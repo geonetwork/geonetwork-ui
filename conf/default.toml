@@ -141,6 +141,9 @@ background_color = "#fdfbff"
 # Optional; if true, opens external viewer in new tab (default false)
 # external_viewer_open_new_tab = false
 
+# Optional; Will not tile WMS. False by default.
+# do_not_tile_wms = false
+
 # Optional; if true, the default basemap will not be added to the map.
 # Use [[map_layer]] sections to define your own custom layers (see below)
 # do_not_use_default_basemap = false

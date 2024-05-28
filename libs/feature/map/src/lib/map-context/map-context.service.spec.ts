@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { TestBed } from '@angular/core/testing'
-import { MAP_CONFIG_FIXTURE } from '@geonetwork-ui/util/app-config'
+import { MAP_CONFIG_FIXTURE, MapConfig } from '@geonetwork-ui/util/app-config'
 import { FeatureCollection } from 'geojson'
 import { Geometry } from 'ol/geom'
 import TileLayer from 'ol/layer/Tile'
@@ -33,6 +33,8 @@ import {
   MapContextService,
 } from './map-context.service'
 import Feature from 'ol/Feature'
+import ImageWMS from 'ol/source/ImageWMS'
+import ImageLayer from 'ol/layer/Image'
 
 const mapStyleServiceMock = {
   createDefaultStyle: jest.fn(() => new Style()),
@@ -130,35 +132,60 @@ describe('MapContextService', () => {
     })
 
     describe('WMS', () => {
-      beforeEach(() => {
-        ;(layerModel = MAP_CTX_LAYER_WMS_FIXTURE),
-          (layer = service.createLayer(layerModel))
+      describe('when mapConfig.DO_NOT_TILE_WMS === false', () => {
+        beforeEach(() => {
+          const mapConfig: MapConfig = {
+            ...MAP_CONFIG_FIXTURE,
+            DO_NOT_TILE_WMS: false,
+          }
+          ;(layerModel = MAP_CTX_LAYER_WMS_FIXTURE),
+            (layer = service.createLayer(layerModel, mapConfig))
+        })
+        it('create a tile layer', () => {
+          expect(layer).toBeTruthy()
+          expect(layer).toBeInstanceOf(TileLayer)
+        })
+        it('create a TileWMS source', () => {
+          const source = layer.getSource()
+          expect(source).toBeInstanceOf(TileWMS)
+        })
+        it('set correct WMS params', () => {
+          const source = layer.getSource()
+          const params = source.getParams()
+          expect(params.LAYERS).toBe(layerModel.name)
+        })
+        it('set correct url without existing REQUEST and SERVICE params', () => {
+          const source = layer.getSource()
+          const urls = source.getUrls()
+          expect(urls.length).toBe(1)
+          expect(urls[0]).toBe(
+            'https://www.geograndest.fr/geoserver/region-grand-est/ows?REQUEST=GetCapabilities&SERVICE=WMS'
+          )
+        })
       })
-      it('create a tile layer', () => {
-        expect(layer).toBeTruthy()
-        expect(layer).toBeInstanceOf(TileLayer)
-      })
-      it('create a TileWMS source', () => {
-        const source = layer.getSource()
-        expect(source).toBeInstanceOf(TileWMS)
-      })
-      it('set correct WMS params', () => {
-        const source = layer.getSource()
-        const params = source.getParams()
-        expect(params.LAYERS).toBe(layerModel.name)
-      })
-      it('set correct url without existing REQUEST and SERVICE params', () => {
-        const source = layer.getSource()
-        const urls = source.getUrls()
-        expect(urls.length).toBe(1)
-        expect(urls[0]).toBe(
-          'https://www.geograndest.fr/geoserver/region-grand-est/ows?REQUEST=GetCapabilities&SERVICE=WMS'
-        )
-      })
-      it('set WMS gutter of 20px', () => {
-        const source = layer.getSource()
-        const gutter = source.gutter_
-        expect(gutter).toBe(20)
+
+      describe('when mapConfig.DO_NOT_TILE_WMS === true', () => {
+        beforeEach(() => {
+          const mapConfig: MapConfig = {
+            ...MAP_CONFIG_FIXTURE,
+            DO_NOT_TILE_WMS: true,
+          }
+          ;(layerModel = MAP_CTX_LAYER_WMS_FIXTURE),
+            (layer = service.createLayer(layerModel, mapConfig))
+        })
+        it('create an image layer', () => {
+          expect(layer).toBeTruthy()
+          expect(layer).toBeInstanceOf(ImageLayer)
+        })
+        it('create an ImageWMS source', () => {
+          const source = layer.getSource()
+          expect(source).toBeInstanceOf(ImageWMS)
+        })
+        it('set correct WMS params', () => {
+          const source = layer.getSource()
+          const params = source.getParams()
+          expect(params.LAYERS).toBe(layerModel.name)
+        })
       })
     })
 

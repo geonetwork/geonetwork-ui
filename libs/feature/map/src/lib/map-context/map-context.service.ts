@@ -29,6 +29,8 @@ import OGCVectorTile from 'ol/source/OGCVectorTile.js'
 import { MVT } from 'ol/format'
 import VectorTileLayer from 'ol/layer/VectorTile'
 import OGCMapTile from 'ol/source/OGCMapTile.js'
+import ImageLayer from 'ol/layer/Image'
+import ImageWMS from 'ol/source/ImageWMS'
 
 export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerXyzModel = {
   type: MapContextLayerTypeEnum.XYZ,
@@ -74,11 +76,13 @@ export class MapContextService {
     }
     map.setView(this.createView(mapContext.view, map))
     map.getLayers().clear()
-    mapContext.layers.forEach((layer) => map.addLayer(this.createLayer(layer)))
+    mapContext.layers.forEach((layer) =>
+      map.addLayer(this.createLayer(layer, mapConfig))
+    )
     return map
   }
 
-  createLayer(layerModel: MapContextLayerModel): Layer {
+  createLayer(layerModel: MapContextLayerModel, mapConfig?: MapConfig): Layer {
     const { type } = layerModel
     const style = this.styleService.styles.default
     switch (type) {
@@ -117,14 +121,24 @@ export class MapContextService {
           }),
         })
       case MapContextLayerTypeEnum.WMS:
-        return new TileLayer({
-          source: new TileWMS({
-            url: layerModel.url,
-            params: { LAYERS: layerModel.name },
-            gutter: 20,
-            attributions: layerModel.attributions,
-          }),
-        })
+        if (mapConfig?.DO_NOT_TILE_WMS) {
+          return new ImageLayer({
+            source: new ImageWMS({
+              url: layerModel.url,
+              params: { LAYERS: layerModel.name },
+              attributions: layerModel.attributions,
+            }),
+          })
+        } else {
+          return new TileLayer({
+            source: new TileWMS({
+              url: layerModel.url,
+              params: { LAYERS: layerModel.name, TILED: true },
+              attributions: layerModel.attributions,
+            }),
+          })
+        }
+
       case MapContextLayerTypeEnum.WMTS: {
         // TODO: isolate this in utils service
         const olLayer = new TileLayer({})
