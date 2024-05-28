@@ -32,10 +32,13 @@ import {
 import {
   catchError,
   distinctUntilChanged,
+  filter,
   finalize,
   map,
+  mergeMap,
   switchMap,
   tap,
+  toArray,
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
@@ -57,7 +60,34 @@ export class MapViewComponent implements OnInit, OnDestroy {
     this.mdViewFacade.mapApiLinks$,
     this.mdViewFacade.geoDataLinks$,
   ]).pipe(
-    map(([mapApiLinks, geoDataLinks]) => [...mapApiLinks, ...geoDataLinks])
+    switchMap(([mapApiLinks, geoDataLinks]) => {
+      const allLinks = [...mapApiLinks, ...geoDataLinks]
+      const ogcLinks = allLinks.filter(
+        (link) =>
+          link.type === 'service' &&
+          link.accessServiceProtocol === 'ogcFeatures'
+      )
+      const otherLinks = allLinks.filter((link) => !ogcLinks.includes(link))
+      return from(ogcLinks).pipe(
+        mergeMap((link) =>
+          this.dataService.readAsGeoJson(link).pipe(
+            map((data) => {
+              const firstFeatures = data.features.slice(0, 10)
+              return {
+                link,
+                hasGeometry: firstFeatures.every((feature) => feature.geometry),
+              }
+            })
+          )
+        ),
+        filter(({ hasGeometry }) => hasGeometry),
+        map(({ link }) => {
+          return link
+        }),
+        toArray(),
+        map((ogcLinksWithGeometry) => [...otherLinks, ...ogcLinksWithGeometry])
+      )
+    })
   )
 
   dropdownChoices$ = this.compatibleMapLinks$.pipe(

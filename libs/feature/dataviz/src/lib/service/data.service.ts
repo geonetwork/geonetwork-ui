@@ -161,6 +161,7 @@ export class DataService {
       ogcApiLink.url.href
     )
     return Object.keys(collectionInfo.bulkDownloadLinks).map((downloadLink) => {
+      console.log(downloadLink)
       return {
         ...ogcApiLink,
         type: 'download',

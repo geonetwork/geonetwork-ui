@@ -2,14 +2,15 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import { ErrorType } from '@geonetwork-ui/ui/elements'
-import { BehaviorSubject, combineLatest } from 'rxjs'
-import { filter, map, mergeMap } from 'rxjs/operators'
+import { BehaviorSubject, combineLatest, from, of } from 'rxjs'
+import { filter, map, mergeMap, switchMap } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
   Keyword,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -24,10 +25,36 @@ export class RecordMetadataComponent {
     this.metadataViewFacade.mapApiLinks$,
     this.metadataViewFacade.geoDataLinks$,
   ]).pipe(
-    map(
-      ([mapLinks, geoDataLinks]) =>
-        mapLinks?.length > 0 || geoDataLinks?.length > 0
-    )
+    switchMap(([mapApiLinks, geoDataLinks]) => {
+      const allLinks = [...mapApiLinks, ...geoDataLinks]
+      const ogcLinks = allLinks.filter(
+        (link) =>
+          link.type === 'service' &&
+          link.accessServiceProtocol === 'ogcFeatures'
+      )
+      const otherLinks = allLinks.filter((link) => !ogcLinks.includes(link))
+      if (ogcLinks.length === 0) {
+        return of(otherLinks?.length > 0)
+      }
+      return from(ogcLinks).pipe(
+        mergeMap((link) =>
+          this.dataService.readAsGeoJson(link).pipe(
+            map((data) => {
+              const firstFeatures = data.features.slice(0, 10)
+              return {
+                link,
+                hasGeometry: firstFeatures.some(
+                  (feature) => feature.geometry != null
+                ),
+              }
+            })
+          )
+        ),
+        map((features) => {
+          return features.hasGeometry || otherLinks?.length > 0
+        })
+      )
+    })
   )
 
   displayData$ = combineLatest([
@@ -104,7 +131,8 @@ export class RecordMetadataComponent {
     public metadataViewFacade: MdViewFacade,
     private searchService: SearchService,
     private sourceService: SourcesService,
-    private orgsService: OrganizationsServiceInterface
+    private orgsService: OrganizationsServiceInterface,
+    private dataService: DataService
   ) {}
 
   onTabIndexChange(index: number): void {
