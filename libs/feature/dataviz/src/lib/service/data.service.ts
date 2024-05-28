@@ -184,14 +184,11 @@ export class DataService {
       })
   }
 
-  async getItemsFromOgcApi(
-    url: string,
-    itemsLimit?: number
-  ): Promise<OgcApiRecord[]> {
+  async getItemsFromOgcApi(url: string): Promise<OgcApiRecord> {
     const endpoint = new OgcApiEndpoint(this.proxy.getProxiedUrl(url))
     return await endpoint.featureCollections
       .then((collections) => {
-        return endpoint.getCollectionItems(collections[0], itemsLimit)
+        return endpoint.getCollectionItem(collections[0], '10')
       })
       .catch((error) => {
         throw new Error(`ogc.unreachable.unknown`)

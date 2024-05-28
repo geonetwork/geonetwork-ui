@@ -60,10 +60,9 @@ export class MapViewComponent implements OnInit, OnDestroy {
     this.mdViewFacade.mapApiLinks$,
     this.mdViewFacade.geospatialLinks$,
   ]).pipe(
-    map(([mapApiLinks, geospatialLinks]) => [
-      ...mapApiLinks,
-      ...geospatialLinks,
-    ])
+    map(([mapApiLinks, geospatialLinks]) => {
+      return [...mapApiLinks, ...geospatialLinks]
+    })
   )
 
   dropdownChoices$ = this.compatibleMapLinks$.pipe(

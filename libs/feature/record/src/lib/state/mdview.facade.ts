@@ -1,6 +1,16 @@
 import { Injectable } from '@angular/core'
 import { select, Store } from '@ngrx/store'
-import { filter, map, switchMap } from 'rxjs/operators'
+import {
+  defaultIfEmpty,
+  distinct,
+  filter,
+  map,
+  mergeMap,
+  scan,
+  switchMap,
+  tap,
+  toArray,
+} from 'rxjs/operators'
 import * as MdViewActions from './mdview.actions'
 import * as MdViewSelectors from './mdview.selectors'
 import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
@@ -95,30 +105,35 @@ export class MdViewFacade {
   )
 
   geospatialLinks$ = this.allLinks$.pipe(
-    map((links) => {
-      return links.filter((link) => {
+    mergeMap((links) => {
+      return from(links)
+    }),
+    mergeMap((link) => {
+      if (this.linkClassifier.hasUsage(link, LinkUsage.GEODATA)) {
         if (
-          this.linkClassifier.hasUsage(link, LinkUsage.GEODATA) &&
           link.type === 'service' &&
           link.accessServiceProtocol === 'ogcFeatures'
         ) {
-          return from(
-            this.dataService.getItemsFromOgcApi(link.url.href, 10)
-          ).pipe(
-            switchMap((collectionRecords: OgcApiRecord[]) => {
-              const hasGeometry = collectionRecords.some(
-                (record) => record.geometry
-              )
-              return hasGeometry ? of(link) : of(null)
-            })
+          return from(this.dataService.getItemsFromOgcApi(link.url.href)).pipe(
+            map((collectionRecords: OgcApiRecord) => {
+              const hasGeometry = collectionRecords.geometry
+              return hasGeometry ? link : null
+            }),
+            defaultIfEmpty(null)
           )
-        } else if (this.linkClassifier.hasUsage(link, LinkUsage.GEODATA)) {
-          return link
         } else {
-          return null
+          return of(link)
         }
-      })
-    })
+      } else {
+        return of(null)
+      }
+    }),
+    scan((acc, val) => {
+      if (val !== null && !acc.includes(val)) {
+        acc.push(val)
+      }
+      return acc
+    }, [])
   )
 
   landingPageLinks$ = this.metadata$.pipe(
