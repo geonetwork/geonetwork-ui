@@ -397,12 +397,12 @@ describe('Gn4PlatformService', () => {
         )
 
         service.getUserFeedbacks(mockUuid).subscribe({
-          next: () => {
-            done('Expected error, but got success')
-          },
-          error: (error) => {
-            expect(error).toBe(errorResponse)
+          next: (result) => {
+            expect(result).toBeUndefined()
             done()
+          },
+          error: () => {
+            done('Expected success, but got error')
           },
         })
       })
