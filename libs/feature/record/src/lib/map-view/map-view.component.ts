@@ -58,36 +58,12 @@ export class MapViewComponent implements OnInit, OnDestroy {
 
   compatibleMapLinks$ = combineLatest([
     this.mdViewFacade.mapApiLinks$,
-    this.mdViewFacade.geoDataLinks$,
+    this.mdViewFacade.geospatialLinks$,
   ]).pipe(
-    switchMap(([mapApiLinks, geoDataLinks]) => {
-      const allLinks = [...mapApiLinks, ...geoDataLinks]
-      const ogcLinks = allLinks.filter(
-        (link) =>
-          link.type === 'service' &&
-          link.accessServiceProtocol === 'ogcFeatures'
-      )
-      const otherLinks = allLinks.filter((link) => !ogcLinks.includes(link))
-      return from(ogcLinks).pipe(
-        mergeMap((link) =>
-          this.dataService.readAsGeoJson(link).pipe(
-            map((data) => {
-              const firstFeatures = data.features.slice(0, 10)
-              return {
-                link,
-                hasGeometry: firstFeatures.every((feature) => feature.geometry),
-              }
-            })
-          )
-        ),
-        filter(({ hasGeometry }) => hasGeometry),
-        map(({ link }) => {
-          return link
-        }),
-        toArray(),
-        map((ogcLinksWithGeometry) => [...otherLinks, ...ogcLinksWithGeometry])
-      )
-    })
+    map(([mapApiLinks, geospatialLinks]) => [
+      ...mapApiLinks,
+      ...geospatialLinks,
+    ])
   )
 
   dropdownChoices$ = this.compatibleMapLinks$.pipe(

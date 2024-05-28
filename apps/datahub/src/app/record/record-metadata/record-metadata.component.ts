@@ -23,38 +23,12 @@ export class RecordMetadataComponent {
 
   displayMap$ = combineLatest([
     this.metadataViewFacade.mapApiLinks$,
-    this.metadataViewFacade.geoDataLinks$,
+    this.metadataViewFacade.geospatialLinks$,
   ]).pipe(
-    switchMap(([mapApiLinks, geoDataLinks]) => {
-      const allLinks = [...mapApiLinks, ...geoDataLinks]
-      const ogcLinks = allLinks.filter(
-        (link) =>
-          link.type === 'service' &&
-          link.accessServiceProtocol === 'ogcFeatures'
-      )
-      const otherLinks = allLinks.filter((link) => !ogcLinks.includes(link))
-      if (ogcLinks.length === 0) {
-        return of(otherLinks?.length > 0)
-      }
-      return from(ogcLinks).pipe(
-        mergeMap((link) =>
-          this.dataService.readAsGeoJson(link).pipe(
-            map((data) => {
-              const firstFeatures = data.features.slice(0, 10)
-              return {
-                link,
-                hasGeometry: firstFeatures.some(
-                  (feature) => feature.geometry != null
-                ),
-              }
-            })
-          )
-        ),
-        map((features) => {
-          return features.hasGeometry || otherLinks?.length > 0
-        })
-      )
-    })
+    map(
+      ([mapApiLinks, geospatialLinks]) =>
+        mapApiLinks?.length > 0 || geospatialLinks?.length > 0
+    )
   )
 
   displayData$ = combineLatest([

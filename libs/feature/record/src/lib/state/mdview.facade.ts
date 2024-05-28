@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { select, Store } from '@ngrx/store'
-import { filter, map } from 'rxjs/operators'
+import { filter, map, switchMap } from 'rxjs/operators'
 import * as MdViewActions from './mdview.actions'
 import * as MdViewSelectors from './mdview.selectors'
 import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
@@ -10,6 +10,9 @@ import {
   UserFeedback,
 } from '@geonetwork-ui/common/domain/model/record'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
+import { OgcApiRecord } from '@camptocamp/ogc-client'
+import { from, of } from 'rxjs'
+import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 @Injectable()
 /**
@@ -22,7 +25,8 @@ export class MdViewFacade {
   constructor(
     private store: Store,
     private linkClassifier: LinkClassifierService,
-    private avatarService: AvatarServiceInterface
+    private avatarService: AvatarServiceInterface,
+    private dataService: DataService
   ) {}
 
   isPresent$ = this.store.pipe(
@@ -88,6 +92,33 @@ export class MdViewFacade {
         this.linkClassifier.hasUsage(link, LinkUsage.GEODATA)
       )
     )
+  )
+
+  geospatialLinks$ = this.allLinks$.pipe(
+    map((links) => {
+      return links.filter((link) => {
+        if (
+          this.linkClassifier.hasUsage(link, LinkUsage.GEODATA) &&
+          link.type === 'service' &&
+          link.accessServiceProtocol === 'ogcFeatures'
+        ) {
+          return from(
+            this.dataService.getItemsFromOgcApi(link.url.href, 10)
+          ).pipe(
+            switchMap((collectionRecords: OgcApiRecord[]) => {
+              const hasGeometry = collectionRecords.some(
+                (record) => record.geometry
+              )
+              return hasGeometry ? of(link) : of(null)
+            })
+          )
+        } else if (this.linkClassifier.hasUsage(link, LinkUsage.GEODATA)) {
+          return link
+        } else {
+          return null
+        }
+      })
+    })
   )
 
   landingPageLinks$ = this.metadata$.pipe(
