@@ -149,7 +149,7 @@
     </div>
   </div>
   <div
-    *ngIf="loadFeedBacks$ | async"
+    *ngIf="(metadataViewFacade.isPresent$ | async) === true"
     id="userFeedbacks"
     class="bg-primary-opacity-10 py-16 mt-[32px]"
   >

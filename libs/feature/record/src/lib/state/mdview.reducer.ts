@@ -82,7 +82,6 @@ const metadataViewReducer = createReducer(
   */
   on(MetadataViewActions.loadUserFeedbacks, (state) => ({
     ...state,
-    error: null,
     allUserFeedbacksLoading: true,
   })),
   on(MetadataViewActions.addUserFeedback, (state) => ({
@@ -93,7 +92,6 @@ const metadataViewReducer = createReducer(
     MetadataViewActions.loadUserFeedbacksSuccess,
     (state, { userFeedbacks }) => ({
       ...state,
-      error: null,
       userFeedbacks: userFeedbacks,
       addUserFeedbackLoading: false,
       allUserFeedbacksLoading: false,
