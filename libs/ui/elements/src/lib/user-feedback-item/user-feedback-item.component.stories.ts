@@ -83,7 +83,6 @@ export const Primary: StoryObj<UserFeedbackItemComponent> = {
         authorEmail: '',
       },
     ],
-    isActiveUserEditor: true,
     activeUser: {
       id: '1',
       email: 'john@example.com',
