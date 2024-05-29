@@ -34,6 +34,7 @@ import {
   distinctUntilChanged,
   finalize,
   map,
+  startWith,
   switchMap,
   tap,
 } from 'rxjs/operators'
@@ -122,6 +123,10 @@ export class MapViewComponent implements OnInit, OnDestroy {
         })
       )
     ),
+    startWith({
+      layers: [],
+      view: {},
+    } as MapContextModel),
     withLatestFrom(this.mdViewFacade.metadata$),
     map(([context, metadata]) => {
       if (context.view.extent) return context

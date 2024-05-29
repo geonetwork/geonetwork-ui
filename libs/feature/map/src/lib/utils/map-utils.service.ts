@@ -26,7 +26,6 @@ import {
   MapContextLayerWmsModel,
 } from '../map-context/map-context.model'
 import Collection from 'ol/Collection'
-import { defaults as defaultControls } from 'ol/control.js'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { ProxyService } from '@geonetwork-ui/util/shared'
@@ -34,6 +33,7 @@ import { WmsEndpoint, WmtsEndpoint } from '@camptocamp/ogc-client'
 import { LONLAT_CRS_CODES } from '../constant/projections'
 import { fromEPSGCode, register } from 'ol/proj/proj4'
 import proj4 from 'proj4/dist/proj4'
+import { defaults as defaultControls } from 'ol/control/defaults'
 
 const FEATURE_PROJECTION = 'EPSG:3857'
 const DATA_PROJECTION = 'EPSG:4326'
