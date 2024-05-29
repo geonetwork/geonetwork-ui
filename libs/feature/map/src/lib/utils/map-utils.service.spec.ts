@@ -199,7 +199,7 @@ describe('MapUtilsService', () => {
       expect(map.getControls().getArray().length).toBe(3)
     })
     it('with no layer', () => {
-      expect(map.getLayers().getArray().length).toBe(3)
+      expect(map.getLayers().getArray().length).toBe(0)
     })
   })
 
