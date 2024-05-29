@@ -656,10 +656,8 @@ describe('api form', () => {
           .find('gn-ui-copy-text-button')
           .find('input')
           .invoke('val')
-          .then((newUrl) => {
-            expect(newUrl).to.not.eq(url)
-            expect(newUrl).to.include('54')
-          })
+          .should('not.eq', url)
+          .and('include', '54')
       })
   })
   it('should set limit to zero on click on "All" button', () => {
@@ -718,9 +716,7 @@ describe('api form', () => {
           .find('gn-ui-copy-text-button')
           .find('input')
           .invoke('val')
-          .then((newUrl) => {
-            expect(newUrl).to.not.eq(url)
-          })
+          .should('not.eq', url)
       })
   })
 })
@@ -747,16 +743,12 @@ describe('userFeedback', () => {
             .eq(1)
             .click()
 
-          // eslint-disable-next-line cypress/no-unnecessary-waiting
-          cy.wait(1000)
-
           cy.get('gn-ui-user-feedback-item')
             .find('[data-cy="commentText"]')
             .first()
-            .then((div) => {
-              const firstCommentAfterSort = div.text().trim()
-              expect(firstCommentBeforeSort).to.not.eq(firstCommentAfterSort)
-            })
+            .invoke('text')
+            .invoke('trim')
+            .should('not.eq', firstCommentBeforeSort)
         })
     })
     it("shouldn't be able to comment", () => {
@@ -804,5 +796,6 @@ describe('When the metadata does not exists', () => {
   })
   it('should display an error message', () => {
     cy.get('gn-ui-search-results-error').should('exist')
+    cy.screenshot({ capture: 'viewport' })
   })
 })
