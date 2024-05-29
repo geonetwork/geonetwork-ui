@@ -5,7 +5,7 @@ import {
   ServiceProtocol,
 } from '@geonetwork-ui/common/domain/model/record'
 import { mimeTypeToFormat } from '@geonetwork-ui/util/shared'
-import { BehaviorSubject, combineLatest, map, switchMap } from 'rxjs'
+import { BehaviorSubject, combineLatest, filter, map, switchMap } from 'rxjs'
 
 const DEFAULT_PARAMS = {
   OFFSET: '',
@@ -54,7 +54,8 @@ export class RecordApiFormComponent {
     this.offset$,
     this.limit$,
     this.format$,
-    this.endpoint$,
+    // only compute the url if the endpoint was created
+    this.endpoint$.pipe(filter((endpoint) => !!endpoint)),
   ]).pipe(
     switchMap(([offset, limit, format]) =>
       this.generateApiQueryUrl(offset, limit, format)
@@ -121,11 +122,9 @@ export class RecordApiFormComponent {
       this.supportOffset = this.endpoint.supportsStartIndex()
       return this.endpoint.getServiceInfo() as OutputFormats
     } else {
-      {
-        return (await this.endpoint.getCollectionInfo(
-          this.firstCollection
-        )) as OutputFormats
-      }
+      return (await this.endpoint.getCollectionInfo(
+        this.firstCollection
+      )) as OutputFormats
     }
   }
 
@@ -136,7 +135,7 @@ export class RecordApiFormComponent {
       await (this.endpoint as WfsEndpoint).isReady()
     } else {
       this.endpoint = new OgcApiEndpoint(this.apiBaseUrl)
-      this.firstCollection = (await this.endpoint.featureCollections)[0]
+      this.firstCollection = (await this.endpoint.allCollections)[0].name
     }
     this.endpoint$.next(this.endpoint)
   }

@@ -174,9 +174,9 @@ export class DataService {
 
   async getDownloadUrlsFromOgcApi(url: string): Promise<OgcApiCollectionInfo> {
     const endpoint = new OgcApiEndpoint(this.proxy.getProxiedUrl(url))
-    return await endpoint.featureCollections
+    return await endpoint.allCollections
       .then((collections) => {
-        return endpoint.getCollectionInfo(collections[0])
+        return endpoint.getCollectionInfo(collections[0].name)
       })
       .catch((error) => {
         throw new Error(`ogc.unreachable.unknown`)

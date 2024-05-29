@@ -92,7 +92,7 @@ jest.mock('@camptocamp/ogc-client', () => ({
         bulkDownloadLinks: { json: 'http://json', csv: 'http://csv' },
       })
     }
-    featureCollections = Promise.resolve(['collection1'])
+    allCollections = Promise.resolve([{ name: 'collection1' }])
   },
 }))
 
