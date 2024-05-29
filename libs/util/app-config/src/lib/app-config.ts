@@ -144,6 +144,7 @@ export function loadAppConfig() {
         [],
         [
           'max_zoom',
+          'do_not_tile_wms',
           'max_extent',
           'baselayer',
           'do_not_use_default_basemap',
@@ -158,6 +159,7 @@ export function loadAppConfig() {
           ? null
           : ({
               MAX_ZOOM: parsedMapSection.max_zoom,
+              DO_NOT_TILE_WMS: parsedMapSection.do_not_tile_wms,
               MAX_EXTENT: parsedMapSection.max_extent,
               EXTERNAL_VIEWER_URL_TEMPLATE:
                 parsedMapSection.external_viewer_url_template,

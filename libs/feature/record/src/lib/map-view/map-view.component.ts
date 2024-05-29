@@ -15,7 +15,7 @@ import {
   MapUtilsService,
 } from '@geonetwork-ui/feature/map'
 import { getOptionalMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
-import { getLinkLabel, ProxyService } from '@geonetwork-ui/util/shared'
+import { getLinkLabel } from '@geonetwork-ui/util/shared'
 import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
 import { StyleLike } from 'ol/style/Style'
@@ -23,10 +23,8 @@ import {
   BehaviorSubject,
   combineLatest,
   from,
-  lastValueFrom,
   Observable,
   of,
-  startWith,
   Subscription,
   throwError,
   withLatestFrom,
@@ -117,7 +115,9 @@ export class MapViewComponent implements OnInit, OnDestroy {
               },
             } as MapContextModel)
         ),
-        tap(() => this.resetSelection())
+        tap((res) => {
+          this.resetSelection()
+        })
       )
     ),
     withLatestFrom(this.mdViewFacade.metadata$),

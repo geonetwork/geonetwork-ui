@@ -20,6 +20,7 @@ export interface LayerConfig {
 
 export interface MapConfig {
   MAX_ZOOM?: number
+  DO_NOT_TILE_WMS: boolean
   MAX_EXTENT?: [number, number, number, number] // Expressed as [minx, miny, maxx, maxy]
   EXTERNAL_VIEWER_URL_TEMPLATE?: string
   EXTERNAL_VIEWER_OPEN_NEW_TAB?: boolean
