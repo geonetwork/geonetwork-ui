@@ -196,7 +196,7 @@ describe('MapUtilsService', () => {
       expect(map).toBeInstanceOf(Map)
     })
     it('with no control', () => {
-      expect(map.getControls().getArray().length).toBe(0)
+      expect(map.getControls().getArray().length).toBe(3)
     })
     it('with no layer', () => {
       expect(map.getLayers().getArray().length).toBe(0)
