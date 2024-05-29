@@ -121,11 +121,9 @@ export class RecordApiFormComponent {
       this.supportOffset = this.endpoint.supportsStartIndex()
       return this.endpoint.getServiceInfo() as OutputFormats
     } else {
-      {
-        return (await this.endpoint.getCollectionInfo(
-          this.firstCollection
-        )) as OutputFormats
-      }
+      return (await this.endpoint.getCollectionInfo(
+        this.firstCollection
+      )) as OutputFormats
     }
   }
 
@@ -136,7 +134,7 @@ export class RecordApiFormComponent {
       await (this.endpoint as WfsEndpoint).isReady()
     } else {
       this.endpoint = new OgcApiEndpoint(this.apiBaseUrl)
-      this.firstCollection = (await this.endpoint.featureCollections)[0]
+      this.firstCollection = (await this.endpoint.allCollections)[0].name
     }
     this.endpoint$.next(this.endpoint)
   }
