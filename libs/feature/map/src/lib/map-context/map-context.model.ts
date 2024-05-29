@@ -20,18 +20,21 @@ export interface MapContextLayerWmsModel {
   type: 'wms'
   url: string
   name: string
+  attributions?: string
 }
 
 export interface MapContextLayerWmtsModel {
   type: 'wmts'
   url: string
   name: string
+  attributions?: string
 }
 
 interface MapContextLayerWfsModel {
   type: 'wfs'
   url: string
   name: string
+  attributions?: string
 }
 
 export interface MapContextLayerOgcapiModel {
@@ -39,11 +42,13 @@ export interface MapContextLayerOgcapiModel {
   url: string
   name: string
   layerType: 'feature' | 'vectorTiles' | 'mapTiles' | 'record'
+  attributions?: string
 }
 
 interface LayerXyzModel {
   type: 'xyz'
   name?: string
+  attributions?: string
 }
 interface LayerXyzModelWithUrl extends LayerXyzModel {
   url: string
@@ -59,6 +64,7 @@ export type MapContextLayerXyzModel =
 
 interface LayerGeojson {
   type: 'geojson'
+  attributions?: string
 }
 interface LayerGeojsonWithUrl extends LayerGeojson {
   url: string

@@ -37,6 +37,7 @@ export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerXyzModel = {
     `https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
     `https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
   ],
+  attributions: `<span>© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, © <a href="https://carto.com/">Carto</a></span>`,
 }
 
 export const DEFAULT_VIEW: MapContextViewModel = {
@@ -87,12 +88,14 @@ export class MapContextService {
             source: new OGCVectorTile({
               url: layerModel.url,
               format: new MVT(),
+              attributions: layerModel.attributions,
             }),
           })
         } else if (layerModel.layerType === 'mapTiles') {
           return new TileLayer({
             source: new OGCMapTile({
               url: layerModel.url,
+              attributions: layerModel.attributions,
             }),
           })
         } else {
@@ -100,6 +103,7 @@ export class MapContextService {
             source: new VectorSource({
               format: new GeoJSON(),
               url: layerModel.url,
+              attributions: layerModel.attributions,
             }),
             style,
           })
@@ -109,6 +113,7 @@ export class MapContextService {
           source: new XYZ({
             url: 'url' in layerModel ? layerModel.url : undefined,
             urls: 'urls' in layerModel ? layerModel.urls : undefined,
+            attributions: layerModel.attributions,
           }),
         })
       case MapContextLayerTypeEnum.WMS:
@@ -117,6 +122,7 @@ export class MapContextService {
             url: layerModel.url,
             params: { LAYERS: layerModel.name },
             gutter: 20,
+            attributions: layerModel.attributions,
           }),
         })
       case MapContextLayerTypeEnum.WMTS: {
@@ -141,6 +147,7 @@ export class MapContextService {
               tileGrid,
               projection: matrixSet.crs,
               dimensions,
+              attributions: layerModel.attributions,
             })
           )
         })
@@ -166,6 +173,7 @@ export class MapContextService {
                 })
               },
               strategy: bboxStrategy,
+              attributions: layerModel.attributions,
             })
           )
         })

@@ -26,6 +26,7 @@ import {
   MapContextLayerWmsModel,
 } from '../map-context/map-context.model'
 import Collection from 'ol/Collection'
+import { defaults as defaultControls } from 'ol/control.js'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { ProxyService } from '@geonetwork-ui/util/shared'
@@ -47,7 +48,10 @@ export class MapUtilsService {
 
   createEmptyMap(): Map {
     return new Map({
-      controls: [],
+      controls: defaultControls({
+        attribution: true,
+        attributionOptions: { collapsible: false },
+      }),
       pixelRatio: 1,
     })
   }
