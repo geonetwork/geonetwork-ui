@@ -797,3 +797,12 @@ describe('userFeedback', () => {
     })
   })
 })
+
+describe('When the metadata does not exists', () => {
+  beforeEach(() => {
+    cy.visit('/dataset/xyz')
+  })
+  it('should display an error message', () => {
+    cy.get('gn-ui-search-results-error').should('exist')
+  })
+})

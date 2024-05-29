@@ -148,13 +148,17 @@
       <div class="container-lg mx-auto h-[1096px] sm:h-96"></div>
     </div>
   </div>
-</div>
-<div id="userFeedbacks" class="bg-primary-opacity-10 py-16 mt-[32px]">
-  <div class="container-lg px-4 lg:mx-auto">
-    <datahub-record-user-feedbacks
-      [organisationName$]="organisationName$"
-      [metadataUuid]="metadataUuid$ | async"
-    ></datahub-record-user-feedbacks>
+  <div
+    *ngIf="(metadataViewFacade.isPresent$ | async) === true"
+    id="userFeedbacks"
+    class="bg-primary-opacity-10 py-16 mt-[32px]"
+  >
+    <div class="container-lg px-4 lg:mx-auto">
+      <datahub-record-user-feedbacks
+        [organisationName$]="organisationName$"
+        [metadataUuid]="metadataUuid$ | async"
+      ></datahub-record-user-feedbacks>
+    </div>
   </div>
 </div>
 <div
