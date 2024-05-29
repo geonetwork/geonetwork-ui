@@ -26,7 +26,6 @@ export class RecordMetadataComponent {
     this.metadataViewFacade.geospatialLinks$,
   ]).pipe(
     map(([mapApiLinks, geospatialLinks]) => {
-      console.log(geospatialLinks)
       return mapApiLinks?.length > 0 || geospatialLinks?.length > 0
     })
   )
