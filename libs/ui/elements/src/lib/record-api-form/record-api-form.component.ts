@@ -5,7 +5,7 @@ import {
   ServiceProtocol,
 } from '@geonetwork-ui/common/domain/model/record'
 import { mimeTypeToFormat } from '@geonetwork-ui/util/shared'
-import { BehaviorSubject, combineLatest, map, switchMap } from 'rxjs'
+import { BehaviorSubject, combineLatest, filter, map, switchMap } from 'rxjs'
 
 const DEFAULT_PARAMS = {
   OFFSET: '',
@@ -54,7 +54,8 @@ export class RecordApiFormComponent {
     this.offset$,
     this.limit$,
     this.format$,
-    this.endpoint$,
+    // only compute the url if the endpoint was created
+    this.endpoint$.pipe(filter((endpoint) => !!endpoint)),
   ]).pipe(
     switchMap(([offset, limit, format]) =>
       this.generateApiQueryUrl(offset, limit, format)

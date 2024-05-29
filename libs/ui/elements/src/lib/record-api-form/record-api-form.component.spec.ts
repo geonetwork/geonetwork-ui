@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordApiFormComponent } from './record-api-form.component'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { firstValueFrom } from 'rxjs'
@@ -15,8 +15,8 @@ const mockDatasetServiceDistribution: DatasetServiceDistribution = {
 jest.mock('@camptocamp/ogc-client', () => ({
   OgcApiEndpoint: class {
     constructor(private url) {}
-    get featureCollections() {
-      return Promise.resolve(['feature1'])
+    get allCollections() {
+      return Promise.resolve([{ name: 'feature1' }])
     }
     getCollectionInfo(collectionId) {
       return Promise.resolve({
@@ -66,7 +66,7 @@ jest.mock('@camptocamp/ogc-client', () => ({
   },
 }))
 
-describe('RecordApFormComponent', () => {
+describe('RecordApiFormComponent', () => {
   let component: RecordApiFormComponent
   let fixture: ComponentFixture<RecordApiFormComponent>
 
