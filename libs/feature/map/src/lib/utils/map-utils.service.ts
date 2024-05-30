@@ -219,16 +219,19 @@ export class MapUtilsService {
   getRecordExtent(record: Partial<CatalogRecord>): Extent {
     if (!('spatialExtents' in record)) {
       return null
+    } else if (record.spatialExtents.length > 0) {
+      // transform an array of geojson geometries into a bbox
+      const totalExtent = record.spatialExtents.reduce(
+        (prev, curr) => {
+          const geom = GEOJSON.readGeometry(curr.geometry)
+          return extend(prev, geom.getExtent())
+        },
+        [Infinity, Infinity, -Infinity, -Infinity]
+      )
+      return transformExtent(totalExtent, 'EPSG:4326', 'EPSG:3857')
+    } else {
+      return null
     }
-    // transform an array of geojson geometries into a bbox
-    const totalExtent = record.spatialExtents.reduce(
-      (prev, curr) => {
-        const geom = GEOJSON.readGeometry(curr.geometry)
-        return extend(prev, geom.getExtent())
-      },
-      [Infinity, Infinity, -Infinity, -Infinity]
-    )
-    return transformExtent(totalExtent, 'EPSG:4326', 'EPSG:3857')
   }
 }
 
