@@ -1,7 +1,8 @@
 <div
-  class="flex items-center justify-between pl-3 rounded-lg border border-gray-300 bg-white"
+  class="flex items-center justify-between rounded-lg border border-gray-300 bg-white"
 >
   <input
+    class="pl-3"
     [matDatepicker]="picker"
     [value]="date"
     (dateChange)="dateChange.emit($event.value)"
