@@ -106,8 +106,9 @@ export class MdViewFacade {
         ) {
           return from(this.dataService.getItemsFromOgcApi(link.url.href)).pipe(
             map((collectionRecords: OgcApiRecord) => {
-              const hasGeometry = collectionRecords.geometry
-              return hasGeometry ? link : null
+              return collectionRecords && collectionRecords.geometry
+                ? link
+                : null
             }),
             defaultIfEmpty(null)
           )

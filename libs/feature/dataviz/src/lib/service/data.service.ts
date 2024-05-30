@@ -188,7 +188,9 @@ export class DataService {
     const endpoint = new OgcApiEndpoint(this.proxy.getProxiedUrl(url))
     return await endpoint.featureCollections
       .then((collections) => {
-        return endpoint.getCollectionItem(collections[0], '1')
+        return collections.length
+          ? endpoint.getCollectionItem(collections[0], '1')
+          : null
       })
       .catch((error) => {
         throw new Error(`ogc.unreachable.unknown`)
