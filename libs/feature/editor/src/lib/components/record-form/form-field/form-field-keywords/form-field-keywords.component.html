@@ -1,0 +1,20 @@
+<div class="flex flex-col gap-3">
+  <gn-ui-autocomplete
+    [placeholder]="'Search for keywords in all thesaurus'"
+    [displayWithFn]="displayWithFn"
+    [action]="autoCompleteAction"
+    (itemSelected)="handleItemSelection($event)"
+    (inputSubmitted)="handleInputSubmission($event)"
+    (inputCleared)="handleInputCleared()"
+    [value]="searchInputValue$ | async"
+    [clearOnSelection]="true"
+  ></gn-ui-autocomplete>
+  <div class="flex gap-2 flex-wrap">
+    <gn-ui-badge
+      *ngFor="let keyword of control.value; let index = index"
+      [removable]="true"
+      (badgeClicked)="removeKeyword(index)"
+      >{{ keyword.label }}</gn-ui-badge
+    >
+  </div>
+</div>

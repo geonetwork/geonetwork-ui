@@ -15,6 +15,7 @@ import * as fromEditor from './+state/editor.reducer'
 import { WizardFieldComponent } from './components/wizard-field/wizard-field.component'
 import { WizardSummarizeComponent } from './components/wizard-summarize/wizard-summarize.component'
 import { WizardComponent } from './components/wizard/wizard.component'
+import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { WizardComponent } from './components/wizard/wizard.component'
     EffectsModule.forFeature([EditorEffects]),
   ],
   exports: [WizardComponent, WizardSummarizeComponent],
-  providers: [EditorFacade],
+  providers: [EditorFacade, Gn4PlatformService],
 })
 export class FeatureEditorModule {}
 export * from './models/index'

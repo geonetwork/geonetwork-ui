@@ -1,5 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core'
 
 @Component({
   selector: 'gn-ui-badge',
@@ -10,5 +16,11 @@ import { CommonModule } from '@angular/common'
   imports: [CommonModule],
 })
 export class BadgeComponent {
-  @Input() clickable = false
+  @Input() clickable? = false
+  @Input() removable? = false
+  @Output() badgeClicked = new EventEmitter<void>()
+
+  removeBadge() {
+    this.badgeClicked.emit()
+  }
 }

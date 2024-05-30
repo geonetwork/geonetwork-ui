@@ -12,6 +12,7 @@ import {
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 import {
+  KeywordThesaurus,
   Organization,
   UserFeedback,
 } from '@geonetwork-ui/common/domain/model/record'
@@ -133,6 +134,30 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     return this.keyTranslations$.pipe(map((translations) => translations[key]))
   }
 
+  getKeywordsFromThesaurus(
+    thesaurusId: string,
+    query: string
+  ): Observable<ThesaurusModel> {
+    return this.registriesApiService
+      .searchKeywords(
+        query,
+        this.langService.iso3,
+        10,
+        0,
+        null,
+        ['external.theme.gemet-theme'],
+        null,
+        `*${query}*`
+      )
+      .pipe(
+        map((thesaurus) =>
+          this.mapper.thesaurusFromApi(
+            thesaurus as any[],
+            this.langService.iso3
+          )
+        )
+      )
+  }
   getThesaurusByUri(uri: string): Observable<ThesaurusModel> {
     if (this.thesauri[uri]) {
       return this.thesauri[uri]

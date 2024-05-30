@@ -66,6 +66,12 @@ export type KeywordThesaurus = {
   id: string
   name?: string
   url?: URL
+  thesaurusKey?: string
+  definition?: string
+  definitions?: object
+  uri?: string
+  value?: string
+  values?: object
 }
 
 export interface Keyword {
