@@ -32,13 +32,10 @@ import {
 import {
   catchError,
   distinctUntilChanged,
-  filter,
   finalize,
   map,
-  mergeMap,
   switchMap,
   tap,
-  toArray,
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
@@ -58,10 +55,10 @@ export class MapViewComponent implements OnInit, OnDestroy {
 
   compatibleMapLinks$ = combineLatest([
     this.mdViewFacade.mapApiLinks$,
-    this.mdViewFacade.geospatialLinks$,
+    this.mdViewFacade.geoDataLinksWithGeometry$,
   ]).pipe(
-    map(([mapApiLinks, geospatialLinks]) => {
-      return [...mapApiLinks, ...geospatialLinks]
+    map(([mapApiLinks, geoDataLinksWithGeometry]) => {
+      return [...mapApiLinks, ...geoDataLinksWithGeometry]
     })
   )
 
@@ -107,8 +104,8 @@ export class MapViewComponent implements OnInit, OnDestroy {
   mapContext$ = this.currentLayers$.pipe(
     switchMap((layers) =>
       from(this.mapUtils.getLayerExtent(layers[0])).pipe(
-        catchError((error) => {
-          console.warn(error) // FIXME: report this to the user somehow
+        catchError(() => {
+          this.error = 'The layer has no extent'
           return of(undefined)
         }),
         map(

@@ -2,15 +2,14 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import { ErrorType } from '@geonetwork-ui/ui/elements'
-import { BehaviorSubject, combineLatest, from, of } from 'rxjs'
-import { filter, map, mergeMap, switchMap } from 'rxjs/operators'
+import { BehaviorSubject, combineLatest } from 'rxjs'
+import { filter, map, mergeMap } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
   Keyword,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -23,10 +22,10 @@ export class RecordMetadataComponent {
 
   displayMap$ = combineLatest([
     this.metadataViewFacade.mapApiLinks$,
-    this.metadataViewFacade.geospatialLinks$,
+    this.metadataViewFacade.geoDataLinksWithGeometry$,
   ]).pipe(
-    map(([mapApiLinks, geospatialLinks]) => {
-      return mapApiLinks?.length > 0 || geospatialLinks?.length > 0
+    map(([mapApiLinks, geoDataLinksWithGeometry]) => {
+      return mapApiLinks?.length > 0 || geoDataLinksWithGeometry?.length > 0
     })
   )
 
@@ -104,8 +103,7 @@ export class RecordMetadataComponent {
     public metadataViewFacade: MdViewFacade,
     private searchService: SearchService,
     private sourceService: SourcesService,
-    private orgsService: OrganizationsServiceInterface,
-    private dataService: DataService
+    private orgsService: OrganizationsServiceInterface
   ) {}
 
   onTabIndexChange(index: number): void {

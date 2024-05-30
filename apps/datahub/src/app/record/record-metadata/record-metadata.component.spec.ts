@@ -39,7 +39,7 @@ class MdViewFacadeMock {
   mapApiLinks$ = new BehaviorSubject([])
   dataLinks$ = new BehaviorSubject([])
   geoDataLinks$ = new BehaviorSubject([])
-  geospatialLinks$ = new BehaviorSubject([])
+  geoDataLinksWithGeometry$ = new BehaviorSubject([])
   downloadLinks$ = new BehaviorSubject([])
   apiLinks$ = new BehaviorSubject([])
   otherLinks$ = new BehaviorSubject([])
@@ -378,7 +378,7 @@ describe('RecordMetadataComponent', () => {
     })
     describe('when a GEODATA link present', () => {
       beforeEach(() => {
-        facade.geospatialLinks$.next(['link'])
+        facade.geoDataLinksWithGeometry$.next(['link'])
         facade.geoDataLinks$.next(['link'])
         fixture.detectChanges()
         mapTab = fixture.debugElement.queryAll(By.css('mat-tab'))[0]
@@ -401,7 +401,7 @@ describe('RecordMetadataComponent', () => {
       beforeEach(() => {
         facade.mapApiLinks$.next(['link'])
         facade.dataLinks$.next(null)
-        facade.geospatialLinks$.next(null)
+        facade.geoDataLinksWithGeometry$.next(null)
         fixture.detectChanges()
         tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
         chartTab = fixture.debugElement.queryAll(By.css('mat-tab'))[2]

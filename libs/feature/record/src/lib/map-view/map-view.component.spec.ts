@@ -67,7 +67,7 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
 
 class MdViewFacadeMock {
   mapApiLinks$ = new Subject()
-  geospatialLinks$ = new Subject()
+  geoDataLinksWithGeometry$ = new Subject()
   metadata$ = of({ title: 'abcd' })
 }
 
@@ -272,7 +272,7 @@ describe('MapViewComponent', () => {
     describe('with no link compatible with MAP_API or GEODATA usage', () => {
       beforeEach(fakeAsync(() => {
         mdViewFacade.mapApiLinks$.next([])
-        mdViewFacade.geospatialLinks$.next([])
+        mdViewFacade.geoDataLinksWithGeometry$.next([])
         tick()
         fixture.detectChanges()
       }))
@@ -317,7 +317,7 @@ describe('MapViewComponent', () => {
             accessServiceProtocol: 'wms',
           },
         ])
-        mdViewFacade.geospatialLinks$.next([])
+        mdViewFacade.geoDataLinksWithGeometry$.next([])
         tick()
         fixture.detectChanges()
       }))
@@ -365,7 +365,7 @@ describe('MapViewComponent', () => {
             accessServiceProtocol: 'wms',
           },
         ])
-        mdViewFacade.geospatialLinks$.next([
+        mdViewFacade.geoDataLinksWithGeometry$.next([
           {
             url: new URL('http://abcd.com/wfs'),
             name: 'featuretype',
@@ -419,7 +419,7 @@ describe('MapViewComponent', () => {
     describe('with a link using WFS protocol', () => {
       beforeEach(fakeAsync(() => {
         mdViewFacade.mapApiLinks$.next([])
-        mdViewFacade.geospatialLinks$.next([
+        mdViewFacade.geoDataLinksWithGeometry$.next([
           {
             url: new URL('http://abcd.com/wfs'),
             name: 'featuretype',
@@ -453,7 +453,7 @@ describe('MapViewComponent', () => {
             accessServiceProtocol: 'wmts',
           },
         ])
-        mdViewFacade.geospatialLinks$.next([])
+        mdViewFacade.geoDataLinksWithGeometry$.next([])
         tick(200)
         fixture.detectChanges()
       }))
@@ -474,7 +474,7 @@ describe('MapViewComponent', () => {
     describe('with a link using ESRI:REST protocol', () => {
       beforeEach(fakeAsync(() => {
         mdViewFacade.mapApiLinks$.next([])
-        mdViewFacade.geospatialLinks$.next([
+        mdViewFacade.geoDataLinksWithGeometry$.next([
           {
             name: 'mes_hdf',
             url: new URL(
@@ -503,7 +503,7 @@ describe('MapViewComponent', () => {
     describe('with a link using OGC API protocol', () => {
       beforeEach(fakeAsync(() => {
         mdViewFacade.mapApiLinks$.next([])
-        mdViewFacade.geospatialLinks$.next([
+        mdViewFacade.geoDataLinksWithGeometry$.next([
           {
             name: 'ogc layer',
             url: new URL('http://abcd.com/data/ogcapi'),
@@ -530,7 +530,7 @@ describe('MapViewComponent', () => {
     describe('with a link using WFS which returns an error', () => {
       beforeEach(() => {
         mdViewFacade.mapApiLinks$.next([])
-        mdViewFacade.geospatialLinks$.next([
+        mdViewFacade.geoDataLinksWithGeometry$.next([
           {
             url: new URL('http://abcd.com/wfs/error'),
             name: 'featuretype',
@@ -548,7 +548,7 @@ describe('MapViewComponent', () => {
       describe('during download', () => {
         beforeEach(fakeAsync(() => {
           mdViewFacade.mapApiLinks$.next([])
-          mdViewFacade.geospatialLinks$.next([
+          mdViewFacade.geoDataLinksWithGeometry$.next([
             {
               url: new URL('http://abcd.com/data.geojson'),
               name: 'data.geojson',
@@ -571,7 +571,7 @@ describe('MapViewComponent', () => {
       describe('after download', () => {
         beforeEach(fakeAsync(() => {
           mdViewFacade.mapApiLinks$.next([])
-          mdViewFacade.geospatialLinks$.next([
+          mdViewFacade.geoDataLinksWithGeometry$.next([
             {
               url: new URL('http://abcd.com/data.geojson'),
               name: 'data.geojson',
@@ -605,7 +605,7 @@ describe('MapViewComponent', () => {
     describe('when receiving several metadata records', () => {
       beforeEach(fakeAsync(() => {
         mdViewFacade.mapApiLinks$.next([])
-        mdViewFacade.geospatialLinks$.next([
+        mdViewFacade.geoDataLinksWithGeometry$.next([
           {
             url: new URL('http://abcd.com/data.geojson'),
             name: 'data.geojson',
@@ -620,7 +620,7 @@ describe('MapViewComponent', () => {
             accessServiceProtocol: 'wms',
           },
         ])
-        mdViewFacade.geospatialLinks$.next([])
+        mdViewFacade.geoDataLinksWithGeometry$.next([])
         tick()
         fixture.detectChanges()
       }))
@@ -671,7 +671,7 @@ describe('MapViewComponent', () => {
             accessServiceProtocol: 'wms',
           },
         ])
-        mdViewFacade.geospatialLinks$.next([])
+        mdViewFacade.geoDataLinksWithGeometry$.next([])
         dropdownComponent.selectValue.emit(1)
         tick()
         fixture.detectChanges()
@@ -856,7 +856,7 @@ describe('MapViewComponent', () => {
     describe('changing the map context', () => {
       beforeEach(() => {
         jest.spyOn(component, 'resetSelection')
-        mdViewFacade.geospatialLinks$.next([])
+        mdViewFacade.geoDataLinksWithGeometry$.next([])
         mdViewFacade.mapApiLinks$.next([])
       })
       it('resets selection', () => {

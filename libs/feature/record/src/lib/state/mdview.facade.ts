@@ -1,16 +1,6 @@
 import { Injectable } from '@angular/core'
 import { select, Store } from '@ngrx/store'
-import {
-  defaultIfEmpty,
-  distinct,
-  filter,
-  map,
-  mergeMap,
-  scan,
-  switchMap,
-  tap,
-  toArray,
-} from 'rxjs/operators'
+import { defaultIfEmpty, filter, map, mergeMap, scan } from 'rxjs/operators'
 import * as MdViewActions from './mdview.actions'
 import * as MdViewSelectors from './mdview.selectors'
 import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
@@ -104,7 +94,7 @@ export class MdViewFacade {
     )
   )
 
-  geospatialLinks$ = this.allLinks$.pipe(
+  geoDataLinksWithGeometry$ = this.allLinks$.pipe(
     mergeMap((links) => {
       return from(links)
     }),
