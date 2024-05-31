@@ -12,13 +12,12 @@ import { ApiCardComponent } from './api-card/api-card.component'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { TranslateModule } from '@ngx-translate/core'
-import { LinkCardComponent } from './link-card/link-card.component'
 import { RelatedRecordCardComponent } from './related-record-card/related-record-card.component'
 import { MetadataContactComponent } from './metadata-contact/metadata-contact.component'
 import { MetadataCatalogComponent } from './metadata-catalog/metadata-catalog.component'
 import { MetadataQualityComponent } from './metadata-quality/metadata-quality.component'
 import { MetadataQualityItemComponent } from './metadata-quality-item/metadata-quality-item.component'
-import { SearchResultsErrorComponent } from './search-results-error/search-results-error.component'
+import { ErrorComponent } from './error/error.component'
 import { PaginationComponent } from './pagination/pagination.component'
 import { ThumbnailComponent } from './thumbnail/thumbnail.component'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
@@ -62,7 +61,7 @@ import { TimeSincePipe } from './user-feedback-item/time-since.pipe'
     MetadataCatalogComponent,
     MetadataQualityComponent,
     MetadataQualityItemComponent,
-    SearchResultsErrorComponent,
+    ErrorComponent,
     PaginationComponent,
     AvatarComponent,
     UserPreviewComponent,
@@ -84,7 +83,7 @@ import { TimeSincePipe } from './user-feedback-item/time-since.pipe'
     MetadataCatalogComponent,
     MetadataQualityComponent,
     MetadataQualityItemComponent,
-    SearchResultsErrorComponent,
+    ErrorComponent,
     PaginationComponent,
     ThumbnailComponent,
     AvatarComponent,

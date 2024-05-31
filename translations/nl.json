@@ -335,6 +335,7 @@
   "search.error.couldNotReachApi": "",
   "search.error.receivedError": "",
   "search.error.recordNotFound": "",
+  "search.error.recordHasnolink": "",
   "search.field.any.placeholder": "",
   "search.field.sortBy": "",
   "search.filters.clear": "",

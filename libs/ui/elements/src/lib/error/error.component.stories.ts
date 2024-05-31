@@ -1,7 +1,4 @@
-import {
-  ErrorType,
-  SearchResultsErrorComponent,
-} from './search-results-error.component'
+import { ErrorComponent, ErrorType } from './error.component'
 import {
   applicationConfig,
   componentWrapperDecorator,
@@ -19,8 +16,8 @@ import { importProvidersFrom } from '@angular/core'
 import { MatIcon } from '@angular/material/icon'
 
 export default {
-  title: 'Elements/SearchResultsErrorComponent',
-  component: SearchResultsErrorComponent,
+  title: 'Elements/ErrorComponent',
+  component: ErrorComponent,
   decorators: [
     moduleMetadata({
       declarations: [MatIcon],
@@ -36,9 +33,9 @@ export default {
       (story) => `<div style="max-width: 800px">${story}</div>`
     ),
   ],
-} as Meta<SearchResultsErrorComponent>
+} as Meta<ErrorComponent>
 
-export const Primary: StoryObj<SearchResultsErrorComponent> = {
+export const Primary: StoryObj<ErrorComponent> = {
   args: {
     type: ErrorType.RECEIVED_ERROR,
     error: 'something wrong happened',
@@ -51,6 +48,7 @@ export const Primary: StoryObj<SearchResultsErrorComponent> = {
         ErrorType.RECEIVED_ERROR,
         ErrorType.COULD_NOT_REACH_API,
         ErrorType.RECORD_NOT_FOUND,
+        ErrorType.DATASET_HAS_NO_LINK,
       ],
     },
   },

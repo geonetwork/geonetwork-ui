@@ -335,6 +335,7 @@
   "search.error.couldNotReachApi": "Problema di connessione all'API",
   "search.error.receivedError": "Errore ricevuto",
   "search.error.recordNotFound": "Impossibile trovare questo dato",
+  "search.error.recordHasnolink": "",
   "search.field.any.placeholder": "Cerca un dato...",
   "search.field.sortBy": "Ordina per:",
   "search.filters.clear": "Ripristina",

@@ -575,6 +575,15 @@ describe('dataset pages', () => {
             })
         })
       })
+
+      describe('When there is no link', () => {
+        beforeEach(() => {
+          cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
+        })
+        it('display the error datasetHasNoLink error block', () => {
+          cy.get('[data-test="dataset-has-no-link-block"]').should('exist')
+        })
+      })
     })
   })
 })
@@ -795,7 +804,7 @@ describe('When the metadata does not exists', () => {
     cy.visit('/dataset/xyz')
   })
   it('should display an error message', () => {
-    cy.get('gn-ui-search-results-error').should('exist')
+    cy.get('gn-ui-error').should('exist')
     cy.screenshot({ capture: 'viewport' })
   })
 })
