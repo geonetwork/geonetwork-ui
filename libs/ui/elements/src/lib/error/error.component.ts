@@ -4,15 +4,16 @@ export enum ErrorType {
   COULD_NOT_REACH_API,
   RECEIVED_ERROR,
   RECORD_NOT_FOUND,
+  DATASET_HAS_NO_LINK,
 }
 
 @Component({
-  selector: 'gn-ui-search-results-error',
-  templateUrl: './search-results-error.component.html',
-  styleUrls: ['./search-results-error.component.css'],
+  selector: 'gn-ui-error',
+  templateUrl: './error.component.html',
+  styleUrls: ['./error.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchResultsErrorComponent {
+export class ErrorComponent {
   @Input() type!: ErrorType
   @Input() error?: string
   @Input() recordId?: string

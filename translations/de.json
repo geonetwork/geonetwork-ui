@@ -335,6 +335,7 @@
   "search.error.couldNotReachApi": "Die API konnte nicht erreicht werden",
   "search.error.receivedError": "Ein Fehler ist aufgetreten",
   "search.error.recordNotFound": "Der Datensatz mit der Kennung \"{ id }\" konnte nicht gefunden werden.",
+  "search.error.recordHasnolink": "",
   "search.field.any.placeholder": "Suche Datensätze ...",
   "search.field.sortBy": "Sortieren nach:",
   "search.filters.clear": "Zurücksetzen",

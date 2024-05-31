@@ -335,6 +335,7 @@
   "search.error.couldNotReachApi": "Problème de connexion à l'API",
   "search.error.receivedError": "Erreur retournée",
   "search.error.recordNotFound": "Cette donnée n'a pu être trouvée.",
+  "search.error.recordHasnolink": "Ce dataset n'a pas encore de lien, réessayez plus tard s'il vous plaît.",
   "search.field.any.placeholder": "Rechercher une donnée...",
   "search.field.sortBy": "Trier par :",
   "search.filters.clear": "Réinitialiser",

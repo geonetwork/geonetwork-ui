@@ -1,7 +1,10 @@
 <div
   class="p-[1.7em] bg-red-50 text-red-800 text-[1.5em] text-center rounded-lg"
 >
-  <div *ngIf="type === types.COULD_NOT_REACH_API">
+  <div
+    *ngIf="type === types.COULD_NOT_REACH_API"
+    data-test="could-not-reach-api-error"
+  >
     <div class="relative opacity-40">
       <mat-icon class="material-symbols-outlined face">face</mat-icon>
       <mat-icon class="material-symbols-outlined question-mark1"
@@ -13,14 +16,26 @@
     </div>
     <div translate>search.error.couldNotReachApi</div>
   </div>
-  <div *ngIf="type === types.RECEIVED_ERROR">
+  <div
+    *ngIf="type === types.DATASET_HAS_NO_LINK"
+    data-test="dataset-has-no-link-error"
+  >
+    <div class="relative opacity-40">
+      <mat-icon class="material-symbols-outlined face">computer</mat-icon>
+    </div>
+    <div translate>search.error.recordHasnolink</div>
+  </div>
+  <div *ngIf="type === types.RECEIVED_ERROR" data-test="received-error-error">
     <div class="relative opacity-40">
       <mat-icon class="material-symbols-outlined face">mood_bad</mat-icon>
     </div>
     <div translate>search.error.receivedError</div>
     <div *ngIf="error">{{ error }}</div>
   </div>
-  <div *ngIf="type === types.RECORD_NOT_FOUND">
+  <div
+    *ngIf="type === types.RECORD_NOT_FOUND"
+    data-test="record-not-found-error"
+  >
     <div class="relative opacity-40">
       <mat-icon class="material-symbols-outlined computer">computer</mat-icon>
       <mat-icon class="material-symbols-outlined computer-question-mark"

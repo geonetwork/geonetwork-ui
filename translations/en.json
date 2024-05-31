@@ -335,6 +335,7 @@
   "search.error.couldNotReachApi": "The API could not be reached",
   "search.error.receivedError": "An error was received",
   "search.error.recordNotFound": "The record with identifier \"{ id }\" could not be found.",
+  "search.error.recordHasnolink": "This record currently has no link yet, please come back later.",
   "search.field.any.placeholder": "Search datasets ...",
   "search.field.sortBy": "Sort by:",
   "search.filters.clear": "Reset",
