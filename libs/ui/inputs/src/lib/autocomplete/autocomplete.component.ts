@@ -81,7 +81,7 @@ export class AutocompleteComponent
 
   ngOnInit(): void {
     this.suggestions$ = merge(
-      of(this.control.value).pipe(map((value) => value)), //dropdown will be filled immediately
+      of([]), //dropdown will be filled immediately
       this.control.valueChanges.pipe(
         filter((value) => typeof value === 'string'),
         filter((value: string) => value.length > 2),
@@ -90,15 +90,13 @@ export class AutocompleteComponent
         tap(() => (this.searching = true))
       ),
       this.control.valueChanges.pipe(
-        filter((value) => typeof value === 'object' && value.title),
+        filter((value) => {
+          return typeof value === 'object' && value.title
+        }),
         map((item) => item.title)
       )
     ).pipe(
-      switchMap((value) =>
-        this.action(value ? value : '').pipe(
-          map((item) => item.map((i: any) => i.title))
-        )
-      ),
+      switchMap((value) => this.action(value ? value : of([]))),
       catchError((error: Error) => {
         this.error = error.message
         return of([])
@@ -138,6 +136,7 @@ export class AutocompleteComponent
   }
 
   clear(): void {
+    this.suggestions$ = merge(this.suggestions$, of([])) // dropdown will be filled after clear
     this.inputRef.nativeElement.value = ''
     this.inputCleared.emit()
     this.selectionSubject

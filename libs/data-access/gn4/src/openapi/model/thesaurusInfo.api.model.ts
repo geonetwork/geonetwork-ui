@@ -22,4 +22,6 @@ export interface ThesaurusInfoApiModel {
   defaultNamespace?: string
   dname?: string
   type?: string
+  key?: string
+  url?: string
 }

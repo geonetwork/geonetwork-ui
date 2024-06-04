@@ -4,25 +4,19 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
 } from '@angular/core'
 import { FormControl } from '@angular/forms'
-import { Thesaurus } from '@geonetwork-ui/api/metadata-converter'
 import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
+import { KeywordType } from '@geonetwork-ui/common/domain/model/record'
+import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus'
 import {
-  CatalogRecord,
-  KeywordThesaurus,
-} from '@geonetwork-ui/common/domain/model/record'
-import { RegistriesApiService } from '@geonetwork-ui/data-access/gn4'
-import {
-  AutocompleteItem,
   DropdownSelectorComponent,
   UiInputsModule,
 } from '@geonetwork-ui/ui/inputs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { LangService } from '@geonetwork-ui/util/i18n'
-import { Observable, map, of, shareReplay } from 'rxjs'
+import { Observable, map } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-form-field-keywords',
@@ -42,17 +36,27 @@ export class FormFieldKeywordsComponent {
   @Output() itemSelected = new EventEmitter<string>()
   @Output() inputSubmitted = new EventEmitter<string>()
   searchInputValue$: Observable<void | { title: string }>
+  allThesaurus$: Observable<any[]>
 
-  displayWithFn = (label) => {
-    return label
+  displayWithFn = (item) => {
+    if (item) {
+      return `${item?.title} (${item?.value?.name})`
+    }
+    return null
   }
 
   autoCompleteAction = (query: string) => {
-    return this.gn4platformService
+    const keywords$ = this.gn4platformService
       .getKeywordsFromThesaurus('', query)
       .pipe(
-        map((thesaurus) => thesaurus.map((thes) => ({ title: thes.label })))
+        map((thesaurus) =>
+          thesaurus.map((thes) => {
+            return { title: thes.label, value: thes.thesaurus }
+          })
+        )
       )
+
+    return keywords$
   }
 
   constructor(
@@ -60,21 +64,13 @@ export class FormFieldKeywordsComponent {
     private gn4platformService: Gn4PlatformService
   ) {}
 
-  //ngOnInit with initial request for the dropdown values?
-
-  handleItemSelection(item: AutocompleteItem) {
-    const record = item as string
-    console.log('record', record) // thesaurus keyword as string - we should have a value?
-    console.log(this.itemSelected.observers.length)
-
-    // emit the value (no if/else?)
-    if (this.itemSelected.observers.length > 0) {
-      this.itemSelected.emit(record)
-    } else {
-      // this.searchFacade.setFilters({ any: record.title })
-    }
-    const keyword = { label: item }
-    this.addKeyword(keyword)
+  // type: { title: string; value: ThesaurusModel }
+  handleItemSelection(item) {
+    this.addKeyword({
+      label: item.title,
+      thesaurus: item.value,
+      type: item.value.dname as KeywordType,
+    })
   }
 
   handleInputSubmission(any: string) {
@@ -89,32 +85,34 @@ export class FormFieldKeywordsComponent {
 
   async handleInputCleared() {
     this.autoCompleteAction('')
-
-    //   const currentSearchFilters: SearchFilters = await firstValueFrom(
-    //     this.searchFacade.searchFilters$
-    //   )
-    //   if (currentSearchFilters.any) {
-    //     this.searchService.updateFilters({ any: '' })
-    //   }
   }
 
-  //TODO: Update dropdown list when input cleared/ selected
-
-  addKeyword(item: object) {
+  addKeyword(item: {
+    label: string
+    thesaurus: ThesaurusModel
+    type: KeywordType
+  }) {
     const addedKeywords = [...this.control.value, item]
 
     // remove duplicates from keyword
-    this.control.setValue([...new Set(addedKeywords)])
+    const filteredKeywords = addedKeywords.filter((value, index, self) => {
+      return (
+        index ===
+        self.findIndex(
+          (t) =>
+            t?.label === value?.label &&
+            t?.thesaurus?.id === value?.thesaurus?.id &&
+            t?.type === value?.type
+        )
+      )
+    })
+
+    this.control.setValue(filteredKeywords)
   }
 
   removeKeyword(index: number) {
     const removeKeywords = this.control.value.filter((_, i) => i !== index)
 
     this.control.setValue(removeKeywords)
-    // this.control.setValue((previousValue) => {
-    //   console.log('remove keyword', previousValue)
-    //   // previousValue.value?.splice(index, 1)
-    // })
-    // this.selectedKeywords.splice(index, 1)
   }
 }

@@ -2,6 +2,7 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import type { Individual } from './contact.model'
 import type { Organization } from './organization.model'
 import type { Geometry } from 'geojson'
+import { ThesaurusModel } from '../thesaurus'
 
 type Uuid = string
 
@@ -62,22 +63,11 @@ export type SpatialRepresentationType =
 
 export type KeywordType = 'place' | 'temporal' | 'theme' | 'other'
 
-export type KeywordThesaurus = {
-  id: string
-  name?: string
-  url?: URL
-  thesaurusKey?: string
-  definition?: string
-  definitions?: object
-  uri?: string
-  value?: string
-  values?: object
-}
-
 export interface Keyword {
   label: string
   type: KeywordType
-  thesaurus?: KeywordThesaurus
+  thesaurus?: ThesaurusModel
+  thesaurusKey?: string
 }
 // languages should be expressed using two-letters ISO 639-1 codes
 export type LanguageCode = string

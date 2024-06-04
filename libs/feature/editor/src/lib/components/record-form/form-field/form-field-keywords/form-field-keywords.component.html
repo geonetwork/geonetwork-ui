@@ -13,7 +13,7 @@
     <gn-ui-badge
       *ngFor="let keyword of control.value; let index = index"
       [removable]="true"
-      (badgeClicked)="removeKeyword(index)"
+      (badgeRemoveClicked)="removeKeyword(index)"
       >{{ keyword.label }}</gn-ui-badge
     >
   </div>

@@ -1,7 +1,12 @@
-export interface ThesaurusItemModel {
-  key: string
-  label: string
-  description?: string
+export interface ThesaurusModel {
+  id: string
+  name?: string
+  url?: URL
+  thesaurusKey?: string
+  definition?: string
+  definitions?: object
+  uri?: string
+  value?: string
+  values?: object
+  dname?: string
 }
-
-export type ThesaurusModel = ThesaurusItemModel[]

@@ -8,8 +8,8 @@ import { Injectable } from '@angular/core'
 import { AvatarServiceInterface } from '../auth'
 import { map } from 'rxjs/operators'
 import { Observable, of } from 'rxjs'
-import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus/thesaurus.model'
 import {
+  Keyword,
   UserFeedback,
   UserFeedbackViewModel,
 } from '@geonetwork-ui/common/domain/model/record'
@@ -52,8 +52,8 @@ export class Gn4PlatformMapper {
     return { ...apiUser, id: id.toString() } as UserModel
   }
 
-  thesaurusFromApi(thesaurus: any[], lang3?: string): ThesaurusModel {
-    return thesaurus.map((keyword) => {
+  keywordsFromApi(keywords: any[], lang3?: string): Keyword[] {
+    return keywords.map((keyword) => {
       let key = keyword.uri
       // sometines GN can prefix an URI with an "all thesaurus" URI; only keep the last one
       if (key.indexOf('@@@') > -1) {
@@ -65,10 +65,13 @@ export class Gn4PlatformMapper {
         lang3 && lang3 in keyword.definitions
           ? keyword.definitions[lang3]
           : keyword.definition
+
       return {
         key,
         label,
         description,
+        type: keyword?.type,
+        thesaurusKey: keyword?.thesaurusKey,
       }
     })
   }
