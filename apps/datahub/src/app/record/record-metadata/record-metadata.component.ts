@@ -3,7 +3,7 @@ import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import { ErrorType } from '@geonetwork-ui/ui/elements'
 import { BehaviorSubject, combineLatest } from 'rxjs'
-import { filter, map, mergeMap } from 'rxjs/operators'
+import { filter, map, mergeMap, startWith } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
   Keyword,
@@ -26,7 +26,8 @@ export class RecordMetadataComponent {
   ]).pipe(
     map(([mapApiLinks, geoDataLinksWithGeometry]) => {
       return mapApiLinks?.length > 0 || geoDataLinksWithGeometry?.length > 0
-    })
+    }),
+    startWith(false)
   )
 
   displayData$ = combineLatest([

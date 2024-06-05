@@ -24,9 +24,9 @@ import { DataService } from '@geonetwork-ui/feature/dataviz'
 export class MdViewFacade {
   constructor(
     private store: Store,
-    private linkClassifier: LinkClassifierService,
+    public linkClassifier: LinkClassifierService,
     private avatarService: AvatarServiceInterface,
-    private dataService: DataService
+    public dataService: DataService
   ) {}
 
   isPresent$ = this.store.pipe(
