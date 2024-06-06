@@ -93,6 +93,13 @@ jest.mock('@camptocamp/ogc-client', () => ({
       })
     }
     allCollections = Promise.resolve([{ name: 'collection1' }])
+    featureCollections =
+      this.url.indexOf('error.http') > -1
+        ? Promise.reject(new Error())
+        : Promise.resolve(['collection1', 'collection2'])
+    getCollectionItem(collection, id) {
+      return Promise.resolve('item1')
+    }
   },
 }))
 
@@ -698,6 +705,26 @@ describe('DataService', () => {
           'http://proxy.local/?url=http%3A%2F%2Fsample%2Fgeojson',
           'csv'
         )
+      })
+    })
+    describe('#getItemsFromOgcApi', () => {
+      describe('calling getItemsFromOgcApi() with a valid URL', () => {
+        it('returns the first collection item when collections array is not empty', async () => {
+          const item = await service.getItemsFromOgcApi(
+            'https://my.ogc.api/features'
+          )
+          expect(item).toBe('item1')
+        })
+      })
+
+      describe('calling getItemsFromOgcApi() with an erroneous URL', () => {
+        it('throws an error', async () => {
+          try {
+            await service.getItemsFromOgcApi('http://error.http/ogcapi')
+          } catch (e) {
+            expect(e.message).toBe('ogc.unreachable.unknown')
+          }
+        })
       })
     })
   })

@@ -327,6 +327,16 @@ describe('MapUtilsService', () => {
     })
   })
 
+  describe('getRecordExtent', () => {
+    it('should return null if spatialExtents is not present or is an empty array', () => {
+      const record1: Partial<CatalogRecord> = {}
+      const record2: Partial<CatalogRecord> = { spatialExtents: [] }
+
+      expect(service.getRecordExtent(record1)).toBeNull()
+      expect(service.getRecordExtent(record2)).toBeNull()
+    })
+  })
+
   describe('#prioritizePageScroll', () => {
     const interactions = defaults()
     let dragRotate

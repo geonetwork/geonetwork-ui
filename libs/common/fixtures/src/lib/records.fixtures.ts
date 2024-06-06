@@ -117,6 +117,14 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
         description: 'This WFS service offers direct download capability',
         identifierInService: 'my:featuretype',
       },
+      {
+        type: 'service',
+        url: new URL('https://my-org.net/ogc'),
+        accessServiceProtocol: 'ogcFeatures',
+        name: 'my:featuretype',
+        description: 'This OGC service offers direct download capability',
+        identifierInService: 'my:featuretype',
+      },
     ],
     lineage: `This record was edited manually to test the conversion processes
 

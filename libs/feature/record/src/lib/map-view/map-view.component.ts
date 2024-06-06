@@ -55,9 +55,11 @@ export class MapViewComponent implements OnInit, OnDestroy {
 
   compatibleMapLinks$ = combineLatest([
     this.mdViewFacade.mapApiLinks$,
-    this.mdViewFacade.geoDataLinks$,
+    this.mdViewFacade.geoDataLinksWithGeometry$,
   ]).pipe(
-    map(([mapApiLinks, geoDataLinks]) => [...mapApiLinks, ...geoDataLinks])
+    map(([mapApiLinks, geoDataLinksWithGeometry]) => {
+      return [...mapApiLinks, ...geoDataLinksWithGeometry]
+    })
   )
 
   dropdownChoices$ = this.compatibleMapLinks$.pipe(
@@ -102,8 +104,8 @@ export class MapViewComponent implements OnInit, OnDestroy {
   mapContext$ = this.currentLayers$.pipe(
     switchMap((layers) =>
       from(this.mapUtils.getLayerExtent(layers[0])).pipe(
-        catchError((error) => {
-          console.warn(error) // FIXME: report this to the user somehow
+        catchError(() => {
+          this.error = 'The layer has no extent'
           return of(undefined)
         }),
         map(

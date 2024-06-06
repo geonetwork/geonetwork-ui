@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { select, Store } from '@ngrx/store'
-import { filter, map } from 'rxjs/operators'
+import { defaultIfEmpty, filter, map, mergeMap, scan } from 'rxjs/operators'
 import * as MdViewActions from './mdview.actions'
 import * as MdViewSelectors from './mdview.selectors'
 import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
@@ -10,6 +10,9 @@ import {
   UserFeedback,
 } from '@geonetwork-ui/common/domain/model/record'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
+import { OgcApiRecord } from '@camptocamp/ogc-client'
+import { from, of } from 'rxjs'
+import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 @Injectable()
 /**
@@ -21,8 +24,9 @@ import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
 export class MdViewFacade {
   constructor(
     private store: Store,
-    private linkClassifier: LinkClassifierService,
-    private avatarService: AvatarServiceInterface
+    public linkClassifier: LinkClassifierService,
+    private avatarService: AvatarServiceInterface,
+    public dataService: DataService
   ) {}
 
   isPresent$ = this.store.pipe(
@@ -88,6 +92,39 @@ export class MdViewFacade {
         this.linkClassifier.hasUsage(link, LinkUsage.GEODATA)
       )
     )
+  )
+
+  geoDataLinksWithGeometry$ = this.allLinks$.pipe(
+    mergeMap((links) => {
+      return from(links)
+    }),
+    mergeMap((link) => {
+      if (this.linkClassifier.hasUsage(link, LinkUsage.GEODATA)) {
+        if (
+          link.type === 'service' &&
+          link.accessServiceProtocol === 'ogcFeatures'
+        ) {
+          return from(this.dataService.getItemsFromOgcApi(link.url.href)).pipe(
+            map((collectionRecords: OgcApiRecord) => {
+              return collectionRecords && collectionRecords.geometry
+                ? link
+                : null
+            }),
+            defaultIfEmpty(null)
+          )
+        } else {
+          return of(link)
+        }
+      } else {
+        return of(null)
+      }
+    }),
+    scan((acc, val) => {
+      if (val !== null && !acc.includes(val)) {
+        acc.push(val)
+      }
+      return acc
+    }, [])
   )
 
   landingPageLinks$ = this.metadata$.pipe(

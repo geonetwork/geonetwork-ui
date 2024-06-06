@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing'
+import { TestBed, fakeAsync, tick } from '@angular/core/testing'
 import { MockStore, provideMockStore } from '@ngrx/store/testing'
 import {
   initialMetadataViewState,
@@ -13,6 +13,26 @@ import {
 } from '@geonetwork-ui/common/fixtures'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
+import { TestScheduler } from 'rxjs/testing'
+
+const newEndpointCall = jest.fn()
+let testScheduler: TestScheduler
+
+jest.mock('@camptocamp/ogc-client', () => ({
+  _newEndpointCall: jest.fn(),
+  OgcApiEndpoint: class {
+    constructor(private url) {
+      newEndpointCall(url) // to track endpoint creation
+    }
+    featureCollections =
+      this.url.indexOf('error.http') > -1
+        ? Promise.reject(new Error())
+        : Promise.resolve(['collection1', 'collection2'])
+    getCollectionItem(collection, id) {
+      return Promise.resolve('item1')
+    }
+  },
+}))
 
 describe('MdViewFacade', () => {
   let store: MockStore
@@ -216,5 +236,97 @@ describe('MdViewFacade', () => {
       })
       expect(store.scannedActions$).toBeObservable(expected)
     })
+  })
+
+  describe('geoDataLinksWithGeometry$', () => {
+    beforeEach(() => {
+      testScheduler = new TestScheduler((actual, expected) => {
+        expect(actual).toEqual(expected)
+      })
+      store.setState({
+        [METADATA_VIEW_FEATURE_STATE_KEY]: {
+          ...initialMetadataViewState,
+          metadata: DATASET_RECORDS[0],
+        },
+      })
+    })
+    it('should return OGC links that have geometry', fakeAsync(() => {
+      const values = {
+        a: [
+          {
+            type: 'download',
+            url: new URL('http://my-org.net/download/2.geojson'),
+            mimeType: 'application/geo+json',
+            name: 'Direct download',
+          },
+          {
+            type: 'service',
+            url: new URL('https://my-org.net/wfs'),
+            accessServiceProtocol: 'wfs',
+            name: 'my:featuretype', // FIXME: same as identifier otherwise it will be lost in iso...
+            description: 'This WFS service offers direct download capability',
+            identifierInService: 'my:featuretype',
+          },
+          {
+            type: 'service',
+            url: new URL('https://my-org.net/ogc'),
+            accessServiceProtocol: 'ogcFeatures',
+            name: 'my:featuretype',
+            description: 'This OGC service offers direct download capability',
+            identifierInService: 'my:featuretype',
+          },
+        ],
+      }
+      jest.spyOn(facade.dataService, 'getItemsFromOgcApi').mockResolvedValue({
+        id: '123',
+        type: 'Feature',
+        time: null,
+        properties: {
+          type: '',
+          title: '',
+        },
+        links: [],
+        geometry: { type: 'MultiPolygon', coordinates: [] },
+      })
+      let result
+      facade.geoDataLinksWithGeometry$.subscribe((v) => (result = v))
+      tick()
+      expect(result).toEqual(values.a)
+    }))
+    it('should not return OGC links that do not have geometry', fakeAsync(() => {
+      const values = {
+        a: [
+          {
+            type: 'download',
+            url: new URL('http://my-org.net/download/2.geojson'),
+            mimeType: 'application/geo+json',
+            name: 'Direct download',
+          },
+          {
+            type: 'service',
+            url: new URL('https://my-org.net/wfs'),
+            accessServiceProtocol: 'wfs',
+            name: 'my:featuretype', // FIXME: same as identifier otherwise it will be lost in iso...
+            description: 'This WFS service offers direct download capability',
+            identifierInService: 'my:featuretype',
+          },
+        ],
+      }
+      jest.spyOn(facade.dataService, 'getItemsFromOgcApi').mockResolvedValue({
+        id: '123',
+        type: 'Feature',
+        time: null,
+        properties: {
+          type: '',
+          title: '',
+        },
+        links: [],
+        geometry: null,
+      })
+      let result
+      facade.geoDataLinksWithGeometry$.subscribe((v) => (result = v))
+      tick()
+      expect(result).toEqual(values.a)
+    }))
   })
 })

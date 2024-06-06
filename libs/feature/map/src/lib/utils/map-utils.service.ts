@@ -217,7 +217,7 @@ export class MapUtilsService {
   }
 
   getRecordExtent(record: Partial<CatalogRecord>): Extent {
-    if (!('spatialExtents' in record)) {
+    if (!('spatialExtents' in record) || record.spatialExtents.length === 0) {
       return null
     }
     // transform an array of geojson geometries into a bbox

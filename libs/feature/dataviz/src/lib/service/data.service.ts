@@ -3,6 +3,7 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   OgcApiCollectionInfo,
   OgcApiEndpoint,
+  OgcApiRecord,
   WfsEndpoint,
   WfsVersion,
 } from '@camptocamp/ogc-client'
@@ -177,6 +178,19 @@ export class DataService {
     return await endpoint.allCollections
       .then((collections) => {
         return endpoint.getCollectionInfo(collections[0].name)
+      })
+      .catch((error) => {
+        throw new Error(`ogc.unreachable.unknown`)
+      })
+  }
+
+  async getItemsFromOgcApi(url: string): Promise<OgcApiRecord> {
+    const endpoint = new OgcApiEndpoint(this.proxy.getProxiedUrl(url))
+    return await endpoint.featureCollections
+      .then((collections) => {
+        return collections.length
+          ? endpoint.getCollectionItem(collections[0], '1')
+          : null
       })
       .catch((error) => {
         throw new Error(`ogc.unreachable.unknown`)
