@@ -8,10 +8,14 @@ import * as EditorActions from './editor.actions'
 import { EditorEffects } from './editor.effects'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 import { EditorService } from '../services/editor.service'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 class EditorServiceMock {
   saveRecord = jest.fn((record) => of([record, '<xml>blabla</xml>']))
   saveRecordAsDraft = jest.fn(() => of('<xml>blabla</xml>'))
+}
+class RecordsRepositoryMock {
+  recordHasDraft = jest.fn(() => of(true))
 }
 
 describe('EditorEffects', () => {
@@ -40,6 +44,10 @@ describe('EditorEffects', () => {
         {
           provide: EditorService,
           useClass: EditorServiceMock,
+        },
+        {
+          provide: RecordsRepositoryInterface,
+          useClass: RecordsRepositoryMock,
         },
       ],
     })
@@ -126,6 +134,40 @@ describe('EditorEffects', () => {
         expect(service.saveRecordAsDraft).toHaveBeenCalledWith(
           DATASET_RECORDS[0]
         )
+      })
+    })
+  })
+
+  describe('checkHasChangesOnOpen$', () => {
+    describe('if the record has a draft', () => {
+      it('dispatch markRecordAsChanged', () => {
+        actions = hot('-a-|', {
+          a: EditorActions.openRecord({
+            record: DATASET_RECORDS[0],
+            alreadySavedOnce: true,
+          }),
+        })
+        const expected = hot('-a-|', {
+          a: EditorActions.markRecordAsChanged(),
+        })
+        expect(effects.checkHasChangesOnOpen$).toBeObservable(expected)
+      })
+    })
+    describe('if the record has no draft', () => {
+      beforeEach(() => {
+        ;(
+          TestBed.inject(RecordsRepositoryInterface).recordHasDraft as jest.Mock
+        ).mockImplementationOnce(() => of(false))
+      })
+      it('dispatches nothing', () => {
+        actions = hot('-a-|', {
+          a: EditorActions.openRecord({
+            record: DATASET_RECORDS[0],
+            alreadySavedOnce: true,
+          }),
+        })
+        const expected = hot('---|')
+        expect(effects.checkHasChangesOnOpen$).toBeObservable(expected)
       })
     })
   })
