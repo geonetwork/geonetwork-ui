@@ -11,7 +11,33 @@
   <gn-ui-button type="light">
     <mat-icon class="material-symbols-outlined">undo</mat-icon>
   </gn-ui-button>
-  <div class="grow text-center">Save status</div>
+  <div
+    class="grow flex flex-row items-center justify-center gap-1 text-[14px]"
+    [ngSwitch]="saveStatus$ | async"
+  >
+    <ng-container *ngSwitchCase="'saved_not_published'">
+      <mat-icon
+        class="material-symbols-outlined text-slate-400"
+        style="font-variation-settings: 'FILL' 1"
+        >check_circle</mat-icon
+      >
+      <span translate>editor.record.saveStatus.notPublishedYet</span>
+    </ng-container>
+    <ng-container *ngSwitchCase="'saved_published_up_to_date'">
+      <mat-icon
+        class="material-symbols-outlined text-lime-400"
+        style="font-variation-settings: 'FILL' 1"
+        >check_circle</mat-icon
+      >
+      <span translate>editor.record.saveStatus.publishedUpToDate</span>
+    </ng-container>
+    <ng-container *ngSwitchCase="'saved_published_changes_pending'">
+      <mat-icon class="material-symbols-outlined text-sky-300"
+        >pending</mat-icon
+      >
+      <span translate>editor.record.saveStatus.publishedChangesPending</span>
+    </ng-container>
+  </div>
   <gn-ui-button type="light">
     <mat-icon class="material-symbols-outlined">help</mat-icon>
   </gn-ui-button>
