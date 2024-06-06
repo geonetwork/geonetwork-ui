@@ -190,6 +190,25 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                             </gex:northBoundLatitude>
                         </gex:EX_GeographicBoundingBox>
                     </gex:geographicElement>
+                    <mdb:temporalElement>
+                        <mdb:EX_TemporalExtent>
+                            <mdb:extent>
+                                <gml:TimePeriod>
+                                    <gml:beginPosition>2024-05-24</gml:beginPosition>
+                                    <gml:endPosition indeterminatePosition="unknown"/>
+                                </gml:TimePeriod>
+                            </mdb:extent>
+                        </mdb:EX_TemporalExtent>
+                    </mdb:temporalElement>
+                    <mdb:temporalElement>
+                        <mdb:EX_TemporalExtent>
+                            <mdb:extent>
+                                <gml:TimeInstant>
+                                    <gml:timePosition>2024-05-30</gml:timePosition>
+                                </gml:TimeInstant>
+                            </mdb:extent>
+                        </mdb:EX_TemporalExtent>
+                    </mdb:temporalElement>
                 </gex:EX_Extent>
             </mri:extent>
             <mri:resourceMaintenance>

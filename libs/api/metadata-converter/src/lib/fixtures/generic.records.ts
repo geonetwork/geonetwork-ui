@@ -195,7 +195,15 @@ As such, **it is not very interesting at all.**`,
     },
   ],
   spatialExtents: [],
-  temporalExtents: [],
+  temporalExtents: [
+    {
+      start: new Date('2024-05-24'),
+      end: null,
+    },
+    {
+      start: new Date('2024-05-30'),
+    },
+  ],
   updateFrequency: {
     updatedTimes: 3,
     per: 'month',

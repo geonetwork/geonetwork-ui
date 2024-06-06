@@ -8,6 +8,7 @@
                  xmlns:gcx="http://standards.iso.org/iso/19115/-3/gcx/1.0"
                  xmlns:xlink="http://www.w3.org/1999/xlink"
                  xmlns:mmi="http://standards.iso.org/iso/19115/-3/mmi/1.0"
+                 xmlns:gml="http://www.opengis.net/gml/3.2"
                  xmlns:mrd="http://standards.iso.org/iso/19115/-3/mrd/1.0"
                  xmlns:mrl="http://standards.iso.org/iso/19115/-3/mrl/2.0">
     <mdb:metadataIdentifier>
@@ -437,6 +438,29 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                     </mcc:fileName>
                 </mcc:MD_BrowseGraphic>
             </mri:graphicOverview>
+            <mdb:extent>
+                <mdb:EX_Extent>
+                    <mdb:temporalElement>
+                        <mdb:EX_TemporalExtent>
+                            <mdb:extent>
+                                <gml:TimePeriod>
+                                    <gml:beginPosition>2024-05-24</gml:beginPosition>
+                                    <gml:endPosition indeterminatePosition="unknown"/>
+                                </gml:TimePeriod>
+                            </mdb:extent>
+                        </mdb:EX_TemporalExtent>
+                    </mdb:temporalElement>
+                    <mdb:temporalElement>
+                        <mdb:EX_TemporalExtent>
+                            <mdb:extent>
+                                <gml:TimeInstant>
+                                    <gml:timePosition>2024-05-30</gml:timePosition>
+                                </gml:TimeInstant>
+                            </mdb:extent>
+                        </mdb:EX_TemporalExtent>
+                    </mdb:temporalElement>
+                </mdb:EX_Extent>
+            </mdb:extent>
         </mri:MD_DataIdentification>
     </mdb:identificationInfo>
     <mdb:distributionInfo>

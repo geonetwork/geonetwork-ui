@@ -1,4 +1,6 @@
+import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 import { XmlElement } from '@rgrove/parse-xml'
+import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
 import {
   createElement,
   getRootElement,
@@ -9,9 +11,8 @@ import {
   getISODuration,
   writeDistributions,
   writeKeywords,
+  writeTemporalExtents,
 } from './write-parts'
-import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
-import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 
 describe('write parts', () => {
   let rootEl: XmlElement
@@ -236,6 +237,78 @@ describe('write parts', () => {
             </gmd:transferOptions>
         </gmd:MD_Distribution>
     </gmd:distributionInfo>
+</root>`)
+    })
+  })
+
+  describe('writeTemporalExtents', () => {
+    it('removes and writes several temporal extents', () => {
+      // add some temporal extents first
+      const sample = parseXmlString(`
+<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <gmd:extent>
+                <gmd:EX_Extent>
+                    <gmd:temporalElement>
+                        <gmd:EX_TemporalExtent>
+                            <gmd:extent>
+                                <gml:TimePeriod>
+                                    <gml:beginPosition>2021-01-01</gml:beginPosition>
+                                    <gml:endPosition>2021-01-31</gml:endPosition>
+                                </gml:TimePeriod>
+                            </gmd:extent>
+                        </gmd:EX_TemporalExtent>
+                    </gmd:temporalElement>
+                </gmd:EX_Extent>
+            </gmd:extent>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+      rootEl = getRootElement(sample)
+      writeTemporalExtents(
+        {
+          ...datasetRecord,
+          temporalExtents: [
+            {
+              start: new Date('2024-05-24'),
+              end: null,
+            },
+            {
+              start: new Date('2024-05-30'),
+            },
+          ],
+        },
+        rootEl
+      )
+      expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <gmd:extent>
+                <gmd:EX_Extent>
+                    <gmd:temporalElement>
+                        <gmd:EX_TemporalExtent>
+                            <gmd:extent>
+                                <gml:TimePeriod>
+                                    <gml:beginPosition>2024-05-24</gml:beginPosition>
+                                    <gml:endPosition indeterminatePosition="unknown"/>
+                                </gml:TimePeriod>
+                            </gmd:extent>
+                        </gmd:EX_TemporalExtent>
+                    </gmd:temporalElement>
+                    <gmd:temporalElement>
+                        <gmd:EX_TemporalExtent>
+                            <gmd:extent>
+                                <gml:TimeInstant>
+                                    <gml:timePosition>2024-05-30</gml:timePosition>
+                                </gml:TimeInstant>
+                            </gmd:extent>
+                        </gmd:EX_TemporalExtent>
+                    </gmd:temporalElement>
+                </gmd:EX_Extent>
+            </gmd:extent>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
 </root>`)
     })
   })

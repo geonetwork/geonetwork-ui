@@ -169,12 +169,12 @@ export interface DatasetSpatialExtent {
 }
 
 /**
- * At least a start or an end date should be provided
+ * Period if both start and end are provided
+ * Instant if only start is provided
  */
 export interface DatasetTemporalExtent {
-  start?: Date
+  start: Date
   end?: Date
-  description?: string
 }
 
 export interface DatasetRecord extends BaseRecord {

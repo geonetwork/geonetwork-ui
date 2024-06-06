@@ -15,7 +15,20 @@ import {
   UpdateFrequencyCode,
   UpdateFrequencyCustom,
 } from '@geonetwork-ui/common/domain/model/record'
+import format from 'date-fns/format'
 import {
+  ChainableFunction,
+  fallback,
+  filterArray,
+  getAtIndex,
+  map,
+  mapArray,
+  noop,
+  pipe,
+  tap,
+} from '../function-utils'
+import {
+  XmlElement,
   addAttribute,
   appendChildren,
   createChild,
@@ -30,20 +43,7 @@ import {
   removeChildren,
   removeChildrenByName,
   setTextContent,
-  XmlElement,
 } from '../xml-utils'
-import {
-  ChainableFunction,
-  fallback,
-  filterArray,
-  getAtIndex,
-  map,
-  mapArray,
-  noop,
-  pipe,
-  tap,
-} from '../function-utils'
-import format from 'date-fns/format'
 import { readKind } from './read-parts'
 import { namePartsToFull } from './utils/individual-name'
 
@@ -1124,5 +1124,63 @@ export function writeOnlineResources(
   pipe(
     removeDistributions(),
     appendChildren(...record.onlineResources.map(createOnlineResource))
+  )(rootEl)
+}
+
+export function writeTemporalExtents(
+  record: DatasetRecord,
+  rootEl: XmlElement
+) {
+  pipe(
+    findOrCreateIdentification(),
+    findNestedChildOrCreate('gmd:extent', 'gmd:EX_Extent'),
+    removeChildrenByName('gmd:temporalElement'),
+    appendChildren(
+      ...record.temporalExtents.map((extent) =>
+        pipe(
+          createElement('gmd:temporalElement'),
+          createChild('gmd:EX_TemporalExtent'),
+          appendChildren(
+            'start' in extent && 'end' in extent
+              ? pipe(
+                  createElement('gmd:extent'),
+                  createChild('gml:TimePeriod'),
+                  appendChildren(
+                    pipe(
+                      createElement('gml:beginPosition'),
+                      pipe(
+                        extent.start
+                          ? setTextContent(format(extent.start, 'yyyy-MM-dd'))
+                          : addAttribute('indeterminatePosition', 'unknown')
+                      )
+                    ),
+                    pipe(
+                      createElement('gml:endPosition'),
+                      pipe(
+                        extent.end
+                          ? setTextContent(format(extent.end, 'yyyy-MM-dd'))
+                          : addAttribute('indeterminatePosition', 'unknown')
+                      )
+                    )
+                  )
+                )
+              : pipe(
+                  createElement('gmd:extent'),
+                  createChild('gml:TimeInstant'),
+                  appendChildren(
+                    pipe(
+                      createElement('gml:timePosition'),
+                      pipe(
+                        extent.start
+                          ? setTextContent(format(extent.start, 'yyyy-MM-dd'))
+                          : addAttribute('indeterminatePosition', 'unknown')
+                      )
+                    )
+                  )
+                )
+          )
+        )
+      )
+    )
   )(rootEl)
 }
