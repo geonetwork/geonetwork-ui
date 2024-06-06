@@ -42,8 +42,13 @@ export class EditPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const currentRecord = this.route.snapshot.data['record']
-    this.facade.openRecord(currentRecord)
+    const [currentRecord, currentRecordSource, currentRecordAlreadySaved] =
+      this.route.snapshot.data['record']
+    this.facade.openRecord(
+      currentRecord,
+      currentRecordSource,
+      currentRecordAlreadySaved
+    )
 
     this.subscription.add(
       this.facade.saveError$.subscribe((error) => {
