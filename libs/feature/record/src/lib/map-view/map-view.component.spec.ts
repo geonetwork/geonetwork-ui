@@ -40,6 +40,15 @@ import { Interaction } from 'ol/interaction'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
 
+const recordMapExtent = [-30, -60, 30, 60]
+
+const emptyMapContext = {
+  layers: [],
+  view: {
+    extent: recordMapExtent,
+  },
+} as MapContextModel
+
 const mapConfigMock = {
   MAX_ZOOM: 10,
   MAX_EXTENT: [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855],
@@ -72,6 +81,7 @@ class MdViewFacadeMock {
 }
 
 class MapUtilsServiceMock {
+  createEmptyMap = jest.fn()
   getLayerExtent = jest.fn(function () {
     return new Promise((resolve, reject) => {
       this._resolve = resolve
@@ -87,7 +97,7 @@ class MapUtilsServiceMock {
     })
   })
   prioritizePageScroll = jest.fn()
-  getRecordExtent = jest.fn(() => [-30, -60, 30, 60])
+  getRecordExtent = jest.fn(() => recordMapExtent)
   _returnImmediately = true
   _resolve = null
   _reject = null
@@ -559,8 +569,8 @@ describe('MapViewComponent', () => {
           tick(50)
           discardPeriodicTasks()
         }))
-        it('does not emit immediately a map context', () => {
-          expect(mapComponent.context).toBe(null)
+        it('emit an empty map context', () => {
+          expect(mapComponent.context).toEqual(emptyMapContext)
         })
         it('shows a loading indicator', () => {
           expect(
@@ -677,8 +687,8 @@ describe('MapViewComponent', () => {
         fixture.detectChanges()
       }))
       describe('while extent is not ready', () => {
-        it('does not emit a map context', () => {
-          expect(mapComponent.context).toBeFalsy()
+        it('emit a empty map context', () => {
+          expect(mapComponent.context).toEqual(emptyMapContext)
         })
       })
       describe('when extent is received', () => {
@@ -726,7 +736,7 @@ describe('MapViewComponent', () => {
               },
             ],
             view: {
-              extent: [-30, -60, 30, 60],
+              extent: recordMapExtent,
             },
           })
         })
@@ -754,7 +764,7 @@ describe('MapViewComponent', () => {
                 type: 'wms',
               },
             ],
-            view: { extent: [-30, -60, 30, 60] },
+            view: { extent: recordMapExtent },
           })
         })
         it('provides selected link to the external viewer component', () => {
@@ -768,7 +778,7 @@ describe('MapViewComponent', () => {
       })
       describe('selecting another layer, while extent is not ready', () => {
         beforeEach(fakeAsync(() => {
-          mapUtilsService._resolve([-30, -60, 30, 60])
+          mapUtilsService._resolve(recordMapExtent)
           tick()
           dropdownComponent.selectValue.emit(0)
           tick()
