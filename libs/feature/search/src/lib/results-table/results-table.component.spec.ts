@@ -8,6 +8,7 @@ import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { SelectionService } from '@geonetwork-ui/api/repository'
 import { TranslateModule } from '@ngx-translate/core'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 class SearchFacadeMock {
   results$ = new BehaviorSubject(DATASET_RECORDS)
@@ -25,6 +26,9 @@ class SelectionServiceMock {
   deselectRecords = jest.fn()
   clearSelection = jest.fn()
   selectedRecordsIdentifiers$ = new BehaviorSubject([])
+}
+class RecordsRepositoryMock {
+  recordHasDraft = jest.fn(() => false)
 }
 
 describe('ResultsTableComponent', () => {
@@ -49,6 +53,10 @@ describe('ResultsTableComponent', () => {
         {
           provide: SelectionService,
           useClass: SelectionServiceMock,
+        },
+        {
+          provide: RecordsRepositoryInterface,
+          useClass: RecordsRepositoryMock,
         },
       ],
     }).compileComponents()
@@ -204,6 +212,16 @@ describe('ResultsTableComponent', () => {
       )[1].nativeElement as HTMLDivElement
       tableRow.parentElement.click()
       expect(clickedRecord).toEqual(DATASET_RECORDS[0])
+    })
+  })
+
+  describe('#hasDraft', () => {
+    it('calls the repository service', () => {
+      const record = DATASET_RECORDS[0]
+      component.hasDraft(record)
+      expect(
+        TestBed.inject(RecordsRepositoryInterface).recordHasDraft
+      ).toHaveBeenCalledWith('my-dataset-001')
     })
   })
 })

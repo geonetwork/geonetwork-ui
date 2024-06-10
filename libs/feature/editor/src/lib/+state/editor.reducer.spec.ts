@@ -1,25 +1,54 @@
 import { Action } from '@ngrx/store'
 import * as EditorActions from './editor.actions'
 import {
+  editorReducer,
   EditorState,
   initialEditorState,
-  editorReducer,
 } from './editor.reducer'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 
 describe('Editor Reducer', () => {
   describe('valid Editor actions', () => {
-    it('openRecord', () => {
+    it('openRecord (with source)', () => {
       const action = EditorActions.openRecord({
         record: DATASET_RECORDS[0],
+        recordSource: '<xml>blabla</xml>',
+        alreadySavedOnce: false,
       })
       const result: EditorState = editorReducer(
-        { ...initialEditorState, changedSinceSave: true },
+        {
+          ...initialEditorState,
+          changedSinceSave: true,
+          recordSource: 'abcd',
+          alreadySavedOnce: true,
+        },
         action
       )
 
       expect(result.record).toBe(DATASET_RECORDS[0])
       expect(result.changedSinceSave).toBe(false)
+      expect(result.recordSource).toBe('<xml>blabla</xml>')
+      expect(result.alreadySavedOnce).toBe(false)
+    })
+    it('openRecord (without source)', () => {
+      const action = EditorActions.openRecord({
+        record: DATASET_RECORDS[0],
+        alreadySavedOnce: true,
+      })
+      const result: EditorState = editorReducer(
+        {
+          ...initialEditorState,
+          changedSinceSave: true,
+          recordSource: '<xml>blabla</xml>',
+          alreadySavedOnce: false,
+        },
+        action
+      )
+
+      expect(result.record).toBe(DATASET_RECORDS[0])
+      expect(result.changedSinceSave).toBe(false)
+      expect(result.recordSource).toBe(null)
+      expect(result.alreadySavedOnce).toBe(true)
     })
     it('saveRecord action', () => {
       const action = EditorActions.saveRecord()

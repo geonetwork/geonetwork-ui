@@ -4586,8 +4586,8 @@ export class RecordsApiService {
     accept?: string,
     observe?: 'body',
     reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<object>
+    options?: { httpHeaderAccept?: 'application/xml' | 'application/json' }
+  ): Observable<string>
   public getRecordAs(
     metadataUuid: string,
     addSchemaLocation?: boolean,
@@ -4598,8 +4598,8 @@ export class RecordsApiService {
     accept?: string,
     observe?: 'response',
     reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpResponse<object>>
+    options?: { httpHeaderAccept?: 'application/xml' | 'application/json' }
+  ): Observable<HttpResponse<string>>
   public getRecordAs(
     metadataUuid: string,
     addSchemaLocation?: boolean,
@@ -4610,8 +4610,8 @@ export class RecordsApiService {
     accept?: string,
     observe?: 'events',
     reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
-  ): Observable<HttpEvent<object>>
+    options?: { httpHeaderAccept?: 'application/xml' | 'application/json' }
+  ): Observable<HttpEvent<string>>
   public getRecordAs(
     metadataUuid: string,
     addSchemaLocation?: boolean,
@@ -4622,7 +4622,7 @@ export class RecordsApiService {
     accept?: string,
     observe: any = 'body',
     reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json' | 'application/xml' }
+    options?: { httpHeaderAccept?: 'application/xml' | 'application/json' }
   ): Observable<any> {
     if (metadataUuid === null || metadataUuid === undefined) {
       throw new Error(
@@ -4677,8 +4677,8 @@ export class RecordsApiService {
     if (httpHeaderAcceptSelected === undefined) {
       // to determine the Accept header
       const httpHeaderAccepts: string[] = [
-        'application/json',
         'application/xml',
+        'application/json',
       ]
       httpHeaderAcceptSelected =
         this.configuration.selectHeaderAccept(httpHeaderAccepts)
@@ -4695,7 +4695,7 @@ export class RecordsApiService {
       responseType_ = 'text'
     }
 
-    return this.httpClient.get<object>(
+    return this.httpClient.get<string>(
       `${this.configuration.basePath}/records/${encodeURIComponent(
         String(metadataUuid)
       )}/formatters/xml`,

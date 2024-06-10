@@ -4,16 +4,18 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { of, throwError } from 'rxjs'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
-import { EditorService } from '@geonetwork-ui/feature/editor'
 import { ActivatedRouteSnapshot, convertToParamMap } from '@angular/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateModule } from '@ngx-translate/core'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 class NotificationsServiceMock {
   showNotification = jest.fn()
 }
-class EditorServiceMock {
-  loadRecordByUuid = jest.fn(() => of(DATASET_RECORDS[0]))
+class RecordsRepositoryMock {
+  openRecordForEdition = jest.fn(() =>
+    of([DATASET_RECORDS[0], '<xml>blabla</xml>', false])
+  )
 }
 
 const activatedRoute = {
@@ -22,20 +24,23 @@ const activatedRoute = {
 
 describe('EditRecordResolver', () => {
   let resolver: EditRecordResolver
-  let editorService: EditorService
+  let recordsRepository: RecordsRepositoryInterface
   let notificationsService: NotificationsService
-  let record: CatalogRecord
+  let resolvedData: [CatalogRecord, string, boolean]
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, TranslateModule.forRoot()],
       providers: [
         { provide: NotificationsService, useClass: NotificationsServiceMock },
-        { provide: EditorService, useClass: EditorServiceMock },
+        {
+          provide: RecordsRepositoryInterface,
+          useClass: RecordsRepositoryMock,
+        },
       ],
     })
     resolver = TestBed.inject(EditRecordResolver)
-    editorService = TestBed.inject(EditorService)
+    recordsRepository = TestBed.inject(RecordsRepositoryInterface)
     notificationsService = TestBed.inject(NotificationsService)
   })
 
@@ -45,23 +50,27 @@ describe('EditRecordResolver', () => {
 
   describe('load record success', () => {
     beforeEach(() => {
-      record = undefined
-      resolver.resolve(activatedRoute, null).subscribe((r) => (record = r))
+      resolvedData = undefined
+      resolver.resolve(activatedRoute).subscribe((r) => (resolvedData = r))
     })
     it('should load record by uuid', () => {
-      expect(record).toBe(DATASET_RECORDS[0])
+      expect(resolvedData).toEqual([
+        DATASET_RECORDS[0],
+        '<xml>blabla</xml>',
+        false,
+      ])
     })
   })
 
   describe('load record failure', () => {
     beforeEach(() => {
-      editorService.loadRecordByUuid = () =>
+      recordsRepository.openRecordForEdition = () =>
         throwError(() => new Error('oopsie'))
-      record = undefined
-      resolver.resolve(activatedRoute, null).subscribe((r) => (record = r))
+      resolvedData = undefined
+      resolver.resolve(activatedRoute).subscribe((r) => (resolvedData = r))
     })
     it('should not emit anything', () => {
-      expect(record).toBeUndefined()
+      expect(resolvedData).toBeUndefined()
     })
     it('should show error notification', () => {
       expect(notificationsService.showNotification).toHaveBeenCalledWith({

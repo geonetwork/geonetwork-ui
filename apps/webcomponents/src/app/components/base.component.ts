@@ -116,9 +116,7 @@ export class BaseComponent implements OnChanges, OnInit {
     uuid: string,
     usages: LinkUsage[]
   ): Promise<DatasetDistribution | null> {
-    const record = await firstValueFrom(
-      this.recordsRepository.getByUniqueIdentifier(uuid)
-    )
+    const record = await firstValueFrom(this.recordsRepository.getRecord(uuid))
     if (record?.kind !== 'dataset') {
       return null
     }

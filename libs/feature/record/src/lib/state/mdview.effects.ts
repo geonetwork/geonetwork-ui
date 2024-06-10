@@ -20,9 +20,7 @@ export class MdViewEffects {
   loadFullMetadata$ = createEffect(() =>
     this.actions$.pipe(
       ofType(MdViewActions.loadFullMetadata),
-      switchMap(({ uuid }) =>
-        this.recordsRepository.getByUniqueIdentifier(uuid)
-      ),
+      switchMap(({ uuid }) => this.recordsRepository.getRecord(uuid)),
       map((record) => {
         if (record === null) {
           return MdViewActions.loadFullMetadataFailure({ notFound: true })

@@ -20,6 +20,8 @@ import { CommonModule } from '@angular/common'
 import { map, take } from 'rxjs/operators'
 import { FieldSort } from '@geonetwork-ui/common/domain/model/search'
 import { SearchService } from '../utils/service/search.service'
+import { BadgeComponent } from '@geonetwork-ui/ui/widgets'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 @Component({
   selector: 'gn-ui-results-table',
@@ -33,6 +35,7 @@ import { SearchService } from '../utils/service/search.service'
     InteractiveTableColumnComponent,
     MatIconModule,
     TranslateModule,
+    BadgeComponent,
   ],
 })
 export class ResultsTableComponent {
@@ -44,7 +47,8 @@ export class ResultsTableComponent {
   constructor(
     private searchFacade: SearchFacade,
     private searchService: SearchService,
-    private selectionService: SelectionService
+    private selectionService: SelectionService,
+    private recordsRepository: RecordsRepositoryInterface
   ) {}
 
   dateToString(date: Date): string {
@@ -160,5 +164,9 @@ export class ResultsTableComponent {
         return !allSelected && someSelected
       })
     )
+  }
+
+  hasDraft(record: CatalogRecord): boolean {
+    return this.recordsRepository.recordHasDraft(record.uniqueIdentifier)
   }
 }

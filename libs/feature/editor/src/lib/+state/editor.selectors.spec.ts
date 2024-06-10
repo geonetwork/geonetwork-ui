@@ -11,6 +11,7 @@ describe('Editor Selectors', () => {
       editor: {
         ...initialEditorState,
         record: DATASET_RECORDS[0],
+        recordSource: '<xml>blabla</xml>',
         saveError: 'something went wrong',
         saving: false,
         changedSinceSave: true,
@@ -22,6 +23,11 @@ describe('Editor Selectors', () => {
     it('selectRecord() should return the current loaded record', () => {
       const result = EditorSelectors.selectRecord(state)
       expect(result).toBe(DATASET_RECORDS[0])
+    })
+
+    it('selectRecordSource() should return the source of the current record', () => {
+      const result = EditorSelectors.selectRecordSource(state)
+      expect(result).toBe('<xml>blabla</xml>')
     })
 
     it('selectRecordSaving() should return the current "saving" state', () => {
@@ -37,6 +43,11 @@ describe('Editor Selectors', () => {
     it('selectRecordChangedSinceSave() should return the current "changedSinceSave" state', () => {
       const result = EditorSelectors.selectRecordChangedSinceSave(state)
       expect(result).toBe(true)
+    })
+
+    it('selectRecordAlreadySavedOnce() should return the current "alreadySavedOnce" state', () => {
+      const result = EditorSelectors.selectRecordAlreadySavedOnce(state)
+      expect(result).toBe(false)
     })
 
     it('selectRecordFieldsConfig() should return the current "fieldsConfig" state', () => {

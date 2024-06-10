@@ -7,8 +7,18 @@ import { DEFAULT_FIELDS } from '../fields.config'
 
 export const EDITOR_FEATURE_KEY = 'editor'
 
+/**
+ * @property record The record being edited
+ * @property recordSource Original representation of the record as text, used as a reference; null means the record hasn't be serialized yet
+ * @property saving
+ * @property saveError
+ * @property changedSinceSave
+ * @property fieldsConfig Configuration for the fields in the editor
+ */
 export interface EditorState {
   record: CatalogRecord | null
+  recordSource: string | null
+  alreadySavedOnce: boolean
   saving: boolean
   saveError: SaveRecordError | null
   changedSinceSave: boolean
@@ -21,6 +31,8 @@ export interface EditorPartialState {
 
 export const initialEditorState: EditorState = {
   record: null,
+  recordSource: null,
+  alreadySavedOnce: false,
   saving: false,
   saveError: null,
   changedSinceSave: false,
@@ -29,11 +41,16 @@ export const initialEditorState: EditorState = {
 
 const reducer = createReducer(
   initialEditorState,
-  on(EditorActions.openRecord, (state, { record }) => ({
-    ...state,
-    changedSinceSave: false,
-    record,
-  })),
+  on(
+    EditorActions.openRecord,
+    (state, { record, recordSource, alreadySavedOnce }) => ({
+      ...state,
+      changedSinceSave: false,
+      recordSource: recordSource ?? null,
+      alreadySavedOnce,
+      record,
+    })
+  ),
   on(EditorActions.saveRecord, (state) => ({
     ...state,
     saving: true,

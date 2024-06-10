@@ -11,7 +11,7 @@ import { TranslateModule } from '@ngx-translate/core'
 const getRoute = () => ({
   snapshot: {
     data: {
-      record: DATASET_RECORDS[0],
+      record: [DATASET_RECORDS[0], '<xml>blabla</xml>', false],
     },
   },
 })
@@ -64,7 +64,11 @@ describe('EditPageComponent', () => {
 
   describe('initial state', () => {
     it('calls openRecord', () => {
-      expect(facade.openRecord).toHaveBeenCalledWith(DATASET_RECORDS[0])
+      expect(facade.openRecord).toHaveBeenCalledWith(
+        DATASET_RECORDS[0],
+        '<xml>blabla</xml>',
+        false
+      )
     })
   })
 
