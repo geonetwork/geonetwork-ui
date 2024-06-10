@@ -4,18 +4,20 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
-import { KeywordType } from '@geonetwork-ui/common/domain/model/record'
-import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus'
+import {
+  KeywordType,
+  ThesaurusModel,
+} from '@geonetwork-ui/common/domain/model/thesaurus'
 import {
   DropdownSelectorComponent,
   UiInputsModule,
 } from '@geonetwork-ui/ui/inputs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
-import { LangService } from '@geonetwork-ui/util/i18n'
 import { Observable, map } from 'rxjs'
 
 @Component({
@@ -31,7 +33,7 @@ import { Observable, map } from 'rxjs'
     UiWidgetsModule,
   ],
 })
-export class FormFieldKeywordsComponent {
+export class FormFieldKeywordsComponent implements OnInit {
   @Input() control: FormControl<any>
   @Output() itemSelected = new EventEmitter<string>()
   @Output() inputSubmitted = new EventEmitter<string>()
@@ -47,7 +49,7 @@ export class FormFieldKeywordsComponent {
 
   autoCompleteAction = (query: string) => {
     const keywords$ = this.gn4platformService
-      .getKeywordsFromThesaurus('', query)
+      .searchKeywordsFromThesaurus('', query)
       .pipe(
         map((thesaurus) =>
           thesaurus.map((thes) => {
@@ -59,17 +61,18 @@ export class FormFieldKeywordsComponent {
     return keywords$
   }
 
-  constructor(
-    private langService: LangService,
-    private gn4platformService: Gn4PlatformService
-  ) {}
+  constructor(private gn4platformService: Gn4PlatformService) {}
+
+  ngOnInit(): void {
+    this.searchInputValue$ = this.autoCompleteAction('')[0]
+  }
 
   // type: { title: string; value: ThesaurusModel }
   handleItemSelection(item) {
     this.addKeyword({
       label: item.title,
       thesaurus: item.value,
-      type: item.value.dname as KeywordType,
+      type: item.value.type,
     })
   }
 

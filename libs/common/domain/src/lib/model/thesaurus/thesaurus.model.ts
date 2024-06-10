@@ -1,3 +1,5 @@
+export type KeywordType = 'place' | 'temporal' | 'theme' | 'other'
+
 export interface ThesaurusModel {
   id: string
   name?: string
@@ -8,5 +10,5 @@ export interface ThesaurusModel {
   uri?: string
   value?: string
   values?: object
-  dname?: string
+  type?: KeywordType
 }

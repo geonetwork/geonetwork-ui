@@ -21,6 +21,10 @@ import { Gn4PlatformMapper } from './gn4-platform.mapper'
 import { ltr } from 'semver'
 import { LangService } from '@geonetwork-ui/util/i18n'
 import { HttpClient } from '@angular/common/http'
+import {
+  KeywordApiResponse,
+  ThesaurusApiResponse,
+} from '@geonetwork-ui/api/metadata-converter'
 
 const minApiVersion = '4.2.2'
 
@@ -127,7 +131,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
       return this.getKeywordsByUri(thesaurusUri).pipe(
         map((thesaurus) => {
           for (const item of thesaurus) {
-            if (item.thesaurusKey === key) return item.label
+            if (item.key === key) return item.label
           }
           return key
         })
@@ -136,25 +140,25 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     return this.keyTranslations$.pipe(map((translations) => translations[key]))
   }
 
-  getAllThesaurus(): Observable<ThesaurusInfoApiModel[]> {
-    return this.httpClient
-      .get(
-        `${this.registriesApiService.configuration.basePath}/thesaurus?_content_type=json`
-      )
-      .pipe(
-        map((thesaurus) => {
-          thesaurus[0].filter((thes) => thes.dname !== 'place')
-          return thesaurus[0] as any[]
-        })
-      )
-  }
+  private allThesaurus$ = this.httpClient
+    .get(
+      `${this.registriesApiService.configuration.basePath}/thesaurus?_content_type=json`
+    )
+    .pipe(
+      map((thesaurus) => {
+        // FIXME: find a better way to exclude place keywords
+        // thesaurus[0].filter((thes) => thes.dname !== 'place')
+        return thesaurus[0] as ThesaurusApiResponse[]
+      }),
+      shareReplay(1)
+    )
 
-  getKeywordsFromThesaurus(
+  searchKeywordsFromThesaurus(
     thesaurusId: string,
     query: string
   ): Observable<Keyword[]> {
-    const keywords$ = this.registriesApiService
-      .searchKeywords(
+    const keywords$: Observable<KeywordApiResponse[]> =
+      this.registriesApiService.searchKeywords(
         query,
         this.langService.iso3,
         10,
@@ -163,43 +167,25 @@ export class Gn4PlatformService implements PlatformServiceInterface {
         null,
         null,
         `*${query}*`
-      )
-      .pipe(
-        map((thesaurus) => {
-          return this.mapper.keywordsFromApi(
-            thesaurus as any[],
-            this.langService.iso3
-          )
-        })
-      )
+      ) as Observable<KeywordApiResponse[]>
 
-    return combineLatest([keywords$, this.getAllThesaurus()]).pipe(
+    return combineLatest([keywords$, this.allThesaurus$]).pipe(
       map(([keywords, thesaurus]) => {
-        return keywords
-          .map((keyword) => {
-            const matchedThesaurus = thesaurus.find(
-              (thes) => keyword.thesaurusKey === thes.key
-            )
-            return {
-              ...keyword,
-              thesaurus: {
-                id: matchedThesaurus?.key,
-                name: matchedThesaurus?.title,
-                url: new URL(matchedThesaurus?.url),
-                dname: matchedThesaurus?.dname,
-              },
-            }
-          })
-          .filter((keyword) => keyword.thesaurus.dname !== 'place')
+        return this.mapper.keywordsFromApi(
+          keywords,
+          thesaurus,
+          this.langService.iso3
+        )
       })
     )
   }
+
   getKeywordsByUri(uri: string): Observable<Keyword[]> {
     if (this.keyword[uri]) {
       return this.keyword[uri]
     }
-    this.keyword[uri] = this.registriesApiService
-      .searchKeywords(
+    const keywords$: Observable<KeywordApiResponse[]> =
+      this.registriesApiService.searchKeywords(
         null,
         this.langService.iso3,
         1000,
@@ -208,13 +194,18 @@ export class Gn4PlatformService implements PlatformServiceInterface {
         null,
         null,
         `${uri}*`
-      )
-      .pipe(
-        map((thesaurus) =>
-          this.mapper.keywordsFromApi(thesaurus as any[], this.langService.iso3)
-        ),
-        shareReplay(1)
-      )
+      ) as Observable<KeywordApiResponse[]>
+
+    this.keyword[uri] = combineLatest([keywords$, this.allThesaurus$]).pipe(
+      map(([keywords, thesaurus]) => {
+        return this.mapper.keywordsFromApi(
+          keywords,
+          thesaurus,
+          this.langService.iso3
+        )
+      }),
+      shareReplay(1)
+    )
 
     return this.keyword[uri]
   }
