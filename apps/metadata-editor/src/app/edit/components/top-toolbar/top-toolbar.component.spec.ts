@@ -66,7 +66,7 @@ describe('TopToolbarComponent', () => {
         editorFacade.changedSinceSave$.next(true)
       })
       it('sets the correct status', () => {
-        expect(saveStatus).toBe('saved_not_published')
+        expect(saveStatus).toBe('draft_only')
       })
     })
     describe('saved, published and up to date', () => {
@@ -75,7 +75,7 @@ describe('TopToolbarComponent', () => {
         editorFacade.changedSinceSave$.next(false)
       })
       it('sets the correct status', () => {
-        expect(saveStatus).toBe('saved_published_up_to_date')
+        expect(saveStatus).toBe('record_up_to_date')
       })
     })
     describe('saved, published, pending changes', () => {
@@ -84,7 +84,7 @@ describe('TopToolbarComponent', () => {
         editorFacade.changedSinceSave$.next(true)
       })
       it('sets the correct status', () => {
-        expect(saveStatus).toBe('saved_published_changes_pending')
+        expect(saveStatus).toBe('draft_changes_pending')
       })
     })
   })

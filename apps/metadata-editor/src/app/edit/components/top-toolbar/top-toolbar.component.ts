@@ -24,13 +24,13 @@ import { TranslateModule } from '@ngx-translate/core'
 })
 export class TopToolbarComponent {
   protected SaveStatus = [
-    'saved_not_published',
-    'saved_published_up_to_date',
-    'saved_published_changes_pending',
-    // these are not used since the draft is saved locally
+    'draft_only', // => when creating a record
+    'record_up_to_date', // => when the record was just published (ie saved on the server)
+    'draft_changes_pending', // => when the record was modified and not yet published
+    // these are not used since the draft is saved locally in a synchronous way
     // TODO: use these states when the draft is saved on the server
-    // 'saving',
-    // 'saving_failed',
+    // 'draft_saving',
+    // 'draft_saving_failed',
   ] as const
 
   protected saveStatus$: Observable<typeof this.SaveStatus[number]> =
@@ -40,11 +40,9 @@ export class TopToolbarComponent {
     ]).pipe(
       map(([alreadySavedOnce, changedSinceSave]) => {
         if (!alreadySavedOnce) {
-          return 'saved_not_published'
+          return 'draft_only'
         }
-        return changedSinceSave
-          ? 'saved_published_changes_pending'
-          : 'saved_published_up_to_date'
+        return changedSinceSave ? 'draft_changes_pending' : 'record_up_to_date'
       })
     )
 
