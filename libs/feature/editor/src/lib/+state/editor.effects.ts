@@ -67,7 +67,7 @@ export class EditorEffects {
   checkHasChangesOnOpen$ = createEffect(() =>
     this.actions$.pipe(
       ofType(EditorActions.openRecord),
-      switchMap(({ record }) =>
+      map(({ record }) =>
         this.recordsRepository.recordHasDraft(record.uniqueIdentifier)
       ),
       filter((hasDraft) => hasDraft),

@@ -50,6 +50,6 @@ export abstract class RecordsRepositoryInterface {
     referenceRecordSource?: string
   ): Observable<string>
 
-  abstract clearRecordDraft(uniqueIdentifier: string): Observable<void>
-  abstract recordHasDraft(uniqueIdentifier: string): Observable<boolean>
+  abstract clearRecordDraft(uniqueIdentifier: string): void
+  abstract recordHasDraft(uniqueIdentifier: string): boolean
 }

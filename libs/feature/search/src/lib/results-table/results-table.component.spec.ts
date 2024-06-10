@@ -3,7 +3,7 @@ import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 import { ResultsTableComponent } from './results-table.component'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { By } from '@angular/platform-browser'
-import { BehaviorSubject, firstValueFrom, of } from 'rxjs'
+import { BehaviorSubject, firstValueFrom } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { SelectionService } from '@geonetwork-ui/api/repository'
@@ -28,7 +28,7 @@ class SelectionServiceMock {
   selectedRecordsIdentifiers$ = new BehaviorSubject([])
 }
 class RecordsRepositoryMock {
-  recordHasDraft = jest.fn(() => of(false))
+  recordHasDraft = jest.fn(() => false)
 }
 
 describe('ResultsTableComponent', () => {

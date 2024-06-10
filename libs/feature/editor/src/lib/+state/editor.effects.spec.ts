@@ -15,7 +15,7 @@ class EditorServiceMock {
   saveRecordAsDraft = jest.fn(() => of('<xml>blabla</xml>'))
 }
 class RecordsRepositoryMock {
-  recordHasDraft = jest.fn(() => of(true))
+  recordHasDraft = jest.fn(() => true)
 }
 
 describe('EditorEffects', () => {
@@ -157,7 +157,7 @@ describe('EditorEffects', () => {
       beforeEach(() => {
         ;(
           TestBed.inject(RecordsRepositoryInterface).recordHasDraft as jest.Mock
-        ).mockImplementationOnce(() => of(false))
+        ).mockImplementationOnce(() => false)
       })
       it('dispatches nothing', () => {
         actions = hot('-a-|', {

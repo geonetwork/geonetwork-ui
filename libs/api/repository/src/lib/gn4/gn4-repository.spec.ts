@@ -404,35 +404,32 @@ describe('Gn4Repository', () => {
       })
     })
     describe('#clearRecordDraft', () => {
-      beforeEach(async () => {
-        await lastValueFrom(
-          repository.clearRecordDraft(DATASET_RECORD_SIMPLE.uniqueIdentifier)
-        )
+      beforeEach(() => {
+        repository.clearRecordDraft(DATASET_RECORD_SIMPLE.uniqueIdentifier)
       })
       it('removes the record draft', async () => {
-        const record = await lastValueFrom(
+        const [record] = await lastValueFrom(
           repository.openRecordForEdition(
             DATASET_RECORD_SIMPLE.uniqueIdentifier
           )
         )
         expect(record?.title).not.toBe('The title has been modified')
-        const hasDraft = await lastValueFrom(
-          repository.recordHasDraft(DATASET_RECORD_SIMPLE.uniqueIdentifier)
+        const hasDraft = repository.recordHasDraft(
+          DATASET_RECORD_SIMPLE.uniqueIdentifier
         )
+
         expect(hasDraft).toBe(false)
       })
     })
     describe('#recordHasDraft', () => {
-      it('returns true when there is a draft', async () => {
-        const hasDraft = await lastValueFrom(
-          repository.recordHasDraft(DATASET_RECORD_SIMPLE.uniqueIdentifier)
+      it('returns true when there is a draft', () => {
+        const hasDraft = repository.recordHasDraft(
+          DATASET_RECORD_SIMPLE.uniqueIdentifier
         )
         expect(hasDraft).toBe(true)
       })
-      it('returns false otherwise', async () => {
-        const hasDraft = await lastValueFrom(
-          repository.recordHasDraft('blargz')
-        )
+      it('returns false otherwise', () => {
+        const hasDraft = repository.recordHasDraft('blargz')
         expect(hasDraft).toBe(false)
       })
     })

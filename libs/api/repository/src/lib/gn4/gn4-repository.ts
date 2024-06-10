@@ -290,15 +290,14 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     )
   }
 
-  clearRecordDraft(uniqueIdentifier: string): Observable<void> {
+  clearRecordDraft(uniqueIdentifier: string): void {
     window.localStorage.removeItem(
       this.getLocalStorageKeyForRecord(uniqueIdentifier)
     )
-    return of(undefined)
   }
 
-  recordHasDraft(uniqueIdentifier: string): Observable<boolean> {
-    return of(
+  recordHasDraft(uniqueIdentifier: string): boolean {
+    return (
       window.localStorage.getItem(
         this.getLocalStorageKeyForRecord(uniqueIdentifier)
       ) !== null

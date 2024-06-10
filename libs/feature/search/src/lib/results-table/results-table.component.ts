@@ -166,7 +166,7 @@ export class ResultsTableComponent {
     )
   }
 
-  hasDraft(record: CatalogRecord): Observable<boolean> {
+  hasDraft(record: CatalogRecord): boolean {
     return this.recordsRepository.recordHasDraft(record.uniqueIdentifier)
   }
 }
