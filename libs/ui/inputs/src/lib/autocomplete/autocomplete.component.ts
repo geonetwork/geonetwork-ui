@@ -93,7 +93,7 @@ export class AutocompleteComponent
         map((item) => item.title)
       )
     ).pipe(
-      switchMap((value) => this.action(value ? value : of([]))),
+      switchMap((value) => (value ? this.action(value) : of([]))),
       catchError((error: Error) => {
         this.error = error.message
         return of([])
