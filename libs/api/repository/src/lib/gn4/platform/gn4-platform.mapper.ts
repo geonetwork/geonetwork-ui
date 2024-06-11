@@ -82,7 +82,7 @@ export class Gn4PlatformMapper {
       return {
         key,
         label,
-        // description,
+        description,
         type: matchedThesaurus?.dname as KeywordType,
         thesaurus: {
           id: matchedThesaurus?.key,

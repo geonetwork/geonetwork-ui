@@ -15,6 +15,7 @@ export abstract class PlatformServiceInterface {
   ): Observable<UserModel[]>
   abstract getOrganizations(): Observable<Organization[]>
   abstract translateKey(key: string): Observable<string>
+  abstract searchKeywordsFromThesaurus(query: string): Observable<Keyword[]>
   abstract getKeywordsByUri(uri: string): Observable<Keyword[]>
   abstract getUserFeedbacks(recordUuid: string): Observable<UserFeedback[]>
   abstract postUserFeedbacks(recordUuid: UserFeedback): Observable<void>

@@ -8,11 +8,11 @@ import {
   Output,
 } from '@angular/core'
 import { FormControl } from '@angular/forms'
-import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
 import {
   KeywordType,
   ThesaurusModel,
 } from '@geonetwork-ui/common/domain/model/thesaurus'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
   DropdownSelectorComponent,
   UiInputsModule,
@@ -48,8 +48,8 @@ export class FormFieldKeywordsComponent implements OnInit {
   }
 
   autoCompleteAction = (query: string) => {
-    const keywords$ = this.gn4platformService
-      .searchKeywordsFromThesaurus('', query)
+    const keywords$ = this.platformService
+      .searchKeywordsFromThesaurus(query)
       .pipe(
         map((thesaurus) =>
           thesaurus.map((thes) => {
@@ -61,7 +61,7 @@ export class FormFieldKeywordsComponent implements OnInit {
     return keywords$
   }
 
-  constructor(private gn4platformService: Gn4PlatformService) {}
+  constructor(private platformService: PlatformServiceInterface) {}
 
   ngOnInit(): void {
     this.searchInputValue$ = this.autoCompleteAction('')[0]

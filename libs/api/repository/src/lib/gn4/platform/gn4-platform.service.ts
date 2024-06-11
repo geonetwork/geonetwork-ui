@@ -66,7 +66,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
    * A map of already loaded thesauri (groups of keywords); the key is a URI
    * @private
    */
-  private keyword: Record<string, Observable<Keyword[]>> = {}
+  private keywordsByThesauri: Record<string, Observable<Keyword[]>> = {}
 
   constructor(
     private siteApiService: SiteApiService,
@@ -153,10 +153,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
       shareReplay(1)
     )
 
-  searchKeywordsFromThesaurus(
-    thesaurusId: string,
-    query: string
-  ): Observable<Keyword[]> {
+  searchKeywordsFromThesaurus(query: string): Observable<Keyword[]> {
     const keywords$: Observable<KeywordApiResponse[]> =
       this.registriesApiService.searchKeywords(
         query,
@@ -181,8 +178,8 @@ export class Gn4PlatformService implements PlatformServiceInterface {
   }
 
   getKeywordsByUri(uri: string): Observable<Keyword[]> {
-    if (this.keyword[uri]) {
-      return this.keyword[uri]
+    if (this.keywordsByThesauri[uri]) {
+      return this.keywordsByThesauri[uri]
     }
     const keywords$: Observable<KeywordApiResponse[]> =
       this.registriesApiService.searchKeywords(
@@ -196,7 +193,10 @@ export class Gn4PlatformService implements PlatformServiceInterface {
         `${uri}*`
       ) as Observable<KeywordApiResponse[]>
 
-    this.keyword[uri] = combineLatest([keywords$, this.allThesaurus$]).pipe(
+    this.keywordsByThesauri[uri] = combineLatest([
+      keywords$,
+      this.allThesaurus$,
+    ]).pipe(
       map(([keywords, thesaurus]) => {
         return this.mapper.keywordsFromApi(
           keywords,
@@ -207,7 +207,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
       shareReplay(1)
     )
 
-    return this.keyword[uri]
+    return this.keywordsByThesauri[uri]
   }
 
   getUserFeedbacks(uuid: string): Observable<UserFeedback[]> {

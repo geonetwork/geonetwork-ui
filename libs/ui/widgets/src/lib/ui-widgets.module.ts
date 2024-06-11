@@ -13,7 +13,6 @@ import { PopupAlertComponent } from './popup-alert/popup-alert.component'
 import { MatIconModule } from '@angular/material/icon'
 import { SpinningLoaderComponent } from './spinning-loader/spinning-loader.component'
 import { CommonModule } from '@angular/common'
-import { BadgeComponent } from './badge/badge.component'
 
 @NgModule({
   declarations: [
@@ -34,7 +33,6 @@ import { BadgeComponent } from './badge/badge.component'
     UtilSharedModule,
     MatProgressSpinnerModule,
     MatIconModule,
-    BadgeComponent,
   ],
   exports: [
     ProgressBarComponent,
@@ -42,7 +40,6 @@ import { BadgeComponent } from './badge/badge.component'
     LoadingMaskComponent,
     PopupAlertComponent,
     SpinningLoaderComponent,
-    BadgeComponent,
   ],
 })
 export class UiWidgetsModule {}

@@ -7,11 +7,12 @@
   "
 >
   <span><ng-content></ng-content></span>
-  <span
+  <gn-ui-button
     class="material-symbols-outlined cursor-pointer text-xs"
     *ngIf="removable"
-    (click)="removeBadge()"
+    (buttonClick)="removeBadge()"
+    extraClass="p-1 bg-transparent border-0 border-transparent "
   >
     close
-  </span>
+  </gn-ui-button>
 </div>

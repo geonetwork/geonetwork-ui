@@ -62,8 +62,9 @@ export type SpatialRepresentationType =
   | 'point'
 
 export interface Keyword {
-  key: string
+  key?: string
   label: string
+  description?: string
   type: KeywordType
   thesaurus?: ThesaurusModel
 }
