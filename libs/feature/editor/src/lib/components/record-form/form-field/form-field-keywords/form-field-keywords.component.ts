@@ -48,15 +48,13 @@ export class FormFieldKeywordsComponent implements OnInit {
   }
 
   autoCompleteAction = (query: string) => {
-    const keywords$ = this.platformService
-      .searchKeywordsFromThesaurus(query)
-      .pipe(
-        map((thesaurus) =>
-          thesaurus.map((thes) => {
-            return { title: thes.label, value: thes.thesaurus }
-          })
-        )
+    const keywords$ = this.platformService.searchKeywords(query).pipe(
+      map((thesaurus) =>
+        thesaurus.map((thes) => {
+          return { title: thes.label, value: thes.thesaurus }
+        })
       )
+    )
 
     return keywords$
   }

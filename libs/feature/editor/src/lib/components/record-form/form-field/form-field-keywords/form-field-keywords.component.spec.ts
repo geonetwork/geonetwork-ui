@@ -12,7 +12,7 @@ import { of } from 'rxjs'
 import { FormControl } from '@angular/forms'
 
 class Gn4PlatformServiceMock {
-  searchKeywordsFromThesaurus = jest.fn(() =>
+  searchKeywords = jest.fn(() =>
     of([{ label: 'Address', thesaurus: { id: '1' } }])
   )
 }

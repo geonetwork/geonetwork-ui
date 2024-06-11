@@ -153,7 +153,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
       shareReplay(1)
     )
 
-  searchKeywordsFromThesaurus(query: string): Observable<Keyword[]> {
+  searchKeywords(query: string): Observable<Keyword[]> {
     const keywords$: Observable<KeywordApiResponse[]> =
       this.registriesApiService.searchKeywords(
         query,
