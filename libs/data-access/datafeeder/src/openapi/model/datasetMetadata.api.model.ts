@@ -38,4 +38,8 @@ export interface DatasetMetadataApiModel {
    * textual description of dataset lineage
    */
   creationProcessDescription?: string
+  /**
+   * Optional, additional options for the dataset
+   */
+  options: any
 }

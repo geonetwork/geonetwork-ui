@@ -7,5 +7,11 @@ import { Component, Input } from '@angular/core'
 })
 export class UploadDataRulesComponent {
   @Input() maxFileSizeMb: number
-  @Input() acceptedFileFormats = ['SHP', 'GeoJSON', 'GeoPackage', 'Spatialite']
+  @Input() acceptedFileFormats = [
+    'SHP',
+    'GeoJSON',
+    'GeoPackage',
+    'Spatialite',
+    'CSV',
+  ]
 }

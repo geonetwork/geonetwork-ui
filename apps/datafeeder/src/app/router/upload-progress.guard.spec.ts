@@ -2,8 +2,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { getTestBed, TestBed } from '@angular/core/testing'
 import { Router } from '@angular/router'
 import {
-  FileUploadApiService,
   AnalysisStatusEnumApiModel,
+  FileUploadApiService,
 } from '@geonetwork-ui/data-access/datafeeder'
 import { of, throwError } from 'rxjs'
 import { UploadProgressGuard } from './upload-progress.guard'
@@ -12,6 +12,7 @@ const uploadApiStatusMock = {
   jobId: '123',
   progress: 1,
   status: AnalysisStatusEnumApiModel.Done,
+  datasets: [{ format: 'SHAPEFILE' }],
 }
 
 const fileUploadApiServiceMock = {
