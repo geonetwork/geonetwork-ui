@@ -390,6 +390,8 @@ describe('Gn4PlatformService', () => {
       )
       expect(thesaurusDomain).toEqual([
         {
+          description:
+            'Localisation des propriétés fondée sur les identifiants des adresses, habituellement le nom de la rue, le numéro de la maison et le code postal.',
           key: 'http://inspire.ec.europa.eu/theme/ad',
           label: 'Adresses',
           thesaurus: {
@@ -403,6 +405,8 @@ describe('Gn4PlatformService', () => {
           type: 'theme',
         },
         {
+          description:
+            "Modèles numériques pour l'altitude des surfaces terrestres, glaciaires et océaniques. Comprend l'altitude terrestre, la bathymétrie et la ligne de rivage.",
           key: 'http://inspire.ec.europa.eu/theme/el',
           label: 'Altitude',
           thesaurus: {
@@ -425,6 +429,7 @@ describe('Gn4PlatformService', () => {
         )
         expect(thesaurusDomain).toEqual([
           {
+            description: 'localization of properties',
             key: 'http://inspire.ec.europa.eu/theme/ad',
             label: 'addresses',
             thesaurus: {
@@ -438,6 +443,7 @@ describe('Gn4PlatformService', () => {
             type: 'theme',
           },
           {
+            description: 'digital terrain models',
             key: 'http://inspire.ec.europa.eu/theme/el',
             label: 'altitude',
             thesaurus: {
