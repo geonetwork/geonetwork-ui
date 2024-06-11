@@ -7,11 +7,11 @@ import {
 } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
-import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
 import { of } from 'rxjs'
 import { FormControl } from '@angular/forms'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
-class Gn4PlatformServiceMock {
+class PlatformServiceInterfaceMock {
   searchKeywords = jest.fn(() =>
     of([{ label: 'Address', thesaurus: { id: '1' } }])
   )
@@ -31,8 +31,8 @@ describe('FormFieldKeywordsComponent', () => {
       ],
       providers: [
         {
-          provide: Gn4PlatformService,
-          useClass: Gn4PlatformServiceMock,
+          provide: PlatformServiceInterface,
+          useClass: PlatformServiceInterfaceMock,
         },
       ],
     })
