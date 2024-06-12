@@ -4,7 +4,6 @@ import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { TagInputModule } from 'ngx-chips'
 import { NgxDropzoneModule } from 'ngx-dropzone'
-import { AutocompleteComponent } from './autocomplete/autocomplete.component'
 import { ButtonComponent } from './button/button.component'
 import { BadgeComponent } from './badge/badge.component'
 import { ChipsInputComponent } from './chips-input/chips-input.component'
@@ -37,7 +36,6 @@ import { ImageInputComponent } from './image-input/image-input.component'
 
 @NgModule({
   declarations: [
-    AutocompleteComponent,
     TextInputComponent,
     DragAndDropFileInputComponent,
     ChipsInputComponent,
@@ -78,7 +76,6 @@ import { ImageInputComponent } from './image-input/image-input.component'
   ],
   exports: [
     DropdownSelectorComponent,
-    AutocompleteComponent,
     ButtonComponent,
     TextInputComponent,
     DragAndDropFileInputComponent,
