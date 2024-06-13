@@ -27,6 +27,7 @@ import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
 import { FormFieldConfig } from './form-field.model'
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
+import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
 import { FormFieldKeywordsComponent } from './form-field-keywords/form-field-keywords.component'
 
 @Component({
@@ -57,7 +58,7 @@ import { FormFieldKeywordsComponent } from './form-field-keywords/form-field-key
   ],
 })
 export class FormFieldComponent {
-  @Input() model: string
+  @Input() model: CatalogRecordKeys
   @Input() config: FormFieldConfig
   @Input() set value(v: unknown) {
     this.formControl.setValue(v, {
@@ -78,49 +79,6 @@ export class FormFieldComponent {
     this.titleInput.nativeElement.children[0].focus()
   }
 
-  get simpleType() {
-    return this.config.type as
-      | 'date'
-      | 'url'
-      | 'text'
-      | 'number'
-      | 'list'
-      | 'toggle'
-  }
-
-  get isSimpleField() {
-    return (
-      this.config.type === 'text' ||
-      this.config.type === 'number' ||
-      this.config.type === 'date' ||
-      this.config.type === 'list' ||
-      this.config.type === 'url' ||
-      this.config.type === 'toggle'
-    )
-  }
-  get isFileField() {
-    return this.config.type === 'file'
-  }
-  get isSpatialExtentField() {
-    return this.config.type === 'spatial_extent'
-  }
-  get isArrayField() {
-    return this.config.type === 'array'
-  }
-  get isObjectField() {
-    return this.config.type === 'object'
-  }
-
-  get isFieldOk() {
-    return !this.config.locked && !this.config.invalid
-  }
-  get isFieldLocked() {
-    return this.config.locked
-  }
-  get isFieldInvalid() {
-    return !this.config.locked && this.config.invalid
-  }
-
   get isTitle() {
     return this.model === 'title'
   }
@@ -138,6 +96,15 @@ export class FormFieldComponent {
   }
   get isTemporalExtents() {
     return this.model === 'temporalExtents'
+  }
+  get isSpatialExtentField() {
+    return this.model === 'spatialExtents'
+  }
+  get isSimpleField() {
+    return this.model === 'uniqueIdentifier' || this.model === 'recordUpdated'
+  }
+  get isReadOnly() {
+    return this.model === 'uniqueIdentifier' || this.model === 'recordUpdated'
   }
   get isKeywords() {
     return this.model === 'keywords'

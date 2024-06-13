@@ -2,10 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
 import { TranslateModule } from '@ngx-translate/core'
-import { FormFieldArrayComponent } from './form-field-array/form-field-array.component'
-import { FormFieldFileComponent } from './form-field-file/form-field-file.component'
 import { FormFieldLicenseComponent } from './form-field-license/form-field-license.component'
-import { FormFieldObjectComponent } from './form-field-object/form-field-object.component'
 import { FormFieldResourceUpdatedComponent } from './form-field-resource-updated/form-field-resource-updated.component'
 import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
 import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
@@ -121,7 +118,7 @@ describe('FormFieldComponent', () => {
     let fieldWrapper
     let formField
     beforeEach(async () => {
-      component.config.type = 'url'
+      component.model = 'uniqueIdentifier'
       fixture.detectChanges()
       await fixture.whenStable()
       fieldWrapper = fixture.debugElement.query(
@@ -131,109 +128,25 @@ describe('FormFieldComponent', () => {
         By.directive(FormFieldSimpleComponent)
       ).componentInstance
     })
-    it('creates a simple form field', () => {
+    it('creates a simple field field (unique identifier)', () => {
       expect(formField).toBeTruthy()
-      expect(formField.type).toEqual(component.config.type)
-      expect(formField.readonly).toEqual(component.config.locked)
-      expect(formField.invalid).toEqual(component.config.invalid)
+      expect(formField.type).toEqual('text')
+      expect(formField.readonly).toEqual(true)
     })
     it('creates a form field wrapper', () => {
       expect(fieldWrapper).toBeTruthy()
     })
   })
-  describe('simple field (invalid)', () => {
-    let formField
-    beforeEach(async () => {
-      component.config.type = 'number'
-      component.config.invalid = true
-      component.config.invalidHintKey = 'something.is.wrong'
-      fixture.detectChanges()
-      await fixture.whenStable()
-      formField = fixture.debugElement.query(
-        By.directive(FormFieldSimpleComponent)
-      ).componentInstance
-    })
-    it('shows a simple form field as invalid', () => {
-      expect(formField).toBeTruthy()
-      expect(formField.type).toEqual(component.config.type)
-      expect(formField.invalid).toEqual(true)
-    })
-    it('shows the invalid hint key', () => {
-      const hint = fixture.debugElement.query(By.css('.field-invalid-hint'))
-      expect(hint.nativeElement.textContent).toContain(
-        component.config.invalidHintKey
-      )
-    })
-  })
-  describe('simple field (invalid and locked)', () => {
-    let formField
-    beforeEach(async () => {
-      component.config.type = 'number'
-      component.config.locked = true
-      component.config.invalid = true
-      fixture.detectChanges()
-      await fixture.whenStable()
-      formField = fixture.debugElement.query(
-        By.directive(FormFieldSimpleComponent)
-      ).componentInstance
-    })
-    it('shows a simple form field as locked (but not invalid)', () => {
-      expect(formField).toBeTruthy()
-      expect(formField.type).toEqual(component.config.type)
-      expect(formField.readonly).toEqual(true)
-      expect(formField.invalid).toEqual(false)
-    })
-  })
-  describe('file field', () => {
-    let formField
-    beforeEach(() => {
-      component.config.type = 'file'
-      fixture.detectChanges()
-      formField = fixture.debugElement.query(
-        By.directive(FormFieldFileComponent)
-      ).componentInstance
-    })
-    it('creates a file form field', () => {
-      expect(formField).toBeTruthy()
-      expect(formField.readonly).toEqual(component.config.locked)
-    })
-  })
   describe('spatial extent field', () => {
     let formField
     beforeEach(() => {
-      component.config.type = 'spatial_extent'
+      component.model = 'spatialExtents'
       fixture.detectChanges()
       formField = fixture.debugElement.query(
         By.directive(FormFieldSpatialExtentComponent)
       ).componentInstance
     })
     it('creates an array form field', () => {
-      expect(formField).toBeTruthy()
-    })
-  })
-  describe('array field', () => {
-    let formField
-    beforeEach(() => {
-      component.config.type = 'array'
-      fixture.detectChanges()
-      formField = fixture.debugElement.query(
-        By.directive(FormFieldArrayComponent)
-      ).componentInstance
-    })
-    it('creates an array form field', () => {
-      expect(formField).toBeTruthy()
-    })
-  })
-  describe('object field', () => {
-    let formField
-    beforeEach(() => {
-      component.config.type = 'object'
-      fixture.detectChanges()
-      formField = fixture.debugElement.query(
-        By.directive(FormFieldObjectComponent)
-      ).componentInstance
-    })
-    it('creates an object form field', () => {
       expect(formField).toBeTruthy()
     })
   })
