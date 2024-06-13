@@ -5,8 +5,7 @@ describe('my-org', () => {
       method: 'GET',
       url: '/geonetwork/srv/api/userselections/0/101',
     }).as('dataGetFirst')
-    cy.visit(`/records/my-org`)
-    cy.get('md-editor-dashboard-menu').find('a').first().click()
+    cy.visit(`/catalog/my-org`)
     cy.wait('@dataGetFirst').its('response.statusCode').should('equal', 200)
   })
   describe('my-org display', () => {
@@ -31,8 +30,7 @@ describe('my-org', () => {
         })
     })
     it('should access the user list page and show my-org users', () => {
-      cy.visit(`/records/my-org`)
-      cy.get('md-editor-dashboard-menu').find('a').first().click()
+      cy.visit(`/catalog/my-org`)
       cy.get('[data-cy=link-to-users]').click()
       cy.url().should('include', '/users/my-org')
       cy.get('gn-ui-interactive-table .contents').should('have.length.above', 1)

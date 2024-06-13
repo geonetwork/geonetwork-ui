@@ -8,6 +8,7 @@ import { MyDraftComponent } from './records/my-draft/my-draft.component'
 import { MyLibraryComponent } from './records/my-library/my-library.component'
 import { SearchRecordsComponent } from './records/search-records/search-records-list.component'
 import { MyOrgUsersComponent } from './my-org-users/my-org-users.component'
+import { MyOrgRecordsComponent } from './records/my-org-records/my-org-records.component'
 import { NewRecordResolver } from './new-record.resolver'
 
 export const appRoutes: Route[] = [
@@ -47,6 +48,11 @@ export const appRoutes: Route[] = [
         title: 'Search Records',
         component: SearchRecordsComponent,
         pathMatch: 'prefix',
+      },
+      {
+        path: 'my-org',
+        title: 'My Organisation',
+        component: MyOrgRecordsComponent,
       },
     ],
   },
