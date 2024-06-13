@@ -2,7 +2,7 @@ describe('dashboard', () => {
   let pageOne
   describe('pagination', () => {
     it('should display different results on click on arrow', () => {
-      cy.visit('/records/search')
+      cy.visit('/catalog/search')
       cy.get('gn-ui-results-table')
         .find('.table-row-cell')
         .first()
@@ -13,7 +13,7 @@ describe('dashboard', () => {
     })
     //TODO remove skip when dump contains more than 15 records
     it.skip('should display different results on click on specific page and change url', () => {
-      cy.visit('/records/search?_page=2')
+      cy.visit('/catalog/search?_page=2')
       cy.get('gn-ui-pagination-buttons').find('gn-ui-button').eq(1).click()
       cy.get('gn-ui-results-table')
         .find('.table-row-cell')
@@ -36,8 +36,8 @@ describe('dashboard', () => {
   })
 
   describe('sorting', () => {
-    it('should order the result list on click', () => {
-      cy.visit('/records/search')
+    it.only('should order the result list on click', () => {
+      cy.visit('/catalog/search')
       cy.get('gn-ui-results-table')
         .find('.table-row-cell')
         .eq(1)
@@ -65,7 +65,7 @@ describe('dashboard', () => {
 
   describe('checkboxes', () => {
     it('should show the correct amount of selected records when they are selected', () => {
-      cy.visit('/records/search')
+      cy.visit('/catalog/search')
       cy.get('gn-ui-results-table')
         .find('.table-row-cell')
         .get('gn-ui-checkbox')
@@ -75,7 +75,7 @@ describe('dashboard', () => {
     })
 
     it('should show nothing when none are selected', () => {
-      cy.visit('/records/search')
+      cy.visit('/catalog/search')
       cy.get('gn-ui-results-table')
         .find('.table-row-cell')
         .get('gn-ui-checkbox')
@@ -87,7 +87,7 @@ describe('dashboard', () => {
     })
 
     it('should select all records when the "select all" checkbox is checked', () => {
-      cy.visit('/records/search')
+      cy.visit('/catalog/search')
       cy.get('gn-ui-results-table')
         .find('.table-row-cell')
         .get('gn-ui-checkbox')
