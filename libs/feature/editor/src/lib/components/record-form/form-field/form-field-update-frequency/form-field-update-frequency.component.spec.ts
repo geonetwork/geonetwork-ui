@@ -22,10 +22,19 @@ describe('FormFieldUpdateFrequencyComponent', () => {
     })
     component.control = control
     fixture.detectChanges()
+    await component.ngOnInit()
   })
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  it('should offer a set of initial choices', () => {
+    expect(component['choices']).toHaveLength(10)
+    expect(component['choices']).toContainEqual({
+      label: 'domain.record.updateFrequency.week',
+      value: 'week.3',
+    })
   })
 
   it('should parse the updatedTimes and per values', () => {
@@ -41,7 +50,7 @@ describe('FormFieldUpdateFrequencyComponent', () => {
   })
 
   it('should add the custom frequency to the dropdown choices', () => {
-    expect(component.choices).toContainEqual({
+    expect(component['choices']).toContainEqual({
       value: 'week.3',
       label: 'domain.record.updateFrequency.week',
     })
