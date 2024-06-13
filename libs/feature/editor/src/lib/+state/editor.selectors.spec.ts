@@ -55,46 +55,69 @@ describe('Editor Selectors', () => {
       expect(result).toEqual(DEFAULT_FIELDS)
     })
 
-    it('selectRecordFields() should return the config and value for each field', () => {
-      const result = EditorSelectors.selectRecordFields(state)
-      expect(result).toEqual([
-        {
+    describe('selectRecordFields', () => {
+      it('should return the config and value for each field', () => {
+        const result = EditorSelectors.selectRecordFields(state)
+        expect(result).toEqual([
+          {
+            config: DEFAULT_FIELDS[0],
+            value: DATASET_RECORDS[0].title,
+          },
+          {
+            config: DEFAULT_FIELDS[1],
+            value: DATASET_RECORDS[0].abstract,
+          },
+          {
+            config: DEFAULT_FIELDS[2],
+            value: DATASET_RECORDS[0].uniqueIdentifier,
+          },
+          {
+            config: DEFAULT_FIELDS[3],
+            value: DATASET_RECORDS[0].recordUpdated,
+          },
+          {
+            config: DEFAULT_FIELDS[4],
+            value: DATASET_RECORDS[0].licenses,
+          },
+          {
+            config: DEFAULT_FIELDS[5],
+            value: DATASET_RECORDS[0].resourceUpdated,
+          },
+          {
+            config: DEFAULT_FIELDS[6],
+            value: DATASET_RECORDS[0].updateFrequency,
+          },
+          {
+            config: DEFAULT_FIELDS[7],
+            value: DATASET_RECORDS[0].temporalExtents,
+          },
+          {
+            config: DEFAULT_FIELDS[8],
+            value: DATASET_RECORDS[0].keywords,
+          },
+        ])
+      })
+      it('should not coerce falsy values to null', () => {
+        const result = EditorSelectors.selectRecordFields({
+          ...state,
+          editor: {
+            ...state.editor,
+            record: {
+              ...DATASET_RECORDS[0],
+              abstract: '',
+              title: '',
+            },
+          },
+        })
+        expect(result).toContainEqual({
           config: DEFAULT_FIELDS[0],
-          value: DATASET_RECORDS[0].title,
-        },
-        {
+          value: '',
+        })
+        expect(result).toContainEqual({
           config: DEFAULT_FIELDS[1],
-          value: DATASET_RECORDS[0].abstract,
-        },
-        {
-          config: DEFAULT_FIELDS[2],
-          value: DATASET_RECORDS[0].uniqueIdentifier,
-        },
-        {
-          config: DEFAULT_FIELDS[3],
-          value: DATASET_RECORDS[0].recordUpdated,
-        },
-        {
-          config: DEFAULT_FIELDS[4],
-          value: DATASET_RECORDS[0].licenses,
-        },
-        {
-          config: DEFAULT_FIELDS[5],
-          value: DATASET_RECORDS[0].resourceUpdated,
-        },
-        {
-          config: DEFAULT_FIELDS[6],
-          value: DATASET_RECORDS[0].updateFrequency,
-        },
-        {
-          config: DEFAULT_FIELDS[7],
-          value: DATASET_RECORDS[0].temporalExtents,
-        },
-        {
-          config: DEFAULT_FIELDS[8],
-          value: DATASET_RECORDS[0].keywords,
-        },
-      ])
+          value: '',
+        })
+      })
     })
   })
 })

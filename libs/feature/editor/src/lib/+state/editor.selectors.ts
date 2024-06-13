@@ -44,6 +44,6 @@ export const selectRecordFields = createSelector(
   (state: EditorState) =>
     state.fieldsConfig.map((fieldConfig) => ({
       config: fieldConfig,
-      value: state.record?.[fieldConfig.model] || null,
+      value: state.record?.[fieldConfig.model] ?? null,
     }))
 )
