@@ -64,6 +64,7 @@ export class MapViewComponent implements OnInit, OnDestroy {
   )
 
   dropdownChoices$ = this.compatibleMapLinks$.pipe(
+    tap(() => (this.loading = true)),
     map((links) =>
       links.length
         ? links.map((link, index) => ({
@@ -71,7 +72,8 @@ export class MapViewComponent implements OnInit, OnDestroy {
             value: index,
           }))
         : [{ label: 'No preview layer', value: 0 }]
-    )
+    ),
+    finalize(() => (this.loading = false))
   )
   selectedLinkIndex$ = new BehaviorSubject(0)
 

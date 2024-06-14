@@ -233,6 +233,14 @@ Malgré l'attention portée à la création de ces données, il est rappelé que
         description: 'Téléchargement du fichier',
         mimeType: 'x-gis/x-shapefile',
       },
+      {
+        type: 'service',
+        url: new URL('https://my-org.net/ogc'),
+        accessServiceProtocol: 'ogcFeatures',
+        name: 'ogcFeaturesSecondRecord',
+        description: 'This OGC service is the second part of the download',
+        identifierInService: 'my:featuretype',
+      },
     ],
     lineage: `Document d’urbanisme numérisé conformément aux prescriptions nationales du CNIG par le Service d'Information Géographique de l'Agglomération de la Région de Compiègne.
 Ce lot de données produit en 2019, a été numérisé à partir du PCI Vecteur de 2019 et contrôlé par le Service d'Information Géographique de l'Agglomération de la Région de Compiègne.`,

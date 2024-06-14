@@ -328,5 +328,45 @@ describe('MdViewFacade', () => {
       tick()
       expect(result).toEqual(values.a)
     }))
+    describe('When the user switches datasets and allLinks emits again', () => {
+      beforeEach(() => {
+        store.setState({
+          [METADATA_VIEW_FEATURE_STATE_KEY]: {
+            ...initialMetadataViewState,
+            metadata: DATASET_RECORDS[1],
+          },
+        })
+      })
+      it('should return only the last links from allLinks', fakeAsync(() => {
+        const values = {
+          a: [
+            {
+              type: 'service',
+              url: new URL('https://my-org.net/ogc'),
+              accessServiceProtocol: 'ogcFeatures',
+              name: 'ogcFeaturesSecondRecord',
+              description:
+                'This OGC service is the second part of the download',
+              identifierInService: 'my:featuretype',
+            },
+          ],
+        }
+        jest.spyOn(facade.dataService, 'getItemsFromOgcApi').mockResolvedValue({
+          id: '123',
+          type: 'Feature',
+          time: null,
+          properties: {
+            type: '',
+            title: '',
+          },
+          links: [],
+          geometry: { type: 'MultiPolygon', coordinates: [] },
+        })
+        let result
+        facade.geoDataLinksWithGeometry$.subscribe((v) => (result = v))
+        tick()
+        expect(result).toEqual(values.a)
+      }))
+    })
   })
 })
