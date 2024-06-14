@@ -10,9 +10,9 @@ import { FormFieldResourceUpdatedComponent } from './form-field-resource-updated
 import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
 import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
-import { FormFieldTemporalExtentComponent } from './form-field-temporal-extent/form-field-temporal-extent.component'
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
 import { FormFieldComponent } from './form-field.component'
+import { FormFieldTemporalExtentsComponent } from './form-field-temporal-extents/form-field-temporal-extents.component'
 
 describe('FormFieldComponent', () => {
   let component: FormFieldComponent
@@ -92,6 +92,28 @@ describe('FormFieldComponent', () => {
       ).componentInstance
     })
     it('creates an update frequency form field', () => {
+      expect(formField).toBeTruthy()
+    })
+  })
+  describe('temporal extents field', () => {
+    let formField
+    beforeEach(() => {
+      component.model = 'temporalExtents'
+      component.value = [
+        {
+          start: new Date('2024-05-24'),
+          end: null,
+        },
+        {
+          start: new Date('2024-05-30'),
+        },
+      ]
+      fixture.detectChanges()
+      formField = fixture.debugElement.query(
+        By.directive(FormFieldTemporalExtentsComponent)
+      ).componentInstance
+    })
+    it('creates a temporal extents form field', () => {
       expect(formField).toBeTruthy()
     })
   })
@@ -183,19 +205,6 @@ describe('FormFieldComponent', () => {
       fixture.detectChanges()
       formField = fixture.debugElement.query(
         By.directive(FormFieldSpatialExtentComponent)
-      ).componentInstance
-    })
-    it('creates an array form field', () => {
-      expect(formField).toBeTruthy()
-    })
-  })
-  describe('temporal extent field', () => {
-    let formField
-    beforeEach(() => {
-      component.config.type = 'temporal_extent'
-      fixture.detectChanges()
-      formField = fixture.debugElement.query(
-        By.directive(FormFieldTemporalExtentComponent)
       ).componentInstance
     })
     it('creates an array form field', () => {

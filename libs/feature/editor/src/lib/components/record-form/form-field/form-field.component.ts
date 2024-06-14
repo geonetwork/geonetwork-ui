@@ -14,15 +14,17 @@ import { EditableLabelDirective } from '@geonetwork-ui/ui/inputs'
 import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
 import { TranslateModule } from '@ngx-translate/core'
 import { Observable } from 'rxjs'
+import {
+  FormFieldLicenseComponent,
+  FormFieldResourceUpdatedComponent,
+  FormFieldTemporalExtentsComponent,
+} from '.'
 import { FormFieldArrayComponent } from './form-field-array/form-field-array.component'
 import { FormFieldFileComponent } from './form-field-file/form-field-file.component'
-import { FormFieldLicenseComponent } from './form-field-license/form-field-license.component'
 import { FormFieldObjectComponent } from './form-field-object/form-field-object.component'
-import { FormFieldResourceUpdatedComponent } from './form-field-resource-updated/form-field-resource-updated.component'
 import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
 import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
-import { FormFieldTemporalExtentComponent } from './form-field-temporal-extent/form-field-temporal-extent.component'
 import { FormFieldConfig } from './form-field.model'
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
 
@@ -42,11 +44,11 @@ import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency
     FormFieldLicenseComponent,
     FormFieldResourceUpdatedComponent,
     FormFieldUpdateFrequencyComponent,
+    FormFieldTemporalExtentsComponent,
     FormFieldSimpleComponent,
     FormFieldRichComponent,
     FormFieldObjectComponent,
     FormFieldSpatialExtentComponent,
-    FormFieldTemporalExtentComponent,
     FormFieldFileComponent,
     FormFieldArrayComponent,
     TranslateModule,
@@ -100,9 +102,6 @@ export class FormFieldComponent {
   get isSpatialExtentField() {
     return this.config.type === 'spatial_extent'
   }
-  get isTemporalExtentField() {
-    return this.config.type === 'temporal_extent'
-  }
   get isArrayField() {
     return this.config.type === 'array'
   }
@@ -134,6 +133,9 @@ export class FormFieldComponent {
   }
   get isUpdateFrequency() {
     return this.model === 'updateFrequency'
+  }
+  get isTemporalExtents() {
+    return this.model === 'temporalExtents'
   }
 
   get withoutWrapper() {

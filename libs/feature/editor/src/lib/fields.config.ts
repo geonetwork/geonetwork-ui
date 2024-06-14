@@ -54,4 +54,11 @@ export const DEFAULT_FIELDS: EditorFieldsConfig = [
       type: 'text',
     },
   },
+  {
+    model: 'temporalExtents',
+    formFieldConfig: {
+      labelKey: marker('editor.record.form.temporalExtents'),
+      type: 'list',
+    },
+  },
 ]

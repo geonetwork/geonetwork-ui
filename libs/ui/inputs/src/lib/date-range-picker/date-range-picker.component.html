@@ -1,24 +1,24 @@
 <div
-  class="flex items-center justify-center w-64 h-11 rounded-lg border border-gray-300 bg-white"
+  class="flex items-center justify-between rounded-lg border border-gray-300 bg-white"
 >
-  <div class="w-48 flex justify-between">
+  <div class="pl-3 flex justify-center">
     <mat-date-range-input [rangePicker]="picker" class="w-full">
       <input
-        class="w-24 text-black font-basierCircle text-base font-medium text-center"
         matStartDate
         placeholder="Start date"
-        (dateInput)="startDateSelected($event)"
+        [value]="startDate"
+        (dateInput)="startDateChange.emit($event.value)"
       />
       <input
-        class="w-24 text-black font-basierCircle text-base font-medium text-center"
         matEndDate
         placeholder="End date"
-        (dateInput)="endDateSelected($event)"
+        [value]="endDate"
+        (dateInput)="endDateChange.emit($event.value)"
       />
     </mat-date-range-input>
   </div>
   <mat-datepicker-toggle matSuffix [for]="picker">
     <mat-icon>calendar_today</mat-icon>
   </mat-datepicker-toggle>
-  <mat-date-range-picker #picker></mat-date-range-picker>
 </div>
+<mat-date-range-picker #picker></mat-date-range-picker>

@@ -86,6 +86,10 @@ describe('Editor Selectors', () => {
           config: DEFAULT_FIELDS[6],
           value: DATASET_RECORDS[0].updateFrequency,
         },
+        {
+          config: DEFAULT_FIELDS[7],
+          value: DATASET_RECORDS[0].temporalExtents,
+        },
       ])
     })
   })
