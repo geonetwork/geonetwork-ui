@@ -53,15 +53,14 @@ export class EditorEffects {
     )
   )
 
-  saveRecordDraft$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(EditorActions.updateRecordField),
-        debounceTime(1000),
-        withLatestFrom(this.store.select(selectRecord)),
-        switchMap(([, record]) => this.editorService.saveRecordAsDraft(record))
-      ),
-    { dispatch: false }
+  saveRecordDraft$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(EditorActions.updateRecordField),
+      debounceTime(1000),
+      withLatestFrom(this.store.select(selectRecord)),
+      switchMap(([, record]) => this.editorService.saveRecordAsDraft(record)),
+      map(() => EditorActions.draftSaveSuccess())
+    )
   )
 
   checkHasChangesOnOpen$ = createEffect(() =>

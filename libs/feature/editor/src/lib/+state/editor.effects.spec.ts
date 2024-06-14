@@ -128,7 +128,7 @@ describe('EditorEffects', () => {
         })
         expect(effects.saveRecordDraft$).toBeObservable(
           hot('--- 999ms b', {
-            b: '<xml>blabla</xml>', // this is emitted by the observable but not dispatched as an action
+            b: EditorActions.draftSaveSuccess(),
           })
         )
         expect(service.saveRecordAsDraft).toHaveBeenCalledWith(

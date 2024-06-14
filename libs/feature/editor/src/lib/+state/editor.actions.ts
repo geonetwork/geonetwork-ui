@@ -26,3 +26,5 @@ export const saveRecordFailure = createAction(
   '[Editor] Save record failure',
   props<{ error: SaveRecordError }>()
 )
+
+export const draftSaveSuccess = createAction('[Editor] Draft save success')

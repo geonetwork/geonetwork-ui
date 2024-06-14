@@ -26,6 +26,7 @@ export class EditorFacade {
     select(EditorSelectors.selectRecordChangedSinceSave)
   )
   recordFields$ = this.store.pipe(select(EditorSelectors.selectRecordFields))
+  draftSaveSuccess$ = this.actions$.pipe(ofType(EditorActions.draftSaveSuccess))
 
   openRecord(
     record: CatalogRecord,
