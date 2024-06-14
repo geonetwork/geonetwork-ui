@@ -14,7 +14,7 @@ import {
   NotificationsService,
 } from '@geonetwork-ui/feature/notifications'
 import { TranslateService } from '@ngx-translate/core'
-import { Subscription, take } from 'rxjs'
+import { filter, Subscription, take } from 'rxjs'
 
 @Component({
   selector: 'md-editor-edit',
@@ -91,6 +91,19 @@ export class EditPageComponent implements OnInit, OnDestroy {
         this.router.navigate(['edit', currentRecord.uniqueIdentifier])
       })
     }
+
+    // if the record unique identifier changes, navigate to /edit/newUuid
+    this.facade.record$
+      .pipe(
+        filter(
+          (record) =>
+            record?.uniqueIdentifier !== currentRecord.uniqueIdentifier
+        ),
+        take(1)
+      )
+      .subscribe((savedRecord) => {
+        this.router.navigate(['edit', savedRecord.uniqueIdentifier])
+      })
   }
 
   ngOnDestroy() {

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
-import { Subject } from 'rxjs'
+import { BehaviorSubject, Subject } from 'rxjs'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -24,6 +24,7 @@ class RouterMock {
 }
 
 class EditorFacadeMock {
+  record$ = new BehaviorSubject(DATASET_RECORDS[0])
   openRecord = jest.fn()
   saveError$ = new Subject<string>()
   saveSuccess$ = new Subject()
@@ -129,6 +130,21 @@ describe('EditPageComponent', () => {
       const navigateSpy = jest.spyOn(router, 'navigate')
       ;(facade.draftSaveSuccess$ as any).next()
       expect(navigateSpy).toHaveBeenCalledWith(['edit', 'my-dataset-001'])
+    })
+  })
+
+  describe('unique identifier of the current record changes', () => {
+    beforeEach(() => {
+      fixture.detectChanges()
+    })
+    it('navigates to /edit/newUuid', () => {
+      const router = TestBed.inject(Router)
+      const navigateSpy = jest.spyOn(router, 'navigate')
+      ;(facade.record$ as any).next({
+        ...DATASET_RECORDS[0],
+        uniqueIdentifier: 'new-uuid',
+      })
+      expect(navigateSpy).toHaveBeenCalledWith(['edit', 'new-uuid'])
     })
   })
 })

@@ -5,7 +5,11 @@ import { catchError, map, switchMap } from 'rxjs/operators'
 import * as EditorActions from './editor.actions'
 import { EditorService } from '../services/editor.service'
 import { Store } from '@ngrx/store'
-import { selectRecord, selectRecordFieldsConfig } from './editor.selectors'
+import {
+  selectRecord,
+  selectRecordAlreadySavedOnce,
+  selectRecordFieldsConfig,
+} from './editor.selectors'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 @Injectable()
@@ -20,28 +24,31 @@ export class EditorEffects {
       ofType(EditorActions.saveRecord),
       withLatestFrom(
         this.store.select(selectRecord),
-        this.store.select(selectRecordFieldsConfig)
+        this.store.select(selectRecordFieldsConfig),
+        this.store.select(selectRecordAlreadySavedOnce)
       ),
-      switchMap(([, record, fieldsConfig]) =>
-        this.editorService.saveRecord(record, fieldsConfig).pipe(
-          switchMap(([record, recordSource]) =>
-            of(
-              EditorActions.saveRecordSuccess(),
-              EditorActions.openRecord({
-                record,
-                alreadySavedOnce: true,
-                recordSource,
-              })
-            )
-          ),
-          catchError((error) =>
-            of(
-              EditorActions.saveRecordFailure({
-                error: error.message,
-              })
+      switchMap(([, record, fieldsConfig, alreadySavedOnce]) =>
+        this.editorService
+          .saveRecord(record, fieldsConfig, !alreadySavedOnce)
+          .pipe(
+            switchMap(([record, recordSource]) =>
+              of(
+                EditorActions.saveRecordSuccess(),
+                EditorActions.openRecord({
+                  record,
+                  alreadySavedOnce: true,
+                  recordSource,
+                })
+              )
+            ),
+            catchError((error) =>
+              of(
+                EditorActions.saveRecordFailure({
+                  error: error.message,
+                })
+              )
             )
           )
-        )
       )
     )
   )
