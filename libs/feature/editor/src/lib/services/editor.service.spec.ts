@@ -8,14 +8,21 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { DEFAULT_FIELDS } from '../fields.config'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { of } from 'rxjs'
+import { firstValueFrom, of } from 'rxjs'
 
 const SAMPLE_RECORD: CatalogRecord = DATASET_RECORDS[0]
 
 class RecordsRepositoryMock {
-  openRecordForEdition = jest.fn(() => of(SAMPLE_RECORD))
+  openRecordForEdition = jest.fn(() =>
+    of([
+      { ...SAMPLE_RECORD, recordUpdated: new Date() },
+      '<xml>blabla</xml>',
+      false,
+    ])
+  )
   saveRecord = jest.fn(() => of('<xml>blabla</xml>'))
   saveRecordAsDraft = jest.fn(() => of('<xml>blabla</xml>'))
+  clearRecordDraft = jest.fn()
 }
 
 describe('EditorService', () => {
@@ -47,21 +54,39 @@ describe('EditorService', () => {
   })
 
   describe('saveRecord', () => {
-    let savedRecord: CatalogRecord
-    beforeEach(() => {
-      savedRecord = null
-      service
-        .saveRecord(SAMPLE_RECORD, DEFAULT_FIELDS)
-        .subscribe((v) => (savedRecord = v))
+    let savedRecord: [CatalogRecord, string]
+    beforeEach(async () => {
+      savedRecord = await firstValueFrom(
+        service.saveRecord(SAMPLE_RECORD, DEFAULT_FIELDS)
+      )
     })
-    it('calls recordUpdated after applying field processes', () => {
+    it('calls repository.saveRecord and repository.clearRecordDraft', () => {
       const expected = {
         ...SAMPLE_RECORD,
         recordUpdated: expect.any(Date),
       }
       expect(repository.saveRecord).toHaveBeenCalledWith(expected)
+      expect(repository.clearRecordDraft).toHaveBeenCalledWith(
+        SAMPLE_RECORD.uniqueIdentifier
+      )
       expect(savedRecord).toEqual([expected, '<xml>blabla</xml>'])
-      expect(savedRecord.recordUpdated).not.toEqual(SAMPLE_RECORD.recordUpdated)
+    })
+    it('applies field processes (update date in record)', () => {
+      const arg = (repository.saveRecord as jest.Mock).mock.calls[0][0]
+      expect(arg.recordUpdated).not.toEqual(SAMPLE_RECORD.recordUpdated)
+    })
+    describe('if a new one has to be generated', () => {
+      beforeEach(() => {
+        service.saveRecord(SAMPLE_RECORD, DEFAULT_FIELDS, true).subscribe()
+      })
+      it('clears the unique identifier of the record', () => {
+        const expected = {
+          ...SAMPLE_RECORD,
+          recordUpdated: expect.any(Date),
+          uniqueIdentifier: null,
+        }
+        expect(repository.saveRecord).toHaveBeenCalledWith(expected)
+      })
     })
   })
 

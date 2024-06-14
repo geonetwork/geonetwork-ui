@@ -1,14 +1,15 @@
 import { TestBed } from '@angular/core/testing'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { Action } from '@ngrx/store'
-import { provideMockStore } from '@ngrx/store/testing'
+import { MockStore, provideMockStore } from '@ngrx/store/testing'
 import { getTestScheduler, hot } from 'jasmine-marbles'
-import { Observable, of, throwError } from 'rxjs'
+import { firstValueFrom, Observable, of, throwError } from 'rxjs'
 import * as EditorActions from './editor.actions'
 import { EditorEffects } from './editor.effects'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 import { EditorService } from '../services/editor.service'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { EditorPartialState } from './editor.reducer'
 
 class EditorServiceMock {
   saveRecord = jest.fn((record) => of([record, '<xml>blabla</xml>']))
@@ -16,6 +17,16 @@ class EditorServiceMock {
 }
 class RecordsRepositoryMock {
   recordHasDraft = jest.fn(() => true)
+}
+
+const initialEditorState = {
+  record: DATASET_RECORDS[0],
+  recordSource: '<xml>blabla</xml>',
+  saving: false,
+  saveError: null,
+  changedSinceSave: false,
+  alreadySavedOnce: true,
+  fieldsConfig: [],
 }
 
 describe('EditorEffects', () => {
@@ -29,16 +40,9 @@ describe('EditorEffects', () => {
       providers: [
         EditorEffects,
         provideMockActions(() => actions),
-        provideMockStore({
+        provideMockStore<EditorPartialState>({
           initialState: {
-            editor: {
-              record: DATASET_RECORDS[0],
-              loading: false,
-              loadError: null,
-              saving: false,
-              saveError: null,
-              changedSinceSave: false,
-            },
+            editor: initialEditorState,
           },
         }),
         {
@@ -71,6 +75,27 @@ describe('EditorEffects', () => {
           }),
         })
         expect(effects.saveRecord$).toBeObservable(expected)
+        expect(service.saveRecord).toHaveBeenCalledWith(
+          DATASET_RECORDS[0],
+          [],
+          false
+        )
+      })
+      it('asks for a new unique identifier if the record was never saved', async () => {
+        const store = TestBed.inject(MockStore)
+        store.setState({
+          editor: {
+            ...initialEditorState,
+            alreadySavedOnce: false,
+          },
+        })
+        actions = of(EditorActions.saveRecord())
+        await firstValueFrom(effects.saveRecord$)
+        expect(service.saveRecord).toHaveBeenCalledWith(
+          DATASET_RECORDS[0],
+          [],
+          true
+        )
       })
     })
 
@@ -128,7 +153,7 @@ describe('EditorEffects', () => {
         })
         expect(effects.saveRecordDraft$).toBeObservable(
           hot('--- 999ms b', {
-            b: '<xml>blabla</xml>', // this is emitted by the observable but not dispatched as an action
+            b: EditorActions.draftSaveSuccess(),
           })
         )
         expect(service.saveRecordAsDraft).toHaveBeenCalledWith(

@@ -265,14 +265,13 @@ export class Gn4Repository implements RecordsRepositoryInterface {
             undefined,
             recordXml
           )
-          .pipe(map(() => recordXml))
-      ),
-      tap(() => {
-        // if saving was successful, the associated draft can be discarded
-        window.localStorage.removeItem(
-          this.getLocalStorageKeyForRecord(record.uniqueIdentifier)
-        )
-      })
+          .pipe(
+            map((response) => {
+              const metadataId = Object.keys(response.metadataInfos)[0]
+              return response.metadataInfos[metadataId][0].uuid
+            })
+          )
+      )
     )
   }
 

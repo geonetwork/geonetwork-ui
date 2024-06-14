@@ -68,24 +68,10 @@
   </ng-container>
   <ng-container *ngIf="isSimpleField">
     <gn-ui-form-field-simple
-      [type]="simpleType"
+      type="text"
       [control]="formControl"
-      [readonly]="isFieldLocked"
-      [invalid]="isFieldInvalid"
+      [readonly]="isReadOnly"
     ></gn-ui-form-field-simple>
-  </ng-container>
-  <ng-container *ngIf="isFileField">
-    <gn-ui-form-field-file
-      [control]="formControl"
-      [readonly]="isFieldLocked"
-      [invalid]="isFieldInvalid"
-    ></gn-ui-form-field-file>
-  </ng-container>
-  <ng-container *ngIf="isArrayField">
-    <gn-ui-form-field-array></gn-ui-form-field-array>
-  </ng-container>
-  <ng-container *ngIf="isObjectField">
-    <gn-ui-form-field-object></gn-ui-form-field-object>
   </ng-container>
   <ng-container *ngIf="isSpatialExtentField">
     <gn-ui-form-field-spatial-extent></gn-ui-form-field-spatial-extent>
@@ -95,10 +81,4 @@
       [control]="formControl"
     ></gn-ui-form-field-keywords>
   </ng-container>
-  <div
-    *ngIf="isFieldInvalid && config.invalidHintKey"
-    class="mt-2 text-pink-500 text-sm field-invalid-hint"
-  >
-    {{ config.invalidHintKey | translate }}
-  </div>
 </ng-template>

@@ -73,7 +73,17 @@ class RecordsApiServiceMock {
   </gmd:fileIdentifier>
 </gmd:MD_Metadata>`).pipe(map((xml) => ({ body: xml })))
   )
-  insert = jest.fn(() => of({}))
+  insert = jest.fn(() =>
+    of({
+      metadataInfos: {
+        1234: [
+          {
+            uuid: '1234-5678-9012',
+          },
+        ],
+      },
+    })
+  )
 }
 
 describe('Gn4Repository', () => {
@@ -354,8 +364,8 @@ describe('Gn4Repository', () => {
                 <gco:CharacterString>my-dataset-001</gco:CharacterString>`)
         )
       })
-      it('returns the record as serialized', () => {
-        expect(recordSource).toMatch(/<mdb:MD_Metadata/)
+      it('returns the unique identifier of the record as it was saved', () => {
+        expect(recordSource).toEqual('1234-5678-9012')
       })
     })
     describe('without reference', () => {

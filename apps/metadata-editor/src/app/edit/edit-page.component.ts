@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common'
 import { Component, OnDestroy, OnInit } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import {
   EditorFacade,
   RecordFormComponent,
@@ -14,7 +14,7 @@ import {
   NotificationsService,
 } from '@geonetwork-ui/feature/notifications'
 import { TranslateService } from '@ngx-translate/core'
-import { Subscription } from 'rxjs'
+import { filter, Subscription, take } from 'rxjs'
 
 @Component({
   selector: 'md-editor-edit',
@@ -38,7 +38,8 @@ export class EditPageComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private facade: EditorFacade,
     private notificationsService: NotificationsService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -83,6 +84,26 @@ export class EditPageComponent implements OnInit, OnDestroy {
         )
       })
     )
+
+    // if we're on the /create route, go to /edit/{uuid} on first change
+    if (this.route.snapshot.routeConfig?.path.includes('create')) {
+      this.facade.draftSaveSuccess$.pipe(take(1)).subscribe(() => {
+        this.router.navigate(['edit', currentRecord.uniqueIdentifier])
+      })
+    }
+
+    // if the record unique identifier changes, navigate to /edit/newUuid
+    this.facade.record$
+      .pipe(
+        filter(
+          (record) =>
+            record?.uniqueIdentifier !== currentRecord.uniqueIdentifier
+        ),
+        take(1)
+      )
+      .subscribe((savedRecord) => {
+        this.router.navigate(['edit', savedRecord.uniqueIdentifier])
+      })
   }
 
   ngOnDestroy() {

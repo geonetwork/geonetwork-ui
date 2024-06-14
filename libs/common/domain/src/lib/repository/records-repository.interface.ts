@@ -33,7 +33,7 @@ export abstract class RecordsRepositoryInterface {
   /**
    * @param record
    * @param referenceRecordSource
-   * @returns Observable<string> Returns the source of the record as it was serialized when saved
+   * @returns Observable<string> Returns the unique identifier of the record as it was when saved
    */
   abstract saveRecord(
     record: CatalogRecord,
