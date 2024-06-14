@@ -6,6 +6,7 @@ import { TagInputModule } from 'ngx-chips'
 import { NgxDropzoneModule } from 'ngx-dropzone'
 import { AutocompleteComponent } from './autocomplete/autocomplete.component'
 import { ButtonComponent } from './button/button.component'
+import { BadgeComponent } from './badge/badge.component'
 import { ChipsInputComponent } from './chips-input/chips-input.component'
 import { DragAndDropFileInputComponent } from './drag-and-drop-file-input/drag-and-drop-file-input.component'
 import { DropdownSelectorComponent } from './dropdown-selector/dropdown-selector.component'
@@ -73,6 +74,7 @@ import { ImageInputComponent } from './image-input/image-input.component'
     DropdownSelectorComponent,
     DateRangePickerComponent,
     CheckToggleComponent,
+    BadgeComponent,
   ],
   exports: [
     DropdownSelectorComponent,
@@ -93,6 +95,7 @@ import { ImageInputComponent } from './image-input/image-input.component'
     DateRangePickerComponent,
     EditableLabelDirective,
     ImageInputComponent,
+    BadgeComponent,
   ],
 })
 export class UiInputsModule {}

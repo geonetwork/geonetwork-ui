@@ -8,11 +8,16 @@ import { Injectable } from '@angular/core'
 import { AvatarServiceInterface } from '../auth'
 import { map } from 'rxjs/operators'
 import { Observable, of } from 'rxjs'
-import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus/thesaurus.model'
 import {
+  Keyword,
   UserFeedback,
   UserFeedbackViewModel,
 } from '@geonetwork-ui/common/domain/model/record'
+import {
+  KeywordApiResponse,
+  ThesaurusApiResponse,
+} from '@geonetwork-ui/api/metadata-converter'
+import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
 
 @Injectable()
 export class Gn4PlatformMapper {
@@ -52,8 +57,12 @@ export class Gn4PlatformMapper {
     return { ...apiUser, id: id.toString() } as UserModel
   }
 
-  thesaurusFromApi(thesaurus: any[], lang3?: string): ThesaurusModel {
-    return thesaurus.map((keyword) => {
+  keywordsFromApi(
+    keywords: KeywordApiResponse[],
+    thesaurus: ThesaurusApiResponse[],
+    lang3?: string
+  ): Keyword[] {
+    return keywords.map((keyword): Keyword => {
       let key = keyword.uri
       // sometines GN can prefix an URI with an "all thesaurus" URI; only keep the last one
       if (key.indexOf('@@@') > -1) {
@@ -65,10 +74,22 @@ export class Gn4PlatformMapper {
         lang3 && lang3 in keyword.definitions
           ? keyword.definitions[lang3]
           : keyword.definition
+
+      const matchedThesaurus = thesaurus.find(
+        (thes) => keyword.thesaurusKey === thes.key
+      )
+
       return {
         key,
         label,
         description,
+        type: matchedThesaurus?.dname as KeywordType,
+        thesaurus: {
+          id: matchedThesaurus?.key,
+          name: matchedThesaurus?.title,
+          url: new URL(matchedThesaurus?.url),
+          type: matchedThesaurus?.dname as KeywordType,
+        },
       }
     })
   }

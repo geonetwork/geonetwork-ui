@@ -1,0 +1,18 @@
+<div
+  class="gn-ui-badge flex items-center gap-1.5"
+  [ngClass]="
+    clickable
+      ? 'hover:bg-primary cursor-pointer transition-colors duration-100'
+      : ''
+  "
+>
+  <span><ng-content></ng-content></span>
+  <gn-ui-button
+    class="material-symbols-outlined cursor-pointer text-xs"
+    *ngIf="removable"
+    (buttonClick)="removeBadge()"
+    extraClass="p-1 bg-transparent border-0 border-transparent "
+  >
+    close
+  </gn-ui-button>
+</div>

@@ -61,4 +61,11 @@ export const DEFAULT_FIELDS: EditorFieldsConfig = [
       type: 'list',
     },
   },
+  {
+    model: 'keywords',
+    formFieldConfig: {
+      labelKey: marker('editor.record.form.keywords'),
+      type: 'list',
+    },
+  },
 ]

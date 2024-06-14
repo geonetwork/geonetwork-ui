@@ -1,7 +1,7 @@
+export * from './form-field-keywords/form-field-keywords.component'
 export * from './form-field-license/form-field-license.component'
 export * from './form-field-resource-updated/form-field-resource-updated.component'
 export * from './form-field-temporal-extents/form-field-temporal-extents.component'
-
 export * from './form-field-simple/form-field-simple.component'
 export * from './form-field-file/form-field-file.component'
 export * from './form-field-rich/form-field-rich.component'

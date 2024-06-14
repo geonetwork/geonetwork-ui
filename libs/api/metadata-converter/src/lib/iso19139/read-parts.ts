@@ -4,7 +4,6 @@ import {
   GraphicOverview,
   Individual,
   Keyword,
-  KeywordThesaurus,
   Organization,
   RecordKind,
   RecordStatus,
@@ -41,6 +40,7 @@ import { getKeywordTypeFromKeywordTypeCode } from './utils/keyword.mapper'
 import { getRoleFromRoleCode } from './utils/role.mapper'
 import { getStatusFromStatusCode } from './utils/status.mapper'
 import { getUpdateFrequencyFromFrequencyCode } from './utils/update-frequency.mapper'
+import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus'
 
 export function extractCharacterString(): ChainableFunction<
   XmlElement,
@@ -609,7 +609,7 @@ export function readContactsForResource(rootEl: XmlElement): Individual[] {
 }
 
 // from gmd:thesaurusName
-export function readThesaurus(rootEl: XmlElement): KeywordThesaurus {
+export function readThesaurus(rootEl: XmlElement): ThesaurusModel {
   if (!rootEl) return null
 
   const findIdentifier = findNestedElement(

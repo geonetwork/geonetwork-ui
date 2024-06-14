@@ -27,6 +27,7 @@ import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
 import { FormFieldConfig } from './form-field.model'
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
+import { FormFieldKeywordsComponent } from './form-field-keywords/form-field-keywords.component'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -51,6 +52,7 @@ import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency
     FormFieldSpatialExtentComponent,
     FormFieldFileComponent,
     FormFieldArrayComponent,
+    FormFieldKeywordsComponent,
     TranslateModule,
   ],
 })
@@ -136,6 +138,9 @@ export class FormFieldComponent {
   }
   get isTemporalExtents() {
     return this.model === 'temporalExtents'
+  }
+  get isKeywords() {
+    return this.model === 'keywords'
   }
 
   get withoutWrapper() {

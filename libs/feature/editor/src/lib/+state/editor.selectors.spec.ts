@@ -90,6 +90,10 @@ describe('Editor Selectors', () => {
           config: DEFAULT_FIELDS[7],
           value: DATASET_RECORDS[0].temporalExtents,
         },
+        {
+          config: DEFAULT_FIELDS[8],
+          value: DATASET_RECORDS[0].keywords,
+        },
       ])
     })
   })

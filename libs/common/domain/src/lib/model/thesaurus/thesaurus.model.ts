@@ -1,7 +1,14 @@
-export interface ThesaurusItemModel {
-  key: string
-  label: string
-  description?: string
-}
+export type KeywordType = 'place' | 'temporal' | 'theme' | 'other'
 
-export type ThesaurusModel = ThesaurusItemModel[]
+export interface ThesaurusModel {
+  id: string
+  name?: string
+  url?: URL
+  thesaurusKey?: string
+  definition?: string
+  definitions?: object
+  uri?: string
+  value?: string
+  values?: object
+  type?: KeywordType
+}

@@ -17,6 +17,11 @@ import {
   A_USER_FEEDBACK,
   SOME_USER_FEEDBACKS,
 } from '@geonetwork-ui/common/fixtures'
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing'
+import { HttpClient } from '@angular/common/http'
 
 let geonetworkVersion: string
 
@@ -84,7 +89,47 @@ class ToolsApiServiceMock {
   )
 }
 
+class HttpClientMock {
+  get = jest.fn(() =>
+    of([
+      [
+        {
+          key: 'external.theme.httpinspireeceuropaeutheme-theme',
+          dname: 'theme',
+          description: [],
+          filename: 'httpinspireeceuropaeutheme-theme.rdf',
+          title: 'GEMET - INSPIRE themes, version 1.0',
+          multilingualTitles: [],
+          dublinCoreMultilinguals: [],
+          date: '2008-06-01',
+          url: 'http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme',
+          defaultNamespace: 'http://inspire.ec.europa.eu/theme',
+          type: 'external',
+          activated: 'y',
+        },
+        {
+          key: 'external.place.regions',
+          dname: 'place',
+          description: 'Generated from NaturalEarth datasets and SeaVox.',
+          filename: 'regions.rdf',
+          title: 'Continents, countries, sea regions of the world.',
+          multilingualTitles: [],
+          dublinCoreMultilinguals: [],
+          date: '2015-07-17',
+          url: 'http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.place.regions',
+          defaultNamespace:
+            'http://geonetwork-opensource.org/thesaurus/naturalearth-and-seavox',
+          type: 'external',
+          activated: 'y',
+        },
+      ],
+    ])
+  )
+}
 class RegistriesApiServiceMock {
+  configuration = {
+    basePath: 'https://demo.georchestra.org/geonetwork/srv/api',
+  }
   searchKeywords = jest.fn(() =>
     of([
       {
@@ -178,13 +223,19 @@ describe('Gn4PlatformService', () => {
           provide: UserfeedbackApiService,
           useClass: UserfeedbackApiServiceMock,
         },
+        {
+          provide: HttpClient,
+          useClass: HttpClientMock,
+        },
       ],
+      imports: [HttpClientTestingModule],
     })
     service = TestBed.inject(Gn4PlatformService)
     meApiService = TestBed.inject(MeApiService)
     toolsApiService = TestBed.inject(ToolsApiService)
     registriesApiService = TestBed.inject(RegistriesApiService)
     userFeedbackApiService = TestBed.inject(UserfeedbackApiService as any)
+    TestBed.inject(HttpTestingController)
   })
 
   it('creates', () => {
@@ -289,15 +340,15 @@ describe('Gn4PlatformService', () => {
     })
     describe('if key is a URI', () => {
       beforeEach(() => {
-        jest.spyOn(service, 'getThesaurusByUri')
+        jest.spyOn(service, 'getKeywordsByUri')
       })
-      it('calls getThesaurusByUri using the thesaurus base path', async () => {
+      it('calls getKeywordsByUri using the thesaurus base path', async () => {
         await lastValueFrom(
           service.translateKey(
             'https://www.eionet.europa.eu/gemet/concept/15028?abc#123'
           )
         )
-        expect(service.getThesaurusByUri).toHaveBeenCalledWith(
+        expect(service.getKeywordsByUri).toHaveBeenCalledWith(
           'https://www.eionet.europa.eu/gemet/concept/'
         )
       })
@@ -319,9 +370,9 @@ describe('Gn4PlatformService', () => {
       })
     })
   })
-  describe('#getThesaurusByUri', () => {
+  describe('#getKeywordsByUri', () => {
     it('calls api service ', async () => {
-      service.getThesaurusByUri('http://inspire.ec.europa.eu/theme/')
+      service.getKeywordsByUri('http://inspire.ec.europa.eu/theme/')
       expect(registriesApiService.searchKeywords).toHaveBeenCalledWith(
         null,
         'fre',
@@ -335,7 +386,7 @@ describe('Gn4PlatformService', () => {
     })
     it('returns mapped thesaurus with translated values', async () => {
       const thesaurusDomain = await lastValueFrom(
-        service.getThesaurusByUri('http://inspire.ec.europa.eu/theme/')
+        service.getKeywordsByUri('http://inspire.ec.europa.eu/theme/')
       )
       expect(thesaurusDomain).toEqual([
         {
@@ -343,12 +394,30 @@ describe('Gn4PlatformService', () => {
             'Localisation des propriétés fondée sur les identifiants des adresses, habituellement le nom de la rue, le numéro de la maison et le code postal.',
           key: 'http://inspire.ec.europa.eu/theme/ad',
           label: 'Adresses',
+          thesaurus: {
+            id: 'external.theme.httpinspireeceuropaeutheme-theme',
+            name: 'GEMET - INSPIRE themes, version 1.0',
+            type: 'theme',
+            url: new URL(
+              'http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme'
+            ),
+          },
+          type: 'theme',
         },
         {
           description:
             "Modèles numériques pour l'altitude des surfaces terrestres, glaciaires et océaniques. Comprend l'altitude terrestre, la bathymétrie et la ligne de rivage.",
           key: 'http://inspire.ec.europa.eu/theme/el',
           label: 'Altitude',
+          thesaurus: {
+            id: 'external.theme.httpinspireeceuropaeutheme-theme',
+            name: 'GEMET - INSPIRE themes, version 1.0',
+            type: 'theme',
+            url: new URL(
+              'http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme'
+            ),
+          },
+          type: 'theme',
         },
       ])
     })
@@ -356,18 +425,36 @@ describe('Gn4PlatformService', () => {
       it('uses default values', async () => {
         service['langService']['iso3'] = 'ger'
         const thesaurusDomain = await lastValueFrom(
-          service.getThesaurusByUri('http://inspire.ec.europa.eu/theme/')
+          service.getKeywordsByUri('http://inspire.ec.europa.eu/theme/')
         )
         expect(thesaurusDomain).toEqual([
           {
             description: 'localization of properties',
             key: 'http://inspire.ec.europa.eu/theme/ad',
             label: 'addresses',
+            thesaurus: {
+              id: 'external.theme.httpinspireeceuropaeutheme-theme',
+              name: 'GEMET - INSPIRE themes, version 1.0',
+              type: 'theme',
+              url: new URL(
+                'http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme'
+              ),
+            },
+            type: 'theme',
           },
           {
             description: 'digital terrain models',
             key: 'http://inspire.ec.europa.eu/theme/el',
             label: 'altitude',
+            thesaurus: {
+              id: 'external.theme.httpinspireeceuropaeutheme-theme',
+              name: 'GEMET - INSPIRE themes, version 1.0',
+              type: 'theme',
+              url: new URL(
+                'http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme'
+              ),
+            },
+            type: 'theme',
           },
         ])
       })

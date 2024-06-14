@@ -90,6 +90,11 @@
   <ng-container *ngIf="isSpatialExtentField">
     <gn-ui-form-field-spatial-extent></gn-ui-form-field-spatial-extent>
   </ng-container>
+  <ng-container *ngIf="isKeywords">
+    <gn-ui-form-field-keywords
+      [control]="formControl"
+    ></gn-ui-form-field-keywords>
+  </ng-container>
   <div
     *ngIf="isFieldInvalid && config.invalidHintKey"
     class="mt-2 text-pink-500 text-sm field-invalid-hint"

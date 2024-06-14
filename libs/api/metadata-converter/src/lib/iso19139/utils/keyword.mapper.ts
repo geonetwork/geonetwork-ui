@@ -1,4 +1,4 @@
-import { KeywordType } from '@geonetwork-ui/common/domain/model/record'
+import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
 
 export function getKeywordTypeFromKeywordTypeCode(
   typeCode: string

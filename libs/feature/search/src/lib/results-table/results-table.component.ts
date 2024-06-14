@@ -6,7 +6,7 @@ import {
   getFileFormat,
   getFormatPriority,
 } from '@geonetwork-ui/util/shared'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { BadgeComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import {
   InteractiveTableColumnComponent,
   InteractiveTableComponent,
@@ -20,7 +20,6 @@ import { CommonModule } from '@angular/common'
 import { map, take } from 'rxjs/operators'
 import { FieldSort } from '@geonetwork-ui/common/domain/model/search'
 import { SearchService } from '../utils/service/search.service'
-import { BadgeComponent } from '@geonetwork-ui/ui/widgets'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 @Component({

@@ -6,7 +6,6 @@ import {
   DatasetServiceDistribution,
   Individual,
   Keyword,
-  KeywordThesaurus,
   RecordStatus,
   Role,
   ServiceEndpoint,
@@ -46,6 +45,7 @@ import {
 } from '../xml-utils'
 import { readKind } from './read-parts'
 import { namePartsToFull } from './utils/individual-name'
+import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus'
 
 export function writeCharacterString(
   text: string
@@ -367,7 +367,7 @@ export function removeKeywords() {
 }
 
 // returns a <gmd:thesaurusName> element
-export function createThesaurus(thesaurus: KeywordThesaurus) {
+export function createThesaurus(thesaurus: ThesaurusModel) {
   return pipe(
     createElement('gmd:thesaurusName'),
     createChild('gmd:CI_Citation'),
