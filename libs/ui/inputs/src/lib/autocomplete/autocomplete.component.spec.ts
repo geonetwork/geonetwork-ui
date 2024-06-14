@@ -183,7 +183,6 @@ describe('AutocompleteComponent', () => {
   })
 
   describe('@Input() value', () => {
-    let anyEmitted
     describe('when set', () => {
       beforeEach(() => {
         const simpleChanges: any = {
@@ -192,8 +191,7 @@ describe('AutocompleteComponent', () => {
             currentValue: { title: 'hello' },
           },
         }
-        component.displayWithFn = (item) => item?.title
-        component.inputSubmitted.subscribe((event) => (anyEmitted = event))
+        component.displayWithFn = (item) => item.title
         component.ngOnChanges(simpleChanges)
       })
       it('set control value', () => {
@@ -208,8 +206,7 @@ describe('AutocompleteComponent', () => {
             currentValue: { title: 'good bye' },
           },
         }
-        component.displayWithFn = (item) => item?.title
-        component.inputSubmitted.subscribe((event) => (anyEmitted = event))
+        component.displayWithFn = (item) => item.title
         component.ngOnChanges(simpleChanges)
       })
       it('set control value', () => {
@@ -225,7 +222,7 @@ describe('AutocompleteComponent', () => {
             currentValue: { title: 'good bye' },
           },
         }
-        component.displayWithFn = (item) => item?.title
+        component.displayWithFn = (item) => item.title
         component.inputSubmitted.subscribe((event) => (anyEmitted = event))
         component.ngOnChanges(simpleChanges)
       })
@@ -238,7 +235,6 @@ describe('AutocompleteComponent', () => {
     })
     describe('when not set on init (firstChange == true)', () => {
       beforeEach(() => {
-        component.inputSubmitted.subscribe((event) => (anyEmitted = event))
         const simpleChanges: any = {
           value: {
             firstChange: true,
@@ -291,7 +287,7 @@ describe('AutocompleteComponent', () => {
     let suggestions
     beforeEach(() => {
       suggestions = null
-      component.action = jest.fn(() => throwError(new Error('blargz')))
+      component.action = jest.fn(() => throwError(() => new Error('blargz')))
       fixture.detectChanges()
       component.suggestions$.subscribe((value) => (suggestions = value))
 

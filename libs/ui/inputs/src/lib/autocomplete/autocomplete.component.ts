@@ -65,14 +65,20 @@ export class AutocompleteComponent
   lastInputValue$ = new ReplaySubject<string>(1)
   error: string | null = null
 
-  @Input() displayWithFn: (AutocompleteItem) => string = (item) => item
+  @Input() displayWithFn: (item: AutocompleteItem) => string = (item) =>
+    JSON.stringify(item)
+
+  displayWithFnInternal = (item: AutocompleteItem) => {
+    if (item === null || item === undefined) return null
+    return this.displayWithFn(item)
+  }
 
   constructor(private cdRef: ChangeDetectorRef) {}
   ngOnChanges(changes: SimpleChanges): void {
     const { value } = changes
     if (value) {
-      const previousTextValue = this.displayWithFn(value.previousValue)
-      const currentTextValue = this.displayWithFn(value.currentValue)
+      const previousTextValue = this.displayWithFnInternal(value.previousValue)
+      const currentTextValue = this.displayWithFnInternal(value.currentValue)
       if (previousTextValue !== currentTextValue) {
         this.updateInputValue(value.currentValue)
       }

@@ -39,13 +39,13 @@
 <mat-autocomplete
   #auto="matAutocomplete"
   (optionSelected)="handleSelection($event)"
-  [displayWith]="displayWithFn"
+  [displayWith]="displayWithFnInternal"
 >
   <mat-option
     *ngFor="let suggestion of suggestions$ | async"
     [value]="suggestion"
     class="p-2 suggestion"
   >
-    {{ displayWithFn(suggestion) }}
+    {{ displayWithFnInternal(suggestion) }}
   </mat-option>
 </mat-autocomplete>
