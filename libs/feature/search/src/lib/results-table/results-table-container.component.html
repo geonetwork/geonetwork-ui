@@ -1,0 +1,9 @@
+<gn-ui-results-table
+  [records]="records$ | async"
+  [recordHasDraft]="hasDraft"
+  [selectedRecordsIdentifiers]="selectedRecords$ | async"
+  [sortOrder]="sortBy$ | async"
+  (recordClick)="handleRecordClick($event)"
+  (recordsSelectedChange)="handleRecordsSelectedChange($event[0], $event[1])"
+  (sortByChange)="handleSortByChange($event[0], $event[1])"
+></gn-ui-results-table>
