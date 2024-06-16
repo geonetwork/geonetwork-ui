@@ -8,23 +8,27 @@
     [matAutocomplete]="auto"
     (keyup.enter)="handleEnter(searchInput.value)"
   />
-  <button
-    type="button"
-    class="text-primary-lightest hover:text-primary hover:bg-gray-50 absolute transition-all duration-100 clear-btn inset-y-0"
-    *ngIf="searchInput.value"
-    aria-label="Clear"
-    (click)="clear()"
-  >
-    <mat-icon class="material-symbols-outlined">close</mat-icon>
-  </button>
-  <button
-    type="button"
-    class="text-primary bg-white hover:text-primary-darkest hover:bg-gray-100 border-gray-300 hover:border-gray-500 absolute transition-all duration-100 search-btn rounded-r inset-y-0 right-0"
-    aria-label="Trigger search"
-    (click)="handleClickSearch()"
-  >
-    <mat-icon class="material-symbols-outlined">search</mat-icon>
-  </button>
+  <div class="flex flex-row absolute inset-y-0 right-0">
+    <button
+      type="button"
+      class="text-primary-lightest hover:text-primary hover:bg-gray-50 transition-all duration-100 clear-btn"
+      *ngIf="searchInput.value"
+      aria-label="Clear"
+      (click)="clear()"
+    >
+      <mat-icon class="material-symbols-outlined">close</mat-icon>
+    </button>
+    <button
+      type="button"
+      class="text-primary bg-white hover:text-primary-darkest hover:bg-gray-100 border-gray-300 hover:border-gray-500 transition-all duration-100 search-btn rounded-r"
+      aria-label="Trigger search"
+      *ngIf="allowSubmit"
+      data-test="autocomplete-submit-btn"
+      (click)="handleClickSearch()"
+    >
+      <mat-icon class="material-symbols-outlined">search</mat-icon>
+    </button>
+  </div>
   <gn-ui-popup-alert
     *ngIf="error"
     class="absolute mt-2 w-full top-[100%] left-0"
@@ -39,13 +43,13 @@
 <mat-autocomplete
   #auto="matAutocomplete"
   (optionSelected)="handleSelection($event)"
-  [displayWith]="displayWithFn"
+  [displayWith]="displayWithFnInternal"
 >
   <mat-option
     *ngFor="let suggestion of suggestions$ | async"
     [value]="suggestion"
     class="p-2 suggestion"
   >
-    {{ displayWithFn(suggestion) }}
+    {{ displayWithFnInternal(suggestion) }}
   </mat-option>
 </mat-autocomplete>

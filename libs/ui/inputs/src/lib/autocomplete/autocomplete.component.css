@@ -3,7 +3,6 @@
 }
 .clear-btn {
   width: var(--input-height);
-  right: var(--input-height);
   height: 100%;
 }
 .search-btn {

@@ -11,7 +11,7 @@ import {
   AutocompleteComponent,
   AutocompleteItem,
 } from '@geonetwork-ui/ui/inputs'
-import { Observable, firstValueFrom } from 'rxjs'
+import { firstValueFrom, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
@@ -32,7 +32,7 @@ export class FuzzySearchComponent implements OnInit {
   @Output() inputSubmitted = new EventEmitter<string>()
   searchInputValue$: Observable<{ title: string }>
 
-  displayWithFn: (record: CatalogRecord) => string = (record) => record?.title
+  displayWithFn: (record: CatalogRecord) => string = (record) => record.title
 
   autoCompleteAction = (query: string) =>
     this.recordsRepository

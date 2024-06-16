@@ -1,14 +1,15 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
-import { AutocompleteComponent } from './autocomplete.component'
-import { of, throwError } from 'rxjs'
-import { MatAutocompleteModule } from '@angular/material/autocomplete'
-import { MatIconModule } from '@angular/material/icon'
-import { ReactiveFormsModule } from '@angular/forms'
+import {
+  AutocompleteComponent,
+  AutocompleteItem,
+} from './autocomplete.component'
+import { Observable, of, throwError } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 export default {
   title: 'Inputs/AutocompleteComponent',
@@ -16,26 +17,35 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [
+        AutocompleteComponent,
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        MatAutocompleteModule,
-        MatIconModule,
-        ReactiveFormsModule,
+        BrowserAnimationsModule,
       ],
     }),
   ],
 } as Meta<AutocompleteComponent>
 
 type AutocompleteComponentWithActionResult = AutocompleteComponent & {
-  actionResult: string[]
+  actionResult: (value: string) => Observable<AutocompleteItem[]>
   actionThrowsError: boolean
+  value: AutocompleteItem
+}
+
+const initialItems = ['Hello', 'world', 'from', 'storybook']
+function filterResults(value: string) {
+  return initialItems.filter((item) => {
+    return item.toLowerCase().includes(value?.toLowerCase())
+  })
 }
 
 export const Primary: StoryObj<AutocompleteComponentWithActionResult> = {
   args: {
     placeholder: 'Full text search',
-    actionResult: ['Hello', 'world'],
+    minCharacterCount: 3,
     actionThrowsError: false,
+    clearOnSelection: false,
+    allowSubmit: true,
   },
   argTypes: {
     itemSelected: {
@@ -51,10 +61,34 @@ export const Primary: StoryObj<AutocompleteComponentWithActionResult> = {
   render: (args) => ({
     props: {
       ...args,
-      action: () =>
+      action: (value: string) =>
         args.actionThrowsError
-          ? throwError(new Error('Something went terribly wrong!'))
-          : of(args.actionResult),
+          ? throwError(() => new Error('Something went terribly wrong!'))
+          : of(filterResults(value)),
     },
   }),
 }
+
+export const NoMinimumCharacterCount: StoryObj<AutocompleteComponentWithActionResult> =
+  {
+    args: {
+      placeholder:
+        'Click to show suggestions! selecting one should clear this field',
+      minCharacterCount: 0,
+      clearOnSelection: true,
+    },
+    argTypes: {
+      itemSelected: {
+        action: 'itemSelected',
+      },
+      inputSubmitted: {
+        action: 'inputSubmitted',
+      },
+    },
+    render: (args) => ({
+      props: {
+        ...args,
+        action: (value: string) => of(filterResults(value)),
+      },
+    }),
+  }

@@ -1,19 +1,10 @@
-import {
-  componentWrapperDecorator,
-  Meta,
-  moduleMetadata,
-  StoryObj,
-} from '@storybook/angular'
+import { componentWrapperDecorator, Meta, StoryObj } from '@storybook/angular'
 import { PopupAlertComponent } from './popup-alert.component'
-import { MatIconModule } from '@angular/material/icon'
 
 export default {
   title: 'Widgets/PopupAlertComponent',
   component: PopupAlertComponent,
   decorators: [
-    moduleMetadata({
-      imports: [MatIconModule],
-    }),
     componentWrapperDecorator(
       (story) => `
 <div class="border border-gray-300 p-2" style="width: 600px; height:300px; resize: both; overflow: auto">
@@ -46,6 +37,6 @@ export const Primary: StoryObj<PopupAlertComponentWithContent> = {
   },
   render: (args) => ({
     props: args,
-    template: `<gn-ui-popup-alert [icon]='icon' [position]='position'>${content}</gn-ui-popup-alert>`,
+    template: `<gn-ui-popup-alert [icon]='icon' [position]='position' [type]='type'>${content}</gn-ui-popup-alert>`,
   }),
 }

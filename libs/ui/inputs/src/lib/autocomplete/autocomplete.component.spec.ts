@@ -1,15 +1,13 @@
 import { ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { ReactiveFormsModule } from '@angular/forms'
-import { MatAutocompleteModule } from '@angular/material/autocomplete'
-import { MatIconModule } from '@angular/material/icon'
 import { By } from '@angular/platform-browser'
-import { of, throwError } from 'rxjs'
+import { of, Subscription, throwError } from 'rxjs'
 import {
   AutocompleteComponent,
   AutocompleteItem,
 } from './autocomplete.component'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('AutocompleteComponent', () => {
   let component: AutocompleteComponent
@@ -18,12 +16,10 @@ describe('AutocompleteComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        MatAutocompleteModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        UiWidgetsModule,
+        AutocompleteComponent,
+        NoopAnimationsModule,
+        TranslateModule.forRoot(),
       ],
-      declarations: [AutocompleteComponent],
     })
       .overrideComponent(AutocompleteComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
@@ -44,54 +40,78 @@ describe('AutocompleteComponent', () => {
   })
 
   describe('suggestions', () => {
-    let emitted
-    let sub
-    beforeEach(() => {
-      fixture.detectChanges()
-      emitted = null
-      sub = component.suggestions$.subscribe((e) => (emitted = e))
-    })
-    afterEach(() => {
-      sub.unsubscribe()
-    })
-    describe('when writing text over 2 chars', () => {
+    let emitted: unknown
+    let sub: Subscription
+    describe('with minCharacterCount above 0', () => {
       beforeEach(() => {
-        component.inputRef.nativeElement.value = 'bla'
-        component.inputRef.nativeElement.dispatchEvent(new InputEvent('input'))
+        fixture.detectChanges()
+        emitted = null
+        sub = component.suggestions$.subscribe((e) => (emitted = e))
       })
-      it('calls the action given as input after debounce', () => {
+      afterEach(() => {
+        sub.unsubscribe()
+      })
+      describe('when writing text over 2 chars', () => {
+        beforeEach(() => {
+          component.inputRef.nativeElement.value = 'bla'
+          component.inputRef.nativeElement.dispatchEvent(
+            new InputEvent('input')
+          )
+        })
+        it('calls the action given as input after debounce', () => {
+          jest.runOnlyPendingTimers()
+          expect(component.action).toHaveBeenCalledWith('bla')
+        })
+        it('emits suggestions', () => {
+          jest.runOnlyPendingTimers()
+          expect(emitted).toEqual(['aa', 'bb', 'cc'])
+        })
+        it('does not show an error popup', () => {
+          const popup = fixture.debugElement.query(By.css('gn-ui-popup-alert'))
+          expect(popup).toBeFalsy()
+        })
+      })
+      describe('when clicking a predefined button', () => {
+        beforeEach(() => {
+          component.updateInputValue({ title: 'cc' } as AutocompleteItem)
+        })
+        it('calls the action with object given as input', () => {
+          expect(component.action).toHaveBeenCalledWith('cc')
+        })
+      })
+      describe('when writing text with 2 chars or less', () => {
+        beforeEach(() => {
+          component.inputRef.nativeElement.value = 'bl'
+          component.inputRef.nativeElement.dispatchEvent(
+            new InputEvent('input')
+          )
+        })
+        it('does not call the action given as input after debounce', () => {
+          jest.runOnlyPendingTimers()
+          expect(component.action).not.toHaveBeenCalled()
+        })
+        it('emit an empty suggestions list', () => {
+          jest.runOnlyPendingTimers()
+          expect(emitted).toEqual([])
+        })
+      })
+    })
+    describe('when minCharacterCount is 0', () => {
+      beforeEach(() => {
+        component.minCharacterCount = 0
+        fixture.detectChanges()
+        emitted = null
+        sub = component.suggestions$.subscribe((e) => (emitted = e))
+        component.inputRef.nativeElement.value = ''
+        component.inputRef.nativeElement.dispatchEvent(new InputEvent('focus'))
+      })
+      it('calls action and shows suggestions on focus', () => {
         jest.runOnlyPendingTimers()
-        expect(component.action).toHaveBeenCalledWith('bla')
+        expect(component.action).toHaveBeenCalled()
       })
       it('emits suggestions', () => {
         jest.runOnlyPendingTimers()
         expect(emitted).toEqual(['aa', 'bb', 'cc'])
-      })
-      it('does not show an error popup', () => {
-        const popup = fixture.debugElement.query(By.css('gn-ui-popup-alert'))
-        expect(popup).toBeFalsy()
-      })
-    })
-    describe('when clicking a predefined button', () => {
-      beforeEach(() => {
-        component.updateInputValue({ title: 'cc' } as AutocompleteItem)
-      })
-      it('calls the action with object given as input', () => {
-        expect(component.action).toHaveBeenCalledWith('cc')
-      })
-    })
-    describe('when writing text with 2 chars or less', () => {
-      beforeEach(() => {
-        component.inputRef.nativeElement.value = 'bl'
-        component.inputRef.nativeElement.dispatchEvent(new InputEvent('input'))
-      })
-      it('does not call the action given as input after debounce', () => {
-        jest.runOnlyPendingTimers()
-        expect(component.action).not.toHaveBeenCalled()
-      })
-      it('does not emit', () => {
-        jest.runOnlyPendingTimers()
-        expect(emitted).toEqual(null)
       })
     })
   })
@@ -164,9 +184,6 @@ describe('AutocompleteComponent', () => {
       it('sends a submitted value', () => {
         expect(anyEmitted).toEqual(['bla'])
       })
-      it('closes the autocomplete panel', () => {
-        expect(component.triggerRef.closePanel).toHaveBeenCalled()
-      })
     })
     describe('with an empty text value', () => {
       beforeEach(() => {
@@ -180,10 +197,35 @@ describe('AutocompleteComponent', () => {
         expect(anyEmitted).toEqual([''])
       })
     })
+    describe('allowSubmit is false', () => {
+      let emitted
+      beforeEach(() => {
+        component.allowSubmit = false
+        fixture.detectChanges()
+        emitted = null
+        component.cancelEnter = false
+        component.inputSubmitted.subscribe((e) => (emitted = e))
+        component.inputRef.nativeElement.value = 'blarg'
+        component.inputRef.nativeElement.dispatchEvent(
+          new KeyboardEvent('keyup', {
+            key: 'Enter',
+            bubbles: true,
+          })
+        )
+      })
+      it('does not show a submit button', () => {
+        const button = fixture.debugElement.query(
+          By.css('[data-test=autocomplete-submit-btn]')
+        )
+        expect(button).toBeFalsy()
+      })
+      it('does not emit inputSubmitted on enter', () => {
+        expect(emitted).toBeNull()
+      })
+    })
   })
 
   describe('@Input() value', () => {
-    let anyEmitted
     describe('when set', () => {
       beforeEach(() => {
         const simpleChanges: any = {
@@ -192,8 +234,7 @@ describe('AutocompleteComponent', () => {
             currentValue: { title: 'hello' },
           },
         }
-        component.displayWithFn = (item) => item?.title
-        component.inputSubmitted.subscribe((event) => (anyEmitted = event))
+        component.displayWithFn = (item) => item.title
         component.ngOnChanges(simpleChanges)
       })
       it('set control value', () => {
@@ -208,8 +249,7 @@ describe('AutocompleteComponent', () => {
             currentValue: { title: 'good bye' },
           },
         }
-        component.displayWithFn = (item) => item?.title
-        component.inputSubmitted.subscribe((event) => (anyEmitted = event))
+        component.displayWithFn = (item) => item.title
         component.ngOnChanges(simpleChanges)
       })
       it('set control value', () => {
@@ -225,7 +265,7 @@ describe('AutocompleteComponent', () => {
             currentValue: { title: 'good bye' },
           },
         }
-        component.displayWithFn = (item) => item?.title
+        component.displayWithFn = (item) => item.title
         component.inputSubmitted.subscribe((event) => (anyEmitted = event))
         component.ngOnChanges(simpleChanges)
       })
@@ -238,7 +278,6 @@ describe('AutocompleteComponent', () => {
     })
     describe('when not set on init (firstChange == true)', () => {
       beforeEach(() => {
-        component.inputSubmitted.subscribe((event) => (anyEmitted = event))
         const simpleChanges: any = {
           value: {
             firstChange: true,
@@ -291,7 +330,7 @@ describe('AutocompleteComponent', () => {
     let suggestions
     beforeEach(() => {
       suggestions = null
-      component.action = jest.fn(() => throwError(new Error('blargz')))
+      component.action = jest.fn(() => throwError(() => new Error('blargz')))
       fixture.detectChanges()
       component.suggestions$.subscribe((value) => (suggestions = value))
 

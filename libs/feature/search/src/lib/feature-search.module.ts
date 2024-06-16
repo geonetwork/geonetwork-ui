@@ -14,7 +14,7 @@ import { SearchEffects } from './state/effects'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './state/reducer'
 import { ResultsHitsContainerComponent } from './results-hits-number/results-hits.container.component'
 import { SearchStateContainerDirective } from './state/container/search-state.container.directive'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { AutocompleteComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { NgModule } from '@angular/core'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { FavoriteStarComponent } from './favorites/favorite-star/favorite-star.component'
@@ -51,6 +51,7 @@ import { Gn4Repository } from '@geonetwork-ui/api/repository'
     FacetsModule,
     MatIconModule,
     UiWidgetsModule,
+    AutocompleteComponent,
   ],
   exports: [
     SortByComponent,

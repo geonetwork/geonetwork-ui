@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { PopupAlertComponent } from './popup-alert.component'
 import { Component, Input } from '@angular/core'
 import { By } from '@angular/platform-browser'
-import { MatIconModule } from '@angular/material/icon'
 
 @Component({
   template: '<gn-ui-popup-alert>{{message}}</gn-ui-popup-alert>',
@@ -19,8 +18,8 @@ describe('PopupAlertComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PopupAlertComponent, PopupAlertWrapperComponent],
-      imports: [MatIconModule],
+      declarations: [PopupAlertWrapperComponent],
+      imports: [PopupAlertComponent],
     }).compileComponents()
   })
 

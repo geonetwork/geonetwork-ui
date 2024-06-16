@@ -13,25 +13,29 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core'
-import { UntypedFormControl } from '@angular/forms'
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms'
 import {
   MatAutocomplete,
+  MatAutocompleteModule,
   MatAutocompleteSelectedEvent,
   MatAutocompleteTrigger,
 } from '@angular/material/autocomplete'
-import { merge, Observable, of, ReplaySubject, Subscription } from 'rxjs'
+import { first, merge, Observable, of, ReplaySubject, Subscription } from 'rxjs'
 import {
   catchError,
   debounceTime,
   distinctUntilChanged,
   filter,
   finalize,
-  first,
   map,
   switchMap,
   take,
   tap,
 } from 'rxjs/operators'
+import { MatIconModule } from '@angular/material/icon'
+import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
+import { CommonModule } from '@angular/common'
+import { TranslateModule } from '@ngx-translate/core'
 
 export type AutocompleteItem = unknown
 
@@ -40,6 +44,15 @@ export type AutocompleteItem = unknown
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    MatIconModule,
+    PopupAlertComponent,
+    MatAutocompleteModule,
+    CommonModule,
+    TranslateModule,
+    ReactiveFormsModule,
+  ],
 })
 export class AutocompleteComponent
   implements OnInit, AfterViewInit, OnDestroy, OnChanges
@@ -49,6 +62,8 @@ export class AutocompleteComponent
   @Input() value?: AutocompleteItem
   @Input() clearOnSelection = false
   @Input() autoFocus = false
+  @Input() minCharacterCount? = 3
+  @Input() allowSubmit = true
   @Output() itemSelected = new EventEmitter<AutocompleteItem>()
   @Output() inputSubmitted = new EventEmitter<string>()
   @Output() inputCleared = new EventEmitter<void>()
@@ -57,22 +72,28 @@ export class AutocompleteComponent
   @ViewChild('searchInput') inputRef: ElementRef<HTMLInputElement>
 
   searching: boolean
-  suggestions$: Observable<AutocompleteItem[]>
   control = new UntypedFormControl()
-  subscription = new Subscription()
   cancelEnter = true
   selectionSubject = new ReplaySubject<MatAutocompleteSelectedEvent>(1)
   lastInputValue$ = new ReplaySubject<string>(1)
   error: string | null = null
+  suggestions$: Observable<AutocompleteItem[]>
+  subscription = new Subscription()
 
-  @Input() displayWithFn: (AutocompleteItem) => string = (item) => item
+  @Input() displayWithFn: (item: AutocompleteItem) => string = (item) =>
+    item.toString()
+
+  displayWithFnInternal = (item?: AutocompleteItem) => {
+    if (item === null || item === undefined) return null
+    return this.displayWithFn(item)
+  }
 
   constructor(private cdRef: ChangeDetectorRef) {}
   ngOnChanges(changes: SimpleChanges): void {
     const { value } = changes
     if (value) {
-      const previousTextValue = this.displayWithFn(value.previousValue)
-      const currentTextValue = this.displayWithFn(value.currentValue)
+      const previousTextValue = this.displayWithFnInternal(value.previousValue)
+      const currentTextValue = this.displayWithFnInternal(value.currentValue)
       if (previousTextValue !== currentTextValue) {
         this.updateInputValue(value.currentValue)
       }
@@ -80,20 +101,33 @@ export class AutocompleteComponent
   }
 
   ngOnInit(): void {
-    this.suggestions$ = merge(
+    const newValue$ = merge(
+      of(''),
+      this.inputCleared.pipe(map(() => '')),
       this.control.valueChanges.pipe(
         filter((value) => typeof value === 'string'),
-        filter((value: string) => value.length > 2),
-        debounceTime(400),
         distinctUntilChanged(),
-        tap(() => (this.searching = true))
-      ),
-      this.control.valueChanges.pipe(
-        filter((value) => typeof value === 'object' && value.title),
-        map((item) => item.title)
+        debounceTime(400)
       )
+    )
+
+    const externalValueChange$ = this.control.valueChanges.pipe(
+      filter((value) => typeof value === 'object' && value.title),
+      map((item) => item.title)
+    )
+
+    // this observable emits arrays of suggestions loaded using the given action
+    const suggestionsFromAction = merge(
+      newValue$.pipe(
+        filter((value: string) => value.length >= this.minCharacterCount)
+      ),
+      externalValueChange$
     ).pipe(
-      switchMap((value) => (value ? this.action(value) : of([]))),
+      tap(() => {
+        this.searching = true
+        this.error = null
+      }),
+      switchMap((value) => this.action(value)),
       catchError((error: Error) => {
         this.error = error.message
         return of([])
@@ -101,11 +135,32 @@ export class AutocompleteComponent
       finalize(() => (this.searching = false))
     )
 
-    this.subscription = this.control.valueChanges.subscribe((any) => {
-      if (any !== '') {
-        this.cancelEnter = false
-      }
-    })
+    this.suggestions$ = merge(
+      suggestionsFromAction,
+      // if a new value is under the min char count, clear suggestions
+      newValue$.pipe(
+        filter((value: string) => value.length < this.minCharacterCount),
+        map(() => [])
+      )
+    )
+
+    // close the panel whenever suggestions are cleared
+    this.subscription.add(
+      this.suggestions$
+        .pipe(filter((suggestions) => suggestions.length === 0))
+        .subscribe(() => {
+          this.triggerRef?.closePanel()
+        })
+    )
+
+    this.subscription.add(
+      this.control.valueChanges.subscribe((any) => {
+        if (any !== '') {
+          this.cancelEnter = false
+        }
+      })
+    )
+
     this.control.valueChanges
       .pipe(filter((value) => typeof value === 'string'))
       .subscribe(this.lastInputValue$)
@@ -120,7 +175,7 @@ export class AutocompleteComponent
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe()
+    this.subscription?.unsubscribe()
   }
 
   updateInputValue(value: AutocompleteItem) {
@@ -139,19 +194,16 @@ export class AutocompleteComponent
       .pipe(take(1))
       .subscribe((selection) => selection && selection.option.deselect())
     this.inputRef.nativeElement.focus()
-    this.triggerRef.closePanel()
   }
 
   handleEnter(any: string) {
-    if (!this.cancelEnter) {
+    if (!this.cancelEnter && this.allowSubmit) {
       this.inputSubmitted.emit(any)
-      this.triggerRef.closePanel()
     }
   }
 
   handleClickSearch() {
     this.inputSubmitted.emit(this.inputRef.nativeElement.value)
-    this.triggerRef.closePanel()
   }
 
   handleSelection(event: MatAutocompleteSelectedEvent) {
