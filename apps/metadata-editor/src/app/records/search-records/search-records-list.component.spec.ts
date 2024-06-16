@@ -24,11 +24,11 @@ const totalPages = 25
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'gn-ui-results-table',
+  selector: 'gn-ui-results-table-container',
   template: '',
   standalone: true,
 })
-export class RecordTableComponent {
+export class ResultsTableContainerComponent {
   @Output() recordClick = new EventEmitter<CatalogRecord>()
 }
 
@@ -103,7 +103,7 @@ describe('SearchRecordsComponent', () => {
           CommonModule,
           TranslateModule,
           MatIconModule,
-          RecordTableComponent,
+          ResultsTableContainerComponent,
           PaginationButtonsComponent,
           UiInputsModule,
           RecordsCountComponent,
@@ -125,7 +125,7 @@ describe('SearchRecordsComponent', () => {
     let table, pagination
     beforeEach(() => {
       table = fixture.debugElement.query(
-        By.directive(RecordTableComponent)
+        By.directive(ResultsTableContainerComponent)
       ).componentInstance
       pagination = fixture.debugElement.query(
         By.directive(PaginationButtonsComponent)

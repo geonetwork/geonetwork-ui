@@ -4,6 +4,12 @@ import { ActivatedRoute } from '@angular/router'
 import { TranslateModule } from '@ngx-translate/core'
 import { of } from 'rxjs'
 import { DashboardMenuComponent } from './dashboard-menu.component'
+import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+
+class RecordsRepositoryMock {
+  getAllDrafts = jest.fn().mockReturnValue(of(DATASET_RECORDS))
+}
 
 describe('DashboardMenuComponent', () => {
   let component: DashboardMenuComponent
@@ -16,6 +22,10 @@ describe('DashboardMenuComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: { params: of({ id: 1 }) },
+        },
+        {
+          provide: RecordsRepositoryInterface,
+          useClass: RecordsRepositoryMock,
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],
