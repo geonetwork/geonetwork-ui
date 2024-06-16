@@ -4,10 +4,9 @@
     [displayWithFn]="displayWithFn"
     [action]="autoCompleteAction"
     (itemSelected)="handleItemSelection($event)"
-    (inputSubmitted)="handleInputSubmission($event)"
-    (inputCleared)="handleInputCleared()"
-    [value]="searchInputValue$ | async"
     [clearOnSelection]="true"
+    [minCharacterCount]="0"
+    [allowSubmit]="false"
   ></gn-ui-autocomplete>
   <div class="flex gap-2 flex-wrap">
     <gn-ui-badge
