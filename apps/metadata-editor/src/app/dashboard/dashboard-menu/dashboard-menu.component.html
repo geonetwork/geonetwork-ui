@@ -67,6 +67,9 @@
     >
       <mat-icon class="material-symbols-outlined">edit_note</mat-icon>
       <span translate="">dashboard.records.myDraft</span>
+      <gn-ui-badge [style.--gn-ui-badge-rounded]="'100px'">{{
+        draftsCount$ | async
+      }}</gn-ui-badge>
     </a>
     <a
       class="menu-item"
