@@ -52,4 +52,7 @@ export abstract class RecordsRepositoryInterface {
 
   abstract clearRecordDraft(uniqueIdentifier: string): void
   abstract recordHasDraft(uniqueIdentifier: string): boolean
+
+  /** will return all pending drafts, both published and not published */
+  abstract getAllDrafts(): Observable<CatalogRecord[]>
 }

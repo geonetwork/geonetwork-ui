@@ -444,4 +444,38 @@ describe('Gn4Repository', () => {
       })
     })
   })
+
+  describe('#getAllDrafts', () => {
+    beforeEach(async () => {
+      window.localStorage.clear()
+      // save 3 drafts
+      await firstValueFrom(
+        repository.saveRecordAsDraft({
+          ...DATASET_RECORD_SIMPLE,
+          uniqueIdentifier: 'DRAFT-1',
+        })
+      )
+      await firstValueFrom(
+        repository.saveRecordAsDraft({
+          ...DATASET_RECORD_SIMPLE,
+          uniqueIdentifier: 'DRAFT-2',
+        })
+      )
+      await firstValueFrom(
+        repository.saveRecordAsDraft({
+          ...DATASET_RECORD_SIMPLE,
+          uniqueIdentifier: 'DRAFT-3',
+        })
+      )
+    })
+    it('returns all drafts', async () => {
+      const drafts = await lastValueFrom(repository.getAllDrafts())
+      expect(drafts.length).toBe(3)
+      expect(drafts.map((d) => d.uniqueIdentifier)).toEqual([
+        'DRAFT-1',
+        'DRAFT-2',
+        'DRAFT-3',
+      ])
+    })
+  })
 })

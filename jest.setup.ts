@@ -20,10 +20,19 @@ class LocalStorageRefStub {
       return key in this.store ? this.store[key] : null
     }),
     setItem: jest.fn((key: string, value: string) => {
+      this.mockLocalStorage[key] = `${value}` // we're also saving it here to be able to get it with {...localStorage}
       this.store[key] = `${value}`
     }),
-    removeItem: jest.fn((key: string) => delete this.store[key]),
-    clear: jest.fn(() => (this.store = {})),
+    removeItem: jest.fn((key: string) => {
+      delete this.mockLocalStorage[key]
+      delete this.store[key]
+    }),
+    clear: jest.fn(() => {
+      for (const key in this.store) {
+        delete this.mockLocalStorage[key]
+      }
+      this.store = {}
+    }),
   }
   public getLocalStorage() {
     return this.mockLocalStorage
