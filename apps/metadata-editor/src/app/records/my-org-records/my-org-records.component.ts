@@ -48,7 +48,6 @@ export class MyOrgRecordsComponent {
       this.router.getDatahubSearchRoute(),
       window.location.toString()
     )
-    console.log('url', url)
     url.searchParams.append('publisher', this.orgName)
     return url.toString()
   }
