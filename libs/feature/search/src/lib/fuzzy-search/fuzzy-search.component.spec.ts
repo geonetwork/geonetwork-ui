@@ -49,7 +49,11 @@ describe('FuzzySearchComponent', () => {
           useClass: RecordsRepositoryMock,
         },
       ],
-      imports: [UiInputsModule, TranslateModule.forRoot()],
+      imports: [
+        AutocompleteComponent,
+        UiInputsModule,
+        TranslateModule.forRoot(),
+      ],
     }).compileComponents()
 
     searchService = TestBed.inject(SearchService)
