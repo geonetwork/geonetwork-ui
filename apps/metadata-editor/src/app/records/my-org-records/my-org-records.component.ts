@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core'
+import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordsListComponent } from '../records-list.component'
@@ -7,7 +7,6 @@ import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { EditorRouterService } from '../../router.service'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 import { take } from 'rxjs'
 
 @Component({
@@ -49,7 +48,6 @@ export class MyOrgRecordsComponent {
       this.router.getDatahubSearchRoute(),
       window.location.toString()
     )
-
     url.searchParams.append('publisher', this.orgName)
     return url.toString()
   }

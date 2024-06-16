@@ -14,7 +14,7 @@ export class EditorRouterService {
   }
 
   getSearchRoute(): string {
-    return 'records/search'
+    return 'catalog/search'
   }
 
   getDatahubSearchRoute(): string {

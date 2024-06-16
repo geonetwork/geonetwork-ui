@@ -1,50 +1,84 @@
-<div class="flex flex-col gap-3">
-  <a
-    class="menu-item"
-    routerLink="/records/my-org"
-    routerLinkActive="btn-active"
-    #rlaMyOrg="routerLinkActive"
-  >
-    <mat-icon class="material-symbols-outlined">home</mat-icon>
-    <span translate="">dashboard.records.myOrg</span>
-  </a>
+<div class="flex flex-col gap-4">
+  <div class="flex flex-col">
+    <div class="menu-title" translate="">dashboard.labels.catalog</div>
+    <a
+      class="menu-item"
+      routerLink="/catalog/search"
+      routerLinkActive="btn-active"
+      #rlaAll="routerLinkActive"
+    >
+      <mat-icon class="material-symbols-outlined">newsmode</mat-icon>
+      <span translate="">dashboard.catalog.allRecords</span>
+    </a>
+    <a
+      class="menu-item"
+      routerLink="/catalog/discussion"
+      routerLinkActive="btn-active"
+      #rlaDiscussion="routerLinkActive"
+    >
+      <mat-icon class="material-symbols-outlined">chat_bubble</mat-icon>
+      <span translate="">dashboard.catalog.discussion</span>
+    </a>
+    <a
+      class="menu-item"
+      routerLink="/catalog/calendar"
+      routerLinkActive="btn-active"
+      #rlaCalendar="routerLinkActive"
+    >
+      <mat-icon class="material-symbols-outlined">calendar_today</mat-icon>
+      <span translate="">dashboard.catalog.calendar</span>
+    </a>
+    <a
+      class="menu-item"
+      routerLink="/catalog/contacts"
+      routerLinkActive="btn-active"
+      #rlaContacts="routerLinkActive"
+    >
+      <mat-icon class="material-symbols-outlined">person</mat-icon>
+      <span translate="">dashboard.catalog.contacts</span>
+    </a>
+    <a
+      class="menu-item"
+      routerLink="/catalog/thesaurus"
+      routerLinkActive="btn-active"
+      #rlaThesaurus="routerLinkActive"
+    >
+      <mat-icon class="material-symbols-outlined">label</mat-icon>
+      <span translate="">dashboard.catalog.thesaurus</span>
+    </a>
+  </div>
 
-  <a
-    class="menu-item"
-    routerLink="/records/search"
-    routerLinkActive="btn-active"
-    #rlaAll="routerLinkActive"
-  >
-    <mat-icon class="material-symbols-outlined">work_outline</mat-icon>
-    <span translate="">dashboard.records.all</span>
-  </a>
-
-  <div class="menu-title" translate="">dashboard.labels.mySpace</div>
-  <a
-    class="menu-item"
-    routerLink="/records/my-records"
-    routerLinkActive="btn-active"
-    #rlaMyRecords="routerLinkActive"
-  >
-    <mat-icon class="material-symbols-outlined">post_add</mat-icon>
-    <span translate="">dashboard.records.myRecords</span>
-  </a>
-  <a
-    class="menu-item"
-    routerLink="/records/my-draft"
-    routerLinkActive="btn-active"
-    #rlaMyDraft="routerLinkActive"
-  >
-    <mat-icon class="material-symbols-outlined">edit_note</mat-icon>
-    <span translate="">dashboard.records.myDraft</span>
-  </a>
-  <a
-    class="menu-item"
-    routerLink="/records/my-library"
-    routerLinkActive="btn-active"
-    #rlaMyLibrary="routerLinkActive"
-  >
-    <mat-icon class="material-symbols-outlined">bookmark_border</mat-icon>
-    <span translate="">dashboard.records.myLibrary</span>
-  </a>
+  <div class="flex flex-col">
+    <div class="menu-title" translate="">dashboard.labels.mySpace</div>
+    <a
+      class="menu-item"
+      routerLink="/my-space/my-records"
+      routerLinkActive="btn-active"
+      #rlaMyRecords="routerLinkActive"
+    >
+      <mat-icon class="material-symbols-outlined">post_add</mat-icon>
+      <span translate="">dashboard.records.myRecords</span>
+    </a>
+    <a
+      class="menu-item"
+      routerLink="/my-space/my-draft"
+      routerLinkActive="btn-active"
+      #rlaMyDraft="routerLinkActive"
+    >
+      <mat-icon class="material-symbols-outlined">edit_note</mat-icon>
+      <span translate="">dashboard.records.myDraft</span>
+      <gn-ui-badge [style.--gn-ui-badge-rounded]="'100px'">{{
+        draftsCount$ | async
+      }}</gn-ui-badge>
+    </a>
+    <a
+      class="menu-item"
+      routerLink="/my-space/templates"
+      routerLinkActive="btn-active"
+      #rlaMyLibrary="routerLinkActive"
+    >
+      <mat-icon class="material-symbols-outlined">lightbulb</mat-icon>
+      <span translate="">dashboard.records.templates</span>
+    </a>
+  </div>
 </div>

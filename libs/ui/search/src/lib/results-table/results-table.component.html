@@ -1,13 +1,13 @@
 <gn-ui-interactive-table
-  [items]="records$ | async"
+  [items]="records"
   (itemClick)="handleRecordClick($event)"
 >
   <!-- SELECTED COLUMN -->
   <gn-ui-interactive-table-column>
     <ng-template #header>
       <gn-ui-checkbox
-        [checked]="isAllSelected() | async"
-        [indeterminate]="isSomeSelected() | async"
+        [checked]="isAllSelected()"
+        [indeterminate]="isSomeSelected()"
         (changed)="toggleSelectAll()"
         type="default"
         class="-m-2 mr-3"
@@ -16,7 +16,7 @@
     </ng-template>
     <ng-template #cell let-item>
       <gn-ui-checkbox
-        [checked]="isChecked(item) | async"
+        [checked]="isChecked(item)"
         (changed)="handleRecordSelectedChange($event, item)"
         class="-m-2"
         type="default"
@@ -27,7 +27,7 @@
   <!-- TITLE COLUMN -->
   <gn-ui-interactive-table-column
     [sortable]="true"
-    [activeSort]="isSortedBy('resourceTitleObject.default.keyword') | async"
+    [activeSort]="isSortedBy('resourceTitleObject.default.keyword')"
     (sortChange)="setSortBy('resourceTitleObject.default.keyword', $event)"
   >
     <ng-template #header>
@@ -37,7 +37,7 @@
       <div class="flex flex-row items-center gap-2 max-w-full">
         <span class="overflow-hidden text-ellipsis">{{ item.title }}</span>
         <gn-ui-badge
-          *ngIf="hasDraft(item)"
+          *ngIf="recordHasDraft(item)"
           [style.--gn-ui-badge-padding]="'0.4em 0.6em'"
           [style.--gn-ui-badge-text-color]="'#3d2006'"
           [style.--gn-ui-badge-background-color]="'#ffbc7b'"
@@ -85,7 +85,7 @@
   <!-- OWNER COLUMN -->
   <gn-ui-interactive-table-column
     [sortable]="true"
-    [activeSort]="isSortedBy('recordOwner') | async"
+    [activeSort]="isSortedBy('recordOwner')"
     (sortChange)="setSortBy('recordOwner', $event)"
   >
     <ng-template #header>
@@ -110,7 +110,7 @@
   <!-- UPDATE DATE COLUMN -->
   <gn-ui-interactive-table-column
     [sortable]="true"
-    [activeSort]="isSortedBy('changeDate') | async"
+    [activeSort]="isSortedBy('changeDate')"
     (sortChange)="setSortBy('changeDate', $event)"
   >
     <ng-template #header>

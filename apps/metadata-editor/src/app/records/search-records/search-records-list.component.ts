@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common'
 import { Component } from '@angular/core'
 import {
-  ResultsTableComponent,
+  ResultsTableContainerComponent,
   SearchFacade,
   SearchService,
 } from '@geonetwork-ui/feature/search'
-import { RecordsListComponent } from '../records-list.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
 import { Router } from '@angular/router'
@@ -24,9 +23,8 @@ import { MatIconModule } from '@angular/material/icon'
   imports: [
     CommonModule,
     TranslateModule,
-    RecordsListComponent,
     RecordsCountComponent,
-    ResultsTableComponent,
+    ResultsTableContainerComponent,
     UiElementsModule,
     UiInputsModule,
     MatIconModule,

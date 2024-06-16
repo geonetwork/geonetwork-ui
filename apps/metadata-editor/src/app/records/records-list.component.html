@@ -1,4 +1,4 @@
-<main class="grow bg-gray-100 p-12 flex flex-col justify-between gap-12">
+<main class="bg-white">
   <div class="flex gap-8 justify-between">
     <div class="flex content-start gap-5">
       <div
@@ -12,8 +12,13 @@
         >
         </gn-ui-thumbnail>
       </div>
-      <div class="flex flex-row gap-3 items-center">
-        <h1 class="text-[56px] font-title grow">{{ title }}</h1>
+      <div class="flex flex-row items-baseline gap-[8px] px-[32px] py-[20px]">
+        <h1 class="text-[16px] text-main font-title font-bold">
+          {{ title }}
+        </h1>
+        <div class="text-[12px]">
+          <md-editor-records-count></md-editor-records-count>
+        </div>
       </div>
     </div>
     <div class="flex flex-col justify-items-start gap-3 items-center">
@@ -43,10 +48,12 @@
       </gn-ui-button>
     </div>
   </div>
-  <div class="shadow rounded bg-white grow">
-    <gn-ui-results-table
+  <div
+    class="shadow-md shadow-gray-300 border-[1px] border-gray-200 overflow-hidden rounded bg-white grow mx-[32px] my-[16px]"
+  >
+    <gn-ui-results-table-container
       (recordClick)="editRecord($event)"
-    ></gn-ui-results-table>
+    ></gn-ui-results-table-container>
     <div class="px-5 py-5 flex justify-center gap-8 items-baseline">
       <div class="grow">
         <gn-ui-pagination-buttons

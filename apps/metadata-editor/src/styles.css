@@ -16,10 +16,10 @@ body {
   @apply rounded px-9 py-3 flex gap-3 items-center hover:opacity-80 transition-opacity;
 }
 .btn-active {
-  @apply bg-blue-50 text-blue-600;
+  @apply bg-neutral-200 text-blue-600 font-bold;
 }
 .menu-title {
-  @apply text-xl px-9 py-3;
+  @apply text-2xl px-9 py-3;
 }
 
 .mat-mdc-button-base {

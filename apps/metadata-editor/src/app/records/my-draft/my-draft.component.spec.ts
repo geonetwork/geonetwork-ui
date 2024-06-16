@@ -1,9 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MyDraftComponent } from './my-draft.component'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { Component, importProvidersFrom } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordsListComponent } from '../records-list.component'
+import { of } from 'rxjs'
+import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 @Component({
   selector: 'md-editor-records-list',
@@ -12,22 +14,21 @@ import { RecordsListComponent } from '../records-list.component'
 })
 export class MockRecordsListComponent {}
 
-class SearchFacadeMock {
-  resetSearch = jest.fn()
+class RecordsRepositoryMock {
+  getAllDrafts = jest.fn().mockReturnValue(of(DATASET_RECORDS))
 }
 
 describe('MyDraftComponent', () => {
   let component: MyDraftComponent
   let fixture: ComponentFixture<MyDraftComponent>
-  let searchFacade: SearchFacade
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         importProvidersFrom(TranslateModule.forRoot()),
         {
-          provide: SearchFacade,
-          useClass: SearchFacadeMock,
+          provide: RecordsRepositoryInterface,
+          useClass: RecordsRepositoryMock,
         },
       ],
     }).overrideComponent(MyDraftComponent, {
@@ -38,7 +39,6 @@ describe('MyDraftComponent', () => {
         imports: [MockRecordsListComponent],
       },
     })
-    searchFacade = TestBed.inject(SearchFacade)
     fixture = TestBed.createComponent(MyDraftComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -48,9 +48,9 @@ describe('MyDraftComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('filters', () => {
-    it('clears filters on init', () => {
-      expect(searchFacade.resetSearch).toHaveBeenCalled()
-    })
+  it('gets all drafts on init', () => {
+    expect(
+      TestBed.inject(RecordsRepositoryInterface).getAllDrafts
+    ).toHaveBeenCalled()
   })
 })

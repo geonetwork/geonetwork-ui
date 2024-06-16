@@ -4,6 +4,12 @@ import { of } from 'rxjs'
 import { SidebarComponent } from './sidebar.component'
 import { ActivatedRoute } from '@angular/router'
 import { TranslateModule } from '@ngx-translate/core'
+import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+
+class RecordsRepositoryMock {
+  getAllDrafts = jest.fn().mockReturnValue(of(DATASET_RECORDS))
+}
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent
@@ -16,6 +22,10 @@ describe('SidebarComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: { params: of({ id: 1 }) },
+        },
+        {
+          provide: RecordsRepositoryInterface,
+          useClass: RecordsRepositoryMock,
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],

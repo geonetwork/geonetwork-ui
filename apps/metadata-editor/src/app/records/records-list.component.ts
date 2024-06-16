@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { Router } from '@angular/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
-  ResultsTableComponent,
+  ResultsTableContainerComponent,
   SearchFacade,
   SearchService,
 } from '@geonetwork-ui/feature/search'
@@ -12,6 +12,7 @@ import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { TranslateModule } from '@ngx-translate/core'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { RecordsCountComponent } from './records-count/records-count.component'
 
 const includes = [
   'uuid',
@@ -36,8 +37,9 @@ const includes = [
     UiSearchModule,
     UiElementsModule,
     TranslateModule,
-    ResultsTableComponent,
+    ResultsTableContainerComponent,
     UiInputsModule,
+    RecordsCountComponent,
   ],
 })
 export class RecordsListComponent {

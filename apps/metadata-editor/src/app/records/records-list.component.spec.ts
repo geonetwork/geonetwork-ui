@@ -8,7 +8,6 @@ import { Router } from '@angular/router'
 import { BehaviorSubject } from 'rxjs'
 import { CommonModule } from '@angular/common'
 import { MatIconModule } from '@angular/material/icon'
-import { SelectionService } from '@geonetwork-ui/api/repository'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 
 const results = [{ md: true }]
@@ -17,11 +16,11 @@ const totalPages = 25
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'gn-ui-results-table',
+  selector: 'gn-ui-results-table-container',
   template: '',
   standalone: true,
 })
-export class RecordTableComponent {
+export class ResultsTableContainerComponent {
   @Output() recordClick = new EventEmitter<CatalogRecord>()
 }
 
@@ -37,6 +36,13 @@ export class PaginationButtonsComponent {
   @Input() hideButton = false
   @Output() newCurrentPageEvent = new EventEmitter<number>()
 }
+
+@Component({
+  selector: 'md-editor-records-count',
+  template: '',
+  standalone: true,
+})
+export class RecordsCountComponent {}
 
 class SearchFacadeMock {
   results$ = new BehaviorSubject(results)
@@ -82,8 +88,9 @@ describe('RecordsListComponent', () => {
         imports: [
           CommonModule,
           MatIconModule,
-          RecordTableComponent,
+          ResultsTableContainerComponent,
           PaginationButtonsComponent,
+          RecordsCountComponent,
         ],
       },
     })
@@ -102,7 +109,7 @@ describe('RecordsListComponent', () => {
     let table, pagination
     beforeEach(() => {
       table = fixture.debugElement.query(
-        By.directive(RecordTableComponent)
+        By.directive(ResultsTableContainerComponent)
       ).componentInstance
       pagination = fixture.debugElement.query(
         By.directive(PaginationButtonsComponent)
