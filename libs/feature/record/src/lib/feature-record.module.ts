@@ -1,4 +1,4 @@
-import { InjectionToken, NgModule } from '@angular/core'
+import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { UiMapModule } from '@geonetwork-ui/ui/map'
 import { StoreModule } from '@ngrx/store'
@@ -17,7 +17,7 @@ import {
 } from './state/mdview.reducer'
 import { MatTabsModule } from '@angular/material/tabs'
 import { MatIconModule } from '@angular/material/icon'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { PopupAlertComponent, UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { TranslateModule } from '@ngx-translate/core'
 import { ExternalViewerButtonComponent } from './external-viewer-button/external-viewer-button.component'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
@@ -52,6 +52,7 @@ import { DataViewShareComponent } from './data-view-share/data-view-share.compon
     TranslateModule,
     TableComponent,
     FeatureDatavizModule,
+    PopupAlertComponent,
   ],
   providers: [MdViewFacade],
   exports: [
