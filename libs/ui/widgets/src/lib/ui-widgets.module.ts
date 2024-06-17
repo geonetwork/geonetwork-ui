@@ -12,6 +12,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatIconModule } from '@angular/material/icon'
 import { SpinningLoaderComponent } from './spinning-loader/spinning-loader.component'
 import { CommonModule } from '@angular/common'
+import { PopupAlertComponent } from './popup-alert/popup-alert.component'
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { CommonModule } from '@angular/common'
     StepBarComponent,
     LoadingMaskComponent,
     SpinningLoaderComponent,
+    PopupAlertComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +39,7 @@ import { CommonModule } from '@angular/common'
     StepBarComponent,
     LoadingMaskComponent,
     SpinningLoaderComponent,
+    PopupAlertComponent,
   ],
 })
 export class UiWidgetsModule {}
