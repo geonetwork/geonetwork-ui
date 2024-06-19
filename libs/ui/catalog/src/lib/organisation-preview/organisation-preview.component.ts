@@ -14,12 +14,12 @@ import { Organization } from '@geonetwork-ui/common/domain/model/record'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrganisationPreviewComponent {
-  @Input() organisation: Organization
+  @Input() organization: Organization
   @Input() organisationUrl: string
   @Output() clickedOrganisation = new EventEmitter<Organization>()
 
   clickOrganisation(event: Event) {
     event.preventDefault()
-    this.clickedOrganisation.emit(this.organisation)
+    this.clickedOrganisation.emit(this.organization)
   }
 }

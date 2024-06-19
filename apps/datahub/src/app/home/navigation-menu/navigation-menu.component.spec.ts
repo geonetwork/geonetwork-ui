@@ -1,15 +1,15 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import {
-  RouterFacade,
   ROUTER_ROUTE_SEARCH,
+  RouterFacade,
 } from '@geonetwork-ui/feature/router'
 import { TranslateModule } from '@ngx-translate/core'
 import { readFirst } from '@nx/angular/testing'
 import { BehaviorSubject } from 'rxjs'
 import {
   ROUTER_ROUTE_NEWS,
-  ROUTER_ROUTE_ORGANISATIONS,
+  ROUTER_ROUTE_ORGANIZATIONS,
 } from '../../router/constants'
 
 import { NavigationMenuComponent } from './navigation-menu.component'
@@ -73,7 +73,7 @@ describe('NavigationMenuComponent', () => {
     describe('navigate to organisations route', () => {
       beforeEach(() => {
         routerFacadeMock.currentRoute$.next({
-          url: [{ path: ROUTER_ROUTE_ORGANISATIONS }],
+          url: [{ path: ROUTER_ROUTE_ORGANIZATIONS }],
         })
       })
       it('displays activeLabel for organisations', async () => {

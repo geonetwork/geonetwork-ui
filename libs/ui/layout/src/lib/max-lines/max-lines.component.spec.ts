@@ -4,6 +4,13 @@ import { MaxLinesComponent } from './max-lines.component'
 import { Component, importProvidersFrom } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 
+// Mock implementation of ResizeObserver
+class ResizeObserverMock {
+  observe = jest.fn()
+  unobserve = jest.fn()
+  disconnect = jest.fn()
+}
+
 @Component({
   template: `
     <gn-ui-max-lines [maxLines]="maxLines">
@@ -22,10 +29,12 @@ describe('MaxLinesComponent', () => {
   let maxLinesComponent: MaxLinesComponent
 
   beforeEach(() => {
+    ;(window as any).ResizeObserver = ResizeObserverMock
+
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
+      imports: [TranslateModule.forRoot(), MaxLinesComponent],
       providers: [importProvidersFrom(TranslateModule.forRoot())],
-      declarations: [MaxLinesComponent, TestHostComponent],
+      declarations: [TestHostComponent],
     })
     fixture = TestBed.createComponent(TestHostComponent)
     hostComponent = fixture.componentInstance

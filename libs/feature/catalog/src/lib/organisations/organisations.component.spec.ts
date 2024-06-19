@@ -4,6 +4,7 @@ import {
   DebugElement,
   EventEmitter,
   Input,
+  NO_ERRORS_SCHEMA,
   Output,
 } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
@@ -27,8 +28,8 @@ class OrganisationsFilterMockComponent {
   template: '<div></div>',
 })
 class OrganisationPreviewMockComponent {
-  @Input() organisation: Organization
-  @Output() clickedOrganisation = new EventEmitter<Organization>()
+  @Input() organization: Organization
+  @Output() clickedOrganization = new EventEmitter<Organization>()
 }
 
 @Component({
@@ -85,6 +86,7 @@ describe('OrganisationsComponent', () => {
           useClass: OrganisationsServiceMock,
         },
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     })
       .overrideComponent(OrganisationsComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
@@ -118,10 +120,10 @@ describe('OrganisationsComponent', () => {
           .map((debugElement) => debugElement.componentInstance)
       })
       it('should pass first organisation (sorted by name-asc) to first ui preview component', () => {
-        expect(orgPreviewComponents[0].organisation.name).toEqual('A Data Org')
+        expect(orgPreviewComponents[0].organization.name).toEqual('A Data Org')
       })
       it('should pass 6th organisation (sorted by name-asc) on page to 6th ui preview component', () => {
-        expect(orgPreviewComponents[5].organisation.name).toEqual('E Data Org')
+        expect(orgPreviewComponents[5].organization.name).toEqual('E Data Org')
       })
     })
     describe('pass params to ui pagination component', () => {
@@ -152,13 +154,13 @@ describe('OrganisationsComponent', () => {
           expect(paginationComponentDE.componentInstance.currentPage).toEqual(2)
         })
         it('should pass first organisation of second page (sorted by name-asc) to first ui preview component', () => {
-          expect(orgPreviewComponents[0].organisation.name).toEqual(
+          expect(orgPreviewComponents[0].organization.name).toEqual(
             'é Data Org'
           )
         })
         it('should pass last organisation of second page (sorted by name-asc) to last ui preview component', () => {
           expect(
-            orgPreviewComponents[orgPreviewComponents.length - 1].organisation
+            orgPreviewComponents[orgPreviewComponents.length - 1].organization
               .name
           ).toEqual('J Data Org')
         })
@@ -193,12 +195,12 @@ describe('OrganisationsComponent', () => {
         expect(organisations[0]).toEqual(ORGANISATIONS_FIXTURE[5])
       })
       it('should pass organisation with max recordCount to first preview component', () => {
-        expect(orgPreviewComponents[0].organisation).toEqual(
+        expect(orgPreviewComponents[0].organization).toEqual(
           ORGANISATIONS_FIXTURE[5]
         )
       })
       it('should pass organisation with 6th highest recordCount to 6th preview component', () => {
-        expect(orgPreviewComponents[5].organisation).toEqual(
+        expect(orgPreviewComponents[5].organization).toEqual(
           ORGANISATIONS_FIXTURE[3]
         )
       })

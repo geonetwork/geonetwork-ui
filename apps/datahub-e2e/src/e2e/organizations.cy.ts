@@ -77,14 +77,15 @@ describe('organizations', () => {
   })
 
   describe('list features', () => {
-    it('should search with a filter on the selected org on click', () => {
+    it('should open the organization page', () => {
       cy.get('@organizationsName')
         .eq(10)
         .then(($clickedName) => {
           cy.get('@organizations').eq(10).click()
-          cy.url()
-            .should('include', 'publisher=')
-            .and('include', encodeURIComponent($clickedName.text().trim()))
+          cy.url().should(
+            'contain',
+            `organization/${encodeURIComponent($clickedName.text().trim())}`
+          )
         })
     })
   })

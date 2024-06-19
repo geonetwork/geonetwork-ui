@@ -1,0 +1,157 @@
+<ng-container *ngIf="organization; else orgNotFound">
+  <ng-container *ngrxLet="lastPublishedDatasets$ as lastPublishedDatasets">
+    <div id="organization-details-container" class="flex flex-col gap-[72px]">
+      <div class="h-full container-lg mx-auto px-[25px] w-full">
+        <div class="flex flex-row justify-between gap-[70px]">
+          <div id="organization-details-left" class="w-2/3 mt-14">
+            <div class="flex flex-col gap-11">
+              <gn-ui-max-lines [maxLines]="2" *ngIf="organization.description">
+                <div>
+                  <gn-ui-markdown-parser
+                    data-test="organizationDescription"
+                    [textContent]="organization.description"
+                  ></gn-ui-markdown-parser>
+                </div>
+              </gn-ui-max-lines>
+            </div>
+          </div>
+          <div
+            id="organization-details-right"
+            class="w-[300px] flex flex-col gap-5"
+          >
+            <div
+              data-test="organizationLogo"
+              class="bg-white border border-[#d8d8d8] w-full h-[185px] rounded-lg p-[30px] -mt-28"
+            >
+              <gn-ui-thumbnail
+                class="relative"
+                [thumbnailUrl]="organization.logoUrl?.href"
+                [fit]="'contain'"
+              >
+              </gn-ui-thumbnail>
+            </div>
+            <a
+              data-test="organizationDatasetCount"
+              [routerLink]="['/', ROUTER_ROUTE_SEARCH]"
+              [queryParams]="{ publisher: organization.name }"
+            >
+              <gn-ui-figure
+                class="py-[37px] pl-[47px] rounded-lg border bg-white mb-5 card-shadow cursor-pointer"
+                [figure]="organization.recordCount"
+                [icon]="'folder_open'"
+                [title]="'catalog.figures.datasets'"
+                [color]="'secondary'"
+              ></gn-ui-figure>
+            </a>
+
+            <a
+              *ngIf="organization.email"
+              data-test="organizationEmail"
+              [href]="'mailto:' + organization.email"
+              target="_top"
+              class="uppercase w-full h-[44px] gn-ui-btn-primary rounded-lg"
+            >
+              <span translate> organization.details.mailContact </span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full bg-primary-opacity-10">
+        <div class="container-lg lg:mx-auto min-h-[534px] pt-12 pb-[72px]">
+          <div class="flex flex-col gap-6">
+            <div class="flex flex-row gap-[18px] items-center px-[25px]">
+              <p
+                class="font-title text-[28px] font-medium text-title text-center sm:text-left"
+                translate
+              >
+                organization.lastPublishedDatasets
+              </p>
+              <ng-container
+                *ngIf="
+                  !isSearchFacadeLoading && lastPublishedDatasets.length > 0
+                "
+              >
+                <gn-ui-previous-next-buttons
+                  data-test="orgDetailsNavBtn"
+                  *ngIf="hasPagination"
+                  [isFirst]="isFirstPage"
+                  [isLast]="isLastPage"
+                  (directionButtonClicked)="changeStepOrPage($event)"
+                ></gn-ui-previous-next-buttons>
+                <div class="ml-auto">
+                  <a
+                    [routerLink]="['/', ROUTER_ROUTE_SEARCH]"
+                    [queryParams]="{ publisher: organization.name }"
+                    class="gn-ui-btn-primary h-[34px] rounded-lg"
+                    data-test="orgDetailsSearchAllBtn"
+                    translate
+                  >
+                    organization.lastPublishedDatasets.searchAllButton
+                  </a>
+                </div>
+              </ng-container>
+            </div>
+
+            <div id="lastPublishedDatasets" data-test="lastPubliDatasets">
+              <ng-container
+                *ngIf="
+                  !isSearchFacadeLoading && lastPublishedDatasets.length > 0;
+                  else orgHasNoDataset
+                "
+              >
+                <div
+                  class="mb-4 flex flex-wrap gap-9 justify-center sm:justify-start px-[25px]"
+                  data-test="orgPageLasPubDat"
+                >
+                  <gn-ui-related-record-card
+                    *ngFor="let dataset of lastPublishedDatasets"
+                    [record]="dataset"
+                    [extraClass]="'w-[300px]'"
+                  ></gn-ui-related-record-card>
+                </div>
+                <div
+                  *ngIf="totalPages > 1"
+                  class="flex flex-row justify-center gap-[14px] p-1 mx-auto"
+                  [ngClass]="paginationContainerClass"
+                >
+                  <button
+                    *ngFor="let page of pages"
+                    class="list-page-dot"
+                    (click)="goToPage(page)"
+                    [ngClass]="
+                      currentPage === page ? 'bg-primary' : 'bg-gray-400'
+                    "
+                  ></button>
+                </div>
+              </ng-container>
+
+              <ng-container *ngIf="isSearchFacadeLoading">
+                <div
+                  data-test="orgPageIsOrgLoading"
+                  class="flex justify-center w-full h-[200px] items-center"
+                >
+                  <gn-ui-spinning-loader></gn-ui-spinning-loader>
+                </div>
+              </ng-container>
+
+              <ng-template
+                #orgHasNoDataset
+                *ngIf="!isSearchFacadeLoading"
+                data-test="orgHasNoDataset"
+              >
+                <gn-ui-error
+                  [type]="ErrorType.ORGANIZATION_HAS_NO_DATASET"
+                ></gn-ui-error>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-template #orgNotFound class="mt-12 p-4 max-w-[600px] m-auto text-[13px]">
+  <gn-ui-error [type]="errorTypes.ORGANIZATION_NOT_FOUND"></gn-ui-error>
+</ng-template>

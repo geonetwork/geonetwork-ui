@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  importProvidersFrom,
-  Output,
-} from '@angular/core'
+import { Component, EventEmitter, Output } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import {

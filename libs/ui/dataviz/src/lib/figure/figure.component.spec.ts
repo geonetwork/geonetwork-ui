@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { FigureComponent } from './figure.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('FigureComponent', () => {
   let component: FigureComponent
@@ -11,6 +12,7 @@ describe('FigureComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [FigureComponent],
+      imports: [TranslateModule.forRoot({})],
       schemas: [NO_ERRORS_SCHEMA],
     })
       .overrideComponent(FigureComponent, {
@@ -66,7 +68,9 @@ describe('FigureComponent', () => {
     )
   })
   it('has a tooltip containing the information', () => {
-    const title = component.hoverTitle
+    const title = compiled.querySelector(
+      '[data-test="figureTitle"]'
+    )?.textContent
     expect(title).toContain(component.title)
     expect(title).toContain(component.unit)
     expect(title).toContain(component.figure)
@@ -77,7 +81,9 @@ describe('FigureComponent', () => {
       component.unit = undefined
     })
     it('does not have undefined in the tooltip', () => {
-      const title = component.hoverTitle
+      const title = compiled.querySelector(
+        '[data-test="figureTitle"]'
+      )?.textContent
       expect(title).toContain(component.title)
       expect(title).toContain(component.figure)
       expect(title).not.toContain('undefined')

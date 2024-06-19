@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { SearchService } from '@geonetwork-ui/feature/search'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
 
 @Component({
   selector: 'datahub-organisations-page',
@@ -10,14 +9,9 @@ import { Organization } from '@geonetwork-ui/common/domain/model/record'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrganisationsPageComponent {
-  constructor(
-    private searchService: SearchService,
-    private orgsService: OrganizationsServiceInterface
-  ) {}
+  constructor(private routerFacade: RouterFacade) {}
 
-  searchByOrganisation(organisation: Organization) {
-    this.orgsService
-      .getFiltersForOrgs([organisation])
-      .subscribe((filters) => this.searchService.setFilters(filters))
+  onOrganizationSelection(organisation: Organization) {
+    this.routerFacade.goToOrganization(organisation.name)
   }
 }

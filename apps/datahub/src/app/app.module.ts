@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { Router, RouterModule } from '@angular/router'
 import {
   FeatureCatalogModule,
+  ORGANIZATION_PAGE_URL_TOKEN,
   ORGANIZATION_URL_TOKEN,
 } from '@geonetwork-ui/feature/catalog'
 import {
@@ -16,6 +17,7 @@ import {
   DefaultRouterModule,
   ROUTE_PARAMS,
   ROUTER_ROUTE_DATASET,
+  ROUTER_ROUTE_ORGANIZATION,
   ROUTER_ROUTE_SEARCH,
   RouterService,
 } from '@geonetwork-ui/feature/router'
@@ -92,6 +94,7 @@ import { MatTabsModule } from '@angular/material/tabs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { RecordUserFeedbacksComponent } from './record/record-user-feedbacks/record-user-feedbacks.component'
 import { LetDirective } from '@ngrx/component'
+import { OrganizationPageComponent } from './organization/organization-page/organization-page.component'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -145,6 +148,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
       searchStateId: 'mainSearch',
       searchRouteComponent: SearchPageComponent,
       recordRouteComponent: RecordPageComponent,
+      organizationRouteComponent: OrganizationPageComponent,
     }),
     FeatureRecordModule,
     FeatureCatalogModule,
@@ -217,6 +221,10 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
       },
     },
     { provide: RECORD_URL_TOKEN, useValue: `${ROUTER_ROUTE_DATASET}/\${uuid}` },
+    {
+      provide: ORGANIZATION_PAGE_URL_TOKEN,
+      useValue: `${ROUTER_ROUTE_ORGANIZATION}/\${name}`,
+    },
     {
       provide: ORGANIZATION_URL_TOKEN,
       useValue: `${ROUTER_ROUTE_SEARCH}?${ROUTE_PARAMS.PUBLISHER}=\${name}`,

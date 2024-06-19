@@ -50,12 +50,14 @@ const sampleOrgA: Organization = {
   recordCount: 80,
   description: 'A description for Köniz Municipality',
   website: new URL('https://www.koeniz.ch/'),
+  email: 'reto.jau@koeniz.ch',
 }
 const sampleOrgB: Organization = {
   logoUrl: new URL('http://localhost/geonetwork/images/harvesting/bakom.png'),
   name: 'Office fédéral de la communication OFCOM',
   recordCount: 50,
   website: new URL('http://www.bakom.admin.ch/'),
+  email: 'christian.meier@bakom.admin.ch',
 }
 const sampleOrgC: Organization = {
   logoUrl: new URL(
@@ -65,6 +67,7 @@ const sampleOrgC: Organization = {
   recordCount: 20,
   description: 'A description for ARE',
   website: new URL('http://www.are.admin.ch/'),
+  email: 'rolf.giezendanner@are.admin.ch',
 }
 
 class SearchApiServiceMock {

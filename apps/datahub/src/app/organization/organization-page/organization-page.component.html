@@ -1,0 +1,12 @@
+<div
+  id="organization-page"
+  *ngrxLet="organization$ as organization"
+  gnUiSearchStateContainer="organization-page"
+>
+  <datahub-organization-header
+    [organization]="organization"
+  ></datahub-organization-header>
+  <datahub-organization-details
+    [organization]="organization"
+  ></datahub-organization-details>
+</div>

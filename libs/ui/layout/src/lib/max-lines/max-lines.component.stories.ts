@@ -14,12 +14,12 @@ import {
 import { importProvidersFrom } from '@angular/core'
 
 export default {
-  title: 'Elements/MaxLinesComponent',
+  title: 'Layout/MaxLinesComponent',
   component: MaxLinesComponent,
   decorators: [
     moduleMetadata({
-      declarations: [MaxLinesComponent],
-      imports: [TranslateModule],
+      declarations: [],
+      imports: [TranslateModule, MaxLinesComponent],
     }),
     applicationConfig({
       providers: [

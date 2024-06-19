@@ -76,6 +76,7 @@ export class OrganizationsFromGroupsService
     return {
       name: group.label[lang3],
       ...(group.description && { description: group.description }),
+      ...(group.email && { email: group.email }),
       ...(group.logo && {
         logoUrl: getAsUrl(`${IMAGE_URL}${group.logo}`),
       }),

@@ -35,7 +35,7 @@ describe('OrganisationPreviewComponent', () => {
 
     fixture = TestBed.createComponent(OrganisationPreviewComponent)
     component = fixture.componentInstance
-    component.organisation = organisationMock
+    component.organization = organisationMock
     fixture.detectChanges()
   })
 

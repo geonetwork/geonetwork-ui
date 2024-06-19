@@ -8,11 +8,11 @@
     <div class="relative opacity-40">
       <mat-icon class="material-symbols-outlined face">face</mat-icon>
       <mat-icon class="material-symbols-outlined question-mark1"
-        >question_mark</mat-icon
-      >
+        >question_mark
+      </mat-icon>
       <mat-icon class="material-symbols-outlined question-mark2"
-        >question_mark</mat-icon
-      >
+        >question_mark
+      </mat-icon>
     </div>
     <div translate>search.error.couldNotReachApi</div>
   </div>
@@ -32,6 +32,15 @@
     <div translate>search.error.receivedError</div>
     <div *ngIf="error">{{ error }}</div>
   </div>
+  <div *ngIf="type === types.ORGANIZATION_HAS_NO_DATASET">
+    <div class="relative opacity-40">
+      <mat-icon class="material-symbols-outlined computer">computer</mat-icon>
+      <mat-icon class="material-symbols-outlined computer-question-mark"
+        >question_mark
+      </mat-icon>
+    </div>
+    <div translate>search.error.organizationHasNoDataset</div>
+  </div>
   <div
     *ngIf="type === types.RECORD_NOT_FOUND"
     data-test="record-not-found-error"
@@ -39,11 +48,26 @@
     <div class="relative opacity-40">
       <mat-icon class="material-symbols-outlined computer">computer</mat-icon>
       <mat-icon class="material-symbols-outlined computer-question-mark"
-        >question_mark</mat-icon
-      >
+        >question_mark
+      </mat-icon>
     </div>
     <div translate [translateParams]="{ id: recordId }">
       search.error.recordNotFound
+    </div>
+    <div *ngIf="error">{{ error }}</div>
+  </div>
+  <div
+    *ngIf="type === types.ORGANIZATION_NOT_FOUND"
+    data-test="org-not-found-error"
+  >
+    <div class="relative opacity-40">
+      <mat-icon class="material-symbols-outlined computer">computer</mat-icon>
+      <mat-icon class="material-symbols-outlined computer-question-mark"
+        >question_mark
+      </mat-icon>
+    </div>
+    <div translate [translateParams]="{ id: recordId }">
+      search.error.organizationNotFound
     </div>
     <div *ngIf="error">{{ error }}</div>
   </div>

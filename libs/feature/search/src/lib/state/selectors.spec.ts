@@ -76,6 +76,38 @@ describe('Search Selectors', () => {
     })
   })
 
+  describe('isBeginningOfResults', () => {
+    it('should return true once at the beginning of results list', () => {
+      const beginningResult = fromSelectors.isBeginningOfResults.projector({
+        ...initialStateSearch,
+        params: {
+          ...initialStateSearch.params,
+          currentPage: 0,
+          pageSize: 20,
+        },
+        results: {
+          ...initialStateSearch.results,
+          count: 62,
+        },
+      })
+      expect(beginningResult).toEqual(true)
+
+      const notBeginningResult = fromSelectors.isBeginningOfResults.projector({
+        ...initialStateSearch,
+        params: {
+          ...initialStateSearch.params,
+          currentPage: 3,
+          pageSize: 20,
+        },
+        results: {
+          ...initialStateSearch.results,
+          count: 62,
+        },
+      })
+      expect(notBeginningResult).toEqual(false)
+    })
+  })
+
   describe('isEndOfResults', () => {
     it('should return true once at the end of results list', () => {
       const result = fromSelectors.isEndOfResults.projector({

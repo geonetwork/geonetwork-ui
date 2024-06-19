@@ -1,5 +1,9 @@
 import { Inject, Injectable } from '@angular/core'
-import { ROUTER_ROUTE_DATASET, ROUTER_ROUTE_SEARCH } from '.'
+import {
+  ROUTER_ROUTE_DATASET,
+  ROUTER_ROUTE_ORGANIZATION,
+  ROUTER_ROUTE_SEARCH,
+} from '.'
 import { Router, Routes } from '@angular/router'
 import { ROUTER_CONFIG, RouterConfigModel } from './router.config'
 
@@ -30,10 +34,18 @@ export class RouterService {
         path: `${ROUTER_ROUTE_DATASET}/:metadataUuid`,
         component: this.routerConfig.recordRouteComponent,
       },
+      {
+        path: `${ROUTER_ROUTE_ORGANIZATION}/:name`,
+        component: this.routerConfig.organizationRouteComponent,
+      },
     ]
   }
 
   getSearchRoute(): string {
     return ROUTER_ROUTE_SEARCH
+  }
+
+  getOrganizationPageRoute(): string {
+    return ROUTER_ROUTE_ORGANIZATION
   }
 }

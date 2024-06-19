@@ -1,14 +1,14 @@
 <a href (click)="clickOrganisation($event)" [attr.href]="organisationUrl">
   <div
     class="group cursor-pointer rounded-lg h-full flex flex-col"
-    [title]="organisation.name"
+    [title]="organization.name"
   >
     <div
       class="shrink-0 bg-gray-100 rounded-lg overflow-hidden w-full border border-gray-300 h-36"
     >
       <gn-ui-thumbnail
         class="relative h-full w-full"
-        [thumbnailUrl]="organisation.logoUrl"
+        [thumbnailUrl]="organization.logoUrl"
         [fit]="'contain'"
       >
       </gn-ui-thumbnail>
@@ -18,22 +18,24 @@
         class="shrink-0 mb-3 mt-5 font-title text-21 text-title group-hover:text-primary line-clamp-2 sm:mt-2 transition-colors"
         data-cy="organizationName"
       >
-        {{ organisation.name }}</span
+        {{ organization.name }}</span
       >
       <p
         class="abstract mt-4 mb-5 sm:mb-2 sm:mt-0 grow shrink-1 overflow-hidden"
         data-cy="organizationDesc"
       >
-        {{ organisation.description }}
+        {{ organization.description }}
       </p>
       <div class="shrink-0 text-primary opacity-50 flex leading-6">
         <mat-icon class="material-symbols-outlined text-primary opacity-50 mr-1"
           >folder_open
         </mat-icon>
         <span class="mx-1" data-cy="organizationRecordsCount">{{
-          organisation.recordCount
+          organization.recordCount
         }}</span>
-        <span translate>record.metadata.publications</span>
+        <span translate [translateParams]="{ count: organization.recordCount }"
+          >record.metadata.publications</span
+        >
       </div>
     </div>
   </div>
