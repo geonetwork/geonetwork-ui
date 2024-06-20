@@ -2,12 +2,16 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RecordsApiService } from '@geonetwork-ui/data-access/gn4'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { FormControl } from '@angular/forms'
+import { GraphicOverview } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-overview-upload',
@@ -19,6 +23,8 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 })
 export class OverviewUploadComponent implements OnInit {
   @Input() metadataUuid: string
+  @Input() formControl!: FormControl
+  @Output() overViewChange = new EventEmitter<GraphicOverview | null>()
 
   imageAltText: string
   resourceUrl: string
@@ -34,6 +40,10 @@ export class OverviewUploadComponent implements OnInit {
       .subscribe((resources) => {
         this.imageAltText = resources[0]?.filename
         this.resourceUrl = resources[0]?.url
+
+        this.resourceUrl = this.formControl.value?.[0]?.url.href
+        this.imageAltText = this.formControl.value?.[0]?.description
+
         this.cd.markForCheck()
       })
   }
@@ -44,6 +54,12 @@ export class OverviewUploadComponent implements OnInit {
       .subscribe((resource) => {
         this.imageAltText = resource.filename
         this.resourceUrl = resource.url
+
+        this.overViewChange.emit({
+          url: new URL(resource.url),
+          description: resource.filename,
+        })
+
         this.cd.markForCheck()
       })
   }
@@ -54,6 +70,12 @@ export class OverviewUploadComponent implements OnInit {
       .subscribe((resource) => {
         this.imageAltText = resource.filename
         this.resourceUrl = resource.url
+
+        this.overViewChange.emit({
+          url: new URL(resource.url),
+          description: resource.filename,
+        })
+
         this.cd.markForCheck()
       })
   }
@@ -64,6 +86,9 @@ export class OverviewUploadComponent implements OnInit {
       .subscribe(() => {
         this.imageAltText = null
         this.resourceUrl = null
+
+        this.overViewChange.emit(null)
+
         this.cd.markForCheck()
       })
   }
