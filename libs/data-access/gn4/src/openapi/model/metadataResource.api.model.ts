@@ -19,7 +19,7 @@ export interface MetadataResourceApiModel {
   metadataResourceExternalManagementProperties?: MetadataResourceExternalManagementPropertiesApiModel
   lastModification?: string
   version?: string
-  url?: string
+  url?: URL
   filename?: string
   id?: string
   size?: number

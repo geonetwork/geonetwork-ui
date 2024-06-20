@@ -93,6 +93,10 @@ describe('Editor Selectors', () => {
           },
           {
             config: DEFAULT_FIELDS[8],
+            value: DATASET_RECORDS[0].overviews,
+          },
+          {
+            config: DEFAULT_FIELDS[9],
             value: DATASET_RECORDS[0].keywords,
           },
         ])

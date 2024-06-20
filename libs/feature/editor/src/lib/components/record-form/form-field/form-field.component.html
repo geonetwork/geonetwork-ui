@@ -76,6 +76,12 @@
   <ng-container *ngIf="isSpatialExtentField">
     <gn-ui-form-field-spatial-extent></gn-ui-form-field-spatial-extent>
   </ng-container>
+  <ng-container *ngIf="isGraphicOverview">
+    <gn-ui-form-field-overviews
+      [control]="formControl"
+      [metadataUuid]="metadataUuid$ | async"
+    ></gn-ui-form-field-overviews>
+  </ng-container>
   <ng-container *ngIf="isKeywords">
     <gn-ui-form-field-keywords
       [control]="formControl"
