@@ -167,6 +167,18 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
     {
       labelKey: marker('editor.record.form.page.description'),
       sections: [TITLE_SECTION, ABOUT_SECTION, GEOGRAPHICAL_COVERAGE_SECTION],
+  {
+    model: 'overviews',
+    formFieldConfig: {
+      labelKey: marker('editor.record.form.overviews'),
+      type: 'list',
+    },
+  },
+  {
+    model: 'keywords',
+    formFieldConfig: {
+      labelKey: marker('editor.record.form.keywords'),
+      type: 'list',
     },
     {
       labelKey: marker('editor.record.form.page.ressources'),
