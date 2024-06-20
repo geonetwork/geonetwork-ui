@@ -20,7 +20,7 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 export class OverviewUploadComponent implements OnInit {
   @Input() metadataUuid: string
 
-  resourceFileName: string
+  imageAltText: string
   resourceUrl: string
 
   constructor(
@@ -32,7 +32,7 @@ export class OverviewUploadComponent implements OnInit {
     this.recordsApiService
       .getAllResources(this.metadataUuid)
       .subscribe((resources) => {
-        this.resourceFileName = resources[0]?.filename
+        this.imageAltText = resources[0]?.filename
         this.resourceUrl = resources[0]?.url
         this.cd.markForCheck()
       })
@@ -42,7 +42,7 @@ export class OverviewUploadComponent implements OnInit {
     this.recordsApiService
       .putResource(this.metadataUuid, file, 'public')
       .subscribe((resource) => {
-        this.resourceFileName = resource.filename
+        this.imageAltText = resource.filename
         this.resourceUrl = resource.url
         this.cd.markForCheck()
       })
@@ -52,7 +52,7 @@ export class OverviewUploadComponent implements OnInit {
     this.recordsApiService
       .putResourceFromURL(this.metadataUuid, url, 'public')
       .subscribe((resource) => {
-        this.resourceFileName = resource.filename
+        this.imageAltText = resource.filename
         this.resourceUrl = resource.url
         this.cd.markForCheck()
       })
@@ -60,9 +60,9 @@ export class OverviewUploadComponent implements OnInit {
 
   handleDelete() {
     this.recordsApiService
-      .delResource(this.metadataUuid, this.resourceFileName)
+      .delResource(this.metadataUuid, this.imageAltText)
       .subscribe(() => {
-        this.resourceFileName = null
+        this.imageAltText = null
         this.resourceUrl = null
         this.cd.markForCheck()
       })
