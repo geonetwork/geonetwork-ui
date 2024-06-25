@@ -31,6 +31,8 @@ marker('search.filters.resourceType')
 marker('search.filters.standard')
 marker('search.filters.topic')
 marker('search.filters.contact')
+marker('search.filters.qualityScore')
+marker('search.filters.territories')
 
 @Injectable({
   providedIn: 'root',
@@ -70,6 +72,8 @@ export class FieldsService {
     q: new FullTextSearchField(),
     license: new LicenseSearchField(this.injector),
     owner: new OwnerSearchField(this.injector),
+    qualityScore: new SimpleSearchField('qualityScore', this.injector, 'desc'),
+    territories: new TranslatedSearchField(undefined, this.injector, 'asc'),
   } as Record<string, AbstractSearchField>
 
   get supportedFields() {
@@ -78,9 +82,17 @@ export class FieldsService {
 
   constructor(protected injector: Injector) {}
 
-  getAvailableValues(fieldName: string) {
-    if (this.supportedFields.indexOf(fieldName) === -1)
+  getAvailableValues(fieldName: string, thesaurusName?: string) {
+    if (this.supportedFields.indexOf(fieldName) === -1) {
       throw new Error(`Unsupported search field: ${fieldName}`)
+    }
+    if (fieldName === 'territories' && thesaurusName) {
+      this.fields[fieldName] = new TranslatedSearchField(
+        thesaurusName,
+        this.injector,
+        'asc'
+      )
+    }
     return this.fields[fieldName].getAvailableValues()
   }
 
