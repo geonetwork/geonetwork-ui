@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core'
 import { Observable, combineLatest, of, switchMap } from 'rxjs'
-import { catchError, map, shareReplay, tap } from 'rxjs/operators'
+import { catchError, concatMap, map, shareReplay, tap } from 'rxjs/operators'
 import {
   MeApiService,
   RegistriesApiService,
   SiteApiService,
-  ThesaurusInfoApiModel,
   ToolsApiService,
   UserfeedbackApiService,
   UsersApiService,
@@ -146,25 +145,35 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     )
     .pipe(
       map((thesaurus) => {
-        // FIXME: find a better way to exclude place keywords
-        // thesaurus[0].filter((thes) => thes.dname !== 'place')
-        return thesaurus[0] as ThesaurusApiResponse[]
+        const thesauriWithoutPlace = thesaurus[0].filter(
+          (thes) => thes.dname !== 'place'
+        )
+        return thesauriWithoutPlace as ThesaurusApiResponse[]
       }),
       shareReplay(1)
     )
 
   searchKeywords(query: string): Observable<Keyword[]> {
-    const keywords$: Observable<KeywordApiResponse[]> =
-      this.registriesApiService.searchKeywords(
-        query,
-        this.langService.iso3,
-        10,
-        0,
-        null,
-        null,
-        null,
-        `*${query}*`
-      ) as Observable<KeywordApiResponse[]>
+    const keywords$: Observable<KeywordApiResponse[]> = this.allThesaurus$.pipe(
+      concatMap((thesaurus) => {
+        return this.registriesApiService
+          .searchKeywords(
+            query,
+            this.langService.iso3,
+            10,
+            0,
+            null,
+            thesaurus.map((thes) => thes.key),
+            null,
+            `*${query}*`
+          )
+          .pipe(
+            map((keywords) => {
+              return keywords as KeywordApiResponse[]
+            })
+          )
+      })
+    )
 
     return combineLatest([keywords$, this.allThesaurus$]).pipe(
       map(([keywords, thesaurus]) => {
