@@ -100,7 +100,7 @@ describe('FieldsService', () => {
           'license',
           'owner',
           'qualityScore',
-          'territories',
+          'customTranslatedSearchField',
         ])
       })
     })
@@ -183,7 +183,7 @@ describe('FieldsService', () => {
           topic: [],
           owner: [],
           qualityScore: [],
-          territories: [],
+          customTranslatedSearchField: [],
         })
       })
     })
