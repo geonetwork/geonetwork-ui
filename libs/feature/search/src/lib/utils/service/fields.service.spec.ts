@@ -99,6 +99,8 @@ describe('FieldsService', () => {
           'q',
           'license',
           'owner',
+          'qualityScore',
+          'territories',
         ])
       })
     })
@@ -180,6 +182,8 @@ describe('FieldsService', () => {
           resourceType: [],
           topic: [],
           owner: [],
+          qualityScore: [],
+          territories: [],
         })
       })
     })
