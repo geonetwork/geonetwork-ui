@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import {
+  catchError,
   defaultIfEmpty,
   filter,
   map,
   mergeMap,
-  scan,
   switchMap,
   toArray,
 } from 'rxjs/operators'
@@ -119,7 +119,11 @@ export class MdViewFacade {
                     ? link
                     : null
                 }),
-                defaultIfEmpty(null)
+                defaultIfEmpty(null),
+                catchError((e) => {
+                  console.error(e)
+                  return of(null)
+                })
               )
             } else {
               return of(link)
