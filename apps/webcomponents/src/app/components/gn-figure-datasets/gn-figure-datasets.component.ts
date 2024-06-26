@@ -7,8 +7,8 @@ import {
 } from '@angular/core'
 import { BaseComponent } from '../base.component'
 import { RecordsService } from '@geonetwork-ui/feature/catalog'
-import { startWith } from 'rxjs/operators'
-import { Observable } from 'rxjs'
+import { catchError, startWith } from 'rxjs/operators'
+import { Observable, of } from 'rxjs'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 
 @Component({
@@ -26,7 +26,10 @@ export class GnFigureDatasetsComponent extends BaseComponent {
   constructor(injector: Injector, private changeDetector: ChangeDetectorRef) {
     super(injector)
     this.catalogRecords = injector.get(RecordsService)
-    this.recordsCount$ = this.catalogRecords.recordsCount$.pipe(startWith('-'))
+    this.recordsCount$ = this.catalogRecords.recordsCount$.pipe(
+      startWith('-'),
+      catchError(() => of('-'))
+    )
   }
 
   init(): void {
