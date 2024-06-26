@@ -30,6 +30,7 @@ export class UploadDataComponent {
     'application/zip',
     'application/x-zip-compressed',
     'text/csv',
+    'application/csv',
   ]
 
   @Input() maxFileSizeMb: number
