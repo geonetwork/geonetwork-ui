@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Observable, combineLatest, of, switchMap } from 'rxjs'
-import { catchError, concatMap, map, shareReplay, tap } from 'rxjs/operators'
+import { catchError, map, shareReplay, tap } from 'rxjs/operators'
 import {
   MeApiService,
   RegistriesApiService,
@@ -24,6 +24,7 @@ import {
   KeywordApiResponse,
   ThesaurusApiResponse,
 } from '@geonetwork-ui/api/metadata-converter'
+import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
 
 const minApiVersion = '4.2.2'
 
@@ -145,33 +146,34 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     )
     .pipe(
       map((thesaurus) => {
-        const thesauriWithoutPlace = thesaurus[0].filter(
-          (thes) => thes.dname !== 'place'
-        )
-        return thesauriWithoutPlace as ThesaurusApiResponse[]
+        return thesaurus[0] as ThesaurusApiResponse[]
       }),
       shareReplay(1)
     )
 
-  searchKeywords(query: string): Observable<Keyword[]> {
+  searchKeywords(
+    query: string,
+    keywordTypes: KeywordType[]
+  ): Observable<Keyword[]> {
     const keywords$: Observable<KeywordApiResponse[]> = this.allThesaurus$.pipe(
-      concatMap((thesaurus) => {
-        return this.registriesApiService
-          .searchKeywords(
-            query,
-            this.langService.iso3,
-            10,
-            0,
-            null,
-            thesaurus.map((thes) => thes.key),
-            null,
-            `*${query}*`
+      switchMap((thesaurus) => {
+        const selectedThesauri = []
+        keywordTypes.map((keywordType) => {
+          selectedThesauri.push(
+            ...thesaurus.filter((thes) => thes.dname === keywordType)
           )
-          .pipe(
-            map((keywords) => {
-              return keywords as KeywordApiResponse[]
-            })
-          )
+        })
+
+        return this.registriesApiService.searchKeywords(
+          query,
+          this.langService.iso3,
+          10,
+          0,
+          null,
+          selectedThesauri.map((thes) => thes.key),
+          null,
+          `*${query}*`
+        ) as Observable<KeywordApiResponse[]>
       })
     )
 

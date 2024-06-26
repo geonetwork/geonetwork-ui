@@ -35,13 +35,15 @@ export class FormFieldKeywordsComponent {
   }
 
   autoCompleteAction = (query: string) => {
-    return this.platformService.searchKeywords(query).pipe(
-      map((keywords) =>
-        keywords.map((keyword) => {
-          return { title: keyword.label, value: keyword }
-        })
+    return this.platformService
+      .searchKeywords(query, ['temporal', 'theme', 'other'])
+      .pipe(
+        map((keywords) =>
+          keywords.map((keyword) => {
+            return { title: keyword.label, value: keyword }
+          })
+        )
       )
-    )
   }
 
   constructor(private platformService: PlatformServiceInterface) {}
