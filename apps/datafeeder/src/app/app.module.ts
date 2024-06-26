@@ -38,6 +38,7 @@ import { DATAFEEDER_STATE_KEY, reducer } from './store/datafeeder.reducer'
 import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { MatIconModule } from '@angular/material/icon'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { DatasetValidationCsvPageComponent } from './presentation/pages/dataset-validation-csv-page/dataset-validation-csv-page'
 
 export function apiConfigurationFactory() {
   return new Configuration({
@@ -54,6 +55,7 @@ export function apiConfigurationFactory() {
     UploadDataRulesComponent,
     AnalysisProgressPageComponent,
     DatasetValidationPageComponent,
+    DatasetValidationCsvPageComponent,
     DataImportValidationMapPanelComponent,
     UploadDataErrorDialogComponent,
     UploadDataBackgroundComponent,

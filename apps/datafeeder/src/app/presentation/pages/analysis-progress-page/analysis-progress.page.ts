@@ -9,6 +9,7 @@ import {
 import { EMPTY, firstValueFrom, Observable, timer } from 'rxjs'
 import { DatafeederFacade } from '../../../store/datafeeder.facade'
 import { expand, switchMap } from 'rxjs/operators'
+import { UploadProgressGuard } from '../../../router/upload-progress.guard'
 
 const { Pending, Analyzing, Done } = AnalysisStatusEnumApiModel
 
@@ -51,9 +52,16 @@ export class AnalysisProgressPageComponent implements OnInit {
 
   onJobFinish(job: UploadJobStatusApiModel) {
     const done = job.status === Done && job.datasets?.length > 0
-    this.router.navigate([done ? 'validation' : '/'], {
-      relativeTo: this.activatedRoute,
-      queryParams: done ? {} : { error: 'analysis' },
-    })
+    this.router.navigate(
+      [
+        done
+          ? UploadProgressGuard.getRedirectPage(job.datasets[0].format)
+          : '/',
+      ],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: done ? {} : { error: 'analysis' },
+      }
+    )
   }
 }

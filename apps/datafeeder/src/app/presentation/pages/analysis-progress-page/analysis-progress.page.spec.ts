@@ -1,13 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import {
-  ComponentFixture,
-  discardPeriodicTasks,
-  fakeAsync,
-  flush,
-  flushMicrotasks,
-  TestBed,
-  tick,
-} from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ActivatedRoute, Router } from '@angular/router'
 import {
   AnalysisStatusEnumApiModel,
@@ -25,7 +17,7 @@ const jobMock: UploadJobStatusApiModel = {
   jobId: JOB_ID,
   status: AnalysisStatusEnumApiModel.Done,
   progress: 1,
-  datasets: [{}],
+  datasets: [{ format: 'SHAPEFILE' }],
 }
 const jobMockNoDS: UploadJobStatusApiModel = {
   jobId: JOB_ID,

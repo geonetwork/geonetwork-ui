@@ -57,6 +57,12 @@ export class SummarizePageComponent implements OnInit, OnDestroy {
         creationDate: new Date(parseInt(dataset.datepicker, 10)).toISOString(),
         scale: parseInt(dataset.dropdown, 10),
         creationProcessDescription: dataset.description,
+        options: {
+          delimiter: dataset.csvDelimiter,
+          quoteChar: dataset.quoteChar,
+          latField: dataset.latField,
+          lngField: dataset.lngField,
+        },
       },
     }
   }

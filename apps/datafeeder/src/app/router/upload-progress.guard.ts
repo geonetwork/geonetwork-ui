@@ -5,8 +5,8 @@ import {
   RouterStateSnapshot,
 } from '@angular/router'
 import {
-  FileUploadApiService,
   AnalysisStatusEnumApiModel,
+  FileUploadApiService,
 } from '@geonetwork-ui/data-access/datafeeder'
 import { Observable, of } from 'rxjs'
 import { catchError, filter, map } from 'rxjs/operators'
@@ -27,7 +27,10 @@ export class UploadProgressGuard {
       filter((job) => !!job),
       map((job) => {
         if (job.status === AnalysisStatusEnumApiModel.Done) {
-          this.router.navigate([state.url, `validation`])
+          this.router.navigate([
+            state.url,
+            UploadProgressGuard.getRedirectPage(job.datasets[0].format),
+          ])
           return false
         }
         if (job.status === AnalysisStatusEnumApiModel.Error) {
@@ -41,5 +44,16 @@ export class UploadProgressGuard {
         return of(false)
       })
     )
+  }
+
+  static getRedirectPage(format: string) {
+    switch (format) {
+      case 'CSV':
+        return 'validation-csv'
+      case 'SHAPEFILE':
+        return 'validation'
+      default:
+        return '/'
+    }
   }
 }
