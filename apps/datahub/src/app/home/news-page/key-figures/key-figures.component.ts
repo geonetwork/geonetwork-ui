@@ -7,7 +7,7 @@ import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/orga
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 marker('catalog.figures.datasets')
-marker('catalog.figures.organisations')
+marker('catalog.figures.organizations')
 
 @Component({
   selector: 'datahub-key-figures',
