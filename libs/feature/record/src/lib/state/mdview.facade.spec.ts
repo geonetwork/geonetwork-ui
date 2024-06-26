@@ -239,6 +239,30 @@ describe('MdViewFacade', () => {
   })
 
   describe('geoDataLinksWithGeometry$', () => {
+    const links = [
+      {
+        type: 'download',
+        url: new URL('http://my-org.net/download/2.geojson'),
+        mimeType: 'application/geo+json',
+        name: 'Direct download',
+      },
+      {
+        type: 'service',
+        url: new URL('https://my-org.net/wfs'),
+        accessServiceProtocol: 'wfs',
+        name: 'my:featuretype', // FIXME: same as identifier otherwise it will be lost in iso...
+        description: 'This WFS service offers direct download capability',
+        identifierInService: 'my:featuretype',
+      },
+      {
+        type: 'service',
+        url: new URL('https://my-org.net/ogc'),
+        accessServiceProtocol: 'ogcFeatures',
+        name: 'my:featuretype',
+        description: 'This OGC service offers direct download capability',
+        identifierInService: 'my:featuretype',
+      },
+    ]
     beforeEach(() => {
       testScheduler = new TestScheduler((actual, expected) => {
         expect(actual).toEqual(expected)
@@ -251,32 +275,6 @@ describe('MdViewFacade', () => {
       })
     })
     it('should return OGC links that have geometry', fakeAsync(() => {
-      const values = {
-        a: [
-          {
-            type: 'download',
-            url: new URL('http://my-org.net/download/2.geojson'),
-            mimeType: 'application/geo+json',
-            name: 'Direct download',
-          },
-          {
-            type: 'service',
-            url: new URL('https://my-org.net/wfs'),
-            accessServiceProtocol: 'wfs',
-            name: 'my:featuretype', // FIXME: same as identifier otherwise it will be lost in iso...
-            description: 'This WFS service offers direct download capability',
-            identifierInService: 'my:featuretype',
-          },
-          {
-            type: 'service',
-            url: new URL('https://my-org.net/ogc'),
-            accessServiceProtocol: 'ogcFeatures',
-            name: 'my:featuretype',
-            description: 'This OGC service offers direct download capability',
-            identifierInService: 'my:featuretype',
-          },
-        ],
-      }
       jest.spyOn(facade.dataService, 'getItemsFromOgcApi').mockResolvedValue({
         id: '123',
         type: 'Feature',
@@ -291,7 +289,17 @@ describe('MdViewFacade', () => {
       let result
       facade.geoDataLinksWithGeometry$.subscribe((v) => (result = v))
       tick()
-      expect(result).toEqual(values.a)
+      expect(result).toEqual(links)
+    }))
+    it('should return links that have geometry if OGC API does not respond', fakeAsync(() => {
+      jest
+        .spyOn(facade.dataService, 'getItemsFromOgcApi')
+        .mockRejectedValue(new Error('An error occurred'))
+      let result
+      facade.geoDataLinksWithGeometry$.subscribe((v) => (result = v))
+      tick()
+      const linksWithoutOgcApi = links.slice(0, -1)
+      expect(result).toEqual(linksWithoutOgcApi)
     }))
     it('should not return OGC links that do not have geometry', fakeAsync(() => {
       const values = {
