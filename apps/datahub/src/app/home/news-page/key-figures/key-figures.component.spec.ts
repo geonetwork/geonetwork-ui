@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { KeyFiguresComponent } from './key-figures.component'
-import { of } from 'rxjs'
+import { BehaviorSubject, of } from 'rxjs'
 import { RecordsService } from '@geonetwork-ui/feature/catalog'
 import { TranslateModule } from '@ngx-translate/core'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
@@ -8,8 +8,9 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { By } from '@angular/platform-browser'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 
+const recordsCount$ = new BehaviorSubject(1234)
 class RecordsServiceMock {
-  recordsCount$ = of(1234)
+  recordsCount$ = recordsCount$
 }
 
 class OrganisationsServiceMock {
@@ -57,6 +58,16 @@ describe('KeyFiguresComponent', () => {
     })
     it('emits the records count', () => {
       expect(values[1]).toBe(1234)
+    })
+    describe('when the request does not behave as expected', () => {
+      beforeEach(() => {
+        recordsCount$.error('blargz')
+      })
+      it('emits -', () => {
+        let count
+        component.recordsCount$.subscribe((v) => (count = v))
+        expect(count).toBe('-')
+      })
     })
   })
 

@@ -83,6 +83,20 @@ To export content as a Web Component you have to:
 }
 ```
 
+- Provide the dependencies which are not inject in root by default (eg `SearchFacade`, `SearchService`, etc.)
+
+```typescript
+{
+  providers: [SearchFacade]
+}
+```
+
+- import gnui styles from the component css file
+
+```css
+@import '../../../styles.css';
+```
+
 - add your component in application module `webcomponents.module.ts` `declarations` list.
 - register your component as a custom element in the `CUSTOM_ELEMENTS` array in application module `webcomponents.ts`, the custom element identifier (i.e Web Component tag name) _must_ be the same as the component folder name
 

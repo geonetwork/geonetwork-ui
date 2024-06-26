@@ -1,5 +1,5 @@
 import { RecordsService } from './records.service'
-import { of, throwError } from 'rxjs'
+import { of } from 'rxjs'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 class RecordsRepositoryMock {
@@ -31,18 +31,6 @@ describe('RecordsService', () => {
         service.recordsCount$.subscribe()
         service.recordsCount$.subscribe()
         expect(repository.getMatchesCount).toHaveBeenCalledTimes(1)
-      })
-    })
-
-    describe('when the request does not behave as expected', () => {
-      beforeEach(() => {
-        repository.getMatchesCount = () => throwError(() => 'blargz')
-        service = new RecordsService(repository) // create a new service to enable the changed repository behaviour
-      })
-      it('emits 0', () => {
-        let count
-        service.recordsCount$.subscribe((v) => (count = v))
-        expect(count).toBe(0)
       })
     })
   })
