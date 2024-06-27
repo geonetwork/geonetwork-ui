@@ -8,7 +8,7 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { of } from 'rxjs'
 
 marker('catalog.figures.datasets')
-marker('catalog.figures.organisations')
+marker('catalog.figures.organizations')
 
 @Component({
   selector: 'datahub-key-figures',

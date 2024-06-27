@@ -13,7 +13,7 @@ import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 
 marker('datahub.header.news')
 marker('datahub.header.datasets')
-marker('datahub.header.organisations')
+marker('datahub.header.organizations')
 
 @Component({
   selector: 'datahub-navigation-menu',
@@ -34,7 +34,7 @@ export class NavigationMenuComponent {
     },
     {
       link: `${ROUTER_ROUTE_ORGANIZATIONS}`,
-      label: 'datahub.header.organisations',
+      label: 'datahub.header.organizations',
     },
   ]
 

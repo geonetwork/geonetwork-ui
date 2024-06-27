@@ -78,7 +78,7 @@ describe('NavigationMenuComponent', () => {
       })
       it('displays activeLabel for organisations', async () => {
         const activeLabel = (await readFirst(component.activeLink$)).label
-        expect(activeLabel).toEqual('datahub.header.organisations')
+        expect(activeLabel).toEqual('datahub.header.organizations')
       })
     })
     describe('navigate to a route with missing label', () => {
