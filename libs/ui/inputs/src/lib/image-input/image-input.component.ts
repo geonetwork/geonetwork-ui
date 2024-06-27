@@ -16,6 +16,7 @@ import { ButtonComponent } from '../button/button.component'
 import { FilesDropDirective } from '../files-drop/files-drop.directive'
 import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { FormControl, ReactiveFormsModule } from '@angular/forms'
 
 @Component({
   selector: 'gn-ui-image-input',
@@ -30,9 +31,11 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
     FilesDropDirective,
     MatProgressSpinnerModule,
     TranslateModule,
+    ReactiveFormsModule,
   ],
 })
 export class ImageInputComponent {
+  @Input() formControl!: FormControl
   @Input() maxSizeMB: number
   @Input() previewUrl?: string
   @Input() altText?: string

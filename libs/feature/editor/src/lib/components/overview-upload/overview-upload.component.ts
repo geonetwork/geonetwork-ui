@@ -2,12 +2,16 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RecordsApiService } from '@geonetwork-ui/data-access/gn4'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { FormControl } from '@angular/forms'
+import { GraphicOverview } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-overview-upload',
@@ -19,8 +23,10 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 })
 export class OverviewUploadComponent implements OnInit {
   @Input() metadataUuid: string
+  @Input() formControl!: FormControl
+  @Output() overViewChange = new EventEmitter<GraphicOverview | null>()
 
-  resourceFileName: string
+  imageAltText: string
   resourceUrl: string
 
   constructor(
@@ -32,8 +38,12 @@ export class OverviewUploadComponent implements OnInit {
     this.recordsApiService
       .getAllResources(this.metadataUuid)
       .subscribe((resources) => {
-        this.resourceFileName = resources[0]?.filename
+        this.imageAltText = resources[0]?.filename
         this.resourceUrl = resources[0]?.url
+
+        this.resourceUrl = this.formControl.value?.[0]?.url.href
+        this.imageAltText = this.formControl.value?.[0]?.description
+
         this.cd.markForCheck()
       })
   }
@@ -42,8 +52,14 @@ export class OverviewUploadComponent implements OnInit {
     this.recordsApiService
       .putResource(this.metadataUuid, file, 'public')
       .subscribe((resource) => {
-        this.resourceFileName = resource.filename
+        this.imageAltText = resource.filename
         this.resourceUrl = resource.url
+
+        this.overViewChange.emit({
+          url: new URL(resource.url),
+          description: resource.filename,
+        })
+
         this.cd.markForCheck()
       })
   }
@@ -52,18 +68,27 @@ export class OverviewUploadComponent implements OnInit {
     this.recordsApiService
       .putResourceFromURL(this.metadataUuid, url, 'public')
       .subscribe((resource) => {
-        this.resourceFileName = resource.filename
+        this.imageAltText = resource.filename
         this.resourceUrl = resource.url
+
+        this.overViewChange.emit({
+          url: new URL(resource.url),
+          description: resource.filename,
+        })
+
         this.cd.markForCheck()
       })
   }
 
   handleDelete() {
     this.recordsApiService
-      .delResource(this.metadataUuid, this.resourceFileName)
+      .delResource(this.metadataUuid, this.imageAltText)
       .subscribe(() => {
-        this.resourceFileName = null
+        this.imageAltText = null
         this.resourceUrl = null
+
+        this.overViewChange.emit(null)
+
         this.cd.markForCheck()
       })
   }
