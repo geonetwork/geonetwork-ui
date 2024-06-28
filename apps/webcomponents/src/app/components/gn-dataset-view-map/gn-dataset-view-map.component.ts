@@ -1,13 +1,17 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Injector,
+  Input,
   OnInit,
   ViewEncapsulation,
 } from '@angular/core'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component'
+import { LinkUsage } from '@geonetwork-ui/util/shared'
+import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'wc-gn-dataset-view-map',
@@ -18,10 +22,22 @@ import { BaseComponent } from '../base.component'
   providers: [SearchFacade],
 })
 export class GnDatasetViewMapComponent extends BaseComponent implements OnInit {
-  constructor(injector: Injector, private mdViewFacade: MdViewFacade) {
+  constructor(
+    injector: Injector,
+    private mdViewFacade: MdViewFacade,
+    private changeDetector: ChangeDetectorRef
+  ) {
     super(injector)
   }
-  ngOnInit(): void {
-    this.mdViewFacade.loadFull('ee965118-2416-4d48-b07e-bbc696f002c2')
+  @Input() datasetId: string
+  link: DatasetDistribution
+  async init() {
+    super.init()
+    this.mdViewFacade.loadFull(this.datasetId)
+    this.link = await this.getRecordLink(this.datasetId, [
+      LinkUsage.MAP_API,
+      LinkUsage.GEODATA,
+    ])
+    this.changeDetector.detectChanges()
   }
 }
