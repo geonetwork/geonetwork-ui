@@ -110,7 +110,7 @@
     </div>
   </div>
   <gn-ui-data-view-share
-    *ngIf="(selectedTabIndex$ | async) === 2"
+    [tabIndex]="selectedTabIndex$ | async"
   ></gn-ui-data-view-share>
   <div
     id="access"
