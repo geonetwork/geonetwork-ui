@@ -294,7 +294,7 @@ describe('dataset pages', () => {
     })
   })
 
-  describe('PREVIEW SECTION : display & functions', () => {
+  describe.only('PREVIEW SECTION : display & functions', () => {
     beforeEach(() => {
       cy.get('datahub-record-metadata')
         .find('[id="preview"]')
@@ -357,7 +357,7 @@ describe('dataset pages', () => {
         cy.screenshot({ capture: 'fullPage' })
       })
       it('should display the sharing options', () => {
-        cy.get('gn-ui-data-view-permalink').should('be.visible')
+        cy.get('gn-ui-data-view-share').should('be.visible')
       })
     })
     describe('features', () => {
