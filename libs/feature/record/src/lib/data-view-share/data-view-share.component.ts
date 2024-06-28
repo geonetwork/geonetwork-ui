@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
+  Input,
   Optional,
 } from '@angular/core'
 import { WEB_COMPONENT_EMBEDDER_URL } from '../data-view-permalink/data-view-permalink.component'
@@ -13,6 +14,7 @@ import { WEB_COMPONENT_EMBEDDER_URL } from '../data-view-permalink/data-view-per
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataViewShareComponent {
+  @Input() tabIndex: number
   constructor(
     @Optional()
     @Inject(WEB_COMPONENT_EMBEDDER_URL)

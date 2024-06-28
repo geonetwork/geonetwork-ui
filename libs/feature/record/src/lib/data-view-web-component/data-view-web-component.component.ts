@@ -1,7 +1,12 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  Input,
+} from '@angular/core'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { MdViewFacade } from '../state'
-import { combineLatest, map } from 'rxjs'
+import { BehaviorSubject, combineLatest, map } from 'rxjs'
 import { GN_UI_VERSION } from '../gn-ui-version.token'
 
 @Component({
@@ -11,35 +16,77 @@ import { GN_UI_VERSION } from '../gn-ui-version.token'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataViewWebComponentComponent {
+  tabIndex$ = new BehaviorSubject<number>(0)
+  @Input()
+  set tabIndex(value: number) {
+    this.tabIndex$.next(value)
+  }
   webComponentHtml$ = combineLatest(
+    this.tabIndex$,
     this.facade.chartConfig$,
     this.facade.metadata$
   ).pipe(
-    map(([config, metadata]) => {
-      if (config) {
-        const { aggregation, xProperty, yProperty, chartType } = config
+    map(([tabIndex, config, metadata]) => {
+      if (tabIndex === 2) {
+        if (config) {
+          const { aggregation, xProperty, yProperty, chartType } = config
+          return `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${
+            this.version
+          }/gn-wc.js"></script>
+  <gn-dataset-view-chart
+          api-url="${new URL(
+            this.config.basePath,
+            window.location.origin
+          ).toString()}"
+          dataset-id="${metadata.uniqueIdentifier}"
+          aggregation="${aggregation}"
+          x-property="${xProperty}"
+          y-property="${yProperty}"
+          chart-type="${chartType}"
+          primary-color="#0f4395"
+          secondary-color="#8bc832"
+          main-color="#555"
+          background-color="#fdfbff"
+          main-font="'Inter', sans-serif"
+          title-font="'DM Serif Display', serif"
+  ></gn-dataset-view-chart>`
+        }
+        return ''
+      } else if (tabIndex === 1) {
         return `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${
           this.version
         }/gn-wc.js"></script>
-<gn-dataset-view-chart
+  <gn-dataset-view-table
+          api-url="${new URL(
+            this.config.basePath,
+            window.location.origin
+          ).toString()}"
+          dataset-id="${metadata.uniqueIdentifier}"
+          primary-color="#0f4395"
+          secondary-color="#8bc832"
+          main-color="#555"
+          background-color="#fdfbff"
+          main-font="'Inter', sans-serif"
+          title-font="'DM Serif Display', serif"
+  ></gn-dataset-view-table>`
+      } else {
+        return `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${
+          this.version
+        }/gn-wc.js"></script>
+<gn-dataset-view-map
         api-url="${new URL(
           this.config.basePath,
           window.location.origin
         ).toString()}"
         dataset-id="${metadata.uniqueIdentifier}"
-        aggregation="${aggregation}"
-        x-property="${xProperty}"
-        y-property="${yProperty}"
-        chart-type="${chartType}"
         primary-color="#0f4395"
         secondary-color="#8bc832"
         main-color="#555"
         background-color="#fdfbff"
         main-font="'Inter', sans-serif"
         title-font="'DM Serif Display', serif"
-></gn-dataset-view-chart>`
+></gn-dataset-view-map>`
       }
-      return ''
     })
   )
 
