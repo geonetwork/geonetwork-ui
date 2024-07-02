@@ -1,21 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { SwitchToggleComponent } from './switch-toggle.component';
+import { SwitchToggleComponent } from './switch-toggle.component'
+import { MatButtonToggleModule } from '@angular/material/button-toggle'
 
 describe('SwitchToggleComponent', () => {
-  let component: SwitchToggleComponent;
-  let fixture: ComponentFixture<SwitchToggleComponent>;
+  let component: SwitchToggleComponent
+  let fixture: ComponentFixture<SwitchToggleComponent>
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SwitchToggleComponent]
-    });
-    fixture = TestBed.createComponent(SwitchToggleComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+      declarations: [SwitchToggleComponent],
+      imports: [MatButtonToggleModule],
+    })
+    fixture = TestBed.createComponent(SwitchToggleComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})
