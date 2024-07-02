@@ -6,6 +6,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { mimeTypeToFormat } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, filter, map, switchMap } from 'rxjs'
+import { ErrorType } from '../error/error.component'
 
 const DEFAULT_PARAMS = {
   OFFSET: '',
@@ -49,6 +50,7 @@ export class RecordApiFormComponent {
   outputFormats = [{ value: 'json', label: 'JSON' }]
   endpoint: WfsEndpoint | OgcApiEndpoint | undefined
   firstCollection: string | undefined
+  errorTypes = ErrorType
 
   apiQueryUrl$ = combineLatest([
     this.offset$,
