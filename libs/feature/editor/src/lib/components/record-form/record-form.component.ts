@@ -24,6 +24,7 @@ export class RecordFormComponent {
     if (!model) {
       return
     }
+    console.log(newValue)
     this.facade.updateRecordField(model, newValue)
   }
 

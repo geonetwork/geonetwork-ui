@@ -179,7 +179,7 @@ describe('FormFieldComponent', () => {
         By.directive(FormFieldOverviewsComponent)
       ).componentInstance
     })
-    it('creates an array form field', () => {
+    it('creates an overview upload form field', () => {
       expect(formField).toBeTruthy()
     })
   })

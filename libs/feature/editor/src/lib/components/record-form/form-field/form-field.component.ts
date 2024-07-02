@@ -31,6 +31,7 @@ import { FormFieldKeywordsComponent } from './form-field-keywords/form-field-key
 import { FormFieldOverviewsComponent } from './form-field-overviews/form-field-overviews.component'
 import { map, take } from 'rxjs/operators'
 import { EditorFacade } from '../../../+state/editor.facade'
+import { FormFieldConfig } from '../../../models'
 
 @Component({
   selector: 'gn-ui-form-field',

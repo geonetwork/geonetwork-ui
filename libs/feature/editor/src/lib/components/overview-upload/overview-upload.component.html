@@ -1,9 +1,10 @@
 <gn-ui-image-input
   [maxSizeMB]="5"
   [previewUrl]="resourceUrl"
-  [altText]="imageAltText"
+  [altText]="resourceAltText"
   [formControl]="formControl"
   (fileChange)="handleFileChange($event)"
   (urlChange)="handleUrlChange($event)"
+  (altTextChange)="handleAltTextChange($event)"
   (delete)="handleDelete()"
 ></gn-ui-image-input>

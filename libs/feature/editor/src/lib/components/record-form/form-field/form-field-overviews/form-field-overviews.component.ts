@@ -16,7 +16,7 @@ export class FormFieldOverviewsComponent {
   @Input() metadataUuid: string
   @Input() control!: FormControl
 
-  handleOverViewChange(overView: GraphicOverview | null) {
+  handleOverviewChange(overView: GraphicOverview | null) {
     this.control.setValue(overView ? [overView] : [])
   }
 }
