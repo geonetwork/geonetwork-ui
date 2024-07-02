@@ -16,18 +16,18 @@ import { GN_UI_VERSION } from '../gn-ui-version.token'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataViewWebComponentComponent {
-  tabIndex$ = new BehaviorSubject<number>(0)
+  viewType$ = new BehaviorSubject<string>('map')
   @Input()
-  set tabIndex(value: number) {
-    this.tabIndex$.next(value)
+  set viewType(value: string) {
+    this.viewType$.next(value)
   }
   webComponentHtml$ = combineLatest(
-    this.tabIndex$,
+    this.viewType$,
     this.facade.chartConfig$,
     this.facade.metadata$
   ).pipe(
-    map(([tabIndex, config, metadata]) => {
-      if (tabIndex === 2) {
+    map(([viewType, config, metadata]) => {
+      if (viewType === 'chart') {
         if (config) {
           const { aggregation, xProperty, yProperty, chartType } = config
           return `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${
@@ -52,7 +52,7 @@ export class DataViewWebComponentComponent {
   ></gn-dataset-view-chart>`
         }
         return ''
-      } else if (tabIndex === 1) {
+      } else if (viewType === 'table') {
         return `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${
           this.version
         }/gn-wc.js"></script>

@@ -22,21 +22,21 @@ export const WEB_COMPONENT_EMBEDDER_URL = new InjectionToken<string>(
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataViewPermalinkComponent {
-  tabIndex$ = new BehaviorSubject<number>(0)
+  viewType$ = new BehaviorSubject<string>('map')
   @Input()
-  set tabIndex(value: number) {
-    this.tabIndex$.next(value)
+  set viewType(value: string) {
+    this.viewType$.next(value)
   }
 
   permalinkUrl$ = combineLatest([
-    this.tabIndex$,
+    this.viewType$,
     this.facade.chartConfig$,
     this.facade.metadata$,
   ]).pipe(
-    map(([tabIndex, config, metadata]) => {
+    map(([viewType, config, metadata]) => {
       const url = new URL(`${this.wcEmbedderBaseUrl}`, window.location.origin)
       url.searchParams.set('v', `${this.version}`)
-      if (tabIndex === 2) {
+      if (viewType === 'chart') {
         if (config) {
           const { aggregation, xProperty, yProperty, chartType } = config
           url.searchParams.append('e', `gn-dataset-view-chart`)
@@ -47,7 +47,7 @@ export class DataViewPermalinkComponent {
         } else {
           return ''
         }
-      } else if (tabIndex === 1) {
+      } else if (viewType === 'table') {
         // table
         url.searchParams.append('e', `gn-dataset-view-table`)
       } else {

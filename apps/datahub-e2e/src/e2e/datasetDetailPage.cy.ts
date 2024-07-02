@@ -294,7 +294,7 @@ describe('dataset pages', () => {
     })
   })
 
-  describe.only('PREVIEW SECTION : display & functions', () => {
+  describe('PREVIEW SECTION : display & functions', () => {
     beforeEach(() => {
       cy.get('datahub-record-metadata')
         .find('[id="preview"]')
