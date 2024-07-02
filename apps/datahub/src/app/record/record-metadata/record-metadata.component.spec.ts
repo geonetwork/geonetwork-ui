@@ -451,9 +451,9 @@ describe('RecordMetadataComponent', () => {
           fixture.debugElement.query(By.directive(MockDataViewShareComponent))
         ).toBeTruthy()
       })
-      describe('when selectedTabIndex$ is 2 (chart tab)', () => {
+      describe('when selectedView$ is chart', () => {
         beforeEach(() => {
-          component.selectedTabIndex$.next(2)
+          component.selectedView$.next('chart')
           fixture.detectChanges()
         })
         it('renders the permalink component', () => {

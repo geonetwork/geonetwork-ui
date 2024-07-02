@@ -69,7 +69,7 @@ describe('DataViewWebComponentComponent', () => {
     facade = TestBed.inject(MdViewFacade)
     fixture = TestBed.createComponent(DataViewWebComponentComponent)
     component = fixture.componentInstance
-    component.tabIndex$.next(2)
+    component.viewType$.next('chart')
     fixture.detectChanges()
   })
 
@@ -128,7 +128,7 @@ describe('DataViewWebComponentComponent', () => {
   })
   describe('Map view', () => {
     beforeEach(() => {
-      component.tabIndex$.next(0)
+      component.viewType$.next('map')
     })
     describe('init webComponentHtml$', () => {
       it('should generate HTML based on configs', async () => {
@@ -151,7 +151,7 @@ describe('DataViewWebComponentComponent', () => {
   })
   describe('Table view', () => {
     beforeEach(() => {
-      component.tabIndex$.next(1)
+      component.viewType$.next('table')
     })
     describe('init webComponentHtml$', () => {
       it('should generate HTML based on configs', async () => {

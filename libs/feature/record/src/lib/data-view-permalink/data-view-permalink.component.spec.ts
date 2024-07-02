@@ -75,7 +75,7 @@ describe('DataViewPermalinkComponent', () => {
     facade = TestBed.inject(MdViewFacade)
     fixture = TestBed.createComponent(DataViewPermalinkComponent)
     component = fixture.componentInstance
-    component.tabIndex$.next(2)
+    component.viewType$.next('chart')
     fixture.detectChanges()
   })
 
@@ -126,7 +126,7 @@ describe('DataViewPermalinkComponent', () => {
   })
   describe('Map view', () => {
     beforeEach(() => {
-      component.tabIndex$.next(0)
+      component.viewType$.next('map')
     })
     describe('init permalinkUrl$', () => {
       it('should generate URL based on configs', async () => {
@@ -143,7 +143,7 @@ describe('DataViewPermalinkComponent', () => {
   })
   describe('Table view', () => {
     beforeEach(() => {
-      component.tabIndex$.next(1)
+      component.viewType$.next('table')
     })
     describe('init permalinkUrl$', () => {
       it('should generate URL based on configs', async () => {
