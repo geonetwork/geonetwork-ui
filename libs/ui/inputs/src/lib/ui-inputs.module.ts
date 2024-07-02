@@ -33,6 +33,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core'
 import { EditableLabelDirective } from './editable-label/editable-label.directive'
 import { ImageInputComponent } from './image-input/image-input.component'
+import { SwitchToggleComponent } from './switch-toggle/switch-toggle.component'
+import { MatButtonToggleModule } from '@angular/material/button-toggle'
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import { ImageInputComponent } from './image-input/image-input.component'
     CopyTextButtonComponent,
     CheckboxComponent,
     SearchInputComponent,
+    SwitchToggleComponent,
   ],
   imports: [
     CommonModule,
@@ -73,6 +76,7 @@ import { ImageInputComponent } from './image-input/image-input.component'
     DateRangePickerComponent,
     CheckToggleComponent,
     BadgeComponent,
+    MatButtonToggleModule,
   ],
   exports: [
     DropdownSelectorComponent,

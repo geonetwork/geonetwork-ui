@@ -5,21 +5,21 @@ export const DEFAULT_FIELDS: EditorFieldsConfig = [
   {
     model: 'title',
     formFieldConfig: {
-      labelKey: 'Metadata title',
+      labelKey: marker('editor.record.form.metadata.title'),
       type: 'text',
     },
   },
   {
     model: 'abstract',
     formFieldConfig: {
-      labelKey: 'Abstract',
+      labelKey: marker('editor.record.form.abstract'),
       type: 'rich',
     },
   },
   {
     model: 'uniqueIdentifier',
     formFieldConfig: {
-      labelKey: 'Unique identifier',
+      labelKey: marker('editor.record.form.unique.identifier'),
       type: 'text',
       locked: true,
     },
@@ -27,7 +27,7 @@ export const DEFAULT_FIELDS: EditorFieldsConfig = [
   {
     model: 'recordUpdated',
     formFieldConfig: {
-      labelKey: 'Record Updated',
+      labelKey: marker('editor.record.form.record.updated'),
       type: 'text',
       locked: true,
     },
