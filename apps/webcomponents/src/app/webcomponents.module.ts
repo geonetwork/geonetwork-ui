@@ -36,6 +36,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { provideGn4 } from '@geonetwork-ui/api/repository'
 import { GnFigureDatasetsComponent } from './components/gn-figure-datasets/gn-figure-datasets.component'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
+import { GnDatasetViewMapComponent } from './components/gn-dataset-view-map/gn-dataset-view-map.component'
 
 const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],
@@ -46,6 +47,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnDatasetViewChartComponent, 'gn-dataset-view-chart'],
   [GnMapViewerComponent, 'gn-map-viewer'],
   [GnFigureDatasetsComponent, 'gn-figure-datasets'],
+  [GnDatasetViewMapComponent, 'gn-dataset-view-map'],
 ]
 
 @NgModule({
@@ -61,6 +63,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     GnDatasetViewChartComponent,
     GnMapViewerComponent,
     GnFigureDatasetsComponent,
+    GnDatasetViewMapComponent,
   ],
   imports: [
     CommonModule,
@@ -100,7 +103,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  // bootstrap: [AppComponent],
+  bootstrap: [AppComponent],
 })
 export class WebcomponentsModule {
   constructor(private injector: Injector) {

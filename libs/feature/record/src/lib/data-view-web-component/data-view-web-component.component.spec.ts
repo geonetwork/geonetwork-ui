@@ -69,6 +69,7 @@ describe('DataViewWebComponentComponent', () => {
     facade = TestBed.inject(MdViewFacade)
     fixture = TestBed.createComponent(DataViewWebComponentComponent)
     component = fixture.componentInstance
+    component.viewType$.next('chart')
     fixture.detectChanges()
   })
 
@@ -76,51 +77,99 @@ describe('DataViewWebComponentComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('init webComponentHtml$', () => {
-    it('should generate HTML based on configs', async () => {
-      const html = await firstValueFrom(component.webComponentHtml$)
-      expect(html).toBe(
-        `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${gnUiVersion}/gn-wc.js"></script>
-<gn-dataset-view-chart
-        api-url="http://gn-api.url/"
-        dataset-id="${metadata.uniqueIdentifier}"
-        aggregation="${chartConfig1.aggregation}"
-        x-property="${chartConfig1.xProperty}"
-        y-property="${chartConfig1.yProperty}"
-        chart-type="${chartConfig1.chartType}"
-        primary-color="#0f4395"
-        secondary-color="#8bc832"
-        main-color="#555"
-        background-color="#fdfbff"
-        main-font="'Inter', sans-serif"
-        title-font="'DM Serif Display', serif"
-></gn-dataset-view-chart>`
-      )
+  describe('Chart view', () => {
+    describe('init webComponentHtml$', () => {
+      it('should generate HTML based on configs', async () => {
+        const html = await firstValueFrom(component.webComponentHtml$)
+        expect(html).toBe(
+          `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${gnUiVersion}/gn-wc.js"></script>
+  <gn-dataset-view-chart
+          api-url="http://gn-api.url/"
+          dataset-id="${metadata.uniqueIdentifier}"
+          aggregation="${chartConfig1.aggregation}"
+          x-property="${chartConfig1.xProperty}"
+          y-property="${chartConfig1.yProperty}"
+          chart-type="${chartConfig1.chartType}"
+          primary-color="#0f4395"
+          secondary-color="#8bc832"
+          main-color="#555"
+          background-color="#fdfbff"
+          main-font="'Inter', sans-serif"
+          title-font="'DM Serif Display', serif"
+  ></gn-dataset-view-chart>`
+        )
+      })
+    })
+    describe('update webComponentHtml$', () => {
+      beforeEach(() => {
+        facade.chartConfig$.next(chartConfig2)
+      })
+      it('should update HTML based on configs', async () => {
+        const html = await firstValueFrom(component.webComponentHtml$)
+        expect(html).toBe(
+          `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${gnUiVersion}/gn-wc.js"></script>
+  <gn-dataset-view-chart
+          api-url="http://gn-api.url/"
+          dataset-id="${metadata.uniqueIdentifier}"
+          aggregation="${chartConfig2.aggregation}"
+          x-property="${chartConfig2.xProperty}"
+          y-property="${chartConfig2.yProperty}"
+          chart-type="${chartConfig2.chartType}"
+          primary-color="#0f4395"
+          secondary-color="#8bc832"
+          main-color="#555"
+          background-color="#fdfbff"
+          main-font="'Inter', sans-serif"
+          title-font="'DM Serif Display', serif"
+  ></gn-dataset-view-chart>`
+        )
+      })
     })
   })
-  describe('update webComponentHtml$', () => {
+  describe('Map view', () => {
     beforeEach(() => {
-      facade.chartConfig$.next(chartConfig2)
+      component.viewType$.next('map')
     })
-    it('should update HTML based on configs', async () => {
-      const html = await firstValueFrom(component.webComponentHtml$)
-      expect(html).toBe(
-        `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${gnUiVersion}/gn-wc.js"></script>
-<gn-dataset-view-chart
+    describe('init webComponentHtml$', () => {
+      it('should generate HTML based on configs', async () => {
+        const html = await firstValueFrom(component.webComponentHtml$)
+        expect(html).toBe(
+          `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${gnUiVersion}/gn-wc.js"></script>
+<gn-dataset-view-map
         api-url="http://gn-api.url/"
         dataset-id="${metadata.uniqueIdentifier}"
-        aggregation="${chartConfig2.aggregation}"
-        x-property="${chartConfig2.xProperty}"
-        y-property="${chartConfig2.yProperty}"
-        chart-type="${chartConfig2.chartType}"
         primary-color="#0f4395"
         secondary-color="#8bc832"
         main-color="#555"
         background-color="#fdfbff"
         main-font="'Inter', sans-serif"
         title-font="'DM Serif Display', serif"
-></gn-dataset-view-chart>`
-      )
+></gn-dataset-view-map>`
+        )
+      })
+    })
+  })
+  describe('Table view', () => {
+    beforeEach(() => {
+      component.viewType$.next('table')
+    })
+    describe('init webComponentHtml$', () => {
+      it('should generate HTML based on configs', async () => {
+        const html = await firstValueFrom(component.webComponentHtml$)
+        expect(html).toBe(
+          `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${gnUiVersion}/gn-wc.js"></script>
+  <gn-dataset-view-table
+          api-url="http://gn-api.url/"
+          dataset-id="${metadata.uniqueIdentifier}"
+          primary-color="#0f4395"
+          secondary-color="#8bc832"
+          main-color="#555"
+          background-color="#fdfbff"
+          main-font="'Inter', sans-serif"
+          title-font="'DM Serif Display', serif"
+  ></gn-dataset-view-table>`
+        )
+      })
     })
   })
 })
