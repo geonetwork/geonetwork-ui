@@ -201,6 +201,7 @@
   "editor.record.saveStatus.draftWithChangesPending": "Brouillon enregistré - modifications en cours",
   "editor.record.saveStatus.recordUpToDate": "La fiche publiée est à jour",
   "editor.record.upToDate": "",
+  "editor.sidebar.menu.editor": "",
   "externalviewer.dataset.unnamed": "Couche du datahub",
   "facets.block.title.OrgForResource": "Organisation",
   "facets.block.title.availableInServices": "Disponible pour",
