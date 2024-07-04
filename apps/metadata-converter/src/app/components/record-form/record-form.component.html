@@ -119,7 +119,7 @@
       (fieldValueChange)="set($event, 'position')"
       (confirm)="emitChangedRecord()"
     ></gn-ui-record-field-simple>
-    <gn-ui-record-field-group label="Organisation">
+    <gn-ui-record-field-group label="Organisation" *ngIf="get().organization">
       <gn-ui-record-field-simple
         label="Name"
         [fieldValue]="get().organization.name"

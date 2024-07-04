@@ -26,7 +26,6 @@ import {
   pipe,
 } from '../function-utils'
 import {
-  XmlElement,
   findChildElement,
   findChildrenElement,
   findNestedElement,
@@ -34,6 +33,7 @@ import {
   findParent,
   readAttribute,
   readText,
+  XmlElement,
 } from '../xml-utils'
 import { fullNameToParts } from './utils/individual-name'
 import { getKeywordTypeFromKeywordTypeCode } from './utils/keyword.mapper'
@@ -41,6 +41,7 @@ import { getRoleFromRoleCode } from './utils/role.mapper'
 import { getStatusFromStatusCode } from './utils/status.mapper'
 import { getUpdateFrequencyFromFrequencyCode } from './utils/update-frequency.mapper'
 import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus'
+import { getAsValidUrl } from '../common/url'
 
 export function extractCharacterString(): ChainableFunction<
   XmlElement,
@@ -78,13 +79,7 @@ export function extractUrl(): ChainableFunction<XmlElement, URL> {
   )
   return pipe(
     fallback(getUrl, getAnchor, getCharacterString),
-    map((urlStr) => {
-      try {
-        return new URL(urlStr)
-      } catch (e) {
-        return null
-      }
-    })
+    map(getAsValidUrl)
   )
 }
 
