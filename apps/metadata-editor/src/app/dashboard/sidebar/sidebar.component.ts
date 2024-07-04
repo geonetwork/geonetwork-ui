@@ -38,7 +38,7 @@ export class SidebarComponent implements OnInit {
     this.organisations$ = combineLatest(
       this.organisationsService.organisations$,
       this.platformService.getMe(),
-      (orgs, me) => orgs.filter((org) => org.name === me.organisation)
+      (orgs, me) => orgs.filter((org) => org.name === me?.organisation)
     )
   }
 }
