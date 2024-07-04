@@ -75,13 +75,14 @@ export class FieldsService {
     producer: new MultilingualSearchField(
       'originatorOrgForResourceObject',
       this.injector,
-      'desc',
-      'count'
+      'asc',
+      'key'
     ),
     publisher: new MultilingualSearchField(
       'distributorOrgForResourceObject',
       this.injector,
-      'asc'
+      'asc',
+      'key'
     ),
   } as Record<string, AbstractSearchField>
 
