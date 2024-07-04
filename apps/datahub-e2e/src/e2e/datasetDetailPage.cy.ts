@@ -246,7 +246,7 @@ describe('dataset pages', () => {
       })
       it('should go to dataset search page when clicking on org name and filter by org', () => {
         cy.get('[data-cy="organization-name"]').eq(1).click()
-        cy.url().should('include', '/search?publisher=')
+        cy.url().should('include', '/search?organization=')
       })
       it('should go to dataset search page when clicking on keyword and filter by keyword', () => {
         cy.get('gn-ui-expandable-panel').eq(2).click()

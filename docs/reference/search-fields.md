@@ -11,7 +11,7 @@ GeoNetwork-UI has built-in logic for several search fields, each of them relying
 These fields are used in the following context:
 
 - when building a URL or permalink from several search criteria; these fields will appear as query parameters in the URL, for instance:  
-  `/search?publisher=MyOrg&format=csv&format=excel`
+  `/search?organization=MyOrg&format=csv&format=excel`
 - when specifying advanced filters [in a configuration file](../guide/configure.md#search)
 
 ## Fields
