@@ -5,6 +5,7 @@ import {
 import { getRoleFromRoleCode } from '../iso19139/utils/role.mapper'
 import { Thesaurus } from './types'
 import { getKeywordTypeFromKeywordTypeCode } from '../iso19139/utils/keyword.mapper'
+import { getAsValidUrl } from '../common/url'
 
 export type SourceWithUnknownProps = { [key: string]: unknown }
 
@@ -57,11 +58,7 @@ export const getAsUrl = (
   if (field === '' || field === null) return null
   let url = field
   if (field.match(/^www\./)) url = `https://${field}`
-  try {
-    return new URL(url, location)
-  } catch {
-    return null
-  }
+  return getAsValidUrl(url, location)
 }
 
 export const mapLogo = (source: SourceWithUnknownProps) => {
