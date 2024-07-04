@@ -53,12 +53,14 @@ export class SearchFiltersComponent implements OnInit {
     this.platformService.getMe().subscribe((user) => (this.userId = user?.id))
     this.searchConfig = (
       getOptionalSearchConfig().ADVANCED_FILTERS || [
-        'publisher',
+        'organization',
         'format',
         'publicationYear',
         'topic',
         'isSpatial',
         'license',
+        'producer',
+        'publisher',
       ]
     )
       .filter((adv_filter) => {

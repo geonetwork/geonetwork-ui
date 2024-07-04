@@ -25,19 +25,21 @@ marker('search.filters.keyword')
 marker('search.filters.isSpatial')
 marker('search.filters.license')
 marker('search.filters.publicationYear')
-marker('search.filters.publisher')
+marker('search.filters.organization')
 marker('search.filters.representationType')
 marker('search.filters.resourceType')
 marker('search.filters.standard')
 marker('search.filters.topic')
 marker('search.filters.contact')
+marker('search.filters.producer')
+marker('search.filters.publisher')
 
 @Injectable({
   providedIn: 'root',
 })
 export class FieldsService {
   protected fields = {
-    publisher: new OrganizationSearchField(this.injector),
+    organization: new OrganizationSearchField(this.injector),
     format: new SimpleSearchField('format', this.injector, 'asc'),
     resourceType: new TranslatedSearchField(
       'resourceType',
@@ -70,6 +72,17 @@ export class FieldsService {
     q: new FullTextSearchField(),
     license: new LicenseSearchField(this.injector),
     owner: new OwnerSearchField(this.injector),
+    producer: new MultilingualSearchField(
+      'originatorOrgForResourceObject',
+      this.injector,
+      'desc',
+      'count'
+    ),
+    publisher: new MultilingualSearchField(
+      'distributorOrgForResourceObject',
+      this.injector,
+      'asc'
+    ),
   } as Record<string, AbstractSearchField>
 
   get supportedFields() {
