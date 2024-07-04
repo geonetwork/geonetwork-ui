@@ -3,6 +3,7 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { StatusComponent } from './components/status/status.component'
 import { RecordOutputXmlComponent } from './components/record-output-xml/record-output-xml.component'
 import { RecordFormComponent } from './components/record-form/record-form.component'
+import { FORMATS, getFormatName } from './md-formats'
 
 @Component({
   selector: 'gn-ui-root',
@@ -14,11 +15,21 @@ export class AppComponent {
   @ViewChild('output') outputComponent: RecordOutputXmlComponent
   @ViewChild('form') formComponent: RecordFormComponent
 
+  formats = FORMATS
+
+  get originalFormat(): string {
+    const converter = this.statusComponent?.currentConverter
+    return getFormatName(converter)
+  }
+
+  currentFormat: string
+
   onRecordChange(record: CatalogRecord) {
     this.statusComponent.recordNative = record
   }
   onRecordOutputReceived(output: string) {
     this.outputComponent.recordXml = output
+    this.currentFormat = this.originalFormat
   }
   onRecordNativeReceived(record: CatalogRecord) {
     this.formComponent.record = record
@@ -51,5 +62,8 @@ export class AppComponent {
         this.statusComponent.currentMetadata = text
       })
       .catch((e) => this.statusComponent.errorLoadingFile(e.message))
+  }
+  onFormatChange(format: string) {
+    this.statusComponent.changeFormat(format)
   }
 }
