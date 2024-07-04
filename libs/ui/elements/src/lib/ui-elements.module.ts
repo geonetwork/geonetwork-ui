@@ -10,7 +10,7 @@ import { DownloadItemComponent } from './download-item/download-item.component'
 import { DownloadsListComponent } from './downloads-list/downloads-list.component'
 import { ApiCardComponent } from './api-card/api-card.component'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
-import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
+import { MaxLinesComponent, UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { TranslateModule } from '@ngx-translate/core'
 import { RelatedRecordCardComponent } from './related-record-card/related-record-card.component'
 import { MetadataContactComponent } from './metadata-contact/metadata-contact.component'
@@ -49,6 +49,7 @@ import { TimeSincePipe } from './user-feedback-item/time-since.pipe'
     ThumbnailComponent,
     TimeSincePipe,
     BadgeComponent,
+    MaxLinesComponent,
   ],
   declarations: [
     MetadataInfoComponent,

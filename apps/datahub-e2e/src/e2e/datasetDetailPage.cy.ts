@@ -140,6 +140,16 @@ describe('dataset pages', () => {
             expect(text).not.to.equal('')
           })
       })
+      it('should display the read more button and expand description', () => {
+        cy.visit('/dataset/01491630-78ce-49f3-b479-4b30dabc4c69')
+        cy.get('datahub-record-metadata')
+          .find('[id="about"]')
+          .find('gn-ui-max-lines')
+          .as('maxLines')
+        cy.get('@maxLines').find('.ease-out').should('exist')
+        cy.get('[data-cy=readMoreButton]').click()
+        cy.get('@maxLines').find('.ease-in').should('exist')
+      })
       it('should display the thumbnail image and magnify', () => {
         cy.get('datahub-record-metadata')
           .find('[id="about"]')
