@@ -44,7 +44,7 @@ const initialParams: Params = {
 
 class FieldsServiceMock {
   mapping = {
-    publisher: 'OrgForResource',
+    organization: 'OrgForResource',
     q: 'any',
   }
   buildFiltersFromFieldValues = jest.fn((fieldValues) =>

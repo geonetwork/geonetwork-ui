@@ -192,13 +192,13 @@ describe('datasets', () => {
           'keyword',
           'resourceType',
           'representationType',
-          'producer',
-          'publisher',
+          'producerOrg',
+          'publisherOrg',
         ])
       cy.screenshot({ capture: 'viewport' })
     })
 
-    describe('publisher filter', () => {
+    describe('organization filter', () => {
       beforeEach(() => {
         cy.get('@filters').eq(0).click()
         getFilterOptions()

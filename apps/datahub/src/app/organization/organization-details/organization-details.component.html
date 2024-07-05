@@ -33,7 +33,7 @@
             <a
               data-test="organizationDatasetCount"
               [routerLink]="['/', ROUTER_ROUTE_SEARCH]"
-              [queryParams]="{ publisher: organization.name }"
+              [queryParams]="{ organization: organization.name }"
             >
               <gn-ui-figure
                 class="py-[37px] pl-[47px] rounded-lg border bg-white mb-5 card-shadow cursor-pointer"
@@ -82,7 +82,7 @@
                 <div class="ml-auto">
                   <a
                     [routerLink]="['/', ROUTER_ROUTE_SEARCH]"
-                    [queryParams]="{ publisher: organization.name }"
+                    [queryParams]="{ organization: organization.name }"
                     class="gn-ui-btn-primary h-[34px] rounded-lg"
                     data-test="orgDetailsSearchAllBtn"
                     translate

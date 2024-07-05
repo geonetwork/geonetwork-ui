@@ -99,8 +99,8 @@ describe('FieldsService', () => {
           'q',
           'license',
           'owner',
-          'producer',
-          'publisher',
+          'producerOrg',
+          'publisherOrg',
         ])
       })
     })
@@ -182,8 +182,8 @@ describe('FieldsService', () => {
           resourceType: [],
           topic: [],
           owner: [],
-          producer: [],
-          publisher: [],
+          producerOrg: [],
+          publisherOrg: [],
         })
       })
     })

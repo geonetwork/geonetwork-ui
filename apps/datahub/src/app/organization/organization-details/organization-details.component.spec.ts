@@ -259,7 +259,7 @@ describe('OrganizationDetailsComponent', () => {
           expect(orgDetailsSearchAllBtn).toBeTruthy()
 
           expect(orgDetailsSearchAllBtn?.getAttribute('href')).toEqual(
-            `/${ROUTER_ROUTE_SEARCH}?publisher=${encodeURIComponent(
+            `/${ROUTER_ROUTE_SEARCH}?organization=${encodeURIComponent(
               anOrganizationWithManyDatasets.name
             )}`
           )
