@@ -59,8 +59,6 @@ export class SearchFiltersComponent implements OnInit {
         'topic',
         'isSpatial',
         'license',
-        'producer',
-        'publisher',
       ]
     )
       .filter((adv_filter) => {
