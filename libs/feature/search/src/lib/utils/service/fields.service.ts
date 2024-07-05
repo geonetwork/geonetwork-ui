@@ -31,8 +31,8 @@ marker('search.filters.resourceType')
 marker('search.filters.standard')
 marker('search.filters.topic')
 marker('search.filters.contact')
-marker('search.filters.producer')
-marker('search.filters.publisher')
+marker('search.filters.producerOrg')
+marker('search.filters.publisherOrg')
 
 @Injectable({
   providedIn: 'root',
@@ -72,13 +72,13 @@ export class FieldsService {
     q: new FullTextSearchField(),
     license: new LicenseSearchField(this.injector),
     owner: new OwnerSearchField(this.injector),
-    producer: new MultilingualSearchField(
+    producerOrg: new MultilingualSearchField(
       'originatorOrgForResourceObject',
       this.injector,
       'asc',
       'key'
     ),
-    publisher: new MultilingualSearchField(
+    publisherOrg: new MultilingualSearchField(
       'distributorOrgForResourceObject',
       this.injector,
       'asc',
