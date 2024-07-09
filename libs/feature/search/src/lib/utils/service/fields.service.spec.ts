@@ -86,7 +86,7 @@ describe('FieldsService', () => {
     describe('#supportedFields', () => {
       it('returns a list of fields', () => {
         expect(service.supportedFields).toEqual([
-          'publisher',
+          'organization',
           'format',
           'resourceType',
           'representationType',
@@ -99,13 +99,15 @@ describe('FieldsService', () => {
           'q',
           'license',
           'owner',
+          'producerOrg',
+          'publisherOrg',
         ])
       })
     })
     describe('#getAvailableValues', () => {
       let values
       beforeEach(async () => {
-        values = await lastValueFrom(service.getAvailableValues('publisher'))
+        values = await lastValueFrom(service.getAvailableValues('organization'))
       })
       it('gets the values from the orgs service', () => {
         expect(values).toEqual([{ label: 'orgA (10)', value: 'orgA' }])
@@ -121,7 +123,7 @@ describe('FieldsService', () => {
       beforeEach(async () => {
         filters = await lastValueFrom(
           service.buildFiltersFromFieldValues({
-            publisher: ['aa', 'bb'],
+            organization: ['aa', 'bb'],
             format: ['cc', 'dd'],
             publicationYear: '2022',
             q: 'any',
@@ -174,12 +176,14 @@ describe('FieldsService', () => {
           isSpatial: [],
           license: [],
           publicationYear: [],
-          publisher: ['orgB'],
+          organization: ['orgB'],
           q: [],
           representationType: [],
           resourceType: [],
           topic: [],
           owner: [],
+          producerOrg: [],
+          publisherOrg: [],
         })
       })
     })

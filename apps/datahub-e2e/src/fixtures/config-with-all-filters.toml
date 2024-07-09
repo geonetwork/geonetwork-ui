@@ -9,4 +9,4 @@ main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
 
 [search]
-advanced_filters = ['publisher', 'format', 'publicationYear', 'topic', 'isSpatial', 'license', 'inspireKeyword', 'keyword', 'resourceType', 'representationType']
+advanced_filters = ['organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license', 'inspireKeyword', 'keyword', 'resourceType', 'representationType', 'producerOrg', 'publisherOrg']

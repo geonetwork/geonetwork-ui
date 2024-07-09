@@ -151,7 +151,7 @@ For a list of supported search fields, see [this documentation page](../referenc
 The filters should be provided as an array, for instance:
 
 ```toml
-advanced_filters = ['publisher', 'inspireKeyword', 'keyword', 'topic']
+advanced_filters = ['organization', 'inspireKeyword', 'keyword', 'topic']
 ```
 
 - `[[search_preset]]` (multiple, optional)
@@ -171,7 +171,7 @@ advanced_filters = ['publisher', 'inspireKeyword', 'keyword', 'topic']
   [[search_preset]]
   name = 'filterByName'
   filters.q = 'full text search'
-  filters.publisher = ['Org 1', 'Org 2']
+  filters.organization = ['Org 1', 'Org 2']
   filters.format = ['format 1', 'format 2']
   filters.documentStandard = ['iso19115-3.2018']
   filters.inspireKeyword = ['keyword 1', 'keyword 2']

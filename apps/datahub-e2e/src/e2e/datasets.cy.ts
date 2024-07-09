@@ -173,7 +173,7 @@ describe('datasets', () => {
         .click()
     })
     it('should display all filters', () => {
-      cy.get('@filters').filter(':visible').should('have.length', 10)
+      cy.get('@filters').filter(':visible').should('have.length', 12)
       cy.get('@filters')
         .children()
         .then(($dropdowns) =>
@@ -182,7 +182,7 @@ describe('datasets', () => {
             .map((dropdown) => dropdown.getAttribute('data-cy-field'))
         )
         .should('eql', [
-          'publisher',
+          'organization',
           'format',
           'publicationYear',
           'topic',
@@ -192,11 +192,13 @@ describe('datasets', () => {
           'keyword',
           'resourceType',
           'representationType',
+          'producerOrg',
+          'publisherOrg',
         ])
       cy.screenshot({ capture: 'viewport' })
     })
 
-    describe('publisher filter', () => {
+    describe('organization filter', () => {
       beforeEach(() => {
         cy.get('@filters').eq(0).click()
         getFilterOptions()

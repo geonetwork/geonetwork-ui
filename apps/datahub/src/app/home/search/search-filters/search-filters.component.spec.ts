@@ -27,7 +27,7 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getOptionalSearchConfig: () => ({
     ADVANCED_FILTERS: [
-      'publisher',
+      'publisherOrg',
       'format',
       'isSpatial',
       'documentStandard',
@@ -92,7 +92,7 @@ class FieldsServiceMock {
   )
   public get supportedFields() {
     return [
-      'publisher',
+      'publisherOrg',
       'format',
       'isSpatial',
       'documentStandard',
@@ -294,7 +294,7 @@ describe('SearchFiltersComponent', () => {
           filter_format: {},
           filter_publicationYear: {},
           filter_isSpatial: {},
-          filter_publisher: {},
+          filter_publisherOrg: {},
           filter_topic: {},
           filter_license: {},
           filter_documentStandard: {},

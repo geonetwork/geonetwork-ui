@@ -31,7 +31,7 @@ jest.mock('@geonetwork-ui/util/app-config', () => {
         {
           sort: '-createDate',
           name: 'sortCeatedDateAndOrg',
-          filters: { publisher: ['DREAL'] },
+          filters: { organization: ['DREAL'] },
         },
         {
           name: 'filterCarto',
