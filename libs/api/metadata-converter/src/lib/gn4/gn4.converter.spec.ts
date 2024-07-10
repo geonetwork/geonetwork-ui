@@ -954,6 +954,7 @@ describe('Gn4Converter', () => {
                 name: 'GEMET themes',
               },
               type: 'theme',
+              key: 'http://www.eionet.europa.eu/gemet/theme/1',
             },
             {
               label: 'Unterschlupf',

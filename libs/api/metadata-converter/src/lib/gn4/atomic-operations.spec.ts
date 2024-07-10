@@ -30,29 +30,65 @@ describe('atomic operations', () => {
           id: '1',
           theme: 'theme',
           keywords: [
-            { en: 'keyword1', fr: 'mot-clé1' },
-            { en: 'keyword2', fr: 'mot-clé2' },
+            {
+              en: 'keyword1',
+              fr: 'mot-clé1',
+              link: 'https://some-uri.org/thematique/categories/culture_tourisme_sport',
+            },
+            {
+              en: 'keyword2',
+              fr: 'mot-clé2',
+              link: 'https://some-uri.org/thematique/categories/services_social_sante',
+            },
           ],
         },
         {
           id: '2',
           theme: 'place',
           keywords: [
-            { en: 'keyword3', fr: 'mot-clé3' },
-            { en: 'keyword4', fr: 'mot-clé4' },
+            {
+              en: 'keyword3',
+              fr: 'mot-clé3',
+              link: 'https://some-uri.org/place/france',
+            },
+            {
+              en: 'keyword4',
+              fr: 'mot-clé4',
+              link: 'https://some-uri.org/place/europe',
+            },
           ],
         },
       ]
       const expected = [
-        { label: 'keyword1', type: 'theme', thesaurus: { id: '1' } },
-        { label: 'keyword2', type: 'theme', thesaurus: { id: '1' } },
-        { label: 'keyword3', type: 'place', thesaurus: { id: '2' } },
-        { label: 'keyword4', type: 'place', thesaurus: { id: '2' } },
+        {
+          label: 'keyword1',
+          type: 'theme',
+          key: 'https://some-uri.org/thematique/categories/culture_tourisme_sport',
+          thesaurus: { id: '1' },
+        },
+        {
+          label: 'keyword2',
+          type: 'theme',
+          key: 'https://some-uri.org/thematique/categories/services_social_sante',
+          thesaurus: { id: '1' },
+        },
+        {
+          label: 'keyword3',
+          type: 'place',
+          key: 'https://some-uri.org/place/france',
+          thesaurus: { id: '2' },
+        },
+        {
+          label: 'keyword4',
+          type: 'place',
+          key: 'https://some-uri.org/place/europe',
+          thesaurus: { id: '2' },
+        },
       ]
       expect(mapKeywords(thesauri, 'en')).toEqual(expected)
     })
 
-    it('should default type to "other" if theme is not provided', () => {
+    it('should default type to "other" if theme is not provided and not break without link', () => {
       const thesauri = [
         {
           id: '1',

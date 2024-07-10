@@ -120,6 +120,7 @@ export const mapKeywords = (thesauri: Thesaurus[], language: string) => {
       keywords.push({
         label: selectTranslatedValue<string>(keyword, language),
         type: getKeywordTypeFromKeywordTypeCode(rawThesaurus.theme),
+        ...(keyword.link && { key: keyword.link }),
         ...(thesaurus && { thesaurus }),
       })
     }
