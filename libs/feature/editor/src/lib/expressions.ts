@@ -1,4 +1,4 @@
-import { EditorFieldState, EditorFieldValue } from './models/fields.model'
+import { EditorFieldState, EditorFieldValue } from './models/'
 
 export type ExpressionEvaluator = (field: EditorFieldState) => EditorFieldValue
 

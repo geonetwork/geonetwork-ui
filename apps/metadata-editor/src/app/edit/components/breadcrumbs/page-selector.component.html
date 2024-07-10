@@ -1,0 +1,39 @@
+<div class="w-full flex flex-row p-8 items-center gap-6">
+  <ng-container
+    *ngFor="let page of pages; let index = index; let isLast = last"
+  >
+    <div class="flex flex-row items-center gap-4">
+      <div class="flex flex-row items-center gap-4 hover:cursor-pointer">
+        <gn-ui-button
+          (buttonClick)="pageSectionClickHandler(index)"
+          class="flex flex-row items-center"
+          [type]="selectedPage === index ? 'primary' : 'default'"
+          extraClass="bg-transparent border-none"
+        >
+          <div
+            class="w-10 h-10 rounded-[8px] pt-3 text-center"
+            [ngClass]="
+              selectedPage === index ? 'bg-primary font-bold' : 'bg-gray-200'
+            "
+          >
+            {{ index }}
+          </div>
+          <div
+            class="ms-4"
+            [ngClass]="
+              selectedPage === index
+                ? 'text-center text-black font-bold'
+                : 'text-gray-400'
+            "
+            translate
+          >
+            {{ page.labelKey }}
+          </div>
+        </gn-ui-button>
+      </div>
+      <div *ngIf="!isLast" class="w-10">
+        <hr class="border-t-[2px]" />
+      </div>
+    </div>
+  </ng-container>
+</div>

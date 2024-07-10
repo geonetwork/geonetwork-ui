@@ -41,9 +41,18 @@ export const selectRecordFieldsConfig = createSelector(
 
 export const selectRecordFields = createSelector(
   selectEditorState,
-  (state: EditorState) =>
-    state.fieldsConfig.map((fieldConfig) => ({
-      config: fieldConfig,
-      value: state.record?.[fieldConfig.model] ?? null,
-    }))
+  (state: EditorState) => {
+    const fieldsConfig = state.fieldsConfig
+    fieldsConfig.pages.forEach((page) => {
+      page.sections.forEach((section) => {
+        section.fields.forEach((field) => {
+          if (state.record) {
+            field.value = state.record[field.model]
+          }
+        })
+      })
+    })
+
+    return fieldsConfig
+  }
 )

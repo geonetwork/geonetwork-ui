@@ -23,7 +23,6 @@ describe('FormFieldComponent', () => {
     fixture = TestBed.createComponent(FormFieldComponent)
     component = fixture.componentInstance
     component.config = {
-      type: 'text',
       labelKey: 'my.label',
     }
   })

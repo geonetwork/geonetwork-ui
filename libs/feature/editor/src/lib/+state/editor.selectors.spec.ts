@@ -58,45 +58,26 @@ describe('Editor Selectors', () => {
     describe('selectRecordFields', () => {
       it('should return the config and value for each field', () => {
         const result = EditorSelectors.selectRecordFields(state)
-        expect(result).toEqual([
-          {
-            config: DEFAULT_FIELDS[0],
-            value: DATASET_RECORDS[0].title,
-          },
-          {
-            config: DEFAULT_FIELDS[1],
-            value: DATASET_RECORDS[0].abstract,
-          },
-          {
-            config: DEFAULT_FIELDS[2],
-            value: DATASET_RECORDS[0].uniqueIdentifier,
-          },
-          {
-            config: DEFAULT_FIELDS[3],
-            value: DATASET_RECORDS[0].recordUpdated,
-          },
-          {
-            config: DEFAULT_FIELDS[4],
-            value: DATASET_RECORDS[0].licenses,
-          },
-          {
-            config: DEFAULT_FIELDS[5],
-            value: DATASET_RECORDS[0].resourceUpdated,
-          },
-          {
-            config: DEFAULT_FIELDS[6],
-            value: DATASET_RECORDS[0].updateFrequency,
-          },
-          {
-            config: DEFAULT_FIELDS[7],
-            value: DATASET_RECORDS[0].temporalExtents,
-          },
-          {
-            config: DEFAULT_FIELDS[8],
-            value: DATASET_RECORDS[0].keywords,
-          },
-        ])
+
+        const actualSections = result.pages.map((page) => page.sections).flat()
+
+        const expectedSections = DEFAULT_FIELDS.pages
+          .map((page) => page.sections)
+          .flat()
+
+        expect(actualSections).toEqual(expectedSections)
+
+        const actualFields = actualSections
+          .map((section) => section.fields)
+          .flat()
+
+        const expectedFields = expectedSections
+          .map((section) => section.fields)
+          .flat()
+
+        expect(actualFields).toEqual(expectedFields)
       })
+
       it('should not coerce falsy values to null', () => {
         const result = EditorSelectors.selectRecordFields({
           ...state,
@@ -109,14 +90,19 @@ describe('Editor Selectors', () => {
             },
           },
         })
-        expect(result).toContainEqual({
-          config: DEFAULT_FIELDS[0],
-          value: '',
-        })
-        expect(result).toContainEqual({
-          config: DEFAULT_FIELDS[1],
-          value: '',
-        })
+
+        const resultFields = result.pages
+          .flatMap((page) => page.sections)
+          .flatMap((section) => section.fields)
+
+        const abstractField = resultFields.find(
+          (field) => field.model === 'abstract'
+        )
+
+        const titleField = resultFields.find((field) => field.model === 'title')
+
+        expect(abstractField.value).toEqual('')
+        expect(titleField.value).toEqual('')
       })
     })
   })

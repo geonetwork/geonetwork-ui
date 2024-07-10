@@ -7,11 +7,7 @@
     "declarationMap": true,
     "inlineSources": true,
     "types": [],
-    "lib": [
-      "dom",
-      "es2020",
-      "dom.iterable"
-    ],
+    "lib": ["dom", "es2020", "dom.iterable"],
     "downlevelIteration": true
   },
   "exclude": [
@@ -20,7 +16,5 @@
     "**/*.test.ts",
     "jest.config.ts"
   ],
-  "include": [
-    "**/*.ts"
-  ]
+  "include": ["**/*.ts"]
 }

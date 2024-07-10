@@ -1,11 +1,38 @@
-<div class="flex flex-col h-full">
-  <div class="w-full h-auto shrink-0">
-    <md-editor-top-toolbar></md-editor-top-toolbar>
-  </div>
-  <div class="grow overflow-auto relative">
-    <div class="absolute top-0 left-0 w-2/3 z-10 pointer-events-none">
-      <gn-ui-notifications-container></gn-ui-notifications-container>
+<ng-container *ngIf="fields$ | async as fields">
+  <div class="flex flex-col h-full">
+    <div class="w-full h-auto shrink-0">
+      <md-editor-top-toolbar></md-editor-top-toolbar>
+      <md-editor-page-selector
+        [pages]="fields.pages"
+        [selectedPage]="selectedPage"
+        (selectedPageChange)="selectedPageChange($event)"
+      ></md-editor-page-selector>
     </div>
-    <gn-ui-record-form></gn-ui-record-form>
+    <div class="grow overflow-auto relative">
+      <div class="absolute top-0 left-0 w-2/3 z-10 pointer-events-none">
+        <gn-ui-notifications-container></gn-ui-notifications-container>
+      </div>
+      <gn-ui-record-form
+        [page]="getSelectedPageFields(fields.pages)"
+      ></gn-ui-record-form>
+    </div>
+    <div class="p-8 mt-auto flex flex-row justify-between">
+      <gn-ui-button
+        type="secondary"
+        (buttonClick)="previousPageButtonHandler()"
+        translate
+      >
+        {{
+          selectedPage === 0
+            ? ('editor.record.form.bottomButtons.comeBackLater' | translate)
+            : ('editor.record.form.bottomButtons.previous' | translate)
+        }}
+      </gn-ui-button>
+      <gn-ui-button type="primary" (buttonClick)="nextPageButtonHandler()"
+        ><span translate
+          >editor.record.form.bottomButtons.next</span
+        ></gn-ui-button
+      >
+    </div>
   </div>
-</div>
+</ng-container>

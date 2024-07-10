@@ -16,11 +16,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "target": "es2020",
-    "lib": [
-      "dom",
-      "es2020",
-      "dom.iterable"
-    ],
+    "lib": ["dom", "es2020", "dom.iterable"],
     "downlevelIteration": true
   },
   "angularCompilerOptions": {
