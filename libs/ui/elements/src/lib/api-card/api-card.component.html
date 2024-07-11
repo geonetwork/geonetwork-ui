@@ -1,7 +1,5 @@
 <div
-  class="group flex flex-col justify-between h-40 pt-5 pb-6 px-7 rounded filter overflow-hidden"
-  [ngClass]="{ 'cursor-pointer': displayApiFormButton }"
-  (click)="openRecordApiFormPanel()"
+  class="group flex flex-col justify-between h-40 pt-5 pb-6 px-7 rounded filter overflow-hidden cursor-default"
 >
   <div
     class="font-title font-medium text-21 text-black text-ellipsis overflow-hidden break-words pb-5 h-[4.5rem]"
@@ -17,35 +15,37 @@
         }"
         >{{ link.accessServiceProtocol }}</span
       >
-      <gn-ui-copy-text-button
-        *ngIf="!displayApiFormButton"
-        [text]="link.url.toString()"
-        [tooltipText]="'tooltip.url.copy' | translate"
-        [displayText]="false"
-      ></gn-ui-copy-text-button>
-      <button
-        *ngIf="displayApiFormButton"
-        type="button"
-        [ngClass]="{
-          'py-2 px-4 rounded-r-md bg-gray-400 hover:bg-gray-600 focus:bg-gray-800 text-white':
-            displayText
-        }"
-        mat-raised-button
-        [matTooltip]="
-          !currentlyActive
-            ? ('record.metadata.api.form.openForm' | translate)
-            : ('record.metadata.api.form.closeForm' | translate)
-        "
-        matTooltipPosition="above"
-      >
-        <mat-icon
-          class="material-symbols-outlined pointer-events-none align-middle card-icon"
+      <div class="flex flex-row gap-2 items-center">
+        <gn-ui-copy-text-button
+          [text]="link.url"
+          [tooltipText]="'tooltip.url.copy' | translate"
+          [displayText]="false"
+        ></gn-ui-copy-text-button>
+        <button
+          *ngIf="displayApiFormButton"
+          type="button"
           [ngClass]="{
-            'text-secondary opacity-100': currentlyActive
+            'py-2 px-4 rounded-r-md bg-gray-400 hover:bg-gray-600 focus:bg-gray-800 text-white':
+              displayText
           }"
-          >more_horiz</mat-icon
+          mat-raised-button
+          [matTooltip]="
+            !currentlyActive
+              ? ('record.metadata.api.form.openForm' | translate)
+              : ('record.metadata.api.form.closeForm' | translate)
+          "
+          matTooltipPosition="above"
+          (click)="openRecordApiFormPanel()"
         >
-      </button>
+          <mat-icon
+            class="material-symbols-outlined pointer-events-none align-middle card-icon"
+            [ngClass]="{
+              'text-secondary opacity-100': currentlyActive
+            }"
+            >more_horiz</mat-icon
+          >
+        </button>
+      </div>
     </div>
   </div>
 </div>
