@@ -74,7 +74,9 @@
     ></gn-ui-form-field-simple>
   </ng-container>
   <ng-container *ngIf="isSpatialExtentField">
-    <gn-ui-form-field-spatial-extent></gn-ui-form-field-spatial-extent>
+    <gn-ui-form-field-spatial-extent
+      [control]="formControl"
+    ></gn-ui-form-field-spatial-extent>
   </ng-container>
   <ng-container *ngIf="isKeywords">
     <gn-ui-form-field-keywords

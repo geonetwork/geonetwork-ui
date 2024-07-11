@@ -1,1 +1,22 @@
-<p>form-field-spatial-extent works!</p>
+<div class="flex flex-col gap-3">
+  <gn-ui-autocomplete
+    [placeholder]="'Search for place keywords'"
+    [displayWithFn]="displayWithFn"
+    [action]="autoCompleteAction"
+    (itemSelected)="handleItemSelection($event)"
+    [clearOnSelection]="true"
+    [minCharacterCount]="0"
+    [allowSubmit]="false"
+  ></gn-ui-autocomplete>
+  <div class="flex gap-2 flex-wrap">
+    <gn-ui-badge
+      *ngFor="let keyword of control.value; let index = index"
+      [removable]="true"
+      (badgeRemoveClicked)="removeKeyword(index)"
+      >{{ keyword.label }}</gn-ui-badge
+    >
+  </div>
+</div>
+<div class="w-full h-96">
+  <gn-ui-map-container></gn-ui-map-container>
+</div>
