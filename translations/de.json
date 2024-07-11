@@ -282,6 +282,7 @@
   "record.metadata.api.form.closeForm": "Formular schließen",
   "record.metadata.api.form.create": "Ihre Anfrage erstellen",
   "record.metadata.api.form.customUrl": "Benutzerdefinierte URL",
+  "record.metadata.api.form.error": "",
   "record.metadata.api.form.limit": "Anzahl der Datensätze",
   "record.metadata.api.form.limit.all": "Alle",
   "record.metadata.api.form.offset": "Anzahl des ersten Datensatzes",

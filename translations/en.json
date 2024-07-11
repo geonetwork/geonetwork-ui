@@ -282,6 +282,7 @@
   "record.metadata.api.form.closeForm": "Close the form",
   "record.metadata.api.form.create": "Create your request",
   "record.metadata.api.form.customUrl": "Custom URL",
+  "record.metadata.api.form.error": "The service returned an error.",
   "record.metadata.api.form.limit": "Count of records",
   "record.metadata.api.form.limit.all": "All",
   "record.metadata.api.form.offset": "Count of first record",

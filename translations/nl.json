@@ -282,6 +282,7 @@
   "record.metadata.api.form.closeForm": "",
   "record.metadata.api.form.create": "",
   "record.metadata.api.form.customUrl": "",
+  "record.metadata.api.form.error": "",
   "record.metadata.api.form.limit": "",
   "record.metadata.api.form.limit.all": "",
   "record.metadata.api.form.offset": "",

@@ -1,5 +1,8 @@
 <div class="flex flex-col gap-8">
-  <div class="flex flex-col bg-white p-8 ng-star-inserted shadow-xl gap-8">
+  <div
+    class="flex flex-col bg-white p-8 ng-star-inserted shadow-xl gap-8"
+    *ngIf="apiQueryUrl$ | async"
+  >
     <div class="flex flex-row">
       <div class="text-[16px] text-black truncate font-title w-11/12" translate>
         record.metadata.api.form.create
@@ -78,7 +81,7 @@
       </div>
     </div>
   </div>
-  <div class="flex flex-col gap-3 mb-3">
+  <div class="flex flex-col gap-3 mb-3" *ngIf="apiQueryUrl$ | async">
     <div class="text-sm text-black truncate font-title w-11/12" translate>
       record.metadata.api.form.customUrl
     </div>
@@ -88,4 +91,12 @@
       ></gn-ui-copy-text-button>
     </div>
   </div>
+  <ng-container *ngIf="isLoading">
+    <gn-ui-spinning-loader class="ml-[30rem]"></gn-ui-spinning-loader>
+  </ng-container>
+  <gn-ui-error
+    *ngIf="(apiQueryUrl$ | async) === undefined && !isLoading"
+    [type]="errorTypes.RECEIVED_ERROR"
+    [error]="'record.metadata.api.form.error' | translate"
+  ></gn-ui-error>
 </div>

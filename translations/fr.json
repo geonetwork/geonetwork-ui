@@ -282,6 +282,7 @@
   "record.metadata.api.form.closeForm": "Fermer le panneau de personnalisation",
   "record.metadata.api.form.create": "Paramétrer votre requête",
   "record.metadata.api.form.customUrl": "URL personnalisée",
+  "record.metadata.api.form.error": "Le service a renvoyé un message d'erreur.",
   "record.metadata.api.form.limit": "Nombre d'enregistrements",
   "record.metadata.api.form.limit.all": "Tous",
   "record.metadata.api.form.offset": "Numéro du 1er enregistrement",

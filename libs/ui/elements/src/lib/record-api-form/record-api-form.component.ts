@@ -6,6 +6,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { mimeTypeToFormat } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, filter, map, switchMap } from 'rxjs'
+import { ErrorType } from '../error/error.component'
 
 const DEFAULT_PARAMS = {
   OFFSET: '',
@@ -26,12 +27,20 @@ interface OutputFormats {
 })
 export class RecordApiFormComponent {
   @Input() set apiLink(value: DatasetServiceDistribution) {
+    this.isLoading = true
     this.outputFormats = [{ value: 'json', label: 'JSON' }]
     this.accessServiceProtocol = value ? value.accessServiceProtocol : undefined
     this.apiFeatureType = value ? value.name : undefined
     if (value) {
       this.apiBaseUrl = value.url.href
-      this.createEndpoint().then(() => this.parseOutputFormats())
+      this.createEndpoint()
+        .then(() => {
+          this.parseOutputFormats()
+          this.isLoading = false
+        })
+        .catch(() => {
+          this.isLoading = false
+        })
     }
     this.resetUrl()
   }
@@ -49,17 +58,18 @@ export class RecordApiFormComponent {
   outputFormats = [{ value: 'json', label: 'JSON' }]
   endpoint: WfsEndpoint | OgcApiEndpoint | undefined
   firstCollection: string | undefined
+  errorTypes = ErrorType
+  isLoading = false
 
   apiQueryUrl$ = combineLatest([
     this.offset$,
     this.limit$,
     this.format$,
-    // only compute the url if the endpoint was created
-    this.endpoint$.pipe(filter((endpoint) => !!endpoint)),
+    this.endpoint$,
   ]).pipe(
-    switchMap(([offset, limit, format]) =>
-      this.generateApiQueryUrl(offset, limit, format)
-    )
+    switchMap(([offset, limit, format]) => {
+      return this.generateApiQueryUrl(offset, limit, format) || undefined
+    })
   )
 
   noLimitChecked$ = this.limit$.pipe(
@@ -85,6 +95,7 @@ export class RecordApiFormComponent {
     this.offset$.next(DEFAULT_PARAMS.OFFSET)
     this.limit$.next(DEFAULT_PARAMS.LIMIT)
     this.format$.next(DEFAULT_PARAMS.FORMAT)
+    this.isLoading = false
   }
 
   async parseOutputFormats() {
@@ -146,7 +157,6 @@ export class RecordApiFormComponent {
     format: string
   ): Promise<string> {
     if (!this.apiBaseUrl || !this.endpoint || !this.apiFeatureType) return ''
-
     const options = {
       outputFormat: format,
       startIndex: offset ? Number(offset) : undefined,
@@ -154,15 +164,20 @@ export class RecordApiFormComponent {
       limit: limit !== '-1' ? Number(limit) : limit === '-1' ? -1 : undefined,
       offset: offset !== '' ? Number(offset) : undefined,
     }
-
-    if (this.endpoint instanceof WfsEndpoint) {
-      options.maxFeatures = limit !== '-1' ? Number(limit) : undefined
-      return this.endpoint.getFeatureUrl(this.apiFeatureType, options)
-    } else {
-      return await this.endpoint.getCollectionItemsUrl(
-        this.firstCollection,
-        options
-      )
+    try {
+      let url
+      if (this.endpoint instanceof WfsEndpoint) {
+        options.maxFeatures = limit !== '-1' ? Number(limit) : undefined
+        url = this.endpoint.getFeatureUrl(this.apiFeatureType, options)
+      } else {
+        url = await this.endpoint.getCollectionItemsUrl(
+          this.firstCollection,
+          options
+        )
+      }
+      return url
+    } catch (error) {
+      return undefined
     }
   }
 }

@@ -738,6 +738,16 @@ describe('api form', () => {
           .should('not.eq', url)
       })
   })
+  describe('When the api link has an error', () => {
+    beforeEach(() => {
+      cy.visit('/dataset/ee965118-2416-4d48-b07e-bbc696f002c2')
+      cy.get('gn-ui-api-card').last().find('button').eq(1).click()
+    })
+
+    it('should display the error message', () => {
+      cy.get('gn-ui-error').should('be.visible')
+    })
+  })
 })
 
 describe('userFeedback', () => {
