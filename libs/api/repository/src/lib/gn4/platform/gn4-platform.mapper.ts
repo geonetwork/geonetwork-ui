@@ -90,6 +90,12 @@ export class Gn4PlatformMapper {
           url: new URL(matchedThesaurus?.url),
           type: matchedThesaurus?.dname as KeywordType,
         },
+        coords: {
+          coordEast: keyword.coordEast,
+          coordNorth: keyword.coordNorth,
+          coordSouth: keyword.coordSouth,
+          coordWest: keyword.coordWest,
+        },
       }
     })
   }

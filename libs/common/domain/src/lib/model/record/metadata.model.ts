@@ -67,6 +67,12 @@ export interface Keyword {
   description?: string
   type: KeywordType
   thesaurus?: ThesaurusModel
+  coords?: {
+    coordEast: string
+    coordNorth: string
+    coordSouth: string
+    coordWest: string
+  }
 }
 // languages should be expressed using two-letters ISO 639-1 codes
 export type LanguageCode = string
