@@ -36,7 +36,7 @@ describe('dashboard', () => {
   })
 
   describe('sorting', () => {
-    it.only('should order the result list on click', () => {
+    it('should order the result list on click', () => {
       cy.visit('/catalog/search')
       cy.get('gn-ui-results-table')
         .find('.table-row-cell')
