@@ -323,6 +323,54 @@ describe('Gn4Repository', () => {
       })
     })
   })
+  describe('openRecordForDuplication', () => {
+    let record: CatalogRecord
+    let recordSource: string
+    let savedOnce: boolean
+
+    const date = new Date('2024-07-11')
+    jest.useFakeTimers().setSystemTime(date)
+
+    beforeEach(async () => {
+      ;(gn4RecordsApi.getRecordAs as jest.Mock).mockReturnValueOnce(
+        of(DATASET_RECORD_SIMPLE_AS_XML).pipe(map((xml) => ({ body: xml })))
+      )
+      ;[record, recordSource, savedOnce] = await lastValueFrom(
+        repository.openRecordForDuplication('1234-5678')
+      )
+    })
+    it('calls the API to get the record as XML', () => {
+      expect(gn4RecordsApi.getRecordAs).toHaveBeenCalledWith(
+        '1234-5678',
+        undefined,
+        expect.anything(),
+        undefined,
+        undefined,
+        undefined,
+        expect.anything(),
+        expect.anything(),
+        undefined,
+        expect.anything()
+      )
+    })
+    it('parses the XML record into a native object, and updates the id and title', () => {
+      expect(record).toMatchObject({
+        uniqueIdentifier: `TEMP-ID-1720656000000`,
+        title:
+          'A very interesting dataset (un jeu de données très intéressant) (Copy)',
+      })
+    })
+    it('saves the duplicated record as draft', () => {
+      const hasDraft = repository.recordHasDraft(`TEMP-ID-1720656000000`)
+      expect(hasDraft).toBe(true)
+    })
+    it('tells the record it has not been saved yet', () => {
+      expect(savedOnce).toBe(false)
+    })
+    it('returns the record as serialized', () => {
+      expect(recordSource).toMatch(/<mdb:MD_Metadata/)
+    })
+  })
   // note: we're using a simple record here otherwise there might be loss of information when converting
   describe('saveRecord', () => {
     let recordSource: string

@@ -31,6 +31,18 @@ export abstract class RecordsRepositoryInterface {
   ): Observable<[CatalogRecord, string, boolean] | null>
 
   /**
+   * This emits once:
+   * - record object with a new unique identifier and suffixed title
+   * - serialized representation of the record as text
+   * - false, as the duplicated record is always a draft
+   * @param uniqueIdentifier
+   * @returns Observable<[CatalogRecord, string, false] | null>
+   */
+  abstract openRecordForDuplication(
+    uniqueIdentifier: string
+  ): Observable<[CatalogRecord, string, false] | null>
+
+  /**
    * @param record
    * @param referenceRecordSource
    * @returns Observable<string> Returns the unique identifier of the record as it was when saved
