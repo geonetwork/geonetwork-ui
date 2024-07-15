@@ -1,4 +1,9 @@
 <div class="flex flex-col gap-3">
+  <gn-ui-switch-toggle
+    [options]="coverage"
+    (selectedValue)="handleCoverageSelection($event)"
+    extraClasses="grow"
+  ></gn-ui-switch-toggle>
   <gn-ui-autocomplete
     [placeholder]="'Search for place keywords'"
     [displayWithFn]="displayWithFn"

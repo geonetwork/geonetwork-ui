@@ -13,22 +13,30 @@ import {
   FeatureMapModule,
   MapContextLayerTypeEnum,
   MapFacade,
+  MapStyleService,
 } from '@geonetwork-ui/feature/map'
 import {
   AutocompleteComponent,
   DropdownSelectorComponent,
+  SwitchToggleComponent,
   UiInputsModule,
 } from '@geonetwork-ui/ui/inputs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
+import { Fill, Stroke, Style } from 'ol/style'
 import { map } from 'rxjs'
 
 type AutocompleteItem = { title: string; value: Keyword }
-type geogrCoords = {
+type GeogrCoords = {
   coordEast: string
   coordNorth: string
   coordSouth: string
   coordWest: string
+}
+type Coverage = {
+  label: string
+  value: string
+  checked: boolean
 }
 
 @Component({
@@ -44,17 +52,29 @@ type geogrCoords = {
     UiWidgetsModule,
     AutocompleteComponent,
     FeatureMapModule,
+    SwitchToggleComponent,
   ],
 })
 export class FormFieldSpatialExtentComponent {
   @Input() control: FormControl<Keyword[]>
   @Input() geogrExtent: GeoJSONFeatureCollection
-  @Input() coverage: 'national' | 'regional'
+  // @Input()
+  coverage = [
+    {
+      label: 'national', // translation key
+      value: 'national',
+      checked: true,
+    },
+    {
+      label: 'regional', // translation key
+      value: 'regional',
+      checked: false,
+    },
+  ]
 
   @Output() geogrExtentChange: EventEmitter<GeoJSONFeatureCollection> =
     new EventEmitter()
-  @Output() coverageChange: EventEmitter<GeoJSONFeatureCollection> =
-    new EventEmitter()
+  @Output() coverageChange: EventEmitter<Coverage> = new EventEmitter()
 
   layers$ = this.mapFacade.layers$
 
@@ -74,13 +94,35 @@ export class FormFieldSpatialExtentComponent {
 
   constructor(
     private platformService: PlatformServiceInterface,
-    private mapFacade: MapFacade
-  ) {}
+    private mapFacade: MapFacade,
+    private styleService: MapStyleService
+  ) {
+    const fill = new Fill({
+      color: 'transparent',
+    })
+    const stroke = new Stroke({
+      color: 'black',
+      width: 2,
+    })
+    const styles = [
+      new Style({
+        fill: fill,
+        stroke: stroke,
+      }),
+    ]
+    this.styleService.styles.default = this.styleService.createStyleFunction({
+      ...this.styleService.createGeometryStyles({ color: 'black' }),
+      polygon: styles,
+    })
+  }
 
   handleItemSelection(item: AutocompleteItem) {
     this.addKeyword(item.value)
-    console.log('place keyword', item)
     this.addGeogrExtent(item.value.label, item.value.coords)
+  }
+  handleCoverageSelection(coverage: Coverage) {
+    console.log('coverage', coverage)
+    this.coverageChange.emit(coverage)
   }
 
   addKeyword(keyword: Keyword) {
@@ -107,11 +149,15 @@ export class FormFieldSpatialExtentComponent {
     this.control.setValue(removedKeywords)
 
     this.deleteLayer(index)
-    //update geogrExtent?
+
+    this.geogrExtent.features = this.geogrExtent.features.filter(
+      (_, i) => i !== index
+    )
     this.geogrExtentChange.emit(this.geogrExtent)
+    console.log('geogrExtent', this.geogrExtent)
   }
 
-  addGeogrExtent(description: string, coords: geogrCoords) {
+  addGeogrExtent(description: string, coords: GeogrCoords) {
     const featureCollection = {
       type: 'FeatureCollection',
       features: [
@@ -137,7 +183,9 @@ export class FormFieldSpatialExtentComponent {
       ],
     } as GeoJSONFeatureCollection
 
-    this.geogrExtentChange.emit(featureCollection)
+    this.geogrExtent = featureCollection
+    this.geogrExtentChange.emit(this.geogrExtent)
+    console.log('geogrExtent', this.geogrExtent)
 
     this.mapFacade.addLayer({
       type: MapContextLayerTypeEnum.GEOJSON,
