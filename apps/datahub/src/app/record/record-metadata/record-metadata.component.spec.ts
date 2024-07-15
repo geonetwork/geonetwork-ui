@@ -421,10 +421,10 @@ describe('RecordMetadataComponent', () => {
           fixture.debugElement.query(By.directive(MockDataViewComponent))
         ).toBeFalsy()
       })
-      it('does not render the permalink component', () => {
+      it('does render the permalink component', () => {
         expect(
           fixture.debugElement.query(By.directive(MockDataViewShareComponent))
-        ).toBeFalsy()
+        ).toBeTruthy()
       })
     })
     describe('when a DATA link present', () => {
@@ -446,14 +446,14 @@ describe('RecordMetadataComponent', () => {
             .length
         ).toEqual(2)
       })
-      it('does not render the permalink component', () => {
+      it('does render the permalink component', () => {
         expect(
           fixture.debugElement.query(By.directive(MockDataViewShareComponent))
-        ).toBeFalsy()
+        ).toBeTruthy()
       })
-      describe('when selectedTabIndex$ is 2 (chart tab)', () => {
+      describe('when selectedView$ is chart', () => {
         beforeEach(() => {
-          component.selectedTabIndex$.next(2)
+          component.selectedView$.next('chart')
           fixture.detectChanges()
         })
         it('renders the permalink component', () => {

@@ -83,7 +83,7 @@ export class RecordMetadataComponent {
 
   errorTypes = ErrorType
 
-  selectedTabIndex$ = new BehaviorSubject(0)
+  selectedView$ = new BehaviorSubject('map')
 
   thumbnailUrl$ = this.metadataViewFacade.metadata$.pipe(
     map((metadata) => {
@@ -108,7 +108,18 @@ export class RecordMetadataComponent {
   ) {}
 
   onTabIndexChange(index: number): void {
-    this.selectedTabIndex$.next(index)
+    let view
+    switch (index) {
+      case 0:
+        view = 'map'
+        break
+      case 1:
+        view = 'table'
+        break
+      default:
+        view = 'chart'
+    }
+    this.selectedView$.next(view)
     setTimeout(() => {
       window.dispatchEvent(new Event('resize'))
     }, 0)

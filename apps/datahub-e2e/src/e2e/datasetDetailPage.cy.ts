@@ -1,4 +1,5 @@
 import 'cypress-real-events'
+import { tile } from 'ol/loadingstrategy'
 import path from 'path'
 
 beforeEach(() => {
@@ -364,6 +365,9 @@ describe('dataset pages', () => {
             .should('have.length.greaterThan', 0)
         })
         cy.screenshot({ capture: 'fullPage' })
+      })
+      it('should display the sharing options', () => {
+        cy.get('gn-ui-data-view-share').should('be.visible')
       })
     })
     describe('features', () => {

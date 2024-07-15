@@ -75,6 +75,7 @@ describe('DataViewPermalinkComponent', () => {
     facade = TestBed.inject(MdViewFacade)
     fixture = TestBed.createComponent(DataViewPermalinkComponent)
     component = fixture.componentInstance
+    component.viewType$.next('chart')
     fixture.detectChanges()
   })
 
@@ -82,39 +83,79 @@ describe('DataViewPermalinkComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('init permalinkUrl$', () => {
-    it('should generate URL based on configs', async () => {
-      const url = await firstValueFrom(component.permalinkUrl$)
-      expect(url).toBe(
-        `https://example.com/wc-embedder?v=${gnUiVersion}&e=gn-dataset-view-chart&a=api-url%3D${encodeURIComponent(
-          component.config.basePath
-        )}&a=dataset-id%3D${
-          metadata.uniqueIdentifier
-        }&a=primary-color%3D%230f4395&a=secondary-color%3D%238bc832&a=main-color%3D%23555&a=background-color%3D%23fdfbff&a=aggregation%3D${
-          chartConfig1.aggregation
-        }&a=x-property%3D${chartConfig1.xProperty}&a=y-property%3D${
-          chartConfig1.yProperty
-        }&a=chart-type%3D${chartConfig1.chartType}`
-      )
+  describe('Chart view', () => {
+    describe('init permalinkUrl$', () => {
+      it('should generate URL based on configs', async () => {
+        const url = await firstValueFrom(component.permalinkUrl$)
+        expect(url).toBe(
+          `https://example.com/wc-embedder?v=${gnUiVersion}&e=gn-dataset-view-chart&a=aggregation%3D${
+            chartConfig1.aggregation
+          }&a=x-property%3D${chartConfig1.xProperty}&a=y-property%3D${
+            chartConfig1.yProperty
+          }&a=chart-type%3D${
+            chartConfig1.chartType
+          }&a=api-url%3D${encodeURIComponent(
+            component.config.basePath
+          )}&a=dataset-id%3D${
+            metadata.uniqueIdentifier
+          }&a=primary-color%3D%230f4395&a=secondary-color%3D%238bc832&a=main-color%3D%23555&a=background-color%3D%23fdfbff`
+        )
+      })
+    })
+    describe('update permalinkUrl$', () => {
+      beforeEach(() => {
+        facade.chartConfig$.next(chartConfig2)
+      })
+      it('should update URL based on configs', async () => {
+        const url = await firstValueFrom(component.permalinkUrl$)
+        expect(url).toBe(
+          `https://example.com/wc-embedder?v=${gnUiVersion}&e=gn-dataset-view-chart&a=aggregation%3D${
+            chartConfig2.aggregation
+          }&a=x-property%3D${chartConfig2.xProperty}&a=y-property%3D${
+            chartConfig2.yProperty
+          }&a=chart-type%3D${
+            chartConfig2.chartType
+          }&a=api-url%3D${encodeURIComponent(
+            component.config.basePath
+          )}&a=dataset-id%3D${
+            metadata.uniqueIdentifier
+          }&a=primary-color%3D%230f4395&a=secondary-color%3D%238bc832&a=main-color%3D%23555&a=background-color%3D%23fdfbff`
+        )
+      })
     })
   })
-  describe('update permalinkUrl$', () => {
+  describe('Map view', () => {
     beforeEach(() => {
-      facade.chartConfig$.next(chartConfig2)
+      component.viewType$.next('map')
     })
-    it('should update URL based on configs', async () => {
-      const url = await firstValueFrom(component.permalinkUrl$)
-      expect(url).toBe(
-        `https://example.com/wc-embedder?v=${gnUiVersion}&e=gn-dataset-view-chart&a=api-url%3D${encodeURIComponent(
-          component.config.basePath
-        )}&a=dataset-id%3D${
-          metadata.uniqueIdentifier
-        }&a=primary-color%3D%230f4395&a=secondary-color%3D%238bc832&a=main-color%3D%23555&a=background-color%3D%23fdfbff&a=aggregation%3D${
-          chartConfig2.aggregation
-        }&a=x-property%3D${chartConfig2.xProperty}&a=y-property%3D${
-          chartConfig2.yProperty
-        }&a=chart-type%3D${chartConfig2.chartType}`
-      )
+    describe('init permalinkUrl$', () => {
+      it('should generate URL based on configs', async () => {
+        const url = await firstValueFrom(component.permalinkUrl$)
+        expect(url).toBe(
+          `https://example.com/wc-embedder?v=${gnUiVersion}&e=gn-dataset-view-map&a=api-url%3D${encodeURIComponent(
+            component.config.basePath
+          )}&a=dataset-id%3D${
+            metadata.uniqueIdentifier
+          }&a=primary-color%3D%230f4395&a=secondary-color%3D%238bc832&a=main-color%3D%23555&a=background-color%3D%23fdfbff`
+        )
+      })
+    })
+  })
+  describe('Table view', () => {
+    beforeEach(() => {
+      component.viewType$.next('table')
+    })
+    describe('init permalinkUrl$', () => {
+      it('should generate URL based on configs', async () => {
+        const url = await firstValueFrom(component.permalinkUrl$)
+        expect(url).toBe(
+          `https://example.com/wc-embedder?v=${gnUiVersion}&e=gn-dataset-view-table&a=api-url%3D${encodeURIComponent(
+            component.config.basePath
+          )}&a=dataset-id%3D${
+            metadata.uniqueIdentifier
+          }&a=primary-color%3D%230f4395&a=secondary-color%3D%238bc832&a=main-color%3D%23555&a=background-color%3D%23fdfbff`
+        )
+      })
     })
   })
 })
