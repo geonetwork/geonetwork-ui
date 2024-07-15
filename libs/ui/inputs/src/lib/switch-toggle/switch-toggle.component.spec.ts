@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { SwitchToggleComponent } from './switch-toggle.component'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
+import { CommonModule } from '@angular/common'
 
 describe('SwitchToggleComponent', () => {
   let component: SwitchToggleComponent
@@ -9,8 +10,8 @@ describe('SwitchToggleComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SwitchToggleComponent],
-      imports: [MatButtonToggleModule],
+      declarations: [],
+      imports: [MatButtonToggleModule, SwitchToggleComponent, CommonModule],
     })
     fixture = TestBed.createComponent(SwitchToggleComponent)
     component = fixture.componentInstance
