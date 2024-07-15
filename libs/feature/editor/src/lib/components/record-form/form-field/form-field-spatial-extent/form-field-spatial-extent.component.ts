@@ -4,18 +4,14 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
 } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import { Keyword } from '@geonetwork-ui/common/domain/model/record'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
-  DEFAULT_BASELAYER_CONTEXT,
   FeatureMapModule,
-  MapContextLayerModel,
   MapContextLayerTypeEnum,
-  MapContextModel,
   MapFacade,
 } from '@geonetwork-ui/feature/map'
 import {
@@ -24,7 +20,6 @@ import {
   UiInputsModule,
 } from '@geonetwork-ui/ui/inputs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
-import { getOptionalMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import { map } from 'rxjs'
 
