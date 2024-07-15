@@ -5,6 +5,7 @@ type MultilingualField = {
   [K in `lang${LangCode}`]: string
 } & {
   default: string
+  link?: string
 }
 
 type BooleanString = 'true' | 'false'
