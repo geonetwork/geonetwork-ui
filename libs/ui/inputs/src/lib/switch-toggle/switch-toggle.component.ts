@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,6 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
+import { MatButtonToggleModule } from '@angular/material/button-toggle'
 
 export type SwitchToggleOption = {
   label: string
@@ -17,6 +19,8 @@ export type SwitchToggleOption = {
   templateUrl: './switch-toggle.component.html',
   styleUrls: ['./switch-toggle.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [MatButtonToggleModule, CommonModule],
 })
 export class SwitchToggleComponent {
   @Input() options: SwitchToggleOption[]
@@ -25,13 +29,10 @@ export class SwitchToggleComponent {
   @Output() selectedValue = new EventEmitter<SwitchToggleOption>()
 
   onChange(selectedOption: SwitchToggleOption) {
-    this.options.forEach((option) => {
-      if (option.value === selectedOption.value) {
-        option.checked = true
-      } else {
-        option.checked = false
-      }
-    })
+    this.options.find(
+      (option) => option.value === selectedOption.value
+    ).checked = true
+
     this.selectedValue.emit(selectedOption)
   }
 }
