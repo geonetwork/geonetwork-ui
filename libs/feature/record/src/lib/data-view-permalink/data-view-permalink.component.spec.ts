@@ -4,7 +4,7 @@ import {
   DataViewPermalinkComponent,
   WEB_COMPONENT_EMBEDDER_URL,
 } from './data-view-permalink.component'
-import { BehaviorSubject, firstValueFrom, lastValueFrom, takeLast } from 'rxjs'
+import { BehaviorSubject, firstValueFrom } from 'rxjs'
 import { MdViewFacade } from '../state'
 import { Component, Input } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
