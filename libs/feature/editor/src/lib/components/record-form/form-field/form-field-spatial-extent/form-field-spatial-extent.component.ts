@@ -192,6 +192,8 @@ export class FormFieldSpatialExtentComponent {
       data: featureCollection,
       title: description,
     })
+
+    // TODO: zoom to extent
   }
 
   deleteLayer(index: number) {
