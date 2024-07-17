@@ -306,6 +306,7 @@
   "pagination.pageOf": "z",
   "previous": "predchádzajúci",
   "record.action.download": "Stiahnuť",
+  "record.action.duplicate": "",
   "record.action.view": "Zobraziť",
   "record.externalViewer.open": "Otvoriť v externom mapovom prehliadači",
   "record.metadata.about": "O",

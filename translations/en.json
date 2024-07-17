@@ -306,6 +306,7 @@
   "pagination.pageOf": "of",
   "previous": "previous",
   "record.action.download": "Download",
+  "record.action.duplicate": "Duplicate",
   "record.action.view": "View",
   "record.externalViewer.open": "Open in the external map viewer",
   "record.metadata.about": "Description",

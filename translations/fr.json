@@ -306,6 +306,7 @@
   "pagination.pageOf": "sur",
   "previous": "précédent",
   "record.action.download": "Télécharger",
+  "record.action.duplicate": "Dupliquer",
   "record.action.view": "Voir",
   "record.externalViewer.open": "Ouvrir dans le visualiseur externe",
   "record.metadata.about": "Description",
