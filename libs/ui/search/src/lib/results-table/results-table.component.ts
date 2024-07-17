@@ -1,23 +1,24 @@
+import { CommonModule } from '@angular/common'
 import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { MatIconModule } from '@angular/material/icon'
+import { MatMenuModule } from '@angular/material/menu'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  FieldSort,
+  SortByField,
+} from '@geonetwork-ui/common/domain/model/search'
+import { BadgeComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import {
+  InteractiveTableColumnComponent,
+  InteractiveTableComponent,
+} from '@geonetwork-ui/ui/layout'
 import {
   FileFormat,
   getBadgeColor,
   getFileFormat,
   getFormatPriority,
 } from '@geonetwork-ui/util/shared'
-import { BadgeComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import {
-  InteractiveTableColumnComponent,
-  InteractiveTableComponent,
-} from '@geonetwork-ui/ui/layout'
-import { MatIconModule } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
-import { CommonModule } from '@angular/common'
-import {
-  FieldSort,
-  SortByField,
-} from '@geonetwork-ui/common/domain/model/search'
 
 @Component({
   selector: 'gn-ui-results-table',
@@ -32,6 +33,7 @@ import {
     MatIconModule,
     TranslateModule,
     BadgeComponent,
+    MatMenuModule,
   ],
 })
 export class ResultsTableComponent {
@@ -43,6 +45,7 @@ export class ResultsTableComponent {
   // emits the column (field) as well as the order
   @Output() sortByChange = new EventEmitter<[string, 'asc' | 'desc']>()
   @Output() recordClick = new EventEmitter<CatalogRecord>()
+  @Output() duplicateRecord = new EventEmitter<CatalogRecord>()
   @Output() recordsSelectedChange = new EventEmitter<
     [CatalogRecord[], boolean]
   >()
@@ -87,6 +90,11 @@ export class ResultsTableComponent {
 
   handleRecordClick(item: unknown) {
     this.recordClick.emit(item as CatalogRecord)
+  }
+
+  handleDuplicateClick(event: Event, item: unknown) {
+    event.stopPropagation()
+    this.duplicateRecord.emit(item as CatalogRecord)
   }
 
   setSortBy(col: string, order: 'asc' | 'desc') {

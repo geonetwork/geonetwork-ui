@@ -48,6 +48,10 @@ export class SearchRecordsComponent {
     this.router.navigate(['/edit', record.uniqueIdentifier])
   }
 
+  duplicateRecord(record: CatalogRecord) {
+    this.router.navigate(['/duplicate', record.uniqueIdentifier])
+  }
+
   createRecord() {
     this.router.navigate(['/create'])
   }

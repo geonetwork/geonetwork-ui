@@ -4,6 +4,7 @@
   [selectedRecordsIdentifiers]="selectedRecords$ | async"
   [sortOrder]="sortBy$ | async"
   (recordClick)="handleRecordClick($event)"
+  (duplicateRecord)="handleDuplicateRecord($event)"
   (recordsSelectedChange)="handleRecordsSelectedChange($event[0], $event[1])"
   (sortByChange)="handleSortByChange($event[0], $event[1])"
 ></gn-ui-results-table>

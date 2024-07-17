@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
-import { ResultsTableComponent } from './results-table.component'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { By } from '@angular/platform-browser'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
+import { ResultsTableComponent } from './results-table.component'
 
 describe('ResultsTableComponent', () => {
   let component: ResultsTableComponent
@@ -11,7 +12,7 @@ describe('ResultsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
+      imports: [TranslateModule.forRoot(), NoopAnimationsModule],
     }).compileComponents()
 
     fixture = TestBed.createComponent(ResultsTableComponent)
@@ -133,7 +134,7 @@ describe('ResultsTableComponent', () => {
     })
   })
 
-  describe('clicking on a dataset', () => {
+  describe('clicking on a title', () => {
     let clickedRecord: CatalogRecord
 
     beforeEach(() => {
@@ -142,11 +143,33 @@ describe('ResultsTableComponent', () => {
     })
 
     it('emits a recordClick event', () => {
-      const tableRow = fixture.debugElement.queryAll(
-        By.css('.table-row-cell')
-      )[1].nativeElement as HTMLDivElement
-      tableRow.parentElement.click()
+      const tableRow = fixture.debugElement.query(
+        By.css('[data-test="record-title-cell"]')
+      ).nativeElement as HTMLDivElement
+      tableRow.click()
       expect(clickedRecord).toEqual(DATASET_RECORDS[0])
+    })
+  })
+
+  describe('duplicating a dataset', () => {
+    let recordToBeDuplicated: CatalogRecord
+
+    beforeEach(() => {
+      recordToBeDuplicated = null
+      component.duplicateRecord.subscribe((r) => (recordToBeDuplicated = r))
+    })
+
+    it('emits a duplicateRecord event', () => {
+      const menuButton = fixture.debugElement.query(
+        By.css('[data-test="record-menu-button"]')
+      ).nativeElement as HTMLButtonElement
+      menuButton.click()
+      fixture.detectChanges()
+      const duplicateButton = fixture.debugElement.query(
+        By.css('[data-test="record-menu-duplicate-button"]')
+      ).nativeElement as HTMLButtonElement
+      duplicateButton.click()
+      expect(recordToBeDuplicated).toEqual(DATASET_RECORDS[0])
     })
   })
 })
