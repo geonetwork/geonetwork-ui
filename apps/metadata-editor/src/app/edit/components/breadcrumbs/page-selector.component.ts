@@ -1,14 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
-import { EditorFieldPage } from '@geonetwork-ui/feature/editor'
+import { EditorFacade } from '@geonetwork-ui/feature/editor'
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'md-editor-page-selector',
@@ -19,12 +14,11 @@ import { EditorFieldPage } from '@geonetwork-ui/feature/editor'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageSelectorComponent {
-  @Input() selectedPage = 0
-  @Input() pages: EditorFieldPage[]
+  pages$ = this.facade.editorConfig$.pipe(map((config) => config.pages))
 
-  @Output() selectedPageChange = new EventEmitter<number>()
+  constructor(public facade: EditorFacade) {}
 
   pageSectionClickHandler(index: number) {
-    this.selectedPageChange.emit(index)
+    this.facade.setCurrentPage(index) // TODO
   }
 }

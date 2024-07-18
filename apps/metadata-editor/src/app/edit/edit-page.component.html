@@ -2,19 +2,13 @@
   <div class="flex flex-col h-full">
     <div class="w-full h-auto shrink-0">
       <md-editor-top-toolbar></md-editor-top-toolbar>
-      <md-editor-page-selector
-        [pages]="fields.pages"
-        [selectedPage]="selectedPage"
-        (selectedPageChange)="selectedPageChange($event)"
-      ></md-editor-page-selector>
+      <md-editor-page-selector></md-editor-page-selector>
     </div>
     <div class="grow overflow-auto relative">
       <div class="absolute top-0 left-0 w-2/3 z-10 pointer-events-none">
         <gn-ui-notifications-container></gn-ui-notifications-container>
       </div>
-      <gn-ui-record-form
-        [page]="getSelectedPageFields(fields.pages)"
-      ></gn-ui-record-form>
+      <gn-ui-record-form></gn-ui-record-form>
     </div>
     <div class="p-8 mt-auto flex flex-row justify-between">
       <gn-ui-button
@@ -23,7 +17,7 @@
         translate
       >
         {{
-          selectedPage === 0
+          (currentPage$ | async) === 0
             ? ('editor.record.form.bottomButtons.comeBackLater' | translate)
             : ('editor.record.form.bottomButtons.previous' | translate)
         }}

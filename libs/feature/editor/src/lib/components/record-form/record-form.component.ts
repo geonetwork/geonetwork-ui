@@ -1,14 +1,13 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { EditorFacade } from '../../+state/editor.facade'
-import {
-  EditorField,
-  EditorFieldPage,
-  EditorFieldValue,
-  EditorSection,
-} from '../../models'
+import { EditorFieldValue } from '../../models'
 import { FormFieldComponent } from './form-field'
 import { TranslateModule } from '@ngx-translate/core'
+import {
+  EditorFieldWithValue,
+  EditorSectionWithValues,
+} from '../../+state/editor.models'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -19,8 +18,6 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [CommonModule, FormFieldComponent, TranslateModule],
 })
 export class RecordFormComponent {
-  @Input() page: EditorFieldPage
-
   constructor(public facade: EditorFacade) {}
 
   handleFieldValueChange(model: string, newValue: EditorFieldValue) {
@@ -30,11 +27,11 @@ export class RecordFormComponent {
     this.facade.updateRecordField(model, newValue)
   }
 
-  fieldTracker(index: number, field: EditorField): any {
-    return field.model
+  fieldTracker(index: number, field: EditorFieldWithValue): any {
+    return field.config.model
   }
 
-  sectionTracker(index: number, section: EditorSection): any {
+  sectionTracker(index: number, section: EditorSectionWithValues): any {
     return section.labelKey
   }
 }

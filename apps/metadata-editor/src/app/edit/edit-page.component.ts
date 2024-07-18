@@ -3,7 +3,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import {
   EditorFacade,
-  EditorFieldPage,
   RecordFormComponent,
 } from '@geonetwork-ui/feature/editor'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
@@ -15,9 +14,10 @@ import {
   NotificationsService,
 } from '@geonetwork-ui/feature/notifications'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { filter, Subscription, take } from 'rxjs'
+import { filter, firstValueFrom, Subscription, take } from 'rxjs'
 import { PageSelectorComponent } from './components/breadcrumbs/page-selector.component'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { map } from 'rxjs/operators'
 
 marker('editor.record.form.bottomButtons.comeBackLater')
 marker('editor.record.form.bottomButtons.previous')
@@ -43,9 +43,11 @@ marker('editor.record.form.bottomButtons.next')
 export class EditPageComponent implements OnInit, OnDestroy {
   subscription = new Subscription()
 
-  fields$ = this.facade.recordFields$
-  totalPages = 0
-  selectedPage = 0
+  fields$ = this.facade.currentSections$
+  currentPage$ = this.facade.currentPage$
+  pagesLength$ = this.facade.editorConfig$.pipe(
+    map((config) => config.pages.length)
+  )
 
   constructor(
     private route: ActivatedRoute,
@@ -53,13 +55,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
     private notificationsService: NotificationsService,
     private translateService: TranslateService,
     private router: Router
-  ) {
-    this.subscription.add(
-      this.fields$.subscribe((fields) => {
-        this.totalPages = fields.pages.length
-      })
-    )
-  }
+  ) {}
 
   ngOnInit(): void {
     const [currentRecord, currentRecordSource, currentRecordAlreadySaved] =
@@ -129,24 +125,20 @@ export class EditPageComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe()
   }
 
-  getSelectedPageFields(pages: EditorFieldPage[]) {
-    return pages[this.selectedPage]
-  }
-
-  previousPageButtonHandler() {
-    if (this.selectedPage === 0) {
+  async previousPageButtonHandler() {
+    const currentPage = await firstValueFrom(this.currentPage$)
+    if (currentPage === 0) {
       this.router.navigate(['catalog', 'search'])
     } else {
-      this.selectedPage--
+      this.facade.setCurrentPage(currentPage - 1) // TODO
     }
   }
 
-  nextPageButtonHandler() {
-    if (this.selectedPage === this.totalPages - 1) return
-    this.selectedPage++
-  }
-
-  selectedPageChange(index: number) {
-    this.selectedPage = index
+  async nextPageButtonHandler() {
+    const currentPage = await firstValueFrom(this.currentPage$)
+    const pagesCount = await firstValueFrom(this.pagesLength$)
+    if (currentPage < pagesCount - 1) {
+      this.facade.setCurrentPage(currentPage + 1)
+    }
   }
 }

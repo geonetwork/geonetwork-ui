@@ -51,13 +51,13 @@ describe('Editor Selectors', () => {
     })
 
     it('selectRecordFieldsConfig() should return the current "fieldsConfig" state', () => {
-      const result = EditorSelectors.selectRecordFieldsConfig(state)
+      const result = EditorSelectors.selectEditorConfig(state)
       expect(result).toEqual(DEFAULT_FIELDS)
     })
 
     describe('selectRecordFields', () => {
       it('should return the config and value for each field', () => {
-        const result = EditorSelectors.selectRecordFields(state)
+        const result = EditorSelectors.selectRecordSections(state)
 
         const actualSections = result.pages.map((page) => page.sections).flat()
 
@@ -79,7 +79,7 @@ describe('Editor Selectors', () => {
       })
 
       it('should not coerce falsy values to null', () => {
-        const result = EditorSelectors.selectRecordFields({
+        const result = EditorSelectors.selectRecordSections({
           ...state,
           editor: {
             ...state.editor,

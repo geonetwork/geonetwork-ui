@@ -28,3 +28,8 @@ export const saveRecordFailure = createAction(
 )
 
 export const draftSaveSuccess = createAction('[Editor] Draft save success')
+
+export const setCurrentPage = createAction(
+  '[Editor] Set current page',
+  props<{ page: number }>()
+)

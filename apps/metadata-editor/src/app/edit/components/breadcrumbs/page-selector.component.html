@@ -1,19 +1,23 @@
 <div class="w-full flex flex-row p-8 items-center gap-6">
   <ng-container
-    *ngFor="let page of pages; let index = index; let isLast = last"
+    *ngFor="let page of pages$ | async; let index = index; let isLast = last"
   >
     <div class="flex flex-row items-center gap-4">
       <div class="flex flex-row items-center gap-4 hover:cursor-pointer">
         <gn-ui-button
           (buttonClick)="pageSectionClickHandler(index)"
           class="flex flex-row items-center"
-          [type]="selectedPage === index ? 'primary' : 'default'"
+          [type]="
+            (facade.currentPage$ | async) === index ? 'primary' : 'default'
+          "
           extraClass="bg-transparent border-none"
         >
           <div
             class="w-10 h-10 rounded-[8px] pt-3 text-center"
             [ngClass]="
-              selectedPage === index ? 'bg-primary font-bold' : 'bg-gray-200'
+              (facade.currentPage$ | async) === index
+                ? 'bg-primary font-bold'
+                : 'bg-gray-200'
             "
           >
             {{ index }}
@@ -21,7 +25,7 @@
           <div
             class="ms-4"
             [ngClass]="
-              selectedPage === index
+              (facade.currentPage$ | async) === index
                 ? 'text-center text-black font-bold'
                 : 'text-gray-400'
             "

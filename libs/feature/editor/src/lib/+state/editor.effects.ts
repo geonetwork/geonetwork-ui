@@ -6,9 +6,9 @@ import * as EditorActions from './editor.actions'
 import { EditorService } from '../services/editor.service'
 import { Store } from '@ngrx/store'
 import {
+  selectEditorConfig,
   selectRecord,
   selectRecordAlreadySavedOnce,
-  selectRecordFieldsConfig,
 } from './editor.selectors'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
@@ -24,7 +24,7 @@ export class EditorEffects {
       ofType(EditorActions.saveRecord),
       withLatestFrom(
         this.store.select(selectRecord),
-        this.store.select(selectRecordFieldsConfig),
+        this.store.select(selectEditorConfig),
         this.store.select(selectRecordAlreadySavedOnce)
       ),
       switchMap(([, record, fieldsConfig, alreadySavedOnce]) =>

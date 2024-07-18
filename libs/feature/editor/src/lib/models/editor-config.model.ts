@@ -30,7 +30,7 @@ export interface EditorField {
   // the result of this expression will replace the field value on save
   onSaveProcess?: EditorFieldExpression
 
-  value?: EditorFieldValue
+  // value?: EditorFieldValue
 }
 
 export interface EditorSection {
