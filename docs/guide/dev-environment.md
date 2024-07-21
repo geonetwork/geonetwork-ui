@@ -43,6 +43,21 @@ By default, the version of GeoNetwork used as a backend is 4.2.2. You can specif
 $ GEONETWORK_VERSION=4.2.5 docker compose up -d
 ```
 
+### Remote debugging of GeoNetwork
+
+When using an IDE that supports Java remote debugging (e.g. IntelliJ IDEA), it is possible to connect to the running GeoNetwork instance by creating a "Remote JVM Debug" configuration pointing on the `5005` port; This can be done in IntelliJ like so:
+
+1. Open the "Edit Configurations" dialog  
+   ![intellij-edit-configs.png](..%2Fassets%2Fintellij-edit-configs.png)
+
+2. Create a new "Remote JVM Debug" configuration  
+   ![intellij-create-debug-config.png](..%2Fassets%2Fintellij-create-debug-config.png)
+
+3. Set the port to `5005`  
+   ![intellij-remote-debug.png](..%2Fassets%2Fintellij-remote-debug.png)
+
+Then, the remote debugger will be able to attach to GeoNetwork once it's running and you will be able to create breakpoints and inspect the running code.
+
 ## GeoNetwork-UI code
 
 ### Applications

@@ -80,6 +80,15 @@ services:
       GEONETWORK_DB_NAME: geonetwork
       GEONETWORK_DB_USERNAME: geonetwork
       GEONETWORK_DB_PASSWORD: geonetwork
+      JAVA_OPTS: >
+        -Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
+        -Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true
+        -Xms512M -Xss512M -Xmx2G -XX:+UseConcMarkSweepGC
+        -Dgeonetwork.resources.dir=/var/lib/jetty/webapps/geonetwork/WEB-INF/data/data/resources
+        -Dgeonetwork.data.dir=/var/lib/jetty/webapps/geonetwork/WEB-INF/data/data
+        -Dgeonetwork.codeList.dir=/var/lib/jetty/webapps/geonetwork/WEB-INF/data/config/codelist
+        -Dgeonetwork.schema.dir=/var/lib/jetty/webapps/geonetwork/WEB-INF/data/config/schema_plugins
+        -Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:5005
     depends_on:
       database:
         condition: service_healthy
@@ -98,6 +107,7 @@ services:
       - geonetwork_data:/var/lib/jetty/webapps/geonetwork/WEB-INF/data/
     ports:
       - '8080:8080'
+      - '5005:5005'
 
   init-pipeline:
     image: geonetwork/geonetwork-ui-tools-pipelines:latest
