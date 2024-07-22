@@ -7201,11 +7201,7 @@ export class RecordsApiService {
     }
 
     // to determine the Content-Type header
-    const consumes: string[] = [
-      'application/xml',
-      'application/json',
-      'application/x-www-form-urlencoded',
-    ]
+    const consumes: string[] = ['application/xml']
     const httpContentTypeSelected: string | undefined =
       this.configuration.selectHeaderContentType(consumes)
     if (httpContentTypeSelected !== undefined) {
