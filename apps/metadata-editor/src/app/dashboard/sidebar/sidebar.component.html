@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <ng-container *ngrxLet="platformService.getMe() as user">
+    <ng-container *ngIf="platformService.getMe() | async as user">
       <div
         *ngIf="user && user.name"
         class="basis-1/12 mb-2 flex flex-col justify-center items-center"
@@ -23,7 +23,6 @@
           class="w-10 h-10 flex justify-center items-center hover:cursor-pointer"
         >
           <gn-ui-user-preview
-            *ngIf="user && user.name"
             [user]="user"
             [avatarPlaceholder]="placeholder$ | async"
             extraClass="w-10 h-10"
