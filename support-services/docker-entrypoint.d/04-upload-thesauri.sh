@@ -15,5 +15,6 @@ do
     -H 'Accept: application/json, text/plain, */*' \
     -H "Cookie: JSESSIONID=$jsessionid; XSRF-TOKEN=$xsrf_token" \
     -H "X-XSRF-TOKEN: $xsrf_token"
+  echo ""
 done
 
