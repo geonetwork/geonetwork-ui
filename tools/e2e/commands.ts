@@ -15,6 +15,7 @@ declare namespace Cypress {
     login(username?: string, password?: string, redirect?: boolean): void
     signOut(): void
     clearFavorites(): void
+    clearRecordDrafts(): void
 
     // interaction with gn-ui-dropdown-selector
     openDropdown(): Chainable<JQuery<HTMLElement>>
@@ -138,6 +139,18 @@ Cypress.Commands.add(
     return cy.wrap(dropdownElement).openDropdown().find(`[data-cy-active]`)
   }
 )
+
+Cypress.Commands.add('clearRecordDrafts', () => {
+  cy.window().then((window) => {
+    const items = { ...window.localStorage }
+    const draftKeys = Object.keys(items).filter((key) =>
+      key.startsWith('geonetwork-ui-draft-')
+    )
+    draftKeys.forEach((key) => window.localStorage.removeItem(key))
+    cy.log(`Cleared ${draftKeys.length} draft(s).`)
+  })
+  cy.reload()
+})
 
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
