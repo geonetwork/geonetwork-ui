@@ -228,6 +228,7 @@ export function xmlToString(
 ${padding}<${el.name}${attrs}/>
 ${parentPadding}`
   }
+
   return `
 ${padding}<${el.name}${attrs}>${children}</${el.name}>
 ${parentPadding}`
@@ -307,11 +308,13 @@ function getTreeRoot(element: XmlElement): XmlElement {
 
 // stays on the parent element
 // if the given elements are part of a subtree, will add the root of subtree
+// will filter out falsy elements
 export function appendChildren(
   ...childrenFns: Array<ChainableFunction<void, XmlElement>>
 ): ChainableFunction<XmlElement, XmlElement> {
   return (element) => {
     if (!element) return null
+    childrenFns = childrenFns.filter((fn) => fn)
     element.children.push(...childrenFns.map((fn) => fn()).map(getTreeRoot))
     element.children.forEach((el) => (el.parent = element))
     return element

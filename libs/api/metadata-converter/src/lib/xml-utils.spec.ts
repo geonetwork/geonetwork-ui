@@ -1,10 +1,10 @@
+import { XmlElement } from '@rgrove/parse-xml'
 import {
   getRootElement,
   parseXmlString,
   renameElements,
   xmlToString,
 } from './xml-utils'
-import { XmlElement } from '@rgrove/parse-xml'
 
 describe('xml utils', () => {
   describe('xmlToString', () => {

@@ -220,11 +220,10 @@ export class MapUtilsService {
     if (!('spatialExtents' in record) || record.spatialExtents.length === 0) {
       return null
     }
-    // transform an array of geojson geometries into a bbox
+    // extend all the spatial extents bbox into an including bbox
     const totalExtent = record.spatialExtents.reduce(
       (prev, curr) => {
-        const geom = GEOJSON.readGeometry(curr.geometry)
-        return extend(prev, geom.getExtent())
+        return extend(prev, curr.bbox)
       },
       [Infinity, Infinity, -Infinity, -Infinity]
     )

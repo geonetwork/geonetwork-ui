@@ -13,6 +13,8 @@ import {
   UpdateFrequency,
   UpdateFrequencyCustom,
 } from '@geonetwork-ui/common/domain/model/record'
+import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus'
+import { Geometry } from 'geojson'
 import { matchMimeType, matchProtocol } from '../common/distribution.mapper'
 import {
   ChainableFunction,
@@ -35,12 +37,12 @@ import {
   readAttribute,
   readText,
 } from '../xml-utils'
+import { readGeometry } from './utils/geometry'
 import { fullNameToParts } from './utils/individual-name'
 import { getKeywordTypeFromKeywordTypeCode } from './utils/keyword.mapper'
 import { getRoleFromRoleCode } from './utils/role.mapper'
 import { getStatusFromStatusCode } from './utils/status.mapper'
 import { getUpdateFrequencyFromFrequencyCode } from './utils/update-frequency.mapper'
-import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus'
 
 export function extractCharacterString(): ChainableFunction<
   XmlElement,
@@ -63,6 +65,14 @@ export function extractDateTime(): ChainableFunction<XmlElement, Date> {
     ),
     readText(),
     map((dateStr) => (dateStr ? new Date(dateStr) : null))
+  )
+}
+
+export function extractDecimal(): ChainableFunction<XmlElement, number> {
+  return pipe(
+    findChildElement('gco:Decimal', false),
+    readText(),
+    map((numberStr) => (numberStr ? Number(numberStr) : null))
   )
 }
 
@@ -891,6 +901,69 @@ export function readTemporalExtents(rootEl: XmlElement) {
             start: date,
           }))
         )(instantEl)
+      }
+    })
+  )(rootEl)
+}
+
+export function readSpatialExtents(rootEl: XmlElement) {
+  const extractGeometries = (rootEl: XmlElement): Geometry[] => {
+    if (!rootEl) return null
+    return pipe(
+      findChildrenElement('gmd:polygon', false),
+      mapArray((el) => {
+        const elements = el.children.filter(
+          (child) => child instanceof XmlElement
+        )
+        return readGeometry(elements[0] as XmlElement)
+      })
+    )(rootEl)
+  }
+
+  const extractBBox = (
+    rootEl: XmlElement
+  ): [number, number, number, number] => {
+    if (!rootEl) return null
+    return pipe(
+      combine(
+        pipe(findChildElement('gmd:westBoundLongitude'), extractDecimal()),
+        pipe(findChildElement('gmd:southBoundLatitude'), extractDecimal()),
+        pipe(findChildElement('gmd:eastBoundLongitude'), extractDecimal()),
+        pipe(findChildElement('gmd:northBoundLatitude'), extractDecimal())
+      )
+    )(rootEl)
+  }
+
+  const extractDescription = (rootEl: XmlElement): string => {
+    if (!rootEl) return null
+    return pipe(
+      findNestedElement(
+        'gmd:geographicIdentifier',
+        'gmd:MD_Identifier',
+        'gmd:code'
+      ),
+      extractCharacterString()
+    )(rootEl)
+  }
+
+  return pipe(
+    findIdentification(),
+    findNestedElements('gmd:extent', 'gmd:EX_Extent', 'gmd:geographicElement'),
+    mapArray(
+      combine(
+        pipe(findChildElement('gmd:EX_BoundingPolygon'), extractGeometries),
+        pipe(findChildElement('gmd:EX_GeographicBoundingBox'), extractBBox),
+        pipe(
+          findChildElement('gmd:EX_GeographicDescription'),
+          extractDescription
+        )
+      )
+    ),
+    mapArray(([geometries, bbox, description]) => {
+      return {
+        ...(geometries && { geometries }),
+        ...(bbox && { bbox }),
+        ...(description && { description }),
       }
     })
   )(rootEl)

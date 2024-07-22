@@ -335,6 +335,27 @@ describe('MapUtilsService', () => {
       expect(service.getRecordExtent(record1)).toBeNull()
       expect(service.getRecordExtent(record2)).toBeNull()
     })
+
+    it('should return the projected extent of included extents', () => {
+      const record: Partial<CatalogRecord> = {
+        spatialExtents: [
+          {
+            bbox: [6.43, 47.663, 7.263, 48.033],
+          },
+          {
+            bbox: [7.56, 47.24, 7.86, 47.41],
+          },
+          {
+            bbox: [8.2, 47.95, 8.72, 48.26],
+          },
+        ],
+      }
+
+      expect(service.getRecordExtent(record)).toEqual([
+        715784.3258007491, 5981336.544186428, 970705.9597173458,
+        6150219.0853063855,
+      ])
+    })
   })
 
   describe('#prioritizePageScroll', () => {

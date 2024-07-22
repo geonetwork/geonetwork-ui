@@ -388,7 +388,11 @@ Depuis, ce sont les Districts routiers qui assurent la tenue à jour de ces info
     name: 'Direction Asset Management (SPW - Mobilité et Infrastructures - Direction Asset Management)',
   },
   securityConstraints: [],
-  spatialExtents: [],
+  spatialExtents: [
+    {
+      bbox: [2.75, 49.45, 6.5, 50.85],
+    },
+  ],
   spatialRepresentation: 'vector',
   status: 'ongoing',
   temporalExtents: [],
