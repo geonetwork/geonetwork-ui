@@ -1,6 +1,4 @@
-import { EditorConfig, EditorField, EditorSection } from '../models'
-
-export const EDITOR_CONFIG = (): EditorConfig => ({
+export const EDITOR_CONFIG = () => ({
   pages: [
     {
       labelKey: 'Resource description',
@@ -20,7 +18,7 @@ export const EDITOR_CONFIG = (): EditorConfig => ({
   ],
 })
 
-export const EDITOR_SECTION_ABOUT = (): EditorSection => ({
+export const EDITOR_SECTION_ABOUT = () => ({
   labelKey: 'About the resource',
   descriptionKey: 'This section describes the resource.',
   hidden: false,
@@ -34,28 +32,28 @@ export const EDITOR_SECTION_ABOUT = (): EditorSection => ({
   ],
 })
 
-export const EDITOR_SECTION_DATA_MANAGER = (): EditorSection => ({
+export const EDITOR_SECTION_DATA_MANAGER = () => ({
   labelKey: 'Data manager',
   descriptionKey: '',
   hidden: false,
   fields: [],
 })
 
-export const EDITOR_SECTION_USE_AND_ACCESS_CONDITIONS = (): EditorSection => ({
+export const EDITOR_SECTION_USE_AND_ACCESS_CONDITIONS = () => ({
   labelKey: 'Data manager',
   descriptionKey: '',
   hidden: false,
   fields: [EDITOR_FIELD_LICENSE()],
 })
 
-export const EDITOR_SECTION_CLASSIFICATION = (): EditorSection => ({
+export const EDITOR_SECTION_CLASSIFICATION = () => ({
   labelKey: 'Classification',
   descriptionKey: 'The classification has an impact on the access to the data.',
   hidden: false,
   fields: [EDITOR_FIELD_KEYWORDS(), EDITOR_FIELD_UNIQUE_IDENTIFIER()],
 })
 
-export const EDITOR_FIELD_TITLE = (): EditorField => ({
+export const EDITOR_FIELD_TITLE = () => ({
   model: 'title',
   hidden: false,
   value: 'Accroches vélos MEL',
@@ -64,7 +62,7 @@ export const EDITOR_FIELD_TITLE = (): EditorField => ({
   },
 })
 
-export const EDITOR_FIELD_ABSTRACT = (): EditorField => ({
+export const EDITOR_FIELD_ABSTRACT = () => ({
   model: 'abstract',
   hidden: false,
   value: 'Abstract',
@@ -73,7 +71,7 @@ export const EDITOR_FIELD_ABSTRACT = (): EditorField => ({
   },
 })
 
-export const EDITOR_FIELD_RESOURCE_UPDATED = (): EditorField => ({
+export const EDITOR_FIELD_RESOURCE_UPDATED = () => ({
   model: 'resourceUpdated',
   hidden: false,
   formFieldConfig: {
@@ -81,7 +79,7 @@ export const EDITOR_FIELD_RESOURCE_UPDATED = (): EditorField => ({
   },
 })
 
-export const EDITOR_FIELD_RECORD_UPDATED = (): EditorField => ({
+export const EDITOR_FIELD_RECORD_UPDATED = () => ({
   model: 'recordUpdated',
   hidden: false,
   formFieldConfig: {
@@ -92,7 +90,7 @@ export const EDITOR_FIELD_RECORD_UPDATED = (): EditorField => ({
   onSaveProcess: '${dateNow()}',
 })
 
-export const EDITOR_FIELD_UPDATE_FREQUENCY = (): EditorField => ({
+export const EDITOR_FIELD_UPDATE_FREQUENCY = () => ({
   model: 'updateFrequency',
   hidden: false,
   formFieldConfig: {
@@ -101,7 +99,7 @@ export const EDITOR_FIELD_UPDATE_FREQUENCY = (): EditorField => ({
   value: 'unknown',
 })
 
-export const EDITOR_FIELD_TEMPORAL_EXTENTS = (): EditorField => ({
+export const EDITOR_FIELD_TEMPORAL_EXTENTS = () => ({
   model: 'temporalExtents',
   hidden: false,
   formFieldConfig: {
@@ -110,7 +108,7 @@ export const EDITOR_FIELD_TEMPORAL_EXTENTS = (): EditorField => ({
   value: [],
 })
 
-export const EDITOR_FIELD_SPATIAL_EXTENTS = (): EditorField => ({
+export const EDITOR_FIELD_SPATIAL_EXTENTS = () => ({
   model: 'spatialExtents',
   hidden: false,
   formFieldConfig: {
@@ -118,7 +116,7 @@ export const EDITOR_FIELD_SPATIAL_EXTENTS = (): EditorField => ({
   },
 })
 
-export const EDITOR_FIELD_KEYWORDS = (): EditorField => ({
+export const EDITOR_FIELD_KEYWORDS = () => ({
   model: 'keywords',
   hidden: false,
   formFieldConfig: {
@@ -126,7 +124,7 @@ export const EDITOR_FIELD_KEYWORDS = (): EditorField => ({
   },
 })
 
-export const EDITOR_FIELD_UNIQUE_IDENTIFIER = (): EditorField => ({
+export const EDITOR_FIELD_UNIQUE_IDENTIFIER = () => ({
   model: 'uniqueIdentifier',
   hidden: false,
   formFieldConfig: {
@@ -136,7 +134,7 @@ export const EDITOR_FIELD_UNIQUE_IDENTIFIER = (): EditorField => ({
   value: 'accroche_velos',
 })
 
-export const EDITOR_FIELD_LICENSE = (): EditorField => ({
+export const EDITOR_FIELD_LICENSE = () => ({
   model: 'licenses',
   hidden: false,
   formFieldConfig: {
@@ -145,7 +143,7 @@ export const EDITOR_FIELD_LICENSE = (): EditorField => ({
   },
 })
 
-export const EDITOR_FIELDS = (): EditorField[] => [
+export const EDITOR_FIELDS = () => [
   EDITOR_FIELD_TITLE(),
   EDITOR_FIELD_ABSTRACT(),
   EDITOR_FIELD_RESOURCE_UPDATED(),

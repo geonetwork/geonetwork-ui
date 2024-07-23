@@ -15,7 +15,7 @@ import {
 } from '@geonetwork-ui/feature/notifications'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { filter, firstValueFrom, Subscription, take } from 'rxjs'
-import { PageSelectorComponent } from './components/breadcrumbs/page-selector.component'
+import { PageSelectorComponent } from './components/page-selector/page-selector.component'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { map } from 'rxjs/operators'
 
@@ -130,7 +130,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
     if (currentPage === 0) {
       this.router.navigate(['catalog', 'search'])
     } else {
-      this.facade.setCurrentPage(currentPage - 1) // TODO
+      this.facade.setCurrentPage(currentPage - 1)
     }
   }
 

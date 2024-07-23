@@ -51,7 +51,6 @@ module.exports = {
         title:
           'var(--font-family-title, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif)', // alias for serif
         mono: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-        petrona: ['Petrona', 'serif'],
       },
       fontSize: {
         13: '13px',

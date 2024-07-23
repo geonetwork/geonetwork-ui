@@ -1,11 +1,3 @@
-/* Petrona */
-@font-face {
-  font-family: 'Petrona';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(../fonts/Petrona-Regular.woff2) format('woff2');
-}
 /* arabic */
 @font-face {
   font-family: 'Readex Pro';

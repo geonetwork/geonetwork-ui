@@ -1,14 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { EditPageComponent } from './edit-page.component'
 import { ActivatedRoute, Router } from '@angular/router'
-import { EDITOR_CONFIG, EditorFacade } from '@geonetwork-ui/feature/editor'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { DATASET_RECORDS, EDITOR_CONFIG } from '@geonetwork-ui/common/fixtures'
 import { BehaviorSubject, Subject } from 'rxjs'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateModule } from '@ngx-translate/core'
-import { FindPipe } from '../pipes/filter.pipe'
-import { PageSelectorComponent } from './components/breadcrumbs/page-selector.component'
+import { PageSelectorComponent } from './components/page-selector/page-selector.component'
+import { EditorFacade } from '@geonetwork-ui/feature/editor'
 
 const getRoute = () => ({
   snapshot: {
@@ -27,11 +26,11 @@ class RouterMock {
 
 class EditorFacadeMock {
   record$ = new BehaviorSubject(DATASET_RECORDS[0])
-  recordFields$ = new BehaviorSubject(EDITOR_CONFIG())
   openRecord = jest.fn()
   saveError$ = new Subject<string>()
   saveSuccess$ = new Subject()
   draftSaveSuccess$ = new Subject()
+  editorConfig$ = new BehaviorSubject(EDITOR_CONFIG())
 }
 class NotificationsServiceMock {
   showNotification = jest.fn()
@@ -48,7 +47,6 @@ describe('EditPageComponent', () => {
       imports: [
         EditPageComponent,
         TranslateModule.forRoot(),
-        FindPipe,
         PageSelectorComponent,
       ],
       schemas: [NO_ERRORS_SCHEMA],

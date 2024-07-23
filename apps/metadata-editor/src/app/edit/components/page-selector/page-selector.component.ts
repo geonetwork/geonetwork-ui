@@ -19,6 +19,6 @@ export class PageSelectorComponent {
   constructor(public facade: EditorFacade) {}
 
   pageSectionClickHandler(index: number) {
-    this.facade.setCurrentPage(index) // TODO
+    this.facade.setCurrentPage(index)
   }
 }

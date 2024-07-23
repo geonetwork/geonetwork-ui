@@ -26,7 +26,8 @@ const initialEditorState = {
   saveError: null,
   changedSinceSave: false,
   alreadySavedOnce: true,
-  fieldsConfig: [],
+  editorConfig: [],
+  currentPage: 0,
 }
 
 describe('EditorEffects', () => {

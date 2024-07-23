@@ -1,7 +1,12 @@
-import { EditorPartialState, initialEditorState } from './editor.reducer'
+import {
+  EDITOR_FEATURE_KEY,
+  EditorPartialState,
+  initialEditorState,
+} from './editor.reducer'
 import * as EditorSelectors from './editor.selectors'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 import { DEFAULT_FIELDS } from '../fields.config'
+import { EditorSectionWithValues } from './editor.models'
 
 describe('Editor Selectors', () => {
   let state: EditorPartialState
@@ -56,22 +61,27 @@ describe('Editor Selectors', () => {
     })
 
     describe('selectRecordFields', () => {
-      it('should return the config and value for each field', () => {
-        const result = EditorSelectors.selectRecordSections(state)
+      it('should return the config and value for specified page', () => {
+        const recordSections = EditorSelectors.selectRecordSections(state)
 
-        const actualSections = result.pages.map((page) => page.sections).flat()
+        const expectedResult = DEFAULT_FIELDS.pages[0].sections.map(
+          (section) => ({
+            ...section,
+            fieldsWithValues: section.fields.map((fieldConfig) => ({
+              config: fieldConfig,
+              value:
+                state[EDITOR_FEATURE_KEY].record?.[fieldConfig.model] ?? null,
+            })),
+          })
+        ) as EditorSectionWithValues[]
 
-        const expectedSections = DEFAULT_FIELDS.pages
-          .map((page) => page.sections)
-          .flat()
+        expect(recordSections).toEqual(expectedResult)
 
-        expect(actualSections).toEqual(expectedSections)
-
-        const actualFields = actualSections
+        const actualFields = recordSections
           .map((section) => section.fields)
           .flat()
 
-        const expectedFields = expectedSections
+        const expectedFields = expectedResult
           .map((section) => section.fields)
           .flat()
 
@@ -91,15 +101,17 @@ describe('Editor Selectors', () => {
           },
         })
 
-        const resultFields = result.pages
-          .flatMap((page) => page.sections)
-          .flatMap((section) => section.fields)
-
-        const abstractField = resultFields.find(
-          (field) => field.model === 'abstract'
+        const resultFields = result.flatMap(
+          (section) => section.fieldsWithValues
         )
 
-        const titleField = resultFields.find((field) => field.model === 'title')
+        const abstractField = resultFields.find(
+          (field) => field.config.model === 'abstract'
+        )
+
+        const titleField = resultFields.find(
+          (field) => field.config.model === 'title'
+        )
 
         expect(abstractField.value).toEqual('')
         expect(titleField.value).toEqual('')
