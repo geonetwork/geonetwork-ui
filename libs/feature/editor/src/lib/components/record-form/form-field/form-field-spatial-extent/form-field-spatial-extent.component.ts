@@ -7,14 +7,21 @@ import {
   Output,
 } from '@angular/core'
 import { FormControl } from '@angular/forms'
-import { Keyword } from '@geonetwork-ui/common/domain/model/record'
+import {
+  DatasetSpatialExtent,
+  Keyword,
+} from '@geonetwork-ui/common/domain/model/record'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
   FeatureMapModule,
   MapContextLayerTypeEnum,
+  MapContextService,
   MapFacade,
+  MapManagerService,
   MapStyleService,
+  MapUtilsService,
 } from '@geonetwork-ui/feature/map'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
   AutocompleteComponent,
   DropdownSelectorComponent,
@@ -22,7 +29,9 @@ import {
   UiInputsModule,
 } from '@geonetwork-ui/ui/inputs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+
 import { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
+import { Polygon } from 'ol/geom'
 import { Fill, Stroke, Style } from 'ol/style'
 import { map } from 'rxjs'
 
@@ -57,7 +66,7 @@ type Coverage = {
 })
 export class FormFieldSpatialExtentComponent {
   @Input() control: FormControl<Keyword[]>
-  @Input() geogrExtent: GeoJSONFeatureCollection
+  @Input() geogrExtent?: DatasetSpatialExtent[] = []
   // @Input()
   coverage = [
     {
@@ -72,11 +81,9 @@ export class FormFieldSpatialExtentComponent {
     },
   ]
 
-  @Output() geogrExtentChange: EventEmitter<GeoJSONFeatureCollection> =
+  @Output() geogrExtentChange: EventEmitter<DatasetSpatialExtent[]> =
     new EventEmitter()
-  @Output() coverageChange: EventEmitter<Coverage> = new EventEmitter()
-
-  layers$ = this.mapFacade.layers$
+  // @Output() coverageChange: EventEmitter<Coverage> = new EventEmitter()
 
   displayWithFn = (item: AutocompleteItem) => {
     return `${item.title} (${item.value.thesaurus?.name})`
@@ -95,7 +102,11 @@ export class FormFieldSpatialExtentComponent {
   constructor(
     private platformService: PlatformServiceInterface,
     private mapFacade: MapFacade,
-    private styleService: MapStyleService
+    private styleService: MapStyleService,
+    private mapManager: MapManagerService,
+    private mapUtils: MapUtilsService,
+    private mapContext: MapContextService,
+    private mdViewFacade: MdViewFacade
   ) {
     const fill = new Fill({
       color: 'transparent',
@@ -122,7 +133,7 @@ export class FormFieldSpatialExtentComponent {
   }
   handleCoverageSelection(coverage: Coverage) {
     console.log('coverage', coverage)
-    this.coverageChange.emit(coverage)
+    // this.coverageChange.emit(coverage)
   }
 
   addKeyword(keyword: Keyword) {
@@ -144,48 +155,65 @@ export class FormFieldSpatialExtentComponent {
     this.control.setValue(filteredKeywords)
   }
 
-  removeKeyword(index: number) {
+  removeKeyword(index: number, label: string) {
     const removedKeywords = this.control.value.filter((_, i) => i !== index)
     this.control.setValue(removedKeywords)
 
     this.deleteLayer(index)
 
-    this.geogrExtent.features = this.geogrExtent.features.filter(
-      (_, i) => i !== index
+    // remove from geogrExtent
+    this.geogrExtent = this.geogrExtent.filter(
+      (extent) => extent.description !== label
     )
+
     this.geogrExtentChange.emit(this.geogrExtent)
     console.log('geogrExtent', this.geogrExtent)
   }
-
   addGeogrExtent(description: string, coords: GeogrCoords) {
-    const featureCollection = {
-      type: 'FeatureCollection',
-      features: [
-        ...(this.geogrExtent ? this.geogrExtent.features : []),
-        {
-          type: 'Feature',
-          geometry: {
-            type: 'Polygon',
-            coordinates: [
-              [
-                [coords.coordEast, coords.coordNorth],
-                [coords.coordEast, coords.coordSouth],
-                [coords.coordWest, coords.coordSouth],
-                [coords.coordWest, coords.coordNorth],
-                [coords.coordEast, coords.coordNorth],
-              ],
-            ],
-          },
-          properties: {
-            description: description,
-          },
-        },
-      ],
-    } as GeoJSONFeatureCollection
+    const coordWest = parseFloat(coords.coordWest)
+    const coordSouth = parseFloat(coords.coordSouth)
+    const coordEast = parseFloat(coords.coordEast)
+    const coordNorth = parseFloat(coords.coordNorth)
+    // bbox: minx, miny, maxx, maxy
+    this.geogrExtent.push({
+      description,
+      bbox: [coordWest, coordSouth, coordEast, coordNorth],
+    })
 
-    this.geogrExtent = featureCollection
     this.geogrExtentChange.emit(this.geogrExtent)
     console.log('geogrExtent', this.geogrExtent)
+
+    this.addToMap(description, coordWest, coordSouth, coordEast, coordNorth)
+  }
+
+  addToMap(
+    description: string,
+    coordWest: number,
+    coordSouth: number,
+    coordEast: number,
+    coordNorth: number
+  ) {
+    const featureCollection: GeoJSONFeatureCollection = {
+      type: 'FeatureCollection',
+      features: [],
+    }
+
+    featureCollection.features.push({
+      type: 'Feature',
+      properties: { description },
+      geometry: {
+        coordinates: [
+          [
+            [coordEast, coordNorth],
+            [coordEast, coordSouth],
+            [coordWest, coordSouth],
+            [coordWest, coordNorth],
+            [coordEast, coordNorth],
+          ],
+        ],
+        type: 'Polygon',
+      },
+    })
 
     this.mapFacade.addLayer({
       type: MapContextLayerTypeEnum.GEOJSON,
@@ -193,7 +221,31 @@ export class FormFieldSpatialExtentComponent {
       title: description,
     })
 
-    // TODO: zoom to extent
+    // const extent = [coordEast, coordSouth, coordWest, coordNorth]
+
+    this.mapContext.createLayer({
+      type: MapContextLayerTypeEnum.GEOJSON,
+      data: featureCollection,
+    })
+
+    // zoom to layer (does not work yet)
+    const poly = new Polygon([
+      [
+        [coordEast, coordNorth],
+        [coordEast, coordSouth],
+        [coordWest, coordSouth],
+        [coordWest, coordNorth],
+        [coordEast, coordNorth],
+      ],
+    ])
+
+    const view = this.mapContext
+      .createView({
+        maxExtent: poly.getExtent(),
+        center: [coordEast, coordNorth],
+        maxZoom: 12,
+      })
+      .fit(poly, { duration: 100, maxZoom: 12 })
   }
 
   deleteLayer(index: number) {
