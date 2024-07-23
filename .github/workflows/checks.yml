@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
           fetch-depth: 0
@@ -38,9 +38,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v2
-        with:
-          main-branch-name: 'main'
+        uses: nrwl/nx-set-shas@v3
       - run: npm ci
       - run: npx nx format:check
       - run: npx nx affected -t lint --parallel=3
@@ -79,7 +77,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
           fetch-depth: 0
@@ -89,9 +87,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v2
-        with:
-          main-branch-name: 'main'
+        uses: nrwl/nx-set-shas@v3
       - run: npm ci
       - run: npx nx affected -t build --parallel=3
 
@@ -102,7 +98,7 @@ jobs:
 
     steps:
       - name: Checkout branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
           fetch-depth: 0
@@ -142,13 +138,18 @@ jobs:
           comment_tag: build-options
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  cypress-run:
-    name: End-to-end tests
+  e2e-run:
+    name: End-to-end tests, GeoNetwork v${{ matrix.gn_version }}
     runs-on: ubuntu-latest
-    outputs:
-      screenshotsUrl: ${{ steps.upload-screenshots.outputs.artifact-url }}
+    strategy:
+      fail-fast: false
+      matrix:
+        gn_version: [4.2.2, 4.2.8, 4.4.0]
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
@@ -156,24 +157,29 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v3
+
       - name: Create pipeline docker image
-        run: cd tools && docker build . -f pipelines/Dockerfile -t geonetwork/geonetwork-ui-tools-pipelines:latest
+        working-directory: tools
+        run: docker build . -f pipelines/Dockerfile -t geonetwork/geonetwork-ui-tools-pipelines:latest
 
-      - name: Build the backend
-        run: sudo docker-compose -f support-services/docker-compose.yml up -d init
+      - name: Start up backend support services
+        env:
+          GEONETWORK_VERSION: ${{ matrix.gn_version }}
+        working-directory: support-services
+        run: docker compose up -d init
 
-      - name: Install dependencies
-        run: |
-          npm ci
+      - run: npm ci
 
-      - name: Run tests
-        run: npx nx run-many --target=e2e
+      - name: Run e2e tests
+        run: npx nx affected --target=e2e
 
       - uses: actions/upload-artifact@v4
         if: always()
         id: upload-screenshots
         with:
-          name: cypress-screenshots
+          name: cypress-screenshots-gn-${{ matrix.gn_version }}
           path: |
             apps/datahub-e2e/cypress/screenshots/**/*
             apps/metadata-editor-e2e/cypress/screenshots/**/*
@@ -193,7 +199,7 @@ jobs:
 
     steps:
       - name: Checkout branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
           fetch-depth: 0
