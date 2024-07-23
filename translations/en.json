@@ -229,6 +229,7 @@
   "editor.record.saveStatus.draftWithChangesPending": "Saved as draft - changes are pending",
   "editor.record.saveStatus.recordUpToDate": "Record is up to date",
   "editor.record.upToDate": "This record is up to date",
+  "editor.sidebar.menu.editor": "Editor",
   "externalviewer.dataset.unnamed": "Datahub layer",
   "facets.block.title.OrgForResource": "Organisation",
   "facets.block.title.availableInServices": "Available for",

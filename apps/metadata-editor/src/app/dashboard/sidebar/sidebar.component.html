@@ -1,5 +1,61 @@
-<div class="flex flex-col pt-9 px-5 gap-12 bg-neutral-100 h-full">
-  <div>
+<div class="flex h-full">
+  <div
+    class="h-full bg-black w-[50px] rounded-r-lg flex flex-col justify-between"
+  >
+    <div class="flex flex-col justify-between h-24">
+      <div class="flex justify-center items-center h-12">
+        <img src="assets/editor-logo.svg" alt="Editor logo" />
+      </div>
+      <div class="">
+        <div translate class="uppercase text-white rotate-[-0.25turn]">
+          editor.sidebar.menu.editor
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="platformService.getMe() | async as user">
+      <div
+        *ngIf="user && user.name"
+        class="basis-1/12 mb-2 flex flex-col justify-center items-center"
+      >
+        <gn-ui-button
+          type="default"
+          class="w-10 h-10 flex justify-center items-center hover:cursor-pointer"
+        >
+          <gn-ui-user-preview
+            [user]="user"
+            [avatarPlaceholder]="placeholder$ | async"
+            extraClass="w-10 h-10"
+          ></gn-ui-user-preview>
+        </gn-ui-button>
+        <gn-ui-button
+          type="default"
+          class="w-10 h-10 flex justify-center items-center hover:cursor-pointer"
+        >
+          <img src="assets/system-shut.svg" alt="Log out" class="w-4 h-4" />
+        </gn-ui-button>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="flex flex-col pt-9 px-5 gap-10 bg-neutral-100 h-full grow">
+    <ng-container *ngIf="organisations$ | async as organisations">
+      <ng-container *ngIf="organisations[0]?.name">
+        <gn-ui-button
+          *ngIf="organisations[0].logoUrl?.href"
+          type="default"
+          class="flex flex-col gap-3 items-center gap-2"
+          [routerLink]="['/organizations', organisations[0].id]"
+        >
+          <img
+            [src]="organisations[0].logoUrl?.href"
+            alt="Organization logo"
+            class="w-12 h-12"
+          />
+          <span>{{ organisations[0].name }}</span>
+        </gn-ui-button>
+      </ng-container>
+    </ng-container>
     <md-editor-dashboard-menu></md-editor-dashboard-menu>
   </div>
 </div>

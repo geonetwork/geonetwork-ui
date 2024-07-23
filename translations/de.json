@@ -229,6 +229,7 @@
   "editor.record.saveStatus.draftWithChangesPending": "Als Entwurf gespeichert - Änderungen stehen aus",
   "editor.record.saveStatus.recordUpToDate": "Datensatz ist auf dem neuesten Stand",
   "editor.record.upToDate": "Dieser Datensatz ist auf dem neuesten Stand",
+  "editor.sidebar.menu.editor": "",
   "externalviewer.dataset.unnamed": "Datensatz aus dem Datahub",
   "facets.block.title.OrgForResource": "Organisation",
   "facets.block.title.availableInServices": "Verfügbar für",
