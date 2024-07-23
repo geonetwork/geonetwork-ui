@@ -32,10 +32,7 @@ describe('RecordFormComponent', () => {
 
   describe('handleFieldValueChange', () => {
     it('should call facade.updateRecordField', () => {
-      component.handleFieldValueChange(
-        { config: { model: 'title' }, value: 'old title' },
-        'new title'
-      )
+      component.handleFieldValueChange('title', 'new title')
       expect(component.facade.updateRecordField).toHaveBeenCalledWith(
         'title',
         'new title'

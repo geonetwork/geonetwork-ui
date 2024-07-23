@@ -11,3 +11,5 @@ export * from './lib/records.fixtures'
 export * from './lib/repository.fixtures'
 export * from './lib/user.fixtures'
 export * from './lib/user-feedbacks.fixtures'
+
+export * from './lib/editor'

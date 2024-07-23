@@ -1,8 +1,13 @@
 import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { EditorFacade } from '../../+state/editor.facade'
-import { EditorFieldState, EditorFieldValue } from '../../models/fields.model'
+import { EditorFieldValue } from '../../models'
 import { FormFieldComponent } from './form-field'
+import { TranslateModule } from '@ngx-translate/core'
+import {
+  EditorFieldWithValue,
+  EditorSectionWithValues,
+} from '../../+state/editor.models'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -10,21 +15,23 @@ import { FormFieldComponent } from './form-field'
   styleUrls: ['./record-form.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, FormFieldComponent],
+  imports: [CommonModule, FormFieldComponent, TranslateModule],
 })
 export class RecordFormComponent {
-  fields$ = this.facade.recordFields$
-
   constructor(public facade: EditorFacade) {}
 
-  handleFieldValueChange(field: EditorFieldState, newValue: EditorFieldValue) {
-    if (!field.config.model) {
+  handleFieldValueChange(model: string, newValue: EditorFieldValue) {
+    if (!model) {
       return
     }
-    this.facade.updateRecordField(field.config.model, newValue)
+    this.facade.updateRecordField(model, newValue)
   }
 
-  fieldTracker(index: number, field: EditorFieldState) {
+  fieldTracker(index: number, field: EditorFieldWithValue): any {
     return field.config.model
+  }
+
+  sectionTracker(index: number, section: EditorSectionWithValues): any {
+    return section.labelKey
   }
 }

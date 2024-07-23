@@ -4,8 +4,8 @@
   </ng-container>
   <ng-template #withGenericWrapper>
     <gn-ui-form-field-wrapper
-      [label]="config.labelKey | translate"
-      [hint]="config.hintKey | translate"
+      [label]="config.labelKey! | translate"
+      [hint]="config.hintKey! | translate"
     >
       <ng-container *ngTemplateOutlet="fieldContent"></ng-container>
     </gn-ui-form-field-wrapper>
@@ -15,14 +15,14 @@
 <ng-template #fieldContent>
   <ng-container *ngIf="isTitle">
     <div class="flex justify-between items-center gap-3">
-      <h2
+      <span
         #titleInput
-        class="grow text-3xl font-normal"
+        class="grow font-title text-3xl font-normal"
         [gnUiEditableLabel]="true"
         (editableLabelChanged)="formControl.setValue($event)"
       >
         {{ formControl.value }}
-      </h2>
+      </span>
       <span
         class="material-symbols-outlined gn-ui-icon-small m-2 cursor-pointer"
         (click)="focusTitleInput()"
@@ -30,7 +30,7 @@
       >
       <span
         class="material-symbols-outlined gn-ui-icon-small m-2"
-        [matTooltip]="config.hintKey | translate"
+        [matTooltip]="config.hintKey! | translate"
         matTooltipPosition="above"
       >
         help
@@ -41,14 +41,14 @@
     <gn-ui-form-field-rich
       class="h-[8rem]"
       [control]="formControl"
-      [label]="config.labelKey | translate"
-      [hint]="config.hintKey | translate"
+      [label]="config.labelKey! | translate"
+      [hint]="config.hintKey! | translate"
     ></gn-ui-form-field-rich>
   </ng-container>
   <ng-container *ngIf="isLicenses">
     <gn-ui-form-field-license
       [control]="formControl"
-      [label]="config.labelKey | translate"
+      [label]="config.labelKey! | translate"
     ></gn-ui-form-field-license>
   </ng-container>
   <ng-container *ngIf="isResourceUpdated">

@@ -2,8 +2,8 @@ import { Action, createReducer, on } from '@ngrx/store'
 import * as EditorActions from './editor.actions'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { SaveRecordError } from './editor.models'
-import { EditorFieldsConfig } from '../models/fields.model'
-import { DEFAULT_FIELDS } from '../fields.config'
+import { EditorConfig } from '../models'
+import { DEFAULT_CONFIGURATION } from '../fields.config'
 
 export const EDITOR_FEATURE_KEY = 'editor'
 
@@ -13,7 +13,7 @@ export const EDITOR_FEATURE_KEY = 'editor'
  * @property saving
  * @property saveError
  * @property changedSinceSave
- * @property fieldsConfig Configuration for the fields in the editor
+ * @property editorConfig Configuration for the fields in the editor
  */
 export interface EditorState {
   record: CatalogRecord | null
@@ -22,7 +22,8 @@ export interface EditorState {
   saving: boolean
   saveError: SaveRecordError | null
   changedSinceSave: boolean
-  fieldsConfig: EditorFieldsConfig
+  editorConfig: EditorConfig
+  currentPage: number
 }
 
 export interface EditorPartialState {
@@ -36,7 +37,8 @@ export const initialEditorState: EditorState = {
   saving: false,
   saveError: null,
   changedSinceSave: false,
-  fieldsConfig: DEFAULT_FIELDS,
+  editorConfig: DEFAULT_CONFIGURATION,
+  currentPage: 0,
 }
 
 const reducer = createReducer(
@@ -77,6 +79,10 @@ const reducer = createReducer(
   on(EditorActions.markRecordAsChanged, (state) => ({
     ...state,
     changedSinceSave: true,
+  })),
+  on(EditorActions.setCurrentPage, (state, { page }) => ({
+    ...state,
+    currentPage: page,
   }))
 )
 

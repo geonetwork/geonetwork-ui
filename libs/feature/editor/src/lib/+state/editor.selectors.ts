@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
 import { EDITOR_FEATURE_KEY, EditorState } from './editor.reducer'
+import { EditorSectionWithValues } from './editor.models'
 
 export const selectEditorState =
   createFeatureSelector<EditorState>(EDITOR_FEATURE_KEY)
@@ -34,16 +35,29 @@ export const selectRecordAlreadySavedOnce = createSelector(
   (state: EditorState) => state.alreadySavedOnce
 )
 
-export const selectRecordFieldsConfig = createSelector(
+export const selectEditorConfig = createSelector(
   selectEditorState,
-  (state: EditorState) => state.fieldsConfig
+  (state: EditorState) => state.editorConfig
 )
 
-export const selectRecordFields = createSelector(
+export const selectCurrentPage = createSelector(
   selectEditorState,
-  (state: EditorState) =>
-    state.fieldsConfig.map((fieldConfig) => ({
-      config: fieldConfig,
-      value: state.record?.[fieldConfig.model] ?? null,
-    }))
+  (state: EditorState) => state.currentPage
+)
+
+export const selectRecordSections = createSelector(
+  selectEditorState,
+  (state: EditorState) => {
+    const currentPage = state.editorConfig.pages[state.currentPage]
+    if (!currentPage) {
+      return [] as EditorSectionWithValues[]
+    }
+    return currentPage.sections.map((section) => ({
+      ...section,
+      fieldsWithValues: section.fields.map((fieldConfig) => ({
+        config: fieldConfig,
+        value: state.record?.[fieldConfig.model] ?? null,
+      })),
+    })) as EditorSectionWithValues[]
+  }
 )

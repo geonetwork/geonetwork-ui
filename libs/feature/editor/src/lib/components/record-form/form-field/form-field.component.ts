@@ -25,10 +25,10 @@ import { FormFieldObjectComponent } from './form-field-object/form-field-object.
 import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
 import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
-import { FormFieldConfig } from './form-field.model'
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
 import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
 import { FormFieldKeywordsComponent } from './form-field-keywords/form-field-keywords.component'
+import { FormFieldConfig } from '../../../models'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -65,6 +65,7 @@ export class FormFieldComponent {
       emitEvent: false,
     })
   }
+
   @Output() valueChange: Observable<unknown>
 
   @ViewChild('titleInput') titleInput: ElementRef
