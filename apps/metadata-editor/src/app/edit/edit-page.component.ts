@@ -43,7 +43,6 @@ marker('editor.record.form.bottomButtons.next')
 export class EditPageComponent implements OnInit, OnDestroy {
   subscription = new Subscription()
 
-  fields$ = this.facade.currentSections$
   currentPage$ = this.facade.currentPage$
   pagesLength$ = this.facade.editorConfig$.pipe(
     map((config) => config.pages.length)

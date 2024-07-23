@@ -5,7 +5,7 @@ import {
 } from './editor.reducer'
 import * as EditorSelectors from './editor.selectors'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
-import { DEFAULT_FIELDS } from '../fields.config'
+import { DEFAULT_CONFIGURATION } from '../fields.config'
 import { EditorSectionWithValues } from './editor.models'
 
 describe('Editor Selectors', () => {
@@ -57,14 +57,14 @@ describe('Editor Selectors', () => {
 
     it('selectRecordFieldsConfig() should return the current "fieldsConfig" state', () => {
       const result = EditorSelectors.selectEditorConfig(state)
-      expect(result).toEqual(DEFAULT_FIELDS)
+      expect(result).toEqual(DEFAULT_CONFIGURATION)
     })
 
     describe('selectRecordFields', () => {
       it('should return the config and value for specified page', () => {
         const recordSections = EditorSelectors.selectRecordSections(state)
 
-        const expectedResult = DEFAULT_FIELDS.pages[0].sections.map(
+        const expectedResult = DEFAULT_CONFIGURATION.pages[0].sections.map(
           (section) => ({
             ...section,
             fieldsWithValues: section.fields.map((fieldConfig) => ({

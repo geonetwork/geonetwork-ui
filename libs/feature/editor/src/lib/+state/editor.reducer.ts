@@ -3,7 +3,7 @@ import * as EditorActions from './editor.actions'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { SaveRecordError } from './editor.models'
 import { EditorConfig } from '../models'
-import { DEFAULT_FIELDS } from '../fields.config'
+import { DEFAULT_CONFIGURATION } from '../fields.config'
 
 export const EDITOR_FEATURE_KEY = 'editor'
 
@@ -37,7 +37,7 @@ export const initialEditorState: EditorState = {
   saving: false,
   saveError: null,
   changedSinceSave: false,
-  editorConfig: DEFAULT_FIELDS,
+  editorConfig: DEFAULT_CONFIGURATION,
   currentPage: 0,
 }
 

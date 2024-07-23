@@ -162,7 +162,7 @@ export const DATA_POINT_OF_CONTACT_SECTION: EditorSection = {
  ***************           PAGES            *****************
  ************************************************************
  */
-export const DEFAULT_FIELDS: EditorConfig = {
+export const DEFAULT_CONFIGURATION: EditorConfig = {
   pages: [
     {
       labelKey: marker('editor.record.form.page.description'),
