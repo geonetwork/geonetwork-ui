@@ -69,7 +69,12 @@ if(ctx.resourceTitleObject != null && ctx.resourceTitleObject.default != null &&
 if(ctx.resourceAbstractObject != null && ctx.resourceAbstractObject.default != null && ctx.resourceAbstractObject.default != '') {
   ok++
 }
+// this checks for single-language Organizations (GN 4.2.2)
 if(ctx.contact != null && ctx.contact.length > 0 && ctx.contact[0].organisation != null && ctx.contact[0].organisation != '') {
+  ok++
+}
+// this checks for multilingual Organizations (GN 4.2.3+)
+if(ctx.contact != null && ctx.contact.length > 0 && ctx.contact[0].organisationObject != null && ctx.contact[0].organisationObject.default != '') {
   ok++
 }
 if(ctx.contact != null && ctx.contact.length > 0 && ctx.contact[0].email != null && ctx.contact[0].email != '') {
