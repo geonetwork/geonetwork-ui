@@ -10,7 +10,8 @@
         "cypressConfig": "apps/metadata-editor-e2e/cypress.config.js",
         "devServerTarget": "metadata-editor:serve:development",
         "testingType": "e2e",
-        "browser": "chrome"
+        "browser": "chrome",
+        "port": "cypress-auto"
       },
       "configurations": {
         "production": {
