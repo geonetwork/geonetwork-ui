@@ -11,29 +11,18 @@ describe('Map Selectors', () => {
   beforeEach(() => {
     state = {
       map: {
-        layers: [
-          {
-            ...MAP_CTX_LAYER_WMS_FIXTURE,
-            title: 'wms',
-            error: null,
-            loading: false,
-          },
-          {
-            ...MAP_CTX_LAYER_GEOJSON_FIXTURE,
-            title: 'geojson',
-            error: null,
-            loading: false,
-          },
-        ],
+        context: {
+          layers: [MAP_CTX_LAYER_WMS_FIXTURE, MAP_CTX_LAYER_GEOJSON_FIXTURE],
+          view: {},
+        },
       },
     }
   })
 
   describe('getLayers', () => {
     it('returns the list of layers', () => {
-      const results = MapSelectors.getMapLayers(state)
-      expect(results.length).toBe(2)
-      expect(results.map((l) => l.title)).toEqual(['wms', 'geojson'])
+      const result = MapSelectors.getMapContext(state)
+      expect(result.layers.map((l) => l.title)).toEqual(['wms', 'geojson'])
     })
   })
 })

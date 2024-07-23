@@ -12,9 +12,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { AddLayerFromCatalogComponent } from './add-layer-from-catalog/add-layer-from-catalog.component'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { StoreModule } from '@ngrx/store'
-import { EffectsModule } from '@ngrx/effects'
 import * as fromMap from './+state/map.reducer'
-import { MapEffects } from './+state/map.effects'
 import { MapFacade } from './+state/map.facade'
 import { MapContainerComponent } from './map-container/map-container.component'
 import { AddLayerRecordPreviewComponent } from './add-layer-from-catalog/add-layer-record-preview/add-layer-record-preview.component'
@@ -57,7 +55,6 @@ import { AddLayerFromOgcApiComponent } from './add-layer-from-ogc-api/add-layer-
     TranslateModule,
     FeatureSearchModule,
     StoreModule.forFeature(fromMap.MAP_FEATURE_KEY, fromMap.mapReducer),
-    EffectsModule.forFeature([MapEffects]),
     UiElementsModule,
     UiInputsModule,
     AddLayerFromOgcApiComponent,

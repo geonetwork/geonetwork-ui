@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { EffectsModule } from '@ngrx/effects'
 import { Store, StoreModule } from '@ngrx/store'
-import { readFirst } from '@nx/angular/testing'
-import { MapEffects } from './map.effects'
 import { MapFacade } from './map.facade'
+import * as MapActions from './map.actions'
 import { MAP_FEATURE_KEY, mapReducer, MapState } from './map.reducer'
 import { MAP_CTX_LAYER_WMS_FIXTURE } from '../map-context/map-context.fixtures'
 
@@ -19,10 +18,7 @@ describe('MapFacade', () => {
   describe('used in NgModule', () => {
     beforeEach(() => {
       @NgModule({
-        imports: [
-          StoreModule.forFeature(MAP_FEATURE_KEY, mapReducer),
-          EffectsModule.forFeature([MapEffects]),
-        ],
+        imports: [StoreModule.forFeature(MAP_FEATURE_KEY, mapReducer)],
         providers: [MapFacade],
       })
       class CustomFeatureModule {}
@@ -41,31 +37,18 @@ describe('MapFacade', () => {
       facade = TestBed.inject(MapFacade)
     })
 
-    describe('layers$ / addLayer / addLayerAtIndex', () => {
-      it('emits the list of layers after each change', async () => {
-        let list = await readFirst(facade.layers$)
-        expect(list.length).toBe(0)
+    describe('setContext', () => {
+      it('dispatches a setContext action', async () => {
+        const spy = jest.spyOn(store, 'dispatch')
+        const context = {
+          layers: [MAP_CTX_LAYER_WMS_FIXTURE],
+          view: {},
+        }
 
-        facade.addLayer({
-          ...MAP_CTX_LAYER_WMS_FIXTURE,
-          title: 'world',
-        })
+        facade.applyContext(context)
 
-        list = await readFirst(facade.layers$)
-        expect(list.length).toBe(1)
-        expect(list.map((l) => l.title)).toEqual(['world'])
-
-        facade.addLayerAtIndex(
-          {
-            ...MAP_CTX_LAYER_WMS_FIXTURE,
-            title: 'hello',
-          },
-          0
-        )
-
-        list = await readFirst(facade.layers$)
-        expect(list.length).toBe(2)
-        expect(list.map((l) => l.title)).toEqual(['hello', 'world'])
+        const action = MapActions.setContext({ context })
+        expect(spy).toHaveBeenCalledWith(action)
       })
     })
   })
