@@ -1,1 +1,4 @@
-<gn-ui-map-container [context]="context$ | async"></gn-ui-map-container>
+<gn-ui-map-container
+  [context]="context$ | async"
+  (featuresClicked)="handleFeaturesClicked($event)"
+></gn-ui-map-container>

@@ -8,3 +8,8 @@ export const getMapContext = createSelector(
   getMapState,
   (state: MapState) => state.context
 )
+
+export const getSelectedFeatures = createSelector(
+  getMapState,
+  (state: MapState) => state.selectedFeatures
+)

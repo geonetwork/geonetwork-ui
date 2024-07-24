@@ -5,14 +5,12 @@ import { MapFacade } from '../+state/map.facade'
 import { MapContext, MapContextLayerXyz } from '@geospatial-sdk/core'
 import { MapContainerComponent } from '@geonetwork-ui/ui/map'
 import { CommonModule } from '@angular/common'
+import Feature from 'ol/Feature'
+import GeoJSON from 'ol/format/GeoJSON'
 
 export const DEFAULT_BASELAYER_CONTEXT: MapContextLayerXyz = {
   type: 'xyz',
-  urls: [
-    `https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
-    `https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
-    `https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
-  ],
+  url: `https://{a-c}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png`,
   attributions: `<span>© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, © <a href="https://carto.com/">Carto</a></span>`,
 }
 
@@ -37,4 +35,13 @@ export class MapStateContainerComponent {
   )
 
   constructor(private mapFacade: MapFacade) {}
+
+  handleFeaturesClicked(features: Feature[]) {
+    if (!features.length) {
+      this.mapFacade.clearFeatureSelection()
+      return
+    }
+    const geojsonFeatures = new GeoJSON().writeFeaturesObject(features).features
+    this.mapFacade.selectFeatures(geojsonFeatures)
+  }
 }

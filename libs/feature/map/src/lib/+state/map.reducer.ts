@@ -1,11 +1,13 @@
 import { Action, createReducer, on } from '@ngrx/store'
 import * as MapActions from './map.actions'
 import { MapContext } from '@geospatial-sdk/core'
+import { Feature } from 'geojson'
 
 export const MAP_FEATURE_KEY = 'map'
 
 export interface MapState {
   context: MapContext
+  selectedFeatures: Feature[]
 }
 
 export interface MapPartialState {
@@ -14,6 +16,7 @@ export interface MapPartialState {
 
 export const initialMapState: MapState = {
   context: { layers: [], view: {} },
+  selectedFeatures: [],
 }
 
 const reducer = createReducer(
@@ -22,6 +25,18 @@ const reducer = createReducer(
     return {
       ...state,
       context,
+    }
+  }),
+  on(MapActions.setSelectedFeatures, (state, { selectedFeatures }) => {
+    return {
+      ...state,
+      selectedFeatures,
+    }
+  }),
+  on(MapActions.clearSelectedFeatures, (state) => {
+    return {
+      ...state,
+      selectedFeatures: [],
     }
   })
 )

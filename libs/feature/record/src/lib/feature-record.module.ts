@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { FeatureDetailComponent } from '@geonetwork-ui/ui/map'
+import {
+  FeatureDetailComponent,
+  MapContainerComponent,
+} from '@geonetwork-ui/ui/map'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
@@ -57,6 +60,7 @@ import { DataViewShareComponent } from './data-view-share/data-view-share.compon
     PopupAlertComponent,
     FeatureDetailComponent,
     MapStateContainerComponent,
+    MapContainerComponent,
   ],
   providers: [MdViewFacade],
   exports: [

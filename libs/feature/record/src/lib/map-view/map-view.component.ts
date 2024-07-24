@@ -1,9 +1,9 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnDestroy,
-  OnInit,
+  ViewChild,
 } from '@angular/core'
 import { MapStyleService, MapUtilsService } from '@geonetwork-ui/feature/map'
 import { getOptionalMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
@@ -14,10 +14,12 @@ import { StyleLike } from 'ol/style/Style'
 import {
   BehaviorSubject,
   combineLatest,
+  from,
   Observable,
   of,
-  Subscription,
+  startWith,
   throwError,
+  withLatestFrom,
 } from 'rxjs'
 import {
   catchError,
@@ -25,11 +27,13 @@ import {
   finalize,
   map,
   switchMap,
+  tap,
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
-import { MapContextLayer } from '@geospatial-sdk/core'
+import { MapContext, MapContextLayer } from '@geospatial-sdk/core'
+import { MapContainerComponent } from '@geonetwork-ui/ui/map'
 
 @Component({
   selector: 'gn-ui-map-view',
@@ -37,10 +41,11 @@ import { MapContextLayer } from '@geospatial-sdk/core'
   styleUrls: ['./map-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MapViewComponent implements OnInit, OnDestroy {
+export class MapViewComponent implements AfterViewInit {
+  @ViewChild(MapContainerComponent) mapContainer: MapContainerComponent
+
   mapConfig: MapConfig = getOptionalMapConfig()
   selection: Feature<Geometry>
-  private subscription = new Subscription()
   private selectionStyle: StyleLike
 
   compatibleMapLinks$ = combineLatest([
@@ -91,44 +96,44 @@ export class MapViewComponent implements OnInit, OnDestroy {
     })
   )
 
-  // mapContext$ = this.currentLayers$.pipe(
-  //   switchMap((layers) =>
-  //     from(this.mapUtils.getLayerExtent(layers[0])).pipe(
-  //       catchError(() => {
-  //         this.error = 'The layer has no extent'
-  //         return of(undefined)
-  //       }),
-  //       map(
-  //         (extent) =>
-  //           ({
-  //             layers,
-  //             view: {
-  //               extent,
-  //             },
-  //           } as MapContext)
-  //       ),
-  //       tap((res) => {
-  //         this.resetSelection()
-  //       })
-  //     )
-  //   ),
-  //   startWith({
-  //     layers: [],
-  //     view: {},
-  //   } as MapContext),
-  //   withLatestFrom(this.mdViewFacade.metadata$),
-  //   map(([context, metadata]) => {
-  //     if (context.view.extent) return context
-  //     const extent = this.mapUtils.getRecordExtent(metadata)
-  //     return {
-  //       ...context,
-  //       view: {
-  //         ...context.view,
-  //         extent,
-  //       },
-  //     }
-  //   })
-  // )
+  mapContext$ = this.currentLayers$.pipe(
+    switchMap((layers) =>
+      from(this.mapUtils.getLayerExtent(layers[0])).pipe(
+        catchError(() => {
+          this.error = 'The layer has no extent'
+          return of(undefined)
+        }),
+        map(
+          (extent) =>
+            ({
+              layers,
+              view: {
+                extent,
+              },
+            } as MapContext)
+        ),
+        tap((res) => {
+          this.resetSelection()
+        })
+      )
+    ),
+    startWith({
+      layers: [],
+      view: {},
+    } as MapContext),
+    withLatestFrom(this.mdViewFacade.metadata$),
+    map(([context, metadata]) => {
+      if (context.view.extent) return context
+      const extent = this.mapUtils.getRecordExtent(metadata)
+      return {
+        ...context,
+        view: {
+          ...context.view,
+          extent,
+        },
+      }
+    })
+  )
 
   constructor(
     private mdViewFacade: MdViewFacade,
@@ -138,18 +143,11 @@ export class MapViewComponent implements OnInit, OnDestroy {
     private styleService: MapStyleService
   ) {}
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe()
-  }
-
-  ngOnInit(): void {
-    this.mapUtils.prioritizePageScroll(this.mapManager.map.getInteractions())
-    this.selectionStyle = this.styleService.styles.defaultHL
-    this.subscription.add(
-      this.featureInfo.features$.subscribe((features) => {
-        this.onMapFeatureSelect(features)
-      })
+  ngAfterViewInit(): void {
+    this.mapUtils.prioritizePageScroll(
+      this.mapContainer.openlayersMap.getInteractions()
     )
+    this.selectionStyle = this.styleService.styles.defaultHL
   }
 
   onMapFeatureSelect(features: Feature<Geometry>[]): void {
