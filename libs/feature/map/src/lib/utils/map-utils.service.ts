@@ -21,10 +21,6 @@ import {
 } from 'ol/events/condition'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-import {
-  MapContextLayerModel,
-  MapContextLayerWmsModel,
-} from '../map-context/map-context.model'
 import Collection from 'ol/Collection'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -33,7 +29,6 @@ import { WmsEndpoint, WmtsEndpoint } from '@camptocamp/ogc-client'
 import { LONLAT_CRS_CODES } from '../constant/projections'
 import { fromEPSGCode, register } from 'ol/proj/proj4'
 import proj4 from 'proj4/dist/proj4'
-import { defaults as defaultControls } from 'ol/control/defaults'
 
 const FEATURE_PROJECTION = 'EPSG:3857'
 const DATA_PROJECTION = 'EPSG:4326'
@@ -45,16 +40,6 @@ const GEOJSON = new GeoJSON()
 })
 export class MapUtilsService {
   constructor(private http: HttpClient, private proxy: ProxyService) {}
-
-  createEmptyMap(): Map {
-    return new Map({
-      controls: defaultControls({
-        attribution: true,
-        attributionOptions: { collapsible: false },
-      }),
-      pixelRatio: 1,
-    })
-  }
 
   readFeatureCollection = (
     featureCollection: FeatureCollection,

@@ -5,15 +5,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core'
-import {
-  FeatureInfoService,
-  MapContextLayerModel,
-  MapContextLayerTypeEnum,
-  MapContextModel,
-  MapManagerService,
-  MapStyleService,
-  MapUtilsService,
-} from '@geonetwork-ui/feature/map'
+import { MapStyleService, MapUtilsService } from '@geonetwork-ui/feature/map'
 import { getOptionalMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import { getLinkLabel } from '@geonetwork-ui/util/shared'
 import Feature from 'ol/Feature'
@@ -22,25 +14,22 @@ import { StyleLike } from 'ol/style/Style'
 import {
   BehaviorSubject,
   combineLatest,
-  from,
   Observable,
   of,
   Subscription,
   throwError,
-  withLatestFrom,
 } from 'rxjs'
 import {
   catchError,
   distinctUntilChanged,
   finalize,
   map,
-  startWith,
   switchMap,
-  tap,
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { MapContextLayer } from '@geospatial-sdk/core'
 
 @Component({
   selector: 'gn-ui-map-view',
@@ -102,51 +91,49 @@ export class MapViewComponent implements OnInit, OnDestroy {
     })
   )
 
-  mapContext$ = this.currentLayers$.pipe(
-    switchMap((layers) =>
-      from(this.mapUtils.getLayerExtent(layers[0])).pipe(
-        catchError(() => {
-          this.error = 'The layer has no extent'
-          return of(undefined)
-        }),
-        map(
-          (extent) =>
-            ({
-              layers,
-              view: {
-                extent,
-              },
-            } as MapContextModel)
-        ),
-        tap((res) => {
-          this.resetSelection()
-        })
-      )
-    ),
-    startWith({
-      layers: [],
-      view: {},
-    } as MapContextModel),
-    withLatestFrom(this.mdViewFacade.metadata$),
-    map(([context, metadata]) => {
-      if (context.view.extent) return context
-      const extent = this.mapUtils.getRecordExtent(metadata)
-      return {
-        ...context,
-        view: {
-          ...context.view,
-          extent,
-        },
-      }
-    })
-  )
+  // mapContext$ = this.currentLayers$.pipe(
+  //   switchMap((layers) =>
+  //     from(this.mapUtils.getLayerExtent(layers[0])).pipe(
+  //       catchError(() => {
+  //         this.error = 'The layer has no extent'
+  //         return of(undefined)
+  //       }),
+  //       map(
+  //         (extent) =>
+  //           ({
+  //             layers,
+  //             view: {
+  //               extent,
+  //             },
+  //           } as MapContext)
+  //       ),
+  //       tap((res) => {
+  //         this.resetSelection()
+  //       })
+  //     )
+  //   ),
+  //   startWith({
+  //     layers: [],
+  //     view: {},
+  //   } as MapContext),
+  //   withLatestFrom(this.mdViewFacade.metadata$),
+  //   map(([context, metadata]) => {
+  //     if (context.view.extent) return context
+  //     const extent = this.mapUtils.getRecordExtent(metadata)
+  //     return {
+  //       ...context,
+  //       view: {
+  //         ...context.view,
+  //         extent,
+  //       },
+  //     }
+  //   })
+  // )
 
   constructor(
     private mdViewFacade: MdViewFacade,
-    private mapManager: MapManagerService,
     private mapUtils: MapUtilsService,
     private dataService: DataService,
-    private featureInfo: FeatureInfoService,
     private changeRef: ChangeDetectorRef,
     private styleService: MapStyleService
   ) {}
@@ -158,7 +145,6 @@ export class MapViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.mapUtils.prioritizePageScroll(this.mapManager.map.getInteractions())
     this.selectionStyle = this.styleService.styles.defaultHL
-    this.featureInfo.handleFeatureInfo()
     this.subscription.add(
       this.featureInfo.features$.subscribe((features) => {
         this.onMapFeatureSelect(features)
@@ -182,13 +168,11 @@ export class MapViewComponent implements OnInit, OnDestroy {
     this.selection = null
   }
 
-  getLayerFromLink(
-    link: DatasetDistribution
-  ): Observable<MapContextLayerModel> {
+  getLayerFromLink(link: DatasetDistribution): Observable<MapContextLayer> {
     if (link.type === 'service' && link.accessServiceProtocol === 'wms') {
       return of({
         url: link.url.toString(),
-        type: MapContextLayerTypeEnum.WMS,
+        type: 'wms',
         name: link.name,
       })
     } else if (
@@ -197,7 +181,7 @@ export class MapViewComponent implements OnInit, OnDestroy {
     ) {
       return of({
         url: link.url.toString(),
-        type: MapContextLayerTypeEnum.WMTS,
+        type: 'wmts',
         name: link.name,
       })
     } else if (
@@ -209,7 +193,7 @@ export class MapViewComponent implements OnInit, OnDestroy {
     ) {
       return this.dataService.readAsGeoJson(link).pipe(
         map((data) => ({
-          type: MapContextLayerTypeEnum.GEOJSON,
+          type: 'geojson',
           data,
         }))
       )

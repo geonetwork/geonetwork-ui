@@ -1,8 +1,5 @@
 import { Component } from '@angular/core'
-import {
-  MapContextLayerTypeEnum,
-  MapContextModel,
-} from '@geonetwork-ui/feature/map'
+import { MapContext } from '@geospatial-sdk/core'
 
 @Component({
   selector: 'map-viewer-root',
@@ -10,14 +7,14 @@ import {
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  context: MapContextModel = {
+  context: MapContext = {
     view: {
       center: [4, 42],
       zoom: 6,
     },
     layers: [
       {
-        type: MapContextLayerTypeEnum.XYZ,
+        type: 'xyz',
         url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       },
     ],

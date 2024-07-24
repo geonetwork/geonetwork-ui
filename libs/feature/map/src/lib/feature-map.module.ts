@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { UiMapModule } from '@geonetwork-ui/ui/map'
 import { defaultMapOptions, FEATURE_MAP_OPTIONS } from './constant'
-import { MapInstanceDirective } from './manager/map-instance.directive'
-import { MapContextComponent } from './map-context/component/map-context.component'
 import { LayersPanelComponent } from './layers-panel/layers-panel.component'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { MatIconModule } from '@angular/material/icon'
@@ -14,7 +11,6 @@ import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { StoreModule } from '@ngrx/store'
 import * as fromMap from './+state/map.reducer'
 import { MapFacade } from './+state/map.facade'
-import { MapContainerComponent } from './map-container/map-container.component'
 import { AddLayerRecordPreviewComponent } from './add-layer-from-catalog/add-layer-record-preview/add-layer-record-preview.component'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
@@ -27,11 +23,8 @@ import { AddLayerFromOgcApiComponent } from './add-layer-from-ogc-api/add-layer-
 
 @NgModule({
   declarations: [
-    MapContextComponent,
-    MapInstanceDirective,
     LayersPanelComponent,
     AddLayerFromCatalogComponent,
-    MapContainerComponent,
     AddLayerRecordPreviewComponent,
     AddLayerFromWmsComponent,
     AddLayerFromFileComponent,
@@ -39,16 +32,12 @@ import { AddLayerFromOgcApiComponent } from './add-layer-from-ogc-api/add-layer-
     GeocodingComponent,
   ],
   exports: [
-    MapContextComponent,
-    MapInstanceDirective,
     LayersPanelComponent,
     AddLayerFromCatalogComponent,
-    MapContainerComponent,
     GeocodingComponent,
   ],
   imports: [
     CommonModule,
-    UiMapModule,
     UiLayoutModule,
     MatIconModule,
     MatTabsModule,

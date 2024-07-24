@@ -1,10 +1,8 @@
 import { Component, OnDestroy } from '@angular/core'
-import { catchError, from, Subject, takeUntil } from 'rxjs'
+import { catchError, firstValueFrom, from, Subject, takeUntil } from 'rxjs'
 import { debounceTime, switchMap } from 'rxjs/operators'
-import { MapManagerService } from '../manager/map-manager.service'
-import { fromLonLat } from 'ol/proj'
-import { Polygon } from 'ol/geom'
 import { GeocodingService } from '../geocoding.service'
+import { MapFacade } from '../+state/map.facade'
 
 @Component({
   selector: 'gn-ui-geocoding',
@@ -19,7 +17,7 @@ export class GeocodingComponent implements OnDestroy {
   errorMessage: string | null = null
 
   constructor(
-    private mapManager: MapManagerService,
+    private mapFacade: MapFacade,
     private geocodingService: GeocodingService
   ) {
     this.searchTextChanged
@@ -63,31 +61,30 @@ export class GeocodingComponent implements OnDestroy {
   }
 
   zoomToLocation(result: any) {
-    const map = this.mapManager.map
-    const view = map.getView()
     const geometry = result.geom
 
     if (geometry.type === 'Point') {
-      this.zoomToPoint(geometry.coordinates, view)
+      this.zoomToPoint(geometry.coordinates)
     } else if (geometry.type === 'Polygon') {
-      this.zoomToPolygon(geometry.coordinates, view)
+      this.zoomToPolygon(geometry.coordinates)
     } else {
       console.error(`Unsupported geometry type: ${geometry.type}`)
     }
   }
 
-  zoomToPoint(pointCoords: [number, number], view: any) {
-    const transformedCoords = fromLonLat(pointCoords)
-    view.setCenter(transformedCoords)
-    view.setZoom(12)
+  async zoomToPoint(pointCoords: [number, number]) {
+    const context = await firstValueFrom(this.mapFacade.context$)
+    this.mapFacade.applyContext({
+      ...context,
+      // TODO: change context to fit point
+    })
   }
 
-  zoomToPolygon(polygonCoords: [[number, number][]], view: any) {
-    const transformedCoords = polygonCoords[0].map((coord) => fromLonLat(coord))
-    const polygon = new Polygon([transformedCoords])
-    view.fit(polygon, {
-      duration: 100,
-      maxZoom: 12,
+  async zoomToPolygon(polygonCoords: [[number, number][]]) {
+    const context = await firstValueFrom(this.mapFacade.context$)
+    this.mapFacade.applyContext({
+      ...context,
+      // TODO: change context to fit polygon
     })
   }
 

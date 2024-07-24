@@ -13,3 +13,5 @@ export * from './lib/user.fixtures'
 export * from './lib/user-feedbacks.fixtures'
 
 export * from './lib/editor'
+
+export * from './lib/map'
