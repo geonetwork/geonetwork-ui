@@ -6,7 +6,6 @@ import {
   ViewChild,
 } from '@angular/core'
 import { MapStyleService, MapUtilsService } from '@geonetwork-ui/feature/map'
-import { getOptionalMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import { getLinkLabel } from '@geonetwork-ui/util/shared'
 import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
@@ -33,7 +32,10 @@ import { MdViewFacade } from '../state/mdview.facade'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { MapContext, MapContextLayer } from '@geospatial-sdk/core'
-import { MapContainerComponent } from '@geonetwork-ui/ui/map'
+import {
+  MapContainerComponent,
+  prioritizePageScroll,
+} from '@geonetwork-ui/ui/map'
 
 @Component({
   selector: 'gn-ui-map-view',
@@ -44,7 +46,6 @@ import { MapContainerComponent } from '@geonetwork-ui/ui/map'
 export class MapViewComponent implements AfterViewInit {
   @ViewChild(MapContainerComponent) mapContainer: MapContainerComponent
 
-  mapConfig: MapConfig = getOptionalMapConfig()
   selection: Feature<Geometry>
   private selectionStyle: StyleLike
 
@@ -144,9 +145,7 @@ export class MapViewComponent implements AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
-    this.mapUtils.prioritizePageScroll(
-      this.mapContainer.openlayersMap.getInteractions()
-    )
+    prioritizePageScroll(this.mapContainer.openlayersMap.getInteractions())
     this.selectionStyle = this.styleService.styles.defaultHL
   }
 
