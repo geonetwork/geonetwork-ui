@@ -168,7 +168,7 @@ jobs:
         env:
           GEONETWORK_VERSION: ${{ matrix.gn_version }}
         working-directory: support-services
-        run: docker compose up -d init
+        run: docker compose up --quiet-pull init
 
       - run: npm ci
 
