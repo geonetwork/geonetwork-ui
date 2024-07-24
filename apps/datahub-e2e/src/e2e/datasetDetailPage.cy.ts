@@ -583,7 +583,7 @@ describe('dataset pages', () => {
         })
       })
 
-      describe.only('When there is no link', () => {
+      describe('When there is no link', () => {
         it('display the error datasetHasNoLink error block', () => {
           cy.login()
 
