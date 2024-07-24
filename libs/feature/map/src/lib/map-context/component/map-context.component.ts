@@ -12,7 +12,6 @@ import { Geometry } from 'ol/geom'
 
 import Map from 'ol/Map'
 import { FeatureInfoService } from '../../feature-info/feature-info.service'
-import { MapManagerService } from '../../manager/map-manager.service'
 import { MapContextModel } from '../map-context.model'
 import { MapContextService } from '../map-context.service'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
@@ -33,7 +32,6 @@ export class MapContextComponent implements OnChanges {
   constructor(
     private service: MapContextService,
     private featureInfo: FeatureInfoService,
-    private manager: MapManagerService,
     private utils: MapUtilsService
   ) {
     this.map = manager.map
