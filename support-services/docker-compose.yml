@@ -21,7 +21,7 @@ services:
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTICSEARCH_VERSION}
     ulimits:
       memlock:
         soft: -1
@@ -80,15 +80,26 @@ services:
       GEONETWORK_DB_NAME: geonetwork
       GEONETWORK_DB_USERNAME: geonetwork
       GEONETWORK_DB_PASSWORD: geonetwork
+      DATA_DIR: /catalogue-data
+      VIRTUAL_HOST: localhost
+
       JAVA_OPTS: >
         -Dorg.eclipse.jetty.annotations.AnnotationParser.LEVEL=OFF
         -Djava.security.egd=file:/dev/./urandom -Djava.awt.headless=true
         -Xms512M -Xss512M -Xmx2G -XX:+UseConcMarkSweepGC
-        -Dgeonetwork.resources.dir=/var/lib/jetty/webapps/geonetwork/WEB-INF/data/data/resources
-        -Dgeonetwork.data.dir=/var/lib/jetty/webapps/geonetwork/WEB-INF/data/data
-        -Dgeonetwork.codeList.dir=/var/lib/jetty/webapps/geonetwork/WEB-INF/data/config/codelist
-        -Dgeonetwork.schema.dir=/var/lib/jetty/webapps/geonetwork/WEB-INF/data/config/schema_plugins
         -Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:5005
+        -Dgeonetwork.resources.dir=/catalogue-data/data/resources
+        -Dgeonetwork.data.dir=/catalogue-data/data
+        -Dgeonetwork.codeList.dir=/catalogue-data/config/codelist
+        -Dgeonetwork.schema.dir=/catalogue-data/config/schema_plugins
+        -Dgeonetwork.config.dir=/catalogue-data/config
+        -Dgeonetwork.indexConfig.dir=/catalogue-data/config/index
+        -Des.host=elasticsearch
+        -Des.protocol=http
+        -Des.port=9200
+        -Des.url=http://elasticsearch:9200
+        -Des.username=
+        -Des.password=
     depends_on:
       database:
         condition: service_healthy
@@ -104,7 +115,7 @@ services:
       timeout: 10s
       retries: 10
     volumes:
-      - geonetwork_data:/var/lib/jetty/webapps/geonetwork/WEB-INF/data/
+      - geonetwork_data:/catalogue-data/
     ports:
       - '8080:8080'
       - '5005:5005'
@@ -123,7 +134,7 @@ services:
   init:
     image: alpine/curl
     # only run init if volumes were cleared
-    command: sh -c "if [ ! -f /done ]; then run-parts /docker-entrypoint.d --exit-on-error; else echo 'Nothing to do.'; exit 0; fi"
+    command: sh -c -e "if [ ! -f /done ]; then run-parts /docker-entrypoint.d --exit-on-error; else echo 'Nothing to do.'; exit 0; fi"
     environment:
       GEONETWORK_VERSION: ${GEONETWORK_VERSION}
     depends_on:

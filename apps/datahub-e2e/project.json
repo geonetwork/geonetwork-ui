@@ -10,7 +10,8 @@
         "cypressConfig": "apps/datahub-e2e/cypress.config.js",
         "devServerTarget": "datahub:serve:development",
         "testingType": "e2e",
-        "browser": "chrome"
+        "browser": "chrome",
+        "port": "cypress-auto"
       },
       "configurations": {
         "production": {

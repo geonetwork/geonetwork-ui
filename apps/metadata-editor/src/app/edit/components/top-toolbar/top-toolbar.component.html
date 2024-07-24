@@ -13,6 +13,8 @@
   </gn-ui-button>
   <div
     class="grow flex flex-row items-center justify-center gap-1 text-[14px]"
+    data-cy="save-status"
+    [attr.data-cy-value]="saveStatus$ | async"
     [ngSwitch]="saveStatus$ | async"
   >
     <ng-container *ngSwitchCase="'draft_only'">

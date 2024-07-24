@@ -1832,14 +1832,6 @@ paths:
             schema:
               type: string
               description: XML fragment.
-          application/json:
-            schema:
-              type: string
-              description: XML fragment.
-          application/x-www-form-urlencoded:
-            schema:
-              type: string
-              description: XML fragment.
       responses:
         default:
           description: default response
