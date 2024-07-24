@@ -55,13 +55,17 @@ export class RecordMetadataComponent {
   )
 
   displayDatasetHasNoLinkBlock$ = combineLatest([
+    this.metadataViewFacade.isMetadataLoading$,
     this.displayDownload$,
     this.displayApi$,
     this.displayOtherLinks,
   ]).pipe(
     map(
-      ([displayDownload, displayApi, displayOtherLinks]) =>
-        !displayDownload && !displayApi && !displayOtherLinks
+      ([isMetadataLoading, displayDownload, displayApi, displayOtherLinks]) =>
+        !isMetadataLoading &&
+        !displayDownload &&
+        !displayApi &&
+        !displayOtherLinks
     )
   )
 
