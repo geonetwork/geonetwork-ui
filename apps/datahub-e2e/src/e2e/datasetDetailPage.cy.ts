@@ -118,7 +118,7 @@ describe('dataset pages', () => {
           .find('.font-title')
           .next()
           .as('infoBar')
-        cy.get('@infoBar').children('div').should('have.length', 3)
+        cy.get('@infoBar').children().should('have.length', 3)
       })
       it('should return to the dataset list', () => {
         cy.get('datahub-header-record')
