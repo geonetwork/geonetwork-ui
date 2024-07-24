@@ -307,6 +307,7 @@
   "pagination.pageOf": "von",
   "previous": "zurück",
   "record.action.download": "Herunterladen",
+  "record.action.duplicate": "",
   "record.action.view": "Anzeigen",
   "record.externalViewer.open": "In externem Kartenviewer öffnen",
   "record.metadata.about": "Beschreibung",

@@ -67,6 +67,10 @@ export class RecordsListComponent {
     this.router.navigate(['/edit', record.uniqueIdentifier])
   }
 
+  duplicateRecord(record: CatalogRecord) {
+    this.router.navigate(['/duplicate', record.uniqueIdentifier])
+  }
+
   showUsers() {
     this.router.navigate(['/users/my-org'])
   }

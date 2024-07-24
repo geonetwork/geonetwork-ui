@@ -22,6 +22,7 @@ const totalPages = 25
 })
 export class ResultsTableContainerComponent {
   @Output() recordClick = new EventEmitter<CatalogRecord>()
+  @Output() duplicateRecord = new EventEmitter<CatalogRecord>()
 }
 
 @Component({
@@ -134,6 +135,19 @@ describe('RecordsListComponent', () => {
       })
       it('routes to record edition', () => {
         expect(router.navigate).toHaveBeenCalledWith(['/edit', 123])
+      })
+    })
+    describe('when asking for record duplication', () => {
+      const uniqueIdentifier = 123
+      const singleRecord = {
+        ...DATASET_RECORDS[0],
+        uniqueIdentifier,
+      }
+      beforeEach(() => {
+        table.duplicateRecord.emit(singleRecord)
+      })
+      it('routes to record duplication', () => {
+        expect(router.navigate).toHaveBeenCalledWith(['/duplicate', 123])
       })
     })
     describe('when click on pagination', () => {

@@ -120,4 +120,13 @@
       {{ dateToString(item.recordUpdated) }}
     </ng-template>
   </gn-ui-interactive-table-column>
+
+  <!-- ACTION MENU COLUMN -->
+  <gn-ui-interactive-table-column>
+    <ng-template #header> </ng-template>
+    <ng-template #cell let-item>
+      <gn-ui-action-menu (duplicate)="handleDuplicate(item)">
+      </gn-ui-action-menu>
+    </ng-template>
+  </gn-ui-interactive-table-column>
 </gn-ui-interactive-table>

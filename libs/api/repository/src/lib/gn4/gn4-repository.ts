@@ -24,6 +24,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/search'
 import { catchError, map, tap } from 'rxjs/operators'
 import {
+  BaseConverter,
   findConverterForDocument,
   Gn4Converter,
   Gn4SearchResults,
@@ -226,6 +227,25 @@ export class Gn4Repository implements RecordsRepositoryInterface {
             (record) =>
               [record, xml, isSavedAlready] as [CatalogRecord, string, boolean]
           )
+      })
+    )
+  }
+
+  openRecordForDuplication(
+    uniqueIdentifier: string
+  ): Observable<[CatalogRecord, string, false] | null> {
+    return this.loadRecordAsXml(uniqueIdentifier).pipe(
+      switchMap(async (recordAsXml) => {
+        const converter = findConverterForDocument(recordAsXml)
+        const record = await converter.readRecord(recordAsXml)
+        record.uniqueIdentifier = `TEMP-ID-${Date.now()}`
+        record.title = `${record.title} (Copy)`
+        const xml = await converter.writeRecord(record, recordAsXml)
+        window.localStorage.setItem(
+          this.getLocalStorageKeyForRecord(record.uniqueIdentifier),
+          xml
+        )
+        return [record, xml, false] as [CatalogRecord, string, false]
       })
     )
   }

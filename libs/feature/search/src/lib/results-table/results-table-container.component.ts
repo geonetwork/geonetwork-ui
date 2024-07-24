@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common'
 })
 export class ResultsTableContainerComponent {
   @Output() recordClick = new EventEmitter<CatalogRecord>()
+  @Output() duplicateRecord = new EventEmitter<CatalogRecord>()
 
   records$ = this.searchFacade.results$
   selectedRecords$ = this.selectionService.selectedRecordsIdentifiers$
@@ -33,6 +34,10 @@ export class ResultsTableContainerComponent {
 
   handleRecordClick(item: unknown) {
     this.recordClick.emit(item as CatalogRecord)
+  }
+
+  handleDuplicateRecord(item: unknown) {
+    this.duplicateRecord.emit(item as CatalogRecord)
   }
 
   handleSortByChange(col: string, order: 'asc' | 'desc') {

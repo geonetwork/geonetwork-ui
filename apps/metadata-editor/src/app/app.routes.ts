@@ -10,6 +10,7 @@ import { SearchRecordsComponent } from './records/search-records/search-records-
 import { MyOrgUsersComponent } from './my-org-users/my-org-users.component'
 import { MyOrgRecordsComponent } from './records/my-org-records/my-org-records.component'
 import { NewRecordResolver } from './new-record.resolver'
+import { DuplicateRecordResolver } from './duplicate-record.resolver'
 
 export const appRoutes: Route[] = [
   { path: '', redirectTo: 'catalog/search', pathMatch: 'prefix' },
@@ -100,6 +101,11 @@ export const appRoutes: Route[] = [
     path: 'create',
     component: EditPageComponent,
     resolve: { record: NewRecordResolver },
+  },
+  {
+    path: 'duplicate/:uuid',
+    component: EditPageComponent,
+    resolve: { record: DuplicateRecordResolver },
   },
   {
     path: 'edit/:uuid',
