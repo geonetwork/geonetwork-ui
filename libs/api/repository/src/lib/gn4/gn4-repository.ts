@@ -235,15 +235,12 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     uniqueIdentifier: string
   ): Observable<[CatalogRecord, string, false] | null> {
     return this.loadRecordAsXml(uniqueIdentifier).pipe(
-      switchMap(async (xml) => {
-        const converter = findConverterForDocument(xml)
-        const record = await converter.readRecord(xml)
-        return [record, converter] as [CatalogRecord, BaseConverter<string>]
-      }),
-      switchMap(async ([record, converter]) => {
+      switchMap(async (recordAsXml) => {
+        const converter = findConverterForDocument(recordAsXml)
+        const record = await converter.readRecord(recordAsXml)
         record.uniqueIdentifier = `TEMP-ID-${Date.now()}`
         record.title = `${record.title} (Copy)`
-        const xml = await converter.writeRecord(record)
+        const xml = await converter.writeRecord(record, recordAsXml)
         window.localStorage.setItem(
           this.getLocalStorageKeyForRecord(record.uniqueIdentifier),
           xml

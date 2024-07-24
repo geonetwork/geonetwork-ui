@@ -1,0 +1,17 @@
+<gn-ui-button
+  type="outline"
+  [matMenuTriggerFor]="menu"
+  (buttonClick)="openMenu()"
+  data-test="record-menu-button"
+>
+  <mat-icon class="material-symbols-outlined">more_vert</mat-icon>
+</gn-ui-button>
+<mat-menu #menu="matMenu">
+  <button
+    mat-menu-item
+    (click)="duplicate.emit()"
+    data-test="record-menu-duplicate-button"
+  >
+    <span translate>record.action.duplicate</span>
+  </button>
+</mat-menu>

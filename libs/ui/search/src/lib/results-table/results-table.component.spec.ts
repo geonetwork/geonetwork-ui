@@ -134,7 +134,7 @@ describe('ResultsTableComponent', () => {
     })
   })
 
-  describe('clicking on a title', () => {
+  describe('clicking on a dataset', () => {
     let clickedRecord: CatalogRecord
 
     beforeEach(() => {
@@ -143,10 +143,10 @@ describe('ResultsTableComponent', () => {
     })
 
     it('emits a recordClick event', () => {
-      const tableRow = fixture.debugElement.query(
-        By.css('[data-test="record-title-cell"]')
-      ).nativeElement as HTMLDivElement
-      tableRow.click()
+      const tableRow = fixture.debugElement.queryAll(
+        By.css('.table-row-cell')
+      )[1].nativeElement as HTMLDivElement
+      tableRow.parentElement.click()
       expect(clickedRecord).toEqual(DATASET_RECORDS[0])
     })
   })

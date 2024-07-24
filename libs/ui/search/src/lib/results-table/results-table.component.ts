@@ -1,7 +1,13 @@
 import { CommonModule } from '@angular/common'
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
-import { MatMenuModule } from '@angular/material/menu'
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
   FieldSort,
@@ -19,6 +25,7 @@ import {
   getFormatPriority,
 } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
+import { ActionMenuComponent } from './action-menu/action-menu.component'
 
 @Component({
   selector: 'gn-ui-results-table',
@@ -33,7 +40,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatIconModule,
     TranslateModule,
     BadgeComponent,
-    MatMenuModule,
+    ActionMenuComponent,
   ],
 })
 export class ResultsTableComponent {
@@ -92,8 +99,7 @@ export class ResultsTableComponent {
     this.recordClick.emit(item as CatalogRecord)
   }
 
-  handleDuplicateClick(event: Event, item: unknown) {
-    event.stopPropagation()
+  handleDuplicate(item: unknown) {
     this.duplicateRecord.emit(item as CatalogRecord)
   }
 
