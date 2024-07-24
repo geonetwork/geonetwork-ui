@@ -13,15 +13,15 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
+  DEFAULT_BASELAYER_CONTEXT,
   FeatureMapModule,
   MapContextLayerTypeEnum,
+  MapContextModel,
   MapContextService,
   MapFacade,
   MapManagerService,
   MapStyleService,
-  MapUtilsService,
 } from '@geonetwork-ui/feature/map'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
   AutocompleteComponent,
   DropdownSelectorComponent,
@@ -29,11 +29,12 @@ import {
   UiInputsModule,
 } from '@geonetwork-ui/ui/inputs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { getOptionalMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 
 import { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import { Polygon } from 'ol/geom'
 import { Fill, Stroke, Style } from 'ol/style'
-import { map } from 'rxjs'
+import { map, Observable } from 'rxjs'
 
 type AutocompleteItem = { title: string; value: Keyword }
 type GeogrCoords = {
@@ -85,6 +86,24 @@ export class FormFieldSpatialExtentComponent {
     new EventEmitter()
   // @Output() coverageChange: EventEmitter<Coverage> = new EventEmitter()
 
+  // mapContext: MapContextModel = {
+  //   view: {
+  //     center: [4, 42],
+  //     zoom: 6,
+  //   },
+  //   layers: [DEFAULT_BASELAYER_CONTEXT],
+  // }
+  mapContext$: Observable<MapContextModel> = this.mapFacade.layers$.pipe(
+    map((layers) => ({
+      view: {
+        center: [4, 42],
+        zoom: 6,
+      },
+      layers: [DEFAULT_BASELAYER_CONTEXT, ...layers],
+    }))
+  )
+  mapConfig: MapConfig = getOptionalMapConfig()
+
   displayWithFn = (item: AutocompleteItem) => {
     return `${item.title} (${item.value.thesaurus?.name})`
   }
@@ -103,10 +122,8 @@ export class FormFieldSpatialExtentComponent {
     private platformService: PlatformServiceInterface,
     private mapFacade: MapFacade,
     private styleService: MapStyleService,
-    private mapManager: MapManagerService,
-    private mapUtils: MapUtilsService,
-    private mapContext: MapContextService,
-    private mdViewFacade: MdViewFacade
+    private mapContextService: MapContextService,
+    private mapManagerService: MapManagerService
   ) {
     const fill = new Fill({
       color: 'transparent',
@@ -215,20 +232,22 @@ export class FormFieldSpatialExtentComponent {
       },
     })
 
+    // const view = this.mapManager.createView({})
+
     this.mapFacade.addLayer({
       type: MapContextLayerTypeEnum.GEOJSON,
       data: featureCollection,
       title: description,
     })
 
-    // const extent = [coordEast, coordSouth, coordWest, coordNorth]
+    // const extent = [coordEast, coordSouth, coordWest, coordNorth] as [
+    //   number,
+    //   number,
+    //   number,
+    //   number
+    // ]
 
-    this.mapContext.createLayer({
-      type: MapContextLayerTypeEnum.GEOJSON,
-      data: featureCollection,
-    })
-
-    // zoom to layer (does not work yet)
+    // // zoom to layer (does not work yet)
     const poly = new Polygon([
       [
         [coordEast, coordNorth],
@@ -239,13 +258,24 @@ export class FormFieldSpatialExtentComponent {
       ],
     ])
 
-    const view = this.mapContext
-      .createView({
-        maxExtent: poly.getExtent(),
-        center: [coordEast, coordNorth],
-        maxZoom: 12,
-      })
-      .fit(poly, { duration: 100, maxZoom: 12 })
+    // this.mapContext.layers.push({
+    //   type: MapContextLayerTypeEnum.GEOJSON,
+    //   data: featureCollection,
+    // })
+    // this.mapContext.view.maxExtent = poly.getExtent()
+    // this.mapContext.view.extent = poly.getExtent()
+
+    // console.log('mapContext', this.mapContext)
+
+    this.mapContext$ = this.mapFacade.layers$.pipe(
+      map((layers) => ({
+        view: {
+          maxExtent: poly.getExtent(),
+          maxZoom: 12,
+        },
+        layers: [...layers],
+      }))
+    )
   }
 
   deleteLayer(index: number) {
