@@ -31,8 +31,11 @@ import {
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { getOptionalMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import { Extent } from 'ol/extent'
+import Feature from 'ol/Feature'
 
 import { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
+import GeoJSON from 'ol/format/GeoJSON'
+import { Polygon } from 'ol/geom'
 import { Fill, Stroke, Style } from 'ol/style'
 import { catchError, from, map, Observable, of, switchMap } from 'rxjs'
 
@@ -170,26 +173,31 @@ export class FormFieldSpatialExtentComponent implements OnInit {
     // if an extent comes with no description: same, an “Unknown location” badge appears
     // if an extent comes with a description that is NOT a URI, the description is shown in the badge
 
-    // this.geogrExtent.forEach((extent) => {
-    // add to keywords (in html)
-    // add to map
-    // fetch keyword with description from thesaurus
-    // NOT NEEDED:
-    // const uri = 'http://www.naturalearthdata.com/ne_admin#Country/AFG'
-    // // extent.description
-    // this.platformService.getKeywordsByUri(uri).subscribe((keywords) => {
-    //   keywords.forEach((keyword) => {
-    //     this.control.setValue([...this.control.value, keyword])
-    //     console.log('keyword', keyword)
-    //     this.addToMap(
-    //       keyword.label,
-    //       parseFloat(keyword.coords.coordEast),
-    //       parseFloat(keyword.coords.coordSouth),
-    //       parseFloat(keyword.coords.coordWest),
-    //       parseFloat(keyword.coords.coordNorth)
-    //     )
-    //   })
-    // })
+    this.geogrExtent.forEach((extent) => {
+      // add to keywords (in html)
+      // add to map
+      // link to keyword of type place
+      if (extent.geometries.length > 0) {
+        // this.addToMap(extent.description, extent.geometries[0])
+      }
+
+      // fetch keyword with description from thesaurus
+      // NOT NEEDED:
+      // const uri = 'http://www.naturalearthdata.com/ne_admin#Country/AFG'
+      // // extent.description
+      // this.platformService.getKeywordsByUri(uri).subscribe((keywords) => {
+      //   keywords.forEach((keyword) => {
+      //     this.control.setValue([...this.control.value, keyword])
+      //     console.log('keyword', keyword)
+      //     this.addToMap(
+      //       keyword.label,
+      //       parseFloat(keyword.coords.coordEast),
+      //       parseFloat(keyword.coords.coordSouth),
+      //       parseFloat(keyword.coords.coordWest),
+      //       parseFloat(keyword.coords.coordNorth)
+      //     )
+      //   })
+    })
   }
 
   handleItemSelection(item: AutocompleteItem) {
@@ -249,36 +257,46 @@ export class FormFieldSpatialExtentComponent implements OnInit {
     this.geogrExtentChange.emit(this.geogrExtent)
     console.log('geogrExtent', this.geogrExtent)
 
-    this.addToMap(description, coordWest, coordSouth, coordEast, coordNorth)
+    const bboxGeom = this.bboxCoordsToGeometry(
+      coordWest,
+      coordSouth,
+      coordEast,
+      coordNorth
+    )
+    this.addToMap(description, bboxGeom)
   }
 
-  addToMap(
-    description: string,
+  bboxCoordsToGeometry(
     coordWest: number,
     coordSouth: number,
     coordEast: number,
     coordNorth: number
-  ) {
+  ): Feature {
+    const geometry = new Polygon([
+      [
+        [coordEast, coordNorth],
+        [coordEast, coordSouth],
+        [coordWest, coordSouth],
+        [coordWest, coordNorth],
+        [coordEast, coordNorth],
+      ],
+    ])
+    return new Feature(geometry)
+  }
+
+  addToMap(description: string, geometry: Feature) {
     const featureCollection: GeoJSONFeatureCollection = {
       type: 'FeatureCollection',
       features: [],
     }
+    const geoJSONGeom = new GeoJSON().writeGeometryObject(
+      geometry.getGeometry()
+    )
 
     featureCollection.features.push({
       type: 'Feature',
       properties: { description },
-      geometry: {
-        coordinates: [
-          [
-            [coordEast, coordNorth],
-            [coordEast, coordSouth],
-            [coordWest, coordSouth],
-            [coordWest, coordNorth],
-            [coordEast, coordNorth],
-          ],
-        ],
-        type: 'Polygon',
-      },
+      geometry: geoJSONGeom,
     })
 
     this.mapFacade.addLayer({
