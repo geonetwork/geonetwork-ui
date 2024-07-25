@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core'
 import { FormControl } from '@angular/forms'
@@ -17,10 +18,9 @@ import {
   FeatureMapModule,
   MapContextLayerTypeEnum,
   MapContextModel,
-  MapContextService,
   MapFacade,
-  MapManagerService,
   MapStyleService,
+  MapUtilsService,
 } from '@geonetwork-ui/feature/map'
 import {
   AutocompleteComponent,
@@ -30,11 +30,11 @@ import {
 } from '@geonetwork-ui/ui/inputs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { getOptionalMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
+import { Extent } from 'ol/extent'
 
 import { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
-import { Polygon } from 'ol/geom'
 import { Fill, Stroke, Style } from 'ol/style'
-import { map, Observable } from 'rxjs'
+import { catchError, from, map, Observable, of, switchMap } from 'rxjs'
 
 type AutocompleteItem = { title: string; value: Keyword }
 type GeogrCoords = {
@@ -65,7 +65,7 @@ type Coverage = {
     SwitchToggleComponent,
   ],
 })
-export class FormFieldSpatialExtentComponent {
+export class FormFieldSpatialExtentComponent implements OnInit {
   @Input() control: FormControl<Keyword[]>
   @Input() geogrExtent?: DatasetSpatialExtent[] = []
   // @Input()
@@ -82,26 +82,39 @@ export class FormFieldSpatialExtentComponent {
     },
   ]
 
+  @Output() keywordChange: EventEmitter<Keyword[]> = new EventEmitter()
   @Output() geogrExtentChange: EventEmitter<DatasetSpatialExtent[]> =
     new EventEmitter()
   // @Output() coverageChange: EventEmitter<Coverage> = new EventEmitter()
 
-  // mapContext: MapContextModel = {
-  //   view: {
-  //     center: [4, 42],
-  //     zoom: 6,
-  //   },
-  //   layers: [DEFAULT_BASELAYER_CONTEXT],
-  // }
+  error = ''
+  viewExtent: Extent
   mapContext$: Observable<MapContextModel> = this.mapFacade.layers$.pipe(
-    map((layers) => ({
-      view: {
-        center: [4, 42],
-        zoom: 6,
-      },
-      layers: [DEFAULT_BASELAYER_CONTEXT, ...layers],
-    }))
+    switchMap((layers) =>
+      from(this.mapUtils.getLayerExtent(layers[layers.length - 1])).pipe(
+        catchError(() => {
+          this.error = 'The layer has no extent'
+          return of(undefined)
+        }),
+        map((extent) => {
+          this.viewExtent = this.mapUtils.getGeoJSONLayersExtent([
+            this.viewExtent,
+            extent,
+          ])
+
+          // remove map extent when layer was removed?
+
+          return {
+            layers: [DEFAULT_BASELAYER_CONTEXT, ...layers],
+            view: {
+              extent: this.viewExtent,
+            },
+          } as MapContextModel
+        })
+      )
+    )
   )
+
   mapConfig: MapConfig = getOptionalMapConfig()
 
   displayWithFn = (item: AutocompleteItem) => {
@@ -122,8 +135,7 @@ export class FormFieldSpatialExtentComponent {
     private platformService: PlatformServiceInterface,
     private mapFacade: MapFacade,
     private styleService: MapStyleService,
-    private mapContextService: MapContextService,
-    private mapManagerService: MapManagerService
+    private mapUtils: MapUtilsService
   ) {
     const fill = new Fill({
       color: 'transparent',
@@ -142,6 +154,42 @@ export class FormFieldSpatialExtentComponent {
       ...this.styleService.createGeometryStyles({ color: 'black' }),
       polygon: styles,
     })
+  }
+
+  ngOnInit(): void {
+    // add initial keywords of type place to map //
+    this.control?.value.forEach((keyword) => {
+      this.addGeogrExtent(keyword.label, keyword.coords)
+    })
+    this.keywordChange.emit(this.control.value)
+
+    // handle initial values coming as Input from geogrExtent
+
+    //when creating an extent from a place keyword, the keyword URI should be stored in the extent description; this way, when deleting a place keyword, its corresponding extent can also be removed from the record
+    // if an extent comes with a description that is a URI for which no keyword was found, a badge “Unknown location” appears below the keyword selector; this way, the extent can still be deleted
+    // if an extent comes with no description: same, an “Unknown location” badge appears
+    // if an extent comes with a description that is NOT a URI, the description is shown in the badge
+
+    // this.geogrExtent.forEach((extent) => {
+    // add to keywords (in html)
+    // add to map
+    // fetch keyword with description from thesaurus
+    // NOT NEEDED:
+    // const uri = 'http://www.naturalearthdata.com/ne_admin#Country/AFG'
+    // // extent.description
+    // this.platformService.getKeywordsByUri(uri).subscribe((keywords) => {
+    //   keywords.forEach((keyword) => {
+    //     this.control.setValue([...this.control.value, keyword])
+    //     console.log('keyword', keyword)
+    //     this.addToMap(
+    //       keyword.label,
+    //       parseFloat(keyword.coords.coordEast),
+    //       parseFloat(keyword.coords.coordSouth),
+    //       parseFloat(keyword.coords.coordWest),
+    //       parseFloat(keyword.coords.coordNorth)
+    //     )
+    //   })
+    // })
   }
 
   handleItemSelection(item: AutocompleteItem) {
@@ -170,11 +218,13 @@ export class FormFieldSpatialExtentComponent {
     })
 
     this.control.setValue(filteredKeywords)
+    this.keywordChange.emit(filteredKeywords)
   }
 
   removeKeyword(index: number, label: string) {
     const removedKeywords = this.control.value.filter((_, i) => i !== index)
     this.control.setValue(removedKeywords)
+    this.keywordChange.emit(removedKeywords)
 
     this.deleteLayer(index)
 
@@ -182,7 +232,6 @@ export class FormFieldSpatialExtentComponent {
     this.geogrExtent = this.geogrExtent.filter(
       (extent) => extent.description !== label
     )
-
     this.geogrExtentChange.emit(this.geogrExtent)
     console.log('geogrExtent', this.geogrExtent)
   }
@@ -232,50 +281,11 @@ export class FormFieldSpatialExtentComponent {
       },
     })
 
-    // const view = this.mapManager.createView({})
-
     this.mapFacade.addLayer({
       type: MapContextLayerTypeEnum.GEOJSON,
       data: featureCollection,
       title: description,
     })
-
-    // const extent = [coordEast, coordSouth, coordWest, coordNorth] as [
-    //   number,
-    //   number,
-    //   number,
-    //   number
-    // ]
-
-    // // zoom to layer (does not work yet)
-    const poly = new Polygon([
-      [
-        [coordEast, coordNorth],
-        [coordEast, coordSouth],
-        [coordWest, coordSouth],
-        [coordWest, coordNorth],
-        [coordEast, coordNorth],
-      ],
-    ])
-
-    // this.mapContext.layers.push({
-    //   type: MapContextLayerTypeEnum.GEOJSON,
-    //   data: featureCollection,
-    // })
-    // this.mapContext.view.maxExtent = poly.getExtent()
-    // this.mapContext.view.extent = poly.getExtent()
-
-    // console.log('mapContext', this.mapContext)
-
-    this.mapContext$ = this.mapFacade.layers$.pipe(
-      map((layers) => ({
-        view: {
-          maxExtent: poly.getExtent(),
-          maxZoom: 12,
-        },
-        layers: [...layers],
-      }))
-    )
   }
 
   deleteLayer(index: number) {

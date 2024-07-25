@@ -166,6 +166,13 @@ export class MapUtilsService {
     return transformExtent(latLonExtent, 'EPSG:4326', 'EPSG:3857')
   }
 
+  getGeoJSONLayersExtent(extents: Extent[]) {
+    return extents.reduce(
+      (prev, curr) => (prev ? extend(prev, curr) : curr),
+      null as Extent
+    )
+  }
+
   async getWmsLayerExtent(
     layer: MapContextLayerWmsModel
   ): Promise<Extent | null> {
