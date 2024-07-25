@@ -83,6 +83,13 @@ export const RECORD_ABSTRACT_FIELD: EditorField = {
   },
 }
 
+export const RECORD_SPATIAL_EXTENTS_FIELD: EditorField = {
+  model: 'spatialExtents',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.spatialExtents'),
+  },
+}
+
 /************************************************************
  ***************          SECTIONS          *****************
  ************************************************************
@@ -109,7 +116,7 @@ export const ABOUT_SECTION: EditorSection = {
 export const GEOGRAPHICAL_COVERAGE_SECTION: EditorSection = {
   labelKey: marker('editor.record.form.section.geographicalCoverage.label'),
   hidden: false,
-  fields: [],
+  fields: [RECORD_SPATIAL_EXTENTS_FIELD],
 }
 
 export const ASSOCIATED_RESOURCES_SECTION: EditorSection = {
