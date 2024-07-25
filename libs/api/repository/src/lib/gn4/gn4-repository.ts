@@ -24,7 +24,6 @@ import {
 } from '@geonetwork-ui/common/domain/model/search'
 import { catchError, map, tap } from 'rxjs/operators'
 import {
-  BaseConverter,
   findConverterForDocument,
   Gn4Converter,
   Gn4SearchResults,
