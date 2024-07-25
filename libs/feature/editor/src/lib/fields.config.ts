@@ -90,6 +90,14 @@ export const RECORD_SPATIAL_EXTENTS_FIELD: EditorField = {
   },
 }
 
+export const RECORD_PLACE_KEYWORDS_FIELD: EditorField = {
+  model: 'keywords',
+  id: 'placeKeywords',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.keywords'),
+  },
+}
+
 /************************************************************
  ***************          SECTIONS          *****************
  ************************************************************
@@ -116,7 +124,7 @@ export const ABOUT_SECTION: EditorSection = {
 export const GEOGRAPHICAL_COVERAGE_SECTION: EditorSection = {
   labelKey: marker('editor.record.form.section.geographicalCoverage.label'),
   hidden: false,
-  fields: [RECORD_SPATIAL_EXTENTS_FIELD],
+  fields: [RECORD_PLACE_KEYWORDS_FIELD, RECORD_SPATIAL_EXTENTS_FIELD],
 }
 
 export const ASSOCIATED_RESOURCES_SECTION: EditorSection = {

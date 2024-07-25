@@ -69,8 +69,8 @@ type Coverage = {
   ],
 })
 export class FormFieldSpatialExtentComponent implements OnInit {
-  @Input() control: FormControl<Keyword[]>
-  @Input() geogrExtent?: DatasetSpatialExtent[] = []
+  @Input() placeKeywords: Keyword[]
+  @Input() spatialExtents: DatasetSpatialExtent[]
   // @Input()
   coverage = [
     {
@@ -89,6 +89,8 @@ export class FormFieldSpatialExtentComponent implements OnInit {
   @Output() geogrExtentChange: EventEmitter<DatasetSpatialExtent[]> =
     new EventEmitter()
   // @Output() coverageChange: EventEmitter<Coverage> = new EventEmitter()
+
+  // keywordsLinkedToExtents = new Set({key: 'uri', values: {bbox: 'bbox'}})
 
   error = ''
   viewExtent: Extent
@@ -161,10 +163,10 @@ export class FormFieldSpatialExtentComponent implements OnInit {
 
   ngOnInit(): void {
     // add initial keywords of type place to map //
-    this.control?.value.forEach((keyword) => {
-      this.addGeogrExtent(keyword.label, keyword.coords)
-    })
-    this.keywordChange.emit(this.control.value)
+    // this.placeKeywords?.value.forEach((keyword) => {
+    //   this.addGeogrExtent(keyword.label, keyword.coords)
+    // })
+    // this.keywordChange.emit(this.placeKeywords.value)
 
     // handle initial values coming as Input from geogrExtent
 
@@ -173,7 +175,7 @@ export class FormFieldSpatialExtentComponent implements OnInit {
     // if an extent comes with no description: same, an “Unknown location” badge appears
     // if an extent comes with a description that is NOT a URI, the description is shown in the badge
 
-    this.geogrExtent.forEach((extent) => {
+    this.spatialExtents.forEach((extent) => {
       // add to keywords (in html)
       // add to map
       // link to keyword of type place
@@ -210,7 +212,7 @@ export class FormFieldSpatialExtentComponent implements OnInit {
   }
 
   addKeyword(keyword: Keyword) {
-    const addedKeywords = [...this.control.value, keyword]
+    const addedKeywords = [...this.placeKeywords.value, keyword]
 
     // remove duplicates from keyword
     const filteredKeywords = addedKeywords.filter((value, index, self) => {
@@ -225,23 +227,25 @@ export class FormFieldSpatialExtentComponent implements OnInit {
       )
     })
 
-    this.control.setValue(filteredKeywords)
+    this.placeKeywords.setValue(filteredKeywords)
     this.keywordChange.emit(filteredKeywords)
   }
 
   removeKeyword(index: number, label: string) {
-    const removedKeywords = this.control.value.filter((_, i) => i !== index)
-    this.control.setValue(removedKeywords)
+    const removedKeywords = this.placeKeywords.value.filter(
+      (_, i) => i !== index
+    )
+    this.placeKeywords.setValue(removedKeywords)
     this.keywordChange.emit(removedKeywords)
 
     this.deleteLayer(index)
 
     // remove from geogrExtent
-    this.geogrExtent = this.geogrExtent.filter(
+    this.spatialExtents = this.spatialExtents.filter(
       (extent) => extent.description !== label
     )
-    this.geogrExtentChange.emit(this.geogrExtent)
-    console.log('geogrExtent', this.geogrExtent)
+    this.geogrExtentChange.emit(this.spatialExtents)
+    console.log('geogrExtent', this.spatialExtents)
   }
   addGeogrExtent(description: string, coords: GeogrCoords) {
     const coordWest = parseFloat(coords.coordWest)
@@ -249,13 +253,13 @@ export class FormFieldSpatialExtentComponent implements OnInit {
     const coordEast = parseFloat(coords.coordEast)
     const coordNorth = parseFloat(coords.coordNorth)
     // bbox: minx, miny, maxx, maxy
-    this.geogrExtent.push({
+    this.spatialExtents.push({
       description,
       bbox: [coordWest, coordSouth, coordEast, coordNorth],
     })
 
-    this.geogrExtentChange.emit(this.geogrExtent)
-    console.log('geogrExtent', this.geogrExtent)
+    this.geogrExtentChange.emit(this.spatialExtents)
+    console.log('geogrExtent', this.spatialExtents)
 
     const bboxGeom = this.bboxCoordsToGeometry(
       coordWest,
