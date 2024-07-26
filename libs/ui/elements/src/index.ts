@@ -1,5 +1,6 @@
 export * from './lib/api-card/api-card.component'
 export * from './lib/avatar/avatar.component'
+export * from './lib/confirmation-dialog/confirmation-dialog.component'
 export * from './lib/content-ghost/content-ghost.component'
 export * from './lib/download-item/download-item.component'
 export * from './lib/downloads-list/downloads-list.component'

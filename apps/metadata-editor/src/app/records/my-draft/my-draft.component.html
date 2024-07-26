@@ -11,6 +11,7 @@
     <gn-ui-results-table
       [records]="records$ | async"
       [recordHasDraft]="hasDraft"
+      [recordIsDraft]="isDraft"
       (recordClick)="editRecord($event)"
     ></gn-ui-results-table>
   </div>

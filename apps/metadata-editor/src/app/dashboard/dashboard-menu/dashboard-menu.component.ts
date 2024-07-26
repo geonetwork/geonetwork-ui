@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { RouterModule } from '@angular/router'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { map } from 'rxjs/operators'
+import { map, startWith, switchMap } from 'rxjs/operators'
 import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
 
 @Component({
@@ -22,9 +22,11 @@ import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
   ],
 })
 export class DashboardMenuComponent {
-  draftsCount$ = this.recordsRepository
-    .getAllDrafts()
-    .pipe(map((drafts) => drafts.length))
+  draftsCount$ = this.recordsRepository.draftsChanged$.pipe(
+    startWith(void 0),
+    switchMap(() => this.recordsRepository.getAllDrafts()),
+    map((drafts) => drafts.length)
+  )
 
   constructor(private recordsRepository: RecordsRepositoryInterface) {}
 }

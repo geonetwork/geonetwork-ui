@@ -1,5 +1,5 @@
 <gn-ui-button
-  type="outline"
+  type="light"
   [matMenuTriggerFor]="menu"
   (buttonClick)="openMenu()"
   data-test="record-menu-button"
@@ -9,9 +9,18 @@
 <mat-menu #menu="matMenu">
   <button
     mat-menu-item
+    [disabled]="isDraft"
     (click)="duplicate.emit()"
     data-test="record-menu-duplicate-button"
   >
     <span translate>record.action.duplicate</span>
+  </button>
+  <button
+    mat-menu-item
+    [disabled]="isDraft"
+    (click)="openDeleteConfirmationDialog()"
+    data-test="record-menu-delete-button"
+  >
+    <span translate>record.action.delete</span>
   </button>
 </mat-menu>

@@ -125,7 +125,11 @@
   <gn-ui-interactive-table-column>
     <ng-template #header> </ng-template>
     <ng-template #cell let-item>
-      <gn-ui-action-menu (duplicate)="handleDuplicate(item)">
+      <gn-ui-action-menu
+        [isDraft]="recordIsDraft(item)"
+        (duplicate)="handleDuplicate(item)"
+        (delete)="handleDelete(item)"
+      >
       </gn-ui-action-menu>
     </ng-template>
   </gn-ui-interactive-table-column>

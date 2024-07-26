@@ -8,6 +8,7 @@ import {
   Paginate,
   RequestMoreOnAggregation,
   RequestMoreResults,
+  RequestNewResults,
   SetConfigAggregations,
   SetConfigFilters,
   SetConfigRequestFields,
@@ -148,6 +149,11 @@ export class SearchFacade {
 
   requestMoreResults(): SearchFacade {
     this.store.dispatch(new RequestMoreResults(this.searchId))
+    return this
+  }
+
+  requestNewResults(): SearchFacade {
+    this.store.dispatch(new RequestNewResults(this.searchId))
     return this
   }
 
