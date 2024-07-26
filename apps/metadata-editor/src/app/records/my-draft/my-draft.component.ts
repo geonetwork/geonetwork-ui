@@ -33,6 +33,7 @@ import { startWith } from 'rxjs'
 export class MyDraftComponent {
   records$ = this.recordsRepository.getAllDrafts().pipe(startWith([]))
   hasDraft = () => true
+  isDraft = () => true
 
   constructor(
     private router: Router,

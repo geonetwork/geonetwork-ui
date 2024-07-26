@@ -48,11 +48,13 @@ export class ResultsTableComponent {
   @Input() selectedRecordsIdentifiers: string[] = []
   @Input() sortOrder: SortByField = null
   @Input() recordHasDraft: (record: CatalogRecord) => boolean = () => false
+  @Input() recordIsDraft: (record: CatalogRecord) => boolean = () => false
 
   // emits the column (field) as well as the order
   @Output() sortByChange = new EventEmitter<[string, 'asc' | 'desc']>()
   @Output() recordClick = new EventEmitter<CatalogRecord>()
   @Output() duplicateRecord = new EventEmitter<CatalogRecord>()
+  @Output() deleteRecord = new EventEmitter<CatalogRecord>()
   @Output() recordsSelectedChange = new EventEmitter<
     [CatalogRecord[], boolean]
   >()
@@ -101,6 +103,10 @@ export class ResultsTableComponent {
 
   handleDuplicate(item: unknown) {
     this.duplicateRecord.emit(item as CatalogRecord)
+  }
+
+  handleDelete(item: unknown) {
+    this.deleteRecord.emit(item as CatalogRecord)
   }
 
   setSortBy(col: string, order: 'asc' | 'desc') {

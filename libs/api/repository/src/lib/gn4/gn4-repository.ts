@@ -9,6 +9,7 @@ import {
   from,
   Observable,
   of,
+  Subject,
   switchMap,
   throwError,
 } from 'rxjs'
@@ -34,6 +35,9 @@ import { HttpErrorResponse } from '@angular/common/http'
 
 @Injectable()
 export class Gn4Repository implements RecordsRepositoryInterface {
+  _draftsChanged = new Subject<void>()
+  draftsChanged$ = this._draftsChanged.asObservable()
+
   constructor(
     private gn4SearchApi: SearchApiService,
     private gn4SearchHelper: ElasticsearchService,
@@ -244,6 +248,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
           this.getLocalStorageKeyForRecord(record.uniqueIdentifier),
           xml
         )
+        this._draftsChanged.next()
         return [record, xml, false] as [CatalogRecord, string, false]
       })
     )
@@ -294,17 +299,22 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     )
   }
 
+  deleteRecord(uniqueIdentifier: string): Observable<void> {
+    return this.gn4RecordsApi.deleteRecord(uniqueIdentifier)
+  }
+
   saveRecordAsDraft(
     record: CatalogRecord,
     referenceRecordSource?: string
   ): Observable<string> {
     return this.serializeRecordToXml(record, referenceRecordSource).pipe(
-      tap((recordXml) =>
+      tap((recordXml) => {
         window.localStorage.setItem(
           this.getLocalStorageKeyForRecord(record.uniqueIdentifier),
           recordXml
         )
-      )
+        this._draftsChanged.next()
+      })
     )
   }
 
@@ -312,6 +322,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     window.localStorage.removeItem(
       this.getLocalStorageKeyForRecord(uniqueIdentifier)
     )
+    this._draftsChanged.next()
   }
 
   recordHasDraft(uniqueIdentifier: string): boolean {
