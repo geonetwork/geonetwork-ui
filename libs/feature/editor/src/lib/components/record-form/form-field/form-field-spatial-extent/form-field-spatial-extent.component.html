@@ -15,9 +15,9 @@
   ></gn-ui-autocomplete>
   <div class="flex gap-2 flex-wrap">
     <gn-ui-badge
-      *ngFor="let keyword of control.value; let index = index"
+      *ngFor="let keyword of placeKeywords; let index = index"
       [removable]="true"
-      (badgeRemoveClicked)="removeKeyword(index, keyword.label)"
+      (badgeRemoveClicked)="removeKeyword(keyword.key)"
       >{{ keyword.label }}</gn-ui-badge
     >
   </div>

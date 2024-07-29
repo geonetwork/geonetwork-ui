@@ -11,6 +11,10 @@ import {
   EditorFieldWithValue,
   EditorSectionWithValues,
 } from '../../+state/editor.models'
+import {
+  DatasetSpatialExtent,
+  Keyword,
+} from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -54,16 +58,16 @@ export class RecordFormComponent {
   }
 
   extractSpatialExtentsFields(fieldsWithValues: EditorFieldWithValue[]) {
-    const spatialExtentsField = fieldsWithValues.find(
-      (field) => field.config.model === 'spatialExtents'
-    )
     const placeKeywordsField = fieldsWithValues.find(
       (field) => field.config.id === 'placeKeywords'
-    )
+    )?.value as Keyword[]
+    const spatialExtentsField = fieldsWithValues.find(
+      (field) => field.config.model === 'spatialExtents'
+    )?.value as DatasetSpatialExtent[]
     if (spatialExtentsField && placeKeywordsField) {
       return {
-        spatialExtentsField,
         placeKeywordsField,
+        spatialExtentsField,
       }
     } else {
       return null
