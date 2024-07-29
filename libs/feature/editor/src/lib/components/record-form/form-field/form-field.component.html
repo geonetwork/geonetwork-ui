@@ -87,4 +87,9 @@
       [control]="formControl"
     ></gn-ui-form-field-keywords>
   </ng-container>
+  <ng-container *ngIf="isContactsForResource">
+    <gn-ui-form-field-contacts-for-resource
+      [control]="formControl"
+    ></gn-ui-form-field-contacts-for-resource>
+  </ng-container>
 </ng-template>

@@ -61,6 +61,7 @@ export class AutocompleteComponent
   @Input() action: (value: string) => Observable<AutocompleteItem[]>
   @Input() value?: AutocompleteItem
   @Input() clearOnSelection = false
+  @Input() completeOnSelection = false
   @Input() autoFocus = false
   @Input() minCharacterCount? = 3
   @Input() allowSubmit = true
@@ -209,10 +210,14 @@ export class AutocompleteComponent
   handleSelection(event: MatAutocompleteSelectedEvent) {
     this.cancelEnter = true
     this.itemSelected.emit(event.option.value)
-    if (this.clearOnSelection) {
+    if (this.completeOnSelection) {
       this.lastInputValue$.pipe(first()).subscribe((any) => {
         this.inputRef.nativeElement.value = any
       })
+      return
+    }
+    if (this.clearOnSelection) {
+      this.inputRef.nativeElement.value = ''
     }
   }
 }

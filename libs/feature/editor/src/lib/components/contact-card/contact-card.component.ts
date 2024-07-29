@@ -14,14 +14,14 @@ import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
 @Component({
-  selector: 'gn-ui-editor-contact-card',
-  templateUrl: './editor-contact-card.component.html',
-  styleUrls: ['./editor-contact-card.component.css'],
+  selector: 'gn-ui-contact-card',
+  templateUrl: './contact-card.component.html',
+  styleUrls: ['./contact-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, MatIconModule, ButtonComponent],
 })
-export class EditorContactCardComponent {
+export class ContactCardComponent {
   @Input() contact: Individual
   @Input() organization: Organization
   @Output() contactRemoved = new EventEmitter<Individual>()

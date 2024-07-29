@@ -83,6 +83,14 @@ export const RECORD_ABSTRACT_FIELD: EditorField = {
   },
 }
 
+export const CONTACTS_FOR_RESOURCE_FIELD: EditorField = {
+  model: 'contactsForResource',
+  formFieldConfig: {
+    // labelKey: marker('editor.record.form.field.contactsForResource')
+    labelKey: '',
+  },
+}
+
 export const RECORD_GRAPHICAL_OVERVIEW_FIELD: EditorField = {
   model: 'overviews',
   formFieldConfig: {
@@ -157,7 +165,7 @@ export const DATA_MANAGERS_SECTION: EditorSection = {
   labelKey: marker('editor.record.form.section.dataManagers.label'),
   descriptionKey: marker('editor.record.form.section.dataManagers.description'),
   hidden: false,
-  fields: [],
+  fields: [CONTACTS_FOR_RESOURCE_FIELD],
 }
 
 export const DATA_POINT_OF_CONTACT_SECTION: EditorSection = {

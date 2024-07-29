@@ -15,6 +15,18 @@ describe('editor form', () => {
     cy.get('[data-cy=save-status]')
       .invoke('attr', 'data-cy-value')
       .as('saveStatus')
+    cy.get('[data-test=pageSelectorButtons]')
+      .find('gn-ui-button')
+      .eq(0)
+      .as('resourceDescriptionPageSelectorButton')
+    cy.get('[data-test=pageSelectorButtons]')
+      .find('gn-ui-button')
+      .eq(1)
+      .as('resourcePageSelectorButton')
+    cy.get('[data-test=pageSelectorButtons]')
+      .find('gn-ui-button')
+      .eq(2)
+      .as('accessAndContactPageSelectorButton')
   })
 
   it('form shows correctly', () => {
@@ -56,6 +68,70 @@ describe('editor form', () => {
       cy.wrap(field).type(this.abstractFieldInitialValue)
     })
     cy.get('md-editor-publish-button').click()
+  })
+
+  describe('record fields', () => {
+    describe('contacts for resources', () => {
+      beforeEach(() => {
+        cy.login('admin', 'admin', false)
+
+        // Alpine convention record
+        cy.visit('/edit/accroche_velos')
+
+        cy.get('@accessAndContactPageSelectorButton').click()
+      })
+
+      it('show the contacts for resource of the dataset', () => {
+        cy.get('[data-test=displayedRoles]').children().should('have.length', 1)
+      })
+
+      it('show the 5 roles available to add', () => {
+        cy.get('[data-test=rolesToPick]').children().should('have.length', 5)
+      })
+
+      it('click on a role adds it to the list of displayed role', () => {
+        cy.get('[data-test="rolesToPick"]').children().eq(2).click()
+
+        cy.get('[data-test=rolesToPick]').children().should('have.length', 4)
+
+        cy.get('[data-test=displayedRoles]').children().should('have.length', 2)
+      })
+
+      it('add a contact for resource', () => {
+        cy.get('[data-test=displayedRoles]')
+          .children()
+          .find('gn-ui-contact-card')
+          .should('have.length', 1)
+
+        cy.get('[data-test=displayedRoles]')
+          .find('gn-ui-autocomplete')
+          .type('bar')
+
+        cy.get('mat-option').should('have.text', ' Barbara Roberts ').click()
+
+        cy.get('[data-test=displayedRoles]')
+          .children()
+          .find('gn-ui-contact-card')
+          .should('have.length', 2)
+      })
+
+      it('delete a contact for resource', () => {
+        cy.get('[data-test=displayedRoles]')
+          .children()
+          .find('gn-ui-contact-card')
+          .should('have.length', 1)
+
+        cy.get('[data-test=displayedRoles]')
+          .children()
+          .get('[data-test=removeContactButton]')
+          .click()
+
+        cy.get('[data-test=displayedRoles]')
+          .children()
+          .find('gn-ui-contact-card')
+          .should('not.exist')
+      })
+    })
   })
 
   describe('date range in sortable list', () => {

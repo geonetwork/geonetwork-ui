@@ -1,0 +1,52 @@
+<div class="flex flex-col gap-3">
+  <div class="flex flex-row flex-wrap gap-2" data-test="rolesToPick">
+    <ng-container *ngFor="let role of rolesToPick">
+      <gn-ui-button
+        extraClass="px-2 py-1.5"
+        (buttonClick)="addRoleToDisplay(role)"
+      >
+        <div class="flex flex-row gap-1 items-center">
+          <span class="text-primary text-[20px] leading-[0] font-bold pb-[5px]"
+            >&#8330;</span
+          >
+          <span class="font-bold" translate>{{ roleToLabel(role) }}</span>
+        </div>
+      </gn-ui-button>
+    </ng-container>
+  </div>
+  <div
+    class="mt-8"
+    *ngIf="rolesToDisplay && rolesToDisplay.length > 0"
+    data-test="displayedRoles"
+  >
+    <div
+      *ngFor="let role of rolesToDisplay; let index = index; let isLast = last"
+      class="flex flex-col gap-4"
+    >
+      <div class="flex flex-row justify-between">
+        <span class="font-bold text-base" translate>{{
+          roleToLabel(role)
+        }}</span>
+      </div>
+
+      <gn-ui-autocomplete
+        [placeholder]="'Choose a contact'"
+        [action]="autoCompleteAction"
+        (itemSelected)="addContact($event, role)"
+        [displayWithFn]="displayWithFn"
+        [minCharacterCount]="1"
+        [clearOnSelection]="true"
+      >
+      </gn-ui-autocomplete>
+
+      <ng-container *ngFor="let contact of getContactsByRole(role)">
+        <gn-ui-contact-card
+          [contact]="contact"
+          [organization]="getOrganizationByName(contact.organization.name)"
+          (contactRemoved)="removeContact(index)"
+        ></gn-ui-contact-card>
+      </ng-container>
+      <hr class="border-t-[#D6D3D1] mt-4 mb-6" *ngIf="!isLast" />
+    </div>
+  </div>
+</div>

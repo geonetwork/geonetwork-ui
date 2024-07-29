@@ -31,7 +31,6 @@ import { MarkdownParserComponent } from './markdown-parser/markdown-parser.compo
 import { ImageOverlayPreviewComponent } from './image-overlay-preview/image-overlay-preview.component'
 import { UserFeedbackItemComponent } from './user-feedback-item/user-feedback-item.component'
 import { TimeSincePipe } from './user-feedback-item/time-since.pipe'
-import { EditorContactCardComponent } from './editor-contact-card/editor-contact-card.component'
 
 @NgModule({
   imports: [
@@ -52,7 +51,6 @@ import { EditorContactCardComponent } from './editor-contact-card/editor-contact
     TimeSincePipe,
     BadgeComponent,
     MaxLinesComponent,
-    EditorContactCardComponent,
   ],
   declarations: [
     MetadataInfoComponent,
@@ -80,7 +78,6 @@ import { EditorContactCardComponent } from './editor-contact-card/editor-contact
     ContentGhostComponent,
     DownloadItemComponent,
     DownloadsListComponent,
-    EditorContactCardComponent,
     ApiCardComponent,
     RelatedRecordCardComponent,
     MetadataContactComponent,

@@ -9,7 +9,8 @@
           >{{ contact.firstName }} {{ contact.lastName }}</span
         >
         <gn-ui-button
-          type="secondary"
+          data-test="removeContactButton"
+          type="light"
           extraClass="w-[20px] h-[20px] flex items-center justify-center"
           (buttonClick)="removeContact(contact)"
           ><span class="text-[14px] leading-[0] font-bold">&#x2715;</span>
