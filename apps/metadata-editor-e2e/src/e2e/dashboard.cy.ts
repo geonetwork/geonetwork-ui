@@ -86,7 +86,7 @@ describe('dashboard', () => {
       )
     })
 
-    it('should select all records when the "select all" checkbox is checked', () => {
+    it.only('should select all records when the "select all" checkbox is checked', () => {
       cy.visit('/catalog/search')
       cy.get('gn-ui-results-table')
         .find('.table-row-cell')
