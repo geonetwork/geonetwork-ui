@@ -9,7 +9,10 @@ import {
 } from '@geonetwork-ui/util/i18n'
 import { TranslateModule } from '@ngx-translate/core'
 import { MetadataQualityItemComponent } from '../metadata-quality-item/metadata-quality-item.component'
-import { ProgressBarComponent } from '@geonetwork-ui/ui/widgets'
+import {
+  PopoverComponent,
+  ProgressBarComponent,
+} from '@geonetwork-ui/ui/widgets'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { By } from '@angular/platform-browser'
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
@@ -44,6 +47,7 @@ describe('MetadataQualityComponent', () => {
         MatIconModule,
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+        PopoverComponent,
       ],
     }).compileComponents()
   })
@@ -61,28 +65,6 @@ describe('MetadataQualityComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('focus should show menu / blur should hide', () => {
-    const progressBar = fixture.debugElement.query(By.css('gn-ui-progress-bar'))
-    progressBar.nativeElement.focus()
-    expect(component.isMenuShown).toBe(true)
-    progressBar.nativeElement.blur()
-    expect(component.isMenuShown).toBe(false)
-  })
-
-  it('mouseenter should show menu / mouseleave should hide', () => {
-    const metadataQuality = fixture.debugElement.query(
-      By.css('.metadata-quality')
-    )
-
-    const mouseEnterEvent = new Event('mouseenter')
-    metadataQuality.nativeElement.dispatchEvent(mouseEnterEvent)
-    expect(component.isMenuShown).toBe(true)
-
-    const mouseLeaveEvent = new Event('mouseleave')
-    metadataQuality.nativeElement.dispatchEvent(mouseLeaveEvent)
-    expect(component.isMenuShown).toBe(false)
-  })
-
   it('content', () => {
     expect(component.metadata?.contacts[0]?.email).toBe('bob@org.net')
   })
@@ -94,6 +76,11 @@ describe('MetadataQualityComponent', () => {
   })
 
   it('should display sub-components with correct inputs', () => {
+    const popoverElement = fixture.debugElement.query(
+      By.directive(PopoverComponent)
+    )
+    popoverElement.triggerEventHandler('mouseenter', null)
+    fixture.detectChanges()
     const metadataItems = fixture.debugElement.queryAll(
       By.directive(MetadataQualityItemComponent)
     )

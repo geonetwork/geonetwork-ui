@@ -25,6 +25,11 @@
           }
         ],
         "styles": [
+          "node_modules/tippy.js/dist/tippy.css",
+          "node_modules/tippy.js/themes/light.css",
+          "node_modules/tippy.js/themes/light-border.css",
+          "node_modules/tippy.js/themes/material.css",
+          "node_modules/tippy.js/themes/translucent.css",
           "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
           "apps/demo/src/styles.css",
           "tailwind.base.css"
