@@ -30,7 +30,6 @@ import {
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { getOptionalMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import { Extent } from 'ol/extent'
-import Feature from 'ol/Feature'
 
 import { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import GeoJSON from 'ol/format/GeoJSON'
@@ -38,6 +37,7 @@ import { Polygon } from 'ol/geom'
 import { Fill, Stroke, Style } from 'ol/style'
 import { catchError, from, map, Observable, of, switchMap } from 'rxjs'
 import { GenericFormFieldKeywordsComponent } from '../form-field-keywords-generic/form-field-keywords-generic.component'
+import { Geometry } from 'geojson'
 
 @Component({
   selector: 'gn-ui-form-field-spatial-extent',
@@ -100,7 +100,6 @@ export class FormFieldSpatialExtentComponent implements OnInit {
   mapConfig: MapConfig = getOptionalMapConfig()
 
   constructor(
-    private platformService: PlatformServiceInterface,
     private mapFacade: MapFacade,
     private styleService: MapStyleService,
     private mapUtils: MapUtilsService
@@ -125,16 +124,39 @@ export class FormFieldSpatialExtentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.placeKeywords.forEach((keyword) => {
-      const bbox = this.spatialExtents.find(
-        (extent) => extent.description === keyword?.key
+    this.linkPlaceKeywordsToSpatialExtents(
+      this.placeKeywords,
+      this.spatialExtents
+    )
+    this.linkSpatialExtentsToPlaceKeywords(
+      this.spatialExtents,
+      this.placeKeywords
+    )
+
+    // add initial places to map
+    this.handleLayersOnMap()
+
+    // Rules
+    //when creating an extent from a place keyword, the keyword URI should be stored in the extent description; this way, when deleting a place keyword, its corresponding extent can also be removed from the record
+    // if an extent comes with a description that is a URI for which no keyword was found, a badge “Unknown location” appears below the keyword selector; this way, the extent can still be deleted
+    // if an extent comes with no description: same, an “Unknown location” badge appears
+    // if an extent comes with a description that is NOT a URI, the description is shown in the badge
+  }
+
+  linkPlaceKeywordsToSpatialExtents(
+    placeKeywords: Keyword[],
+    spatialExtents: DatasetSpatialExtent[]
+  ) {
+    placeKeywords.forEach((keyword) => {
+      const bbox = spatialExtents.find(
+        (extent) => extent?.description === keyword?.key
       )?.bbox
 
-      const geometries = this.spatialExtents.find(
-        (extent) => extent.description === keyword?.key
+      const geometries = spatialExtents.find(
+        (extent) => extent?.description === keyword?.key
       )?.geometries
 
-      this.keywordsLinkedToExtents[keyword.key] = {
+      this.keywordsLinkedToExtents[keyword?.key] = {
         placeKeyword: keyword,
         spatialExtents: {
           bbox: bbox,
@@ -144,7 +166,14 @@ export class FormFieldSpatialExtentComponent implements OnInit {
       }
     })
 
-    this.spatialExtents.forEach((extent) => {
+    this.placeKeywords = placeKeywords
+  }
+
+  linkSpatialExtentsToPlaceKeywords(
+    spatialExtents: DatasetSpatialExtent[],
+    placeKeywords: Keyword[]
+  ) {
+    spatialExtents.forEach((extent) => {
       if (this.keywordsLinkedToExtents[extent.description]) {
         return
       } else {
@@ -158,9 +187,9 @@ export class FormFieldSpatialExtentComponent implements OnInit {
         }
       }
     })
-    // add initial keywords to badges
+
     const missingPlaces = Object.keys(this.keywordsLinkedToExtents).filter(
-      (key) => !this.placeKeywords.some(({ key: id }) => key === id)
+      (key) => !placeKeywords.some(({ key: id }) => key === id)
     )
     console.log('missingPlaces', missingPlaces)
 
@@ -169,8 +198,9 @@ export class FormFieldSpatialExtentComponent implements OnInit {
         this.keywordsLinkedToExtents[missingPlace].placeKeyword
       )
     })
+  }
 
-    // add initial places to map
+  handleLayersOnMap() {
     Object.keys(this.keywordsLinkedToExtents).forEach((key) => {
       if (
         this.keywordsLinkedToExtents[key].spatialExtents?.geometries?.length >=
@@ -190,30 +220,9 @@ export class FormFieldSpatialExtentComponent implements OnInit {
         )
       }
     })
-
-    // 1. itereate over keywordsLinkedToExtents
-    // 2. add keywords.key to list of displayed place keywords
-    // apply Rules -> check if description is undefined or URI -> "Unknown location" badge
-    // 3. check if geometry is available for keyword
-    // 4. if yes, add to map
-    // 5. if no, check if bbox is available
-    // 6. if yes, add to map
-    // 7. if no, do nothing?
-
-    // Questions:
-    // I will manage keywordsLinkedToExtents (adding / removing keywords and geoms)
-    // When will I emit updated values? add/remove
-    // Will I update the keywordsLinkedToExtents and then emit the values?
-    // Should keywordsLinkedToExtents be an Observable that should be listened to and then emit the values as Output?
-
-    // Rules
-    //when creating an extent from a place keyword, the keyword URI should be stored in the extent description; this way, when deleting a place keyword, its corresponding extent can also be removed from the record
-    // if an extent comes with a description that is a URI for which no keyword was found, a badge “Unknown location” appears below the keyword selector; this way, the extent can still be deleted
-    // if an extent comes with no description: same, an “Unknown location” badge appears
-    // if an extent comes with a description that is NOT a URI, the description is shown in the badge
   }
 
-  bboxCoordsToGeometry(bbox: [number, number, number, number]): Feature {
+  bboxCoordsToGeometry(bbox: [number, number, number, number]): Geometry {
     const geometry = new Polygon([
       [
         [bbox[2], bbox[3]],
@@ -223,25 +232,27 @@ export class FormFieldSpatialExtentComponent implements OnInit {
         [bbox[2], bbox[3]],
       ],
     ])
-    return new Feature(geometry)
+
+    const geoJSONGeom = new GeoJSON().writeGeometryObject(geometry)
+    return geoJSONGeom
   }
 
-  addToMap(key: string, geometry: Feature) {
+  addToMap(key: string, geometry: Geometry) {
     const featureCollection: GeoJSONFeatureCollection = {
       type: 'FeatureCollection',
       features: [],
     }
-    const geoJSONGeom = new GeoJSON().writeGeometryObject(
-      geometry.getGeometry()
-    )
+    // const geoJSONGeom = new GeoJSON().writeGeometryObject(
+    //   geometry
+    // )
 
     featureCollection.features.push({
       type: 'Feature',
       properties: { description: key },
-      geometry: geoJSONGeom,
+      geometry: geometry,
     })
 
-    console.log('geoJSONGeom', geoJSONGeom)
+    // console.log('geoJSONGeom', geoJSONGeom)
 
     this.mapFacade.addLayer({
       type: MapContextLayerTypeEnum.GEOJSON,
@@ -255,7 +266,10 @@ export class FormFieldSpatialExtentComponent implements OnInit {
   }
 
   handlePlaceKeywordsChange(keywords: Keyword[]) {
-    // this.placeKeywords = keywords
-    console.log('placeKeywords', keywords)
+    this.keywordsLinkedToExtents = []
+    this.linkPlaceKeywordsToSpatialExtents(keywords, this.spatialExtents)
+
+    // add / remove layers
+    this.handleLayersOnMap()
   }
 }

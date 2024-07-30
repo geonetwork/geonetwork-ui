@@ -61,18 +61,20 @@ export class GenericFormFieldKeywordsComponent {
   }
 
   addKeyword(keyword: Keyword) {
-    const isNewKeyword = this.keywords.find((k) => k.label !== keyword.label)
-    if (isNewKeyword) {
+    const duplicatedKeyword = this.keywords.find(
+      (k) => k.label === keyword.label
+    )
+    if (!duplicatedKeyword) {
       this.keywords.push(keyword)
       this.changedKeywords.emit(this.keywords)
     }
   }
 
   removeKeyword(keyword: Keyword) {
-    const removeKeywords = this.keywords.filter(
+    const removedKeywords = this.keywords.filter(
       (k) => k.label !== keyword.label
     )
 
-    this.changedKeywords.emit(removeKeywords)
+    this.changedKeywords.emit(removedKeywords)
   }
 }

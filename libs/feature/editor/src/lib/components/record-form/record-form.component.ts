@@ -15,6 +15,7 @@ import {
   DatasetSpatialExtent,
   Keyword,
 } from '@geonetwork-ui/common/domain/model/record'
+import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
 
 const DUMMY_DATA_PLACE_KEYWORDS = [
   {
@@ -24,7 +25,7 @@ const DUMMY_DATA_PLACE_KEYWORDS = [
       id: '1',
       name: 'GEMET',
     },
-    type: 'place',
+    type: 'place' as KeywordType,
     coords: {
       coordEast: '13.5',
       coordNorth: '52.5',
@@ -39,7 +40,7 @@ const DUMMY_DATA_PLACE_KEYWORDS = [
       id: '1',
       name: 'GEMET',
     },
-    type: 'place',
+    type: 'place' as KeywordType,
     coords: {
       coordEast: '10',
       coordNorth: '53.5',
@@ -54,7 +55,7 @@ const DUMMY_DATA_PLACE_KEYWORDS = [
       id: '1',
       name: 'GEMET',
     },
-    type: 'place',
+    type: 'place' as KeywordType,
     coords: {
       coordEast: '11.5',
       coordNorth: '48.5',
@@ -67,19 +68,19 @@ const DUMMY_DATA_PLACE_KEYWORDS = [
 const DUMMY_DATA_SPATIAL_EXTENTS = [
   {
     description: 'uri1',
-    bbox: [13.5, 52.5, 14.5, 53.5],
+    bbox: [13.5, 52.5, 14.5, 53.5] as [number, number, number, number],
   },
   {
     description: 'uri2',
-    bbox: [10, 53.5, 11, 53.4],
+    bbox: [10, 53.5, 11, 53.4] as [number, number, number, number],
   },
   {
     description: 'uri3',
-    bbox: [11.5, 48.5, 11.5, 48.3],
+    bbox: [11.5, 48.5, 11.5, 48.3] as [number, number, number, number],
   },
   {
     description: 'URI-Paris',
-    bbox: [1, 2, 3, 4],
+    bbox: [1, 2, 3, 4] as [number, number, number, number],
   },
 ]
 @Component({
