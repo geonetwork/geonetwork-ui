@@ -38,19 +38,21 @@
       {{ metadata.title }}
     </div>
     <div
-      class="flex flex-row flex-wrap gap-2 mb-4 ml-4 sm:mr-[332px]"
+      class="flex flex-row flex-wrap gap-4 mb-4 ml-4 sm:mr-[332px]"
       [style.color]="foregroundColor"
     >
-      <div
+      <gn-ui-badge
         *ngIf="(isGeodata$ | async) === true"
-        class="flex flex-row bg-primary-darker rounded"
+        [style.--gn-ui-badge-padding]="'0.4em 0.75em'"
+        [style.--gn-ui-badge-background-color]="'var(--color-primary-darker)'"
+        [style.--gn-ui-badge-opacity]="'1'"
       >
-        <span class="material-symbols-outlined mt-0.5 ml-2 text-[20px]">
+        <mat-icon class="material-symbols-outlined mt-0.5 ml-2 text-[20px]">
           my_location
-        </span>
-        <p class="ml-2 mr-2" translate>record.metadata.type</p>
-      </div>
-      <div *ngIf="metadata.recordUpdated" class="flex flex-row gap-1">
+        </mat-icon>
+        <span class="ml-2 mr-2" translate>record.metadata.type</span>
+      </gn-ui-badge>
+      <div *ngIf="metadata.recordUpdated">
         <p translate [translateParams]="{ date: lastUpdate }">
           record.metadata.lastUpdate
         </p>
