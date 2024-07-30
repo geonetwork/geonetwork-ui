@@ -8,9 +8,7 @@
   </gn-ui-form-field-keywords-generic>
 </div>
 <div class="w-full h-96">
-  <!-- <gn-ui-map-container></gn-ui-map-container> -->
-  <gn-ui-map-context
-    [context]="mapContext$ | async"
-    [mapConfig]="mapConfig"
-  ></gn-ui-map-context>
+  <gn-ui-form-field-map-container
+    [keywordsWithSpatialExtents]="keywordsLinkedToExtents"
+  ></gn-ui-form-field-map-container>
 </div>
