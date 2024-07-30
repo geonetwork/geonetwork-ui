@@ -94,7 +94,7 @@ describe('dataset pages', () => {
 
   describe('GENERAL : display & functions', () => {
     describe('no-link-error block', () => {
-      it("shouldn't be there until metadata is fully loaded", () => {
+      it("shouldn't be there if there are links", () => {
         cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
         cy.get('[data-test=dataset-has-no-link-block]').should('not.exist')
       })
@@ -597,24 +597,15 @@ describe('dataset pages', () => {
       })
 
       describe('When there is no link', () => {
-        it('display the error datasetHasNoLink error block', () => {
-          cy.login()
-
-          cy.intercept(
-            'GET',
-            '/geonetwork/srv/api/userfeedback?metadataUuid=a3774ef6-809d-4dd1-984f-9254f49cbd0a',
-            (req) => {
-              // Test if the error block is not shown before the metadata is fully loaded
-              cy.get('[data-test="dataset-has-no-link-block"]').should(
-                'not.exist'
-              )
-            }
-          ).as('getData')
-
+        beforeEach(() => {
           cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
-
-          cy.wait('@getData')
-
+        })
+        it('do not display the no-link-error warning initially, only after loading', () => {
+          // wait for metadata info to show up
+          cy.get('gn-ui-metadata-info').should('exist')
+          // first, the block is not visible
+          cy.get('[data-test="dataset-has-no-link-block"]').should('not.exist')
+          // then the block shows up
           cy.get('[data-test="dataset-has-no-link-block"]').should('exist')
         })
       })
