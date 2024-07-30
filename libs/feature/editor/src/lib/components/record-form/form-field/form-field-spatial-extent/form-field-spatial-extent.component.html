@@ -1,26 +1,11 @@
 <div class="flex flex-col gap-3">
-  <gn-ui-switch-toggle
-    [options]="coverage"
-    (selectedValue)="handleCoverageSelection($event)"
-    extraClasses="grow"
-  ></gn-ui-switch-toggle>
-  <gn-ui-autocomplete
+  <gn-ui-form-field-keywords-generic
     [placeholder]="'Search for place keywords'"
-    [displayWithFn]="displayWithFn"
-    [action]="autoCompleteAction"
-    (itemSelected)="handleItemSelection($event)"
-    [clearOnSelection]="true"
-    [minCharacterCount]="0"
-    [allowSubmit]="false"
-  ></gn-ui-autocomplete>
-  <div class="flex gap-2 flex-wrap">
-    <gn-ui-badge
-      *ngFor="let keyword of placeKeywords; let index = index"
-      [removable]="true"
-      (badgeRemoveClicked)="removeKeyword(keyword.key)"
-      >{{ keyword.label }}</gn-ui-badge
-    >
-  </div>
+    [keywords]="placeKeywords"
+    [keywordTypes]="['place']"
+    (changedKeywords)="handlePlaceKeywordsChange($event)"
+  >
+  </gn-ui-form-field-keywords-generic>
 </div>
 <div class="w-full h-96">
   <!-- <gn-ui-map-container></gn-ui-map-container> -->

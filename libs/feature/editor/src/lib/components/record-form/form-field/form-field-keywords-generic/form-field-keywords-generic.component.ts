@@ -1,0 +1,78 @@
+import { CommonModule } from '@angular/common'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core'
+import { FormControl } from '@angular/forms'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import {
+  AutocompleteComponent,
+  DropdownSelectorComponent,
+  UiInputsModule,
+} from '@geonetwork-ui/ui/inputs'
+import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { map } from 'rxjs'
+import { Keyword } from '@geonetwork-ui/common/domain/model/record'
+import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
+
+type AutocompleteItem = { title: string; value: Keyword }
+
+@Component({
+  selector: 'gn-ui-form-field-keywords-generic',
+  templateUrl: './form-field-keywords-generic.component.html',
+  styleUrls: ['./form-field-keywords-generic.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    DropdownSelectorComponent,
+    UiInputsModule,
+    CommonModule,
+    UiWidgetsModule,
+    AutocompleteComponent,
+  ],
+})
+export class GenericFormFieldKeywordsComponent {
+  @Input() keywords: Keyword[]
+  @Input() keywordTypes: KeywordType[]
+  @Input() placeholder: string
+  @Output() changedKeywords: EventEmitter<Keyword[]> = new EventEmitter()
+
+  displayWithFn = (item: AutocompleteItem) => {
+    return `${item.title} (${item.value.thesaurus?.name})`
+  }
+
+  autoCompleteAction = (query: string) => {
+    return this.platformService.searchKeywords(query, this.keywordTypes).pipe(
+      map((keywords) =>
+        keywords.map((keyword) => {
+          return { title: keyword.label, value: keyword }
+        })
+      )
+    )
+  }
+
+  constructor(private platformService: PlatformServiceInterface) {}
+
+  handleItemSelection(item: AutocompleteItem) {
+    this.addKeyword(item.value)
+  }
+
+  addKeyword(keyword: Keyword) {
+    const isNewKeyword = this.keywords.find((k) => k.label !== keyword.label)
+    if (isNewKeyword) {
+      this.keywords.push(keyword)
+      this.changedKeywords.emit(this.keywords)
+    }
+  }
+
+  removeKeyword(keyword: Keyword) {
+    const removeKeywords = this.keywords.filter(
+      (k) => k.label !== keyword.label
+    )
+
+    this.changedKeywords.emit(removeKeywords)
+  }
+}

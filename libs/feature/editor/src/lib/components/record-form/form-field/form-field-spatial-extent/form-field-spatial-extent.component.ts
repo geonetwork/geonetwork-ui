@@ -7,7 +7,6 @@ import {
   OnInit,
   Output,
 } from '@angular/core'
-import { FormControl } from '@angular/forms'
 import {
   DatasetSpatialExtent,
   Keyword,
@@ -38,19 +37,7 @@ import GeoJSON from 'ol/format/GeoJSON'
 import { Polygon } from 'ol/geom'
 import { Fill, Stroke, Style } from 'ol/style'
 import { catchError, from, map, Observable, of, switchMap } from 'rxjs'
-
-type AutocompleteItem = { title: string; value: Keyword }
-type GeogrCoords = {
-  coordEast: string
-  coordNorth: string
-  coordSouth: string
-  coordWest: string
-}
-type Coverage = {
-  label: string
-  value: string
-  checked: boolean
-}
+import { GenericFormFieldKeywordsComponent } from '../form-field-keywords-generic/form-field-keywords-generic.component'
 
 @Component({
   selector: 'gn-ui-form-field-spatial-extent',
@@ -66,29 +53,16 @@ type Coverage = {
     AutocompleteComponent,
     FeatureMapModule,
     SwitchToggleComponent,
+    GenericFormFieldKeywordsComponent,
   ],
 })
 export class FormFieldSpatialExtentComponent implements OnInit {
   @Input() placeKeywords: Keyword[]
   @Input() spatialExtents: DatasetSpatialExtent[]
-  // @Input()
-  coverage = [
-    {
-      label: 'national', // translation key
-      value: 'national',
-      checked: true,
-    },
-    {
-      label: 'regional', // translation key
-      value: 'regional',
-      checked: false,
-    },
-  ]
 
   @Output() placeKeywordChange: EventEmitter<Keyword[]> = new EventEmitter()
   @Output() spatialExtentsChange: EventEmitter<DatasetSpatialExtent[]> =
     new EventEmitter()
-  // @Output() coverageChange: EventEmitter<Coverage> = new EventEmitter()
 
   keywordsLinkedToExtents = new Array<{
     [key: string]: {
@@ -112,8 +86,6 @@ export class FormFieldSpatialExtentComponent implements OnInit {
             extent,
           ])
 
-          // remove map extent when layer was removed?
-
           return {
             layers: [DEFAULT_BASELAYER_CONTEXT, ...layers],
             view: {
@@ -126,20 +98,6 @@ export class FormFieldSpatialExtentComponent implements OnInit {
   )
 
   mapConfig: MapConfig = getOptionalMapConfig()
-
-  displayWithFn = (item: AutocompleteItem) => {
-    return `${item.title} (${item.value.thesaurus?.name})`
-  }
-
-  autoCompleteAction = (query: string) => {
-    return this.platformService.searchKeywords(query, ['place']).pipe(
-      map((keywords) =>
-        keywords.map((keyword) => {
-          return { title: keyword.label, value: keyword }
-        })
-      )
-    )
-  }
 
   constructor(
     private platformService: PlatformServiceInterface,
@@ -167,86 +125,14 @@ export class FormFieldSpatialExtentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // create a dummy list of placeKeywords
-    this.placeKeywords = [
-      {
-        key: 'uri1',
-        label: 'Berlin',
-        thesaurus: {
-          id: '1',
-          name: 'GEMET',
-        },
-        type: 'place',
-        coords: {
-          coordEast: '13.5',
-          coordNorth: '52.5',
-          coordSouth: '52.5',
-          coordWest: '13.5',
-        },
-      },
-      {
-        key: 'uri2',
-        label: 'Hamburg',
-        thesaurus: {
-          id: '1',
-          name: 'GEMET',
-        },
-        type: 'place',
-        coords: {
-          coordEast: '10',
-          coordNorth: '53.5',
-          coordSouth: '53.5',
-          coordWest: '10',
-        },
-      },
-      {
-        key: 'uri3',
-        label: 'Munich',
-        thesaurus: {
-          id: '1',
-          name: 'GEMET',
-        },
-        type: 'place',
-        coords: {
-          coordEast: '11.5',
-          coordNorth: '48.5',
-          coordSouth: '48.5',
-          coordWest: '11.5',
-        },
-      },
-    ]
-
-    // create a dummy list of spatialExtents with one more extent
-    this.spatialExtents = [
-      {
-        description: 'uri1',
-        bbox: [13.5, 52.5, 13.5, 52.5],
-      },
-      {
-        description: 'uri2',
-        bbox: [10, 53.5, 10, 53.5],
-      },
-      {
-        description: 'uri3',
-        bbox: [11.5, 48.5, 11.5, 48.5],
-      },
-      {
-        description: 'Paris',
-        bbox: [1, 2, 3, 4],
-      },
-    ]
-
     this.placeKeywords.forEach((keyword) => {
       const bbox = this.spatialExtents.find(
         (extent) => extent.description === keyword?.key
       )?.bbox
-      // Fallback keyword bbox?
-      const keywordBox = keyword.coords
 
       const geometries = this.spatialExtents.find(
         (extent) => extent.description === keyword?.key
       )?.geometries
-      // Apply rules
 
       this.keywordsLinkedToExtents[keyword.key] = {
         placeKeyword: keyword,
@@ -257,7 +143,6 @@ export class FormFieldSpatialExtentComponent implements OnInit {
         },
       }
     })
-    // loop over spatialExtents
 
     this.spatialExtents.forEach((extent) => {
       if (this.keywordsLinkedToExtents[extent.description]) {
@@ -273,7 +158,19 @@ export class FormFieldSpatialExtentComponent implements OnInit {
         }
       }
     })
+    // add initial keywords to badges
+    const missingPlaces = Object.keys(this.keywordsLinkedToExtents).filter(
+      (key) => !this.placeKeywords.some(({ key: id }) => key === id)
+    )
+    console.log('missingPlaces', missingPlaces)
 
+    missingPlaces.forEach((missingPlace) => {
+      this.placeKeywords.push(
+        this.keywordsLinkedToExtents[missingPlace].placeKeyword
+      )
+    })
+
+    // add initial places to map
     Object.keys(this.keywordsLinkedToExtents).forEach((key) => {
       if (
         this.keywordsLinkedToExtents[key].spatialExtents?.geometries?.length >=
@@ -283,7 +180,7 @@ export class FormFieldSpatialExtentComponent implements OnInit {
           (geoemtry) => this.addToMap(key, geoemtry)
         )
       } else if (
-        this.keywordsLinkedToExtents[key].spatialExtents?.bbox.length >= 0
+        this.keywordsLinkedToExtents[key].spatialExtents?.bbox?.length >= 0
       ) {
         this.addToMap(
           key,
@@ -294,7 +191,6 @@ export class FormFieldSpatialExtentComponent implements OnInit {
       }
     })
 
-    console.log('keywordsLinkedToExtents', this.keywordsLinkedToExtents)
     // 1. itereate over keywordsLinkedToExtents
     // 2. add keywords.key to list of displayed place keywords
     // apply Rules -> check if description is undefined or URI -> "Unknown location" badge
@@ -317,87 +213,6 @@ export class FormFieldSpatialExtentComponent implements OnInit {
     // if an extent comes with a description that is NOT a URI, the description is shown in the badge
   }
 
-  handleItemSelection(item: AutocompleteItem) {
-    this.addKeyword(item.value)
-    this.addGeogrExtent(item.value.label, item.value.coords)
-  }
-  handleCoverageSelection(coverage: Coverage) {
-    console.log('coverage', coverage)
-    // this.coverageChange.emit(coverage)
-  }
-
-  addKeyword(keyword: Keyword) {
-    if (this.keywordsLinkedToExtents[keyword.key]) {
-      return
-    } else {
-      const keywordBbox = [
-        keyword.coords.coordWest,
-        keyword.coords.coordSouth,
-        keyword.coords.coordEast,
-        keyword.coords.coordNorth,
-      ].map((coord) => parseFloat(coord)) as [number, number, number, number]
-      this.keywordsLinkedToExtents[keyword.key] = {
-        placeKeyword: keyword,
-        spatialExtents: {
-          bbox: keywordBbox,
-          description: keyword.label,
-        },
-      }
-
-      // add to placeKeywords
-      this.placeKeywords.push(keyword)
-      this.placeKeywordChange.emit(this.placeKeywords)
-
-      // add to spatialExtents
-      this.spatialExtents.push({
-        description: keyword.key,
-        bbox: keywordBbox,
-      })
-      this.spatialExtentsChange.emit(this.spatialExtents)
-
-      // add to map
-    }
-  }
-
-  removeKeyword(key: string) {
-    delete this.keywordsLinkedToExtents[key]
-
-    this.placeKeywords = this.placeKeywords.filter(
-      (keyword) => keyword.key !== key
-    )
-    this.placeKeywordChange.emit(this.placeKeywords)
-
-    this.spatialExtents = this.spatialExtents.filter(
-      (extent) => extent.description !== key
-    )
-    this.spatialExtentsChange.emit(this.spatialExtents)
-
-    console.log('keywordsLinkedToExtents', this.keywordsLinkedToExtents)
-    // remove from map
-  }
-  addGeogrExtent(description: string, coords: GeogrCoords) {
-    const coordWest = parseFloat(coords.coordWest)
-    const coordSouth = parseFloat(coords.coordSouth)
-    const coordEast = parseFloat(coords.coordEast)
-    const coordNorth = parseFloat(coords.coordNorth)
-    // bbox: minx, miny, maxx, maxy
-    this.spatialExtents.push({
-      description,
-      bbox: [coordWest, coordSouth, coordEast, coordNorth],
-    })
-
-    this.spatialExtentsChange.emit(this.spatialExtents)
-    console.log('geogrExtent', this.spatialExtents)
-
-    const bboxGeom = this.bboxCoordsToGeometry([
-      coordWest,
-      coordSouth,
-      coordEast,
-      coordNorth,
-    ])
-    this.addToMap(description, bboxGeom)
-  }
-
   bboxCoordsToGeometry(bbox: [number, number, number, number]): Feature {
     const geometry = new Polygon([
       [
@@ -411,7 +226,7 @@ export class FormFieldSpatialExtentComponent implements OnInit {
     return new Feature(geometry)
   }
 
-  addToMap(description: string, geometry: Feature) {
+  addToMap(key: string, geometry: Feature) {
     const featureCollection: GeoJSONFeatureCollection = {
       type: 'FeatureCollection',
       features: [],
@@ -422,18 +237,25 @@ export class FormFieldSpatialExtentComponent implements OnInit {
 
     featureCollection.features.push({
       type: 'Feature',
-      properties: { description },
+      properties: { description: key },
       geometry: geoJSONGeom,
     })
+
+    console.log('geoJSONGeom', geoJSONGeom)
 
     this.mapFacade.addLayer({
       type: MapContextLayerTypeEnum.GEOJSON,
       data: featureCollection,
-      title: description,
+      title: key,
     })
   }
 
   deleteLayer(index: number) {
     this.mapFacade.removeLayer(index)
+  }
+
+  handlePlaceKeywordsChange(keywords: Keyword[]) {
+    // this.placeKeywords = keywords
+    console.log('placeKeywords', keywords)
   }
 }
