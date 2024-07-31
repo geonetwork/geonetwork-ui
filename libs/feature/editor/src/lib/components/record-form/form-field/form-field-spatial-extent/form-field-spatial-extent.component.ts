@@ -88,7 +88,7 @@ export class FormFieldSpatialExtentComponent implements OnInit {
       this.keywordsLinkedToExtents[keyword?.key] = {
         placeKeyword: keyword,
         spatialExtents: {
-          bbox: bbox.length >= 0 ? bbox : coordsBbox,
+          bbox: bbox?.length >= 0 ? bbox : coordsBbox,
           geometries: geometries,
           description: keyword.label,
         },
