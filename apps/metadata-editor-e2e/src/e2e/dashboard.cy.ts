@@ -93,7 +93,7 @@ describe('dashboard', () => {
         .get('gn-ui-checkbox')
         .first()
         .click()
-      cy.get('[data-test=selected-count]').contains('14 selected')
+      cy.get('[data-test=selected-count]').contains('15 selected')
     })
   })
 })
