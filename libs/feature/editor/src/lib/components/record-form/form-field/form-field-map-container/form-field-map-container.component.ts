@@ -45,24 +45,18 @@ export class FormFieldMapContainerComponent implements OnChanges {
   }[]
 
   error = ''
-  viewExtent: Extent
   mapContext$: Observable<MapContextModel> = this.mapFacade.layers$.pipe(
     switchMap((layers) =>
-      from(this.mapUtils.getLayerExtent(layers[layers.length - 1])).pipe(
+      from(this.mapUtils.getLayerExtent(layers[0])).pipe(
         catchError(() => {
           this.error = 'The layer has no extent'
           return of(undefined)
         }),
         map((extent) => {
-          this.viewExtent = this.mapUtils.getGeoJSONLayersExtent([
-            this.viewExtent,
-            extent,
-          ])
-
           return {
             layers: [DEFAULT_BASELAYER_CONTEXT, ...layers],
             view: {
-              extent: this.viewExtent,
+              extent: extent,
             },
           } as MapContextModel
         })
