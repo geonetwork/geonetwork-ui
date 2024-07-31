@@ -71,6 +71,12 @@ export class FormFieldSpatialExtentComponent implements OnInit {
     spatialExtents: DatasetSpatialExtent[]
   ) {
     placeKeywords.forEach((keyword) => {
+      const coordsBbox = this.transformCoordsToBbox(
+        keyword.coords?.coordEast,
+        keyword.coords?.coordNorth,
+        keyword.coords?.coordSouth,
+        keyword.coords?.coordWest
+      )
       const bbox = spatialExtents.find(
         (extent) => extent?.description === keyword?.key
       )?.bbox
@@ -82,7 +88,7 @@ export class FormFieldSpatialExtentComponent implements OnInit {
       this.keywordsLinkedToExtents[keyword?.key] = {
         placeKeyword: keyword,
         spatialExtents: {
-          bbox: bbox,
+          bbox: bbox.length >= 0 ? bbox : coordsBbox,
           geometries: geometries,
           description: keyword.label,
         },
@@ -90,6 +96,17 @@ export class FormFieldSpatialExtentComponent implements OnInit {
     })
 
     this.placeKeywords = placeKeywords
+  }
+
+  transformCoordsToBbox(
+    coordEast: string,
+    coordNorth: string,
+    coordSouth: string,
+    coordWest: string
+  ): [number, number, number, number] {
+    return [coordWest, coordSouth, coordEast, coordNorth].map((coord) =>
+      parseFloat(coord)
+    ) as [number, number, number, number]
   }
 
   linkSpatialExtentsToPlaceKeywords(
@@ -125,8 +142,5 @@ export class FormFieldSpatialExtentComponent implements OnInit {
   handlePlaceKeywordsChange(keywords: Keyword[]) {
     this.keywordsLinkedToExtents = []
     this.linkPlaceKeywordsToSpatialExtents(keywords, this.spatialExtents)
-
-    // add / remove layers
-    // update this.keywordsLinkedToExtents
   }
 }

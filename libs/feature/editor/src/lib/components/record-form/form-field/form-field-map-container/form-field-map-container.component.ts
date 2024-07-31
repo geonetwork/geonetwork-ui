@@ -2,7 +2,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
-  OnInit,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { catchError, from, map, Observable, of, switchMap } from 'rxjs'
@@ -18,7 +19,7 @@ import {
 import { Extent } from 'ol/extent'
 import { Fill, Stroke, Style } from 'ol/style'
 import { getOptionalMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
-import { Geometry } from 'geojson'
+import { FeatureCollection, Geometry } from 'geojson'
 import { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import {
   DatasetSpatialExtent,
@@ -35,7 +36,7 @@ import GeoJSON from 'ol/format/GeoJSON'
   styleUrls: ['./form-field-map-container.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormFieldMapContainerComponent implements OnInit {
+export class FormFieldMapContainerComponent implements OnChanges {
   @Input() keywordsWithSpatialExtents: {
     [key: string]: {
       placeKeyword?: Keyword
@@ -95,28 +96,47 @@ export class FormFieldMapContainerComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-    Object.keys(this.keywordsWithSpatialExtents).forEach((key) => {
-      if (
-        this.keywordsWithSpatialExtents[key].spatialExtents?.geometries
-          ?.length >= 0
-      ) {
-        this.keywordsWithSpatialExtents[key].spatialExtents.geometries.forEach(
-          (geoemtry) => this.addToMap(key, geoemtry)
-        )
-      } else if (
-        this.keywordsWithSpatialExtents[key].spatialExtents?.bbox?.length >= 0
-      ) {
-        this.addToMap(
-          key,
-          this.bboxCoordsToGeometry(
-            this.keywordsWithSpatialExtents[key].spatialExtents.bbox
-          )
-        )
+  ngOnChanges(): void {
+    this.mapFacade.removeLayer(0)
+    if (this.keywordsWithSpatialExtents) {
+      const featureCollection: GeoJSONFeatureCollection = {
+        type: 'FeatureCollection',
+        features: [],
       }
-    })
-  }
 
+      Object.keys(this.keywordsWithSpatialExtents).forEach((key) => {
+        if (
+          this.keywordsWithSpatialExtents[key].spatialExtents?.geometries
+            ?.length >= 0
+        ) {
+          this.keywordsWithSpatialExtents[
+            key
+          ].spatialExtents.geometries.forEach((geometry) =>
+            featureCollection.features.push({
+              type: 'Feature',
+              properties: { description: key },
+              geometry: geometry,
+            })
+          )
+        } else if (
+          this.keywordsWithSpatialExtents[key].spatialExtents?.bbox?.length >= 0
+        ) {
+          featureCollection.features.push({
+            type: 'Feature',
+            properties: { description: key },
+            geometry: this.bboxCoordsToGeometry(
+              this.keywordsWithSpatialExtents[key].spatialExtents.bbox
+            ),
+          })
+        }
+      })
+      this.mapFacade.addLayer({
+        type: MapContextLayerTypeEnum.GEOJSON,
+        data: featureCollection,
+        title: 'Spatial extents',
+      })
+    }
+  }
   bboxCoordsToGeometry(bbox: [number, number, number, number]): Geometry {
     const geometry = new Polygon([
       [
@@ -132,7 +152,15 @@ export class FormFieldMapContainerComponent implements OnInit {
     return geoJSONGeom
   }
 
-  addToMap(key: string, geometry: Geometry) {
+  addToMap(
+    key: string,
+    geometry: Geometry
+  ): FeatureCollection<
+    Geometry,
+    {
+      [name: string]: any
+    }
+  > {
     const featureCollection: GeoJSONFeatureCollection = {
       type: 'FeatureCollection',
       features: [],
@@ -144,14 +172,6 @@ export class FormFieldMapContainerComponent implements OnInit {
       geometry: geometry,
     })
 
-    this.mapFacade.addLayer({
-      type: MapContextLayerTypeEnum.GEOJSON,
-      data: featureCollection,
-      title: key,
-    })
-  }
-
-  deleteLayer(index: number) {
-    this.mapFacade.removeLayer(index)
+    return featureCollection
   }
 }
