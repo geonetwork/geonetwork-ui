@@ -18,3 +18,12 @@ do
   echo ""
 done
 
+curl "http://$host/geonetwork/srv/fre/thesaurus?_content_type=json" \
+  -H 'Accept: application/json, text/plain, */*' \
+  -H 'Content-Type: multipart/form-data' \
+  -H 'Accept: application/json, text/plain, */*' \
+  -H "Cookie: JSESSIONID=$jsessionid; XSRF-TOKEN=$xsrf_token" \
+  -H "X-XSRF-TOKEN: $xsrf_token"
+
+echo ""
+echo "Thesauri uploaded to GeoNetwork."

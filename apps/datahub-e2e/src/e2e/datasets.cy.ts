@@ -6,7 +6,7 @@ describe('datasets', () => {
 
     // aliases
     cy.get('gn-ui-results-list-item').find('a').as('results')
-    cy.get('@results').first().as('firstResult')
+    cy.get('@results').eq(1).as('sampleResult')
     cy.get('@results')
       .then(($results) => $results.length)
       .as('resultsCount')
@@ -54,12 +54,12 @@ describe('datasets', () => {
   describe('display of dataset previews', () => {
     it('should display a logo for first and a placeholder for second result', () => {
       cy.get('@sortBy').selectDropdownOption('desc,createDate') // this makes the order reliable
-      cy.get('@firstResult')
+      cy.get('@sampleResult')
         .find('gn-ui-thumbnail')
         .children('div')
         .invoke('attr', 'data-cy-is-placeholder')
         .should('equal', 'false')
-      cy.get('@firstResult')
+      cy.get('@sampleResult')
         .find('gn-ui-thumbnail')
         .find('img')
         .invoke('attr', 'src')
@@ -68,45 +68,45 @@ describe('datasets', () => {
           'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/records/9e1ea778-d0ce-4b49-90b7-37bc0e448300/attachments/test.png'
         )
       cy.get('@results')
-        .eq(1)
+        .first()
         .find('gn-ui-thumbnail')
         .children('div')
         .invoke('attr', 'data-cy-is-placeholder')
         .should('equal', 'true')
     })
     it('should display the title', () => {
-      cy.get('@firstResult')
+      cy.get('@sampleResult')
         .find('[data-cy="recordTitle"]')
         .should('be.visible')
     })
     it('should display the summary', () => {
-      cy.get('@firstResult')
+      cy.get('@sampleResult')
         .find('[data-cy="recordAbstract"]')
         .should('be.visible')
     })
     it('should display the organization', () => {
-      cy.get('@firstResult').find('[data-cy="recordOrg"]').should('be.visible')
+      cy.get('@sampleResult').find('[data-cy="recordOrg"]').should('be.visible')
     })
     it('should display the star and like count', () => {
-      cy.get('@firstResult').find('[data-cy="recordFav"]').should('be.visible')
+      cy.get('@sampleResult').find('[data-cy="recordFav"]').should('be.visible')
     })
   })
 
   describe('interactions with dataset', () => {
     beforeEach(() => {
-      cy.get('@firstResult')
+      cy.get('@sampleResult')
         .find('gn-ui-favorite-star')
         .eq(0)
         .as('favoriteStar')
     })
     it('should open the dataset page in the same application on click', () => {
-      cy.get('@firstResult').click()
+      cy.get('@sampleResult').click()
       cy.url().should('match', /^http:\/\/localhost:[0-9]+\/dataset\/.+/)
     })
     describe('not logged in', () => {
       it('should show a popover with login link when hovering the favorite star', () => {
         cy.get('@favoriteStar').trigger('mouseenter')
-        cy.get('[id="tippy-1"]')
+        cy.get('[id="tippy-2"]')
           .find('a')
           .invoke('attr', 'href')
           .should('include', 'catalog.signin')
@@ -437,8 +437,6 @@ describe('datasets', () => {
 
     describe('multiple filters', () => {
       beforeEach(() => {
-        cy.get('datahub-search-filters').scrollIntoView()
-
         // filter by org
         cy.get('@filters').eq(0).click()
         getFilterOptions()
@@ -559,7 +557,7 @@ describe('datasets', () => {
       it('should display quality widget', () => {
         cy.get('@sortBy').selectDropdownOption('desc,createDate')
         cy.get('gn-ui-progress-bar')
-          .eq(0)
+          .eq(1)
           .should('have.attr', 'ng-reflect-value', 87)
       })
 
