@@ -1,22 +1,16 @@
-<div
-  *ngIf="metadataQualityDisplay"
-  class="mb-6 metadata-quality"
-  (mouseenter)="showMenu()"
-  (mouseleave)="hideMenu()"
->
-  <div class="min-w-[200px]" [class]="smaller ? 'leading-[8px]' : ''">
-    <gn-ui-progress-bar
-      (focus)="showMenu()"
-      (blur)="hideMenu()"
-      tabindex="0"
-      [value]="qualityScore"
-      type="primary"
-    ></gn-ui-progress-bar>
-  </div>
-  <div
-    class="absolute z-10 bg-white border border-black border-opacity-35 rounded-lg shadow-lg p-5 whitespace-nowrap"
-    [class]="isMenuShown ? 'block' : 'hidden'"
-  >
+<div *ngIf="metadataQualityDisplay" class="mb-6 metadata-quality">
+  <gn-ui-popover [content]="popoverItems" theme="light-border">
+    <div class="min-w-[200px]" [class]="smaller ? 'leading-[8px]' : ''">
+      <gn-ui-progress-bar
+        tabindex="0"
+        [value]="qualityScore"
+        type="primary"
+      ></gn-ui-progress-bar>
+    </div>
+  </gn-ui-popover>
+</div>
+<ng-template #popoverItems>
+  <div class="p-2 py-4">
     <div class="mb-4 font-bold" translate>record.metadata.quality.details</div>
     <gn-ui-metadata-quality-item
       *ngFor="let e of items"
@@ -24,4 +18,4 @@
       [value]="e.value"
     ></gn-ui-metadata-quality-item>
   </div>
-</div>
+</ng-template>

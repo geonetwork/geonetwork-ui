@@ -9,7 +9,7 @@ import { ContentGhostComponent } from './content-ghost/content-ghost.component'
 import { DownloadItemComponent } from './download-item/download-item.component'
 import { DownloadsListComponent } from './downloads-list/downloads-list.component'
 import { ApiCardComponent } from './api-card/api-card.component'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { PopoverComponent, UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { MaxLinesComponent, UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { TranslateModule } from '@ngx-translate/core'
 import { RelatedRecordCardComponent } from './related-record-card/related-record-card.component'
@@ -45,6 +45,7 @@ import { TimeSincePipe } from './user-feedback-item/time-since.pipe'
     UiInputsModule,
     FormsModule,
     NgOptimizedImage,
+    PopoverComponent,
     MarkdownParserComponent,
     ThumbnailComponent,
     TimeSincePipe,

@@ -9,6 +9,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core'
 import { MetadataQualityItemComponent } from '../metadata-quality-item/metadata-quality-item.component'
 import { ProgressBarComponent } from '@geonetwork-ui/ui/widgets'
+import { PopoverComponent } from '@geonetwork-ui/ui/widgets'
 import { MatIconModule } from '@angular/material/icon'
 
 export default {
@@ -22,6 +23,7 @@ export default {
         MatIconModule,
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+        PopoverComponent,
       ],
     }),
   ],

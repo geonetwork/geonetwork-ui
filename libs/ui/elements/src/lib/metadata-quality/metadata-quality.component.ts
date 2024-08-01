@@ -21,8 +21,6 @@ export class MetadataQualityComponent implements OnChanges {
 
   items: MetadataQualityItem[] = []
 
-  isMenuShown = false
-
   get qualityScore() {
     const qualityScore = this.metadata?.extras?.qualityScore
     return typeof qualityScore === 'number'
@@ -34,14 +32,6 @@ export class MetadataQualityComponent implements OnChanges {
     return Math.round(
       (this.items.filter(({ value }) => value).length * 100) / this.items.length
     )
-  }
-
-  showMenu() {
-    this.isMenuShown = true
-  }
-
-  hideMenu() {
-    this.isMenuShown = false
   }
 
   private add(name: string, value: boolean) {
