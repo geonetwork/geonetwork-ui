@@ -6,6 +6,7 @@ import {
   XmlText,
 } from '@rgrove/parse-xml'
 import { ChainableFunction, fallback } from './function-utils'
+
 export { XmlDocument, XmlElement } from '@rgrove/parse-xml'
 
 export class XmlParseError extends Error {
@@ -113,6 +114,10 @@ export function allChildrenElement(element: XmlElement): Array<XmlElement> {
   return [
     ...element.children.filter((el) => el instanceof XmlElement),
   ] as Array<XmlElement>
+}
+
+export function firstChildElement(element: XmlElement): XmlElement {
+  return allChildrenElement(element)[0] ?? null
 }
 
 /**

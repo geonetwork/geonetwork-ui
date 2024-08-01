@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
-// @ts-ignore
 import GEOCAT_CH_DATASET from '../fixtures/geocat-ch.iso19139.dataset.xml'
 // @ts-ignore
 import { XmlElement } from '@rgrove/parse-xml'
+// @ts-ignore
 import GEOCAT_CH_SERVICE from '../fixtures/geocat-ch.iso19139.service.xml'
 import { pipe } from '../function-utils'
 import {
@@ -448,22 +448,20 @@ describe('read parts', () => {
         it('returns an array of spatial extents with geometries, bbox and description', () => {
           expect(readSpatialExtents(recordRootEl)).toEqual([
             {
-              geometries: [
-                {
-                  type: 'MultiPolygon',
-                  coordinates: [
+              geometry: {
+                type: 'MultiPolygon',
+                coordinates: [
+                  [
                     [
-                      [
-                        [6.777075, 45.827119, 0],
-                        [6.755991, 47.517566, 0],
-                        [10.541824, 47.477984, 0],
-                        [10.446252, 45.788744, 0],
-                        [6.777075, 45.827119, 0],
-                      ],
+                      [6.777075, 45.827119, 0],
+                      [6.755991, 47.517566, 0],
+                      [10.541824, 47.477984, 0],
+                      [10.446252, 45.788744, 0],
+                      [6.777075, 45.827119, 0],
                     ],
                   ],
-                },
-              ],
+                ],
+              },
               bbox: [
                 6.75599105586694, 45.7887442565203, 10.5418236945627,
                 47.5175655551557,
@@ -486,22 +484,20 @@ describe('read parts', () => {
               ],
             },
             {
-              geometries: [
-                {
-                  type: 'MultiPolygon',
-                  coordinates: [
+              geometry: {
+                type: 'MultiPolygon',
+                coordinates: [
+                  [
                     [
-                      [
-                        [6.777075, 45.827119, 0],
-                        [6.755991, 47.517566, 0],
-                        [10.541824, 47.477984, 0],
-                        [10.446252, 45.788744, 0],
-                        [6.777075, 45.827119, 0],
-                      ],
+                      [6.777075, 45.827119, 0],
+                      [6.755991, 47.517566, 0],
+                      [10.541824, 47.477984, 0],
+                      [10.446252, 45.788744, 0],
+                      [6.777075, 45.827119, 0],
                     ],
                   ],
-                },
-              ],
+                ],
+              },
             },
           ])
         })

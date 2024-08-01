@@ -28,14 +28,15 @@ import {
   pipe,
 } from '../function-utils'
 import {
-  XmlElement,
   findChildElement,
   findChildrenElement,
   findNestedElement,
   findNestedElements,
   findParent,
+  firstChildElement,
   readAttribute,
   readText,
+  XmlElement,
 } from '../xml-utils'
 import { readGeometry } from './utils/geometry'
 import { fullNameToParts } from './utils/individual-name'
@@ -907,16 +908,12 @@ export function readTemporalExtents(rootEl: XmlElement) {
 }
 
 export function readSpatialExtents(rootEl: XmlElement) {
-  const extractGeometries = (rootEl: XmlElement): Geometry[] => {
+  const extractGeometry = (rootEl: XmlElement): Geometry => {
     if (!rootEl) return null
     return pipe(
-      findChildrenElement('gmd:polygon', false),
-      mapArray((el) => {
-        const elements = el.children.filter(
-          (child) => child instanceof XmlElement
-        )
-        return readGeometry(elements[0] as XmlElement)
-      })
+      findChildElement('gmd:polygon', false),
+      firstChildElement,
+      map((el) => readGeometry(el))
     )(rootEl)
   }
 
@@ -951,7 +948,7 @@ export function readSpatialExtents(rootEl: XmlElement) {
     findNestedElements('gmd:extent', 'gmd:EX_Extent', 'gmd:geographicElement'),
     mapArray(
       combine(
-        pipe(findChildElement('gmd:EX_BoundingPolygon'), extractGeometries),
+        pipe(findChildElement('gmd:EX_BoundingPolygon'), extractGeometry),
         pipe(findChildElement('gmd:EX_GeographicBoundingBox'), extractBBox),
         pipe(
           findChildElement('gmd:EX_GeographicDescription'),
@@ -959,9 +956,9 @@ export function readSpatialExtents(rootEl: XmlElement) {
         )
       )
     ),
-    mapArray(([geometries, bbox, description]) => {
+    mapArray(([geometry, bbox, description]) => {
       return {
-        ...(geometries && { geometries }),
+        ...(geometry && { geometry }),
         ...(bbox && { bbox }),
         ...(description && { description }),
       }

@@ -1196,16 +1196,14 @@ export function writeTemporalExtents(
 }
 
 export function writeSpatialExtents(record: DatasetRecord, rootEl: XmlElement) {
-  const appendBoundingPolygon = (geometries?: Geometry[]) => {
-    if (!geometries) return null
+  const appendBoundingPolygon = (geometry?: Geometry) => {
+    if (!geometry) return null
     return pipe(
       createElement('gmd:EX_BoundingPolygon'),
       appendChildren(
-        ...geometries.map((geometry) =>
-          pipe(
-            createElement('gmd:polygon'),
-            appendChildren(() => writeGeometry(geometry))
-          )
+        pipe(
+          createElement('gmd:polygon'),
+          appendChildren(() => writeGeometry(geometry))
         )
       )
     )
@@ -1246,7 +1244,7 @@ export function writeSpatialExtents(record: DatasetRecord, rootEl: XmlElement) {
         pipe(
           createElement('gmd:geographicElement'),
           appendChildren(
-            appendBoundingPolygon(extent.geometries),
+            appendBoundingPolygon(extent.geometry),
             appendGeographicBoundingBox(extent.bbox),
             appendGeographicDescription(extent.description)
           )
