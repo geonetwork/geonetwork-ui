@@ -5,7 +5,9 @@
     <img [src]="organization.logoUrl" class="w-[56px] h-[56px] rounded-[4px]" />
     <div class="flex flex-col w-full">
       <div class="flex flex-row justify-between">
-        <span class="flex flex-wrap font-bold w-full"
+        <span
+          class="flex flex-wrap font-bold w-full"
+          data-test="contactCardName"
           >{{ contact.firstName }} {{ contact.lastName }}</span
         >
         <gn-ui-button
@@ -16,7 +18,7 @@
           ><span class="text-[14px] leading-[0] font-bold">&#x2715;</span>
         </gn-ui-button>
       </div>
-      <div>{{ contact.email }}</div>
+      <div data-test="contactCardEmail">{{ contact.email }}</div>
     </div>
   </div>
 </ng-container>

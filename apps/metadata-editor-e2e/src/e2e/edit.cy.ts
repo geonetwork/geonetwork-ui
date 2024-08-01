@@ -70,12 +70,39 @@ describe('editor form', () => {
     cy.get('md-editor-publish-button').click()
   })
 
+  describe('New record', () => {
+    beforeEach(() => {
+      cy.login('barbie', 'p4ssworD_', false)
+
+      cy.visit('/create')
+
+      cy.get('@accessAndContactPageSelectorButton').click()
+    })
+
+    it('should have the connected user information prefilled in the contacts for resource of the dataset', () => {
+      cy.get('[data-test=displayedRoles]').children().should('have.length', 1)
+
+      cy.get('[data-test=displayedRoles]')
+        .children()
+        .find('gn-ui-contact-card')
+        .get('[data-test=contactCardName]')
+        .invoke('text')
+        .should('contain', 'Barbara Roberts')
+
+      cy.get('[data-test=displayedRoles]')
+        .children()
+        .find('gn-ui-contact-card')
+        .get('[data-test=contactCardEmail]')
+        .invoke('text')
+        .should('contain', 'barbie@email.org')
+    })
+  })
+
   describe('record fields', () => {
     describe('contacts for resources', () => {
       beforeEach(() => {
         cy.login('admin', 'admin', false)
 
-        // Alpine convention record
         cy.visit('/edit/accroche_velos')
 
         cy.get('@accessAndContactPageSelectorButton').click()
