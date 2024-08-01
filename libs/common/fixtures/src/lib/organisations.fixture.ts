@@ -7,7 +7,7 @@ export const REGION_HAUT_DE_FRANCE_ORG_FIXTURE = (): Organization => ({
   email: 'contact@region-haut-de-france.com',
   website: new URL('https://region-haut-de-france.com/'),
   logoUrl: new URL('https://region-haut-de-france.com/logo.png'),
-  recordCount: 27,
+  recordCount: 4,
 })
 
 export const ORGANISATIONS_FIXTURE: Organization[] = deepFreeze([
