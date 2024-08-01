@@ -1,6 +1,15 @@
 import { deepFreeze } from './utils/freeze'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 
+export const REGION_HAUT_DE_FRANCE_ORG_FIXTURE = (): Organization => ({
+  name: 'Région Hauts-de-France',
+  description: 'A very sweet description about Région Hauts-de-France.',
+  email: 'contact@region-haut-de-france.com',
+  website: new URL('https://region-haut-de-france.com/'),
+  logoUrl: new URL('https://region-haut-de-france.com/logo.png'),
+  recordCount: 27,
+})
+
 export const ORGANISATIONS_FIXTURE: Organization[] = deepFreeze([
   {
     name: 'I Data Org',
@@ -114,4 +123,5 @@ export const ORGANISATIONS_FIXTURE: Organization[] = deepFreeze([
     logoUrl: new URL('https://my-geonetwork.org/logo12.png'),
     recordCount: 2,
   },
+  REGION_HAUT_DE_FRANCE_ORG_FIXTURE(),
 ])
