@@ -39,5 +39,24 @@ describe('create', () => {
       cy.go('back')
       cy.url().should('include', '/catalog/search')
     })
+
+    it('the created record should have the registered user as point of contact in the data managers section', () => {
+      // First create a record and its draft
+      cy.get('[data-cy="create-record"]').click()
+
+      cy.get('[data-test=pageSelectorButtons]')
+        .find('gn-ui-button')
+        .eq(2)
+        .click()
+
+      cy.get('[data-test=displayedRoles]').children().should('have.length', 1)
+
+      cy.get('[data-test=displayedRoles]')
+        .children()
+        .find('gn-ui-contact-card')
+        .get('[data-test=contactCardName]')
+        .invoke('text')
+        .should('contain', 'admin admin')
+    })
   })
 })

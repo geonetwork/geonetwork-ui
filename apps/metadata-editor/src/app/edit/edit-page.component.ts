@@ -59,6 +59,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const [currentRecord, currentRecordSource, currentRecordAlreadySaved] =
       this.route.snapshot.data['record']
+
     this.facade.openRecord(
       currentRecord,
       currentRecordSource,
