@@ -7,6 +7,7 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  Type,
 } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import {
@@ -26,6 +27,10 @@ import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { ContactCardComponent } from '../../../contact-card/contact-card.component'
+import {
+  DynamicElement,
+  SortableListComponent,
+} from '@geonetwork-ui/ui/elements'
 
 @Component({
   selector: 'gn-ui-form-field-contacts-for-resource',
@@ -41,6 +46,7 @@ import { ContactCardComponent } from '../../../contact-card/contact-card.compone
     AutocompleteComponent,
     TranslateModule,
     ContactCardComponent,
+    SortableListComponent,
   ],
 })
 export class FormFieldContactsForResourceComponent
@@ -48,7 +54,7 @@ export class FormFieldContactsForResourceComponent
 {
   @Input() control: FormControl<Individual[]>
 
-  allUser$: Observable<UserModel[]>
+  allUsers$: Observable<UserModel[]>
 
   rolesToPick: string[] = [
     'resource_provider',
@@ -62,12 +68,14 @@ export class FormFieldContactsForResourceComponent
 
   allOrganizations: Map<string, Organization> = new Map()
 
+  addOptions: Array<{ buttonLabel: string; eventName: string }> = []
+
   constructor(
     private platformServiceInterface: PlatformServiceInterface,
     private organizationsServiceInterface: OrganizationsServiceInterface,
     private changeDetectorRef: ChangeDetectorRef
   ) {
-    this.allUser$ = this.platformServiceInterface.getUsers()
+    this.allUsers$ = this.platformServiceInterface.getUsers()
   }
 
   ngOnInit(): void {
@@ -81,7 +89,7 @@ export class FormFieldContactsForResourceComponent
     )
   }
 
-  async ngOnChanges(changes: SimpleChanges): Promise<void> {
+  ngOnChanges(changes: SimpleChanges) {
     const contactsForResource = changes['control']
 
     if (
@@ -91,6 +99,8 @@ export class FormFieldContactsForResourceComponent
       const rolesToAdd = contactsForResource.currentValue.value.map(
         (contact: Individual) => contact.role
       )
+
+      console.log(contactsForResource.currentValue)
 
       rolesToAdd.forEach((role: string) => {
         if (!this.rolesToDisplay.includes(role)) {
@@ -136,7 +146,7 @@ export class FormFieldContactsForResourceComponent
    * gn-ui-autocomplete
    */
   autoCompleteAction = (query: string) => {
-    return this.allUser$.pipe(
+    return this.allUsers$.pipe(
       switchMap((users) => [
         users.filter((user) => user.username.includes(query)),
       ]),
@@ -148,8 +158,8 @@ export class FormFieldContactsForResourceComponent
   /**
    * gn-ui-autocomplete
    */
-  async addContact(contact: UserModel, role: string) {
-    let newContactsforRessource = {
+  addContact(contact: UserModel, role: string) {
+    let newContactsForRessource = {
       firstName: contact.name ?? '',
       lastName: contact.surname ?? '',
       organization: {
@@ -166,12 +176,12 @@ export class FormFieldContactsForResourceComponent
       contact.organisation
     )
 
-    newContactsforRessource = {
-      ...newContactsforRessource,
+    newContactsForRessource = {
+      ...newContactsForRessource,
       organization: newContactOrganization,
     }
 
-    const newControlValue = [...this.control.value, newContactsforRessource]
+    const newControlValue = [...this.control.value, newContactsForRessource]
 
     this.control.setValue(newControlValue)
   }
@@ -184,5 +194,27 @@ export class FormFieldContactsForResourceComponent
 
   getOrganizationByName(name: string): Organization {
     return this.allOrganizations.get(name)
+  }
+
+  getContactByRoleForSortableList(role: string): Array<DynamicElement> {
+    return this.control.value
+      .filter((contact: Individual) => {
+        return contact.role === role
+      })
+      .map((contact) => ({
+        component: ContactCardComponent,
+        inputs: {
+          contact,
+          organization: contact.organization,
+          removable: false,
+        },
+      })) as Array<{
+      component: Type<any>
+      inputs: Record<string, any>
+    }>
+  }
+
+  handleContactOrderChange(event) {
+    console.log(event)
   }
 }

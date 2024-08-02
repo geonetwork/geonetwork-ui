@@ -16,7 +16,7 @@
   </div>
   <div
     class="mt-8"
-    *ngIf="rolesToDisplay && rolesToDisplay.length > 0"
+    *ngIf="rolesToDisplay && rolesToDisplay.length > 0; else noContact"
     data-test="displayedRoles"
   >
     <div
@@ -38,15 +38,29 @@
         [clearOnSelection]="true"
       >
       </gn-ui-autocomplete>
-
-      <ng-container *ngFor="let contact of getContactsByRole(role)">
-        <gn-ui-contact-card
-          [contact]="contact"
-          [organization]="getOrganizationByName(contact.organization.name)"
-          (contactRemoved)="removeContact(index)"
-        ></gn-ui-contact-card>
+      <ng-container *ngIf="getContactsByRole(role).length > 1">
+        <gn-ui-sortable-list
+          [elements]="getContactByRoleForSortableList(role)"
+          (elementsChange)="handleContactOrderChange($event)"
+        ></gn-ui-sortable-list>
       </ng-container>
+      <ng-container *ngIf="getContactsByRole(role).length === 1">
+        <ng-container *ngFor="let contact of getContactsByRole(role)">
+          <gn-ui-contact-card
+            [contact]="contact"
+            [organization]="getOrganizationByName(contact.organization.name)"
+            (contactRemoved)="removeContact(index)"
+          ></gn-ui-contact-card> </ng-container
+      ></ng-container>
       <hr class="border-t-[#D6D3D1] mt-4 mb-6" *ngIf="!isLast" />
     </div>
   </div>
+  <ng-template #noContact>
+    <div
+      class="p-4 border border-primary bg-primary-lightest rounded-lg"
+      translate
+    >
+      editor.record.form.field.contactsForResource.noContact
+    </div>
+  </ng-template>
 </div>

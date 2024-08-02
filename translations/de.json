@@ -178,6 +178,7 @@
   "editor.record.form.bottomButtons.next": "",
   "editor.record.form.bottomButtons.previous": "",
   "editor.record.form.field.abstract": "Kurzbeschreibung",
+  "editor.record.form.field.contactsForResource.noContact": "",
   "editor.record.form.field.keywords": "Schlagwörter",
   "editor.record.form.field.license": "Lizenz",
   "editor.record.form.field.overviews": "",
