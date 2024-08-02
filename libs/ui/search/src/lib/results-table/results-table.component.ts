@@ -1,13 +1,6 @@
 import { CommonModule } from '@angular/common'
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
-import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
   FieldSort,
@@ -49,6 +42,7 @@ export class ResultsTableComponent {
   @Input() sortOrder: SortByField = null
   @Input() recordHasDraft: (record: CatalogRecord) => boolean = () => false
   @Input() recordIsDraft: (record: CatalogRecord) => boolean = () => false
+  @Input() draftIsTemporary: (record: CatalogRecord) => boolean = () => false
 
   // emits the column (field) as well as the order
   @Output() sortByChange = new EventEmitter<[string, 'asc' | 'desc']>()
