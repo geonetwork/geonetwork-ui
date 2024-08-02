@@ -1,22 +1,28 @@
 <ng-container *ngIf="organization && contact">
-  <div
-    class="flex flex-row border border-gray-200 bg-gray-50 rounded-xl p-4 gap-4"
-  >
-    <img [src]="organization.logoUrl" class="w-[56px] h-[56px] rounded-[4px]" />
-    <div class="flex flex-col w-full">
-      <div class="flex flex-row justify-between">
-        <span class="flex flex-wrap font-bold w-full"
-          >{{ contact.firstName }} {{ contact.lastName }}</span
-        >
-        <gn-ui-button
-          data-test="removeContactButton"
-          type="light"
-          extraClass="w-[20px] h-[20px] flex items-center justify-center"
-          (buttonClick)="removeContact(contact)"
-          ><span class="text-[14px] leading-[0] font-bold">&#x2715;</span>
-        </gn-ui-button>
+  <div class="flex flex-row gap-4 items-center">
+    <div
+      class="flex flex-row border border-gray-200 rounded-xl p-4 gap-4 w-full"
+    >
+      <img
+        [src]="organization.logoUrl"
+        class="w-[56px] h-[56px] rounded-[4px]"
+      />
+      <div class="flex flex-col w-full">
+        <div class="flex flex-row justify-between">
+          <span class="flex flex-wrap font-bold w-full"
+            >{{ contact.firstName }} {{ contact.lastName }}</span
+          >
+        </div>
+        <div>{{ contact.email }}</div>
       </div>
-      <div>{{ contact.email }}</div>
     </div>
+    <gn-ui-button
+      *ngIf="removable"
+      data-test="removeContactButton"
+      type="light"
+      extraClass="w-[20px] h-[20px] flex items-center justify-center"
+      (buttonClick)="removeContact(contact)"
+      ><span class="material-symbols-outlined"> close </span>
+    </gn-ui-button>
   </div>
 </ng-container>

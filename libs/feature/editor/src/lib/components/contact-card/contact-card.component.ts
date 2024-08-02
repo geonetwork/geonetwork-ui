@@ -24,6 +24,7 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 export class ContactCardComponent {
   @Input() contact: Individual
   @Input() organization: Organization
+  @Input() removable = true
   @Output() contactRemoved = new EventEmitter<Individual>()
 
   removeContact(contact: Individual) {

@@ -86,7 +86,6 @@ export const RECORD_ABSTRACT_FIELD: EditorField = {
 export const CONTACTS_FOR_RESOURCE_FIELD: EditorField = {
   model: 'contactsForResource',
   formFieldConfig: {
-    // labelKey: marker('editor.record.form.field.contactsForResource')
     labelKey: '',
   },
 }

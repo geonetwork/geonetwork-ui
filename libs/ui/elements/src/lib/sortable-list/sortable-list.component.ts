@@ -8,6 +8,7 @@ import {
 import { NgComponentOutlet, NgFor } from '@angular/common'
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -17,7 +18,7 @@ import {
 import { MatIconModule } from '@angular/material/icon'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
-type DynamicElement = {
+export type DynamicElement = {
   component: Type<any>
   inputs: Record<string, any>
 }
@@ -40,9 +41,11 @@ type DynamicElement = {
 })
 export class SortableListComponent {
   @Input() elements: Array<DynamicElement>
-  @Input() addOptions: Array<{ buttonLabel: string; eventName: string }>
+  @Input() addOptions: Array<{ buttonLabel: string; eventName: string }> = []
   @Output() elementsChange = new EventEmitter<Array<DynamicElement>>()
   @Output() add = new EventEmitter<string>()
+
+  constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.elements, event.previousIndex, event.currentIndex)
