@@ -127,6 +127,7 @@
     <ng-template #cell let-item>
       <gn-ui-action-menu
         [isDraft]="recordIsDraft(item)"
+        [isDraftOnly]="draftIsTemporary(item)"
         (duplicate)="handleDuplicate(item)"
         (delete)="handleDelete(item)"
       >

@@ -17,7 +17,7 @@
   </button>
   <button
     mat-menu-item
-    [disabled]="isDraft"
+    [disabled]="!(isDraftOnly || !isDraft)"
     (click)="openDeleteConfirmationDialog()"
     data-test="record-menu-delete-button"
   >
