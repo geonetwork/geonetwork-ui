@@ -438,7 +438,7 @@
   "search.filters.resourceType": "Resource type",
   "search.filters.standard": "Standard",
   "search.filters.title": "Filter your results",
-  "search.filters.topic": "Topic",
+  "search.filters.topic": "Topics",
   "search.filters.useSpatialFilter": "Show records in the area of interest first",
   "search.filters.useSpatialFilterHelp": "When this is enabled, records situated in the catalog's area of interest are shown first; records outside of this area will not show up.",
   "share.tab.permalink": "Share",

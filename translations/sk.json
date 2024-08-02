@@ -438,7 +438,7 @@
   "search.filters.resourceType": "Typ zdroja",
   "search.filters.standard": "Štandard",
   "search.filters.title": "Filtrovanie výsledkov",
-  "search.filters.topic": "Téma",
+  "search.filters.topic": "Témy",
   "search.filters.useSpatialFilter": "Najskôr zobraziť záznamy v oblasti záujmu",
   "search.filters.useSpatialFilterHelp": "Keď je táto možnosť zapnutá, záznamy nachádzajúce sa v oblasti záujmu katalógu sa zobrazia ako prvé; záznamy mimo tejto oblasti sa nezobrazia.",
   "share.tab.permalink": "Zdieľať",
