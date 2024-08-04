@@ -7,13 +7,10 @@ import {
 } from '@angular/core'
 import { MapStyleService, MapUtilsService } from '@geonetwork-ui/feature/map'
 import { getLinkLabel } from '@geonetwork-ui/util/shared'
-import Feature from 'ol/Feature'
-import { Geometry } from 'ol/geom'
 import { StyleLike } from 'ol/style/Style'
 import {
   BehaviorSubject,
   combineLatest,
-  from,
   Observable,
   of,
   startWith,
@@ -26,7 +23,6 @@ import {
   finalize,
   map,
   switchMap,
-  tap,
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
@@ -36,6 +32,7 @@ import {
   MapContainerComponent,
   prioritizePageScroll,
 } from '@geonetwork-ui/ui/map'
+import { Feature } from 'geojson'
 
 @Component({
   selector: 'gn-ui-map-view',
@@ -46,7 +43,7 @@ import {
 export class MapViewComponent implements AfterViewInit {
   @ViewChild(MapContainerComponent) mapContainer: MapContainerComponent
 
-  selection: Feature<Geometry>
+  selection: Feature
   private selectionStyle: StyleLike
 
   compatibleMapLinks$ = combineLatest([
@@ -98,25 +95,32 @@ export class MapViewComponent implements AfterViewInit {
   )
 
   mapContext$ = this.currentLayers$.pipe(
-    switchMap((layers) =>
-      from(this.mapUtils.getLayerExtent(layers[0])).pipe(
-        catchError(() => {
-          this.error = 'The layer has no extent'
-          return of(undefined)
-        }),
-        map(
-          (extent) =>
-            ({
-              layers,
-              view: {
-                extent,
-              },
-            } as MapContext)
-        ),
-        tap((res) => {
-          this.resetSelection()
-        })
-      )
+    // switchMap((layers) =>
+    //   from(this.mapUtils.getLayerExtent(layers[0])).pipe(
+    //     catchError(() => {
+    //       this.error = 'The layer has no extent'
+    //       return of(undefined)
+    //     }),
+    //     map(
+    //       (extent) =>
+    //         ({
+    //           layers,
+    //           view: {
+    //             extent,
+    //           },
+    //         } as MapContext)
+    //     ),
+    //     tap((res) => {
+    //       this.resetSelection()
+    //     })
+    //   )
+    // ),
+    map(
+      (layers) =>
+        ({
+          layers,
+          view: {},
+        } as MapContext)
     ),
     startWith({
       layers: [],
@@ -144,24 +148,25 @@ export class MapViewComponent implements AfterViewInit {
     private styleService: MapStyleService
   ) {}
 
-  ngAfterViewInit(): void {
-    prioritizePageScroll(this.mapContainer.openlayersMap.getInteractions())
+  async ngAfterViewInit() {
+    const map = await this.mapContainer.openlayersMap
+    prioritizePageScroll(map.getInteractions())
     this.selectionStyle = this.styleService.styles.defaultHL
   }
 
-  onMapFeatureSelect(features: Feature<Geometry>[]): void {
+  onMapFeatureSelect(features: Feature[]): void {
     this.resetSelection()
     this.selection = features?.length > 0 && features[0]
-    if (this.selection) {
-      this.selection.setStyle(this.selectionStyle)
-    }
+    // if (this.selection) {
+    //   this.selection.setStyle(this.selectionStyle)
+    // }
     this.changeRef.detectChanges()
   }
 
   resetSelection(): void {
-    if (this.selection) {
-      this.selection.setStyle(null)
-    }
+    // if (this.selection) {
+    //   this.selection.setStyle(null)
+    // }
     this.selection = null
   }
 

@@ -5,18 +5,14 @@ import {
   LinkClassifierService,
   LinkUsage,
 } from '@geonetwork-ui/util/shared'
-import { Observable, of, throwError } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { firstValueFrom, Observable, of, throwError } from 'rxjs'
 import { MapUtilsService } from '../../utils'
 import { MapFacade } from '../../+state/map.facade'
-import {
-  MapContextLayerModel,
-  MapContextLayerTypeEnum,
-} from '../../map-context/map-context.model'
 import {
   DatasetDistribution,
   DatasetRecord,
 } from '@geonetwork-ui/common/domain/model/record'
+import { MapContextLayer } from '@geospatial-sdk/core'
 
 @Component({
   selector: 'gn-ui-add-layer-record-preview',
@@ -41,13 +37,15 @@ export class AddLayerRecordPreviewComponent extends RecordPreviewComponent {
   }
 
   async handleLinkClick(link: DatasetDistribution) {
-    const layer = await this.getLayerFromLink(link).toPromise()
-    this.mapFacade.addLayer({ ...layer, title: this.record.title })
+    const layer = await firstValueFrom(this.getLayerFromLink(link))
+    const context = await firstValueFrom(this.mapFacade.context$)
+    this.mapFacade.applyContext({
+      ...context,
+      layers: [...context.layers, layer],
+    }) // TODO: title
   }
 
-  getLayerFromLink(
-    link: DatasetDistribution
-  ): Observable<MapContextLayerModel> {
+  getLayerFromLink(link: DatasetDistribution): Observable<MapContextLayer> {
     if (link.type !== 'service')
       return throwError(
         () => 'map layer could not be built for this distribution'
@@ -55,13 +53,13 @@ export class AddLayerRecordPreviewComponent extends RecordPreviewComponent {
     if (link.accessServiceProtocol === 'wms') {
       return of({
         url: link.url.toString(),
-        type: MapContextLayerTypeEnum.WMS,
+        type: 'wms',
         name: link.name,
       })
     } else if (link.accessServiceProtocol === 'wmts') {
       return of({
         url: link.url.toString(),
-        type: MapContextLayerTypeEnum.WMTS,
+        type: 'wmts',
         name: link.name,
       })
     }

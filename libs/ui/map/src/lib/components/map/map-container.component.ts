@@ -20,6 +20,12 @@ import { TranslateModule } from '@ngx-translate/core'
 import {
   computeMapContextDiff,
   Extent,
+  FeaturesClickEvent,
+  FeaturesClickEventType,
+  FeaturesHoverEvent,
+  FeaturesHoverEventType,
+  MapClickEvent,
+  MapClickEventType,
   MapContext,
   MapContextLayer,
   MapContextLayerXyz,
@@ -29,8 +35,9 @@ import OlMap from 'ol/Map'
 import {
   applyContextDiffToMap,
   createMapFromContext,
+  listen,
 } from '@geospatial-sdk/openlayers'
-import Feature from 'ol/Feature'
+import { Feature } from 'geojson'
 
 export const DO_NOT_USE_DEFAULT_BASEMAP = new InjectionToken(
   'doNotUseDefaultBasemap',
@@ -45,6 +52,12 @@ export const MAP_VIEW_CONSTRAINTS = new InjectionToken<{
   maxExtent?: Extent
 }>('mapViewConstraints', {
   factory: () => ({}),
+})
+export const VECTOR_STYLE_DEFAULT = new InjectionToken('vectorStyleDefault', {
+  factory: () => ({
+    fill: { color: 'rgba(255, 255, 255, 0.2)' },
+    stroke: { color: '#ffcc33', width: 2 },
+  }),
 })
 
 const DEFAULT_BASEMAP_LAYER: MapContextLayerXyz = {
@@ -68,7 +81,9 @@ const DEFAULT_VIEW: MapContextView = {
 })
 export class MapContainerComponent implements AfterViewInit, OnChanges {
   @Input() context: MapContext
-  @Output() featuresClicked = new EventEmitter<Feature[]>() // TODO
+  @Output() featuresClick = new EventEmitter<Feature[]>()
+  @Output() featuresHover = new EventEmitter<Feature[]>()
+  @Output() mapClick = new EventEmitter<[number, number]>()
 
   @ViewChild('map') container: ElementRef
   displayMessage$: Observable<boolean>
@@ -84,13 +99,14 @@ export class MapContainerComponent implements AfterViewInit, OnChanges {
     }
   ) {}
 
-  public get openlayersMap(): OlMap {
-    return this.olMap
-  }
+  private olMapResolver
+  openlayersMap = new Promise<OlMap>((resolve) => {
+    this.olMapResolver = resolve
+  })
 
-  ngAfterViewInit() {
-    this.olMap = createMapFromContext(
-      this.context,
+  async ngAfterViewInit() {
+    this.olMap = await createMapFromContext(
+      this.processContext(this.context),
       this.container.nativeElement
     )
     this.displayMessage$ = merge(
@@ -108,6 +124,20 @@ export class MapContainerComponent implements AfterViewInit, OnChanges {
           : of(false)
       )
     )
+    listen(
+      this.olMap,
+      FeaturesClickEventType,
+      ({ features }: FeaturesClickEvent) => this.featuresClick.emit(features)
+    )
+    listen(
+      this.olMap,
+      FeaturesHoverEventType,
+      ({ features }: FeaturesHoverEvent) => this.featuresHover.emit(features)
+    )
+    listen(this.olMap, MapClickEventType, ({ coordinate }: MapClickEvent) =>
+      this.mapClick.emit(coordinate)
+    )
+    this.olMapResolver(this.olMap)
   }
 
   ngOnChanges(changes: SimpleChanges) {

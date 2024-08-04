@@ -61,11 +61,12 @@ export class GeoTableViewComponent implements OnInit, AfterViewInit, OnDestroy {
     this.mapContext = this.initMapContext()
   }
 
-  ngAfterViewInit(): void {
-    this.view = this.mapContainer.openlayersMap.getView()
-    this.vectorLayer = this.mapContainer.openlayersMap
-      .getLayers()
-      .item(1) as VectorLayer<VectorSource<Feature<Geometry>>>
+  async ngAfterViewInit() {
+    const map = await this.mapContainer.openlayersMap
+    this.view = map.getView()
+    this.vectorLayer = map.getLayers().item(1) as VectorLayer<
+      VectorSource<Feature<Geometry>>
+    >
     this.vectorLayer.setStyle(this.styleFn.bind(this))
     this.vectorSource = this.vectorLayer.getSource()
     this.features = this.vectorSource.getFeatures()

@@ -4,8 +4,7 @@ import { MapFacade } from '../+state/map.facade'
 import { MapContext } from '@geospatial-sdk/core'
 import { MapContainerComponent } from '@geonetwork-ui/ui/map'
 import { CommonModule } from '@angular/common'
-import Feature from 'ol/Feature'
-import GeoJSON from 'ol/format/GeoJSON'
+import { Feature } from 'geojson'
 
 @Component({
   selector: 'gn-ui-map-state-container',
@@ -25,7 +24,6 @@ export class MapStateContainerComponent {
       this.mapFacade.clearFeatureSelection()
       return
     }
-    const geojsonFeatures = new GeoJSON().writeFeaturesObject(features).features
-    this.mapFacade.selectFeatures(geojsonFeatures)
+    this.mapFacade.selectFeatures(features)
   }
 }
