@@ -21,9 +21,9 @@ import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
 type AutocompleteItem = { title: string; value: Keyword }
 
 @Component({
-  selector: 'gn-ui-form-field-keywords-generic',
-  templateUrl: './form-field-keywords-generic.component.html',
-  styleUrls: ['./form-field-keywords-generic.component.css'],
+  selector: 'gn-ui-generic-keywords',
+  templateUrl: './generic-keywords.component.html',
+  styleUrls: ['./generic-keywords.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -34,7 +34,7 @@ type AutocompleteItem = { title: string; value: Keyword }
     AutocompleteComponent,
   ],
 })
-export class GenericFormFieldKeywordsComponent {
+export class GenericKeywordsComponent {
   @Input() keywords: Keyword[]
   @Input() keywordTypes: KeywordType[]
   @Input() placeholder: string

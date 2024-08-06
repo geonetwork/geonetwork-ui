@@ -19,8 +19,11 @@ import {
   UiInputsModule,
 } from '@geonetwork-ui/ui/inputs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
-import { GenericFormFieldKeywordsComponent } from '../form-field-keywords-generic/form-field-keywords-generic.component'
+import { GenericKeywordsComponent } from '../../../generic-keywords/generic-keywords.component'
 import { FormFieldMapContainerComponent } from '../form-field-map-container/form-field-map-container.component'
+import { Geometry } from 'geojson'
+import { Polygon } from 'ol/geom'
+import GeoJSON from 'ol/format/GeoJSON'
 
 @Component({
   selector: 'gn-ui-form-field-spatial-extent',
@@ -36,7 +39,7 @@ import { FormFieldMapContainerComponent } from '../form-field-map-container/form
     AutocompleteComponent,
     FeatureMapModule,
     SwitchToggleComponent,
-    GenericFormFieldKeywordsComponent,
+    GenericKeywordsComponent,
     FormFieldMapContainerComponent,
   ],
 })
@@ -55,8 +58,10 @@ export class FormFieldSpatialExtentComponent implements OnInit {
     }
   }>()
 
+  updatedPlaceKeywords: Keyword[]
+
   ngOnInit(): void {
-    this.linkPlaceKeywordsToSpatialExtents(
+    this.keywordsLinkedToExtents = this.linkPlaceKeywordsToSpatialExtents(
       this.placeKeywords,
       this.spatialExtents
     )
@@ -64,49 +69,82 @@ export class FormFieldSpatialExtentComponent implements OnInit {
       this.spatialExtents,
       this.placeKeywords
     )
+
+    this.updatedPlaceKeywords = this.placeKeywords
   }
 
   linkPlaceKeywordsToSpatialExtents(
     placeKeywords: Keyword[],
     spatialExtents: DatasetSpatialExtent[]
   ) {
-    placeKeywords.forEach((keyword) => {
-      const coordsBbox = this.transformCoordsToBbox(
-        keyword.coords?.coordEast,
-        keyword.coords?.coordNorth,
-        keyword.coords?.coordSouth,
-        keyword.coords?.coordWest
-      )
-      const bbox = spatialExtents.find(
-        (extent) => extent?.description === keyword?.key
-      )?.bbox
+    const newKeywordsLinkedToExtentsReference = []
 
-      const geometries = spatialExtents.find(
+    placeKeywords.forEach((keyword) => {
+      let geometries = spatialExtents.find(
         (extent) => extent?.description === keyword?.key
       )?.geometries
 
-      this.keywordsLinkedToExtents[keyword?.key] = {
+      if (!geometries?.length) {
+        const geometry = this.transformCoordsToGeometry(
+          keyword.coords?.coordWest,
+          keyword.coords?.coordSouth,
+          keyword.coords?.coordEast,
+          keyword.coords?.coordNorth
+        )
+        geometries = [geometry]
+      }
+
+      newKeywordsLinkedToExtentsReference[keyword?.key] = {
         placeKeyword: keyword,
         spatialExtents: {
-          bbox: bbox?.length >= 0 ? bbox : coordsBbox,
           geometries: geometries,
           description: keyword.label,
         },
       }
     })
 
-    this.placeKeywords = placeKeywords
+    this.updatedPlaceKeywords =
+      this.mapKeywordLinkedToExtentsReferenceToKeywords(
+        newKeywordsLinkedToExtentsReference
+      )
+    return newKeywordsLinkedToExtentsReference
   }
 
-  transformCoordsToBbox(
-    coordEast: string,
-    coordNorth: string,
-    coordSouth: string,
-    coordWest: string
-  ): [number, number, number, number] {
-    return [coordWest, coordSouth, coordEast, coordNorth].map((coord) =>
-      parseFloat(coord)
-    ) as [number, number, number, number]
+  mapKeywordLinkedToExtentsReferenceToKeywords(
+    keywordsLinkedToExtents: {
+      [key: string]: {
+        placeKeyword?: Keyword
+        spatialExtents?: DatasetSpatialExtent
+      }
+    }[]
+  ): Keyword[] {
+    return Object.keys(keywordsLinkedToExtents).map(
+      (key) => keywordsLinkedToExtents[key].placeKeyword
+    )
+  }
+
+  transformCoordsToGeometry(
+    west: string,
+    south: string,
+    east: string,
+    north: string
+  ): Geometry {
+    const coordWest = parseFloat(west)
+    const coordSouth = parseFloat(south)
+    const coordEast = parseFloat(east)
+    const coordNorth = parseFloat(north)
+    const geometry = new Polygon([
+      [
+        [coordWest, coordSouth],
+        [coordEast, coordSouth],
+        [coordEast, coordNorth],
+        [coordWest, coordNorth],
+        [coordWest, coordSouth],
+      ],
+    ])
+
+    const geoJSONGeom = new GeoJSON().writeGeometryObject(geometry)
+    return geoJSONGeom
   }
 
   linkSpatialExtentsToPlaceKeywords(
@@ -128,19 +166,23 @@ export class FormFieldSpatialExtentComponent implements OnInit {
       }
     })
 
-    const missingPlaces = Object.keys(this.keywordsLinkedToExtents).filter(
-      (uri) => !placeKeywords.some(({ key: id }) => uri === id)
-    )
+    // const missingPlaces = Object.keys(this.keywordsLinkedToExtents).filter(
+    //   (uri) => !placeKeywords.some(({ key: id }) => uri === id)
+    // )
 
-    missingPlaces.forEach((missingPlace) => {
-      this.placeKeywords.push(
-        this.keywordsLinkedToExtents[missingPlace].placeKeyword
-      )
-    })
+    // missingPlaces.forEach((missingPlace) => {
+    //   this.placeKeywords.push(
+    //     this.keywordsLinkedToExtents[missingPlace].placeKeyword
+    //   )
+    // })
   }
 
   handlePlaceKeywordsChange(keywords: Keyword[]) {
-    this.keywordsLinkedToExtents = []
-    this.linkPlaceKeywordsToSpatialExtents(keywords, this.spatialExtents)
+    //empty previous linked keywords
+    this.keywordsLinkedToExtents.length = 0
+    this.keywordsLinkedToExtents = this.linkPlaceKeywordsToSpatialExtents(
+      keywords,
+      this.spatialExtents
+    )
   }
 }

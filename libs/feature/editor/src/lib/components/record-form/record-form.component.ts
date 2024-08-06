@@ -27,10 +27,10 @@ const DUMMY_DATA_PLACE_KEYWORDS = [
     },
     type: 'place' as KeywordType,
     coords: {
-      coordEast: '13.5',
-      coordNorth: '52.5',
-      coordSouth: '52.5',
-      coordWest: '13.5',
+      coordEast: '13.27',
+      coordNorth: '52.63',
+      coordSouth: '52.50',
+      coordWest: '13.14',
     },
   },
   {
@@ -42,9 +42,9 @@ const DUMMY_DATA_PLACE_KEYWORDS = [
     },
     type: 'place' as KeywordType,
     coords: {
-      coordEast: '10',
-      coordNorth: '53.5',
-      coordSouth: '53.5',
+      coordEast: '10.5',
+      coordNorth: '53.66',
+      coordSouth: '53.53',
       coordWest: '10',
     },
   },
@@ -57,10 +57,10 @@ const DUMMY_DATA_PLACE_KEYWORDS = [
     },
     type: 'place' as KeywordType,
     coords: {
-      coordEast: '11.5',
-      coordNorth: '48.5',
-      coordSouth: '48.5',
-      coordWest: '11.5',
+      coordEast: '11.64',
+      coordNorth: '48.65',
+      coordSouth: '48.51',
+      coordWest: '11.50',
     },
   },
 ]

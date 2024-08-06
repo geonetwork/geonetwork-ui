@@ -86,8 +86,8 @@ describe('FormFieldSpatialExtentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(FormFieldSpatialExtentComponent)
     component = fixture.componentInstance
-    component.control = new FormControl()
-    component.geogrExtent = { features: [], type: 'FeatureCollection' }
+    component.placeKeywords = new FormControl()
+    component.spatialExtents = { features: [], type: 'FeatureCollection' }
     fixture.detectChanges()
   })
 

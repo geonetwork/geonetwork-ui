@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { FormFieldKeywordsComponent } from './form-field-keywords-generic.component'
+import { FormFieldKeywordsComponent } from './generic-keywords.component'
 import {
   DropdownSelectorComponent,
   UiInputsModule,

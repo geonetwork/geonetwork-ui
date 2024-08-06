@@ -3,7 +3,6 @@ import {
   Component,
   Input,
   OnChanges,
-  SimpleChanges,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { catchError, from, map, Observable, of, switchMap } from 'rxjs'
@@ -16,10 +15,9 @@ import {
   MapStyleService,
   MapUtilsService,
 } from '@geonetwork-ui/feature/map'
-import { Extent } from 'ol/extent'
 import { Fill, Stroke, Style } from 'ol/style'
 import { getOptionalMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
-import { FeatureCollection, Geometry } from 'geojson'
+import { Geometry } from 'geojson'
 import { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import {
   DatasetSpatialExtent,
@@ -92,6 +90,7 @@ export class FormFieldMapContainerComponent implements OnChanges {
 
   ngOnChanges(): void {
     this.mapFacade.removeLayer(0)
+
     if (this.keywordsWithSpatialExtents) {
       const featureCollection: GeoJSONFeatureCollection = {
         type: 'FeatureCollection',
@@ -105,19 +104,19 @@ export class FormFieldMapContainerComponent implements OnChanges {
         ) {
           this.keywordsWithSpatialExtents[
             key
-          ].spatialExtents.geometries.forEach((geometry) =>
+          ].spatialExtents.geometries.forEach((geometry) => {
             featureCollection.features.push({
               type: 'Feature',
               properties: { description: key },
               geometry: geometry,
             })
-          )
+          })
         } else if (
           this.keywordsWithSpatialExtents[key].spatialExtents?.bbox?.length >= 0
         ) {
           featureCollection.features.push({
             type: 'Feature',
-            properties: { description: key },
+            properties: {},
             geometry: this.bboxCoordsToGeometry(
               this.keywordsWithSpatialExtents[key].spatialExtents.bbox
             ),
@@ -144,28 +143,5 @@ export class FormFieldMapContainerComponent implements OnChanges {
 
     const geoJSONGeom = new GeoJSON().writeGeometryObject(geometry)
     return geoJSONGeom
-  }
-
-  addToMap(
-    key: string,
-    geometry: Geometry
-  ): FeatureCollection<
-    Geometry,
-    {
-      [name: string]: any
-    }
-  > {
-    const featureCollection: GeoJSONFeatureCollection = {
-      type: 'FeatureCollection',
-      features: [],
-    }
-
-    featureCollection.features.push({
-      type: 'Feature',
-      properties: { description: key },
-      geometry: geometry,
-    })
-
-    return featureCollection
   }
 }
