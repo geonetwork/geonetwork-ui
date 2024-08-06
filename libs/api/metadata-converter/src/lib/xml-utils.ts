@@ -6,6 +6,7 @@ import {
   XmlText,
 } from '@rgrove/parse-xml'
 import { ChainableFunction, fallback } from './function-utils'
+
 export { XmlDocument, XmlElement } from '@rgrove/parse-xml'
 
 export class XmlParseError extends Error {
@@ -113,6 +114,10 @@ export function allChildrenElement(element: XmlElement): Array<XmlElement> {
   return [
     ...element.children.filter((el) => el instanceof XmlElement),
   ] as Array<XmlElement>
+}
+
+export function firstChildElement(element: XmlElement): XmlElement {
+  return allChildrenElement(element)[0] ?? null
 }
 
 /**
@@ -228,6 +233,7 @@ export function xmlToString(
 ${padding}<${el.name}${attrs}/>
 ${parentPadding}`
   }
+
   return `
 ${padding}<${el.name}${attrs}>${children}</${el.name}>
 ${parentPadding}`
@@ -307,11 +313,13 @@ function getTreeRoot(element: XmlElement): XmlElement {
 
 // stays on the parent element
 // if the given elements are part of a subtree, will add the root of subtree
+// will filter out falsy elements
 export function appendChildren(
   ...childrenFns: Array<ChainableFunction<void, XmlElement>>
 ): ChainableFunction<XmlElement, XmlElement> {
   return (element) => {
     if (!element) return null
+    childrenFns = childrenFns.filter((fn) => fn)
     element.children.push(...childrenFns.map((fn) => fn()).map(getTreeRoot))
     element.children.forEach((el) => (el.parent = element))
     return element

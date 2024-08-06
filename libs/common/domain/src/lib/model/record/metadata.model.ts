@@ -159,7 +159,8 @@ export interface GraphicOverview {
 }
 
 export interface DatasetSpatialExtent {
-  geometry: Geometry
+  bbox?: [number, number, number, number]
+  geometry?: Geometry
   description?: string
 }
 

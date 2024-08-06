@@ -14,7 +14,9 @@ import {
   UpdateFrequencyCode,
   UpdateFrequencyCustom,
 } from '@geonetwork-ui/common/domain/model/record'
+import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus'
 import format from 'date-fns/format'
+import { Geometry } from 'geojson'
 import {
   ChainableFunction,
   fallback,
@@ -44,8 +46,8 @@ import {
   setTextContent,
 } from '../xml-utils'
 import { readKind } from './read-parts'
+import { writeGeometry } from './utils/geometry'
 import { namePartsToFull } from './utils/individual-name'
-import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus'
 
 export function writeCharacterString(
   text: string
@@ -98,6 +100,14 @@ export function writeDate(
       findChildOrCreate('gco:Date'),
       setTextContent(format(date, 'yyyy-MM-dd'))
     )
+  )
+}
+
+export function writeDecimal(
+  decimal: number
+): ChainableFunction<XmlElement, XmlElement> {
+  return tap(
+    pipe(findChildOrCreate('gco:Decimal'), setTextContent(decimal.toString()))
   )
 }
 
@@ -1178,6 +1188,65 @@ export function writeTemporalExtents(
                     )
                   )
                 )
+          )
+        )
+      )
+    )
+  )(rootEl)
+}
+
+export function writeSpatialExtents(record: DatasetRecord, rootEl: XmlElement) {
+  const appendBoundingPolygon = (geometry?: Geometry) => {
+    if (!geometry) return null
+    return pipe(
+      createElement('gmd:EX_BoundingPolygon'),
+      appendChildren(
+        pipe(
+          createElement('gmd:polygon'),
+          appendChildren(() => writeGeometry(geometry))
+        )
+      )
+    )
+  }
+
+  const appendGeographicBoundingBox = (
+    bbox?: [number, number, number, number]
+  ) => {
+    if (!bbox) return null
+    return pipe(
+      createElement('gmd:EX_GeographicBoundingBox'),
+      appendChildren(
+        pipe(createElement('gmd:westBoundLongitude'), writeDecimal(bbox[0])),
+        pipe(createElement('gmd:eastBoundLongitude'), writeDecimal(bbox[2])),
+        pipe(createElement('gmd:southBoundLatitude'), writeDecimal(bbox[1])),
+        pipe(createElement('gmd:northBoundLatitude'), writeDecimal(bbox[3]))
+      )
+    )
+  }
+
+  const appendGeographicDescription = (description?: string) => {
+    if (!description) return null
+    return pipe(
+      createElement('gmd:EX_GeographicDescription'),
+      createChild('gmd:geographicIdentifier'),
+      createChild('gmd:MD_Identifier'),
+      createChild('gmd:code'),
+      writeCharacterString(description)
+    )
+  }
+
+  pipe(
+    findOrCreateIdentification(),
+    findNestedChildOrCreate('gmd:extent', 'gmd:EX_Extent'),
+    removeChildrenByName('gmd:geographicElement'),
+    appendChildren(
+      ...record.spatialExtents.map((extent) =>
+        pipe(
+          createElement('gmd:geographicElement'),
+          appendChildren(
+            appendBoundingPolygon(extent.geometry),
+            appendGeographicBoundingBox(extent.bbox),
+            appendGeographicDescription(extent.description)
           )
         )
       )

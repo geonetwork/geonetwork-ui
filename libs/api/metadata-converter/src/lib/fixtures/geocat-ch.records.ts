@@ -94,7 +94,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         id: 'geonetwork.thesaurus.external.theme.gemet',
         name: 'GEMET',
         url: new URL(
-          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
         ),
       },
       type: 'theme',
@@ -105,7 +105,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         id: 'geonetwork.thesaurus.external.theme.gemet',
         name: 'GEMET',
         url: new URL(
-          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
         ),
       },
       type: 'theme',
@@ -116,7 +116,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         id: 'geonetwork.thesaurus.external.theme.gemet',
         name: 'GEMET',
         url: new URL(
-          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
         ),
       },
       type: 'theme',
@@ -127,7 +127,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         id: 'geonetwork.thesaurus.external.theme.gemet',
         name: 'GEMET',
         url: new URL(
-          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
         ),
       },
       type: 'theme',
@@ -138,7 +138,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         id: 'geonetwork.thesaurus.external.theme.gemet',
         name: 'GEMET',
         url: new URL(
-          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
         ),
       },
       type: 'theme',
@@ -149,7 +149,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         id: 'geonetwork.thesaurus.external.theme.gemet',
         name: 'GEMET',
         url: new URL(
-          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
         ),
       },
       type: 'theme',
@@ -160,7 +160,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         id: 'geonetwork.thesaurus.external.theme.gemet',
         name: 'GEMET',
         url: new URL(
-          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
         ),
       },
       type: 'theme',
@@ -171,7 +171,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         id: 'geonetwork.thesaurus.external.theme.gemet',
         name: 'GEMET',
         url: new URL(
-          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
         ),
       },
       type: 'theme',
@@ -182,7 +182,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         id: 'geonetwork.thesaurus.external.theme.gemet',
         name: 'GEMET',
         url: new URL(
-          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
         ),
       },
       type: 'theme',
@@ -193,7 +193,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         id: 'geonetwork.thesaurus.external.theme.inspire-theme',
         name: 'GEMET - INSPIRE themes, version 1.0',
         url: new URL(
-          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.inspire-theme'
         ),
       },
       type: 'theme',
@@ -204,7 +204,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         id: 'geonetwork.thesaurus.external.theme.inspire-theme',
         name: 'GEMET - INSPIRE themes, version 1.0',
         url: new URL(
-          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.inspire-theme'
         ),
       },
       type: 'theme',
@@ -332,7 +332,32 @@ Die Quelle ist zu bezeichnen: „Quelle: Stadt Zürich“.`,
   securityConstraints: [],
   otherConstraints: [],
   // data quality?
-  spatialExtents: [],
+  spatialExtents: [
+    {
+      description: 'AK',
+    },
+    {
+      bbox: [
+        6.75599105586694, 45.7887442565203, 10.5418236945627, 47.5175655551557,
+      ],
+    },
+    {
+      geometry: {
+        type: 'MultiPolygon',
+        coordinates: [
+          [
+            [
+              [6.777075, 45.827119, 0],
+              [6.755991, 47.517566, 0],
+              [10.541824, 47.477984, 0],
+              [10.446252, 45.788744, 0],
+              [6.777075, 45.827119, 0],
+            ],
+          ],
+        ],
+      },
+    },
+  ],
   temporalExtents: [],
   status: 'completed',
   updateFrequency: 'asNeeded',
