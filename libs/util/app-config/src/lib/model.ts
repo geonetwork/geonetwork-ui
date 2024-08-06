@@ -9,6 +9,7 @@ export interface GlobalConfig {
   WEB_COMPONENT_EMBEDDER_URL?: string
   LANGUAGES?: string[]
   CONTACT_EMAIL?: string
+  LICENSES: string[]
 }
 
 export interface LayerConfig {
