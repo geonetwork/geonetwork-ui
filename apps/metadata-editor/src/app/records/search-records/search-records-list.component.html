@@ -31,7 +31,11 @@
       <span class="uppercase" translate>dashboard.results.listResources</span>
     </div>
     <div class="grow"></div>
-    <gn-ui-button (buttonClick)="createRecord()" type="primary">
+    <gn-ui-button
+      (buttonClick)="createRecord()"
+      type="primary"
+      data-cy="create-record"
+    >
       <mat-icon class="material-symbols-outlined mr-2">edit_document</mat-icon>
       <span translate>dashboard.createRecord</span>
     </gn-ui-button>
