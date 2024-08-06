@@ -24,6 +24,7 @@ import { FormFieldMapContainerComponent } from '../form-field-map-container/form
 import { Geometry } from 'geojson'
 import { Polygon } from 'ol/geom'
 import GeoJSON from 'ol/format/GeoJSON'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Component({
   selector: 'gn-ui-form-field-spatial-extent',
@@ -60,17 +61,19 @@ export class FormFieldSpatialExtentComponent implements OnInit {
 
   updatedPlaceKeywords: Keyword[]
 
+  constructor(private platformService: PlatformServiceInterface) {}
+
   ngOnInit(): void {
+    this.updatedPlaceKeywords = this.placeKeywords
+
     this.keywordsLinkedToExtents = this.linkPlaceKeywordsToSpatialExtents(
-      this.placeKeywords,
+      this.updatedPlaceKeywords,
       this.spatialExtents
     )
     this.linkSpatialExtentsToPlaceKeywords(
       this.spatialExtents,
-      this.placeKeywords
+      this.updatedPlaceKeywords
     )
-
-    this.updatedPlaceKeywords = this.placeKeywords
   }
 
   linkPlaceKeywordsToSpatialExtents(
@@ -155,23 +158,42 @@ export class FormFieldSpatialExtentComponent implements OnInit {
       if (this.keywordsLinkedToExtents[extent.description]) {
         return
       } else {
-        this.keywordsLinkedToExtents[extent.description] = {
-          spatialExtents: extent,
-          placeKeyword: {
-            key: extent.description,
-            label: 'Unknown location',
-            type: 'place',
-          },
-        }
+        const keywordsFromThesauri = []
+        this.platformService
+          .getKeywordsByUri(extent.description)
+          .subscribe((keywords) => {
+            // What if more than 1 keyword is returned?
+            keywordsFromThesauri.push(keywords[0])
+
+            console.log('keywordfromthesauri', keywordsFromThesauri)
+            this.keywordsLinkedToExtents[extent.description] = {
+              spatialExtents: extent,
+              placeKeyword:
+                keywordsFromThesauri[0] !== undefined
+                  ? keywordsFromThesauri[0]
+                  : {
+                      key: extent.description,
+                      label: 'Unknown location',
+                      type: 'place',
+                    },
+            }
+
+            this.updatedPlaceKeywords =
+              this.mapKeywordLinkedToExtentsReferenceToKeywords(
+                this.keywordsLinkedToExtents
+              )
+
+            this.keywordsLinkedToExtents = [...this.keywordsLinkedToExtents]
+          })
       }
     })
 
-    // const missingPlaces = Object.keys(this.keywordsLinkedToExtents).filter(
+    // const notMatchedPlaces = Object.keys(this.keywordsLinkedToExtents).filter(
     //   (uri) => !placeKeywords.some(({ key: id }) => uri === id)
     // )
 
-    // missingPlaces.forEach((missingPlace) => {
-    //   this.placeKeywords.push(
+    // notMatchedPlaces.forEach((missingPlace) => {
+    //   this.updatedPlaceKeywords.push(
     //     this.keywordsLinkedToExtents[missingPlace].placeKeyword
     //   )
     // })
