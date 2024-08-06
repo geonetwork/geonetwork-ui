@@ -1,12 +1,9 @@
-import { Component, ChangeDetectorRef, OnInit } from '@angular/core'
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core'
 import { WmsEndpoint, WmsLayerSummary } from '@camptocamp/ogc-client'
 import { MapFacade } from '../+state/map.facade'
-import {
-  MapContextLayerModel,
-  MapContextLayerTypeEnum,
-} from '../map-context/map-context.model'
-import { Subject } from 'rxjs'
+import { firstValueFrom, Subject } from 'rxjs'
 import { debounceTime } from 'rxjs/operators'
+import { MapContextLayer } from '@geospatial-sdk/core'
 
 @Component({
   selector: 'gn-ui-add-layer-from-wms',
@@ -52,12 +49,17 @@ export class AddLayerFromWmsComponent implements OnInit {
     }
   }
 
-  addLayer(layer: WmsLayerSummary) {
-    const layerToAdd: MapContextLayerModel = {
+  async addLayer(layer: WmsLayerSummary) {
+    const context = await firstValueFrom(this.mapFacade.context$)
+    const layerToAdd: MapContextLayer = {
       name: layer.name,
       url: this.wmsUrl.toString(),
-      type: MapContextLayerTypeEnum.WMS,
+      type: 'wms',
+      // title: layer.title, // TODO
     }
-    this.mapFacade.addLayer({ ...layerToAdd, title: layer.title })
+    this.mapFacade.applyContext({
+      ...context,
+      layers: [...context.layers, layerToAdd],
+    })
   }
 }

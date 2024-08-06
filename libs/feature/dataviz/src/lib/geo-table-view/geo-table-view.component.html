@@ -5,10 +5,11 @@
     [activeId]="selectionId"
     (selected)="onTableSelect($event)"
   ></gn-ui-table>
-  <gn-ui-map-context
+  <gn-ui-map-container
     class="w-1/2 h-full"
     [context]="mapContext"
-  ></gn-ui-map-context>
+    (featuresClicked)="onMapFeatureSelect($event)"
+  ></gn-ui-map-container>
   <gn-ui-feature-detail
     style="width: 300px"
     class="p-3 shrink-0 overflow-auto"

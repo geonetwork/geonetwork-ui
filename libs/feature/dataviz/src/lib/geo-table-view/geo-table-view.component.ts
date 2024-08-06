@@ -11,10 +11,6 @@ import {
 } from '@angular/core'
 import {
   FEATURE_MAP_OPTIONS,
-  FeatureInfoService,
-  MapContextLayerTypeEnum,
-  MapContextModel,
-  MapManagerService,
   MapOptionsModel,
 } from '@geonetwork-ui/feature/map'
 import {
@@ -23,7 +19,6 @@ import {
   TableItemModel,
 } from '@geonetwork-ui/ui/dataviz'
 import type { FeatureCollection } from 'geojson'
-import Map from 'ol/Map'
 import View from 'ol/View'
 import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
@@ -31,6 +26,8 @@ import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import Style from 'ol/style/Style'
 import { Subscription } from 'rxjs'
+import { MapContext } from '@geospatial-sdk/core'
+import { MapContainerComponent } from '@geonetwork-ui/ui/map'
 
 @Component({
   selector: 'gn-ui-geo-table-view',
@@ -41,22 +38,20 @@ import { Subscription } from 'rxjs'
 export class GeoTableViewComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() data: FeatureCollection = { type: 'FeatureCollection', features: [] }
   @ViewChild(TableComponent) uiTable: TableComponent
+  @ViewChild(MapContainerComponent) mapContainer: MapContainerComponent
 
-  private map: Map
   private view: View
   private vectorLayer: VectorLayer<VectorSource<Feature<Geometry>>>
   private vectorSource: VectorSource<Feature<Geometry>>
   private features: Feature<Geometry>[]
 
   tableData: TableItemModel[]
-  mapContext: MapContextModel
+  mapContext: MapContext
   selectionId: TableItemId
   selection: Feature<Geometry>
   private subscription = new Subscription()
 
   constructor(
-    private manager: MapManagerService,
-    private featureInfo: FeatureInfoService,
     private changeRef: ChangeDetectorRef,
     @Inject(FEATURE_MAP_OPTIONS) private mapOptions: MapOptionsModel
   ) {}
@@ -64,18 +59,12 @@ export class GeoTableViewComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.tableData = this.geojsonToTableData(this.data)
     this.mapContext = this.initMapContext()
-    this.featureInfo.handleFeatureInfo()
-    this.subscription.add(
-      this.featureInfo.features$.subscribe((features) => {
-        this.onMapFeatureSelect(features)
-      })
-    )
   }
 
-  ngAfterViewInit(): void {
-    const map = (this.map = this.manager.map)
+  async ngAfterViewInit() {
+    const map = await this.mapContainer.openlayersMap
     this.view = map.getView()
-    this.vectorLayer = this.manager.map.getLayers().item(1) as VectorLayer<
+    this.vectorLayer = map.getLayers().item(1) as VectorLayer<
       VectorSource<Feature<Geometry>>
     >
     this.vectorLayer.setStyle(this.styleFn.bind(this))
@@ -110,18 +99,19 @@ export class GeoTableViewComponent implements OnInit, AfterViewInit, OnDestroy {
     }))
   }
 
-  private initMapContext(): MapContextModel {
+  private initMapContext(): MapContext {
     return {
       layers: [
         {
-          type: MapContextLayerTypeEnum.XYZ,
+          type: 'xyz',
           url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         },
         {
-          type: MapContextLayerTypeEnum.GEOJSON,
+          type: 'geojson',
           data: this.data,
         },
       ],
+      view: {},
     }
   }
 

@@ -5,7 +5,6 @@ import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
 import { FeatureMapModule } from '@geonetwork-ui/feature/map'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
-import { UiMapModule } from '@geonetwork-ui/ui/map'
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
@@ -39,7 +38,6 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     FeatureCatalogModule,
     UiLayoutModule,
     FeatureMapModule,
-    UiMapModule,
     FeatureDatavizModule,
     StoreModule.forRoot({}, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],

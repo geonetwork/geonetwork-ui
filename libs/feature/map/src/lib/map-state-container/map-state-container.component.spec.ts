@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MapContainerComponent } from './map-container.component'
+import { MapStateContainerComponent } from './map-state-container.component'
 import { MapFacade } from '../+state/map.facade'
 import { of } from 'rxjs'
 import { MAP_CTX_LAYER_XYZ_FIXTURE } from '../map-context/map-context.fixtures'
@@ -12,12 +12,12 @@ class MapFacadeMock {
 }
 
 describe('MapContainerComponent', () => {
-  let component: MapContainerComponent
-  let fixture: ComponentFixture<MapContainerComponent>
+  let component: MapStateContainerComponent
+  let fixture: ComponentFixture<MapStateContainerComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MapContainerComponent],
+      declarations: [MapStateContainerComponent],
       providers: [
         {
           provide: MapFacade,
@@ -27,7 +27,7 @@ describe('MapContainerComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
 
-    fixture = TestBed.createComponent(MapContainerComponent)
+    fixture = TestBed.createComponent(MapStateContainerComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

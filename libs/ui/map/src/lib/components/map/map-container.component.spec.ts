@@ -5,7 +5,7 @@ import {
   TestBed,
   tick,
 } from '@angular/core/testing'
-import { MapComponent } from './map.component'
+import { MapContainerComponent } from './map-container.component'
 import { MatIconModule } from '@angular/material/icon'
 
 class ResizeObserverMock {
@@ -44,18 +44,18 @@ class OpenLayersMapMock {
 }
 
 describe('MapComponent', () => {
-  let component: MapComponent
-  let fixture: ComponentFixture<MapComponent>
+  let component: MapContainerComponent
+  let fixture: ComponentFixture<MapContainerComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MatIconModule],
-      declarations: [MapComponent],
+      declarations: [MapContainerComponent],
     }).compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MapComponent)
+    fixture = TestBed.createComponent(MapContainerComponent)
     component = fixture.componentInstance
     component.map = new OpenLayersMapMock() as any
     fixture.detectChanges()
