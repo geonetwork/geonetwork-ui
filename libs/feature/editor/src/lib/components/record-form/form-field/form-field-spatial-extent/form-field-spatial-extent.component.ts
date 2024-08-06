@@ -25,6 +25,14 @@ import { Geometry } from 'geojson'
 import { Polygon } from 'ol/geom'
 import GeoJSON from 'ol/format/GeoJSON'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { BehaviorSubject } from 'rxjs'
+
+type KeywordLinkedToExtent = {
+  [key: string]: {
+    placeKeyword?: Keyword
+    spatialExtents?: DatasetSpatialExtent
+  }
+}
 
 @Component({
   selector: 'gn-ui-form-field-spatial-extent',
@@ -52,12 +60,10 @@ export class FormFieldSpatialExtentComponent implements OnInit {
   @Output() spatialExtentsChange: EventEmitter<DatasetSpatialExtent[]> =
     new EventEmitter()
 
-  keywordsLinkedToExtents = new Array<{
-    [key: string]: {
-      placeKeyword?: Keyword
-      spatialExtents?: DatasetSpatialExtent
-    }
-  }>()
+  keywordsLinkedToExtents = new Array<KeywordLinkedToExtent>()
+
+  keywordsWithExtentsObservable$: BehaviorSubject<KeywordLinkedToExtent[]> =
+    new BehaviorSubject([])
 
   updatedPlaceKeywords: Keyword[]
 
@@ -74,6 +80,7 @@ export class FormFieldSpatialExtentComponent implements OnInit {
       this.spatialExtents,
       this.updatedPlaceKeywords
     )
+    this.keywordsWithExtentsObservable$.next(this.keywordsLinkedToExtents)
   }
 
   linkPlaceKeywordsToSpatialExtents(
@@ -158,19 +165,17 @@ export class FormFieldSpatialExtentComponent implements OnInit {
       if (this.keywordsLinkedToExtents[extent.description]) {
         return
       } else {
-        const keywordsFromThesauri = []
+        const additionalKeywordsLinkedToExtent = []
+
         this.platformService
           .getKeywordsByUri(extent.description)
           .subscribe((keywords) => {
             // What if more than 1 keyword is returned?
-            keywordsFromThesauri.push(keywords[0])
-
-            console.log('keywordfromthesauri', keywordsFromThesauri)
-            this.keywordsLinkedToExtents[extent.description] = {
+            additionalKeywordsLinkedToExtent[extent.description] = {
               spatialExtents: extent,
               placeKeyword:
-                keywordsFromThesauri[0] !== undefined
-                  ? keywordsFromThesauri[0]
+                keywords[0] !== undefined
+                  ? keywords[0]
                   : {
                       key: extent.description,
                       label: 'Unknown location',
@@ -179,11 +184,15 @@ export class FormFieldSpatialExtentComponent implements OnInit {
             }
 
             this.updatedPlaceKeywords =
-              this.mapKeywordLinkedToExtentsReferenceToKeywords(
-                this.keywordsLinkedToExtents
-              )
+              this.mapKeywordLinkedToExtentsReferenceToKeywords({
+                ...this.keywordsLinkedToExtents,
+                ...additionalKeywordsLinkedToExtent,
+              })
 
-            this.keywordsLinkedToExtents = [...this.keywordsLinkedToExtents]
+            this.keywordsWithExtentsObservable$.next({
+              ...this.keywordsLinkedToExtents,
+              ...additionalKeywordsLinkedToExtent,
+            })
           })
       }
     })
@@ -206,5 +215,6 @@ export class FormFieldSpatialExtentComponent implements OnInit {
       keywords,
       this.spatialExtents
     )
+    this.keywordsWithExtentsObservable$.next(this.keywordsLinkedToExtents)
   }
 }

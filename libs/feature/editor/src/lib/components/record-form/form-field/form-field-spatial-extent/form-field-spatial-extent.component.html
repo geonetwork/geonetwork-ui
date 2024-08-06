@@ -9,6 +9,6 @@
 </div>
 <div class="w-full h-96">
   <gn-ui-form-field-map-container
-    [keywordsWithSpatialExtents]="keywordsLinkedToExtents"
+    [keywordsWithSpatialExtents]="keywordsWithExtentsObservable$ | async"
   ></gn-ui-form-field-map-container>
 </div>
