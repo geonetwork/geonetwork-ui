@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   Output,
   ViewChild,
@@ -10,7 +11,10 @@ import {
 import { FormControl, ReactiveFormsModule } from '@angular/forms'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
-import { EditableLabelDirective } from '@geonetwork-ui/ui/inputs'
+import {
+  EditableLabelDirective,
+  UiInputsModule,
+} from '@geonetwork-ui/ui/inputs'
 import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
 import { TranslateModule } from '@ngx-translate/core'
 import { Observable } from 'rxjs'

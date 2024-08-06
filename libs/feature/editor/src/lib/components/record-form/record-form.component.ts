@@ -8,6 +8,8 @@ import {
   EditorFieldWithValue,
   EditorSectionWithValues,
 } from '../../+state/editor.models'
+import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -15,12 +17,25 @@ import {
   styleUrls: ['./record-form.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, FormFieldComponent, TranslateModule],
+  imports: [CommonModule, FormFieldComponent, TranslateModule, UiInputsModule],
 })
 export class RecordFormComponent {
+  isHidden: boolean
+
   constructor(public facade: EditorFacade) {}
 
-  handleFieldValueChange(model: string, newValue: EditorFieldValue) {
+  onOpenDataToggled(args) {
+    if (args.length) {
+      this.isHidden = args[0]
+      if (args[1].length) {
+        this.facade.updateRecordField('licenses', args[1])
+      }
+    } else {
+      this.isHidden = args
+    }
+  }
+
+  handleFieldValueChange(model: any, newValue: EditorFieldValue) {
     if (!model) {
       return
     }
@@ -33,5 +48,8 @@ export class RecordFormComponent {
 
   sectionTracker(index: number, section: EditorSectionWithValues): any {
     return section.labelKey
+  }
+  handleVisibility(event) {
+    this.isHidden = event
   }
 }
