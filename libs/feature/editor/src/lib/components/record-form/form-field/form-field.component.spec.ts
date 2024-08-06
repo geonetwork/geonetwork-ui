@@ -10,6 +10,7 @@ import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/for
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
 import { FormFieldComponent } from './form-field.component'
 import { FormFieldTemporalExtentsComponent } from './form-field-temporal-extents/form-field-temporal-extents.component'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 
 describe('FormFieldComponent', () => {
   let component: FormFieldComponent
@@ -18,6 +19,7 @@ describe('FormFieldComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FormFieldComponent, TranslateModule.forRoot()],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
 
     fixture = TestBed.createComponent(FormFieldComponent)

@@ -29,6 +29,7 @@ import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency
 import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
 import { FormFieldKeywordsComponent } from './form-field-keywords/form-field-keywords.component'
 import { FormFieldConfig } from '../../../models'
+import { FormFieldContactsForResourceComponent } from './form-field-contacts-for-resource/form-field-contacts-for-resource.component'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -55,6 +56,7 @@ import { FormFieldConfig } from '../../../models'
     FormFieldArrayComponent,
     FormFieldKeywordsComponent,
     TranslateModule,
+    FormFieldContactsForResourceComponent,
   ],
 })
 export class FormFieldComponent {
@@ -109,6 +111,9 @@ export class FormFieldComponent {
   }
   get isKeywords() {
     return this.model === 'keywords'
+  }
+  get isContactsForResource() {
+    return this.model === 'contactsForResource'
   }
 
   get withoutWrapper() {
