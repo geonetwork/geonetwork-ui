@@ -1,12 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { CheckToggleComponent } from './check-toggle.component'
+import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
+
+jest.mock('@geonetwork-ui/util/app-config')
 
 describe('CheckToggleComponent', () => {
   let component: CheckToggleComponent
   let fixture: ComponentFixture<CheckToggleComponent>
 
   beforeEach(async () => {
+    ;(getGlobalConfig as jest.Mock).mockReturnValue({ LICENSES: ['CC-BY'] })
+
     await TestBed.configureTestingModule({
       imports: [CheckToggleComponent],
     }).compileComponents()
@@ -18,5 +23,19 @@ describe('CheckToggleComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  it('should emit the new license value on toggle', () => {
+    const toggledSpy = jest.spyOn(component.toggled, 'emit')
+    component.model = 'licenses'
+    component.toggle(true)
+    expect(toggledSpy).toHaveBeenCalledWith([true, [{ text: 'CC-BY' }]])
+  })
+
+  it('should emit the event value on toggle when model is not licenses', () => {
+    const toggledSpy = jest.spyOn(component.toggled, 'emit')
+    component.model = 'not-licenses'
+    component.toggle(true)
+    expect(toggledSpy).toHaveBeenCalledWith(true)
   })
 })
