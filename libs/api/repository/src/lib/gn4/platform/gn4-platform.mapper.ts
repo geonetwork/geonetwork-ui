@@ -91,10 +91,10 @@ export class Gn4PlatformMapper {
           type: matchedThesaurus?.dname as KeywordType,
         },
         coords: {
+          coordWest: keyword.coordWest,
+          coordSouth: keyword.coordSouth,
           coordEast: keyword.coordEast,
           coordNorth: keyword.coordNorth,
-          coordSouth: keyword.coordSouth,
-          coordWest: keyword.coordWest,
         },
       }
     })
