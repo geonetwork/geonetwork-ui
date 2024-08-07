@@ -20,10 +20,13 @@ export class CheckToggleComponent {
   @Input() title: string
   @Input() label: string
   @Input() set value(v) {
-    if (v.length) {
-      const isOpenData = getGlobalConfig().LICENSES.includes(v[0].text)
-      this.toggled.emit(isOpenData)
+    if (Array.isArray(v)) {
+      let isOpenData = false
+      if (v[0] && v[0].text) {
+        isOpenData = getGlobalConfig().LICENSES.includes(v[0].text)
+      }
       this.checked = isOpenData
+      this.toggled.emit(isOpenData)
     } else {
       this.checked = v
     }
@@ -33,7 +36,7 @@ export class CheckToggleComponent {
   @Output() toggled = new EventEmitter()
   checked = false
 
-  toggle(event: Event) {
+  toggle(event: boolean) {
     let isHidden = false
     let value = []
     if (this.model === 'licenses') {
