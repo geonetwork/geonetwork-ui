@@ -5,8 +5,9 @@ import { SelectionService } from '@geonetwork-ui/api/repository'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateModule } from '@ngx-translate/core'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, of, throwError } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { ResultsTableContainerComponent } from './results-table-container.component'
@@ -17,6 +18,7 @@ class SearchFacadeMock {
   setConfigRequestFields = jest.fn(() => this)
   setSortBy = jest.fn(() => this)
   sortBy$ = new BehaviorSubject<any>(['asc', 'updateDate'])
+  requestNewResults = jest.fn()
 }
 class SearchServiceMock {
   setPage = jest.fn()
@@ -30,6 +32,11 @@ class SelectionServiceMock {
 }
 class RecordsRepositoryMock {
   recordHasDraft = jest.fn(() => false)
+  deleteRecord = jest.fn(() => of(void 0))
+  clearRecordDraft = jest.fn()
+}
+class NotificationsServiceMock {
+  showNotification = jest.fn()
 }
 
 describe('ResultsTableContainerComponent', () => {
@@ -37,6 +44,8 @@ describe('ResultsTableContainerComponent', () => {
   let searchFacade: SearchFacadeMock
   let searchService: SearchServiceMock
   let selectionService: SelectionServiceMock
+  let recordsRepository: RecordsRepositoryMock
+  let notificationsService: NotificationsServiceMock
   let fixture: ComponentFixture<ResultsTableContainerComponent>
 
   beforeEach(async () => {
@@ -59,6 +68,7 @@ describe('ResultsTableContainerComponent', () => {
           provide: RecordsRepositoryInterface,
           useClass: RecordsRepositoryMock,
         },
+        { provide: NotificationsService, useClass: NotificationsServiceMock },
       ],
     }).compileComponents()
 
@@ -66,6 +76,8 @@ describe('ResultsTableContainerComponent', () => {
     searchFacade = TestBed.inject(SearchFacade) as any
     searchService = TestBed.inject(SearchService) as any
     selectionService = TestBed.inject(SelectionService) as any
+    recordsRepository = TestBed.inject(RecordsRepositoryInterface) as any
+    notificationsService = TestBed.inject(NotificationsService) as any
     component = fixture.componentInstance
     fixture.detectChanges()
   })
@@ -143,6 +155,32 @@ describe('ResultsTableContainerComponent', () => {
       ).nativeElement as HTMLButtonElement
       duplicateButton.click()
       expect(recordToBeDuplicated).toEqual(DATASET_RECORDS[0])
+    })
+  })
+
+  describe('deleting a dataset', () => {
+    describe('delete error', () => {
+      it('shows notification', () => {
+        recordsRepository.deleteRecord = jest.fn(() =>
+          throwError(() => 'oopsie')
+        )
+        component.handleDeleteRecord(DATASET_RECORDS[0])
+        expect(notificationsService.showNotification).toHaveBeenCalledWith({
+          type: 'error',
+          title: 'editor.record.deleteError.title',
+          text: 'editor.record.deleteError.body oopsie',
+          closeMessage: 'editor.record.deleteError.closeMessage',
+        })
+      })
+    })
+
+    describe('delete success', () => {
+      it('shows notification', () => {
+        component.handleDeleteRecord(DATASET_RECORDS[0])
+        expect(recordsRepository.deleteRecord).toHaveBeenCalled()
+        expect(recordsRepository.clearRecordDraft).toHaveBeenCalled()
+        expect(searchFacade.requestNewResults).toHaveBeenCalled()
+      })
     })
   })
 
