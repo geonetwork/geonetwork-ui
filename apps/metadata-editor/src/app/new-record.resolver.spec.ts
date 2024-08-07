@@ -17,6 +17,7 @@ describe('NewRecordResolver', () => {
 
   describe('new record', () => {
     beforeEach(() => {
+      recordsRepository.generateTemporaryId = jest.fn(() => 'TEMP-ID-123')
       resolvedData = undefined
       resolver.resolve().subscribe((r) => (resolvedData = r))
     })

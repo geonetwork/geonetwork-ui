@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { EditPageComponent } from './edit-page.component'
 import { ActivatedRoute, Router } from '@angular/router'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { DATASET_RECORDS, EDITOR_CONFIG } from '@geonetwork-ui/common/fixtures'
 import { BehaviorSubject, Subject } from 'rxjs'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
@@ -49,7 +48,6 @@ describe('EditPageComponent', () => {
         TranslateModule.forRoot(),
         PageSelectorComponent,
       ],
-      schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
           provide: ActivatedRoute,

@@ -1,39 +1,26 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ActivatedRoute } from '@angular/router'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 import { cold, hot } from 'jasmine-marbles'
-import { of } from 'rxjs'
+import { MockBuilder, MockProviders } from 'ng-mocks'
 import { DashboardMenuComponent } from './dashboard-menu.component'
-
-class RecordsRepositoryMock {
-  draftsChanged$ = of(void 0)
-  getAllDrafts = jest.fn().mockReturnValue(of(DATASET_RECORDS))
-}
 
 describe('DashboardMenuComponent', () => {
   let component: DashboardMenuComponent
   let fixture: ComponentFixture<DashboardMenuComponent>
-  let recordsRepository: RecordsRepositoryMock
+  let recordsRepository: RecordsRepositoryInterface
+
+  beforeEach(() => {
+    return MockBuilder(DashboardMenuComponent)
+  })
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DashboardMenuComponent, TranslateModule.forRoot()],
-      providers: [
-        {
-          provide: ActivatedRoute,
-          useValue: { params: of({ id: 1 }) },
-        },
-        {
-          provide: RecordsRepositoryInterface,
-          useClass: RecordsRepositoryMock,
-        },
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
+      providers: [MockProviders(ActivatedRoute, RecordsRepositoryInterface)],
     }).compileComponents()
-    recordsRepository = TestBed.inject(RecordsRepositoryInterface) as any
+    recordsRepository = TestBed.inject(RecordsRepositoryInterface)
     fixture = TestBed.createComponent(DashboardMenuComponent)
     component = fixture.componentInstance
     fixture.detectChanges()

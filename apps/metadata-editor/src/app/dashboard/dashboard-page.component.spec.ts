@@ -1,21 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MockBuilder } from 'ng-mocks'
 import { DashboardPageComponent } from './dashboard-page.component'
-import { CommonModule } from '@angular/common'
 
 describe('DashboardPageComponent', () => {
   let component: DashboardPageComponent
   let fixture: ComponentFixture<DashboardPageComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({})
-      .overrideComponent(DashboardPageComponent, {
-        set: {
-          imports: [CommonModule],
-          providers: [],
-        },
-      })
-      .compileComponents()
+  beforeEach(() => {
+    return MockBuilder(DashboardPageComponent)
+  })
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(DashboardPageComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
