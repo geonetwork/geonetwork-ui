@@ -1,83 +1,49 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { By } from '@angular/platform-browser'
-import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { SelectionService } from '@geonetwork-ui/api/repository'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateModule } from '@ngx-translate/core'
-import { BehaviorSubject, of, throwError } from 'rxjs'
+import { MockBuilder, MockProviders } from 'ng-mocks'
+import { of, Subject, throwError } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { ResultsTableContainerComponent } from './results-table-container.component'
 
-class SearchFacadeMock {
-  results$ = new BehaviorSubject(DATASET_RECORDS)
-  resultsHits$ = new BehaviorSubject(1000)
-  setConfigRequestFields = jest.fn(() => this)
-  setSortBy = jest.fn(() => this)
-  sortBy$ = new BehaviorSubject<any>(['asc', 'updateDate'])
-  requestNewResults = jest.fn()
-}
-class SearchServiceMock {
-  setPage = jest.fn()
-  setSortBy = jest.fn()
-}
-class SelectionServiceMock {
-  selectRecords = jest.fn()
-  deselectRecords = jest.fn()
-  clearSelection = jest.fn()
-  selectedRecordsIdentifiers$ = new BehaviorSubject([])
-}
-class RecordsRepositoryMock {
-  recordHasDraft = jest.fn(() => false)
-  deleteRecord = jest.fn(() => of(void 0))
-  clearRecordDraft = jest.fn()
-}
-class NotificationsServiceMock {
-  showNotification = jest.fn()
-}
-
 describe('ResultsTableContainerComponent', () => {
   let component: ResultsTableContainerComponent
-  let searchFacade: SearchFacadeMock
-  let searchService: SearchServiceMock
-  let selectionService: SelectionServiceMock
-  let recordsRepository: RecordsRepositoryMock
-  let notificationsService: NotificationsServiceMock
+  let searchFacade: SearchFacade
+  let searchService: SearchService
+  let selectionService: SelectionService
+  let recordsRepository: RecordsRepositoryInterface
+  let notificationsService: NotificationsService
   let fixture: ComponentFixture<ResultsTableContainerComponent>
+
+  beforeEach(() => {
+    return MockBuilder(ResultsTableContainerComponent)
+  })
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), NoopAnimationsModule],
+      imports: [TranslateModule.forRoot()],
       providers: [
-        {
-          provide: SearchFacade,
-          useClass: SearchFacadeMock,
-        },
-        {
-          provide: SearchService,
-          useClass: SearchServiceMock,
-        },
-        {
-          provide: SelectionService,
-          useClass: SelectionServiceMock,
-        },
-        {
-          provide: RecordsRepositoryInterface,
-          useClass: RecordsRepositoryMock,
-        },
-        { provide: NotificationsService, useClass: NotificationsServiceMock },
+        MockProviders(
+          SearchFacade,
+          SearchService,
+          SelectionService,
+          RecordsRepositoryInterface,
+          NotificationsService
+        ),
       ],
     }).compileComponents()
 
     fixture = TestBed.createComponent(ResultsTableContainerComponent)
-    searchFacade = TestBed.inject(SearchFacade) as any
-    searchService = TestBed.inject(SearchService) as any
-    selectionService = TestBed.inject(SelectionService) as any
-    recordsRepository = TestBed.inject(RecordsRepositoryInterface) as any
-    notificationsService = TestBed.inject(NotificationsService) as any
+    searchFacade = TestBed.inject(SearchFacade)
+    searchService = TestBed.inject(SearchService)
+    selectionService = TestBed.inject(SelectionService)
+    recordsRepository = TestBed.inject(RecordsRepositoryInterface)
+    notificationsService = TestBed.inject(NotificationsService)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
@@ -97,7 +63,7 @@ describe('ResultsTableContainerComponent', () => {
 
   describe('selection', () => {
     beforeEach(() => {
-      searchFacade.results$.next([
+      ;(searchFacade.results$ as Subject<CatalogRecord[]>).next([
         {
           uniqueIdentifier: '1',
         },
@@ -128,10 +94,7 @@ describe('ResultsTableContainerComponent', () => {
     })
 
     it('emits a recordClick event', () => {
-      const tableRow = fixture.debugElement.queryAll(
-        By.css('.table-row-cell')
-      )[1].nativeElement as HTMLDivElement
-      tableRow.parentElement.click()
+      component.handleRecordClick(DATASET_RECORDS[0])
       expect(clickedRecord).toEqual(DATASET_RECORDS[0])
     })
   })
@@ -145,15 +108,7 @@ describe('ResultsTableContainerComponent', () => {
     })
 
     it('emits a duplicateRecord event', () => {
-      const menuButton = fixture.debugElement.query(
-        By.css('[data-test="record-menu-button"]')
-      ).nativeElement as HTMLButtonElement
-      menuButton.click()
-      fixture.detectChanges()
-      const duplicateButton = fixture.debugElement.query(
-        By.css('[data-test="record-menu-duplicate-button"]')
-      ).nativeElement as HTMLButtonElement
-      duplicateButton.click()
+      component.handleDuplicateRecord(DATASET_RECORDS[0])
       expect(recordToBeDuplicated).toEqual(DATASET_RECORDS[0])
     })
   })
@@ -176,6 +131,7 @@ describe('ResultsTableContainerComponent', () => {
 
     describe('delete success', () => {
       it('shows notification', () => {
+        recordsRepository.deleteRecord = jest.fn(() => of(void 0))
         component.handleDeleteRecord(DATASET_RECORDS[0])
         expect(recordsRepository.deleteRecord).toHaveBeenCalled()
         expect(recordsRepository.clearRecordDraft).toHaveBeenCalled()
