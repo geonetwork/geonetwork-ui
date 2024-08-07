@@ -38,6 +38,7 @@
               [label]="'editor.record.form.classification.opendata' | translate"
               [value]="field.value"
               [model]="field.config.model!"
+              [config]="config"
               (toggled)="onOpenDataToggled($event)"
             ></gn-ui-check-toggle>
             <ng-container *ngIf="!field.config.hidden && !isHidden">
