@@ -94,7 +94,11 @@ export class FormFieldSpatialExtentComponent implements OnInit {
         (extent) => extent?.description === keyword?.key
       )?.geometry
 
-      if (!geometry) {
+      const bbox = spatialExtents.find(
+        (extent) => extent?.description === keyword?.key
+      )?.bbox
+
+      if (!geometry && keyword.coords) {
         const geometryFromCoords = this.transformCoordsToGeometry(
           keyword.coords?.coordWest,
           keyword.coords?.coordSouth,
@@ -108,6 +112,7 @@ export class FormFieldSpatialExtentComponent implements OnInit {
         placeKeyword: keyword as Keyword,
         spatialExtents: {
           geometry: geometry,
+          bbox: bbox,
           description: keyword.label,
         } as DatasetSpatialExtent,
       }
@@ -196,16 +201,6 @@ export class FormFieldSpatialExtentComponent implements OnInit {
           })
       }
     })
-
-    // const notMatchedPlaces = Object.keys(this.keywordsLinkedToExtents).filter(
-    //   (uri) => !placeKeywords.some(({ key: id }) => uri === id)
-    // )
-
-    // notMatchedPlaces.forEach((missingPlace) => {
-    //   this.updatedPlaceKeywords.push(
-    //     this.keywordsLinkedToExtents[missingPlace].placeKeyword
-    //   )
-    // })
   }
 
   handlePlaceKeywordsChange(keywords: Keyword[]) {
