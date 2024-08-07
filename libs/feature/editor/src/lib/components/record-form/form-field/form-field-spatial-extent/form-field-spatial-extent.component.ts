@@ -90,26 +90,26 @@ export class FormFieldSpatialExtentComponent implements OnInit {
     const newKeywordsLinkedToExtentsReference = []
 
     placeKeywords.forEach((keyword) => {
-      let geometries = spatialExtents.find(
+      let geometry = spatialExtents.find(
         (extent) => extent?.description === keyword?.key
-      )?.geometries
+      )?.geometry
 
-      if (!geometries?.length) {
-        const geometry = this.transformCoordsToGeometry(
+      if (!geometry) {
+        const geometryFromCoords = this.transformCoordsToGeometry(
           keyword.coords?.coordWest,
           keyword.coords?.coordSouth,
           keyword.coords?.coordEast,
           keyword.coords?.coordNorth
         )
-        geometries = [geometry]
+        geometry = geometryFromCoords
       }
 
       newKeywordsLinkedToExtentsReference[keyword?.key] = {
-        placeKeyword: keyword,
+        placeKeyword: keyword as Keyword,
         spatialExtents: {
-          geometries: geometries,
+          geometry: geometry,
           description: keyword.label,
-        },
+        } as DatasetSpatialExtent,
       }
     })
 

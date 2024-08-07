@@ -98,18 +98,12 @@ export class FormFieldMapContainerComponent implements OnChanges {
       }
 
       Object.keys(this.keywordsWithSpatialExtents).forEach((key) => {
-        if (
-          this.keywordsWithSpatialExtents[key].spatialExtents?.geometries
-            ?.length >= 0
-        ) {
-          this.keywordsWithSpatialExtents[
-            key
-          ].spatialExtents.geometries.forEach((geometry) => {
-            featureCollection.features.push({
-              type: 'Feature',
-              properties: { description: key },
-              geometry: geometry,
-            })
+        if (this.keywordsWithSpatialExtents[key].spatialExtents?.geometry) {
+          featureCollection.features.push({
+            type: 'Feature',
+            properties: { description: key },
+            geometry:
+              this.keywordsWithSpatialExtents[key].spatialExtents.geometry,
           })
         } else if (
           this.keywordsWithSpatialExtents[key].spatialExtents?.bbox?.length >= 0
