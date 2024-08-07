@@ -6,7 +6,6 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { FormControl } from '@angular/forms'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
   AutocompleteComponent,
@@ -75,6 +74,7 @@ export class GenericKeywordsComponent {
       (k) => k.label !== keyword.label
     )
 
-    this.changedKeywords.emit(removedKeywords)
+    this.keywords = removedKeywords
+    this.changedKeywords.emit(this.keywords)
   }
 }
