@@ -60,34 +60,41 @@ export class FormFieldSpatialExtentComponent implements OnInit {
   @Output() spatialExtentsChange: EventEmitter<DatasetSpatialExtent[]> =
     new EventEmitter()
 
-  keywordsLinkedToExtents = new Array<KeywordLinkedToExtent>()
+  keywordsLinkedToExtents = <KeywordLinkedToExtent>{}
 
-  keywordsWithExtentsObservable$: BehaviorSubject<KeywordLinkedToExtent[]> =
-    new BehaviorSubject([])
+  keywordsWithExtentsObservable$: BehaviorSubject<KeywordLinkedToExtent> =
+    new BehaviorSubject({})
 
   updatedPlaceKeywords: Keyword[]
+  updatedSpatialExtents: DatasetSpatialExtent[]
 
   constructor(private platformService: PlatformServiceInterface) {}
 
   ngOnInit(): void {
     this.updatedPlaceKeywords = this.placeKeywords
+    this.updatedSpatialExtents = this.spatialExtents
 
-    this.keywordsLinkedToExtents = this.linkPlaceKeywordsToSpatialExtents(
+    this.linkPlaceKeywordsToSpatialExtents(
       this.updatedPlaceKeywords,
       this.spatialExtents
     )
-    this.linkSpatialExtentsToPlaceKeywords(
-      this.spatialExtents,
-      this.updatedPlaceKeywords
-    )
-    this.keywordsWithExtentsObservable$.next(this.keywordsLinkedToExtents)
+    this.linkSpatialExtentsToPlaceKeywords(this.spatialExtents)
+
+    this.keywordsWithExtentsObservable$.subscribe((keywords) => {
+      this.updatedPlaceKeywords = Object.keys(keywords).map(
+        (key) => keywords[key].placeKeyword
+      )
+      this.updatedSpatialExtents = Object.keys(keywords).map(
+        (key) => keywords[key].spatialExtents
+      )
+    })
   }
 
   linkPlaceKeywordsToSpatialExtents(
     placeKeywords: Keyword[],
     spatialExtents: DatasetSpatialExtent[]
   ) {
-    const newKeywordsLinkedToExtentsReference = []
+    const newKeywordsLinkedToExtentsReference = {} as KeywordLinkedToExtent
 
     placeKeywords.forEach((keyword) => {
       let geometry = spatialExtents.find(
@@ -97,6 +104,10 @@ export class FormFieldSpatialExtentComponent implements OnInit {
       const bbox = spatialExtents.find(
         (extent) => extent?.description === keyword?.key
       )?.bbox
+
+      const description = spatialExtents.find(
+        (extent) => extent?.description === keyword?.key
+      )?.description
 
       if (!geometry && keyword.coords) {
         const geometryFromCoords = this.transformCoordsToGeometry(
@@ -113,29 +124,15 @@ export class FormFieldSpatialExtentComponent implements OnInit {
         spatialExtents: {
           geometry: geometry,
           bbox: bbox,
-          description: keyword.label,
+          description: description ? description : keyword.label,
         } as DatasetSpatialExtent,
       }
+
+      return newKeywordsLinkedToExtentsReference
     })
 
-    this.updatedPlaceKeywords =
-      this.mapKeywordLinkedToExtentsReferenceToKeywords(
-        newKeywordsLinkedToExtentsReference
-      )
-    return newKeywordsLinkedToExtentsReference
-  }
-
-  mapKeywordLinkedToExtentsReferenceToKeywords(
-    keywordsLinkedToExtents: {
-      [key: string]: {
-        placeKeyword?: Keyword
-        spatialExtents?: DatasetSpatialExtent
-      }
-    }[]
-  ): Keyword[] {
-    return Object.keys(keywordsLinkedToExtents).map(
-      (key) => keywordsLinkedToExtents[key].placeKeyword
-    )
+    this.keywordsLinkedToExtents = newKeywordsLinkedToExtentsReference
+    this.keywordsWithExtentsObservable$.next(this.keywordsLinkedToExtents)
   }
 
   transformCoordsToGeometry(
@@ -162,15 +159,12 @@ export class FormFieldSpatialExtentComponent implements OnInit {
     return geoJSONGeom
   }
 
-  linkSpatialExtentsToPlaceKeywords(
-    spatialExtents: DatasetSpatialExtent[],
-    placeKeywords: Keyword[]
-  ) {
+  linkSpatialExtentsToPlaceKeywords(spatialExtents: DatasetSpatialExtent[]) {
     spatialExtents.forEach((extent) => {
       if (this.keywordsLinkedToExtents[extent.description]) {
         return
       } else {
-        const additionalKeywordsLinkedToExtent = []
+        const additionalKeywordsLinkedToExtent = {}
 
         this.platformService
           .getKeywordsByUri(extent.description)
@@ -187,29 +181,20 @@ export class FormFieldSpatialExtentComponent implements OnInit {
                       type: 'place',
                     },
             }
-
-            this.updatedPlaceKeywords =
-              this.mapKeywordLinkedToExtentsReferenceToKeywords({
-                ...this.keywordsLinkedToExtents,
-                ...additionalKeywordsLinkedToExtent,
-              })
-
-            this.keywordsWithExtentsObservable$.next({
+            this.keywordsLinkedToExtents = {
               ...this.keywordsLinkedToExtents,
               ...additionalKeywordsLinkedToExtent,
-            })
+            }
+
+            this.keywordsWithExtentsObservable$.next(
+              this.keywordsLinkedToExtents
+            )
           })
       }
     })
   }
 
   handlePlaceKeywordsChange(keywords: Keyword[]) {
-    //empty previous linked keywords
-    this.keywordsLinkedToExtents.length = 0
-    this.keywordsLinkedToExtents = this.linkPlaceKeywordsToSpatialExtents(
-      keywords,
-      this.spatialExtents
-    )
-    this.keywordsWithExtentsObservable$.next(this.keywordsLinkedToExtents)
+    this.linkPlaceKeywordsToSpatialExtents(keywords, this.updatedSpatialExtents)
   }
 }

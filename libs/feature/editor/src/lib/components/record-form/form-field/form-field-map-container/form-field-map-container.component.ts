@@ -19,10 +19,7 @@ import { Fill, Stroke, Style } from 'ol/style'
 import { getOptionalMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import { Geometry } from 'geojson'
 import { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
-import {
-  DatasetSpatialExtent,
-  Keyword,
-} from '@geonetwork-ui/common/domain/model/record'
+import { DatasetSpatialExtent } from '@geonetwork-ui/common/domain/model/record'
 import { Polygon } from 'ol/geom'
 import GeoJSON from 'ol/format/GeoJSON'
 
@@ -35,12 +32,7 @@ import GeoJSON from 'ol/format/GeoJSON'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormFieldMapContainerComponent implements OnChanges {
-  @Input() keywordsWithSpatialExtents: {
-    [key: string]: {
-      placeKeyword?: Keyword
-      spatialExtents?: DatasetSpatialExtent
-    }
-  }[]
+  @Input() spatialExtents: DatasetSpatialExtent[]
 
   error = ''
   mapContext$: Observable<MapContextModel> = this.mapFacade.layers$.pipe(
@@ -91,29 +83,24 @@ export class FormFieldMapContainerComponent implements OnChanges {
   ngOnChanges(): void {
     this.mapFacade.removeLayer(0)
 
-    if (this.keywordsWithSpatialExtents) {
+    if (this.spatialExtents) {
       const featureCollection: GeoJSONFeatureCollection = {
         type: 'FeatureCollection',
         features: [],
       }
 
-      Object.keys(this.keywordsWithSpatialExtents).forEach((key) => {
-        if (this.keywordsWithSpatialExtents[key].spatialExtents?.geometry) {
-          featureCollection.features.push({
-            type: 'Feature',
-            properties: { description: key },
-            geometry:
-              this.keywordsWithSpatialExtents[key].spatialExtents.geometry,
-          })
-        } else if (
-          this.keywordsWithSpatialExtents[key].spatialExtents?.bbox?.length >= 0
-        ) {
+      this.spatialExtents.forEach((extent) => {
+        if (extent.geometry) {
           featureCollection.features.push({
             type: 'Feature',
             properties: {},
-            geometry: this.bboxCoordsToGeometry(
-              this.keywordsWithSpatialExtents[key].spatialExtents.bbox
-            ),
+            geometry: extent.geometry,
+          })
+        } else if (extent.bbox?.length >= 0) {
+          featureCollection.features.push({
+            type: 'Feature',
+            properties: {},
+            geometry: this.bboxCoordsToGeometry(extent.bbox),
           })
         }
       })
