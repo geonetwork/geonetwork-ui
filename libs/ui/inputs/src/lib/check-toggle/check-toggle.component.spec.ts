@@ -1,23 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { CheckToggleComponent } from './check-toggle.component'
-import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
-
-jest.mock('@geonetwork-ui/util/app-config')
 
 describe('CheckToggleComponent', () => {
   let component: CheckToggleComponent
   let fixture: ComponentFixture<CheckToggleComponent>
 
   beforeEach(async () => {
-    ;(getGlobalConfig as jest.Mock).mockReturnValue({ LICENSES: ['CC-BY'] })
-
     await TestBed.configureTestingModule({
       imports: [CheckToggleComponent],
     }).compileComponents()
 
     fixture = TestBed.createComponent(CheckToggleComponent)
     component = fixture.componentInstance
+    component.config = ['CC-BY']
     fixture.detectChanges()
   })
 

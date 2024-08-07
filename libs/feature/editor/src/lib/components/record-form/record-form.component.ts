@@ -22,6 +22,10 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 export class RecordFormComponent {
   isHidden: boolean
 
+  get config() {
+    console.log(getGlobalConfig().LICENSES)
+    return getGlobalConfig().LICENSES
+  }
   constructor(public facade: EditorFacade) {}
 
   onOpenDataToggled(args) {
