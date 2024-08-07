@@ -134,6 +134,56 @@ describe('editor form', () => {
           .should('not.exist')
       })
     })
+    describe('Access and contact', () => {
+      describe('Open data switch', () => {
+        describe('When the open data switch is checked', () => {
+          beforeEach(() => {
+            cy.visit('/edit/accroche_velos')
+            cy.get('md-editor-page-selector')
+              .find('gn-ui-button')
+              .last()
+              .click()
+          })
+          it('should not display the licence section', () => {
+            cy.get('gn-ui-form-field-license').should('not.exist')
+          })
+          it('should display the license section when toggled', () => {
+            cy.get('gn-ui-check-toggle').find('span').first().click()
+            cy.get('gn-ui-form-field-license').should('be.visible')
+            cy.get('gn-ui-form-field-license')
+              .find('button')
+              .children('div')
+              .first()
+              .invoke('text')
+              .should('eq', ' Open Licence (Etalab) ')
+          })
+        })
+        describe('When the open data switch is unchecked', () => {
+          beforeEach(() => {
+            cy.visit(
+              '/edit/fr-120066022-jdd-f20f8125-877e-46dc-8cf8-2a8a372045eb'
+            )
+            cy.get('md-editor-page-selector')
+              .find('gn-ui-button')
+              .last()
+              .click()
+          })
+          it('should display the licence section', () => {
+            cy.get('gn-ui-form-field-license').should('be.visible')
+            cy.get('gn-ui-form-field-license')
+              .find('button')
+              .children('div')
+              .first()
+              .invoke('text')
+              .should('eq', ' Creative Commons CC-BY ')
+          })
+          it('should hide the license section when toggled', () => {
+            cy.get('gn-ui-check-toggle').find('span').first().click()
+            cy.get('gn-ui-form-field-license').should('not.exist')
+          })
+        })
+      })
+    })
   })
 
   describe('date range in sortable list', () => {

@@ -39,4 +39,19 @@ describe('RecordFormComponent', () => {
       )
     })
   })
+
+  describe('onOpenDataToggled', () => {
+    it('should set isHidden and call the facade to set the license', () => {
+      component.onOpenDataToggled([true, [{ text: 'license' }]])
+      expect(component.isHidden).toBe(true)
+      expect(component.facade.updateRecordField).toHaveBeenCalledWith(
+        'licenses',
+        [
+          {
+            text: 'license',
+          },
+        ]
+      )
+    })
+  })
 })
