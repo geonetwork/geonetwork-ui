@@ -114,11 +114,11 @@ export class FormFieldMapContainerComponent implements OnChanges {
   bboxCoordsToGeometry(bbox: [number, number, number, number]): Geometry {
     const geometry = new Polygon([
       [
-        [bbox[2], bbox[3]],
-        [bbox[2], bbox[1]],
         [bbox[0], bbox[1]],
         [bbox[0], bbox[3]],
         [bbox[2], bbox[3]],
+        [bbox[2], bbox[1]],
+        [bbox[0], bbox[1]],
       ],
     ])
 
