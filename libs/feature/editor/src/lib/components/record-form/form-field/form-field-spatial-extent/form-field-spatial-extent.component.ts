@@ -84,9 +84,12 @@ export class FormFieldSpatialExtentComponent implements OnInit {
       this.updatedPlaceKeywords = Object.keys(keywords).map(
         (key) => keywords[key].placeKeyword
       )
+      this.placeKeywordChange.emit(this.updatedPlaceKeywords)
+
       this.updatedSpatialExtents = Object.keys(keywords).map(
         (key) => keywords[key].spatialExtents
       )
+      this.spatialExtentsChange.emit(this.updatedSpatialExtents)
     })
   }
 
