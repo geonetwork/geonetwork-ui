@@ -79,6 +79,16 @@ export class Gn4PlatformMapper {
         (thes) => keyword.thesaurusKey === thes.key
       )
 
+      let coords
+      if (keyword.coordWest) {
+        coords = {
+          coordWest: keyword.coordWest,
+          coordSouth: keyword.coordSouth,
+          coordEast: keyword.coordEast,
+          coordNorth: keyword.coordNorth,
+        }
+      }
+
       return {
         key,
         label,
@@ -90,12 +100,7 @@ export class Gn4PlatformMapper {
           url: new URL(matchedThesaurus?.url),
           type: matchedThesaurus?.dname as KeywordType,
         },
-        coords: {
-          coordWest: keyword.coordWest,
-          coordSouth: keyword.coordSouth,
-          coordEast: keyword.coordEast,
-          coordNorth: keyword.coordNorth,
-        },
+        coords,
       }
     })
   }

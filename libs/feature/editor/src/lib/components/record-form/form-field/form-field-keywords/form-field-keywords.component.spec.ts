@@ -10,6 +10,7 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { of } from 'rxjs'
 import { FormControl } from '@angular/forms'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { TranslateModule } from '@ngx-translate/core'
 
 class PlatformServiceInterfaceMock {
   searchKeywords = jest.fn(() =>
@@ -28,6 +29,7 @@ describe('FormFieldKeywordsComponent', () => {
         UiInputsModule,
         CommonModule,
         UiWidgetsModule,
+        TranslateModule.forRoot(),
       ],
       providers: [
         {

@@ -98,9 +98,9 @@ export class FormFieldComponent {
   get isTemporalExtents() {
     return this.model === 'temporalExtents'
   }
-  get isSpatialExtentField() {
-    return this.model === 'spatialExtents'
-  }
+  // get isSpatialExtentField() {
+  //   return this.model === 'spatialExtents'
+  // }
   get isSimpleField() {
     return this.model === 'uniqueIdentifier' || this.model === 'recordUpdated'
   }
