@@ -9,7 +9,7 @@
 <mat-menu #menu="matMenu">
   <button
     mat-menu-item
-    [disabled]="isDraft"
+    [disabled]="!canDuplicate"
     (click)="duplicate.emit()"
     data-test="record-menu-duplicate-button"
   >
@@ -17,7 +17,7 @@
   </button>
   <button
     mat-menu-item
-    [disabled]="!(isDraftOnly || !isDraft)"
+    [disabled]="!canDelete"
     (click)="openDeleteConfirmationDialog()"
     data-test="record-menu-delete-button"
   >

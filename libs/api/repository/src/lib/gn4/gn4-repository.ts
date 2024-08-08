@@ -333,7 +333,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     )
   }
 
-  draftIsTemporary(uniqueIdentifier: string): boolean {
+  isDraftIdTemporary(uniqueIdentifier: string): boolean {
     return uniqueIdentifier.startsWith('TEMP-ID-')
   }
 
