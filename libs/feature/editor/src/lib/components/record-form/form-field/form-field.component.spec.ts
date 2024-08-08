@@ -6,10 +6,25 @@ import { FormFieldLicenseComponent } from './form-field-license/form-field-licen
 import { FormFieldResourceUpdatedComponent } from './form-field-resource-updated/form-field-resource-updated.component'
 import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
 import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
-import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
 import { FormFieldComponent } from './form-field.component'
 import { FormFieldTemporalExtentsComponent } from './form-field-temporal-extents/form-field-temporal-extents.component'
+import { EffectsModule } from '@ngrx/effects'
+import { StoreModule } from '@ngrx/store'
+import { Gn4Converter } from '@geonetwork-ui/api/metadata-converter'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { of } from 'rxjs'
+
+class Gn4MetadataMapperMock {
+  readRecords = jest.fn((records) =>
+    Promise.all(records.map((r) => this.readRecord(r)))
+  )
+  readRecord = jest.fn((record) => Promise.resolve(record))
+}
+
+class PlatformServiceInterfaceMock {
+  getMe = jest.fn(() => of({}))
+}
 
 describe('FormFieldComponent', () => {
   let component: FormFieldComponent
@@ -17,7 +32,22 @@ describe('FormFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormFieldComponent, TranslateModule.forRoot()],
+      imports: [
+        FormFieldComponent,
+        TranslateModule.forRoot(),
+        EffectsModule.forRoot(),
+        StoreModule.forRoot({}),
+      ],
+      providers: [
+        {
+          provide: PlatformServiceInterface,
+          useClass: PlatformServiceInterfaceMock,
+        },
+        {
+          provide: Gn4Converter,
+          useClass: Gn4MetadataMapperMock,
+        },
+      ],
     }).compileComponents()
 
     fixture = TestBed.createComponent(FormFieldComponent)
@@ -134,19 +164,6 @@ describe('FormFieldComponent', () => {
     })
     it('creates a form field wrapper', () => {
       expect(fieldWrapper).toBeTruthy()
-    })
-  })
-  describe('spatial extent field', () => {
-    let formField
-    beforeEach(() => {
-      component.model = 'spatialExtents'
-      fixture.detectChanges()
-      formField = fixture.debugElement.query(
-        By.directive(FormFieldSpatialExtentComponent)
-      ).componentInstance
-    })
-    it('creates an array form field', () => {
-      expect(formField).toBeTruthy()
     })
   })
 })

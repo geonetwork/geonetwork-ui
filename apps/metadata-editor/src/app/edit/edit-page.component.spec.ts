@@ -3,11 +3,15 @@ import { EditPageComponent } from './edit-page.component'
 import { ActivatedRoute, Router } from '@angular/router'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { DATASET_RECORDS, EDITOR_CONFIG } from '@geonetwork-ui/common/fixtures'
-import { BehaviorSubject, Subject } from 'rxjs'
+import { BehaviorSubject, of, Subject } from 'rxjs'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateModule } from '@ngx-translate/core'
 import { PageSelectorComponent } from './components/page-selector/page-selector.component'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
+import { EffectsModule } from '@ngrx/effects'
+import { StoreModule } from '@ngrx/store'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { Gn4Converter } from '@geonetwork-ui/api/metadata-converter'
 
 const getRoute = () => ({
   snapshot: {
@@ -36,6 +40,17 @@ class NotificationsServiceMock {
   showNotification = jest.fn()
 }
 
+class Gn4MetadataMapperMock {
+  readRecords = jest.fn((records) =>
+    Promise.all(records.map((r) => this.readRecord(r)))
+  )
+  readRecord = jest.fn((record) => Promise.resolve(record))
+}
+
+class PlatformServiceInterfaceMock {
+  getMe = jest.fn(() => of({}))
+}
+
 describe('EditPageComponent', () => {
   let component: EditPageComponent
   let fixture: ComponentFixture<EditPageComponent>
@@ -48,6 +63,8 @@ describe('EditPageComponent', () => {
         EditPageComponent,
         TranslateModule.forRoot(),
         PageSelectorComponent,
+        EffectsModule.forRoot(),
+        StoreModule.forRoot({}),
       ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
@@ -66,6 +83,15 @@ describe('EditPageComponent', () => {
         {
           provide: Router,
           useClass: RouterMock,
+        },
+
+        {
+          provide: PlatformServiceInterface,
+          useClass: PlatformServiceInterfaceMock,
+        },
+        {
+          provide: Gn4Converter,
+          useClass: Gn4MetadataMapperMock,
         },
       ],
     }).compileComponents()

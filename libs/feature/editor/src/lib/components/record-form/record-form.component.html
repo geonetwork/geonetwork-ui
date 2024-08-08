@@ -29,7 +29,7 @@
           </div>
           <ng-container
             *ngFor="
-              let field of section.fieldsWithValues;
+              let field of filterSpatialExtentsFields(section.fieldsWithValues);
               trackBy: fieldTracker
             "
           >
@@ -43,6 +43,19 @@
                 "
               ></gn-ui-form-field>
             </ng-container>
+          </ng-container>
+
+          <ng-container
+            *ngIf="
+              extractSpatialExtentsFields(
+                section.fieldsWithValues
+              ) as spatialExtendsFields
+            "
+          >
+            <gn-ui-form-field-spatial-extent
+              [placeKeywords]="spatialExtendsFields.placeKeywordsField"
+              [spatialExtents]="spatialExtendsFields.spatialExtentsField"
+            ></gn-ui-form-field-spatial-extent>
           </ng-container>
         </div>
       </ng-container>

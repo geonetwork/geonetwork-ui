@@ -2,12 +2,19 @@ import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { EditorFacade } from '../../+state/editor.facade'
 import { EditorFieldValue } from '../../models'
-import { FormFieldComponent } from './form-field'
+import {
+  FormFieldComponent,
+  FormFieldSpatialExtentComponent,
+} from './form-field'
 import { TranslateModule } from '@ngx-translate/core'
 import {
   EditorFieldWithValue,
   EditorSectionWithValues,
 } from '../../+state/editor.models'
+import {
+  DatasetSpatialExtent,
+  Keyword,
+} from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -15,7 +22,12 @@ import {
   styleUrls: ['./record-form.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, FormFieldComponent, TranslateModule],
+  imports: [
+    CommonModule,
+    FormFieldComponent,
+    TranslateModule,
+    FormFieldSpatialExtentComponent,
+  ],
 })
 export class RecordFormComponent {
   constructor(public facade: EditorFacade) {}
@@ -33,5 +45,33 @@ export class RecordFormComponent {
 
   sectionTracker(index: number, section: EditorSectionWithValues): any {
     return section.labelKey
+  }
+
+  filterSpatialExtentsFields(
+    fieldsWithValues: EditorFieldWithValue[]
+  ): EditorFieldWithValue[] {
+    return fieldsWithValues.filter(
+      (field) =>
+        field.config.model !== 'spatialExtents' &&
+        field.config.id !== 'placeKeywords'
+    )
+  }
+
+  extractSpatialExtentsFields(fieldsWithValues: EditorFieldWithValue[]) {
+    const placeKeywordsField = fieldsWithValues.find(
+      (field) => field.config.id === 'placeKeywords'
+    )?.value as Keyword[]
+    const spatialExtentsField = fieldsWithValues.find(
+      (field) => field.config.model === 'spatialExtents'
+    )?.value as DatasetSpatialExtent[]
+
+    if (spatialExtentsField && placeKeywordsField) {
+      return {
+        placeKeywordsField,
+        spatialExtentsField,
+      }
+    } else {
+      return null
+    }
   }
 }

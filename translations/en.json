@@ -208,6 +208,7 @@
   "editor.record.form.metadata.title": "Metadata title",
   "editor.record.form.record.updated": "Record updated",
   "editor.record.form.resourceUpdated": "Last update date",
+  "editor.record.form.spatialExtents": "",
   "editor.record.form.temporalExtents": "Temporal extent",
   "editor.record.form.temporalExtents.addDate": "Time instant",
   "editor.record.form.temporalExtents.addRange": "Time period",
