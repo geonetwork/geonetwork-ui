@@ -10,8 +10,10 @@
   >
     <gn-ui-results-table
       [records]="records$ | async"
-      [recordHasDraft]="hasDraft"
+      [isDraft]="isDraft"
+      [isDraftWithoutRecord]="isDraftIdTemporary"
       (recordClick)="editRecord($event)"
+      (deleteRecord)="deleteDraft($event)"
     ></gn-ui-results-table>
   </div>
 </main>

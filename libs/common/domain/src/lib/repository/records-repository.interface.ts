@@ -53,6 +53,12 @@ export abstract class RecordsRepositoryInterface {
   ): Observable<string>
 
   /**
+   * @param uniqueIdentifier
+   * @returns Observable<void> Returns when record is deleted
+   */
+  abstract deleteRecord(uniqueIdentifier: string): Observable<void>
+
+  /**
    * @param record
    * @param referenceRecordSource
    * @returns Observable<string> Returns the source of the record as it was serialized when saved
@@ -64,7 +70,9 @@ export abstract class RecordsRepositoryInterface {
 
   abstract clearRecordDraft(uniqueIdentifier: string): void
   abstract recordHasDraft(uniqueIdentifier: string): boolean
+  abstract isDraftIdTemporary(uniqueIdentifier: string): boolean
 
   /** will return all pending drafts, both published and not published */
   abstract getAllDrafts(): Observable<CatalogRecord[]>
+  abstract draftsChanged$: Observable<void>
 }
