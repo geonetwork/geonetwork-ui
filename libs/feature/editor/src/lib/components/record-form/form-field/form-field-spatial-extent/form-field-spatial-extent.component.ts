@@ -122,16 +122,20 @@ export class FormFieldSpatialExtentComponent implements OnInit {
         geometry = geometryFromCoords
       }
 
-      newKeywordsLinkedToExtentsReference[keyword?.key] = {
-        placeKeyword: keyword as Keyword,
-        spatialExtents: {
-          geometry: geometry,
-          bbox: bbox,
-          description: description ? description : keyword.label,
-        } as DatasetSpatialExtent,
-      }
+      if (keyword?.key) {
+        newKeywordsLinkedToExtentsReference[keyword?.key] = {
+          placeKeyword: keyword as Keyword,
+          spatialExtents: {
+            geometry: geometry,
+            bbox: bbox,
+            description: description ? description : keyword.label,
+          } as DatasetSpatialExtent,
+        }
 
-      return newKeywordsLinkedToExtentsReference
+        return newKeywordsLinkedToExtentsReference
+      } else {
+        return {}
+      }
     })
 
     this.keywordsLinkedToExtents = newKeywordsLinkedToExtentsReference
