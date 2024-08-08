@@ -38,8 +38,8 @@ export class MyDraftComponent {
   )
   hasDraft = () => true
   isDraft = () => true
-  isTemporary = (record: CatalogRecord): boolean =>
-    this.recordsRepository.draftIsTemporary(record.uniqueIdentifier)
+  isDraftIdTemporary = (record: CatalogRecord): boolean =>
+    this.recordsRepository.isDraftIdTemporary(record.uniqueIdentifier)
 
   constructor(
     private router: Router,

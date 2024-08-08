@@ -1,6 +1,6 @@
 <gn-ui-results-table
   [records]="records$ | async"
-  [recordHasDraft]="hasDraft"
+  [hasDraft]="hasDraft"
   [selectedRecordsIdentifiers]="selectedRecords$ | async"
   [sortOrder]="sortBy$ | async"
   (recordClick)="handleRecordClick($event)"
