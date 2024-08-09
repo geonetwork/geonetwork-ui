@@ -68,7 +68,7 @@ describe('OverviewUploadComponent', () => {
     expect(recordsApiService.getAllResources).toHaveBeenCalledWith(metadataUuid)
     expect(component.resourceAltText).toEqual(imageFileName)
     expect(component.resourceFileName).toEqual(imageFileName)
-    expect(component.resourceUrl.href).toEqual(imageUrl)
+    expect(component.resourceUrl).toEqual(imageUrl)
   })
 
   it('should put the file resource on file change', () => {
@@ -80,7 +80,7 @@ describe('OverviewUploadComponent', () => {
       'public'
     )
     expect(component.resourceAltText).toEqual(imageFileName)
-    expect(component.resourceUrl.href).toEqual(imageUrl)
+    expect(component.resourceUrl).toEqual(imageUrl)
   })
 
   it('should put the file resource on alt text change', () => {
@@ -105,7 +105,7 @@ describe('OverviewUploadComponent', () => {
       'public'
     )
     expect(component.resourceAltText).toEqual(imageFileName)
-    expect(component.resourceUrl.href).toEqual(imageUrl)
+    expect(component.resourceUrl).toEqual(imageUrl)
   })
 
   it('should delete the resource corresponding to the metadata UUID on delete', () => {
@@ -115,7 +115,7 @@ describe('OverviewUploadComponent', () => {
       metadataUuid,
       imageFileName
     )
-    expect(component.resourceAltText).toBeNull()
-    expect(component.resourceUrl).toBeNull()
+    expect(component.resourceAltText).toEqual('')
+    expect(component.resourceUrl).toEqual('')
   })
 })

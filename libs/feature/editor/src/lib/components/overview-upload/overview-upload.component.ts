@@ -15,12 +15,6 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { FormControl } from '@angular/forms'
 import { GraphicOverview } from '@geonetwork-ui/common/domain/model/record'
 
-const extractFileNameFromUrl = (url: string): string => {
-  const pattern = new RegExp(`attachments/([^/?#]+)(?:[/?#]|$)`, 'i')
-  const match = url.match(pattern)
-  return match ? match[1] : ''
-}
-
 @Component({
   selector: 'gn-ui-overview-upload',
   standalone: true,
@@ -35,9 +29,9 @@ export class OverviewUploadComponent implements OnInit, OnChanges {
   @Output() overviewChange = new EventEmitter<GraphicOverview | null>()
   @Output() altTextChange: EventEmitter<string> = new EventEmitter()
 
-  resourceAltText = '' // = ressourceFileName by default
-  resourceFileName = ''
-  resourceUrl: URL
+  resourceAltText: string
+  resourceFileName: string
+  resourceUrl: string
 
   constructor(
     private recordsApiService: RecordsApiService,
@@ -48,14 +42,13 @@ export class OverviewUploadComponent implements OnInit, OnChanges {
     this.recordsApiService.getAllResources(this.metadataUuid).subscribe({
       next: (resources) => {
         if (resources && resources.length > 0) {
-          this.resourceUrl = new URL(resources[0]?.url)
-          this.resourceAltText =
-            this.resourceAltText === ''
-              ? resources[0].filename
-              : this.resourceAltText
-          this.resourceFileName = extractFileNameFromUrl(resources[0]?.url)
+          this.resourceUrl = resources[0].url
+          this.resourceFileName = resources[0].filename
+          if (!this.resourceAltText) {
+            this.resourceAltText = this.resourceFileName
+          }
         } else {
-          this.resourceUrl = null
+          this.resourceUrl = ''
           this.resourceAltText = ''
           this.resourceFileName = ''
         }
@@ -71,7 +64,7 @@ export class OverviewUploadComponent implements OnInit, OnChanges {
       .putResource(this.metadataUuid, file, 'public')
       .subscribe({
         next: (resource) => {
-          this.resourceUrl = new URL(resource.url)
+          this.resourceUrl = resource.url
           this.resourceAltText = resource.filename
 
           this.overviewChange.emit({
@@ -90,7 +83,7 @@ export class OverviewUploadComponent implements OnInit, OnChanges {
       .putResourceFromURL(this.metadataUuid, url, 'public')
       .subscribe({
         next: (resource) => {
-          this.resourceUrl = new URL(resource.url)
+          this.resourceUrl = resource.url
           this.resourceAltText = resource.filename
 
           this.overviewChange.emit({
@@ -108,19 +101,21 @@ export class OverviewUploadComponent implements OnInit, OnChanges {
     this.resourceAltText = newAltText
 
     this.overviewChange.emit({
-      url: this.resourceUrl,
+      url: new URL(this.resourceUrl),
       description: this.resourceAltText,
     })
+
     this.cd.markForCheck()
   }
 
   handleDelete() {
+    //this.formControl.markAsDirty()
     this.recordsApiService
       .delResource(this.metadataUuid, this.resourceFileName)
       .subscribe({
         next: () => {
-          this.resourceAltText = null
-          this.resourceUrl = null
+          this.resourceAltText = ''
+          this.resourceUrl = ''
 
           this.overviewChange.emit(null)
 
@@ -133,7 +128,7 @@ export class OverviewUploadComponent implements OnInit, OnChanges {
   private errorHandle = (error: never) => {
     console.error(error)
 
-    this.resourceUrl = null
+    this.resourceUrl = ''
     this.resourceAltText = ''
     this.resourceFileName = ''
 
@@ -157,7 +152,7 @@ export class OverviewUploadComponent implements OnInit, OnChanges {
       } else {
         return
       }
-      if (overview.description && overview.description !== '') {
+      if (overview.description) {
         this.resourceAltText = overview.description
         this.cd.markForCheck()
       }
