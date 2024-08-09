@@ -62,9 +62,9 @@ export class FormFieldTemporalExtentsComponent implements OnInit, OnDestroy {
     )
   }
 
-  onElementsChange(elements: any) {
+  onElementsChange(elements: { inputs: Record<string, unknown> }[]) {
     this.array.clear({ emitEvent: false })
-    elements.forEach((e: any, i: number) =>
+    elements.forEach((e, i) =>
       this.array.push(e.inputs.control, {
         emitEvent: i === elements.length - 1,
       })
@@ -95,7 +95,7 @@ export class FormFieldTemporalExtentsComponent implements OnInit, OnDestroy {
 
   private resetValueFromInput(value) {
     this.array.clear({ emitEvent: false })
-    this.elements = []
+    let newElements = []
     value.forEach((v: any) => {
       if ('start' in v && 'end' in v) {
         const rangeControl = new FormControl({
@@ -103,8 +103,8 @@ export class FormFieldTemporalExtentsComponent implements OnInit, OnDestroy {
           end: v.end,
         })
         this.array.push(rangeControl, { emitEvent: false })
-        this.elements = [
-          ...this.elements,
+        newElements = [
+          ...newElements,
           {
             component: FormFieldTemporalExtentsRangeComponent,
             inputs: {
@@ -115,8 +115,8 @@ export class FormFieldTemporalExtentsComponent implements OnInit, OnDestroy {
       } else {
         const dateControl = new FormControl({ start: v.start })
         this.array.push(dateControl, { emitEvent: false })
-        this.elements = [
-          ...this.elements,
+        newElements = [
+          ...newElements,
           {
             component: FormFieldTemporalExtentsDateComponent,
             inputs: {
@@ -126,5 +126,6 @@ export class FormFieldTemporalExtentsComponent implements OnInit, OnDestroy {
         ]
       }
     })
+    this.elements = newElements
   }
 }
