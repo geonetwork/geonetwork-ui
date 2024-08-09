@@ -20,24 +20,7 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
   imports: [CommonModule, FormFieldComponent, TranslateModule, UiInputsModule],
 })
 export class RecordFormComponent {
-  isHidden: boolean
-
-  get config() {
-    console.log(getGlobalConfig().LICENSES)
-    return getGlobalConfig().LICENSES
-  }
   constructor(public facade: EditorFacade) {}
-
-  onOpenDataToggled(args) {
-    if (args.length) {
-      this.isHidden = args[0]
-      if (args[1].length) {
-        this.facade.updateRecordField('licenses', args[1])
-      }
-    } else {
-      this.isHidden = args
-    }
-  }
 
   handleFieldValueChange(model: any, newValue: EditorFieldValue) {
     if (!model) {
@@ -52,8 +35,5 @@ export class RecordFormComponent {
 
   sectionTracker(index: number, section: EditorSectionWithValues): any {
     return section.labelKey
-  }
-  handleVisibility(event) {
-    this.isHidden = event
   }
 }

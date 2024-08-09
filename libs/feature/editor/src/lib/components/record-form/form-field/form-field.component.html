@@ -1,4 +1,10 @@
-<div class="flex flex-col h-full">
+<ng-container *ngIf="isOpenData">
+  <gn-ui-form-field-open-data
+    [control]="formControl"
+    (visibilityChange)="onVisibilityChange($event)"
+  ></gn-ui-form-field-open-data>
+</ng-container>
+<div class="flex flex-col h-full" *ngIf="!isHidden">
   <ng-container *ngIf="withoutWrapper; else withGenericWrapper">
     <ng-container *ngTemplateOutlet="fieldContent"></ng-container>
   </ng-container>

@@ -33,15 +33,7 @@
               trackBy: fieldTracker
             "
           >
-            <gn-ui-check-toggle
-              *ngIf="field.config.model === 'licenses'"
-              [label]="'editor.record.form.classification.opendata' | translate"
-              [value]="field.value"
-              [model]="field.config.model!"
-              [config]="config"
-              (toggled)="onOpenDataToggled($event)"
-            ></gn-ui-check-toggle>
-            <ng-container *ngIf="!field.config.hidden && !isHidden">
+            <ng-container *ngIf="!field.config.hidden">
               <gn-ui-form-field
                 [model]="field.config.model!"
                 [config]="field.config.formFieldConfig"
