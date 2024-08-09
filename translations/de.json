@@ -178,6 +178,7 @@
   "editor.record.form.field.title": "Metadaten-Titel",
   "editor.record.form.field.uniqueIdentifier": "Eindeutige Kennung (ID)",
   "editor.record.form.field.updateFrequency": "Aktualisierungshäufigkeit",
+  "editor.record.form.classification.opendata": "",
   "editor.record.form.license.cc-by": "Creative Commons CC-BY",
   "editor.record.form.license.cc-by-sa": "Creative Commons CC-BY-SA",
   "editor.record.form.license.cc-zero": "Creative Commons CC-0",
