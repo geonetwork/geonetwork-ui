@@ -18,8 +18,8 @@ import { MatIconModule } from '@angular/material/icon'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
 type DynamicElement = {
-  component: Type<any>
-  inputs: Record<string, any>
+  component: Type<unknown>
+  inputs: Record<string, unknown>
 }
 
 @Component({
@@ -52,5 +52,9 @@ export class SortableListComponent {
   removeElement(index: number) {
     this.elements = this.elements.filter((_, i) => i !== index)
     this.elementsChange.emit(this.elements)
+  }
+
+  trackByFn(index: number) {
+    return index
   }
 }
