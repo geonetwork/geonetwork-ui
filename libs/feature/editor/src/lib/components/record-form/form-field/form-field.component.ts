@@ -28,6 +28,9 @@ import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/for
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
 import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
 import { FormFieldKeywordsComponent } from './form-field-keywords/form-field-keywords.component'
+import { FormFieldOverviewsComponent } from './form-field-overviews/form-field-overviews.component'
+import { map, take } from 'rxjs/operators'
+import { EditorFacade } from '../../../+state/editor.facade'
 import { FormFieldConfig } from '../../../models'
 
 @Component({
@@ -55,6 +58,7 @@ import { FormFieldConfig } from '../../../models'
     FormFieldArrayComponent,
     FormFieldKeywordsComponent,
     TranslateModule,
+    FormFieldOverviewsComponent,
   ],
 })
 export class FormFieldComponent {
@@ -70,9 +74,14 @@ export class FormFieldComponent {
 
   @ViewChild('titleInput') titleInput: ElementRef
 
+  metadataUuid$ = this.facade.record$.pipe(
+    take(1),
+    map((record) => record.uniqueIdentifier)
+  )
+
   formControl = new FormControl()
 
-  constructor() {
+  constructor(private facade: EditorFacade) {
     this.valueChange = this.formControl.valueChanges
   }
 
@@ -100,6 +109,9 @@ export class FormFieldComponent {
   }
   get isSpatialExtentField() {
     return this.model === 'spatialExtents'
+  }
+  get isGraphicOverview() {
+    return this.model === 'overviews'
   }
   get isSimpleField() {
     return this.model === 'uniqueIdentifier' || this.model === 'recordUpdated'

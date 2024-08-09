@@ -16,6 +16,7 @@ import { ButtonComponent } from '../button/button.component'
 import { FilesDropDirective } from '../files-drop/files-drop.directive'
 import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { FormControl, ReactiveFormsModule } from '@angular/forms'
 
 @Component({
   selector: 'gn-ui-image-input',
@@ -30,11 +31,13 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
     FilesDropDirective,
     MatProgressSpinnerModule,
     TranslateModule,
+    ReactiveFormsModule,
   ],
 })
 export class ImageInputComponent {
+  @Input() formControl!: FormControl
   @Input() maxSizeMB: number
-  @Input() previewUrl?: string
+  @Input() previewUrl?: URL
   @Input() altText?: string
   @Input() uploadProgress?: number
   @Input() uploadError?: boolean
@@ -127,7 +130,8 @@ export class ImageInputComponent {
             const file = new File([blob], name)
             this.fileChange.emit(file)
           },
-          error: () => {
+          error: (error) => {
+            console.error(error)
             this.downloadError = true
             this.cd.markForCheck()
             this.urlChange.emit(this.urlInputValue)
@@ -165,6 +169,7 @@ export class ImageInputComponent {
   }
 
   handleDelete() {
+    this.formControl.markAsDirty()
     this.delete.emit()
   }
 

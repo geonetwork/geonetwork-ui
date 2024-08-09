@@ -83,6 +83,13 @@ export const RECORD_ABSTRACT_FIELD: EditorField = {
   },
 }
 
+export const RECORD_GRAPHICAL_OVERVIEW_FIELD: EditorField = {
+  model: 'overviews',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.overviews'),
+  },
+}
+
 /************************************************************
  ***************          SECTIONS          *****************
  ************************************************************
@@ -90,7 +97,11 @@ export const RECORD_ABSTRACT_FIELD: EditorField = {
 
 export const TITLE_SECTION: EditorSection = {
   hidden: false,
-  fields: [RECORD_TITLE_FIELD, RECORD_ABSTRACT_FIELD],
+  fields: [
+    RECORD_TITLE_FIELD,
+    RECORD_ABSTRACT_FIELD,
+    RECORD_GRAPHICAL_OVERVIEW_FIELD,
+  ],
 }
 
 export const ABOUT_SECTION: EditorSection = {

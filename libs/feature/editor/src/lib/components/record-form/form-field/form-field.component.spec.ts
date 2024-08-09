@@ -10,6 +10,16 @@ import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/for
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
 import { FormFieldComponent } from './form-field.component'
 import { FormFieldTemporalExtentsComponent } from './form-field-temporal-extents/form-field-temporal-extents.component'
+import { FormFieldOverviewsComponent } from './form-field-overviews/form-field-overviews.component'
+import { BehaviorSubject } from 'rxjs'
+import { EditorFacade } from '../../../+state/editor.facade'
+import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+
+class EditorFacadeMock {
+  record$ = new BehaviorSubject(DATASET_RECORDS[0])
+}
 
 describe('FormFieldComponent', () => {
   let component: FormFieldComponent
@@ -17,7 +27,18 @@ describe('FormFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormFieldComponent, TranslateModule.forRoot()],
+      imports: [
+        FormFieldComponent,
+        TranslateModule.forRoot(),
+        HttpClientTestingModule,
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        {
+          provide: EditorFacade,
+          useClass: EditorFacadeMock,
+        },
+      ],
     }).compileComponents()
 
     fixture = TestBed.createComponent(FormFieldComponent)
@@ -146,6 +167,19 @@ describe('FormFieldComponent', () => {
       ).componentInstance
     })
     it('creates an array form field', () => {
+      expect(formField).toBeTruthy()
+    })
+  })
+  describe('overviews field', () => {
+    let formField
+    beforeEach(() => {
+      component.model = 'overviews'
+      fixture.detectChanges()
+      formField = fixture.debugElement.query(
+        By.directive(FormFieldOverviewsComponent)
+      ).componentInstance
+    })
+    it('creates an overview upload form field', () => {
       expect(formField).toBeTruthy()
     })
   })
