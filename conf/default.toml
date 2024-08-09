@@ -37,7 +37,7 @@ proxy_path = ""
 # Enables displaying a "contact block" wherever relevant in applications
 # contact_email = "opendata@mycompany.com"
 
-# Allows to customize the list of licenses considered as "open data".
+# Allows to customize the list of licenses inside the metadata editor considered as "open data".
 licenses = ['etalab', 'etalab-v2', 'odbl', 'odc-by', 'pddl']
 
 ### VISUAL THEME

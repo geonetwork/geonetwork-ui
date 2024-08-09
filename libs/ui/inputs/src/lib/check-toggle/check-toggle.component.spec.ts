@@ -13,25 +13,10 @@ describe('CheckToggleComponent', () => {
 
     fixture = TestBed.createComponent(CheckToggleComponent)
     component = fixture.componentInstance
-    component.config = ['CC-BY']
     fixture.detectChanges()
   })
 
   it('should create', () => {
     expect(component).toBeTruthy()
-  })
-
-  it('should emit the new license value on toggle', () => {
-    const toggledSpy = jest.spyOn(component.toggled, 'emit')
-    component.model = 'licenses'
-    component.toggle(true)
-    expect(toggledSpy).toHaveBeenCalledWith([true, [{ text: 'CC-BY' }]])
-  })
-
-  it('should emit the event value on toggle when model is not licenses', () => {
-    const toggledSpy = jest.spyOn(component.toggled, 'emit')
-    component.model = 'not-licenses'
-    component.toggle(true)
-    expect(toggledSpy).toHaveBeenCalledWith(true)
   })
 })
