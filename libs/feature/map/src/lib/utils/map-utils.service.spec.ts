@@ -9,7 +9,6 @@ import Map from 'ol/Map'
 import ImageWMS from 'ol/source/ImageWMS'
 import TileWMS from 'ol/source/TileWMS'
 import XYZ from 'ol/source/XYZ'
-import { firstValueFrom } from 'rxjs'
 import {
   dragPanCondition,
   MapUtilsService,
@@ -22,15 +21,11 @@ import {
   MouseWheelZoom,
   PinchRotate,
 } from 'ol/interaction'
-import {
-  CatalogRecord,
-  DatasetServiceDistribution,
-} from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import MapBrowserEvent from 'ol/MapBrowserEvent'
-import type { MapContextLayerWmtsModel } from '../map-context/map-context.model'
 import * as olProjProj4 from 'ol/proj/proj4'
 import * as olProj from 'ol/proj'
-import { get } from 'ol/proj'
+import { fromLonLat, get } from 'ol/proj'
 
 jest.mock('@camptocamp/ogc-client', () => ({
   WmsEndpoint: class {
@@ -249,6 +244,9 @@ describe('MapUtilsService', () => {
           .spyOn(olProj, 'transformExtent')
           .mockImplementation((extent) => extent)
       })
+      afterEach(() => {
+        jest.restoreAllMocks()
+      })
 
       describe('extent available in capabilities', () => {
         beforeEach(() => {
@@ -327,7 +325,7 @@ describe('MapUtilsService', () => {
     })
   })
 
-  describe('getRecordExtent', () => {
+  describe('#getRecordExtent', () => {
     it('should return null if spatialExtents is not present or is an empty array', () => {
       const record1: Partial<CatalogRecord> = {}
       const record2: Partial<CatalogRecord> = { spatialExtents: [] }
@@ -336,27 +334,39 @@ describe('MapUtilsService', () => {
       expect(service.getRecordExtent(record2)).toBeNull()
     })
 
-    // FIXME: working locally but not on CI
-    /* it('should return the projected extent of included extents', () => {
+    it('should return the projected extent of included extents', () => {
       const record: Partial<CatalogRecord> = {
         spatialExtents: [
           {
-            bbox: [6.43, 47.663, 7.263, 48.033],
+            bbox: [1, 5, 3, 7],
           },
           {
-            bbox: [7.56, 47.24, 7.86, 47.41],
+            bbox: [2, 3, 5, 6],
           },
           {
-            bbox: [8.2, 47.95, 8.72, 48.26],
+            bbox: [6, 3, 8, 5],
+          },
+          {
+            geometry: {
+              coordinates: [
+                [
+                  [4, 4],
+                  [7, 4],
+                  [7, 8],
+                  [4, 8],
+                  [4, 4],
+                ],
+              ],
+              type: 'Polygon',
+            },
           },
         ],
       }
-
       expect(service.getRecordExtent(record)).toEqual([
-        715784.3258007491, 5981336.544186428, 970705.9597173458,
-        6150219.0853063855,
+        ...fromLonLat([1, 3]),
+        ...fromLonLat([8, 8]),
       ])
-    }) */
+    })
   })
 
   describe('#prioritizePageScroll', () => {
