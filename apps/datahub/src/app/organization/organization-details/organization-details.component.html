@@ -6,7 +6,7 @@
           <div id="organization-details-left" class="w-2/3 mt-14">
             <div class="flex flex-col gap-11">
               <gn-ui-max-lines [maxLines]="2" *ngIf="organization.description">
-                <div>
+                <div class="mb-6">
                   <gn-ui-markdown-parser
                     data-test="organizationDescription"
                     [textContent]="organization.description"

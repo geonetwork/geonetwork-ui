@@ -1,5 +1,8 @@
 <div class="h-full flex flex-col">
-  <p class="flex-none mb-2 font-medium text-sm text-gray-900">
+  <p
+    *ngIf="helperText"
+    class="flex-none mb-2 font-medium text-sm text-gray-900"
+  >
     {{ helperText }}
   </p>
   <div class="flex-1" [hidden]="preview">
