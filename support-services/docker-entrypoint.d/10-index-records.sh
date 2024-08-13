@@ -21,7 +21,8 @@ if [ "$result" != '"CREATED"' ]; then
   exit 1
 fi
 
-# then wait for indexing to finish
+# then wait for indexing to start
+# NOTE: this is confusing but GeoNetwork returns indexing=false when indexing has actually started
 indexing=true
 until [ "$indexing" = 'false' ];
 do
@@ -31,9 +32,9 @@ do
       -H "Cookie: JSESSIONID=$jsessionid; XSRF-TOKEN=$xsrf_token" \
       -H "X-XSRF-TOKEN: $xsrf_token"
   )
-  echo "Currently indexing: $indexing"
   sleep 1
 done
+echo "Indexing has successfully started."
 
 # finally check that the index has records in it
 # and that the records count is stable (i.e. indexing is finished)
