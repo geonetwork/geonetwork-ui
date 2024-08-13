@@ -1,7 +1,7 @@
 <div class="mb-6 md-description sm:mb-4 sm:pr-16">
   <gn-ui-content-ghost ghostClass="h-32" [showContent]="fieldReady('abstract')">
     <gn-ui-max-lines [maxLines]="6" *ngIf="metadata.abstract">
-      <div>
+      <div class="mb-6">
         <gn-ui-markdown-parser
           [textContent]="metadata.abstract"
         ></gn-ui-markdown-parser>
@@ -47,19 +47,23 @@
       </ng-template>
     </ng-container>
     <ng-container *ngIf="legalConstraints.length">
-      <gn-ui-markdown-parser
-        *ngFor="let constraint of legalConstraints"
-        [textContent]="constraint"
-      >
-      </gn-ui-markdown-parser>
+      <div class="mb-6">
+        <gn-ui-markdown-parser
+          *ngFor="let constraint of legalConstraints"
+          [textContent]="constraint"
+        >
+        </gn-ui-markdown-parser>
+      </div>
     </ng-container>
     <ng-container *ngIf="otherConstraints.length">
       <div gnUiLinkify *ngFor="let constraint of otherConstraints">
         <h5 translate class="font-medium text-black text-sm mb-[2px] mt-[16px]">
           record.metadata.otherConstraints
         </h5>
-        <gn-ui-markdown-parser [textContent]="constraint">
-        </gn-ui-markdown-parser>
+        <div class="mb-6">
+          <gn-ui-markdown-parser [textContent]="constraint">
+          </gn-ui-markdown-parser>
+        </div>
       </div>
     </ng-container>
 
