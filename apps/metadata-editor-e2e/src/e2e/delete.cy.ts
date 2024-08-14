@@ -11,9 +11,12 @@ describe('delete', () => {
       cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').type(
         'record abstract'
       )
+      cy.intercept({
+        method: 'PUT',
+        pathname: '**/records',
+      }).as('insertRecord')
       cy.get('md-editor-publish-button').click()
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(1000) // waiting for publication
+      cy.wait('@insertRecord')
       cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').type(
         'draft abstract'
       )
