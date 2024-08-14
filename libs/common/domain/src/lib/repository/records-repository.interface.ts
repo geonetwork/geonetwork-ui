@@ -59,6 +59,7 @@ export abstract class RecordsRepositoryInterface {
   abstract deleteRecord(uniqueIdentifier: string): Observable<void>
 
   abstract generateTemporaryId(): string
+
   /**
    * @param record
    * @param referenceRecordSource
@@ -71,7 +72,7 @@ export abstract class RecordsRepositoryInterface {
 
   abstract clearRecordDraft(uniqueIdentifier: string): void
   abstract recordHasDraft(uniqueIdentifier: string): boolean
-  abstract isDraftIdTemporary(uniqueIdentifier: string): boolean
+  abstract isRecordNotYetSaved(uniqueIdentifier: string): boolean
 
   /** will return all pending drafts, both published and not published */
   abstract getAllDrafts(): Observable<CatalogRecord[]>

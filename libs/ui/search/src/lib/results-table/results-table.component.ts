@@ -41,9 +41,8 @@ export class ResultsTableComponent {
   @Input() selectedRecordsIdentifiers: string[] = []
   @Input() sortOrder: SortByField = null
   @Input() hasDraft: (record: CatalogRecord) => boolean = () => false
-  @Input() isDraft: (record: CatalogRecord) => boolean = () => false
-  @Input() isDraftWithoutRecord: (record: CatalogRecord) => boolean = () =>
-    false
+  @Input() canDuplicate: (record: CatalogRecord) => boolean = () => true
+  @Input() canDelete: (record: CatalogRecord) => boolean = () => true
 
   // emits the column (field) as well as the order
   @Output() sortByChange = new EventEmitter<[string, 'asc' | 'desc']>()

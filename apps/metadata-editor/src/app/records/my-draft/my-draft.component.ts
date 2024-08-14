@@ -37,9 +37,9 @@ export class MyDraftComponent {
     startWith([])
   )
   hasDraft = () => true
-  isDraft = () => true
-  isDraftIdTemporary = (record: CatalogRecord): boolean =>
-    this.recordsRepository.isDraftIdTemporary(record.uniqueIdentifier)
+  canDuplicate = (): boolean => false
+  canDelete = (record: CatalogRecord): boolean =>
+    this.recordsRepository.isRecordNotYetSaved(record.uniqueIdentifier)
 
   constructor(
     private router: Router,
