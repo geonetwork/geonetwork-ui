@@ -6,23 +6,35 @@ import { ConfirmationDialogComponent } from './confirmation-dialog.component'
 
 @Component({
   selector: 'gn-ui-launcher',
-  template: ` <gn-ui-button (buttonClick)="launch()">Open</gn-ui-button> `,
+  template: `
+    <gn-ui-button (buttonClick)="launch()">Open</gn-ui-button>
+    <span *ngIf="confirmed === undefined">Waiting for a result</span>
+    <span *ngIf="confirmed">Confirmed</span>
+    <span *ngIf="confirmed === false">Canceled</span>
+  `,
 })
 class LaunchDialogComponent {
   @Input() title = ''
   @Input() message = ''
   @Input() confirmText = ''
   @Input() cancelText = ''
+
+  confirmed: boolean
+
   constructor(private _dialog: MatDialog) {}
 
   launch(): void {
-    this._dialog.open(ConfirmationDialogComponent, {
+    const dialogRef = this._dialog.open(ConfirmationDialogComponent, {
       data: {
         title: this.title,
         message: this.message,
         confirmText: this.confirmText,
         cancelText: this.cancelText,
       },
+    })
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      this.confirmed = confirmed
     })
   }
 }

@@ -64,9 +64,9 @@ export class ActionMenuComponent {
 
     // Manually restore focus to the menu trigger since the element that
     // opens the dialog won't be in the DOM any more when the dialog closes.
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((confirmed) => {
       this.trigger.focus()
-      if (result) {
+      if (confirmed) {
         this.delete.emit()
       }
     })
