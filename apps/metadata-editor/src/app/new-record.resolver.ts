@@ -1,15 +1,18 @@
 import { Injectable } from '@angular/core'
-import { Observable, of } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { Observable, of } from 'rxjs'
 
 @Injectable({
   providedIn: 'root',
 })
 export class NewRecordResolver {
+  constructor(private recordsRepository: RecordsRepositoryInterface) {}
+
   resolve(): Observable<[CatalogRecord, string, boolean]> {
     return of([
       {
-        uniqueIdentifier: `TEMP-ID-${Date.now()}`,
+        uniqueIdentifier: this.recordsRepository.generateTemporaryId(),
         title: `My new record (${new Date().toISOString()})`,
         abstract: '',
         ownerOrganization: {},

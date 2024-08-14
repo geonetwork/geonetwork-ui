@@ -58,6 +58,7 @@ export abstract class RecordsRepositoryInterface {
    */
   abstract deleteRecord(uniqueIdentifier: string): Observable<void>
 
+  abstract generateTemporaryId(): string
   /**
    * @param record
    * @param referenceRecordSource

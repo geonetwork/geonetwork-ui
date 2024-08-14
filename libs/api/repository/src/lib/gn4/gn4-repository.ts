@@ -33,6 +33,8 @@ import {
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { HttpErrorResponse } from '@angular/common/http'
 
+const TEMPORARY_ID_PREFIX = 'TEMP-ID-'
+
 @Injectable()
 export class Gn4Repository implements RecordsRepositoryInterface {
   _draftsChanged = new Subject<void>()
@@ -241,7 +243,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       switchMap(async (recordAsXml) => {
         const converter = findConverterForDocument(recordAsXml)
         const record = await converter.readRecord(recordAsXml)
-        record.uniqueIdentifier = `TEMP-ID-${Date.now()}`
+        record.uniqueIdentifier = `${TEMPORARY_ID_PREFIX}${Date.now()}`
         record.title = `${record.title} (Copy)`
         const xml = await converter.writeRecord(record, recordAsXml)
         window.localStorage.setItem(
@@ -301,6 +303,10 @@ export class Gn4Repository implements RecordsRepositoryInterface {
 
   deleteRecord(uniqueIdentifier: string): Observable<void> {
     return this.gn4RecordsApi.deleteRecord(uniqueIdentifier)
+  }
+
+  generateTemporaryId(): string {
+    return `${TEMPORARY_ID_PREFIX}${Date.now()}`
   }
 
   saveRecordAsDraft(
