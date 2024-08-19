@@ -1,7 +1,7 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nx"],
+  "plugins": ["@nx", "no-only-tests"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
@@ -73,6 +73,12 @@
       "files": ["*.js", "*.jsx"],
       "extends": ["plugin:@nx/javascript"],
       "rules": {}
+    },
+    {
+      "files": ["*.spec.ts", "*.cy.ts"],
+      "rules": {
+        "no-only-tests/no-only-tests": "error"
+      }
     }
   ]
 }

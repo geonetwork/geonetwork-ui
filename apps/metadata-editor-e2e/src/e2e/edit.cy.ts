@@ -58,7 +58,7 @@ describe('editor form', () => {
     cy.get('md-editor-publish-button').click()
   })
 
-  describe.only('date range in sortable list', () => {
+  describe('date range in sortable list', () => {
     it('should keep the date picker open when selecting the start date of a range', () => {
       // add a date range
       cy.get('gn-ui-form-field-temporal-extents gn-ui-button').eq(1).click()
