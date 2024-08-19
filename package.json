@@ -162,6 +162,7 @@
     "jest-canvas-mock": "2.5.2",
     "jest-environment-jsdom": "29.6.2",
     "jest-preset-angular": "13.1.1",
+    "ng-mocks": "^14.13.0",
     "ng-packagr": "^16.2.3",
     "ngrx-store-freeze": "^0.2.4",
     "ngx-translate-testing": "^6.1.0",

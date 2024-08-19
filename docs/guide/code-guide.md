@@ -2,7 +2,7 @@
 outline: deep
 ---
 
-# Best practices
+# Code guide
 
 ## Standalone components
 
@@ -13,11 +13,24 @@ Standalone components have the following differences with legacy "non-standalone
 - Standalone components are _not_ declared in Angular Modules; instead, they act as their own module, declaring their own dependencies and providers
 - Standalone components can import either Angular modules or other standalone components
 
+Existing components are migrated progressively to become standalone as continuous improvement.
+All new components must be created as standalone.
+
 ## Testing
 
 ### Unit tests
 
-#### Mocking services
+#### ng-mocks
+
+Unit tests are meant to be shallow. We should only test the behaviour of a component or a service by controlling the inputs and dependencies, and checking the outputs and results.
+
+Angular provides many tools to clearly split the responsabilities between each components and services. The testing library `ng-mocks` relies on those tools, to provide an easy way to mock dependencies.
+
+See commit `01dfc84d5e127bd426238dd00395faa1697f0eaa` for a few examples.
+
+Unit tests are migrated progressively to use `ng-mocks`.
+
+#### Mocking services (legacy)
 
 One of the advantages of the Angular [dependency injection](https://angular.io/guide/dependency-injection-overview) system is the ability to use mock classes when testing a component or services.
 

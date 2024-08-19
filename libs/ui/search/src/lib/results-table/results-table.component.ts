@@ -1,13 +1,6 @@
 import { CommonModule } from '@angular/common'
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
-import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
   FieldSort,
@@ -47,12 +40,15 @@ export class ResultsTableComponent {
   @Input() records: CatalogRecord[] = []
   @Input() selectedRecordsIdentifiers: string[] = []
   @Input() sortOrder: SortByField = null
-  @Input() recordHasDraft: (record: CatalogRecord) => boolean = () => false
+  @Input() hasDraft: (record: CatalogRecord) => boolean = () => false
+  @Input() canDuplicate: (record: CatalogRecord) => boolean = () => true
+  @Input() canDelete: (record: CatalogRecord) => boolean = () => true
 
   // emits the column (field) as well as the order
   @Output() sortByChange = new EventEmitter<[string, 'asc' | 'desc']>()
   @Output() recordClick = new EventEmitter<CatalogRecord>()
   @Output() duplicateRecord = new EventEmitter<CatalogRecord>()
+  @Output() deleteRecord = new EventEmitter<CatalogRecord>()
   @Output() recordsSelectedChange = new EventEmitter<
     [CatalogRecord[], boolean]
   >()
@@ -101,6 +97,10 @@ export class ResultsTableComponent {
 
   handleDuplicate(item: unknown) {
     this.duplicateRecord.emit(item as CatalogRecord)
+  }
+
+  handleDelete(item: unknown) {
+    this.deleteRecord.emit(item as CatalogRecord)
   }
 
   setSortBy(col: string, order: 'asc' | 'desc') {
