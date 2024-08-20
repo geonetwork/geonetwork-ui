@@ -312,10 +312,10 @@ describe('AutocompleteComponent', () => {
       it('emits selection event', () => {
         expect(selectionEmitted).toEqual('first')
       })
-      describe('if completeOnSelection on selection', () => {
+      describe('if preventCompleteOnSelection on selection', () => {
         it('set input value to last entered text', () => {
           component.clearOnSelection = false
-          component.completeOnSelection = true
+          component.preventCompleteOnSelection = true
 
           component.control.setValue('second')
           component.handleSelection(selectionEvent)
@@ -328,7 +328,7 @@ describe('AutocompleteComponent', () => {
       describe('if clearOnSelection on selection', () => {
         it('set input value to empty string', () => {
           component.clearOnSelection = true
-          component.completeOnSelection = false
+          component.preventCompleteOnSelection = false
 
           component.control.setValue('second')
           component.handleSelection(selectionEvent)

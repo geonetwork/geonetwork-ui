@@ -107,7 +107,9 @@ describe('editor form', () => {
           .find('gn-ui-autocomplete')
           .type('bar')
 
-        cy.get('mat-option').should('have.text', ' Barbara Roberts ').click()
+        cy.get('mat-option')
+          .should('have.text', ' Barbara Roberts (Barbie Inc.) ')
+          .click()
 
         cy.get('[data-test=displayedRoles]')
           .children()

@@ -4,10 +4,8 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
-  OnChanges,
+  OnDestroy,
   OnInit,
-  SimpleChanges,
-  Type,
 } from '@angular/core'
 import { FormControl } from '@angular/forms'
 import {
@@ -19,10 +17,18 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import {
   Individual,
   Organization,
+  Role,
   RoleLabels,
 } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateModule } from '@ngx-translate/core'
-import { debounceTime, distinctUntilChanged, Observable, switchMap } from 'rxjs'
+import {
+  debounceTime,
+  distinctUntilChanged,
+  firstValueFrom,
+  Observable,
+  Subscription,
+  switchMap,
+} from 'rxjs'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
@@ -31,6 +37,8 @@ import {
   DynamicElement,
   SortableListComponent,
 } from '@geonetwork-ui/ui/elements'
+import { createFuzzyFilter } from '@geonetwork-ui/util/shared'
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'gn-ui-form-field-contacts-for-resource',
@@ -50,13 +58,19 @@ import {
   ],
 })
 export class FormFieldContactsForResourceComponent
-  implements OnInit, OnChanges
+  implements OnInit, OnDestroy
 {
   @Input() control: FormControl<Individual[]>
 
+  subscription: Subscription = new Subscription()
+
   allUsers$: Observable<UserModel[]>
 
-  rolesToPick: string[] = [
+  contactsForRessourceByRole: Map<Role, Individual[]> = new Map()
+
+  contactsAsDynElemByRole: Map<Role, DynamicElement[]> = new Map()
+
+  rolesToPick: Role[] = [
     'resource_provider',
     'custodian',
     'owner',
@@ -64,11 +78,9 @@ export class FormFieldContactsForResourceComponent
     'author',
   ]
 
-  rolesToDisplay = []
+  roleSectionsToDisplay: Role[] = []
 
   allOrganizations: Map<string, Organization> = new Map()
-
-  addOptions: Array<{ buttonLabel: string; eventName: string }> = []
 
   constructor(
     private platformServiceInterface: PlatformServiceInterface,
@@ -78,51 +90,107 @@ export class FormFieldContactsForResourceComponent
     this.allUsers$ = this.platformServiceInterface.getUsers()
   }
 
-  ngOnInit(): void {
-    this.organizationsServiceInterface.organisations$.subscribe(
-      (organizations) => {
-        this.allOrganizations = new Map<string, Organization>(
-          organizations.map((organization) => [organization.name, organization])
-        )
+  async ngOnInit(): Promise<void> {
+    this.allOrganizations = new Map<string, Organization>(
+      (
+        await firstValueFrom(this.organizationsServiceInterface.organisations$)
+      ).map((organization) => [organization.name, organization])
+    )
+    this.updateContactsForRessource()
+    this.manageRoleSectionsToDisplay(this.control.value)
+    this.filterRolesToPick()
+
+    this.changeDetectorRef.markForCheck()
+
+    this.subscription.add(
+      this.control.valueChanges.subscribe((contactsForResource) => {
+        this.updateContactsForRessource()
+        this.manageRoleSectionsToDisplay(contactsForResource)
+        this.filterRolesToPick()
+
         this.changeDetectorRef.markForCheck()
-      }
+      })
     )
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    const contactsForResource = changes['control']
-
-    if (
-      contactsForResource &&
-      contactsForResource.currentValue !== contactsForResource.previousValue
-    ) {
-      const rolesToAdd = contactsForResource.currentValue.value.map(
-        (contact: Individual) => contact.role
-      )
-
-      console.log(contactsForResource.currentValue)
-
-      rolesToAdd.forEach((role: string) => {
-        if (!this.rolesToDisplay.includes(role)) {
-          this.rolesToDisplay.push(role)
-        }
-      })
-
-      this.filterRolesToPick()
-
-      this.changeDetectorRef.markForCheck()
-    }
-  }
-
   addRoleToDisplay(roleToAdd: string) {
-    this.rolesToDisplay.push(roleToAdd)
+    this.roleSectionsToDisplay.push(roleToAdd)
     this.filterRolesToPick()
   }
 
   filterRolesToPick() {
     this.rolesToPick = this.rolesToPick.filter(
-      (role) => !this.rolesToDisplay.includes(role)
+      (role) => !this.roleSectionsToDisplay.includes(role)
     )
+  }
+
+  updateContactsForRessource() {
+    this.contactsForRessourceByRole = this.control.value.reduce(
+      (acc, contact) => {
+        const completeOrganization = this.allOrganizations.get(
+          contact.organization.name
+        )
+
+        const updatedContact = {
+          ...contact,
+          organization:
+            completeOrganization ??
+            ({ name: contact.organization.name } as Organization),
+        }
+
+        if (!acc.has(contact.role)) {
+          acc.set(contact.role, [])
+        }
+
+        acc.get(contact.role).push(updatedContact)
+
+        return acc
+      },
+      new Map<Role, Individual[]>()
+    )
+
+    this.contactsAsDynElemByRole = this.control.value.reduce((acc, contact) => {
+      const completeOrganization = this.allOrganizations.get(
+        contact.organization.name
+      )
+
+      const updatedContact = {
+        ...contact,
+        organization:
+          completeOrganization ??
+          ({ name: contact.organization.name } as Organization),
+      }
+
+      const contactAsDynElem = {
+        component: ContactCardComponent,
+        inputs: {
+          contact: updatedContact,
+          removable: false,
+        },
+      } as DynamicElement
+
+      if (!acc.has(contact.role)) {
+        acc.set(contact.role, [])
+      }
+
+      acc.get(contact.role).push(contactAsDynElem)
+
+      return acc
+    }, new Map<Role, DynamicElement[]>())
+
+    this.changeDetectorRef.markForCheck()
+  }
+
+  manageRoleSectionsToDisplay(contactsForResource: Individual[]) {
+    const roles = contactsForResource.map(
+      (contact: Individual) => contact.role
+    ) as Role[]
+
+    roles.forEach((role: Role) => {
+      if (!this.roleSectionsToDisplay.includes(role)) {
+        this.roleSectionsToDisplay.push(role)
+      }
+    })
   }
 
   removeContact(index: number) {
@@ -130,6 +198,22 @@ export class FormFieldContactsForResourceComponent
       (_, i) => i !== index
     )
     this.control.setValue(newContactsforRessource)
+  }
+
+  handleContactsChanged(event: DynamicElement[]) {
+    const newContactsOrdered = event.map(
+      (contactAsDynElem) => contactAsDynElem.inputs['contact']
+    ) as Individual[]
+
+    const role = newContactsOrdered[0].role
+
+    this.contactsForRessourceByRole.set(role, newContactsOrdered)
+
+    const newControlValue = Array.from(
+      this.contactsForRessourceByRole.values()
+    ).flat()
+
+    this.control.setValue(newControlValue)
   }
 
   protected roleToLabel(role: string): string {
@@ -140,16 +224,20 @@ export class FormFieldContactsForResourceComponent
    * gn-ui-autocomplete
    */
   displayWithFn: (user: UserModel) => string = (user) =>
-    `${user.name} ${user.surname}`
+    `${user.name} ${user.surname} ${
+      user.organisation ? `(${user.organisation})` : ''
+    }`
 
   /**
    * gn-ui-autocomplete
    */
   autoCompleteAction = (query: string) => {
+    const fuzzyFilter = createFuzzyFilter(query)
     return this.allUsers$.pipe(
       switchMap((users) => [
-        users.filter((user) => user.username.includes(query)),
+        users.filter((user) => fuzzyFilter(user.username)),
       ]),
+      map((results) => results.slice(0, 10)),
       debounceTime(300),
       distinctUntilChanged()
     )
@@ -159,12 +247,12 @@ export class FormFieldContactsForResourceComponent
    * gn-ui-autocomplete
    */
   addContact(contact: UserModel, role: string) {
-    let newContactsForRessource = {
+    const newContactsForRessource = {
       firstName: contact.name ?? '',
       lastName: contact.surname ?? '',
-      organization: {
-        name: contact.organisation,
-      },
+      organization:
+        this.allOrganizations.get(contact.organisation) ??
+        ({ name: contact.organisation } as Organization),
       email: contact.email ?? '',
       role,
       address: '',
@@ -172,49 +260,12 @@ export class FormFieldContactsForResourceComponent
       position: '',
     } as Individual
 
-    const newContactOrganization = this.getOrganizationByName(
-      contact.organisation
-    )
-
-    newContactsForRessource = {
-      ...newContactsForRessource,
-      organization: newContactOrganization,
-    }
-
     const newControlValue = [...this.control.value, newContactsForRessource]
 
     this.control.setValue(newControlValue)
   }
 
-  getContactsByRole(role: string): Individual[] {
-    return this.control.value.filter((contact: Individual) => {
-      return contact.role === role
-    })
-  }
-
-  getOrganizationByName(name: string): Organization {
-    return this.allOrganizations.get(name)
-  }
-
-  getContactByRoleForSortableList(role: string): Array<DynamicElement> {
-    return this.control.value
-      .filter((contact: Individual) => {
-        return contact.role === role
-      })
-      .map((contact) => ({
-        component: ContactCardComponent,
-        inputs: {
-          contact,
-          organization: contact.organization,
-          removable: false,
-        },
-      })) as Array<{
-      component: Type<any>
-      inputs: Record<string, any>
-    }>
-  }
-
-  handleContactOrderChange(event) {
-    console.log(event)
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe()
   }
 }

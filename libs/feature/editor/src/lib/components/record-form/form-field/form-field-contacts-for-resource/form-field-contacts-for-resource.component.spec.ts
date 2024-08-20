@@ -5,13 +5,15 @@ import { BehaviorSubject } from 'rxjs'
 import {
   Individual,
   Organization,
+  Role,
 } from '@geonetwork-ui/common/domain/model/record'
-import { ChangeDetectorRef, SimpleChanges } from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 import { ContactCardComponent } from '../../../contact-card/contact-card.component'
 import {
+  AutocompleteComponent,
   DropdownSelectorComponent,
   UiInputsModule,
 } from '@geonetwork-ui/ui/inputs'
@@ -38,22 +40,6 @@ describe('FormFieldContactsForResourceComponent', () => {
   let component: FormFieldContactsForResourceComponent
   let fixture: ComponentFixture<FormFieldContactsForResourceComponent>
 
-  const contactJohn: Individual = {
-    firstName: 'John',
-    lastName: 'Doe',
-    organization: { name: 'Org1' } as Organization,
-    email: 'john.doe@example.com',
-    role: 'author',
-  }
-
-  const contactJane: Individual = {
-    firstName: 'John',
-    lastName: 'Doe',
-    organization: { name: 'Org1' } as Organization,
-    email: 'john.doe@example.com',
-    role: 'custodian',
-  }
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -75,107 +61,164 @@ describe('FormFieldContactsForResourceComponent', () => {
         },
         ChangeDetectorRef,
       ],
-    }).compileComponents()
-  })
+    })
+      .overrideComponent(AutocompleteComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents()
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(FormFieldContactsForResourceComponent)
     component = fixture.componentInstance
     component.control = new FormControl<Individual[]>([])
     fixture.detectChanges()
   })
 
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should initialize with default values', () => {
-    expect(component.rolesToPick).toEqual([
-      'resource_provider',
-      'custodian',
-      'owner',
-      'point_of_contact',
-      'author',
-    ])
-    expect(component.rolesToDisplay).toEqual([])
-    expect(component.allOrganizations.size).toBe(2)
+  describe('ngOnInit', () => {
+    it('should initialize organizations', async () => {
+      await component.ngOnInit()
+
+      expect(component.allOrganizations.size).toBe(2)
+    })
   })
 
-  it('should fetch users on initialization', () => {
-    const platformService = TestBed.inject(PlatformServiceInterface)
-    expect(platformService.getUsers).toHaveBeenCalled()
+  describe('addRoleToDisplay', () => {
+    it('should add role to display and filter roles to pick', () => {
+      const initialRolesToPick = [...component.rolesToPick]
+      const roleToAdd = initialRolesToPick[0]
+
+      component.addRoleToDisplay(roleToAdd)
+
+      expect(component.roleSectionsToDisplay).toContain(roleToAdd)
+      expect(component.rolesToPick).not.toContain(roleToAdd)
+    })
   })
 
-  it('should subscribe to organizations and update the allOrganizations map', () => {
-    component.ngOnInit()
-    expect(component.allOrganizations.size).toBe(2)
-    expect(component.allOrganizations.get('Barbie Inc.')).toEqual(
-      organizationBarbie
-    )
+  describe('filterRolesToPick', () => {
+    it('should filter roles already in roleSectionsToDisplay', () => {
+      component.rolesToPick = ['custodian', 'owner'] as Role[]
+      component.roleSectionsToDisplay = ['custodian'] as Role[]
+
+      component.filterRolesToPick()
+
+      expect(component.rolesToPick).toEqual(['owner'])
+    })
   })
 
-  it('should add role to rolesToDisplay and remove from rolesToPick', () => {
-    component.addRoleToDisplay('owner')
-    expect(component.rolesToPick).not.toContain('owner')
-    expect(component.rolesToDisplay).toContain('owner')
+  describe('updateContactsForRessource', () => {
+    it('should update contactsForRessourceByRole and contactsAsDynElemByRole', () => {
+      const mockContact: Individual = {
+        role: 'owner',
+        organization: { name: 'Org1' } as Organization,
+      } as Individual
+
+      component.allOrganizations.set('Org1', { name: 'Org1' } as Organization)
+      component.control.setValue([mockContact])
+
+      component.updateContactsForRessource()
+
+      expect(component.contactsForRessourceByRole.get('owner')).toEqual([
+        mockContact,
+      ])
+      expect(component.contactsAsDynElemByRole.get('owner').length).toBe(1)
+    })
   })
 
-  it('should remove contact by index', () => {
-    component.control.setValue([
-      { firstName: 'John', lastName: 'Doe' } as Individual,
-    ])
-    component.removeContact(0)
-    expect(component.control.value.length).toBe(0)
+  describe('manageRoleSectionsToDisplay', () => {
+    it('should add new roles to roleSectionsToDisplay', () => {
+      const mockContact: Individual = {
+        role: 'owner',
+        organization: { name: 'Org1' } as Organization,
+      } as Individual
+
+      component.manageRoleSectionsToDisplay([mockContact])
+
+      expect(component.roleSectionsToDisplay).toContain('owner')
+    })
   })
 
-  it('should add a new contact with correct data', async () => {
-    const contact = {
-      name: 'John',
-      surname: 'Doe',
-      organisation: 'Org1',
-      email: 'john.doe@example.com',
-    } as UserModel
-    jest
-      .spyOn(component, 'getOrganizationByName')
-      .mockReturnValue({ name: 'Org1' } as Organization)
-    await component.addContact(contact, 'owner')
-    expect(component.control.value.length).toBe(1)
-    expect(component.control.value[0].firstName).toBe('John')
-    expect(component.control.value[0].lastName).toBe('Doe')
-    expect(component.control.value[0].organization.name).toBe('Org1')
+  describe('removeContact', () => {
+    it('should remove contact at specified index', () => {
+      const mockContacts: Individual[] = [
+        {
+          role: 'owner',
+          organization: { name: 'Org1' } as Organization,
+        } as Individual,
+        {
+          role: 'custodian',
+          organization: { name: 'Org2' } as Organization,
+        } as Individual,
+      ]
+
+      component.control.setValue(mockContacts)
+      component.removeContact(0)
+
+      expect(component.control.value.length).toBe(1)
+      expect(component.control.value[0]).toEqual(mockContacts[1])
+    })
   })
 
-  it('should handle ngOnChanges and update rolesToDisplay', () => {
-    const changes = {
-      control: {
-        currentValue: {
-          value: [contactJane, contactJohn],
-        },
-        previousValue: { value: [] },
-        firstChange: false,
-      },
-    } as unknown as SimpleChanges
-    component.ngOnChanges(changes)
-    expect(component.rolesToDisplay).toEqual([
-      contactJane.role,
-      contactJohn.role,
-    ])
+  describe('handleContactsChanged', () => {
+    it('should update contacts based on reordered dynamic elements', () => {
+      const mockContacts: Individual[] = [
+        {
+          role: 'owner',
+          organization: { name: 'Org1' } as Organization,
+        } as Individual,
+        {
+          role: 'owner',
+          organization: { name: 'Org2' } as Organization,
+        } as Individual,
+      ]
+
+      component.contactsForRessourceByRole.set('owner', [mockContacts[0]])
+      component.contactsForRessourceByRole.set('owner', [mockContacts[1]])
+
+      const reorderedElements = [
+        { inputs: { contact: mockContacts[1] } } as any,
+        { inputs: { contact: mockContacts[0] } } as any,
+      ]
+
+      component.handleContactsChanged(reorderedElements)
+
+      const newControlValue = component.control.value
+      expect(newControlValue[0]).toEqual(mockContacts[1])
+      expect(newControlValue[1]).toEqual(mockContacts[0])
+    })
   })
 
-  it('should return contacts by role', () => {
-    const contacts: Individual[] = [
-      { role: 'owner' } as Individual,
-      { role: 'custodian' } as Individual,
-      { role: 'owner' } as Individual,
-    ]
-    component.control.setValue(contacts)
-    const result = component.getContactsByRole('owner')
-    expect(result.length).toBe(2)
+  describe('addContact', () => {
+    it('should add a new contact to the control value', () => {
+      const mockUser: UserModel = {
+        username: 'user1',
+        name: 'John',
+        surname: 'Doe',
+        organisation: 'Org1',
+      } as UserModel
+
+      component.allOrganizations.set('Org1', { name: 'Org1' } as Organization)
+      const initialContacts = component.control.value.length
+
+      component.addContact(mockUser, 'owner')
+
+      expect(component.control.value.length).toBe(initialContacts + 1)
+      expect(component.control.value[initialContacts].role).toBe('owner')
+      expect(component.control.value[initialContacts].organization.name).toBe(
+        'Org1'
+      )
+    })
   })
 
-  it('should return the correct organization by name', () => {
-    const org = { name: 'Org1' } as Organization
-    component.allOrganizations.set('Org1', org)
-    expect(component.getOrganizationByName('Org1')).toBe(org)
+  describe('ngOnDestroy', () => {
+    it('should unsubscribe from all subscriptions', () => {
+      const subscriptionSpy = jest.spyOn(component.subscription, 'unsubscribe')
+
+      component.ngOnDestroy()
+
+      expect(subscriptionSpy).toHaveBeenCalled()
+    })
   })
 })

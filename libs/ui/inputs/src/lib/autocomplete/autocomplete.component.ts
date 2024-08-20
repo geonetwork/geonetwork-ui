@@ -61,7 +61,7 @@ export class AutocompleteComponent
   @Input() action: (value: string) => Observable<AutocompleteItem[]>
   @Input() value?: AutocompleteItem
   @Input() clearOnSelection = false
-  @Input() completeOnSelection = false
+  @Input() preventCompleteOnSelection = false
   @Input() autoFocus = false
   @Input() minCharacterCount? = 3
   @Input() allowSubmit = true
@@ -207,12 +207,19 @@ export class AutocompleteComponent
     this.inputSubmitted.emit(this.inputRef.nativeElement.value)
   }
 
+  /**
+   * This function is triggered when an item is selected in the list of displayed items.
+   * If preventCompleteOnSelection is true then the input will be left as entered by the user.
+   * If preventCompleteOnSelection is false (by default) then the input will be completed with the item selected by the user.
+   * If clearOnSelection is true then the input will be cleared upon selection.
+   * @param event
+   */
   handleSelection(event: MatAutocompleteSelectedEvent) {
     this.cancelEnter = true
     this.itemSelected.emit(event.option.value)
-    if (this.completeOnSelection) {
-      this.lastInputValue$.pipe(first()).subscribe((any) => {
-        this.inputRef.nativeElement.value = any
+    if (this.preventCompleteOnSelection) {
+      this.lastInputValue$.pipe(first()).subscribe((lastInputValue) => {
+        this.inputRef.nativeElement.value = lastInputValue
       })
       return
     }

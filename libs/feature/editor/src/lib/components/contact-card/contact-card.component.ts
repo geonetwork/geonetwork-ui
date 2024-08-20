@@ -5,13 +5,11 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import {
-  Individual,
-  Organization,
-} from '@geonetwork-ui/common/domain/model/record'
+import { Individual } from '@geonetwork-ui/common/domain/model/record'
 import { MatIconModule } from '@angular/material/icon'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 
 @Component({
   selector: 'gn-ui-contact-card',
@@ -19,11 +17,10 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
   styleUrls: ['./contact-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, MatIconModule, ButtonComponent],
+  imports: [CommonModule, MatIconModule, ButtonComponent, ThumbnailComponent],
 })
 export class ContactCardComponent {
   @Input() contact: Individual
-  @Input() organization: Organization
   @Input() removable = true
   @Output() contactRemoved = new EventEmitter<Individual>()
 

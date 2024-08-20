@@ -16,11 +16,18 @@
   </div>
   <div
     class="mt-8"
-    *ngIf="rolesToDisplay && rolesToDisplay.length > 0; else noContact"
+    *ngIf="
+      roleSectionsToDisplay && roleSectionsToDisplay.length > 0;
+      else noContact
+    "
     data-test="displayedRoles"
   >
     <div
-      *ngFor="let role of rolesToDisplay; let index = index; let isLast = last"
+      *ngFor="
+        let role of roleSectionsToDisplay;
+        let index = index;
+        let isLast = last
+      "
       class="flex flex-col gap-4"
     >
       <div class="flex flex-row justify-between">
@@ -38,20 +45,23 @@
         [clearOnSelection]="true"
       >
       </gn-ui-autocomplete>
-      <ng-container *ngIf="getContactsByRole(role).length > 1">
-        <gn-ui-sortable-list
-          [elements]="getContactByRoleForSortableList(role)"
-          (elementsChange)="handleContactOrderChange($event)"
-        ></gn-ui-sortable-list>
+
+      <ng-container *ngIf="contactsForRessourceByRole.get(role) as contacts">
+        <ng-container *ngIf="contacts.length > 1">
+          <gn-ui-sortable-list
+            [elements]="contactsAsDynElemByRole.get(role)"
+            (elementsChange)="handleContactsChanged($event)"
+          ></gn-ui-sortable-list>
+        </ng-container>
+        <ng-container *ngIf="contacts.length === 1">
+          <ng-container *ngFor="let contact of contacts">
+            <gn-ui-contact-card
+              [contact]="contact"
+              (contactRemoved)="removeContact(index)"
+            ></gn-ui-contact-card> </ng-container
+        ></ng-container>
       </ng-container>
-      <ng-container *ngIf="getContactsByRole(role).length === 1">
-        <ng-container *ngFor="let contact of getContactsByRole(role)">
-          <gn-ui-contact-card
-            [contact]="contact"
-            [organization]="getOrganizationByName(contact.organization.name)"
-            (contactRemoved)="removeContact(index)"
-          ></gn-ui-contact-card> </ng-container
-      ></ng-container>
+
       <hr class="border-t-[#D6D3D1] mt-4 mb-6" *ngIf="!isLast" />
     </div>
   </div>
