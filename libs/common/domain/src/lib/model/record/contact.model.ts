@@ -25,37 +25,31 @@ export const RoleValues = [
   'user', // Party who uses the resource
 ]
 
-export const RoleLabels = new Map<string, string>([
-  ['unspecified', marker('metadata.contactForResource.role.unspecified')],
-  ['other', marker('metadata.contactForResource.role.other')],
-  ['author', marker('metadata.contactForResource.role.author')],
-  ['collaborator', marker('metadata.contactForResource.role.collaborator')],
-  ['contributor', marker('metadata.contactForResource.role.contributor')],
-  ['custodian', marker('metadata.contactForResource.role.custodian')],
-  ['distributor', marker('metadata.contactForResource.role.distributor')],
-  ['editor', marker('metadata.contactForResource.role.editor')],
-  ['funder', marker('metadata.contactForResource.role.funder')],
-  ['mediator', marker('metadata.contactForResource.role.mediator')],
-  ['originator', marker('metadata.contactForResource.role.originator')],
-  ['owner', marker('metadata.contactForResource.role.owner')],
-  [
-    'point_of_contact',
-    marker('metadata.contactForResource.role.point_of_contact'),
-  ],
+export const RoleLabels = new Map<Role, string>([
+  ['unspecified', marker('domain.contact.role.unspecified')],
+  ['other', marker('domain.contact.role.other')],
+  ['author', marker('domain.contact.role.author')],
+  ['collaborator', marker('domain.contact.role.collaborator')],
+  ['contributor', marker('domain.contact.role.contributor')],
+  ['custodian', marker('domain.contact.role.custodian')],
+  ['distributor', marker('domain.contact.role.distributor')],
+  ['editor', marker('domain.contact.role.editor')],
+  ['funder', marker('domain.contact.role.funder')],
+  ['mediator', marker('domain.contact.role.mediator')],
+  ['originator', marker('domain.contact.role.originator')],
+  ['owner', marker('domain.contact.role.owner')],
+  ['point_of_contact', marker('domain.contact.role.point_of_contact')],
   [
     'principal_investigator',
-    marker('metadata.contactForResource.role.principal_investigator'),
+    marker('domain.contact.role.principal_investigator'),
   ],
-  ['processor', marker('metadata.contactForResource.role.processor')],
-  ['publisher', marker('metadata.contactForResource.role.publisher')],
-  [
-    'resource_provider',
-    marker('metadata.contactForResource.role.resource_provider'),
-  ],
-  ['rights_holder', marker('metadata.contactForResource.role.rights_holder')],
-  ['sponsor', marker('metadata.contactForResource.role.sponsor')],
-  ['stakeholder', marker('metadata.contactForResource.role.stakeholder')],
-  ['user', marker('metadata.contactForResource.role.user')],
+  ['processor', marker('domain.contact.role.processor')],
+  ['publisher', marker('domain.contact.role.publisher')],
+  ['resource_provider', marker('domain.contact.role.resource_provider')],
+  ['rights_holder', marker('domain.contact.role.rights_holder')],
+  ['sponsor', marker('domain.contact.role.sponsor')],
+  ['stakeholder', marker('domain.contact.role.stakeholder')],
+  ['user', marker('domain.contact.role.user')],
 ])
 
 export type Role = typeof RoleValues[number]
