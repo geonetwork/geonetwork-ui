@@ -47,8 +47,5 @@ export const Primary: StoryObj<ContactCardComponent> = {
       phone: '123-456-7890',
       position: 'Senior Developer',
     },
-    organization: {
-      name: 'Example Organization',
-    },
   },
 }
