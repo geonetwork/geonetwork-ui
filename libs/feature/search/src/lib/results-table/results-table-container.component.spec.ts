@@ -136,6 +136,14 @@ describe('ResultsTableContainerComponent', () => {
         expect(recordsRepository.deleteRecord).toHaveBeenCalled()
         expect(recordsRepository.clearRecordDraft).toHaveBeenCalled()
         expect(searchFacade.requestNewResults).toHaveBeenCalled()
+        expect(notificationsService.showNotification).toHaveBeenCalledWith(
+          {
+            type: 'success',
+            title: 'editor.record.deleteSuccess.title',
+            text: 'editor.record.deleteSuccess.body',
+          },
+          2500
+        )
       })
     })
   })
