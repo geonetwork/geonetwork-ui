@@ -45,6 +45,7 @@ class MdViewFacadeMock {
   otherLinks$ = new BehaviorSubject([])
   related$ = new BehaviorSubject(null)
   error$ = new BehaviorSubject(null)
+  isMetadataLoading$ = new BehaviorSubject(false)
 }
 
 class SearchServiceMock {
@@ -659,20 +660,39 @@ describe('RecordMetadataComponent', () => {
     })
 
     describe('When there are no link (download, api or other links)', () => {
-      beforeEach(() => {
-        facade.apiLinks$.next([])
-        facade.downloadLinks$.next([])
-        facade.otherLinks$.next([])
-        fixture.detectChanges()
+      describe('When the metadata is not fully loaded', () => {
+        beforeEach(() => {
+          facade.isMetadataLoading$.next(true)
+          facade.apiLinks$.next([])
+          facade.downloadLinks$.next([])
+          facade.otherLinks$.next([])
+          fixture.detectChanges()
+        })
+        it("doesn' show the no link error block", () => {
+          const result = fixture.debugElement.query(
+            By.css('[data-test="dataset-has-no-link-block"]')
+          )
+          expect(result).toBeFalsy()
+        })
       })
-      it('shows the no link error block', () => {
-        const result = fixture.debugElement.query(
-          By.css('[data-test="dataset-has-no-link-block"]')
-        )
-        expect(result).toBeTruthy()
-        expect(result.componentInstance.type).toBe(
-          ErrorType.DATASET_HAS_NO_LINK
-        )
+
+      describe('When the metadata is not fully loaded', () => {
+        beforeEach(() => {
+          facade.isMetadataLoading$.next(false)
+          facade.apiLinks$.next([])
+          facade.downloadLinks$.next([])
+          facade.otherLinks$.next([])
+          fixture.detectChanges()
+        })
+        it('shows the no link error block', () => {
+          const result = fixture.debugElement.query(
+            By.css('[data-test="dataset-has-no-link-block"]')
+          )
+          expect(result).toBeTruthy()
+          expect(result.componentInstance.type).toBe(
+            ErrorType.DATASET_HAS_NO_LINK
+          )
+        })
       })
     })
   })

@@ -93,6 +93,13 @@ describe('dataset pages', () => {
   })
 
   describe('GENERAL : display & functions', () => {
+    describe('no-link-error block', () => {
+      it("shouldn't be there until metadata is fully loaded", () => {
+        cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
+        cy.get('[data-test=dataset-has-no-link-block]').should('not.exist')
+      })
+    })
+
     describe('header', () => {
       it('should display the title, favorite star group and arrow back', () => {
         cy.get('datahub-header-record')
@@ -577,10 +584,24 @@ describe('dataset pages', () => {
       })
 
       describe('When there is no link', () => {
-        beforeEach(() => {
-          cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
-        })
         it('display the error datasetHasNoLink error block', () => {
+          cy.login()
+
+          cy.intercept(
+            'GET',
+            '/geonetwork/srv/api/userfeedback?metadataUuid=a3774ef6-809d-4dd1-984f-9254f49cbd0a',
+            (req) => {
+              // Test if the error block is not shown before the metadata is fully loaded
+              cy.get('[data-test="dataset-has-no-link-block"]').should(
+                'not.exist'
+              )
+            }
+          ).as('getData')
+
+          cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
+
+          cy.wait('@getData')
+
           cy.get('[data-test="dataset-has-no-link-block"]').should('exist')
         })
       })
