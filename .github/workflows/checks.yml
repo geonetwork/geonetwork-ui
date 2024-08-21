@@ -160,7 +160,7 @@ jobs:
         run: cd tools && docker build . -f pipelines/Dockerfile -t geonetwork/geonetwork-ui-tools-pipelines:latest
 
       - name: Build the backend
-        run: sudo docker-compose -f support-services/docker-compose.yml up -d init
+        run: docker compose -f support-services/docker-compose.yml up -d init
 
       - name: Install dependencies
         run: |
