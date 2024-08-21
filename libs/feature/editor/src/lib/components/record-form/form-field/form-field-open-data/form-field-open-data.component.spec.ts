@@ -3,11 +3,9 @@ import { FormFieldOpenDataComponent } from './form-field-open-data.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { FormControl } from '@angular/forms'
 
-jest.mock('@geonetwork-ui/util/app-config', () => {
+jest.mock('./../../../../fields.config', () => {
   return {
-    getGlobalConfig: () => ({
-      LICENSES: ['CC-BY'],
-    }),
+    OPEN_DATA_LICENSES: ['CC-BY'],
   }
 })
 
@@ -23,6 +21,7 @@ describe('FormFieldOpenDataComponent', () => {
     fixture = TestBed.createComponent(FormFieldOpenDataComponent)
     component = fixture.componentInstance
     component.control = new FormControl()
+    component.control.setValue([{ text: 'odc-by' }])
     fixture.detectChanges()
   })
 

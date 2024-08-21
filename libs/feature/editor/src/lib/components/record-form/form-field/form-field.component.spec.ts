@@ -23,11 +23,6 @@ class EditorFacadeMock {
   record$ = new BehaviorSubject(DATASET_RECORDS[0])
 }
 
-jest.mock('@geonetwork-ui/util/app-config', () => ({
-  getGlobalConfig: () => ({ LICENSES: ['cc-by'] }),
-  loadAppConfig: () => Promise.resolve(),
-}))
-
 describe('FormFieldComponent', () => {
   let component: FormFieldComponent
   let fixture: ComponentFixture<FormFieldComponent>
