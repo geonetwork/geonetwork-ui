@@ -172,6 +172,8 @@
   "editor.record.deleteError.body": "",
   "editor.record.deleteError.closeMessage": "",
   "editor.record.deleteError.title": "",
+  "editor.record.deleteSuccess.body": "",
+  "editor.record.deleteSuccess.title": "",
   "editor.record.form.bottomButtons.comeBackLater": "",
   "editor.record.form.bottomButtons.next": "",
   "editor.record.form.bottomButtons.previous": "",
