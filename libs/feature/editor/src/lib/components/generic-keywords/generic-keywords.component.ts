@@ -16,6 +16,8 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { map } from 'rxjs'
 import { Keyword } from '@geonetwork-ui/common/domain/model/record'
 import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
+import { MatIconModule } from '@angular/material/icon'
+import { TranslateModule } from '@ngx-translate/core'
 
 type AutocompleteItem = { title: string; value: Keyword }
 
@@ -31,6 +33,8 @@ type AutocompleteItem = { title: string; value: Keyword }
     CommonModule,
     UiWidgetsModule,
     AutocompleteComponent,
+    MatIconModule,
+    TranslateModule,
   ],
 })
 export class GenericKeywordsComponent {
@@ -76,5 +80,10 @@ export class GenericKeywordsComponent {
     this.keywords = this.keywords.filter((k) => k.label !== keyword.label)
     this.changedKeywords.emit(this.keywords)
     this.deletedKeyword.emit(keyword)
+  }
+
+  isPlaceWithoutExtent(keyword: Keyword): boolean {
+    if (keyword.type !== 'place') return false
+    return !keyword.bbox
   }
 }

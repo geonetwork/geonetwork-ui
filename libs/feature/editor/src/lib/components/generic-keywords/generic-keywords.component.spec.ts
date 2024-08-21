@@ -118,4 +118,32 @@ describe('GenericKeywordsComponent', () => {
       expect(emittedDeletedKeyword).toEqual(keyword)
     })
   })
+
+  describe('isPlaceWithoutExtent', () => {
+    it('should return true if keyword is a place and does not have a bbox', () => {
+      const keyword: Keyword = {
+        label: 'Address',
+        thesaurus: { id: '1' },
+        type: 'place',
+      }
+      expect(component.isPlaceWithoutExtent(keyword)).toBeTruthy()
+    })
+    it('should return false if keyword is not a place', () => {
+      const keyword: Keyword = {
+        label: 'Address',
+        thesaurus: { id: '1' },
+        type: 'theme',
+      }
+      expect(component.isPlaceWithoutExtent(keyword)).toBeFalsy()
+    })
+    it('should return false if keyword is a place and has a bbox', () => {
+      const keyword: Keyword = {
+        label: 'Address',
+        thesaurus: { id: '1' },
+        type: 'place',
+        bbox: [1, 2, 3, 4],
+      }
+      expect(component.isPlaceWithoutExtent(keyword)).toBeFalsy()
+    })
+  })
 })

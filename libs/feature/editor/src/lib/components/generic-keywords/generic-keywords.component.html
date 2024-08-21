@@ -13,7 +13,14 @@
       *ngFor="let keyword of keywords"
       [removable]="true"
       (badgeRemoveClicked)="removeKeyword(keyword)"
-      >{{ keyword.label }}</gn-ui-badge
-    >
+      >{{ keyword.label }}
+
+      <mat-icon
+        *ngIf="isPlaceWithoutExtent(keyword)"
+        [title]="'editor.form.placeKeywordWithoutExtent' | translate"
+        class="material-symbols-outlined"
+        >warning</mat-icon
+      >
+    </gn-ui-badge>
   </div>
 </div>
