@@ -1,4 +1,7 @@
-<div class="w-full flex flex-row p-8 items-center gap-6">
+<div
+  class="w-full flex flex-row p-8 items-center gap-6"
+  data-test="pageSelectorButtons"
+>
   <ng-container
     *ngFor="let page of pages$ | async; let index = index; let isLast = last"
   >

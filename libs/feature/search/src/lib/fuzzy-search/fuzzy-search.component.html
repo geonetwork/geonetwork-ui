@@ -6,6 +6,6 @@
   (inputSubmitted)="handleInputSubmission($event)"
   (inputCleared)="handleInputCleared()"
   [value]="searchInputValue$ | async"
-  [clearOnSelection]="true"
+  [preventCompleteOnSelection]="true"
   [autoFocus]="autoFocus"
 ></gn-ui-autocomplete>

@@ -302,7 +302,6 @@ describe('AutocompleteComponent', () => {
     }
     describe('when true', () => {
       beforeEach(() => {
-        component.clearOnSelection = true
         component.itemSelected.subscribe((event) => (selectionEmitted = event))
         fixture.detectChanges()
         component.handleSelection(selectionEvent)
@@ -313,14 +312,27 @@ describe('AutocompleteComponent', () => {
       it('emits selection event', () => {
         expect(selectionEmitted).toEqual('first')
       })
-      describe('if clear on selection', () => {
+      describe('if preventCompleteOnSelection on selection', () => {
         it('set input value to last entered text', () => {
+          component.clearOnSelection = false
+          component.preventCompleteOnSelection = true
+
           component.control.setValue('second')
           component.handleSelection(selectionEvent)
           expect(component.inputRef.nativeElement.value).toEqual('second')
           component.control.setValue({ title: 'third' })
           component.handleSelection(selectionEvent)
           expect(component.inputRef.nativeElement.value).toEqual('second')
+        })
+      })
+      describe('if clearOnSelection on selection', () => {
+        it('set input value to empty string', () => {
+          component.clearOnSelection = true
+          component.preventCompleteOnSelection = false
+
+          component.control.setValue('second')
+          component.handleSelection(selectionEvent)
+          expect(component.inputRef.nativeElement.value).toEqual('')
         })
       })
     })

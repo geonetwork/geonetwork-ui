@@ -17,7 +17,7 @@ import {
 import { MatIconModule } from '@angular/material/icon'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
-type DynamicElement = {
+export type DynamicElement = {
   component: Type<unknown>
   inputs: Record<string, unknown>
 }
@@ -40,7 +40,7 @@ type DynamicElement = {
 })
 export class SortableListComponent {
   @Input() elements: Array<DynamicElement>
-  @Input() addOptions: Array<{ buttonLabel: string; eventName: string }>
+  @Input() addOptions: Array<{ buttonLabel: string; eventName: string }> = []
   @Output() elementsChange = new EventEmitter<Array<DynamicElement>>()
   @Output() add = new EventEmitter<string>()
 

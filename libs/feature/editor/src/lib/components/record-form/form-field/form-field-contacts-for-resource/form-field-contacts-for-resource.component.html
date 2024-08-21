@@ -1,0 +1,76 @@
+<div class="flex flex-col gap-3">
+  <div class="flex flex-row flex-wrap gap-2" data-test="rolesToPick">
+    <ng-container *ngFor="let role of rolesToPick">
+      <gn-ui-button
+        extraClass="px-2 py-1.5"
+        (buttonClick)="addRoleToDisplay(role)"
+      >
+        <div class="flex flex-row gap-1 items-center">
+          <span class="text-primary text-[20px] leading-[0] font-bold pb-[5px]"
+            >&#8330;</span
+          >
+          <span class="font-bold" translate>{{ roleToLabel(role) }}</span>
+        </div>
+      </gn-ui-button>
+    </ng-container>
+  </div>
+  <div
+    class="mt-8"
+    *ngIf="
+      roleSectionsToDisplay && roleSectionsToDisplay.length > 0;
+      else noContact
+    "
+    data-test="displayedRoles"
+  >
+    <div
+      *ngFor="
+        let role of roleSectionsToDisplay;
+        let index = index;
+        let isLast = last
+      "
+      class="flex flex-col gap-4"
+    >
+      <div class="flex flex-row justify-between">
+        <span class="font-bold text-base" translate>{{
+          roleToLabel(role)
+        }}</span>
+      </div>
+
+      <gn-ui-autocomplete
+        [placeholder]="'Choose a contact'"
+        [action]="autoCompleteAction"
+        (itemSelected)="addContact($event, role)"
+        [displayWithFn]="displayWithFn"
+        [minCharacterCount]="1"
+        [clearOnSelection]="true"
+      >
+      </gn-ui-autocomplete>
+
+      <ng-container *ngIf="contactsForRessourceByRole.get(role) as contacts">
+        <ng-container *ngIf="contacts.length > 1">
+          <gn-ui-sortable-list
+            [elements]="contactsAsDynElemByRole.get(role)"
+            (elementsChange)="handleContactsChanged($event)"
+          ></gn-ui-sortable-list>
+        </ng-container>
+        <ng-container *ngIf="contacts.length === 1">
+          <ng-container *ngFor="let contact of contacts">
+            <gn-ui-contact-card
+              [contact]="contact"
+              (contactRemoved)="removeContact(index)"
+            ></gn-ui-contact-card> </ng-container
+        ></ng-container>
+      </ng-container>
+
+      <hr class="border-t-[#D6D3D1] mt-4 mb-6" *ngIf="!isLast" />
+    </div>
+  </div>
+  <ng-template #noContact>
+    <div
+      class="p-4 border border-primary bg-primary-lightest rounded-lg"
+      translate
+    >
+      editor.record.form.field.contactsForResource.noContact
+    </div>
+  </ng-template>
+</div>

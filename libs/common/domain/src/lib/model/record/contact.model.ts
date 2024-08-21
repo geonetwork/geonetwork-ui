@@ -1,4 +1,5 @@
 import { Organization } from './organization.model'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 export const RoleValues = [
   'unspecified',
@@ -23,6 +24,33 @@ export const RoleValues = [
   'stakeholder', // party who has an interest in the resource or the use of the resource
   'user', // Party who uses the resource
 ]
+
+export const RoleLabels = new Map<Role, string>([
+  ['unspecified', marker('domain.contact.role.unspecified')],
+  ['other', marker('domain.contact.role.other')],
+  ['author', marker('domain.contact.role.author')],
+  ['collaborator', marker('domain.contact.role.collaborator')],
+  ['contributor', marker('domain.contact.role.contributor')],
+  ['custodian', marker('domain.contact.role.custodian')],
+  ['distributor', marker('domain.contact.role.distributor')],
+  ['editor', marker('domain.contact.role.editor')],
+  ['funder', marker('domain.contact.role.funder')],
+  ['mediator', marker('domain.contact.role.mediator')],
+  ['originator', marker('domain.contact.role.originator')],
+  ['owner', marker('domain.contact.role.owner')],
+  ['point_of_contact', marker('domain.contact.role.point_of_contact')],
+  [
+    'principal_investigator',
+    marker('domain.contact.role.principal_investigator'),
+  ],
+  ['processor', marker('domain.contact.role.processor')],
+  ['publisher', marker('domain.contact.role.publisher')],
+  ['resource_provider', marker('domain.contact.role.resource_provider')],
+  ['rights_holder', marker('domain.contact.role.rights_holder')],
+  ['sponsor', marker('domain.contact.role.sponsor')],
+  ['stakeholder', marker('domain.contact.role.stakeholder')],
+  ['user', marker('domain.contact.role.user')],
+])
 
 export type Role = typeof RoleValues[number]
 

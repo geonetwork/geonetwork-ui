@@ -32,6 +32,7 @@ import { FormFieldOverviewsComponent } from './form-field-overviews/form-field-o
 import { map, take } from 'rxjs/operators'
 import { EditorFacade } from '../../../+state/editor.facade'
 import { FormFieldConfig } from '../../../models'
+import { FormFieldContactsForResourceComponent } from './form-field-contacts-for-resource/form-field-contacts-for-resource.component'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -59,6 +60,7 @@ import { FormFieldConfig } from '../../../models'
     FormFieldKeywordsComponent,
     TranslateModule,
     FormFieldOverviewsComponent,
+    FormFieldContactsForResourceComponent,
   ],
 })
 export class FormFieldComponent {
@@ -121,6 +123,9 @@ export class FormFieldComponent {
   }
   get isKeywords() {
     return this.model === 'keywords'
+  }
+  get isContactsForResource() {
+    return this.model === 'contactsForResource'
   }
 
   get withoutWrapper() {
