@@ -172,6 +172,8 @@
   "editor.record.deleteError.body": "La fiche n'a pas pu être supprimée :",
   "editor.record.deleteError.closeMessage": "Compris",
   "editor.record.deleteError.title": "Erreur lors de la suppression",
+  "editor.record.deleteSuccess.body": "La fiche a bien été supprimée !",
+  "editor.record.deleteSuccess.title": "Suppression réussie",
   "editor.record.form.bottomButtons.comeBackLater": "Revenir plus tard",
   "editor.record.form.bottomButtons.next": "Suivant",
   "editor.record.form.bottomButtons.previous": "Précédent",

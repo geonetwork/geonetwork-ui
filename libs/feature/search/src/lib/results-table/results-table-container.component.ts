@@ -54,6 +54,18 @@ export class ResultsTableContainerComponent implements OnDestroy {
         next: () => {
           this.recordsRepository.clearRecordDraft(uniqueIdentifier)
           this.searchFacade.requestNewResults()
+          this.notificationsService.showNotification(
+            {
+              type: 'success',
+              title: this.translateService.instant(
+                'editor.record.deleteSuccess.title'
+              ),
+              text: `${this.translateService.instant(
+                'editor.record.deleteSuccess.body'
+              )}`,
+            },
+            2500
+          )
         },
         error: (error) => {
           this.notificationsService.showNotification({

@@ -172,6 +172,8 @@
   "editor.record.deleteError.body": "Der Datensatz konnte nicht gelöscht werden:",
   "editor.record.deleteError.closeMessage": "Verstanden",
   "editor.record.deleteError.title": "Fehler beim Löschen des Datensatzes",
+  "editor.record.deleteSuccess.body": "",
+  "editor.record.deleteSuccess.title": "",
   "editor.record.form.bottomButtons.comeBackLater": "",
   "editor.record.form.bottomButtons.next": "",
   "editor.record.form.bottomButtons.previous": "",

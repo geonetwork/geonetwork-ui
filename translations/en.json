@@ -172,6 +172,8 @@
   "editor.record.deleteError.body": "The record could not be deleted:",
   "editor.record.deleteError.closeMessage": "Understood",
   "editor.record.deleteError.title": "Error deleting record",
+  "editor.record.deleteSuccess.body": "The record was successfully deleted !",
+  "editor.record.deleteSuccess.title": "Delete success",
   "editor.record.form.bottomButtons.comeBackLater": "Come back later",
   "editor.record.form.bottomButtons.next": "Next",
   "editor.record.form.bottomButtons.previous": "Previous",

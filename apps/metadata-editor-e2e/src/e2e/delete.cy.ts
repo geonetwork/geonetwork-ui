@@ -34,6 +34,7 @@ describe('delete', () => {
       cy.get('[data-cy="table-row"]')
         .contains('My new record')
         .should('have.length', 0)
+      cy.get('gn-ui-notification').should('contain', 'Delete success')
       cy.get('[data-cy="dashboard-drafts-count"]').should('contain', '0')
     })
   })
