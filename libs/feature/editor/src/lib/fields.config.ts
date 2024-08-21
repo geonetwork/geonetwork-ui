@@ -201,3 +201,15 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
     },
   ],
 }
+
+/************************************************************
+ ***************           LICENSES            *****************
+ ************************************************************
+ */
+export const OPEN_DATA_LICENSES: string[] = [
+  'etalab',
+  'etalab-v2',
+  'odbl',
+  'odc-by',
+  'pddl',
+]

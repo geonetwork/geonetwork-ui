@@ -101,7 +101,6 @@ export function loadAppConfig() {
           'web_component_embedder_url',
           'languages',
           'contact_email',
-          'licenses',
         ],
         warnings,
         errors
@@ -129,7 +128,6 @@ export function loadAppConfig() {
                 parsedGlobalSection.web_component_embedder_url,
               LANGUAGES: parsedGlobalSection.languages,
               CONTACT_EMAIL: parsedGlobalSection.contact_email,
-              LICENSES: parsedGlobalSection.licenses,
             } as GlobalConfig)
 
       const parsedLayersSections = parseMultiConfigSection(

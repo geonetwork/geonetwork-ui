@@ -8,8 +8,6 @@ import {
   EditorFieldWithValue,
   EditorSectionWithValues,
 } from '../../+state/editor.models'
-import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -17,12 +15,12 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
   styleUrls: ['./record-form.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, FormFieldComponent, TranslateModule, UiInputsModule],
+  imports: [CommonModule, FormFieldComponent, TranslateModule],
 })
 export class RecordFormComponent {
   constructor(public facade: EditorFacade) {}
 
-  handleFieldValueChange(model: any, newValue: EditorFieldValue) {
+  handleFieldValueChange(model: string, newValue: EditorFieldValue) {
     if (!model) {
       return
     }
