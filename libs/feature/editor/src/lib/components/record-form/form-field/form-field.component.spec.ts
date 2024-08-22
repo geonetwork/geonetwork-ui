@@ -15,6 +15,7 @@ import { EditorFacade } from '../../../+state/editor.facade'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { FormControl } from '@angular/forms'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('FormFieldComponent', () => {
   let component: FormFieldComponent
@@ -26,6 +27,7 @@ describe('FormFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [TranslateModule.forRoot()],
       providers: [
         MockProvider(EditorFacade, {
           record$: new BehaviorSubject(DATASET_RECORDS[0]),
