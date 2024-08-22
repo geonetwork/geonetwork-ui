@@ -46,6 +46,10 @@ export class EditorFacade {
     this.store.dispatch(EditorActions.saveRecord())
   }
 
+  undoRecordDraft() {
+    this.store.dispatch(EditorActions.undoRecordDraft())
+  }
+
   updateRecordField(field: string, value: unknown) {
     this.store.dispatch(EditorActions.updateRecordField({ field, value }))
   }

@@ -6,7 +6,10 @@ import { MatIconModule } from '@angular/material/icon'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { combineLatest, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { MatDialog } from '@angular/material/dialog'
+import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 @Component({
   selector: 'md-editor-top-toolbar',
@@ -16,6 +19,7 @@ import { TranslateModule } from '@ngx-translate/core'
     PublishButtonComponent,
     ButtonComponent,
     MatIconModule,
+    MatTooltipModule,
     TranslateModule,
   ],
   templateUrl: './top-toolbar.component.html',
@@ -46,5 +50,35 @@ export class TopToolbarComponent {
       })
     )
 
-  constructor(private editorFacade: EditorFacade) {}
+  constructor(
+    public dialog: MatDialog,
+    private translateService: TranslateService,
+    private editorFacade: EditorFacade
+  ) {}
+
+  confirmUndo() {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: this.translateService.instant(
+          'editor.record.undo.confirmation.title'
+        ),
+        message: this.translateService.instant(
+          'editor.record.undo.confirmation.message'
+        ),
+        confirmText: this.translateService.instant(
+          'editor.record.undo.confirmation.confirmText'
+        ),
+        cancelText: this.translateService.instant(
+          'editor.record.undo.confirmation.cancelText'
+        ),
+      },
+      restoreFocus: true,
+    })
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed) {
+        this.editorFacade.undoRecordDraft()
+      }
+    })
+  }
 }
