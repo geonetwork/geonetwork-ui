@@ -4,9 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { DATASET_RECORDS, EDITOR_CONFIG } from '@geonetwork-ui/common/fixtures'
 import { BehaviorSubject, Subject } from 'rxjs'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
-import { TranslateModule } from '@ngx-translate/core'
-import { PageSelectorComponent } from './components/page-selector/page-selector.component'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
+import { MockBuilder } from 'ng-mocks'
+import { TranslateModule } from '@ngx-translate/core'
 
 const getRoute = () => ({
   snapshot: {
@@ -41,13 +41,13 @@ describe('EditPageComponent', () => {
   let facade: EditorFacade
   let notificationsService: NotificationsService
 
+  beforeEach(() => {
+    return MockBuilder(EditPageComponent)
+  })
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        EditPageComponent,
-        TranslateModule.forRoot(),
-        PageSelectorComponent,
-      ],
+      imports: [TranslateModule.forRoot()],
       providers: [
         {
           provide: ActivatedRoute,
