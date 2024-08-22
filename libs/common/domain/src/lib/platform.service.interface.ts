@@ -21,6 +21,10 @@ export abstract class PlatformServiceInterface {
     keywordTypes: KeywordType[]
   ): Observable<Keyword[]>
   abstract getKeywordsByUri(uri: string): Observable<Keyword[]>
+  abstract searchKeywordsInThesaurus(
+    query: string,
+    thesaurusId: string
+  ): Observable<Keyword[]>
   abstract getUserFeedbacks(recordUuid: string): Observable<UserFeedback[]>
   abstract postUserFeedbacks(recordUuid: UserFeedback): Observable<void>
 }

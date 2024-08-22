@@ -175,7 +175,6 @@ class LangServiceMock {
 
 class UserfeedbackApiServiceMock {
   getUserComments = jest.fn(() => of(SOME_USER_FEEDBACKS))
-
   newUserFeedback = jest.fn(() => of(undefined))
 }
 
@@ -658,6 +657,71 @@ describe('Gn4PlatformService', () => {
           error: done,
         })
       })
+    })
+  })
+  describe('#searchKeywordsInThesaurus', () => {
+    it('calls api service and strips thesaurus id of the geonetwork prefix', async () => {
+      await firstValueFrom(
+        service.searchKeywordsInThesaurus(
+          'Bla',
+          'geonetwork.thesaurus.external.place.regions'
+        )
+      )
+      expect(registriesApiService.searchKeywords).toHaveBeenCalledWith(
+        'Bla',
+        'fre',
+        100,
+        0,
+        null,
+        ['external.place.regions'],
+        null
+      )
+    })
+    it('returns mapped thesaurus with translated values', async () => {
+      const keywords = await lastValueFrom(
+        service.searchKeywordsInThesaurus(
+          'Bla',
+          'geonetwork.thesaurus.external.place.regions'
+        )
+      )
+      expect(keywords).toEqual([
+        {
+          description:
+            'Localisation des propriétés fondée sur les identifiants des adresses, habituellement le nom de la rue, le numéro de la maison et le code postal.',
+          key: 'http://inspire.ec.europa.eu/theme/ad',
+          label: 'Adresses',
+          thesaurus: {
+            id: 'external.theme.httpinspireeceuropaeutheme-theme',
+            name: 'GEMET - INSPIRE themes, version 1.0',
+            type: 'theme',
+            url: new URL(
+              'http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme'
+            ),
+          },
+          type: 'theme',
+        },
+        {
+          description:
+            "Modèles numériques pour l'altitude des surfaces terrestres, glaciaires et océaniques. Comprend l'altitude terrestre, la bathymétrie et la ligne de rivage.",
+          key: 'http://inspire.ec.europa.eu/theme/el',
+          label: 'Altitude',
+          thesaurus: {
+            id: 'external.theme.httpinspireeceuropaeutheme-theme',
+            name: 'GEMET - INSPIRE themes, version 1.0',
+            type: 'theme',
+            url: new URL(
+              'http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme'
+            ),
+          },
+          type: 'theme',
+        },
+      ])
+    })
+    it('returns an empty array of the thesaurus is unknown', async () => {
+      const keywords = await firstValueFrom(
+        service.searchKeywordsInThesaurus('Bla', 'abcd')
+      )
+      expect(keywords).toEqual([])
     })
   })
 })
