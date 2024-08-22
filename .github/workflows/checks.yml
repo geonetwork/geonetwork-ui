@@ -179,7 +179,7 @@ jobs:
         if: always()
         id: upload-screenshots
         with:
-          name: cypress-screenshots-gn-${{ matrix.gn_version }}
+          name: cypress-screenshots
           path: |
             apps/datahub-e2e/cypress/screenshots/**/*
             apps/metadata-editor-e2e/cypress/screenshots/**/*
