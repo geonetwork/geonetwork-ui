@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FormFieldOpenDataComponent } from './form-field-open-data.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { FormControl } from '@angular/forms'
+import { FormFieldOpenDataComponent } from './form-field-open-data.component'
 
 jest.mock('./../../../../fields.config', () => {
   return {
@@ -20,8 +19,7 @@ describe('FormFieldOpenDataComponent', () => {
 
     fixture = TestBed.createComponent(FormFieldOpenDataComponent)
     component = fixture.componentInstance
-    component.control = new FormControl()
-    component.control.setValue([{ text: 'odc-by' }])
+    component.value = [{ text: 'odc-by' }]
     fixture.detectChanges()
   })
 
@@ -30,18 +28,16 @@ describe('FormFieldOpenDataComponent', () => {
   })
 
   it('should emit the new license value on toggle', () => {
-    const control = new FormControl()
-    const setValueSpy = jest.spyOn(control, 'setValue')
-    component.control = control
+    const licenseSpy = jest.spyOn(component.valueChange, 'emit')
 
     component.onOpenDataToggled(true)
 
-    expect(setValueSpy).toHaveBeenCalledWith([{ text: 'CC-BY' }])
+    expect(licenseSpy).toHaveBeenCalledWith([{ text: 'CC-BY' }])
   })
 
-  it('should emit the event value on toggle', () => {
-    const toggledSpy = jest.spyOn(component.visibilityChange, 'emit')
+  it('should emit the new open data value on toggle', () => {
+    const openDataSpy = jest.spyOn(component.openDataChange, 'emit')
     component.onOpenDataToggled(true)
-    expect(toggledSpy).toHaveBeenCalledWith(true)
+    expect(openDataSpy).toHaveBeenCalledWith(true)
   })
 })

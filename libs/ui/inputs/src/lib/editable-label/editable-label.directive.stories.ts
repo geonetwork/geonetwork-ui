@@ -7,14 +7,11 @@ import { EditableLabelDirective } from './editable-label.directive'
   selector: 'gn-ui-editable-label-story',
   template: `<h3
     class="text-3xl font-bold"
-    [gnUiEditableLabel]="editable"
+    [gnUiEditableLabel]="label"
     (editableLabelChanged)="handleEditableLabelChanged($event)"
-  >
-    {{ label }}
-  </h3>`,
+  ></h3>`,
 })
 class EditableLabelStoryComponent {
-  @Input() editable?: boolean
   @Input() label: string
 
   handleEditableLabelChanged = action('editableLabelChanged')
@@ -32,18 +29,7 @@ export default {
 
 export const Editable: StoryObj<EditableLabelStoryComponent> = {
   args: {
-    editable: true,
     label: 'This is an in place editable label.',
-  },
-  render: (args) => ({
-    props: { ...args, editableLabelChanged: action('editableLabelChanged') },
-  }),
-}
-
-export const NonEditable: StoryObj<EditableLabelStoryComponent> = {
-  args: {
-    editable: false,
-    label: 'This is a non editable label.',
   },
   render: (args) => ({
     props: { ...args, editableLabelChanged: action('editableLabelChanged') },
@@ -53,21 +39,8 @@ export const NonEditable: StoryObj<EditableLabelStoryComponent> = {
 export const EditableWithNewLinesAndSpaces: StoryObj<EditableLabelStoryComponent> =
   {
     args: {
-      editable: true,
       label: `   This is a multi-line
     editable label.  `,
-    },
-    render: (args) => ({
-      props: { ...args, editableLabelChanged: action('editableLabelChanged') },
-    }),
-  }
-
-export const NonEditableWithNewLinesAndSpaces: StoryObj<EditableLabelStoryComponent> =
-  {
-    args: {
-      editable: false,
-      label: `   This is a multi-line
-    non editable label.  `,
     },
     render: (args) => ({
       props: { ...args, editableLabelChanged: action('editableLabelChanged') },

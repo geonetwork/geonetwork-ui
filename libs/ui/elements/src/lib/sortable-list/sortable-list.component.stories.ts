@@ -21,10 +21,6 @@ export default {
 
 export const TemporalExtents: StoryObj<SortableListComponent> = {
   args: {
-    addOptions: [
-      { buttonLabel: 'Date déterminée', eventName: 'date' },
-      { buttonLabel: 'Période de temps', eventName: 'range' },
-    ],
     elements: [
       {
         component: DateRangePickerComponent,

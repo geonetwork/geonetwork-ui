@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { FormControl } from '@angular/forms'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core'
 import {
   AutocompleteComponent,
   DropdownSelectorComponent,
@@ -29,12 +34,13 @@ import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
   ],
 })
 export class FormFieldKeywordsComponent {
-  @Input() control: FormControl<Keyword[]>
+  @Input() value: Keyword[]
+  @Output() valueChange: EventEmitter<Keyword[]> = new EventEmitter()
 
   keywordTypes = ['temporal', 'theme', 'other'] as KeywordType[]
   placeholder = 'editor.form.keywords.placeholder'
 
   handleKeywordsChange(keywords: Keyword[]) {
-    this.control.setValue(keywords)
+    this.valueChange.emit(keywords)
   }
 }

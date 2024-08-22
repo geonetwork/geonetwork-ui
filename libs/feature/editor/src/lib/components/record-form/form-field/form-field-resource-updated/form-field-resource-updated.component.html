@@ -1,4 +1,4 @@
 <gn-ui-date-picker
-  [date]="control.value"
-  (dateChange)="control.setValue($event)"
+  [date]="value"
+  (dateChange)="valueChange.emit($event)"
 ></gn-ui-date-picker>

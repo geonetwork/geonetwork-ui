@@ -1,21 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
+import { TranslateModule } from '@ngx-translate/core'
+import { MockBuilder } from 'ng-mocks'
 import { FormFieldLicenseComponent } from './form-field-license/form-field-license.component'
+import { FormFieldOverviewsComponent } from './form-field-overviews/form-field-overviews.component'
 import { FormFieldResourceUpdatedComponent } from './form-field-resource-updated/form-field-resource-updated.component'
 import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
 import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
+import { FormFieldTemporalExtentsComponent } from './form-field-temporal-extents/form-field-temporal-extents.component'
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
 import { FormFieldComponent } from './form-field.component'
-import { FormFieldTemporalExtentsComponent } from './form-field-temporal-extents/form-field-temporal-extents.component'
-import { FormFieldOverviewsComponent } from './form-field-overviews/form-field-overviews.component'
-import { BehaviorSubject } from 'rxjs'
-import { EditorFacade } from '../../../+state/editor.facade'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
-import { MockBuilder, MockProvider } from 'ng-mocks'
-import { FormControl } from '@angular/forms'
-import { TranslateModule } from '@ngx-translate/core'
 
 describe('FormFieldComponent', () => {
   let component: FormFieldComponent
@@ -27,12 +23,7 @@ describe('FormFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
-      providers: [
-        MockProvider(EditorFacade, {
-          record$: new BehaviorSubject(DATASET_RECORDS[0]),
-        }),
-      ],
+      imports: [FormFieldComponent, TranslateModule.forRoot()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(FormFieldComponent)
@@ -51,7 +42,6 @@ describe('FormFieldComponent', () => {
     let formField
     beforeEach(() => {
       component.model = 'abstract'
-      component.value = 'Some rich abstract value'
       fixture.detectChanges()
       formField = fixture.debugElement.query(
         By.directive(FormFieldRichComponent)
@@ -65,7 +55,6 @@ describe('FormFieldComponent', () => {
     let formField
     beforeEach(() => {
       component.model = 'licenses'
-      component.formControl = new FormControl([{ text: 'cc-by' }])
       fixture.detectChanges()
       formField = fixture.debugElement.query(
         By.directive(FormFieldLicenseComponent)
@@ -79,7 +68,6 @@ describe('FormFieldComponent', () => {
     let formField
     beforeEach(() => {
       component.model = 'resourceUpdated'
-      component.value = new Date('2022-12-04T15:12:00')
       fixture.detectChanges()
       formField = fixture.debugElement.query(
         By.directive(FormFieldResourceUpdatedComponent)
@@ -93,10 +81,6 @@ describe('FormFieldComponent', () => {
     let formField
     beforeEach(() => {
       component.model = 'updateFrequency'
-      component.value = {
-        updatedTimes: 3,
-        per: 'week',
-      }
       fixture.detectChanges()
       formField = fixture.debugElement.query(
         By.directive(FormFieldUpdateFrequencyComponent)
@@ -110,15 +94,6 @@ describe('FormFieldComponent', () => {
     let formField
     beforeEach(() => {
       component.model = 'temporalExtents'
-      component.value = [
-        {
-          start: new Date('2024-05-24'),
-          end: null,
-        },
-        {
-          start: new Date('2024-05-30'),
-        },
-      ]
       fixture.detectChanges()
       formField = fixture.debugElement.query(
         By.directive(FormFieldTemporalExtentsComponent)

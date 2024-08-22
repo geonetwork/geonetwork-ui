@@ -3,10 +3,6 @@ import { EditorFacade } from '../../+state/editor.facade'
 import { RecordFormComponent } from './record-form.component'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 
-class EditorFacadeMock {
-  updateRecordField = jest.fn()
-}
-
 describe('RecordFormComponent', () => {
   let component: RecordFormComponent
   let fixture: ComponentFixture<RecordFormComponent>
@@ -17,7 +13,8 @@ describe('RecordFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [MockProvider(EditorFacade, EditorFacadeMock, 'useClass')],
+      imports: [RecordFormComponent],
+      providers: [MockProvider(EditorFacade)],
     }).compileComponents()
 
     fixture = TestBed.createComponent(RecordFormComponent)

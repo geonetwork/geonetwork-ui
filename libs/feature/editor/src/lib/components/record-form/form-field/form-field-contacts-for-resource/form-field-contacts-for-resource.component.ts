@@ -3,42 +3,42 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
-  OnDestroy,
+  OnChanges,
   OnInit,
+  Output,
 } from '@angular/core'
-import { FormControl } from '@angular/forms'
-import {
-  AutocompleteComponent,
-  DropdownSelectorComponent,
-  UiInputsModule,
-} from '@geonetwork-ui/ui/inputs'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import {
   Individual,
   Organization,
   Role,
   RoleLabels,
 } from '@geonetwork-ui/common/domain/model/record'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import {
+  DynamicElement,
+  SortableListComponent,
+} from '@geonetwork-ui/ui/elements'
+import {
+  AutocompleteComponent,
+  DropdownSelectorComponent,
+  UiInputsModule,
+} from '@geonetwork-ui/ui/inputs'
+import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { createFuzzyFilter } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import {
   debounceTime,
   distinctUntilChanged,
   firstValueFrom,
   Observable,
-  Subscription,
   switchMap,
 } from 'rxjs'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { ContactCardComponent } from '../../../contact-card/contact-card.component'
-import {
-  DynamicElement,
-  SortableListComponent,
-} from '@geonetwork-ui/ui/elements'
-import { createFuzzyFilter } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
+import { ContactCardComponent } from '../../../contact-card/contact-card.component'
 
 @Component({
   selector: 'gn-ui-form-field-contacts-for-resource',
@@ -58,13 +58,10 @@ import { map } from 'rxjs/operators'
   ],
 })
 export class FormFieldContactsForResourceComponent
-  implements OnInit, OnDestroy
+  implements OnChanges, OnInit
 {
-  @Input() control: FormControl<Individual[]>
-
-  subscription: Subscription = new Subscription()
-
-  allUsers$: Observable<UserModel[]>
+  @Input() value: Individual[]
+  @Output() valueChange: EventEmitter<Individual[]> = new EventEmitter()
 
   contactsForRessourceByRole: Map<Role, Individual[]> = new Map()
 
@@ -84,10 +81,13 @@ export class FormFieldContactsForResourceComponent
 
   constructor(
     private platformServiceInterface: PlatformServiceInterface,
-    private organizationsServiceInterface: OrganizationsServiceInterface,
-    private changeDetectorRef: ChangeDetectorRef
-  ) {
-    this.allUsers$ = this.platformServiceInterface.getUsers()
+    private organizationsServiceInterface: OrganizationsServiceInterface
+  ) {}
+
+  ngOnChanges() {
+    this.updateContactsForRessource()
+    this.manageRoleSectionsToDisplay(this.value)
+    this.filterRolesToPick()
   }
 
   async ngOnInit(): Promise<void> {
@@ -97,20 +97,8 @@ export class FormFieldContactsForResourceComponent
       ).map((organization) => [organization.name, organization])
     )
     this.updateContactsForRessource()
-    this.manageRoleSectionsToDisplay(this.control.value)
+    this.manageRoleSectionsToDisplay(this.value)
     this.filterRolesToPick()
-
-    this.changeDetectorRef.markForCheck()
-
-    this.subscription.add(
-      this.control.valueChanges.subscribe((contactsForResource) => {
-        this.updateContactsForRessource()
-        this.manageRoleSectionsToDisplay(contactsForResource)
-        this.filterRolesToPick()
-
-        this.changeDetectorRef.markForCheck()
-      })
-    )
   }
 
   addRoleToDisplay(roleToAdd: string) {
@@ -125,31 +113,28 @@ export class FormFieldContactsForResourceComponent
   }
 
   updateContactsForRessource() {
-    this.contactsForRessourceByRole = this.control.value.reduce(
-      (acc, contact) => {
-        const completeOrganization = this.allOrganizations.get(
-          contact.organization.name
-        )
+    this.contactsForRessourceByRole = this.value.reduce((acc, contact) => {
+      const completeOrganization = this.allOrganizations.get(
+        contact.organization.name
+      )
 
-        const updatedContact = {
-          ...contact,
-          organization:
-            completeOrganization ??
-            ({ name: contact.organization.name } as Organization),
-        }
+      const updatedContact = {
+        ...contact,
+        organization:
+          completeOrganization ??
+          ({ name: contact.organization.name } as Organization),
+      }
 
-        if (!acc.has(contact.role)) {
-          acc.set(contact.role, [])
-        }
+      if (!acc.has(contact.role)) {
+        acc.set(contact.role, [])
+      }
 
-        acc.get(contact.role).push(updatedContact)
+      acc.get(contact.role).push(updatedContact)
 
-        return acc
-      },
-      new Map<Role, Individual[]>()
-    )
+      return acc
+    }, new Map<Role, Individual[]>())
 
-    this.contactsAsDynElemByRole = this.control.value.reduce((acc, contact) => {
+    this.contactsAsDynElemByRole = this.value.reduce((acc, contact) => {
       const completeOrganization = this.allOrganizations.get(
         contact.organization.name
       )
@@ -177,8 +162,6 @@ export class FormFieldContactsForResourceComponent
 
       return acc
     }, new Map<Role, DynamicElement[]>())
-
-    this.changeDetectorRef.markForCheck()
   }
 
   manageRoleSectionsToDisplay(contactsForResource: Individual[]) {
@@ -194,10 +177,8 @@ export class FormFieldContactsForResourceComponent
   }
 
   removeContact(index: number) {
-    const newContactsforRessource = this.control.value.filter(
-      (_, i) => i !== index
-    )
-    this.control.setValue(newContactsforRessource)
+    const newContactsforRessource = this.value.filter((_, i) => i !== index)
+    this.valueChange.emit(newContactsforRessource)
   }
 
   handleContactsChanged(event: DynamicElement[]) {
@@ -213,7 +194,7 @@ export class FormFieldContactsForResourceComponent
       this.contactsForRessourceByRole.values()
     ).flat()
 
-    this.control.setValue(newControlValue)
+    this.valueChange.emit(newControlValue)
   }
 
   protected roleToLabel(role: string): string {
@@ -233,7 +214,7 @@ export class FormFieldContactsForResourceComponent
    */
   autoCompleteAction = (query: string) => {
     const fuzzyFilter = createFuzzyFilter(query)
-    return this.allUsers$.pipe(
+    return this.platformServiceInterface.getUsers().pipe(
       switchMap((users) => [
         users.filter((user) => fuzzyFilter(user.username)),
       ]),
@@ -246,26 +227,23 @@ export class FormFieldContactsForResourceComponent
   /**
    * gn-ui-autocomplete
    */
-  addContact(contact: UserModel, role: string) {
+  addContact(contact: unknown, role: string) {
+    const newContact = contact as UserModel
     const newContactsForRessource = {
-      firstName: contact.name ?? '',
-      lastName: contact.surname ?? '',
+      firstName: newContact.name ?? '',
+      lastName: newContact.surname ?? '',
       organization:
-        this.allOrganizations.get(contact.organisation) ??
-        ({ name: contact.organisation } as Organization),
-      email: contact.email ?? '',
+        this.allOrganizations.get(newContact.organisation) ??
+        ({ name: newContact.organisation } as Organization),
+      email: newContact.email ?? '',
       role,
       address: '',
       phone: '',
       position: '',
     } as Individual
 
-    const newControlValue = [...this.control.value, newContactsForRessource]
+    const newControlValue = [...this.value, newContactsForRessource]
 
-    this.control.setValue(newControlValue)
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe()
+    this.valueChange.emit(newControlValue)
   }
 }

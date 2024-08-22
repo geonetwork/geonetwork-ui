@@ -1,15 +1,16 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { PublishButtonComponent } from '../publish-button/publish-button.component'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 import { MatIconModule } from '@angular/material/icon'
+import { MatTooltipModule } from '@angular/material/tooltip'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
+import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { LetDirective } from '@ngrx/component'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { combineLatest, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { MatDialog } from '@angular/material/dialog'
-import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
-import { MatTooltipModule } from '@angular/material/tooltip'
+import { PublishButtonComponent } from '../publish-button/publish-button.component'
 
 @Component({
   selector: 'md-editor-top-toolbar',
@@ -18,8 +19,10 @@ import { MatTooltipModule } from '@angular/material/tooltip'
     CommonModule,
     PublishButtonComponent,
     ButtonComponent,
+    LetDirective,
     MatIconModule,
     MatTooltipModule,
+    MatDialogModule,
     TranslateModule,
   ],
   templateUrl: './top-toolbar.component.html',

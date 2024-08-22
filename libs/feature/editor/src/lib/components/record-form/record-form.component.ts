@@ -8,6 +8,7 @@ import {
   EditorFieldWithValue,
   EditorSectionWithValues,
 } from '../../+state/editor.models'
+import { map } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -18,6 +19,10 @@ import {
   imports: [CommonModule, FormFieldComponent, TranslateModule],
 })
 export class RecordFormComponent {
+  recordUniqueIdentifier$ = this.facade.record$.pipe(
+    map((record) => record.uniqueIdentifier)
+  )
+
   constructor(public facade: EditorFacade) {}
 
   handleFieldValueChange(model: string, newValue: EditorFieldValue) {
@@ -27,11 +32,11 @@ export class RecordFormComponent {
     this.facade.updateRecordField(model, newValue)
   }
 
-  fieldTracker(index: number, field: EditorFieldWithValue): any {
+  fieldTracker(index: number, field: EditorFieldWithValue) {
     return field.config.model
   }
 
-  sectionTracker(index: number, section: EditorSectionWithValues): any {
+  sectionTracker(index: number, section: EditorSectionWithValues) {
     return section.labelKey
   }
 }

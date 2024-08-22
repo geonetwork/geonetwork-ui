@@ -1,20 +1,21 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
 } from '@angular/core'
-import { FormControl } from '@angular/forms'
+import {
+  UpdateFrequency,
+  UpdateFrequencyCustom,
+} from '@geonetwork-ui/common/domain/model/record'
 import {
   CheckToggleComponent,
   DropdownChoice,
   DropdownSelectorComponent,
 } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import {
-  UpdateFrequency,
-  UpdateFrequencyCustom,
-} from '@geonetwork-ui/common/domain/model/record'
 import { firstValueFrom } from 'rxjs'
 
 @Component({
@@ -26,23 +27,24 @@ import { firstValueFrom } from 'rxjs'
   imports: [CheckToggleComponent, DropdownSelectorComponent, TranslateModule],
 })
 export class FormFieldUpdateFrequencyComponent implements OnInit {
-  @Input() control: FormControl<UpdateFrequency>
+  @Input() value: UpdateFrequency
+  @Output() valueChange: EventEmitter<UpdateFrequency> = new EventEmitter()
 
   protected choices: DropdownChoice[] = []
 
   get planned() {
-    return typeof this.control.value !== 'string'
+    return typeof this.value !== 'string'
   }
 
   constructor(private translateService: TranslateService) {}
 
   async ngOnInit() {
     this.choices = await this.getInitialChoices()
-    if (typeof this.control.value === 'string') {
+    if (typeof this.value === 'string') {
       return
     }
-    const updatedTimes = this.control.value.updatedTimes
-    const per = this.control.value.per
+    const updatedTimes = this.value.updatedTimes
+    const per = this.value.per
     // the update frequency is not in the list; make it appear there
     if (updatedTimes && updatedTimes !== 1 && updatedTimes !== 2) {
       this.choices = [
@@ -61,21 +63,21 @@ export class FormFieldUpdateFrequencyComponent implements OnInit {
 
   onPlannedToggled() {
     if (this.planned) {
-      this.control.setValue('notPlanned')
+      this.valueChange.emit('notPlanned')
     } else {
-      this.control.setValue({ updatedTimes: 1, per: 'day' })
+      this.valueChange.emit({ updatedTimes: 1, per: 'day' })
     }
   }
 
   get selectedFrequency(): string {
-    if (typeof this.control.value === 'string') return null
-    const { updatedTimes, per } = this.control.value
+    if (typeof this.value === 'string') return null
+    const { updatedTimes, per } = this.value
     return `${per}.${updatedTimes}`
   }
 
   onSelectFrequencyValue(value: unknown) {
     const split = (value as string).split('.')
-    this.control.setValue({
+    this.valueChange.emit({
       updatedTimes: Number(split[1]),
       per: split[0] as UpdateFrequencyCustom['per'],
     })

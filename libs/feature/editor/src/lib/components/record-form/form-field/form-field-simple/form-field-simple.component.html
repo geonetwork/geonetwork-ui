@@ -2,8 +2,9 @@
   *ngIf="!isSelect"
   [type]="inputType"
   [readonly]="readonly"
-  [formControl]="control"
   [placeholder]="placeholder"
+  [value]="value"
+  (valueChange)="valueChange.emit($event)"
   class="border rounded-md p-3 w-full bg-white transition-colors"
   [ngClass]="{
     'border-pink-500': invalid,
@@ -13,7 +14,8 @@
 />
 <select
   *ngIf="isSelect"
-  [formControl]="control"
+  [value]="value"
+  (valueChange)="valueChange.emit($event)"
   class="border rounded-md p-3 w-full bg-white transition-colors"
   [ngClass]="{
     'border-pink-500': invalid,
@@ -21,7 +23,7 @@
     'text-gray-600': readonly
   }"
 >
-  <option *ngFor="let option of options" [ngValue]="option.value">
+  <option *ngFor="let option of options" [value]="option.value">
     {{ option.label }}
   </option>
 </select>
