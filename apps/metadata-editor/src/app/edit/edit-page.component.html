@@ -9,7 +9,10 @@
     </div>
     <gn-ui-record-form></gn-ui-record-form>
   </div>
-  <div class="p-8 mt-auto flex flex-row justify-between">
+  <div
+    data-test="previousNextPageButtons"
+    class="p-8 mt-auto flex flex-row justify-between"
+  >
     <gn-ui-button
       type="secondary"
       (buttonClick)="previousPageButtonHandler()"
