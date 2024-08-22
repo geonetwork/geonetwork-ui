@@ -180,11 +180,11 @@ export function findParent(
 
 export function readText(): ChainableFunction<XmlElement, string> {
   return (el) => {
-    const textNode =
-      el && Array.isArray(el.children)
-        ? (el.children.find((node) => node.type === 'text') as XmlText)
-        : null
-    return textNode ? textNode.text : null
+    if (!el) return null
+    const textNode = Array.isArray(el.children)
+      ? (el.children.find((node) => node.type === 'text') as XmlText)
+      : null
+    return textNode ? textNode.text : ''
   }
 }
 
