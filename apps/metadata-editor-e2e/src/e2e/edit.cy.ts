@@ -43,7 +43,7 @@ describe('editor form', () => {
     cy.get('@abstractField').clear()
     cy.get('@abstractField').type('modified abstract')
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000) // waiting for draft saving to kick in
+    cy.wait(1200) // waiting for draft saving to kick in
     cy.reload()
     cy.get('@abstractField').invoke('val').should('eq', 'modified abstract')
     cy.get('@saveStatus').should('eq', 'draft_changes_pending')
