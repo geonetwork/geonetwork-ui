@@ -1,0 +1,37 @@
+<span class="w-full inline-block relative">
+  <input
+    #input
+    class="gn-ui-text-input px-[var(--text-padding)]"
+    [ngClass]="extraClass"
+    type="url"
+    [value]="value"
+    (input)="handleInput()"
+    (keydown.enter)="handleChange(input)"
+    [placeholder]="placeholder"
+    [attr.aria-label]="placeholder"
+    [disabled]="disabled"
+  />
+  <div
+    class="absolute inset-y-[var(--side-padding)] left-[var(--2x-side-padding)] grid justify-center items-center pointer-events-none"
+    [ngClass]='{
+      "text-primary": !disabled,
+      "text-primary-lightest": disabled,
+    }'
+  >
+    <mat-icon
+      class="material-symbols-outlined h-[24px] !w-[26px] text-[28px] leading-[24px]"
+    >
+      link
+    </mat-icon>
+  </div>
+  <gn-ui-button
+    extraClass="absolute inset-y-[var(--side-padding)] right-[var(--side-padding)]"
+    type="primary"
+    [disabled]="disabled || input.value === ''"
+    (buttonClick)="handleChange(input)"
+  >
+    <mat-icon class="material-symbols-outlined text-[20px] leading-[26px]">
+      arrow_upward
+    </mat-icon>
+  </gn-ui-button>
+</span>
