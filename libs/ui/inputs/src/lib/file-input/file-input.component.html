@@ -1,0 +1,85 @@
+<div class="w-full flex flex-col gap-[16px]">
+  <label
+    gnUiFilesDrop
+    class="flex-1 border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center gap-4 transition-colors duration-100"
+    [ngClass]="{
+      'border-primary-lighter bg-primary-white': dragFilesOver,
+      'border-gray-300': !dragFilesOver
+    }"
+    (dragFilesOver)="handleDragFilesOver($event)"
+    (dropFiles)="handleDropFiles($event)"
+  >
+    <div
+      class="w-14 h-14 rounded-md bg-gray-50 grid"
+      *ngIf="!isUploadInProgress"
+    >
+      <mat-icon
+        *ngIf="!dragFilesOver"
+        class="material-symbols-outlined place-self-center text-primary"
+        >cloud_upload</mat-icon
+      >
+      <mat-icon
+        *ngIf="dragFilesOver"
+        class="material-symbols-outlined place-self-center text-primary"
+        >add_box</mat-icon
+      >
+    </div>
+    <div
+      *ngIf="isUploadInProgress"
+      class="w-14 h-14 grid items-center justify-center"
+    >
+      <div class="text-gray-100 absolute">
+        <mat-progress-spinner
+          class="place-self-center"
+          [diameter]="56"
+          mode="determinate"
+          [value]="100"
+        ></mat-progress-spinner>
+      </div>
+      <div class="text-primary absolute">
+        <mat-progress-spinner
+          class="place-self-center"
+          [diameter]="56"
+          mode="determinate"
+          [value]="uploadProgress"
+        ></mat-progress-spinner>
+      </div>
+      <span class="text-sm text-main font-bold">{{ uploadProgress }}%</span>
+    </div>
+    <div class="flex flex-col items-center gap-1">
+      <p class="font-medium">
+        {{ getPrimaryText() | translate: { sizeMB: maxSizeMB.toFixed(0) } }}
+      </p>
+      <p
+        class="text-sm"
+        [class]="
+          isUploadInProgress
+            ? 'font-bold text-primary cursor-pointer'
+            : 'font-medium text-gray-500'
+        "
+        (click)="handleSecondaryTextClick()"
+      >
+        {{ getSecondaryText() | translate }}
+      </p>
+    </div>
+    <p class="w-full flex flex-row items-center justify-stretch gap-[16px]">
+      <span class="border-b border-gray-300 grow"></span>
+      <span class="text-sm font-medium text-gray-500 or-input-url" translate>
+        input.file.orInputUrl</span
+      >
+      <span class="border-b border-gray-300 grow"></span>
+    </p>
+    <input
+      type="file"
+      class="hidden"
+      (change)="handleFileInput($event)"
+      [disabled]="isUploadInProgress"
+    />
+
+    <gn-ui-url-input
+      class="w-full"
+      [disabled]="isUploadInProgress"
+      (valueChange)="handleUrlChange($event)"
+    ></gn-ui-url-input>
+  </label>
+</div>

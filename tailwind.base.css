@@ -74,10 +74,6 @@
     margin-bottom: -0.325em;
     flex-shrink: 0;
   }
-  /* makes spinners appear in the right color */
-  .gn-ui-btn mat-spinner circle {
-    stroke: currentColor !important;
-  }
 
   .gn-ui-btn-default {
     @apply gn-ui-btn text-white
@@ -148,6 +144,12 @@
   /* TODO: add prefix */
   .card-icon {
     @apply text-primary opacity-50 group-hover:text-secondary group-hover:opacity-100 transition-colors transition-opacity;
+  }
+
+  /* makes spinners appear in the right color */
+  mat-spinner circle,
+  mat-progress-spinner circle {
+    stroke: currentColor !important;
   }
 }
 
