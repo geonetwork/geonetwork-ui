@@ -10,7 +10,7 @@ export default {
 export const Primary: StoryObj<TextInputComponent> = {
   args: {
     value: '',
-    hint: 'Put something here!',
+    placeholder: 'Put something here!',
     required: false,
     disabled: false,
   },
@@ -19,4 +19,25 @@ export const Primary: StoryObj<TextInputComponent> = {
       action: 'valueChange',
     },
   },
+}
+
+export const WithCustomStyle: StoryObj<TextInputComponent> = {
+  args: {
+    value: '',
+    disabled: false,
+    placeholder: 'https://mysite.org/file',
+  },
+  argTypes: {
+    valueChange: {
+      action: 'valueChange',
+    },
+  },
+  render: (args) => ({
+    props: args,
+    template: `
+    <div style="--gn-ui-text-input-rounded: 8px; --gn-ui-text-input-padding: 14px">
+      <gn-ui-text-input [value]='value' [disabled]='disabled' [placeholder]='placeholder'>
+      </gn-ui-text-input>
+    </div>`,
+  }),
 }

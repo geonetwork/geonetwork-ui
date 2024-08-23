@@ -8,14 +8,14 @@ describe('TextInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TextInputComponent],
+      imports: [TextInputComponent],
     }).compileComponents()
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TextInputComponent)
     component = fixture.componentInstance
-    component.hint = 'Hint'
+    component.placeholder = 'Hint'
     fixture.detectChanges()
   })
 
