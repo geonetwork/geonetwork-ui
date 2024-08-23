@@ -70,26 +70,15 @@ describe('editor form', () => {
     cy.get('md-editor-publish-button').click()
   })
 
-  describe('Access and constraints', () => {
-    describe('Open data switch', () => {
-      describe('When the open data switch is checked', () => {
-        beforeEach(() => {
-          cy.visit('/edit/accroche_velos')
-          cy.get('md-editor-page-selector').find('gn-ui-button').last().click()
-        })
-        it('should not display the licence form field', () => {
-          cy.get('gn-ui-form-field-license').should('not.exist')
-        })
-        it('should display the license form field when toggled', () => {
-          cy.get('[data-cy="openDataToggle"]').click()
-          cy.get('gn-ui-form-field-license').should('be.visible')
-          cy.get('gn-ui-form-field-license')
-            .find('button')
-            .children('div')
-            .first()
-            .invoke('text')
-            .should('eq', ' Open Licence (Etalab) ')
-        })
+  describe('record fields', () => {
+    describe('contacts for resources', () => {
+      beforeEach(() => {
+        cy.login('admin', 'admin', false)
+
+        // Alpine convention record
+        cy.visit('/edit/accroche_velos')
+
+        cy.get('@accessAndContactPageSelectorButton').click()
       })
 
       it('show the contacts for resource of the dataset', () => {
@@ -145,7 +134,7 @@ describe('editor form', () => {
           .should('not.exist')
       })
     })
-    describe('Access and contact', () => {
+    describe('Access and constraints', () => {
       describe('Open data switch', () => {
         describe('When the open data switch is checked', () => {
           beforeEach(() => {
@@ -155,11 +144,11 @@ describe('editor form', () => {
               .last()
               .click()
           })
-          it('should not display the licence section', () => {
+          it('should not display the licence form field', () => {
             cy.get('gn-ui-form-field-license').should('not.exist')
           })
-          it('should display the license section when toggled', () => {
-            cy.get('gn-ui-check-toggle').find('span').first().click()
+          it('should display the license form field when toggled', () => {
+            cy.get('[data-cy="openDataToggle"]').click()
             cy.get('gn-ui-form-field-license').should('be.visible')
             cy.get('gn-ui-form-field-license')
               .find('button')
@@ -195,20 +184,20 @@ describe('editor form', () => {
         })
       })
     })
+  })
 
-    describe('date range in sortable list', () => {
-      it('should keep the date picker open when selecting the start date of a range', () => {
-        // add a date range
-        cy.get('gn-ui-form-field-temporal-extents gn-ui-button').eq(1).click()
-        // open the date picker
-        cy.get(
-          'gn-ui-form-field-temporal-extents-range mat-datepicker-toggle'
-        ).click()
-        // select a date
-        cy.get('mat-calendar').contains('1').click()
-        // the date picker should still be open
-        cy.get('mat-calendar').should('be.visible')
-      })
+  describe('date range in sortable list', () => {
+    it('should keep the date picker open when selecting the start date of a range', () => {
+      // add a date range
+      cy.get('gn-ui-form-field-temporal-extents gn-ui-button').eq(1).click()
+      // open the date picker
+      cy.get(
+        'gn-ui-form-field-temporal-extents-range mat-datepicker-toggle'
+      ).click()
+      // select a date
+      cy.get('mat-calendar').contains('1').click()
+      // the date picker should still be open
+      cy.get('mat-calendar').should('be.visible')
     })
   })
 })
