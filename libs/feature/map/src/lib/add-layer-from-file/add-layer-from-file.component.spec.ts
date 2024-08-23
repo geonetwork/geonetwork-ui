@@ -14,8 +14,7 @@ describe('AddLayerFromFileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
-      declarations: [AddLayerFromFileComponent],
+      imports: [TranslateModule.forRoot(), AddLayerFromFileComponent],
       providers: [
         {
           provide: MapFacade,

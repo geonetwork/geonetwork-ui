@@ -12,6 +12,7 @@ import { Subject } from 'rxjs'
   selector: 'gn-ui-text-input',
   templateUrl: './text-input.component.html',
   styleUrls: ['./text-input.component.css'],
+  standalone: true,
 })
 export class TextInputComponent implements AfterViewInit {
   private readonly baseClass = [

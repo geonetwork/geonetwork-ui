@@ -7,7 +7,7 @@ import { WizardFieldType } from '../../models/wizard-field.type'
 import { BrowserModule, By } from '@angular/platform-browser'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { WizardService } from '../../services/wizard.service'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { TextInputComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 const DEFAULT_CHIPS_ITEMS_URL = (keys) =>
@@ -29,6 +29,7 @@ describe('WizardFieldsComponent', () => {
         BrowserModule,
         HttpClientTestingModule,
         BrowserAnimationsModule,
+        TextInputComponent,
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()

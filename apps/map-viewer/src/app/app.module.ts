@@ -2,7 +2,10 @@ import { importProvidersFrom, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 
 import { AppComponent } from './app.component'
-import { FeatureMapModule } from '@geonetwork-ui/feature/map'
+import {
+  FeatureMapModule,
+  LayersPanelComponent,
+} from '@geonetwork-ui/feature/map'
 import { ThemeService } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import {
@@ -14,9 +17,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { EffectsModule } from '@ngrx/effects'
 import { storeFreeze } from 'ngrx-store-freeze'
 import { environment } from '../environments/environment'
-import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
+import { provideGn4, provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { provideGn4 } from '@geonetwork-ui/api/repository'
 import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 
@@ -36,6 +38,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     StoreDevtoolsModule.instrument(),
     EffectsModule.forRoot(),
     FeatureCatalogModule,
+    LayersPanelComponent,
   ],
   providers: [
     importProvidersFrom(FeatureAuthModule),

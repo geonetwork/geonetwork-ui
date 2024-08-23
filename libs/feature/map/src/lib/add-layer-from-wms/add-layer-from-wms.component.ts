@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, OnInit } from '@angular/core'
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core'
 import { WmsEndpoint, WmsLayerSummary } from '@camptocamp/ogc-client'
 import { MapFacade } from '../+state/map.facade'
 import {
@@ -7,11 +7,16 @@ import {
 } from '../map-context/map-context.model'
 import { Subject } from 'rxjs'
 import { debounceTime } from 'rxjs/operators'
+import { ButtonComponent, TextInputComponent } from '@geonetwork-ui/ui/inputs'
+import { CommonModule } from '@angular/common'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-add-layer-from-wms',
   templateUrl: './add-layer-from-wms.component.html',
   styleUrls: ['./add-layer-from-wms.component.css'],
+  standalone: true,
+  imports: [TextInputComponent, CommonModule, TranslateModule, ButtonComponent],
 })
 export class AddLayerFromWmsComponent implements OnInit {
   wmsUrl = ''

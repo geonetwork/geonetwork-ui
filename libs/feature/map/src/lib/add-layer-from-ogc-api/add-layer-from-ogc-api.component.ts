@@ -1,20 +1,23 @@
 import {
+  ChangeDetectorRef,
   Component,
+  EventEmitter,
+  Input,
   OnInit,
   Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-  Input,
-  ChangeDetectorRef,
 } from '@angular/core'
 import { OgcApiEndpoint } from '@camptocamp/ogc-client'
-import { Subject, debounceTime } from 'rxjs'
+import { debounceTime, Subject } from 'rxjs'
 import {
   MapContextLayerModel,
   MapContextLayerTypeEnum,
 } from '../map-context/map-context.model'
 import { TranslateModule } from '@ngx-translate/core'
-import { DropdownChoice, UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import {
+  DropdownChoice,
+  TextInputComponent,
+  UiInputsModule,
+} from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
 import { MapLayer } from '../+state/map.models'
 
@@ -23,7 +26,7 @@ import { MapLayer } from '../+state/map.models'
   templateUrl: './add-layer-from-ogc-api.component.html',
   styleUrls: ['./add-layer-from-ogc-api.component.css'],
   standalone: true,
-  imports: [CommonModule, TranslateModule, UiInputsModule],
+  imports: [CommonModule, TranslateModule, UiInputsModule, TextInputComponent],
 })
 export class AddLayerFromOgcApiComponent implements OnInit {
   @Input() ogcUrl: string

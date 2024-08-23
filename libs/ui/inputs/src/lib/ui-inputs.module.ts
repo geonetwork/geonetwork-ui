@@ -10,7 +10,6 @@ import { ChipsInputComponent } from './chips-input/chips-input.component'
 import { DragAndDropFileInputComponent } from './drag-and-drop-file-input/drag-and-drop-file-input.component'
 import { DropdownSelectorComponent } from './dropdown-selector/dropdown-selector.component'
 import { TextAreaComponent } from './text-area/text-area.component'
-import { TextInputComponent } from './text-input/text-input.component'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MatIconModule } from '@angular/material/icon'
 import { NavigationButtonComponent } from './navigation-button/navigation-button.component'
@@ -36,7 +35,6 @@ import { ImageInputComponent } from './image-input/image-input.component'
 
 @NgModule({
   declarations: [
-    TextInputComponent,
     DragAndDropFileInputComponent,
     ChipsInputComponent,
     NavigationButtonComponent,
@@ -77,7 +75,6 @@ import { ImageInputComponent } from './image-input/image-input.component'
   exports: [
     DropdownSelectorComponent,
     ButtonComponent,
-    TextInputComponent,
     DragAndDropFileInputComponent,
     TextAreaComponent,
     ChipsInputComponent,

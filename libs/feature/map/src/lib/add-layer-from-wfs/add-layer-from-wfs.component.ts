@@ -7,11 +7,16 @@ import {
 } from '../map-context/map-context.model'
 import { MapFacade } from '../+state/map.facade'
 import { debounceTime } from 'rxjs/operators'
+import { ButtonComponent, TextInputComponent } from '@geonetwork-ui/ui/inputs'
+import { TranslateModule } from '@ngx-translate/core'
+import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'gn-ui-add-layer-from-wfs',
   templateUrl: './add-layer-from-wfs.component.html',
   styleUrls: ['./add-layer-from-wfs.component.css'],
+  standalone: true,
+  imports: [TextInputComponent, ButtonComponent, TranslateModule, CommonModule],
 })
 export class AddLayerFromWfsComponent implements OnInit {
   wfsUrl = ''
