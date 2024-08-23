@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   Output,
   ViewChild,
@@ -33,6 +34,7 @@ import { map, take } from 'rxjs/operators'
 import { EditorFacade } from '../../../+state/editor.facade'
 import { FormFieldConfig } from '../../../models'
 import { FormFieldContactsForResourceComponent } from './form-field-contacts-for-resource/form-field-contacts-for-resource.component'
+import { FormFieldOpenDataComponent } from './form-field-open-data/form-field-open-data.component'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -61,6 +63,7 @@ import { FormFieldContactsForResourceComponent } from './form-field-contacts-for
     TranslateModule,
     FormFieldOverviewsComponent,
     FormFieldContactsForResourceComponent,
+    FormFieldOpenDataComponent,
   ],
 })
 export class FormFieldComponent {
@@ -73,6 +76,7 @@ export class FormFieldComponent {
   }
 
   @Output() valueChange: Observable<unknown>
+  isHidden = false
 
   @ViewChild('titleInput') titleInput: ElementRef
 
@@ -89,6 +93,10 @@ export class FormFieldComponent {
 
   focusTitleInput() {
     this.titleInput.nativeElement.children[0].focus()
+  }
+
+  onVisibilityChange(visibility: boolean) {
+    this.isHidden = visibility
   }
 
   get isTitle() {
@@ -130,5 +138,9 @@ export class FormFieldComponent {
 
   get withoutWrapper() {
     return this.model === 'title' || this.model === 'abstract'
+  }
+
+  get isOpenData() {
+    return this.model === 'licenses'
   }
 }

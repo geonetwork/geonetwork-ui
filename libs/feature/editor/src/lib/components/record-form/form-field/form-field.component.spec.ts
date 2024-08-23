@@ -16,6 +16,8 @@ import { EditorFacade } from '../../../+state/editor.facade'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { FormControl } from '@angular/forms'
+import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 
 class EditorFacadeMock {
   record$ = new BehaviorSubject(DATASET_RECORDS[0])
@@ -71,7 +73,7 @@ describe('FormFieldComponent', () => {
     let formField
     beforeEach(() => {
       component.model = 'licenses'
-      component.value = 'cc-by'
+      component.formControl = new FormControl([{ text: 'cc-by' }])
       fixture.detectChanges()
       formField = fixture.debugElement.query(
         By.directive(FormFieldLicenseComponent)

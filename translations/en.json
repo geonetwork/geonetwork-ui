@@ -198,6 +198,7 @@
   "editor.record.form.bottomButtons.comeBackLater": "Come back later",
   "editor.record.form.bottomButtons.next": "Next",
   "editor.record.form.bottomButtons.previous": "Previous",
+  "editor.record.form.classification.opendata": "Open Data",
   "editor.record.form.field.abstract": "Abstract",
   "editor.record.form.field.contactsForResource.noContact": "Please provide at least one point of contact responsible for the data.",
   "editor.record.form.field.keywords": "Keywords",
