@@ -53,6 +53,7 @@ export class FormFieldOpenDataComponent implements OnInit {
     if (boolean) {
       this.control.setValue([{ text: this.config[0] }])
     }
+    this.value = !this.value
     this.visibilityChange.emit(boolean)
   }
 }
