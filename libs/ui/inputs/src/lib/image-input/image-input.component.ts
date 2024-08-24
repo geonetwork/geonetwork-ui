@@ -16,6 +16,8 @@ import { ButtonComponent } from '../button/button.component'
 import { FilesDropDirective } from '../files-drop/files-drop.directive'
 import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { UrlInputComponent } from '../url-input/url-input.component'
+import { TextInputComponent } from '../text-input/text-input.component'
 
 @Component({
   selector: 'gn-ui-image-input',
@@ -30,6 +32,8 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
     FilesDropDirective,
     MatProgressSpinnerModule,
     TranslateModule,
+    UrlInputComponent,
+    TextInputComponent,
   ],
 })
 export class ImageInputComponent {
@@ -49,9 +53,12 @@ export class ImageInputComponent {
   downloadError = false
   showAltTextInput = false
 
-  urlInputValue?: string
   lastUploadType?: 'file' | 'url'
   lastUploadContent?: string | File
+
+  get isUploadInProgress() {
+    return this.uploadProgress !== undefined
+  }
 
   constructor(private http: HttpClient, private cd: ChangeDetectorRef) {}
 
@@ -104,24 +111,20 @@ export class ImageInputComponent {
     this.showUrlInput = true
   }
 
-  handleUrlChange(event: Event) {
+  async downloadUrl(url: string) {
     this.downloadError = false
-    this.urlInputValue = (event.target as HTMLInputElement).value
-  }
-
-  async downloadUrl() {
-    const name = this.urlInputValue.split('/').pop()
+    const name = url.split('/').pop()
 
     try {
       const response = await firstValueFrom(
-        this.http.head(this.urlInputValue, { observe: 'response' })
+        this.http.head(url, { observe: 'response' })
       )
       if (
         response.headers.get('content-type')?.startsWith('image/') &&
         parseInt(response.headers.get('content-length')) <
           megabytesToBytes(this.maxSizeMB)
       ) {
-        this.http.get(this.urlInputValue, { responseType: 'blob' }).subscribe({
+        this.http.get(url, { responseType: 'blob' }).subscribe({
           next: (blob) => {
             this.cd.markForCheck()
             const file = new File([blob], name)
@@ -130,7 +133,7 @@ export class ImageInputComponent {
           error: () => {
             this.downloadError = true
             this.cd.markForCheck()
-            this.urlChange.emit(this.urlInputValue)
+            this.urlChange.emit(url)
           },
         })
       }
@@ -172,9 +175,8 @@ export class ImageInputComponent {
     this.showAltTextInput = !this.showAltTextInput
   }
 
-  handleAltTextChange(event: Event) {
-    const input = event.target as HTMLInputElement
-    this.altTextChange.emit(input.value)
+  handleAltTextChange(altText: string) {
+    this.altTextChange.emit(altText)
   }
 
   private filterTypeImage(files: File[]) {

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing'
-
 import { HttpHeaders } from '@angular/common/http'
 import {
   HttpClientTestingModule,
@@ -54,13 +53,12 @@ describe('ImageInputComponent', () => {
 
     beforeEach(() => {
       component.maxSizeMB = testMaxSizeMB
-      component.urlInputValue = testUrl
     })
 
     it('should emit the downloaded file on nominal case', waitForAsync(() => {
       jest.spyOn(component.fileChange, 'emit')
 
-      component.downloadUrl()
+      component.downloadUrl('http://test.com/image.png')
 
       const reqHead = httpTestingController.expectOne(testUrl)
       expect(reqHead.request.method).toEqual('HEAD')
@@ -87,7 +85,7 @@ describe('ImageInputComponent', () => {
     }))
 
     it('should not download the file when content-type is not image', waitForAsync(() => {
-      component.downloadUrl()
+      component.downloadUrl('http://test.com/image.png')
 
       const reqHead = httpTestingController.expectOne(testUrl)
       expect(reqHead.request.method).toEqual('HEAD')
@@ -105,7 +103,7 @@ describe('ImageInputComponent', () => {
     }))
 
     it('should not download the file when content-length is above limit', waitForAsync(() => {
-      component.downloadUrl()
+      component.downloadUrl('http://test.com/image.png')
 
       const reqHead = httpTestingController.expectOne(testUrl)
       expect(reqHead.request.method).toEqual('HEAD')
@@ -125,7 +123,7 @@ describe('ImageInputComponent', () => {
     it('should emit the file URL when encountering a download error', waitForAsync(() => {
       jest.spyOn(component.urlChange, 'emit')
 
-      component.downloadUrl()
+      component.downloadUrl('http://test.com/image.png')
 
       const reqHead = httpTestingController.expectOne(testUrl)
       expect(reqHead.request.method).toEqual('HEAD')
