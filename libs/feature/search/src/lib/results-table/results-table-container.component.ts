@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnDestroy, Output } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+} from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { SearchFacade } from '../state/search.facade'
 import { SelectionService } from '@geonetwork-ui/api/repository'
@@ -29,6 +35,9 @@ export class ResultsTableContainerComponent implements OnDestroy {
 
   hasDraft = (record: CatalogRecord): boolean =>
     this.recordsRepository.recordHasDraft(record.uniqueIdentifier)
+
+  isUnsavedDraft = (record: CatalogRecord): boolean =>
+    this.recordsRepository.isRecordNotYetSaved(record.uniqueIdentifier)
 
   constructor(
     private searchFacade: SearchFacade,

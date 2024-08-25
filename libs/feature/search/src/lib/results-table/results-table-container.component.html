@@ -3,6 +3,7 @@
   [hasDraft]="hasDraft"
   [selectedRecordsIdentifiers]="selectedRecords$ | async"
   [sortOrder]="sortBy$ | async"
+  [isUnsavedDraft]="isUnsavedDraft"
   (recordClick)="handleRecordClick($event)"
   (duplicateRecord)="handleDuplicateRecord($event)"
   (deleteRecord)="handleDeleteRecord($event)"
