@@ -28,7 +28,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
 })
 export class ActionMenuComponent {
   @Input() canDuplicate: boolean
-  @Input() canDelete: boolean
+  @Input() isUnsavedDraft: boolean
   @Output() duplicate = new EventEmitter<void>()
   @Output() delete = new EventEmitter<void>()
 
