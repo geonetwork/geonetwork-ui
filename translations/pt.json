@@ -404,6 +404,8 @@
   "record.metadata.related": "",
   "record.metadata.sheet": "",
   "record.metadata.status": "",
+  "record.metadata.status.notPublished": "",
+  "record.metadata.status.published": "",
   "record.metadata.technical": "",
   "record.metadata.temporalExtent": "",
   "record.metadata.temporalExtent.fromDateToDate": "",

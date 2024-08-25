@@ -404,6 +404,8 @@
   "record.metadata.related": "Súvisiace záznamy",
   "record.metadata.sheet": "Ďalšie metadáta sú k dispozícii na:",
   "record.metadata.status": "Stav",
+  "record.metadata.status.notPublished": "",
+  "record.metadata.status.published": "",
   "record.metadata.technical": "",
   "record.metadata.temporalExtent": "",
   "record.metadata.temporalExtent.fromDateToDate": "",
