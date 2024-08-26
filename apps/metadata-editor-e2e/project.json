@@ -13,12 +13,6 @@
         "browser": "chrome",
         "port": "cypress-auto"
       },
-      "dependsOn": [
-        {
-          "projects": ["datahub-e2e"],
-          "target": "e2e"
-        }
-      ],
       "configurations": {
         "production": {
           "devServerTarget": "metadata-editor:serve:production"
