@@ -139,12 +139,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   e2e-run:
-    name: End-to-end tests, GeoNetwork v${{ matrix.gn_version }}
+    name: E2E tests / ${{ matrix.app }} / GN v${{ matrix.gn_version }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         gn_version: [4.2.2, 4.2.8, 4.4.0]
+        app: [datahub, metadata-editor]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -172,14 +173,16 @@ jobs:
 
       - run: npm ci
 
-      - name: Run e2e tests
-        run: npx nx affected --target=e2e
+      - name: Run e2e tests for ${{ matrix.app }}
+        env:
+          APP: ${{ matrix.app }}
+        run: npx nx e2e "$APP-e2e"
 
       - uses: actions/upload-artifact@v4
         if: always()
         id: upload-screenshots
         with:
-          name: cypress-screenshots-gn-${{ matrix.gn_version }}
+          name: cypress-screenshots-app-${{ matrix.app }}-gn-${{ matrix.gn_version }}
           path: |
             apps/datahub-e2e/cypress/screenshots/**/*
             apps/metadata-editor-e2e/cypress/screenshots/**/*
