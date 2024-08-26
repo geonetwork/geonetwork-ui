@@ -194,7 +194,12 @@ As such, **it is not very interesting at all.**`,
       text: 'Contains sensitive information related to national defense',
     },
   ],
-  spatialExtents: [],
+  spatialExtents: [
+    {
+      bbox: [-11.5, 35.3, 43.2, 81.4],
+      description: 'http://www.naturalearthdata.com/ne_admin#Continent/Europe',
+    },
+  ],
   temporalExtents: [
     {
       start: new Date('2024-05-24'),

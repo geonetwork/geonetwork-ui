@@ -174,22 +174,6 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                     <gex:description>
                         <gco:CharacterString>Région wallonne</gco:CharacterString>
                     </gex:description>
-                    <gex:geographicElement>
-                        <gex:EX_GeographicBoundingBox>
-                            <gex:westBoundLongitude>
-                                <gco:Decimal>2.75</gco:Decimal>
-                            </gex:westBoundLongitude>
-                            <gex:eastBoundLongitude>
-                                <gco:Decimal>6.50</gco:Decimal>
-                            </gex:eastBoundLongitude>
-                            <gex:southBoundLatitude>
-                                <gco:Decimal>49.45</gco:Decimal>
-                            </gex:southBoundLatitude>
-                            <gex:northBoundLatitude>
-                                <gco:Decimal>50.85</gco:Decimal>
-                            </gex:northBoundLatitude>
-                        </gex:EX_GeographicBoundingBox>
-                    </gex:geographicElement>
                     <mdb:temporalElement>
                         <mdb:EX_TemporalExtent>
                             <mdb:extent>
@@ -209,6 +193,31 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                             </mdb:extent>
                         </mdb:EX_TemporalExtent>
                     </mdb:temporalElement>
+                    <mdb:geographicElement>
+                        <mdb:EX_GeographicBoundingBox>
+                            <mdb:westBoundLongitude>
+                                <gco:Decimal>-11.5</gco:Decimal>
+                            </mdb:westBoundLongitude>
+                            <mdb:eastBoundLongitude>
+                                <gco:Decimal>43.2</gco:Decimal>
+                            </mdb:eastBoundLongitude>
+                            <mdb:southBoundLatitude>
+                                <gco:Decimal>35.3</gco:Decimal>
+                            </mdb:southBoundLatitude>
+                            <mdb:northBoundLatitude>
+                                <gco:Decimal>81.4</gco:Decimal>
+                            </mdb:northBoundLatitude>
+                        </mdb:EX_GeographicBoundingBox>
+                        <mdb:EX_GeographicDescription>
+                            <mdb:geographicIdentifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gco:CharacterString>http://www.naturalearthdata.com/ne_admin#Continent/Europe</gco:CharacterString>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </mdb:geographicIdentifier>
+                        </mdb:EX_GeographicDescription>
+                    </mdb:geographicElement>
                 </gex:EX_Extent>
             </mri:extent>
             <mri:resourceMaintenance>
