@@ -6,7 +6,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { GenericKeywordsComponent } from '../../../generic-keywords/generic-keywords.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { firstValueFrom, map } from 'rxjs'
+import { firstValueFrom, map, shareReplay } from 'rxjs'
 import { EditorFacade } from '../../../../+state/editor.facade'
 import { switchMap } from 'rxjs/operators'
 import { FormFieldMapContainerComponent } from '../form-field-map-container/form-field-map-container.component'
@@ -94,7 +94,8 @@ export class FormFieldSpatialExtentComponent {
       ).then((keywords) => keywords.filter((k) => !!k))
 
       return [...keywords, ...keywordsFromExtents]
-    })
+    }),
+    shareReplay(1)
   )
 
   constructor(

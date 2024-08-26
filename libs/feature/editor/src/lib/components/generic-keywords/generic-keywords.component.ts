@@ -70,7 +70,7 @@ export class GenericKeywordsComponent {
       (k) => k.label === keyword.label
     )
     if (!duplicatedKeyword) {
-      this.keywords.push(keyword)
+      this.keywords = [...this.keywords, keyword]
       this.changedKeywords.emit(this.keywords)
       this.addedKeyword.emit(keyword)
     }

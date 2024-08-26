@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent.component'
 import { BehaviorSubject, of } from 'rxjs'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
@@ -206,6 +205,15 @@ describe('FormFieldSpatialExtentComponent', () => {
           type: 'place',
         },
       ])
+    })
+    it('calls the API only once per keyword on multiple subscriptions', () => {
+      component.shownKeywords$.subscribe()
+      component.shownKeywords$.subscribe()
+      component.shownKeywords$.subscribe()
+      const platformService = TestBed.inject(PlatformServiceInterface)
+      expect(platformService.searchKeywordsInThesaurus).toHaveBeenCalledTimes(
+        SAMPLE_PLACE_KEYWORDS.filter((k) => !!k.thesaurus).length
+      )
     })
   })
 
