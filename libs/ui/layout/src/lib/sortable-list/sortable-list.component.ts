@@ -15,6 +15,7 @@ import {
   Type,
 } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
 export type DynamicElement = {
   component: Type<unknown>
@@ -34,6 +35,7 @@ export type DynamicElement = {
     CdkDrag,
     CdkDragHandle,
     MatIconModule,
+    ButtonComponent,
   ],
 })
 export class SortableListComponent {

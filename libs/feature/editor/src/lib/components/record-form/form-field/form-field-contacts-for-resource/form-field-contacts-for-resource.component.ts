@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -18,10 +17,7 @@ import {
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import {
-  DynamicElement,
-  SortableListComponent,
-} from '@geonetwork-ui/ui/elements'
+import { DynamicElement, SortableListComponent } from '@geonetwork-ui/ui/layout'
 import {
   AutocompleteComponent,
   DropdownSelectorComponent,
@@ -34,7 +30,6 @@ import {
   debounceTime,
   distinctUntilChanged,
   firstValueFrom,
-  Observable,
   switchMap,
 } from 'rxjs'
 import { map } from 'rxjs/operators'

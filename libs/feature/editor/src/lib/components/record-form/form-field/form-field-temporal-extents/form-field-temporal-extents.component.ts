@@ -8,13 +8,10 @@ import {
 } from '@angular/core'
 import { FormArray, FormControl } from '@angular/forms'
 import { DatasetTemporalExtent } from '@geonetwork-ui/common/domain/model/record'
-import {
-  DynamicElement,
-  SortableListComponent,
-} from '@geonetwork-ui/ui/elements'
+import { DynamicElement, SortableListComponent } from '@geonetwork-ui/ui/layout'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateService } from '@ngx-translate/core'
-import { Observable, combineLatest, map } from 'rxjs'
+import { combineLatest, map, Observable } from 'rxjs'
 import { FormFieldTemporalExtentsDateComponent } from './form-field-temporal-extents-date/form-field-temporal-extents-date.component'
 import { FormFieldTemporalExtentsRangeComponent } from './form-field-temporal-extents-range/form-field-temporal-extents-range.component'
 

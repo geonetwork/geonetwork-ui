@@ -4,11 +4,11 @@ import {
   DatePickerComponent,
   DateRangePickerComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { Meta, StoryObj, applicationConfig } from '@storybook/angular'
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { SortableListComponent } from './sortable-list.component'
 
 export default {
-  title: 'Elements/SortableListComponent',
+  title: 'Layout/SortableListComponent',
   component: SortableListComponent,
   subcomponents: { DateRangePickerComponent },
   decorators: [
