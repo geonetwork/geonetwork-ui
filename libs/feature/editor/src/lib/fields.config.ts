@@ -104,6 +104,14 @@ export const RECORD_SPATIAL_EXTENTS_FIELD: EditorField = {
   },
 }
 
+export const RECORD_ATTACHED_RESOURCES: EditorField = {
+  model: 'onlineResources',
+  modelSpecifier: 'onlineResourceType:link',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.attachedResources'),
+  },
+}
+
 /************************************************************
  ***************          SECTIONS          *****************
  ************************************************************
@@ -149,7 +157,7 @@ export const ASSOCIATED_RESOURCES_SECTION: EditorSection = {
 export const ANNEXES_SECTION: EditorSection = {
   labelKey: marker('editor.record.form.section.annexes.label'),
   hidden: false,
-  fields: [],
+  fields: [RECORD_ATTACHED_RESOURCES],
 }
 
 export const CLASSIFICATION_SECTION: EditorSection = {

@@ -5,7 +5,7 @@ import {
   CdkDropList,
   moveItemInArray,
 } from '@angular/cdk/drag-drop'
-import { NgComponentOutlet, NgFor } from '@angular/common'
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -29,8 +29,7 @@ export type DynamicElement = {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    NgFor,
-    NgComponentOutlet,
+    CommonModule,
     CdkDropList,
     CdkDrag,
     CdkDragHandle,

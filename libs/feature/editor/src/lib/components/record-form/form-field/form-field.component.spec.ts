@@ -12,6 +12,7 @@ import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/for
 import { FormFieldTemporalExtentsComponent } from './form-field-temporal-extents/form-field-temporal-extents.component'
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
 import { FormFieldComponent } from './form-field.component'
+import { FormFieldAttachedResourcesComponent } from './form-field-attached-resources/form-field-attached-resources.component'
 
 describe('FormFieldComponent', () => {
   let component: FormFieldComponent
@@ -149,6 +150,20 @@ describe('FormFieldComponent', () => {
       ).componentInstance
     })
     it('creates an overview upload form field', () => {
+      expect(formField).toBeTruthy()
+    })
+  })
+  describe('attached resources field', () => {
+    let formField
+    beforeEach(() => {
+      component.model = 'onlineResources'
+      component.modelSpecifier = 'onlineResourceType:link'
+      fixture.detectChanges()
+      formField = fixture.debugElement.query(
+        By.directive(FormFieldAttachedResourcesComponent)
+      ).componentInstance
+    })
+    it('creates an array form field', () => {
       expect(formField).toBeTruthy()
     })
   })

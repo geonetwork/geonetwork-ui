@@ -37,6 +37,7 @@
               <gn-ui-form-field
                 [uniqueIdentifier]="recordUniqueIdentifier$ | async"
                 [model]="field.config.model!"
+                [modelSpecifier]="field.config.modelSpecifier!"
                 [config]="field.config.formFieldConfig"
                 [value]="field.value"
                 (valueChange)="

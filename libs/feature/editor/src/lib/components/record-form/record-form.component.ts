@@ -9,6 +9,7 @@ import {
   EditorSectionWithValues,
 } from '../../+state/editor.models'
 import { map } from 'rxjs'
+import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-record-form',
@@ -25,7 +26,7 @@ export class RecordFormComponent {
 
   constructor(public facade: EditorFacade) {}
 
-  handleFieldValueChange(model: string, newValue: EditorFieldValue) {
+  handleFieldValueChange(model: CatalogRecordKeys, newValue: EditorFieldValue) {
     if (!model) {
       return
     }

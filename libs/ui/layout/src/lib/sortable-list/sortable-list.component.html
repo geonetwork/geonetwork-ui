@@ -18,12 +18,18 @@
           *ngComponentOutlet="element.component; inputs: element.inputs"
         ></ng-container>
       </div>
-      <span
-        (click)="removeElement(index)"
-        class="material-symbols-outlined mx-[10px] cursor-pointer gn-ui-icon-medium flex-none"
-      >
-        close
-      </span>
+
+      <gn-ui-button
+        type="light"
+        style="
+          --gn-ui-button-padding: 0px;
+          --gn-ui-button-width: 24px;
+          --gn-ui-button-height: 24px;
+        "
+        class="ml-[8px] mr-[10px]"
+        (buttonClick)="removeElement(index)"
+        ><span class="material-symbols-outlined gn-ui-icon-medium">close</span>
+      </gn-ui-button>
     </div>
   </ng-container>
 </div>

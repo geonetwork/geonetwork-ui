@@ -1,0 +1,12 @@
+<gn-ui-file-input
+  [maxSizeMB]="10"
+  (fileChange)="handleFileChange($event)"
+  (uploadCancel)="handleUploadCancel()"
+  [uploadProgress]="uploadProgress"
+  (urlChange)="handleUrlChange($event)"
+></gn-ui-file-input>
+<gn-ui-sortable-list
+  [elements]="sortableElements"
+  (elementsChange)="handleResourcesChange($event)"
+>
+</gn-ui-sortable-list>
