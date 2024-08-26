@@ -1,12 +1,13 @@
 <input
   #input
-  [class]="classList"
+  class="gn-ui-text-input"
+  [ngClass]="extraClass"
   type="text"
   [value]="value"
   (change)="handleChange($event)"
   (input)="handleChange($event)"
-  [placeholder]="hint"
-  [attr.aria-label]="hint"
+  [placeholder]="placeholder"
+  [attr.aria-label]="placeholder"
   [attr.required]="required || null"
   [disabled]="disabled"
 />

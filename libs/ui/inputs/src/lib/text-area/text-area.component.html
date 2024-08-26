@@ -2,12 +2,13 @@
   <textarea
     #input
     name="textArea"
+    class="gn-ui-text-input leading-tight"
+    [ngClass]="extraClass"
     [disabled]="disabled"
     [placeholder]="placeholder"
     [value]="value"
     (change)="handleChange($event)"
     (input)="handleChange($event)"
-    [class]="classList"
     [attr.required]="required || null"
   ></textarea>
 </div>

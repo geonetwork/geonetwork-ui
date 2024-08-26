@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core'
 import { MatNativeDateModule } from '@angular/material/core'
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatFormFieldModule } from '@angular/material/form-field'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { TextInputComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
@@ -38,6 +38,7 @@ import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
       fromEditor.editorReducer
     ),
     EffectsModule.forFeature([EditorEffects]),
+    TextInputComponent,
   ],
   exports: [WizardComponent, WizardSummarizeComponent],
   providers: [EditorFacade, Gn4PlatformService],

@@ -74,10 +74,6 @@
     margin-bottom: -0.325em;
     flex-shrink: 0;
   }
-  /* makes spinners appear in the right color */
-  .gn-ui-btn mat-spinner circle {
-    stroke: currentColor !important;
-  }
 
   .gn-ui-btn-default {
     @apply gn-ui-btn text-white
@@ -135,9 +131,25 @@
     @apply flex items-center justify-center px-4 py-1 text-white rounded backdrop-blur;
   }
 
+  /* GENERIC TEXT INPUT (textarea, text field, url input...) */
+  .gn-ui-text-input {
+    --rounded: var(--gn-ui-text-input-rounded, 0.25em);
+    --padding: var(--gn-ui-text-input-padding, 0.6em);
+    @apply appearance-none border-2 p-[--padding] rounded-[--rounded] w-full transition-colors duration-75
+    text-[14px] leading-none border-gray-300 text-main placeholder-gray-800
+    focus:outline-none focus:border-main hover:border-main
+    disabled:cursor-not-allowed disabled:border-gray-100 disabled:placeholder-gray-300 disabled:text-gray-700 disabled:bg-white;
+  }
+
   /* TODO: add prefix */
   .card-icon {
     @apply text-primary opacity-50 group-hover:text-secondary group-hover:opacity-100 transition-colors transition-opacity;
+  }
+
+  /* makes spinners appear in the right color */
+  mat-spinner circle,
+  mat-progress-spinner circle {
+    stroke: currentColor !important;
   }
 }
 

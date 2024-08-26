@@ -48,8 +48,7 @@ describe('AddLayerFromWfsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
-      declarations: [AddLayerFromWfsComponent],
+      imports: [TranslateModule.forRoot(), AddLayerFromWfsComponent],
       providers: [
         {
           provide: MapFacade,

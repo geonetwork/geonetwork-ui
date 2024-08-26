@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddLayerFromCatalogComponent } from './add-layer-from-catalog.component'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
+import { MockBuilder, MockProvider } from 'ng-mocks'
 
 class SearchFacadeMock {
   init = jest.fn()
@@ -15,19 +15,19 @@ describe('AddLayerFromCatalogComponent', () => {
   let fixture: ComponentFixture<AddLayerFromCatalogComponent>
   let searchFacade: SearchFacade
 
+  beforeEach(() => {
+    return MockBuilder(AddLayerFromCatalogComponent)
+  })
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AddLayerFromCatalogComponent],
-      providers: [{ provide: SearchFacade, useClass: SearchFacadeMock }],
-      schemas: [NO_ERRORS_SCHEMA],
+      imports: [AddLayerFromCatalogComponent],
     })
       .overrideComponent(AddLayerFromCatalogComponent, {
         set: {
           providers: [
-            {
-              provide: SearchService,
-              useClass: SearchServiceMock,
-            },
+            MockProvider(SearchFacade, SearchFacadeMock, 'useClass'),
+            MockProvider(SearchService, SearchServiceMock, 'useClass'),
           ],
         },
       })
@@ -35,9 +35,9 @@ describe('AddLayerFromCatalogComponent', () => {
   })
 
   beforeEach(() => {
-    searchFacade = TestBed.inject(SearchFacade)
     fixture = TestBed.createComponent(AddLayerFromCatalogComponent)
     component = fixture.componentInstance
+    searchFacade = component['searchFacade']
     fixture.detectChanges()
   })
 

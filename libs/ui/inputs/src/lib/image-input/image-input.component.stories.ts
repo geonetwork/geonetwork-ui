@@ -12,20 +12,21 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { ImageInputComponent } from './image-input.component'
+import { action } from '@storybook/addon-actions'
 
 export default {
   title: 'Inputs/ImageInputComponent',
   component: ImageInputComponent,
   decorators: [
     applicationConfig({
-      providers: [importProvidersFrom(HttpClientModule)],
+      providers: [
+        importProvidersFrom(HttpClientModule),
+        importProvidersFrom(UtilI18nModule),
+        importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
+      ],
     }),
     moduleMetadata({
-      imports: [
-        ImageInputComponent,
-        UtilI18nModule,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-      ],
+      imports: [ImageInputComponent, UtilI18nModule, TranslateModule],
     }),
   ],
 } as Meta<ImageInputComponent>
@@ -35,10 +36,22 @@ export const WithoutImage: StoryObj<ImageInputComponent> = {
     maxSizeMB: 5,
   },
   render: (args) => ({
-    props: args,
+    props: {
+      ...args,
+      fileChange: action('fileChange'),
+      urlChange: action('urlChange'),
+      uploadCancel: action('uploadCancel'),
+      delete: action('delete'),
+      altTextChange: action('altTextChange'),
+    },
     template: `
     <div style="width: 600px;height: 400px;">
-      <gn-ui-image-input [maxSizeMB]="maxSizeMB">
+      <gn-ui-image-input [maxSizeMB]="maxSizeMB"
+        (fileChange)='fileChange($event)'
+        (urlChange)='urlChange($event)'
+        (uploadCancel)='uploadCancel($event)'
+        (delete)='delete($event)'
+        (altTextChange)='altTextChange($event)'>
       </gn-ui-image-input>
     </div>`,
   }),
@@ -52,13 +65,25 @@ export const WithImage: StoryObj<ImageInputComponent> = {
     altText: 'Some alternative text',
   },
   render: (args) => ({
-    props: args,
+    props: {
+      ...args,
+      fileChange: action('fileChange'),
+      urlChange: action('urlChange'),
+      uploadCancel: action('uploadCancel'),
+      delete: action('delete'),
+      altTextChange: action('altTextChange'),
+    },
     template: `
     <div style="width: 600px;height: 400px;">
       <gn-ui-image-input
         [maxSizeMB]="maxSizeMB"
         [previewUrl]="previewUrl"
         [altText]="altText"
+        (fileChange)='fileChange($event)'
+        (urlChange)='urlChange($event)'
+        (uploadCancel)='uploadCancel($event)'
+        (delete)='delete($event)'
+        (altTextChange)='altTextChange($event)'
       ></gn-ui-image-input>
     </div>`,
   }),
@@ -71,13 +96,25 @@ export const WithBrokenImage: StoryObj<ImageInputComponent> = {
     altText: 'Some alternative text',
   },
   render: (args) => ({
-    props: args,
+    props: {
+      ...args,
+      fileChange: action('fileChange'),
+      urlChange: action('urlChange'),
+      uploadCancel: action('uploadCancel'),
+      delete: action('delete'),
+      altTextChange: action('altTextChange'),
+    },
     template: `
     <div style="width: 600px;height: 400px;">
       <gn-ui-image-input
         [maxSizeMB]="maxSizeMB"
         [previewUrl]="previewUrl"
         [altText]="altText"
+        (fileChange)='fileChange($event)'
+        (urlChange)='urlChange($event)'
+        (uploadCancel)='uploadCancel($event)'
+        (delete)='delete($event)'
+        (altTextChange)='altTextChange($event)'
       ></gn-ui-image-input>
     </div>`,
   }),
@@ -89,12 +126,24 @@ export const UploadProgress5: StoryObj<ImageInputComponent> = {
     uploadProgress: 5,
   },
   render: (args) => ({
-    props: args,
+    props: {
+      ...args,
+      fileChange: action('fileChange'),
+      urlChange: action('urlChange'),
+      uploadCancel: action('uploadCancel'),
+      delete: action('delete'),
+      altTextChange: action('altTextChange'),
+    },
     template: `
     <div style="width: 600px;height: 400px;">
       <gn-ui-image-input
         [maxSizeMB]="maxSizeMB"
         [uploadProgress]="uploadProgress"
+        (fileChange)='fileChange($event)'
+        (urlChange)='urlChange($event)'
+        (uploadCancel)='uploadCancel($event)'
+        (delete)='delete($event)'
+        (altTextChange)='altTextChange($event)'
       ></gn-ui-image-input>
     </div>`,
   }),
@@ -106,12 +155,24 @@ export const UploadProgress95: StoryObj<ImageInputComponent> = {
     uploadProgress: 95,
   },
   render: (args) => ({
-    props: args,
+    props: {
+      ...args,
+      fileChange: action('fileChange'),
+      urlChange: action('urlChange'),
+      uploadCancel: action('uploadCancel'),
+      delete: action('delete'),
+      altTextChange: action('altTextChange'),
+    },
     template: `
     <div style="width: 600px;height: 400px;">
       <gn-ui-image-input
         [maxSizeMB]="maxSizeMB"
         [uploadProgress]="uploadProgress"
+        (fileChange)='fileChange($event)'
+        (urlChange)='urlChange($event)'
+        (uploadCancel)='uploadCancel($event)'
+        (delete)='delete($event)'
+        (altTextChange)='altTextChange($event)'
       ></gn-ui-image-input>
     </div>`,
   }),
@@ -123,12 +184,24 @@ export const UploadError: StoryObj<ImageInputComponent> = {
     uploadError: true,
   },
   render: (args) => ({
-    props: args,
+    props: {
+      ...args,
+      fileChange: action('fileChange'),
+      urlChange: action('urlChange'),
+      uploadCancel: action('uploadCancel'),
+      delete: action('delete'),
+      altTextChange: action('altTextChange'),
+    },
     template: `
     <div style="width: 600px;height: 400px;">
       <gn-ui-image-input
         [maxSizeMB]="maxSizeMB"
         [uploadError]="uploadError"
+        (fileChange)='fileChange($event)'
+        (urlChange)='urlChange($event)'
+        (uploadCancel)='uploadCancel($event)'
+        (delete)='delete($event)'
+        (altTextChange)='altTextChange($event)'
       ></gn-ui-image-input>
     </div>`,
   }),

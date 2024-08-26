@@ -6,7 +6,6 @@ import {
   LinkUsage,
 } from '@geonetwork-ui/util/shared'
 import { Observable, of, throwError } from 'rxjs'
-import { map } from 'rxjs/operators'
 import { MapUtilsService } from '../../utils'
 import { MapFacade } from '../../+state/map.facade'
 import {
@@ -17,12 +16,17 @@ import {
   DatasetDistribution,
   DatasetRecord,
 } from '@geonetwork-ui/common/domain/model/record'
+import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'gn-ui-add-layer-record-preview',
   templateUrl: './add-layer-record-preview.component.html',
   styleUrls: ['./add-layer-record-preview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [ThumbnailComponent, ButtonComponent, CommonModule],
 })
 export class AddLayerRecordPreviewComponent extends RecordPreviewComponent {
   get mapLinks(): DatasetDistribution[] {

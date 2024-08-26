@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import {
+  FeatureSearchModule,
   FIELDS_BRIEF,
   SearchFacade,
   SearchService,
@@ -15,6 +16,7 @@ import { AddLayerRecordPreviewComponent } from './add-layer-record-preview/add-l
   templateUrl: './add-layer-from-catalog.component.html',
   styleUrls: ['./add-layer-from-catalog.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
   providers: [
     SearchFacade,
     SearchService,
@@ -30,6 +32,7 @@ import { AddLayerRecordPreviewComponent } from './add-layer-record-preview/add-l
       },
     },
   ],
+  imports: [FeatureSearchModule],
 })
 export class AddLayerFromCatalogComponent implements OnInit {
   constructor(private searchFacade: SearchFacade) {}

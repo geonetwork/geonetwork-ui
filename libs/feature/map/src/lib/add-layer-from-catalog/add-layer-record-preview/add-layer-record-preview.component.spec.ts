@@ -21,7 +21,7 @@ describe('AddLayerRecordPreviewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AddLayerRecordPreviewComponent],
+      imports: [AddLayerRecordPreviewComponent],
       providers: [
         {
           provide: MapFacade,

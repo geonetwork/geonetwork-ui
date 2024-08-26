@@ -1,6 +1,9 @@
 import { ChangeDetectorRef, Component } from '@angular/core'
 import { MapContextLayerModel } from '../map-context/map-context.model'
 import { MapFacade } from '../+state/map.facade'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { TranslateModule } from '@ngx-translate/core'
+import { CommonModule } from '@angular/common'
 
 const INVALID_FILE_FORMAT_ERROR_MESSAGE = 'Invalid file format'
 
@@ -8,6 +11,8 @@ const INVALID_FILE_FORMAT_ERROR_MESSAGE = 'Invalid file format'
   selector: 'gn-ui-add-layer-from-file',
   templateUrl: './add-layer-from-file.component.html',
   styleUrls: ['./add-layer-from-file.component.css'],
+  standalone: true,
+  imports: [UiInputsModule, TranslateModule, CommonModule],
 })
 export class AddLayerFromFileComponent {
   errorMessage: string | null = null

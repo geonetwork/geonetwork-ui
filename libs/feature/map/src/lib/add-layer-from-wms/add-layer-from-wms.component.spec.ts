@@ -50,8 +50,7 @@ describe('AddLayerFromWmsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
-      declarations: [AddLayerFromWmsComponent],
+      imports: [TranslateModule.forRoot(), AddLayerFromWmsComponent],
       providers: [
         {
           provide: MapFacade,
