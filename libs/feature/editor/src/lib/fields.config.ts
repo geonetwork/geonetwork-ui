@@ -93,6 +93,13 @@ export const CONTACTS_FOR_RESOURCE_FIELD: EditorField = {
   },
 }
 
+export const CONTACTS: EditorField = {
+  model: 'contacts',
+  formFieldConfig: {
+    labelKey: '',
+  },
+}
+
 export const RECORD_GRAPHICAL_OVERVIEW_FIELD: EditorField = {
   model: 'overviews',
   formFieldConfig: {
@@ -191,7 +198,7 @@ export const DATA_POINT_OF_CONTACT_SECTION: EditorSection = {
     'editor.record.form.section.dataPointOfContact.description'
   ),
   hidden: false,
-  fields: [],
+  fields: [CONTACTS],
 }
 
 /************************************************************

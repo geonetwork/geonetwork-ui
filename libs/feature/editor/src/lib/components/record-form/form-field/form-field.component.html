@@ -123,4 +123,9 @@
       ></gn-ui-form-field-online-link-resources>
     </ng-container>
   </ng-container>
+  <ng-container *ngIf="isContacts">
+    <gn-ui-form-field-contacts
+      [control]="formControl"
+    ></gn-ui-form-field-contacts>
+  </ng-container>
 </ng-template>
