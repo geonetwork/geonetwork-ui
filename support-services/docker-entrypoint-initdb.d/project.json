@@ -1,0 +1,9 @@
+{
+  "name": "database-dump",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "support-services/docker-entrypoint-initdb.d",
+  "prefix": "gn-ui",
+  "targets": {},
+  "tags": ["scope:support-services"]
+}

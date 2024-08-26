@@ -33,5 +33,5 @@
     }
   },
   "tags": [],
-  "implicitDependencies": ["datahub"]
+  "implicitDependencies": ["datahub", "database-dump"]
 }
