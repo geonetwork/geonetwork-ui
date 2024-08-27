@@ -30,5 +30,14 @@ describe('create', () => {
         .eq(1)
         .should('contain.text', 'Next')
     })
+
+    it('back navigation should go to search after creating a record', () => {
+      // First create a record and its draft
+      cy.get('[data-cy="create-record"]').click()
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(1200) // waiting for draft saving to kick in
+      cy.go('back')
+      cy.url().should('include', '/catalog/search')
+    })
   })
 })

@@ -133,7 +133,9 @@ describe('EditPageComponent', () => {
       const router = TestBed.inject(Router)
       const navigateSpy = jest.spyOn(router, 'navigate')
       ;(facade.draftSaveSuccess$ as any).next()
-      expect(navigateSpy).toHaveBeenCalledWith(['edit', 'my-dataset-001'])
+      expect(navigateSpy).toHaveBeenCalledWith(['edit', 'my-dataset-001'], {
+        replaceUrl: true,
+      })
     })
   })
 
