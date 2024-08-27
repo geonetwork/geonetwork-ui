@@ -20,9 +20,9 @@ import { getUpdateFrequencyFromFrequencyCode } from '../iso19139/utils/update-fr
 import {
   CatalogRecord,
   Constraint,
-  DatasetDistribution,
-  DatasetDistributionType,
   DatasetDownloadDistribution,
+  DatasetOnlineResource,
+  DatasetOnlineResourceType,
   DatasetServiceDistribution,
   DatasetSpatialExtent,
   OnlineLinkResource,
@@ -158,12 +158,12 @@ export class Gn4FieldMapper {
       const rawLinks = getAsArray(
         selectField<SourceWithUnknownProps[]>(source, 'link')
       )
-      const distributions = rawLinks
+      const onlineResources = rawLinks
         .map((link) => this.mapLink(link))
         .filter((v) => v !== null)
       return {
         ...output,
-        distributions,
+        onlineResources,
       }
     },
     contact: (output, source) => ({
@@ -387,7 +387,7 @@ export class Gn4FieldMapper {
     return fieldName in this.fields ? this.fields[fieldName] : this.genericField
   }
 
-  getLinkType(url: string, protocol?: string): DatasetDistributionType {
+  getLinkType(url: string, protocol?: string): DatasetOnlineResourceType {
     if (!protocol) {
       return 'link'
     }
@@ -408,7 +408,7 @@ export class Gn4FieldMapper {
 
   mapLink = (
     sourceLink: SourceWithUnknownProps
-  ): DatasetDistribution | null => {
+  ): DatasetOnlineResource | null => {
     const url = getAsUrl(
       selectFallback(
         selectTranslatedField<string>(sourceLink, 'urlObject', this.lang3),

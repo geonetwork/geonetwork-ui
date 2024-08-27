@@ -222,7 +222,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
     },
   ],
   spatialRepresentation: 'vector',
-  distributions: [
+  onlineResources: [
     {
       type: 'link',
       url: new URL('https://map.geo.admin.ch/?layers=ch.are.alpenkonvention'),

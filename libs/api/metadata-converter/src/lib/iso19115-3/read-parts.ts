@@ -19,18 +19,20 @@ import {
 } from '../function-utils'
 import {
   extractCharacterString,
-  extractDatasetDistributions,
+  extractDatasetOnlineResources,
   extractDateTime,
   extractRole,
+  extractServiceOnlineResources,
   extractUrl,
   findIdentification,
 } from '../iso19139/read-parts'
 import {
-  DatasetDistribution,
+  DatasetOnlineResource,
   Individual,
   Organization,
   RecordKind,
   Role,
+  ServiceOnlineResource,
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchMimeType } from '../common/distribution.mapper'
 import { fullNameToParts } from '../iso19139/utils/individual-name'
@@ -320,10 +322,19 @@ const getMimeType = pipe(
   map(matchMimeType)
 )
 
-export function readDistributions(rootEl: XmlElement): DatasetDistribution[] {
+export function readOnlineResources(
+  rootEl: XmlElement
+): DatasetOnlineResource[] | ServiceOnlineResource[] {
+  if (readKind(rootEl) === 'dataset') {
+    return pipe(
+      findNestedElements('mrd:distributionInfo', 'mrd:MD_Distribution'),
+      mapArray(extractDatasetOnlineResources(getMimeType)),
+      flattenArray()
+    )(rootEl)
+  }
   return pipe(
     findNestedElements('mrd:distributionInfo', 'mrd:MD_Distribution'),
-    mapArray(extractDatasetDistributions(getMimeType)),
+    mapArray(extractServiceOnlineResources()),
     flattenArray()
   )(rootEl)
 }

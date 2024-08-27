@@ -17,7 +17,6 @@ import {
   findIdentification,
   getUpdateFrequencyFromCustomPeriod,
   readContacts,
-  readDistributions,
   readOnlineResources,
   readOwnerOrganization,
   readSpatialExtents,
@@ -112,9 +111,9 @@ describe('read parts', () => {
     beforeEach(() => {
       recordRootEl = getRootElement(parseXmlString(GEOCAT_CH_DATASET))
     })
-    describe('readDistributions', () => {
-      it('returns an array of distributions', () => {
-        expect(readDistributions(recordRootEl)).toEqual([
+    describe('readOnlineResources', () => {
+      it('returns an array of online resources', () => {
+        expect(readOnlineResources(recordRootEl)).toEqual([
           {
             description: 'Vorschau map.geo.admin.ch',
             url: new URL(
@@ -224,8 +223,8 @@ describe('read parts', () => {
             appendChildren(() => linkWithoutUrl)
           )(recordRootEl)
         })
-        it('returns an array of distributions with empty url', () => {
-          expect(readDistributions(recordRootEl)).toEqual([
+        it('returns an array of online resources with empty url', () => {
+          expect(readOnlineResources(recordRootEl)).toEqual([
             {
               url: new URL('http://missing'),
               mimeType: 'x-gis/x-shapefile',
@@ -562,7 +561,7 @@ describe('read parts', () => {
             appendChildren(() => resourceWithoutUrl)
           )(recordRootEl)
         })
-        it('returns an array of distributions with empty url', () => {
+        it('returns an array of online resources with empty url', () => {
           expect(readOnlineResources(recordRootEl)).toEqual([
             {
               url: new URL('http://missing'),

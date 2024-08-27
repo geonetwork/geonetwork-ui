@@ -1,7 +1,7 @@
 import {
   CatalogRecord,
   Constraint,
-  DatasetDistribution,
+  DatasetOnlineResource,
   DatasetRecord,
   DatasetServiceDistribution,
   Individual,
@@ -29,7 +29,6 @@ import {
   tap,
 } from '../function-utils'
 import {
-  XmlElement,
   addAttribute,
   appendChildren,
   createChild,
@@ -44,6 +43,7 @@ import {
   removeChildren,
   removeChildrenByName,
   setTextContent,
+  XmlElement,
 } from '../xml-utils'
 import { readKind } from './read-parts'
 import { writeGeometry } from './utils/geometry'
@@ -179,7 +179,7 @@ export function getRoleCode(role: Role): string {
   }
 }
 
-export function getDistributionProtocol(
+export function getServiceDistributionProtocol(
   distribution: DatasetServiceDistribution
 ): string {
   switch (distribution.accessServiceProtocol.toLowerCase()) {
@@ -610,11 +610,11 @@ export function createLicense(license: Constraint) {
   )
 }
 
-export function removeDistributions() {
+export function removeOnlineResources() {
   return pipe(removeChildrenByName('gmd:distributionInfo'))
 }
 
-function appendDistributionFormat(mimeType: string) {
+function appendOnlineResourceFormat(mimeType: string) {
   return appendChildren(
     pipe(
       createElement('gmd:distributionFormat'),
@@ -638,8 +638,8 @@ export function createDistributionInfo() {
 }
 
 // apply to MD_Distribution
-export function appendDistribution(
-  distribution: DatasetDistribution,
+export function appendOnlineResource(
+  onlineResource: DatasetOnlineResource,
   appendFormatFn: (
     mimeType: string
   ) => ChainableFunction<XmlElement, XmlElement>
@@ -647,16 +647,16 @@ export function appendDistribution(
   let name: string
   let functionCode: string
   let protocol: string
-  if (distribution.type === 'service') {
-    name = distribution.identifierInService // this is for GeoNetwork to know the layer name
+  if (onlineResource.type === 'service') {
+    name = onlineResource.identifierInService // this is for GeoNetwork to know the layer name
     functionCode = 'download'
-    protocol = getDistributionProtocol(distribution)
-  } else if (distribution.type === 'download') {
-    name = distribution.name
+    protocol = getServiceDistributionProtocol(onlineResource)
+  } else if (onlineResource.type === 'download') {
+    name = onlineResource.name
     functionCode = 'download'
     protocol = 'WWW:DOWNLOAD'
   } else {
-    name = distribution.name
+    name = onlineResource.name
     functionCode = 'information'
     protocol = 'WWW:LINK'
   }
@@ -666,12 +666,12 @@ export function appendDistribution(
       createChild('gmd:MD_DigitalTransferOptions'),
       createChild('gmd:onLine'),
       createChild('gmd:CI_OnlineResource'),
-      writeLinkage(distribution.url),
-      'description' in distribution
+      writeLinkage(onlineResource.url),
+      'description' in onlineResource
         ? appendChildren(
             pipe(
               createElement('gmd:description'),
-              writeCharacterString(distribution.description)
+              writeCharacterString(onlineResource.description)
             )
           )
         : noop,
@@ -695,7 +695,9 @@ export function appendDistribution(
     )
   )
   return pipe(
-    'mimeType' in distribution ? appendFormatFn(distribution.mimeType) : noop,
+    'mimeType' in onlineResource
+      ? appendFormatFn(onlineResource.mimeType)
+      : noop,
     appendTransferOptions
   )
 }
@@ -1032,20 +1034,6 @@ export function writeGraphicOverviews(
   )(rootEl)
 }
 
-export function writeDistributions(record: DatasetRecord, rootEl: XmlElement) {
-  pipe(
-    removeDistributions(),
-    appendChildren(
-      ...record.distributions.map((d) =>
-        pipe(
-          createDistributionInfo(),
-          appendDistribution(d, appendDistributionFormat)
-        )
-      )
-    )
-  )(rootEl)
-}
-
 export function writeLineage(record: DatasetRecord, rootEl: XmlElement) {
   pipe(
     findNestedChildOrCreate(
@@ -1127,14 +1115,38 @@ export function createOnlineResource(onlineResource: ServiceOnlineResource) {
   )
 }
 
-export function writeOnlineResources(
+export function appendDatasetOnlineResources(
+  record: DatasetRecord,
+  rootEl: XmlElement
+) {
+  appendChildren(
+    ...record.onlineResources.map((d) =>
+      pipe(
+        createDistributionInfo(),
+        appendOnlineResource(d, appendOnlineResourceFormat)
+      )
+    )
+  )(rootEl)
+}
+
+export function appendServiceOnlineResources(
   record: ServiceRecord,
   rootEl: XmlElement
 ) {
-  pipe(
-    removeDistributions(),
-    appendChildren(...record.onlineResources.map(createOnlineResource))
-  )(rootEl)
+  appendChildren(...record.onlineResources.map(createOnlineResource))(rootEl)
+}
+
+export function writeOnlineResources(
+  record: CatalogRecord,
+  rootEl: XmlElement
+) {
+  removeOnlineResources()(rootEl)
+
+  if (record.kind === 'dataset') {
+    appendDatasetOnlineResources(record, rootEl)
+    return
+  }
+  appendServiceOnlineResources(record, rootEl)
 }
 
 export function writeTemporalExtents(

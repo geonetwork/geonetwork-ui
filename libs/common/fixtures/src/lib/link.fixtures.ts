@@ -1,6 +1,6 @@
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 
-export const someDataLinksFixture = (): DatasetDistribution[] => [
+export const someDataLinksFixture = (): DatasetOnlineResource[] => [
   aSetOfLinksFixture().dataXls(),
   {
     description: 'CSV file',
@@ -10,7 +10,7 @@ export const someDataLinksFixture = (): DatasetDistribution[] => [
   },
 ]
 
-export const someGeoDatalinksFixture = (): DatasetDistribution[] => [
+export const someGeoDatalinksFixture = (): DatasetOnlineResource[] => [
   {
     description: 'Geojson file',
     name: 'some_file_name.geojson',
@@ -28,7 +28,7 @@ export const someGeoDatalinksFixture = (): DatasetDistribution[] => [
 
 export const aSetOfLinksFixture = (): Record<
   string,
-  () => DatasetDistribution
+  () => DatasetOnlineResource
 > => ({
   readmeLink: () => ({
     description: 'Readme page',

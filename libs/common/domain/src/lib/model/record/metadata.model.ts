@@ -115,7 +115,7 @@ export type ServiceProtocol =
   | 'ogcFeatures'
   | 'other'
 
-export type DatasetDistributionType = 'service' | 'download' | 'link'
+export type DatasetOnlineResourceType = 'service' | 'download' | 'link'
 
 export interface DatasetServiceDistribution {
   type: 'service'
@@ -146,12 +146,12 @@ export interface OnlineLinkResource {
   description?: string
 }
 
-export type DatasetDistribution = (
+export type DatasetOnlineResource = (
   | DatasetServiceDistribution
   | DatasetDownloadDistribution
   | OnlineLinkResource
 ) & {
-  type: DatasetDistributionType
+  type: DatasetOnlineResourceType
 }
 
 export interface GraphicOverview {
@@ -178,7 +178,7 @@ export interface DatasetRecord extends BaseRecord {
   kind: 'dataset'
   status: RecordStatus
   lineage: string // Explanation of the origin of this record (e.g: how, why)"
-  distributions: Array<DatasetDistribution>
+  onlineResources: Array<DatasetOnlineResource>
   spatialExtents: Array<DatasetSpatialExtent>
   temporalExtents: Array<DatasetTemporalExtent>
   spatialRepresentation?: SpatialRepresentationType

@@ -68,7 +68,7 @@ Toutes ces données sont reprises dans BDR.`,
   resourceCreated: new Date('2002-01-01'),
   resourceUpdated: new Date('2022-06-16'),
   resourcePublished: new Date('2022-06-16'),
-  distributions: [
+  onlineResources: [
     {
       description:
         "Application de consultation des routes et autoroutes de Wallonie. Cette application est sécurisée et n'est accessible que pour les agents de la DGO1 du SPW.",

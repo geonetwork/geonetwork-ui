@@ -1,5 +1,5 @@
 import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
-import { writeContactsForResource, writeDistributions } from './write-parts'
+import { writeContactsForResource, writeOnlineResources } from './write-parts'
 import {
   createElement,
   getRootElement,
@@ -22,9 +22,9 @@ describe('write parts', () => {
     datasetRecord = { ...GENERIC_DATASET_RECORD }
   })
 
-  describe('writeDistributions', () => {
-    const distributionShp = GENERIC_DATASET_RECORD.distributions[0]
-    const distributionLink = GENERIC_DATASET_RECORD.distributions[2]
+  describe('writeOnlineResources', () => {
+    const distributionShp = GENERIC_DATASET_RECORD.onlineResources[0]
+    const distributionLink = GENERIC_DATASET_RECORD.onlineResources[2]
 
     it('writes one distributionInfo per link, format in iso19115-3, reuses a distribution info with distributor contact', () => {
       datasetRecord = {
@@ -39,10 +39,10 @@ describe('write parts', () => {
             },
           },
         ],
-        distributions: [distributionShp, distributionLink],
+        onlineResources: [distributionShp, distributionLink],
       }
       writeContactsForResource(datasetRecord, rootEl)
-      writeDistributions(datasetRecord, rootEl)
+      writeOnlineResources(datasetRecord, rootEl)
       expect(rootAsString()).toEqual(`<root>
     <gmd:identificationInfo>
         <gmd:MD_DataIdentification/>
@@ -152,7 +152,7 @@ describe('write parts', () => {
     })
 
     it('removes existing ones, keeping distributor info if not empty', () => {
-      // add some distributions first
+      // add some online resources first
       const sample = parseXmlString(`<root>
     <gmd:distributionInfo xmlns:comp="http://www.geocat.ch/2003/05/gateway/GM03Comprehensive" xmlns:xalan="http://xml.apache.org/xalan" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
         <gmd:MD_Distribution>
@@ -281,11 +281,11 @@ describe('write parts', () => {
     </gmd:distributionInfo>
 </root>`)
       rootEl = getRootElement(sample)
-      writeDistributions(
+      writeOnlineResources(
         {
           ...datasetRecord,
           contactsForResource: [],
-          distributions: [distributionLink],
+          onlineResources: [distributionLink],
         },
         rootEl
       )

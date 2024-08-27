@@ -2,7 +2,6 @@ import {
   CatalogRecord,
   DatasetRecord,
   Individual,
-  ServiceOnlineResource,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
   addAttribute,
@@ -34,14 +33,14 @@ import {
   pipe,
 } from '../function-utils'
 import {
-  appendDistribution,
   appendKeywords,
+  appendOnlineResource,
+  appendServiceOnlineResources,
   createDistributionInfo,
   findOrCreateDistribution,
   findOrCreateIdentification,
   getProgressCode,
   getRoleCode,
-  getServiceEndpointProtocol,
   removeKeywords,
   writeCharacterString,
   writeDateTime,
@@ -481,7 +480,7 @@ function removeTransferOptions(rootEl: XmlElement) {
   )(rootEl)
 }
 
-function appendDistributionFormat(mimeType: string) {
+function appendOnlineResourceFormat(mimeType: string) {
   return appendChildren(
     pipe(
       createElement('mrd:distributionFormat'),
@@ -494,11 +493,18 @@ function appendDistributionFormat(mimeType: string) {
   )
 }
 
-export function writeDistributions(record: DatasetRecord, rootEl: XmlElement) {
+export function writeOnlineResources(
+  record: CatalogRecord,
+  rootEl: XmlElement
+) {
   removeTransferOptions(rootEl)
 
-  // for each distribution, either find an existing distribution info or create a new one
-  record.distributions.forEach((distribution, index) => {
+  if (record.kind === 'service') {
+    appendServiceOnlineResources(record, rootEl)
+  }
+
+  // for each online resource, either find an existing distribution info or create a new one
+  record.onlineResources.forEach((onlineResource, index) => {
     pipe(
       fallback(
         pipe(
@@ -507,7 +513,7 @@ export function writeDistributions(record: DatasetRecord, rootEl: XmlElement) {
         ),
         appendChildTree(createDistributionInfo())
       ),
-      appendDistribution(distribution, appendDistributionFormat)
+      appendOnlineResource(onlineResource, appendOnlineResourceFormat)
     )(rootEl)
   })
 }
