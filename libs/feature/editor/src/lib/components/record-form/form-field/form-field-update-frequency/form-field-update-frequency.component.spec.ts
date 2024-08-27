@@ -1,8 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-
-import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { FormControl } from '@angular/forms'
+import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency.component'
 
 describe('FormFieldUpdateFrequencyComponent', () => {
   let component: FormFieldUpdateFrequencyComponent
@@ -15,58 +13,74 @@ describe('FormFieldUpdateFrequencyComponent', () => {
 
     fixture = TestBed.createComponent(FormFieldUpdateFrequencyComponent)
     component = fixture.componentInstance
-    const control = new FormControl()
-    control.setValue({
-      updatedTimes: 3,
-      per: 'week',
-    })
-    component.control = control
-    fixture.detectChanges()
-    await component.ngOnInit()
   })
 
   it('should create', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should offer a set of initial choices', () => {
-    expect(component['choices']).toHaveLength(10)
-    expect(component['choices']).toContainEqual({
-      label: 'domain.record.updateFrequency.week',
-      value: 'week.3',
-    })
-  })
-
-  it('should parse the updatedTimes and per values', () => {
-    component.onSelectFrequencyValue('day.1')
-    expect(component.control.value).toEqual({
-      updatedTimes: 1,
-      per: 'day',
-    })
-  })
-
-  it('should be recognized as planned', () => {
-    expect(component.planned).toBeTruthy()
-  })
-
-  it('should add the custom frequency to the dropdown choices', () => {
-    expect(component['choices']).toContainEqual({
-      value: 'week.3',
-      label: 'domain.record.updateFrequency.week',
-    })
-  })
-
-  describe('Switch to not planned', () => {
+  describe('when the initial value is an UpdateFrequencyCustom', () => {
     beforeEach(async () => {
-      component.onPlannedToggled()
+      component.value = {
+        updatedTimes: 3,
+        per: 'week',
+      }
+      fixture.detectChanges()
+      await component.ngOnInit()
     })
 
-    it('should set the value as notPlanned', () => {
-      expect(component.control.value).toBe('notPlanned')
+    it('should offer a set of initial choices', () => {
+      expect(component['choices']).toHaveLength(10)
+      expect(component['choices']).toContainEqual({
+        label: 'domain.record.updateFrequency.week',
+        value: 'week.3',
+      })
+    })
+
+    it('should be recognized as planned', () => {
+      expect(component.planned).toBeTruthy()
+    })
+
+    it('should add the custom frequency to the dropdown choices', () => {
+      expect(component['choices']).toContainEqual({
+        value: 'week.3',
+        label: 'domain.record.updateFrequency.week',
+      })
+    })
+
+    it('should parse and emit the updatedTimes and per values on new selection', () => {
+      const spy = jest.spyOn(component.valueChange, 'emit')
+      component.onSelectFrequencyValue('day.1')
+      expect(spy).toHaveBeenCalledWith({
+        updatedTimes: 1,
+        per: 'day',
+      })
+    })
+
+    it('should emit notPlanned on toggle', () => {
+      const spy = jest.spyOn(component.valueChange, 'emit')
+      component.onPlannedToggled()
+      expect(spy).toHaveBeenCalledWith('notPlanned')
+    })
+  })
+
+  describe('when the initial value is an UpdateFrequencyCode', () => {
+    beforeEach(() => {
+      component.value = 'notPlanned'
+      fixture.detectChanges()
     })
 
     it('should be recognized as not planned', () => {
       expect(component.planned).toBeFalsy()
+    })
+
+    it('should emit once per day on toggle', () => {
+      const spy = jest.spyOn(component.valueChange, 'emit')
+      component.onPlannedToggled()
+      expect(spy).toHaveBeenCalledWith({
+        updatedTimes: 1,
+        per: 'day',
+      })
     })
   })
 })

@@ -59,4 +59,11 @@ export class EditorService {
       .saveRecordAsDraft(record)
       .pipe(map(() => undefined))
   }
+
+  undoRecordDraft(
+    record: CatalogRecord
+  ): Observable<[CatalogRecord, string, boolean]> {
+    this.recordsRepository.clearRecordDraft(record.uniqueIdentifier)
+    return this.recordsRepository.openRecordForEdition(record.uniqueIdentifier)
+  }
 }

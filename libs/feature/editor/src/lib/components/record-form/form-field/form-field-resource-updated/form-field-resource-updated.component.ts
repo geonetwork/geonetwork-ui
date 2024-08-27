@@ -1,5 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { FormControl } from '@angular/forms'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core'
 import { DatePickerComponent } from '@geonetwork-ui/ui/inputs'
 
 @Component({
@@ -11,5 +16,6 @@ import { DatePickerComponent } from '@geonetwork-ui/ui/inputs'
   imports: [DatePickerComponent],
 })
 export class FormFieldResourceUpdatedComponent {
-  @Input() control!: FormControl
+  @Input() value: Date
+  @Output() valueChange: EventEmitter<Date> = new EventEmitter()
 }

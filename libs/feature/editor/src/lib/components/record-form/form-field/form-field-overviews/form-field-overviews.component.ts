@@ -1,8 +1,13 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { OverviewUploadComponent } from '../../../overview-upload/overview-upload.component'
-import { FormControl } from '@angular/forms'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core'
 import { GraphicOverview } from '@geonetwork-ui/common/domain/model/record'
+import { OverviewUploadComponent } from '../../../overview-upload/overview-upload.component'
 
 @Component({
   selector: 'gn-ui-form-field-overviews',
@@ -14,9 +19,15 @@ import { GraphicOverview } from '@geonetwork-ui/common/domain/model/record'
 })
 export class FormFieldOverviewsComponent {
   @Input() metadataUuid: string
-  @Input() control!: FormControl
+  @Input() value: Array<GraphicOverview>
+  @Output() valueChange: EventEmitter<Array<GraphicOverview>> =
+    new EventEmitter()
+
+  get firstOverview() {
+    return this.value[0]
+  }
 
   handleOverviewChange(overView: GraphicOverview | null) {
-    this.control.setValue(overView ? [overView] : [])
+    this.valueChange.emit(overView ? [overView] : [])
   }
 }

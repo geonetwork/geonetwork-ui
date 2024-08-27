@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { FormFieldLicenseComponent } from './form-field-license.component'
-import { FormControl } from '@angular/forms'
 import { TranslateModule } from '@ngx-translate/core'
 
 describe('FormFieldLicenseComponent', () => {
@@ -15,10 +14,8 @@ describe('FormFieldLicenseComponent', () => {
 
     fixture = TestBed.createComponent(FormFieldLicenseComponent)
     component = fixture.componentInstance
-    const control = new FormControl()
-    control.setValue([{ text: 'cc-by' }])
-    component.control = control
-    component.label = 'License'
+    component.label = 'License' // TODO: translate
+    component.value = [{ text: 'cc-by' }]
     fixture.detectChanges()
   })
 
@@ -31,9 +28,10 @@ describe('FormFieldLicenseComponent', () => {
     })
   })
   describe('#onSelectValue', () => {
-    it('should set the selected value', () => {
+    it('should emit the selected value', () => {
+      const spy = jest.spyOn(component.valueChange, 'emit')
       component.onSelectValue('cc-by-sa')
-      expect(component.control.value).toEqual([{ text: 'cc-by-sa' }])
+      expect(spy).toHaveBeenCalledWith([{ text: 'cc-by-sa' }])
     })
   })
 })

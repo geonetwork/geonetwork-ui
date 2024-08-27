@@ -1,18 +1,22 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
   Input,
-  OnDestroy,
-  OnInit,
-  Type,
+  OnChanges,
+  Output,
 } from '@angular/core'
 import { FormArray, FormControl } from '@angular/forms'
-import { SortableListComponent } from '@geonetwork-ui/ui/elements'
-import { Subscription, combineLatest, map } from 'rxjs'
+import { DatasetTemporalExtent } from '@geonetwork-ui/common/domain/model/record'
+import {
+  DynamicElement,
+  SortableListComponent,
+} from '@geonetwork-ui/ui/elements'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { TranslateService } from '@ngx-translate/core'
+import { Observable, combineLatest, map } from 'rxjs'
 import { FormFieldTemporalExtentsDateComponent } from './form-field-temporal-extents-date/form-field-temporal-extents-date.component'
 import { FormFieldTemporalExtentsRangeComponent } from './form-field-temporal-extents-range/form-field-temporal-extents-range.component'
-import { TranslateService } from '@ngx-translate/core'
-import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'gn-ui-form-field-temporal-extents',
@@ -20,18 +24,14 @@ import { CommonModule } from '@angular/common'
   styleUrls: ['./form-field-temporal-extents.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, SortableListComponent],
+  imports: [CommonModule, ButtonComponent, SortableListComponent],
 })
-export class FormFieldTemporalExtentsComponent implements OnInit, OnDestroy {
-  @Input() control!: FormControl
-
-  subscription: Subscription
+export class FormFieldTemporalExtentsComponent implements OnChanges {
+  @Input() value: Array<DatasetTemporalExtent>
+  @Output() valueChange: Observable<Array<DatasetTemporalExtent>>
 
   array: FormArray = new FormArray([])
-  elements: Array<{
-    component: Type<any>
-    inputs: Record<string, any>
-  }>
+  elements: DynamicElement[] = []
 
   addOptions$ = combineLatest([
     this.translateService
@@ -42,29 +42,19 @@ export class FormFieldTemporalExtentsComponent implements OnInit, OnDestroy {
       .pipe(map((buttonLabel) => ({ buttonLabel, eventName: 'range' }))),
   ])
 
-  constructor(private translateService: TranslateService) {}
-
-  ngOnInit() {
-    this.resetValueFromInput(this.control.value)
-
-    this.subscription = new Subscription()
-
-    this.subscription.add(
-      this.control.valueChanges.subscribe((value) => {
-        this.resetValueFromInput(value)
-      })
-    )
-
-    this.subscription.add(
-      this.array.valueChanges.subscribe((value) => {
-        this.control.setValue(value)
-      })
-    )
+  constructor(private translateService: TranslateService) {
+    this.valueChange = this.array.valueChanges
   }
 
-  onElementsChange(elements: { inputs: Record<string, unknown> }[]) {
+  ngOnChanges() {
+    this.resetValueFromInput(this.value)
+  }
+
+  onElementsChange(elements: DynamicElement[]) {
+    this.elements = elements
     this.array.clear({ emitEvent: false })
-    elements.forEach((e, i) =>
+
+    this.elements.forEach((e: DynamicElement, i: number) =>
       this.array.push(e.inputs.control, {
         emitEvent: i === elements.length - 1,
       })
@@ -74,58 +64,56 @@ export class FormFieldTemporalExtentsComponent implements OnInit, OnDestroy {
   onAdd(eventName: string) {
     switch (eventName) {
       case 'date': {
-        const dateControl = new FormControl({ start: new Date() })
-        this.array.push(dateControl)
+        const instant = { start: new Date() }
+        this.pushDate(instant, this.elements, true)
         break
       }
       case 'range': {
-        const rangeControl = new FormControl({
+        const range = {
           start: new Date(),
           end: new Date(),
-        })
-        this.array.push(rangeControl)
+        }
+        this.pushRange(range, this.elements, true)
         break
       }
     }
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe()
-  }
-
   private resetValueFromInput(value) {
     this.array.clear({ emitEvent: false })
-    let newElements = []
-    value.forEach((v: any) => {
+    this.elements = []
+    if (!value) return
+
+    const newElements = []
+    value.forEach((v: DatasetTemporalExtent) => {
       if ('start' in v && 'end' in v) {
-        const rangeControl = new FormControl({
-          start: v.start,
-          end: v.end,
-        })
-        this.array.push(rangeControl, { emitEvent: false })
-        newElements = [
-          ...newElements,
-          {
-            component: FormFieldTemporalExtentsRangeComponent,
-            inputs: {
-              control: rangeControl,
-            },
-          },
-        ]
+        this.pushRange(v, newElements, false)
       } else {
-        const dateControl = new FormControl({ start: v.start })
-        this.array.push(dateControl, { emitEvent: false })
-        newElements = [
-          ...newElements,
-          {
-            component: FormFieldTemporalExtentsDateComponent,
-            inputs: {
-              control: dateControl,
-            },
-          },
-        ]
+        this.pushDate(v, newElements, false)
       }
     })
     this.elements = newElements
+  }
+
+  private pushDate(instant, elements, emitEvent) {
+    const dateControl = new FormControl(instant)
+    this.array.push(dateControl, { emitEvent })
+    elements.push({
+      component: FormFieldTemporalExtentsDateComponent,
+      inputs: {
+        control: dateControl,
+      },
+    })
+  }
+
+  private pushRange(period, elements, emitEvent) {
+    const rangeControl = new FormControl(period)
+    this.array.push(rangeControl, { emitEvent })
+    elements.push({
+      component: FormFieldTemporalExtentsRangeComponent,
+      inputs: {
+        control: rangeControl,
+      },
+    })
   }
 }

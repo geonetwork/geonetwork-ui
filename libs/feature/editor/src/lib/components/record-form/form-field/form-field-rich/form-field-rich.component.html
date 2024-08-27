@@ -14,7 +14,7 @@
     [preview]="preview"
     [helperText]="helperText"
     [placeholder]="placeholder"
-    [textContent]="control.value"
-    (textContentChanged)="handleTextContentChanged($event)"
+    [textContent]="value"
+    (textContentChanged)="valueChange.emit($event)"
   ></gn-ui-markdown-editor>
 </gn-ui-form-field-wrapper>

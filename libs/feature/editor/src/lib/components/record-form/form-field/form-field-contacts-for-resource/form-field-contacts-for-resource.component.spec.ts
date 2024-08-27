@@ -1,24 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FormFieldContactsForResourceComponent } from './form-field-contacts-for-resource.component'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { BehaviorSubject } from 'rxjs'
 import {
   Individual,
   Organization,
   Role,
 } from '@geonetwork-ui/common/domain/model/record'
-import { ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
-import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
-import { ContactCardComponent } from '../../../contact-card/contact-card.component'
-import {
-  AutocompleteComponent,
-  DropdownSelectorComponent,
-  UiInputsModule,
-} from '@geonetwork-ui/ui/inputs'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { FormControl } from '@angular/forms'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { TranslateModule } from '@ngx-translate/core'
+import { MockBuilder, MockProviders } from 'ng-mocks'
+import { BehaviorSubject } from 'rxjs'
+import { FormFieldContactsForResourceComponent } from './form-field-contacts-for-resource.component'
+import exp from 'constants'
+import { add } from 'date-fns'
 
 const organizationBarbie: Organization = {
   name: 'Barbie Inc.',
@@ -28,48 +22,40 @@ const organizationGoogle: Organization = {
   name: 'Google',
 }
 
-class MockPlatformServiceInterface {
-  getUsers = jest.fn(() => new BehaviorSubject([]))
-}
-
-class MockOrganizationsServiceInterface {
-  organisations$ = new BehaviorSubject([organizationBarbie, organizationGoogle])
-}
-
 describe('FormFieldContactsForResourceComponent', () => {
   let component: FormFieldContactsForResourceComponent
   let fixture: ComponentFixture<FormFieldContactsForResourceComponent>
+  let platformServiceInterface: PlatformServiceInterface
+  let organizationsServiceInterface: OrganizationsServiceInterface
+
+  beforeEach(() => {
+    return MockBuilder(FormFieldContactsForResourceComponent)
+  })
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         FormFieldContactsForResourceComponent,
-        CommonModule,
         TranslateModule.forRoot(),
-        UiInputsModule,
-        ContactCardComponent,
-        DropdownSelectorComponent,
       ],
       providers: [
-        {
-          provide: PlatformServiceInterface,
-          useClass: MockPlatformServiceInterface,
-        },
-        {
-          provide: OrganizationsServiceInterface,
-          useClass: MockOrganizationsServiceInterface,
-        },
-        ChangeDetectorRef,
+        MockProviders(PlatformServiceInterface, OrganizationsServiceInterface),
       ],
-    })
-      .overrideComponent(AutocompleteComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
-      })
-      .compileComponents()
+    }).compileComponents()
+
+    platformServiceInterface = TestBed.inject(PlatformServiceInterface)
+    platformServiceInterface.getUsers = jest.fn(() => new BehaviorSubject([]))
+    organizationsServiceInterface = TestBed.inject(
+      OrganizationsServiceInterface
+    )
+    organizationsServiceInterface.organisations$ = new BehaviorSubject([
+      organizationBarbie,
+      organizationGoogle,
+    ])
 
     fixture = TestBed.createComponent(FormFieldContactsForResourceComponent)
     component = fixture.componentInstance
-    component.control = new FormControl<Individual[]>([])
+    component.value = []
     fixture.detectChanges()
   })
 
@@ -116,7 +102,7 @@ describe('FormFieldContactsForResourceComponent', () => {
       } as Individual
 
       component.allOrganizations.set('Org1', { name: 'Org1' } as Organization)
-      component.control.setValue([mockContact])
+      component.value = [mockContact]
 
       component.updateContactsForRessource()
 
@@ -141,7 +127,8 @@ describe('FormFieldContactsForResourceComponent', () => {
   })
 
   describe('removeContact', () => {
-    it('should remove contact at specified index', () => {
+    it('should remove contact at specified index, and emit new contacts', () => {
+      const spy = jest.spyOn(component.valueChange, 'emit')
       const mockContacts: Individual[] = [
         {
           role: 'owner',
@@ -153,16 +140,16 @@ describe('FormFieldContactsForResourceComponent', () => {
         } as Individual,
       ]
 
-      component.control.setValue(mockContacts)
+      component.value = mockContacts
       component.removeContact(0)
 
-      expect(component.control.value.length).toBe(1)
-      expect(component.control.value[0]).toEqual(mockContacts[1])
+      expect(spy).toHaveBeenCalledWith([mockContacts[1]])
     })
   })
 
   describe('handleContactsChanged', () => {
-    it('should update contacts based on reordered dynamic elements', () => {
+    it('should emit new contacts based on reordered dynamic elements', () => {
+      const spy = jest.spyOn(component.valueChange, 'emit')
       const mockContacts: Individual[] = [
         {
           role: 'owner',
@@ -184,41 +171,35 @@ describe('FormFieldContactsForResourceComponent', () => {
 
       component.handleContactsChanged(reorderedElements)
 
-      const newControlValue = component.control.value
-      expect(newControlValue[0]).toEqual(mockContacts[1])
-      expect(newControlValue[1]).toEqual(mockContacts[0])
+      expect(spy).toHaveBeenCalledWith([mockContacts[1], mockContacts[0]])
     })
   })
 
   describe('addContact', () => {
-    it('should add a new contact to the control value', () => {
+    it('should add the contact, and emit new contacts', () => {
+      const spy = jest.spyOn(component.valueChange, 'emit')
       const mockUser: UserModel = {
         username: 'user1',
         name: 'John',
         surname: 'Doe',
         organisation: 'Org1',
       } as UserModel
-
       component.allOrganizations.set('Org1', { name: 'Org1' } as Organization)
-      const initialContacts = component.control.value.length
 
       component.addContact(mockUser, 'owner')
 
-      expect(component.control.value.length).toBe(initialContacts + 1)
-      expect(component.control.value[initialContacts].role).toBe('owner')
-      expect(component.control.value[initialContacts].organization.name).toBe(
-        'Org1'
-      )
-    })
-  })
-
-  describe('ngOnDestroy', () => {
-    it('should unsubscribe from all subscriptions', () => {
-      const subscriptionSpy = jest.spyOn(component.subscription, 'unsubscribe')
-
-      component.ngOnDestroy()
-
-      expect(subscriptionSpy).toHaveBeenCalled()
+      expect(spy).toHaveBeenCalledWith([
+        {
+          address: '',
+          email: '',
+          firstName: 'John',
+          lastName: 'Doe',
+          organization: { name: 'Org1' } as Organization,
+          phone: '',
+          position: '',
+          role: 'owner',
+        },
+      ])
     })
   })
 })

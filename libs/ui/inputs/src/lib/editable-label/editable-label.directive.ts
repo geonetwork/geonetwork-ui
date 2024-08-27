@@ -1,48 +1,62 @@
 import {
+  AfterViewInit,
   Directive,
   ElementRef,
-  Renderer2,
-  AfterViewInit,
   EventEmitter,
-  Output,
   Input,
+  OnChanges,
+  Output,
+  Renderer2,
 } from '@angular/core'
 
 @Directive({
   selector: '[gnUiEditableLabel]',
   standalone: true,
 })
-export class EditableLabelDirective implements AfterViewInit {
+export class EditableLabelDirective implements OnChanges, AfterViewInit {
+  @Input() gnUiEditableLabel?: string
   @Output() editableLabelChanged = new EventEmitter<string>()
-  @Input() gnUiEditableLabel?: boolean
+
+  appendedInput: HTMLInputElement
 
   constructor(private el: ElementRef, private renderer: Renderer2) {}
 
+  ngOnChanges() {
+    if (this.appendedInput) {
+      this.renderer.setProperty(
+        this.appendedInput,
+        'value',
+        this.gnUiEditableLabel
+      )
+    }
+  }
+
   ngAfterViewInit() {
-    if (this.gnUiEditableLabel !== false) {
-      const appendedInput = this.renderer.createElement('input')
+    if (this.gnUiEditableLabel !== undefined) {
+      this.appendedInput = this.renderer.createElement('input')
 
-      this.renderer.setStyle(appendedInput, 'background', 'inherit')
-      this.renderer.setStyle(appendedInput, 'color', 'inherit')
-      this.renderer.setStyle(appendedInput, 'font', 'inherit')
-      this.renderer.setStyle(appendedInput, 'border', 'inherit')
-      this.renderer.setStyle(appendedInput, 'width', '100%')
-      this.renderer.setStyle(appendedInput, 'padding', 'inherit')
-      this.renderer.setStyle(appendedInput, 'margin', '0')
-      this.renderer.setStyle(appendedInput, 'height', 'inherit')
-      this.renderer.setStyle(appendedInput, 'line-height', 'inherit')
-      this.renderer.setStyle(appendedInput, 'text-decoration', 'inherit')
+      this.renderer.setStyle(this.appendedInput, 'background', 'inherit')
+      this.renderer.setStyle(this.appendedInput, 'color', 'inherit')
+      this.renderer.setStyle(this.appendedInput, 'font', 'inherit')
+      this.renderer.setStyle(this.appendedInput, 'border', 'inherit')
+      this.renderer.setStyle(this.appendedInput, 'width', '100%')
+      this.renderer.setStyle(this.appendedInput, 'padding', 'inherit')
+      this.renderer.setStyle(this.appendedInput, 'margin', '0')
+      this.renderer.setStyle(this.appendedInput, 'height', 'inherit')
+      this.renderer.setStyle(this.appendedInput, 'line-height', 'inherit')
+      this.renderer.setStyle(this.appendedInput, 'text-decoration', 'inherit')
 
-      const hostContent = this.el.nativeElement.textContent || ''
-      const formattedContent = hostContent.replace(/\s+/g, ' ').trim()
-      this.renderer.setProperty(appendedInput, 'value', formattedContent)
-      this.renderer.setProperty(this.el.nativeElement, 'innerHTML', '')
+      this.renderer.setProperty(
+        this.appendedInput,
+        'value',
+        this.gnUiEditableLabel
+      )
 
-      this.renderer.listen(appendedInput, 'input', (event) => {
+      this.renderer.listen(this.appendedInput, 'input', (event) => {
         this.editableLabelChanged.emit(event.target.value)
       })
 
-      this.renderer.appendChild(this.el.nativeElement, appendedInput)
+      this.renderer.appendChild(this.el.nativeElement, this.appendedInput)
     }
   }
 }

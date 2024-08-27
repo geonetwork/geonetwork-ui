@@ -1,6 +1,12 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { FormControl } from '@angular/forms'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { Constraint } from '@geonetwork-ui/common/domain/model/record'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 
 @Component({
@@ -12,15 +18,17 @@ import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
   imports: [DropdownSelectorComponent],
 })
 export class FormFieldLicenseComponent {
-  @Input() control!: FormControl
   @Input() label: string
+  @Input() value: Array<Constraint>
+
+  @Output() valueChange: EventEmitter<Array<Constraint>> = new EventEmitter()
 
   get selected() {
-    return this.control.value[0]?.text
+    return this.value[0]?.text
   }
 
   onSelectValue(value: unknown) {
-    this.control.setValue([{ text: value }])
+    this.valueChange.emit([{ text: value as string }])
   }
 
   choices = [

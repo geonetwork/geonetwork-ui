@@ -4,15 +4,12 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
-  SimpleChanges,
 } from '@angular/core'
-import { FormControl } from '@angular/forms'
+import { Constraint } from '@geonetwork-ui/common/domain/model/record'
 import { CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { OPEN_DATA_LICENSES } from './../../../../fields.config'
-import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-form-field-open-data',
@@ -22,38 +19,30 @@ import { Subscription } from 'rxjs'
   imports: [CheckToggleComponent, TranslateModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormFieldOpenDataComponent implements OnInit {
-  @Input() control: FormControl
-  value = false
-  @Output() visibilityChange = new EventEmitter<boolean>()
-  subscription: Subscription
+export class FormFieldOpenDataComponent implements OnChanges {
+  @Input() value: Array<Constraint>
+  @Output() valueChange = new EventEmitter<Array<Constraint>>()
+  @Output() openDataChange = new EventEmitter<boolean>()
+
+  openData = false
 
   get config() {
     return OPEN_DATA_LICENSES
   }
 
-  ngOnInit() {
-    this.initToggle()
-    this.subscription = new Subscription()
-
-    this.subscription.add(
-      this.control.valueChanges.subscribe((value) => {
-        this.value = this.config.includes(value[0].text)
-        this.visibilityChange.emit(this.value)
-      })
-    )
-  }
-
-  initToggle() {
-    this.value = this.config.includes(this.control.value[0].text)
-    this.visibilityChange.emit(this.value)
-  }
-
-  onOpenDataToggled(boolean) {
-    if (boolean) {
-      this.control.setValue([{ text: this.config[0] }])
+  ngOnChanges() {
+    if (this.value && this.value.length > 0) {
+      this.openData = this.config.includes(this.value[0].text)
+    } else {
+      this.openData = false
     }
-    this.value = !this.value
-    this.visibilityChange.emit(boolean)
+    this.openDataChange.emit(this.openData)
+  }
+
+  onOpenDataToggled(openData: boolean) {
+    this.openDataChange.emit(openData)
+    if (openData) {
+      this.valueChange.emit([{ text: this.config[0] }])
+    }
   }
 }

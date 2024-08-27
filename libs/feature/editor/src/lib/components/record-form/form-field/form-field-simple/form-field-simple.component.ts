@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { FormControl, ReactiveFormsModule } from '@angular/forms'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core'
 
 @Component({
   selector: 'gn-ui-form-field-simple',
@@ -8,15 +13,17 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms'
   styleUrls: ['./form-field-simple.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule],
 })
 export class FormFieldSimpleComponent {
   @Input() type: 'date' | 'url' | 'text' | 'number' | 'list' | 'toggle'
-  @Input() control!: FormControl
   @Input() readonly = false
   @Input() invalid = false
   @Input() placeholder = ''
   @Input() options?: { label: string; value: unknown }[]
+  @Input() value: unknown
+
+  @Output() valueChange: EventEmitter<unknown> = new EventEmitter()
 
   get inputType() {
     switch (this.type) {

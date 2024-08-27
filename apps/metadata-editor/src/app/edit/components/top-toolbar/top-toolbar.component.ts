@@ -1,12 +1,16 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { PublishButtonComponent } from '../publish-button/publish-button.component'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 import { MatIconModule } from '@angular/material/icon'
+import { MatTooltipModule } from '@angular/material/tooltip'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
+import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { LetDirective } from '@ngrx/component'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { combineLatest, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { TranslateModule } from '@ngx-translate/core'
+import { PublishButtonComponent } from '../publish-button/publish-button.component'
 
 @Component({
   selector: 'md-editor-top-toolbar',
@@ -15,7 +19,10 @@ import { TranslateModule } from '@ngx-translate/core'
     CommonModule,
     PublishButtonComponent,
     ButtonComponent,
+    LetDirective,
     MatIconModule,
+    MatTooltipModule,
+    MatDialogModule,
     TranslateModule,
   ],
   templateUrl: './top-toolbar.component.html',
@@ -46,5 +53,35 @@ export class TopToolbarComponent {
       })
     )
 
-  constructor(private editorFacade: EditorFacade) {}
+  constructor(
+    public dialog: MatDialog,
+    private translateService: TranslateService,
+    private editorFacade: EditorFacade
+  ) {}
+
+  confirmUndo() {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: this.translateService.instant(
+          'editor.record.undo.confirmation.title'
+        ),
+        message: this.translateService.instant(
+          'editor.record.undo.confirmation.message'
+        ),
+        confirmText: this.translateService.instant(
+          'editor.record.undo.confirmation.confirmText'
+        ),
+        cancelText: this.translateService.instant(
+          'editor.record.undo.confirmation.cancelText'
+        ),
+      },
+      restoreFocus: true,
+    })
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed) {
+        this.editorFacade.undoRecordDraft()
+      }
+    })
+  }
 }

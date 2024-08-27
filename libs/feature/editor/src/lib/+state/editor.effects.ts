@@ -70,6 +70,21 @@ export class EditorEffects {
     )
   )
 
+  undoRecordDraft$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(EditorActions.undoRecordDraft),
+      withLatestFrom(this.store.select(selectRecord)),
+      switchMap(([, record]) => this.editorService.undoRecordDraft(record)),
+      map(([record, recordSource, alreadySavedOnce]) =>
+        EditorActions.openRecord({
+          record,
+          alreadySavedOnce,
+          recordSource,
+        })
+      )
+    )
+  )
+
   checkHasChangesOnOpen$ = createEffect(() =>
     this.actions$.pipe(
       ofType(EditorActions.openRecord),

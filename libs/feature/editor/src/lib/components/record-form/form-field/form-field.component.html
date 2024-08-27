@@ -1,7 +1,8 @@
-<ng-container *ngIf="isOpenData">
+<ng-container *ngIf="model === 'licenses'">
   <gn-ui-form-field-open-data
-    [control]="formControl"
-    (visibilityChange)="onVisibilityChange($event)"
+    [value]="valueAsConstraints"
+    (valueChange)="valueChange.emit($event)"
+    (openDataChange)="isHidden = $event"
   ></gn-ui-form-field-open-data>
 </ng-container>
 <div class="flex flex-col h-full" *ngIf="!isHidden">
@@ -19,83 +20,100 @@
 </div>
 
 <ng-template #fieldContent>
-  <ng-container *ngIf="isTitle">
-    <div class="flex justify-between items-center gap-3">
-      <span
-        #titleInput
-        class="grow font-title text-3xl font-normal"
-        [gnUiEditableLabel]="true"
-        (editableLabelChanged)="formControl.setValue($event)"
-      >
-        {{ formControl.value }}
-      </span>
-      <span
-        class="material-symbols-outlined gn-ui-icon-small m-2 cursor-pointer"
-        (click)="focusTitleInput()"
-        >edit</span
-      >
-      <span
-        class="material-symbols-outlined gn-ui-icon-small m-2"
-        [matTooltip]="config.hintKey! | translate"
-        matTooltipPosition="above"
-      >
-        help
-      </span>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="isAbstract">
-    <gn-ui-form-field-rich
-      class="h-[8rem]"
-      [control]="formControl"
-      [label]="config.labelKey! | translate"
-      [hint]="config.hintKey! | translate"
-    ></gn-ui-form-field-rich>
-  </ng-container>
-  <ng-container *ngIf="isLicenses">
-    <gn-ui-form-field-license
-      [control]="formControl"
-      [label]="config.labelKey! | translate"
-    ></gn-ui-form-field-license>
-  </ng-container>
-  <ng-container *ngIf="isResourceUpdated">
-    <gn-ui-form-field-resource-updated
-      [control]="formControl"
-    ></gn-ui-form-field-resource-updated>
-  </ng-container>
-  <ng-container *ngIf="isUpdateFrequency">
-    <gn-ui-form-field-update-frequency
-      [control]="formControl"
-    ></gn-ui-form-field-update-frequency>
-  </ng-container>
-  <ng-container *ngIf="isTemporalExtents">
-    <gn-ui-form-field-temporal-extents
-      [control]="formControl"
-    ></gn-ui-form-field-temporal-extents>
-  </ng-container>
-  <ng-container *ngIf="isSimpleField">
-    <gn-ui-form-field-simple
-      type="text"
-      [control]="formControl"
-      [readonly]="isReadOnly"
-    ></gn-ui-form-field-simple>
-  </ng-container>
-  <ng-container *ngIf="isGraphicOverview">
-    <gn-ui-form-field-overviews
-      [control]="formControl"
-      [metadataUuid]="metadataUuid$ | async"
-    ></gn-ui-form-field-overviews>
-  </ng-container>
-  <ng-container *ngIf="isKeywords">
-    <gn-ui-form-field-keywords
-      [control]="formControl"
-    ></gn-ui-form-field-keywords>
-  </ng-container>
-  <ng-container *ngIf="isContactsForResource">
-    <gn-ui-form-field-contacts-for-resource
-      [control]="formControl"
-    ></gn-ui-form-field-contacts-for-resource>
-  </ng-container>
-  <ng-container *ngIf="isSpatialExtentField">
-    <gn-ui-form-field-spatial-extent></gn-ui-form-field-spatial-extent>
+  <ng-container [ngSwitch]="model">
+    <ng-container *ngSwitchCase="'title'">
+      <div class="flex justify-between items-center gap-3">
+        <span
+          #titleInput
+          class="grow font-title text-3xl font-normal"
+          [gnUiEditableLabel]="valueAsString"
+          (editableLabelChanged)="valueChange.emit($event)"
+        ></span>
+        <span
+          class="material-symbols-outlined gn-ui-icon-small m-2 cursor-pointer"
+          (click)="focusTitleInput()"
+          >edit</span
+        >
+        <span
+          class="material-symbols-outlined gn-ui-icon-small m-2"
+          [matTooltip]="config.hintKey! | translate"
+          matTooltipPosition="above"
+        >
+          help
+        </span>
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="'abstract'">
+      <gn-ui-form-field-rich
+        class="h-[8rem]"
+        [label]="config.labelKey! | translate"
+        [hint]="config.hintKey! | translate"
+        [value]="valueAsString"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-rich>
+    </ng-container>
+    <ng-container *ngSwitchCase="'overviews'">
+      <gn-ui-form-field-overviews
+        [metadataUuid]="uniqueIdentifier"
+        [value]="valueAsOverviews"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-overviews>
+    </ng-container>
+    <ng-container *ngSwitchCase="'uniqueIdentifier'">
+      <gn-ui-form-field-simple
+        type="text"
+        [readonly]="true"
+        [value]="valueAsString"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-simple>
+    </ng-container>
+    <ng-container *ngSwitchCase="'resourceUpdated'">
+      <gn-ui-form-field-resource-updated
+        [value]="valueAsDate"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-resource-updated>
+    </ng-container>
+    <ng-container *ngSwitchCase="'recordUpdated'">
+      <gn-ui-form-field-simple
+        type="date"
+        [readonly]="true"
+        [value]="valueAsDate"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-simple>
+    </ng-container>
+    <ng-container *ngSwitchCase="'updateFrequency'">
+      <gn-ui-form-field-update-frequency
+        [value]="valueAsUpdateFrequency"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-update-frequency>
+    </ng-container>
+    <ng-container *ngSwitchCase="'temporalExtents'">
+      <gn-ui-form-field-temporal-extents
+        [value]="valueAsTemporalExtents"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-temporal-extents>
+    </ng-container>
+    <ng-container *ngSwitchCase="'spatialExtents'">
+      <gn-ui-form-field-spatial-extent></gn-ui-form-field-spatial-extent>
+    </ng-container>
+    <ng-container *ngSwitchCase="'keywords'">
+      <gn-ui-form-field-keywords
+        [value]="valueAsKeywords"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-keywords>
+    </ng-container>
+    <ng-container *ngSwitchCase="'licenses'">
+      <gn-ui-form-field-license
+        [label]="config.labelKey! | translate"
+        [value]="valueAsConstraints"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-license>
+    </ng-container>
+    <ng-container *ngSwitchCase="'contactsForResource'">
+      <gn-ui-form-field-contacts-for-resource
+        [value]="valueAsIndividuals"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-contacts-for-resource>
+    </ng-container>
   </ng-container>
 </ng-template>

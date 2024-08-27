@@ -35,6 +35,7 @@
           >
             <ng-container *ngIf="!field.config.hidden">
               <gn-ui-form-field
+                [uniqueIdentifier]="recordUniqueIdentifier$ | async"
                 [model]="field.config.model!"
                 [config]="field.config.formFieldConfig"
                 [value]="field.value"
