@@ -96,22 +96,47 @@ describe('dashboard', () => {
       cy.get('[data-test=selected-count]').contains('15 selected')
     })
   })
+  describe('columns', () => {
+    beforeEach(() => {
+      cy.login('admin', 'admin', false)
+      cy.visit('/catalog/search')
+      cy.clearRecordDrafts()
+    })
+    it('should display the right info for unpublished records', () => {
+      cy.get('[data-cy="create-record"]').click()
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(1200)
+      cy.get('gn-ui-record-form').should('be.visible')
+      cy.visit('/my-space/my-draft')
+      cy.get('gn-ui-results-table').find('[data-cy="table-row"]').as('draft')
+      cy.get('@draft').should('have.length', 1)
+      cy.get('@draft')
+        .children('div')
+        .eq(4)
+        .find('span')
+        .invoke('text')
+        .should('eq', '')
+      cy.get('@draft')
+        .children('div')
+        .eq(5)
+        .should('contain', ' Not published ')
+      cy.get('@draft').children('div').eq(6).should('contain', ' - ')
+    })
+    it('should display the right info for published records', () => {
+      cy.visit('/catalog/search')
+      cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
+      cy.get('gn-ui-results-table')
+        .find('[data-cy="table-row"]')
+        .first()
+        .as('record')
+      cy.get('@record')
+        .children('div')
+        .eq(4)
+        .find('span')
+        .invoke('text')
+        .should('eq', 'admin admin')
+      cy.get('@record').children('div').eq(5).should('contain', ' Published ')
+      cy.get('@record').children('div').eq(6).should('not.contain', ' - ')
+    })
+  })
 })
-
-// logged in as admin admin!!
-// create a record and not save it
-// go to my drafts and see that the column status displays 'Non publié'
-// see that it has no editor name
-// see that the date shows "-"
-// now save that record
-// go to my records and see that the column status displays 'Publié'
-// see that it shows my name as the editor
-// see that it has a publising date
-
-// might be on 'edit.cy'
-// take a random record that's not admin admin property
-// check that the owner is someone else
-// edit the licence in it
-// save it
-// now go to my records and see that it now belongs to admin admin
-// drop the mic
