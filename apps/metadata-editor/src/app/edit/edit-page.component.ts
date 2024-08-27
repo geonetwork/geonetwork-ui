@@ -102,7 +102,9 @@ export class EditPageComponent implements OnInit, OnDestroy {
     // if we're on the /create route, go to /edit/{uuid} on first change
     if (this.route.snapshot.routeConfig?.path.includes('create')) {
       this.facade.draftSaveSuccess$.pipe(take(1)).subscribe(() => {
-        this.router.navigate(['edit', currentRecord.uniqueIdentifier])
+        this.router.navigate(['edit', currentRecord.uniqueIdentifier], {
+          replaceUrl: true,
+        })
       })
     }
 
