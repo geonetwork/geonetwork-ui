@@ -79,9 +79,6 @@
       [readonly]="isReadOnly"
     ></gn-ui-form-field-simple>
   </ng-container>
-  <ng-container *ngIf="isSpatialExtentField">
-    <gn-ui-form-field-spatial-extent></gn-ui-form-field-spatial-extent>
-  </ng-container>
   <ng-container *ngIf="isGraphicOverview">
     <gn-ui-form-field-overviews
       [control]="formControl"
@@ -97,5 +94,8 @@
     <gn-ui-form-field-contacts-for-resource
       [control]="formControl"
     ></gn-ui-form-field-contacts-for-resource>
+  </ng-container>
+  <ng-container *ngIf="isSpatialExtentField">
+    <gn-ui-form-field-spatial-extent></gn-ui-form-field-spatial-extent>
   </ng-container>
 </ng-template>

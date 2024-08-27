@@ -3,7 +3,6 @@ import '../../../jest.setup'
 
 import { CommonModule } from '@angular/common'
 import { getTestBed } from '@angular/core/testing'
-import { MatDialogModule } from '@angular/material/dialog'
 import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
 import {
@@ -15,9 +14,9 @@ import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { TranslateModule } from '@ngx-translate/core'
 import { ngMocks } from 'ng-mocks'
 import { BehaviorSubject, EMPTY } from 'rxjs'
+import { TranslateModule } from '@ngx-translate/core'
 
 getTestBed().resetTestEnvironment()
 getTestBed().initTestEnvironment(

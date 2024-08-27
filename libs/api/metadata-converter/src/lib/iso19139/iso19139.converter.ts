@@ -141,7 +141,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     distributions: writeDistributions,
     onlineResources: writeOnlineResources,
     temporalExtents: writeTemporalExtents,
-    spatialExtents: () => writeSpatialExtents,
+    spatialExtents: writeSpatialExtents,
     // TODO
     extras: () => undefined,
     landingPage: () => undefined,
@@ -317,6 +317,8 @@ export class Iso19139Converter extends BaseConverter<string> {
       fieldChanged('overviews') && this.writers['overviews'](record, rootEl)
       fieldChanged('temporalExtents') &&
         this.writers['temporalExtents'](record, rootEl)
+      fieldChanged('spatialExtents') &&
+        this.writers['spatialExtents'](record, rootEl)
       fieldChanged('distributions') &&
         this.writers['distributions'](record, rootEl)
       fieldChanged('lineage') && this.writers['lineage'](record, rootEl)

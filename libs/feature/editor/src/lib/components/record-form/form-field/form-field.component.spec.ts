@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
-import { TranslateModule } from '@ngx-translate/core'
 import { FormFieldLicenseComponent } from './form-field-license/form-field-license.component'
 import { FormFieldResourceUpdatedComponent } from './form-field-resource-updated/form-field-resource-updated.component'
 import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
@@ -14,32 +13,25 @@ import { FormFieldOverviewsComponent } from './form-field-overviews/form-field-o
 import { BehaviorSubject } from 'rxjs'
 import { EditorFacade } from '../../../+state/editor.facade'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { MockBuilder, MockProvider } from 'ng-mocks'
 import { FormControl } from '@angular/forms'
-import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
-
-class EditorFacadeMock {
-  record$ = new BehaviorSubject(DATASET_RECORDS[0])
-}
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('FormFieldComponent', () => {
   let component: FormFieldComponent
   let fixture: ComponentFixture<FormFieldComponent>
 
+  beforeEach(() => {
+    return MockBuilder(FormFieldComponent)
+  })
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        FormFieldComponent,
-        TranslateModule.forRoot(),
-        HttpClientTestingModule,
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
+      imports: [TranslateModule.forRoot()],
       providers: [
-        {
-          provide: EditorFacade,
-          useClass: EditorFacadeMock,
-        },
+        MockProvider(EditorFacade, {
+          record$: new BehaviorSubject(DATASET_RECORDS[0]),
+        }),
       ],
     }).compileComponents()
 

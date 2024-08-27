@@ -79,6 +79,16 @@ export class Gn4PlatformMapper {
         (thes) => keyword.thesaurusKey === thes.key
       )
 
+      let bbox: [number, number, number, number]
+      if (keyword.coordWest) {
+        bbox = [
+          parseFloat(keyword.coordWest),
+          parseFloat(keyword.coordSouth),
+          parseFloat(keyword.coordEast),
+          parseFloat(keyword.coordNorth),
+        ]
+      }
+
       return {
         key,
         label,
@@ -90,7 +100,8 @@ export class Gn4PlatformMapper {
           url: new URL(matchedThesaurus?.url),
           type: matchedThesaurus?.dname as KeywordType,
         },
-      }
+        ...(bbox && { bbox }),
+      } as Keyword
     })
   }
 

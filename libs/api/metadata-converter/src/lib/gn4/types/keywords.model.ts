@@ -1,10 +1,6 @@
 export interface KeywordApiResponse {
-  values?: {
-    eng: string
-  }
-  definitions?: {
-    eng: string
-  }
+  values?: Record<string, string>
+  definitions?: Record<string, string>
   coordEast?: string
   coordWest?: string
   coordSouth?: string

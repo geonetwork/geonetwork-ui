@@ -134,22 +134,6 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                     <gmd:description>
                         <gco:CharacterString>Emprise géographique d'Avrigny</gco:CharacterString>
                     </gmd:description>
-                    <gmd:geographicElement>
-                        <gmd:EX_GeographicBoundingBox>
-                            <gmd:westBoundLongitude>
-                                <gco:Decimal>2.5587</gco:Decimal>
-                            </gmd:westBoundLongitude>
-                            <gmd:eastBoundLongitude>
-                                <gco:Decimal>2.5934</gco:Decimal>
-                            </gmd:eastBoundLongitude>
-                            <gmd:southBoundLatitude>
-                                <gco:Decimal>49.3677</gco:Decimal>
-                            </gmd:southBoundLatitude>
-                            <gmd:northBoundLatitude>
-                                <gco:Decimal>49.4051</gco:Decimal>
-                            </gmd:northBoundLatitude>
-                        </gmd:EX_GeographicBoundingBox>
-                    </gmd:geographicElement>
                     <gmd:temporalElement>
                         <gmd:EX_TemporalExtent>
                             <gmd:extent>
@@ -169,6 +153,31 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                             </gmd:extent>
                         </gmd:EX_TemporalExtent>
                     </gmd:temporalElement>
+                    <gmd:geographicElement>
+                        <gmd:EX_GeographicBoundingBox>
+                            <gmd:westBoundLongitude>
+                                <gco:Decimal>-11.5</gco:Decimal>
+                            </gmd:westBoundLongitude>
+                            <gmd:eastBoundLongitude>
+                                <gco:Decimal>43.2</gco:Decimal>
+                            </gmd:eastBoundLongitude>
+                            <gmd:southBoundLatitude>
+                                <gco:Decimal>35.3</gco:Decimal>
+                            </gmd:southBoundLatitude>
+                            <gmd:northBoundLatitude>
+                                <gco:Decimal>81.4</gco:Decimal>
+                            </gmd:northBoundLatitude>
+                        </gmd:EX_GeographicBoundingBox>
+                        <gmd:EX_GeographicDescription>
+                            <gmd:geographicIdentifier>
+                                <gmd:MD_Identifier>
+                                    <gmd:code>
+                                        <gco:CharacterString>http://www.naturalearthdata.com/ne_admin#Continent/Europe</gco:CharacterString>
+                                    </gmd:code>
+                                </gmd:MD_Identifier>
+                            </gmd:geographicIdentifier>
+                        </gmd:EX_GeographicDescription>
+                    </gmd:geographicElement>
                 </gmd:EX_Extent>
             </gmd:extent>
             <gmd:pointOfContact>

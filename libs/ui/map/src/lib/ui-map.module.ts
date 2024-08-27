@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon'
     CommonModule,
     HttpClientModule,
     MatIconModule,
-    TranslateModule.forRoot(),
+    TranslateModule.forChild(),
   ],
   exports: [MapComponent, FeatureDetailComponent],
 })

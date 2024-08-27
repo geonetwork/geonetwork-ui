@@ -1,0 +1,26 @@
+<div class="flex flex-col gap-3">
+  <gn-ui-autocomplete
+    [placeholder]="placeholder"
+    [displayWithFn]="displayWithFn"
+    [action]="autoCompleteAction"
+    (itemSelected)="handleItemSelection($event)"
+    [preventCompleteOnSelection]="true"
+    [minCharacterCount]="0"
+    [allowSubmit]="false"
+  ></gn-ui-autocomplete>
+  <div class="flex gap-2 flex-wrap">
+    <gn-ui-badge
+      *ngFor="let keyword of keywords"
+      [removable]="true"
+      (badgeRemoveClicked)="removeKeyword(keyword)"
+      >{{ keyword.label }}
+
+      <mat-icon
+        *ngIf="isPlaceWithoutExtent(keyword)"
+        [title]="'editor.form.placeKeywordWithoutExtent' | translate"
+        class="material-symbols-outlined"
+        >warning</mat-icon
+      >
+    </gn-ui-badge>
+  </div>
+</div>

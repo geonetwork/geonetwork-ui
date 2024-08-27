@@ -20,6 +20,22 @@ const keywords: KeywordApiResponse[] = [
     value: 'Addresses',
     uri: 'http://inspire.ec.europa.eu/theme/ad',
   },
+  {
+    values: {
+      fre: 'France',
+    },
+    definitions: {
+      fre: '',
+    },
+    coordEast: '55.855',
+    coordWest: '-61.798',
+    coordSouth: '-21.371',
+    coordNorth: '51.088',
+    thesaurusKey: 'external.place.regions',
+    definition: '',
+    value: 'France',
+    uri: 'http://www.naturalearthdata.com/ne_admin#Country/FRA',
+  },
 ]
 const thesaurus: ThesaurusApiResponse[] = [
   {
@@ -77,12 +93,38 @@ describe('Gn4PlatformMapper', () => {
         ),
         type: 'theme',
       }
-      expect(result).toBeInstanceOf(Array)
-      expect(result[0].label).toBe('Addresses')
-      expect(result[0].type).toBe('theme')
-      expect(JSON.stringify(result[0].thesaurus)).toBe(
-        JSON.stringify(resultThesaurus)
-      )
+      expect(result).toEqual([
+        {
+          description:
+            'Location of properties based on address identifiers, usually by road name, house number, postal code.',
+          key: 'http://inspire.ec.europa.eu/theme/ad',
+          label: 'Addresses',
+          thesaurus: {
+            id: 'external.theme.httpinspireeceuropaeutheme-theme',
+            name: 'GEMET - INSPIRE themes, version 1.0',
+            type: 'theme',
+            url: new URL(
+              'http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme'
+            ),
+          },
+          type: 'theme',
+        },
+        {
+          bbox: [-61.798, -21.371, 55.855, 51.088],
+          description: '',
+          key: 'http://www.naturalearthdata.com/ne_admin#Country/FRA',
+          label: 'France',
+          thesaurus: {
+            id: 'external.place.regions',
+            name: 'Continents, countries, sea regions of the world.',
+            type: 'place',
+            url: new URL(
+              'http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.place.regions'
+            ),
+          },
+          type: 'place',
+        },
+      ])
     })
   })
 })
