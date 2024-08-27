@@ -97,3 +97,21 @@ describe('dashboard', () => {
     })
   })
 })
+
+// logged in as admin admin!!
+// create a record and not save it
+// go to my drafts and see that the column status displays 'Non publié'
+// see that it has no editor name
+// see that the date shows "-"
+// now save that record
+// go to my records and see that the column status displays 'Publié'
+// see that it shows my name as the editor
+// see that it has a publising date
+
+// might be on 'edit.cy'
+// take a random record that's not admin admin property
+// check that the owner is someone else
+// edit the licence in it
+// save it
+// now go to my records and see that it now belongs to admin admin
+// drop the mic
