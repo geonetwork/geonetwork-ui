@@ -717,7 +717,7 @@ describe('Gn4PlatformService', () => {
         },
       ])
     })
-    it('returns an empty array of the thesaurus is unknown', async () => {
+    it('returns an empty array if the thesaurus is unknown', async () => {
       const keywords = await firstValueFrom(
         service.searchKeywordsInThesaurus('Bla', 'abcd')
       )

@@ -17,7 +17,6 @@ export interface FormFieldConfig {
 }
 
 export interface EditorField {
-  id?: string
   // configuration of the form field used as presentation
   formFieldConfig: FormFieldConfig
 

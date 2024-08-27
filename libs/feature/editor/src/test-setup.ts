@@ -25,6 +25,5 @@ ngMocks.autoSpy('jest')
 
 ngMocks.globalKeep(CommonModule, true)
 ngMocks.globalKeep(BrowserModule, true)
-ngMocks.globalKeep(RouterModule, true)
 ngMocks.globalKeep(TranslateModule, true)
 ngMocks.globalKeep(MatIconModule, true)

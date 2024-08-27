@@ -135,12 +135,6 @@ describe('FormFieldSpatialExtentComponent', () => {
         }),
       ],
     })
-      .overrideComponent(FormFieldSpatialExtentComponent, {
-        set: {
-          changeDetection: ChangeDetectionStrategy.Default,
-        },
-      })
-      .compileComponents()
 
     editorFacade = TestBed.inject(EditorFacade)
     fixture = TestBed.createComponent(FormFieldSpatialExtentComponent)
