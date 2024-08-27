@@ -115,7 +115,7 @@ export type ServiceProtocol =
   | 'ogcFeatures'
   | 'other'
 
-export type DatasetOnlineResourceType = 'service' | 'download' | 'link'
+export type OnlineResourceType = 'service' | 'download' | 'link' | 'endpoint'
 
 export interface DatasetServiceDistribution {
   type: 'service'
@@ -151,7 +151,7 @@ export type DatasetOnlineResource = (
   | DatasetDownloadDistribution
   | OnlineLinkResource
 ) & {
-  type: DatasetOnlineResourceType
+  type: OnlineResourceType
 }
 
 export interface GraphicOverview {
@@ -184,8 +184,6 @@ export interface DatasetRecord extends BaseRecord {
   spatialRepresentation?: SpatialRepresentationType
 }
 
-export type ServiceOnlineResourceType = 'endpoint' | 'link'
-
 export interface ServiceEndpoint {
   endpointUrl: URL
   protocol: string
@@ -194,13 +192,15 @@ export interface ServiceEndpoint {
 }
 
 export type ServiceOnlineResource = (ServiceEndpoint | OnlineLinkResource) & {
-  type: ServiceOnlineResourceType
+  type: OnlineResourceType
 }
 
 export interface ServiceRecord extends BaseRecord {
   kind: 'service'
   onlineResources: Array<ServiceOnlineResource>
 }
+
+export type OnlineResource = DatasetOnlineResource | ServiceOnlineResource
 
 export type CatalogRecord = ServiceRecord | DatasetRecord
 

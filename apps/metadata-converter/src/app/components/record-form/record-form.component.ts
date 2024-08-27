@@ -7,14 +7,12 @@ import {
 } from '@angular/core'
 import {
   CatalogRecord,
-  DatasetOnlineResource,
-  DatasetOnlineResourceType,
   DatasetRecord,
+  OnlineResource,
+  OnlineResourceType,
   RecordKind,
   RecordStatusValues,
   RoleValues,
-  ServiceOnlineResource,
-  ServiceOnlineResourceType,
   ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 
@@ -51,9 +49,7 @@ export class RecordFormComponent implements AfterViewInit {
     this.recordChanged.emit(this.record)
   }
 
-  getOnlineResourceForType(
-    type: DatasetOnlineResourceType | ServiceOnlineResourceType
-  ): DatasetOnlineResource | ServiceOnlineResource {
+  getOnlineResourceForType(type: OnlineResourceType): OnlineResource {
     switch (type) {
       case 'download':
         return {

@@ -4,6 +4,7 @@ import {
   GraphicOverview,
   Individual,
   Keyword,
+  OnlineResource,
   Organization,
   RecordKind,
   RecordStatus,
@@ -837,9 +838,7 @@ export function extractServiceOnlineResources(): ChainableFunction<
   )
 }
 
-export function readOnlineResources(
-  rootEl: XmlElement
-): ServiceOnlineResource[] | DatasetOnlineResource[] {
+export function readOnlineResources(rootEl: XmlElement): OnlineResource[] {
   if (readKind(rootEl) === 'dataset') {
     return pipe(
       findNestedElements('gmd:distributionInfo', 'gmd:MD_Distribution'),

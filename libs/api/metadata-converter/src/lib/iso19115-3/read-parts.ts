@@ -27,12 +27,11 @@ import {
   findIdentification,
 } from '../iso19139/read-parts'
 import {
-  DatasetOnlineResource,
   Individual,
+  OnlineResource,
   Organization,
   RecordKind,
   Role,
-  ServiceOnlineResource,
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchMimeType } from '../common/distribution.mapper'
 import { fullNameToParts } from '../iso19139/utils/individual-name'
@@ -322,9 +321,7 @@ const getMimeType = pipe(
   map(matchMimeType)
 )
 
-export function readOnlineResources(
-  rootEl: XmlElement
-): DatasetOnlineResource[] | ServiceOnlineResource[] {
+export function readOnlineResources(rootEl: XmlElement): OnlineResource[] {
   if (readKind(rootEl) === 'dataset') {
     return pipe(
       findNestedElements('mrd:distributionInfo', 'mrd:MD_Distribution'),
