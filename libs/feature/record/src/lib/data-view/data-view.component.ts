@@ -9,7 +9,7 @@ import { BehaviorSubject, combineLatest } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-data-view',
@@ -43,7 +43,7 @@ export class DataViewComponent {
       }))
     )
   )
-  selectedLink$ = new BehaviorSubject<DatasetDistribution>(null)
+  selectedLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
 
   constructor(private mdViewFacade: MdViewFacade) {}
 
@@ -52,7 +52,7 @@ export class DataViewComponent {
   }
 
   selectLink(linkAsString: string) {
-    const link: DatasetDistribution = JSON.parse(linkAsString)
+    const link: DatasetOnlineResource = JSON.parse(linkAsString)
     link.url = new URL(link.url)
     this.selectedLink$.next(link)
   }

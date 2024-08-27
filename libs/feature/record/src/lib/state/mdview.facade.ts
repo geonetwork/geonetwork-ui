@@ -63,7 +63,7 @@ export class MdViewFacade {
   chartConfig$ = this.store.pipe(select(MdViewSelectors.getChartConfig))
 
   allLinks$ = this.metadata$.pipe(
-    map((record) => ('distributions' in record ? record.distributions : []))
+    map((record) => ('onlineResources' in record ? record.onlineResources : []))
   )
 
   apiLinks$ = this.allLinks$.pipe(

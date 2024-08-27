@@ -38,7 +38,7 @@ import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 import { Collection } from 'ol'
 import { Interaction } from 'ol/interaction'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 
 const recordMapExtent = [-30, -60, 30, 60]
 
@@ -183,7 +183,7 @@ export class MockDropdownSelectorComponent {
   template: '<div></div>',
 })
 export class MockExternalViewerButtonComponent {
-  @Input() link: DatasetDistribution
+  @Input() link: DatasetOnlineResource
   @Input() mapConfig: MapConfig
 }
 

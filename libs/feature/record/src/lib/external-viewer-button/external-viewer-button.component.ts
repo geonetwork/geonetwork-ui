@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { TranslateService } from '@ngx-translate/core'
 import { getFileFormat } from '@geonetwork-ui/util/shared'
@@ -14,7 +14,7 @@ marker('externalviewer.dataset.unnamed')
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExternalViewerButtonComponent {
-  @Input() link: DatasetDistribution
+  @Input() link: DatasetOnlineResource
   @Input() mapConfig: MapConfig
 
   get externalViewer() {

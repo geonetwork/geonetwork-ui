@@ -1,11 +1,11 @@
 import {
-  Component,
   ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
   Input,
   Output,
-  EventEmitter,
 } from '@angular/core'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-download-item',
@@ -14,7 +14,7 @@ import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DownloadItemComponent {
-  @Input() link: DatasetDistribution
+  @Input() link: DatasetOnlineResource
   @Input() color: string
   @Input() format: string
   @Input() isFromWfs: boolean

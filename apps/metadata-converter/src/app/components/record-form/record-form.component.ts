@@ -7,8 +7,8 @@ import {
 } from '@angular/core'
 import {
   CatalogRecord,
-  DatasetDistribution,
-  DatasetDistributionType,
+  DatasetOnlineResource,
+  DatasetOnlineResourceType,
   DatasetRecord,
   RecordKind,
   RecordStatusValues,
@@ -51,7 +51,9 @@ export class RecordFormComponent implements AfterViewInit {
     this.recordChanged.emit(this.record)
   }
 
-  getDistributionForType(type: DatasetDistributionType): DatasetDistribution {
+  getOnlineResourceForType(
+    type: DatasetOnlineResourceType | ServiceOnlineResourceType
+  ): DatasetOnlineResource | ServiceOnlineResource {
     switch (type) {
       case 'download':
         return {
@@ -64,19 +66,6 @@ export class RecordFormComponent implements AfterViewInit {
           url: new URL('', window.location.toString()),
           accessServiceProtocol: 'other',
         }
-      case 'link':
-      default:
-        return {
-          type: 'link',
-          url: new URL('', window.location.toString()),
-        }
-    }
-  }
-
-  getOnlineResourceForType(
-    type: ServiceOnlineResourceType
-  ): ServiceOnlineResource {
-    switch (type) {
       case 'endpoint':
         return {
           type,
@@ -84,6 +73,7 @@ export class RecordFormComponent implements AfterViewInit {
           protocol: 'other',
         }
       case 'link':
+      default:
         return {
           type,
           url: new URL('', window.location.toString()),
@@ -113,6 +103,7 @@ export class RecordFormComponent implements AfterViewInit {
       otherConstraints: hasPrevious ? [...this.record.otherConstraints] : [],
       keywords: hasPrevious ? this.record.keywords : [],
       topics: hasPrevious ? this.record.topics : [],
+      onlineResources: [],
     }
     if (kind === 'dataset') {
       this.record = {
@@ -122,7 +113,6 @@ export class RecordFormComponent implements AfterViewInit {
         updateFrequency: 'unknown',
         lineage: '',
         overviews: [],
-        distributions: [],
         spatialExtents: [],
         temporalExtents: [],
       } as DatasetRecord
@@ -130,7 +120,6 @@ export class RecordFormComponent implements AfterViewInit {
       this.record = {
         ...record,
         kind: 'service',
-        onlineResources: [],
       } as ServiceRecord
     }
     this.recordChanged.emit(this.record)

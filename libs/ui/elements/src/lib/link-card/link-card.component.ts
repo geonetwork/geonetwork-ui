@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { MatIconModule } from '@angular/material/icon'
 import { CommonModule } from '@angular/common'
 
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common'
   imports: [CommonModule, MatIconModule],
 })
 export class LinkCardComponent {
-  @Input() link: DatasetDistribution
+  @Input() link: DatasetOnlineResource
   @Input() compact = false
 
   get title() {

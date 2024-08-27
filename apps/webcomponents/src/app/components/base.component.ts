@@ -15,7 +15,7 @@ import { Configuration, SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { TranslateService } from '@ngx-translate/core'
 import { firstValueFrom } from 'rxjs'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { OverlayContainer } from '@angular/cdk/overlay'
 import { WebcomponentOverlayContainer } from '../webcomponent-overlay-container'
@@ -115,12 +115,12 @@ export class BaseComponent implements OnChanges, OnInit {
   async getRecordLink(
     uuid: string,
     usages: LinkUsage[]
-  ): Promise<DatasetDistribution | null> {
+  ): Promise<DatasetOnlineResource | null> {
     const record = await firstValueFrom(this.recordsRepository.getRecord(uuid))
     if (record?.kind !== 'dataset') {
       return null
     }
-    const dataLinks = record.distributions.filter((link) =>
+    const dataLinks = record.onlineResources.filter((link) =>
       usages.some((usage) => this.linkClassifier.hasUsage(link, usage))
     )
     return dataLinks[0]

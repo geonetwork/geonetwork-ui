@@ -627,7 +627,7 @@ describe('record with file distributions', () => {
       .click()
   })
 
-  it('should display the distributions by priority', () => {
+  it('should display the onlineResources by priority', () => {
     cy.get('@previewSection')
       .find('gn-ui-dropdown-selector')
       .last()

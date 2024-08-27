@@ -64,12 +64,14 @@ export class ResultsTableComponent {
   }
 
   getRecordFormats(record: CatalogRecord): FileFormat[] {
-    if (record.kind === 'service' || !('distributions' in record)) {
+    if (record.kind === 'service' || !('onlineResources' in record)) {
       return []
     }
     const formats = Array.from(
       new Set(
-        record.distributions.map((distribution) => getFileFormat(distribution))
+        record.onlineResources.map((onlineResource) =>
+          getFileFormat(onlineResource)
+        )
       )
     ).filter((format) => !!format)
     formats.sort((a, b) => getFormatPriority(b) - getFormatPriority(a))

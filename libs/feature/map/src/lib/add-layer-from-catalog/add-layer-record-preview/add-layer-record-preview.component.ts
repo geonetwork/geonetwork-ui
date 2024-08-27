@@ -13,7 +13,7 @@ import {
   MapContextLayerTypeEnum,
 } from '../../map-context/map-context.model'
 import {
-  DatasetDistribution,
+  DatasetOnlineResource,
   DatasetRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
@@ -29,10 +29,10 @@ import { CommonModule } from '@angular/common'
   imports: [ThumbnailComponent, ButtonComponent, CommonModule],
 })
 export class AddLayerRecordPreviewComponent extends RecordPreviewComponent {
-  get mapLinks(): DatasetDistribution[] {
-    return (this.record as DatasetRecord).distributions.filter((link) =>
+  get mapLinks(): DatasetOnlineResource[] {
+    return (this.record as DatasetRecord).onlineResources.filter((link) =>
       this.linkClassifier.hasUsage(link, LinkUsage.MAP_API)
-    ) as DatasetDistribution[]
+    ) as DatasetOnlineResource[]
   }
 
   constructor(
@@ -44,13 +44,13 @@ export class AddLayerRecordPreviewComponent extends RecordPreviewComponent {
     super(elementRef)
   }
 
-  async handleLinkClick(link: DatasetDistribution) {
+  async handleLinkClick(link: DatasetOnlineResource) {
     const layer = await this.getLayerFromLink(link).toPromise()
     this.mapFacade.addLayer({ ...layer, title: this.record.title })
   }
 
   getLayerFromLink(
-    link: DatasetDistribution
+    link: DatasetOnlineResource
   ): Observable<MapContextLayerModel> {
     if (link.type !== 'service')
       return throwError(
@@ -72,7 +72,7 @@ export class AddLayerRecordPreviewComponent extends RecordPreviewComponent {
     return throwError(() => 'protocol not supported')
   }
 
-  getLinkLabel(link: DatasetDistribution) {
+  getLinkLabel(link: DatasetOnlineResource) {
     return getLinkLabel(link)
   }
 }

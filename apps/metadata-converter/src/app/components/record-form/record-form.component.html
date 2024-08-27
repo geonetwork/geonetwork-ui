@@ -362,7 +362,7 @@
       [(fieldValue)]="record.distributions"
       [itemTemplate]="distributionTpl"
       (confirm)="emitChangedRecord()"
-      [defaultItem]="getDistributionForType('download')"
+      [defaultItem]="getOnlineResourceForType('download')"
     >
       <ng-template #distributionTpl let-get="getValue" let-set="setValue">
         <gn-ui-record-field-group label="Distribution">
@@ -370,7 +370,7 @@
             label="Type"
             [options]="['service', 'download', 'link']"
             [fieldValue]="get().type"
-            (fieldValueChange)="set(getDistributionForType($event))"
+            (fieldValueChange)="set(getOnlineResourceForType($event))"
             (confirm)="emitChangedRecord()"
           ></gn-ui-record-field-simple>
           <gn-ui-record-field-simple

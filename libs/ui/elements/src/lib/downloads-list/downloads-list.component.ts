@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { getBadgeColor, getFileFormat } from '@geonetwork-ui/util/shared'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 
 marker('datahub.search.filter.all')
 marker('datahub.search.filter.others')
@@ -19,11 +19,11 @@ type FilterFormat = typeof FILTER_FORMATS[number]
 export class DownloadsListComponent {
   constructor(private translateService: TranslateService) {}
 
-  @Input() links: DatasetDistribution[]
+  @Input() links: DatasetOnlineResource[]
 
   activeFilterFormats: FilterFormat[] = ['all']
 
-  get filteredLinks(): DatasetDistribution[] {
+  get filteredLinks(): DatasetOnlineResource[] {
     return this.links.filter((link) =>
       this.activeFilterFormats.some((format) =>
         this.isLinkOfFormat(link, format)
@@ -68,7 +68,7 @@ export class DownloadsListComponent {
     return format
   }
 
-  isLinkOfFormat(link: DatasetDistribution, format: FilterFormat): boolean {
+  isLinkOfFormat(link: DatasetOnlineResource, format: FilterFormat): boolean {
     if (format === 'all') {
       return true
     }
@@ -86,15 +86,15 @@ export class DownloadsListComponent {
     return getFileFormat(link).includes(format)
   }
 
-  getLinkFormat(link: DatasetDistribution) {
+  getLinkFormat(link: DatasetOnlineResource) {
     return getFileFormat(link)
   }
 
-  getLinkColor(link: DatasetDistribution) {
+  getLinkColor(link: DatasetOnlineResource) {
     return getBadgeColor(getFileFormat(link))
   }
 
-  isFromWfs(link: DatasetDistribution) {
+  isFromWfs(link: DatasetOnlineResource) {
     return link.type === 'download' && link.accessServiceProtocol === 'wfs'
   }
 }

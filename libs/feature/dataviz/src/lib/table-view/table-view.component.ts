@@ -11,7 +11,7 @@ import {
 import { DataItem, FetchError } from '@geonetwork-ui/data-fetcher'
 import { DataService } from '../service/data.service'
 import { TableItemModel } from '@geonetwork-ui/ui/dataviz'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateService } from '@ngx-translate/core'
 
 @Component({
@@ -21,10 +21,10 @@ import { TranslateService } from '@ngx-translate/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableViewComponent {
-  @Input() set link(value: DatasetDistribution) {
+  @Input() set link(value: DatasetOnlineResource) {
     this.currentLink$.next(value)
   }
-  private currentLink$ = new BehaviorSubject<DatasetDistribution>(null)
+  private currentLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
 
   loading = false
   error = null
@@ -59,7 +59,7 @@ export class TableViewComponent {
     private translateService: TranslateService
   ) {}
 
-  fetchData(link: DatasetDistribution): Observable<DataItem[]> {
+  fetchData(link: DatasetOnlineResource): Observable<DataItem[]> {
     return this.dataService
       .getDataset(link)
       .pipe(switchMap((dataset) => dataset.read()))

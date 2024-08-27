@@ -1,5 +1,5 @@
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 
 marker('downloads.wfs.featuretype.not.found')
 
@@ -131,7 +131,7 @@ export function getFormatPriority(linkFormat: FileFormat): number {
   return 0
 }
 
-export function getLinkPriority(link: DatasetDistribution): number {
+export function getLinkPriority(link: DatasetOnlineResource): number {
   return getFormatPriority(getFileFormat(link))
 }
 
@@ -155,7 +155,7 @@ export function getFileFormatFromServiceOutput(
   return null
 }
 
-export function getFileFormat(link: DatasetDistribution): FileFormat {
+export function getFileFormat(link: DatasetOnlineResource): FileFormat {
   if ('mimeType' in link) {
     const mimeTypeFormat = mimeTypeToFormat(link.mimeType)
     if (mimeTypeFormat !== null) {
@@ -172,7 +172,7 @@ export function getFileFormat(link: DatasetDistribution): FileFormat {
 }
 
 export function isFormatInQueryParam(
-  link: DatasetDistribution,
+  link: DatasetOnlineResource,
   alias: string
 ): boolean {
   const queryParams = link.url.searchParams
@@ -194,7 +194,7 @@ export function mimeTypeToFormat(mimeType: string): FileFormat {
 }
 
 export function checkFileFormat(
-  link: DatasetDistribution,
+  link: DatasetOnlineResource,
   format: FileFormat
 ): boolean {
   return (
@@ -214,7 +214,7 @@ export function getBadgeColor(linkFormat: FileFormat): string {
   return 'var(--color-gray-700)' // Default color ?
 }
 
-export function getLinkLabel(link: DatasetDistribution): string {
+export function getLinkLabel(link: DatasetOnlineResource): string {
   let format = ''
   switch (link.type) {
     case 'service':

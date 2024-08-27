@@ -10,7 +10,7 @@ import {
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component'
 import { LinkUsage } from '@geonetwork-ui/util/shared'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'wc-gn-dataset-view-chart',
@@ -29,7 +29,7 @@ export class GnDatasetViewChartComponent
   @Input() xProperty: string
   @Input() yProperty: string
   @Input() chartType: string
-  link: DatasetDistribution
+  link: DatasetOnlineResource
   constructor(injector: Injector, private changeDetector: ChangeDetectorRef) {
     super(injector)
   }
