@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core'
 import { combineLatest, Observable, of, switchMap } from 'rxjs'
-import { catchError, map, shareReplay, tap } from 'rxjs/operators'
+import { catchError, filter, map, shareReplay, tap } from 'rxjs/operators'
 import {
   MeApiService,
+  RecordsApiService,
   RegistriesApiService,
   SiteApiService,
   ToolsApiService,
@@ -19,7 +20,7 @@ import {
 import { Gn4PlatformMapper } from './gn4-platform.mapper'
 import { ltr } from 'semver'
 import { LangService } from '@geonetwork-ui/util/i18n'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpEventType } from '@angular/common/http'
 import {
   KeywordApiResponse,
   ThesaurusApiResponse,
@@ -77,7 +78,8 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     private registriesApiService: RegistriesApiService,
     private langService: LangService,
     private userfeedbackApiService: UserfeedbackApiService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private recordsApiService: RecordsApiService
   ) {
     this.me$ = this.meApi.getMe().pipe(
       switchMap((apiUser) => this.mapper.userFromMeApi(apiUser)),
@@ -273,5 +275,47 @@ export class Gn4PlatformService implements PlatformServiceInterface {
         return of(undefined)
       })
     )
+  }
+
+  getRecordAttachments(recordUuid: string) {
+    return this.recordsApiService.getAllResources(recordUuid).pipe(
+      map((resources) =>
+        resources.map((r) => ({
+          url: new URL(r.url),
+          fileName: r.filename,
+        }))
+      )
+    )
+  }
+
+  attachFileToRecord(recordUuid: string, file: File) {
+    let sizeBytes = -1
+    return this.recordsApiService
+      .putResource(recordUuid, file, 'public', undefined, 'events', true)
+      .pipe(
+        map((event) => {
+          if (event.type === HttpEventType.UploadProgress) {
+            sizeBytes = event.total
+            return {
+              type: 'progress',
+              progress: event.total
+                ? Math.round((100 * event.loaded) / event.total)
+                : 0,
+            } as const
+          }
+          if (event.type === HttpEventType.Response) {
+            return {
+              type: 'success',
+              attachment: {
+                url: new URL(event.body.url),
+                fileName: event.body.filename,
+              },
+              sizeBytes,
+            } as const
+          }
+          return undefined
+        }),
+        filter((event) => !!event)
+      )
   }
 }

@@ -1,5 +1,6 @@
 import {
   MeApiService,
+  RecordsApiService,
   RegistriesApiService,
   SiteApiService,
   ToolsApiService,
@@ -21,7 +22,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpEventType } from '@angular/common/http'
 
 let geonetworkVersion: string
 
@@ -173,6 +174,22 @@ class LangServiceMock {
   iso3 = 'fre'
 }
 
+class RecordsApiServiceMock {
+  getAllResources = jest.fn(() =>
+    of([
+      {
+        filename: 'doge.jpg',
+        url: 'http://localhost:8080/geonetwork/srv/api/records/8505d991-e38f-4704-a47a-e7d335dfbef5/attachments/doge.jpg',
+      },
+      {
+        filename: 'flower.jpg',
+        url: 'http://localhost:8080/geonetwork/srv/api/records/8505d991-e38f-4704-a47a-e7d335dfbef5/attachments/flower.jpg',
+      },
+    ])
+  )
+  putResource = jest.fn(() => of(undefined))
+}
+
 class UserfeedbackApiServiceMock {
   getUserComments = jest.fn(() => of(someUserFeedbacksFixture()))
   newUserFeedback = jest.fn(() => of(undefined))
@@ -184,6 +201,7 @@ describe('Gn4PlatformService', () => {
   let toolsApiService: ToolsApiService
   let registriesApiService: RegistriesApiService
   let userFeedbackApiService: UserfeedbackApiServiceMock
+  let recordsApiService: RecordsApiService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -226,6 +244,10 @@ describe('Gn4PlatformService', () => {
           provide: HttpClient,
           useClass: HttpClientMock,
         },
+        {
+          provide: RecordsApiService,
+          useClass: RecordsApiServiceMock,
+        },
       ],
       imports: [HttpClientTestingModule],
     })
@@ -234,6 +256,7 @@ describe('Gn4PlatformService', () => {
     toolsApiService = TestBed.inject(ToolsApiService)
     registriesApiService = TestBed.inject(RegistriesApiService)
     userFeedbackApiService = TestBed.inject(UserfeedbackApiService as any)
+    recordsApiService = TestBed.inject(RecordsApiService)
     TestBed.inject(HttpTestingController)
   })
 
@@ -722,6 +745,90 @@ describe('Gn4PlatformService', () => {
         service.searchKeywordsInThesaurus('Bla', 'abcd')
       )
       expect(keywords).toEqual([])
+    })
+  })
+
+  describe('getRecordAttachments', () => {
+    it('calls api service', async () => {
+      const result = await firstValueFrom(service.getRecordAttachments('12345'))
+      expect(recordsApiService.getAllResources).toHaveBeenCalledWith('12345')
+      expect(result).toEqual([
+        {
+          fileName: 'doge.jpg',
+          url: new URL(
+            'http://localhost:8080/geonetwork/srv/api/records/8505d991-e38f-4704-a47a-e7d335dfbef5/attachments/doge.jpg'
+          ),
+        },
+        {
+          fileName: 'flower.jpg',
+          url: new URL(
+            'http://localhost:8080/geonetwork/srv/api/records/8505d991-e38f-4704-a47a-e7d335dfbef5/attachments/flower.jpg'
+          ),
+        },
+      ])
+    })
+  })
+
+  describe('attachFileToRecord', () => {
+    let file: File
+    beforeEach(() => {
+      file = new File([''], 'filename')
+    })
+    it('calls api service', async () => {
+      service.attachFileToRecord('12345', file)
+      expect(recordsApiService.putResource).toHaveBeenCalledWith(
+        '12345',
+        file,
+        'public',
+        undefined,
+        'events',
+        true
+      )
+    })
+    it('handles progress event', () => {
+      ;(recordsApiService.putResource as jest.Mock).mockReturnValue(
+        of({
+          type: HttpEventType.UploadProgress,
+          loaded: 2,
+          total: 10,
+        })
+      )
+      let result
+      service.attachFileToRecord('12345', file).subscribe((e) => (result = e))
+      expect(result).toEqual({
+        type: 'progress',
+        progress: 20,
+      })
+    })
+    it('handles success event', () => {
+      ;(recordsApiService.putResource as jest.Mock).mockReturnValue(
+        of(
+          {
+            type: HttpEventType.UploadProgress,
+            loaded: 2,
+            total: 10,
+          },
+          {
+            type: HttpEventType.Response,
+            body: {
+              filename: 'filename',
+              url: 'http://localhost:8080/geonetwork/srv/api/records/12345/attachments/filename',
+            },
+          }
+        )
+      )
+      let result
+      service.attachFileToRecord('12345', file).subscribe((e) => (result = e))
+      expect(result).toEqual({
+        type: 'success',
+        attachment: {
+          fileName: 'filename',
+          url: new URL(
+            'http://localhost:8080/geonetwork/srv/api/records/12345/attachments/filename'
+          ),
+        },
+        sizeBytes: 10,
+      })
     })
   })
 })
