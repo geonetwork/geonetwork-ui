@@ -1,5 +1,11 @@
-<gn-ui-overview-upload
-  [metadataUuid]="metadataUuid"
-  [overview]="firstOverview"
-  (overviewChange)="handleOverviewChange($event)"
-></gn-ui-overview-upload>
+<gn-ui-image-input
+  [maxSizeMB]="5"
+  [previewUrl]="firstOverview.url"
+  [altText]="firstOverview.description"
+  (fileChange)="handleFileChange($event)"
+  (urlChange)="handleUrlChange($event)"
+  (altTextChange)="handleAltTextChange($event)"
+  (delete)="handleDelete()"
+  [uploadProgress]="uploadProgress"
+  (uploadCancel)="handleUploadCancel()"
+></gn-ui-image-input>
