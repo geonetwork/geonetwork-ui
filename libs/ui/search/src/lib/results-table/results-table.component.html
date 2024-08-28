@@ -134,7 +134,7 @@
     <ng-template #cell let-item>
       <gn-ui-action-menu
         [canDuplicate]="canDuplicate(item)"
-        [isUnsavedDraft]="isUnsavedDraft(item)"
+        [canDelete]="canDelete(item)"
         (duplicate)="handleDuplicate(item)"
         (delete)="handleDelete(item)"
       >

@@ -43,6 +43,7 @@ export class ResultsTableComponent {
   @Input() hasDraft: (record: CatalogRecord) => boolean = () => false
   @Input() canDuplicate: (record: CatalogRecord) => boolean = () => true
   @Input() isUnsavedDraft: (record: CatalogRecord) => boolean = () => true
+  @Input() canDelete: (record: CatalogRecord) => boolean = () => true
 
   // emits the column (field) as well as the order
   @Output() sortByChange = new EventEmitter<[string, 'asc' | 'desc']>()
