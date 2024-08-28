@@ -7,7 +7,7 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatIconModule } from '@angular/material/icon'
 import { combineLatest, Observable } from 'rxjs'
-import { map, take } from 'rxjs/operators'
+import { map, switchMap, take } from 'rxjs/operators'
 import {
   GroupsApiService,
   RecordsApiService,
@@ -61,8 +61,14 @@ export class PublishButtonComponent {
   }
 
   saveRecord() {
-    combineLatest([this.activeUser$, this.record$])
-      .pipe(take(1))
+    this.facade.saveRecord()
+    this.facade.saveSuccess$
+      .pipe(
+        take(1),
+        switchMap(() =>
+          combineLatest([this.activeUser$, this.record$]).pipe(take(1))
+        )
+      )
       .subscribe(([userId, record]) => {
         this.groupApiService.getGroups().subscribe((groups) => {
           const groupId = groups.find(
@@ -77,7 +83,7 @@ export class PublishButtonComponent {
             )
             .subscribe(
               () => {
-                this.facade.saveRecord()
+                console.log('Ownership set successfully')
               },
               (error) => {
                 console.log('Error setting ownership :', error)
