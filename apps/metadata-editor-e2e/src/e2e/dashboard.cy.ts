@@ -100,13 +100,14 @@ describe('dashboard', () => {
     beforeEach(() => {
       cy.login('admin', 'admin', false)
       cy.visit('/catalog/search')
-      cy.clearRecordDrafts()
     })
     it('should display the right info for unpublished records', () => {
       cy.get('[data-cy="create-record"]').click()
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').type(
+        'draft abstract'
+      )
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(1200)
-      cy.get('gn-ui-record-form').should('be.visible')
       cy.visit('/my-space/my-draft')
       cy.get('gn-ui-results-table').find('[data-cy="table-row"]').as('draft')
       cy.get('@draft').should('have.length', 1)
@@ -138,6 +139,7 @@ describe('dashboard', () => {
         .should('eq', 'admin admin')
       cy.get('@record').children('div').eq(5).should('contain', ' Published ')
       cy.get('@record').children('div').eq(6).should('not.contain', ' - ')
+      cy.clearRecordDrafts()
     })
   })
 })
