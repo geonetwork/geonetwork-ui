@@ -121,6 +121,7 @@ describe('dashboard', () => {
         .eq(5)
         .should('contain', ' Not published ')
       cy.get('@draft').children('div').eq(6).should('contain', ' - ')
+      cy.clearRecordDrafts()
     })
     it('should display the right info for published records', () => {
       cy.visit('/catalog/search')

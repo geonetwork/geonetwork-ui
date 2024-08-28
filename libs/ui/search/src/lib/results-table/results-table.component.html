@@ -122,7 +122,9 @@
       <span translate>record.metadata.updatedOn</span>
     </ng-template>
     <ng-template #cell let-item>
-      {{ isUnsavedDraft(item) ? '-' : dateToString(item.recordUpdated) }}
+      <div class="flex justify-center w-full">
+        {{ isUnsavedDraft(item) ? '-' : dateToString(item.recordUpdated) }}
+      </div>
     </ng-template>
   </gn-ui-interactive-table-column>
 
