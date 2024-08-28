@@ -20,6 +20,7 @@ class EditorFacadeMock {
     uniqueIdentifier: 304,
   })
   saveRecord = jest.fn()
+  saveSuccess$ = new BehaviorSubject(true)
 }
 
 const user = USER_FIXTURE()
