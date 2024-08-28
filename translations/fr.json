@@ -283,7 +283,7 @@
   "input.file.orInputUrl": "ou",
   "input.file.selectFileLabel": "Sélectionnez un fichier ({sizeMB} Mo max.)",
   "input.file.uploadProgressCancel": "Annuler",
-  "input.file.uploadProgressLabel": "Chargement en cours......",
+  "input.file.uploadProgressLabel": "Chargement en cours...",
   "input.image.altTextPlaceholder": "Texte alternatif de l'image",
   "input.image.delete": "Supprimer",
   "input.image.displayAltTextInput": "Texte alternatif",
