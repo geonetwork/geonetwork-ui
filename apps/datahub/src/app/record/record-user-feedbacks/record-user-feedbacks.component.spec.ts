@@ -26,7 +26,7 @@ import {
 import { Gn4PlatformMapper } from '@geonetwork-ui/api/repository'
 
 describe('RelatedRecordsComponent', () => {
-  const allUserFeedbacks = SOME_USER_FEEDBACKS
+  const allUserFeedbacks = SOME_USER_FEEDBACKS()
   let mockDestroy$: Subject<void>
 
   const activeUser = USER_FIXTURE()
@@ -97,7 +97,7 @@ describe('RelatedRecordsComponent', () => {
     component = fixture.componentInstance
 
     component.destroy$ = mockDestroy$
-    component.metadataUuid = DATASET_RECORDS[0].uniqueIdentifier
+    component.metadataUuid = DATASET_RECORDS()[0].uniqueIdentifier
 
     fixture.detectChanges()
   })
@@ -116,7 +116,7 @@ describe('RelatedRecordsComponent', () => {
     it('should load user feedbacks', () => {
       component.ngOnInit()
       expect(mdViewFacadeMock.loadUserFeedbacks).toHaveBeenCalledWith(
-        DATASET_RECORDS[0].uniqueIdentifier
+        DATASET_RECORDS()[0].uniqueIdentifier
       )
     })
     it('should set active user', fakeAsync(() => {
@@ -129,7 +129,7 @@ describe('RelatedRecordsComponent', () => {
       await fixture.whenStable()
       expect(component.userFeedbacksParents.length).toBe(4)
       expect(
-        component.userFeedBacksAnswers.get(SOME_USER_FEEDBACKS[0].uuid).length
+        component.userFeedBacksAnswers.get(SOME_USER_FEEDBACKS()[0].uuid).length
       ).toBe(2)
     })
   })

@@ -2,15 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { RecordsMetricsComponent } from './records-metrics.component'
 import { TranslateModule } from '@ngx-translate/core'
-import {
-  aggsOnly as aggsOnlyFixture,
-  SAMPLE_AGGREGATIONS_RESULTS,
-} from '@geonetwork-ui/common/fixtures'
+import { SAMPLE_AGGREGATIONS_RESULTS } from '@geonetwork-ui/common/fixtures'
 import { of } from 'rxjs'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 class RecordsRepositoryMock {
-  aggregate = jest.fn(() => of(SAMPLE_AGGREGATIONS_RESULTS))
+  aggregate = jest.fn(() => of(SAMPLE_AGGREGATIONS_RESULTS()))
 }
 
 describe('RecordsMetricsComponent', () => {
@@ -50,7 +47,7 @@ describe('RecordsMetricsComponent', () => {
       let results = null
       component.results$.subscribe((value) => (results = value))
       expect(results.length).toBe(
-        SAMPLE_AGGREGATIONS_RESULTS.myField.buckets.length
+        SAMPLE_AGGREGATIONS_RESULTS().myField.buckets.length
       )
     })
   })

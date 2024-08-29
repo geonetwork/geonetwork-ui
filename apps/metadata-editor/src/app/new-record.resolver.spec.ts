@@ -23,7 +23,7 @@ class PlatformServiceInterfaceMock {
 }
 
 class OrganizationsServiceInterfaceMock {
-  organisations$ = of(ORGANISATIONS_FIXTURE)
+  organisations$ = of(ORGANISATIONS_FIXTURE())
 }
 
 describe('NewRecordResolver', () => {

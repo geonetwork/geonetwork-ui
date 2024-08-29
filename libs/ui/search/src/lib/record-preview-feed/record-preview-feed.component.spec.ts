@@ -24,7 +24,7 @@ describe('RecordPreviewFeedComponent', () => {
       abstract: '<b>abstract</b>',
       landingPage: new URL('http://localhost/abcd.html'),
       overviews: [{ url: new URL('http://localhost/abcd.jpg') }],
-      ownerOrganization: ORGANISATIONS_FIXTURE[0],
+      ownerOrganization: ORGANISATIONS_FIXTURE()[0],
       contacts: [],
     } as CatalogRecord
     fixture.detectChanges()

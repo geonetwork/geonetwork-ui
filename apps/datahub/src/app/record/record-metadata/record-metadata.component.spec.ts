@@ -27,7 +27,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 
 const SAMPLE_RECORD = {
-  ...DATASET_RECORDS[0],
+  ...DATASET_RECORDS()[0],
   extras: {
     catalogUuid: 'catalog-0001',
   },

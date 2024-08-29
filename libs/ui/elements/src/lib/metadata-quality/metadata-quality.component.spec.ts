@@ -55,7 +55,7 @@ describe('MetadataQualityComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MetadataQualityComponent)
     component = fixture.componentInstance
-    component.metadata = DATASET_RECORDS[0]
+    component.metadata = DATASET_RECORDS()[0]
     component.metadataQualityDisplay = true
     component.initialize()
     fixture.detectChanges()

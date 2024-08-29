@@ -45,10 +45,10 @@ describe('Search Selectors', () => {
         ...initialStateSearch,
         config: {
           ...initialStateSearch.config,
-          aggregations: SAMPLE_AGGREGATIONS_PARAMS,
+          aggregations: SAMPLE_AGGREGATIONS_PARAMS(),
         },
       })
-      expect(result).toEqual(SAMPLE_AGGREGATIONS_PARAMS)
+      expect(result).toEqual(SAMPLE_AGGREGATIONS_PARAMS())
     })
   })
 
@@ -198,7 +198,7 @@ describe('Search Selectors', () => {
 
   describe('getSearchResultsAggregations', () => {
     it('should return search aggregations results', () => {
-      const aggregations = SAMPLE_AGGREGATIONS_RESULTS
+      const aggregations = SAMPLE_AGGREGATIONS_RESULTS()
       const result = fromSelectors.getSearchResultsAggregations.projector({
         ...initialStateSearch,
         results: {

@@ -1,6 +1,4 @@
-import { deepFreeze } from '../utils/freeze'
-
-const BUCKETS = deepFreeze([
+const ES_FIXTURE_BUCKETS = () => [
   { key: 'Hungary', doc_count: 20 },
   {
     key: 'Austria',
@@ -16,13 +14,13 @@ const BUCKETS = deepFreeze([
     key: 'Cyprus',
     doc_count: 5,
   },
-])
+]
 
-export const ES_FIXTURE_AGGS_RESPONSE = deepFreeze({
+export const ES_FIXTURE_AGGS_RESPONSE = () => ({
   'tag.default': {
     doc_count_error_upper_bound: 0,
     sum_other_doc_count: 458,
-    buckets: BUCKETS,
+    buckets: ES_FIXTURE_BUCKETS(),
   },
   availableInServices: {
     buckets: {
@@ -66,12 +64,12 @@ export const ES_FIXTURE_AGGS_RESPONSE = deepFreeze({
   },
 })
 
-export const ES_FIXTURE_AGGS_RESPONSE_MORE = deepFreeze({
+export const ES_FIXTURE_AGGS_RESPONSE_MORE = () => ({
   'tag.default': {
     doc_count_error_upper_bound: 0,
     sum_other_doc_count: 456,
     buckets: [
-      ...BUCKETS,
+      ...ES_FIXTURE_BUCKETS(),
       { key: 'Spain', doc_count: 86 },
       { key: 'United Kingdom', doc_count: 84 },
     ],

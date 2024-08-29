@@ -1,7 +1,6 @@
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
-import { deepFreeze } from './utils'
 
-export const DATASET_RECORDS: DatasetRecord[] = deepFreeze([
+export const DATASET_RECORDS = () => [
   {
     uniqueIdentifier: 'my-dataset-001',
     kind: 'dataset',
@@ -259,7 +258,7 @@ Ce lot de données produit en 2019, a été numérisé à partir du PCI Vecteur 
     updateFrequency: 'unknown',
     languages: ['fr', 'de'],
   },
-])
+]
 
 export const DATASET_RECORD_SIMPLE: DatasetRecord = {
   uniqueIdentifier: 'my-dataset-001',

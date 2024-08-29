@@ -102,7 +102,7 @@ describe('MapUtilsService', () => {
   })
 
   describe('#readFeatureCollection', () => {
-    const collection = FEATURE_COLLECTION_POLYGON_FIXTURE_4326
+    const collection = FEATURE_COLLECTION_POLYGON_FIXTURE_4326()
     let olFeatures, featureSample: Feature<Polygon>
     describe('when no option', () => {
       beforeEach(() => {
@@ -204,7 +204,7 @@ describe('MapUtilsService', () => {
       beforeEach(() => {
         layer = {
           type: 'geojson',
-          data: FEATURE_COLLECTION_POLYGON_FIXTURE_4326,
+          data: FEATURE_COLLECTION_POLYGON_FIXTURE_4326(),
         }
       })
       it('returns an observable emitting the aggregated extent', async () => {

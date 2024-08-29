@@ -27,8 +27,8 @@ describe('FacetsService', () => {
 
   describe('#createFacetModel', () => {
     let result
-    requestAggregations = ES_FIXTURE_AGGS_REQUEST
-    responseAggregations = ES_FIXTURE_AGGS_RESPONSE
+    requestAggregations = ES_FIXTURE_AGGS_REQUEST()
+    responseAggregations = ES_FIXTURE_AGGS_RESPONSE()
 
     beforeEach(() => {
       result = service.createFacetModel(

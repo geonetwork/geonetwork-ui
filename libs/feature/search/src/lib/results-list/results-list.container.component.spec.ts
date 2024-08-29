@@ -158,7 +158,7 @@ describe('ResultsListContainerComponent', () => {
   describe('record url', () => {
     describe('without templates', () => {
       it('returns null', () => {
-        expect(component.getRecordUrl(DATASET_RECORDS[0])).toBe(null)
+        expect(component.getRecordUrl(DATASET_RECORDS()[0])).toBe(null)
       })
     })
     describe('with templates', () => {
@@ -166,7 +166,7 @@ describe('ResultsListContainerComponent', () => {
         component['recordUrlTemplate'] = '/my/record/${uuid}/open'
       })
       it('returns actual urls', () => {
-        expect(component.getRecordUrl(DATASET_RECORDS[0])).toBe(
+        expect(component.getRecordUrl(DATASET_RECORDS()[0])).toBe(
           '/my/record/my-dataset-001/open'
         )
       })

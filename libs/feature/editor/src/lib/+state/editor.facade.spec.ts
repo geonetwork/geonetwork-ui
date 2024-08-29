@@ -51,8 +51,8 @@ describe('EditorFacade', () => {
 
     it('openRecord() should dispatch openRecord action', () => {
       const spy = jest.spyOn(store, 'dispatch')
-      facade.openRecord(DATASET_RECORDS[0])
-      const action = EditorActions.openRecord({ record: DATASET_RECORDS[0] })
+      facade.openRecord(DATASET_RECORDS()[0])
+      const action = EditorActions.openRecord({ record: DATASET_RECORDS()[0] })
       expect(spy).toHaveBeenCalledWith(action)
     })
 

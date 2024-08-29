@@ -174,7 +174,7 @@ class LangServiceMock {
 }
 
 class UserfeedbackApiServiceMock {
-  getUserComments = jest.fn(() => of(SOME_USER_FEEDBACKS))
+  getUserComments = jest.fn(() => of(SOME_USER_FEEDBACKS()))
   newUserFeedback = jest.fn(() => of(undefined))
 }
 
@@ -606,7 +606,7 @@ describe('Gn4PlatformService', () => {
     describe('getUserFeedbacks', () => {
       it('should call getUserComments with correct UUID and map results', (done) => {
         const mockUuid = '1234'
-        const mockFeedbacks = SOME_USER_FEEDBACKS
+        const mockFeedbacks = SOME_USER_FEEDBACKS()
 
         service.getUserFeedbacks(mockUuid).subscribe({
           next: (results) => {
@@ -642,12 +642,12 @@ describe('Gn4PlatformService', () => {
     describe('postUserFeedbacks', () => {
       it('should process and post user feedbacks correctly', (done) => {
         const expected: UserFeedbackDTOApiModel = {
-          ...A_USER_FEEDBACK,
+          ...A_USER_FEEDBACK(),
           authorUserId: expect.any(Number),
           date: expect.any(String),
         }
 
-        service.postUserFeedbacks(A_USER_FEEDBACK).subscribe({
+        service.postUserFeedbacks(A_USER_FEEDBACK()).subscribe({
           next: () => {
             expect(userFeedbackApiService.newUserFeedback).toHaveBeenCalledWith(
               expected

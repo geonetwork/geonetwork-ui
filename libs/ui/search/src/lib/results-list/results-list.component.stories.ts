@@ -49,7 +49,7 @@ type ResultsListComponentWithKey = ResultsListComponent & {
 
 export const Primary: StoryObj<ResultsListComponentWithKey> = {
   args: {
-    records: DATASET_RECORDS,
+    records: DATASET_RECORDS(),
     layoutConfigKey: 'CARD',
   },
   argTypes: {

@@ -1,7 +1,6 @@
 import { UserFeedback } from '@geonetwork-ui/common/domain/model/record'
-import { deepFreeze } from './utils'
 
-export const SOME_USER_FEEDBACKS: UserFeedback[] = deepFreeze([
+export const SOME_USER_FEEDBACKS = (): UserFeedback[] => [
   {
     uuid: '4ad03fb7-1728-424c-bdaa-aedd531b07a8',
     comment: 'A nice comment.',
@@ -68,9 +67,9 @@ export const SOME_USER_FEEDBACKS: UserFeedback[] = deepFreeze([
     parentUuid: undefined,
     date: new Date('2023-01-01T11:00:00Z'),
   },
-])
+]
 
-export const A_USER_FEEDBACK: UserFeedback = deepFreeze({
+export const A_USER_FEEDBACK = (): UserFeedback => ({
   uuid: '4ad03fb7-1728-424c-bdaa-aedd531b07a8',
   comment: 'A nice comment.',
   metadataUUID: 'my-dataset-001',

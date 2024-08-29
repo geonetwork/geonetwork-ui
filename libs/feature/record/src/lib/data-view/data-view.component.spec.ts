@@ -15,7 +15,7 @@ import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
 
 const DATALINKS_FIXTURE: DatasetDistribution[] = [
-  LINK_FIXTURES.dataXls,
+  LINK_FIXTURES().dataXls,
   {
     description: 'CSV file',
     name: 'some_file_name.csv',

@@ -24,7 +24,7 @@ export const MAP_CTX_LAYER_WFS_FIXTURE: MapContextLayerModel = {
 }
 export const MAP_CTX_LAYER_GEOJSON_FIXTURE: MapContextLayerGeojsonModel = {
   type: MapContextLayerTypeEnum.GEOJSON,
-  data: FEATURE_COLLECTION_POLYGON_FIXTURE_4326,
+  data: FEATURE_COLLECTION_POLYGON_FIXTURE_4326(),
 }
 export const MAP_CTX_LAYER_GEOJSON_REMOTE_FIXTURE: MapContextLayerGeojsonModel =
   {

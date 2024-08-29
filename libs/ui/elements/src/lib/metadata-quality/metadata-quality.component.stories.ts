@@ -8,8 +8,10 @@ import {
 } from '@geonetwork-ui/util/i18n'
 import { TranslateModule } from '@ngx-translate/core'
 import { MetadataQualityItemComponent } from '../metadata-quality-item/metadata-quality-item.component'
-import { ProgressBarComponent } from '@geonetwork-ui/ui/widgets'
-import { PopoverComponent } from '@geonetwork-ui/ui/widgets'
+import {
+  PopoverComponent,
+  ProgressBarComponent,
+} from '@geonetwork-ui/ui/widgets'
 import { MatIconModule } from '@angular/material/icon'
 
 export default {
@@ -32,7 +34,7 @@ export default {
 export const Primary: StoryObj<MetadataQualityComponent> = {
   args: {
     smaller: false,
-    metadata: DATASET_RECORDS[0],
+    metadata: DATASET_RECORDS()[0],
     metadataQualityDisplay: true,
   },
 }

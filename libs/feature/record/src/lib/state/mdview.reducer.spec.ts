@@ -47,7 +47,7 @@ describe('metadataViewReducer', () => {
     let action
 
     beforeEach(() => {
-      const { uniqueIdentifier, title, ...rest } = DATASET_RECORDS[0]
+      const { uniqueIdentifier, title, ...rest } = DATASET_RECORDS()[0]
       action = MdViewActions.setIncompleteMetadata({
         incomplete: {
           uniqueIdentifier,
@@ -75,7 +75,7 @@ describe('metadataViewReducer', () => {
 
     beforeEach(() => {
       action = MdViewActions.loadFullMetadataSuccess({
-        full: DATASET_RECORDS[0],
+        full: DATASET_RECORDS()[0],
       })
     })
 
@@ -88,7 +88,7 @@ describe('metadataViewReducer', () => {
         ...initialMetadataViewState,
         error: null,
         loadingFull: false,
-        metadata: DATASET_RECORDS[0],
+        metadata: DATASET_RECORDS()[0],
       })
     })
   })
@@ -121,7 +121,7 @@ describe('metadataViewReducer', () => {
 
     beforeEach(() => {
       action = MdViewActions.setRelated({
-        related: [DATASET_RECORDS[1]],
+        related: [DATASET_RECORDS()[1]],
       })
     })
 
@@ -129,7 +129,7 @@ describe('metadataViewReducer', () => {
       const state = reducer({ ...initialMetadataViewState }, action)
       expect(state).toEqual({
         ...initialMetadataViewState,
-        related: [DATASET_RECORDS[1]],
+        related: [DATASET_RECORDS()[1]],
       })
     })
   })
@@ -163,9 +163,9 @@ describe('metadataViewReducer', () => {
       const state = reducer(
         {
           ...initialMetadataViewState,
-          related: [DATASET_RECORDS[1]],
+          related: [DATASET_RECORDS()[1]],
           loadingFull: false,
-          metadata: DATASET_RECORDS[0],
+          metadata: DATASET_RECORDS()[0],
         },
         action
       )
@@ -199,7 +199,7 @@ describe('metadataViewReducer', () => {
 
     beforeEach(() => {
       action = MdViewActions.addUserFeedback({
-        userFeedback: A_USER_FEEDBACK,
+        userFeedback: A_USER_FEEDBACK(),
       })
     })
 

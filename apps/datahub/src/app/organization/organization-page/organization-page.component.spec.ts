@@ -11,20 +11,19 @@ import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { RouterTestingModule } from '@angular/router/testing'
 
-const expectedOrganization = ORGANISATIONS_FIXTURE[0]
+const expectedOrganization = ORGANISATIONS_FIXTURE()[0]
 
 class RouterFacadeMock {
-  pathParams$ = of({ name: ORGANISATIONS_FIXTURE[0].name } as Params)
+  pathParams$ = of({ name: ORGANISATIONS_FIXTURE()[0].name } as Params)
 }
 
 class OrganizationsServiceInterfaceMock {
-  organisations$ = of(ORGANISATIONS_FIXTURE)
+  organisations$ = of(ORGANISATIONS_FIXTURE())
 }
 
 describe('OrganizationPageComponent', () => {
   let component: OrganizationPageComponent
   let fixture: ComponentFixture<OrganizationPageComponent>
-  let organizationsServiceInterface: OrganizationsServiceInterface
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -55,10 +54,6 @@ describe('OrganizationPageComponent', () => {
         },
       })
       .compileComponents()
-
-    organizationsServiceInterface = TestBed.inject(
-      OrganizationsServiceInterface
-    )
 
     fixture = TestBed.createComponent(OrganizationPageComponent)
     component = fixture.componentInstance

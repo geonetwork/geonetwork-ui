@@ -14,12 +14,12 @@ class NotificationsServiceMock {
 }
 class RecordsRepositoryMock {
   openRecordForDuplication = jest.fn(() =>
-    of([DATASET_RECORDS[0], '<xml>blabla</xml>', false])
+    of([DATASET_RECORDS()[0], '<xml>blabla</xml>', false])
   )
 }
 
 const activatedRoute = {
-  paramMap: convertToParamMap({ id: DATASET_RECORDS[0].uniqueIdentifier }),
+  paramMap: convertToParamMap({ id: DATASET_RECORDS()[0].uniqueIdentifier }),
 } as ActivatedRouteSnapshot
 
 describe('DuplicateRecordResolver', () => {
@@ -55,7 +55,7 @@ describe('DuplicateRecordResolver', () => {
     })
     it('should load record by uuid', () => {
       expect(resolvedData).toEqual([
-        DATASET_RECORDS[0],
+        DATASET_RECORDS()[0],
         '<xml>blabla</xml>',
         false,
       ])

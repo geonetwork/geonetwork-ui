@@ -9,7 +9,7 @@ import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-comp
 import { TranslateTestingModule } from 'ngx-translate-testing'
 
 class SearchFacadeMock {
-  results$ = new BehaviorSubject(DATASET_RECORDS)
+  results$ = new BehaviorSubject(DATASET_RECORDS())
   resultsHits$ = new BehaviorSubject(1000)
 }
 class SelectionServiceMock {

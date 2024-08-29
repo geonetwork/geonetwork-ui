@@ -50,6 +50,6 @@ export default {
 
 export const Primary: StoryObj<RelatedRecordCardComponent> = {
   args: {
-    record: DATASET_RECORDS[0],
+    record: DATASET_RECORDS()[0],
   },
 }

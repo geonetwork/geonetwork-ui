@@ -94,8 +94,8 @@ describe('ResultsTableContainerComponent', () => {
     })
 
     it('emits a recordClick event', () => {
-      component.handleRecordClick(DATASET_RECORDS[0])
-      expect(clickedRecord).toEqual(DATASET_RECORDS[0])
+      component.handleRecordClick(DATASET_RECORDS()[0])
+      expect(clickedRecord).toEqual(DATASET_RECORDS()[0])
     })
   })
 
@@ -108,8 +108,8 @@ describe('ResultsTableContainerComponent', () => {
     })
 
     it('emits a duplicateRecord event', () => {
-      component.handleDuplicateRecord(DATASET_RECORDS[0])
-      expect(recordToBeDuplicated).toEqual(DATASET_RECORDS[0])
+      component.handleDuplicateRecord(DATASET_RECORDS()[0])
+      expect(recordToBeDuplicated).toEqual(DATASET_RECORDS()[0])
     })
   })
 
@@ -119,7 +119,7 @@ describe('ResultsTableContainerComponent', () => {
         recordsRepository.deleteRecord = jest.fn(() =>
           throwError(() => 'oopsie')
         )
-        component.handleDeleteRecord(DATASET_RECORDS[0])
+        component.handleDeleteRecord(DATASET_RECORDS()[0])
         expect(notificationsService.showNotification).toHaveBeenCalledWith({
           type: 'error',
           title: 'editor.record.deleteError.title',
@@ -132,7 +132,7 @@ describe('ResultsTableContainerComponent', () => {
     describe('delete success', () => {
       it('shows notification', () => {
         recordsRepository.deleteRecord = jest.fn(() => of(void 0))
-        component.handleDeleteRecord(DATASET_RECORDS[0])
+        component.handleDeleteRecord(DATASET_RECORDS()[0])
         expect(recordsRepository.deleteRecord).toHaveBeenCalled()
         expect(recordsRepository.clearRecordDraft).toHaveBeenCalled()
         expect(searchFacade.requestNewResults).toHaveBeenCalled()
@@ -150,7 +150,7 @@ describe('ResultsTableContainerComponent', () => {
 
   describe('#hasDraft', () => {
     it('calls the repository service', () => {
-      const record = DATASET_RECORDS[0]
+      const record = DATASET_RECORDS()[0]
       component.hasDraft(record)
       expect(
         TestBed.inject(RecordsRepositoryInterface).recordHasDraft

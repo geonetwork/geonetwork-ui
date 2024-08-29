@@ -144,7 +144,7 @@ describe('SearchRecordsComponent', () => {
     describe('when click on a record', () => {
       const uniqueIdentifier = 123
       const singleRecord = {
-        ...DATASET_RECORDS[0],
+        ...DATASET_RECORDS()[0],
         uniqueIdentifier,
       }
       beforeEach(() => {
@@ -157,7 +157,7 @@ describe('SearchRecordsComponent', () => {
     describe('when asking for record duplication', () => {
       const uniqueIdentifier = 123
       const singleRecord = {
-        ...DATASET_RECORDS[0],
+        ...DATASET_RECORDS()[0],
         uniqueIdentifier,
       }
       beforeEach(() => {

@@ -14,7 +14,7 @@ describe('OrganisationsPageComponent', () => {
   let fixture: ComponentFixture<OrganisationsPageComponent>
   let routerFacade: RouterFacade
 
-  const selectedOrganization = ORGANISATIONS_FIXTURE[0]
+  const selectedOrganization = ORGANISATIONS_FIXTURE()[0]
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

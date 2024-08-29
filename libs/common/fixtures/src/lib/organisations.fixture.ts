@@ -1,4 +1,3 @@
-import { deepFreeze } from './utils/freeze'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 
 export const REGION_HAUT_DE_FRANCE_ORG_FIXTURE = (): Organization => ({
@@ -10,7 +9,7 @@ export const REGION_HAUT_DE_FRANCE_ORG_FIXTURE = (): Organization => ({
   recordCount: 4,
 })
 
-export const ORGANISATIONS_FIXTURE: Organization[] = deepFreeze([
+export const ORGANISATIONS_FIXTURE = (): Organization[] => [
   {
     name: 'I Data Org',
     description: 'one org for testing',
@@ -124,4 +123,4 @@ export const ORGANISATIONS_FIXTURE: Organization[] = deepFreeze([
     recordCount: 2,
   },
   REGION_HAUT_DE_FRANCE_ORG_FIXTURE(),
-])
+]

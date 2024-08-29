@@ -23,7 +23,7 @@ class SearchServiceMock {
 }
 
 class RecordsRepositoryMock {
-  fuzzySearch = jest.fn(() => of(SAMPLE_SEARCH_RESULTS))
+  fuzzySearch = jest.fn(() => of(SAMPLE_SEARCH_RESULTS()))
 }
 
 describe('FuzzySearchComponent', () => {
@@ -108,7 +108,7 @@ describe('FuzzySearchComponent', () => {
       component.autocomplete.action('').subscribe((e) => (emitted = e))
     })
     it('emits an array of CatalogRecord', () => {
-      expect(emitted).toEqual(DATASET_RECORDS)
+      expect(emitted).toEqual(DATASET_RECORDS())
     })
   })
 

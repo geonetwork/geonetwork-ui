@@ -38,7 +38,7 @@ export default {
 
 export const Primary: StoryObj<RecordPreviewTitleComponent> = {
   args: {
-    record: DATASET_RECORDS[0],
+    record: DATASET_RECORDS()[0],
     linkTarget: '_blank',
   },
 }

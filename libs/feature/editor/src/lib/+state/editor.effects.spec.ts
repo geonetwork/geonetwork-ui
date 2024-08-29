@@ -20,7 +20,7 @@ class RecordsRepositoryMock {
 }
 
 const initialEditorState = {
-  record: DATASET_RECORDS[0],
+  record: DATASET_RECORDS()[0],
   recordSource: '<xml>blabla</xml>',
   saving: false,
   saveError: null,
@@ -70,14 +70,14 @@ describe('EditorEffects', () => {
         const expected = hot('-(ab)|', {
           a: EditorActions.saveRecordSuccess(),
           b: EditorActions.openRecord({
-            record: DATASET_RECORDS[0],
+            record: DATASET_RECORDS()[0],
             alreadySavedOnce: true,
             recordSource: '<xml>blabla</xml>',
           }),
         })
         expect(effects.saveRecord$).toBeObservable(expected)
         expect(service.saveRecord).toHaveBeenCalledWith(
-          DATASET_RECORDS[0],
+          DATASET_RECORDS()[0],
           [],
           false
         )
@@ -93,7 +93,7 @@ describe('EditorEffects', () => {
         actions = of(EditorActions.saveRecord())
         await firstValueFrom(effects.saveRecord$)
         expect(service.saveRecord).toHaveBeenCalledWith(
-          DATASET_RECORDS[0],
+          DATASET_RECORDS()[0],
           [],
           true
         )
@@ -158,7 +158,7 @@ describe('EditorEffects', () => {
           })
         )
         expect(service.saveRecordAsDraft).toHaveBeenCalledWith(
-          DATASET_RECORDS[0]
+          DATASET_RECORDS()[0]
         )
       })
     })
@@ -169,7 +169,7 @@ describe('EditorEffects', () => {
       it('dispatch markRecordAsChanged', () => {
         actions = hot('-a-|', {
           a: EditorActions.openRecord({
-            record: DATASET_RECORDS[0],
+            record: DATASET_RECORDS()[0],
             alreadySavedOnce: true,
           }),
         })
@@ -188,7 +188,7 @@ describe('EditorEffects', () => {
       it('dispatches nothing', () => {
         actions = hot('-a-|', {
           a: EditorActions.openRecord({
-            record: DATASET_RECORDS[0],
+            record: DATASET_RECORDS()[0],
             alreadySavedOnce: true,
           }),
         })

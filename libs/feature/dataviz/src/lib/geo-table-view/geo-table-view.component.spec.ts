@@ -27,7 +27,7 @@ import { Geometry } from 'ol/geom'
 const vectorLayer = new VectorLayer({
   source: new VectorSource({
     features: new GeoJSON().readFeatures(
-      FEATURE_COLLECTION_POINT_FIXTURE_4326,
+      FEATURE_COLLECTION_POINT_FIXTURE_4326(),
       {
         featureProjection: 'EPSG:3857',
         dataProjection: 'EPSG:4326',
@@ -125,7 +125,7 @@ describe('GeoTableViewComponent', () => {
       expect(component['view']).toBe(mapMock.getView())
       expect(component['vectorLayer']).toBe(vectorLayer)
       expect(component['features'].length).toBe(
-        FEATURE_COLLECTION_POINT_FIXTURE_4326.features.length
+        FEATURE_COLLECTION_POINT_FIXTURE_4326().features.length
       )
     })
   })

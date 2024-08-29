@@ -32,7 +32,7 @@ export default {
 
 export const Primary: StoryObj<RecordPreviewCardComponent> = {
   args: {
-    record: DATASET_RECORDS[0],
+    record: DATASET_RECORDS()[0],
     linkTarget: '_blank',
   },
 }

@@ -851,7 +851,7 @@ describe('ElasticsearchService', () => {
       it('parses the result', () => {
         expect(
           service.parseAggregationResult(
-            ES_FIXTURE_AGGS_RESPONSE['tag.default'],
+            ES_FIXTURE_AGGS_RESPONSE()['tag.default'],
             { type: 'terms' } as any
           )
         ).toStrictEqual({
@@ -888,7 +888,7 @@ describe('ElasticsearchService', () => {
       it('parses the result', () => {
         expect(
           service.parseAggregationResult(
-            ES_FIXTURE_AGGS_RESPONSE['availableInServices'],
+            ES_FIXTURE_AGGS_RESPONSE()['availableInServices'],
             { type: 'filters' } as any
           )
         ).toStrictEqual({
@@ -968,7 +968,7 @@ describe('ElasticsearchService', () => {
       it('parses the result (keyed)', () => {
         expect(
           service.parseAggregationResult(
-            ES_FIXTURE_AGGS_RESPONSE['resolutionScaleDenominator'],
+            ES_FIXTURE_AGGS_RESPONSE()['resolutionScaleDenominator'],
             { type: 'histogram' } as any
           )
         ).toStrictEqual(expectedHistogram)
@@ -976,7 +976,7 @@ describe('ElasticsearchService', () => {
       it('parses the result (ordered array)', () => {
         expect(
           service.parseAggregationResult(
-            ES_FIXTURE_AGGS_RESPONSE['resolutionScaleDenominatorArray'],
+            ES_FIXTURE_AGGS_RESPONSE()['resolutionScaleDenominatorArray'],
             { type: 'histogram' } as any
           )
         ).toStrictEqual(expectedHistogram)

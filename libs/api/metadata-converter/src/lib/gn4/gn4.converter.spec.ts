@@ -1,7 +1,7 @@
 import 'jest-preset-angular/setup-jest'
 import {
   ES_FIXTURE_FULL_RESPONSE,
-  hitsOnly,
+  ES_FIXTURE_HITS_ONLY,
 } from '@geonetwork-ui/common/fixtures'
 import { Gn4Converter } from './gn4.converter'
 import { of } from 'rxjs'
@@ -71,7 +71,9 @@ describe('Gn4Converter', () => {
     })
     describe('#readRecords', () => {
       it('outputs records', async () => {
-        const records = await service.readRecords(hitsOnly.hits.hits)
+        const records = await service.readRecords(
+          ES_FIXTURE_HITS_ONLY().hits.hits
+        )
         expect(records).toEqual([
           {
             kind: 'dataset',
@@ -176,7 +178,7 @@ describe('Gn4Converter', () => {
     describe('#readRecord', () => {
       let hit
       beforeEach(() => {
-        hit = hitsOnly.hits.hits[0]
+        hit = ES_FIXTURE_HITS_ONLY().hits.hits[0]
       })
 
       describe('overview', () => {
@@ -989,7 +991,7 @@ describe('Gn4Converter', () => {
       describe('full record', () => {
         it('builds a complete record object', async () => {
           const record = await service.readRecord(
-            ES_FIXTURE_FULL_RESPONSE.hits.hits[0] as Gn4Record
+            ES_FIXTURE_FULL_RESPONSE().hits.hits[0] as Gn4Record
           )
           expect(record).toEqual({
             kind: 'dataset',

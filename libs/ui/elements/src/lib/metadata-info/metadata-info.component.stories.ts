@@ -34,7 +34,7 @@ export default {
 
 export const Primary: StoryObj<MetadataInfoComponent> = {
   args: {
-    metadata: DATASET_RECORDS[0],
+    metadata: DATASET_RECORDS()[0],
     incomplete: false,
   },
 }

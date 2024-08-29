@@ -14,7 +14,7 @@ import { PageSelectorComponent } from './components/page-selector/page-selector.
 const getRoute = () => ({
   snapshot: {
     data: {
-      record: [DATASET_RECORDS[0], '<xml>blabla</xml>', false],
+      record: [DATASET_RECORDS()[0], '<xml>blabla</xml>', false],
     },
     routeConfig: {
       path: '/edit/:uuid',
@@ -27,7 +27,7 @@ class RouterMock {
 }
 
 class EditorFacadeMock {
-  record$ = new BehaviorSubject(DATASET_RECORDS[0])
+  record$ = new BehaviorSubject(DATASET_RECORDS()[0])
   openRecord = jest.fn()
   saveError$ = new Subject<string>()
   saveSuccess$ = new Subject()
@@ -101,7 +101,7 @@ describe('EditPageComponent', () => {
     })
     it('calls openRecord', () => {
       expect(facade.openRecord).toHaveBeenCalledWith(
-        DATASET_RECORDS[0],
+        DATASET_RECORDS()[0],
         '<xml>blabla</xml>',
         false
       )
@@ -163,7 +163,7 @@ describe('EditPageComponent', () => {
       const router = TestBed.inject(Router)
       const navigateSpy = jest.spyOn(router, 'navigate')
       ;(facade.record$ as any).next({
-        ...DATASET_RECORDS[0],
+        ...DATASET_RECORDS()[0],
         uniqueIdentifier: 'new-uuid',
       })
       expect(navigateSpy).toHaveBeenCalledWith(['edit', 'new-uuid'])

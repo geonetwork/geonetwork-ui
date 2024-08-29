@@ -811,7 +811,7 @@ describe('MapViewComponent', () => {
       const vectorLayer = new VectorLayer({
         source: new VectorSource({
           features: new GeoJSON().readFeatures(
-            FEATURE_COLLECTION_POINT_FIXTURE_4326,
+            FEATURE_COLLECTION_POINT_FIXTURE_4326(),
             {
               featureProjection: 'EPSG:3857',
               dataProjection: 'EPSG:4326',

@@ -52,8 +52,8 @@ class PaginationMockComponent {
 }
 
 class OrganisationsServiceMock {
-  organisations$ = of(ORGANISATIONS_FIXTURE)
-  organisationsCount$ = of(ORGANISATIONS_FIXTURE.length)
+  organisations$ = of(ORGANISATIONS_FIXTURE())
+  organisationsCount$ = of(ORGANISATIONS_FIXTURE().length)
 }
 
 const organisationMock = {
@@ -132,7 +132,7 @@ describe('OrganisationsComponent', () => {
       })
       it('should init ui pagination component with correct value for total nPages', () => {
         expect(paginationComponentDE.componentInstance.nPages).toEqual(
-          Math.ceil(ORGANISATIONS_FIXTURE.length / ITEMS_ON_PAGE)
+          Math.ceil(ORGANISATIONS_FIXTURE().length / ITEMS_ON_PAGE)
         )
       })
       describe('navigate to second page (and trigger newCurrentPageEvent output)', () => {
@@ -192,16 +192,16 @@ describe('OrganisationsComponent', () => {
       })
       it('should have organisation with max recordCount at first position in observable', async () => {
         const organisations = await firstValueFrom(component.organisations$)
-        expect(organisations[0]).toEqual(ORGANISATIONS_FIXTURE[5])
+        expect(organisations[0]).toEqual(ORGANISATIONS_FIXTURE()[5])
       })
       it('should pass organisation with max recordCount to first preview component', () => {
         expect(orgPreviewComponents[0].organization).toEqual(
-          ORGANISATIONS_FIXTURE[5]
+          ORGANISATIONS_FIXTURE()[5]
         )
       })
       it('should pass organisation with 6th highest recordCount to 6th preview component', () => {
         expect(orgPreviewComponents[5].organization).toEqual(
-          ORGANISATIONS_FIXTURE[3]
+          ORGANISATIONS_FIXTURE()[3]
         )
       })
     })
@@ -213,10 +213,14 @@ describe('OrganisationsComponent', () => {
           ).componentInstance
         })
         it('should display number of organisations found to equal all', () => {
-          expect(orgResultComponent.hits).toEqual(ORGANISATIONS_FIXTURE.length)
+          expect(orgResultComponent.hits).toEqual(
+            ORGANISATIONS_FIXTURE().length
+          )
         })
         it('should display number of all organisations', () => {
-          expect(orgResultComponent.total).toEqual(ORGANISATIONS_FIXTURE.length)
+          expect(orgResultComponent.total).toEqual(
+            ORGANISATIONS_FIXTURE().length
+          )
         })
       })
       describe('entering search terms', () => {

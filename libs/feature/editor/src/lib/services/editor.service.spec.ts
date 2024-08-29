@@ -10,7 +10,7 @@ import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { firstValueFrom, of } from 'rxjs'
 
-const SAMPLE_RECORD: CatalogRecord = DATASET_RECORDS[0]
+const SAMPLE_RECORD: CatalogRecord = DATASET_RECORDS()[0]
 
 class RecordsRepositoryMock {
   openRecordForEdition = jest.fn(() =>

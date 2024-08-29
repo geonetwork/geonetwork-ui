@@ -1,6 +1,4 @@
-import { deepFreeze } from '../utils/freeze'
-
-export const ES_FIXTURE_REQUEST_WITH_AGGS = deepFreeze({
+export const ES_FIXTURE_REQUEST_WITH_AGGS = () => ({
   from: 0,
   size: 30,
   sort: ['_score'],

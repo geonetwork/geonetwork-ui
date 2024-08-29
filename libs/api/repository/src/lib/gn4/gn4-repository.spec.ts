@@ -50,7 +50,7 @@ class SearchApiServiceMock {
     const count = body.size || 1234
     const result: EsSearchResponse = {
       hits: {
-        hits: DATASET_RECORDS,
+        hits: DATASET_RECORDS(),
         total: { value: count },
       },
     }
@@ -155,7 +155,7 @@ describe('Gn4Repository', () => {
     })
     it('returns the given results as records', () => {
       expect(results.count).toBe(12)
-      expect(results.records).toStrictEqual(DATASET_RECORDS)
+      expect(results.records).toStrictEqual(DATASET_RECORDS())
     })
   })
   describe('getMatchesCount', () => {
@@ -193,7 +193,7 @@ describe('Gn4Repository', () => {
       expect(gn4Helper.getMetadataByIdPayload).toHaveBeenCalledWith('1234-5678')
     })
     it('returns the given result as record', () => {
-      expect(record).toStrictEqual(DATASET_RECORDS[0])
+      expect(record).toStrictEqual(DATASET_RECORDS()[0])
     })
     describe('if record is not found', () => {
       beforeEach(async () => {
@@ -214,7 +214,7 @@ describe('Gn4Repository', () => {
     let results: CatalogRecord[]
     beforeEach(async () => {
       results = await lastValueFrom(
-        repository.getSimilarRecords(DATASET_RECORDS[0])
+        repository.getSimilarRecords(DATASET_RECORDS()[0])
       )
     })
     it('uses a related record ES payload', () => {
@@ -225,7 +225,7 @@ describe('Gn4Repository', () => {
       )
     })
     it('returns the given results as records', () => {
-      expect(results).toStrictEqual(DATASET_RECORDS)
+      expect(results).toStrictEqual(DATASET_RECORDS())
     })
   })
   describe('aggregate', () => {
@@ -263,7 +263,7 @@ describe('Gn4Repository', () => {
     })
     it('returns the given results as records', () => {
       expect(results.count).toBe(1234)
-      expect(results.records).toStrictEqual(DATASET_RECORDS)
+      expect(results.records).toStrictEqual(DATASET_RECORDS())
     })
   })
   describe('openRecordForEdition', () => {
@@ -418,7 +418,7 @@ describe('Gn4Repository', () => {
     })
     describe('without reference', () => {
       beforeEach(async () => {
-        await lastValueFrom(repository.saveRecord(DATASET_RECORDS[0]))
+        await lastValueFrom(repository.saveRecord(DATASET_RECORDS()[0]))
       })
       it('uses the ISO19139 converter by default', () => {
         const recordXml = (gn4RecordsApi.insert as jest.Mock).mock.calls[0][14]

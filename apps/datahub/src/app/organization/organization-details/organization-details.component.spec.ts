@@ -48,13 +48,13 @@ class OrganisationsServiceMock {
       orgs: orgs.reduce((prev, curr) => ({ ...prev, [curr.name]: true }), {}),
     })
   )
-  organisations$ = of(ORGANISATIONS_FIXTURE)
+  organisations$ = of(ORGANISATIONS_FIXTURE())
 }
 
-const anOrganizationWithManyDatasets: Organization = ORGANISATIONS_FIXTURE[0]
+const anOrganizationWithManyDatasets: Organization = ORGANISATIONS_FIXTURE()[0]
 
-const oneDataset = [DATASET_RECORDS[0]]
-const manyDatasets = DATASET_RECORDS.concat(DATASET_RECORDS[0])
+const oneDataset = [DATASET_RECORDS()[0]]
+const manyDatasets = DATASET_RECORDS().concat(DATASET_RECORDS()[0])
 
 const organizationIsLoading = new BehaviorSubject(false)
 const totalPages = new BehaviorSubject(10)

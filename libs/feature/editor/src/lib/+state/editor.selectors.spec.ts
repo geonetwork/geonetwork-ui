@@ -7,6 +7,7 @@ import * as EditorSelectors from './editor.selectors'
 import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
 import { DEFAULT_CONFIGURATION } from '../fields.config'
 import { EditorSectionWithValues } from './editor.models'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 describe('Editor Selectors', () => {
   let state: EditorPartialState
@@ -15,7 +16,7 @@ describe('Editor Selectors', () => {
     state = {
       editor: {
         ...initialEditorState,
-        record: DATASET_RECORDS[0],
+        record: DATASET_RECORDS()[0] as CatalogRecord,
         recordSource: '<xml>blabla</xml>',
         saveError: 'something went wrong',
         saving: false,
@@ -27,7 +28,7 @@ describe('Editor Selectors', () => {
   describe('Editor Selectors', () => {
     it('selectRecord() should return the current loaded record', () => {
       const result = EditorSelectors.selectRecord(state)
-      expect(result).toBe(DATASET_RECORDS[0])
+      expect(result).toEqual(DATASET_RECORDS()[0])
     })
 
     it('selectRecordSource() should return the source of the current record', () => {
@@ -94,7 +95,7 @@ describe('Editor Selectors', () => {
           editor: {
             ...state.editor,
             record: {
-              ...DATASET_RECORDS[0],
+              ...DATASET_RECORDS()[0],
               abstract: '',
               title: '',
             },

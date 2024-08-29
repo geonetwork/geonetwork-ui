@@ -1,4 +1,4 @@
-import { TestBed, fakeAsync, tick } from '@angular/core/testing'
+import { fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { MockStore, provideMockStore } from '@ngrx/store/testing'
 import {
   initialMetadataViewState,
@@ -72,7 +72,7 @@ describe('MdViewFacade', () => {
       store.setState({
         [METADATA_VIEW_FEATURE_STATE_KEY]: {
           ...initialMetadataViewState,
-          metadata: DATASET_RECORDS[0],
+          metadata: DATASET_RECORDS()[0],
         },
       })
       const expected = hot('a', { a: true })
@@ -90,10 +90,10 @@ describe('MdViewFacade', () => {
       store.setState({
         [METADATA_VIEW_FEATURE_STATE_KEY]: {
           ...initialMetadataViewState,
-          metadata: DATASET_RECORDS[0],
+          metadata: DATASET_RECORDS()[0],
         },
       })
-      const expected = hot('a', { a: DATASET_RECORDS[0] })
+      const expected = hot('a', { a: DATASET_RECORDS()[0] })
       expect(facade.metadata$).toBeObservable(expected)
     })
   })
@@ -108,10 +108,10 @@ describe('MdViewFacade', () => {
       store.setState({
         [METADATA_VIEW_FEATURE_STATE_KEY]: {
           ...initialMetadataViewState,
-          metadata: DATASET_RECORDS[0],
+          metadata: DATASET_RECORDS()[0],
         },
       })
-      const expected = hot('a', { a: DATASET_RECORDS[0].distributions })
+      const expected = hot('a', { a: DATASET_RECORDS()[0].distributions })
       expect(facade.allLinks$).toBeObservable(expected)
     })
   })
@@ -121,7 +121,7 @@ describe('MdViewFacade', () => {
       store.setState({
         [METADATA_VIEW_FEATURE_STATE_KEY]: {
           ...initialMetadataViewState,
-          metadata: DATASET_RECORDS[0],
+          metadata: DATASET_RECORDS()[0],
           loadingFull: true,
         },
       })
@@ -133,7 +133,7 @@ describe('MdViewFacade', () => {
       store.setState({
         [METADATA_VIEW_FEATURE_STATE_KEY]: {
           ...initialMetadataViewState,
-          metadata: DATASET_RECORDS[0],
+          metadata: DATASET_RECORDS()[0],
           loadingFull: false,
         },
       })
@@ -188,10 +188,10 @@ describe('MdViewFacade', () => {
 
   describe('setIncompleteMetadata', () => {
     it('dispatches a setIncompleteMetadata action', () => {
-      facade.setIncompleteMetadata(DATASET_RECORDS[0])
+      facade.setIncompleteMetadata(DATASET_RECORDS()[0])
       const expected = hot('a', {
         a: MdViewActions.setIncompleteMetadata({
-          incomplete: DATASET_RECORDS[0],
+          incomplete: DATASET_RECORDS()[0],
         }),
       })
       expect(store.scannedActions$).toBeObservable(expected)
@@ -220,9 +220,9 @@ describe('MdViewFacade', () => {
 
   describe('addUserFeedback', () => {
     it('dispatches a addUserFeedback action', () => {
-      facade.addUserFeedback(A_USER_FEEDBACK)
+      facade.addUserFeedback(A_USER_FEEDBACK())
       const expected = hot('a', {
-        a: MdViewActions.addUserFeedback({ userFeedback: A_USER_FEEDBACK }),
+        a: MdViewActions.addUserFeedback({ userFeedback: A_USER_FEEDBACK() }),
       })
       expect(store.scannedActions$).toBeObservable(expected)
     })
@@ -270,7 +270,7 @@ describe('MdViewFacade', () => {
       store.setState({
         [METADATA_VIEW_FEATURE_STATE_KEY]: {
           ...initialMetadataViewState,
-          metadata: DATASET_RECORDS[0],
+          metadata: DATASET_RECORDS()[0],
         },
       })
     })
@@ -341,7 +341,7 @@ describe('MdViewFacade', () => {
         store.setState({
           [METADATA_VIEW_FEATURE_STATE_KEY]: {
             ...initialMetadataViewState,
-            metadata: DATASET_RECORDS[1],
+            metadata: DATASET_RECORDS()[1],
           },
         })
       })

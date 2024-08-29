@@ -52,7 +52,7 @@ describe('HeaderRecordComponent', () => {
     fixture = TestBed.createComponent(HeaderRecordComponent)
     component = fixture.componentInstance
     component.metadata = {
-      ...DATASET_RECORDS[0],
+      ...DATASET_RECORDS()[0],
     }
     fixture.detectChanges()
   })

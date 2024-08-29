@@ -53,7 +53,7 @@ describe('OrganizationHeaderComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OrganizationHeaderComponent)
     component = fixture.componentInstance
-    component.organization = ORGANISATIONS_FIXTURE[0]
+    component.organization = ORGANISATIONS_FIXTURE()[0]
     fixture.detectChanges()
   })
 

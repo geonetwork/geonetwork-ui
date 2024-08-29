@@ -40,8 +40,8 @@ describe('Gn4FieldMapper', () => {
     })
     describe('#getLinkType', () => {
       it('correctly detects the fixtures types', () => {
-        const allLinks = Object.keys(ES_LINK_FIXTURES).map(
-          (key) => ES_LINK_FIXTURES[key]
+        const allLinks = Object.keys(ES_LINK_FIXTURES()).map(
+          (key) => ES_LINK_FIXTURES()[key]
         )
         const linkTypes = allLinks.map((fixture) =>
           service.getLinkType(fixture.url, fixture.protocol)
