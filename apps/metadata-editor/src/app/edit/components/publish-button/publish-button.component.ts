@@ -8,10 +8,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { MatIconModule } from '@angular/material/icon'
 import { combineLatest, Observable } from 'rxjs'
 import { map, switchMap, take } from 'rxjs/operators'
-import {
-  GroupsApiService,
-  RecordsApiService,
-} from '@geonetwork-ui/data-access/gn4'
+import { RecordsApiService } from '@geonetwork-ui/data-access/gn4'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 
@@ -54,8 +51,7 @@ export class PublishButtonComponent {
   constructor(
     private facade: EditorFacade,
     private recordsApiService: RecordsApiService,
-    private platformService: PlatformServiceInterface,
-    private groupApiService: GroupsApiService
+    private platformService: PlatformServiceInterface
   ) {
     this.activeUser$ = this.platformService.getMe()
   }
@@ -70,26 +66,16 @@ export class PublishButtonComponent {
         )
       )
       .subscribe(([userId, record]) => {
-        this.groupApiService.getGroups().subscribe((groups) => {
-          const groupId = groups.find(
-            (grp) => grp.name === record.ownerOrganization.name
+        this.recordsApiService
+          .setRecordOwnership(record.uniqueIdentifier, 0, Number(userId.id))
+          .subscribe(
+            () => {
+              console.log('Ownership set successfully')
+            },
+            (error) => {
+              console.log('Error setting ownership :', error)
+            }
           )
-          // setting to 0 by default because the API expects a number and not null & most records don't have a group
-          this.recordsApiService
-            .setRecordOwnership(
-              record.uniqueIdentifier,
-              groupId ? groupId.id : 0,
-              Number(userId.id)
-            )
-            .subscribe(
-              () => {
-                console.log('Ownership set successfully')
-              },
-              (error) => {
-                console.log('Error setting ownership :', error)
-              }
-            )
-        })
       })
   }
 }
