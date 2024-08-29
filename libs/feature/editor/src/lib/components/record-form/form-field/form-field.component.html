@@ -122,10 +122,11 @@
         (valueChange)="valueChange.emit($event)"
       ></gn-ui-form-field-online-link-resources>
     </ng-container>
-  </ng-container>
-  <ng-container *ngIf="isContacts">
-    <gn-ui-form-field-contacts
-      [control]="formControl"
-    ></gn-ui-form-field-contacts>
+    <ng-container *ngSwitchCase="'contacts'">
+      <gn-ui-form-field-contacts
+        [value]="valueAsIndividuals"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-contacts>
+    </ng-container>
   </ng-container>
 </ng-template>

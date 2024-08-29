@@ -3,13 +3,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
-  OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core'
-import { FormControl } from '@angular/forms'
 import {
   AutocompleteComponent,
   DropdownSelectorComponent,
@@ -58,10 +58,9 @@ import { map } from 'rxjs/operators'
     SortableListComponent,
   ],
 })
-export class FormFieldContactsComponent
-  implements OnInit, OnDestroy, OnChanges
-{
-  @Input() control: FormControl<Individual[]>
+export class FormFieldContactsComponent implements OnDestroy, OnChanges {
+  @Input() value: Individual[]
+  @Output() valueChange: EventEmitter<Individual[]> = new EventEmitter()
 
   contacts: Individual[] = []
   contactsAsDynElem: DynamicElement[] = []
@@ -82,32 +81,31 @@ export class FormFieldContactsComponent
     this.allUsers$ = this.platformServiceInterface.getUsers()
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes['control'])
-  }
+  async ngOnChanges(changes: SimpleChanges): Promise<void> {
+    const contactsChanges = changes['value']
 
-  async ngOnInit(): Promise<void> {
-    this.allOrganizations = new Map<string, Organization>(
-      (
-        await firstValueFrom(this.organizationsServiceInterface.organisations$)
-      ).map((organization) => [organization.name, organization])
-    )
+    if (contactsChanges.firstChange) {
+      this.allOrganizations = new Map<string, Organization>(
+        (
+          await firstValueFrom(
+            this.organizationsServiceInterface.organisations$
+          )
+        ).map((organization) => [organization.name, organization])
+      )
+    }
 
-    this.updateContacts()
+    if (contactsChanges.currentValue !== contactsChanges.previousValue) {
+      const contacts = contactsChanges.currentValue
+      console.log(contacts)
 
-    this.changeDetectorRef.markForCheck()
+      this.updateContacts()
 
-    this.subscription.add(
-      this.control.valueChanges.subscribe((contacts) => {
-        console.log('new contacts (valueChange): ', contacts)
-        this.updateContacts()
-        this.changeDetectorRef.markForCheck()
-      })
-    )
+      this.changeDetectorRef.markForCheck()
+    }
   }
 
   updateContacts() {
-    this.contacts = this.control.value.reduce((acc, contact) => {
+    this.contacts = this.value.reduce((acc, contact) => {
       const completeOrganization = this.allOrganizations.get(
         contact.organization.name
       )
@@ -124,7 +122,7 @@ export class FormFieldContactsComponent
       return acc
     }, [] as Individual[])
 
-    this.contactsAsDynElem = this.control.value.reduce((acc, contact) => {
+    this.contactsAsDynElem = this.value.reduce((acc, contact) => {
       const completeOrganization = this.allOrganizations.get(
         contact.organization.name
       )
@@ -152,18 +150,12 @@ export class FormFieldContactsComponent
     this.changeDetectorRef.markForCheck()
   }
 
-  removeContact() {
-    this.control.setValue([])
-  }
-
   handleContactsChanged(event: DynamicElement[]) {
     const newContactsOrdered = event.map(
       (contactAsDynElem) => contactAsDynElem.inputs['contact']
     ) as Individual[]
 
-    console.log('newContactsOrdered :', newContactsOrdered)
-
-    this.control.setValue(newContactsOrdered)
+    this.valueChange.emit(newContactsOrdered)
   }
 
   /**
@@ -193,7 +185,7 @@ export class FormFieldContactsComponent
    * gn-ui-autocomplete
    */
   addContact(contact: UserModel) {
-    const newContacts = {
+    const newContact = {
       firstName: contact.name ?? '',
       lastName: contact.surname ?? '',
       organization:
@@ -206,9 +198,7 @@ export class FormFieldContactsComponent
       position: '',
     } as Individual
 
-    const newControlValue = [...this.control.value, newContacts]
-
-    this.control.setValue(newControlValue)
+    this.valueChange.emit([...this.value, newContact])
   }
 
   ngOnDestroy(): void {

@@ -206,6 +206,7 @@
   "editor.record.form.bottomButtons.previous": "",
   "editor.record.form.classification.opendata": "",
   "editor.record.form.field.abstract": "",
+  "editor.record.form.field.contacts.noContact": "",
   "editor.record.form.field.contactsForResource.noContact": "",
   "editor.record.form.field.keywords": "",
   "editor.record.form.field.license": "Licencia",

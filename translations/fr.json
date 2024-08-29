@@ -206,6 +206,7 @@
   "editor.record.form.bottomButtons.previous": "Précédent",
   "editor.record.form.classification.opendata": "Données ouvertes",
   "editor.record.form.field.abstract": "Résumé",
+  "editor.record.form.field.contacts.noContact": "Veuillez renseigner au moins un point de contact.",
   "editor.record.form.field.contactsForResource.noContact": "Veuillez renseigner au moins un point de contact responsable de la donnée.",
   "editor.record.form.field.keywords": "Mots-clés",
   "editor.record.form.field.license": "Licence",
