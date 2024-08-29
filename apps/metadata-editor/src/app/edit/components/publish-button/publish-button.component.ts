@@ -46,15 +46,12 @@ export class PublishButtonComponent {
   )
 
   record$ = this.facade.record$
-  activeUser$: Observable<UserModel>
 
   constructor(
     private facade: EditorFacade,
     private recordsApiService: RecordsApiService,
     private platformService: PlatformServiceInterface
-  ) {
-    this.activeUser$ = this.platformService.getMe()
-  }
+  ) {}
 
   saveRecord() {
     this.facade.saveRecord()
@@ -62,20 +59,21 @@ export class PublishButtonComponent {
       .pipe(
         take(1),
         switchMap(() =>
-          combineLatest([this.activeUser$, this.record$]).pipe(take(1))
+          combineLatest([this.platformService.getMe(), this.record$]).pipe(
+            take(1)
+          )
+        ),
+        switchMap(([userId, record]) =>
+          this.recordsApiService.setRecordOwnership(
+            record.uniqueIdentifier,
+            0,
+            Number(userId.id)
+          )
         )
       )
-      .subscribe(([userId, record]) => {
-        this.recordsApiService
-          .setRecordOwnership(record.uniqueIdentifier, 0, Number(userId.id))
-          .subscribe(
-            () => {
-              console.log('Ownership set successfully')
-            },
-            (error) => {
-              console.log('Error setting ownership :', error)
-            }
-          )
-      })
+      .subscribe(
+        () => {},
+        (error) => {}
+      )
   }
 }
