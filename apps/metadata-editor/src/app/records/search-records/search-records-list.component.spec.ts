@@ -64,6 +64,7 @@ class SearchFacadeMock {
   setConfigRequestFields = jest.fn(() => this)
   setPageSize = jest.fn(() => this)
   setSortBy = jest.fn(() => this)
+  resetSearch = jest.fn()
 }
 
 class SearchServiceMock {

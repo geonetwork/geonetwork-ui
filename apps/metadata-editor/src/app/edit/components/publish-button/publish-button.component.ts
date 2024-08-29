@@ -7,7 +7,10 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatIconModule } from '@angular/material/icon'
 import { combineLatest, Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, switchMap, take } from 'rxjs/operators'
+import { RecordsApiService } from '@geonetwork-ui/data-access/gn4'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 
 export type RecordSaveStatus = 'saving' | 'upToDate' | 'hasChanges'
 
@@ -42,9 +45,32 @@ export class PublishButtonComponent {
     })
   )
 
-  constructor(private facade: EditorFacade) {}
+  record$ = this.facade.record$
+
+  constructor(
+    private facade: EditorFacade,
+    private recordsApiService: RecordsApiService,
+    private platformService: PlatformServiceInterface
+  ) {}
 
   saveRecord() {
     this.facade.saveRecord()
+    this.facade.saveSuccess$
+      .pipe(
+        take(1),
+        switchMap(() =>
+          combineLatest([this.platformService.getMe(), this.record$]).pipe(
+            take(1)
+          )
+        ),
+        switchMap(([userId, record]) =>
+          this.recordsApiService.setRecordOwnership(
+            record.uniqueIdentifier,
+            0,
+            Number(userId.id)
+          )
+        )
+      )
+      .subscribe()
   }
 }

@@ -11,7 +11,8 @@
     <gn-ui-results-table
       [records]="records$ | async"
       [canDuplicate]="canDuplicate"
-      [canDelete]="canDelete"
+      [isUnsavedDraft]="isUnsavedDraft"
+      [canDelete]="isUnsavedDraft"
       (recordClick)="editRecord($event)"
       (deleteRecord)="deleteDraft($event)"
     ></gn-ui-results-table>

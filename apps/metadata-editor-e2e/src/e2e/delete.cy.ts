@@ -22,13 +22,13 @@ describe('delete', () => {
       )
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(1000) // waiting for draft saving to kick in
-      cy.visit('/catalog/search?_sort=-changeDate')
+      cy.visit('/my-space/my-records')
       cy.get('[data-cy="table-row"]')
         .contains('My new record')
         .should('have.length', 1)
       cy.get('[data-cy="dashboard-drafts-count"]').should('contain', '1')
       // Delete the record
-      cy.get('[data-test="record-menu-button"]').first().click()
+      cy.get('[data-test="record-menu-button"]').last().click()
       cy.get('[data-test="record-menu-delete-button"]').click()
       cy.get('[data-cy="confirm-button"]').click()
       cy.get('[data-cy="table-row"]')

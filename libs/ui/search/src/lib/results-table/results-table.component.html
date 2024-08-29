@@ -103,7 +103,12 @@
       <span translate>record.metadata.status</span>
     </ng-template>
     <ng-template #cell let-item>
-      {{ item.status }}
+      {{
+        (isUnsavedDraft(item)
+          ? 'record.metadata.status.notPublished'
+          : 'record.metadata.status.published'
+        ) | translate
+      }}
     </ng-template>
   </gn-ui-interactive-table-column>
 
@@ -117,7 +122,9 @@
       <span translate>record.metadata.updatedOn</span>
     </ng-template>
     <ng-template #cell let-item>
-      {{ dateToString(item.recordUpdated) }}
+      <div class="flex justify-center w-full">
+        {{ isUnsavedDraft(item) ? '-' : dateToString(item.recordUpdated) }}
+      </div>
     </ng-template>
   </gn-ui-interactive-table-column>
 

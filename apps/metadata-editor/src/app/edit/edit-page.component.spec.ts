@@ -7,6 +7,9 @@ import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { MockBuilder } from 'ng-mocks'
 import { TranslateModule } from '@ngx-translate/core'
+import { HttpClientModule } from '@angular/common/http'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { PageSelectorComponent } from './components/page-selector/page-selector.component'
 
 const getRoute = () => ({
   snapshot: {
@@ -35,6 +38,10 @@ class NotificationsServiceMock {
   showNotification = jest.fn()
 }
 
+class PlatformServiceMock {
+  getMe = jest.fn()
+}
+
 describe('EditPageComponent', () => {
   let component: EditPageComponent
   let fixture: ComponentFixture<EditPageComponent>
@@ -47,7 +54,12 @@ describe('EditPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
+      imports: [
+        EditPageComponent,
+        TranslateModule.forRoot(),
+        PageSelectorComponent,
+        HttpClientModule,
+      ],
       providers: [
         {
           provide: ActivatedRoute,
@@ -64,6 +76,10 @@ describe('EditPageComponent', () => {
         {
           provide: Router,
           useClass: RouterMock,
+        },
+        {
+          provide: PlatformServiceInterface,
+          useClass: PlatformServiceMock,
         },
       ],
     }).compileComponents()

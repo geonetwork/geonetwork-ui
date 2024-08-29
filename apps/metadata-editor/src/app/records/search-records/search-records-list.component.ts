@@ -42,6 +42,7 @@ export class SearchRecordsComponent {
     public searchService: SearchService
   ) {
     this.searchFacade.setPageSize(15)
+    this.searchFacade.resetSearch()
   }
 
   editRecord(record: CatalogRecord) {

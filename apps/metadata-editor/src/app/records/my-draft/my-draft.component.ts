@@ -12,7 +12,6 @@ import { TranslateModule } from '@ngx-translate/core'
 import { startWith, switchMap } from 'rxjs'
 import { RecordsCountComponent } from '../records-count/records-count.component'
 import { RecordsListComponent } from '../records-list.component'
-
 @Component({
   selector: 'md-editor-my-my-draft',
   templateUrl: './my-draft.component.html',
@@ -38,7 +37,7 @@ export class MyDraftComponent {
   )
   hasDraft = () => true
   canDuplicate = (): boolean => false
-  canDelete = (record: CatalogRecord): boolean =>
+  isUnsavedDraft = (record: CatalogRecord): boolean =>
     this.recordsRepository.isRecordNotYetSaved(record.uniqueIdentifier)
 
   constructor(
