@@ -75,7 +75,6 @@ describe('editor form', () => {
       beforeEach(() => {
         cy.login('admin', 'admin', false)
 
-        // Alpine convention record
         cy.visit('/edit/accroche_velos')
 
         cy.get('@accessAndContactPageSelectorButton').click()
