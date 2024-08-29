@@ -3,9 +3,7 @@
   class="sortable-list flex flex-col gap-3 p-2"
   (cdkDropListDropped)="drop($event)"
 >
-  <ng-container
-    *ngFor="let element of elements; index as index; trackBy: trackByFn"
-  >
+  <ng-container *ngFor="let item of items; index as index; trackBy: trackByFn">
     <div class="sortable-box bg-white flex items-center" cdkDrag>
       <span
         cdkDragHandle
@@ -15,7 +13,10 @@
       </span>
       <div class="flex-1">
         <ng-container
-          *ngComponentOutlet="element.component; inputs: element.inputs"
+          *ngTemplateOutlet="
+            elementTemplate;
+            context: { $implicit: item, index }
+          "
         ></ng-container>
       </div>
 
@@ -27,7 +28,7 @@
           --gn-ui-button-height: 24px;
         "
         class="ml-[8px] mr-[10px]"
-        (buttonClick)="removeElement(index)"
+        (buttonClick)="removeItem(index)"
         ><span class="material-symbols-outlined gn-ui-icon-medium">close</span>
       </gn-ui-button>
     </div>

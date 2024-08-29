@@ -12,15 +12,10 @@ import {
   EventEmitter,
   Input,
   Output,
-  Type,
+  TemplateRef,
 } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-
-export type DynamicElement = {
-  component: Type<unknown>
-  inputs: Record<string, unknown>
-}
 
 @Component({
   selector: 'gn-ui-sortable-list',
@@ -38,17 +33,18 @@ export type DynamicElement = {
   ],
 })
 export class SortableListComponent {
-  @Input() elements: Array<DynamicElement>
-  @Output() elementsChange = new EventEmitter<Array<DynamicElement>>()
+  @Input() elementTemplate: TemplateRef<unknown>
+  @Input() items: unknown[]
+  @Output() itemsOrderChange = new EventEmitter<unknown[]>()
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.elements, event.previousIndex, event.currentIndex)
-    this.elementsChange.emit(this.elements)
+    moveItemInArray(this.items, event.previousIndex, event.currentIndex)
+    this.itemsOrderChange.emit([...this.items])
   }
 
-  removeElement(index: number) {
-    this.elements = this.elements.filter((_, i) => i !== index)
-    this.elementsChange.emit(this.elements)
+  removeItem(index: number) {
+    this.items = this.items.filter((_, i) => i !== index)
+    this.itemsOrderChange.emit(this.items)
   }
 
   trackByFn(index: number) {
