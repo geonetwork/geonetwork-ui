@@ -122,7 +122,7 @@ describe('PublishButtonComponent', () => {
       expect(facade.saveRecord).toHaveBeenCalled()
       expect(recordsApiService.setRecordOwnership).toHaveBeenCalledWith(
         304,
-        1,
+        0,
         46798
       )
     })

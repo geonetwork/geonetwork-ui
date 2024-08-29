@@ -71,9 +71,6 @@ export class PublishButtonComponent {
           )
         )
       )
-      .subscribe(
-        () => {},
-        (error) => {}
-      )
+      .subscribe()
   }
 }
