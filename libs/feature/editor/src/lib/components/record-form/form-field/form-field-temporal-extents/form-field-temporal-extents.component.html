@@ -8,6 +8,21 @@
   >
 </div>
 <gn-ui-sortable-list
-  [elements]="elements"
-  (elementsChange)="onElementsChange($event)"
+  [items]="extents"
+  (itemsOrderChange)="onItemsOrderChange($event)"
+  [elementTemplate]="template"
 ></gn-ui-sortable-list>
+<ng-template #template let-extent let-index="index">
+  <gn-ui-date-picker
+    *ngIf="extent.end === undefined"
+    [date]="extent.start"
+    (dateChange)="onExtentChange({ start: $event }, index)"
+  ></gn-ui-date-picker>
+  <gn-ui-date-range-picker
+    *ngIf="extent.end !== undefined"
+    [startDate]="extent.start"
+    [endDate]="extent.end"
+    (startDateChange)="onExtentChange({ start: $event }, index)"
+    (endDateChange)="onExtentChange({ end: $event }, index)"
+  ></gn-ui-date-range-picker>
+</ng-template>

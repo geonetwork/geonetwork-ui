@@ -6,7 +6,13 @@
   (urlChange)="handleUrlChange($event)"
 ></gn-ui-file-input>
 <gn-ui-sortable-list
-  [elements]="sortableElements"
-  (elementsChange)="handleResourcesChange($event)"
+  [items]="linkResources"
+  (itemsOrderChange)="handleResourcesChange($event)"
+  [elementTemplate]="template"
 >
 </gn-ui-sortable-list>
+<ng-template #template let-onlineResource>
+  <gn-ui-online-resource-card
+    [onlineResource]="onlineResource"
+  ></gn-ui-online-resource-card>
+</ng-template>

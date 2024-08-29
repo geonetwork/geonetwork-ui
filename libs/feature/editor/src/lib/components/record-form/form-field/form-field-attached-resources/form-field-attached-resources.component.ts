@@ -13,7 +13,7 @@ import {
 import { FileInputComponent } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
 import { OnlineResourceCardComponent } from '../../../online-resource-card/online-resource-card.component'
-import { DynamicElement, SortableListComponent } from '@geonetwork-ui/ui/layout'
+import { SortableListComponent } from '@geonetwork-ui/ui/layout'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateService } from '@ngx-translate/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
@@ -25,7 +25,12 @@ import { Subscription } from 'rxjs'
   styleUrls: ['./form-field-attached-resources.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FileInputComponent, CommonModule, SortableListComponent],
+  imports: [
+    FileInputComponent,
+    CommonModule,
+    SortableListComponent,
+    OnlineResourceCardComponent,
+  ],
 })
 export class FormFieldAttachedResourcesComponent {
   @Input() metadataUuid: string
@@ -34,17 +39,12 @@ export class FormFieldAttachedResourcesComponent {
     this.linkResources = onlineResources.filter(
       (res): res is OnlineLinkResource => res.type === 'link'
     )
-    this.sortableElements = this.linkResources.map((resource) => ({
-      component: OnlineResourceCardComponent,
-      inputs: { onlineResource: resource },
-    }))
   }
   @Output() valueChange: EventEmitter<Array<OnlineResource>> =
     new EventEmitter()
 
   private allResources: OnlineResource[] = []
-  private linkResources: OnlineLinkResource[] = []
-  sortableElements: DynamicElement[] = []
+  linkResources: OnlineLinkResource[] = []
   uploadProgress = undefined
   uploadSubscription: Subscription = null
 
@@ -100,10 +100,8 @@ export class FormFieldAttachedResourcesComponent {
     }
   }
 
-  handleResourcesChange(newList: DynamicElement[]) {
-    const links = newList.map(
-      (e) => e.inputs.onlineResource as OnlineLinkResource
-    )
+  handleResourcesChange(items: unknown[]) {
+    const links = items as OnlineResource[]
     const newResources = [
       ...this.allResources.filter((r) => r.type !== 'link'),
       ...links,

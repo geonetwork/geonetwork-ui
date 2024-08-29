@@ -5,7 +5,6 @@ import { MockBuilder, MockProvider } from 'ng-mocks'
 import { TranslateModule } from '@ngx-translate/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
-import { OnlineResourceCardComponent } from '../../../online-resource-card/online-resource-card.component'
 import { Subject } from 'rxjs'
 
 let uploadSubject: Subject<any>
@@ -57,21 +56,11 @@ describe('FormFieldAttachedResourcesComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('sortableElements', () => {
-    it('gives an array of DynamicElement objects, only for link resources', () => {
-      expect(component.sortableElements).toEqual([
-        {
-          component: OnlineResourceCardComponent,
-          inputs: {
-            onlineResource: LINK_FIXTURES.readmeLink,
-          },
-        },
-        {
-          component: OnlineResourceCardComponent,
-          inputs: {
-            onlineResource: LINK_FIXTURES.doiLink,
-          },
-        },
+  describe('linkResources', () => {
+    it('gives an array of link resources', () => {
+      expect(component.linkResources).toEqual([
+        LINK_FIXTURES.readmeLink,
+        LINK_FIXTURES.doiLink,
       ])
     })
   })
@@ -173,24 +162,9 @@ describe('FormFieldAttachedResourcesComponent', () => {
     })
     it('emits the new resources along with the other ones', () => {
       component.handleResourcesChange([
-        {
-          component: OnlineResourceCardComponent,
-          inputs: {
-            onlineResource: LINK_FIXTURES.landingPage,
-          },
-        },
-        {
-          component: OnlineResourceCardComponent,
-          inputs: {
-            onlineResource: LINK_FIXTURES.doiLink,
-          },
-        },
-        {
-          component: OnlineResourceCardComponent,
-          inputs: {
-            onlineResource: LINK_FIXTURES.readmeLink,
-          },
-        },
+        LINK_FIXTURES.landingPage,
+        LINK_FIXTURES.doiLink,
+        LINK_FIXTURES.readmeLink,
       ])
       expect(valueChange).toEqual([
         LINK_FIXTURES.dataCsv,

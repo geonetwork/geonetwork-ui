@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { FormFieldTemporalExtentsComponent } from './form-field-temporal-extents.component'
-import { FormControl } from '@angular/forms'
 
 describe('FormFieldTemporalExtentsComponent', () => {
   let component: FormFieldTemporalExtentsComponent
@@ -14,8 +13,7 @@ describe('FormFieldTemporalExtentsComponent', () => {
 
     fixture = TestBed.createComponent(FormFieldTemporalExtentsComponent)
     component = fixture.componentInstance
-    const control = new FormControl()
-    control.setValue([
+    component.extents = [
       {
         start: new Date('2024-05-24'),
         end: null,
@@ -23,8 +21,7 @@ describe('FormFieldTemporalExtentsComponent', () => {
       {
         start: new Date('2024-05-30'),
       },
-    ])
-    component.control = control
+    ]
     fixture.detectChanges()
   })
 

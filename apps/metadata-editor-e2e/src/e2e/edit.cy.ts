@@ -190,9 +190,7 @@ describe('editor form', () => {
       // add a date range
       cy.get('gn-ui-form-field-temporal-extents gn-ui-button').eq(1).click()
       // open the date picker
-      cy.get(
-        'gn-ui-form-field-temporal-extents-range mat-datepicker-toggle'
-      ).click()
+      cy.get('gn-ui-form-field-temporal-extents mat-datepicker-toggle').click()
       // select a date
       cy.get('mat-calendar').contains('1').click()
       // the date picker should still be open
