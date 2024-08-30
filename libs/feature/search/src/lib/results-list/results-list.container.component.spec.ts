@@ -9,7 +9,7 @@ import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { ResultsListContainerComponent } from './results-list.container.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
@@ -158,7 +158,7 @@ describe('ResultsListContainerComponent', () => {
   describe('record url', () => {
     describe('without templates', () => {
       it('returns null', () => {
-        expect(component.getRecordUrl(DATASET_RECORDS[0])).toBe(null)
+        expect(component.getRecordUrl(datasetRecordsFixture()[0])).toBe(null)
       })
     })
     describe('with templates', () => {
@@ -166,7 +166,7 @@ describe('ResultsListContainerComponent', () => {
         component['recordUrlTemplate'] = '/my/record/${uuid}/open'
       })
       it('returns actual urls', () => {
-        expect(component.getRecordUrl(DATASET_RECORDS[0])).toBe(
+        expect(component.getRecordUrl(datasetRecordsFixture()[0])).toBe(
           '/my/record/my-dataset-001/open'
         )
       })

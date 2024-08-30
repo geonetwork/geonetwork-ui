@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { TestBed } from '@angular/core/testing'
-import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from '@geonetwork-ui/common/fixtures'
+import { polygonFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 import Feature from 'ol/Feature'
 import { Polygon } from 'ol/geom'
 import ImageLayer from 'ol/layer/Image'
@@ -102,7 +102,7 @@ describe('MapUtilsService', () => {
   })
 
   describe('#readFeatureCollection', () => {
-    const collection = FEATURE_COLLECTION_POLYGON_FIXTURE_4326
+    const collection = polygonFeatureCollectionFixture()
     let olFeatures, featureSample: Feature<Polygon>
     describe('when no option', () => {
       beforeEach(() => {
@@ -204,7 +204,7 @@ describe('MapUtilsService', () => {
       beforeEach(() => {
         layer = {
           type: 'geojson',
-          data: FEATURE_COLLECTION_POLYGON_FIXTURE_4326,
+          data: polygonFeatureCollectionFixture(),
         }
       })
       it('returns an observable emitting the aggregated extent', async () => {

@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { UiCatalogModule } from '@geonetwork-ui/ui/catalog'
 import { AsyncPipe, Location, NgIf } from '@angular/common'
 import { MatIconModule } from '@angular/material/icon'
-import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/common/fixtures'
+import { someOrganizationsFixture } from '@geonetwork-ui/common/fixtures'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
@@ -53,7 +53,7 @@ describe('OrganizationHeaderComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OrganizationHeaderComponent)
     component = fixture.componentInstance
-    component.organization = ORGANISATIONS_FIXTURE[0]
+    component.organization = someOrganizationsFixture()[0]
     fixture.detectChanges()
   })
 

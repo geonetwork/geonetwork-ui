@@ -8,7 +8,7 @@ import XYZ from 'ol/source/XYZ'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import GeoJSON from 'ol/format/GeoJSON'
-import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/common/fixtures'
+import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 import Feature from 'ol/Feature'
 import { Geometry } from 'ol/geom'
 import { TranslateModule } from '@ngx-translate/core'
@@ -17,13 +17,10 @@ import { of } from 'rxjs'
 
 const vectorLayer = new VectorLayer({
   source: new VectorSource({
-    features: new GeoJSON().readFeatures(
-      FEATURE_COLLECTION_POINT_FIXTURE_4326,
-      {
-        featureProjection: 'EPSG:3857',
-        dataProjection: 'EPSG:4326',
-      }
-    ),
+    features: new GeoJSON().readFeatures(pointFeatureCollectionFixture(), {
+      featureProjection: 'EPSG:3857',
+      dataProjection: 'EPSG:4326',
+    }),
   }) as VectorSource<Feature<Geometry>>,
 })
 

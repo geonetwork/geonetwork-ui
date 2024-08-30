@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { OrganisationsPageComponent } from './organisations-page.component'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/common/fixtures'
+import { someOrganizationsFixture } from '@geonetwork-ui/common/fixtures'
 
 class RouterFacadeMock {
   goToOrganization = jest.fn()
@@ -14,7 +14,7 @@ describe('OrganisationsPageComponent', () => {
   let fixture: ComponentFixture<OrganisationsPageComponent>
   let routerFacade: RouterFacade
 
-  const selectedOrganization = ORGANISATIONS_FIXTURE[0]
+  const selectedOrganization = someOrganizationsFixture()[0]
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

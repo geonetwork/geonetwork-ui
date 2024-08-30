@@ -1,6 +1,6 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
 import { FacetListComponent } from './facet-list.component'
-import { BLOCK_MODEL_FIXTURE } from '../fixtures'
+import { blockModelFixture } from '../fixtures'
 import { FacetItemComponent } from '../facet-item/facet-item.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { FacetBlockComponent } from '../facet-block/facet-block.component'
@@ -28,7 +28,7 @@ export default {
 export const Primary: StoryObj<FacetListComponent> = {
   args: {
     models: [
-      BLOCK_MODEL_FIXTURE,
+      blockModelFixture(),
       {
         key: 'theme',
         items: [

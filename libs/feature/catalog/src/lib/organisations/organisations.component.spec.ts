@@ -12,7 +12,7 @@ import { By } from '@angular/platform-browser'
 import { ContentGhostComponent } from '@geonetwork-ui/ui/elements'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { firstValueFrom, of } from 'rxjs'
-import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/common/fixtures'
+import { someOrganizationsFixture } from '@geonetwork-ui/common/fixtures'
 import { OrganisationsComponent } from './organisations.component'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 
@@ -52,8 +52,8 @@ class PaginationMockComponent {
 }
 
 class OrganisationsServiceMock {
-  organisations$ = of(ORGANISATIONS_FIXTURE)
-  organisationsCount$ = of(ORGANISATIONS_FIXTURE.length)
+  organisations$ = of(someOrganizationsFixture())
+  organisationsCount$ = of(someOrganizationsFixture().length)
 }
 
 const organisationMock = {
@@ -123,7 +123,7 @@ describe('OrganisationsComponent', () => {
         expect(orgPreviewComponents[0].organization.name).toEqual('A Data Org')
       })
       it('should pass 6th organisation (sorted by name-asc) on page to 6th ui preview component', () => {
-        expect(orgPreviewComponents[5].organization.name).toEqual('E Data Org')
+        expect(orgPreviewComponents[5].organization.name).toEqual('D Data Org')
       })
     })
     describe('pass params to ui pagination component', () => {
@@ -132,7 +132,7 @@ describe('OrganisationsComponent', () => {
       })
       it('should init ui pagination component with correct value for total nPages', () => {
         expect(paginationComponentDE.componentInstance.nPages).toEqual(
-          Math.ceil(ORGANISATIONS_FIXTURE.length / ITEMS_ON_PAGE)
+          Math.ceil(someOrganizationsFixture().length / ITEMS_ON_PAGE)
         )
       })
       describe('navigate to second page (and trigger newCurrentPageEvent output)', () => {
@@ -155,14 +155,14 @@ describe('OrganisationsComponent', () => {
         })
         it('should pass first organisation of second page (sorted by name-asc) to first ui preview component', () => {
           expect(orgPreviewComponents[0].organization.name).toEqual(
-            'é Data Org'
+            'E Data Org'
           )
         })
         it('should pass last organisation of second page (sorted by name-asc) to last ui preview component', () => {
           expect(
             orgPreviewComponents[orgPreviewComponents.length - 1].organization
               .name
-          ).toEqual('J Data Org')
+          ).toEqual('I Data Org')
         })
         it('should not change currentPage when sorting results', () => {
           component['setSortBy'](['desc', 'recordCount'])
@@ -192,16 +192,16 @@ describe('OrganisationsComponent', () => {
       })
       it('should have organisation with max recordCount at first position in observable', async () => {
         const organisations = await firstValueFrom(component.organisations$)
-        expect(organisations[0]).toEqual(ORGANISATIONS_FIXTURE[5])
+        expect(organisations[0]).toEqual(someOrganizationsFixture()[5])
       })
       it('should pass organisation with max recordCount to first preview component', () => {
         expect(orgPreviewComponents[0].organization).toEqual(
-          ORGANISATIONS_FIXTURE[5]
+          someOrganizationsFixture()[5]
         )
       })
       it('should pass organisation with 6th highest recordCount to 6th preview component', () => {
         expect(orgPreviewComponents[5].organization).toEqual(
-          ORGANISATIONS_FIXTURE[3]
+          someOrganizationsFixture()[3]
         )
       })
     })
@@ -213,10 +213,14 @@ describe('OrganisationsComponent', () => {
           ).componentInstance
         })
         it('should display number of organisations found to equal all', () => {
-          expect(orgResultComponent.hits).toEqual(ORGANISATIONS_FIXTURE.length)
+          expect(orgResultComponent.hits).toEqual(
+            someOrganizationsFixture().length
+          )
         })
         it('should display number of all organisations', () => {
-          expect(orgResultComponent.total).toEqual(ORGANISATIONS_FIXTURE.length)
+          expect(orgResultComponent.total).toEqual(
+            someOrganizationsFixture().length
+          )
         })
       })
       describe('entering search terms', () => {

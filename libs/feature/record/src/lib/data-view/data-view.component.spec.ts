@@ -12,33 +12,10 @@ import { DataViewComponent } from './data-view.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
-import { LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
-
-const DATALINKS_FIXTURE: DatasetDistribution[] = [
-  LINK_FIXTURES.dataXls,
-  {
-    description: 'CSV file',
-    name: 'some_file_name.csv',
-    url: new URL('https://test.org/some_file_name.csv'),
-    type: 'download',
-  },
-]
-
-const GEODATALINKS_FIXTURE: DatasetDistribution[] = [
-  {
-    description: 'Geojson file',
-    name: 'some_file_name.geojson',
-    url: new URL('https://test.org/some_file_name.geojson'),
-    type: 'download',
-  },
-  {
-    description: 'Service WFS',
-    name: 'abc:featureType',
-    url: new URL('https://test.org/wfs'),
-    type: 'service',
-    accessServiceProtocol: 'wfs',
-  },
-]
+import {
+  someDataLinksFixture,
+  someGeoDatalinksFixture,
+} from '@geonetwork-ui/common/fixtures'
 
 class MdViewFacadeMock {
   dataLinks$ = new Subject()
@@ -120,8 +97,8 @@ describe('DataViewComponent', () => {
     beforeEach(fakeAsync(() => {
       component.mode = 'table'
       fixture.detectChanges()
-      facade.dataLinks$.next(DATALINKS_FIXTURE)
-      facade.geoDataLinks$.next(GEODATALINKS_FIXTURE)
+      facade.dataLinks$.next(someDataLinksFixture())
+      facade.geoDataLinks$.next(someGeoDatalinksFixture())
       flushMicrotasks()
       fixture.detectChanges()
 
@@ -137,38 +114,38 @@ describe('DataViewComponent', () => {
         expect(dropdownComponent.choices).toEqual([
           {
             label: 'CSV file (csv)',
-            value: JSON.stringify(DATALINKS_FIXTURE[1]),
+            value: JSON.stringify(someDataLinksFixture()[1]),
           },
           {
             label: 'Data in XLS format (excel)',
-            value: JSON.stringify(DATALINKS_FIXTURE[0]),
+            value: JSON.stringify(someDataLinksFixture()[0]),
           },
           {
             label: 'Geojson file (geojson)',
-            value: JSON.stringify(GEODATALINKS_FIXTURE[0]),
+            value: JSON.stringify(someGeoDatalinksFixture()[0]),
           },
           {
             label: 'Service WFS (WFS)',
-            value: JSON.stringify(GEODATALINKS_FIXTURE[1]),
+            value: JSON.stringify(someGeoDatalinksFixture()[1]),
           },
         ])
       })
       it('displays link in the table', () => {
-        expect(tableViewComponent.link).toEqual(DATALINKS_FIXTURE[1])
+        expect(tableViewComponent.link).toEqual(someDataLinksFixture()[1])
       })
     })
 
     describe('when switching data link', () => {
       beforeEach(fakeAsync(() => {
         dropdownComponent.selectValue.emit(
-          JSON.stringify(GEODATALINKS_FIXTURE[1])
+          JSON.stringify(someGeoDatalinksFixture()[1])
         )
         flushMicrotasks()
         fixture.detectChanges()
       }))
       it('displays link in the table', () => {
         expect(tableViewComponent.link.description).toEqual(
-          GEODATALINKS_FIXTURE[1].description
+          someGeoDatalinksFixture()[1].description
         )
       })
     })

@@ -1,4 +1,4 @@
-export const TABLE_ITEM_FIXTURE = [
+export const tableItemFixture = () => [
   {
     name: 'name 1',
     id: 'id 1',
@@ -16,7 +16,7 @@ export const TABLE_ITEM_FIXTURE = [
   },
 ]
 
-export const TABLE_ITEM_FIXTURE_HAB = [
+export const someHabTableItemFixture = () => [
   {
     name: 'France',
     id: '1',

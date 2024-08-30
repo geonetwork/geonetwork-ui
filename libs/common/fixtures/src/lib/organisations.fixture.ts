@@ -1,16 +1,39 @@
-import { deepFreeze } from './utils/freeze'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 
-export const REGION_HAUT_DE_FRANCE_ORG_FIXTURE = (): Organization => ({
-  name: 'Région Hauts-de-France',
-  description: 'A very sweet description about Région Hauts-de-France.',
-  email: 'contact@region-haut-de-france.com',
-  website: new URL('https://region-haut-de-france.com/'),
-  logoUrl: new URL('https://region-haut-de-france.com/logo.png'),
-  recordCount: 4,
+export const createOrganizationFixture = (
+  overrides: Partial<Organization> = {}
+): Organization => ({
+  name: 'anOrganizationName',
+  description: 'An organization description.',
+  email: 'contact@anOrganizationName.com',
+  website: new URL('https://www.anOrganizationName.com'),
+  logoUrl: new URL('https://www.anOrganizationName/logo.png'),
+  recordCount: 10,
+  ...overrides,
 })
 
-export const ORGANISATIONS_FIXTURE: Organization[] = deepFreeze([
+export const barbieIncOrganizationFixture = (): Organization =>
+  createOrganizationFixture({
+    name: 'Barbie Inc.',
+    description:
+      "Barbie Incorporation is an iconic company creating dolls that inspire young generations. Founded on innovation, it offers diverse products reflecting everyone's aspirations. Barbie is more than a doll; she's a symbol of empowerment and creativity.",
+    email: 'contact@barbie-inc.com',
+    website: new URL('https://www.barbie-inc.com'),
+    logoUrl: new URL('https://www.barbie-inc.com/logo.png'),
+    recordCount: 4,
+  })
+
+export const regionHautDeFranceOrganizationFixture = (): Organization =>
+  createOrganizationFixture({
+    name: 'Région Hauts-de-France',
+    description: 'A very sweet description about Région Hauts-de-France.',
+    email: 'contact@region-haut-de-france.com',
+    website: new URL('https://region-haut-de-france.com/'),
+    logoUrl: new URL('https://region-haut-de-france.com/logo.png'),
+    recordCount: 4,
+  })
+
+export const someOrganizationsFixture = (): Organization[] => [
   {
     name: 'I Data Org',
     description: 'one org for testing',
@@ -123,5 +146,6 @@ export const ORGANISATIONS_FIXTURE: Organization[] = deepFreeze([
     logoUrl: new URL('https://my-geonetwork.org/logo12.png'),
     recordCount: 2,
   },
-  REGION_HAUT_DE_FRANCE_ORG_FIXTURE(),
-])
+  regionHautDeFranceOrganizationFixture(),
+  barbieIncOrganizationFixture(),
+]

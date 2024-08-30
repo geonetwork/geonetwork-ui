@@ -14,7 +14,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { HttpClientModule } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 
 export default {
   title: 'Search/RecordPreviewTextComponent',
@@ -38,7 +38,7 @@ export default {
 
 export const Primary: StoryObj<RecordPreviewTitleComponent> = {
   args: {
-    record: DATASET_RECORDS[0],
+    record: datasetRecordsFixture()[0],
     linkTarget: '_blank',
   },
 }

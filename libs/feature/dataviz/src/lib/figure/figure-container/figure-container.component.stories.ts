@@ -8,8 +8,8 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FigureContainerComponent } from './figure-container.component'
 import {
-  TABLE_ITEM_FIXTURE,
-  TABLE_ITEM_FIXTURE_HAB,
+  someHabTableItemFixture,
+  tableItemFixture,
   UiDatavizModule,
 } from '@geonetwork-ui/ui/dataviz'
 import { importProvidersFrom } from '@angular/core'
@@ -41,7 +41,7 @@ export const Sum: Story = {
     icon: 'maps_home_work',
     unit: 'hab.',
     expression: 'sum|pop',
-    dataset: TABLE_ITEM_FIXTURE_HAB,
+    dataset: someHabTableItemFixture(),
   },
 }
 
@@ -52,6 +52,6 @@ export const Average: Story = {
     unit: 'years old',
     expression: 'average|age',
     digits: 3,
-    dataset: TABLE_ITEM_FIXTURE,
+    dataset: tableItemFixture(),
   },
 }

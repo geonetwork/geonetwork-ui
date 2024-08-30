@@ -1,6 +1,4 @@
-import { deepFreeze } from '../utils/freeze'
-
-export const ES_FIXTURE_AGGS_REQUEST = deepFreeze({
+export const elasticAggsRequestFixture = () => ({
   'tag.default': { terms: { field: 'tag.default', include: '.*', size: 10 } },
   availableInServices: {
     filters: {

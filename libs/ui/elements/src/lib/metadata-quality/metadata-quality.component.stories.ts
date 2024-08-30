@@ -1,5 +1,5 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { MetadataQualityComponent } from './metadata-quality.component'
 import { CommonModule } from '@angular/common'
 import {
@@ -8,8 +8,10 @@ import {
 } from '@geonetwork-ui/util/i18n'
 import { TranslateModule } from '@ngx-translate/core'
 import { MetadataQualityItemComponent } from '../metadata-quality-item/metadata-quality-item.component'
-import { ProgressBarComponent } from '@geonetwork-ui/ui/widgets'
-import { PopoverComponent } from '@geonetwork-ui/ui/widgets'
+import {
+  PopoverComponent,
+  ProgressBarComponent,
+} from '@geonetwork-ui/ui/widgets'
 import { MatIconModule } from '@angular/material/icon'
 
 export default {
@@ -32,7 +34,7 @@ export default {
 export const Primary: StoryObj<MetadataQualityComponent> = {
   args: {
     smaller: false,
-    metadata: DATASET_RECORDS[0],
+    metadata: datasetRecordsFixture()[0],
     metadataQualityDisplay: true,
   },
 }

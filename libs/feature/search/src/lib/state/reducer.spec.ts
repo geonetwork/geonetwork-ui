@@ -258,7 +258,7 @@ describe('Search Reducer', () => {
 
   describe('SetResultsAggregations action', () => {
     it('should replace the aggregations in the result', () => {
-      const payload = SAMPLE_AGGREGATIONS_RESULTS
+      const payload = SAMPLE_AGGREGATIONS_RESULTS()
       const action = new fromActions.SetResultsAggregations(payload)
       const state = reducerSearch(
         {
@@ -270,13 +270,13 @@ describe('Search Reducer', () => {
         },
         action
       )
-      expect(state.results.aggregations).toEqual(SAMPLE_AGGREGATIONS_RESULTS)
+      expect(state.results.aggregations).toEqual(SAMPLE_AGGREGATIONS_RESULTS())
     })
   })
 
   describe('SetConfigAggregations action', () => {
     it('should replace the aggregations in the config', () => {
-      const payload = SAMPLE_AGGREGATIONS_PARAMS
+      const payload = SAMPLE_AGGREGATIONS_PARAMS()
       const action = new fromActions.SetConfigAggregations(payload)
       const state = reducerSearch(
         {
@@ -295,7 +295,7 @@ describe('Search Reducer', () => {
         },
         action
       )
-      expect(state.config.aggregations).toEqual(SAMPLE_AGGREGATIONS_PARAMS)
+      expect(state.config.aggregations).toEqual(SAMPLE_AGGREGATIONS_PARAMS())
     })
   })
 
@@ -341,7 +341,7 @@ describe('Search Reducer', () => {
           ...initialStateSearch,
           config: {
             ...initialStateSearch.config,
-            aggregations: SAMPLE_AGGREGATIONS_PARAMS,
+            aggregations: SAMPLE_AGGREGATIONS_PARAMS(),
           },
         },
         action
@@ -360,7 +360,7 @@ describe('Search Reducer', () => {
         ...initialStateSearch,
         config: {
           ...initialStateSearch.config,
-          aggregations: SAMPLE_AGGREGATIONS_PARAMS,
+          aggregations: SAMPLE_AGGREGATIONS_PARAMS(),
         },
       }
       const state = reducerSearch(initialState, action)
@@ -379,7 +379,7 @@ describe('Search Reducer', () => {
           ...initialStateSearch,
           config: {
             ...initialStateSearch.config,
-            aggregations: SAMPLE_AGGREGATIONS_PARAMS,
+            aggregations: SAMPLE_AGGREGATIONS_PARAMS(),
           },
         },
         action
@@ -398,7 +398,7 @@ describe('Search Reducer', () => {
         ...initialStateSearch,
         config: {
           ...initialStateSearch.config,
-          aggregations: SAMPLE_AGGREGATIONS_PARAMS,
+          aggregations: SAMPLE_AGGREGATIONS_PARAMS(),
         },
       }
       const state = reducerSearch(initialState, action)
@@ -417,7 +417,7 @@ describe('Search Reducer', () => {
           ...initialStateSearch,
           results: {
             ...initialStateSearch.results,
-            aggregations: SAMPLE_AGGREGATIONS_RESULTS,
+            aggregations: SAMPLE_AGGREGATIONS_RESULTS(),
           },
         },
         action

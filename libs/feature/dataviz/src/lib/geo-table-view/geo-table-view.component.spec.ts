@@ -11,7 +11,7 @@ import {
   MapContextLayerTypeEnum,
   MapManagerService,
 } from '@geonetwork-ui/feature/map'
-import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/common/fixtures'
+import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 import Map from 'ol/Map'
 import Feature from 'ol/Feature'
 import GeoJSON from 'ol/format/GeoJSON'
@@ -26,13 +26,10 @@ import { Geometry } from 'ol/geom'
 
 const vectorLayer = new VectorLayer({
   source: new VectorSource({
-    features: new GeoJSON().readFeatures(
-      FEATURE_COLLECTION_POINT_FIXTURE_4326,
-      {
-        featureProjection: 'EPSG:3857',
-        dataProjection: 'EPSG:4326',
-      }
-    ),
+    features: new GeoJSON().readFeatures(pointFeatureCollectionFixture(), {
+      featureProjection: 'EPSG:3857',
+      dataProjection: 'EPSG:4326',
+    }),
   }) as VectorSource<Feature<Geometry>>,
 })
 
@@ -125,7 +122,7 @@ describe('GeoTableViewComponent', () => {
       expect(component['view']).toBe(mapMock.getView())
       expect(component['vectorLayer']).toBe(vectorLayer)
       expect(component['features'].length).toBe(
-        FEATURE_COLLECTION_POINT_FIXTURE_4326.features.length
+        pointFeatureCollectionFixture().features.length
       )
     })
   })

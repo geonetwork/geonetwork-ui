@@ -8,7 +8,7 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterModule } from '@angular/router'
 import { importProvidersFrom } from '@angular/core'
-import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
+import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
 import { UserPreviewComponent } from './user-preview.component'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { AvatarComponent } from '../avatar/avatar.component'
@@ -35,7 +35,7 @@ export default {
 
 export const Primary: StoryObj<UserPreviewComponent> = {
   args: {
-    user: USER_FIXTURE(),
+    user: barbieUserFixture(),
     avatarPlaceholder: 'https://www.gravatar.com/avatar/?d=mp',
   },
 }

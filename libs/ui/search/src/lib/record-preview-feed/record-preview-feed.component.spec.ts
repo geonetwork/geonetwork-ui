@@ -3,7 +3,7 @@ import { RecordPreviewFeedComponent } from './record-preview-feed.component'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/common/fixtures'
+import { someOrganizationsFixture } from '@geonetwork-ui/common/fixtures'
 
 describe('RecordPreviewFeedComponent', () => {
   let component: RecordPreviewFeedComponent
@@ -24,7 +24,7 @@ describe('RecordPreviewFeedComponent', () => {
       abstract: '<b>abstract</b>',
       landingPage: new URL('http://localhost/abcd.html'),
       overviews: [{ url: new URL('http://localhost/abcd.jpg') }],
-      ownerOrganization: ORGANISATIONS_FIXTURE[0],
+      ownerOrganization: someOrganizationsFixture()[0],
       contacts: [],
     } as CatalogRecord
     fixture.detectChanges()

@@ -12,7 +12,8 @@ import {
 import { MetadataInfoComponent } from './metadata-info.component'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export default {
   title: 'Elements/MetadataInfoComponent',
@@ -34,7 +35,7 @@ export default {
 
 export const Primary: StoryObj<MetadataInfoComponent> = {
   args: {
-    metadata: DATASET_RECORDS[0],
+    metadata: datasetRecordsFixture()[0] as Partial<DatasetRecord>,
     incomplete: false,
   },
 }

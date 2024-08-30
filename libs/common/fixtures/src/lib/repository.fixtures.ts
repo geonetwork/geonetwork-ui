@@ -1,8 +1,8 @@
-import { deepFreeze } from './utils/freeze'
 import { SearchResults } from '@geonetwork-ui/common/domain/model/search'
-import { DATASET_RECORDS } from './records.fixtures'
+import { datasetRecordsFixture } from './records.fixtures'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
-export const SAMPLE_SEARCH_RESULTS: SearchResults = deepFreeze({
+export const searchResultsFixture = (): SearchResults => ({
   count: 123,
-  records: DATASET_RECORDS,
+  records: datasetRecordsFixture() as CatalogRecord[],
 })

@@ -1,6 +1,4 @@
-import { deepFreeze } from '../utils'
-
-export const ES_LINK_FIXTURES: Record<string, unknown> = deepFreeze({
+export const elasticLinkFixture = (): Record<string, unknown> => ({
   readmeLink: {
     protocol: 'WWW:LINK',
     description: 'Readme page',

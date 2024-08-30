@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { CHART_ITEM_FIXTURE } from './chart.fixtures'
+import { charItemFixture } from './chart.fixtures'
 import { ChartComponent } from './chart.component'
 import { Chart } from 'chart.js'
 import { ChangeDetectionStrategy } from '@angular/core'
@@ -28,7 +28,7 @@ describe('ChartComponent', () => {
 
     fixture = TestBed.createComponent(ChartComponent)
     component = fixture.componentInstance
-    component.data = CHART_ITEM_FIXTURE
+    component.data = charItemFixture()
     component.labelProperty = 'name'
     component.valueProperty = 'age'
     component.type = 'bar'
@@ -83,7 +83,7 @@ describe('ChartComponent', () => {
 
     describe('when data changes', () => {
       beforeEach(() => {
-        component.data = CHART_ITEM_FIXTURE.slice(0, 2)
+        component.data = charItemFixture().slice(0, 2)
         component.ngOnChanges()
         fixture.detectChanges()
       })

@@ -1,4 +1,4 @@
-import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from '@geonetwork-ui/common/fixtures'
+import { polygonFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 import { Extent } from 'ol/extent'
 import {
   MapContextLayerGeojsonModel,
@@ -8,44 +8,48 @@ import {
   MapContextViewModel,
 } from '../map-context/map-context.model'
 
-export const MAP_CTX_LAYER_XYZ_FIXTURE: MapContextLayerModel = {
+export const mapCtxLayerXyzFixture = (): MapContextLayerModel => ({
   type: MapContextLayerTypeEnum.XYZ,
   url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-}
-export const MAP_CTX_LAYER_WMS_FIXTURE: MapContextLayerModel = {
+})
+
+export const mapCtxLayerWmsFixture = (): MapContextLayerModel => ({
   type: MapContextLayerTypeEnum.WMS,
   url: 'https://www.geograndest.fr/geoserver/region-grand-est/ows?REQUEST=GetCapabilities&SERVICE=WMS',
   name: 'commune_actuelle_3857',
-}
-export const MAP_CTX_LAYER_WFS_FIXTURE: MapContextLayerModel = {
+})
+
+export const mapCtxLayerWfsFixture = (): MapContextLayerModel => ({
   type: MapContextLayerTypeEnum.WFS,
   url: 'https://www.geograndest.fr/geoserver/region-grand-est/ows?REQUEST=GetCapabilities&SERVICE=WFS&VERSION=1.1.0',
   name: 'ms:commune_actuelle_3857',
-}
-export const MAP_CTX_LAYER_GEOJSON_FIXTURE: MapContextLayerGeojsonModel = {
+})
+
+export const mapCtxLayerGeojsonFixture = (): MapContextLayerGeojsonModel => ({
   type: MapContextLayerTypeEnum.GEOJSON,
-  data: FEATURE_COLLECTION_POLYGON_FIXTURE_4326,
-}
-export const MAP_CTX_LAYER_GEOJSON_REMOTE_FIXTURE: MapContextLayerGeojsonModel =
-  {
+  data: polygonFeatureCollectionFixture(),
+})
+
+export const mapCtxLayerGeojsonRemoteFixture =
+  (): MapContextLayerGeojsonModel => ({
     type: MapContextLayerTypeEnum.GEOJSON,
     url: 'https://my.host.com/data/regions.json',
-  }
+  })
 
-export const MAP_CTX_VIEW_FIXTURE: MapContextViewModel = {
+export const mapCtxViewFixture = (): MapContextViewModel => ({
   center: [7.75, 48.6],
   zoom: 9,
-}
+})
 
-export const MAP_CTX_FIXTURE: MapContextModel = {
+export const mapCtxFixture = (): MapContextModel => ({
   layers: [
-    MAP_CTX_LAYER_XYZ_FIXTURE,
-    MAP_CTX_LAYER_WMS_FIXTURE,
-    MAP_CTX_LAYER_GEOJSON_FIXTURE,
+    mapCtxLayerXyzFixture(),
+    mapCtxLayerWmsFixture(),
+    mapCtxLayerGeojsonFixture(),
   ],
-  view: MAP_CTX_VIEW_FIXTURE,
-}
+  view: mapCtxViewFixture(),
+})
 
-export const MAP_CTX_EXTENT_FIXTURE: Extent = [
+export const mapCtxExtentFixture = (): Extent => [
   171083.69713494915, 6246047.945419401, 476970.39956295764, 6631079.362882684,
 ]

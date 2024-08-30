@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 import { ResultsTableComponent } from './results-table.component'
 
@@ -17,7 +17,7 @@ describe('ResultsTableComponent', () => {
 
     fixture = TestBed.createComponent(ResultsTableComponent)
     component = fixture.componentInstance
-    component.records = DATASET_RECORDS
+    component.records = datasetRecordsFixture() as CatalogRecord[]
     fixture.detectChanges()
   })
 
@@ -27,18 +27,18 @@ describe('ResultsTableComponent', () => {
 
   describe('get a list of formats and sorts them depending on priority', () => {
     it('returns a list of unique formats', () => {
-      expect(component.getRecordFormats(DATASET_RECORDS[0])).toEqual([
-        'geojson',
-        'shp',
-        'pdf',
-      ])
+      expect(
+        component.getRecordFormats(datasetRecordsFixture()[0] as CatalogRecord)
+      ).toEqual(['geojson', 'shp', 'pdf'])
     })
   })
   describe('get the badge color for given format', () => {
     it('returns the color for its format', () => {
       expect(
         component.getBadgeColor(
-          component.getRecordFormats(DATASET_RECORDS[0])[0]
+          component.getRecordFormats(
+            datasetRecordsFixture()[0] as CatalogRecord
+          )[0]
         )
       ).toEqual('#1e5180') // geojson
     })
@@ -147,7 +147,9 @@ describe('ResultsTableComponent', () => {
         By.css('.table-row-cell')
       )[1].nativeElement as HTMLDivElement
       tableRow.parentElement.click()
-      expect(clickedRecord).toEqual(DATASET_RECORDS[0])
+      expect(JSON.stringify(clickedRecord)).toEqual(
+        JSON.stringify(datasetRecordsFixture()[0])
+      )
     })
   })
 
@@ -169,7 +171,9 @@ describe('ResultsTableComponent', () => {
         By.css('[data-test="record-menu-duplicate-button"]')
       ).nativeElement as HTMLButtonElement
       duplicateButton.click()
-      expect(recordToBeDuplicated).toEqual(DATASET_RECORDS[0])
+      expect(JSON.stringify(recordToBeDuplicated)).toEqual(
+        JSON.stringify(datasetRecordsFixture()[0])
+      )
     })
   })
 })

@@ -8,8 +8,8 @@ import { SearchService } from '../utils/service/search.service'
 import { FuzzySearchComponent } from './fuzzy-search.component'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
-  DATASET_RECORDS,
-  SAMPLE_SEARCH_RESULTS,
+  datasetRecordsFixture,
+  searchResultsFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
@@ -23,7 +23,7 @@ class SearchServiceMock {
 }
 
 class RecordsRepositoryMock {
-  fuzzySearch = jest.fn(() => of(SAMPLE_SEARCH_RESULTS))
+  fuzzySearch = jest.fn(() => of(searchResultsFixture()))
 }
 
 describe('FuzzySearchComponent', () => {
@@ -108,7 +108,7 @@ describe('FuzzySearchComponent', () => {
       component.autocomplete.action('').subscribe((e) => (emitted = e))
     })
     it('emits an array of CatalogRecord', () => {
-      expect(emitted).toEqual(DATASET_RECORDS)
+      expect(emitted).toEqual(datasetRecordsFixture())
     })
   })
 

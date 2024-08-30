@@ -9,9 +9,9 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import {
-  MAP_CTX_LAYER_GEOJSON_FIXTURE,
-  MAP_CTX_LAYER_WMS_FIXTURE,
-  MAP_CTX_LAYER_XYZ_FIXTURE,
+  mapCtxLayerGeojsonFixture,
+  mapCtxLayerWmsFixture,
+  mapCtxLayerXyzFixture,
 } from '../map-context.fixtures'
 import { MapContextComponent } from './map-context.component'
 import { importProvidersFrom } from '@angular/core'
@@ -39,7 +39,7 @@ type Story = StoryObj<MapContextComponent>
 export const WMS: Story = {
   args: {
     context: {
-      layers: [MAP_CTX_LAYER_XYZ_FIXTURE, MAP_CTX_LAYER_WMS_FIXTURE],
+      layers: [mapCtxLayerXyzFixture(), mapCtxLayerWmsFixture()],
       view: {
         center: [7.75, 48.6],
         zoom: 4,
@@ -51,7 +51,7 @@ export const WMS: Story = {
 export const GEOJSON: Story = {
   args: {
     context: {
-      layers: [MAP_CTX_LAYER_XYZ_FIXTURE, MAP_CTX_LAYER_GEOJSON_FIXTURE],
+      layers: [mapCtxLayerXyzFixture(), mapCtxLayerGeojsonFixture()],
       view: {
         center: [7.75, 48.6],
         zoom: 4,

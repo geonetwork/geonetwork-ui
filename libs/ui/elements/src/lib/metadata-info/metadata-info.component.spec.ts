@@ -3,9 +3,10 @@ import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
 import { MetadataInfoComponent } from './metadata-info.component'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { TranslateTestingModule } from 'ngx-translate-testing'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 
 describe('MetadataInfoComponent', () => {
   let component: MetadataInfoComponent
@@ -35,7 +36,7 @@ describe('MetadataInfoComponent', () => {
       fixture = TestBed.createComponent(MetadataInfoComponent)
       component = fixture.componentInstance
       component.metadata = {
-        ...DATASET_RECORDS[0],
+        ...datasetRecordsFixture()[0],
         abstract: null,
         licenses: null,
         legalConstraints: null,
@@ -44,7 +45,7 @@ describe('MetadataInfoComponent', () => {
           isOpenData: false,
         },
         keywords: null,
-      }
+      } as DatasetRecord
       fixture.detectChanges()
     })
     it('should display a message for no usage or constraints', () => {
@@ -67,7 +68,10 @@ describe('MetadataInfoComponent', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(MetadataInfoComponent)
       component = fixture.componentInstance
-      component.metadata = { ...DATASET_RECORDS[0], lineage: null }
+      component.metadata = {
+        ...datasetRecordsFixture()[0],
+        lineage: null,
+      } as DatasetRecord
       fixture.detectChanges()
     })
     it('should not display a message for no usage or constraints', () => {
@@ -87,9 +91,9 @@ describe('MetadataInfoComponent', () => {
         fixture = TestBed.createComponent(MetadataInfoComponent)
         component = fixture.componentInstance
         component.metadata = {
-          ...DATASET_RECORDS[0],
+          ...datasetRecordsFixture()[0],
           updateFrequency: undefined,
-        }
+        } as DatasetRecord
         fixture.detectChanges()
       })
       it('should not display the updateFrequency section', () => {
@@ -103,9 +107,9 @@ describe('MetadataInfoComponent', () => {
         fixture = TestBed.createComponent(MetadataInfoComponent)
         component = fixture.componentInstance
         component.metadata = {
-          ...DATASET_RECORDS[0],
+          ...datasetRecordsFixture()[0],
           updateFrequency: 'notPlanned',
-        }
+        } as DatasetRecord
         fixture.detectChanges()
       })
       it('should display the updateFrequency code correctly', () => {
@@ -118,7 +122,7 @@ describe('MetadataInfoComponent', () => {
       beforeEach(() => {
         fixture = TestBed.createComponent(MetadataInfoComponent)
         component = fixture.componentInstance
-        component.metadata = DATASET_RECORDS[0]
+        component.metadata = datasetRecordsFixture()[0] as DatasetRecord
         fixture.detectChanges()
       })
       it('should display the updateFrequency object correctly', () => {

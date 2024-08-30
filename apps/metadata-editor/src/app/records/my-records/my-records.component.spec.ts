@@ -5,8 +5,7 @@ import { Component, importProvidersFrom, Input } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordsListComponent } from '../records-list.component'
 import { BehaviorSubject, of } from 'rxjs'
-import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
-import { AuthService } from '@geonetwork-ui/api/repository'
+import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
 import { EditorRouterService } from '../../router.service'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
@@ -18,7 +17,7 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 export class MockRecordsListComponent {
   @Input() linkToDatahub: string
 }
-const user = USER_FIXTURE()
+const user = barbieUserFixture()
 
 class SearchFacadeMock {
   resetSearch = jest.fn()
@@ -38,7 +37,7 @@ class FieldsServiceMock {
   buildFiltersFromFieldValues = jest.fn((val) => of(val))
 }
 
-const me$ = new BehaviorSubject(USER_FIXTURE())
+const me$ = new BehaviorSubject(barbieUserFixture())
 class PlatformServiceMock {
   getMe = jest.fn(() => me$)
 }

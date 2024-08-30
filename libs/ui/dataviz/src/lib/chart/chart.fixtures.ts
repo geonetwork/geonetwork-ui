@@ -1,4 +1,4 @@
-export const CHART_ITEM_FIXTURE = [
+export const charItemFixture = () => [
   {
     name: 'name 1',
     id: 'id 1',
@@ -19,7 +19,7 @@ export const CHART_ITEM_FIXTURE = [
   },
 ]
 
-export const CHART_ITEM_FIXTURE_HAB = [
+export const chartItemHabFixture = () => [
   {
     name: 'France',
     id: '1',

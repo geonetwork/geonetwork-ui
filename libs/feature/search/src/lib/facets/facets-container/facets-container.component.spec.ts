@@ -2,16 +2,16 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { SearchFacade } from '../../state/search.facade'
 import {
-  EMPTY_BLOCK_MODEL_FIXTURE,
-  FACET_ITEM_FIXTURE,
+  emptyBlockModelFixture,
+  itemModelFixture,
 } from '@geonetwork-ui/ui/search'
 import { of } from 'rxjs'
-import { SEARCH_STATE_FILTERS_FIXTURE } from '../../state/fixtures/search-state.fixtures'
+import { searchStateFiltersFixture } from '../../state/fixtures/search-state.fixtures'
 import { FacetsService } from '../facets.service'
 
 import { FacetsContainerComponent } from './facets-container.component'
 
-const mockStateFilters = { ...SEARCH_STATE_FILTERS_FIXTURE.simpleTerms }
+const mockStateFilters = { ...searchStateFiltersFixture().simpleTerms }
 const searchFacadeMock = {
   setConfigAggregations: jest.fn(),
   requestMoreResults: jest.fn(),
@@ -90,16 +90,16 @@ describe('FacetsContainerComponent', () => {
   describe('#onItemChange', () => {
     it('update filters state', () => {
       component.onItemChange({
-        block: EMPTY_BLOCK_MODEL_FIXTURE,
-        item: FACET_ITEM_FIXTURE,
+        block: emptyBlockModelFixture(),
+        item: itemModelFixture(),
       })
       expect(facetServiceMock.computeItemPathValue).toHaveBeenCalledWith(
-        EMPTY_BLOCK_MODEL_FIXTURE,
-        FACET_ITEM_FIXTURE
+        emptyBlockModelFixture(),
+        itemModelFixture()
       )
       expect(facetServiceMock.computeNewFiltersFromState).toHaveBeenCalledWith(
         mockStateFilters,
-        FACET_ITEM_FIXTURE.path,
+        itemModelFixture().path,
         'mock path'
       )
       expect(searchFacadeMock.setFilters).toHaveBeenCalledWith({

@@ -11,19 +11,19 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { BehaviorSubject, of } from 'rxjs'
 import {
-  ORGANISATIONS_FIXTURE,
-  REGION_HAUT_DE_FRANCE_ORG_FIXTURE,
-  USER_FIXTURE,
+  barbieIncOrganizationFixture,
+  barbieUserFixture,
+  someOrganizationsFixture,
 } from '@geonetwork-ui/common/fixtures'
 
-const user = USER_FIXTURE()
+const user = barbieUserFixture()
 
 class PlatformServiceInterfaceMock {
   getMe = jest.fn(() => new BehaviorSubject(user))
 }
 
 class OrganizationsServiceInterfaceMock {
-  organisations$ = of(ORGANISATIONS_FIXTURE)
+  organisations$ = of(someOrganizationsFixture())
 }
 
 describe('NewRecordResolver', () => {
@@ -72,7 +72,7 @@ describe('NewRecordResolver', () => {
           lastName: user.surname,
           email: user.email,
           role: 'point_of_contact',
-          organization: REGION_HAUT_DE_FRANCE_ORG_FIXTURE(),
+          organization: barbieIncOrganizationFixture(),
         } as Individual,
       ]
 

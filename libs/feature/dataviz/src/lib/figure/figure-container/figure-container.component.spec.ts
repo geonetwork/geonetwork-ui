@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import {
-  FIGURE_ITEM_FIXTURE,
-  FIGURE_ITEM_FIXTURE_HAB,
-} from './../figure.fixtures'
+  someFigureItemFixture,
+  someHabFigureItemFixture,
+} from '../figure.fixtures'
 import { FigureContainerComponent } from './figure-container.component'
 
 describe('FigureContainerComponent', () => {
@@ -32,7 +32,7 @@ describe('FigureContainerComponent', () => {
   })
   describe('when average', () => {
     beforeEach(() => {
-      component.dataset = FIGURE_ITEM_FIXTURE
+      component.dataset = someFigureItemFixture()
       component.expression = 'average|age'
       component.ngOnChanges(null)
     })
@@ -47,7 +47,7 @@ describe('FigureContainerComponent', () => {
   })
   describe('when sum', () => {
     beforeEach(() => {
-      component.dataset = FIGURE_ITEM_FIXTURE_HAB
+      component.dataset = someHabFigureItemFixture()
       component.expression = 'sum|pop'
       component.ngOnChanges(null)
     })
@@ -57,7 +57,7 @@ describe('FigureContainerComponent', () => {
   })
   describe('when bad expression', () => {
     beforeEach(() => {
-      component.dataset = FIGURE_ITEM_FIXTURE_HAB
+      component.dataset = someHabFigureItemFixture()
       component.expression = 'sumfds--fdfdspop'
       component.ngOnChanges(null)
     })

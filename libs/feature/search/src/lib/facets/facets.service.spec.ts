@@ -1,9 +1,9 @@
 import {
-  ES_FIXTURE_AGGS_REQUEST,
-  ES_FIXTURE_AGGS_RESPONSE,
+  elasticAggsRequestFixture,
+  elasticAggsResponseFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { ModelBlock, ModelItem } from '@geonetwork-ui/ui/search'
-import { SEARCH_STATE_FILTERS_FIXTURE } from '../state/fixtures/search-state.fixtures'
+import { searchStateFiltersFixture } from '../state/fixtures/search-state.fixtures'
 import { FacetsService } from './facets.service'
 
 let requestAggregations
@@ -27,8 +27,8 @@ describe('FacetsService', () => {
 
   describe('#createFacetModel', () => {
     let result
-    requestAggregations = ES_FIXTURE_AGGS_REQUEST
-    responseAggregations = ES_FIXTURE_AGGS_RESPONSE
+    requestAggregations = elasticAggsRequestFixture()
+    responseAggregations = elasticAggsResponseFixture()
 
     beforeEach(() => {
       result = service.createFacetModel(
@@ -340,7 +340,7 @@ describe('FacetsService', () => {
     let searchFilters
     describe('when simple terms', () => {
       beforeEach(() => {
-        searchFilters = SEARCH_STATE_FILTERS_FIXTURE.simpleTerms
+        searchFilters = searchStateFiltersFixture().simpleTerms
       })
       it('returns simple 2 elements paths', () => {
         const paths = service.findSelectedPaths(searchFilters)
@@ -352,7 +352,7 @@ describe('FacetsService', () => {
     })
     describe('when recursive terms', () => {
       beforeEach(() => {
-        searchFilters = SEARCH_STATE_FILTERS_FIXTURE.recursiveTerms
+        searchFilters = searchStateFiltersFixture().recursiveTerms
       })
       it('nested elements are appended to the path', () => {
         const paths = service.findSelectedPaths(searchFilters)
@@ -364,7 +364,7 @@ describe('FacetsService', () => {
     })
     describe('when histogram', () => {
       beforeEach(() => {
-        searchFilters = SEARCH_STATE_FILTERS_FIXTURE.histogram
+        searchFilters = searchStateFiltersFixture().histogram
       })
       it('nested elements are appended to the path', () => {
         const paths = service.findSelectedPaths(searchFilters)
@@ -373,7 +373,7 @@ describe('FacetsService', () => {
     })
     describe('when filters', () => {
       beforeEach(() => {
-        searchFilters = SEARCH_STATE_FILTERS_FIXTURE.filters
+        searchFilters = searchStateFiltersFixture().filters
       })
       it('nested elements are appended to the path', () => {
         const paths = service.findSelectedPaths(searchFilters)

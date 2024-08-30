@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { summaryHits } from '@geonetwork-ui/common/fixtures'
+import { elasticSummaryHitsFixture } from '@geonetwork-ui/common/fixtures'
 import { of } from 'rxjs'
 import { LastCreatedComponent } from './last-created.component'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
@@ -8,7 +8,7 @@ import { RouterFacade } from '@geonetwork-ui/feature/router'
 
 class SearchFacadeMock {
   init = jest.fn()
-  results$ = of(summaryHits)
+  results$ = of(elasticSummaryHitsFixture())
   setPageSize = jest.fn(() => this)
   setSortBy = jest.fn(() => this)
   setConfigRequestFields = jest.fn(() => this)

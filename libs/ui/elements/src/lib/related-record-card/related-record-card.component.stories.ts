@@ -19,7 +19,7 @@ import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 
 export default {
   title: 'Elements/RelatedRecordCardComponent',
@@ -50,6 +50,6 @@ export default {
 
 export const Primary: StoryObj<RelatedRecordCardComponent> = {
   args: {
-    record: DATASET_RECORDS[0],
+    record: datasetRecordsFixture()[0],
   },
 }

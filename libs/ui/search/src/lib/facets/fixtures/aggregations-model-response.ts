@@ -1,6 +1,6 @@
 import { ModelBlock, ModelItem } from '../facets.model'
 
-export const BLOCK_MODEL_FIXTURE: ModelBlock = {
+export const blockModelFixture = (): ModelBlock => ({
   key: 'tag',
   items: [
     { value: 'Hungary', count: 20, path: ['tag', 'Hungary'] },
@@ -31,8 +31,9 @@ export const BLOCK_MODEL_FIXTURE: ModelBlock = {
   more: true,
   includeFilter: true,
   excludeFilter: false,
-}
-export const EMPTY_BLOCK_MODEL_FIXTURE: ModelBlock = {
+})
+
+export const emptyBlockModelFixture = (): ModelBlock => ({
   key: 'emptytag',
   items: [],
   path: ['emptytag'],
@@ -41,12 +42,12 @@ export const EMPTY_BLOCK_MODEL_FIXTURE: ModelBlock = {
   more: true,
   includeFilter: false,
   excludeFilter: false,
-}
+})
 
-export const FACET_ITEM_FIXTURE: ModelItem = {
+export const itemModelFixture = (): ModelItem => ({
   path: ['tag.default', 'land use'],
   value: 'land use',
   count: 500,
   selected: true,
   inverted: false,
-}
+})

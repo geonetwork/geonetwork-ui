@@ -1,12 +1,12 @@
 import { Action } from '@ngrx/store'
 
 import * as MapActions from './map.actions'
-import { MapState, initialMapState, mapReducer } from './map.reducer'
-import { MAP_CTX_LAYER_WMS_FIXTURE } from '../map-context/map-context.fixtures'
+import { initialMapState, mapReducer, MapState } from './map.reducer'
+import { mapCtxLayerWmsFixture } from '../map-context/map-context.fixtures'
 import { MapLayerWithInfo } from './map.models'
 
 function getSampleLayer(title: string): MapLayerWithInfo {
-  return { ...MAP_CTX_LAYER_WMS_FIXTURE, loading: false, error: null, title }
+  return { ...mapCtxLayerWmsFixture(), loading: false, error: null, title }
 }
 
 describe('Map Reducer', () => {

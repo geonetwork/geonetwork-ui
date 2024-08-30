@@ -11,8 +11,8 @@ import {
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
-  ES_FIXTURE_FULL_RESPONSE,
-  GROUPS_FIXTURE,
+  elasticFullResponseFixture,
+  groupsFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { LangService } from '@geonetwork-ui/util/i18n'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
@@ -145,7 +145,7 @@ class SearchApiServiceMock {
 }
 
 class GroupsApiServiceMock {
-  getGroups = jest.fn(() => of(GROUPS_FIXTURE))
+  getGroups = jest.fn(() => of(groupsFixture()))
 }
 
 class Gn4PlatformServiceMock {
@@ -405,7 +405,7 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
       let record
       beforeEach(async () => {
         const source = {
-          ...ES_FIXTURE_FULL_RESPONSE.hits.hits[0]._source,
+          ...elasticFullResponseFixture().hits.hits[0]._source,
         }
         record = await lastValueFrom(
           service.addOrganizationToRecordFromSource(source, {
@@ -431,7 +431,7 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
       describe('when no resource contacts', () => {
         beforeEach(async () => {
           const source = {
-            ...ES_FIXTURE_FULL_RESPONSE.hits.hits[0]._source,
+            ...elasticFullResponseFixture().hits.hits[0]._source,
             contactForResource: [],
           }
           record = await lastValueFrom(
@@ -459,7 +459,7 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
       describe('when no logoUrl can be found by organisation name/email matching', () => {
         beforeEach(async () => {
           const source = {
-            ...ES_FIXTURE_FULL_RESPONSE.hits.hits[0]._source,
+            ...elasticFullResponseFixture().hits.hits[0]._source,
             contactForResource: [
               {
                 organisation: 'WrongIfremerName',

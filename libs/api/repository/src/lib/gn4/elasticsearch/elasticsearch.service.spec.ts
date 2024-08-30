@@ -1,5 +1,5 @@
 import { ElasticsearchService } from './elasticsearch.service'
-import { ES_FIXTURE_AGGS_RESPONSE } from '@geonetwork-ui/common/fixtures'
+import { elasticAggsResponseFixture } from '@geonetwork-ui/common/fixtures'
 import { LangService } from '@geonetwork-ui/util/i18n'
 import { EsSearchParams } from '@geonetwork-ui/api/metadata-converter'
 import { TestBed } from '@angular/core/testing'
@@ -851,8 +851,10 @@ describe('ElasticsearchService', () => {
       it('parses the result', () => {
         expect(
           service.parseAggregationResult(
-            ES_FIXTURE_AGGS_RESPONSE['tag.default'],
-            { type: 'terms' } as any
+            elasticAggsResponseFixture()['tag.default'],
+            {
+              type: 'terms',
+            } as any
           )
         ).toStrictEqual({
           buckets: [
@@ -888,7 +890,7 @@ describe('ElasticsearchService', () => {
       it('parses the result', () => {
         expect(
           service.parseAggregationResult(
-            ES_FIXTURE_AGGS_RESPONSE['availableInServices'],
+            elasticAggsResponseFixture()['availableInServices'],
             { type: 'filters' } as any
           )
         ).toStrictEqual({
@@ -968,7 +970,7 @@ describe('ElasticsearchService', () => {
       it('parses the result (keyed)', () => {
         expect(
           service.parseAggregationResult(
-            ES_FIXTURE_AGGS_RESPONSE['resolutionScaleDenominator'],
+            elasticAggsResponseFixture()['resolutionScaleDenominator'],
             { type: 'histogram' } as any
           )
         ).toStrictEqual(expectedHistogram)
@@ -976,7 +978,7 @@ describe('ElasticsearchService', () => {
       it('parses the result (ordered array)', () => {
         expect(
           service.parseAggregationResult(
-            ES_FIXTURE_AGGS_RESPONSE['resolutionScaleDenominatorArray'],
+            elasticAggsResponseFixture()['resolutionScaleDenominatorArray'],
             { type: 'histogram' } as any
           )
         ).toStrictEqual(expectedHistogram)

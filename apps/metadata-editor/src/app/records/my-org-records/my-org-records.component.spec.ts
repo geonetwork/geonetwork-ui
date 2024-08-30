@@ -1,7 +1,7 @@
 import { MyOrgRecordsComponent } from './my-org-records.component'
 import { of } from 'rxjs'
 import { MyOrgService } from '@geonetwork-ui/feature/catalog'
-import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/common/fixtures'
+import { someOrganizationsFixture } from '@geonetwork-ui/common/fixtures'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { EditorRouterService } from '../../router.service'
@@ -49,7 +49,7 @@ const myOrgServiceMock = {
 }
 
 const organisationsServiceMock = {
-  organisations$: of(ORGANISATIONS_FIXTURE),
+  organisations$: of(someOrganizationsFixture),
 }
 
 const searchFacadeMock = {

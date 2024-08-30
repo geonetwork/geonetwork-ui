@@ -1,10 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddLayerRecordPreviewComponent } from './add-layer-record-preview.component'
 import { MapFacade } from '../../+state/map.facade'
-import { DATASET_RECORDS, LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
+import {
+  aSetOfLinksFixture,
+  datasetRecordsFixture,
+} from '@geonetwork-ui/common/fixtures'
 import { of } from 'rxjs'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { MapUtilsService } from '../../utils'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 class MapFacadeMock {
   addLayer = jest.fn()
@@ -38,7 +42,7 @@ describe('AddLayerRecordPreviewComponent', () => {
     mapFacade = TestBed.inject(MapFacade)
     fixture = TestBed.createComponent(AddLayerRecordPreviewComponent)
     component = fixture.componentInstance
-    component.record = DATASET_RECORDS[0]
+    component.record = datasetRecordsFixture()[0] as CatalogRecord
     fixture.detectChanges()
   })
 
@@ -48,7 +52,7 @@ describe('AddLayerRecordPreviewComponent', () => {
 
   describe('click on link', () => {
     beforeEach(() => {
-      component.handleLinkClick(LINK_FIXTURES.geodataWms)
+      component.handleLinkClick(aSetOfLinksFixture().geodataWms())
     })
     it('adds a layer', () => {
       expect(mapFacade.addLayer).toHaveBeenCalledWith({

@@ -15,9 +15,9 @@ import {
 } from '@angular/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
-  DATASET_RECORDS,
-  SOME_USER_FEEDBACKS,
-  USER_FIXTURE,
+  barbieUserFixture,
+  datasetRecordsFixture,
+  someUserFeedbacksFixture,
 } from '@geonetwork-ui/common/fixtures'
 import {
   UserFeedback,
@@ -26,10 +26,10 @@ import {
 import { Gn4PlatformMapper } from '@geonetwork-ui/api/repository'
 
 describe('RelatedRecordsComponent', () => {
-  const allUserFeedbacks = SOME_USER_FEEDBACKS
+  const allUserFeedbacks = someUserFeedbacksFixture()
   let mockDestroy$: Subject<void>
 
-  const activeUser = USER_FIXTURE()
+  const activeUser = barbieUserFixture()
 
   const mdViewFacadeMock: Partial<MdViewFacade> = {
     isAllUserFeedbackLoading$: new BehaviorSubject(false),
@@ -97,7 +97,7 @@ describe('RelatedRecordsComponent', () => {
     component = fixture.componentInstance
 
     component.destroy$ = mockDestroy$
-    component.metadataUuid = DATASET_RECORDS[0].uniqueIdentifier
+    component.metadataUuid = datasetRecordsFixture()[0].uniqueIdentifier
 
     fixture.detectChanges()
   })
@@ -116,20 +116,21 @@ describe('RelatedRecordsComponent', () => {
     it('should load user feedbacks', () => {
       component.ngOnInit()
       expect(mdViewFacadeMock.loadUserFeedbacks).toHaveBeenCalledWith(
-        DATASET_RECORDS[0].uniqueIdentifier
+        datasetRecordsFixture()[0].uniqueIdentifier
       )
     })
     it('should set active user', fakeAsync(() => {
       component.ngOnInit()
       tick()
-      expect(component.activeUser).toEqual(USER_FIXTURE())
+      expect(component.activeUser).toEqual(barbieUserFixture())
     }))
     it('should fetch user feedbacks and sort them correctly', async () => {
       component.ngOnInit()
       await fixture.whenStable()
       expect(component.userFeedbacksParents.length).toBe(4)
       expect(
-        component.userFeedBacksAnswers.get(SOME_USER_FEEDBACKS[0].uuid).length
+        component.userFeedBacksAnswers.get(someUserFeedbacksFixture()[0].uuid)
+          .length
       ).toBe(2)
     })
   })

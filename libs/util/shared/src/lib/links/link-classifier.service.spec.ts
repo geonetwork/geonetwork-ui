@@ -1,5 +1,5 @@
 import { LinkClassifierService, LinkUsage } from './link-classifier.service'
-import { LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
+import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 
 describe('LinkClassifierService', () => {
   let service: LinkClassifierService
@@ -15,19 +15,16 @@ describe('LinkClassifierService', () => {
   describe('#getUsagesForLink', () => {
     describe('for a WMS link', () => {
       it('returns map API  and API usage', () => {
-        expect(service.getUsagesForLink(LINK_FIXTURES.geodataWms)).toEqual([
-          LinkUsage.API,
-          LinkUsage.MAP_API,
-        ])
+        expect(
+          service.getUsagesForLink(aSetOfLinksFixture().geodataWms())
+        ).toEqual([LinkUsage.API, LinkUsage.MAP_API])
       })
     })
     describe('for a WFS link', () => {
       it('returns download, data and API usage', () => {
-        expect(service.getUsagesForLink(LINK_FIXTURES.geodataWfs)).toEqual([
-          LinkUsage.API,
-          LinkUsage.DOWNLOAD,
-          LinkUsage.GEODATA,
-        ])
+        expect(
+          service.getUsagesForLink(aSetOfLinksFixture().geodataWfs())
+        ).toEqual([LinkUsage.API, LinkUsage.DOWNLOAD, LinkUsage.GEODATA])
       })
     })
     describe('for a WFS link (registered as download)', () => {
@@ -43,81 +40,74 @@ describe('LinkClassifierService', () => {
     })
     describe('for a ESRI REST feature service link', () => {
       it('returns download and API usage', () => {
-        expect(service.getUsagesForLink(LINK_FIXTURES.geodataRest)).toEqual([
-          LinkUsage.API,
-          LinkUsage.DOWNLOAD,
-          LinkUsage.GEODATA,
-        ])
+        expect(
+          service.getUsagesForLink(aSetOfLinksFixture().geodataRest())
+        ).toEqual([LinkUsage.API, LinkUsage.DOWNLOAD, LinkUsage.GEODATA])
       })
     })
     describe('for a ESRI REST WFS service link', () => {
       it('returns download and API usage', () => {
-        expect(service.getUsagesForLink(LINK_FIXTURES.geodataRestWfs)).toEqual([
-          LinkUsage.API,
-          LinkUsage.DOWNLOAD,
-          LinkUsage.GEODATA,
-        ])
+        expect(
+          service.getUsagesForLink(aSetOfLinksFixture().geodataRestWfs())
+        ).toEqual([LinkUsage.API, LinkUsage.DOWNLOAD, LinkUsage.GEODATA])
       })
     })
     describe('for a ESRI REST map service link', () => {
       it('returns no usage', () => {
-        expect(service.getUsagesForLink(LINK_FIXTURES.maplayerRest)).toEqual([
-          LinkUsage.UNKNOWN,
-        ])
+        expect(
+          service.getUsagesForLink(aSetOfLinksFixture().maplayerRest())
+        ).toEqual([LinkUsage.UNKNOWN])
       })
     })
     describe('for a link to a CSV file', () => {
       it('returns a download usage', () => {
-        expect(service.getUsagesForLink(LINK_FIXTURES.dataCsv)).toEqual([
-          LinkUsage.DOWNLOAD,
-          LinkUsage.DATA,
-        ])
+        expect(
+          service.getUsagesForLink(aSetOfLinksFixture().dataCsv())
+        ).toEqual([LinkUsage.DOWNLOAD, LinkUsage.DATA])
       })
     })
     describe('for a link to a XLSX file', () => {
       it('returns a download usage', () => {
-        expect(service.getUsagesForLink(LINK_FIXTURES.dataXlsx)).toEqual([
-          LinkUsage.DOWNLOAD,
-          LinkUsage.DATA,
-        ])
+        expect(
+          service.getUsagesForLink(aSetOfLinksFixture().dataXlsx())
+        ).toEqual([LinkUsage.DOWNLOAD, LinkUsage.DATA])
       })
     })
     describe('for a link to a geojson file', () => {
       it('returns download and data usage', () => {
-        expect(service.getUsagesForLink(LINK_FIXTURES.geodataJson)).toEqual([
-          LinkUsage.DOWNLOAD,
-          LinkUsage.GEODATA,
-        ])
+        expect(
+          service.getUsagesForLink(aSetOfLinksFixture().geodataJson())
+        ).toEqual([LinkUsage.DOWNLOAD, LinkUsage.GEODATA])
       })
     })
     describe('for a link to a geojson with mimetype in the protocol', () => {
       it('returns download and data usage', () => {
         expect(
-          service.getUsagesForLink(LINK_FIXTURES.geodataJsonWithMimeType)
+          service.getUsagesForLink(
+            aSetOfLinksFixture().geodataJsonWithMimeType()
+          )
         ).toEqual([LinkUsage.DOWNLOAD, LinkUsage.GEODATA])
       })
     })
     describe('for a link to a simple page', () => {
       it('returns UNKNOWN', () => {
-        expect(service.getUsagesForLink(LINK_FIXTURES.readmeLink)).toEqual([
-          LinkUsage.UNKNOWN,
-        ])
+        expect(
+          service.getUsagesForLink(aSetOfLinksFixture().readmeLink())
+        ).toEqual([LinkUsage.UNKNOWN])
       })
     })
     describe('for a landing page', () => {
       it('returns unknown usage', () => {
-        expect(service.getUsagesForLink(LINK_FIXTURES.landingPage)).toEqual([
-          LinkUsage.UNKNOWN,
-        ])
+        expect(
+          service.getUsagesForLink(aSetOfLinksFixture().landingPage())
+        ).toEqual([LinkUsage.UNKNOWN])
       })
     })
     describe('for an OGC API Features link', () => {
       it('returns download, data and API usage', () => {
-        expect(service.getUsagesForLink(LINK_FIXTURES.ogcApiFormat)).toEqual([
-          LinkUsage.API,
-          LinkUsage.DOWNLOAD,
-          LinkUsage.GEODATA,
-        ])
+        expect(
+          service.getUsagesForLink(aSetOfLinksFixture().ogcApiFormat())
+        ).toEqual([LinkUsage.API, LinkUsage.DOWNLOAD, LinkUsage.GEODATA])
       })
     })
   })

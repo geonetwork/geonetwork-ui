@@ -11,8 +11,8 @@ import {
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
-  ES_FIXTURE_FULL_RESPONSE,
-  GROUPS_FIXTURE,
+  elasticFullResponseFixture,
+  groupsFixture,
 } from '@geonetwork-ui/common/fixtures'
 
 const groupsAggregationMock = {
@@ -75,7 +75,7 @@ class SearchApiServiceMock {
 }
 
 class GoupsApiServiceMock {
-  getGroups = jest.fn(() => of(GROUPS_FIXTURE))
+  getGroups = jest.fn(() => of(groupsFixture()))
 }
 
 class TranslateServiceMock {
@@ -153,7 +153,7 @@ describe('OrganizationsFromGroupsService', () => {
     let record
     beforeEach(async () => {
       const source = {
-        ...ES_FIXTURE_FULL_RESPONSE.hits.hits[0]._source,
+        ...elasticFullResponseFixture().hits.hits[0]._source,
         groupOwner: '34838580',
       }
       record = await firstValueFrom(
@@ -180,7 +180,7 @@ describe('OrganizationsFromGroupsService', () => {
     describe('when a non existent group is the owner', () => {
       beforeEach(async () => {
         const source = {
-          ...ES_FIXTURE_FULL_RESPONSE.hits.hits[0]._source,
+          ...elasticFullResponseFixture().hits.hits[0]._source,
           groupOwner: '-1',
         }
         record = await firstValueFrom(

@@ -1,25 +1,25 @@
 import { getGeometryFromGeoJSON } from './geojson'
 import { GeometryCollection } from 'geojson'
-import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from '@geonetwork-ui/common/fixtures'
+import { polygonFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 
 describe('geojson utils', () => {
   describe('getGeometryFromGeoJSON', () => {
     let input
-    const output = FEATURE_COLLECTION_POLYGON_FIXTURE_4326.features[0].geometry
+    const output = polygonFeatureCollectionFixture().features[0].geometry
     describe('from a feature collection', () => {
       beforeEach(() => {
-        input = FEATURE_COLLECTION_POLYGON_FIXTURE_4326
+        input = polygonFeatureCollectionFixture()
       })
       it('returns the geometry of the first feature', () => {
-        expect(getGeometryFromGeoJSON(input)).toBe(output)
+        expect(getGeometryFromGeoJSON(input)).toEqual(output)
       })
     })
     describe('from a feature', () => {
       beforeEach(() => {
-        input = FEATURE_COLLECTION_POLYGON_FIXTURE_4326.features[0]
+        input = polygonFeatureCollectionFixture().features[0]
       })
       it('returns the feature geometry', () => {
-        expect(getGeometryFromGeoJSON(input)).toBe(output)
+        expect(getGeometryFromGeoJSON(input)).toEqual(output)
       })
     })
     describe('from a geometry collection', () => {
@@ -35,10 +35,10 @@ describe('geojson utils', () => {
     })
     describe('from a geometry', () => {
       beforeEach(() => {
-        input = FEATURE_COLLECTION_POLYGON_FIXTURE_4326.features[0].geometry
+        input = polygonFeatureCollectionFixture().features[0].geometry
       })
       it('returns the geometry', () => {
-        expect(getGeometryFromGeoJSON(input)).toBe(output)
+        expect(getGeometryFromGeoJSON(input)).toEqual(output)
       })
     })
     describe('from anything else', () => {

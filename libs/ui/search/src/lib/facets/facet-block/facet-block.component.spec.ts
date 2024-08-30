@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms'
 import { By } from '@angular/platform-browser'
 import { TranslateModule } from '@ngx-translate/core'
 import { FacetItemStubComponent } from '../facet-item/facet-item.component'
-import { BLOCK_MODEL_FIXTURE, EMPTY_BLOCK_MODEL_FIXTURE } from '../fixtures'
+import { blockModelFixture, emptyBlockModelFixture } from '../fixtures'
 import { FacetBlockComponent } from './facet-block.component'
 
 describe('FacetBlockComponent', () => {
@@ -32,7 +32,7 @@ describe('FacetBlockComponent', () => {
     fixture = TestBed.createComponent(FacetBlockComponent)
     component = fixture.componentInstance
     de = fixture.debugElement
-    component.model = BLOCK_MODEL_FIXTURE
+    component.model = blockModelFixture()
     component.selectedPaths = []
     fixture.detectChanges()
   })
@@ -95,7 +95,7 @@ describe('FacetBlockComponent', () => {
     })
     describe('when no include filter', () => {
       beforeEach(() => {
-        component.model = EMPTY_BLOCK_MODEL_FIXTURE
+        component.model = emptyBlockModelFixture()
         fixture.detectChanges()
       })
       it('adds the filter input with a value', () => {
@@ -126,8 +126,8 @@ describe('FacetBlockComponent', () => {
     let items: DebugElement[]
     beforeEach(() => {
       component.selectedPaths = [
-        [BLOCK_MODEL_FIXTURE.key, 'Romania'],
-        [BLOCK_MODEL_FIXTURE.key, 'Austria'],
+        [blockModelFixture().key, 'Romania'],
+        [blockModelFixture().key, 'Austria'],
       ]
       fixture.detectChanges()
       items = de.queryAll(By.directive(FacetItemStubComponent))
@@ -164,7 +164,7 @@ describe('EmptyFacetBlockComponent', () => {
     fixture = TestBed.createComponent(FacetBlockComponent)
     component = fixture.componentInstance
     de = fixture.debugElement
-    component.model = EMPTY_BLOCK_MODEL_FIXTURE
+    component.model = emptyBlockModelFixture()
     component.selectedPaths = []
     fixture.detectChanges()
   })

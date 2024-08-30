@@ -1,9 +1,9 @@
 import * as MdViewActions from './mdview.actions'
 import { initialMetadataViewState, reducer } from './mdview.reducer'
 import {
-  A_USER_FEEDBACK,
-  DATASET_RECORDS,
-  SOME_USER_FEEDBACKS,
+  datasetRecordsFixture,
+  someUserFeedbacksFixture,
+  userFeedbackFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 
@@ -47,7 +47,7 @@ describe('metadataViewReducer', () => {
     let action
 
     beforeEach(() => {
-      const { uniqueIdentifier, title, ...rest } = DATASET_RECORDS[0]
+      const { uniqueIdentifier, title, ...rest } = datasetRecordsFixture()[0]
       action = MdViewActions.setIncompleteMetadata({
         incomplete: {
           uniqueIdentifier,
@@ -75,7 +75,7 @@ describe('metadataViewReducer', () => {
 
     beforeEach(() => {
       action = MdViewActions.loadFullMetadataSuccess({
-        full: DATASET_RECORDS[0],
+        full: datasetRecordsFixture()[0],
       })
     })
 
@@ -88,7 +88,7 @@ describe('metadataViewReducer', () => {
         ...initialMetadataViewState,
         error: null,
         loadingFull: false,
-        metadata: DATASET_RECORDS[0],
+        metadata: datasetRecordsFixture()[0],
       })
     })
   })
@@ -121,7 +121,7 @@ describe('metadataViewReducer', () => {
 
     beforeEach(() => {
       action = MdViewActions.setRelated({
-        related: [DATASET_RECORDS[1]],
+        related: [datasetRecordsFixture()[1]],
       })
     })
 
@@ -129,7 +129,7 @@ describe('metadataViewReducer', () => {
       const state = reducer({ ...initialMetadataViewState }, action)
       expect(state).toEqual({
         ...initialMetadataViewState,
-        related: [DATASET_RECORDS[1]],
+        related: [datasetRecordsFixture()[1]],
       })
     })
   })
@@ -163,9 +163,9 @@ describe('metadataViewReducer', () => {
       const state = reducer(
         {
           ...initialMetadataViewState,
-          related: [DATASET_RECORDS[1]],
+          related: [datasetRecordsFixture()[1]],
           loadingFull: false,
-          metadata: DATASET_RECORDS[0],
+          metadata: datasetRecordsFixture()[0],
         },
         action
       )
@@ -199,7 +199,7 @@ describe('metadataViewReducer', () => {
 
     beforeEach(() => {
       action = MdViewActions.addUserFeedback({
-        userFeedback: A_USER_FEEDBACK,
+        userFeedback: userFeedbackFixture(),
       })
     })
 
@@ -217,7 +217,7 @@ describe('metadataViewReducer', () => {
 
     beforeEach(() => {
       action = MdViewActions.loadUserFeedbacksSuccess({
-        userFeedbacks: SOME_USER_FEEDBACKS,
+        userFeedbacks: someUserFeedbacksFixture,
       })
     })
 
@@ -232,7 +232,7 @@ describe('metadataViewReducer', () => {
         addUserFeedbackLoading: false,
         allUserFeedbacksLoading: false,
         loadingFull: false,
-        userFeedbacks: SOME_USER_FEEDBACKS,
+        userFeedbacks: someUserFeedbacksFixture,
       })
     })
   })

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { RecordsCountComponent } from './records-count.component'
 import { By } from '@angular/platform-browser'
 import { BehaviorSubject } from 'rxjs'
@@ -9,7 +9,7 @@ import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-comp
 import { TranslateTestingModule } from 'ngx-translate-testing'
 
 class SearchFacadeMock {
-  results$ = new BehaviorSubject(DATASET_RECORDS)
+  results$ = new BehaviorSubject(datasetRecordsFixture())
   resultsHits$ = new BehaviorSubject(1000)
 }
 class SelectionServiceMock {

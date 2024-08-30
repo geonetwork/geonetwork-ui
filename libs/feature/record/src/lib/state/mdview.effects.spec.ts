@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing'
 import {
-  A_USER_FEEDBACK,
-  DATASET_RECORDS,
+  datasetRecordsFixture,
   SAMPLE_AGGREGATIONS_RESULTS,
-  SAMPLE_SEARCH_RESULTS,
-  SOME_USER_FEEDBACKS,
+  searchResultsFixture,
+  someUserFeedbacksFixture,
+  userFeedbackFixture,
 } from '@geonetwork-ui/common/fixtures'
 
 import { provideMockActions } from '@ngrx/effects/testing'
@@ -26,14 +26,14 @@ const full = {
 } as CatalogRecord
 
 class RecordsRepositoryMock {
-  aggregate = jest.fn(() => of(SAMPLE_AGGREGATIONS_RESULTS))
-  search = jest.fn(() => of(SAMPLE_SEARCH_RESULTS))
-  getRecord = jest.fn(() => of(DATASET_RECORDS[0]))
-  getSimilarRecords = jest.fn(() => of(DATASET_RECORDS))
+  aggregate = jest.fn(() => of(SAMPLE_AGGREGATIONS_RESULTS()))
+  search = jest.fn(() => of(searchResultsFixture()))
+  getRecord = jest.fn(() => of(datasetRecordsFixture()[0]))
+  getSimilarRecords = jest.fn(() => of(datasetRecordsFixture()))
 }
 
 class PlatformServiceInterfaceMock {
-  getUserFeedbacks = jest.fn(() => of(SOME_USER_FEEDBACKS))
+  getUserFeedbacks = jest.fn(() => of(someUserFeedbacksFixture()))
   postUserFeedbacks = jest.fn(() => of(undefined))
 }
 
@@ -74,7 +74,7 @@ describe('MdViewEffects', () => {
         })
         const expected = hot('-a-|', {
           a: MdViewActions.loadFullMetadataSuccess({
-            full: DATASET_RECORDS[0],
+            full: datasetRecordsFixture()[0] as CatalogRecord,
           }),
         })
         expect(effects.loadFullMetadata$).toBeObservable(expected)
@@ -118,7 +118,9 @@ describe('MdViewEffects', () => {
           a: MdViewActions.loadFullMetadataSuccess({ full }),
         })
         const expected = hot('-a-|', {
-          a: MdViewActions.setRelated({ related: DATASET_RECORDS }),
+          a: MdViewActions.setRelated({
+            related: datasetRecordsFixture() as CatalogRecord[],
+          }),
         })
         expect(effects.loadRelatedRecords$).toBeObservable(expected)
       })
@@ -147,7 +149,7 @@ describe('MdViewEffects', () => {
         })
         const expected = hot('-a-', {
           a: MdViewActions.loadUserFeedbacksSuccess({
-            userFeedbacks: SOME_USER_FEEDBACKS,
+            userFeedbacks: someUserFeedbacksFixture(),
           }),
         })
 
@@ -185,7 +187,7 @@ describe('MdViewEffects', () => {
         })
         const expected = hot('-a', {
           a: MdViewActions.loadUserFeedbacksSuccess({
-            userFeedbacks: SOME_USER_FEEDBACKS,
+            userFeedbacks: someUserFeedbacksFixture(),
           }),
         })
 
@@ -221,11 +223,13 @@ describe('MdViewEffects', () => {
     describe('when addUserFeedback success', () => {
       it('should dispatch addUserFeedbackSuccess when API call is successful', () => {
         actions = hot('-a-', {
-          a: MdViewActions.addUserFeedback({ userFeedback: A_USER_FEEDBACK }),
+          a: MdViewActions.addUserFeedback({
+            userFeedback: userFeedbackFixture(),
+          }),
         })
         const expected = hot('-a-', {
           a: MdViewActions.addUserFeedbackSuccess({
-            datasetUuid: A_USER_FEEDBACK.metadataUUID,
+            datasetUuid: userFeedbackFixture().metadataUUID,
           }),
         })
 
@@ -246,7 +250,9 @@ describe('MdViewEffects', () => {
         const error = 'API error'
 
         actions = hot('-a-', {
-          a: MdViewActions.addUserFeedback({ userFeedback: A_USER_FEEDBACK }),
+          a: MdViewActions.addUserFeedback({
+            userFeedback: userFeedbackFixture(),
+          }),
         })
         const expected = hot('-a', {
           a: MdViewActions.addUserFeedbackFailure({ otherError: error }),

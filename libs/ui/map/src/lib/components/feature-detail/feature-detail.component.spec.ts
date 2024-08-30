@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { OL_FEATURE_FIXTURE } from '@geonetwork-ui/common/fixtures'
+import { openLayerFeatureFixture } from '@geonetwork-ui/common/fixtures'
 import { Feature } from 'ol'
 import { Geometry } from 'ol/geom'
 
@@ -41,7 +41,7 @@ describe('FeatureDetailComponent', () => {
       feature = new Feature()
       feature.set('id', 123)
       feature.set('name', 'ol_feature')
-      component.feature = OL_FEATURE_FIXTURE
+      component.feature = openLayerFeatureFixture()
       fixture.detectChanges()
     })
     it('displays the info', () => {

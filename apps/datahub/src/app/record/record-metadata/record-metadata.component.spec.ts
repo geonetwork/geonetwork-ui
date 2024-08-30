@@ -15,7 +15,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject, of } from 'rxjs'
 import { RecordMetadataComponent } from './record-metadata.component'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
   CatalogRecord,
@@ -27,7 +27,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 
 const SAMPLE_RECORD = {
-  ...DATASET_RECORDS[0],
+  ...datasetRecordsFixture()[0],
   extras: {
     catalogUuid: 'catalog-0001',
   },

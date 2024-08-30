@@ -1,6 +1,6 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
 import { FacetBlockComponent } from './facet-block.component'
-import { BLOCK_MODEL_FIXTURE } from '../fixtures'
+import { blockModelFixture } from '../fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 import { FacetItemComponent } from '../facet-item/facet-item.component'
 import { FormsModule } from '@angular/forms'
@@ -28,7 +28,7 @@ export const Primary: StoryObj<FacetBlockComponent> = {
   args: {
     collapsed: false,
     filter: '',
-    model: BLOCK_MODEL_FIXTURE,
+    model: blockModelFixture(),
     selectedPaths: [
       ['tag', 'Austria'],
       ['tag', 'Denmark'],

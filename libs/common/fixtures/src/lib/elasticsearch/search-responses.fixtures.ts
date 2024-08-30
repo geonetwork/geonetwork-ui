@@ -1,6 +1,4 @@
-import { deepFreeze } from '../utils/freeze'
-
-export const aggsOnly = deepFreeze({
+export const elasticAggsOnlyFixture = () => ({
   took: 7,
   timed_out: false,
   _shards: { total: 1, successful: 1, skipped: 0, failed: 0 },
@@ -61,7 +59,7 @@ export const aggsOnly = deepFreeze({
   },
 })
 
-export const hitsOnly = deepFreeze({
+export const elasticHitsOnlyFixture = () => ({
   hits: {
     max_score: 1,
     hits: [
@@ -220,12 +218,12 @@ export const hitsOnly = deepFreeze({
   },
 })
 
-export const simpleWithAgg = deepFreeze({
+export const elasticSimpleWithAggsFixture = () => ({
   hits: { hits: [] },
   aggregations: { abc: {} },
 })
 
-export const summaryHits = deepFreeze({
+export const elasticSummaryHitsFixture = () => ({
   took: 3,
   timed_out: false,
   _shards: { total: 1, successful: 1, skipped: 0, failed: 0 },

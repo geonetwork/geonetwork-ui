@@ -1,12 +1,12 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { SITE_FIXTURES, SiteApiService } from '@geonetwork-ui/data-access/gn4'
+import { SiteApiService, siteFixture } from '@geonetwork-ui/data-access/gn4'
 import { BehaviorSubject } from 'rxjs'
 
 import { SiteTitleComponent } from './site-title.component'
 
 class SiteApiServiceMock {
-  getSiteOrPortalDescription = jest.fn(() => new BehaviorSubject(SITE_FIXTURES))
+  getSiteOrPortalDescription = jest.fn(() => new BehaviorSubject(siteFixture()))
 }
 describe('CatalogTitleComponent', () => {
   let component: SiteTitleComponent

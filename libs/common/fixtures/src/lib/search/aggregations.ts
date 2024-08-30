@@ -1,4 +1,3 @@
-import { deepFreeze } from '../utils/freeze'
 import {
   AggregationParams,
   Aggregations,
@@ -30,13 +29,13 @@ export const FILTERS_AGGREGATION: AggregationParams = {
     },
   },
 }
-export const SAMPLE_AGGREGATIONS_PARAMS: AggregationsParams = deepFreeze({
+export const SAMPLE_AGGREGATIONS_PARAMS = (): AggregationsParams => ({
   myField: TERMS_AGGREGATION,
   myValueField: HISTOGRAM_AGGREGATION,
   myFilters: FILTERS_AGGREGATION,
 })
 
-export const SAMPLE_AGGREGATIONS_RESULTS: Aggregations = deepFreeze({
+export const SAMPLE_AGGREGATIONS_RESULTS = (): Aggregations => ({
   myField: {
     buckets: [
       { term: 'Hungary', count: 20 },

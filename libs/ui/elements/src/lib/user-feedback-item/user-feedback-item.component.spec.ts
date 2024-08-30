@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { UserFeedbackItemComponent } from './user-feedback-item.component'
 import { ChangeDetectionStrategy } from '@angular/core'
-import { SOME_USER_FEEDBACKS } from '@geonetwork-ui/common/fixtures'
+import { someUserFeedbacksFixture } from '@geonetwork-ui/common/fixtures'
 import { TimeSincePipe } from './time-since.pipe'
 
 describe('UserFeedbackItemComponent', () => {
@@ -23,7 +23,10 @@ describe('UserFeedbackItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UserFeedbackItemComponent)
     component = fixture.componentInstance
-    component.userFeedbackParent = { ...SOME_USER_FEEDBACKS[0], avatarUrl: '' }
+    component.userFeedbackParent = {
+      ...someUserFeedbacksFixture[0],
+      avatarUrl: '',
+    }
     fixture.detectChanges()
   })
 

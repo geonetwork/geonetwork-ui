@@ -10,7 +10,7 @@ import {
   initialEditorState,
 } from './editor.reducer'
 import { provideMockStore } from '@ngrx/store/testing'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 
 interface TestSchema {
   editor: EditorState
@@ -51,8 +51,10 @@ describe('EditorFacade', () => {
 
     it('openRecord() should dispatch openRecord action', () => {
       const spy = jest.spyOn(store, 'dispatch')
-      facade.openRecord(DATASET_RECORDS[0])
-      const action = EditorActions.openRecord({ record: DATASET_RECORDS[0] })
+      facade.openRecord(datasetRecordsFixture()[0])
+      const action = EditorActions.openRecord({
+        record: datasetRecordsFixture()[0],
+      })
       expect(spy).toHaveBeenCalledWith(action)
     })
 

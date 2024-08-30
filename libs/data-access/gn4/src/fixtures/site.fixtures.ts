@@ -1,12 +1,12 @@
-export const SITE_FIXTURES = {
+export const siteFixture = () => ({
   'system/platform/subVersion': 'alpha.2',
   'system/platform/version': '4.0.0',
   'system/site/name': 'GeoNetwork 4',
   'system/site/organization': 'titellus',
   'system/site/siteId': '04fe602b-fc46-4e6b-ac5a-138c6153eceb',
-}
+})
 
-export const SETTINGS_FIXTURES = {
+export const settingsFixture = () => ({
   'system/site/name': 'GeoNetwork 4',
   'system/site/siteId': '04fe602b-fc46-4e6b-ac5a-138c6153eceb',
   'system/site/organization': 'titellus',
@@ -62,4 +62,4 @@ export const SETTINGS_FIXTURES = {
   'system/publication/doi/doilandingpagetemplate':
     'http://localhost:8080/geonetwork/srv/resources/records/{{uuid}}',
   'system/feedback/mailServer/hostIsDefined': false,
-}
+})

@@ -1,6 +1,6 @@
 import 'jest-preset-angular/setup-jest'
 import { TestBed } from '@angular/core/testing'
-import { ES_LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
+import { elasticLinkFixture } from '@geonetwork-ui/common/fixtures'
 import { Gn4FieldMapper } from './gn4.field.mapper'
 import { MetadataUrlService } from './metadata-url.service'
 import { TranslateService } from '@ngx-translate/core'
@@ -40,8 +40,8 @@ describe('Gn4FieldMapper', () => {
     })
     describe('#getLinkType', () => {
       it('correctly detects the fixtures types', () => {
-        const allLinks = Object.keys(ES_LINK_FIXTURES).map(
-          (key) => ES_LINK_FIXTURES[key]
+        const allLinks = Object.keys(elasticLinkFixture()).map(
+          (key) => elasticLinkFixture()[key]
         )
         const linkTypes = allLinks.map((fixture) =>
           service.getLinkType(fixture.url, fixture.protocol)

@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { TABLE_ITEM_FIXTURE, TABLE_ITEM_FIXTURE_HAB } from './table.fixtures'
+import { someHabTableItemFixture, tableItemFixture } from './table.fixtures'
 import { TableComponent } from './table.component'
 import { By } from '@angular/platform-browser'
 import { TableItemSizeDirective } from 'ng-table-virtual-scroll'
@@ -32,7 +32,7 @@ describe('TableComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TableComponent)
     component = fixture.componentInstance
-    component.data = TABLE_ITEM_FIXTURE
+    component.data = tableItemFixture()
   })
 
   it('should create', () => {
@@ -55,7 +55,7 @@ describe('TableComponent', () => {
     let previousDataSource
     beforeEach(() => {
       previousDataSource = component.dataSource
-      component.data = TABLE_ITEM_FIXTURE_HAB
+      component.data = someHabTableItemFixture()
       fixture.detectChanges()
     })
     it('updates the internal data source', () => {

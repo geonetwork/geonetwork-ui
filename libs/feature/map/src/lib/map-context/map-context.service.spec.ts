@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { TestBed } from '@angular/core/testing'
-import { MAP_CONFIG_FIXTURE, MapConfig } from '@geonetwork-ui/util/app-config'
+import { MapConfig, mapConfigFixture } from '@geonetwork-ui/util/app-config'
 import { FeatureCollection } from 'geojson'
 import { Geometry } from 'ol/geom'
 import TileLayer from 'ol/layer/Tile'
@@ -13,18 +13,18 @@ import { Style } from 'ol/style'
 import View from 'ol/View'
 import GeoJSON from 'ol/format/GeoJSON'
 import {
-  DEFAULT_STYLE_FIXTURE,
-  DEFAULT_STYLE_HL_FIXTURE,
+  defaultMapStyleFixture,
+  defaultMapStyleHlFixture,
 } from '../style/map-style.fixtures'
 import { MapStyleService } from '../style/map-style.service'
 import {
-  MAP_CTX_EXTENT_FIXTURE,
-  MAP_CTX_FIXTURE,
-  MAP_CTX_LAYER_GEOJSON_FIXTURE,
-  MAP_CTX_LAYER_GEOJSON_REMOTE_FIXTURE,
-  MAP_CTX_LAYER_WFS_FIXTURE,
-  MAP_CTX_LAYER_WMS_FIXTURE,
-  MAP_CTX_LAYER_XYZ_FIXTURE,
+  mapCtxExtentFixture,
+  mapCtxFixture,
+  mapCtxLayerGeojsonFixture,
+  mapCtxLayerGeojsonRemoteFixture,
+  mapCtxLayerWfsFixture,
+  mapCtxLayerWmsFixture,
+  mapCtxLayerXyzFixture,
 } from './map-context.fixtures'
 
 import {
@@ -39,8 +39,8 @@ import ImageLayer from 'ol/layer/Image'
 const mapStyleServiceMock = {
   createDefaultStyle: jest.fn(() => new Style()),
   styles: {
-    default: DEFAULT_STYLE_FIXTURE,
-    defaultHL: DEFAULT_STYLE_HL_FIXTURE,
+    default: defaultMapStyleFixture(),
+    defaultHL: defaultMapStyleHlFixture(),
   },
 }
 
@@ -110,7 +110,7 @@ describe('MapContextService', () => {
 
     describe('XYZ', () => {
       beforeEach(() => {
-        layerModel = MAP_CTX_LAYER_XYZ_FIXTURE
+        layerModel = mapCtxLayerXyzFixture()
         layer = service.createLayer(layerModel)
       })
       it('create a tile layer', () => {
@@ -135,10 +135,10 @@ describe('MapContextService', () => {
       describe('when mapConfig.DO_NOT_TILE_WMS === false', () => {
         beforeEach(() => {
           const mapConfig: MapConfig = {
-            ...MAP_CONFIG_FIXTURE,
+            ...mapConfigFixture(),
             DO_NOT_TILE_WMS: false,
           }
-          ;(layerModel = MAP_CTX_LAYER_WMS_FIXTURE),
+          ;(layerModel = mapCtxLayerWmsFixture()),
             (layer = service.createLayer(layerModel, mapConfig))
         })
         it('create a tile layer', () => {
@@ -167,10 +167,10 @@ describe('MapContextService', () => {
       describe('when mapConfig.DO_NOT_TILE_WMS === true', () => {
         beforeEach(() => {
           const mapConfig: MapConfig = {
-            ...MAP_CONFIG_FIXTURE,
+            ...mapConfigFixture(),
             DO_NOT_TILE_WMS: true,
           }
-          ;(layerModel = MAP_CTX_LAYER_WMS_FIXTURE),
+          ;(layerModel = mapCtxLayerWmsFixture()),
             (layer = service.createLayer(layerModel, mapConfig))
         })
         it('create an image layer', () => {
@@ -191,7 +191,7 @@ describe('MapContextService', () => {
 
     describe('WFS', () => {
       beforeEach(() => {
-        ;(layerModel = MAP_CTX_LAYER_WFS_FIXTURE),
+        ;(layerModel = mapCtxLayerWfsFixture()),
           (layer = service.createLayer(layerModel))
       })
       it('create a vector layer', () => {
@@ -214,7 +214,7 @@ describe('MapContextService', () => {
     describe('GEOJSON', () => {
       describe('with inline data', () => {
         beforeEach(() => {
-          layerModel = MAP_CTX_LAYER_GEOJSON_FIXTURE
+          layerModel = mapCtxLayerGeojsonFixture()
           layer = service.createLayer(layerModel)
         })
         it('create a VectorLayer', () => {
@@ -233,7 +233,7 @@ describe('MapContextService', () => {
       })
       describe('with inline data as string', () => {
         beforeEach(() => {
-          layerModel = { ...MAP_CTX_LAYER_GEOJSON_FIXTURE }
+          layerModel = { ...mapCtxLayerGeojsonFixture() }
           layerModel.data = JSON.stringify(layerModel.data)
           layer = service.createLayer(layerModel)
         })
@@ -249,7 +249,7 @@ describe('MapContextService', () => {
           const source = layer.getSource()
           const features = source.getFeatures()
           expect(features.length).toBe(
-            (MAP_CTX_LAYER_GEOJSON_FIXTURE.data as FeatureCollection).features
+            (mapCtxLayerGeojsonFixture().data as FeatureCollection).features
               .length
           )
         })
@@ -258,7 +258,7 @@ describe('MapContextService', () => {
         beforeEach(() => {
           const spy = jest.spyOn(global.console, 'warn')
           spy.mockClear()
-          layerModel = { ...MAP_CTX_LAYER_GEOJSON_FIXTURE, data: 'blargz' }
+          layerModel = { ...mapCtxLayerGeojsonFixture(), data: 'blargz' }
           layer = service.createLayer(layerModel)
         })
         it('create a VectorLayer', () => {
@@ -276,7 +276,7 @@ describe('MapContextService', () => {
       })
       describe('with remote file url', () => {
         beforeEach(() => {
-          layerModel = MAP_CTX_LAYER_GEOJSON_REMOTE_FIXTURE
+          layerModel = mapCtxLayerGeojsonRemoteFixture()
           layer = service.createLayer(layerModel)
         })
         it('create a VectorLayer', () => {
@@ -302,7 +302,7 @@ describe('MapContextService', () => {
   describe('#createView', () => {
     describe('from center and zoom', () => {
       let view
-      const contextModel = MAP_CTX_FIXTURE
+      const contextModel = mapCtxFixture()
       beforeEach(() => {
         view = service.createView(contextModel.view)
       })
@@ -321,8 +321,8 @@ describe('MapContextService', () => {
     })
     describe('from extent', () => {
       let view
-      const contextModel = MAP_CTX_FIXTURE
-      contextModel.view.extent = MAP_CTX_EXTENT_FIXTURE
+      const contextModel = mapCtxFixture()
+      contextModel.view.extent = mapCtxExtentFixture()
       const map = new Map({})
       map.setSize([100, 100])
       beforeEach(() => {
@@ -345,7 +345,7 @@ describe('MapContextService', () => {
   describe('#resetMapFromContext', () => {
     describe('without config', () => {
       const map = new Map({})
-      const mapContext = MAP_CTX_FIXTURE
+      const mapContext = mapCtxFixture()
       beforeEach(() => {
         service.resetMapFromContext(map, mapContext)
       })
@@ -371,8 +371,8 @@ describe('MapContextService', () => {
     })
     describe('with config', () => {
       const map = new Map({})
-      const mapContext = MAP_CTX_FIXTURE
-      const mapConfig = MAP_CONFIG_FIXTURE
+      const mapContext = mapCtxFixture()
+      const mapConfig = mapConfigFixture()
       beforeEach(() => {
         mapConfig.DO_NOT_USE_DEFAULT_BASEMAP = true
         service.resetMapFromContext(map, mapContext, mapConfig)
@@ -404,8 +404,8 @@ describe('MapContextService', () => {
     })
     describe('with config, but keeping default basemap', () => {
       const map = new Map({})
-      const mapContext = MAP_CTX_FIXTURE
-      const mapConfig = MAP_CONFIG_FIXTURE
+      const mapContext = mapCtxFixture()
+      const mapConfig = mapConfigFixture()
       beforeEach(() => {
         mapConfig.DO_NOT_USE_DEFAULT_BASEMAP = false
         service.resetMapFromContext(map, mapContext, mapConfig)
@@ -425,9 +425,9 @@ describe('MapContextService', () => {
         center: null,
         zoom: null,
         layers: [
-          MAP_CTX_LAYER_XYZ_FIXTURE,
-          MAP_CTX_LAYER_WMS_FIXTURE,
-          MAP_CTX_LAYER_GEOJSON_FIXTURE,
+          mapCtxLayerXyzFixture(),
+          mapCtxLayerWmsFixture(),
+          mapCtxLayerGeojsonFixture(),
         ],
       }
       beforeEach(() => {
@@ -458,7 +458,7 @@ describe('MapContextService', () => {
     describe('uses fallback view from config', () => {
       let view
       const map = new Map({})
-      const mapConfig = MAP_CONFIG_FIXTURE
+      const mapConfig = mapConfigFixture()
       const mapContext = {
         extent: null,
         center: null,
@@ -492,8 +492,8 @@ describe('MapContextService', () => {
     })
   })
   describe('#mergeMapConfigWithContext', () => {
-    const mapContext = MAP_CTX_FIXTURE
-    const mapConfig = MAP_CONFIG_FIXTURE
+    const mapContext = mapCtxFixture()
+    const mapConfig = mapConfigFixture()
     beforeEach(() => {
       mapConfig.DO_NOT_USE_DEFAULT_BASEMAP = true
     })
@@ -502,22 +502,22 @@ describe('MapContextService', () => {
         mapContext,
         mapConfig
       )
-      const layersContext = MAP_CONFIG_FIXTURE.MAP_LAYERS.map(
+      const layersContext = mapConfigFixture().MAP_LAYERS.map(
         service.getContextLayerFromConfig
       )
 
       expect(mergedMapContext).toEqual({
-        ...MAP_CTX_FIXTURE,
+        ...mapCtxFixture(),
         view: {
-          ...MAP_CTX_FIXTURE.view,
-          maxZoom: MAP_CONFIG_FIXTURE.MAX_ZOOM,
-          maxExtent: MAP_CONFIG_FIXTURE.MAX_EXTENT,
+          ...mapCtxFixture().view,
+          maxZoom: mapConfigFixture().MAX_ZOOM,
+          maxExtent: mapConfigFixture().MAX_EXTENT,
         },
         layers: [
           layersContext[0],
           layersContext[1],
           layersContext[2],
-          ...MAP_CTX_FIXTURE.layers,
+          ...mapCtxFixture().layers,
         ],
       })
     })

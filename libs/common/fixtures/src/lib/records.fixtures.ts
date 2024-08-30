@@ -1,7 +1,6 @@
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
-import { deepFreeze } from './utils'
 
-export const DATASET_RECORDS: DatasetRecord[] = deepFreeze([
+export const datasetRecordsFixture = () => [
   {
     uniqueIdentifier: 'my-dataset-001',
     kind: 'dataset',
@@ -259,9 +258,9 @@ Ce lot de données produit en 2019, a été numérisé à partir du PCI Vecteur 
     updateFrequency: 'unknown',
     languages: ['fr', 'de'],
   },
-])
+]
 
-export const DATASET_RECORD_SIMPLE: DatasetRecord = {
+export const simpleDatasetRecordFixture = (): DatasetRecord => ({
   uniqueIdentifier: 'my-dataset-001',
   kind: 'dataset',
   languages: [],
@@ -304,9 +303,10 @@ export const DATASET_RECORD_SIMPLE: DatasetRecord = {
     },
   ],
   updateFrequency: { per: 'month', updatedTimes: 3 },
-}
+})
 
-export const DATASET_RECORD_SIMPLE_AS_XML = `<?xml version="1.0" encoding="UTF-8"?>
+export const simpleDatasetRecordAsXmlFixture =
+  (): string => `<?xml version="1.0" encoding="UTF-8"?>
 <mdb:MD_Metadata xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/2.0" xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0" xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0" xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/2.0" xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0" xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0" xmlns:gcx="http://standards.iso.org/iso/19115/-3/gcx/1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mmi="http://standards.iso.org/iso/19115/-3/mmi/1.0" xmlns:mrd="http://standards.iso.org/iso/19115/-3/mrd/1.0" xmlns:mrl="http://standards.iso.org/iso/19115/-3/mrl/2.0">
     <mdb:metadataIdentifier>
         <mcc:MD_Identifier>

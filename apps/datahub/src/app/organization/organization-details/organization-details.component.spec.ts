@@ -11,8 +11,8 @@ import { BehaviorSubject, of } from 'rxjs'
 import { OrganizationDetailsComponent } from './organization-details.component'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
-  DATASET_RECORDS,
-  ORGANISATIONS_FIXTURE,
+  datasetRecordsFixture,
+  someOrganizationsFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common'
 import {
@@ -48,13 +48,14 @@ class OrganisationsServiceMock {
       orgs: orgs.reduce((prev, curr) => ({ ...prev, [curr.name]: true }), {}),
     })
   )
-  organisations$ = of(ORGANISATIONS_FIXTURE)
+  organisations$ = of(someOrganizationsFixture())
 }
 
-const anOrganizationWithManyDatasets: Organization = ORGANISATIONS_FIXTURE[0]
+const anOrganizationWithManyDatasets: Organization =
+  someOrganizationsFixture()[0]
 
-const oneDataset = [DATASET_RECORDS[0]]
-const manyDatasets = DATASET_RECORDS.concat(DATASET_RECORDS[0])
+const oneDataset = [datasetRecordsFixture()[0]]
+const manyDatasets = datasetRecordsFixture().concat(datasetRecordsFixture()[0])
 
 const organizationIsLoading = new BehaviorSubject(false)
 const totalPages = new BehaviorSubject(10)

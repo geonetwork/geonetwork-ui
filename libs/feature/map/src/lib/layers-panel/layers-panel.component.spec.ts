@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { LayersPanelComponent } from './layers-panel.component'
 import { of } from 'rxjs'
-import { MAP_CTX_LAYER_XYZ_FIXTURE } from '../map-context/map-context.fixtures'
+import { mapCtxLayerXyzFixture } from '../map-context/map-context.fixtures'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { MapFacade } from '../+state/map.facade'
 
 class MapFacadeMock {
-  layers$ = of([MAP_CTX_LAYER_XYZ_FIXTURE])
+  layers$ = of([mapCtxLayerXyzFixture()])
   removeLayer = jest.fn()
 }
 

@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing'
 import { UsersApiService } from '@geonetwork-ui/data-access/gn4'
-import { USERS_FIXTURE } from '@geonetwork-ui/common/fixtures'
+import { someUsersFixture } from '@geonetwork-ui/common/fixtures'
 import { of } from 'rxjs'
 
 import { UsersService } from './users.service'
 
 class UsersApiServiceMock {
-  getUsers = jest.fn(() => of(USERS_FIXTURE()))
+  getUsers = jest.fn(() => of(someUsersFixture()))
 }
 
 describe('UsersService', () => {

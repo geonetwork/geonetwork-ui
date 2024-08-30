@@ -6,7 +6,7 @@ import { readFirst } from '@nx/angular/testing'
 import { MapEffects } from './map.effects'
 import { MapFacade } from './map.facade'
 import { MAP_FEATURE_KEY, mapReducer, MapState } from './map.reducer'
-import { MAP_CTX_LAYER_WMS_FIXTURE } from '../map-context/map-context.fixtures'
+import { mapCtxLayerWmsFixture } from '../map-context/map-context.fixtures'
 
 interface TestSchema {
   map: MapState
@@ -47,7 +47,7 @@ describe('MapFacade', () => {
         expect(list.length).toBe(0)
 
         facade.addLayer({
-          ...MAP_CTX_LAYER_WMS_FIXTURE,
+          ...mapCtxLayerWmsFixture(),
           title: 'world',
         })
 
@@ -57,7 +57,7 @@ describe('MapFacade', () => {
 
         facade.addLayerAtIndex(
           {
-            ...MAP_CTX_LAYER_WMS_FIXTURE,
+            ...mapCtxLayerWmsFixture(),
             title: 'hello',
           },
           0

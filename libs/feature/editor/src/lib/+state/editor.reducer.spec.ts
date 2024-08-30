@@ -5,13 +5,14 @@ import {
   EditorState,
   initialEditorState,
 } from './editor.reducer'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 describe('Editor Reducer', () => {
   describe('valid Editor actions', () => {
     it('openRecord (with source)', () => {
       const action = EditorActions.openRecord({
-        record: DATASET_RECORDS[0],
+        record: datasetRecordsFixture()[0] as CatalogRecord,
         recordSource: '<xml>blabla</xml>',
         alreadySavedOnce: false,
       })
@@ -25,14 +26,14 @@ describe('Editor Reducer', () => {
         action
       )
 
-      expect(result.record).toBe(DATASET_RECORDS[0])
+      expect(result.record).toEqual(datasetRecordsFixture()[0])
       expect(result.changedSinceSave).toBe(false)
       expect(result.recordSource).toBe('<xml>blabla</xml>')
       expect(result.alreadySavedOnce).toBe(false)
     })
     it('openRecord (without source)', () => {
       const action = EditorActions.openRecord({
-        record: DATASET_RECORDS[0],
+        record: datasetRecordsFixture()[0] as CatalogRecord,
         alreadySavedOnce: true,
       })
       const result: EditorState = editorReducer(
@@ -45,7 +46,7 @@ describe('Editor Reducer', () => {
         action
       )
 
-      expect(result.record).toBe(DATASET_RECORDS[0])
+      expect(result.record).toEqual(datasetRecordsFixture()[0])
       expect(result.changedSinceSave).toBe(false)
       expect(result.recordSource).toBe(null)
       expect(result.alreadySavedOnce).toBe(true)
@@ -94,7 +95,10 @@ describe('Editor Reducer', () => {
         value: 'new title',
       })
       const result: EditorState = editorReducer(
-        { ...initialEditorState, record: DATASET_RECORDS[0] },
+        {
+          ...initialEditorState,
+          record: datasetRecordsFixture()[0] as CatalogRecord,
+        },
         action
       )
 
