@@ -6,7 +6,7 @@
     [ngClass]="extraClass"
     [disabled]="disabled"
     [placeholder]="placeholder"
-    [value]="value"
+    [value]="value ?? ''"
     (change)="handleChange($event)"
     (input)="handleChange($event)"
     [attr.required]="required || null"

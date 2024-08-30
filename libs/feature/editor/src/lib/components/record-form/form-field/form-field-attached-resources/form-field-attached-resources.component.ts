@@ -5,19 +5,29 @@ import {
   EventEmitter,
   Input,
   Output,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core'
 import {
   OnlineLinkResource,
   OnlineResource,
 } from '@geonetwork-ui/common/domain/model/record'
-import { FileInputComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  FileInputComponent,
+  TextAreaComponent,
+  TextInputComponent,
+} from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
 import { OnlineResourceCardComponent } from '../../../online-resource-card/online-resource-card.component'
-import { SortableListComponent } from '@geonetwork-ui/ui/layout'
+import {
+  ModalDialogComponent,
+  SortableListComponent,
+} from '@geonetwork-ui/ui/layout'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateService } from '@ngx-translate/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { Subscription } from 'rxjs'
+import { MatDialog } from '@angular/material/dialog'
 
 @Component({
   selector: 'gn-ui-form-field-attached-resources',
@@ -30,6 +40,8 @@ import { Subscription } from 'rxjs'
     CommonModule,
     SortableListComponent,
     OnlineResourceCardComponent,
+    TextInputComponent,
+    TextAreaComponent,
   ],
 })
 export class FormFieldAttachedResourcesComponent {
@@ -43,6 +55,8 @@ export class FormFieldAttachedResourcesComponent {
   @Output() valueChange: EventEmitter<Array<OnlineResource>> =
     new EventEmitter()
 
+  @ViewChild('dialogTemplate') dialogTemplate: TemplateRef<OnlineResource>
+
   private allResources: OnlineResource[] = []
   linkResources: OnlineLinkResource[] = []
   uploadProgress = undefined
@@ -52,7 +66,8 @@ export class FormFieldAttachedResourcesComponent {
     private notificationsService: NotificationsService,
     private translateService: TranslateService,
     private platformService: PlatformServiceInterface,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private dialog: MatDialog
   ) {}
 
   handleFileChange(file: File) {
@@ -109,6 +124,10 @@ export class FormFieldAttachedResourcesComponent {
     this.valueChange.emit(newResources)
   }
 
+  handleResourceModify(resource: OnlineLinkResource, index: number) {
+    this.openEditDialog(resource, index)
+  }
+
   private handleError(error: string) {
     this.uploadProgress = undefined
     this.notificationsService.showNotification({
@@ -123,5 +142,37 @@ export class FormFieldAttachedResourcesComponent {
         'editor.record.onlineResourceError.closeMessage'
       ),
     })
+  }
+
+  private openEditDialog(resource: OnlineLinkResource, index: number) {
+    const resourceCopy = {
+      ...resource,
+    }
+    this.dialog
+      .open(ModalDialogComponent, {
+        data: {
+          title: this.translateService.instant(
+            'editor.record.form.field.onlineResource.dialogTitle'
+          ),
+          body: this.dialogTemplate,
+          bodyContext: resourceCopy,
+          confirmText: this.translateService.instant(
+            'editor.record.form.field.onlineResource.confirm'
+          ),
+          cancelText: this.translateService.instant(
+            'editor.record.form.field.onlineResource.cancel'
+          ),
+        },
+      })
+      .afterClosed()
+      .subscribe((confirmed: boolean) => {
+        if (!confirmed) return
+        const newLinks = [...this.linkResources]
+        newLinks.splice(index, 1, resourceCopy)
+        this.valueChange.emit([
+          ...this.allResources.filter((r) => r.type !== 'link'),
+          ...newLinks,
+        ])
+      })
   }
 }

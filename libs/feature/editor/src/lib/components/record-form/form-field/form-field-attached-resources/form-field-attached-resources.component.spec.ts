@@ -1,11 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormFieldAttachedResourcesComponent } from './form-field-attached-resources.component'
-import { LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
+import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { TranslateModule } from '@ngx-translate/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { Subject } from 'rxjs'
+import { MatDialog, MatDialogRef } from '@angular/material/dialog'
+import { OnlineLinkResource } from '@geonetwork-ui/common/domain/model/record'
+import { ModalDialogComponent } from '@geonetwork-ui/ui/layout'
 
 let uploadSubject: Subject<any>
 class PlatformServiceInterfaceMock {
@@ -13,6 +16,13 @@ class PlatformServiceInterfaceMock {
     uploadSubject = new Subject()
     return uploadSubject
   })
+}
+export class MatDialogMock {
+  _subject = new Subject()
+  _closeWithValue = (v) => this._subject.next(v)
+  open = jest.fn(() => ({
+    afterClosed: () => this._subject,
+  }))
 }
 
 describe('FormFieldAttachedResourcesComponent', () => {
@@ -35,6 +45,11 @@ describe('FormFieldAttachedResourcesComponent', () => {
           'useClass'
         ),
         MockProvider(NotificationsService),
+        MockProvider(MatDialogRef),
+        MockProvider(MatDialog, MatDialogMock, 'useClass'),
+        // MockProvider(MatDialog, {
+        //   open: jest.fn(),
+        // }),
       ],
     }).compileComponents()
 
@@ -44,10 +59,10 @@ describe('FormFieldAttachedResourcesComponent', () => {
     component = fixture.componentInstance
     component.metadataUuid = '12345'
     component.value = [
-      LINK_FIXTURES.readmeLink,
-      LINK_FIXTURES.dataCsv,
-      LINK_FIXTURES.geodataWms,
-      LINK_FIXTURES.doiLink,
+      aSetOfLinksFixture().readmeLink(),
+      aSetOfLinksFixture().dataCsv(),
+      aSetOfLinksFixture().geodataWms(),
+      aSetOfLinksFixture().doiLink(),
     ]
     fixture.detectChanges()
   })
@@ -59,8 +74,8 @@ describe('FormFieldAttachedResourcesComponent', () => {
   describe('linkResources', () => {
     it('gives an array of link resources', () => {
       expect(component.linkResources).toEqual([
-        LINK_FIXTURES.readmeLink,
-        LINK_FIXTURES.doiLink,
+        aSetOfLinksFixture().readmeLink(),
+        aSetOfLinksFixture().doiLink(),
       ])
     })
   })
@@ -96,10 +111,10 @@ describe('FormFieldAttachedResourcesComponent', () => {
       })
       expect(component.uploadProgress).toBeUndefined()
       expect(valueChange).toEqual([
-        LINK_FIXTURES.readmeLink,
-        LINK_FIXTURES.dataCsv,
-        LINK_FIXTURES.geodataWms,
-        LINK_FIXTURES.doiLink,
+        aSetOfLinksFixture().readmeLink(),
+        aSetOfLinksFixture().dataCsv(),
+        aSetOfLinksFixture().geodataWms(),
+        aSetOfLinksFixture().doiLink(),
         {
           url: new URL('http://example.com/test-file.txt'),
           type: 'link',
@@ -142,10 +157,10 @@ describe('FormFieldAttachedResourcesComponent', () => {
     it('emits the new resources along with the other ones', () => {
       component.handleUrlChange('http://my.org/aaa/file.png')
       expect(valueChange).toEqual([
-        LINK_FIXTURES.readmeLink,
-        LINK_FIXTURES.dataCsv,
-        LINK_FIXTURES.geodataWms,
-        LINK_FIXTURES.doiLink,
+        aSetOfLinksFixture().readmeLink(),
+        aSetOfLinksFixture().dataCsv(),
+        aSetOfLinksFixture().geodataWms(),
+        aSetOfLinksFixture().doiLink(),
         {
           url: new URL('http://my.org/aaa/file.png'),
           type: 'link',
@@ -162,17 +177,56 @@ describe('FormFieldAttachedResourcesComponent', () => {
     })
     it('emits the new resources along with the other ones', () => {
       component.handleResourcesChange([
-        LINK_FIXTURES.landingPage,
-        LINK_FIXTURES.doiLink,
-        LINK_FIXTURES.readmeLink,
+        aSetOfLinksFixture().landingPage(),
+        aSetOfLinksFixture().doiLink(),
+        aSetOfLinksFixture().readmeLink(),
       ])
       expect(valueChange).toEqual([
-        LINK_FIXTURES.dataCsv,
-        LINK_FIXTURES.geodataWms,
-        LINK_FIXTURES.landingPage,
-        LINK_FIXTURES.doiLink,
-        LINK_FIXTURES.readmeLink,
+        aSetOfLinksFixture().dataCsv(),
+        aSetOfLinksFixture().geodataWms(),
+        aSetOfLinksFixture().landingPage(),
+        aSetOfLinksFixture().doiLink(),
+        aSetOfLinksFixture().readmeLink(),
       ])
+    })
+  })
+  describe('handleResourceModify', () => {
+    let valueChange
+    beforeEach(() => {
+      valueChange = null
+      component.valueChange.subscribe((v) => (valueChange = v))
+      component.handleResourceModify(
+        {
+          ...aSetOfLinksFixture().doiLink(),
+          name: 'Changed name',
+        } as OnlineLinkResource,
+        1
+      )
+    })
+    it('opens a dialog to edit the resource', () => {
+      const matDialog = TestBed.inject(MatDialog)
+      const call = (matDialog.open as jest.Mock).mock.calls[0]
+      expect(call[0]).toEqual(ModalDialogComponent)
+      expect(call[1].data.bodyContext).toEqual({
+        ...aSetOfLinksFixture().doiLink(),
+        name: 'Changed name',
+      })
+    })
+    it('if confirmed, the resource is updated', () => {
+      const matDialog = TestBed.inject(MatDialog) as unknown as MatDialogMock
+      matDialog._closeWithValue(true)
+      expect(valueChange).toEqual([
+        aSetOfLinksFixture().dataCsv(),
+        aSetOfLinksFixture().geodataWms(),
+        // links are appended to the end
+        aSetOfLinksFixture().readmeLink(),
+        { ...aSetOfLinksFixture().doiLink(), name: 'Changed name' },
+      ])
+    })
+    it('if canceled, nothing happens', () => {
+      const matDialog = TestBed.inject(MatDialog) as unknown as MatDialogMock
+      matDialog._closeWithValue(false)
+      expect(valueChange).toBe(null)
     })
   })
 })
