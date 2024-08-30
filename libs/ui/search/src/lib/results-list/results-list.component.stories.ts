@@ -19,6 +19,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core'
 import { importProvidersFrom } from '@angular/core'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export default {
   title: 'Search/ResultsListComponent',
@@ -49,7 +50,7 @@ type ResultsListComponentWithKey = ResultsListComponent & {
 
 export const Primary: StoryObj<ResultsListComponentWithKey> = {
   args: {
-    records: datasetRecordsFixture(),
+    records: datasetRecordsFixture() as CatalogRecord[],
     layoutConfigKey: 'CARD',
   },
   argTypes: {

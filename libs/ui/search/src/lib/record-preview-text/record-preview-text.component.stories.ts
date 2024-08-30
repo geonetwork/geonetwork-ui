@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export default {
   title: 'Search/RecordPreviewTextComponent',
@@ -38,7 +39,7 @@ export default {
 
 export const Primary: StoryObj<RecordPreviewTitleComponent> = {
   args: {
-    record: datasetRecordsFixture()[0],
+    record: datasetRecordsFixture()[0] as CatalogRecord,
     linkTarget: '_blank',
   },
 }
