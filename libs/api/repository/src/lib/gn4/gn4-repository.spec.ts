@@ -15,9 +15,9 @@ import {
   SearchResults,
 } from '@geonetwork-ui/common/domain/model/search'
 import {
-  DATASET_RECORD_SIMPLE,
-  DATASET_RECORD_SIMPLE_AS_XML,
-  DATASET_RECORDS,
+  datasetRecordsFixture,
+  simpleDatasetRecordAsXmlFixture,
+  simpleDatasetRecordFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { map } from 'rxjs/operators'
@@ -50,7 +50,7 @@ class SearchApiServiceMock {
     const count = body.size || 1234
     const result: EsSearchResponse = {
       hits: {
-        hits: DATASET_RECORDS(),
+        hits: datasetRecordsFixture(),
         total: { value: count },
       },
     }
@@ -155,7 +155,7 @@ describe('Gn4Repository', () => {
     })
     it('returns the given results as records', () => {
       expect(results.count).toBe(12)
-      expect(results.records).toStrictEqual(DATASET_RECORDS())
+      expect(results.records).toStrictEqual(datasetRecordsFixture())
     })
   })
   describe('getMatchesCount', () => {
@@ -193,7 +193,7 @@ describe('Gn4Repository', () => {
       expect(gn4Helper.getMetadataByIdPayload).toHaveBeenCalledWith('1234-5678')
     })
     it('returns the given result as record', () => {
-      expect(record).toStrictEqual(DATASET_RECORDS()[0])
+      expect(record).toStrictEqual(datasetRecordsFixture()[0])
     })
     describe('if record is not found', () => {
       beforeEach(async () => {
@@ -214,7 +214,9 @@ describe('Gn4Repository', () => {
     let results: CatalogRecord[]
     beforeEach(async () => {
       results = await lastValueFrom(
-        repository.getSimilarRecords(DATASET_RECORDS()[0])
+        repository.getSimilarRecords(
+          datasetRecordsFixture()[0] as CatalogRecord
+        )
       )
     })
     it('uses a related record ES payload', () => {
@@ -225,7 +227,7 @@ describe('Gn4Repository', () => {
       )
     })
     it('returns the given results as records', () => {
-      expect(results).toStrictEqual(DATASET_RECORDS())
+      expect(results).toStrictEqual(datasetRecordsFixture())
     })
   })
   describe('aggregate', () => {
@@ -263,7 +265,7 @@ describe('Gn4Repository', () => {
     })
     it('returns the given results as records', () => {
       expect(results.count).toBe(1234)
-      expect(results.records).toStrictEqual(DATASET_RECORDS())
+      expect(results.records).toStrictEqual(datasetRecordsFixture())
     })
   })
   describe('openRecordForEdition', () => {
@@ -304,7 +306,7 @@ describe('Gn4Repository', () => {
       beforeEach(async () => {
         recordSource = await firstValueFrom(
           repository.saveRecordAsDraft({
-            ...DATASET_RECORD_SIMPLE,
+            ...simpleDatasetRecordFixture(),
             uniqueIdentifier: '1234-5678',
           })
         )
@@ -333,7 +335,9 @@ describe('Gn4Repository', () => {
 
     beforeEach(async () => {
       ;(gn4RecordsApi.getRecordAs as jest.Mock).mockReturnValueOnce(
-        of(DATASET_RECORD_SIMPLE_AS_XML).pipe(map((xml) => ({ body: xml })))
+        of(simpleDatasetRecordAsXmlFixture()).pipe(
+          map((xml) => ({ body: xml }))
+        )
       )
       ;[record, recordSource, savedOnce] = await lastValueFrom(
         repository.openRecordForDuplication('1234-5678')
@@ -378,8 +382,8 @@ describe('Gn4Repository', () => {
       beforeEach(async () => {
         recordSource = await lastValueFrom(
           repository.saveRecord(
-            DATASET_RECORD_SIMPLE,
-            DATASET_RECORD_SIMPLE_AS_XML
+            simpleDatasetRecordFixture(),
+            simpleDatasetRecordAsXmlFixture()
           )
         )
       })
@@ -418,13 +422,17 @@ describe('Gn4Repository', () => {
     })
     describe('without reference', () => {
       beforeEach(async () => {
-        await lastValueFrom(repository.saveRecord(DATASET_RECORDS()[0]))
+        await lastValueFrom(
+          repository.saveRecord(datasetRecordsFixture()[0] as CatalogRecord)
+        )
       })
       it('uses the ISO19139 converter by default', () => {
         const recordXml = (gn4RecordsApi.insert as jest.Mock).mock.calls[0][14]
         expect(recordXml).toMatch(`
     <gmd:fileIdentifier>
-        <gco:CharacterString>${DATASET_RECORD_SIMPLE.uniqueIdentifier}</gco:CharacterString>
+        <gco:CharacterString>${
+          simpleDatasetRecordFixture().uniqueIdentifier
+        }</gco:CharacterString>
     </gmd:fileIdentifier>`)
       })
     })
@@ -434,17 +442,17 @@ describe('Gn4Repository', () => {
       // save a record, then a draft, then open the record again
       await lastValueFrom(
         repository.saveRecord(
-          DATASET_RECORD_SIMPLE,
-          DATASET_RECORD_SIMPLE_AS_XML
+          simpleDatasetRecordFixture(),
+          simpleDatasetRecordAsXmlFixture()
         )
       )
       await lastValueFrom(
         repository.saveRecordAsDraft(
           {
-            ...DATASET_RECORD_SIMPLE,
+            ...simpleDatasetRecordFixture(),
             title: 'The title has been modified',
           },
-          DATASET_RECORD_SIMPLE_AS_XML
+          simpleDatasetRecordAsXmlFixture()
         )
       )
     })
@@ -452,28 +460,30 @@ describe('Gn4Repository', () => {
       it('loads the draft instead of the original one', async () => {
         const [record] = await lastValueFrom(
           repository.openRecordForEdition(
-            DATASET_RECORD_SIMPLE.uniqueIdentifier
+            simpleDatasetRecordFixture().uniqueIdentifier
           )
         )
         expect(record).toStrictEqual({
-          ...DATASET_RECORD_SIMPLE,
+          ...simpleDatasetRecordFixture(),
           title: 'The title has been modified',
         })
       })
     })
     describe('#clearRecordDraft', () => {
       beforeEach(() => {
-        repository.clearRecordDraft(DATASET_RECORD_SIMPLE.uniqueIdentifier)
+        repository.clearRecordDraft(
+          simpleDatasetRecordFixture().uniqueIdentifier
+        )
       })
       it('removes the record draft', async () => {
         const [record] = await lastValueFrom(
           repository.openRecordForEdition(
-            DATASET_RECORD_SIMPLE.uniqueIdentifier
+            simpleDatasetRecordFixture().uniqueIdentifier
           )
         )
         expect(record?.title).not.toBe('The title has been modified')
         const hasDraft = repository.recordHasDraft(
-          DATASET_RECORD_SIMPLE.uniqueIdentifier
+          simpleDatasetRecordFixture().uniqueIdentifier
         )
 
         expect(hasDraft).toBe(false)
@@ -482,7 +492,7 @@ describe('Gn4Repository', () => {
     describe('#recordHasDraft', () => {
       it('returns true when there is a draft', () => {
         const hasDraft = repository.recordHasDraft(
-          DATASET_RECORD_SIMPLE.uniqueIdentifier
+          simpleDatasetRecordFixture().uniqueIdentifier
         )
         expect(hasDraft).toBe(true)
       })
@@ -499,19 +509,19 @@ describe('Gn4Repository', () => {
       // save 3 drafts
       await firstValueFrom(
         repository.saveRecordAsDraft({
-          ...DATASET_RECORD_SIMPLE,
+          ...simpleDatasetRecordFixture(),
           uniqueIdentifier: 'DRAFT-1',
         })
       )
       await firstValueFrom(
         repository.saveRecordAsDraft({
-          ...DATASET_RECORD_SIMPLE,
+          ...simpleDatasetRecordFixture(),
           uniqueIdentifier: 'DRAFT-2',
         })
       )
       await firstValueFrom(
         repository.saveRecordAsDraft({
-          ...DATASET_RECORD_SIMPLE,
+          ...simpleDatasetRecordFixture(),
           uniqueIdentifier: 'DRAFT-3',
         })
       )

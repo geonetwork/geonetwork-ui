@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MetadataQualityComponent } from './metadata-quality.component'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { MatIconModule } from '@angular/material/icon'
 import { CommonModule } from '@angular/common'
 import {
@@ -55,7 +55,7 @@ describe('MetadataQualityComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(MetadataQualityComponent)
     component = fixture.componentInstance
-    component.metadata = DATASET_RECORDS()[0]
+    component.metadata = datasetRecordsFixture()[0]
     component.metadataQualityDisplay = true
     component.initialize()
     fixture.detectChanges()

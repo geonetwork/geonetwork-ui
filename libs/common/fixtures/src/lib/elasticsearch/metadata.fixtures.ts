@@ -1,4 +1,4 @@
-export const ES_FIXTURE_HITS_ONLY = () => ({
+export const elasticHitsOnlyFixture = () => ({
   hits: {
     max_score: 1,
     hits: [
@@ -156,7 +156,8 @@ export const ES_FIXTURE_HITS_ONLY = () => ({
     ],
   },
 })
-export const ES_FIXTURE_FULL_RESPONSE = () => ({
+
+export const elasticFullResponseFixture = () => ({
   took: 1,
   timed_out: false,
   _shards: { total: 1, successful: 1, skipped: 0, failed: 0 },

@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { PageSelectorComponent } from './page-selector.component'
-import { EDITOR_CONFIG } from '@geonetwork-ui/common/fixtures'
+import { editorConfigFixture } from '@geonetwork-ui/common/fixtures'
 import { BehaviorSubject } from 'rxjs'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { By } from '@angular/platform-browser'
 
 class EditorFacadeMock {
-  editorConfig$ = new BehaviorSubject(EDITOR_CONFIG())
+  editorConfig$ = new BehaviorSubject(editorConfigFixture())
   currentPage$ = new BehaviorSubject(0)
   setCurrentPage = jest.fn()
 }
@@ -40,7 +40,7 @@ describe('PageSelectorComponent', () => {
 
   it('should render the correct number of pages', () => {
     const pages = fixture.debugElement.queryAll(By.css('.w-10.h-10'))
-    expect(pages.length).toBe(EDITOR_CONFIG().pages.length)
+    expect(pages.length).toBe(editorConfigFixture().pages.length)
   })
 
   it('should highlight the current page', () => {

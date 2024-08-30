@@ -5,7 +5,7 @@ import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { SearchPageComponent } from './search-page.component'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 
 const RouterFacadeMock = {
   goToMetadata: jest.fn(),
@@ -54,9 +54,9 @@ describe('MainSearchComponent', () => {
 
   describe('navigate to metadata record', () => {
     it('calls searchRouter goToMetdata with md record', () => {
-      component.onMetadataSelection(DATASET_RECORDS[0])
+      component.onMetadataSelection(datasetRecordsFixture[0])
       expect(RouterFacadeMock.goToMetadata).toHaveBeenCalledWith(
-        DATASET_RECORDS[0]
+        datasetRecordsFixture[0]
       )
     })
   })

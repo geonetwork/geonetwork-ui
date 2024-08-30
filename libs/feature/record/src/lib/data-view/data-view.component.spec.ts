@@ -12,10 +12,10 @@ import { DataViewComponent } from './data-view.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
-import { LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
+import { linkFixture } from '@geonetwork-ui/common/fixtures'
 
 const DATALINKS_FIXTURE: DatasetDistribution[] = [
-  LINK_FIXTURES().dataXls,
+  linkFixture().dataXls,
   {
     description: 'CSV file',
     name: 'some_file_name.csv',

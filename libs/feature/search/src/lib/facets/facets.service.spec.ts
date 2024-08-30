@@ -1,6 +1,6 @@
 import {
-  ES_FIXTURE_AGGS_REQUEST,
-  ES_FIXTURE_AGGS_RESPONSE,
+  elasticAggsRequestFixture,
+  elasticAggsResponseFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { ModelBlock, ModelItem } from '@geonetwork-ui/ui/search'
 import { SEARCH_STATE_FILTERS_FIXTURE } from '../state/fixtures/search-state.fixtures'
@@ -27,8 +27,8 @@ describe('FacetsService', () => {
 
   describe('#createFacetModel', () => {
     let result
-    requestAggregations = ES_FIXTURE_AGGS_REQUEST()
-    responseAggregations = ES_FIXTURE_AGGS_RESPONSE()
+    requestAggregations = elasticAggsRequestFixture()
+    responseAggregations = elasticAggsResponseFixture()
 
     beforeEach(() => {
       result = service.createFacetModel(

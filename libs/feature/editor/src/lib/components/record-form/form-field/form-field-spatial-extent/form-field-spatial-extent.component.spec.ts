@@ -8,7 +8,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { EditorFacade } from '../../../../+state/editor.facade'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 
 const SAMPLE_PLACE_KEYWORDS: Keyword[] = [
@@ -95,10 +95,10 @@ const SAMPLE_SPATIAL_EXTENTS: DatasetSpatialExtent[] = [
 ]
 
 const SAMPLE_RECORD = {
-  ...DATASET_RECORDS()[0],
+  ...datasetRecordsFixture()[0],
   spatialExtents: SAMPLE_SPATIAL_EXTENTS,
   keywords: [
-    ...DATASET_RECORDS()[0].keywords,
+    ...datasetRecordsFixture()[0].keywords,
     ...SAMPLE_PLACE_KEYWORDS_FROM_XML,
   ],
 }
@@ -222,7 +222,7 @@ describe('FormFieldSpatialExtentComponent', () => {
         const newPlaceKeywords = SAMPLE_PLACE_KEYWORDS_FROM_XML.slice(1)
         expect(editorFacade.updateRecordField).toHaveBeenCalledWith(
           'keywords',
-          [...DATASET_RECORDS()[0].keywords, ...newPlaceKeywords]
+          [...datasetRecordsFixture()[0].keywords, ...newPlaceKeywords]
         )
         const newExtents = SAMPLE_SPATIAL_EXTENTS.slice(1)
         expect(editorFacade.updateRecordField).toHaveBeenCalledWith(
@@ -240,7 +240,7 @@ describe('FormFieldSpatialExtentComponent', () => {
         newPlaceKeywords.splice(2, 1)
         expect(editorFacade.updateRecordField).toHaveBeenCalledWith(
           'keywords',
-          [...DATASET_RECORDS()[0].keywords, ...newPlaceKeywords]
+          [...datasetRecordsFixture()[0].keywords, ...newPlaceKeywords]
         )
         expect(editorFacade.updateRecordField).toHaveBeenCalledWith(
           'spatialExtents',
@@ -260,7 +260,10 @@ describe('FormFieldSpatialExtentComponent', () => {
       it('deletes only the extent, do not change the record keywords', () => {
         expect(editorFacade.updateRecordField).toHaveBeenCalledWith(
           'keywords',
-          [...DATASET_RECORDS()[0].keywords, ...SAMPLE_PLACE_KEYWORDS_FROM_XML]
+          [
+            ...datasetRecordsFixture()[0].keywords,
+            ...SAMPLE_PLACE_KEYWORDS_FROM_XML,
+          ]
         )
         const newExtents = SAMPLE_SPATIAL_EXTENTS.slice(0)
         newExtents.splice(3, 1)
@@ -291,7 +294,7 @@ describe('FormFieldSpatialExtentComponent', () => {
         expect(editorFacade.updateRecordField).toHaveBeenCalledWith(
           'keywords',
           [
-            ...DATASET_RECORDS()[0].keywords,
+            ...datasetRecordsFixture()[0].keywords,
             ...SAMPLE_PLACE_KEYWORDS_FROM_XML,
             {
               label: newKeyword.label,
@@ -326,7 +329,7 @@ describe('FormFieldSpatialExtentComponent', () => {
         expect(editorFacade.updateRecordField).toHaveBeenCalledWith(
           'keywords',
           [
-            ...DATASET_RECORDS()[0].keywords,
+            ...datasetRecordsFixture()[0].keywords,
             ...SAMPLE_PLACE_KEYWORDS_FROM_XML,
             {
               label: newKeyword.label,

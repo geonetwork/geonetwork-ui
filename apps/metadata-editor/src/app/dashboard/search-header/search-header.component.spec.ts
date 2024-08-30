@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { SearchHeaderComponent } from './search-header.component'
 import { BehaviorSubject, of } from 'rxjs'
-import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
+import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { TranslateModule } from '@ngx-translate/core'
@@ -16,7 +16,7 @@ class AvatarServiceInterfaceMock {
   getProfileIcon = (hash: string) => of(`${hash}`)
 }
 
-const me$ = new BehaviorSubject(USER_FIXTURE())
+const me$ = new BehaviorSubject(barbieUserFixture)
 class PlatformServiceMock {
   getMe = jest.fn(() => me$)
 }

@@ -3,7 +3,7 @@ import { DuplicateRecordResolver } from './duplicate-record.resolver'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { of, throwError } from 'rxjs'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { ActivatedRouteSnapshot, convertToParamMap } from '@angular/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateModule } from '@ngx-translate/core'
@@ -14,12 +14,14 @@ class NotificationsServiceMock {
 }
 class RecordsRepositoryMock {
   openRecordForDuplication = jest.fn(() =>
-    of([DATASET_RECORDS()[0], '<xml>blabla</xml>', false])
+    of([datasetRecordsFixture()[0], '<xml>blabla</xml>', false])
   )
 }
 
 const activatedRoute = {
-  paramMap: convertToParamMap({ id: DATASET_RECORDS()[0].uniqueIdentifier }),
+  paramMap: convertToParamMap({
+    id: datasetRecordsFixture()[0].uniqueIdentifier,
+  }),
 } as ActivatedRouteSnapshot
 
 describe('DuplicateRecordResolver', () => {
@@ -55,7 +57,7 @@ describe('DuplicateRecordResolver', () => {
     })
     it('should load record by uuid', () => {
       expect(resolvedData).toEqual([
-        DATASET_RECORDS()[0],
+        datasetRecordsFixture()[0],
         '<xml>blabla</xml>',
         false,
       ])

@@ -1,4 +1,4 @@
-export const GROUPS_FIXTURE = () => [
+export const groupsFixture = () => [
   {
     logo: '047a5cb4-b942-41dc-9ffa-ffd229da064d.png',
     website: 'http://www.are.admin.ch',

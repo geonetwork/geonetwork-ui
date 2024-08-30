@@ -1,4 +1,4 @@
-export const ES_FIXTURE_AGGS_ONLY = () => ({
+export const elasticAggsOnlyFixture = () => ({
   took: 7,
   timed_out: false,
   _shards: { total: 1, successful: 1, skipped: 0, failed: 0 },
@@ -59,7 +59,7 @@ export const ES_FIXTURE_AGGS_ONLY = () => ({
   },
 })
 
-export const ES_FIXTURE_HITS_ONLY = () => ({
+export const elasticHitsOnlyFixture = () => ({
   hits: {
     max_score: 1,
     hits: [
@@ -218,12 +218,12 @@ export const ES_FIXTURE_HITS_ONLY = () => ({
   },
 })
 
-export const ES_FIXTURE_SIMPLE_WITH_AGGS = () => ({
+export const elasticSimpleWithAggsFixture = () => ({
   hits: { hits: [] },
   aggregations: { abc: {} },
 })
 
-export const ES_FIXTURE_SUMMARY_HITS = () => ({
+export const elasticSummaryHitsFixture = () => ({
   took: 3,
   timed_out: false,
   _shards: { total: 1, successful: 1, skipped: 0, failed: 0 },

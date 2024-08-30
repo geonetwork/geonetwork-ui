@@ -18,7 +18,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 import { DataService } from '../service/data.service'
-import { LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
+import { linkFixture } from '@geonetwork-ui/common/fixtures'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
 
 const SAMPLE_DATA_ITEMS = [
@@ -92,7 +92,7 @@ describe('TableViewComponent', () => {
     component = fixture.componentInstance
   })
   beforeEach(fakeAsync(() => {
-    component.link = LINK_FIXTURES().dataCsv
+    component.link = linkFixture().dataCsv
     fixture.detectChanges()
     flushMicrotasks()
   }))
@@ -105,14 +105,12 @@ describe('TableViewComponent', () => {
     let tableComponent: MockTableComponent
 
     it('loads the data from the first available link', () => {
-      expect(dataService.getDataset).toHaveBeenCalledWith(
-        LINK_FIXTURES().dataCsv
-      )
+      expect(dataService.getDataset).toHaveBeenCalledWith(linkFixture().dataCsv)
     })
 
     describe('during data loading', () => {
       beforeEach(fakeAsync(() => {
-        component.link = LINK_FIXTURES().dataCsv
+        component.link = linkFixture().dataCsv
         tick(50)
         discardPeriodicTasks()
       }))
@@ -126,7 +124,7 @@ describe('TableViewComponent', () => {
 
     describe('when data is loaded', () => {
       beforeEach(fakeAsync(() => {
-        component.link = LINK_FIXTURES().dataCsv
+        component.link = linkFixture().dataCsv
         fixture.detectChanges()
         flushMicrotasks()
         tableComponent = fixture.debugElement.query(
@@ -141,13 +139,13 @@ describe('TableViewComponent', () => {
 
       describe('when switching data link', () => {
         beforeEach(fakeAsync(() => {
-          component.link = LINK_FIXTURES().geodataJson
+          component.link = linkFixture().geodataJson
           flushMicrotasks()
           fixture.detectChanges()
         }))
         it('loads data from selected link', () => {
           expect(dataService.getDataset).toHaveBeenCalledWith(
-            LINK_FIXTURES().geodataJson
+            linkFixture().geodataJson
           )
         })
         it('displays mocked data in the table', () => {
@@ -161,7 +159,7 @@ describe('TableViewComponent', () => {
       dataService.getDataset = () =>
         throwError(() => new Error('data loading error'))
       component.link = {
-        ...LINK_FIXTURES().dataCsv,
+        ...linkFixture().dataCsv,
         url: new URL('http://changed/'),
       }
       flushMicrotasks()

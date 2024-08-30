@@ -6,7 +6,7 @@ import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import tippy from 'tippy.js'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { FavoritesService } from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
@@ -81,7 +81,7 @@ describe('FavoriteStarComponent', () => {
     describe('when a record has a favorite count', () => {
       beforeEach(() => {
         component.record = {
-          ...DATASET_RECORDS[0],
+          ...datasetRecordsFixture[0],
           extras: { favoriteCount: 42 },
         }
         fixture.detectChanges()
@@ -98,7 +98,7 @@ describe('FavoriteStarComponent', () => {
     })
     describe('when a record does not have a favorite count', () => {
       beforeEach(() => {
-        component.record = { ...DATASET_RECORDS[0] }
+        component.record = { ...datasetRecordsFixture[0] }
         fixture.detectChanges()
       })
       it('does not show the amount of favorites on the record', () => {
@@ -143,7 +143,7 @@ describe('FavoriteStarComponent', () => {
   describe('On favorite click', () => {
     beforeEach(() => {
       component.record = {
-        ...DATASET_RECORDS[0],
+        ...datasetRecordsFixture[0],
         extras: { favoriteCount: 42 },
       }
       fixture.detectChanges()
@@ -177,7 +177,7 @@ describe('FavoriteStarComponent', () => {
   describe('On favorites array update', () => {
     beforeEach(() => {
       component.record = {
-        ...DATASET_RECORDS[0],
+        ...datasetRecordsFixture[0],
         extras: { favoriteCount: 42 },
       }
       fixture.detectChanges()
@@ -214,7 +214,7 @@ describe('FavoriteStarComponent', () => {
   describe('two subsequent changes', () => {
     beforeEach(() => {
       component.record = {
-        ...DATASET_RECORDS[0],
+        ...datasetRecordsFixture[0],
         extras: { favoriteCount: 42 },
       }
       ;(favoritesService as any).myFavoritesUuid$.next(['aaa'])
@@ -239,7 +239,7 @@ describe('FavoriteStarComponent', () => {
   describe('if favorite modification fails', () => {
     beforeEach(() => {
       component.record = {
-        ...DATASET_RECORDS[0],
+        ...datasetRecordsFixture[0],
         extras: { favoriteCount: 42 },
       }
       favoritesService.addToFavorites = () => throwError('blargz')

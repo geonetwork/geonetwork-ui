@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { OrganizationPageComponent } from './organization-page.component'
 import { of } from 'rxjs'
-import { ORGANISATIONS_FIXTURE } from '@geonetwork-ui/common/fixtures'
+import { someOrganizationsFixture } from '@geonetwork-ui/common/fixtures'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { Params } from '@angular/router'
 import { TranslateModule } from '@ngx-translate/core'
@@ -11,14 +11,14 @@ import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { RouterTestingModule } from '@angular/router/testing'
 
-const expectedOrganization = ORGANISATIONS_FIXTURE()[0]
+const expectedOrganization = someOrganizationsFixture()[0]
 
 class RouterFacadeMock {
-  pathParams$ = of({ name: ORGANISATIONS_FIXTURE()[0].name } as Params)
+  pathParams$ = of({ name: someOrganizationsFixture()[0].name } as Params)
 }
 
 class OrganizationsServiceInterfaceMock {
-  organisations$ = of(ORGANISATIONS_FIXTURE())
+  organisations$ = of(someOrganizationsFixture())
 }
 
 describe('OrganizationPageComponent', () => {

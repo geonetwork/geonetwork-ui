@@ -1,6 +1,6 @@
 import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
 
-export const LINK_FIXTURES = (): Record<string, DatasetDistribution> => ({
+export const linkFixture = (): Record<string, DatasetDistribution> => ({
   readmeLink: {
     description: 'Readme page',
     type: 'link',

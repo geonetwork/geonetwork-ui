@@ -1,4 +1,4 @@
-export const ES_FIXTURE_REQUEST_WITH_AGGS = () => ({
+export const elasticRequestWithAggsFixture = () => ({
   from: 0,
   size: 30,
   sort: ['_score'],

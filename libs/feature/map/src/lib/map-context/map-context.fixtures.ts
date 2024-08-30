@@ -1,4 +1,4 @@
-import { FEATURE_COLLECTION_POLYGON_FIXTURE_4326 } from '@geonetwork-ui/common/fixtures'
+import { polygonFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 import { Extent } from 'ol/extent'
 import {
   MapContextLayerGeojsonModel,
@@ -24,7 +24,7 @@ export const MAP_CTX_LAYER_WFS_FIXTURE: MapContextLayerModel = {
 }
 export const MAP_CTX_LAYER_GEOJSON_FIXTURE: MapContextLayerGeojsonModel = {
   type: MapContextLayerTypeEnum.GEOJSON,
-  data: FEATURE_COLLECTION_POLYGON_FIXTURE_4326(),
+  data: polygonFeatureCollectionFixture(),
 }
 export const MAP_CTX_LAYER_GEOJSON_REMOTE_FIXTURE: MapContextLayerGeojsonModel =
   {

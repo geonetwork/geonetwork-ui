@@ -12,7 +12,7 @@ import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatIconModule } from '@angular/material/icon'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 
 export default {
   title: 'Search/RecordPreviewCardComponent',
@@ -32,7 +32,7 @@ export default {
 
 export const Primary: StoryObj<RecordPreviewCardComponent> = {
   args: {
-    record: DATASET_RECORDS()[0],
+    record: datasetRecordsFixture()[0],
     linkTarget: '_blank',
   },
 }

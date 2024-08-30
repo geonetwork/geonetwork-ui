@@ -1,5 +1,5 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { MetadataQualityComponent } from './metadata-quality.component'
 import { CommonModule } from '@angular/common'
 import {
@@ -34,7 +34,7 @@ export default {
 export const Primary: StoryObj<MetadataQualityComponent> = {
   args: {
     smaller: false,
-    metadata: DATASET_RECORDS()[0],
+    metadata: datasetRecordsFixture()[0],
     metadataQualityDisplay: true,
   },
 }

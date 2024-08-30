@@ -4,7 +4,7 @@ import {
   initialEditorState,
 } from './editor.reducer'
 import * as EditorSelectors from './editor.selectors'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { DEFAULT_CONFIGURATION } from '../fields.config'
 import { EditorSectionWithValues } from './editor.models'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -16,7 +16,7 @@ describe('Editor Selectors', () => {
     state = {
       editor: {
         ...initialEditorState,
-        record: DATASET_RECORDS()[0] as CatalogRecord,
+        record: datasetRecordsFixture()[0] as CatalogRecord,
         recordSource: '<xml>blabla</xml>',
         saveError: 'something went wrong',
         saving: false,
@@ -28,7 +28,7 @@ describe('Editor Selectors', () => {
   describe('Editor Selectors', () => {
     it('selectRecord() should return the current loaded record', () => {
       const result = EditorSelectors.selectRecord(state)
-      expect(result).toEqual(DATASET_RECORDS()[0])
+      expect(result).toEqual(datasetRecordsFixture()[0])
     })
 
     it('selectRecordSource() should return the source of the current record', () => {
@@ -95,7 +95,7 @@ describe('Editor Selectors', () => {
           editor: {
             ...state.editor,
             record: {
-              ...DATASET_RECORDS()[0],
+              ...datasetRecordsFixture()[0],
               abstract: '',
               title: '',
             },

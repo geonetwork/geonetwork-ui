@@ -35,10 +35,10 @@ import {
 } from './reducer'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import {
-  DATASET_RECORDS,
+  datasetRecordsFixture,
   SAMPLE_AGGREGATIONS_PARAMS,
   SAMPLE_AGGREGATIONS_RESULTS,
-  SAMPLE_SEARCH_RESULTS,
+  searchResultsFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { HttpErrorResponse } from '@angular/common/http'
 import { delay } from 'rxjs/operators'
@@ -76,7 +76,7 @@ class FavoritesServiceMock {
 
 class RecordsRepositoryMock {
   aggregate = jest.fn(() => of(SAMPLE_AGGREGATIONS_RESULTS()))
-  search = jest.fn(() => of(SAMPLE_SEARCH_RESULTS()))
+  search = jest.fn(() => of(searchResultsFixture()))
 }
 
 describe('Effects', () => {
@@ -282,7 +282,7 @@ describe('Effects', () => {
     it('load new results on requestMoreResults action', () => {
       actions$ = hot('-a-', { a: new RequestMoreResults() })
       const expected = hot('-(ebcd)-', {
-        b: new AddResults(DATASET_RECORDS()),
+        b: new AddResults(datasetRecordsFixture()),
         c: new SetResultsAggregations(SAMPLE_AGGREGATIONS_RESULTS()),
         d: new SetResultsHits(123),
         e: new ClearError(),
@@ -293,7 +293,7 @@ describe('Effects', () => {
     it('load new results and clear previous ones on requestNewResults action', () => {
       actions$ = hot('-a-', { a: new RequestNewResults() })
       const expected = hot('-(febcd)-', {
-        b: new AddResults(DATASET_RECORDS()),
+        b: new AddResults(datasetRecordsFixture()),
         c: new SetResultsAggregations(SAMPLE_AGGREGATIONS_RESULTS()),
         d: new SetResultsHits(123),
         e: new ClearError(),
@@ -305,7 +305,7 @@ describe('Effects', () => {
     it('propagate action search id', () => {
       actions$ = hot('-a-', { a: new RequestNewResults('main') })
       const expected = hot('-(febcd)-', {
-        b: new AddResults(DATASET_RECORDS(), 'main'),
+        b: new AddResults(datasetRecordsFixture(), 'main'),
         c: new SetResultsAggregations(SAMPLE_AGGREGATIONS_RESULTS(), 'main'),
         d: new SetResultsHits(123, 'main'),
         e: new ClearError('main'),
@@ -317,7 +317,7 @@ describe('Effects', () => {
     describe('when running multiple searches concurrently', () => {
       beforeEach(() => {
         repository.search = () =>
-          of(SAMPLE_SEARCH_RESULTS()).pipe(delay(10, getTestScheduler()))
+          of(searchResultsFixture()).pipe(delay(10, getTestScheduler()))
       })
       it('cancels requests with the same search id', () => {
         actions$ = hot('-(aabab)-', {
@@ -325,14 +325,11 @@ describe('Effects', () => {
           b: new RequestMoreResults(DEFAULT_SEARCH_KEY),
         })
         const expected = hot('--(dabczwxy)-', {
-          a: new AddResults(SAMPLE_SEARCH_RESULTS().records, 'main'),
+          a: new AddResults(searchResultsFixture().records, 'main'),
           b: new SetResultsAggregations(SAMPLE_AGGREGATIONS_RESULTS(), 'main'),
           c: new SetResultsHits(123, 'main'),
           d: new ClearError('main'),
-          w: new AddResults(
-            SAMPLE_SEARCH_RESULTS().records,
-            DEFAULT_SEARCH_KEY
-          ),
+          w: new AddResults(searchResultsFixture().records, DEFAULT_SEARCH_KEY),
           x: new SetResultsAggregations(
             SAMPLE_AGGREGATIONS_RESULTS(),
             DEFAULT_SEARCH_KEY
@@ -407,7 +404,7 @@ describe('Effects', () => {
         })
         const expected = hot('-(abcd)-', {
           a: new ClearError('main'),
-          b: new AddResults(DATASET_RECORDS(), 'main'),
+          b: new AddResults(datasetRecordsFixture(), 'main'),
           c: new SetResultsAggregations(SAMPLE_AGGREGATIONS_RESULTS(), 'main'),
           d: new SetResultsHits(123, 'main'),
         })

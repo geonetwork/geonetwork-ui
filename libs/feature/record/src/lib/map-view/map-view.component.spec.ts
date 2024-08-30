@@ -34,7 +34,7 @@ import { MapViewComponent } from './map-view.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { delay } from 'rxjs/operators'
 import { MapConfig } from '@geonetwork-ui/util/app-config'
-import { FEATURE_COLLECTION_POINT_FIXTURE_4326 } from '@geonetwork-ui/common/fixtures'
+import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 import { Collection } from 'ol'
 import { Interaction } from 'ol/interaction'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
@@ -811,7 +811,7 @@ describe('MapViewComponent', () => {
       const vectorLayer = new VectorLayer({
         source: new VectorSource({
           features: new GeoJSON().readFeatures(
-            FEATURE_COLLECTION_POINT_FIXTURE_4326(),
+            pointFeatureCollectionFixture(),
             {
               featureProjection: 'EPSG:3857',
               dataProjection: 'EPSG:4326',

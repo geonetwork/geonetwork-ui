@@ -1,4 +1,4 @@
-export const ES_FIXTURE_FULL_RESPONSE = () => ({
+export const elasticFullResponseFixture = () => ({
   took: 1,
   timed_out: false,
   _shards: { total: 1, successful: 1, skipped: 0, failed: 0 },

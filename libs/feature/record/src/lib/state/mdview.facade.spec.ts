@@ -8,8 +8,8 @@ import { MdViewFacade } from './mdview.facade'
 import * as MdViewActions from './mdview.actions'
 import { hot } from 'jasmine-marbles'
 import {
-  A_USER_FEEDBACK,
-  DATASET_RECORDS,
+  datasetRecordsFixture,
+  userFeedbackFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
@@ -72,7 +72,7 @@ describe('MdViewFacade', () => {
       store.setState({
         [METADATA_VIEW_FEATURE_STATE_KEY]: {
           ...initialMetadataViewState,
-          metadata: DATASET_RECORDS()[0],
+          metadata: datasetRecordsFixture()[0],
         },
       })
       const expected = hot('a', { a: true })
@@ -90,10 +90,10 @@ describe('MdViewFacade', () => {
       store.setState({
         [METADATA_VIEW_FEATURE_STATE_KEY]: {
           ...initialMetadataViewState,
-          metadata: DATASET_RECORDS()[0],
+          metadata: datasetRecordsFixture()[0],
         },
       })
-      const expected = hot('a', { a: DATASET_RECORDS()[0] })
+      const expected = hot('a', { a: datasetRecordsFixture()[0] })
       expect(facade.metadata$).toBeObservable(expected)
     })
   })
@@ -108,10 +108,10 @@ describe('MdViewFacade', () => {
       store.setState({
         [METADATA_VIEW_FEATURE_STATE_KEY]: {
           ...initialMetadataViewState,
-          metadata: DATASET_RECORDS()[0],
+          metadata: datasetRecordsFixture()[0],
         },
       })
-      const expected = hot('a', { a: DATASET_RECORDS()[0].distributions })
+      const expected = hot('a', { a: datasetRecordsFixture()[0].distributions })
       expect(facade.allLinks$).toBeObservable(expected)
     })
   })
@@ -121,7 +121,7 @@ describe('MdViewFacade', () => {
       store.setState({
         [METADATA_VIEW_FEATURE_STATE_KEY]: {
           ...initialMetadataViewState,
-          metadata: DATASET_RECORDS()[0],
+          metadata: datasetRecordsFixture()[0],
           loadingFull: true,
         },
       })
@@ -133,7 +133,7 @@ describe('MdViewFacade', () => {
       store.setState({
         [METADATA_VIEW_FEATURE_STATE_KEY]: {
           ...initialMetadataViewState,
-          metadata: DATASET_RECORDS()[0],
+          metadata: datasetRecordsFixture()[0],
           loadingFull: false,
         },
       })
@@ -188,10 +188,10 @@ describe('MdViewFacade', () => {
 
   describe('setIncompleteMetadata', () => {
     it('dispatches a setIncompleteMetadata action', () => {
-      facade.setIncompleteMetadata(DATASET_RECORDS()[0])
+      facade.setIncompleteMetadata(datasetRecordsFixture()[0])
       const expected = hot('a', {
         a: MdViewActions.setIncompleteMetadata({
-          incomplete: DATASET_RECORDS()[0],
+          incomplete: datasetRecordsFixture()[0],
         }),
       })
       expect(store.scannedActions$).toBeObservable(expected)
@@ -220,9 +220,11 @@ describe('MdViewFacade', () => {
 
   describe('addUserFeedback', () => {
     it('dispatches a addUserFeedback action', () => {
-      facade.addUserFeedback(A_USER_FEEDBACK())
+      facade.addUserFeedback(userFeedbackFixture())
       const expected = hot('a', {
-        a: MdViewActions.addUserFeedback({ userFeedback: A_USER_FEEDBACK() }),
+        a: MdViewActions.addUserFeedback({
+          userFeedback: userFeedbackFixture(),
+        }),
       })
       expect(store.scannedActions$).toBeObservable(expected)
     })
@@ -270,7 +272,7 @@ describe('MdViewFacade', () => {
       store.setState({
         [METADATA_VIEW_FEATURE_STATE_KEY]: {
           ...initialMetadataViewState,
-          metadata: DATASET_RECORDS()[0],
+          metadata: datasetRecordsFixture()[0],
         },
       })
     })
@@ -341,7 +343,7 @@ describe('MdViewFacade', () => {
         store.setState({
           [METADATA_VIEW_FEATURE_STATE_KEY]: {
             ...initialMetadataViewState,
-            metadata: DATASET_RECORDS()[1],
+            metadata: datasetRecordsFixture()[1],
           },
         })
       })

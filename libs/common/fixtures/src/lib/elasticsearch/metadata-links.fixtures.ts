@@ -1,4 +1,4 @@
-export const ES_LINK_FIXTURES = (): Record<string, unknown> => ({
+export const elasticLinkFixture = (): Record<string, unknown> => ({
   readmeLink: {
     protocol: 'WWW:LINK',
     description: 'Readme page',

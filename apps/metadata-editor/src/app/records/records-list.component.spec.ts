@@ -8,7 +8,7 @@ import { Router } from '@angular/router'
 import { BehaviorSubject } from 'rxjs'
 import { CommonModule } from '@angular/common'
 import { MatIconModule } from '@angular/material/icon'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 
 const results = [{ md: true }]
 const currentPage = 5
@@ -127,7 +127,7 @@ describe('RecordsListComponent', () => {
     describe('when click on a record', () => {
       const uniqueIdentifier = 123
       const singleRecord = {
-        ...DATASET_RECORDS()[0],
+        ...datasetRecordsFixture()[0],
         uniqueIdentifier,
       }
       beforeEach(() => {
@@ -140,7 +140,7 @@ describe('RecordsListComponent', () => {
     describe('when asking for record duplication', () => {
       const uniqueIdentifier = 123
       const singleRecord = {
-        ...DATASET_RECORDS()[0],
+        ...datasetRecordsFixture()[0],
         uniqueIdentifier,
       }
       beforeEach(() => {

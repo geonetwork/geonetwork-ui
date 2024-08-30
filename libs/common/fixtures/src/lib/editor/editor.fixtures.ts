@@ -1,59 +1,59 @@
-export const EDITOR_CONFIG = () => ({
+export const editorConfigFixture = () => ({
   pages: [
     {
       labelKey: 'Resource description',
-      sections: [EDITOR_SECTION_ABOUT()],
+      sections: [editorSectionAboutFixture()],
     },
     {
       labelKey: 'Resources',
-      sections: [EDITOR_SECTION_CLASSIFICATION()],
+      sections: [editorSectionClassificationFixture()],
     },
     {
       labelKey: 'Access and contact',
       sections: [
-        EDITOR_SECTION_USE_AND_ACCESS_CONDITIONS(),
-        EDITOR_SECTION_DATA_MANAGER(),
+        editorSectionUseAndAccessConditionsFixture(),
+        editorSectionDataManagerFixture(),
       ],
     },
   ],
 })
 
-export const EDITOR_SECTION_ABOUT = () => ({
+export const editorSectionAboutFixture = () => ({
   labelKey: 'About the resource',
   descriptionKey: 'This section describes the resource.',
   hidden: false,
   fields: [
-    EDITOR_FIELD_TITLE(),
-    EDITOR_FIELD_ABSTRACT(),
-    EDITOR_FIELD_RESOURCE_UPDATED(),
-    EDITOR_FIELD_RECORD_UPDATED(),
-    EDITOR_FIELD_UPDATE_FREQUENCY(),
-    EDITOR_FIELD_TEMPORAL_EXTENTS(),
+    editorFieldTitleFixture(),
+    editorFieldAbstractFixture(),
+    editorFieldResourceUpdatedFixture(),
+    editorFieldRecordUpdatedFixture(),
+    editorFieldUpdateFrequencyFixture(),
+    editorFieldTemporalExtentsFixture(),
   ],
 })
 
-export const EDITOR_SECTION_DATA_MANAGER = () => ({
+export const editorSectionDataManagerFixture = () => ({
   labelKey: 'Data manager',
   descriptionKey: '',
   hidden: false,
   fields: [],
 })
 
-export const EDITOR_SECTION_USE_AND_ACCESS_CONDITIONS = () => ({
+export const editorSectionUseAndAccessConditionsFixture = () => ({
   labelKey: 'Data manager',
   descriptionKey: '',
   hidden: false,
-  fields: [EDITOR_FIELD_LICENSE()],
+  fields: [editorFieldLicenseFixture()],
 })
 
-export const EDITOR_SECTION_CLASSIFICATION = () => ({
+export const editorSectionClassificationFixture = () => ({
   labelKey: 'Classification',
   descriptionKey: 'The classification has an impact on the access to the data.',
   hidden: false,
-  fields: [EDITOR_FIELD_KEYWORDS(), EDITOR_FIELD_UNIQUE_IDENTIFIER()],
+  fields: [editorFieldKeywordsFixture(), editorFieldUniqueIdentifierFixture()],
 })
 
-export const EDITOR_FIELD_TITLE = () => ({
+export const editorFieldTitleFixture = () => ({
   model: 'title',
   hidden: false,
   value: 'Accroches vélos MEL',
@@ -62,7 +62,7 @@ export const EDITOR_FIELD_TITLE = () => ({
   },
 })
 
-export const EDITOR_FIELD_ABSTRACT = () => ({
+export const editorFieldAbstractFixture = () => ({
   model: 'abstract',
   hidden: false,
   value: 'Abstract',
@@ -71,7 +71,7 @@ export const EDITOR_FIELD_ABSTRACT = () => ({
   },
 })
 
-export const EDITOR_FIELD_RESOURCE_UPDATED = () => ({
+export const editorFieldResourceUpdatedFixture = () => ({
   model: 'resourceUpdated',
   hidden: false,
   formFieldConfig: {
@@ -79,7 +79,7 @@ export const EDITOR_FIELD_RESOURCE_UPDATED = () => ({
   },
 })
 
-export const EDITOR_FIELD_RECORD_UPDATED = () => ({
+export const editorFieldRecordUpdatedFixture = () => ({
   model: 'recordUpdated',
   hidden: false,
   formFieldConfig: {
@@ -90,7 +90,7 @@ export const EDITOR_FIELD_RECORD_UPDATED = () => ({
   onSaveProcess: '${dateNow()}',
 })
 
-export const EDITOR_FIELD_UPDATE_FREQUENCY = () => ({
+export const editorFieldUpdateFrequencyFixture = () => ({
   model: 'updateFrequency',
   hidden: false,
   formFieldConfig: {
@@ -99,7 +99,7 @@ export const EDITOR_FIELD_UPDATE_FREQUENCY = () => ({
   value: 'unknown',
 })
 
-export const EDITOR_FIELD_TEMPORAL_EXTENTS = () => ({
+export const editorFieldTemporalExtentsFixture = () => ({
   model: 'temporalExtents',
   hidden: false,
   formFieldConfig: {
@@ -108,7 +108,7 @@ export const EDITOR_FIELD_TEMPORAL_EXTENTS = () => ({
   value: [],
 })
 
-export const EDITOR_FIELD_SPATIAL_EXTENTS = () => ({
+export const editorFieldSpatialExtentsFixture = () => ({
   model: 'spatialExtents',
   hidden: false,
   formFieldConfig: {
@@ -116,7 +116,7 @@ export const EDITOR_FIELD_SPATIAL_EXTENTS = () => ({
   },
 })
 
-export const EDITOR_FIELD_KEYWORDS = () => ({
+export const editorFieldKeywordsFixture = () => ({
   model: 'keywords',
   hidden: false,
   formFieldConfig: {
@@ -124,7 +124,7 @@ export const EDITOR_FIELD_KEYWORDS = () => ({
   },
 })
 
-export const EDITOR_FIELD_UNIQUE_IDENTIFIER = () => ({
+export const editorFieldUniqueIdentifierFixture = () => ({
   model: 'uniqueIdentifier',
   hidden: false,
   formFieldConfig: {
@@ -134,7 +134,7 @@ export const EDITOR_FIELD_UNIQUE_IDENTIFIER = () => ({
   value: 'accroche_velos',
 })
 
-export const EDITOR_FIELD_LICENSE = () => ({
+export const editorFieldLicenseFixture = () => ({
   model: 'licenses',
   hidden: false,
   formFieldConfig: {
@@ -143,14 +143,14 @@ export const EDITOR_FIELD_LICENSE = () => ({
   },
 })
 
-export const EDITOR_FIELDS = () => [
-  EDITOR_FIELD_TITLE(),
-  EDITOR_FIELD_ABSTRACT(),
-  EDITOR_FIELD_RESOURCE_UPDATED(),
-  EDITOR_FIELD_RECORD_UPDATED(),
-  EDITOR_FIELD_UPDATE_FREQUENCY(),
-  EDITOR_FIELD_TEMPORAL_EXTENTS(),
-  EDITOR_FIELD_SPATIAL_EXTENTS(),
-  EDITOR_FIELD_KEYWORDS(),
-  EDITOR_FIELD_UNIQUE_IDENTIFIER(),
+export const editorFieldsFixture = () => [
+  editorFieldTitleFixture(),
+  editorFieldAbstractFixture(),
+  editorFieldResourceUpdatedFixture(),
+  editorFieldRecordUpdatedFixture(),
+  editorFieldUpdateFrequencyFixture(),
+  editorFieldTemporalExtentsFixture(),
+  editorFieldSpatialExtentsFixture(),
+  editorFieldKeywordsFixture(),
+  editorFieldUniqueIdentifierFixture(),
 ]

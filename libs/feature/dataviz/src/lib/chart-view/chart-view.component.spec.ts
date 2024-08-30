@@ -18,7 +18,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { DataService } from '../service/data.service'
 import { firstValueFrom, of, throwError } from 'rxjs'
 import { By } from '@angular/platform-browser'
-import { LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
+import { linkFixture } from '@geonetwork-ui/common/fixtures'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
 
@@ -140,7 +140,7 @@ describe('ChartViewComponent', () => {
     fixture.detectChanges()
   })
   beforeEach(fakeAsync(() => {
-    component.link = LINK_FIXTURES().dataCsv
+    component.link = linkFixture().dataCsv
     flushMicrotasks()
     chartComponent = fixture.debugElement.query(
       By.directive(MockChartComponent)
@@ -155,9 +155,7 @@ describe('ChartViewComponent', () => {
   describe('initial link input', () => {
     it('creates a dataset reader once from the link', () => {
       expect(dataService.getDataset).toHaveBeenCalledTimes(1)
-      expect(dataService.getDataset).toHaveBeenCalledWith(
-        LINK_FIXTURES().dataCsv
-      )
+      expect(dataService.getDataset).toHaveBeenCalledWith(linkFixture().dataCsv)
     })
     it('choses the first string property for X', () => {
       expect(chartComponent.labelProperty).toBe('distinct(propStr1)')
@@ -189,7 +187,7 @@ describe('ChartViewComponent', () => {
     beforeEach(fakeAsync(() => {
       jest.clearAllMocks()
       component.link = {
-        ...LINK_FIXTURES().dataCsv,
+        ...linkFixture().dataCsv,
         url: new URL('http://changed/'),
       }
       flushMicrotasks()
@@ -320,7 +318,7 @@ describe('ChartViewComponent', () => {
       dataService.getDataset = () =>
         throwError(() => new Error('could not open dataset'))
       component.link = {
-        ...LINK_FIXTURES().dataCsv,
+        ...linkFixture().dataCsv,
         url: new URL('http://changed/'),
       }
       flushMicrotasks()
@@ -337,7 +335,7 @@ describe('ChartViewComponent', () => {
   describe('dataset fails on properties info', () => {
     beforeEach(fakeAsync(() => {
       component.link = {
-        ...LINK_FIXTURES().dataCsv,
+        ...linkFixture().dataCsv,
         url: new URL('http://error-props/'),
       }
       flushMicrotasks()
@@ -354,7 +352,7 @@ describe('ChartViewComponent', () => {
   describe('no fitting property for x', () => {
     beforeEach(fakeAsync(() => {
       component.link = {
-        ...LINK_FIXTURES().dataCsv,
+        ...linkFixture().dataCsv,
         url: new URL('http://server.org/no-string-props/'),
       }
       flushMicrotasks()
@@ -370,7 +368,7 @@ describe('ChartViewComponent', () => {
     beforeEach(fakeAsync(() => {
       component.aggregation$.next('sum')
       component.link = {
-        ...LINK_FIXTURES().dataCsv,
+        ...linkFixture().dataCsv,
         url: new URL(
           'http://server.org/no-number-props/no-date-props/more-results/'
         ),

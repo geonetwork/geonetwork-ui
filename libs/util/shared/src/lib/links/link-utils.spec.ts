@@ -1,4 +1,4 @@
-import { LINK_FIXTURES } from '@geonetwork-ui/common/fixtures'
+import { linkFixture } from '@geonetwork-ui/common/fixtures'
 import {
   checkFileFormat,
   FORMATS,
@@ -15,17 +15,17 @@ describe('link utils', () => {
   describe('#getFileFormat', () => {
     describe('for a csv FILE link', () => {
       it('returns csv format', () => {
-        expect(getFileFormat(LINK_FIXTURES().dataCsv)).toEqual('csv')
+        expect(getFileFormat(linkFixture().dataCsv)).toEqual('csv')
       })
     })
     describe('for a geojson FILE link', () => {
       it('returns geojson format', () => {
-        expect(getFileFormat(LINK_FIXTURES().geodataJson)).toEqual('geojson')
+        expect(getFileFormat(linkFixture().geodataJson)).toEqual('geojson')
       })
     })
     describe('for a geojson FILE link with mime type in protocol', () => {
       it('returns geojson format', () => {
-        expect(getFileFormat(LINK_FIXTURES().geodataJsonWithMimeType)).toEqual(
+        expect(getFileFormat(linkFixture().geodataJsonWithMimeType)).toEqual(
           'geojson'
         )
       })
@@ -34,7 +34,7 @@ describe('link utils', () => {
       it('returns geojson format', () => {
         expect(
           getFileFormat({
-            ...LINK_FIXTURES().geodataJsonWithMimeType,
+            ...linkFixture().geodataJsonWithMimeType,
             mimeType: 'unknown',
           } as DatasetDownloadDistribution)
         ).toEqual('geojson')
@@ -42,49 +42,49 @@ describe('link utils', () => {
     })
     describe('for a json FILE link', () => {
       it('returns json format', () => {
-        expect(getFileFormat(LINK_FIXTURES().dataJson)).toEqual('json')
+        expect(getFileFormat(linkFixture().dataJson)).toEqual('json')
       })
     })
     describe('for a shapefile link', () => {
       it('returns shp format', () => {
-        expect(getFileFormat(LINK_FIXTURES().geodataShp)).toEqual('shp')
+        expect(getFileFormat(linkFixture().geodataShp)).toEqual('shp')
       })
     })
     describe('for a shapefile link with MimeType', () => {
       it('returns shp format', () => {
-        expect(getFileFormat(LINK_FIXTURES().geodataShpWithMimeType)).toEqual(
+        expect(getFileFormat(linkFixture().geodataShpWithMimeType)).toEqual(
           'shp'
         )
       })
     })
     describe('for a kml FILE link', () => {
       it('returns kml format', () => {
-        expect(getFileFormat(LINK_FIXTURES().geodataKml)).toEqual('kml')
+        expect(getFileFormat(linkFixture().geodataKml)).toEqual('kml')
       })
     })
     describe('for a geopackage FILE link', () => {
       it('returns gpkg format', () => {
-        expect(getFileFormat(LINK_FIXTURES().geodataGpkg)).toEqual('gpkg')
+        expect(getFileFormat(linkFixture().geodataGpkg)).toEqual('gpkg')
       })
     })
     describe('for an excel FILE link', () => {
       it('returns excel format', () => {
-        expect(getFileFormat(LINK_FIXTURES().dataXlsx)).toEqual('excel')
+        expect(getFileFormat(linkFixture().dataXlsx)).toEqual('excel')
       })
     })
     describe('for a pdf FILE link', () => {
       it('returns pdf format', () => {
-        expect(getFileFormat(LINK_FIXTURES().dataPdf)).toEqual('pdf')
+        expect(getFileFormat(linkFixture().dataPdf)).toEqual('pdf')
       })
     })
     describe('for a jpg FILE link', () => {
       it('returns jpg format', () => {
-        expect(getFileFormat(LINK_FIXTURES().dataJpg)).toEqual('jpg')
+        expect(getFileFormat(linkFixture().dataJpg)).toEqual('jpg')
       })
     })
     describe('for a zip FILE link', () => {
       it('returns zip format', () => {
-        expect(getFileFormat(LINK_FIXTURES().dataZip)).toEqual('zip')
+        expect(getFileFormat(linkFixture().dataZip)).toEqual('zip')
       })
     })
 

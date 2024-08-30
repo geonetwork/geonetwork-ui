@@ -18,6 +18,62 @@ All new components must be created as standalone.
 
 ## Testing
 
+### Fixture Guidelines
+
+When creating fixtures for testing, we should ensure that each test operates with an independent instance of the fixture data to prevent unintended side effects between tests.
+
+Instead of using a shared fixture object, encapsulate the fixture data within a function that generates a new instance for each test.
+
+#### Structure of a Fixture File
+
+Each fixture file should follow a consistent structure to allow for both flexibility and reusability. The recommended structure includes:
+
+1. **A Generic Fixture Creation Function with Overrides**: This function, named using the convention `createModelNameFixture`, is responsible for generating fixture objects. It should accept an optional `overrides` parameter that allows specific properties of the fixture object to be customized for individual tests.
+
+2. **Preconfigured Specific Fixtures**: Below the generic fixture function, include specific fixtures that represent common scenarios (e.g., a banned user, an admin user). These should follow the naming convention `specificScenarioFixture` (e.g., `bannedUserFixture`, `adminUserFixture`). These functions use the generic fixture creation function with predefined overrides to create specific fixture instances.
+
+#### Example: User Fixture File (`user.fixtures.ts`)
+
+```typescript
+// Generic function to create a user fixture with optional overrides
+export const createUserFixture = (overrides: Partial<User> = {}): User => ({
+  id: 1,
+  name: 'John Doe',
+  email: 'john.doe@example.com',
+  isBanned: false, // Default property
+  role: 'user', // Default role
+  ...overrides, // Apply overrides
+})
+
+// Specific fixture for a banned user
+export const bannedUserFixture = (): User =>
+  createUserFixture({
+    isBanned: true,
+  })
+
+// Specific fixture for an admin user
+export const adminUserFixture = (): User =>
+  createUserFixture({
+    role: 'admin',
+  })
+
+// Specific fixture for a guest user
+export const guestUserFixture = (): User =>
+  createUserFixture({
+    role: 'guest',
+  })
+
+// Specific fixture for multiple users
+export const someUsersFixture = (): User[] => [
+  bannedUserFixture(),
+  guestUserFixture(),
+  // ...
+]
+```
+
+This approach ensures test isolation, reduces the risk of shared state issues, and makes the test suite more maintainable and reliable.
+Always place these fixture-generating functions in a dedicated directory (e.g., fixtures) for easy reuse across the project.
+
 ### Unit tests
 
 #### ng-mocks

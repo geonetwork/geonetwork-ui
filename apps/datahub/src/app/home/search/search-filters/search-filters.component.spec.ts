@@ -20,8 +20,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 import { FormsModule } from '@angular/forms'
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
-import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
-import { AuthService } from '@geonetwork-ui/api/repository'
+import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
@@ -67,7 +66,7 @@ export class MockFilterDropdownComponent {
   @Input() title: string
 }
 const state = { OrgForResource: { mel: true } } as FieldFilters
-const user = USER_FIXTURE()
+const user = barbieUserFixture
 class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject(state)
   hasSpatialFilter$ = new BehaviorSubject(false)

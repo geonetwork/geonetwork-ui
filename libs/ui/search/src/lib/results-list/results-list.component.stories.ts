@@ -18,7 +18,7 @@ import {
 } from '@geonetwork-ui/util/i18n'
 import { TranslateModule } from '@ngx-translate/core'
 import { importProvidersFrom } from '@angular/core'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 
 export default {
   title: 'Search/ResultsListComponent',
@@ -49,7 +49,7 @@ type ResultsListComponentWithKey = ResultsListComponent & {
 
 export const Primary: StoryObj<ResultsListComponentWithKey> = {
   args: {
-    records: DATASET_RECORDS(),
+    records: datasetRecordsFixture(),
     layoutConfigKey: 'CARD',
   },
   argTypes: {

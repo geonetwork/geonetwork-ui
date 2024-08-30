@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common'
 import { MatIconModule } from '@angular/material/icon'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { By } from '@angular/platform-browser'
-import { DATASET_RECORDS } from '@geonetwork-ui/common/fixtures'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { Router } from '@angular/router'
 
 const results = [{ md: true }]
@@ -144,7 +144,7 @@ describe('SearchRecordsComponent', () => {
     describe('when click on a record', () => {
       const uniqueIdentifier = 123
       const singleRecord = {
-        ...DATASET_RECORDS()[0],
+        ...datasetRecordsFixture()[0],
         uniqueIdentifier,
       }
       beforeEach(() => {
@@ -157,7 +157,7 @@ describe('SearchRecordsComponent', () => {
     describe('when asking for record duplication', () => {
       const uniqueIdentifier = 123
       const singleRecord = {
-        ...DATASET_RECORDS()[0],
+        ...datasetRecordsFixture()[0],
         uniqueIdentifier,
       }
       beforeEach(() => {
