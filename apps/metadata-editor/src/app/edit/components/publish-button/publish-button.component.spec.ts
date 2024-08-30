@@ -5,11 +5,11 @@ import { BehaviorSubject, firstValueFrom, of } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
 import { HttpClientModule } from '@angular/common/http'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { USER_FIXTURE } from '@geonetwork-ui/common/fixtures'
 import {
   GroupsApiService,
   RecordsApiService,
 } from '@geonetwork-ui/data-access/gn4'
+import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
 
 class EditorFacadeMock {
   changedSinceSave$ = new BehaviorSubject(false)
@@ -23,7 +23,7 @@ class EditorFacadeMock {
   saveSuccess$ = new BehaviorSubject(true)
 }
 
-const user = USER_FIXTURE()
+const user = barbieUserFixture
 const groups = [
   { id: 1, name: 'Group 1' },
   { id: 2, name: 'Group 2' },
