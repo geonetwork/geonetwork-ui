@@ -15,33 +15,35 @@ export const createUserFixture = (
   ...overrides,
 })
 
-export const barbieUserFixture = createUserFixture({
-  id: '46798',
-  profile: 'Administrator',
-  username: 'barbie',
-  name: 'Barbara',
-  surname: 'Roberts',
-  email: 'barbie@email.org',
-  organisation: 'Barbie Inc.',
-  profileIcon:
-    'https://www.gravatar.com/avatar/dbdffd183622800bcf8587328daf43a6?d=mp',
-})
+export const barbieUserFixture = (): UserModel =>
+  createUserFixture({
+    id: '46798',
+    profile: 'Administrator',
+    username: 'barbie',
+    name: 'Barbara',
+    surname: 'Roberts',
+    email: 'barbie@email.org',
+    organisation: 'Barbie Inc.',
+    profileIcon:
+      'https://www.gravatar.com/avatar/dbdffd183622800bcf8587328daf43a6?d=mp',
+  })
 
-export const ghostUserFixture = createUserFixture({
-  id: '161',
-  profile: 'Administrator',
-  username: 'ghost',
-  name: 'Ghost',
-  surname: 'Old',
-  email: 'old.ghost@wiz.fr',
-  organisation: 'wizard-org',
-  profileIcon:
-    'https://www.gravatar.com/avatar/dbdffd183622800bcf8587328daf43a6?d=mp',
-})
+export const ghostUserFixture = (): UserModel =>
+  createUserFixture({
+    id: '161',
+    profile: 'Administrator',
+    username: 'ghost',
+    name: 'Ghost',
+    surname: 'Old',
+    email: 'old.ghost@wiz.fr',
+    organisation: 'wizard-org',
+    profileIcon:
+      'https://www.gravatar.com/avatar/dbdffd183622800bcf8587328daf43a6?d=mp',
+  })
 
 export const someUsersFixture = (): UserModel[] => [
-  barbieUserFixture,
-  ghostUserFixture,
+  barbieUserFixture(),
+  ghostUserFixture(),
   {
     id: '1',
     profile: 'Editor',

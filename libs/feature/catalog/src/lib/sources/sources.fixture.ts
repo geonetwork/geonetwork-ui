@@ -1,4 +1,4 @@
-export const SOURCES_FIXTURE = [
+export const someSourcesFixture = () => [
   {
     type: 'harvester',
     logo: null,

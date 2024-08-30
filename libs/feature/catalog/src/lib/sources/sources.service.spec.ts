@@ -3,14 +3,14 @@ import { HttpClientModule } from '@angular/common/http'
 import { SourcesService } from './sources.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { SourcesApiService } from '@geonetwork-ui/data-access/gn4'
-import { SOURCES_FIXTURE } from './sources.fixture'
+import { someSourcesFixture } from './sources.fixture'
 import { Observable } from 'rxjs'
 import { LangService } from '@geonetwork-ui/util/i18n'
 
 class SourcesApiServiceMock {
   getSubPortals1 = jest.fn(function () {
     return new Observable((observer) => {
-      observer.next(SOURCES_FIXTURE)
+      observer.next(someSourcesFixture())
     })
   })
 }

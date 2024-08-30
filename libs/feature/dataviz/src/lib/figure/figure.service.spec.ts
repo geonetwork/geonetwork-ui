@@ -1,5 +1,8 @@
 import { TestBed } from '@angular/core/testing'
-import { FIGURE_ITEM_FIXTURE, FIGURE_ITEM_FIXTURE_HAB } from './figure.fixtures'
+import {
+  someFigureItemFixture,
+  someHabFigureItemFixture,
+} from './figure.fixtures'
 
 import { FigureService } from './figure.service'
 
@@ -32,7 +35,7 @@ describe('FigureServiceService', () => {
 
     describe('average', () => {
       beforeEach(() => {
-        dataset = FIGURE_ITEM_FIXTURE
+        dataset = someFigureItemFixture()
         expression = 'average|age'
         figure = service.compute(expression, dataset)
       })
@@ -43,7 +46,7 @@ describe('FigureServiceService', () => {
     })
     describe('sum', () => {
       beforeEach(() => {
-        dataset = FIGURE_ITEM_FIXTURE_HAB
+        dataset = someHabFigureItemFixture()
         expression = 'sum|pop'
         figure = service.compute(expression, dataset)
       })
@@ -54,7 +57,7 @@ describe('FigureServiceService', () => {
     })
     describe('error', () => {
       beforeEach(() => {
-        dataset = FIGURE_ITEM_FIXTURE
+        dataset = someFigureItemFixture()
         expression = 'avera---age'
         figure = service.compute(expression, dataset)
       })

@@ -16,7 +16,7 @@ import {
   someOrganizationsFixture,
 } from '@geonetwork-ui/common/fixtures'
 
-const user = barbieUserFixture
+const user = barbieUserFixture()
 
 class PlatformServiceInterfaceMock {
   getMe = jest.fn(() => new BehaviorSubject(user))
@@ -72,7 +72,7 @@ describe('NewRecordResolver', () => {
           lastName: user.surname,
           email: user.email,
           role: 'point_of_contact',
-          organization: barbieIncOrganizationFixture,
+          organization: barbieIncOrganizationFixture(),
         } as Individual,
       ]
 

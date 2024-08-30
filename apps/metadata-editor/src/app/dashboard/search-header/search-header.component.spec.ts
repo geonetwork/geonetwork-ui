@@ -16,7 +16,7 @@ class AvatarServiceInterfaceMock {
   getProfileIcon = (hash: string) => of(`${hash}`)
 }
 
-const me$ = new BehaviorSubject(barbieUserFixture)
+const me$ = new BehaviorSubject(barbieUserFixture())
 class PlatformServiceMock {
   getMe = jest.fn(() => me$)
 }

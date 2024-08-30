@@ -1,6 +1,6 @@
 import { MapConfig } from './model'
 
-export const CONFIG_OK = `
+export const okAppConfigFixture = () => `
 [global]
 geonetwork4_api_url = "/geonetwork/srv/api"
 proxy_path = "/proxy/?url="
@@ -63,9 +63,9 @@ my.sample.text = "Un bon exemple de texte."
 "my.quoted.text" = 'du texte entre guillements.'
 `
 
-export const CONFIG_WITH_TRANSLATIONS = CONFIG_OK
+export const appConfigWithTranslationFixture = () => okAppConfigFixture()
 
-export const CONFIG_MINIMAL = `
+export const minimalAppConfigFixture = () => `
 [global]
 geonetwork4_api_url = "/geonetwork/srv/api"
 proxy_path = "/proxy/?url="
@@ -77,7 +77,7 @@ main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
 `
 
-export const MAP_CONFIG_FIXTURE: MapConfig = {
+export const mapConfigFixture = (): MapConfig => ({
   MAX_ZOOM: 10,
   MAX_EXTENT: [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855],
   DO_NOT_USE_DEFAULT_BASEMAP: false,
@@ -101,15 +101,15 @@ export const MAP_CONFIG_FIXTURE: MapConfig = {
       NAME: 'some_layername',
     },
   ],
-}
+})
 
-export const CONFIG_MALFORMED = `
+export const malformedConfigFixture = () => `
 {
   "I thought": "we were still doing json"
 }
 `
 
-export const CONFIG_MISSING_MANDATORY = `
+export const missingMandatoryConfigFixture = () => `
 [theme]
 primary_color = "#093564"
 secondary_color = "#c2e9dc"
@@ -117,7 +117,7 @@ background_color = "#fdfbff"
 main_font = 'sans-serif'
 `
 
-export const CONFIG_WRONG_LANGUAGE_CODE = `
+export const wrongLanguageCodeConfigFixture = () => `
 [global]
 geonetwork4_api_url = "/geonetwork/srv/api"
 proxy_path = "/proxy/?url="
@@ -132,7 +132,7 @@ main_color = "#212029" # All-purpose text color
 background_color = "#fdfbff"
 `
 
-export const CONFIG_UNRECOGNIZED_KEYS = `
+export const unrecognizedKeysConfigFixture = () => `
 [global]
 geonetwork4_api_url = "/geonetwork/srv/api"
 proxy_path = "/proxy/?url="

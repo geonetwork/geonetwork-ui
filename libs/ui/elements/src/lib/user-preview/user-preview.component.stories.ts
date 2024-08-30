@@ -35,7 +35,7 @@ export default {
 
 export const Primary: StoryObj<UserPreviewComponent> = {
   args: {
-    user: barbieUserFixture,
+    user: barbieUserFixture(),
     avatarPlaceholder: 'https://www.gravatar.com/avatar/?d=mp',
   },
 }

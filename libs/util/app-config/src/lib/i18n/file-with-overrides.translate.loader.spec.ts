@@ -7,7 +7,7 @@ import {
 import { HttpClient } from '@angular/common/http'
 import * as AppConfig from '../app-config'
 import { loadAppConfig } from '../app-config'
-import { CONFIG_WITH_TRANSLATIONS } from '../fixtures'
+import { appConfigWithTranslationFixture } from '../fixtures'
 import fetchMock from 'fetch-mock-jest'
 
 describe('FileTranslateLoader', () => {
@@ -37,7 +37,7 @@ describe('FileTranslateLoader', () => {
       'second.label': 'Deuxième libellé.',
     }
     beforeEach(async () => {
-      fetchMock.get('end:default.toml', () => CONFIG_WITH_TRANSLATIONS)
+      fetchMock.get('end:default.toml', () => appConfigWithTranslationFixture())
       await loadAppConfig()
     })
     it('includes translations', () => {

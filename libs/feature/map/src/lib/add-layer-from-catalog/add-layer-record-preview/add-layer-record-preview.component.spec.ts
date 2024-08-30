@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddLayerRecordPreviewComponent } from './add-layer-record-preview.component'
 import { MapFacade } from '../../+state/map.facade'
 import {
+  aSetOfLinksFixture,
   datasetRecordsFixture,
-  linkFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { of } from 'rxjs'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
@@ -52,7 +52,7 @@ describe('AddLayerRecordPreviewComponent', () => {
 
   describe('click on link', () => {
     beforeEach(() => {
-      component.handleLinkClick(linkFixture().geodataWms)
+      component.handleLinkClick(aSetOfLinksFixture().geodataWms())
     })
     it('adds a layer', () => {
       expect(mapFacade.addLayer).toHaveBeenCalledWith({

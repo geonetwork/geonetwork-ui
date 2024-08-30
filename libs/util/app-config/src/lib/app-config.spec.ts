@@ -3,18 +3,18 @@ import {
   _reset,
   getCustomTranslations,
   getGlobalConfig,
-  getThemeConfig,
-  loadAppConfig,
   getOptionalMapConfig,
   getOptionalSearchConfig,
+  getThemeConfig,
+  loadAppConfig,
 } from './app-config'
 import {
-  CONFIG_MALFORMED,
-  CONFIG_MINIMAL,
-  CONFIG_MISSING_MANDATORY,
-  CONFIG_OK,
-  CONFIG_UNRECOGNIZED_KEYS,
-  CONFIG_WRONG_LANGUAGE_CODE,
+  malformedConfigFixture,
+  minimalAppConfigFixture,
+  missingMandatoryConfigFixture,
+  okAppConfigFixture,
+  unrecognizedKeysConfigFixture,
+  wrongLanguageCodeConfigFixture,
 } from './fixtures'
 
 describe('app config utils', () => {
@@ -43,7 +43,7 @@ describe('app config utils', () => {
   })
   describe('when the configuration file is malformed', () => {
     beforeEach(() => {
-      fetchMock.get('end:default.toml', () => CONFIG_MALFORMED)
+      fetchMock.get('end:default.toml', () => malformedConfigFixture())
     })
     describe('loadAppConfig', () => {
       it('throws an error', async () => {
@@ -61,7 +61,7 @@ describe('app config utils', () => {
   })
   describe('when the configuration file misses mandatory keys', () => {
     beforeEach(() => {
-      fetchMock.get('end:default.toml', () => CONFIG_MISSING_MANDATORY)
+      fetchMock.get('end:default.toml', () => missingMandatoryConfigFixture())
     })
     describe('loadAppConfig', () => {
       it('throws an error (only for sections with mandatory properties)', async () => {
@@ -79,7 +79,7 @@ describe('app config utils', () => {
   })
   describe('when the metadata_language key has a wrong value', () => {
     beforeEach(async () => {
-      fetchMock.get('end:default.toml', () => CONFIG_WRONG_LANGUAGE_CODE)
+      fetchMock.get('end:default.toml', () => wrongLanguageCodeConfigFixture())
       await loadAppConfig()
     })
     describe('loadAppConfig', () => {
@@ -101,7 +101,7 @@ describe('app config utils', () => {
   })
   describe('when the configuration file contains unrecognized keys', () => {
     beforeEach(async () => {
-      fetchMock.get('end:default.toml', () => CONFIG_UNRECOGNIZED_KEYS)
+      fetchMock.get('end:default.toml', () => unrecognizedKeysConfigFixture())
       await loadAppConfig()
     })
     describe('loadAppConfig', () => {
@@ -123,7 +123,7 @@ describe('app config utils', () => {
   })
   describe('when the configuration file is valid', () => {
     beforeEach(async () => {
-      fetchMock.get('end:default.toml', () => CONFIG_OK)
+      fetchMock.get('end:default.toml', () => okAppConfigFixture())
       await loadAppConfig()
     })
     describe('getGlobalConfig', () => {
@@ -203,7 +203,7 @@ describe('app config utils', () => {
   })
   describe('minimal config', () => {
     beforeEach(async () => {
-      fetchMock.get('end:default.toml', () => CONFIG_MINIMAL)
+      fetchMock.get('end:default.toml', () => minimalAppConfigFixture())
       await loadAppConfig()
     })
     describe('loadAppConfig', () => {

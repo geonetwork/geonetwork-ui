@@ -1,8 +1,8 @@
 import { MapPartialState } from './map.reducer'
 import * as MapSelectors from './map.selectors'
 import {
-  MAP_CTX_LAYER_GEOJSON_FIXTURE,
-  MAP_CTX_LAYER_WMS_FIXTURE,
+  mapCtxLayerGeojsonFixture,
+  mapCtxLayerWmsFixture,
 } from '../map-context/map-context.fixtures'
 
 describe('Map Selectors', () => {
@@ -13,13 +13,13 @@ describe('Map Selectors', () => {
       map: {
         layers: [
           {
-            ...MAP_CTX_LAYER_WMS_FIXTURE,
+            ...mapCtxLayerWmsFixture(),
             title: 'wms',
             error: null,
             loading: false,
           },
           {
-            ...MAP_CTX_LAYER_GEOJSON_FIXTURE,
+            ...mapCtxLayerGeojsonFixture(),
             title: 'geojson',
             error: null,
             loading: false,

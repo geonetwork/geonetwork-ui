@@ -17,7 +17,7 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 export class MockRecordsListComponent {
   @Input() linkToDatahub: string
 }
-const user = barbieUserFixture
+const user = barbieUserFixture()
 
 class SearchFacadeMock {
   resetSearch = jest.fn()
@@ -37,7 +37,7 @@ class FieldsServiceMock {
   buildFiltersFromFieldValues = jest.fn((val) => of(val))
 }
 
-const me$ = new BehaviorSubject(barbieUserFixture)
+const me$ = new BehaviorSubject(barbieUserFixture())
 class PlatformServiceMock {
   getMe = jest.fn(() => me$)
 }

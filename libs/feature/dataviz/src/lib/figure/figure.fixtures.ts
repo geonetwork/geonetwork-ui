@@ -1,4 +1,4 @@
-export const FIGURE_ITEM_FIXTURE = [
+export const someFigureItemFixture = () => [
   {
     name: 'name 1',
     id: 'id 1',
@@ -16,7 +16,7 @@ export const FIGURE_ITEM_FIXTURE = [
   },
 ]
 
-export const FIGURE_ITEM_FIXTURE_HAB = [
+export const someHabFigureItemFixture = () => [
   {
     name: 'France',
     id: '1',

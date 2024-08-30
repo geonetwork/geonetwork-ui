@@ -8,7 +8,7 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { LinkClassifierService } from '@geonetwork-ui/util/shared'
-import { linkFixture } from '@geonetwork-ui/common/fixtures'
+import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 import { DownloadsListComponent } from './downloads-list.component'
 import {
@@ -62,9 +62,9 @@ describe('DownloadsListComponent', () => {
 
     beforeEach(() => {
       component.links = [
-        linkFixture().dataCsv,
-        linkFixture().dataPdf,
-        linkFixture().dataPdf,
+        aSetOfLinksFixture().dataCsv(),
+        aSetOfLinksFixture().dataPdf(),
+        aSetOfLinksFixture().dataPdf(),
       ]
       fixture.detectChanges()
       items = de.queryAll(By.directive(MockDownloadItemComponent))
@@ -91,7 +91,7 @@ describe('DownloadsListComponent', () => {
     let items: DebugElement[]
 
     beforeEach(() => {
-      component.links = [linkFixture().unknownFormat]
+      component.links = [aSetOfLinksFixture().unknownFormat()]
       fixture.detectChanges()
       items = de.queryAll(By.directive(MockDownloadItemComponent))
     })
@@ -106,7 +106,7 @@ describe('DownloadsListComponent', () => {
     beforeEach(() => {
       component.links = [
         {
-          ...linkFixture().geodataJsonWithMimeType,
+          ...aSetOfLinksFixture().geodataJsonWithMimeType(),
           mimeType: 'unknown/x-type',
         } as DatasetDownloadDistribution,
       ]
@@ -122,14 +122,14 @@ describe('DownloadsListComponent', () => {
     let items: DebugElement[]
 
     beforeEach(() => {
-      component.links = [linkFixture().geodataShpWithMimeType]
+      component.links = [aSetOfLinksFixture().geodataShpWithMimeType()]
       fixture.detectChanges()
       items = de.queryAll(By.directive(MockDownloadItemComponent))
     })
     it('contains color, isWfs & format', () => {
       expect(items.length).toBe(1)
       expect(items[0].componentInstance.link).toEqual(
-        linkFixture().geodataShpWithMimeType
+        aSetOfLinksFixture().geodataShpWithMimeType()
       )
       expect(items[0].componentInstance.format).toEqual('shp')
       expect(items[0].componentInstance.color).toEqual(
@@ -142,7 +142,7 @@ describe('DownloadsListComponent', () => {
     let items: DebugElement[]
 
     beforeEach(() => {
-      component.links = [linkFixture().geodataWfsDownload]
+      component.links = [aSetOfLinksFixture().geodataWfsDownload()]
       fixture.detectChanges()
       items = de.queryAll(By.directive(MockDownloadItemComponent))
     })
@@ -153,8 +153,8 @@ describe('DownloadsListComponent', () => {
   describe('filtering links', () => {
     beforeEach(() => {
       component.links = [
-        linkFixture().dataCsv,
-        linkFixture().geodataJsonWithMimeType,
+        aSetOfLinksFixture().dataCsv(),
+        aSetOfLinksFixture().geodataJsonWithMimeType(),
       ]
     })
     describe('no filter', () => {
@@ -164,8 +164,8 @@ describe('DownloadsListComponent', () => {
       })
       it('shows all links', () => {
         expect(component.filteredLinks).toEqual([
-          linkFixture().dataCsv,
-          linkFixture().geodataJsonWithMimeType,
+          aSetOfLinksFixture().dataCsv(),
+          aSetOfLinksFixture().geodataJsonWithMimeType(),
         ])
       })
     })
@@ -175,7 +175,9 @@ describe('DownloadsListComponent', () => {
         fixture.detectChanges()
       })
       it('shows only one link', () => {
-        expect(component.filteredLinks).toEqual([linkFixture().dataCsv])
+        expect(component.filteredLinks).toEqual([
+          aSetOfLinksFixture().dataCsv(),
+        ])
       })
     })
     describe('filter on json and csv', () => {
@@ -185,8 +187,8 @@ describe('DownloadsListComponent', () => {
       })
       it('shows both links including geojson', () => {
         expect(component.filteredLinks).toEqual([
-          linkFixture().dataCsv,
-          linkFixture().geodataJsonWithMimeType,
+          aSetOfLinksFixture().dataCsv(),
+          aSetOfLinksFixture().geodataJsonWithMimeType(),
         ])
       })
     })
@@ -240,9 +242,9 @@ describe('DownloadsListComponent', () => {
     describe('csv, json, pdf', () => {
       beforeEach(() => {
         component.links = [
-          linkFixture().dataCsv,
-          linkFixture().dataJson,
-          linkFixture().dataPdf,
+          aSetOfLinksFixture().dataCsv(),
+          aSetOfLinksFixture().dataJson(),
+          aSetOfLinksFixture().dataPdf(),
         ]
         fixture.detectChanges()
         items = de.queryAll(By.css('.format-filter'))
@@ -257,10 +259,10 @@ describe('DownloadsListComponent', () => {
     describe('geojson, shp, excel', () => {
       beforeEach(() => {
         component.links = [
-          linkFixture().geodataJsonWithMimeType,
-          linkFixture().geodataShp,
-          linkFixture().dataXls,
-          linkFixture().dataXlsx,
+          aSetOfLinksFixture().geodataJsonWithMimeType(),
+          aSetOfLinksFixture().geodataShp(),
+          aSetOfLinksFixture().dataXls(),
+          aSetOfLinksFixture().dataXlsx(),
         ]
         fixture.detectChanges()
         items = de.queryAll(By.css('.format-filter'))
@@ -274,7 +276,7 @@ describe('DownloadsListComponent', () => {
     })
     describe('pdf', () => {
       beforeEach(() => {
-        component.links = [linkFixture().dataPdf]
+        component.links = [aSetOfLinksFixture().dataPdf()]
         fixture.detectChanges()
         items = de.queryAll(By.css('.format-filter'))
       })

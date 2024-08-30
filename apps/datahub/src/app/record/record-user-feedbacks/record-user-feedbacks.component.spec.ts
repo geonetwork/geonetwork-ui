@@ -29,7 +29,7 @@ describe('RelatedRecordsComponent', () => {
   const allUserFeedbacks = someUserFeedbacksFixture()
   let mockDestroy$: Subject<void>
 
-  const activeUser = barbieUserFixture
+  const activeUser = barbieUserFixture()
 
   const mdViewFacadeMock: Partial<MdViewFacade> = {
     isAllUserFeedbackLoading$: new BehaviorSubject(false),
@@ -122,7 +122,7 @@ describe('RelatedRecordsComponent', () => {
     it('should set active user', fakeAsync(() => {
       component.ngOnInit()
       tick()
-      expect(component.activeUser).toEqual(barbieUserFixture)
+      expect(component.activeUser).toEqual(barbieUserFixture())
     }))
     it('should fetch user feedbacks and sort them correctly', async () => {
       component.ngOnInit()

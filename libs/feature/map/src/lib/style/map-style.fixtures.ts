@@ -4,42 +4,44 @@ const colorPrimary = 'blue'
 const colorSecondary = 'red'
 const colorStroke = 'white'
 
-export const DEFAULT_STYLE_FIXTURE = new Style({
-  image: new Circle({
+export const defaultMapStyleFixture = (): Style =>
+  new Style({
+    image: new Circle({
+      fill: new Fill({
+        color: colorPrimary,
+      }),
+      stroke: new Stroke({
+        color: colorStroke,
+        width: 2,
+      }),
+      radius: 5,
+    }),
     fill: new Fill({
-      color: colorPrimary,
+      color: 'rgba(0,0,255,0.25)',
     }),
     stroke: new Stroke({
       color: colorStroke,
       width: 2,
     }),
-    radius: 5,
-  }),
-  fill: new Fill({
-    color: 'rgba(0,0,255,0.25)',
-  }),
-  stroke: new Stroke({
-    color: colorStroke,
-    width: 2,
-  }),
-})
+  })
 
-export const DEFAULT_STYLE_HL_FIXTURE = new Style({
-  image: new Circle({
+export const defaultMapStyleHlFixture = (): Style =>
+  new Style({
+    image: new Circle({
+      fill: new Fill({
+        color: colorSecondary,
+      }),
+      stroke: new Stroke({
+        color: colorStroke,
+        width: 3,
+      }),
+      radius: 6,
+    }),
     fill: new Fill({
-      color: colorSecondary,
+      color: 'rgba(255,0,0,0.25)',
     }),
     stroke: new Stroke({
-      color: colorStroke,
+      color: colorSecondary,
       width: 3,
     }),
-    radius: 6,
-  }),
-  fill: new Fill({
-    color: 'rgba(255,0,0,0.25)',
-  }),
-  stroke: new Stroke({
-    color: colorSecondary,
-    width: 3,
-  }),
-})
+  })

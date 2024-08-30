@@ -66,7 +66,7 @@ export class MockFilterDropdownComponent {
   @Input() title: string
 }
 const state = { OrgForResource: { mel: true } } as FieldFilters
-const user = barbieUserFixture
+const user = barbieUserFixture()
 class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject(state)
   hasSpatialFilter$ = new BehaviorSubject(false)

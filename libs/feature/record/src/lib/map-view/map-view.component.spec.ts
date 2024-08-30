@@ -15,8 +15,8 @@ import {
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import {
-  DEFAULT_STYLE_FIXTURE,
-  DEFAULT_STYLE_HL_FIXTURE,
+  defaultMapStyleFixture,
+  defaultMapStyleHlFixture,
   FeatureInfoService,
   MapContextModel,
   MapManagerService,
@@ -130,8 +130,8 @@ class DataServiceMock {
 class MapStyleServiceMock {
   createDefaultStyle = jest.fn(() => [new Style()])
   styles = {
-    default: DEFAULT_STYLE_FIXTURE,
-    defaultHL: DEFAULT_STYLE_HL_FIXTURE,
+    default: defaultMapStyleFixture(),
+    defaultHL: defaultMapStyleHlFixture(),
   }
 }
 

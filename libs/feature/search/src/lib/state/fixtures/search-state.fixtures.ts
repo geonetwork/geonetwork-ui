@@ -1,4 +1,4 @@
-export const SEARCH_STATE_FILTERS_FIXTURE = {
+export const searchStateFiltersFixture = () => ({
   recursiveTerms: {
     resourceType: {
       service: {
@@ -26,4 +26,4 @@ export const SEARCH_STATE_FILTERS_FIXTURE = {
       availableInViewService: '+linkProtocol:/OGC:WMS.*/',
     },
   },
-}
+})

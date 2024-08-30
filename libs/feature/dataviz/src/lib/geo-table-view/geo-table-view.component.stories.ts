@@ -36,9 +36,3 @@ export default {
     ),
   ],
 } as Meta<GeoTableViewComponent>
-
-/*export const POINTS: StoryObj<GeoTableViewComponent> = {
-  args: {
-    data: FEATURE_COLLECTION_POINT_FIXTURE_4326,
-  },
-}*/

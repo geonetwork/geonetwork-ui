@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { FormFieldMapContainerComponent } from './form-field-map-container.component'
 import {
-  DEFAULT_STYLE_FIXTURE,
-  DEFAULT_STYLE_HL_FIXTURE,
+  defaultMapStyleFixture,
+  defaultMapStyleHlFixture,
   MapContextModel,
   MapFacade,
   MapStyleService,
@@ -36,8 +36,8 @@ class Gn4MetadataMapperMock {
 class mapStyleServiceMock {
   createDefaultStyle = jest.fn(() => new Style())
   styles = {
-    default: DEFAULT_STYLE_FIXTURE,
-    defaultHL: DEFAULT_STYLE_HL_FIXTURE,
+    default: defaultMapStyleFixture(),
+    defaultHL: defaultMapStyleHlFixture(),
   }
   createGeometryStyles = jest.fn(() => new Style())
   createStyleFunction = jest.fn()

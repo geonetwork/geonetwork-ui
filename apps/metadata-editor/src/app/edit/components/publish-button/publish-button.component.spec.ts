@@ -23,7 +23,7 @@ class EditorFacadeMock {
   saveSuccess$ = new BehaviorSubject(true)
 }
 
-const user = barbieUserFixture
+const user = barbieUserFixture()
 const groups = [
   { id: 1, name: 'Group 1' },
   { id: 2, name: 'Group 2' },

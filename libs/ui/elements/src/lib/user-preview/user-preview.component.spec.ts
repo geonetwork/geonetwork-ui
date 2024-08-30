@@ -5,7 +5,7 @@ import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
 
 import { UserPreviewComponent } from './user-preview.component'
 
-const user = barbieUserFixture
+const user = barbieUserFixture()
 @Component({
   selector: 'gn-ui-avatar',
   template: '',
