@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export default {
   title: 'Search/RecordPreviewListComponent',
@@ -24,7 +25,7 @@ export default {
 
 export const Primary: StoryObj<RecordPreviewListComponent> = {
   args: {
-    record: datasetRecordsFixture()[0],
+    record: datasetRecordsFixture()[0] as CatalogRecord,
     linkTarget: '_blank',
   },
 }

@@ -20,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export default {
   title: 'Elements/RelatedRecordCardComponent',
@@ -50,6 +51,6 @@ export default {
 
 export const Primary: StoryObj<RelatedRecordCardComponent> = {
   args: {
-    record: datasetRecordsFixture()[0],
+    record: datasetRecordsFixture()[0] as CatalogRecord,
   },
 }

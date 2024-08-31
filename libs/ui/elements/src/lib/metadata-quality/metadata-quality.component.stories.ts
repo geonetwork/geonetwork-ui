@@ -13,6 +13,7 @@ import {
   ProgressBarComponent,
 } from '@geonetwork-ui/ui/widgets'
 import { MatIconModule } from '@angular/material/icon'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export default {
   title: 'Elements/MetadataQualityComponent',
@@ -34,7 +35,7 @@ export default {
 export const Primary: StoryObj<MetadataQualityComponent> = {
   args: {
     smaller: false,
-    metadata: datasetRecordsFixture()[0],
+    metadata: datasetRecordsFixture()[0] as Partial<CatalogRecord>,
     metadataQualityDisplay: true,
   },
 }
