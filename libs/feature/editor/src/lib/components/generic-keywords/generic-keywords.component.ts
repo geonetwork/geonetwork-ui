@@ -41,6 +41,8 @@ export class GenericKeywordsComponent {
   @Input() keywords: Keyword[]
   @Input() keywordTypes: KeywordType[]
   @Input() placeholder: string
+  @Input() allowSubmit: boolean
+  @Input() searchFirst: boolean
   @Output() changedKeywords: EventEmitter<Keyword[]> = new EventEmitter()
   @Output() addedKeyword: EventEmitter<Keyword> = new EventEmitter()
   @Output() deletedKeyword: EventEmitter<Keyword> = new EventEmitter()

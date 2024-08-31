@@ -6,7 +6,8 @@
     (itemSelected)="handleItemSelection($event)"
     [preventCompleteOnSelection]="true"
     [minCharacterCount]="0"
-    [allowSubmit]="false"
+    [allowSubmit]="allowSubmit"
+    [searchFirst]="searchFirst"
   ></gn-ui-autocomplete>
   <div class="flex gap-2 flex-wrap">
     <gn-ui-badge
