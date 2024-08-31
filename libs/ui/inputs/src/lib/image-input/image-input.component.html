@@ -24,21 +24,23 @@
       [placeholder]="'input.image.altTextPlaceholder' | translate"
       [value]="altText ?? ''"
       (valueChange)="handleAltTextChange($event)"
+      extraClass="gn-ui-editor-textarea"
     ></gn-ui-text-input>
-    <div class="flex flex-row gap-2">
-      <gn-ui-button
-        [extraClass]="'bg-gray-200 font-bold'"
-        (buttonClick)="handleDelete()"
-      >
-        <mat-icon class="material-symbols-outlined me-1">delete</mat-icon>
+    <div class="flex flex-row gap-2 mt-2">
+      <gn-ui-button type="md-gray" (buttonClick)="handleDelete()">
+        <mat-icon class="material-symbols-outlined me-1 text-primary"
+          >delete</mat-icon
+        >
         {{ 'input.image.delete' | translate }}
       </gn-ui-button>
       <gn-ui-button
         *ngIf="!showAltTextInput"
-        [extraClass]="'bg-gray-200 font-bold'"
+        type="md-gray"
         (buttonClick)="toggleAltTextInput()"
       >
-        <mat-icon class="material-symbols-outlined me-1">add</mat-icon>
+        <mat-icon class="material-symbols-outlined me-1 text-primary"
+          >add</mat-icon
+        >
         {{ 'input.image.displayAltTextInput' | translate }}
       </gn-ui-button>
     </div>
@@ -125,12 +127,15 @@
       />
     </label>
 
-    <div *ngIf="!showUrlInput" class="flex-none">
+    <div *ngIf="!showUrlInput" class="flex-none mt-2">
       <gn-ui-button
         [extraClass]="'bg-gray-200 font-bold'"
         (buttonClick)="displayUrlInput()"
+        type="md-gray"
       >
-        <mat-icon class="material-symbols-outlined me-1">link</mat-icon>
+        <mat-icon class="material-symbols-outlined me-1 text-primary"
+          >link</mat-icon
+        >
         {{ 'input.image.displayUrlInput' | translate }}
       </gn-ui-button>
     </div>
