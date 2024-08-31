@@ -79,9 +79,10 @@ export class FileInputComponent {
     this.urlChange.emit(url)
   }
 
-  handleSecondaryTextClick() {
+  handleSecondaryTextClick(event: Event) {
     if (this.uploadProgress) {
       this.handleCancel()
+      event.preventDefault()
     }
   }
 
