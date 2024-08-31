@@ -9,6 +9,7 @@
   width: var(--input-height);
   height: 100%;
   border-left-width: 0.1em;
+  background-color: white;
 }
 mat-icon {
   width: 100%;
@@ -20,6 +21,7 @@ input {
   height: var(--input-height);
   padding: 1.05em;
   padding-right: calc(2 * var(--input-height));
+  width: calc(100% - var(--input-height));
 }
 input:placeholder-shown {
   text-overflow: ellipsis;

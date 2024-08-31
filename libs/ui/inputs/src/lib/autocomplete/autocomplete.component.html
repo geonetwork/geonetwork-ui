@@ -1,23 +1,5 @@
-<div class="relative">
-  <input
-    #searchInput
-    type="text"
-    class="appearance-none focus:outline-white focus:outline-2 focus:outline-dotted focus:outline-offset-2 leading-tight rounded w-full text-black shadow-xl focus:shadow-[0_0_24px_0_rgba(21,40,184,0.09)]"
-    [placeholder]="placeholder"
-    [formControl]="control"
-    [matAutocomplete]="auto"
-    (keyup.enter)="handleEnter(searchInput.value)"
-  />
-  <div class="flex flex-row absolute inset-y-0 right-0">
-    <button
-      type="button"
-      class="text-primary-lightest hover:text-primary hover:bg-gray-50 transition-all duration-100 clear-btn"
-      *ngIf="searchInput.value"
-      aria-label="Clear"
-      (click)="clear()"
-    >
-      <mat-icon class="material-symbols-outlined">close</mat-icon>
-    </button>
+<ng-template #searchButton>
+  <div class="absolute inset-y-0" [ngClass]="searchFirst ? '' : 'right-0'">
     <button
       type="button"
       class="text-primary bg-white hover:text-primary-darkest hover:bg-gray-100 border-gray-300 hover:border-gray-500 transition-all duration-100 search-btn rounded-r"
@@ -28,6 +10,36 @@
     >
       <mat-icon class="material-symbols-outlined">search</mat-icon>
     </button>
+  </div>
+</ng-template>
+
+<div class="gn-ui-autocomplete">
+  <ng-container *ngIf="searchFirst">
+    <ng-template [ngTemplateOutlet]="searchButton"></ng-template>
+  </ng-container>
+  <div class="relative" [ngClass]="searchFirst ? 'left-14' : 'left-0'">
+    <input
+      #searchInput
+      type="text"
+      class="appearance-none focus:outline-white focus:outline-2 focus:outline-dotted focus:outline-offset-2 leading-tight rounded text-black"
+      [placeholder]="placeholder"
+      [formControl]="control"
+      [matAutocomplete]="auto"
+      (keyup.enter)="handleEnter(searchInput.value)"
+    />
+    <button
+      type="button"
+      [ngClass]="allowSubmit ? 'right-14' : 'right-0'"
+      class="absolute text-primary-lightest hover:text-primary hover:bg-gray-50 transition-all duration-100 clear-btn"
+      *ngIf="searchInput.value"
+      aria-label="Clear"
+      (click)="clear()"
+    >
+      <mat-icon class="material-symbols-outlined">close</mat-icon>
+    </button>
+    <ng-container *ngIf="!searchFirst">
+      <ng-template [ngTemplateOutlet]="searchButton"></ng-template>
+    </ng-container>
   </div>
   <gn-ui-popup-alert
     *ngIf="error"

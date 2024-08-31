@@ -64,7 +64,8 @@ export class AutocompleteComponent
   @Input() preventCompleteOnSelection = false
   @Input() autoFocus = false
   @Input() minCharacterCount? = 3
-  @Input() allowSubmit = true
+  @Input() allowSubmit = false
+  @Input() searchFirst = false
   @Output() itemSelected = new EventEmitter<AutocompleteItem>()
   @Output() inputSubmitted = new EventEmitter<string>()
   @Output() inputCleared = new EventEmitter<void>()
