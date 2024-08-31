@@ -40,8 +40,8 @@ export class FormFieldRichComponent {
 
   getButtonExtraClass() {
     return `${
-      this.preview ? 'text-gray-200 bg-gray-900' : 'text-gray-900 bg-gray-200'
-    } rounded-[1.25rem] p-[0.375rem] text-xs font-medium w-24`
+      this.preview ? 'text-gray-200 bg-gray-900' : 'text-black bg-gray-200'
+    }`
   }
 
   togglePreview() {

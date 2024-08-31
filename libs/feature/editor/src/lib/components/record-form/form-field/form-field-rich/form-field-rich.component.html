@@ -2,15 +2,18 @@
   <gn-ui-button
     form-field-interaction
     [extraClass]="getButtonExtraClass()"
+    type="sm-gray"
     (buttonClick)="togglePreview()"
   >
-    <span class="material-symbols-outlined mr-1 gn-ui-icon-small">{{
-      preview ? 'visibility' : 'visibility_off'
-    }}</span>
+    <span
+      class="material-symbols-outlined mr-1 gn-ui-icon-small text-primary"
+      >{{ preview ? 'visibility' : 'visibility_off' }}</span
+    >
     {{ preview ? 'WYSIWYG' : 'Markdown' }}
   </gn-ui-button>
   <gn-ui-markdown-editor
     class="h-full"
+    extraClass="gn-ui-editor-textarea"
     [preview]="preview"
     [helperText]="helperText"
     [placeholder]="placeholder"
