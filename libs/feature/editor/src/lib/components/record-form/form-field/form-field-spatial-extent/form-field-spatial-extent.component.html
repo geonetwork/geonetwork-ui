@@ -10,10 +10,12 @@
     [keywordTypes]="['place']"
     (deletedKeyword)="handleKeywordDelete($event)"
     (addedKeyword)="handleKeywordAdd($event)"
+    [allowSubmit]="true"
+    [searchFirst]="true"
   >
   </gn-ui-generic-keywords>
 </div>
-<div class="w-full h-96">
+<div class="w-full h-96 mt-2">
   <gn-ui-form-field-map-container
     [spatialExtents]="spatialExtents$ | async"
   ></gn-ui-form-field-map-container>

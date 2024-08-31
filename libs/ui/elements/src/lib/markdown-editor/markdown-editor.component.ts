@@ -35,6 +35,7 @@ export class MarkdownEditorComponent {
   @Input() helperText?: string
   @Input() placeholder: string
   @Input() textContent: string
+  @Input() extraClass = ''
   @Output() textContentChanged: EventEmitter<string> =
     new EventEmitter<string>()
 

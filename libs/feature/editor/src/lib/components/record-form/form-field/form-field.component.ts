@@ -25,7 +25,7 @@ import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
 import { TranslateModule } from '@ngx-translate/core'
 import {
   FormFieldLicenseComponent,
-  FormFieldResourceUpdatedComponent,
+  FormFieldDateUpdatedComponent,
   FormFieldTemporalExtentsComponent,
 } from '.'
 import { FieldModelSpecifier, FormFieldConfig } from '../../../models'
@@ -56,7 +56,7 @@ import { FormFieldOnlineLinkResourcesComponent } from './form-field-online-link-
     MatTooltipModule,
     FormFieldWrapperComponent,
     FormFieldLicenseComponent,
-    FormFieldResourceUpdatedComponent,
+    FormFieldDateUpdatedComponent,
     FormFieldUpdateFrequencyComponent,
     FormFieldTemporalExtentsComponent,
     FormFieldSimpleComponent,

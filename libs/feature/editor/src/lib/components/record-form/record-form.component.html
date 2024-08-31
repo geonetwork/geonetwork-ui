@@ -27,25 +27,39 @@
               {{ section.descriptionKey }}
             </div>
           </div>
-          <ng-container
-            *ngFor="
-              let field of section.fieldsWithValues;
-              trackBy: fieldTracker
+          <div
+            [ngClass]="
+              isAboutSection(section) ? 'flex flex-wrap justify-between' : ''
             "
           >
-            <ng-container *ngIf="!field.config.hidden">
-              <gn-ui-form-field
-                [uniqueIdentifier]="recordUniqueIdentifier$ | async"
-                [model]="field.config.model!"
-                [modelSpecifier]="field.config.modelSpecifier!"
-                [config]="field.config.formFieldConfig"
-                [value]="field.value"
-                (valueChange)="
-                  handleFieldValueChange(field.config.model!, $event)
-                "
-              ></gn-ui-form-field>
+            <ng-container
+              *ngFor="
+                let field of section.fieldsWithValues;
+                let i = index;
+                trackBy: fieldTracker
+              "
+            >
+              <ng-container *ngIf="!field.config.hidden">
+                <gn-ui-form-field
+                  [ngClass]="{
+                    'w-full':
+                      isAboutSection(section) &&
+                      (i === 0 || i === 3 || i === 4),
+                    'w-[680px]':
+                      isAboutSection(section) && (i === 1 || i === 2),
+                  }"
+                  [uniqueIdentifier]="recordUniqueIdentifier$ | async"
+                  [model]="field.config.model!"
+                  [modelSpecifier]="field.config.modelSpecifier!"
+                  [config]="field.config.formFieldConfig"
+                  [value]="field.value"
+                  (valueChange)="
+                    handleFieldValueChange(field.config.model!, $event)
+                  "
+                ></gn-ui-form-field>
+              </ng-container>
             </ng-container>
-          </ng-container>
+          </div>
         </div>
       </ng-container>
     </ng-container>

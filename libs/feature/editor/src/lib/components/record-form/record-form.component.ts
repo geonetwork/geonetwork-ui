@@ -40,4 +40,9 @@ export class RecordFormComponent {
   sectionTracker(index: number, section: EditorSectionWithValues) {
     return section.labelKey
   }
+
+  isAboutSection(section) {
+    console.log(section)
+    return section.labelKey === 'editor.record.form.section.about.label'
+  }
 }
