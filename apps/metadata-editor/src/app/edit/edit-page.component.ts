@@ -18,6 +18,7 @@ import { filter, firstValueFrom, Subscription, take } from 'rxjs'
 import { PageSelectorComponent } from './components/page-selector/page-selector.component'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { map } from 'rxjs/operators'
+import { SidebarComponent } from '../dashboard/sidebar/sidebar.component'
 
 marker('editor.record.form.bottomButtons.comeBackLater')
 marker('editor.record.form.bottomButtons.previous')
@@ -38,6 +39,7 @@ marker('editor.record.form.bottomButtons.next')
     NotificationsContainerComponent,
     PageSelectorComponent,
     TranslateModule,
+    SidebarComponent,
   ],
 })
 export class EditPageComponent implements OnInit, OnDestroy {
