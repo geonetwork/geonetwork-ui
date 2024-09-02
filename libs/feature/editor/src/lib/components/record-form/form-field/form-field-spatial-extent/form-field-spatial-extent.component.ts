@@ -1,16 +1,21 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import {
   DatasetSpatialExtent,
   Keyword,
 } from '@geonetwork-ui/common/domain/model/record'
 import { GenericKeywordsComponent } from '../../../generic-keywords/generic-keywords.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { firstValueFrom, map, shareReplay } from 'rxjs'
+import { firstValueFrom, from, map, Observable, shareReplay } from 'rxjs'
 import { EditorFacade } from '../../../../+state/editor.facade'
 import { switchMap } from 'rxjs/operators'
 import { FormFieldMapContainerComponent } from '../form-field-map-container/form-field-map-container.component'
 import { TranslateService } from '@ngx-translate/core'
+import {
+  SwitchToggleComponent,
+  SwitchToggleOption,
+} from '@geonetwork-ui/ui/inputs'
+import { SPATIAL_SCOPES } from '../../../../fields.config'
 
 // This intermediary type will let us keep track of which keyword is bound to
 // which extent; these properties will not be persisted
@@ -35,11 +40,16 @@ type KeywordWithExtent = Keyword & {
     CommonModule,
     GenericKeywordsComponent,
     FormFieldMapContainerComponent,
+    SwitchToggleComponent,
   ],
 })
-export class FormFieldSpatialExtentComponent {
+export class FormFieldSpatialExtentComponent implements OnInit {
   spatialExtents$ = this.editorFacade.record$.pipe(
     map((record) => ('spatialExtents' in record ? record?.spatialExtents : []))
+  )
+
+  allKeywords$ = this.editorFacade.record$.pipe(
+    map((record) => record?.keywords)
   )
 
   shownKeywords$ = this.editorFacade.record$.pipe(
@@ -98,11 +108,31 @@ export class FormFieldSpatialExtentComponent {
     shareReplay(1)
   )
 
+  switchToggleOptions$: Observable<SwitchToggleOption[]>
+
   constructor(
     private platformService: PlatformServiceInterface,
     private editorFacade: EditorFacade,
     private translateService: TranslateService
   ) {}
+
+  ngOnInit(): void {
+    this.editorFacade.record$.subscribe((data) => {
+      const allKeywords = data.keywords
+
+      allKeywords.forEach((keyword) => {
+        this.switchToggleOptions$ = from([
+          SPATIAL_SCOPES.map((scope) => {
+            return {
+              label: scope.label,
+              value: { ...scope },
+              checked: keyword.label === scope.label,
+            }
+          }),
+        ])
+      })
+    })
+  }
 
   async handleKeywordDelete(keyword: Keyword) {
     const spatialExtents = await firstValueFrom(this.spatialExtents$)
@@ -161,5 +191,20 @@ export class FormFieldSpatialExtentComponent {
       ...filteredPlaceKeywords,
     ])
     this.editorFacade.updateRecordField('spatialExtents', spatialExtents)
+  }
+
+  async onSpatialScopeChange(selectedOption: SwitchToggleOption) {
+    // remove all existing spatial scope keywords
+    const allKeywords = await firstValueFrom(this.allKeywords$)
+    const filteredKeywords = allKeywords.filter((keyword) => {
+      const spatialScopeLabels = SPATIAL_SCOPES.map((scope) => scope.label)
+      return !spatialScopeLabels.includes(keyword.label)
+    })
+
+    // add the selected spatial scope keyword
+    this.editorFacade.updateRecordField('keywords', [
+      ...filteredKeywords,
+      { ...selectedOption.value },
+    ])
   }
 }
