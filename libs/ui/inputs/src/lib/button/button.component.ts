@@ -24,7 +24,7 @@ export class ButtonComponent {
       | 'default'
       | 'outline'
       | 'light'
-      | 'big-gray'
+      | 'lg-gray'
       | 'md-gray'
       | 'sm-gray'
   ) {
@@ -42,8 +42,8 @@ export class ButtonComponent {
       case 'light':
         this.btnClass = 'gn-ui-btn-light'
         break
-      case 'big-gray':
-        this.btnClass = 'gn-ui-btn-big-gray'
+      case 'lg-gray':
+        this.btnClass = 'gn-ui-btn-lg-gray'
         break
       case 'md-gray':
         this.btnClass = 'gn-ui-btn-md-gray'

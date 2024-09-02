@@ -94,7 +94,7 @@
       border border-secondary focus:ring-4 focus:ring-secondary-lightest;
   }
 
-  .gn-ui-btn-big-gray {
+  .gn-ui-btn-lg-gray {
     @apply gn-ui-btn text-black
     bg-gray-200 hover:bg-gray-400 focus:bg-gray-400 active:bg-gray-400
     border border-gray-400 focus:ring-4 focus:ring-gray-100;
@@ -180,6 +180,18 @@
 
   .gn-ui-editor-textarea {
     @apply gn-ui-text-input rounded-lg;
+  }
+
+  .gn-ui-autocomplete-input {
+    @apply appearance-none focus:outline-white focus:outline-2 focus:outline-dotted focus:outline-offset-2 leading-tight rounded text-black;
+  }
+
+  .gn-ui-autocomplete-clear {
+    @apply absolute text-primary-lightest hover:text-primary hover:bg-gray-50 transition-all duration-100;
+  }
+
+  .gn-ui-autocomplete-search {
+    @apply text-primary bg-white hover:text-primary-darkest hover:bg-gray-100 border-gray-300 hover:border-gray-500 transition-all duration-100 rounded-r;
   }
 }
 
