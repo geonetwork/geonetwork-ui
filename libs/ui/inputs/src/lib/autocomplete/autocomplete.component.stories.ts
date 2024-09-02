@@ -46,6 +46,7 @@ export const Primary: StoryObj<AutocompleteComponentWithActionResult> = {
     actionThrowsError: false,
     clearOnSelection: false,
     allowSubmit: true,
+    searchFirst: false,
   },
   argTypes: {
     itemSelected: {
