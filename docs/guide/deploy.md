@@ -4,8 +4,13 @@ outline: deep
 
 # Deployment
 
-This guide will offer you indications and advices for successfully deploying one or several GeoNetwork-UI applications
-in your infrastructure.
+This guide will offer you indications and advices for successfully deploying one or several GeoNetwork-UI applications in your infrastructure.
+
+::: tip
+
+Before diving into this guide, please refer yourself to the [prerequisites](./prerequisites.md) page to make sure your environment is ready for deploying GeoNetwork-UI applications.
+
+:::
 
 ## Basic principle
 
