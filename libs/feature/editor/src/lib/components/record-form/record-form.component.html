@@ -28,9 +28,9 @@
             </div>
           </div>
           <div
-            [ngClass]="
-              isAboutSection(section) ? 'flex flex-wrap justify-between' : ''
-            "
+            [ngClass]="{
+              'flex flex-wrap justify-between': isAboutSection(section)
+            }"
           >
             <ng-container
               *ngFor="
@@ -41,13 +41,7 @@
             >
               <ng-container *ngIf="!field.config.hidden">
                 <gn-ui-form-field
-                  [ngClass]="{
-                    'w-full':
-                      isAboutSection(section) &&
-                      (i === 0 || i === 3 || i === 4),
-                    'w-[680px]':
-                      isAboutSection(section) && (i === 1 || i === 2),
-                  }"
+                  [ngClass]="getClassForField(section, i)"
                   [uniqueIdentifier]="recordUniqueIdentifier$ | async"
                   [model]="field.config.model!"
                   [modelSpecifier]="field.config.modelSpecifier!"
