@@ -50,10 +50,9 @@ function sidebarGuide() {
       text: 'Guide',
       items: [
         { text: 'Why?', link: '/guide/why' },
-        { text: 'Getting started', link: '/guide/getting-started' },
         { text: 'Prerequisites', link: '/guide/prerequisites' },
-        { text: 'Configure', link: '/guide/configure' },
         { text: 'Deploy', link: '/guide/deploy' },
+        { text: 'Configure', link: '/guide/configure' },
         { text: 'Theming', link: '/guide/theming' },
         { text: 'Web components', link: '/guide/webcomponents' },
         { text: 'Custom Applications', link: '/guide/custom-app' },
