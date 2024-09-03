@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FormFieldAttachedResourcesComponent } from './form-field-attached-resources.component'
+import { FormFieldOnlineLinkResourcesComponent } from './form-field-online-link-resources.component'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { TranslateModule } from '@ngx-translate/core'
@@ -25,14 +25,14 @@ export class MatDialogMock {
   }))
 }
 
-describe('FormFieldAttachedResourcesComponent', () => {
-  let component: FormFieldAttachedResourcesComponent
-  let fixture: ComponentFixture<FormFieldAttachedResourcesComponent>
+describe('FormFieldOnlineLinkResourcesComponent', () => {
+  let component: FormFieldOnlineLinkResourcesComponent
+  let fixture: ComponentFixture<FormFieldOnlineLinkResourcesComponent>
   let notificationsService: NotificationsService
   let platformService: PlatformServiceInterface
 
   beforeEach(() => {
-    return MockBuilder(FormFieldAttachedResourcesComponent)
+    return MockBuilder(FormFieldOnlineLinkResourcesComponent)
   })
 
   beforeEach(async () => {
@@ -47,15 +47,12 @@ describe('FormFieldAttachedResourcesComponent', () => {
         MockProvider(NotificationsService),
         MockProvider(MatDialogRef),
         MockProvider(MatDialog, MatDialogMock, 'useClass'),
-        // MockProvider(MatDialog, {
-        //   open: jest.fn(),
-        // }),
       ],
     }).compileComponents()
 
     notificationsService = TestBed.inject(NotificationsService)
     platformService = TestBed.inject(PlatformServiceInterface)
-    fixture = TestBed.createComponent(FormFieldAttachedResourcesComponent)
+    fixture = TestBed.createComponent(FormFieldOnlineLinkResourcesComponent)
     component = fixture.componentInstance
     component.metadataUuid = '12345'
     component.value = [

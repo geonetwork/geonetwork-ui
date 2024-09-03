@@ -40,7 +40,7 @@ import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
 import { FormFieldOpenDataComponent } from './form-field-open-data/form-field-open-data.component'
-import { FormFieldAttachedResourcesComponent } from './form-field-attached-resources/form-field-attached-resources.component'
+import { FormFieldOnlineLinkResourcesComponent } from './form-field-online-link-resources/form-field-online-link-resources.component'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -69,7 +69,7 @@ import { FormFieldAttachedResourcesComponent } from './form-field-attached-resou
     FormFieldOverviewsComponent,
     FormFieldContactsForResourceComponent,
     FormFieldOpenDataComponent,
-    FormFieldAttachedResourcesComponent,
+    FormFieldOnlineLinkResourcesComponent,
   ],
 })
 export class FormFieldComponent {

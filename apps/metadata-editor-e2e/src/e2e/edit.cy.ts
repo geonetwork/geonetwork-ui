@@ -190,16 +190,18 @@ describe('editor form', () => {
       it('adds, modifies, deletes a resource', () => {
         // original item count
         cy.get(
-          'gn-ui-form-field-attached-resources gn-ui-online-resource-card'
+          'gn-ui-form-field-online-link-resources gn-ui-online-resource-card'
         ).should('have.length', 7)
         // upload readme file
-        cy.get('gn-ui-form-field-attached-resources label').selectFile(
+        cy.get('gn-ui-form-field-online-link-resources label').selectFile(
           'src/fixtures/readme.txt'
         )
         cy.get(
-          'gn-ui-form-field-attached-resources gn-ui-online-resource-card'
+          'gn-ui-form-field-online-link-resources gn-ui-online-resource-card'
         ).should('have.length', 8)
-        cy.get('gn-ui-form-field-attached-resources gn-ui-online-resource-card')
+        cy.get(
+          'gn-ui-form-field-online-link-resources gn-ui-online-resource-card'
+        )
           .eq(7)
           .as('readmeLink')
         cy.get('@readmeLink')
@@ -225,13 +227,13 @@ describe('editor form', () => {
         cy.screenshot({ capture: 'viewport' })
         // delete item
         cy.get(
-          'gn-ui-form-field-attached-resources gn-ui-sortable-list [data-cy=remove-item]'
+          'gn-ui-form-field-online-link-resources gn-ui-sortable-list [data-cy=remove-item]'
         )
           .eq(7)
           .click()
         // original item count
         cy.get(
-          'gn-ui-form-field-attached-resources gn-ui-online-resource-card'
+          'gn-ui-form-field-online-link-resources gn-ui-online-resource-card'
         ).should('have.length', 7)
       })
     })

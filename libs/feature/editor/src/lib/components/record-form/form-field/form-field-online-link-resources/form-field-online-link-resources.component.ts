@@ -30,9 +30,9 @@ import { Subscription } from 'rxjs'
 import { MatDialog } from '@angular/material/dialog'
 
 @Component({
-  selector: 'gn-ui-form-field-attached-resources',
-  templateUrl: './form-field-attached-resources.component.html',
-  styleUrls: ['./form-field-attached-resources.component.css'],
+  selector: 'gn-ui-form-field-online-link-resources',
+  templateUrl: './form-field-online-link-resources.component.html',
+  styleUrls: ['./form-field-online-link-resources.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -44,7 +44,7 @@ import { MatDialog } from '@angular/material/dialog'
     TextAreaComponent,
   ],
 })
-export class FormFieldAttachedResourcesComponent {
+export class FormFieldOnlineLinkResourcesComponent {
   @Input() metadataUuid: string
   @Input() set value(onlineResources: Array<OnlineResource>) {
     this.allResources = onlineResources
