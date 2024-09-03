@@ -241,28 +241,12 @@ export const SPATIAL_SCOPES: Keyword[] = [
     key: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/national',
     label: 'National',
     description: '',
-    type: 'place',
-    thesaurus: {
-      id: 'external.place.national.en',
-      name: 'National',
-      url: new URL(
-        'http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.place.national.en'
-      ),
-      type: 'place',
-    },
+    type: 'theme',
   },
   {
     key: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/regional',
     label: 'Regional',
     description: '',
-    type: 'place',
-    thesaurus: {
-      id: 'external.place.regional.en',
-      name: 'Regional',
-      url: new URL(
-        'http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.place.regional.en'
-      ),
-      type: 'place',
-    },
+    type: 'theme',
   },
 ]
