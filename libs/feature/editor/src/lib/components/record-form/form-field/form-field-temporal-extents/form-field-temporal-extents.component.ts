@@ -13,7 +13,7 @@ import {
   DatePickerComponent,
   DateRangePickerComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { TranslateService } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { combineLatest, map } from 'rxjs'
 
 @Component({
@@ -28,6 +28,7 @@ import { combineLatest, map } from 'rxjs'
     SortableListComponent,
     DatePickerComponent,
     DateRangePickerComponent,
+    TranslateModule,
   ],
 })
 export class FormFieldTemporalExtentsComponent {

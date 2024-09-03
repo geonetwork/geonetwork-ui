@@ -13,16 +13,20 @@
   [elementTemplate]="template"
 ></gn-ui-sortable-list>
 <ng-template #template let-extent let-index="index">
-  <gn-ui-date-picker
-    *ngIf="extent.end === undefined"
-    [date]="extent.start"
-    (dateChange)="onExtentChange({ start: $event }, index)"
-  ></gn-ui-date-picker>
-  <gn-ui-date-range-picker
-    *ngIf="extent.end !== undefined"
-    [startDate]="extent.start"
-    [endDate]="extent.end"
-    (startDateChange)="onExtentChange({ start: $event }, index)"
-    (endDateChange)="onExtentChange({ end: $event }, index)"
-  ></gn-ui-date-range-picker>
+  <div class="border rounded-lg px-4 pb-4" *ngIf="extent.end === undefined">
+    <p class="my-2" translate>editor.record.form.temporalExtents.date</p>
+    <gn-ui-date-picker
+      [date]="extent.start"
+      (dateChange)="onExtentChange({ start: $event }, index)"
+    ></gn-ui-date-picker>
+  </div>
+  <div class="border rounded-lg px-4 pb-4" *ngIf="extent.end !== undefined">
+    <p class="my-2" translate>editor.record.form.temporalExtents.range</p>
+    <gn-ui-date-range-picker
+      [startDate]="extent.start"
+      [endDate]="extent.end"
+      (startDateChange)="onExtentChange({ start: $event }, index)"
+      (endDateChange)="onExtentChange({ end: $event }, index)"
+    ></gn-ui-date-range-picker>
+  </div>
 </ng-template>
