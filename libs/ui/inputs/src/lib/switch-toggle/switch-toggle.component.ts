@@ -10,7 +10,6 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle'
 
 export type SwitchToggleOption = {
   label: string
-  value: any
   checked: boolean
 }
 

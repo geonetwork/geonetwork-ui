@@ -16,15 +16,7 @@ const NATIONAL_KEYWORD = {
   key: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/national',
   label: 'National',
   description: '',
-  type: 'place',
-  thesaurus: {
-    id: 'external.place.national.en',
-    name: 'National',
-    url: new URL(
-      'http://localhost:8080/geonetwork/srv/api/registries/vocabularies/external.place.national.en'
-    ),
-    type: 'place',
-  },
+  type: 'theme',
 }
 
 const SAMPLE_PLACE_KEYWORDS: Keyword[] = [
@@ -376,7 +368,6 @@ describe('FormFieldSpatialExtentComponent', () => {
         component = fixture.componentInstance
         fixture.detectChanges()
 
-        await component.ngOnInit()
         const results = await firstValueFrom(component.switchToggleOptions$)
         const nationalOption = results.filter(
           (result) => result.label === 'National'
@@ -394,7 +385,6 @@ describe('FormFieldSpatialExtentComponent', () => {
         component = fixture.componentInstance
         fixture.detectChanges()
 
-        await component.ngOnInit()
         const results = await firstValueFrom(component.switchToggleOptions$)
         const nationalOption = results.filter(
           (result) => result.label === 'National'
@@ -405,7 +395,7 @@ describe('FormFieldSpatialExtentComponent', () => {
     })
     describe('#onSpatialScopeChange', () => {
       it('removes all existing spatial scope keywords and add the selected one', async () => {
-        const spatialScopes = [{ label: 'national' }, { label: 'regional' }]
+        const spatialScopes = [{ label: 'National' }, { label: 'Regional' }]
 
         const allKeywords = await firstValueFrom(component.allKeywords$)
         const filteredKeywords = allKeywords.filter((keyword) => {
@@ -414,7 +404,7 @@ describe('FormFieldSpatialExtentComponent', () => {
         })
 
         const selectedOption = {
-          label: 'national',
+          label: 'National',
           value: NATIONAL_KEYWORD,
           checked: true,
         }
