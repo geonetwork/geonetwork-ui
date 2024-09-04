@@ -1,19 +1,17 @@
-<div class="flex flex-row gap-4 items-center">
-  <div class="flex flex-row border border-gray-200 rounded-xl p-4 gap-4 w-full">
+<div class="flex flex-row gap-2 items-center">
+  <div class="gn-ui-card">
     <gn-ui-thumbnail
-      class="w-[56px] h-[56px] rounded-[4px]"
+      class="w-[56px] h-[56px] rounded-[4px] overflow-hidden shrink-0"
       [thumbnailUrl]="contact.organization.logoUrl?.href"
       [fit]="'contain'"
     ></gn-ui-thumbnail>
-    <div class="flex flex-col w-full">
-      <div class="flex flex-row justify-between">
-        <span
-          class="flex flex-wrap font-bold w-full"
-          data-test="contactCardName"
-          >{{ contact.firstName }} {{ contact.lastName }}</span
-        >
+    <div class="flex flex-col w-full overflow-hidden leading-snug">
+      <div class="text-[16px] font-bold text-main" data-test="contactCardName">
+        {{ contact.firstName }} {{ contact.lastName }}
       </div>
-      <div data-test="contactCardEmail">{{ contact.email }}</div>
+      <div class="text-[14px] text-gray-900" data-test="contactCardEmail">
+        {{ contact.email }}
+      </div>
     </div>
   </div>
   <gn-ui-button

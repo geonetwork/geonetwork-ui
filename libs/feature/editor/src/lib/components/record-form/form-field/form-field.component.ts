@@ -17,6 +17,7 @@ import {
   GraphicOverview,
   Individual,
   Keyword,
+  OnlineResource,
   UpdateFrequency,
 } from '@geonetwork-ui/common/domain/model/record'
 import { EditableLabelDirective } from '@geonetwork-ui/ui/inputs'
@@ -27,7 +28,7 @@ import {
   FormFieldResourceUpdatedComponent,
   FormFieldTemporalExtentsComponent,
 } from '.'
-import { FormFieldConfig } from '../../../models'
+import { FieldModelSpecifier, FormFieldConfig } from '../../../models'
 import { FormFieldArrayComponent } from './form-field-array/form-field-array.component'
 import { FormFieldContactsForResourceComponent } from './form-field-contacts-for-resource/form-field-contacts-for-resource.component'
 import { FormFieldFileComponent } from './form-field-file/form-field-file.component'
@@ -39,6 +40,7 @@ import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
 import { FormFieldOpenDataComponent } from './form-field-open-data/form-field-open-data.component'
+import { FormFieldOnlineLinkResourcesComponent } from './form-field-online-link-resources/form-field-online-link-resources.component'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -67,11 +69,13 @@ import { FormFieldOpenDataComponent } from './form-field-open-data/form-field-op
     FormFieldOverviewsComponent,
     FormFieldContactsForResourceComponent,
     FormFieldOpenDataComponent,
+    FormFieldOnlineLinkResourcesComponent,
   ],
 })
 export class FormFieldComponent {
   @Input() uniqueIdentifier: string
   @Input() model: CatalogRecordKeys
+  @Input() modelSpecifier: FieldModelSpecifier
   @Input() config: FormFieldConfig
   @Input() value: unknown
 
@@ -113,5 +117,8 @@ export class FormFieldComponent {
   }
   get valueAsIndividuals() {
     return this.value as Array<Individual>
+  }
+  get valueAsOnlineResources() {
+    return this.value as Array<OnlineResource>
   }
 }

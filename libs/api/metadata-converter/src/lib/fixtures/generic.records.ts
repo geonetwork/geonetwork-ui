@@ -141,7 +141,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
   ],
   topics: ['agriculture'],
   spatialRepresentation: 'grid',
-  distributions: [
+  onlineResources: [
     {
       type: 'download',
       url: new URL('http://my-org.net/download/1.zip'),

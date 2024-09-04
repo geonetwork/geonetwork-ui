@@ -141,6 +141,11 @@
     disabled:cursor-not-allowed disabled:border-gray-100 disabled:placeholder-gray-300 disabled:text-gray-700 disabled:bg-white;
   }
 
+  /* GENERIC CARD */
+  .gn-ui-card {
+    @apply flex flex-row border border-gray-200 rounded-xl p-4 gap-2 w-full;
+  }
+
   /* TODO: add prefix */
   .card-icon {
     @apply text-primary opacity-50 group-hover:text-secondary group-hover:opacity-100 transition-colors transition-opacity;

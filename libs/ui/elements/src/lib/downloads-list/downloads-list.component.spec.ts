@@ -12,8 +12,8 @@ import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 import { DownloadsListComponent } from './downloads-list.component'
 import {
-  DatasetDistribution,
   DatasetDownloadDistribution,
+  DatasetOnlineResource,
 } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
@@ -21,7 +21,7 @@ import {
   template: ``,
 })
 class MockDownloadItemComponent {
-  @Input() link: DatasetDistribution
+  @Input() link: DatasetOnlineResource
   @Input() color: string
   @Input() format: string
   @Input() isFromWfs: boolean

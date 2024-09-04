@@ -16,12 +16,21 @@ export interface FormFieldConfig {
   invalidHintKey?: string
 }
 
+// Specifiers let us use specific components
+// This is used for instance to target only certain online resources in a field
+type OnlineLinkResourceSpecifier = `onlineResourceType:link`
+type DatasetDistributionsSpecifier = `onlineResourceType:!link`
+export type FieldModelSpecifier =
+  | OnlineLinkResourceSpecifier
+  | DatasetDistributionsSpecifier
+
 export interface EditorField {
   // configuration of the form field used as presentation
   formFieldConfig: FormFieldConfig
 
   // name of the target field in the record; will not change the record directly if not defined
   model?: CatalogRecordKeys
+  modelSpecifier?: FieldModelSpecifier
 
   // a hidden field won't show but can still be used to modify the record
   // FIXME: currently this is redundant with an absence of formFieldConfig but necessary for clarity

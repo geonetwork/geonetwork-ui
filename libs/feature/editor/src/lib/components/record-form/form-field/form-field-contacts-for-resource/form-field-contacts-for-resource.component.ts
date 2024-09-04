@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -18,10 +17,7 @@ import {
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import {
-  DynamicElement,
-  SortableListComponent,
-} from '@geonetwork-ui/ui/elements'
+import { SortableListComponent } from '@geonetwork-ui/ui/layout'
 import {
   AutocompleteComponent,
   DropdownSelectorComponent,
@@ -34,7 +30,6 @@ import {
   debounceTime,
   distinctUntilChanged,
   firstValueFrom,
-  Observable,
   switchMap,
 } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -64,8 +59,6 @@ export class FormFieldContactsForResourceComponent
   @Output() valueChange: EventEmitter<Individual[]> = new EventEmitter()
 
   contactsForRessourceByRole: Map<Role, Individual[]> = new Map()
-
-  contactsAsDynElemByRole: Map<Role, DynamicElement[]> = new Map()
 
   rolesToPick: Role[] = [
     'resource_provider',
@@ -133,35 +126,6 @@ export class FormFieldContactsForResourceComponent
 
       return acc
     }, new Map<Role, Individual[]>())
-
-    this.contactsAsDynElemByRole = this.value.reduce((acc, contact) => {
-      const completeOrganization = this.allOrganizations.get(
-        contact.organization.name
-      )
-
-      const updatedContact = {
-        ...contact,
-        organization:
-          completeOrganization ??
-          ({ name: contact.organization.name } as Organization),
-      }
-
-      const contactAsDynElem = {
-        component: ContactCardComponent,
-        inputs: {
-          contact: updatedContact,
-          removable: false,
-        },
-      } as DynamicElement
-
-      if (!acc.has(contact.role)) {
-        acc.set(contact.role, [])
-      }
-
-      acc.get(contact.role).push(contactAsDynElem)
-
-      return acc
-    }, new Map<Role, DynamicElement[]>())
   }
 
   manageRoleSectionsToDisplay(contactsForResource: Individual[]) {
@@ -181,14 +145,11 @@ export class FormFieldContactsForResourceComponent
     this.valueChange.emit(newContactsforRessource)
   }
 
-  handleContactsChanged(event: DynamicElement[]) {
-    const newContactsOrdered = event.map(
-      (contactAsDynElem) => contactAsDynElem.inputs['contact']
-    ) as Individual[]
+  handleContactsChanged(items: unknown[]) {
+    const contacts = items as Individual[]
+    const role = contacts[0].role
 
-    const role = newContactsOrdered[0].role
-
-    this.contactsForRessourceByRole.set(role, newContactsOrdered)
+    this.contactsForRessourceByRole.set(role, contacts)
 
     const newControlValue = Array.from(
       this.contactsForRessourceByRole.values()

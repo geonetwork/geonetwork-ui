@@ -43,7 +43,7 @@ export class NewRecordResolver {
           kind: 'dataset',
           status: 'ongoing',
           lineage: '',
-          distributions: [],
+          onlineResources: [],
           spatialExtents: [],
           temporalExtents: [],
         } as CatalogRecord

@@ -11,8 +11,6 @@ import { TranslateModule } from '@ngx-translate/core'
 import { MockBuilder, MockProviders } from 'ng-mocks'
 import { BehaviorSubject } from 'rxjs'
 import { FormFieldContactsForResourceComponent } from './form-field-contacts-for-resource.component'
-import exp from 'constants'
-import { add } from 'date-fns'
 
 const organizationBarbie: Organization = {
   name: 'Barbie Inc.',
@@ -95,7 +93,7 @@ describe('FormFieldContactsForResourceComponent', () => {
   })
 
   describe('updateContactsForRessource', () => {
-    it('should update contactsForRessourceByRole and contactsAsDynElemByRole', () => {
+    it('should update contactsForRessourceByRole ', () => {
       const mockContact: Individual = {
         role: 'owner',
         organization: { name: 'Org1' } as Organization,
@@ -109,7 +107,6 @@ describe('FormFieldContactsForResourceComponent', () => {
       expect(component.contactsForRessourceByRole.get('owner')).toEqual([
         mockContact,
       ])
-      expect(component.contactsAsDynElemByRole.get('owner').length).toBe(1)
     })
   })
 
@@ -164,10 +161,7 @@ describe('FormFieldContactsForResourceComponent', () => {
       component.contactsForRessourceByRole.set('owner', [mockContacts[0]])
       component.contactsForRessourceByRole.set('owner', [mockContacts[1]])
 
-      const reorderedElements = [
-        { inputs: { contact: mockContacts[1] } } as any,
-        { inputs: { contact: mockContacts[0] } } as any,
-      ]
+      const reorderedElements = [mockContacts[1], mockContacts[0]]
 
       component.handleContactsChanged(reorderedElements)
 

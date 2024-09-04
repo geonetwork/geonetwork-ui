@@ -20,7 +20,7 @@ export class TextAreaComponent implements AfterViewInit {
   @Input() value = ''
   @Input() disabled = false
   @Input() extraClass = ''
-  @Input() placeholder: string
+  @Input() placeholder = ''
   @Input() required = false
 
   rawChange = new Subject<string>()

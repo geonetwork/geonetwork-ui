@@ -49,17 +49,27 @@
       <ng-container *ngIf="contactsForRessourceByRole.get(role) as contacts">
         <ng-container *ngIf="contacts.length > 1">
           <gn-ui-sortable-list
-            [elements]="contactsAsDynElemByRole.get(role)"
-            (elementsChange)="handleContactsChanged($event)"
+            [items]="contacts"
+            (itemsOrderChange)="handleContactsChanged($event)"
+            [elementTemplate]="contactTemplate"
           ></gn-ui-sortable-list>
+          <ng-template #contactTemplate let-contact>
+            <div class="flex flex-row items-center gap-2">
+              <gn-ui-contact-card
+                [contact]="contact"
+                [removable]="false"
+              ></gn-ui-contact-card>
+            </div>
+          </ng-template>
         </ng-container>
         <ng-container *ngIf="contacts.length === 1">
           <ng-container *ngFor="let contact of contacts">
             <gn-ui-contact-card
               [contact]="contact"
               (contactRemoved)="removeContact(index)"
-            ></gn-ui-contact-card> </ng-container
-        ></ng-container>
+            ></gn-ui-contact-card>
+          </ng-container>
+        </ng-container>
       </ng-container>
 
       <hr class="border-t-[#D6D3D1] mt-4 mb-6" *ngIf="!isLast" />

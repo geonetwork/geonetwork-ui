@@ -4,7 +4,7 @@ import { getFileFormat, getLinkPriority } from '@geonetwork-ui/util/shared'
 import { combineLatest, of } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
 import {
-  DatasetDistribution,
+  DatasetOnlineResource,
   DatasetServiceDistribution,
 } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
@@ -61,11 +61,11 @@ export class RecordDownloadsComponent {
                 .pipe(
                   catchError((e) => {
                     this.error = e.message
-                    return [of([] as DatasetDistribution[])]
+                    return [of([] as DatasetOnlineResource[])]
                   })
                 )
             )
-          : [of([] as DatasetDistribution[])]),
+          : [of([] as DatasetOnlineResource[])]),
         ...(ogcLinks.length > 0
           ? ogcLinks.map((link) =>
               this.dataService
@@ -77,7 +77,7 @@ export class RecordDownloadsComponent {
                   return Promise.resolve([])
                 })
             )
-          : [of([] as DatasetDistribution[])]),
+          : [of([] as DatasetOnlineResource[])]),
       ]).pipe(
         map(flattenArray),
         map(removeLinksWithUnknownFormat),
@@ -113,6 +113,8 @@ const removeDuplicateLinks = (downloadLinks) =>
   )
 
 const sortLinks = (allLinks) =>
-  allLinks.sort((a: DatasetDistribution, b: DatasetDistribution): number => {
-    return getLinkPriority(b) - getLinkPriority(a)
-  })
+  allLinks.sort(
+    (a: DatasetOnlineResource, b: DatasetOnlineResource): number => {
+      return getLinkPriority(b) - getLinkPriority(a)
+    }
+  )

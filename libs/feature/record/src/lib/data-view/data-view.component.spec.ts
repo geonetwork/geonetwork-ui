@@ -11,7 +11,7 @@ import { MdViewFacade } from '../state'
 import { DataViewComponent } from './data-view.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import {
   someDataLinksFixture,
   someGeoDatalinksFixture,
@@ -35,7 +35,7 @@ const chartConfigMock = {
   template: '<div></div>',
 })
 export class MockTableViewComponent {
-  @Input() link: DatasetDistribution
+  @Input() link: DatasetOnlineResource
 }
 
 @Component({
@@ -43,7 +43,7 @@ export class MockTableViewComponent {
   template: '<div></div>',
 })
 export class MockChartViewComponent {
-  @Input() link: DatasetDistribution
+  @Input() link: DatasetOnlineResource
   @Output() chartConfig$ = new BehaviorSubject<DatavizConfigurationModel>(null)
 }
 

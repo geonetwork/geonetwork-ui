@@ -87,7 +87,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
     ],
     topics: ['testData', 'exampleData'],
     spatialRepresentation: 'grid',
-    distributions: [
+    onlineResources: [
       {
         type: 'download',
         url: new URL('http://my-org.net/download/1.zip'),
@@ -222,7 +222,7 @@ Malgré l'attention portée à la création de ces données, il est rappelé que
     ],
     topics: ['Usage des sols', "document d'urbanisme"],
     spatialRepresentation: 'vector',
-    distributions: [
+    onlineResources: [
       {
         type: 'download',
         url: new URL(
@@ -293,7 +293,7 @@ export const simpleDatasetRecordFixture = (): DatasetRecord => ({
   overviews: [],
   spatialExtents: [],
   temporalExtents: [],
-  distributions: [
+  onlineResources: [
     {
       type: 'download',
       url: new URL('http://my-org.net/download/1.zip'),

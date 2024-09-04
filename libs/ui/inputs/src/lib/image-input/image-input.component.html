@@ -112,7 +112,7 @@
               ? 'font-bold text-blue-500 cursor-pointer'
               : 'font-medium text-gray-500'
           "
-          (click)="handleSecondaryTextClick()"
+          (click)="handleSecondaryTextClick($event)"
         >
           {{ getSecondaryText() | translate }}
         </p>

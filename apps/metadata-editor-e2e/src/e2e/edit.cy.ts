@@ -183,6 +183,60 @@ describe('editor form', () => {
         })
       })
     })
+    describe('attached resources', () => {
+      beforeEach(() => {
+        cy.get('@resourcePageSelectorButton').click()
+      })
+      it('adds, modifies, deletes a resource', () => {
+        // original item count
+        cy.get(
+          'gn-ui-form-field-online-link-resources gn-ui-online-resource-card'
+        ).should('have.length', 7)
+        // upload readme file
+        cy.get('gn-ui-form-field-online-link-resources label').selectFile(
+          'src/fixtures/readme.txt'
+        )
+        cy.get(
+          'gn-ui-form-field-online-link-resources gn-ui-online-resource-card'
+        ).should('have.length', 8)
+        cy.get(
+          'gn-ui-form-field-online-link-resources gn-ui-online-resource-card'
+        )
+          .eq(7)
+          .as('readmeLink')
+        cy.get('@readmeLink')
+          .find('[data-test=card-title]')
+          .invoke('text')
+          .invoke('trim')
+          .should('eql', 'readme.txt')
+        // open modify dialog
+        cy.get('@readmeLink').find('button[data-test=card-modify]').click()
+        cy.get('gn-ui-modal-dialog gn-ui-text-input')
+          .find('input')
+          .type('{selectall}{del}new title!')
+        cy.get('gn-ui-modal-dialog gn-ui-text-area')
+          .find('textarea')
+          .type('new description')
+        cy.get('gn-ui-modal-dialog [data-cy=confirm-button]').click()
+        cy.get('@readmeLink')
+          .find('[data-test=card-title]')
+          .invoke('text')
+          .invoke('trim')
+          .should('eql', 'new title!')
+        cy.get('@readmeLink').scrollIntoView()
+        cy.screenshot({ capture: 'viewport' })
+        // delete item
+        cy.get(
+          'gn-ui-form-field-online-link-resources gn-ui-sortable-list [data-cy=remove-item]'
+        )
+          .eq(7)
+          .click()
+        // original item count
+        cy.get(
+          'gn-ui-form-field-online-link-resources gn-ui-online-resource-card'
+        ).should('have.length', 7)
+      })
+    })
   })
 
   describe('date range in sortable list', () => {
@@ -190,9 +244,7 @@ describe('editor form', () => {
       // add a date range
       cy.get('gn-ui-form-field-temporal-extents gn-ui-button').eq(1).click()
       // open the date picker
-      cy.get(
-        'gn-ui-form-field-temporal-extents-range mat-datepicker-toggle'
-      ).click()
+      cy.get('gn-ui-form-field-temporal-extents mat-datepicker-toggle').click()
       // select a date
       cy.get('mat-calendar').contains('1').click()
       // the date picker should still be open

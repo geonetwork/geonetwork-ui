@@ -40,7 +40,7 @@ import {
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-map-view',
@@ -183,7 +183,7 @@ export class MapViewComponent implements OnInit, OnDestroy {
   }
 
   getLayerFromLink(
-    link: DatasetDistribution
+    link: DatasetOnlineResource
   ): Observable<MapContextLayerModel> {
     if (link.type === 'service' && link.accessServiceProtocol === 'wms') {
       return of({

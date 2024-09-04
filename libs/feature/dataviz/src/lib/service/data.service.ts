@@ -24,7 +24,7 @@ import type { FeatureCollection } from 'geojson'
 import { from, Observable, throwError } from 'rxjs'
 import { catchError, map, switchMap, tap } from 'rxjs/operators'
 import {
-  DatasetDistribution,
+  DatasetOnlineResource,
   DatasetServiceDistribution,
 } from '@geonetwork-ui/common/domain/model/record'
 
@@ -135,7 +135,7 @@ export class DataService {
 
   getDownloadLinksFromWfs(
     wfsLink: DatasetServiceDistribution
-  ): Observable<DatasetDistribution[]> {
+  ): Observable<DatasetOnlineResource[]> {
     // Pour DL toutes les données
     return this.getDownloadUrlsFromWfs(
       wfsLink.url.toString(),
@@ -157,7 +157,7 @@ export class DataService {
 
   async getDownloadLinksFromOgcApiFeatures(
     ogcApiLink: DatasetServiceDistribution
-  ): Promise<DatasetDistribution[]> {
+  ): Promise<DatasetOnlineResource[]> {
     const collectionInfo = await this.getDownloadUrlsFromOgcApi(
       ogcApiLink.url.href
     )
@@ -199,7 +199,7 @@ export class DataService {
 
   getDownloadLinksFromEsriRest(
     esriRestLink: DatasetServiceDistribution
-  ): DatasetDistribution[] {
+  ): DatasetOnlineResource[] {
     return ['json', 'geojson'].map((format) => ({
       ...esriRestLink,
       url: new URL(
@@ -209,7 +209,7 @@ export class DataService {
     }))
   }
 
-  readAsGeoJson(link: DatasetDistribution): Observable<FeatureCollection> {
+  readAsGeoJson(link: DatasetOnlineResource): Observable<FeatureCollection> {
     return this.getDataset(link).pipe(
       switchMap((dataset) => dataset.selectAll().read()),
       map((features) => ({
@@ -219,7 +219,7 @@ export class DataService {
     )
   }
 
-  getDataset(link: DatasetDistribution): Observable<BaseReader> {
+  getDataset(link: DatasetOnlineResource): Observable<BaseReader> {
     if (link.type === 'service' && link.accessServiceProtocol === 'wfs') {
       return this.getDownloadUrlsFromWfs(link.url.toString(), link.name).pipe(
         switchMap((urls) => {

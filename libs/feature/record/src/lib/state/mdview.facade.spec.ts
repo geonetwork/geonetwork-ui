@@ -111,7 +111,9 @@ describe('MdViewFacade', () => {
           metadata: datasetRecordsFixture()[0],
         },
       })
-      const expected = hot('a', { a: datasetRecordsFixture()[0].distributions })
+      const expected = hot('a', {
+        a: datasetRecordsFixture()[0].onlineResources,
+      })
       expect(facade.allLinks$).toBeObservable(expected)
     })
   })

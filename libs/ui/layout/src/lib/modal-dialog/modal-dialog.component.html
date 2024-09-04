@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+<div mat-dialog-content>
+  <ng-container
+    *ngTemplateOutlet="data.body; context: { $implicit: data.bodyContext }"
+  ></ng-container>
+</div>
+<div mat-dialog-actions>
+  <gn-ui-button (buttonClick)="onCancel()">{{ data.cancelText }}</gn-ui-button>
+  <gn-ui-button
+    (buttonClick)="onConfirm()"
+    class="ml-2"
+    data-cy="confirm-button"
+    >{{ data.confirmText }}</gn-ui-button
+  >
+</div>

@@ -102,7 +102,7 @@ describe('Gn4Converter', () => {
             lineage: null,
             recordPublished: null,
             recordUpdated: null,
-            distributions: [],
+            onlineResources: [],
             licenses: [],
             legalConstraints: [],
             securityConstraints: [],
@@ -149,7 +149,7 @@ describe('Gn4Converter', () => {
             lineage: null,
             recordPublished: null,
             recordUpdated: null,
-            distributions: [],
+            onlineResources: [],
             contacts: [],
             contactsForResource: [],
             keywords: [],
@@ -235,7 +235,7 @@ describe('Gn4Converter', () => {
           })
           it('parses as a valid link, uses name as label', async () => {
             const record = (await service.readRecord(hit)) as DatasetRecord
-            expect(record.distributions).toEqual([
+            expect(record.onlineResources).toEqual([
               {
                 name: 'my data layer',
                 type: 'link',
@@ -261,7 +261,7 @@ describe('Gn4Converter', () => {
           })
           it('parses as a valid link, uses description as label', async () => {
             const record = (await service.readRecord(hit)) as DatasetRecord
-            expect(record.distributions).toEqual([
+            expect(record.onlineResources).toEqual([
               {
                 description: 'Download this file!',
                 type: 'link',
@@ -288,7 +288,7 @@ describe('Gn4Converter', () => {
           })
           it('parses as a valid link, uses description as label', async () => {
             const record = (await service.readRecord(hit)) as DatasetRecord
-            expect(record.distributions).toEqual([
+            expect(record.onlineResources).toEqual([
               {
                 description: 'Download this file!',
                 mimeType: 'application/csv',
@@ -315,7 +315,7 @@ describe('Gn4Converter', () => {
           })
           it('does not parse the link', async () => {
             const record = (await service.readRecord(hit)) as DatasetRecord
-            expect(record.distributions).toEqual([])
+            expect(record.onlineResources).toEqual([])
             expect(window.console.warn).toHaveBeenCalledWith(
               expect.stringContaining('URL'),
               expect.any(Object)
@@ -350,7 +350,7 @@ describe('Gn4Converter', () => {
           })
           it('parse the link correctly', async () => {
             const summary = (await service.readRecord(hit)) as DatasetRecord
-            expect(summary.distributions).toEqual([
+            expect(summary.onlineResources).toEqual([
               {
                 name: 'My file',
                 description: 'Download this file!',
@@ -380,7 +380,7 @@ describe('Gn4Converter', () => {
           })
           it('parse the link correctly', async () => {
             const summary = (await service.readRecord(hit)) as DatasetRecord
-            expect(summary.distributions).toEqual([
+            expect(summary.onlineResources).toEqual([
               {
                 url: new URL('https://my.website/services/static/data.csv'),
                 type: 'link',
@@ -1060,7 +1060,7 @@ describe('Gn4Converter', () => {
                 role: 'publisher',
               },
             ],
-            distributions: [
+            onlineResources: [
               {
                 url: new URL(
                   'https://wwz.ifremer.fr/envlit/Quadrige-la-base-de-donnees'

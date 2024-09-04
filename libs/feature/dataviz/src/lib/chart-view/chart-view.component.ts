@@ -25,7 +25,7 @@ import {
 } from 'rxjs/operators'
 import { DataService } from '../service/data.service'
 import { InputChartType } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateService } from '@ngx-translate/core'
 
 marker('chart.type.bar')
@@ -47,10 +47,10 @@ marker('chart.aggregation.count')
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChartViewComponent {
-  @Input() set link(value: DatasetDistribution) {
+  @Input() set link(value: DatasetOnlineResource) {
     this.currentLink$.next(value)
   }
-  private currentLink$ = new BehaviorSubject<DatasetDistribution>(null)
+  private currentLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
 
   @Input() set aggregation(value: FieldAggregation[0]) {
     this.aggregation$.next(value)

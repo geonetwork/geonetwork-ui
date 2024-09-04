@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { getFileFormat } from './link-utils'
+
 export enum LinkUsage {
   API = 'api',
   MAP_API = 'mapapi',
@@ -15,7 +16,7 @@ export enum LinkUsage {
   providedIn: 'root',
 })
 export class LinkClassifierService {
-  getUsagesForLink(link: DatasetDistribution): LinkUsage[] {
+  getUsagesForLink(link: DatasetOnlineResource): LinkUsage[] {
     switch (link.type) {
       case 'service': {
         switch (link.accessServiceProtocol) {
@@ -51,7 +52,7 @@ export class LinkClassifierService {
     }
   }
 
-  hasUsage(link: DatasetDistribution, usage: LinkUsage) {
+  hasUsage(link: DatasetOnlineResource, usage: LinkUsage) {
     return this.getUsagesForLink(link).indexOf(usage) > -1
   }
 }

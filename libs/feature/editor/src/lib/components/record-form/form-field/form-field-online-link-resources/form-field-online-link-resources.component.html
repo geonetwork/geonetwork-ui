@@ -1,0 +1,33 @@
+<gn-ui-file-input
+  [maxSizeMB]="10"
+  (fileChange)="handleFileChange($event)"
+  (uploadCancel)="handleUploadCancel()"
+  [uploadProgress]="uploadProgress"
+  (urlChange)="handleUrlChange($event)"
+></gn-ui-file-input>
+<gn-ui-sortable-list
+  [items]="linkResources"
+  (itemsOrderChange)="handleResourcesChange($event)"
+  [elementTemplate]="template"
+>
+</gn-ui-sortable-list>
+<ng-template #template let-onlineResource let-index="index">
+  <gn-ui-online-resource-card
+    [onlineResource]="onlineResource"
+    (modifyClick)="handleResourceModify(onlineResource, index)"
+  ></gn-ui-online-resource-card>
+</ng-template>
+
+<ng-template #dialogTemplate let-onlineResource>
+  <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
+    editor.record.form.field.onlineResource.edit.title
+  </h3>
+  <gn-ui-text-input
+    extraClass="mb-[16px]"
+    [(value)]="onlineResource.name"
+  ></gn-ui-text-input>
+  <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
+    editor.record.form.field.onlineResource.edit.description
+  </h3>
+  <gn-ui-text-area [(value)]="onlineResource.description"></gn-ui-text-area>
+</ng-template>

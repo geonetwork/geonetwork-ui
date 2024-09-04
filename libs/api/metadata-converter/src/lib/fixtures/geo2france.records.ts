@@ -98,7 +98,7 @@ Malgré l'attention portée à la création de ces données, il est rappelé que
   ],
   topics: ['planningCadastre'],
   spatialRepresentation: 'vector',
-  distributions: [
+  onlineResources: [
     {
       type: 'download',
       url: new URL(

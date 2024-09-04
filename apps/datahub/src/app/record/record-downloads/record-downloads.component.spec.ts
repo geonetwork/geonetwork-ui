@@ -9,7 +9,7 @@ import { RecordDownloadsComponent } from './record-downloads.component'
 import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 
 // This is used to work around a very weird bug when comparing URL objects would fail
@@ -77,7 +77,7 @@ class DataServiceMock {
   template: '<div></div>',
 })
 export class MockDownloadsListItemComponent {
-  @Input() link: DatasetDistribution
+  @Input() link: DatasetOnlineResource
 }
 
 @Component({
@@ -146,7 +146,7 @@ describe('DataDownloadsComponent', () => {
       })
       it('emits the other links', fakeAsync(() => {
         let downloadLinks = []
-        component.links$.subscribe((links: DatasetDistribution[]) => {
+        component.links$.subscribe((links: DatasetOnlineResource[]) => {
           downloadLinks = links
         })
         tick(200)
@@ -174,7 +174,7 @@ describe('DataDownloadsComponent', () => {
         fixture.detectChanges()
       })
       it('emits no links', () => {
-        component.links$.subscribe((links: DatasetDistribution[]) => {
+        component.links$.subscribe((links: DatasetOnlineResource[]) => {
           expect(links).toEqual([])
         })
       })
@@ -245,7 +245,7 @@ describe('DataDownloadsComponent', () => {
       })
       it('emits download links once per format', fakeAsync(() => {
         let downloadLinks = []
-        component.links$.subscribe((links: DatasetDistribution[]) => {
+        component.links$.subscribe((links: DatasetOnlineResource[]) => {
           downloadLinks = links
         })
         tick(200)
@@ -387,7 +387,7 @@ describe('DataDownloadsComponent', () => {
       })
       it('sorts links', fakeAsync(() => {
         let downloadLinks = []
-        component.links$.subscribe((links: DatasetDistribution[]) => {
+        component.links$.subscribe((links: DatasetOnlineResource[]) => {
           downloadLinks = links
         })
         tick(200)

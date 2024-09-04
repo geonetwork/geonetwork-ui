@@ -28,7 +28,8 @@ export default {
       providers: [importProvidersFrom(BrowserAnimationsModule)],
     }),
     componentWrapperDecorator(
-      (story) => `<div style="max-width: 400px; margin: auto;">${story}</div>`
+      (story) =>
+        `<div class="border border-gray-300 h-[200px] w-[500px] p-[10px]" style="resize: both; overflow: auto; margin: auto;">${story}</div>`
     ),
   ],
 } as Meta<ContactCardComponent>

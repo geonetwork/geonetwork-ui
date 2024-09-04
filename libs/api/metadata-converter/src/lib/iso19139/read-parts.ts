@@ -1,9 +1,10 @@
 import {
   Constraint,
-  DatasetDistribution,
+  DatasetOnlineResource,
   GraphicOverview,
   Individual,
   Keyword,
+  OnlineResource,
   Organization,
   RecordKind,
   RecordStatus,
@@ -326,12 +327,12 @@ const getMimeType = pipe(
 )
 
 /**
- * Extract distributions from a MD_Distribution element
+ * Extract online resources from an MD_Distribution element
  * @param getMimeTypeFn This function starts from a gmd:transferOptions element
  */
-export function extractDatasetDistributions(
+export function extractDatasetOnlineResources(
   getMimeTypeFn: ChainableFunction<XmlElement, string>
-): ChainableFunction<XmlElement, DatasetDistribution[]> {
+): ChainableFunction<XmlElement, DatasetOnlineResource[]> {
   const getUrl = pipe(findChildElement('gmd:linkage'), extractMandatoryUrl())
   const getProtocolStr = pipe(
     findChildElement('gmd:protocol'),
@@ -774,14 +775,6 @@ export function readLineage(rootEl: XmlElement): string {
   )(rootEl)
 }
 
-export function readDistributions(rootEl: XmlElement): DatasetDistribution[] {
-  return pipe(
-    findNestedElements('gmd:distributionInfo', 'gmd:MD_Distribution'),
-    mapArray(extractDatasetDistributions(getMimeType)),
-    flattenArray()
-  )(rootEl)
-}
-
 export function readUpdateFrequency(rootEl: XmlElement): UpdateFrequency {
   return pipe(
     findIdentification(),
@@ -845,9 +838,14 @@ export function extractServiceOnlineResources(): ChainableFunction<
   )
 }
 
-export function readOnlineResources(
-  rootEl: XmlElement
-): ServiceOnlineResource[] {
+export function readOnlineResources(rootEl: XmlElement): OnlineResource[] {
+  if (readKind(rootEl) === 'dataset') {
+    return pipe(
+      findNestedElements('gmd:distributionInfo', 'gmd:MD_Distribution'),
+      mapArray(extractDatasetOnlineResources(getMimeType)),
+      flattenArray()
+    )(rootEl)
+  }
   return pipe(
     findNestedElements('gmd:distributionInfo', 'gmd:MD_Distribution'),
     mapArray(extractServiceOnlineResources()),

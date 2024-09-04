@@ -19,15 +19,16 @@ import {
 } from '../function-utils'
 import {
   extractCharacterString,
-  extractDatasetDistributions,
+  extractDatasetOnlineResources,
   extractDateTime,
   extractRole,
+  extractServiceOnlineResources,
   extractUrl,
   findIdentification,
 } from '../iso19139/read-parts'
 import {
-  DatasetDistribution,
   Individual,
+  OnlineResource,
   Organization,
   RecordKind,
   Role,
@@ -320,10 +321,17 @@ const getMimeType = pipe(
   map(matchMimeType)
 )
 
-export function readDistributions(rootEl: XmlElement): DatasetDistribution[] {
+export function readOnlineResources(rootEl: XmlElement): OnlineResource[] {
+  if (readKind(rootEl) === 'dataset') {
+    return pipe(
+      findNestedElements('mrd:distributionInfo', 'mrd:MD_Distribution'),
+      mapArray(extractDatasetOnlineResources(getMimeType)),
+      flattenArray()
+    )(rootEl)
+  }
   return pipe(
     findNestedElements('mrd:distributionInfo', 'mrd:MD_Distribution'),
-    mapArray(extractDatasetDistributions(getMimeType)),
+    mapArray(extractServiceOnlineResources()),
     flattenArray()
   )(rootEl)
 }

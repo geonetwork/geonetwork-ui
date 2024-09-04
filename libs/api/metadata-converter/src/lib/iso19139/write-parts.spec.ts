@@ -9,8 +9,8 @@ import {
 } from '../xml-utils'
 import {
   getISODuration,
-  writeDistributions,
   writeKeywords,
+  writeOnlineResources,
   writeSpatialExtents,
   writeTemporalExtents,
 } from './write-parts'
@@ -28,15 +28,15 @@ describe('write parts', () => {
     datasetRecord = { ...GENERIC_DATASET_RECORD }
   })
 
-  describe('writeDistributions', () => {
-    const distributionShp = GENERIC_DATASET_RECORD.distributions[0]
-    const distributionLink = GENERIC_DATASET_RECORD.distributions[2]
+  describe('writeOnlineResources', () => {
+    const distributionShp = GENERIC_DATASET_RECORD.onlineResources[0]
+    const distributionLink = GENERIC_DATASET_RECORD.onlineResources[2]
 
-    it('writes several distributions', () => {
-      writeDistributions(
+    it('writes several online resources', () => {
+      writeOnlineResources(
         {
           ...datasetRecord,
-          distributions: [distributionShp, distributionLink],
+          onlineResources: [distributionShp, distributionLink],
         },
         rootEl
       )
@@ -109,7 +109,7 @@ describe('write parts', () => {
     })
 
     it('removes existing ones', () => {
-      // add some distributions first
+      // add some online resources first
       const sample = parseXmlString(`
 <root>
     <gmd:distributionInfo xmlns:comp="http://www.geocat.ch/2003/05/gateway/GM03Comprehensive" xmlns:xalan="http://xml.apache.org/xalan" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:che="http://www.geocat.ch/2008/che" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -203,10 +203,10 @@ describe('write parts', () => {
     </gmd:distributionInfo>
 </root>`)
       rootEl = getRootElement(sample)
-      writeDistributions(
+      writeOnlineResources(
         {
           ...datasetRecord,
-          distributions: [distributionLink],
+          onlineResources: [distributionLink],
         },
         rootEl
       )
@@ -543,7 +543,7 @@ describe('write parts', () => {
     })
 
     it('removes existing ones', () => {
-      // add some distributions first
+      // add some keywords first
       const sample = parseXmlString(`
 <root>
     <gmd:identificationInfo >
@@ -620,7 +620,7 @@ describe('write parts', () => {
     })
 
     it('correctly adds a thesaurus to an existing keyword', () => {
-      // add some distributions first
+      // add some keywords first
       const sample = parseXmlString(`
 <root>
     <gmd:identificationInfo >

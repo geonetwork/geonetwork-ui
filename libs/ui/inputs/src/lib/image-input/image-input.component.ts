@@ -144,11 +144,12 @@ export class ImageInputComponent {
     }
   }
 
-  handleSecondaryTextClick() {
+  handleSecondaryTextClick(event: Event) {
     if (this.uploadError) {
       this.handleRetry()
     } else if (this.uploadProgress) {
       this.handleCancel()
+      event.preventDefault()
     }
   }
 

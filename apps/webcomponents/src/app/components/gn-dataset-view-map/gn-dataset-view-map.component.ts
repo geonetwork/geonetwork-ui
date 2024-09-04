@@ -11,7 +11,7 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component'
 import { LinkUsage } from '@geonetwork-ui/util/shared'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'wc-gn-dataset-view-map',
@@ -30,7 +30,7 @@ export class GnDatasetViewMapComponent extends BaseComponent implements OnInit {
     super(injector)
   }
   @Input() datasetId: string
-  link: DatasetDistribution
+  link: DatasetOnlineResource
   async init() {
     super.init()
     this.mdViewFacade.loadFull(this.datasetId)

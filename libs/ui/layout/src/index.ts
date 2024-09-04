@@ -8,4 +8,6 @@ export * from './lib/interactive-table/interactive-table-column/interactive-tabl
 export * from './lib/interactive-table/interactive-table.component'
 export * from './lib/sticky-header/sticky-header.component'
 export * from './lib/block-list/block-list.component'
+export * from './lib/sortable-list/sortable-list.component'
+export * from './lib/modal-dialog/modal-dialog.component'
 export * from './lib/ui-layout.module'

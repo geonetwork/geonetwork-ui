@@ -20,12 +20,9 @@ import { getUpdateFrequencyFromFrequencyCode } from '../iso19139/utils/update-fr
 import {
   CatalogRecord,
   Constraint,
-  DatasetDistribution,
-  DatasetDistributionType,
-  DatasetDownloadDistribution,
-  DatasetServiceDistribution,
   DatasetSpatialExtent,
-  OnlineLinkResource,
+  OnlineResource,
+  OnlineResourceType,
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchProtocol } from '../common/distribution.mapper'
 import { Thesaurus } from './types'
@@ -158,13 +155,13 @@ export class Gn4FieldMapper {
       const rawLinks = getAsArray(
         selectField<SourceWithUnknownProps[]>(source, 'link')
       )
-      const distributions = rawLinks
+      const onlineResources = rawLinks
         .map((link) => this.mapLink(link))
         .filter((v) => v !== null)
       return {
         ...output,
-        distributions,
-      }
+        onlineResources,
+      } as CatalogRecord
     },
     contact: (output, source) => ({
       ...output,
@@ -287,7 +284,7 @@ export class Gn4FieldMapper {
       return {
         ...output,
         kind,
-      }
+      } as CatalogRecord
     },
     geom: (output, source) => {
       const geoms = getAsArray(selectField(source, 'geom'))
@@ -387,7 +384,7 @@ export class Gn4FieldMapper {
     return fieldName in this.fields ? this.fields[fieldName] : this.genericField
   }
 
-  getLinkType(url: string, protocol?: string): DatasetDistributionType {
+  getLinkType(url: string, protocol?: string): OnlineResourceType {
     if (!protocol) {
       return 'link'
     }
@@ -406,9 +403,7 @@ export class Gn4FieldMapper {
     return 'link'
   }
 
-  mapLink = (
-    sourceLink: SourceWithUnknownProps
-  ): DatasetDistribution | null => {
+  mapLink = (sourceLink: SourceWithUnknownProps): OnlineResource | null => {
     const url = getAsUrl(
       selectFallback(
         selectTranslatedField<string>(sourceLink, 'urlObject', this.lang3),
@@ -452,20 +447,27 @@ export class Gn4FieldMapper {
           type,
           url: url,
           accessServiceProtocol,
-        } as DatasetServiceDistribution
+        }
       case 'link':
         return {
           ...distribution,
           type,
           url: url,
-        } as OnlineLinkResource
+        }
       case 'download':
         return {
           ...distribution,
           type,
           url: url,
           ...(mimeType && { mimeType }),
-        } as DatasetDownloadDistribution
+        }
+      case 'endpoint':
+        return {
+          ...distribution,
+          type,
+          endpointUrl: url,
+          protocol: accessServiceProtocol,
+        }
     }
   }
 

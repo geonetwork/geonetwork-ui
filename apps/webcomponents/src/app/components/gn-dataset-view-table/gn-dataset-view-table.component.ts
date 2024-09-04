@@ -10,7 +10,7 @@ import {
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { BaseComponent } from '../base.component'
 import { LinkUsage } from '@geonetwork-ui/util/shared'
-import { DatasetDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'wc-gn-dataset-view-table',
@@ -25,7 +25,7 @@ export class GnDatasetViewTableComponent
   implements OnInit
 {
   @Input() datasetId!: string
-  link: DatasetDistribution
+  link: DatasetOnlineResource
   constructor(injector: Injector, private changeDetector: ChangeDetectorRef) {
     super(injector)
   }

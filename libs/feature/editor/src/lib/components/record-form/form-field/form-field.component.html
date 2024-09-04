@@ -115,5 +115,13 @@
         (valueChange)="valueChange.emit($event)"
       ></gn-ui-form-field-contacts-for-resource>
     </ng-container>
+    <ng-container *ngSwitchCase="'onlineResources'">
+      <gn-ui-form-field-online-link-resources
+        *ngIf="modelSpecifier === 'onlineResourceType:link'"
+        [metadataUuid]="uniqueIdentifier"
+        [value]="valueAsOnlineResources"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-online-link-resources>
+    </ng-container>
   </ng-container>
 </ng-template>
