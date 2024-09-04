@@ -24,7 +24,7 @@ import {
   SortableListComponent,
 } from '@geonetwork-ui/ui/layout'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
-import { TranslateService } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { Subscription } from 'rxjs'
 import { MatDialog } from '@angular/material/dialog'
@@ -42,6 +42,7 @@ import { MatDialog } from '@angular/material/dialog'
     OnlineResourceCardComponent,
     TextInputComponent,
     TextAreaComponent,
+    TranslateModule,
   ],
 })
 export class FormFieldOnlineLinkResourcesComponent {
