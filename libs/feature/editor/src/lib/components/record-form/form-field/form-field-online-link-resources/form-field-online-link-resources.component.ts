@@ -28,6 +28,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { Subscription } from 'rxjs'
 import { MatDialog } from '@angular/material/dialog'
+import { MAX_UPLOAD_SIZE_MB } from '../../../../fields.config'
 
 @Component({
   selector: 'gn-ui-form-field-online-link-resources',
@@ -62,6 +63,8 @@ export class FormFieldOnlineLinkResourcesComponent {
   linkResources: OnlineLinkResource[] = []
   uploadProgress = undefined
   uploadSubscription: Subscription = null
+
+  protected MAX_UPLOAD_SIZE_MB = MAX_UPLOAD_SIZE_MB
 
   constructor(
     private notificationsService: NotificationsService,

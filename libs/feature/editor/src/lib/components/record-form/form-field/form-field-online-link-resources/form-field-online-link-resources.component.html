@@ -1,5 +1,5 @@
 <gn-ui-file-input
-  [maxSizeMB]="10"
+  [maxSizeMB]="MAX_UPLOAD_SIZE_MB"
   (fileChange)="handleFileChange($event)"
   (uploadCancel)="handleUploadCancel()"
   [uploadProgress]="uploadProgress"

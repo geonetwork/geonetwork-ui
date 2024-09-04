@@ -228,3 +228,5 @@ export const OPEN_DATA_LICENSES: string[] = [
   'odc-by',
   'pddl',
 ]
+
+export const MAX_UPLOAD_SIZE_MB = 10
