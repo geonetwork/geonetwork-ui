@@ -13,6 +13,7 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateService } from '@ngx-translate/core'
 import { Subscription } from 'rxjs'
+import { MAX_UPLOAD_SIZE_MB } from '../../../../fields.config'
 
 @Component({
   selector: 'gn-ui-form-field-overviews',
@@ -30,6 +31,8 @@ export class FormFieldOverviewsComponent {
 
   uploadProgress = undefined
   uploadSubscription: Subscription = null
+
+  protected MAX_UPLOAD_SIZE_MB = MAX_UPLOAD_SIZE_MB
 
   get firstOverview() {
     return (
