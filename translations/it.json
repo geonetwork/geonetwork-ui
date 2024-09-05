@@ -369,6 +369,7 @@
   "record.metadata.api.form.closeForm": "Chiudi il pannello di personalizzazione",
   "record.metadata.api.form.create": "Configura la sua richiesta",
   "record.metadata.api.form.customUrl": "URL personalizzata",
+  "record.metadata.api.form.error": "",
   "record.metadata.api.form.limit": "Numero di record",
   "record.metadata.api.form.limit.all": "Tutti",
   "record.metadata.api.form.offset": "Numero del primo record",

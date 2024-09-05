@@ -369,6 +369,7 @@
   "record.metadata.api.form.closeForm": "Zavrieť formulár",
   "record.metadata.api.form.create": "Vytvoriť požiadavku",
   "record.metadata.api.form.customUrl": "Vlastná URL",
+  "record.metadata.api.form.error": "",
   "record.metadata.api.form.limit": "Počet záznamov",
   "record.metadata.api.form.limit.all": "Všetky",
   "record.metadata.api.form.offset": "Počet prvých záznamov",
