@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common'
-import { Component } from '@angular/core'
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core'
 import {
   ResultsTableContainerComponent,
   SearchFacade,
@@ -14,6 +21,14 @@ import { Observable } from 'rxjs'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { MatIconModule } from '@angular/material/icon'
+import {
+  CdkConnectedOverlay,
+  CdkOverlayOrigin,
+  Overlay,
+  OverlayRef,
+} from '@angular/cdk/overlay'
+import { TemplatePortal } from '@angular/cdk/portal'
+import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
 
 @Component({
   selector: 'md-editor-search-records-list',
@@ -28,32 +43,88 @@ import { MatIconModule } from '@angular/material/icon'
     UiElementsModule,
     UiInputsModule,
     MatIconModule,
+    ImportRecordComponent,
+    CdkOverlayOrigin,
+    CdkConnectedOverlay,
   ],
 })
 export class SearchRecordsComponent {
+  @ViewChild('importRecordButton', { read: ElementRef })
+  private importRecordButton!: ElementRef
+  @ViewChild('template') template!: TemplateRef<any>
+  private overlayRef!: OverlayRef
+
   searchText$: Observable<string | null> =
     this.searchFacade.searchFilters$.pipe(
       map((filters) => ('any' in filters ? (filters['any'] as string) : null))
     )
 
+  isImportMenuOpen = false
+
   constructor(
     private router: Router,
     public searchFacade: SearchFacade,
-    public searchService: SearchService
+    public searchService: SearchService,
+    private overlay: Overlay,
+    private viewContainerRef: ViewContainerRef,
+    private cdr: ChangeDetectorRef
   ) {
     this.searchFacade.setPageSize(15)
     this.searchFacade.resetSearch()
   }
 
   editRecord(record: CatalogRecord) {
-    this.router.navigate(['/edit', record.uniqueIdentifier])
+    this.router
+      .navigate(['/edit', record.uniqueIdentifier])
+      .catch((err) => console.error(err))
   }
 
   duplicateRecord(record: CatalogRecord) {
-    this.router.navigate(['/duplicate', record.uniqueIdentifier])
+    this.router
+      .navigate(['/duplicate', record.uniqueIdentifier])
+      .catch((err) => console.error(err))
   }
 
   createRecord() {
-    this.router.navigate(['/create'])
+    this.router.navigate(['/create']).catch((err) => console.error(err))
+  }
+
+  duplicateExternalRecord() {
+    this.isImportMenuOpen = true
+
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(this.importRecordButton)
+      .withPositions([
+        {
+          originX: 'end',
+          originY: 'bottom',
+          overlayX: 'end',
+          overlayY: 'top',
+        },
+      ])
+
+    this.overlayRef = this.overlay.create({
+      hasBackdrop: true,
+      backdropClass: 'cdk-overlay-transparent-backdrop',
+      positionStrategy: positionStrategy,
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+    })
+
+    const portal = new TemplatePortal(this.template, this.viewContainerRef)
+
+    this.overlayRef.attach(portal)
+
+    this.overlayRef.backdropClick().subscribe(() => {
+      this.closeImportMenu()
+    })
+  }
+
+  closeImportMenu() {
+    if (this.overlayRef) {
+      this.isImportMenuOpen = false
+      this.overlayRef.dispose()
+      this.cdr.markForCheck()
+    }
   }
 }

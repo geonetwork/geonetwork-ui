@@ -22,6 +22,10 @@ body {
   @apply text-2xl px-9 py-3;
 }
 
+.cdk-overlay-transparent-backdrop {
+  @apply bg-transparent;
+}
+
 .mat-mdc-button-base {
   line-height: normal;
 }

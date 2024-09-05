@@ -59,6 +59,7 @@ export class RecordsListComponent {
   paginate(page: number) {
     this.searchService.setPage(page)
   }
+
   createRecord() {
     this.router.navigate(['/create'])
   }

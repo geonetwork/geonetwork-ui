@@ -6,6 +6,7 @@ import {
 import { ElasticsearchService } from './elasticsearch'
 import {
   combineLatest,
+  exhaustMap,
   from,
   Observable,
   of,
@@ -25,15 +26,22 @@ import {
 } from '@geonetwork-ui/common/domain/model/search'
 import { catchError, map, tap } from 'rxjs/operators'
 import {
+  assertValidXml,
   findConverterForDocument,
   Gn4Converter,
   Gn4SearchResults,
   Iso19139Converter,
 } from '@geonetwork-ui/api/metadata-converter'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { HttpErrorResponse } from '@angular/common/http'
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http'
 
 const TEMPORARY_ID_PREFIX = 'TEMP-ID-'
+
+export type RecordAsXml = string
 
 @Injectable()
 export class Gn4Repository implements RecordsRepositoryInterface {
@@ -41,6 +49,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   draftsChanged$ = this._draftsChanged.asObservable()
 
   constructor(
+    private httpClient: HttpClient,
     private gn4SearchApi: SearchApiService,
     private gn4SearchHelper: ElasticsearchService,
     private gn4Mapper: Gn4Converter,
@@ -140,6 +149,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         )
       )
   }
+
   aggregate(params: AggregationsParams): Observable<Aggregations> {
     // if aggregations are empty, return an empty object right away
     if (Object.keys(params).length === 0) return of({})
@@ -184,44 +194,12 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       )
   }
 
-  /**
-   * Returns null if the record is not found
-   */
-  private loadRecordAsXml(uniqueIdentifier: string): Observable<string | null> {
-    return this.gn4RecordsApi
-      .getRecordAs(
-        uniqueIdentifier,
-        undefined,
-        false,
-        undefined,
-        undefined,
-        undefined,
-        'application/xml',
-        'response',
-        undefined,
-        { httpHeaderAccept: 'text/xml,application/xml' as 'application/xml' } // this is to make sure that the response is parsed as text
-      )
-      .pipe(
-        map((response) => response.body),
-        catchError((error: HttpErrorResponse) =>
-          error.status === 404 ? of(null) : throwError(() => error)
-        )
-      )
-  }
-
-  private getLocalStorageKeyForRecord(uniqueIdentifier: string) {
-    return `geonetwork-ui-draft-${uniqueIdentifier}`
-  }
-
   openRecordForEdition(
     uniqueIdentifier: string
   ): Observable<[CatalogRecord, string, boolean] | null> {
-    const draft$ = of(
-      window.localStorage.getItem(
-        this.getLocalStorageKeyForRecord(uniqueIdentifier)
-      )
-    )
-    const recordAsXml$ = this.loadRecordAsXml(uniqueIdentifier)
+    const draft$ = of(this.getRecordFromLocalStorage(uniqueIdentifier))
+    const recordAsXml$ = this.getRecordAsXml(uniqueIdentifier)
+
     return combineLatest([draft$, recordAsXml$]).pipe(
       switchMap(([draft, recordAsXml]) => {
         const xml = draft ?? recordAsXml
@@ -239,32 +217,25 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   openRecordForDuplication(
     uniqueIdentifier: string
   ): Observable<[CatalogRecord, string, false] | null> {
-    return this.loadRecordAsXml(uniqueIdentifier).pipe(
-      switchMap(async (recordAsXml) => {
-        const converter = findConverterForDocument(recordAsXml)
-        const record = await converter.readRecord(recordAsXml)
+    return this.getRecordAsXml(uniqueIdentifier).pipe(
+      switchMap(async (fetchedRecordAsXml) => {
+        const converter = findConverterForDocument(fetchedRecordAsXml)
+        const record = await converter.readRecord(fetchedRecordAsXml)
+
         record.uniqueIdentifier = `${TEMPORARY_ID_PREFIX}${Date.now()}`
         record.title = `${record.title} (Copy)`
-        const xml = await converter.writeRecord(record, recordAsXml)
-        window.localStorage.setItem(
-          this.getLocalStorageKeyForRecord(record.uniqueIdentifier),
-          xml
+
+        const recordAsXml = await converter.writeRecord(
+          record,
+          fetchedRecordAsXml
         )
+
+        this.saveRecordToLocalStorage(recordAsXml, record.uniqueIdentifier)
         this._draftsChanged.next()
-        return [record, xml, false] as [CatalogRecord, string, false]
+
+        return [record, recordAsXml, false] as [CatalogRecord, string, false]
       })
     )
-  }
-
-  private serializeRecordToXml(
-    record: CatalogRecord,
-    referenceRecordSource?: string
-  ): Observable<string> {
-    // if there's a reference record, use that standard; otherwise, use iso19139
-    const converter = referenceRecordSource
-      ? findConverterForDocument(referenceRecordSource)
-      : new Iso19139Converter()
-    return from(converter.writeRecord(record, referenceRecordSource))
   }
 
   saveRecord(
@@ -301,6 +272,32 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     )
   }
 
+  duplicateExternalRecord(recordDownloadUrl: string): Observable<string> {
+    return this.getExternalRecordAsXml(recordDownloadUrl).pipe(
+      exhaustMap(async (fetchedRecordAsXml: string) => {
+        const converter = findConverterForDocument(fetchedRecordAsXml)
+        const record = await converter.readRecord(fetchedRecordAsXml)
+        const tempId = this.generateTemporaryId()
+
+        record.title = `${record.title} (Copy)`
+        record.uniqueIdentifier = tempId
+
+        const recordAsXml = await converter.writeRecord(
+          record,
+          fetchedRecordAsXml
+        )
+
+        this.saveRecordToLocalStorage(recordAsXml, record.uniqueIdentifier)
+        this._draftsChanged.next()
+
+        return tempId
+      }),
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => error)
+      })
+    )
+  }
+
   deleteRecord(uniqueIdentifier: string): Observable<void> {
     return this.gn4RecordsApi.deleteRecord(uniqueIdentifier)
   }
@@ -315,28 +312,19 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   ): Observable<string> {
     return this.serializeRecordToXml(record, referenceRecordSource).pipe(
       tap((recordXml) => {
-        window.localStorage.setItem(
-          this.getLocalStorageKeyForRecord(record.uniqueIdentifier),
-          recordXml
-        )
+        this.saveRecordToLocalStorage(recordXml, record.uniqueIdentifier)
         this._draftsChanged.next()
       })
     )
   }
 
   clearRecordDraft(uniqueIdentifier: string): void {
-    window.localStorage.removeItem(
-      this.getLocalStorageKeyForRecord(uniqueIdentifier)
-    )
+    this.removeRecordFromLocalStorage(uniqueIdentifier)
     this._draftsChanged.next()
   }
 
   recordHasDraft(uniqueIdentifier: string): boolean {
-    return (
-      window.localStorage.getItem(
-        this.getLocalStorageKeyForRecord(uniqueIdentifier)
-      ) !== null
-    )
+    return this.getRecordFromLocalStorage(uniqueIdentifier) !== null
   }
 
   isRecordNotYetSaved(uniqueIdentifier: string): boolean {
@@ -355,5 +343,81 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         drafts.map((draft) => findConverterForDocument(draft).readRecord(draft))
       )
     )
+  }
+
+  private getRecordAsXml(uniqueIdentifier: string): Observable<string | null> {
+    return this.gn4RecordsApi
+      .getRecordAs(
+        uniqueIdentifier,
+        undefined,
+        false,
+        undefined,
+        undefined,
+        undefined,
+        'application/xml',
+        'response',
+        undefined,
+        { httpHeaderAccept: 'text/xml,application/xml' as 'application/xml' } // this is to make sure that the response is parsed as text
+      )
+      .pipe(
+        map((response) => response.body),
+        catchError((error: HttpErrorResponse) =>
+          error.status === 404 ? of(null) : throwError(() => error)
+        )
+      )
+  }
+
+  private serializeRecordToXml(
+    record: CatalogRecord,
+    referenceRecordSource?: string
+  ): Observable<string> {
+    // if there's a reference record, use that standard; otherwise, use iso19139
+    const converter = referenceRecordSource
+      ? findConverterForDocument(referenceRecordSource)
+      : new Iso19139Converter()
+    return from(converter.writeRecord(record, referenceRecordSource))
+  }
+
+  private getExternalRecordAsXml(
+    recordDownloadUrl: string
+  ): Observable<string> {
+    let headers = new HttpHeaders()
+    const responseType_ = 'text'
+    headers = headers.set('Accept', 'text/xml,application/xml')
+
+    return this.httpClient
+      .get<string>(recordDownloadUrl, {
+        responseType: <any>responseType_,
+        headers: headers,
+        observe: 'body',
+      })
+      .pipe(
+        map((recordAsXmlFile) => {
+          assertValidXml(recordAsXmlFile)
+
+          return recordAsXmlFile
+        })
+      )
+  }
+
+  private getLocalStorageKeyForRecord(recordId: string): string {
+    return `geonetwork-ui-draft-${recordId}` // Never change this prefix as it is a breaking change
+  }
+
+  private saveRecordToLocalStorage(recordAsXml: RecordAsXml, recordId: string) {
+    window.localStorage.setItem(
+      this.getLocalStorageKeyForRecord(recordId),
+      recordAsXml
+    )
+  }
+
+  private getRecordFromLocalStorage(recordId: string): RecordAsXml {
+    return window.localStorage.getItem(
+      this.getLocalStorageKeyForRecord(recordId)
+    )
+  }
+
+  private removeRecordFromLocalStorage(recordId: string): void {
+    window.localStorage.removeItem(this.getLocalStorageKeyForRecord(recordId))
   }
 }

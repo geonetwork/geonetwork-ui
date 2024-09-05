@@ -3,6 +3,7 @@ import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { SearchRecordsComponent } from './search-records-list.component'
 import {
   Component,
+  CUSTOM_ELEMENTS_SCHEMA,
   EventEmitter,
   importProvidersFrom,
   Input,
@@ -73,7 +74,7 @@ class SearchServiceMock {
 }
 
 class RouterMock {
-  navigate = jest.fn()
+  navigate = jest.fn(() => Promise.resolve(true))
 }
 
 describe('SearchRecordsComponent', () => {
@@ -81,9 +82,11 @@ describe('SearchRecordsComponent', () => {
   let fixture: ComponentFixture<SearchRecordsComponent>
   let router: Router
   let searchService: SearchService
+  let searchFacade: SearchFacade
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         importProvidersFrom(TranslateModule.forRoot()),
         {
@@ -115,12 +118,62 @@ describe('SearchRecordsComponent', () => {
     fixture = TestBed.createComponent(SearchRecordsComponent)
     router = TestBed.inject(Router)
     searchService = TestBed.inject(SearchService)
+    searchFacade = TestBed.inject(SearchFacade)
+
     component = fixture.componentInstance
     fixture.detectChanges()
   })
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  it('should map search filters to searchText$', (done) => {
+    component.searchText$.subscribe((text) => {
+      expect(text).toBe('hello world')
+      done()
+    })
+  })
+
+  describe('when clicking createRecord', () => {
+    beforeEach(() => {
+      component.createRecord()
+    })
+
+    it('navigates to the create record page', () => {
+      expect(router.navigate).toHaveBeenCalledWith(['/create'])
+    })
+  })
+
+  describe('when importing a record', () => {
+    beforeEach(() => {
+      component.duplicateExternalRecord()
+    })
+
+    it('sets isImportMenuOpen to true', () => {
+      expect(component.isImportMenuOpen).toBe(true)
+    })
+  })
+
+  describe('when closing the import menu', () => {
+    let overlaySpy: any
+
+    beforeEach(() => {
+      overlaySpy = {
+        dispose: jest.fn(),
+      }
+      component['overlayRef'] = overlaySpy
+
+      component.closeImportMenu()
+    })
+
+    it('sets isImportMenuOpen to false', () => {
+      expect(component.isImportMenuOpen).toBe(false)
+    })
+
+    it('disposes the overlay', () => {
+      expect(overlaySpy.dispose).toHaveBeenCalled()
+    })
   })
 
   describe('when search results', () => {
@@ -141,6 +194,7 @@ describe('SearchRecordsComponent', () => {
       expect(pagination.currentPage).toEqual(currentPage)
       expect(pagination.totalPages).toEqual(totalPages)
     })
+
     describe('when click on a record', () => {
       const uniqueIdentifier = 123
       const singleRecord = {
@@ -154,6 +208,7 @@ describe('SearchRecordsComponent', () => {
         expect(router.navigate).toHaveBeenCalledWith(['/edit', 123])
       })
     })
+
     describe('when asking for record duplication', () => {
       const uniqueIdentifier = 123
       const singleRecord = {
@@ -167,6 +222,7 @@ describe('SearchRecordsComponent', () => {
         expect(router.navigate).toHaveBeenCalledWith(['/duplicate', 123])
       })
     })
+
     describe('when click on pagination', () => {
       beforeEach(() => {
         pagination.newCurrentPageEvent.emit(3)

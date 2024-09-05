@@ -53,6 +53,16 @@ export abstract class RecordsRepositoryInterface {
   ): Observable<string>
 
   /**
+   * Try to duplicate the external record from given url. If it suceed, then it will save the record as draft and return its temporary id.
+   *
+   * @param recordDownloadUrl
+   * @returns Observable<string>
+   */
+  abstract duplicateExternalRecord(
+    recordDownloadUrl: string
+  ): Observable<string>
+
+  /**
    * @param uniqueIdentifier
    * @returns Observable<void> Returns when record is deleted
    */
