@@ -204,4 +204,36 @@ describe('dashboard', () => {
       cy.clearRecordDrafts()
     })
   })
+  describe('navigation', () => {
+    beforeEach(() => {
+      cy.login('admin', 'admin', false)
+      cy.visit('/catalog/search')
+    })
+    describe('search input', () => {
+      it('should filter the dashboard based on the search input', () => {
+        cy.get('gn-ui-autocomplete').type('Mat')
+        cy.get('mat-option').first().click()
+        cy.get('gn-ui-interactive-table')
+          .find('[data-cy="table-row"]')
+          .should('have.length', '1')
+      })
+    })
+    describe.skip('my drafts', () => {
+      it('should only display drafts in the draft tab', () => {
+        cy.get('md-editor-dashboard-menu').find('a').eq(6).click()
+
+        cy.clearRecordDrafts()
+      })
+    })
+    describe('my records', () => {
+      it('should only display records I own', () => {
+        cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
+        cy.get('gn-ui-results-table')
+          .find('[data-cy="table-row"]')
+          .find('mat-icon')
+          .next()
+          .should('contain', 'admin admin')
+      })
+    })
+  })
 })

@@ -149,15 +149,19 @@ describe('record-actions', () => {
       )
     })
   })
-  describe.only('duplicate', () => {
+  describe('duplicate', () => {
     it('should duplicate the record', () => {
-      // order to target something specific
+      cy.get('.table-header-cell').eq(1).click()
       cy.get('[data-cy="table-row"]')
         .first()
         .find('[data-test="record-menu-button"]')
         .click()
       cy.get('[data-test="record-menu-duplicate-button"]').click()
-      cy.get('gn-ui-form-field').first().should('contain', 'Alpenkonvention')
+      cy.get('gn-ui-form-field')
+        .first()
+        .find('input')
+        .invoke('val')
+        .should('eq', 'Accroches vélos MEL (Copy)')
     })
   })
 })
