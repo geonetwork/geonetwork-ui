@@ -66,7 +66,7 @@
       text-[length:--font-size] leading-none
       p-[--padding] rounded-[--rounded] w-[--width] h-[--height] overflow-hidden
       bg-[--background] transition-all duration-100
-      focus:outline-none
+      outline-none
       disabled:opacity-50 disabled:pointer-events-none;
   }
   /* makes sure icons will not make the buttons grow vertically */
@@ -94,20 +94,16 @@
       border border-secondary focus:ring-4 focus:ring-secondary-lightest;
   }
 
-  .gn-ui-btn-lg-gray {
+  .gn-ui-btn-gray {
     @apply gn-ui-btn text-black
-    bg-gray-200 hover:bg-gray-400 focus:bg-gray-400 active:bg-gray-400
-    border border-gray-400 focus:ring-4 focus:ring-gray-100;
+    bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-300
+    border border-gray-100 focus:ring-4 focus:ring-gray-50;
   }
 
-  .gn-ui-btn-md-gray {
-    @apply gn-ui-btn text-black font-bold
-    bg-gray-200 rounded-lg h-[32px] hover:bg-gray-400 focus:bg-gray-400 active:bg-gray-400;
-  }
-
-  .gn-ui-btn-sm-gray {
-    @apply gn-ui-btn text-black font-bold
-    rounded-[1.25rem] p-[0.375rem] text-xs font-medium w-24;
+  .gn-ui-btn-black {
+    @apply gn-ui-btn text-white
+    bg-black hover:bg-gray-950 focus:bg-gray-950 active:bg-gray-900
+    border border-black focus:ring-4 focus:ring-gray-300;
   }
 
   .gn-ui-btn-outline {
