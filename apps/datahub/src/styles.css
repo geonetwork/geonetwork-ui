@@ -7,16 +7,6 @@ body {
   margin: 0;
 }
 
-.container-sm {
-  max-width: 640px;
-}
-.container-md {
-  max-width: 768px;
-}
-.container-lg {
-  max-width: 1024px;
-}
-
 html.record-page-active {
   scroll-padding-top: 220px;
 }

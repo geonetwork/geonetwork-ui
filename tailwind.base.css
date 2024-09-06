@@ -4,6 +4,16 @@
 
 /* PLEASE NOTE: all Tailwind components should be prefixed by `gn-ui` */
 @layer components {
+  .container-sm {
+    max-width: 640px;
+  }
+  .container-md {
+    max-width: 768px;
+  }
+  .container-lg {
+    max-width: 1024px;
+  }
+
   /* TODO: add prefix */
   .card-shadow {
     @apply shadow-xl hover:shadow-xl-hover transition-shadow;
