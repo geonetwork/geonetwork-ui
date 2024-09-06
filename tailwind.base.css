@@ -174,10 +174,6 @@
     @apply relative border-2 border-gray-300 rounded-md transition-colors duration-75 focus:outline-none focus:border-main hover:border-main;
   }
 
-  .gn-ui-editor-textarea {
-    @apply gn-ui-text-input rounded-lg;
-  }
-
   .gn-ui-autocomplete-input {
     @apply appearance-none focus:outline-white focus:outline-2 focus:outline-dotted focus:outline-offset-2 leading-tight rounded text-black;
   }
