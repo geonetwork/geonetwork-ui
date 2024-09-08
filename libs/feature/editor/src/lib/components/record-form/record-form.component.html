@@ -22,21 +22,20 @@
             {{ section.descriptionKey }}
           </div>
         </div>
-        <div
-          [ngClass]="{
-            'flex flex-wrap justify-between': isAboutSection(section)
-          }"
-        >
+        <div class="grid auto-rows-auto grid-cols-2 gap-[32px]">
           <ng-container
             *ngFor="
               let field of section.fieldsWithValues;
-              let i = index;
               trackBy: fieldTracker
             "
           >
             <ng-container *ngIf="!field.config.hidden">
               <gn-ui-form-field
-                [ngClass]="getClassForField(section, i)"
+                [ngClass]="
+                  field.config.gridColumnSpan === 1
+                    ? 'col-span-1'
+                    : 'col-span-2'
+                "
                 [uniqueIdentifier]="recordUniqueIdentifier$ | async"
                 [model]="field.config.model!"
                 [modelSpecifier]="field.config.modelSpecifier!"

@@ -40,16 +40,4 @@ export class RecordFormComponent {
   sectionTracker(index: number, section: EditorSectionWithValues) {
     return section.labelKey
   }
-
-  isAboutSection(section) {
-    return section.labelKey === 'editor.record.form.section.about.label'
-  }
-
-  getClassForField(section, item) {
-    const flexItemsIndexes = [1, 2]
-    if (this.isAboutSection(section)) {
-      return flexItemsIndexes.includes(item) ? 'w-[680px]' : 'w-full'
-    }
-    return ''
-  }
 }

@@ -5,7 +5,7 @@
     (openDataChange)="isHidden = $event"
   ></gn-ui-form-field-open-data>
 </ng-container>
-<div class="flex flex-col h-full mb-6" *ngIf="!isHidden">
+<div class="flex flex-col h-full" *ngIf="!isHidden">
   <ng-container *ngIf="withoutWrapper; else withGenericWrapper">
     <ng-container *ngTemplateOutlet="fieldContent"></ng-container>
   </ng-container>
@@ -22,7 +22,7 @@
 <ng-template #fieldContent>
   <ng-container [ngSwitch]="model">
     <ng-container *ngSwitchCase="'title'">
-      <div class="flex flex-row flex-start items-center gap-3 mb-4">
+      <div class="flex flex-row flex-start items-center gap-3 mb-[12px]">
         <span
           #titleInput
           class="grow font-title text-3xl font-normal"
