@@ -16,6 +16,8 @@ import { Keyword } from '@geonetwork-ui/common/domain/model/record'
 import { GenericKeywordsComponent } from '../../../generic-keywords/generic-keywords.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
+import { EditorFacade } from '../../../../+state/editor.facade'
+import { firstValueFrom, map } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-form-field-keywords',
@@ -40,7 +42,19 @@ export class FormFieldKeywordsComponent {
   keywordTypes = ['temporal', 'theme', 'other'] as KeywordType[]
   placeholder = 'editor.form.keywords.placeholder'
 
-  handleKeywordsChange(keywords: Keyword[]) {
-    this.valueChange.emit(keywords)
+  get filteredKeywords(): Keyword[] {
+    return this.value?.filter((keyword) => keyword.type !== 'place') || []
+  }
+
+  constructor(private editorFacade: EditorFacade) {}
+
+  async handleKeywordsChange(keywords: Keyword[]) {
+    const placeKeywords = await firstValueFrom(
+      this.editorFacade.record$.pipe(
+        map((record) => record.keywords.filter((k) => k.type == 'place'))
+      )
+    )
+
+    this.valueChange.emit([...keywords, ...placeKeywords])
   }
 }

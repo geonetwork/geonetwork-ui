@@ -258,6 +258,64 @@ describe('editor form', () => {
           .eq(0)
           .should('not.have.class', 'mat-button-toggle-checked')
       })
+
+      it('should display place keywords', () => {
+        cy.get('gn-ui-autocomplete').should('have.length', 1)
+        cy.get('gn-ui-autocomplete').type('a')
+        cy.get('mat-option').should('have.length', 10)
+        cy.get('mat-option').eq(0).click()
+        cy.get('gn-ui-badge').should('have.length', 4)
+        cy.get('gn-ui-badge')
+          .eq(0)
+          .find('span')
+          .should('have.text', 'Adriatic Sea ')
+      })
+    })
+  })
+
+  describe('Keywords', () => {
+    beforeEach(() => {
+      cy.get('@accessAndContactPageSelectorButton').click()
+    })
+
+    it('should display keywords without place keywords', () => {
+      cy.get('gn-ui-form-field-keywords')
+        .find('gn-ui-badge')
+        .should('have.length', 19)
+      cy.get('gn-ui-form-field-keywords')
+        .find('gn-ui-badge')
+        .find('span')
+        .each(($span) => {
+          cy.wrap($span).should('not.have.text', 'Adriatic Sea ')
+        })
+    })
+
+    it('should add a keyword', () => {
+      cy.get('gn-ui-form-field-keywords')
+        .find('gn-ui-autocomplete')
+        .should('have.length', 1)
+      cy.get('gn-ui-form-field-keywords').find('gn-ui-autocomplete').click()
+      cy.get('mat-option').should('have.length', 10)
+      cy.get('mat-option').eq(0).click()
+      cy.get('gn-ui-badge').should('have.length', 20)
+      cy.get('gn-ui-badge')
+        .eq(19)
+        .find('span')
+        .should('have.text', 'Addresses ')
+    })
+
+    it('should remove a keyword', () => {
+      cy.get('gn-ui-form-field-keywords')
+        .find('gn-ui-badge')
+        .should('have.length', 19)
+      cy.get('gn-ui-form-field-keywords')
+        .find('gn-ui-badge')
+        .eq(0)
+        .find('button')
+        .click()
+      cy.get('gn-ui-form-field-keywords')
+        .find('gn-ui-badge')
+        .should('have.length', 18)
     })
   })
 
