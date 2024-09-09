@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { Individual } from '@geonetwork-ui/common/domain/model/record'
 import { MatIconModule } from '@angular/material/icon'
 import { CommonModule } from '@angular/common'
@@ -21,10 +15,4 @@ import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 })
 export class ContactCardComponent {
   @Input() contact: Individual
-  @Input() removable = true
-  @Output() contactRemoved = new EventEmitter<Individual>()
-
-  removeContact(contact: Individual) {
-    this.contactRemoved.emit(contact)
-  }
 }
