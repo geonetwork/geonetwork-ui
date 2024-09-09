@@ -7,6 +7,7 @@ import {
   Output,
 } from '@angular/core'
 import { ButtonComponent } from '../button/button.component'
+import { MatIconModule } from '@angular/material/icon'
 
 @Component({
   selector: 'gn-ui-badge',
@@ -14,7 +15,7 @@ import { ButtonComponent } from '../button/button.component'
   styleUrls: ['./badge.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, ButtonComponent],
+  imports: [CommonModule, ButtonComponent, MatIconModule],
 })
 export class BadgeComponent {
   @Input() clickable? = false
