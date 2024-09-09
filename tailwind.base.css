@@ -76,7 +76,9 @@
       p-[--padding] rounded-[--rounded] w-[--width] h-[--height] overflow-hidden
       bg-[--background] transition-all duration-100
       outline-none
-      disabled:opacity-50 disabled:pointer-events-none;
+      relative
+      disabled:opacity-50 disabled:pointer-events-none
+      focus:z-10 active:z-10 hover:z-10;
   }
   /* makes sure icons will not make the buttons grow vertically */
   .gn-ui-btn mat-icon.mat-icon {
