@@ -48,9 +48,12 @@ export class FormFieldSpatialExtentComponent {
     map((record) => ('spatialExtents' in record ? record?.spatialExtents : []))
   )
 
+  allKeywords$ = this.editorFacade.record$.pipe(
+    map((record) => record?.keywords)
+  )
+
   switchToggleOptions$: Observable<SwitchToggleOption[]> =
-    this.editorFacade.record$.pipe(
-      map((record) => record?.keywords || []), // Safely access keywords
+    this.allKeywords$.pipe(
       map((keywords) =>
         SPATIAL_SCOPES.map((scope) => {
           const isChecked = keywords.some(
@@ -63,10 +66,6 @@ export class FormFieldSpatialExtentComponent {
         })
       )
     )
-
-  allKeywords$ = this.editorFacade.record$.pipe(
-    map((record) => record?.keywords)
-  )
 
   shownKeywords$ = this.editorFacade.record$.pipe(
     map((record) => record?.keywords.filter((k) => k.type === 'place')),
