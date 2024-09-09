@@ -261,14 +261,11 @@ describe('editor form', () => {
 
       it('should display place keywords', () => {
         cy.get('gn-ui-autocomplete').should('have.length', 1)
-        cy.get('gn-ui-autocomplete').type('a')
+        cy.get('gn-ui-autocomplete').type('afr')
         cy.get('mat-option').should('have.length', 10)
         cy.get('mat-option').eq(0).click()
         cy.get('gn-ui-badge').should('have.length', 4)
-        cy.get('gn-ui-badge')
-          .eq(0)
-          .find('span')
-          .should('have.text', 'Adriatic Sea ')
+        cy.get('gn-ui-badge').eq(0).find('span').should('have.text', 'Africa ')
       })
     })
   })
@@ -286,7 +283,7 @@ describe('editor form', () => {
         .find('gn-ui-badge')
         .find('span')
         .each(($span) => {
-          cy.wrap($span).should('not.have.text', 'Adriatic Sea ')
+          cy.wrap($span).should('not.have.text', 'Africa ')
         })
     })
 
