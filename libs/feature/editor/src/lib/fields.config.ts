@@ -4,6 +4,7 @@ import {
   EditorField,
   EditorSection,
 } from './models/editor-config.model'
+import { Keyword } from '@geonetwork-ui/common/domain/model/record'
 
 /**
  * This file contains the configuration of the fields that will be displayed in the editor.
@@ -218,7 +219,7 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
 }
 
 /************************************************************
- ***************           LICENSES            *****************
+ ***************           LICENSES            **************
  ************************************************************
  */
 export const OPEN_DATA_LICENSES: string[] = [
@@ -230,3 +231,22 @@ export const OPEN_DATA_LICENSES: string[] = [
 ]
 
 export const MAX_UPLOAD_SIZE_MB = 10
+/************************************************************
+ ***************        SPATIAL SCOPE            ************
+ ************************************************************
+ */
+
+export const SPATIAL_SCOPES: Keyword[] = [
+  {
+    key: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/national',
+    label: 'National',
+    description: '',
+    type: 'theme',
+  },
+  {
+    key: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/regional',
+    label: 'Regional',
+    description: '',
+    type: 'theme',
+  },
+]

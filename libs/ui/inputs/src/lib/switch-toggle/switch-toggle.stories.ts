@@ -17,9 +17,9 @@ export default {
 export const Primary: StoryObj<SwitchToggleComponent> = {
   args: {
     options: [
-      { label: 'city', value: 'city', checked: true },
-      { label: 'municipality', value: 'municipality', checked: false },
-      { label: 'state', value: 'state', checked: false },
+      { label: 'city', checked: true },
+      { label: 'municipality', checked: false },
+      { label: 'state', checked: false },
     ],
     extraClasses: 'grow',
   },
