@@ -357,6 +357,27 @@ describe('editor form', () => {
             .should('have.length', 1)
         })
       })
+      describe('Spatial coverage', () => {
+        it('toggle between national and regional spatial coverage', () => {
+          cy.get('gn-ui-switch-toggle').should('exist')
+
+          cy.get('gn-ui-switch-toggle').find('mat-button-toggle').eq(0).click()
+          cy.get('mat-button-toggle')
+            .eq(0)
+            .should('have.class', 'mat-button-toggle-checked')
+          cy.get('mat-button-toggle')
+            .eq(1)
+            .should('not.have.class', 'mat-button-toggle-checked')
+
+          cy.get('gn-ui-switch-toggle').find('mat-button-toggle').eq(1).click()
+          cy.get('mat-button-toggle')
+            .eq(1)
+            .should('have.class', 'mat-button-toggle-checked')
+          cy.get('mat-button-toggle')
+            .eq(0)
+            .should('not.have.class', 'mat-button-toggle-checked')
+        })
+      })
     })
     describe('attached resources', () => {
       beforeEach(() => {
