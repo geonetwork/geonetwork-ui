@@ -218,13 +218,6 @@ describe('dashboard', () => {
           .should('have.length', '1')
       })
     })
-    describe.skip('my drafts', () => {
-      it('should only display drafts in the draft tab', () => {
-        cy.get('md-editor-dashboard-menu').find('a').eq(6).click()
-
-        cy.clearRecordDrafts()
-      })
-    })
     describe('my records', () => {
       it('should only display records I own', () => {
         cy.get('md-editor-dashboard-menu').find('a').eq(5).click()

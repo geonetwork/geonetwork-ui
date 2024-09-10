@@ -1,5 +1,3 @@
-import { before } from 'cypress/types/lodash'
-
 describe('record-actions', () => {
   beforeEach(() => {
     cy.login('admin', 'admin', false)
@@ -162,6 +160,14 @@ describe('record-actions', () => {
         .find('input')
         .invoke('val')
         .should('eq', 'Accroches vélos MEL (Copy)')
+
+      // delete the new record
+      cy.visit('/catalog/search')
+      cy.get('.table-header-cell').eq(1).click()
+      cy.get('.table-header-cell').eq(1).click()
+      cy.get('[data-test="record-menu-button"]').first().click()
+      cy.get('[data-test="record-menu-delete-button"]').click()
+      cy.get('[data-cy="confirm-button"]').click()
     })
   })
 })
