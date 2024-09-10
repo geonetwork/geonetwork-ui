@@ -1,16 +1,49 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
 
-import { before } from 'node:test'
-
 describe('editor form', () => {
-  beforeEach(() => {
+  let recordUuid
+  before(() => {
     cy.login('admin', 'admin', false)
 
-    // Alpine convention record
-    cy.visit('/edit/8698bf0b-fceb-4f0f-989b-111e7c4af0a4')
-
     cy.clearRecordDrafts()
+    // Duplicate a record to manipulate it at will
+    cy.visit('/catalog/search')
+    cy.get('.table-header-cell').eq(1).click()
+    cy.get('.table-header-cell').eq(1).click()
+    cy.get('[data-cy="table-row"]')
+      .first()
+      .find('[data-test="record-menu-button"]')
+      .click()
+    cy.get('[data-test="record-menu-duplicate-button"]').click()
+    cy.wait(1200)
+    cy.get('md-editor-publish-button').click()
 
+    cy.visit('/catalog/search')
+    cy.get('.table-header-cell').eq(1).click()
+    cy.get('.table-header-cell').eq(1).click()
+    cy.get('[data-cy="table-row"]').first().children('div').eq(2).click()
+
+    cy.get('gn-ui-record-form')
+      .children('div')
+      .first()
+      .children('div')
+      .eq(1)
+      .find('gn-ui-form-field')
+      .eq(0)
+      .find('gn-ui-form-field-simple')
+      .find('input')
+      .invoke('val')
+      .then((uuid) => {
+        recordUuid = uuid
+      })
+  })
+  beforeEach(() => {
+    cy.login('admin', 'admin', false)
+    cy.wrap(recordUuid).as('recordUuid')
+
+    cy.get('@recordUuid').then((recordUuid) => {
+      cy.visit(`/edit/${recordUuid}`)
+    })
     // aliases
     cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
       'abstractField'
@@ -32,6 +65,16 @@ describe('editor form', () => {
       .eq(2)
       .as('accessContactPageBtn')
   })
+
+  after(() => {
+    cy.visit('/catalog/search')
+    cy.get('.table-header-cell').eq(1).click()
+    cy.get('.table-header-cell').eq(1).click()
+    cy.get('[data-test="record-menu-button"]').first().click()
+    cy.get('[data-test="record-menu-delete-button"]').click()
+    cy.get('[data-cy="confirm-button"]').click()
+  })
+
   describe('form display', () => {
     it('form shows correctly', () => {
       cy.get('gn-ui-record-form').should('be.visible')
@@ -53,7 +96,7 @@ describe('editor form', () => {
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
       cy.get('@abstractField')
         .invoke('val')
-        .should('contain', 'Perimeter der Alpenkonvention in der Schweiz.')
+        .should('contain', 'Cette couche de points reprend les informations')
     })
   })
   describe('record fields', () => {
@@ -64,73 +107,76 @@ describe('editor form', () => {
             .first()
             .find('input')
             .invoke('val')
-            .should('eq', 'Alpenkonvention')
+            .should(
+              'eq',
+              "Stations d'épuration selon la directive Eaux Résiduelles Urbaines (91/271/CEE) en Wallonie (Copy)"
+            )
         })
         it('edits and saves the title', () => {
-          cy.get('gn-ui-form-field').first().find('input').type(' modified')
-          cy.wait(1200)
-          cy.get('md-editor-publish-button').click()
-          cy.visit('/edit/8698bf0b-fceb-4f0f-989b-111e7c4af0a4')
-          cy.get('gn-ui-form-field')
-            .first()
-            .find('input')
-            .invoke('val')
-            .should('eq', 'Alpenkonvention modified')
-
           cy.get('gn-ui-form-field').first().find('input').clear()
           cy.get('gn-ui-form-field')
             .first()
             .find('input')
-            .type('Alpenkonvention')
-          cy.wait(1200)
-          cy.get('md-editor-publish-button').click()
+            .type('Test record modified')
+          cy.publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
+          cy.get('gn-ui-form-field')
+            .first()
+            .find('input')
+            .invoke('val')
+            .should('eq', 'Test record modified')
         })
       })
       describe('abstract', () => {
         it('shows the abstract', () => {
           cy.get('@abstractField')
             .invoke('val')
-            .should('contain', 'Perimeter der Alpenkonvention in der Schweiz.')
+            .should(
+              'contain',
+              'Cette couche de points reprend les informations'
+            )
         })
         it('edits and saves the abstract', () => {
           cy.get('@abstractField').clear()
-          cy.get('@abstractField').type('modified abstract before saving')
-          cy.wait(1200)
-          cy.get('md-editor-publish-button').click()
+          cy.get('@abstractField').type('modified abstract')
+          cy.publishAndReload()
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
-
-          // restore abstract
-          cy.get('@abstractField').clear()
-          cy.get('@abstractField').then(function (field) {
-            cy.wrap(field).type(this.abstractFieldInitialValue)
-          })
-          cy.wait(1200)
-          cy.get('md-editor-publish-button').click()
+          cy.get('@abstractField')
+            .invoke('val')
+            .should('eq', 'modified abstract')
         })
       })
       describe('graphic overview', () => {
         it('shows the graphic overview', () => {
           cy.get('gn-ui-image-input').should('be.visible')
         })
-        it('allows to add images to the graphic overview by URL', () => {
+        it('allows to delete images from the graphic overview', () => {
+          cy.get('gn-ui-image-input').find('img').should('have.length', 1)
+          cy.get('gn-ui-image-input').find('gn-ui-button').eq(1).click()
+          cy.publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
+          cy.get('gn-ui-image-input').find('img').should('have.length', 0)
+        })
+        it('allows to add overviews by URL', () => {
           cy.get('gn-ui-image-input')
             .find('gn-ui-button')
             .find('button')
             .click()
           cy.get('gn-ui-url-input').should('be.visible')
         })
+        it('adds overviews', () => {
+          cy.get('gn-ui-form-field-overviews label').selectFile(
+            'src/fixtures/sample.png'
+          )
+          cy.publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
+          cy.get('gn-ui-image-input').find('img').should('have.length', 1)
+        })
         it('allows to add an alternate text', () => {
-          cy.visit('/edit/011963da-afc0-494c-a2cc-5cbd59e122e4')
           cy.get('gn-ui-image-input').find('gn-ui-button').eq(2).click()
           cy.get('gn-ui-image-input')
             .find('gn-ui-text-input')
             .should('be.visible')
-        })
-        it('allows to delete images from the graphic overview', () => {
-          cy.visit('/edit/011963da-afc0-494c-a2cc-5cbd59e122e4')
-          cy.get('gn-ui-image-input').find('img').should('have.length', 1)
-          cy.get('gn-ui-image-input').find('gn-ui-button').eq(1).click()
-          cy.get('gn-ui-image-input').find('img').should('have.length', 0)
         })
       })
     })
@@ -151,13 +197,12 @@ describe('editor form', () => {
             .find('gn-ui-form-field-simple')
             .find('input')
             .invoke('val')
-            .should('eq', '8698bf0b-fceb-4f0f-989b-111e7c4af0a4')
+            .then((val) => {
+              cy.get('@recordUuid').should('eq', val)
+            })
         })
       })
       describe('resource updated', () => {
-        beforeEach(() => {
-          cy.visit('/edit/011963da-afc0-494c-a2cc-5cbd59e122e4')
-        })
         it('shows the resource update date', () => {
           cy.get('@aboutSection')
             .find('gn-ui-form-field-resource-updated')
@@ -177,165 +222,167 @@ describe('editor form', () => {
             .find('td')
             .first()
             .click()
-          cy.wait(1200)
-          cy.get('md-editor-publish-button').click()
-          cy.visit('/edit/011963da-afc0-494c-a2cc-5cbd59e122e4')
+          cy.get('body').click()
+          cy.publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('@aboutSection')
             .find('gn-ui-form-field-resource-updated')
             .find('input')
             .invoke('val')
             .should('eq', '11/17/2019')
-
-          // restore date
-          cy.get('@aboutSection')
-            .find('gn-ui-form-field-resource-updated')
-            .find('mat-datepicker-toggle')
-            .click()
-          cy.get('mat-month-view')
-            .find('tbody')
-            .find('tr')
-            .first()
-            .find('td')
-            .eq(1)
-            .click()
-          cy.wait(1200)
-          cy.get('md-editor-publish-button').click()
         })
       })
-      describe.only('update frequency', () => {
+      describe('update frequency', () => {
         describe('when the regularity switch is on', () => {
           it('should allow to select a frequency', () => {
-            cy.get('gn-ui-form-field-update-frequency').find(
-              'gn-ui-check-toggle'
-            )
+            cy.get('gn-ui-form-field-update-frequency')
+              .find('gn-ui-check-toggle')
+              .click()
+            cy.get('gn-ui-form-field-update-frequency')
+              .find('gn-ui-dropdown-selector')
+              .openDropdown()
+              .children('button')
+              .eq(3)
+              .click()
+            cy.publishAndReload()
+            cy.get('@saveStatus').should('eq', 'record_up_to_date')
+            cy.get('gn-ui-form-field-update-frequency')
+              .find('gn-ui-dropdown-selector')
+              .getActiveDropdownOption()
+              .find('span')
+              .invoke('text')
+              .should('eq', ' 2 times per week ')
           })
         })
         describe('when the regularity switch is off', () => {
-          it('should not allow to select a frequency', () => {
+          it('should show default frequency', () => {
+            cy.get('gn-ui-form-field-update-frequency')
+              .find('gn-ui-check-toggle')
+              .click()
+            cy.publishAndReload()
+            cy.get('@saveStatus').should('eq', 'record_up_to_date')
             cy.get('gn-ui-form-field-update-frequency')
               .find('gn-ui-dropdown-selector')
               .find('button')
-              .should('be.disabled')
+              .find('div')
+              .invoke('text')
+              .should('eq', ' Once per day ')
           })
-          it('should show the default frequency value', () => {})
         })
-        // dont forget to restore the initial state
       })
       describe('temporal extents', () => {
-        it('should show the two extents buttons', () => {})
-        it('adds a time instant', () => {})
-        it('adds a time period', () => {})
+        it('should show the two extents buttons', () => {
+          cy.get('gn-ui-form-field-temporal-extents')
+            .find('gn-ui-button')
+            .should('have.length', 2)
+        })
+        it('adds a time instant', () => {
+          cy.get('gn-ui-form-field-temporal-extents')
+            .find('gn-ui-button')
+            .first()
+            .click()
+          cy.publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
+          cy.get('gn-ui-form-field-temporal-extents')
+            .find('gn-ui-date-picker')
+            .should('be.visible')
+        })
+        it('adds a time period', () => {
+          cy.get('gn-ui-form-field-temporal-extents')
+            .find('gn-ui-button')
+            .eq(1)
+            .click()
+          cy.publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
+          cy.get('gn-ui-form-field-temporal-extents')
+            .find('gn-ui-date-range-picker')
+            .should('be.visible')
+        })
+        it('should delete dates', () => {
+          cy.get('gn-ui-form-field-temporal-extents')
+            .find('[data-cy="remove-item"]')
+            .first()
+            .click()
+          cy.get('gn-ui-form-field-temporal-extents')
+            .find('[data-cy="remove-item"]')
+            .first()
+            .click()
+          cy.publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
+          cy.get('gn-ui-form-field-temporal-extents')
+            .find('[data-cy="remove-item"]')
+            .should('have.length', 0)
+        })
         describe('date picker in sortable list', () => {
           it('should keep the date picker open when selecting the start date of a range', () => {
             cy.get('gn-ui-form-field-temporal-extents gn-ui-button')
               .eq(1)
               .click()
-            cy.get(
-              'gn-ui-form-field-temporal-extents-range mat-datepicker-toggle'
-            ).click()
+            cy.get('gn-ui-form-field-temporal-extents')
+              .find('mat-datepicker-toggle')
+              .click()
             cy.get('mat-calendar').contains('1').click()
             cy.get('mat-calendar').should('be.visible')
-          })
-          it('should delete dates', () => {})
-          it('should order dates', () => {})
-          it('should save and show the right dates on reload', () => {
-            // dont forget to restore the initial state
           })
         })
       })
     })
     describe('geographical coverage', () => {
       describe('spatial extents', () => {
-        it('should show a map', () => {})
-        it('should select and show a place keyword from the dropdown', () => {})
-        it('should save and display the new value on reload', () => {
-          // dont forget to restore the initial state
+        it('should show a map', () => {
+          cy.get('gn-ui-form-field-spatial-extent')
+            .find('gn-ui-map')
+            .should('be.visible')
         })
-      })
-    })
-    describe('classification', () => {
-      describe('keywords', () => {
-        it('should show the current keywords', () => {})
-        it('should add a keyword', () => {})
-        it('should delete a keyword', () => {})
-        it('should show the right keywords on reload', () => {
-          // dont forget to restore the initial state
+        it('should allow to delete place keywords', () => {
+          cy.get('gn-ui-form-field-spatial-extent')
+            .find('gn-ui-badge')
+            .find('gn-ui-button')
+            .click()
+          cy.publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
+          cy.get('gn-ui-form-field-spatial-extent')
+            .find('gn-ui-badge')
+            .should('have.length', 0)
         })
-      })
-    })
-    describe('Access and constraints', () => {
-      describe('Open data switch', () => {
-        describe('When the open data switch is checked', () => {
-          beforeEach(() => {
-            cy.visit('/edit/accroche_velos')
-            cy.get('md-editor-page-selector')
-              .find('gn-ui-button')
-              .last()
-              .click()
-          })
-          it('should not display the licence form field', () => {
-            cy.get('gn-ui-form-field-license').should('not.exist')
-          })
-          it('should display the license form field when toggled', () => {
-            cy.get('[data-cy="openDataToggle"]').click()
-            cy.get('gn-ui-form-field-license').should('be.visible')
-            cy.get('gn-ui-form-field-license')
-              .find('button')
-              .children('div')
-              .first()
-              .invoke('text')
-              .should('eq', ' Open Licence (Etalab) ')
-          })
+        it('should select and show a place keyword from the dropdown', () => {
+          cy.get('gn-ui-form-field-spatial-extent')
+            .find('gn-ui-autocomplete')
+            .click()
+          cy.get('mat-option').eq(1).click()
+          cy.publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
+          cy.get('gn-ui-form-field-spatial-extent')
+            .find('gn-ui-badge')
+            .should('have.length', 1)
         })
-        describe('When the open data switch is unchecked', () => {
-          beforeEach(() => {
-            cy.visit(
-              '/edit/fr-120066022-jdd-f20f8125-877e-46dc-8cf8-2a8a372045eb'
-            )
-            cy.get('md-editor-page-selector')
-              .find('gn-ui-button')
-              .last()
-              .click()
-          })
-          it('should display the licence form field', () => {
-            cy.get('gn-ui-form-field-license').should('be.visible')
-            cy.get('gn-ui-form-field-license')
-              .find('button')
-              .children('div')
-              .first()
-              .invoke('text')
-              .should('eq', ' Creative Commons CC-BY ')
-          })
-          it('should hide the license form field when toggled', () => {
-            cy.get('[data-cy="openDataToggle"]').click()
-            cy.get('gn-ui-form-field-license').should('not.exist')
-          })
-        })
-      })
-      describe('licenses', () => {
-        it('should select a new license and show it on reload', () => {})
       })
     })
     describe('attached resources', () => {
       beforeEach(() => {
-        cy.get('@resourcePageSelectorButton').click()
+        cy.get('@resourcePageBtn').click()
       })
-      it('adds, modifies, deletes a resource', () => {
+      it('adds a resource', () => {
         // original item count
         cy.get(
           'gn-ui-form-field-online-link-resources gn-ui-online-resource-card'
-        ).should('have.length', 7)
+        ).should('have.length', 1)
         // upload readme file
         cy.get('gn-ui-form-field-online-link-resources label').selectFile(
           'src/fixtures/readme.txt'
         )
+        cy.publishAndReload()
+        cy.get('@saveStatus').should('eq', 'record_up_to_date')
+        cy.get('@resourcePageBtn').click()
         cy.get(
           'gn-ui-form-field-online-link-resources gn-ui-online-resource-card'
-        ).should('have.length', 8)
+        ).should('have.length', 2)
+      })
+      it('modifies a resource', () => {
         cy.get(
           'gn-ui-form-field-online-link-resources gn-ui-online-resource-card'
         )
-          .eq(7)
+          .eq(1)
           .as('readmeLink')
         cy.get('@readmeLink')
           .find('[data-test=card-title]')
@@ -351,6 +398,8 @@ describe('editor form', () => {
           .find('textarea')
           .type('new description')
         cy.get('gn-ui-modal-dialog [data-cy=confirm-button]').click()
+        cy.publishAndReload()
+        cy.get('@resourcePageBtn').click()
         cy.get('@readmeLink')
           .find('[data-test=card-title]')
           .invoke('text')
@@ -358,16 +407,110 @@ describe('editor form', () => {
           .should('eql', 'new title!')
         cy.get('@readmeLink').scrollIntoView()
         cy.screenshot({ capture: 'viewport' })
-        // delete item
+      })
+      it('deletes a resource', () => {
         cy.get(
           'gn-ui-form-field-online-link-resources gn-ui-sortable-list [data-cy=remove-item]'
         )
-          .eq(7)
+          .eq(1)
           .click()
         // original item count
         cy.get(
           'gn-ui-form-field-online-link-resources gn-ui-online-resource-card'
-        ).should('have.length', 7)
+        ).should('have.length', 1)
+        cy.publishAndReload()
+        cy.get('@saveStatus').should('eq', 'record_up_to_date')
+        cy.get('@resourcePageBtn').click()
+        cy.get(
+          'gn-ui-form-field-online-link-resources gn-ui-online-resource-card'
+        ).should('have.length', 1)
+      })
+    })
+    describe('classification', () => {
+      beforeEach(() => {
+        cy.get('@accessContactPageBtn').click()
+      })
+      describe('keywords', () => {
+        it('should show the current keywords', () => {
+          cy.get('gn-ui-form-field-keywords')
+            .find('gn-ui-badge')
+            .should('have.length', 42)
+        })
+        it('should add a keyword', () => {
+          cy.get('gn-ui-form-field-keywords').find('gn-ui-autocomplete').click()
+          cy.get('mat-option').first().click()
+          cy.publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
+          cy.get('@accessContactPageBtn').click()
+          cy.get('gn-ui-form-field-keywords')
+            .find('gn-ui-badge')
+            .should('have.length', 43)
+        })
+        it('should delete a keyword', () => {
+          cy.get('gn-ui-form-field-keywords')
+            .find('gn-ui-badge')
+            .last()
+            .find('gn-ui-button')
+            .click()
+          cy.publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
+          cy.get('@accessContactPageBtn').click()
+          cy.get('gn-ui-form-field-keywords')
+            .find('gn-ui-badge')
+            .should('have.length', 42)
+        })
+      })
+    })
+    describe('Access and constraints', () => {
+      describe('Open data switch', () => {
+        beforeEach(() => {
+          cy.get('@accessContactPageBtn').click()
+        })
+        describe('When the open data switch is unchecked', () => {
+          it('should display the licence form field', () => {
+            cy.get('gn-ui-form-field-license').should('be.visible')
+            cy.get('gn-ui-form-field-license')
+              .find('button')
+              .children('div')
+              .first()
+              .invoke('text')
+              .should('eq', ' Creative Commons CC-BY ')
+          })
+        })
+        describe('When the open data switch is checked', () => {
+          it('should not display the licence form field', () => {
+            cy.get('[data-cy="openDataToggle"]').click()
+            cy.get('gn-ui-form-field-license').should('not.exist')
+          })
+        })
+      })
+      describe('licenses', () => {
+        beforeEach(() => {
+          cy.get('@accessContactPageBtn').click()
+        })
+        it('should select a new license and show it on reload', () => {
+          cy.get('gn-ui-form-field-license')
+            .find('button')
+            .children('div')
+            .first()
+            .invoke('text')
+            .should('eq', ' Creative Commons CC-BY ')
+          cy.get('gn-ui-form-field-license')
+            .find('gn-ui-dropdown-selector')
+            .openDropdown()
+            .children('button')
+            .eq(2)
+            .click()
+          cy.publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
+          cy.get('@accessContactPageBtn').click()
+          cy.get('gn-ui-form-field-license')
+            .find('button')
+            .children('div')
+            .first()
+            .invoke('text')
+            .should('eq', ' Creative Commons CC-0 ')
+        })
       })
     })
 
@@ -478,24 +621,41 @@ describe('editor form', () => {
     describe('data managers', () => {
       describe('contacts for resources', () => {
         beforeEach(() => {
-          cy.login('admin', 'admin', false)
-          cy.visit('/edit/accroche_velos')
           cy.get('@accessContactPageBtn').click()
         })
 
         it('show the contacts for resource of the dataset', () => {
           cy.get('[data-test=displayedRoles]')
             .children()
+            .should('have.length', 3)
+        })
+
+        it('delete a contact for resource', () => {
+          cy.get('[data-test=displayedRoles]')
+            .children()
+            .find('gn-ui-contact-card')
+            .should('have.length', 3)
+
+          cy.get('[data-test=removeContactButton]').first().click()
+          cy.get('[data-test=removeContactButton]').first().click()
+          cy.get('[data-test=removeContactButton]').first().click()
+
+          cy.publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
+          cy.get('@accessContactPageBtn').click()
+          cy.get('[data-test=displayedRoles]')
+            .children()
+            .find('gn-ui-contact-card')
             .should('have.length', 1)
         })
 
-        it('show the 5 roles available to add', () => {
-          cy.get('[data-test=rolesToPick]').children().should('have.length', 5)
+        it('show the roles available to add', () => {
+          cy.get('[data-test=rolesToPick]').children().should('have.length', 4)
         })
 
         it('click on a role adds it to the list of displayed role', () => {
           cy.get('[data-test="rolesToPick"]').children().eq(2).click()
-          cy.get('[data-test=rolesToPick]').children().should('have.length', 4)
+          cy.get('[data-test=rolesToPick]').children().should('have.length', 3)
           cy.get('[data-test=displayedRoles]')
             .children()
             .should('have.length', 2)
@@ -514,28 +674,13 @@ describe('editor form', () => {
           cy.get('mat-option')
             .should('have.text', ' Barbara Roberts (Barbie Inc.) ')
             .click()
-
+          cy.publishAndReload()
+          cy.get('@accessContactPageBtn').click()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('[data-test=displayedRoles]')
             .children()
             .find('gn-ui-contact-card')
             .should('have.length', 2)
-        })
-
-        it('delete a contact for resource', () => {
-          cy.get('[data-test=displayedRoles]')
-            .children()
-            .find('gn-ui-contact-card')
-            .should('have.length', 1)
-
-          cy.get('[data-test=displayedRoles]')
-            .children()
-            .get('[data-test=removeContactButton]')
-            .click()
-
-          cy.get('[data-test=displayedRoles]')
-            .children()
-            .find('gn-ui-contact-card')
-            .should('not.exist')
         })
       })
     })

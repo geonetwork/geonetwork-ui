@@ -16,6 +16,7 @@ declare namespace Cypress {
     signOut(): void
     clearFavorites(): void
     clearRecordDrafts(): void
+    publishAndReload(): void
 
     // interaction with gn-ui-dropdown-selector
     openDropdown(): Chainable<JQuery<HTMLElement>>
@@ -150,6 +151,15 @@ Cypress.Commands.add('clearRecordDrafts', () => {
     cy.log(`Cleared ${draftKeys.length} draft(s).`)
   })
   cy.reload()
+})
+
+Cypress.Commands.add('publishAndReload', () => {
+  cy.wait(1200)
+  cy.get('md-editor-publish-button').click()
+  cy.wait(1200)
+  cy.get('@recordUuid').then((recordUuid) => {
+    cy.visit(`/edit/${recordUuid}`)
+  })
 })
 
 // -- This is a parent command --
