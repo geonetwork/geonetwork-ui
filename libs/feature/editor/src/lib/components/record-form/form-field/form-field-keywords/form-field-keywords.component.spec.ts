@@ -37,12 +37,12 @@ const placeKeywords: Keyword[] = [
 
 const otherKeywords: Keyword[] = [
   {
-    label: 'Regional',
+    label: 'Administatrative',
     thesaurus: { id: '3' },
     type: 'theme',
   },
   {
-    label: 'National',
+    label: 'Agriculture',
     thesaurus: { id: '4' },
     type: 'theme',
   },
@@ -53,6 +53,19 @@ const otherKeywords: Keyword[] = [
   },
 ]
 
+const spatialScopeKeywords: Keyword[] = [
+  {
+    label: 'National',
+    description: '',
+    type: 'theme',
+  },
+  {
+    label: 'Regional',
+    description: '',
+    type: 'theme',
+  },
+]
+
 class PlatformServiceInterfaceMock {
   searchKeywords = jest.fn(() =>
     of([{ label: 'Address', thesaurus: { id: '1' } }])
@@ -60,7 +73,9 @@ class PlatformServiceInterfaceMock {
 }
 
 class EditorFacadeMock {
-  record$ = of({ keywords: [...placeKeywords, ...otherKeywords] })
+  record$ = of({
+    keywords: [...placeKeywords, ...otherKeywords, spatialScopeKeywords[1]],
+  })
 }
 
 describe('FormFieldKeywordsComponent', () => {
@@ -101,8 +116,12 @@ describe('FormFieldKeywordsComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should filter out place keywords', () => {
-    component.value = [...placeKeywords, ...otherKeywords]
+  it('should filter out place keywords and spatial scope keywords', () => {
+    component.value = [
+      ...placeKeywords,
+      ...otherKeywords,
+      spatialScopeKeywords[0],
+    ]
 
     expect(component.filteredKeywords).toEqual(otherKeywords)
   })
@@ -118,8 +137,9 @@ describe('FormFieldKeywordsComponent', () => {
     await component.handleKeywordsChange([...otherKeywords])
 
     expect(valueChangeSpy).toHaveBeenCalledWith([
-      ...otherKeywords,
       ...placeKeywords,
+      spatialScopeKeywords[1],
+      ...otherKeywords,
     ])
   })
 })
