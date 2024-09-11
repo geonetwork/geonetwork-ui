@@ -36,6 +36,7 @@ import {
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
+import { IgnApiDlComponent } from '@geonetwork-ui/feature/record'
 import {
   getGlobalConfig,
   getMapContextLayerFromConfig,
@@ -103,6 +104,7 @@ import {
 } from '@ng-icons/material-icons/outline'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
 import { MAX_FEATURE_COUNT } from './record/record-data-preview/record-data-preview.component'
+import { MatButtonToggleModule } from '@angular/material/button-toggle'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -176,6 +178,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     }),
     OrganisationsComponent,
     LanguageSwitcherComponent,
+    MatButtonToggleModule,
   ],
   providers: [
     provideNgIconsConfig({
@@ -273,10 +276,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(
-    router: Router,
-    @Inject(DOCUMENT) private document: Document
-  ) {
+  constructor(router: Router, @Inject(DOCUMENT) private document: Document) {
     ThemeService.applyCssVariables(
       getThemeConfig().PRIMARY_COLOR,
       getThemeConfig().SECONDARY_COLOR,

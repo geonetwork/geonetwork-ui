@@ -12,6 +12,8 @@ import {
   METADATA_VIEW_FEATURE_STATE_KEY,
   reducer,
 } from './state/mdview.reducer'
+import { IgnApiDlComponent } from './ign-api-dl/ign-api-dl.component'
+import { IgnApiProduitComponent } from './ign-api-produit/ign-api-produit.component'
 import { MatTabsModule } from '@angular/material/tabs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { TranslateModule } from '@ngx-translate/core'
@@ -20,6 +22,16 @@ import { TableComponent } from '@geonetwork-ui/ui/dataviz'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
 
 @NgModule({
+  declarations: [
+    MapViewComponent,
+    DataViewComponent,
+    ExternalViewerButtonComponent,
+    DataViewPermalinkComponent,
+    DataViewWebComponentComponent,
+    DataViewShareComponent,
+    IgnApiDlComponent,
+    IgnApiProduitComponent,
+  ],
   imports: [
     CommonModule,
     StoreModule.forFeature(METADATA_VIEW_FEATURE_STATE_KEY, reducer),
@@ -40,6 +52,7 @@ import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
     provideNgIconsConfig({
       size: '1.5em',
     }),
+    IgnApiDlComponent,
   ],
 })
 export class FeatureRecordModule {}

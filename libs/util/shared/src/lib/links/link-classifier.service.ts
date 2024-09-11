@@ -28,6 +28,8 @@ export class LinkClassifierService {
             return [LinkUsage.API, LinkUsage.MAP_API]
           case 'ogcFeatures':
             return [LinkUsage.API, LinkUsage.DOWNLOAD, LinkUsage.GEODATA]
+          case 'GPFDL':
+            return [LinkUsage.API]
           default:
             return [LinkUsage.UNKNOWN]
         }

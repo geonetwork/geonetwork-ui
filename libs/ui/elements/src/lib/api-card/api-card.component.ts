@@ -46,7 +46,8 @@ export class ApiCardComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.displayApiFormButton =
       this.link.accessServiceProtocol === 'ogcFeatures' ||
-      this.link.accessServiceProtocol === 'wfs'
+      this.link.accessServiceProtocol === 'wfs' ||
+      this.link.accessServiceProtocol === 'GPFDL'
   }
 
   ngOnChanges(changes: SimpleChanges) {

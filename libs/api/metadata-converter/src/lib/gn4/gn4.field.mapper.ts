@@ -394,7 +394,8 @@ export class Gn4FieldMapper {
       /^OGC:WMS/.test(protocol) ||
       /^OGC:WFS/.test(protocol) ||
       /^OGC:WMTS/.test(protocol) ||
-      /ogc\W*api\W*features/i.test(protocol)
+      /ogc\W*api\W*features/i.test(protocol) ||
+      /^WWW:DOWNLOAD-/.test(protocol)
     ) {
       return 'service'
     }

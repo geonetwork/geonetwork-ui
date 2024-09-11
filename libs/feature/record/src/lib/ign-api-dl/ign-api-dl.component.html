@@ -1,0 +1,108 @@
+<div class="flex flex-col gap-8">
+  <div class="flex flex-col bg-white p-8 ng-star-inserted shadow-xl">
+    <div class="flex flex-row">
+      <div class="text-[16px] text-black truncate font-title w-11/12" translate>
+        record.metadata.api.form.create
+      </div>
+      <button
+        (click)="resetUrl()"
+        class="bg-primary-opacity-50 inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded capitalize text-primary-lightest hover:bg-primary transition-colors"
+      >
+        <p class="text-[13px] uppercase" translate>
+          record.metadata.api.form.reset
+        </p>
+      </button>
+    </div>
+    <div class="flex flex-row flex-wrap justify-between flex-grow gap-5">
+      <div class="flex flex-col gap-3">
+        <!--<p class="text-sm" translate>record.metadata.api.form.type</p>-->
+        <gn-ui-dropdown-selector
+          #zone
+          [title]="''"
+          extraBtnClass="secondary min-w-full !w-40 !text-black"
+          [showTitle]="false"
+          class="text-black"
+          [choices]="bucketPromisesZone"
+          (selectValue)="setZone($event)"
+          [selected]="zone$ | async"
+        >
+        </gn-ui-dropdown-selector>
+      </div>
+      <div class="flex flex-col gap-3">
+        <!--<p class="text-sm" translate>record.metadata.api.form.type</p>-->
+        <gn-ui-dropdown-selector
+          #format
+          [title]="''"
+          extraBtnClass="secondary min-w-full !w-40 !text-black"
+          [showTitle]="false"
+          class="text-black"
+          [choices]="bucketPromisesFormat"
+          (selectValue)="setFormat($event)"
+          [selected]="format$ | async"
+        >
+        </gn-ui-dropdown-selector>
+      </div>
+      <div class="flex flex-col gap-3">
+        <!--<p class="text-sm" translate>record.metadata.api.form.type</p>-->
+        <gn-ui-dropdown-selector
+          #format
+          [title]="'CRS'"
+          [choices]="bucketPromisesCrs"
+          (selectValue)="setCrs($event)"
+          [selected]="crs$ | async"
+        >
+        </gn-ui-dropdown-selector>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg h-min">
+      <div class="overflow-auto h-60 w-65 bg-white-300 m-2">
+        <table class="w-full text-left border-collapse">
+          <tbody class="align-baseline">
+            <tr>
+              <div *ngFor="let link of listFilteredProduct$ | async">
+                <div class="mb-2 sm:mb-3">
+                  <gn-ui-ign-api-produit
+                    [link]="link"
+                    color="rgb(124 45 18)"
+                    [format]="getLinkFormat(link)"
+                    [isFromWfs]="true"
+                  ></gn-ui-ign-api-produit>
+                </div>
+              </div>
+            </tr>
+            <tr class="flex items-center justify-between">
+              <div class="w-1/3">
+                <button
+                  *ngIf="page$.value > 1"
+                  (click)="lessResult()"
+                  class="bg-primary-opacity-50 inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded capitalize text-primary-lightest hover:bg-primary transition-colors float-left"
+                >
+                  <p class="text-[13px] uppercase" translate>Page précédente</p>
+                </button>
+                <div *ngIf="page$.value <= 1"></div>
+              </div>
+              <div class="w-1/3 flex items-center justify-center">
+                <div
+                  *ngIf="(pageMax$ | async) !== 1"
+                  class="sticky z-10 leading-6 font-semibold"
+                >
+                  {{ page$.value }}/{{ pageMax$ | async }}
+                </div>
+              </div>
+              <div class="w-1/3">
+                <button
+                  *ngIf="page$.value < (pageMax$ | async)"
+                  (click)="moreResult()"
+                  class="bg-primary-opacity-50 inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded capitalize text-primary-lightest hover:bg-primary transition-colors float-right"
+                >
+                  <p class="text-[13px] uppercase" translate>Page suivante</p>
+                </button>
+                <div *ngIf="page$.value >= (pageMax$ | async)"></div>
+              </div>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
