@@ -41,7 +41,7 @@ The package _does not_ contain:
 The NPM package is compiled as a single Angular Library with the so-called [partial-Ivy mode](https://angular.io/guide/angular-compiler-options#compilationmode), which means that
 it is theoretically compatible with a wide range of Angular versions.
 
-The [package.json](https://github.com/geonetwork/geonetwork-ui/package/package.json) file of the NPM package lists Angular libraries as peer dependencies, along with a range of versions that indicate what can be
+The [package.json](https://github.com/geonetwork/geonetwork-ui/tree/main/package/package.json) file of the NPM package lists Angular libraries as peer dependencies, along with a range of versions that indicate what can be
 expected in terms of compatibility with Angular.
 
 Please note that **the GeoNetwork-UI package only requires a basic Angular application to run!**
