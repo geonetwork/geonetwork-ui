@@ -159,8 +159,10 @@
   .gn-ui-text-input {
     --rounded: var(--gn-ui-text-input-rounded, 0.25em);
     --padding: var(--gn-ui-text-input-padding, 0.6em);
-    @apply appearance-none border-2 p-[--padding] rounded-[--rounded] w-full transition-colors duration-75
-    text-[14px] leading-none border-gray-300 text-main placeholder-gray-800
+    --font-size: var(--gn-ui-text-input-font-size, 1em);
+    --border-size: var(--gn-ui-text-input-border-size, 2px);
+    @apply appearance-none border-[length:--border-size] p-[--padding] rounded-[--rounded] w-full transition-colors duration-75
+    text-[length:--font-size] leading-none border-gray-300 text-main placeholder-gray-800
     focus:outline-none focus:border-main hover:border-main
     disabled:cursor-not-allowed disabled:border-gray-100 disabled:placeholder-gray-300 disabled:text-gray-700 disabled:bg-white;
   }
@@ -179,22 +181,6 @@
   mat-spinner circle,
   mat-progress-spinner circle {
     stroke: currentColor !important;
-  }
-
-  .gn-ui-autocomplete {
-    @apply relative border-2 border-gray-300 rounded-md transition-colors duration-75 focus:outline-none focus:border-main hover:border-main;
-  }
-
-  .gn-ui-autocomplete-input {
-    @apply appearance-none focus:outline-white focus:outline-2 focus:outline-dotted focus:outline-offset-2 leading-tight rounded text-black;
-  }
-
-  .gn-ui-autocomplete-clear {
-    @apply absolute text-primary-lightest hover:text-primary hover:bg-gray-50 transition-all duration-100;
-  }
-
-  .gn-ui-autocomplete-search {
-    @apply text-primary bg-white hover:text-primary-darkest hover:bg-gray-100 border-gray-300 hover:border-gray-500 transition-all duration-100 rounded-r;
   }
 }
 

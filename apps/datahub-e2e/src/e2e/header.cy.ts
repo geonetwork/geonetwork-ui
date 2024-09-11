@@ -88,13 +88,10 @@ describe('header', () => {
     })
     it('should delete text input on click on cancel button', () => {
       cy.get('gn-ui-fuzzy-search').type('velo')
-      cy.get('mat-icon')
+      cy.get('gn-ui-fuzzy-search [data-test=clear-btn]')
         .contains('close')
         .trigger('click', { waitForAnimations: false })
-      cy.get('gn-ui-autocomplete')
-        .find('div')
-        .find('input')
-        .should('have.value', '')
+      cy.get('gn-ui-autocomplete').find('input').should('have.value', '')
     })
     describe('when on search url path', () => {
       it('should reset search results on click on cancel button', () => {

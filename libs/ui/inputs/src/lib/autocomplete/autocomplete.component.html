@@ -1,46 +1,47 @@
-<ng-template #searchButton>
-  <div class="absolute inset-y-0" [ngClass]="{ 'right-0': !searchFirst }">
-    <button
-      type="button"
-      class="gn-ui-autocomplete-search search-btn"
-      aria-label="Trigger search"
-      *ngIf="allowSubmit"
-      data-test="autocomplete-submit-btn"
-      (click)="handleClickSearch()"
-    >
-      <mat-icon class="material-symbols-outlined">search</mat-icon>
-    </button>
+<span class="w-full inline-block relative">
+  <div
+    class="absolute inset-y-[--icon-padding] left-[--icon-padding] w-[--icon-width] pointer-events-none"
+    *ngIf="!allowSubmit"
+  >
+    <mat-icon class="material-symbols-outlined text-primary"> search </mat-icon>
   </div>
-</ng-template>
+  <input
+    #searchInput
+    type="text"
+    class="gn-ui-text-input"
+    [ngClass]="{
+      'px-[--icon-width]': !allowSubmit
+    }"
+    [placeholder]="placeholder"
+    [formControl]="control"
+    [matAutocomplete]="auto"
+    (keyup.enter)="handleEnter(searchInput.value)"
+  />
+  <gn-ui-button
+    type="light"
+    extraClass="border-0 text-primary-lightest hover:text-primary focus:text-primary absolute inset-y-[--icon-padding] {{
+      allowSubmit
+        ? 'right-[calc(var(--icon-width)+var(--icon-padding))]'
+        : 'right-[--icon-padding]'
+    }}"
+    data-test="clear-btn"
+    *ngIf="searchInput.value"
+    aria-label="Clear"
+    (buttonClick)="clear()"
+  >
+    <mat-icon class="material-symbols-outlined">close</mat-icon>
+  </gn-ui-button>
+  <gn-ui-button
+    type="light"
+    extraClass="border-0 border-l-[1px] border-gray-300 hover:border-gray-500 text-primary hover:text-primary-darkest focus:text-primary-darkest absolute inset-y-[--icon-padding] right-[--icon-padding]"
+    aria-label="Trigger search"
+    *ngIf="allowSubmit"
+    data-test="autocomplete-submit-btn"
+    (buttonClick)="handleClickSearch()"
+  >
+    <mat-icon class="material-symbols-outlined">search</mat-icon>
+  </gn-ui-button>
 
-<div class="gn-ui-autocomplete">
-  <ng-container *ngIf="searchFirst">
-    <ng-template [ngTemplateOutlet]="searchButton"></ng-template>
-  </ng-container>
-  <div class="relative" [ngClass]="searchFirst ? 'left-14' : 'left-0'">
-    <input
-      #searchInput
-      type="text"
-      class="gn-ui-autocomplete-input"
-      [placeholder]="placeholder"
-      [formControl]="control"
-      [matAutocomplete]="auto"
-      (keyup.enter)="handleEnter(searchInput.value)"
-    />
-    <button
-      type="button"
-      [ngClass]="allowSubmit ? 'right-14' : 'right-0'"
-      class="gn-ui-autocomplete-clear clear-btn"
-      *ngIf="searchInput.value"
-      aria-label="Clear"
-      (click)="clear()"
-    >
-      <mat-icon class="material-symbols-outlined">close</mat-icon>
-    </button>
-    <ng-container *ngIf="!searchFirst">
-      <ng-template [ngTemplateOutlet]="searchButton"></ng-template>
-    </ng-container>
-  </div>
   <gn-ui-popup-alert
     *ngIf="error"
     class="absolute mt-2 w-full top-[100%] left-0"
@@ -51,7 +52,8 @@
     <span translate>search.autocomplete.error</span>
     {{ error }}
   </gn-ui-popup-alert>
-</div>
+</span>
+
 <mat-autocomplete
   #auto="matAutocomplete"
   (optionSelected)="handleSelection($event)"
