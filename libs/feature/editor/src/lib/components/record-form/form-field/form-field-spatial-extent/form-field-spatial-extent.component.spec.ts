@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent.component'
-import { BehaviorSubject, of } from 'rxjs'
+import { BehaviorSubject, firstValueFrom, from, of } from 'rxjs'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
+  CatalogRecord,
   DatasetSpatialExtent,
   Keyword,
 } from '@geonetwork-ui/common/domain/model/record'
@@ -10,6 +11,13 @@ import { MockBuilder, MockProvider } from 'ng-mocks'
 import { EditorFacade } from '../../../../+state/editor.facade'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
+
+const NATIONAL_KEYWORD = {
+  key: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/national',
+  label: 'National',
+  description: '',
+  type: 'theme',
+}
 
 const SAMPLE_PLACE_KEYWORDS: Keyword[] = [
   // these keywords come from a thesaurus available locally
@@ -341,6 +349,70 @@ describe('FormFieldSpatialExtentComponent', () => {
         expect(editorFacade.updateRecordField).toHaveBeenCalledWith(
           'spatialExtents',
           SAMPLE_SPATIAL_EXTENTS
+        )
+      })
+    })
+  })
+  describe('spatial coverage', () => {
+    describe('switch toggle option is based on the keywords present in the record', () => {
+      it('should return true if the record has a national keyword', async () => {
+        const keywords = [
+          ...SAMPLE_PLACE_KEYWORDS,
+          NATIONAL_KEYWORD,
+        ] as Keyword[]
+        editorFacade = TestBed.inject(EditorFacade)
+        editorFacade.record$ = from([
+          { ...SAMPLE_RECORD, keywords } as CatalogRecord,
+        ])
+        fixture = TestBed.createComponent(FormFieldSpatialExtentComponent)
+        component = fixture.componentInstance
+        fixture.detectChanges()
+
+        const results = await firstValueFrom(component.switchToggleOptions$)
+        const nationalOption = results.filter(
+          (result) => result.label === 'National'
+        )[0]
+
+        expect(nationalOption.checked).toBe(true)
+      })
+      it('should return false if the record does not have a national keyword', async () => {
+        const keywords2 = [...SAMPLE_PLACE_KEYWORDS] as Keyword[]
+        editorFacade = TestBed.inject(EditorFacade)
+        editorFacade.record$ = from([
+          { ...SAMPLE_RECORD, keywords: keywords2 } as CatalogRecord,
+        ])
+        fixture = TestBed.createComponent(FormFieldSpatialExtentComponent)
+        component = fixture.componentInstance
+        fixture.detectChanges()
+
+        const results = await firstValueFrom(component.switchToggleOptions$)
+        const nationalOption = results.filter(
+          (result) => result.label === 'National'
+        )[0]
+
+        expect(nationalOption.checked).toBe(false)
+      })
+    })
+    describe('#onSpatialScopeChange', () => {
+      it('removes all existing spatial scope keywords and add the selected one', async () => {
+        const spatialScopes = [{ label: 'National' }, { label: 'Regional' }]
+
+        const allKeywords = await firstValueFrom(component.allKeywords$)
+        const filteredKeywords = allKeywords.filter((keyword) => {
+          const spatialScopeLabels = spatialScopes.map((scope) => scope.label)
+          return !spatialScopeLabels.includes(keyword.label)
+        })
+
+        const selectedOption = {
+          label: 'National',
+          value: NATIONAL_KEYWORD,
+          checked: true,
+        }
+        await component.onSpatialScopeChange(selectedOption)
+
+        expect(editorFacade.updateRecordField).toHaveBeenCalledWith(
+          'keywords',
+          [...filteredKeywords, NATIONAL_KEYWORD]
         )
       })
     })

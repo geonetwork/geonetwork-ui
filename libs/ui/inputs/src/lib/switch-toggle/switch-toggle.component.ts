@@ -10,7 +10,6 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle'
 
 export type SwitchToggleOption = {
   label: string
-  value: string
   checked: boolean
 }
 
@@ -30,7 +29,7 @@ export class SwitchToggleComponent {
 
   onChange(selectedOption: SwitchToggleOption) {
     this.options.find(
-      (option) => option.value === selectedOption.value
+      (option) => option.label === selectedOption.label
     ).checked = true
 
     this.selectedValue.emit(selectedOption)

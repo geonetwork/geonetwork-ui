@@ -6,7 +6,6 @@
   <mat-button-toggle
     *ngFor="let option of options"
     [aria-label]="option.label"
-    [value]="option.value"
     [checked]="option.checked"
     (change)="onChange(option)"
     [class]="extraClasses"

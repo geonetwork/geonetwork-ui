@@ -29,6 +29,11 @@
   @apply text-title font-title font-bold;
 }
 
+/** No margin for first child/heading, that cannot be detected by getBoundingClientRect() **/
+:host ::ng-deep .markdown-body :first-child {
+  margin-top: 0;
+}
+
 :host ::ng-deep .markdown-body h1 {
   margin: 0.67em 0;
   padding-bottom: 0.3em;
