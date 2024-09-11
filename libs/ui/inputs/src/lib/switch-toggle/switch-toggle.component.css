@@ -15,6 +15,7 @@
   background-color: var(--color-gray-200);
   border-radius: 4px;
   border-left: none;
+  font-family: var(--font-family-main);
 }
 
 .mat-button-toggle-appearance-standard.mat-button-toggle-checked {

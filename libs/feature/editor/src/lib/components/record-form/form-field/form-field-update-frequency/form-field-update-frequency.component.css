@@ -1,0 +1,4 @@
+gn-ui-dropdown-selector {
+  /* FIXME: this includes the grid gap from the editor form, but there should be no dependency */
+  max-width: calc(50% - 16px);
+}

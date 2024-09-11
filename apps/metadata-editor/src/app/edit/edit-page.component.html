@@ -9,8 +9,8 @@
         <gn-ui-notifications-container></gn-ui-notifications-container>
       </div>
     </div>
-    <div class="grow overflow-auto p-[32px]">
-      <div class="container-lg mx-auto flex flex-col gap-[32px]">
+    <div class="grow overflow-auto p-[32px]" #scrollContainer>
+      <div class="container-md mx-auto flex flex-col gap-[32px]">
         <md-editor-page-selector></md-editor-page-selector>
         <gn-ui-record-form></gn-ui-record-form>
         <div
@@ -28,11 +28,13 @@
                 : ('editor.record.form.bottomButtons.previous' | translate)
             }}
           </gn-ui-button>
-          <gn-ui-button type="primary" (buttonClick)="nextPageButtonHandler()"
-            ><span translate
-              >editor.record.form.bottomButtons.next</span
-            ></gn-ui-button
+          <gn-ui-button
+            type="primary"
+            (buttonClick)="nextPageButtonHandler()"
+            [disabled]="isLastPage$ | async"
           >
+            <span translate>editor.record.form.bottomButtons.next</span>
+          </gn-ui-button>
         </div>
       </div>
     </div>

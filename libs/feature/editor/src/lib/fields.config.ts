@@ -62,6 +62,8 @@ export const RECORD_UPDATE_FREQUENCY_FIELD: EditorField = {
   model: 'updateFrequency',
   formFieldConfig: {},
 }
+// keeping track of the label to not lose existing translation
+marker('editor.record.form.field.updateFrequency')
 
 export const RECORD_TEMPORAL_EXTENTS_FIELD: EditorField = {
   model: 'temporalExtents',

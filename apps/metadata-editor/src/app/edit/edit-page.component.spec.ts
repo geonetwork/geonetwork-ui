@@ -5,7 +5,7 @@ import {
   datasetRecordsFixture,
   editorConfigFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { BehaviorSubject, Subject } from 'rxjs'
+import { BehaviorSubject, firstValueFrom, Subject } from 'rxjs'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { MockBuilder } from 'ng-mocks'
@@ -36,6 +36,8 @@ class EditorFacadeMock {
   saveSuccess$ = new Subject()
   draftSaveSuccess$ = new Subject()
   editorConfig$ = new BehaviorSubject(editorConfigFixture())
+  currentPage$ = new BehaviorSubject(0)
+  pagesCount$ = new BehaviorSubject(2)
 }
 class NotificationsServiceMock {
   showNotification = jest.fn()
@@ -170,6 +172,23 @@ describe('EditPageComponent', () => {
         uniqueIdentifier: 'new-uuid',
       })
       expect(navigateSpy).toHaveBeenCalledWith(['edit', 'new-uuid'])
+    })
+  })
+
+  describe('isLastPage$', () => {
+    let editorFacade: EditorFacadeMock
+    beforeEach(() => {
+      editorFacade = TestBed.inject(EditorFacade) as unknown as EditorFacadeMock
+    })
+    it('returns true if last page', async () => {
+      editorFacade.currentPage$.next(3)
+      editorFacade.pagesCount$.next(4)
+      expect(await firstValueFrom(component.isLastPage$)).toBe(true)
+    })
+    it('returns false if not', async () => {
+      editorFacade.currentPage$.next(1)
+      editorFacade.pagesCount$.next(3)
+      expect(await firstValueFrom(component.isLastPage$)).toBe(false)
     })
   })
 })
