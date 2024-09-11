@@ -41,6 +41,7 @@ import {
   UiLayoutModule,
 } from '@geonetwork-ui/ui/layout'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
+import { IgnApiDlComponent } from '@geonetwork-ui/feature/record'
 import {
   getGlobalConfig,
   getOptionalSearchConfig,
@@ -95,6 +96,7 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { RecordUserFeedbacksComponent } from './record/record-user-feedbacks/record-user-feedbacks.component'
 import { LetDirective } from '@ngrx/component'
 import { OrganizationPageComponent } from './organization/organization-page/organization-page.component'
+import { MatButtonToggleModule } from '@angular/material/button-toggle'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -168,6 +170,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     BlockListComponent,
     PreviousNextButtonsComponent,
     LetDirective,
+    MatButtonToggleModule,
   ],
   providers: [
     importProvidersFrom(FeatureAuthModule),
