@@ -4,12 +4,16 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { Subject, distinctUntilChanged } from 'rxjs'
+import { distinctUntilChanged, Subject } from 'rxjs'
+import { MatIconModule } from '@angular/material/icon'
+import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'gn-ui-search-input',
   templateUrl: './search-input.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, MatIconModule],
 })
 export class SearchInputComponent {
   @Input() value = ''

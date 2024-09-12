@@ -10,13 +10,10 @@ import * as fromMap from './+state/map.reducer'
 import { MapFacade } from './+state/map.facade'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { TextInputComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { GeocodingComponent } from './geocoding/geocoding.component'
 import { GEOCODING_PROVIDER, GeocodingProvider } from './geocoding.service'
 import { AddLayerFromOgcApiComponent } from './add-layer-from-ogc-api/add-layer-from-ogc-api.component'
 
 @NgModule({
-  declarations: [GeocodingComponent],
-  exports: [GeocodingComponent],
   imports: [
     CommonModule,
     UiLayoutModule,

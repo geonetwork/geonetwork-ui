@@ -5,7 +5,6 @@ import { OrganisationPreviewComponent } from './organisation-preview/organisatio
 import { TranslateModule } from '@ngx-translate/core'
 import { MatIconModule } from '@angular/material/icon'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
-import { OrganisationsFilterComponent } from './organisations-filter/organisations-filter.component'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { LanguageSwitcherComponent } from './language-switcher/language-switcher.component'
 import { OrganisationsResultComponent } from './organisations-result/organisations-result.component'
@@ -15,7 +14,6 @@ import { RouterLink } from '@angular/router'
   declarations: [
     CatalogTitleComponent,
     OrganisationPreviewComponent,
-    OrganisationsFilterComponent,
     LanguageSwitcherComponent,
     OrganisationsResultComponent,
   ],
@@ -30,7 +28,6 @@ import { RouterLink } from '@angular/router'
   exports: [
     CatalogTitleComponent,
     OrganisationPreviewComponent,
-    OrganisationsFilterComponent,
     LanguageSwitcherComponent,
     OrganisationsResultComponent,
   ],

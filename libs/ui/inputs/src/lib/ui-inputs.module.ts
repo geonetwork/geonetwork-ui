@@ -24,7 +24,6 @@ import { CopyTextButtonComponent } from './copy-text-button/copy-text-button.com
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { CommonModule } from '@angular/common'
 import { CheckboxComponent } from './checkbox/checkbox.component'
-import { SearchInputComponent } from './search-input/search-input.component'
 import { DateRangePickerComponent } from './date-range-picker/date-range-picker.component'
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
@@ -43,7 +42,6 @@ import { ImageInputComponent } from './image-input/image-input.component'
     ViewportIntersectorComponent,
     CopyTextButtonComponent,
     CheckboxComponent,
-    SearchInputComponent,
   ],
   imports: [
     CommonModule,
@@ -85,7 +83,6 @@ import { ImageInputComponent } from './image-input/image-input.component'
     CheckToggleComponent,
     CopyTextButtonComponent,
     CheckboxComponent,
-    SearchInputComponent,
     DateRangePickerComponent,
     EditableLabelDirective,
     ImageInputComponent,

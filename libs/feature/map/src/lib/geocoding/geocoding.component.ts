@@ -3,11 +3,22 @@ import { catchError, firstValueFrom, from, Subject, takeUntil } from 'rxjs'
 import { debounceTime, switchMap } from 'rxjs/operators'
 import { GeocodingService } from '../geocoding.service'
 import { MapFacade } from '../+state/map.facade'
+import { CommonModule } from '@angular/common'
+import { SearchInputComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { TranslateModule } from '@ngx-translate/core'
+import { MapContextView } from '@geospatial-sdk/core'
 
 @Component({
   selector: 'gn-ui-geocoding',
   templateUrl: './geocoding.component.html',
   styleUrls: ['./geocoding.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    UiInputsModule,
+    TranslateModule,
+    SearchInputComponent,
+  ],
 })
 export class GeocodingComponent implements OnDestroy {
   searchText = ''
@@ -60,13 +71,13 @@ export class GeocodingComponent implements OnDestroy {
     this.errorMessage = null
   }
 
-  zoomToLocation(result: any) {
+  async zoomToLocation(result: any) {
     const geometry = result.geom
 
     if (geometry.type === 'Point') {
-      this.zoomToPoint(geometry.coordinates)
+      await this.zoomToPoint(geometry.coordinates)
     } else if (geometry.type === 'Polygon') {
-      this.zoomToPolygon(geometry.coordinates)
+      await this.zoomToPolygon(geometry.coordinates)
     } else {
       console.error(`Unsupported geometry type: ${geometry.type}`)
     }
@@ -74,17 +85,27 @@ export class GeocodingComponent implements OnDestroy {
 
   async zoomToPoint(pointCoords: [number, number]) {
     const context = await firstValueFrom(this.mapFacade.context$)
+    const view: MapContextView = {
+      center: pointCoords,
+      zoom: 10,
+    }
     this.mapFacade.applyContext({
       ...context,
-      // TODO: change context to fit point
+      view,
     })
   }
 
   async zoomToPolygon(polygonCoords: [[number, number][]]) {
     const context = await firstValueFrom(this.mapFacade.context$)
+    const view: MapContextView = {
+      geometry: {
+        type: 'Polygon',
+        coordinates: polygonCoords,
+      },
+    }
     this.mapFacade.applyContext({
       ...context,
-      // TODO: change context to fit polygon
+      view,
     })
   }
 

@@ -1,32 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { OrganisationsFilterComponent } from './organisations-filter.component'
-import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
-
-@Component({
-  selector: 'gn-ui-dropdown-selector',
-  template: '',
-})
-class DropdownSelectorMockComponent {
-  @Input() showTitle: unknown
-  @Input() choices: {
-    value: unknown
-    label: string
-  }[]
-  @Input() selected: unknown
-  @Output() selectValue = new EventEmitter<unknown>()
-}
+import { MockBuilder } from 'ng-mocks'
 
 describe('OrganisationsOrderComponent', () => {
   let component: OrganisationsFilterComponent
   let fixture: ComponentFixture<OrganisationsFilterComponent>
 
+  beforeEach(() => {
+    return MockBuilder(OrganisationsFilterComponent)
+  })
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        OrganisationsFilterComponent,
-        DropdownSelectorMockComponent,
-      ],
       imports: [TranslateModule.forRoot()],
     }).compileComponents()
 

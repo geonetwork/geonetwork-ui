@@ -1,63 +1,36 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { GeocodingComponent } from './geocoding.component'
-import { MapManagerService } from '../manager/map-manager.service'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
-import Map from 'ol/Map'
-import TileLayer from 'ol/layer/Tile'
-import XYZ from 'ol/source/XYZ'
-import VectorLayer from 'ol/layer/Vector'
-import VectorSource from 'ol/source/Vector'
-import GeoJSON from 'ol/format/GeoJSON'
-import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
-import Feature from 'ol/Feature'
-import { Geometry } from 'ol/geom'
-import { TranslateModule } from '@ngx-translate/core'
 import { GeocodingService } from '../geocoding.service'
 import { of } from 'rxjs'
-
-const vectorLayer = new VectorLayer({
-  source: new VectorSource({
-    features: new GeoJSON().readFeatures(pointFeatureCollectionFixture(), {
-      featureProjection: 'EPSG:3857',
-      dataProjection: 'EPSG:4326',
-    }),
-  }) as VectorSource<Feature<Geometry>>,
-})
-
-const mapMock = new Map({
-  layers: [
-    new TileLayer({
-      source: new XYZ({
-        url: 'http://test',
-      }),
-    }),
-    vectorLayer,
-  ],
-})
-
-const mapManagerMock = {
-  map: mapMock,
-}
-
-const geocodingServiceMock = {
-  query: jest.fn().mockReturnValue(of([])),
-}
+import { MockBuilder, MockProvider } from 'ng-mocks'
+import { MapFacade } from '../+state/map.facade'
 
 describe('GeocodingComponent', () => {
   let component: GeocodingComponent
   let fixture: ComponentFixture<GeocodingComponent>
+  let mapFacade: MapFacade
+
+  beforeEach(() => {
+    return MockBuilder(GeocodingComponent)
+  })
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
-      declarations: [GeocodingComponent],
       providers: [
-        { provide: MapManagerService, useValue: mapManagerMock },
-        { provide: GeocodingService, useValue: geocodingServiceMock },
+        MockProvider(GeocodingService, {
+          query: jest.fn().mockReturnValue(of([])),
+        }),
+        MockProvider(MapFacade, {
+          context$: of({
+            layers: [],
+            view: null,
+          }),
+          applyContext: jest.fn(),
+        }),
       ],
-      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
 
+    mapFacade = TestBed.inject(MapFacade)
     fixture = TestBed.createComponent(GeocodingComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -91,36 +64,21 @@ describe('GeocodingComponent', () => {
   })
 
   describe('zoomToLocation', () => {
-    let viewMock: any
-    let zoomToPointSpy: jest.SpyInstance
-    let zoomToPolygonSpy: jest.SpyInstance
-
-    beforeEach(() => {
-      viewMock = {
-        setCenter: jest.fn(),
-        setZoom: jest.fn(),
-        fit: jest.fn(),
-      }
-      mapMock.getView = jest.fn().mockReturnValue(viewMock)
-      zoomToPointSpy = jest.spyOn(component, 'zoomToPoint')
-      zoomToPolygonSpy = jest.spyOn(component, 'zoomToPolygon')
-    })
-
-    it('should zoom to the location of the result if geometry type is Point', () => {
+    it('should zoom to the location of the result if geometry type is Point', async () => {
       const result = {
         geom: {
           type: 'Point',
           coordinates: [0, 0],
         },
       }
-      component.zoomToLocation(result)
-      expect(zoomToPointSpy).toHaveBeenCalledWith(
-        result.geom.coordinates,
-        viewMock
-      )
+      await component.zoomToLocation(result)
+      expect(mapFacade.applyContext).toHaveBeenCalledWith({
+        layers: [],
+        view: { center: [0, 0], zoom: 10 },
+      })
     })
 
-    it('should zoom to the location of the result if geometry type is Polygon', () => {
+    it('should zoom to the location of the result if geometry type is Polygon', async () => {
       const result = {
         geom: {
           type: 'Polygon',
@@ -134,14 +92,26 @@ describe('GeocodingComponent', () => {
           ],
         },
       }
-      component.zoomToLocation(result)
-      expect(zoomToPolygonSpy).toHaveBeenCalledWith(
-        result.geom.coordinates,
-        viewMock
-      )
+      await component.zoomToLocation(result)
+      expect(mapFacade.applyContext).toHaveBeenCalledWith({
+        layers: [],
+        view: {
+          geometry: {
+            coordinates: [
+              [
+                [0, 0],
+                [1, 1],
+                [2, 2],
+                [0, 0],
+              ],
+            ],
+            type: 'Polygon',
+          },
+        },
+      })
     })
 
-    it('should log an error if geometry type is unsupported', () => {
+    it('should log an error if geometry type is unsupported', async () => {
       const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
       const result = {
         geom: {
@@ -149,7 +119,7 @@ describe('GeocodingComponent', () => {
           coordinates: [0, 0],
         },
       }
-      component.zoomToLocation(result)
+      await component.zoomToLocation(result)
       expect(consoleSpy).toHaveBeenCalledWith(
         `Unsupported geometry type: ${result.geom.type}`
       )
