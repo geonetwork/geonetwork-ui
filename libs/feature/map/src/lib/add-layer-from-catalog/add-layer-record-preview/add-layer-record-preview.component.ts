@@ -5,17 +5,13 @@ import {
   LinkClassifierService,
   LinkUsage,
 } from '@geonetwork-ui/util/shared'
-import { Observable, of, throwError } from 'rxjs'
-import { MapUtilsService } from '../../utils'
+import { firstValueFrom, Observable, of, throwError } from 'rxjs'
 import { MapFacade } from '../../+state/map.facade'
-import {
-  MapContextLayerModel,
-  MapContextLayerTypeEnum,
-} from '../../map-context/map-context.model'
 import {
   DatasetOnlineResource,
   DatasetRecord,
 } from '@geonetwork-ui/common/domain/model/record'
+import { MapContextLayer } from '@geospatial-sdk/core'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
@@ -38,20 +34,21 @@ export class AddLayerRecordPreviewComponent extends RecordPreviewComponent {
   constructor(
     protected elementRef: ElementRef,
     private linkClassifier: LinkClassifierService,
-    private mapFacade: MapFacade,
-    private mapUtils: MapUtilsService
+    private mapFacade: MapFacade
   ) {
     super(elementRef)
   }
 
   async handleLinkClick(link: DatasetOnlineResource) {
-    const layer = await this.getLayerFromLink(link).toPromise()
-    this.mapFacade.addLayer({ ...layer, title: this.record.title })
+    const layer = await firstValueFrom(this.getLayerFromLink(link))
+    const context = await firstValueFrom(this.mapFacade.context$)
+    this.mapFacade.applyContext({
+      ...context,
+      layers: [...context.layers, { ...layer, label: this.record.title }],
+    })
   }
 
-  getLayerFromLink(
-    link: DatasetOnlineResource
-  ): Observable<MapContextLayerModel> {
+  getLayerFromLink(link: DatasetOnlineResource): Observable<MapContextLayer> {
     if (link.type !== 'service')
       return throwError(
         () => 'map layer could not be built for this distribution'
@@ -59,13 +56,13 @@ export class AddLayerRecordPreviewComponent extends RecordPreviewComponent {
     if (link.accessServiceProtocol === 'wms') {
       return of({
         url: link.url.toString(),
-        type: MapContextLayerTypeEnum.WMS,
+        type: 'wms',
         name: link.name,
       })
     } else if (link.accessServiceProtocol === 'wmts') {
       return of({
         url: link.url.toString(),
-        type: MapContextLayerTypeEnum.WMTS,
+        type: 'wmts',
         name: link.name,
       })
     }

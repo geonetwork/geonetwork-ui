@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { MapFacade } from '../+state/map.facade'
+import { firstValueFrom, map } from 'rxjs'
+import { MapContextLayer } from '@geospatial-sdk/core'
 import { MatIconModule } from '@angular/material/icon'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { MatTabsModule } from '@angular/material/tabs'
@@ -31,15 +33,23 @@ import { CommonModule } from '@angular/common'
   ],
 })
 export class LayersPanelComponent {
-  layers$ = this.mapFacade.layers$
+  layers$ = this.mapFacade.context$.pipe(map((context) => context.layers))
   ogcUrl = ''
   constructor(private mapFacade: MapFacade) {}
 
-  deleteLayer(index: number) {
-    this.mapFacade.removeLayer(index)
+  async deleteLayer(index: number) {
+    const context = await firstValueFrom(this.mapFacade.context$)
+    this.mapFacade.applyContext({
+      ...context,
+      layers: context.layers.filter((_, i) => i !== index),
+    })
   }
 
-  addLayer(layer) {
-    this.mapFacade.addLayer(layer)
+  async addLayer(layer: MapContextLayer) {
+    const context = await firstValueFrom(this.mapFacade.context$)
+    this.mapFacade.applyContext({
+      ...context,
+      layers: [...context.layers, layer],
+    })
   }
 }

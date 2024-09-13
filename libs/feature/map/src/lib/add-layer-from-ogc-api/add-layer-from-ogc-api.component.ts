@@ -8,10 +8,6 @@ import {
 } from '@angular/core'
 import { OgcApiEndpoint } from '@camptocamp/ogc-client'
 import { debounceTime, Subject } from 'rxjs'
-import {
-  MapContextLayerModel,
-  MapContextLayerTypeEnum,
-} from '../map-context/map-context.model'
 import { TranslateModule } from '@ngx-translate/core'
 import {
   DropdownChoice,
@@ -19,7 +15,7 @@ import {
   UiInputsModule,
 } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
-import { MapLayer } from '../+state/map.models'
+import { MapContextLayer, MapContextLayerOgcApi } from '@geospatial-sdk/core'
 
 @Component({
   selector: 'gn-ui-add-layer-from-ogc-api',
@@ -30,7 +26,7 @@ import { MapLayer } from '../+state/map.models'
 })
 export class AddLayerFromOgcApiComponent implements OnInit {
   @Input() ogcUrl: string
-  @Output() layerAdded = new EventEmitter<MapLayer>()
+  @Output() layerAdded = new EventEmitter<MapContextLayer>()
 
   urlChange = new Subject<string>()
   loading = false
@@ -112,24 +108,27 @@ export class AddLayerFromOgcApiComponent implements OnInit {
     try {
       const ogcEndpoint = await new OgcApiEndpoint(this.ogcUrl)
       let layerUrl: string
+      let useTiles: MapContextLayerOgcApi['useTiles']
 
       if (layerType === 'vectorTiles') {
         layerUrl = await ogcEndpoint.getVectorTilesetUrl(layer)
+        useTiles = 'vector'
       } else if (layerType === 'mapTiles') {
         layerUrl = await ogcEndpoint.getMapTilesetUrl(layer)
+        useTiles = 'map'
       } else {
         layerUrl = await ogcEndpoint.getCollectionItemsUrl(layer, {
           outputFormat: 'json',
         })
       }
 
-      const layerToAdd: MapContextLayerModel = {
-        name: layer,
+      this.layerAdded.emit({
         url: layerUrl,
-        type: MapContextLayerTypeEnum.OGCAPI,
-        layerType: layerType,
-      }
-      this.layerAdded.emit({ ...layerToAdd, title: layer })
+        type: 'ogcapi',
+        collection: layer,
+        ...(useTiles && { useTiles }),
+        label: layer,
+      })
     } catch (error) {
       const err = error as Error
       console.error('Error adding layer:', err.message)

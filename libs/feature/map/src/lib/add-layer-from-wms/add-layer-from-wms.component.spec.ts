@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddLayerFromWmsComponent } from './add-layer-from-wms.component'
 import { MapFacade } from '../+state/map.facade'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
+import { MockBuilder, MockProvider } from 'ng-mocks'
+import { of } from 'rxjs'
+import { mapCtxFixture } from '@geonetwork-ui/common/fixtures'
 
 jest.mock('@camptocamp/ogc-client', () => ({
   WmsEndpoint: class {
@@ -39,25 +40,23 @@ jest.mock('@camptocamp/ogc-client', () => ({
   },
 }))
 
-class MapFacadeMock {
-  addLayer = jest.fn()
-}
-
 describe('AddLayerFromWmsComponent', () => {
   let component: AddLayerFromWmsComponent
   let fixture: ComponentFixture<AddLayerFromWmsComponent>
   let mapFacade: MapFacade
 
+  beforeEach(() => {
+    return MockBuilder(AddLayerFromWmsComponent)
+  })
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), AddLayerFromWmsComponent],
       providers: [
-        {
-          provide: MapFacade,
-          useClass: MapFacadeMock,
-        },
+        MockProvider(MapFacade, {
+          context$: of(mapCtxFixture()),
+          applyContext: jest.fn(),
+        }),
       ],
-      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
 
     mapFacade = TestBed.inject(MapFacade)
@@ -153,11 +152,17 @@ describe('AddLayerFromWmsComponent', () => {
       })
     })
     it('adds the selected layer in the current map context', () => {
-      expect(mapFacade.addLayer).toHaveBeenCalledWith({
-        name: 'myLayer',
-        title: 'My Layer',
-        type: 'wms',
-        url: 'http://my.service.org/wms',
+      expect(mapFacade.applyContext).toHaveBeenCalledWith({
+        ...mapCtxFixture(),
+        layers: [
+          ...mapCtxFixture().layers,
+          {
+            name: 'myLayer',
+            label: 'My Layer',
+            type: 'wms',
+            url: 'http://my.service.org/wms',
+          },
+        ],
       })
     })
   })

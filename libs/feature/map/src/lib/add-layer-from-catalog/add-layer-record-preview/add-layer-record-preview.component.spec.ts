@@ -4,37 +4,29 @@ import { MapFacade } from '../../+state/map.facade'
 import {
   aSetOfLinksFixture,
   datasetRecordsFixture,
+  mapCtxFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { of } from 'rxjs'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { MapUtilsService } from '../../utils'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-
-class MapFacadeMock {
-  addLayer = jest.fn()
-}
-
-class MapUtilsServiceMock {
-  getWmtsOptionsFromCapabilities = jest.fn(() => of())
-}
+import { MockBuilder, MockProvider } from 'ng-mocks'
 
 describe('AddLayerRecordPreviewComponent', () => {
   let component: AddLayerRecordPreviewComponent
   let fixture: ComponentFixture<AddLayerRecordPreviewComponent>
   let mapFacade: MapFacade
 
+  beforeEach(() => {
+    return MockBuilder(AddLayerRecordPreviewComponent)
+  })
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddLayerRecordPreviewComponent],
       providers: [
-        {
-          provide: MapFacade,
-          useClass: MapFacadeMock,
-        },
-        {
-          provide: MapUtilsService,
-          useClass: MapUtilsServiceMock,
-        },
+        MockProvider(MapFacade, {
+          context$: of(mapCtxFixture()),
+          applyContext: jest.fn(),
+        }),
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
@@ -55,12 +47,18 @@ describe('AddLayerRecordPreviewComponent', () => {
       component.handleLinkClick(aSetOfLinksFixture().geodataWms())
     })
     it('adds a layer', () => {
-      expect(mapFacade.addLayer).toHaveBeenCalledWith({
-        name: 'mylayer',
-        title:
-          'A very interesting dataset (un jeu de données très intéressant)',
-        type: 'wms',
-        url: 'https://my.ogc.server/wms',
+      expect(mapFacade.applyContext).toHaveBeenCalledWith({
+        ...mapCtxFixture(),
+        layers: [
+          ...mapCtxFixture().layers,
+          {
+            name: 'mylayer',
+            label:
+              'A very interesting dataset (un jeu de données très intéressant)',
+            type: 'wms',
+            url: 'https://my.ogc.server/wms',
+          },
+        ],
       })
     })
   })
