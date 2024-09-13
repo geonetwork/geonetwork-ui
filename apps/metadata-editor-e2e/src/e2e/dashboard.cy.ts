@@ -165,11 +165,16 @@ describe('dashboard', () => {
     })
     it('should display the right info for unpublished records', () => {
       cy.get('[data-cy="create-record"]').click()
-      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').type(
-        'draft abstract'
-      )
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(1200)
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
+        .as('abstractField')
+        .focus()
+      cy.get('@abstractField').type('draft abstract')
+      cy.readFormUniqueIdentifier().then((recordUuid) => {
+        cy.window()
+          .its('localStorage')
+          .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
+          .should('contain', 'draft abstract')
+      })
       cy.visit('/my-space/my-draft')
       cy.get('gn-ui-results-table').find('[data-cy="table-row"]').as('draft')
       cy.get('@draft').should('have.length', 1)

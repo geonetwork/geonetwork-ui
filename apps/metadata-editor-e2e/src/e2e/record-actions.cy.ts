@@ -8,20 +8,27 @@ describe('record-actions', () => {
       it('should delete the record, delete its associated draft and refresh the interface', () => {
         // First create a record and its draft
         cy.get('[data-cy="create-record"]').click()
-        cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').type(
-          'record abstract'
-        )
+        cy.url().should('include', '/create')
+        cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
+          .as('abstractField')
+          .focus()
+        cy.get('@abstractField').type('record abstract')
         cy.intercept({
           method: 'PUT',
           pathname: '**/records',
         }).as('insertRecord')
         cy.get('md-editor-publish-button').click()
         cy.wait('@insertRecord')
-        cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').type(
-          'draft abstract'
+        cy.get('@abstractField').focus()
+        cy.get('@abstractField').type('draft abstract')
+        // Assert that the draft exists in the local storage
+        cy.readFormUniqueIdentifier().then((uniqueIdentifier) =>
+          cy
+            .window()
+            .its('localStorage')
+            .invoke('getItem', `geonetwork-ui-draft-${uniqueIdentifier}`)
+            .should('exist')
         )
-        // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.wait(1000) // waiting for draft saving to kick in
         cy.visit('/my-space/my-records')
         cy.get('[data-cy="table-row"]')
           .contains('My new record')
@@ -43,11 +50,17 @@ describe('record-actions', () => {
       it('should delete the draft and refresh the interface', () => {
         // First create a draft
         cy.get('[data-cy="create-record"]').click()
-        cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').type(
-          'draft abstract'
-        )
-        // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.wait(1000) // waiting for draft saving to kick in
+        cy.url().should('include', '/create')
+        cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
+          .as('abstractField')
+          .focus()
+        cy.get('@abstractField').type('draft abstract')
+        cy.readFormUniqueIdentifier().then((recordUuid) => {
+          cy.window()
+            .its('localStorage')
+            .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
+            .should('contain', 'draft abstract')
+        })
         cy.visit('/my-space/my-draft')
         cy.get('[data-cy="table-row"]')
           .contains('My new record')
@@ -64,14 +77,25 @@ describe('record-actions', () => {
       })
     })
   })
+
   describe('create', () => {
-    it('should create the record without error', () => {
-      // First create a record and its draft
+    beforeEach(() => {
+      // create a record
       cy.get('[data-cy="create-record"]').click()
+      cy.url().should('include', '/create')
+    })
 
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(1200) // waiting for draft saving to kick in
+    afterEach(() => {
+      // delete the new record
+      cy.visit('/catalog/search')
+      cy.get('.table-header-cell').eq(1).click()
+      cy.get('.table-header-cell').eq(1).click()
+      cy.get('[data-test="record-menu-button"]').first().click()
+      cy.get('[data-test="record-menu-delete-button"]').click()
+      cy.get('[data-cy="confirm-button"]').click()
+    })
 
+    it('should create the record without error', () => {
       // Check that the record is correctly displayed
       cy.get('gn-ui-record-form').should('be.visible')
 
@@ -92,18 +116,11 @@ describe('record-actions', () => {
     })
 
     it('back navigation should go to search after creating a record', () => {
-      // First create a record and its draft
-      cy.get('[data-cy="create-record"]').click()
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(1200) // waiting for draft saving to kick in
       cy.go('back')
       cy.url().should('include', '/catalog/search')
     })
 
     it('the created record should have the registered user as point of contact in the data managers section', () => {
-      // First create a record and its draft
-      cy.get('[data-cy="create-record"]').click()
-
       cy.get('[data-test=pageSelectorButtons]')
         .find('gn-ui-button')
         .eq(2)
@@ -119,34 +136,55 @@ describe('record-actions', () => {
         .should('contain', 'admin admin')
     })
   })
+
   describe('undo', () => {
     it('should restore the record and refresh the interface', () => {
       // First create a record and its draft
       cy.get('[data-cy="create-record"]').click()
-      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').type(
-        'record abstract'
-      )
+      cy.url().should('include', '/create')
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
+        .as('abstractField')
+        .focus()
+      cy.get('@abstractField').type('record abstract')
+      cy.readFormUniqueIdentifier().then((recordUuid) => {
+        cy.window()
+          .its('localStorage')
+          .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
+          .should('exist')
+      })
+
       cy.intercept({
         method: 'PUT',
         pathname: '**/records',
       }).as('insertRecord')
       cy.get('md-editor-publish-button').click()
       cy.wait('@insertRecord')
-      cy.url().should('contain', '/edit/')
       cy.get('[data-cy="undo-button"] button').should('be.disabled')
-      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').type(
-        'draft abstract'
-      )
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(1000) // waiting for draft saving to kick in
+
+      cy.get('@abstractField').clear()
+      cy.get('@abstractField').focus()
+      cy.get('@abstractField').type('draft abstract')
+      cy.readFormUniqueIdentifier().then((recordUuid) => {
+        cy.window()
+          .its('localStorage')
+          .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
+          .should('contain', 'draft abstract')
+      })
+
       cy.get('[data-cy="undo-button"]').click()
       cy.get('[data-cy="confirm-button"]').click()
-      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').should(
-        'have.value',
-        'record abstract'
-      )
+      cy.get('@abstractField').should('have.value', 'record abstract')
+
+      // delete the new record
+      cy.visit('/catalog/search')
+      cy.get('.table-header-cell').eq(1).click()
+      cy.get('.table-header-cell').eq(1).click()
+      cy.get('[data-test="record-menu-button"]').first().click()
+      cy.get('[data-test="record-menu-delete-button"]').click()
+      cy.get('[data-cy="confirm-button"]').click()
     })
   })
+
   describe('duplicate', () => {
     it('should duplicate the record', () => {
       cy.get('.table-header-cell').eq(1).click()
@@ -155,6 +193,7 @@ describe('record-actions', () => {
         .find('[data-test="record-menu-button"]')
         .click()
       cy.get('[data-test="record-menu-duplicate-button"]').click()
+
       cy.get('gn-ui-form-field')
         .first()
         .find('input')

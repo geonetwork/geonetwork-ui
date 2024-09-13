@@ -16,6 +16,8 @@ declare namespace Cypress {
     signOut(): void
     clearFavorites(): void
     clearRecordDrafts(): void
+    readFormUniqueIdentifier(): Chainable<string | number | string[]>
+    wrapPreviousDraft(): void
     publishAndReload(): void
 
     // interaction with gn-ui-dropdown-selector
@@ -153,10 +155,55 @@ Cypress.Commands.add('clearRecordDrafts', () => {
   cy.reload()
 })
 
+Cypress.Commands.add('readFormUniqueIdentifier', () => {
+  return cy
+    .get('gn-ui-form-field[ng-reflect-model=uniqueIdentifier] input')
+    .invoke('val')
+})
+
+// this needs a recordUuid to have been wrapped
+Cypress.Commands.add('wrapPreviousDraft', () => {
+  cy.get('@recordUuid').then((recordUuid) => {
+    cy.window()
+      .its('localStorage')
+      .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
+      .then((previousDraft) => {
+        cy.wrap(previousDraft).as('previousDraft')
+      })
+  })
+})
+
+// this needs a recordUuid and a previousDraft to have been wrapped
 Cypress.Commands.add('publishAndReload', () => {
-  cy.wait(1200)
+  // wait for the draft to be saved
+  cy.get('@recordUuid').then((recordUuid) => {
+    // nesting thens as Cypress doesn't seem to support the "all" operator
+    //https://github.com/cypress-io/cypress/issues/915
+    cy.get('@previousDraft').then((previousDraft) => {
+      cy.window()
+        .its('localStorage')
+        .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
+        .should('not.eq', previousDraft)
+    })
+  })
+
+  // publish the record
+  cy.intercept({
+    method: 'PUT',
+    pathname: '**/records',
+  }).as('insertRecord')
   cy.get('md-editor-publish-button').click()
-  cy.wait(1200)
+  cy.wait('@insertRecord')
+
+  // wait for the draft to be deleted on publication
+  cy.get('@recordUuid').then((recordUuid) => {
+    cy.window()
+      .its('localStorage')
+      .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
+      .should('be.null')
+  })
+
+  // reload the page
   cy.get('@recordUuid').then((recordUuid) => {
     cy.visit(`/edit/${recordUuid}`)
   })
