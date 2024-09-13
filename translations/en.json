@@ -186,6 +186,7 @@
   "downloads.format.unknown": "unknown",
   "downloads.wfs.featuretype.not.found": "The layer was not found",
   "dropFile": "drop file",
+  "editor.form.keywords.placeholder": "Select a keyword",
   "editor.form.placeKeywordWithoutExtent": "This keyword is not associated with a geographical extent",
   "editor.record.delete.confirmation.cancelText": "Cancel",
   "editor.record.delete.confirmation.confirmText": "Delete",

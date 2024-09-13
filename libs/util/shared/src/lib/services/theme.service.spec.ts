@@ -30,6 +30,7 @@ describe('ThemeService', () => {
           '--color-gray-700': 'rgb(140,140,255)',
           '--color-gray-800': 'rgb(114,114,255)',
           '--color-gray-900': 'rgb(81,81,255)',
+          '--color-gray-950': 'rgb(57,57,255)',
           '--color-main': 'rgb(0,0,255)',
           '--color-primary': 'rgb(255,0,0)',
           '--color-primary-black': 'rgb(42,16,5)',

@@ -186,6 +186,7 @@
   "downloads.format.unknown": "inconnu",
   "downloads.wfs.featuretype.not.found": "La couche n'a pas été retrouvée",
   "dropFile": "Faites glisser votre fichier",
+  "editor.form.keywords.placeholder": "Sélectionner un mot-clé",
   "editor.form.placeKeywordWithoutExtent": "Ce mot-clé n'a pas de localisation géographique associée",
   "editor.record.delete.confirmation.cancelText": "Annuler",
   "editor.record.delete.confirmation.confirmText": "Supprimer",

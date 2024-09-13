@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common'
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import {
   EditorFacade,
@@ -14,10 +20,11 @@ import {
   NotificationsService,
 } from '@geonetwork-ui/feature/notifications'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { filter, firstValueFrom, Subscription, take } from 'rxjs'
+import { combineLatest, filter, firstValueFrom, Subscription, take } from 'rxjs'
 import { PageSelectorComponent } from './components/page-selector/page-selector.component'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { map } from 'rxjs/operators'
+import { SidebarComponent } from '../dashboard/sidebar/sidebar.component'
 
 marker('editor.record.form.bottomButtons.comeBackLater')
 marker('editor.record.form.bottomButtons.previous')
@@ -38,6 +45,7 @@ marker('editor.record.form.bottomButtons.next')
     NotificationsContainerComponent,
     PageSelectorComponent,
     TranslateModule,
+    SidebarComponent,
   ],
 })
 export class EditPageComponent implements OnInit, OnDestroy {
@@ -47,6 +55,11 @@ export class EditPageComponent implements OnInit, OnDestroy {
   pagesLength$ = this.facade.editorConfig$.pipe(
     map((config) => config.pages.length)
   )
+  isLastPage$ = combineLatest([this.currentPage$, this.pagesLength$]).pipe(
+    map(([currentPage, pagesCount]) => currentPage >= pagesCount - 1)
+  )
+
+  @ViewChild('scrollContainer') scrollContainer: ElementRef<HTMLElement>
 
   constructor(
     private route: ActivatedRoute,
@@ -133,6 +146,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
       this.router.navigate(['catalog', 'search'])
     } else {
       this.facade.setCurrentPage(currentPage - 1)
+      this.scrollToTop()
     }
   }
 
@@ -141,6 +155,14 @@ export class EditPageComponent implements OnInit, OnDestroy {
     const pagesCount = await firstValueFrom(this.pagesLength$)
     if (currentPage < pagesCount - 1) {
       this.facade.setCurrentPage(currentPage + 1)
+      this.scrollToTop()
     }
+  }
+
+  private scrollToTop() {
+    this.scrollContainer.nativeElement.scroll({
+      behavior: 'instant',
+      top: 0,
+    })
   }
 }

@@ -36,6 +36,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
+import { ButtonComponent } from '../button/button.component'
 
 export type AutocompleteItem = unknown
 
@@ -52,6 +53,7 @@ export type AutocompleteItem = unknown
     CommonModule,
     TranslateModule,
     ReactiveFormsModule,
+    ButtonComponent,
   ],
 })
 export class AutocompleteComponent
@@ -64,7 +66,8 @@ export class AutocompleteComponent
   @Input() preventCompleteOnSelection = false
   @Input() autoFocus = false
   @Input() minCharacterCount? = 3
-  @Input() allowSubmit = true
+  // this will show a submit button next to the input; if false, a search icon will appear on the left
+  @Input() allowSubmit = false
   @Output() itemSelected = new EventEmitter<AutocompleteItem>()
   @Output() inputSubmitted = new EventEmitter<string>()
   @Output() inputCleared = new EventEmitter<void>()

@@ -4,10 +4,13 @@
     class="flex-1 border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center gap-4 transition-colors duration-100"
     [ngClass]="{
       'border-primary-lighter bg-primary-white': dragFilesOver,
-      'border-gray-300': !dragFilesOver
+      'border-gray-300': !dragFilesOver,
+      'cursor-pointer hover:border-gray-500': !isUploadInProgress
     }"
+    [attr.tabindex]="isUploadInProgress ? null : 0"
     (dragFilesOver)="handleDragFilesOver($event)"
     (dropFiles)="handleDropFiles($event)"
+    (keydown.enter)="fileInput.click()"
   >
     <div
       class="w-14 h-14 rounded-md bg-gray-50 grid"
@@ -26,7 +29,7 @@
     </div>
     <div
       *ngIf="isUploadInProgress"
-      class="w-14 h-14 grid items-center justify-center"
+      class="w-14 h-14 grid items-center justify-center relative"
     >
       <div class="text-gray-100 absolute">
         <mat-progress-spinner
@@ -70,6 +73,7 @@
       <span class="border-b border-gray-300 grow"></span>
     </p>
     <input
+      #fileInput
       type="file"
       class="hidden"
       (change)="handleFileInput($event)"

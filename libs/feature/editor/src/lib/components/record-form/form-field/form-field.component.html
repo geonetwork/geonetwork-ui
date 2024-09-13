@@ -22,30 +22,31 @@
 <ng-template #fieldContent>
   <ng-container [ngSwitch]="model">
     <ng-container *ngSwitchCase="'title'">
-      <div class="flex justify-between items-center gap-3">
+      <div class="flex flex-row flex-start items-center gap-3 mb-[12px]">
         <span
           #titleInput
           class="grow font-title text-3xl font-normal"
           [gnUiEditableLabel]="valueAsString"
           (editableLabelChanged)="valueChange.emit($event)"
         ></span>
-        <span
-          class="material-symbols-outlined gn-ui-icon-small m-2 cursor-pointer"
-          (click)="focusTitleInput()"
-          >edit</span
-        >
-        <span
-          class="material-symbols-outlined gn-ui-icon-small m-2"
-          [matTooltip]="config.hintKey! | translate"
-          matTooltipPosition="above"
-        >
-          help
-        </span>
+        <div class="flex flex-row justify-between">
+          <span
+            class="material-symbols-outlined gn-ui-icon-small m-2 cursor-pointer"
+            (click)="focusTitleInput()"
+            >edit</span
+          >
+          <span
+            class="material-symbols-outlined gn-ui-icon-small m-2"
+            [matTooltip]="config.hintKey! | translate"
+            matTooltipPosition="above"
+          >
+            help
+          </span>
+        </div>
       </div>
     </ng-container>
     <ng-container *ngSwitchCase="'abstract'">
       <gn-ui-form-field-rich
-        class="h-[8rem]"
         [label]="config.labelKey! | translate"
         [hint]="config.hintKey! | translate"
         [value]="valueAsString"
@@ -68,18 +69,16 @@
       ></gn-ui-form-field-simple>
     </ng-container>
     <ng-container *ngSwitchCase="'resourceUpdated'">
-      <gn-ui-form-field-resource-updated
+      <gn-ui-form-field-date-updated
         [value]="valueAsDate"
         (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-resource-updated>
+      ></gn-ui-form-field-date-updated>
     </ng-container>
     <ng-container *ngSwitchCase="'recordUpdated'">
-      <gn-ui-form-field-simple
-        type="date"
-        [readonly]="true"
+      <gn-ui-form-field-date-updated
         [value]="valueAsDate"
         (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-simple>
+      ></gn-ui-form-field-date-updated>
     </ng-container>
     <ng-container *ngSwitchCase="'updateFrequency'">
       <gn-ui-form-field-update-frequency

@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { MockBuilder } from 'ng-mocks'
 import { FormFieldLicenseComponent } from './form-field-license/form-field-license.component'
 import { FormFieldOverviewsComponent } from './form-field-overviews/form-field-overviews.component'
-import { FormFieldResourceUpdatedComponent } from './form-field-resource-updated/form-field-resource-updated.component'
+import { FormFieldDateUpdatedComponent } from './form-field-date-updated/form-field-date-updated.component'
 import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
 import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
@@ -71,7 +71,7 @@ describe('FormFieldComponent', () => {
       component.model = 'resourceUpdated'
       fixture.detectChanges()
       formField = fixture.debugElement.query(
-        By.directive(FormFieldResourceUpdatedComponent)
+        By.directive(FormFieldDateUpdatedComponent)
       ).componentInstance
     })
     it('creates a resource updated form field', () => {

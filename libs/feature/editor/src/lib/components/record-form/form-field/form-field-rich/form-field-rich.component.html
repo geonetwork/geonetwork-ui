@@ -1,20 +1,27 @@
 <gn-ui-form-field-wrapper [label]="label" [hint]="hint">
   <gn-ui-button
     form-field-interaction
-    [extraClass]="getButtonExtraClass()"
+    [type]="preview ? 'black' : 'gray'"
+    style="
+      --gn-ui-button-padding: 3px 8px;
+      --gn-ui-button-font-size: 12px;
+      --gn-ui-button-rounded: 20px;
+    "
     (buttonClick)="togglePreview()"
   >
-    <span class="material-symbols-outlined mr-1 gn-ui-icon-small">{{
-      preview ? 'visibility' : 'visibility_off'
-    }}</span>
+    <span
+      class="material-symbols-outlined gn-ui-icon-small"
+      [ngClass]="{ 'text-primary': !preview }"
+      >{{ preview ? 'visibility' : 'visibility_off' }}</span
+    >
+    &nbsp;
     {{ preview ? 'WYSIWYG' : 'Markdown' }}
   </gn-ui-button>
   <gn-ui-markdown-editor
-    class="h-full"
     [preview]="preview"
-    [helperText]="helperText"
     [placeholder]="placeholder"
     [textContent]="value"
     (textContentChanged)="valueChange.emit($event)"
+    textAreaExtraClass="min-h-[100px]"
   ></gn-ui-markdown-editor>
 </gn-ui-form-field-wrapper>

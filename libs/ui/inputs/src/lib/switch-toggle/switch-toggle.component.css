@@ -11,15 +11,16 @@
 }
 
 .mat-button-toggle-appearance-standard {
-  color: var(--color-main);
+  color: black;
   background-color: var(--color-gray-200);
   border-radius: 4px;
   border-left: none;
+  font-family: var(--font-family-main);
 }
 
 .mat-button-toggle-appearance-standard.mat-button-toggle-checked {
-  background-color: var(--color-main);
-  color: var(--color-primary-white);
+  background-color: black;
+  color: var(--color-background);
 }
 
 button.mat-button-toggle-button.mat-focus-indicator.mat-button-toggle-label-content {

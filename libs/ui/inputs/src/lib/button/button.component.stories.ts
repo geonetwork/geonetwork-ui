@@ -35,7 +35,15 @@ export const Primary: StoryObj<ButtonComponentWithContent> = {
   argTypes: {
     type: {
       control: 'radio',
-      options: ['primary', 'secondary', 'default', 'outline', 'light'],
+      options: [
+        'primary',
+        'secondary',
+        'default',
+        'outline',
+        'light',
+        'gray',
+        'black',
+      ],
     },
   },
   render: (args) => ({

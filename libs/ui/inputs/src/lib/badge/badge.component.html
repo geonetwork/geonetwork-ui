@@ -8,11 +8,20 @@
 >
   <span><ng-content></ng-content></span>
   <gn-ui-button
-    class="material-symbols-outlined cursor-pointer text-xs"
+    type="light"
     *ngIf="removable"
     (buttonClick)="removeBadge()"
-    extraClass="p-1 bg-transparent border-0 border-transparent "
+    class="ml-1 -my-[0.4em] -mr-[0.45em]"
+    extraClass="border-0"
+    style="
+      --gn-ui-button-padding: 0;
+      --gn-ui-button-font-size: 0.8em;
+      --gn-ui-button-width: 1.4em;
+      --gn-ui-button-height: 1.4em;
+      --gn-ui-button-rounded: 1.4em;
+      --gn-ui-button-background: white;
+    "
   >
-    close
+    <mat-icon class="material-symbols-outlined leading-[1.1]">close</mat-icon>
   </gn-ui-button>
 </div>

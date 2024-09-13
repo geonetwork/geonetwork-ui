@@ -1,33 +1,42 @@
-<div class="flex flex-col h-full">
-  <div class="w-full h-auto shrink-0">
-    <md-editor-top-toolbar></md-editor-top-toolbar>
-    <md-editor-page-selector></md-editor-page-selector>
-  </div>
-  <div class="grow overflow-auto relative">
-    <div class="absolute top-0 left-0 w-2/3 z-10 pointer-events-none">
-      <gn-ui-notifications-container></gn-ui-notifications-container>
+<div class="flex flex-row h-full">
+  <aside class="w-[370px] shrink-0 border-r">
+    <md-editor-sidebar></md-editor-sidebar>
+  </aside>
+  <div class="flex flex-col h-full w-full">
+    <div class="w-full h-auto shrink-0 relative">
+      <md-editor-top-toolbar></md-editor-top-toolbar>
+      <div class="absolute top-full left-0 w-2/3 z-10 pointer-events-none">
+        <gn-ui-notifications-container></gn-ui-notifications-container>
+      </div>
     </div>
-    <gn-ui-record-form></gn-ui-record-form>
-  </div>
-  <div
-    data-test="previousNextPageButtons"
-    class="p-8 mt-auto flex flex-row justify-between"
-  >
-    <gn-ui-button
-      type="secondary"
-      (buttonClick)="previousPageButtonHandler()"
-      translate
-    >
-      {{
-        (currentPage$ | async) === 0
-          ? ('editor.record.form.bottomButtons.comeBackLater' | translate)
-          : ('editor.record.form.bottomButtons.previous' | translate)
-      }}
-    </gn-ui-button>
-    <gn-ui-button type="primary" (buttonClick)="nextPageButtonHandler()"
-      ><span translate
-        >editor.record.form.bottomButtons.next</span
-      ></gn-ui-button
-    >
+    <div class="grow overflow-auto p-[32px]" #scrollContainer>
+      <div class="container-lg mx-auto flex flex-col gap-[32px]">
+        <md-editor-page-selector></md-editor-page-selector>
+        <gn-ui-record-form></gn-ui-record-form>
+        <div
+          data-test="previousNextPageButtons"
+          class="mt-auto flex flex-row justify-between"
+        >
+          <gn-ui-button
+            type="gray"
+            (buttonClick)="previousPageButtonHandler()"
+            translate
+          >
+            {{
+              (currentPage$ | async) === 0
+                ? ('editor.record.form.bottomButtons.comeBackLater' | translate)
+                : ('editor.record.form.bottomButtons.previous' | translate)
+            }}
+          </gn-ui-button>
+          <gn-ui-button
+            type="primary"
+            (buttonClick)="nextPageButtonHandler()"
+            [disabled]="isLastPage$ | async"
+          >
+            <span translate>editor.record.form.bottomButtons.next</span>
+          </gn-ui-button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

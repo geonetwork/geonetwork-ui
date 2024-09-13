@@ -15,6 +15,7 @@ import {
 } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { combineLatest, map } from 'rxjs'
+import { MatIconModule } from '@angular/material/icon'
 
 @Component({
   selector: 'gn-ui-form-field-temporal-extents',
@@ -29,6 +30,7 @@ import { combineLatest, map } from 'rxjs'
     DatePickerComponent,
     DateRangePickerComponent,
     TranslateModule,
+    MatIconModule,
   ],
 })
 export class FormFieldTemporalExtentsComponent {

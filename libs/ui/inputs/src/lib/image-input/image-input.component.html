@@ -5,15 +5,15 @@
   <div class="w-full h-full flex flex-col gap-2">
     <div class="flex-1 group relative">
       <img
-        class="w-full h-full object-cover border-2 border-gray-300 rounded-lg"
+        class="w-full object-cover border-2 border-gray-300 rounded-lg h-[172px]"
         [alt]="altText"
         loading="lazy"
         [src]="previewUrl"
       />
       <gn-ui-button
-        [extraClass]="
-          'bg-gray-200 absolute right-2 bottom-2 invisible group-hover:visible'
-        "
+        type="outline"
+        style="--gn-ui-button-height: 40px; --gn-ui-button-width: 40px"
+        extraClass="absolute right-2 bottom-2 invisible group-hover:visible bg-background"
         (buttonClick)="handleDelete()"
       >
         <mat-icon class="material-symbols-outlined">delete</mat-icon>
@@ -24,21 +24,23 @@
       [placeholder]="'input.image.altTextPlaceholder' | translate"
       [value]="altText ?? ''"
       (valueChange)="handleAltTextChange($event)"
+      extraClass="gn-ui-editor-textarea"
     ></gn-ui-text-input>
-    <div class="flex flex-row gap-2">
-      <gn-ui-button
-        [extraClass]="'bg-gray-200 font-bold'"
-        (buttonClick)="handleDelete()"
-      >
-        <mat-icon class="material-symbols-outlined me-1">delete</mat-icon>
+    <div class="flex flex-row gap-2 mt-2">
+      <gn-ui-button type="gray" (buttonClick)="handleDelete()">
+        <mat-icon class="material-symbols-outlined me-1 text-primary"
+          >delete</mat-icon
+        >
         {{ 'input.image.delete' | translate }}
       </gn-ui-button>
       <gn-ui-button
         *ngIf="!showAltTextInput"
-        [extraClass]="'bg-gray-200 font-bold'"
+        type="gray"
         (buttonClick)="toggleAltTextInput()"
       >
-        <mat-icon class="material-symbols-outlined me-1">add</mat-icon>
+        <mat-icon class="material-symbols-outlined me-1 text-primary"
+          >add</mat-icon
+        >
         {{ 'input.image.displayAltTextInput' | translate }}
       </gn-ui-button>
     </div>
@@ -49,11 +51,17 @@
   <div class="w-full h-full flex flex-col gap-2">
     <label
       gnUiFilesDrop
-      class="flex-1 border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center gap-4"
+      class="flex-1 border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center gap-4 transition-colors duration-100"
       [ngClass]="{
         'border-primary-lighter bg-primary-white': dragFilesOver,
-        'border-gray-300': !dragFilesOver
+        'border-gray-300': !dragFilesOver,
+        'cursor-pointer hover:border-gray-500':
+          !isUploadInProgress && !uploadError && !showUrlInput
       }"
+      [attr.tabindex]="
+        isUploadInProgress || uploadError || showUrlInput ? null : 0
+      "
+      (keydown.enter)="fileInput.click()"
       (dragFilesOver)="handleDragFilesOver($event)"
       (dropFiles)="handleDropFiles($event)"
     >
@@ -75,7 +83,7 @@
 
       <div
         *ngIf="isUploadInProgress && !uploadError"
-        class="w-14 h-14 grid items-center justify-center"
+        class="w-14 h-14 grid items-center justify-center relative"
       >
         <div class="text-gray-100 absolute">
           <mat-progress-spinner
@@ -118,6 +126,7 @@
         </p>
       </div>
       <input
+        #fileInput
         type="file"
         class="hidden"
         (change)="handleFileInput($event)"
@@ -125,12 +134,11 @@
       />
     </label>
 
-    <div *ngIf="!showUrlInput" class="flex-none">
-      <gn-ui-button
-        [extraClass]="'bg-gray-200 font-bold'"
-        (buttonClick)="displayUrlInput()"
-      >
-        <mat-icon class="material-symbols-outlined me-1">link</mat-icon>
+    <div *ngIf="!showUrlInput" class="flex-none mt-2">
+      <gn-ui-button (buttonClick)="displayUrlInput()" type="gray">
+        <mat-icon class="material-symbols-outlined me-1 text-primary"
+          >link</mat-icon
+        >
         {{ 'input.image.displayUrlInput' | translate }}
       </gn-ui-button>
     </div>

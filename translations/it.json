@@ -186,6 +186,7 @@
   "downloads.format.unknown": "sconosciuto",
   "downloads.wfs.featuretype.not.found": "Il layer non è stato trovato",
   "dropFile": "Trascina il suo file",
+  "editor.form.keywords.placeholder": "",
   "editor.form.placeKeywordWithoutExtent": "",
   "editor.record.delete.confirmation.cancelText": "",
   "editor.record.delete.confirmation.confirmText": "",

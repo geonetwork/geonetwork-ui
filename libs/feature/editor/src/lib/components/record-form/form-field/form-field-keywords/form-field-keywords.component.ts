@@ -42,7 +42,6 @@ export class FormFieldKeywordsComponent {
   @Output() valueChange: EventEmitter<Keyword[]> = new EventEmitter()
 
   keywordTypes = ['temporal', 'theme', 'other'] as KeywordType[]
-  placeholder = 'editor.form.keywords.placeholder'
 
   get filteredKeywords(): Keyword[] {
     return (

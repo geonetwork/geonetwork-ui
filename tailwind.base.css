@@ -4,6 +4,16 @@
 
 /* PLEASE NOTE: all Tailwind components should be prefixed by `gn-ui` */
 @layer components {
+  .container-sm {
+    max-width: 640px;
+  }
+  .container-md {
+    max-width: 768px;
+  }
+  .container-lg {
+    max-width: 1024px;
+  }
+
   /* TODO: add prefix */
   .card-shadow {
     @apply shadow-xl hover:shadow-xl-hover transition-shadow;
@@ -65,8 +75,10 @@
       text-[length:--font-size] leading-none
       p-[--padding] rounded-[--rounded] w-[--width] h-[--height] overflow-hidden
       bg-[--background] transition-all duration-100
-      focus:outline-none
-      disabled:opacity-50 disabled:pointer-events-none;
+      outline-none
+      relative
+      disabled:opacity-50 disabled:pointer-events-none
+      focus:z-10 active:z-10 hover:z-10;
   }
   /* makes sure icons will not make the buttons grow vertically */
   .gn-ui-btn mat-icon.mat-icon {
@@ -91,6 +103,18 @@
     @apply gn-ui-btn text-white
       bg-secondary hover:bg-secondary-darker focus:bg-secondary-darker active:bg-secondary-darkest
       border border-secondary focus:ring-4 focus:ring-secondary-lightest;
+  }
+
+  .gn-ui-btn-gray {
+    @apply gn-ui-btn text-black
+    bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-300
+    border border-gray-100 focus:ring-4 focus:ring-gray-50;
+  }
+
+  .gn-ui-btn-black {
+    @apply gn-ui-btn text-white
+    bg-black hover:bg-gray-950 focus:bg-gray-950 active:bg-gray-900
+    border border-black focus:ring-4 focus:ring-gray-300;
   }
 
   .gn-ui-btn-outline {
@@ -135,8 +159,10 @@
   .gn-ui-text-input {
     --rounded: var(--gn-ui-text-input-rounded, 0.25em);
     --padding: var(--gn-ui-text-input-padding, 0.6em);
-    @apply appearance-none border-2 p-[--padding] rounded-[--rounded] w-full transition-colors duration-75
-    text-[14px] leading-none border-gray-300 text-main placeholder-gray-800
+    --font-size: var(--gn-ui-text-input-font-size, 1em);
+    --border-size: var(--gn-ui-text-input-border-size, 2px);
+    @apply appearance-none border-[length:--border-size] p-[--padding] rounded-[--rounded] w-full transition-colors duration-75
+    text-[length:--font-size] leading-none border-gray-300 text-main placeholder-gray-800
     focus:outline-none focus:border-main hover:border-main
     disabled:cursor-not-allowed disabled:border-gray-100 disabled:placeholder-gray-300 disabled:text-gray-700 disabled:bg-white;
   }

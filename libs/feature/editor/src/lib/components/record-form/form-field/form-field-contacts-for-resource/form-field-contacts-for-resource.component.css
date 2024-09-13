@@ -1,0 +1,4 @@
+:host {
+  --gn-ui-button-padding: 8px 8px;
+  --gn-ui-button-rounded: 8px;
+}

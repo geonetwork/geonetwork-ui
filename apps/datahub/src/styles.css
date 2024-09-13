@@ -7,16 +7,6 @@ body {
   margin: 0;
 }
 
-.container-sm {
-  max-width: 640px;
-}
-.container-md {
-  max-width: 768px;
-}
-.container-lg {
-  max-width: 1024px;
-}
-
 html.record-page-active {
   scroll-padding-top: 220px;
 }
@@ -42,4 +32,10 @@ html.record-page-active {
 }
 .tippy-box a:hover {
   @apply text-primary-lightest;
+}
+
+/* this targets the main search field */
+gn-ui-autocomplete .gn-ui-text-input {
+  @apply focus:outline-white focus:outline-2 focus:outline-dotted focus:outline-offset-2
+  shadow-xl focus:shadow-[0_0_24px_0_rgba(21,40,184,0.09)];
 }

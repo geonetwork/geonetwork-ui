@@ -34,6 +34,7 @@ import {
 } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { ContactCardComponent } from '../../../contact-card/contact-card.component'
+import { MatIconModule } from '@angular/material/icon'
 
 @Component({
   selector: 'gn-ui-form-field-contacts-for-resource',
@@ -50,6 +51,7 @@ import { ContactCardComponent } from '../../../contact-card/contact-card.compone
     TranslateModule,
     ContactCardComponent,
     SortableListComponent,
+    MatIconModule,
   ],
 })
 export class FormFieldContactsForResourceComponent

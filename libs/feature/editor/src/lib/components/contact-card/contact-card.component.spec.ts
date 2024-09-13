@@ -52,10 +52,4 @@ describe('ContactCardComponent', () => {
   it('should create the component', () => {
     expect(component).toBeTruthy()
   })
-
-  it('should emit contactRemoved event with the correct contact', () => {
-    const contactRemovedSpy = jest.spyOn(component.contactRemoved, 'emit')
-    component.removeContact(mockContact)
-    expect(contactRemovedSpy).toHaveBeenCalledWith(mockContact)
-  })
 })

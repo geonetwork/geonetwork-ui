@@ -32,9 +32,9 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 })
 export class MarkdownEditorComponent {
   @Input() preview = false
-  @Input() helperText?: string
   @Input() placeholder: string
   @Input() textContent: string
+  @Input() textAreaExtraClass = ''
   @Output() textContentChanged: EventEmitter<string> =
     new EventEmitter<string>()
 
