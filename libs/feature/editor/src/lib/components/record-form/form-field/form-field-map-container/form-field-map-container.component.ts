@@ -1,95 +1,41 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnChanges,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { catchError, from, map, Observable, of, switchMap } from 'rxjs'
-import {
-  DEFAULT_BASELAYER_CONTEXT,
-  FeatureMapModule,
-  MapContextLayerTypeEnum,
-  MapContextModel,
-  MapFacade,
-  MapStyleService,
-  MapUtilsService,
-} from '@geonetwork-ui/feature/map'
-import { Fill, Stroke, Style } from 'ol/style'
-import { getOptionalMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
 import { Geometry } from 'geojson'
-import { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
+import GeoJSON, { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
 import { DatasetSpatialExtent } from '@geonetwork-ui/common/domain/model/record'
 import { Polygon } from 'ol/geom'
-import GeoJSON from 'ol/format/GeoJSON'
+import {
+  createViewFromLayer,
+  MapContext,
+  MapContextLayer,
+} from '@geospatial-sdk/core'
+import { MapContainerComponent } from '@geonetwork-ui/ui/map'
+import { BehaviorSubject, Observable } from 'rxjs'
+import { switchMap } from 'rxjs/operators'
 
 @Component({
   selector: 'gn-ui-form-field-map-container',
   standalone: true,
-  imports: [CommonModule, FeatureMapModule],
+  imports: [CommonModule, MapContainerComponent],
   templateUrl: './form-field-map-container.component.html',
   styleUrls: ['./form-field-map-container.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormFieldMapContainerComponent implements OnChanges {
-  @Input() spatialExtents: DatasetSpatialExtent[]
-
-  error = ''
-  mapContext$: Observable<MapContextModel> = this.mapFacade.layers$.pipe(
-    switchMap((layers) =>
-      from(this.mapUtils.getLayerExtent(layers[0])).pipe(
-        catchError(() => {
-          this.error = 'The layer has no extent'
-          return of(undefined)
-        }),
-        map((extent) => {
-          return {
-            layers: [DEFAULT_BASELAYER_CONTEXT, ...layers],
-            view: {
-              extent: extent,
-            },
-          } as MapContextModel
-        })
-      )
-    )
-  )
-
-  mapConfig: MapConfig = getOptionalMapConfig()
-
-  constructor(
-    private mapFacade: MapFacade,
-    private mapUtils: MapUtilsService,
-    private styleService: MapStyleService
-  ) {
-    const fill = new Fill({
-      color: 'transparent',
-    })
-    const stroke = new Stroke({
-      color: 'black',
-      width: 2,
-    })
-    const styles = [
-      new Style({
-        fill: fill,
-        stroke: stroke,
-      }),
-    ]
-    this.styleService.styles.default = this.styleService.createStyleFunction({
-      ...this.styleService.createGeometryStyles({ color: 'black' }),
-      polygon: styles,
-    })
+export class FormFieldMapContainerComponent {
+  @Input() set spatialExtents(value: DatasetSpatialExtent[]) {
+    this.spatialExtents$.next(value)
   }
-
-  ngOnChanges(): void {
-    this.mapFacade.removeLayer(0)
-
-    if (this.spatialExtents) {
+  spatialExtents$ = new BehaviorSubject<DatasetSpatialExtent[]>([])
+  mapContext$: Observable<MapContext> = this.spatialExtents$.pipe(
+    switchMap(async (extents) => {
+      if (extents.length === 0) {
+        return null // null extent means default view
+      }
       const featureCollection: GeoJSONFeatureCollection = {
         type: 'FeatureCollection',
         features: [],
       }
-
-      this.spatialExtents.forEach((extent) => {
+      extents.forEach((extent) => {
         if (extent.geometry) {
           featureCollection.features.push({
             type: 'Feature',
@@ -104,13 +50,26 @@ export class FormFieldMapContainerComponent implements OnChanges {
           })
         }
       })
-      this.mapFacade.addLayer({
-        type: MapContextLayerTypeEnum.GEOJSON,
+
+      const layer: MapContextLayer = {
+        type: 'geojson',
         data: featureCollection,
-        title: 'Spatial extents',
-      })
-    }
-  }
+        label: 'Spatial extents',
+        style: {
+          'stroke-color': 'black',
+          'stroke-width': 2,
+        },
+      }
+      const view = await createViewFromLayer(layer)
+      return {
+        view,
+        layers: [layer],
+      }
+    })
+  )
+
+  error = ''
+
   bboxCoordsToGeometry(bbox: [number, number, number, number]): Geometry {
     const geometry = new Polygon([
       [
@@ -122,7 +81,6 @@ export class FormFieldMapContainerComponent implements OnChanges {
       ],
     ])
 
-    const geoJSONGeom = new GeoJSON().writeGeometryObject(geometry)
-    return geoJSONGeom
+    return new GeoJSON().writeGeometryObject(geometry)
   }
 }
