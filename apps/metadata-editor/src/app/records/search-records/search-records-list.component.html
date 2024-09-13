@@ -32,6 +32,30 @@
     </div>
     <div class="grow"></div>
     <gn-ui-button
+      cdkOverlayOrigin
+      #importRecordButton
+      (buttonClick)="duplicateExternalRecord()"
+      type="gray"
+      data-test="import-record"
+    >
+      <span translate>dashboard.importRecord</span>
+      <mat-icon
+        *ngIf="!isImportMenuOpen"
+        class="material-symbols-outlined text-primary"
+        >keyboard_arrow_down</mat-icon
+      >
+      <mat-icon
+        *ngIf="isImportMenuOpen"
+        class="material-symbols-outlined text-primary"
+        >keyboard_arrow_up</mat-icon
+      >
+    </gn-ui-button>
+    <ng-template #template>
+      <gn-ui-import-record
+        (closeImportMenu)="closeImportMenu()"
+      ></gn-ui-import-record>
+    </ng-template>
+    <gn-ui-button
       (buttonClick)="createRecord()"
       type="primary"
       data-cy="create-record"

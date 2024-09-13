@@ -5,7 +5,7 @@ import {
 } from '@geonetwork-ui/data-access/gn4'
 import { firstValueFrom, lastValueFrom, of, throwError } from 'rxjs'
 import { ElasticsearchService } from './elasticsearch'
-import { TestBed } from '@angular/core/testing'
+import { fakeAsync, TestBed, tick } from '@angular/core/testing'
 import {
   EsSearchResponse,
   Gn4Converter,
@@ -22,6 +22,10 @@ import {
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { map } from 'rxjs/operators'
 import { HttpErrorResponse } from '@angular/common/http'
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing'
 
 class Gn4MetadataMapperMock {
   readRecords = jest.fn((records) =>
@@ -84,6 +88,7 @@ class RecordsApiServiceMock {
       },
     })
   )
+  deleteRecord = jest.fn(() => of({}))
 }
 
 describe('Gn4Repository', () => {
@@ -91,9 +96,11 @@ describe('Gn4Repository', () => {
   let gn4Helper: ElasticsearchService
   let gn4SearchApi: SearchApiService
   let gn4RecordsApi: RecordsApiService
+  let httpTestingController: HttpTestingController
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       providers: [
         Gn4Repository,
         {
@@ -118,7 +125,14 @@ describe('Gn4Repository', () => {
     gn4Helper = TestBed.inject(ElasticsearchService)
     gn4SearchApi = TestBed.inject(SearchApiService)
     gn4RecordsApi = TestBed.inject(RecordsApiService)
+    httpTestingController = TestBed.inject(HttpTestingController)
   })
+
+  afterEach(() => {
+    // Verify that no other requests are outstanding
+    httpTestingController.verify()
+  })
+
   it('creates', () => {
     expect(repository).toBeTruthy()
   })
@@ -534,6 +548,151 @@ describe('Gn4Repository', () => {
         'DRAFT-2',
         'DRAFT-3',
       ])
+    })
+  })
+
+  describe('importRecordFromExternalFileUrlAsDraft', () => {
+    const recordDownloadUrl = 'https://example.com/record/xml'
+    const mockXml = simpleDatasetRecordAsXmlFixture()
+    let tempId: string
+
+    it('should fetch the external record and save it as a draft', fakeAsync(() => {
+      repository.duplicateExternalRecord(recordDownloadUrl).subscribe((id) => {
+        tempId = id
+
+        expect(tempId).toMatch(/^TEMP-ID-\d+$/)
+      })
+
+      const req = httpTestingController.expectOne(recordDownloadUrl)
+
+      expect(req.request.headers.get('Accept')).toEqual(
+        'text/xml,application/xml'
+      )
+      expect(req.request.method).toEqual('GET')
+
+      req.flush(mockXml)
+
+      tick()
+    }))
+
+    it('should handle an error response when fetching the external record', fakeAsync(() => {
+      let errorResponse: any
+
+      repository.duplicateExternalRecord(recordDownloadUrl).subscribe({
+        error: (error) => {
+          errorResponse = error
+        },
+      })
+
+      const req = httpTestingController.expectOne(recordDownloadUrl)
+
+      req.flush('Error fetching record', {
+        status: 404,
+        statusText: 'Not Found',
+      })
+
+      tick()
+
+      expect(errorResponse).toBeDefined()
+      expect(errorResponse.status).toBe(404)
+      expect(errorResponse.statusText).toBe('Not Found')
+    }))
+  })
+
+  describe('deleteRecord', () => {
+    it('calls the API to delete the record by unique identifier', fakeAsync(() => {
+      repository.deleteRecord('1234-5678').subscribe()
+
+      // Simulate async passage of time
+      tick()
+
+      // Ensure the API method was called correctly
+      expect(gn4RecordsApi.deleteRecord).toHaveBeenCalledWith('1234-5678')
+    }))
+  })
+
+  describe('saveRecordAsDraft', () => {
+    beforeEach(async () => {
+      await lastValueFrom(
+        repository.saveRecordAsDraft({
+          ...simpleDatasetRecordFixture(),
+          uniqueIdentifier: 'DRAFT-123',
+        })
+      )
+    })
+
+    it('saves the record to localStorage with the correct key', () => {
+      const hasDraft = repository.recordHasDraft('DRAFT-123')
+      expect(hasDraft).toBe(true)
+    })
+
+    it('emits a draft changed notification', async () => {
+      const draftsChangedSpy = jest.spyOn(repository._draftsChanged, 'next')
+
+      await lastValueFrom(
+        repository.saveRecordAsDraft({
+          ...simpleDatasetRecordFixture(),
+          uniqueIdentifier: 'DRAFT-456',
+        })
+      )
+
+      expect(draftsChangedSpy).toHaveBeenCalled()
+    })
+  })
+
+  describe('generateTemporaryId', () => {
+    it('generates a temporary ID with the correct prefix', () => {
+      const tempId = repository.generateTemporaryId()
+      expect(tempId).toMatch(/^TEMP-ID-\d+$/)
+    })
+  })
+
+  describe('clearRecordDraft', () => {
+    beforeEach(async () => {
+      await lastValueFrom(
+        repository.saveRecordAsDraft({
+          ...simpleDatasetRecordFixture(),
+          uniqueIdentifier: 'DRAFT-123',
+        })
+      )
+      repository.clearRecordDraft('DRAFT-123')
+    })
+
+    it('removes the draft from localStorage', () => {
+      const hasDraft = repository.recordHasDraft('DRAFT-123')
+      expect(hasDraft).toBe(false)
+    })
+
+    it('emits a draft changed notification after clearing', () => {
+      const draftsChangedSpy = jest.spyOn(repository._draftsChanged, 'next')
+      repository.clearRecordDraft('DRAFT-123')
+      expect(draftsChangedSpy).toHaveBeenCalled()
+    })
+  })
+
+  describe('recordHasDraft', () => {
+    it('returns true if the draft exists', async () => {
+      await lastValueFrom(
+        repository.saveRecordAsDraft({
+          ...simpleDatasetRecordFixture(),
+          uniqueIdentifier: 'DRAFT-123',
+        })
+      )
+      expect(repository.recordHasDraft('DRAFT-123')).toBe(true)
+    })
+
+    it('returns false if the draft does not exist', () => {
+      expect(repository.recordHasDraft('NON_EXISTENT_DRAFT')).toBe(false)
+    })
+  })
+
+  describe('isRecordNotYetSaved', () => {
+    it('returns true if the record has a temporary ID', () => {
+      expect(repository.isRecordNotYetSaved('TEMP-ID-12345')).toBe(true)
+    })
+
+    it('returns false if the record does not have a temporary ID', () => {
+      expect(repository.isRecordNotYetSaved('1234-5678')).toBe(false)
     })
   })
 })
