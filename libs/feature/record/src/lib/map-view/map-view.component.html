@@ -10,17 +10,17 @@
     <gn-ui-external-viewer-button
       class="shrink-0 py-1 place-self-end"
       [link]="selectedLink$ | async"
-      [mapConfig]="mapConfig"
     >
     </gn-ui-external-viewer-button>
   </div>
   <div
     class="relative w-full h-full bg-white border border-gray-300 rounded-lg overflow-hidden"
   >
-    <gn-ui-map-context
+    <gn-ui-map-container
+      #mapContainer
       [context]="mapContext$ | async"
-      [mapConfig]="mapConfig"
-    ></gn-ui-map-context>
+      (featuresClick)="onMapFeatureSelect($event)"
+    ></gn-ui-map-container>
     <div
       class="top-[1em] right-[1em] p-3 bg-white absolute overflow-y-auto overflow-x-hidden max-h-72 w-56"
       [class.hidden]="!selection"

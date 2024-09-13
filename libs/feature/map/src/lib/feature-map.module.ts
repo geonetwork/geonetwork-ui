@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { defaultMapOptions, FEATURE_MAP_OPTIONS } from './constant'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTabsModule } from '@angular/material/tabs'
@@ -32,10 +31,6 @@ import { AddLayerFromOgcApiComponent } from './add-layer-from-ogc-api/add-layer-
     TextInputComponent,
   ],
   providers: [
-    {
-      provide: FEATURE_MAP_OPTIONS,
-      useValue: defaultMapOptions,
-    },
     MapFacade,
     {
       provide: GEOCODING_PROVIDER,

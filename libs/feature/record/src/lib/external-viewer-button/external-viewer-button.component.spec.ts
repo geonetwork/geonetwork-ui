@@ -1,8 +1,11 @@
 import { Component, EventEmitter, Output } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { mapConfigFixture } from '@geonetwork-ui/util/app-config'
-import { ExternalViewerButtonComponent } from './external-viewer-button.component'
+import {
+  EXTERNAL_VIEWER_OPEN_NEW_TAB,
+  EXTERNAL_VIEWER_URL_TEMPLATE,
+  ExternalViewerButtonComponent,
+} from './external-viewer-button.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatIconModule } from '@angular/material/icon'
 
@@ -22,6 +25,17 @@ describe('ExternalViewerButtonComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ExternalViewerButtonComponent, MockButtonComponent],
       imports: [TranslateModule.forRoot(), MatIconModule],
+      providers: [
+        {
+          provide: EXTERNAL_VIEWER_URL_TEMPLATE,
+          useValue:
+            'https://example.com/myviewer/#/?actions=[{"type":"CATALOG:ADD_LAYERS_FROM_CATALOGS","layers":["${layer_name}"],"sources":[{"url":"${service_url}","type":"${service_type}"}]}]',
+        },
+        {
+          provide: EXTERNAL_VIEWER_OPEN_NEW_TAB,
+          useValue: true,
+        },
+      ],
     }).compileComponents()
   })
 
@@ -35,7 +49,6 @@ describe('ExternalViewerButtonComponent', () => {
   })
   describe('with mapConfig and no link', () => {
     beforeEach(() => {
-      component.mapConfig = mapConfigFixture()
       component.link = null
       fixture.detectChanges()
     })
@@ -51,7 +64,6 @@ describe('ExternalViewerButtonComponent', () => {
     const focusMock = jest.fn().mockReturnThis()
     describe('with mapConfig and WMS link', () => {
       beforeEach(() => {
-        component.mapConfig = mapConfigFixture()
         component.link = {
           url: new URL(
             'http://example.com/ows?service=wms&request=getcapabilities'
@@ -100,7 +112,6 @@ describe('ExternalViewerButtonComponent', () => {
     })
     describe('with mapConfig and WFS link', () => {
       beforeEach(() => {
-        component.mapConfig = mapConfigFixture()
         component.link = {
           url: new URL(
             'http://example.com/ows?service=wfs&request=getcapabilities'
@@ -149,7 +160,6 @@ describe('ExternalViewerButtonComponent', () => {
     })
     describe('with mapConfig and GEOJSON link', () => {
       beforeEach(() => {
-        component.mapConfig = mapConfigFixture()
         component.link = {
           url: new URL('http://example.com/somespatialdata.geojson'),
           type: 'download',
@@ -196,7 +206,6 @@ describe('ExternalViewerButtonComponent', () => {
   })
   describe('with mapConfig and invalid external link (non WMS/WFS/GEOJSON)', () => {
     beforeEach(() => {
-      component.mapConfig = mapConfigFixture()
       component.link = {
         url: new URL('http://example.com/'),
         name: 'layername',
