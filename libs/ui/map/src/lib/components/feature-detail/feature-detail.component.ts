@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
-import Feature from 'ol/Feature'
-import { Geometry } from 'ol/geom'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import type { Feature } from 'geojson'
 
 const geometryKeys = ['geometry', 'the_geom']
 
@@ -9,12 +9,15 @@ const geometryKeys = ['geometry', 'the_geom']
   templateUrl: './feature-detail.component.html',
   styleUrls: ['./feature-detail.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule],
 })
 export class FeatureDetailComponent {
-  @Input() feature: Feature<Geometry>
+  @Input() feature: Feature
 
   get properties() {
-    return Object.keys(this.feature.getProperties()).filter(
+    if (!this.feature) return []
+    return Object.keys(this.feature.properties).filter(
       (prop) => !geometryKeys.includes(prop)
     )
   }

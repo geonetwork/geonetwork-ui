@@ -332,7 +332,9 @@ describe('dataset pages', () => {
           .should('have.length.gt', 1)
       })
       it('should display the map', () => {
-        cy.get('@previewSection').find('gn-ui-map').should('be.visible')
+        cy.get('@previewSection')
+          .find('gn-ui-map-container')
+          .should('be.visible')
       })
       it('should display the table', () => {
         cy.get('@previewSection')
