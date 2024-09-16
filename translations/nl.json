@@ -30,6 +30,8 @@
   "dashboard.importRecord.useModel": "",
   "dashboard.labels.catalog": "Catalogus",
   "dashboard.labels.mySpace": "Mijn ruimte",
+  "dashboard.myRecords.currentlyEdited": "",
+  "dashboard.myRecords.publishedMetadatas": "",
   "dashboard.records.all": "Catalogus",
   "dashboard.records.hasDraft": "",
   "dashboard.records.myDraft": "Mijn concepten",

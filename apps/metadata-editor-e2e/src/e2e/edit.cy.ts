@@ -1,9 +1,10 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
 
 describe('editor form', () => {
-  let recordUuid
+  let recordUuid: any
   before(() => {
     cy.login('admin', 'admin', false)
+    cy.viewport(1920, 2400)
 
     cy.clearRecordDrafts()
 
@@ -53,6 +54,7 @@ describe('editor form', () => {
   })
   beforeEach(() => {
     cy.login('admin', 'admin', false)
+    cy.visit('/catalog/search')
     cy.wrap(recordUuid).as('recordUuid')
 
     cy.get('@recordUuid').then((recordUuid) => {

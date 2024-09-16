@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MyLibraryComponent } from './my-library.component'
+import { TemplatesComponent } from './templates.component'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { Component, importProvidersFrom } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
@@ -17,8 +17,8 @@ class SearchFacadeMock {
 }
 
 describe('MyLibraryComponent', () => {
-  let component: MyLibraryComponent
-  let fixture: ComponentFixture<MyLibraryComponent>
+  let component: TemplatesComponent
+  let fixture: ComponentFixture<TemplatesComponent>
   let searchFacade: SearchFacade
 
   beforeEach(() => {
@@ -30,7 +30,7 @@ describe('MyLibraryComponent', () => {
           useClass: SearchFacadeMock,
         },
       ],
-    }).overrideComponent(MyLibraryComponent, {
+    }).overrideComponent(TemplatesComponent, {
       remove: {
         imports: [RecordsListComponent],
       },
@@ -39,7 +39,7 @@ describe('MyLibraryComponent', () => {
       },
     })
     searchFacade = TestBed.inject(SearchFacade)
-    fixture = TestBed.createComponent(MyLibraryComponent)
+    fixture = TestBed.createComponent(TemplatesComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

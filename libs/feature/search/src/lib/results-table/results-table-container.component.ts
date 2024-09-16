@@ -24,6 +24,9 @@ import { TranslateService } from '@ngx-translate/core'
   imports: [CommonModule, ResultsTableComponent],
 })
 export class ResultsTableContainerComponent implements OnDestroy {
+  @Input() canDuplicate: (record: CatalogRecord) => boolean = () => true
+  @Input() canDelete: (record: CatalogRecord) => boolean = () => true
+
   @Output() recordClick = new EventEmitter<CatalogRecord>()
   @Output() duplicateRecord = new EventEmitter<CatalogRecord>()
 

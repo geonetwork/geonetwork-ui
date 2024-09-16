@@ -25,6 +25,7 @@
       <div class="flex flex-row flex-start items-center gap-3 mb-[12px]">
         <span
           #titleInput
+          data-test="recordTitleInput"
           class="grow font-title text-3xl font-normal"
           [gnUiEditableLabel]="valueAsString"
           (editableLabelChanged)="valueChange.emit($event)"

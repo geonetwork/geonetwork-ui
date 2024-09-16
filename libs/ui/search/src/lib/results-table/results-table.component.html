@@ -27,6 +27,7 @@
   <!-- TITLE COLUMN -->
   <gn-ui-interactive-table-column
     [sortable]="true"
+    [grow]="true"
     [activeSort]="isSortedBy('resourceTitleObject.default.keyword')"
     (sortChange)="setSortBy('resourceTitleObject.default.keyword', $event)"
   >
@@ -34,7 +35,7 @@
       <span translate>record.metadata.title</span>
     </ng-template>
     <ng-template #cell let-item>
-      <div class="flex flex-row items-center gap-2 max-w-full">
+      <div class="flex flex-row items-center gap-2 max-w-full font-semibold">
         <span class="overflow-hidden text-ellipsis">{{ item.title }}</span>
         <gn-ui-badge
           *ngIf="hasDraft(item)"
@@ -56,7 +57,7 @@
     </ng-template>
     <ng-template #cell let-item>
       <div
-        class="flex justify-start items-center gap-2"
+        class="flex justify-start items-center gap-2 font-medium"
         *ngIf="getRecordFormats(item) as formats"
         [title]="formats.join(', ')"
       >
@@ -93,7 +94,7 @@
     </ng-template>
     <ng-template #cell let-item>
       <mat-icon class="material-symbols-outlined">person</mat-icon>
-      <span>{{ formatUserInfo(item.extras?.ownerInfo) }}</span>
+      <span class="text-xs">{{ formatUserInfo(item.extras?.ownerInfo) }}</span>
     </ng-template>
   </gn-ui-interactive-table-column>
 
@@ -103,12 +104,14 @@
       <span translate>record.metadata.status</span>
     </ng-template>
     <ng-template #cell let-item>
-      {{
-        (isUnsavedDraft(item)
-          ? 'record.metadata.status.notPublished'
-          : 'record.metadata.status.published'
-        ) | translate
-      }}
+      <span class="text-xs">
+        {{
+          (isUnsavedDraft(item)
+            ? 'record.metadata.status.notPublished'
+            : 'record.metadata.status.published'
+          ) | translate
+        }}</span
+      >
     </ng-template>
   </gn-ui-interactive-table-column>
 
@@ -122,7 +125,7 @@
       <span translate>record.metadata.updatedOn</span>
     </ng-template>
     <ng-template #cell let-item>
-      <div class="flex justify-center w-full">
+      <div class="flex justify-center w-full text-xs">
         {{ isUnsavedDraft(item) ? '-' : dateToString(item.recordUpdated) }}
       </div>
     </ng-template>
