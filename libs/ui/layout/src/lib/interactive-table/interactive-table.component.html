@@ -1,5 +1,5 @@
 <div class="grid w-full" [ngStyle]="gridStyle">
-  <div class="contents">
+  <div class="contents w-full">
     <ng-container *ngFor="let column of columns">
       <button
         *ngIf="column.sortable"
@@ -44,7 +44,7 @@
     </div>
     <ng-container *ngFor="let column of columns">
       <div
-        class="table-row-cell px-4 py-3 flex items-center bg-white transition-colors duration-75 truncate group-hover:text-main group-hover:bg-gray-50 border-b border-gray-200"
+        class="table-row-cell px-3 py-1.5 flex items-center bg-white transition-colors duration-75 truncate group-hover:text-main group-hover:bg-gray-50 border-b border-gray-200"
       >
         <ng-container
           *ngTemplateOutlet="column.cell; context: { $implicit: item }"

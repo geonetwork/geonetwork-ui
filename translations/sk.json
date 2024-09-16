@@ -30,6 +30,8 @@
   "dashboard.importRecord.useModel": "",
   "dashboard.labels.catalog": "Katalóg",
   "dashboard.labels.mySpace": "Môj priestor",
+  "dashboard.myRecords.currentlyEdited": "",
+  "dashboard.myRecords.publishedMetadatas": "",
   "dashboard.records.all": "Katalóg",
   "dashboard.records.hasDraft": "",
   "dashboard.records.myDraft": "Moje koncepty",

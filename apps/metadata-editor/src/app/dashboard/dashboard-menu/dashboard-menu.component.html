@@ -71,11 +71,11 @@
     >
       <mat-icon class="material-symbols-outlined">edit_note</mat-icon>
       <span translate="">dashboard.records.myDraft</span>
-      <gn-ui-badge
-        [style.--gn-ui-badge-rounded]="'100px'"
-        data-cy="dashboard-drafts-count"
-        >{{ draftsCount$ | async }}</gn-ui-badge
-      >
+      <ng-container *ngIf="draftsCount$ | async as draftsCount">
+        <gn-ui-badge *ngIf="draftsCount > 0" data-cy="dashboard-drafts-count">{{
+          draftsCount
+        }}</gn-ui-badge>
+      </ng-container>
     </a>
     <a
       class="menu-item btn-inactive"

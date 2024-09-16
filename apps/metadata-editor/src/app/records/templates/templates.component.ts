@@ -5,13 +5,13 @@ import { RecordsListComponent } from '../records-list.component'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 
 @Component({
-  selector: 'md-editor-my-library',
-  templateUrl: './my-library.component.html',
-  styleUrls: ['./my-library.component.css'],
+  selector: 'md-editor-templates',
+  templateUrl: './templates.component.html',
+  styleUrls: ['./templates.component.css'],
   standalone: true,
   imports: [CommonModule, TranslateModule, RecordsListComponent],
 })
-export class MyLibraryComponent {
+export class TemplatesComponent {
   constructor(public searchFacade: SearchFacade) {
     this.searchFacade.resetSearch()
   }

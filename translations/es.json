@@ -30,6 +30,8 @@
   "dashboard.importRecord.useModel": "",
   "dashboard.labels.catalog": "Catálogo",
   "dashboard.labels.mySpace": "Mi espacio",
+  "dashboard.myRecords.currentlyEdited": "",
+  "dashboard.myRecords.publishedMetadatas": "",
   "dashboard.records.all": "Catálogo",
   "dashboard.records.hasDraft": "",
   "dashboard.records.myDraft": "Mis borradores",

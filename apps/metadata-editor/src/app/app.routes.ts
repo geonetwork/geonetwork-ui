@@ -5,12 +5,11 @@ import { EditPageComponent } from './edit/edit-page.component'
 import { EditRecordResolver } from './edit-record.resolver'
 import { MyRecordsComponent } from './records/my-records/my-records.component'
 import { MyDraftComponent } from './records/my-draft/my-draft.component'
-import { MyLibraryComponent } from './records/my-library/my-library.component'
-import { SearchRecordsComponent } from './records/search-records/search-records-list.component'
+import { TemplatesComponent } from './records/templates/templates.component'
 import { MyOrgUsersComponent } from './my-org-users/my-org-users.component'
-import { MyOrgRecordsComponent } from './records/my-org-records/my-org-records.component'
 import { NewRecordResolver } from './new-record.resolver'
 import { DuplicateRecordResolver } from './duplicate-record.resolver'
+import { AllRecordsComponent } from './records/all-records/all-records.component'
 
 export const appRoutes: Route[] = [
   { path: '', redirectTo: 'catalog/search', pathMatch: 'prefix' },
@@ -26,34 +25,29 @@ export const appRoutes: Route[] = [
       },
       {
         path: 'discussion',
-        component: SearchRecordsComponent,
+        component: AllRecordsComponent,
         pathMatch: 'prefix',
       },
       {
         path: 'calendar',
-        component: SearchRecordsComponent,
+        component: AllRecordsComponent,
         pathMatch: 'prefix',
       },
       {
         path: 'contacts',
-        component: SearchRecordsComponent,
+        component: AllRecordsComponent,
         pathMatch: 'prefix',
       },
       {
         path: 'thesaurus',
-        component: SearchRecordsComponent,
+        component: AllRecordsComponent,
         pathMatch: 'prefix',
       },
       {
         path: 'search',
         title: 'Search Records',
-        component: SearchRecordsComponent,
+        component: AllRecordsComponent,
         pathMatch: 'prefix',
-      },
-      {
-        path: 'my-org',
-        title: 'My Organisation',
-        component: MyOrgRecordsComponent,
       },
     ],
   },
@@ -78,7 +72,7 @@ export const appRoutes: Route[] = [
       {
         path: 'templates',
         title: 'Templates',
-        component: MyLibraryComponent,
+        component: TemplatesComponent,
         pathMatch: 'prefix',
       },
     ],

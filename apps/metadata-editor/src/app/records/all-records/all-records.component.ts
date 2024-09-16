@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  OnInit,
   TemplateRef,
   ViewChild,
   ViewContainerRef,
@@ -13,11 +14,9 @@ import {
   SearchService,
 } from '@geonetwork-ui/feature/search'
 import { TranslateModule } from '@ngx-translate/core'
-import { map } from 'rxjs/operators'
-import { Router } from '@angular/router'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { ActivatedRoute, Router } from '@angular/router'
 import { RecordsCountComponent } from '../records-count/records-count.component'
-import { Observable } from 'rxjs'
+import { Observable, of } from 'rxjs'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { MatIconModule } from '@angular/material/icon'
@@ -29,11 +28,25 @@ import {
 } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
 import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
+import { RecordsListComponent } from '../records-list.component'
+import { map } from 'rxjs/operators'
+
+export const allSearchFields = [
+  'uuid',
+  'resourceTitleObject',
+  'createDate',
+  'changeDate',
+  'userinfo',
+  'cl_status',
+  'isPublishedToAll',
+  'link',
+  'owner',
+]
 
 @Component({
-  selector: 'md-editor-search-records-list',
-  templateUrl: './search-records-list.component.html',
-  styleUrls: ['./search-records-list.component.css'],
+  selector: 'md-editor-all-records',
+  templateUrl: './all-records.component.html',
+  styleUrls: ['./all-records.component.css'],
   standalone: true,
   imports: [
     CommonModule,
@@ -46,43 +59,58 @@ import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
     ImportRecordComponent,
     CdkOverlayOrigin,
     CdkConnectedOverlay,
+    RecordsListComponent,
   ],
 })
-export class SearchRecordsComponent {
+export class AllRecordsComponent implements OnInit {
   @ViewChild('importRecordButton', { read: ElementRef })
-  private importRecordButton!: ElementRef
+  importRecordButton!: ElementRef
   @ViewChild('template') template!: TemplateRef<any>
   private overlayRef!: OverlayRef
 
-  searchText$: Observable<string | null> =
-    this.searchFacade.searchFilters$.pipe(
-      map((filters) => ('any' in filters ? (filters['any'] as string) : null))
-    )
+  searchText$: Observable<string | null> = of(null)
 
   isImportMenuOpen = false
 
   constructor(
     private router: Router,
+    private activedRoute: ActivatedRoute,
     public searchFacade: SearchFacade,
     public searchService: SearchService,
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef,
     private cdr: ChangeDetectorRef
-  ) {
-    this.searchFacade.setPageSize(15)
+  ) {}
+
+  ngOnInit(): void {
+    this.searchText$ = this.searchFacade.searchFilters$.pipe(
+      map((filters) => ('any' in filters ? (filters['any'] as string) : null))
+    )
+
     this.searchFacade.resetSearch()
-  }
 
-  editRecord(record: CatalogRecord) {
-    this.router
-      .navigate(['/edit', record.uniqueIdentifier])
-      .catch((err) => console.error(err))
-  }
+    const searchTerms = this.activedRoute.snapshot.queryParams['q'] ?? ''
 
-  duplicateRecord(record: CatalogRecord) {
-    this.router
-      .navigate(['/duplicate', record.uniqueIdentifier])
-      .catch((err) => console.error(err))
+    if (searchTerms) {
+      this.searchFacade.setFilters({ any: searchTerms })
+    }
+
+    let sort = (this.activedRoute.snapshot.queryParams['_sort'] as string) ?? ''
+
+    if (sort) {
+      let ascDesc = ''
+
+      if (sort?.charAt(0) === '-') {
+        ascDesc = 'desc'
+        sort = sort.slice(1, sort.length)
+      } else {
+        ascDesc = 'asc'
+      }
+      this.searchFacade.setSortBy([ascDesc as 'asc' | 'desc', sort])
+    }
+
+    this.searchFacade.setPageSize(15)
+    this.searchFacade.setConfigRequestFields(allSearchFields)
   }
 
   createRecord() {

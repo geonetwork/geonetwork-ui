@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component, Input } from '@angular/core'
+import { Component } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { Router } from '@angular/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -13,18 +13,6 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { TranslateModule } from '@ngx-translate/core'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { RecordsCountComponent } from './records-count/records-count.component'
-
-const includes = [
-  'uuid',
-  'resourceTitleObject',
-  'createDate',
-  'changeDate',
-  'userinfo',
-  'cl_status',
-  'isPublishedToAll',
-  'link',
-  'owner',
-]
 
 @Component({
   selector: 'md-editor-records-list',
@@ -43,25 +31,14 @@ const includes = [
   ],
 })
 export class RecordsListComponent {
-  @Input() title: string
-  @Input() logo: string
-  @Input() linkToDatahub?: string
-  @Input() userCount = 0
-
   constructor(
     private router: Router,
     public searchFacade: SearchFacade,
-    public searchService: SearchService
-  ) {
-    this.searchFacade.setPageSize(15).setConfigRequestFields(includes)
-  }
+    private searchService: SearchService
+  ) {}
 
   paginate(page: number) {
     this.searchService.setPage(page)
-  }
-
-  createRecord() {
-    this.router.navigate(['/create'])
   }
 
   editRecord(record: CatalogRecord) {
@@ -70,9 +47,5 @@ export class RecordsListComponent {
 
   duplicateRecord(record: CatalogRecord) {
     this.router.navigate(['/duplicate', record.uniqueIdentifier])
-  }
-
-  showUsers() {
-    this.router.navigate(['/users/my-org'])
   }
 }

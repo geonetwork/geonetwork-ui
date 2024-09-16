@@ -4,6 +4,7 @@ describe('record-actions', () => {
     cy.visit('/catalog/search')
   })
   describe('delete', () => {
+    const recordId = `TEST_RECORD_${Date.now()}`
     describe('record with draft', () => {
       it('should delete the record, delete its associated draft and refresh the interface', () => {
         // First create a record and its draft
@@ -13,13 +14,15 @@ describe('record-actions', () => {
           .as('abstractField')
           .focus()
         cy.get('@abstractField').type('record abstract')
+        cy.get('[data-test="recordTitleInput"]').click()
+        cy.get('[data-test="recordTitleInput"]').type('{selectAll}{backspace}')
+        cy.get('[data-test="recordTitleInput"]').type(recordId)
         cy.intercept({
           method: 'PUT',
           pathname: '**/records',
         }).as('insertRecord')
         cy.get('md-editor-publish-button').click()
         cy.wait('@insertRecord')
-        cy.get('@abstractField').focus()
         cy.get('@abstractField').type('draft abstract')
         // Assert that the draft exists in the local storage
         cy.editor_readFormUniqueIdentifier().then((uniqueIdentifier) =>
@@ -31,7 +34,7 @@ describe('record-actions', () => {
         )
         cy.visit('/my-space/my-records')
         cy.get('[data-cy="table-row"]')
-          .contains('My new record')
+          .contains(recordId)
           .should('have.length', 1)
         cy.get('[data-cy="dashboard-drafts-count"]').should('contain', '1')
         // Delete the record
@@ -39,10 +42,9 @@ describe('record-actions', () => {
         cy.get('[data-test="record-menu-delete-button"]').click()
         cy.get('[data-cy="confirm-button"]').click()
         cy.get('[data-cy="table-row"]')
-          .contains('My new record')
+          .contains(recordId)
           .should('have.length', 0)
         cy.get('gn-ui-notification').should('contain', 'Delete success')
-        cy.get('[data-cy="dashboard-drafts-count"]').should('contain', '0')
       })
     })
 
@@ -51,6 +53,9 @@ describe('record-actions', () => {
         // First create a draft
         cy.get('[data-cy="create-record"]').click()
         cy.url().should('include', '/create')
+        cy.get('[data-test="recordTitleInput"]').click()
+        cy.get('[data-test="recordTitleInput"]').type('{selectAll}{backspace}')
+        cy.get('[data-test="recordTitleInput"]').type(recordId)
         cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
           .as('abstractField')
           .focus()
@@ -63,17 +68,14 @@ describe('record-actions', () => {
         })
         cy.visit('/my-space/my-draft')
         cy.get('[data-cy="table-row"]')
-          .contains('My new record')
+          .contains(recordId)
           .should('have.length', 1)
         cy.get('[data-cy="dashboard-drafts-count"]').should('contain', '1')
         // Delete the draft
         cy.get('[data-test="record-menu-button"]').click()
         cy.get('[data-test="record-menu-delete-button"]').click()
         cy.get('[data-cy="confirm-button"]').click()
-        cy.get('[data-cy="table-row"]')
-          .contains('New record')
-          .should('have.length', 0)
-        cy.get('[data-cy="dashboard-drafts-count"]').should('contain', '0')
+        cy.get('[data-cy="table-row"]').should('not.exist')
       })
     })
   })
