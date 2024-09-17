@@ -44,7 +44,7 @@
       <ng-container *ngIf="contactsForRessourceByRole.get(role) as contacts">
         <gn-ui-sortable-list
           [items]="contacts"
-          (itemsOrderChange)="handleContactsChanged($event)"
+          (itemsOrderChange)="handleContactsChanged($event, role)"
           [elementTemplate]="contactTemplate"
         ></gn-ui-sortable-list>
         <ng-template #contactTemplate let-contact>

@@ -146,6 +146,9 @@ jobs:
       matrix:
         gn_version: [4.2.2, 4.2.8, 4.4.0]
         app: [datahub, metadata-editor]
+        exclude:
+          - gn_version: 4.2.2 # metadata-editor requires v4.2.5+
+            app: metadata-editor
     steps:
       - uses: actions/checkout@v4
         with:

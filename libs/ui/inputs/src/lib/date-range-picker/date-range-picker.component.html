@@ -16,8 +16,9 @@
 
   <gn-ui-button
     type="light"
+    class="absolute inset-y-[var(--side-padding)] right-[var(--side-padding)] z-10"
     (buttonClick)="picker.open()"
-    extraClass="absolute inset-y-[var(--side-padding)] right-[var(--side-padding)]"
+    extraClass="h-full"
     data-cy="date-picker-button"
   >
     <mat-icon class="material-symbols-outlined text-primary"

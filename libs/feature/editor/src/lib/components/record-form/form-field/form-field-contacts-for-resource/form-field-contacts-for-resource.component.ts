@@ -147,9 +147,8 @@ export class FormFieldContactsForResourceComponent
     this.valueChange.emit(newContactsforRessource)
   }
 
-  handleContactsChanged(items: unknown[]) {
+  handleContactsChanged(items: unknown[], role: Role) {
     const contacts = items as Individual[]
-    const role = contacts[0].role
 
     this.contactsForRessourceByRole.set(role, contacts)
 

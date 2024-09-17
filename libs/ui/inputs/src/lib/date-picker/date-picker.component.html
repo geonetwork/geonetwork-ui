@@ -7,9 +7,10 @@
   />
   <gn-ui-button
     type="light"
+    class="absolute inset-y-[var(--side-padding)] right-[var(--side-padding)] z-10"
     (buttonClick)="picker.open()"
-    extraClass="absolute inset-y-[var(--side-padding)] right-[var(--side-padding)]"
     data-cy="date-picker-button"
+    extraClass="h-full"
   >
     <mat-icon class="material-symbols-outlined text-primary"
       >calendar_today</mat-icon
