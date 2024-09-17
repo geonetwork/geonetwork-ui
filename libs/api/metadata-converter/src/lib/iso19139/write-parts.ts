@@ -745,33 +745,6 @@ export function writeKind(record: CatalogRecord, rootEl: XmlElement) {
   )(rootEl)
 }
 
-export function writeOwnerOrganization(
-  record: CatalogRecord,
-  rootEl: XmlElement
-) {
-  // if no contact matches the owner org, create an empty one
-  const ownerContact: Individual = record.contacts.find(
-    (contact) => contact.organization.name === record.ownerOrganization.name
-  )
-  pipe(
-    findChildOrCreate('gmd:contact'),
-    removeAllChildren(),
-    appendResponsibleParty(
-      ownerContact
-        ? {
-            ...ownerContact,
-            // owner responsible party is always point of contact
-            role: 'point_of_contact',
-          }
-        : {
-            organization: record.ownerOrganization,
-            email: '',
-            role: 'point_of_contact',
-          }
-    )
-  )(rootEl)
-}
-
 export function writeRecordUpdated(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
     findChildOrCreate('gmd:dateStamp'),
