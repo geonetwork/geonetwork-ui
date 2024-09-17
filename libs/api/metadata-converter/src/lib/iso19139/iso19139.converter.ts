@@ -53,7 +53,6 @@ import {
   writeLineage,
   writeOnlineResources,
   writeOtherConstraints,
-  writeOwnerOrganization,
   writeRecordUpdated,
   writeResourceCreated,
   writeResourcePublished,
@@ -113,7 +112,7 @@ export class Iso19139Converter extends BaseConverter<string> {
   > = {
     uniqueIdentifier: writeUniqueIdentifier,
     kind: writeKind,
-    ownerOrganization: writeOwnerOrganization,
+    ownerOrganization: () => undefined, // fixme: find a way to store this value properly
     recordUpdated: writeRecordUpdated,
     recordCreated: () => undefined, // not supported in ISO19139
     recordPublished: () => undefined, // not supported in ISO19139
