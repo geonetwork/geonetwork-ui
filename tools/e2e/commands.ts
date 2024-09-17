@@ -16,9 +16,9 @@ declare namespace Cypress {
     signOut(): void
     clearFavorites(): void
     clearRecordDrafts(): void
-    readFormUniqueIdentifier(): Chainable<string | number | string[]>
-    wrapPreviousDraft(): void
-    publishAndReload(): void
+    editor_readFormUniqueIdentifier(): Chainable<string | number | string[]>
+    editor_wrapPreviousDraft(): void
+    editor_publishAndReload(): void
 
     // interaction with gn-ui-dropdown-selector
     openDropdown(): Chainable<JQuery<HTMLElement>>
@@ -155,14 +155,14 @@ Cypress.Commands.add('clearRecordDrafts', () => {
   cy.reload()
 })
 
-Cypress.Commands.add('readFormUniqueIdentifier', () => {
+Cypress.Commands.add('editor_readFormUniqueIdentifier', () => {
   return cy
     .get('gn-ui-form-field[ng-reflect-model=uniqueIdentifier] input')
     .invoke('val')
 })
 
 // this needs a recordUuid to have been wrapped
-Cypress.Commands.add('wrapPreviousDraft', () => {
+Cypress.Commands.add('editor_wrapPreviousDraft', () => {
   cy.get('@recordUuid').then((recordUuid) => {
     cy.window()
       .its('localStorage')
@@ -174,7 +174,7 @@ Cypress.Commands.add('wrapPreviousDraft', () => {
 })
 
 // this needs a recordUuid and a previousDraft to have been wrapped
-Cypress.Commands.add('publishAndReload', () => {
+Cypress.Commands.add('editor_publishAndReload', () => {
   // wait for the draft to be saved
   cy.get('@recordUuid').then((recordUuid) => {
     // nesting thens as Cypress doesn't seem to support the "all" operator

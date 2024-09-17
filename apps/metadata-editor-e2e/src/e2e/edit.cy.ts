@@ -17,7 +17,7 @@ describe('editor form', () => {
 
     cy.get('[data-test="record-menu-duplicate-button"]').click()
     cy.url().should('include', '/duplicate/')
-    cy.readFormUniqueIdentifier().then((recordUuid) => {
+    cy.editor_readFormUniqueIdentifier().then((recordUuid) => {
       cy.window()
         .its('localStorage')
         .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
@@ -30,7 +30,7 @@ describe('editor form', () => {
     cy.get('.table-header-cell').eq(1).click()
     cy.get('[data-cy="table-row"]').first().children('div').eq(2).click()
 
-    cy.readFormUniqueIdentifier().then((uuid) => {
+    cy.editor_readFormUniqueIdentifier().then((uuid) => {
       recordUuid = uuid
     })
   })
@@ -116,13 +116,13 @@ describe('editor form', () => {
             )
         })
         it('edits and saves the title', () => {
-          cy.wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft()
           cy.get('gn-ui-form-field').first().find('input').clear()
           cy.get('gn-ui-form-field')
             .first()
             .find('input')
             .type('Test record modified')
-          cy.publishAndReload()
+          cy.editor_publishAndReload()
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('gn-ui-form-field')
             .first()
@@ -141,10 +141,10 @@ describe('editor form', () => {
             )
         })
         it('edits and saves the abstract', () => {
-          cy.wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft()
           cy.get('@abstractField').clear()
           cy.get('@abstractField').type('modified abstract')
-          cy.publishAndReload()
+          cy.editor_publishAndReload()
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('@abstractField')
             .invoke('val')
@@ -157,9 +157,9 @@ describe('editor form', () => {
         })
         it('allows to delete images from the graphic overview', () => {
           cy.get('gn-ui-image-input').find('img').should('have.length', 1)
-          cy.wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft()
           cy.get('gn-ui-image-input').find('gn-ui-button').eq(1).click()
-          cy.publishAndReload()
+          cy.editor_publishAndReload()
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('gn-ui-image-input').find('img').should('have.length', 0)
         })
@@ -171,11 +171,11 @@ describe('editor form', () => {
           cy.get('gn-ui-url-input').should('be.visible')
         })
         it('adds overviews', () => {
-          cy.wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft()
           cy.get('gn-ui-form-field-overviews label').selectFile(
             'src/fixtures/sample.png'
           )
-          cy.publishAndReload()
+          cy.editor_publishAndReload()
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('gn-ui-image-input').find('img').should('have.length', 1)
         })
@@ -218,10 +218,9 @@ describe('editor form', () => {
             .should('eq', '11/1/2019')
         })
         it('edits and saves the resource update date', () => {
-          cy.wrapPreviousDraft()
-          cy.get('@aboutSection')
-            .find('gn-ui-form-field-resource-updated')
-            .find('mat-datepicker-toggle')
+          cy.editor_wrapPreviousDraft()
+          cy.get('@resourceUpdatedField')
+            .find('[data-cy=date-picker-button]')
             .click()
           cy.get('mat-month-view')
             .find('tbody')
@@ -231,7 +230,7 @@ describe('editor form', () => {
             .first()
             .click()
           cy.get('body').click()
-          cy.publishAndReload()
+          cy.editor_publishAndReload()
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('@aboutSection')
             .find('gn-ui-form-field-resource-updated')
@@ -243,7 +242,7 @@ describe('editor form', () => {
       describe('update frequency', () => {
         describe('when the regularity switch is on', () => {
           it('should allow to select a frequency', () => {
-            cy.wrapPreviousDraft()
+            cy.editor_wrapPreviousDraft()
             cy.get('gn-ui-form-field-update-frequency')
               .find('gn-ui-check-toggle')
               .click()
@@ -253,7 +252,7 @@ describe('editor form', () => {
               .children('button')
               .eq(3)
               .click()
-            cy.publishAndReload()
+            cy.editor_publishAndReload()
             cy.get('@saveStatus').should('eq', 'record_up_to_date')
             cy.get('gn-ui-form-field-update-frequency')
               .find('gn-ui-dropdown-selector')
@@ -265,11 +264,11 @@ describe('editor form', () => {
         })
         describe('when the regularity switch is off', () => {
           it('should show default frequency', () => {
-            cy.wrapPreviousDraft()
+            cy.editor_wrapPreviousDraft()
             cy.get('gn-ui-form-field-update-frequency')
               .find('gn-ui-check-toggle')
               .click()
-            cy.publishAndReload()
+            cy.editor_publishAndReload()
             cy.get('@saveStatus').should('eq', 'record_up_to_date')
             cy.get('gn-ui-form-field-update-frequency')
               .find('gn-ui-dropdown-selector')
@@ -287,31 +286,31 @@ describe('editor form', () => {
             .should('have.length', 2)
         })
         it('adds a time instant', () => {
-          cy.wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft()
           cy.get('gn-ui-form-field-temporal-extents')
             .find('gn-ui-button')
             .first()
             .click()
-          cy.publishAndReload()
+          cy.editor_publishAndReload()
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('gn-ui-form-field-temporal-extents')
             .find('gn-ui-date-picker')
             .should('be.visible')
         })
         it('adds a time period', () => {
-          cy.wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft()
           cy.get('gn-ui-form-field-temporal-extents')
             .find('gn-ui-button')
             .eq(1)
             .click()
-          cy.publishAndReload()
+          cy.editor_publishAndReload()
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('gn-ui-form-field-temporal-extents')
             .find('gn-ui-date-range-picker')
             .should('be.visible')
         })
         it('should delete dates', () => {
-          cy.wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft()
           cy.get('gn-ui-form-field-temporal-extents')
             .find('[data-cy="remove-item"]')
             .first()
@@ -320,7 +319,7 @@ describe('editor form', () => {
             .find('[data-cy="remove-item"]')
             .first()
             .click()
-          cy.publishAndReload()
+          cy.editor_publishAndReload()
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('gn-ui-form-field-temporal-extents')
             .find('[data-cy="remove-item"]')
@@ -348,24 +347,24 @@ describe('editor form', () => {
             .should('be.visible')
         })
         it('should allow to delete place keywords', () => {
-          cy.wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft()
           cy.get('gn-ui-form-field-spatial-extent')
             .find('gn-ui-badge')
             .find('gn-ui-button')
             .click()
-          cy.publishAndReload()
+          cy.editor_publishAndReload()
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('gn-ui-form-field-spatial-extent')
             .find('gn-ui-badge')
             .should('have.length', 0)
         })
         it('should select and show a place keyword from the dropdown', () => {
-          cy.wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft()
           cy.get('gn-ui-form-field-spatial-extent')
             .find('gn-ui-autocomplete')
             .click()
           cy.get('mat-option').eq(1).click()
-          cy.publishAndReload()
+          cy.editor_publishAndReload()
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('gn-ui-form-field-spatial-extent')
             .find('gn-ui-badge')
@@ -403,12 +402,12 @@ describe('editor form', () => {
         cy.get(
           'gn-ui-form-field-online-link-resources gn-ui-online-resource-card'
         ).should('have.length', 1)
-        cy.wrapPreviousDraft()
+        cy.editor_wrapPreviousDraft()
         // upload readme file
         cy.get('gn-ui-form-field-online-link-resources label').selectFile(
           'src/fixtures/readme.txt'
         )
-        cy.publishAndReload()
+        cy.editor_publishAndReload()
         cy.get('@saveStatus').should('eq', 'record_up_to_date')
         cy.get('@resourcePageBtn').click()
         cy.get(
@@ -426,7 +425,7 @@ describe('editor form', () => {
           .invoke('text')
           .invoke('trim')
           .should('eql', 'readme.txt')
-        cy.wrapPreviousDraft()
+        cy.editor_wrapPreviousDraft()
         // open modify dialog
         cy.get('@readmeLink').find('button[data-test=card-modify]').click()
         cy.get('gn-ui-modal-dialog gn-ui-text-input')
@@ -436,7 +435,7 @@ describe('editor form', () => {
           .find('textarea')
           .type('new description')
         cy.get('gn-ui-modal-dialog [data-cy=confirm-button]').click()
-        cy.publishAndReload()
+        cy.editor_publishAndReload()
         cy.get('@resourcePageBtn').click()
         cy.get('@readmeLink')
           .find('[data-test=card-title]')
@@ -451,14 +450,14 @@ describe('editor form', () => {
         cy.get(
           'gn-ui-form-field-online-link-resources gn-ui-online-resource-card'
         ).should('have.length', 2)
-        cy.wrapPreviousDraft()
+        cy.editor_wrapPreviousDraft()
         // delete the second item
         cy.get(
           'gn-ui-form-field-online-link-resources gn-ui-sortable-list [data-cy=remove-item]'
         )
           .eq(1)
           .click()
-        cy.publishAndReload()
+        cy.editor_publishAndReload()
         cy.get('@saveStatus').should('eq', 'record_up_to_date')
         cy.get('@resourcePageBtn').click()
         cy.get(
@@ -477,10 +476,10 @@ describe('editor form', () => {
             .should('have.length', 42)
         })
         it('should add a keyword', () => {
-          cy.wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft()
           cy.get('gn-ui-form-field-keywords').find('gn-ui-autocomplete').click()
           cy.get('mat-option').first().click()
-          cy.publishAndReload()
+          cy.editor_publishAndReload()
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('@accessContactPageBtn').click()
           cy.get('gn-ui-form-field-keywords')
@@ -488,13 +487,13 @@ describe('editor form', () => {
             .should('have.length', 43)
         })
         it('should delete a keyword', () => {
-          cy.wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft()
           cy.get('gn-ui-form-field-keywords')
             .find('gn-ui-badge')
             .last()
             .find('gn-ui-button')
             .click()
-          cy.publishAndReload()
+          cy.editor_publishAndReload()
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('@accessContactPageBtn').click()
           cy.get('gn-ui-form-field-keywords')
@@ -537,14 +536,14 @@ describe('editor form', () => {
             .first()
             .invoke('text')
             .should('eq', ' Creative Commons CC-BY ')
-          cy.wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft()
           cy.get('gn-ui-form-field-license')
             .find('gn-ui-dropdown-selector')
             .openDropdown()
             .children('button')
             .eq(2)
             .click()
-          cy.publishAndReload()
+          cy.editor_publishAndReload()
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('@accessContactPageBtn').click()
           cy.get('gn-ui-form-field-license')
@@ -678,13 +677,13 @@ describe('editor form', () => {
             .children()
             .find('gn-ui-contact-card')
             .should('have.length', 3)
-          cy.wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft()
 
           cy.get('[data-test=removeContactButton]').first().click()
           cy.get('[data-test=removeContactButton]').first().click()
           cy.get('[data-test=removeContactButton]').first().click()
 
-          cy.publishAndReload()
+          cy.editor_publishAndReload()
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('@accessContactPageBtn').click()
           cy.get('[data-test=displayedRoles]')
@@ -710,7 +709,7 @@ describe('editor form', () => {
             .children()
             .find('gn-ui-contact-card')
             .should('have.length', 1)
-          cy.wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft()
 
           cy.get('[data-test=displayedRoles]')
             .find('gn-ui-autocomplete')
@@ -719,7 +718,7 @@ describe('editor form', () => {
           cy.get('mat-option')
             .should('have.text', ' Barbara Roberts (Barbie Inc.) ')
             .click()
-          cy.publishAndReload()
+          cy.editor_publishAndReload()
           cy.get('@accessContactPageBtn').click()
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('[data-test=displayedRoles]')

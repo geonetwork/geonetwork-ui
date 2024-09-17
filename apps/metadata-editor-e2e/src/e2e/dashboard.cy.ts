@@ -169,7 +169,7 @@ describe('dashboard', () => {
         .as('abstractField')
         .focus()
       cy.get('@abstractField').type('draft abstract')
-      cy.readFormUniqueIdentifier().then((recordUuid) => {
+      cy.editor_readFormUniqueIdentifier().then((recordUuid) => {
         cy.window()
           .its('localStorage')
           .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)

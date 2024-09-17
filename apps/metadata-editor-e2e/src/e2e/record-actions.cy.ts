@@ -22,7 +22,7 @@ describe('record-actions', () => {
         cy.get('@abstractField').focus()
         cy.get('@abstractField').type('draft abstract')
         // Assert that the draft exists in the local storage
-        cy.readFormUniqueIdentifier().then((uniqueIdentifier) =>
+        cy.editor_readFormUniqueIdentifier().then((uniqueIdentifier) =>
           cy
             .window()
             .its('localStorage')
@@ -55,7 +55,7 @@ describe('record-actions', () => {
           .as('abstractField')
           .focus()
         cy.get('@abstractField').type('draft abstract')
-        cy.readFormUniqueIdentifier().then((recordUuid) => {
+        cy.editor_readFormUniqueIdentifier().then((recordUuid) => {
           cy.window()
             .its('localStorage')
             .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
@@ -146,7 +146,7 @@ describe('record-actions', () => {
         .as('abstractField')
         .focus()
       cy.get('@abstractField').type('record abstract')
-      cy.readFormUniqueIdentifier().then((recordUuid) => {
+      cy.editor_readFormUniqueIdentifier().then((recordUuid) => {
         cy.window()
           .its('localStorage')
           .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
@@ -164,7 +164,7 @@ describe('record-actions', () => {
       cy.get('@abstractField').clear()
       cy.get('@abstractField').focus()
       cy.get('@abstractField').type('draft abstract')
-      cy.readFormUniqueIdentifier().then((recordUuid) => {
+      cy.editor_readFormUniqueIdentifier().then((recordUuid) => {
         cy.window()
           .its('localStorage')
           .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
