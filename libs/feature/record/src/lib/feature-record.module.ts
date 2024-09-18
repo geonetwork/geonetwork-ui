@@ -15,6 +15,8 @@ import {
   METADATA_VIEW_FEATURE_STATE_KEY,
   reducer,
 } from './state/mdview.reducer'
+import { IgnApiDlComponent } from './ign-api-dl/ign-api-dl.component'
+import { IgnApiProduitComponent } from './ign-api-produit/ign-api-produit.component'
 import { MatTabsModule } from '@angular/material/tabs'
 import { MatIconModule } from '@angular/material/icon'
 import { PopupAlertComponent, UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
@@ -35,6 +37,8 @@ import { DataViewShareComponent } from './data-view-share/data-view-share.compon
     DataViewPermalinkComponent,
     DataViewWebComponentComponent,
     DataViewShareComponent,
+    IgnApiDlComponent,
+    IgnApiProduitComponent,
   ],
   imports: [
     CommonModule,
@@ -61,6 +65,7 @@ import { DataViewShareComponent } from './data-view-share/data-view-share.compon
     DataViewPermalinkComponent,
     DataViewWebComponentComponent,
     DataViewShareComponent,
+    IgnApiDlComponent,
   ],
 })
 export class FeatureRecordModule {}
