@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddLayerFromFileComponent } from './add-layer-from-file.component'
 import { MapFacade } from '../+state/map.facade'
-import { TranslateModule } from '@ngx-translate/core'
+import { MockBuilder, MockProvider } from 'ng-mocks'
+import { of } from 'rxjs'
+import { mapCtxFixture } from '@geonetwork-ui/common/fixtures'
 
 class MapFacadeMock {
   addLayer = jest.fn()
@@ -12,14 +14,17 @@ describe('AddLayerFromFileComponent', () => {
   let fixture: ComponentFixture<AddLayerFromFileComponent>
   let mapFacade: MapFacade
 
+  beforeEach(() => {
+    return MockBuilder(AddLayerFromFileComponent)
+  })
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), AddLayerFromFileComponent],
       providers: [
-        {
-          provide: MapFacade,
-          useClass: MapFacadeMock,
-        },
+        MockProvider(MapFacade, {
+          context$: of(mapCtxFixture()),
+          applyContext: jest.fn(),
+        }),
       ],
     }).compileComponents()
 
@@ -117,10 +122,16 @@ describe('AddLayerFromFileComponent', () => {
     })
 
     it('should add the layer', () => {
-      expect(mapFacade.addLayer).toHaveBeenCalledWith({
-        type: 'geojson',
-        title: 'filename',
-        data: JSON.stringify(data, null, 2),
+      expect(mapFacade.applyContext).toHaveBeenCalledWith({
+        ...mapCtxFixture(),
+        layers: [
+          ...mapCtxFixture().layers,
+          {
+            type: 'geojson',
+            label: 'filename',
+            data: JSON.stringify(data, null, 2),
+          },
+        ],
       })
     })
   })

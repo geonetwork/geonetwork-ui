@@ -1,30 +1,26 @@
 import { Injectable } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import * as MapSelectors from './map.selectors'
-import { MapLayer } from './map.models'
 import * as MapActions from './map.actions'
+import { MapContext } from '@geospatial-sdk/core'
+import { Feature } from 'geojson'
 
 @Injectable()
 export class MapFacade {
-  layers$ = this.store.pipe(select(MapSelectors.getMapLayers))
+  context$ = this.store.pipe(select(MapSelectors.getMapContext))
+  selectedFeatures$ = this.store.pipe(select(MapSelectors.getSelectedFeatures))
 
   constructor(private readonly store: Store) {}
 
-  /**
-   * Use the initialization action to perform one
-   * or more tasks in your Effects.
-   */
-  init() {
-    // placeholder
+  applyContext(context: MapContext) {
+    this.store.dispatch(MapActions.setContext({ context }))
   }
 
-  addLayer(layer: MapLayer) {
-    this.store.dispatch(MapActions.addLayer({ layer }))
+  selectFeatures(selectedFeatures: Feature[]) {
+    this.store.dispatch(MapActions.setSelectedFeatures({ selectedFeatures }))
   }
-  addLayerAtIndex(layer: MapLayer, index: number) {
-    this.store.dispatch(MapActions.addLayer({ layer, atIndex: index }))
-  }
-  removeLayer(index: number) {
-    this.store.dispatch(MapActions.removeLayer({ index }))
+
+  clearFeatureSelection() {
+    this.store.dispatch(MapActions.clearSelectedFeatures())
   }
 }

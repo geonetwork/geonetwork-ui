@@ -13,11 +13,11 @@
       <mat-icon class="material-symbols-outlined -ml-2 mr-2 shrink-0"
         >chevron_right</mat-icon
       >
-      <span class="mr-2 grow">{{ layer.title }}</span>
+      <span class="mr-2 grow">{{ layer.label }}</span>
       <a
         href
         class="underline text-sm text-red-700 hover:text-red-900"
-        (click)="deleteLayer(index)"
+        (click)="deleteLayer(index); $event.preventDefault()"
       >
         delete
       </a>

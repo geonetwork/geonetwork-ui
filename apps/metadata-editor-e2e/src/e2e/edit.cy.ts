@@ -346,7 +346,7 @@ describe('editor form', () => {
     describe('geographical coverage', () => {
       it('should show a map', () => {
         cy.get('gn-ui-form-field-spatial-extent')
-          .find('gn-ui-map')
+          .find('gn-ui-map-container')
           .should('be.visible')
       })
       describe('spatial extents', () => {

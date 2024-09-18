@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core'
-import { MapContextLayerModel } from '../map-context/map-context.model'
 import { MapFacade } from '../+state/map.facade'
+import { MapContextLayerGeojson } from '@geospatial-sdk/core'
+import { firstValueFrom } from 'rxjs'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
@@ -65,25 +66,30 @@ export class AddLayerFromFileComponent {
   }
 
   private addGeoJsonLayer(file: File) {
-    return new Promise<void>((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       try {
         const reader = new FileReader()
         reader.onload = () => {
-          const result = reader.result as string
-          const title = file.name.split('.').slice(0, -1).join('.')
-          const layerToAdd: MapContextLayerModel = {
-            type: 'geojson',
-            data: result,
-          }
-          this.mapFacade.addLayer({ ...layerToAdd, title: title })
-          this.displayMessage('File successfully added to map', 'success')
-          resolve()
+          resolve(reader.result as string)
         }
         reader.onerror = reject
         reader.readAsText(file)
       } catch (error) {
         reject(error)
       }
+    }).then(async (result: string) => {
+      const context = await firstValueFrom(this.mapFacade.context$)
+      const title = file.name.split('.').slice(0, -1).join('.')
+      const layerToAdd: MapContextLayerGeojson = {
+        type: 'geojson',
+        data: result,
+        label: title,
+      }
+      this.mapFacade.applyContext({
+        ...context,
+        layers: [...context.layers, layerToAdd],
+      })
+      this.displayMessage('File successfully added to map', 'success')
     })
   }
 

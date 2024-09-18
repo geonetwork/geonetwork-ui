@@ -1,6 +1,9 @@
 import { InjectionToken, NgModule } from '@angular/core'
 import { SiteTitleComponent } from './site-title/site-title.component'
-import { UiCatalogModule } from '@geonetwork-ui/ui/catalog'
+import {
+  OrganisationsFilterComponent,
+  UiCatalogModule,
+} from '@geonetwork-ui/ui/catalog'
 import {
   GroupsApiService,
   SearchApiService,
@@ -64,6 +67,7 @@ const organizationsServiceFactory = (
     UtilI18nModule,
     TranslateModule.forChild(),
     UiElementsModule,
+    OrganisationsFilterComponent,
   ],
   exports: [SiteTitleComponent, SourceLabelComponent, OrganisationsComponent],
   providers: [

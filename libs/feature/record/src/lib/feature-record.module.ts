@@ -1,10 +1,16 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { UiMapModule } from '@geonetwork-ui/ui/map'
+import {
+  FeatureDetailComponent,
+  MapContainerComponent,
+} from '@geonetwork-ui/ui/map'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
-import { FeatureMapModule } from '@geonetwork-ui/feature/map'
+import {
+  FeatureMapModule,
+  MapStateContainerComponent,
+} from '@geonetwork-ui/feature/map'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { MdViewFacade } from './state'
@@ -43,7 +49,6 @@ import { DataViewShareComponent } from './data-view-share/data-view-share.compon
     UiLayoutModule,
     FeatureMapModule,
     FeatureCatalogModule,
-    UiMapModule,
     UiInputsModule,
     UiElementsModule,
     MatTabsModule,
@@ -53,6 +58,9 @@ import { DataViewShareComponent } from './data-view-share/data-view-share.compon
     TableComponent,
     FeatureDatavizModule,
     PopupAlertComponent,
+    FeatureDetailComponent,
+    MapStateContainerComponent,
+    MapContainerComponent,
   ],
   providers: [MdViewFacade],
   exports: [

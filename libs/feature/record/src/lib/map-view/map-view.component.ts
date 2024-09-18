@@ -1,31 +1,19 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnDestroy,
-  OnInit,
+  ViewChild,
 } from '@angular/core'
-import {
-  FeatureInfoService,
-  MapContextLayerModel,
-  MapContextLayerTypeEnum,
-  MapContextModel,
-  MapManagerService,
-  MapStyleService,
-  MapUtilsService,
-} from '@geonetwork-ui/feature/map'
-import { getOptionalMapConfig, MapConfig } from '@geonetwork-ui/util/app-config'
+import { MapUtilsService } from '@geonetwork-ui/feature/map'
 import { getLinkLabel } from '@geonetwork-ui/util/shared'
-import Feature from 'ol/Feature'
-import { Geometry } from 'ol/geom'
-import { StyleLike } from 'ol/style/Style'
 import {
   BehaviorSubject,
   combineLatest,
   from,
   Observable,
   of,
-  Subscription,
+  startWith,
   throwError,
   withLatestFrom,
 } from 'rxjs'
@@ -34,13 +22,22 @@ import {
   distinctUntilChanged,
   finalize,
   map,
-  startWith,
   switchMap,
   tap,
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import {
+  createViewFromLayer,
+  MapContext,
+  MapContextLayer,
+} from '@geospatial-sdk/core'
+import {
+  MapContainerComponent,
+  prioritizePageScroll,
+} from '@geonetwork-ui/ui/map'
+import { Feature } from 'geojson'
 
 @Component({
   selector: 'gn-ui-map-view',
@@ -48,11 +45,10 @@ import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record
   styleUrls: ['./map-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MapViewComponent implements OnInit, OnDestroy {
-  mapConfig: MapConfig = getOptionalMapConfig()
-  selection: Feature<Geometry>
-  private subscription = new Subscription()
-  private selectionStyle: StyleLike
+export class MapViewComponent implements AfterViewInit {
+  @ViewChild('mapContainer') mapContainer: MapContainerComponent
+
+  selection: Feature
 
   compatibleMapLinks$ = combineLatest([
     this.mdViewFacade.mapApiLinks$,
@@ -102,93 +98,70 @@ export class MapViewComponent implements OnInit, OnDestroy {
     })
   )
 
-  mapContext$ = this.currentLayers$.pipe(
+  mapContext$: Observable<MapContext> = this.currentLayers$.pipe(
     switchMap((layers) =>
-      from(this.mapUtils.getLayerExtent(layers[0])).pipe(
-        catchError(() => {
-          this.error = 'The layer has no extent'
-          return of(undefined)
-        }),
-        map(
-          (extent) =>
-            ({
-              layers,
-              view: {
-                extent,
-              },
-            } as MapContextModel)
-        ),
-        tap((res) => {
+      from(createViewFromLayer(layers[0])).pipe(
+        catchError(() => of(null)), // could not zoom on the layer: use the record extent
+        map((view) => ({
+          layers,
+          view,
+        })),
+        tap(() => {
           this.resetSelection()
         })
       )
     ),
     startWith({
       layers: [],
-      view: {},
-    } as MapContextModel),
+      view: null,
+    }),
     withLatestFrom(this.mdViewFacade.metadata$),
     map(([context, metadata]) => {
-      if (context.view.extent) return context
+      if (context.view) return context
       const extent = this.mapUtils.getRecordExtent(metadata)
+      const view = extent ? { extent } : null
       return {
         ...context,
-        view: {
-          ...context.view,
-          extent,
-        },
+        view,
       }
     })
   )
 
   constructor(
     private mdViewFacade: MdViewFacade,
-    private mapManager: MapManagerService,
     private mapUtils: MapUtilsService,
     private dataService: DataService,
-    private featureInfo: FeatureInfoService,
-    private changeRef: ChangeDetectorRef,
-    private styleService: MapStyleService
+    private changeRef: ChangeDetectorRef
   ) {}
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe()
+  async ngAfterViewInit() {
+    const map = await this.mapContainer.openlayersMap
+    prioritizePageScroll(map.getInteractions())
   }
 
-  ngOnInit(): void {
-    this.mapUtils.prioritizePageScroll(this.mapManager.map.getInteractions())
-    this.selectionStyle = this.styleService.styles.defaultHL
-    this.featureInfo.handleFeatureInfo()
-    this.subscription.add(
-      this.featureInfo.features$.subscribe((features) => {
-        this.onMapFeatureSelect(features)
-      })
-    )
-  }
-
-  onMapFeatureSelect(features: Feature<Geometry>[]): void {
+  onMapFeatureSelect(features: Feature[]): void {
     this.resetSelection()
     this.selection = features?.length > 0 && features[0]
     if (this.selection) {
-      this.selection.setStyle(this.selectionStyle)
+      // FIXME: restore styling of selected feature
+      // this.selection.setStyle(this.selectionStyle)
     }
     this.changeRef.detectChanges()
   }
 
   resetSelection(): void {
     if (this.selection) {
-      this.selection.setStyle(null)
+      // FIXME: restore styling of selected feature
+      // this.selection.setStyle(null)
     }
     this.selection = null
   }
 
-  getLayerFromLink(
-    link: DatasetOnlineResource
-  ): Observable<MapContextLayerModel> {
+  getLayerFromLink(link: DatasetOnlineResource): Observable<MapContextLayer> {
     if (link.type === 'service' && link.accessServiceProtocol === 'wms') {
       return of({
         url: link.url.toString(),
-        type: MapContextLayerTypeEnum.WMS,
+        type: 'wms',
         name: link.name,
       })
     } else if (
@@ -197,7 +170,7 @@ export class MapViewComponent implements OnInit, OnDestroy {
     ) {
       return of({
         url: link.url.toString(),
-        type: MapContextLayerTypeEnum.WMTS,
+        type: 'wmts',
         name: link.name,
       })
     } else if (
@@ -209,7 +182,7 @@ export class MapViewComponent implements OnInit, OnDestroy {
     ) {
       return this.dataService.readAsGeoJson(link).pipe(
         map((data) => ({
-          type: MapContextLayerTypeEnum.GEOJSON,
+          type: 'geojson',
           data,
         }))
       )

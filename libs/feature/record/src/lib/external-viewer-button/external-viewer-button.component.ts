@@ -1,11 +1,25 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { MapConfig } from '@geonetwork-ui/util/app-config'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  InjectionToken,
+  Input,
+  Optional,
+} from '@angular/core'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { TranslateService } from '@ngx-translate/core'
 import { getFileFormat } from '@geonetwork-ui/util/shared'
 
 marker('externalviewer.dataset.unnamed')
+
+export const EXTERNAL_VIEWER_URL_TEMPLATE = new InjectionToken<string>(
+  'externalViewerUrlTemplate'
+)
+export const EXTERNAL_VIEWER_OPEN_NEW_TAB = new InjectionToken<boolean>(
+  'externalViewerOpenNewTab',
+  { factory: () => false }
+)
 
 @Component({
   selector: 'gn-ui-external-viewer-button',
@@ -15,16 +29,9 @@ marker('externalviewer.dataset.unnamed')
 })
 export class ExternalViewerButtonComponent {
   @Input() link: DatasetOnlineResource
-  @Input() mapConfig: MapConfig
 
   get externalViewer() {
-    if (this.link && this.mapConfig) {
-      return (
-        !!this.mapConfig.EXTERNAL_VIEWER_URL_TEMPLATE &&
-        !!this.supportedLinkLayerType
-      )
-    }
-    return false
+    return !!this.urlTemplate && !!this.supportedLinkLayerType
   }
 
   get supportedLinkLayerType() {
@@ -45,10 +52,17 @@ export class ExternalViewerButtonComponent {
     return null
   }
 
-  constructor(private translateService: TranslateService) {}
+  constructor(
+    private translateService: TranslateService,
+    @Inject(EXTERNAL_VIEWER_URL_TEMPLATE)
+    @Optional()
+    private urlTemplate: string,
+    @Inject(EXTERNAL_VIEWER_OPEN_NEW_TAB)
+    private openinNewTab: boolean
+  ) {}
 
   openInExternalViewer() {
-    const templateUrl = this.mapConfig.EXTERNAL_VIEWER_URL_TEMPLATE
+    const templateUrl = this.urlTemplate
     const layerName = this.link.name
       ? this.link.name
       : this.translateService.instant('externalviewer.dataset.unnamed')
@@ -59,11 +73,6 @@ export class ExternalViewerButtonComponent {
         `${encodeURIComponent(this.link.url.toString())}`
       )
       .replace('${service_type}', `${this.supportedLinkLayerType}`)
-    window
-      .open(
-        url,
-        this.mapConfig.EXTERNAL_VIEWER_OPEN_NEW_TAB ? '_blank' : '_self'
-      )
-      .focus()
+    window.open(url, this.openinNewTab ? '_blank' : '_self').focus()
   }
 }

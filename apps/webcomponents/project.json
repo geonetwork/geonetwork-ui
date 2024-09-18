@@ -15,7 +15,12 @@
         "polyfills": "apps/webcomponents/src/polyfills.ts",
         "tsConfig": "apps/webcomponents/tsconfig.app.json",
         "assets": [],
-        "styles": [],
+        "styles": [
+          "tailwind.base.css",
+          "apps/webcomponents/src/styles.css",
+          "node_modules/tippy.js/dist/tippy.css",
+          "node_modules/ol/ol.css"
+        ],
         "scripts": [],
         "allowedCommonJsDependencies": [
           "duration-relativetimeformat",

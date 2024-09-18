@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core'
-import { FeatureInfoService } from '@geonetwork-ui/feature/map'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { UiApiService } from '@geonetwork-ui/data-access/gn4'
 import { firstValueFrom, map } from 'rxjs'
@@ -12,7 +11,6 @@ import { firstValueFrom, map } from 'rxjs'
 export class MainSearchComponent implements OnInit {
   constructor(
     private uiService: UiApiService,
-    private featureInfo: FeatureInfoService,
     private searchFacade: SearchFacade
   ) {}
 

@@ -28,7 +28,11 @@ import { GnResultsListComponent } from './components/gn-results-list/gn-results-
 import { GnSearchInputComponent } from './components/gn-search-input/gn-search-input.component'
 import { GnDatasetViewTableComponent } from './components/gn-dataset-view-table/gn-dataset-view-table.component'
 import { GnMapViewerComponent } from './components/gn-map-viewer/gn-map-viewer.component'
-import { FeatureMapModule } from '@geonetwork-ui/feature/map'
+import {
+  FeatureMapModule,
+  LayersPanelComponent,
+  MapStateContainerComponent,
+} from '@geonetwork-ui/feature/map'
 import { GnDatasetViewChartComponent } from './components/gn-dataset-view-chart/gn-dataset-view-chart.component'
 import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
 import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
@@ -90,6 +94,8 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     FeatureDatavizModule,
     FeatureAuthModule,
     BrowserAnimationsModule,
+    MapStateContainerComponent,
+    LayersPanelComponent,
   ],
   providers: [
     provideGn4(),

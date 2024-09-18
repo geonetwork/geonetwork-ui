@@ -1,12 +1,13 @@
 import { Action, createReducer, on } from '@ngrx/store'
-
 import * as MapActions from './map.actions'
-import { MapLayerWithInfo } from './map.models'
+import { MapContext } from '@geospatial-sdk/core'
+import { Feature } from 'geojson'
 
 export const MAP_FEATURE_KEY = 'map'
 
 export interface MapState {
-  layers: MapLayerWithInfo[]
+  context: MapContext
+  selectedFeatures: Feature[]
 }
 
 export interface MapPartialState {
@@ -14,68 +15,30 @@ export interface MapPartialState {
 }
 
 export const initialMapState: MapState = {
-  layers: [],
+  context: { layers: [], view: null },
+  selectedFeatures: [],
 }
 
 const reducer = createReducer(
   initialMapState,
-  on(MapActions.addLayer, (state, action) => {
-    const layers: MapLayerWithInfo[] = [...state.layers]
-    const layerWithInfo = { ...action.layer, loading: false, error: null }
-    if (!('atIndex' in action)) layers.push(layerWithInfo)
-    else layers.splice(action.atIndex, 0, layerWithInfo)
+  on(MapActions.setContext, (state, { context }) => {
     return {
       ...state,
-      layers,
+      context,
     }
   }),
-  on(MapActions.updateLayer, (state, action) => ({
-    ...state,
-    layers: state.layers.map((layer, index) =>
-      index === action.index
-        ? {
-            ...action.updatedLayer,
-            loading: false,
-            error: null,
-          }
-        : layer
-    ),
-  })),
-  on(MapActions.removeLayer, (state, action) => ({
-    ...state,
-    layers: state.layers.filter((layer, index) => index !== action.index),
-  })),
-  on(MapActions.changeLayerOrder, (state, action) => {
-    const layers: MapLayerWithInfo[] = [...state.layers]
-    const moved = layers.splice(action.currentIndex, 1)[0]
-    layers.splice(action.newIndex, 0, moved)
+  on(MapActions.setSelectedFeatures, (state, { selectedFeatures }) => {
     return {
       ...state,
-      layers,
+      selectedFeatures,
     }
   }),
-  on(MapActions.setLayerError, (state, action) => ({
-    ...state,
-    layers: state.layers.map((layer, index) =>
-      index === action.index
-        ? {
-            ...layer,
-            error: action.error,
-          }
-        : layer
-    ),
-  })),
-  on(MapActions.clearLayerError, (state, action) => ({
-    ...state,
-    layers: state.layers.map((layer, index) =>
-      index === action.index
-        ? {
-            ...layer,
-            error: null,
-          }
-        : layer
-    ),
-  }))
+  on(MapActions.clearSelectedFeatures, (state) => {
+    return {
+      ...state,
+      selectedFeatures: [],
+    }
+  })
 )
 
 export function mapReducer(state: MapState | undefined, action: Action) {

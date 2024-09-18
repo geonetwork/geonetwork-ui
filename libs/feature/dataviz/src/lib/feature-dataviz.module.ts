@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FeatureMapModule } from '@geonetwork-ui/feature/map'
-import { UiMapModule } from '@geonetwork-ui/ui/map'
+import {
+  FeatureDetailComponent,
+  MapContainerComponent,
+} from '@geonetwork-ui/ui/map'
 import { GeoTableViewComponent } from './geo-table-view/geo-table-view.component'
 import { FigureContainerComponent } from './figure/figure-container/figure-container.component'
 import {
@@ -19,7 +22,6 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
   imports: [
     CommonModule,
     FeatureMapModule,
-    UiMapModule,
     UiDatavizModule,
     TableComponent,
     UiWidgetsModule,
@@ -27,6 +29,8 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
     ChartComponent,
     UiInputsModule,
     PopupAlertComponent,
+    FeatureDetailComponent,
+    MapContainerComponent,
   ],
   declarations: [
     GeoTableViewComponent,
