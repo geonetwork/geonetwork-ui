@@ -99,6 +99,10 @@ function sidebarReference() {
           text: 'Pivot Format',
           link: '/reference/pivot-format',
         },
+        {
+          text: 'Interactive maps',
+          link: '/reference/maps',
+        },
       ],
     },
     {
