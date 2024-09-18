@@ -39,6 +39,7 @@ describe('ImportRecordComponent', () => {
       .overrideComponent(ImportRecordComponent, {
         set: {
           changeDetection: ChangeDetectionStrategy.Default,
+          imports: [TranslateModule],
         },
       })
       .compileComponents()
