@@ -286,6 +286,7 @@
   "editor.record.undo.tooltip.enabled": "",
   "editor.record.upToDate": "Dieser Datensatz ist auf dem neuesten Stand",
   "editor.sidebar.menu.editor": "",
+  "editor.temporary.disabled": "",
   "externalviewer.dataset.unnamed": "Datensatz aus dem Datahub",
   "facets.block.title.OrgForResource": "Organisation",
   "facets.block.title.availableInServices": "Verfügbar für",
