@@ -119,6 +119,7 @@ describe('GeoTableViewComponent', () => {
           coordinates: [2.335333, 51.070817],
           type: 'Point',
         },
+        maxZoom: 13,
       })
     })
   })

@@ -96,6 +96,7 @@ export class GeoTableViewComponent implements OnInit, OnDestroy {
       ...this.mapContext,
       view: {
         geometry: feature.geometry,
+        maxZoom: 13,
       },
     }
     // FIXME: animate the view

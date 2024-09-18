@@ -12,17 +12,23 @@ import {
   FeatureDetailComponent,
   MapContainerComponent,
 } from '@geonetwork-ui/ui/map'
-import { polygonFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
+import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 import { TableComponent } from '@geonetwork-ui/ui/dataviz'
 import { HttpClientModule } from '@angular/common/http'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 export default {
   title: 'Map/GeoTable',
   component: GeoTableViewComponent,
   decorators: [
     moduleMetadata({
-      imports: [FeatureDetailComponent, MapContainerComponent, TableComponent],
+      imports: [
+        FeatureDetailComponent,
+        MapContainerComponent,
+        TableComponent,
+        BrowserAnimationsModule,
+      ],
     }),
     applicationConfig({
       providers: [
@@ -38,6 +44,6 @@ export default {
 
 export const Primary: StoryObj<GeoTableViewComponent> = {
   args: {
-    data: polygonFeatureCollectionFixture(),
+    data: pointFeatureCollectionFixture(),
   },
 }
