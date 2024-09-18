@@ -18,6 +18,9 @@ body {
 .btn-active {
   @apply bg-neutral-200 text-blue-600 font-bold;
 }
+.btn-inactive {
+  @apply text-slate-400 cursor-default;
+}
 .menu-title {
   @apply text-2xl px-9 py-3;
 }

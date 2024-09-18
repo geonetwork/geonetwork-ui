@@ -1,11 +1,23 @@
 <div class="flex flex-row items-center w-full border-b-[1px]">
-  <gn-ui-button type="light">
+  <gn-ui-button
+    type="light"
+    disabled="true"
+    [title]="'editor.temporary.disabled' | translate"
+  >
     <mat-icon class="material-symbols-outlined">side_navigation</mat-icon>
   </gn-ui-button>
-  <gn-ui-button type="light">
+  <gn-ui-button
+    type="light"
+    disabled="true"
+    [title]="'editor.temporary.disabled' | translate"
+  >
     <mat-icon class="material-symbols-outlined">lightbulb</mat-icon>
   </gn-ui-button>
-  <gn-ui-button type="light">
+  <gn-ui-button
+    type="light"
+    disabled="true"
+    [title]="'editor.temporary.disabled' | translate"
+  >
     <mat-icon class="material-symbols-outlined">download</mat-icon>
   </gn-ui-button>
   <ng-container *ngrxLet="saveStatus$ as saveStatus">
@@ -53,10 +65,18 @@
       <span translate>editor.record.saveStatus.draftWithChangesPending</span>
     </ng-container>
   </div>
-  <gn-ui-button type="light">
+  <gn-ui-button
+    type="light"
+    disabled="true"
+    [title]="'editor.temporary.disabled' | translate"
+  >
     <mat-icon class="material-symbols-outlined">help</mat-icon>
   </gn-ui-button>
-  <gn-ui-button type="light">
+  <gn-ui-button
+    type="light"
+    disabled="true"
+    [title]="'editor.temporary.disabled' | translate"
+  >
     <mat-icon class="material-symbols-outlined">verified</mat-icon>
   </gn-ui-button>
   <md-editor-publish-button></md-editor-publish-button>

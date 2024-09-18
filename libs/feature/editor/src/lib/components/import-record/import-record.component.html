@@ -11,6 +11,10 @@
             type="light"
             extraClass="flex flex-row items-center gap-2 w-full justify-start"
             (buttonClick)="menuItem.action()"
+            [disabled]="menuItem.disabled"
+            [title]="
+              (menuItem.disabled ? 'editor.temporary.disabled' : '') | translate
+            "
             ><mat-icon class="material-symbols-outlined">
               {{ menuItem.icon }} </mat-icon
             ><span>{{ menuItem.label }}</span></gn-ui-button
