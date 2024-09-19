@@ -27,6 +27,7 @@ export class DashboardMenuComponent {
     switchMap(() => this.recordsRepository.getAllDrafts()),
     map((drafts) => drafts.length)
   )
+  activeLink = false
 
   constructor(private recordsRepository: RecordsRepositoryInterface) {}
 }

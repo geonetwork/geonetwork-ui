@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent, UrlInputComponent } from '@geonetwork-ui/ui/inputs'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
-import { TranslateService } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { Router } from '@angular/router'
@@ -19,6 +19,7 @@ interface ImportMenuItems {
   icon: string
   action: () => any
   dataTest: string
+  disabled?: boolean
 }
 
 type ImportMenuPage = 'mainMenu' | 'importExternalFile'
@@ -35,6 +36,7 @@ type ImportMenuPage = 'mainMenu' | 'importExternalFile'
     ButtonComponent,
     ThumbnailComponent,
     UrlInputComponent,
+    TranslateModule,
   ],
 })
 export class ImportRecordComponent {
@@ -46,6 +48,7 @@ export class ImportRecordComponent {
       icon: 'highlight',
       action: () => null,
       dataTest: 'useAModelButton',
+      disabled: true,
     },
     {
       label: this.translateService.instant(

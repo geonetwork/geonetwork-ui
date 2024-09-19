@@ -31,7 +31,7 @@ describe('SearchHeaderComponent', () => {
         SearchHeaderComponent,
         EffectsModule.forRoot(),
         StoreModule.forRoot({}),
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+        TranslateModule.forRoot(),
       ],
       providers: [
         {
@@ -47,7 +47,7 @@ describe('SearchHeaderComponent', () => {
       .overrideComponent(SearchHeaderComponent, {
         set: {
           changeDetection: ChangeDetectionStrategy.Default,
-          imports: [],
+          imports: [TranslateModule],
           schemas: [CUSTOM_ELEMENTS_SCHEMA],
         },
       })
@@ -55,6 +55,7 @@ describe('SearchHeaderComponent', () => {
 
     fixture = TestBed.createComponent(SearchHeaderComponent)
     component = fixture.componentInstance
+    component.activeBtn = true
     fixture.detectChanges()
   })
 
