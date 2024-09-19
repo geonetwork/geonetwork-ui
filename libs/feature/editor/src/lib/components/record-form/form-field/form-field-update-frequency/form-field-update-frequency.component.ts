@@ -70,7 +70,7 @@ export class FormFieldUpdateFrequencyComponent implements OnInit {
   }
 
   get selectedFrequency(): string {
-    if (typeof this.value === 'string') return null
+    if (!this.value || typeof this.value === 'string') return null
     const { updatedTimes, per } = this.value
     return `${per}.${updatedTimes}`
   }

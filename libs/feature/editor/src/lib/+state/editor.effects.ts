@@ -9,6 +9,7 @@ import {
   selectEditorConfig,
   selectRecord,
   selectRecordAlreadySavedOnce,
+  selectRecordSource,
 } from './editor.selectors'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
@@ -24,12 +25,13 @@ export class EditorEffects {
       ofType(EditorActions.saveRecord),
       withLatestFrom(
         this.store.select(selectRecord),
+        this.store.select(selectRecordSource),
         this.store.select(selectEditorConfig),
         this.store.select(selectRecordAlreadySavedOnce)
       ),
-      switchMap(([, record, fieldsConfig, alreadySavedOnce]) =>
+      switchMap(([, record, recordSource, fieldsConfig, alreadySavedOnce]) =>
         this.editorService
-          .saveRecord(record, fieldsConfig, !alreadySavedOnce)
+          .saveRecord(record, recordSource, fieldsConfig, !alreadySavedOnce)
           .pipe(
             switchMap(([record, recordSource]) =>
               of(
@@ -64,8 +66,13 @@ export class EditorEffects {
     this.actions$.pipe(
       ofType(EditorActions.updateRecordField),
       debounceTime(1000),
-      withLatestFrom(this.store.select(selectRecord)),
-      switchMap(([, record]) => this.editorService.saveRecordAsDraft(record)),
+      withLatestFrom(
+        this.store.select(selectRecord),
+        this.store.select(selectRecordSource)
+      ),
+      switchMap(([, record, recordSource]) =>
+        this.editorService.saveRecordAsDraft(record, recordSource)
+      ),
       map(() => EditorActions.draftSaveSuccess())
     )
   )
