@@ -7,13 +7,11 @@ import {
 } from '@angular/core'
 import {
   CatalogRecord,
-  DatasetRecord,
   OnlineResource,
   OnlineResourceType,
   RecordKind,
   RecordStatusValues,
   RoleValues,
-  ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
@@ -100,6 +98,9 @@ export class RecordFormComponent implements AfterViewInit {
       keywords: hasPrevious ? this.record.keywords : [],
       topics: hasPrevious ? this.record.topics : [],
       onlineResources: [],
+      otherLanguages: [],
+      defaultLanguage: 'en',
+      overviews: [],
     }
     if (kind === 'dataset') {
       this.record = {
@@ -108,15 +109,14 @@ export class RecordFormComponent implements AfterViewInit {
         status: 'under_development',
         updateFrequency: 'unknown',
         lineage: '',
-        overviews: [],
         spatialExtents: [],
         temporalExtents: [],
-      } as DatasetRecord
+      }
     } else {
       this.record = {
         ...record,
         kind: 'service',
-      } as ServiceRecord
+      }
     }
     this.recordChanged.emit(this.record)
   }

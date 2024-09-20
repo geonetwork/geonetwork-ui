@@ -161,13 +161,13 @@
         {{ updateFrequency }}
       </p>
     </div>
-    <div *ngIf="metadata.languages">
+    <div *ngIf="metadata.otherLanguages?.length">
       <p class="text-sm mb-1" translate>record.metadata.languages</p>
       <div class="flex flex-row gap-1 flex-wrap">
         <p
           class="text-primary font-medium"
           translate
-          *ngFor="let language of metadata.languages"
+          *ngFor="let language of metadata.otherLanguages"
         >
           language.{{ language }}
         </p>

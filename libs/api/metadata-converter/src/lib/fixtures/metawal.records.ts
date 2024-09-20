@@ -402,7 +402,7 @@ Depuis, ce sont les Districts routiers qui assurent la tenue à jour de ces info
   landingPage: new URL(
     'https://metawal.wallonie.be/geonetwork/srv/api/records/2d974612-70b1-4662-a9f4-c43cbe453773'
   ),
-  languages: [],
+  otherLanguages: [],
 }
 
 export const METAWAL_SERVICE_RECORD: ServiceRecord = {
@@ -577,7 +577,7 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
   title:
     'Plan parcellaire cadastral - situation au 01/01/2016 - Service de visualisation REST',
   topics: [],
-  languages: [],
+  otherLanguages: [],
   landingPage: new URL(
     'https://metawal.wallonie.be/geonetwork/srv/api/records/6d2b6fdb-f1ea-4d48-8697-a0c05512f1dc'
   ),

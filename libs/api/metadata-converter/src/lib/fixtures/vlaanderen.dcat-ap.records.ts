@@ -34,7 +34,7 @@ export const VLAANDEREN_DATASET_RECORD: DatasetRecord = {
     { label: 'mortality', type: 'theme' },
   ],
   kind: 'dataset',
-  languages: [],
+  otherLanguages: [],
   legalConstraints: [],
   licenses: [
     {

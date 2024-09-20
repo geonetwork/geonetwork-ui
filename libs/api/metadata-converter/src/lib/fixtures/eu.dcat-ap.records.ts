@@ -94,7 +94,8 @@ export const EU_SURVEY_DATASET_RECORD: DatasetRecord = {
   ],
   keywords: [],
   kind: 'dataset',
-  languages: [],
+  otherLanguages: [],
+  defaultLanguage: 'en',
   legalConstraints: [],
   licenses: [
     {
@@ -248,7 +249,8 @@ export const EU_WHOISWHO_DATASET_RECORD: DatasetRecord = {
   onlineResources: [],
   keywords: [],
   kind: 'dataset',
-  languages: [],
+  otherLanguages: [],
+  defaultLanguage: 'en',
   legalConstraints: [],
   licenses: [],
   otherConstraints: [],

@@ -67,7 +67,7 @@ export class DcatApConverter extends BaseConverter<string> {
     temporalExtents: () => [],
     spatialRepresentation: () => undefined,
     extras: () => undefined,
-    languages: () => [],
+    otherLanguages: () => [],
   }
 
   protected writers: Record<
@@ -104,7 +104,7 @@ export class DcatApConverter extends BaseConverter<string> {
     spatialExtents: () => undefined,
     extras: () => undefined,
     landingPage: () => undefined,
-    languages: () => undefined,
+    otherLanguages: () => undefined,
   }
 
   constructor(
@@ -209,7 +209,7 @@ export class DcatApConverter extends BaseConverter<string> {
       return {
         uniqueIdentifier,
         kind,
-        languages: [],
+        otherLanguages: [],
         ...(recordCreated && { recordCreated }),
         ...(recordPublished && { recordPublished }),
         recordUpdated,
@@ -245,7 +245,7 @@ export class DcatApConverter extends BaseConverter<string> {
       return {
         uniqueIdentifier,
         kind,
-        languages: [],
+        otherLanguages: [],
         ...(recordCreated && { recordCreated }),
         ...(recordPublished && { recordPublished }),
         recordUpdated,

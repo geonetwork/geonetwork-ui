@@ -213,5 +213,6 @@ As such, **it is not very interesting at all.**`,
     updatedTimes: 3,
     per: 'month',
   },
-  languages: [],
+  languages: ['en'],
+  defaultLanguage: 'en',
 }

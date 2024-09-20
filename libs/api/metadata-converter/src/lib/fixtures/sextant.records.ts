@@ -38,7 +38,7 @@ export const SEXTANT_BATHYMETRY_DATASET_RECORD: DatasetRecord = {
   ],
   keywords: [],
   kind: 'dataset',
-  languages: [],
+  otherLanguages: [],
   legalConstraints: [],
   licenses: [],
   otherConstraints: [],

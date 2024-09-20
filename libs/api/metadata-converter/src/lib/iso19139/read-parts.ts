@@ -4,6 +4,7 @@ import {
   GraphicOverview,
   Individual,
   Keyword,
+  LanguageCode,
   OnlineResource,
   Organization,
   RecordKind,
@@ -45,6 +46,7 @@ import { getKeywordTypeFromKeywordTypeCode } from './utils/keyword.mapper'
 import { getRoleFromRoleCode } from './utils/role.mapper'
 import { getStatusFromStatusCode } from './utils/status.mapper'
 import { getUpdateFrequencyFromFrequencyCode } from './utils/update-frequency.mapper'
+import { LANG_3_TO_2_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
 
 export function extractCharacterString(): ChainableFunction<
   XmlElement,
@@ -961,5 +963,29 @@ export function readSpatialExtents(rootEl: XmlElement) {
         ...(description && { description }),
       }
     })
+  )(rootEl)
+}
+
+export function readLanguages(rootEl: XmlElement): LanguageCode[] {
+  const defaultLanguage = readDefaultLanguage(rootEl)
+  return pipe(
+    findChildrenElement('gmd:locale', false),
+    mapArray(
+      pipe(
+        findChildElement('gmd:LanguageCode'),
+        readAttribute('codeListValue'),
+        map((lang) => LANG_3_TO_2_MAPPER[lang.toLowerCase()])
+      )
+    ),
+    map((languages) => (languages.length ? languages : [defaultLanguage]))
+  )(rootEl)
+}
+
+export function readDefaultLanguage(rootEl: XmlElement): LanguageCode {
+  return pipe(
+    findChildElement('gmd:language', false),
+    findChildElement('gmd:LanguageCode'),
+    readAttribute('codeListValue'),
+    map((lang) => LANG_3_TO_2_MAPPER[lang.toLowerCase()])
   )(rootEl)
 }

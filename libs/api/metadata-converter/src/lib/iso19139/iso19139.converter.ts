@@ -103,7 +103,9 @@ export class Iso19139Converter extends BaseConverter<string> {
     // TODO
     extras: () => undefined,
     landingPage: () => undefined,
-    languages: () => [],
+    otherLanguages: () => [],
+    defaultLanguage: () => undefined,
+    translations: () => undefined,
   }
 
   protected writers: Record<
@@ -140,7 +142,9 @@ export class Iso19139Converter extends BaseConverter<string> {
     // TODO
     extras: () => undefined,
     landingPage: () => undefined,
-    languages: () => undefined,
+    otherLanguages: () => undefined,
+    defaultLanguage: () => undefined,
+    translations: () => undefined,
   }
 
   protected beforeDocumentCreation(rootElement: XmlElement) {
@@ -173,6 +177,8 @@ export class Iso19139Converter extends BaseConverter<string> {
     const overviews = this.readers['overviews'](rootEl)
     const landingPage = this.readers['landingPage'](rootEl)
     const onlineResources = this.readers['onlineResources'](rootEl)
+    const otherLanguages = this.readers['otherLanguages'](rootEl)
+    const defaultLanguage = this.readers['defaultLanguage'](rootEl)
 
     if (kind === 'dataset') {
       const status = this.readers['status'](rootEl)
@@ -186,7 +192,8 @@ export class Iso19139Converter extends BaseConverter<string> {
       return {
         uniqueIdentifier,
         kind,
-        languages: [],
+        otherLanguages,
+        defaultLanguage,
         ...(recordCreated && { recordCreated }),
         ...(recordPublished && { recordPublished }),
         recordUpdated,
@@ -218,7 +225,8 @@ export class Iso19139Converter extends BaseConverter<string> {
       return {
         uniqueIdentifier,
         kind,
-        languages: [],
+        otherLanguages,
+        defaultLanguage,
         ...(recordCreated && { recordCreated }),
         ...(recordPublished && { recordPublished }),
         recordUpdated,

@@ -74,7 +74,7 @@ export const OPENDATASWISS_DATASET_RECORD: DatasetRecord = {
     },
   ],
   kind: 'dataset',
-  languages: [],
+  otherLanguages: [],
   legalConstraints: [],
   licenses: [],
   otherConstraints: [],

@@ -436,9 +436,7 @@ describe('Gn4Repository', () => {
     })
     describe('without reference', () => {
       beforeEach(async () => {
-        await lastValueFrom(
-          repository.saveRecord(datasetRecordsFixture()[0] as CatalogRecord)
-        )
+        await lastValueFrom(repository.saveRecord(datasetRecordsFixture()[0]))
       })
       it('uses the ISO19139 converter by default', () => {
         const recordXml = (gn4RecordsApi.insert as jest.Mock).mock.calls[0][14]
