@@ -5,11 +5,13 @@ import { TranslateModule } from '@ngx-translate/core'
 import { cold, hot } from 'jasmine-marbles'
 import { MockBuilder, MockProviders } from 'ng-mocks'
 import { DashboardMenuComponent } from './dashboard-menu.component'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
 
 describe('DashboardMenuComponent', () => {
   let component: DashboardMenuComponent
   let fixture: ComponentFixture<DashboardMenuComponent>
   let recordsRepository: RecordsRepositoryInterface
+  let searchFacade: SearchFacade
 
   beforeEach(() => {
     return MockBuilder(DashboardMenuComponent)
@@ -18,9 +20,12 @@ describe('DashboardMenuComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DashboardMenuComponent, TranslateModule.forRoot()],
-      providers: [MockProviders(ActivatedRoute, RecordsRepositoryInterface)],
+      providers: [
+        MockProviders(ActivatedRoute, RecordsRepositoryInterface, SearchFacade),
+      ],
     }).compileComponents()
     recordsRepository = TestBed.inject(RecordsRepositoryInterface)
+    searchFacade = TestBed.inject(SearchFacade)
     fixture = TestBed.createComponent(DashboardMenuComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -44,5 +49,11 @@ describe('DashboardMenuComponent', () => {
 
     // Assert that draftsCount$ behaves as expected
     expect(component.draftsCount$).toBeObservable(expected)
+  })
+
+  it('should reset filters in main search', () => {
+    searchFacade.setFilters = jest.fn()
+    component.resetMainSearch()
+    expect(searchFacade.setFilters).toHaveBeenCalledWith({})
   })
 })
