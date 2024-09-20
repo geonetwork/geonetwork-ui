@@ -71,7 +71,8 @@ export class MyRecordsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.searchFacade.setConfigRequestFields(allSearchFields).setPageSize(15)
+    this.searchFacade.setConfigRequestFields(allSearchFields)
+    this.searchFacade.setPageSize(15)
 
     this.sub = this.platformService.getMe().subscribe((user) => {
       this.ownerId = user.id

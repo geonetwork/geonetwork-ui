@@ -86,7 +86,8 @@ export class AllRecordsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.searchFacade.setConfigRequestFields(allSearchFields).setPageSize(15)
+    this.searchFacade.setConfigRequestFields(allSearchFields)
+    this.searchFacade.setPageSize(15)
   }
 
   createRecord() {

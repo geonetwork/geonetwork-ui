@@ -13,6 +13,7 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { MockBuilder, MockInstance, MockProviders } from 'ng-mocks'
 import { ActivatedRoute, Router } from '@angular/router'
 import { TranslateModule } from '@ngx-translate/core'
+import { allSearchFields } from '../all-records/all-records.component'
 
 describe('MyRecordsComponent', () => {
   MockInstance.scope()
@@ -106,11 +107,16 @@ describe('MyRecordsComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('filters', () => {
-    it('clears filters on init', () => {
-      expect(searchFacade.resetSearch).toHaveBeenCalled()
+  describe('filters on init', () => {
+    it('sets search fields', () => {
+      expect(searchFacade.setConfigRequestFields).toHaveBeenCalledWith(
+        allSearchFields
+      )
     })
-    it('Update filters on init', () => {
+    it('sets page size', () => {
+      expect(searchFacade.setPageSize).toHaveBeenCalledWith(15)
+    })
+    it('updates filters with owner', () => {
       expect(searchFacade.updateFilters).toHaveBeenCalledWith({
         owner: user.id,
       })
