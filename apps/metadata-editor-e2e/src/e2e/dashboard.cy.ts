@@ -214,17 +214,35 @@ describe('dashboard', () => {
     })
   })
   describe('navigation', () => {
+    function checkDashboardFiltered() {
+      cy.get('gn-ui-autocomplete').type('Mat')
+      cy.get('mat-option').first().click()
+      cy.get('gn-ui-interactive-table')
+        .find('[data-cy="table-row"]')
+        .should('have.length', '1')
+    }
     beforeEach(() => {
       cy.login('admin', 'admin', false)
       cy.visit('/catalog/search')
     })
     describe('search input', () => {
       it('should filter the dashboard based on the search input', () => {
+        checkDashboardFiltered()
+      })
+      // TODO remove skip when handleItemSelection of autocomplete is handled correctly
+      it.skip('should navigate to list of all records and filter the dashboard based on the search input when on different page', () => {
+        cy.visit('/my-space/my-records')
+        checkDashboardFiltered()
+      })
+      it('should clear the search input when navigating to my records', () => {
         cy.get('gn-ui-autocomplete').type('Mat')
-        cy.get('mat-option').first().click()
-        cy.get('gn-ui-interactive-table')
-          .find('[data-cy="table-row"]')
-          .should('have.length', '1')
+        cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
+        cy.get('gn-ui-autocomplete').should('have.value', '')
+      })
+      it('should clear the search input when navigating to my drafts', () => {
+        cy.get('gn-ui-autocomplete').type('Mat')
+        cy.get('md-editor-dashboard-menu').find('a').eq(6).click()
+        cy.get('gn-ui-autocomplete').should('have.value', '')
       })
     })
     describe('my records', () => {
@@ -235,6 +253,31 @@ describe('dashboard', () => {
           .find('mat-icon')
           .next()
           .should('contain', 'admin admin')
+      })
+      it('should display the correct amount of records', () => {
+        cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
+        cy.get('gn-ui-results-table')
+          .find('[data-cy="table-row"]')
+          .should('have.length', '10')
+      })
+      it('should sort the records by title', () => {
+        cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
+        cy.get('gn-ui-results-table')
+          .find('[data-cy="table-row"]')
+          .first()
+          .invoke('text')
+          .then((firstRecord) => {
+            console.log(firstRecord)
+            cy.get('gn-ui-results-table')
+              .find('.table-header-cell')
+              .eq(1)
+              .click()
+            cy.get('gn-ui-results-table')
+              .find('[data-cy="table-row"]')
+              .first()
+              .invoke('text')
+              .should('not.eq', firstRecord)
+          })
       })
     })
   })
