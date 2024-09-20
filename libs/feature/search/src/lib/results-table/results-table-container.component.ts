@@ -32,7 +32,6 @@ export class ResultsTableContainerComponent implements OnDestroy {
 
   subscription = new Subscription()
 
-  records$ = this.searchFacade.results$
   selectedRecords$ = this.selectionService.selectedRecordsIdentifiers$
   sortBy$ = this.searchFacade.sortBy$
 
@@ -43,7 +42,7 @@ export class ResultsTableContainerComponent implements OnDestroy {
     this.recordsRepository.isRecordNotYetSaved(record.uniqueIdentifier)
 
   constructor(
-    private searchFacade: SearchFacade,
+    protected searchFacade: SearchFacade,
     private searchService: SearchService,
     private selectionService: SelectionService,
     private recordsRepository: RecordsRepositoryInterface,

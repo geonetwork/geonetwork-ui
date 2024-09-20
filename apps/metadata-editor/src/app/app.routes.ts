@@ -3,13 +3,13 @@ import { DashboardPageComponent } from './dashboard/dashboard-page.component'
 import { SignInPageComponent } from './sign-in/sign-in-page.component'
 import { EditPageComponent } from './edit/edit-page.component'
 import { EditRecordResolver } from './edit-record.resolver'
-import { MyRecordsComponent } from './records/my-records/my-records.component'
 import { MyDraftComponent } from './records/my-draft/my-draft.component'
 import { TemplatesComponent } from './records/templates/templates.component'
 import { MyOrgUsersComponent } from './my-org-users/my-org-users.component'
 import { NewRecordResolver } from './new-record.resolver'
 import { DuplicateRecordResolver } from './duplicate-record.resolver'
 import { AllRecordsComponent } from './records/all-records/all-records.component'
+import { MyRecordsStateWrapperComponent } from './records/my-records/my-records-state-wrapper.component'
 
 export const appRoutes: Route[] = [
   { path: '', redirectTo: 'catalog/search', pathMatch: 'prefix' },
@@ -60,7 +60,7 @@ export const appRoutes: Route[] = [
       {
         path: 'my-records',
         title: 'My Records',
-        component: MyRecordsComponent,
+        component: MyRecordsStateWrapperComponent,
         pathMatch: 'prefix',
       },
       {

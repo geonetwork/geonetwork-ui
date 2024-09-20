@@ -16,9 +16,8 @@ import {
   FieldsService,
   ResultsTableContainerComponent,
   SearchFacade,
-  SearchService,
 } from '@geonetwork-ui/feature/search'
-import { Observable, Subscription } from 'rxjs'
+import { Subscription } from 'rxjs'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -30,7 +29,6 @@ import { RecordsCountComponent } from '../records-count/records-count.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { MatIconModule } from '@angular/material/icon'
 import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
-import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'md-editor-my-records',
@@ -59,18 +57,12 @@ export class MyRecordsComponent implements OnInit, OnDestroy {
   @ViewChild('template') template!: TemplateRef<any>
   private overlayRef!: OverlayRef
 
-  searchText$: Observable<string | null> =
-    this.searchFacade.searchFilters$.pipe(
-      map((filters) => ('any' in filters ? (filters['any'] as string) : null))
-    )
-
   isImportMenuOpen = false
 
   constructor(
     private router: Router,
     private activedRoute: ActivatedRoute,
-    private searchFacade: SearchFacade,
-    public searchService: SearchService,
+    protected searchFacade: SearchFacade,
     private platformService: PlatformServiceInterface,
     private fieldsService: FieldsService,
     private overlay: Overlay,
@@ -79,30 +71,7 @@ export class MyRecordsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.searchFacade.resetSearch()
-
-    const searchTerms = this.activedRoute.snapshot.queryParams['q'] ?? ''
-
-    if (searchTerms) {
-      this.searchFacade.setFilters({ any: searchTerms })
-    }
-
-    let sort = (this.activedRoute.snapshot.queryParams['_sort'] as string) ?? ''
-
-    if (sort) {
-      let ascDesc = ''
-
-      if (sort?.charAt(0) === '-') {
-        ascDesc = 'desc'
-        sort = sort.slice(1, sort.length)
-      } else {
-        ascDesc = 'asc'
-      }
-      this.searchFacade.setSortBy([ascDesc as 'asc' | 'desc', sort])
-    }
-
-    this.searchFacade.setPageSize(15)
-    this.searchFacade.setConfigRequestFields(allSearchFields)
+    this.searchFacade.setConfigRequestFields(allSearchFields).setPageSize(15)
 
     this.sub = this.platformService.getMe().subscribe((user) => {
       this.ownerId = user.id
