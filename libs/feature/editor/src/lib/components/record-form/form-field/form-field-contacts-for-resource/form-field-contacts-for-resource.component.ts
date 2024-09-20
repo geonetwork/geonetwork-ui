@@ -109,15 +109,14 @@ export class FormFieldContactsForResourceComponent
 
   updateContactsForRessource() {
     this.contactsForRessourceByRole = this.value.reduce((acc, contact) => {
-      const completeOrganization = this.allOrganizations.get(
-        contact.organization.name
-      )
+      const completeOrganization = contact.organization
+        ? this.allOrganizations.get(contact.organization.name)
+        : null
+      const organization = completeOrganization ?? contact.organization
 
       const updatedContact = {
         ...contact,
-        organization:
-          completeOrganization ??
-          ({ name: contact.organization.name } as Organization),
+        ...(organization && { organization }),
       }
 
       if (!acc.has(contact.role)) {
