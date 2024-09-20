@@ -1,9 +1,5 @@
-<div class="pl-5 pt-24 flex flex-1 flex-col justify-between">
-  <div
-    #wizardFields
-    class="flex-1 flex"
-    *ngFor="let config of configuration; let i = index"
-  >
+<div class="pl-5 pt-24 flex flex-1 flex-col justify-between" #wizardFields>
+  <div class="flex-1 flex" *ngFor="let config of configuration; let i = index">
     <gn-ui-wizard-field [wizardFieldConfig]="config"></gn-ui-wizard-field>
   </div>
 </div>
