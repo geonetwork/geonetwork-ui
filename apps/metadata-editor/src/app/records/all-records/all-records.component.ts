@@ -13,7 +13,7 @@ import {
   SearchService,
 } from '@geonetwork-ui/feature/search'
 import { TranslateModule } from '@ngx-translate/core'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Router } from '@angular/router'
 import { RecordsCountComponent } from '../records-count/records-count.component'
 import { Observable } from 'rxjs'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
@@ -29,18 +29,6 @@ import { TemplatePortal } from '@angular/cdk/portal'
 import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
 import { RecordsListComponent } from '../records-list.component'
 import { map } from 'rxjs/operators'
-
-export const allSearchFields = [
-  'uuid',
-  'resourceTitleObject',
-  'createDate',
-  'changeDate',
-  'userinfo',
-  'cl_status',
-  'isPublishedToAll',
-  'link',
-  'owner',
-]
 
 @Component({
   selector: 'md-editor-all-records',
@@ -76,7 +64,6 @@ export class AllRecordsComponent {
 
   constructor(
     private router: Router,
-    private activedRoute: ActivatedRoute,
     public searchFacade: SearchFacade,
     public searchService: SearchService,
     private overlay: Overlay,

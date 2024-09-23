@@ -13,8 +13,18 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { TranslateModule } from '@ngx-translate/core'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { RecordsCountComponent } from './records-count/records-count.component'
-import { allSearchFields } from './all-records/all-records.component'
 
+export const allSearchFields = [
+  'uuid',
+  'resourceTitleObject',
+  'createDate',
+  'changeDate',
+  'userinfo',
+  'cl_status',
+  'isPublishedToAll',
+  'link',
+  'owner',
+]
 @Component({
   selector: 'md-editor-records-list',
   templateUrl: './records-list.component.html',

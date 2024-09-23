@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
-import { RecordsListComponent } from './records-list.component'
+import { allSearchFields, RecordsListComponent } from './records-list.component'
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { By } from '@angular/platform-browser'
@@ -67,6 +67,7 @@ describe('RecordsListComponent', () => {
   let fixture: ComponentFixture<RecordsListComponent>
   let router: Router
   let searchService: SearchService
+  let searchFacade: SearchFacade
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -97,6 +98,7 @@ describe('RecordsListComponent', () => {
     })
     router = TestBed.inject(Router)
     searchService = TestBed.inject(SearchService)
+    searchFacade = TestBed.inject(SearchFacade)
     fixture = TestBed.createComponent(RecordsListComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -104,6 +106,17 @@ describe('RecordsListComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  describe('on init', () => {
+    it('sets search fields', () => {
+      expect(searchFacade.setConfigRequestFields).toHaveBeenCalledWith(
+        allSearchFields
+      )
+    })
+    it('sets page size', () => {
+      expect(searchFacade.setPageSize).toHaveBeenCalledWith(15)
+    })
   })
 
   describe('when search results', () => {

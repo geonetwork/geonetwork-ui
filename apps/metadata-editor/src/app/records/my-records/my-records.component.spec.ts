@@ -13,7 +13,6 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { MockBuilder, MockInstance, MockProviders } from 'ng-mocks'
 import { ActivatedRoute, Router } from '@angular/router'
 import { TranslateModule } from '@ngx-translate/core'
-import { allSearchFields } from '../all-records/all-records.component'
 
 describe('MyRecordsComponent', () => {
   MockInstance.scope()
@@ -108,14 +107,6 @@ describe('MyRecordsComponent', () => {
   })
 
   describe('filters on init', () => {
-    it('sets search fields', () => {
-      expect(searchFacade.setConfigRequestFields).toHaveBeenCalledWith(
-        allSearchFields
-      )
-    })
-    it('sets page size', () => {
-      expect(searchFacade.setPageSize).toHaveBeenCalledWith(15)
-    })
     it('updates filters with owner', () => {
       expect(searchFacade.updateFilters).toHaveBeenCalledWith({
         owner: user.id,

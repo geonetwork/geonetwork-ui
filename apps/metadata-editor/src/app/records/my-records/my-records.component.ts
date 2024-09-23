@@ -22,7 +22,6 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { Router } from '@angular/router'
 import { Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
-import { allSearchFields } from '../all-records/all-records.component'
 import { RecordsCountComponent } from '../records-count/records-count.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { MatIconModule } from '@angular/material/icon'
@@ -65,9 +64,6 @@ export class MyRecordsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.searchFacade.setConfigRequestFields(allSearchFields)
-    this.searchFacade.setPageSize(15)
-
     this.platformService.getMe().subscribe((user) => {
       this.fieldsService
         .buildFiltersFromFieldValues({ owner: user.id })
