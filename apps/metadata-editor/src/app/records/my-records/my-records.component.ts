@@ -73,12 +73,6 @@ export class MyRecordsComponent implements OnInit {
     })
   }
 
-  duplicateRecord(record: CatalogRecord) {
-    this.router
-      .navigate(['/duplicate', record.uniqueIdentifier])
-      .catch((err) => console.error(err))
-  }
-
   createRecord() {
     this.router.navigate(['/create']).catch((err) => console.error(err))
   }
