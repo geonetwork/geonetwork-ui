@@ -16,6 +16,7 @@ import { graph, parse } from 'rdflib'
 import { SEXTANT_BATHYMETRY_DATASET_RECORD } from '../fixtures/sextant.records'
 import { OPENDATASWISS_DATASET_RECORD } from '../fixtures/opendataswiss.records'
 import { VLAANDEREN_DATASET_RECORD } from '../fixtures/vlaanderen.dcat-ap.records'
+import { exportGraphToXml } from './utils/serialize-to-xml'
 
 // this makes the xml go through the same formatting as the converter
 async function formatRdf(rdfString: string) {
@@ -29,7 +30,7 @@ async function formatRdf(rdfString: string) {
       resolve
     )
   )
-  return dataStore.serialize('', 'application/rdf+xml', null)
+  return exportGraphToXml(dataStore)
 }
 
 describe('DCAT-AP converter', () => {
@@ -91,8 +92,8 @@ describe('DCAT-AP converter', () => {
     })
     describe('with a native record', () => {
       // FIXME: restore this test once we can write RDF XML as well!
-      describe.skip('when converting to XML and back', () => {
-        it('keeps the record unchanged', async () => {
+      describe('when converting to XML and back', () => {
+        it.skip('keeps the record unchanged', async () => {
           const backAndForth = await converter.readRecord(
             await converter.writeRecord(GENERIC_DATASET_RECORD)
           )

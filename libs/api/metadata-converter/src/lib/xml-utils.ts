@@ -249,7 +249,7 @@ function extractNamespace(name: string): string | null {
   return colon > -1 ? name.substring(0, colon) : null
 }
 
-const NAMESPACES = {
+export const NAMESPACES = {
   gmd: 'http://www.isotc211.org/2005/gmd',
   gco: 'http://www.isotc211.org/2005/gco',
   gfc: 'http://www.isotc211.org/2005/gfc',
@@ -284,6 +284,22 @@ const NAMESPACES = {
   cat: 'http://standards.iso.org/iso/19115/-3/cat/1.0',
   lan: 'http://standards.iso.org/iso/19115/-3/lan/1.0',
   mrc: 'http://standards.iso.org/iso/19115/-3/mrc/2.0',
+  rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+  rdfs: 'http://www.w3.org/2000/01/rdf-schema#',
+  foaf: 'http://xmlns.com/foaf/0.1/',
+  xsd: 'http://www.w3.org/2001/XMLSchema#',
+  dcat: 'http://www.w3.org/ns/dcat#',
+  dct: 'http://purl.org/dc/terms/',
+  skos: 'http://www.w3.org/2004/02/skos/core#',
+  schema_org: 'http://schema.org/',
+  spdx: 'https://spdx.org/rdf/terms/#',
+  adms: 'http://www.w3.org/ns/adms#',
+  dqv: 'http://www.w3.org/ns/dqv#',
+  owl: 'http://www.w3.org/2002/07/owl#',
+  vcard: 'http://www.w3.org/2006/vcard/ns#',
+  time: 'http://www.w3.org/2006/time#',
+  locn: 'http://www.w3.org/ns/locn#',
+  mdcat: 'https://data.vlaanderen.be/ns/metadata-dcat#',
 }
 
 /**

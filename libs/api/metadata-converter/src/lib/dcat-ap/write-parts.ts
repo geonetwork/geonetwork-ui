@@ -1,7 +1,11 @@
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { NamedNode, Store, sym } from 'rdflib'
 import { DCAT, DCTERMS, FOAF, RDF } from './namespaces'
-import { getOrAddLocalizedObject, getOrAddStatement } from './utils/graph-utils'
+import {
+  getOrAddLiteral,
+  getOrAddLocalizedLiteral,
+  getOrAddStatement,
+} from './utils/graph-utils'
 import { BASE_URI } from './utils/uri'
 
 function getOrAddDatasetNode(
@@ -37,13 +41,14 @@ export function writeTitle(
   recordNode: NamedNode
 ) {
   const dataset = getOrAddDatasetNode(record, dataStore, recordNode)
-  getOrAddLocalizedObject(
+  getOrAddLocalizedLiteral(
     dataStore,
     dataset,
     DCTERMS('title'),
     record.title,
     'en'
   )
+  getOrAddLiteral(dataStore, dataset, DCTERMS('title'), record.title)
 }
 
 export function writeAbstract(
@@ -52,11 +57,12 @@ export function writeAbstract(
   recordNode: NamedNode
 ) {
   const dataset = getOrAddDatasetNode(record, dataStore, recordNode)
-  getOrAddLocalizedObject(
+  getOrAddLocalizedLiteral(
     dataStore,
     dataset,
     DCTERMS('description'),
     record.abstract,
     'en'
   )
+  getOrAddLiteral(dataStore, dataset, DCTERMS('description'), record.abstract)
 }

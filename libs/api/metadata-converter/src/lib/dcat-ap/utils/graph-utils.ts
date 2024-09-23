@@ -1,6 +1,6 @@
 import { lit, Literal, Node, parse, Statement, Store } from 'rdflib'
 import { Quad_Object, Quad_Predicate, Quad_Subject } from 'rdflib/lib/tf-types'
-import { ContentType, ObjectType } from 'rdflib/lib/types'
+import { ContentType } from 'rdflib/lib/types'
 import { BASE_URI } from './uri'
 
 export function findNodeLocalized(
@@ -38,32 +38,47 @@ export function getOrAddStatement(
   return statement
 }
 
-export function getOrAddLocalizedObject(
+export function getOrAddLiteral(
   dataStore: Store,
   subject: Quad_Subject,
   predicate: Quad_Predicate,
-  object: Quad_Object | string,
+  objectValue: string
+) {
+  let statement = dataStore.statementsMatching(subject, predicate, null)[0]
+  if (!statement) {
+    statement = dataStore.add(subject, predicate, lit(objectValue)) as Statement
+  } else {
+    statement.object = lit(objectValue)
+  }
+  return statement
+}
+
+export function getOrAddLocalizedLiteral(
+  dataStore: Store,
+  subject: Quad_Subject,
+  predicate: Quad_Predicate,
+  objectValue: string,
   language: string
 ) {
-  let statement = dataStore
-    .statementsMatching(
+  const statements = dataStore.statementsMatching(subject, predicate, null)
+  const withMatchingLanguage = statements.filter(
+    (statement) =>
+      statement.object instanceof Literal &&
+      statement.object.language.startsWith(language)
+  )
+  const withNoLanguage = statements.filter(
+    (statement) =>
+      statement.object instanceof Literal && !statement.object.language
+  )
+  let statement = withMatchingLanguage[0] || withNoLanguage[0]
+  if (!statement) {
+    statement = dataStore.add(
       subject,
       predicate,
-      typeof object === 'string' ? null : object
-    )
-    .filter(
-      (statement) =>
-        statement.object instanceof Literal &&
-        statement.object.language.startsWith(language)
-    )[0]
-  if (!statement) {
-    statement = dataStore.add(subject, predicate, object) as Statement
-    ;(statement.object as Literal).language = language
+      lit(objectValue, language)
+    ) as Statement
   } else {
-    statement.object =
-      typeof object === 'string'
-        ? lit(object, language)
-        : (object as ObjectType)
+    statement.object = lit(objectValue, language)
   }
   return statement
 }

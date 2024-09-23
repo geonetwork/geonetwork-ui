@@ -30,6 +30,7 @@ import { DCAT, RDF } from './namespaces'
 import { BASE_URI } from './utils/uri'
 import type { ContentType } from 'rdflib/lib/types'
 import { loadGraph } from './utils/graph-utils'
+import { exportGraphToXml } from './utils/serialize-to-xml'
 
 export class DcatApConverter extends BaseConverter<string> {
   protected readers: Record<
@@ -366,6 +367,10 @@ export class DcatApConverter extends BaseConverter<string> {
         this.writers['temporalExtents'](record, dataStore, recordNode)
       fieldChanged('lineage') &&
         this.writers['lineage'](record, dataStore, recordNode)
+    }
+
+    if (this.contentType.includes('xml')) {
+      return exportGraphToXml(dataStore)
     }
 
     return dataStore.serialize(undefined, this.contentType, null, {})
