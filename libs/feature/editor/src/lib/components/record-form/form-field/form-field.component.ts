@@ -24,8 +24,8 @@ import { EditableLabelDirective } from '@geonetwork-ui/ui/inputs'
 import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
 import { TranslateModule } from '@ngx-translate/core'
 import {
-  FormFieldLicenseComponent,
   FormFieldDateUpdatedComponent,
+  FormFieldLicenseComponent,
   FormFieldTemporalExtentsComponent,
 } from '.'
 import { FieldModelSpecifier, FormFieldConfig } from '../../../models'
@@ -41,6 +41,7 @@ import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/for
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
 import { FormFieldOpenDataComponent } from './form-field-open-data/form-field-open-data.component'
 import { FormFieldOnlineLinkResourcesComponent } from './form-field-online-link-resources/form-field-online-link-resources.component'
+import { FormFieldContactsComponent } from './form-field-contacts/form-field-contacts.component'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -70,6 +71,7 @@ import { FormFieldOnlineLinkResourcesComponent } from './form-field-online-link-
     FormFieldContactsForResourceComponent,
     FormFieldOpenDataComponent,
     FormFieldOnlineLinkResourcesComponent,
+    FormFieldContactsComponent,
   ],
 })
 export class FormFieldComponent {

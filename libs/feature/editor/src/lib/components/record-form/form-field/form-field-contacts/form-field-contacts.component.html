@@ -13,14 +13,13 @@
       <ng-container *ngFor="let contact of contacts; let index = index">
         <gn-ui-contact-card
           [contact]="contact"
-          [removable]="false"
         ></gn-ui-contact-card> </ng-container
     ></ng-container>
 
     <ng-container *ngIf="contacts.length > 1">
       <gn-ui-sortable-list
-        [elements]="contactsAsDynElem"
-        (elementsChange)="handleContactsChanged($event)"
+        [items]="contacts"
+        (itemsOrderChange)="handleContactsChanged($event)"
       ></gn-ui-sortable-list>
     </ng-container>
   </ng-container>

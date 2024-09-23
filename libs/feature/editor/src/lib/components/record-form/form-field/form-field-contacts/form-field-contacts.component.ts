@@ -34,12 +34,9 @@ import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { ContactCardComponent } from '../../../contact-card/contact-card.component'
-import {
-  DynamicElement,
-  SortableListComponent,
-} from '@geonetwork-ui/ui/elements'
 import { createFuzzyFilter } from '@geonetwork-ui/util/shared'
 import { map } from 'rxjs/operators'
+import { SortableListComponent } from '@geonetwork-ui/ui/layout'
 
 @Component({
   selector: 'gn-ui-form-field-contacts',
@@ -63,7 +60,6 @@ export class FormFieldContactsComponent implements OnDestroy, OnChanges {
   @Output() valueChange: EventEmitter<Individual[]> = new EventEmitter()
 
   contacts: Individual[] = []
-  contactsAsDynElem: DynamicElement[] = []
 
   subscription: Subscription = new Subscription()
 
@@ -83,6 +79,8 @@ export class FormFieldContactsComponent implements OnDestroy, OnChanges {
 
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
     const contactsChanges = changes['value']
+
+    console.log(contactsChanges)
 
     if (contactsChanges.firstChange) {
       this.allOrganizations = new Map<string, Organization>(
@@ -121,41 +119,15 @@ export class FormFieldContactsComponent implements OnDestroy, OnChanges {
 
       return acc
     }, [] as Individual[])
-
-    this.contactsAsDynElem = this.value.reduce((acc, contact) => {
-      const completeOrganization = this.allOrganizations.get(
-        contact.organization.name
-      )
-
-      const updatedContact = {
-        ...contact,
-        organization:
-          completeOrganization ??
-          ({ name: contact.organization.name } as Organization),
-      }
-
-      const contactAsDynElem = {
-        component: ContactCardComponent,
-        inputs: {
-          contact: updatedContact,
-          removable: false,
-        },
-      } as DynamicElement
-
-      acc.push(contactAsDynElem)
-
-      return acc
-    }, [] as DynamicElement[])
-
-    this.changeDetectorRef.markForCheck()
   }
 
-  handleContactsChanged(event: DynamicElement[]) {
-    const newContactsOrdered = event.map(
-      (contactAsDynElem) => contactAsDynElem.inputs['contact']
-    ) as Individual[]
+  handleContactsChanged(items: unknown[]) {
+    console.log(items)
+    // const newContactsOrdered = items.map(
+    //   (contactAsDynElem) => contactAsDynElem.inputs['contact']
+    // ) as Individual[]
 
-    this.valueChange.emit(newContactsOrdered)
+    // this.valueChange.emit(newContactsOrdered)
   }
 
   /**
