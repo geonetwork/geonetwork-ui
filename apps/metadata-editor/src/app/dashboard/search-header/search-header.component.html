@@ -1,6 +1,7 @@
 <div class="py-3 px-12 flex justify-between w-full">
   <div class="w-2/3">
     <gn-ui-fuzzy-search
+      (itemSelected)="handleItemSelection($event)"
       style="--gn-ui-text-input-border-size: 0px"
     ></gn-ui-fuzzy-search>
   </div>

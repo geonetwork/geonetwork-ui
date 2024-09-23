@@ -229,8 +229,7 @@ describe('dashboard', () => {
       it('should filter the dashboard based on the search input', () => {
         checkDashboardFiltered()
       })
-      // TODO remove skip when handleItemSelection of autocomplete is handled correctly
-      it.skip('should navigate to list of all records and filter the dashboard based on the search input when on different page', () => {
+      it('should navigate to list of all records and filter the dashboard based on the search input when on different page', () => {
         cy.visit('/my-space/my-records')
         checkDashboardFiltered()
       })

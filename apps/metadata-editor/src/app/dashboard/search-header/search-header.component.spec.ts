@@ -7,9 +7,9 @@ import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { TranslateModule } from '@ngx-translate/core'
-import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
+import { SearchService } from '@geonetwork-ui/feature/search'
 
 class AvatarServiceInterfaceMock {
   getPlaceholder = () => of('http://placeholder.com')
@@ -19,6 +19,10 @@ class AvatarServiceInterfaceMock {
 const me$ = new BehaviorSubject(barbieUserFixture())
 class PlatformServiceMock {
   getMe = jest.fn(() => me$)
+}
+
+class SearchServiceMock {
+  updateFilters = jest.fn()
 }
 
 describe('SearchHeaderComponent', () => {
@@ -41,6 +45,10 @@ describe('SearchHeaderComponent', () => {
         {
           provide: PlatformServiceInterface,
           useClass: PlatformServiceMock,
+        },
+        {
+          provide: SearchService,
+          useClass: SearchServiceMock,
         },
       ],
     })
