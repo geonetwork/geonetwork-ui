@@ -8,6 +8,7 @@
     [clearOnSelection]="true"
   >
   </gn-ui-autocomplete>
+
   <ng-container *ngIf="contacts.length > 0; else noContact">
     <ng-container *ngIf="contacts.length === 1">
       <ng-container *ngFor="let contact of contacts; let index = index">
@@ -20,10 +21,15 @@
       <gn-ui-sortable-list
         [items]="contacts"
         (itemsOrderChange)="handleContactsChanged($event)"
+        [elementTemplate]="contactTemplate"
       ></gn-ui-sortable-list>
+      <ng-template #contactTemplate let-contact>
+        <gn-ui-contact-card [contact]="contact"></gn-ui-contact-card>
+      </ng-template>
     </ng-container>
   </ng-container>
 </div>
+
 <ng-template #noContact>
   <div
     class="p-4 border border-primary bg-primary-lightest rounded-lg"

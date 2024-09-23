@@ -80,8 +80,6 @@ export class FormFieldContactsComponent implements OnDestroy, OnChanges {
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
     const contactsChanges = changes['value']
 
-    console.log(contactsChanges)
-
     if (contactsChanges.firstChange) {
       this.allOrganizations = new Map<string, Organization>(
         (
@@ -93,9 +91,6 @@ export class FormFieldContactsComponent implements OnDestroy, OnChanges {
     }
 
     if (contactsChanges.currentValue !== contactsChanges.previousValue) {
-      const contacts = contactsChanges.currentValue
-      console.log(contacts)
-
       this.updateContacts()
 
       this.changeDetectorRef.markForCheck()
@@ -122,12 +117,11 @@ export class FormFieldContactsComponent implements OnDestroy, OnChanges {
   }
 
   handleContactsChanged(items: unknown[]) {
-    console.log(items)
-    // const newContactsOrdered = items.map(
-    //   (contactAsDynElem) => contactAsDynElem.inputs['contact']
-    // ) as Individual[]
+    const contacts = items as Individual[]
 
-    // this.valueChange.emit(newContactsOrdered)
+    this.contacts = contacts
+
+    this.valueChange.emit(contacts)
   }
 
   /**
