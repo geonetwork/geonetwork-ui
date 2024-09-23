@@ -3,7 +3,6 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  OnInit,
   TemplateRef,
   ViewChild,
   ViewContainerRef,
@@ -62,7 +61,7 @@ export const allSearchFields = [
     RecordsListComponent,
   ],
 })
-export class AllRecordsComponent implements OnInit {
+export class AllRecordsComponent {
   @ViewChild('importRecordButton', { read: ElementRef })
   importRecordButton!: ElementRef
   @ViewChild('template') template!: TemplateRef<any>
@@ -84,11 +83,6 @@ export class AllRecordsComponent implements OnInit {
     private viewContainerRef: ViewContainerRef,
     private cdr: ChangeDetectorRef
   ) {}
-
-  ngOnInit(): void {
-    this.searchFacade.setConfigRequestFields(allSearchFields)
-    this.searchFacade.setPageSize(15)
-  }
 
   createRecord() {
     this.router.navigate(['/create']).catch((err) => console.error(err))

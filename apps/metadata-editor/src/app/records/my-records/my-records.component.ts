@@ -2,7 +2,6 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  OnDestroy,
   OnInit,
   TemplateRef,
   ViewChild,
@@ -17,11 +16,10 @@ import {
   ResultsTableContainerComponent,
   SearchFacade,
 } from '@geonetwork-ui/feature/search'
-import { Subscription } from 'rxjs'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Router } from '@angular/router'
 import { Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
 import { allSearchFields } from '../all-records/all-records.component'
@@ -48,10 +46,7 @@ import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
     FeatureSearchModule,
   ],
 })
-export class MyRecordsComponent implements OnInit, OnDestroy {
-  private sub: Subscription
-  ownerId: string
-
+export class MyRecordsComponent implements OnInit {
   @ViewChild('importRecordButton', { read: ElementRef })
   private importRecordButton!: ElementRef
   @ViewChild('template') template!: TemplateRef<any>
@@ -61,7 +56,6 @@ export class MyRecordsComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private activedRoute: ActivatedRoute,
     protected searchFacade: SearchFacade,
     private platformService: PlatformServiceInterface,
     private fieldsService: FieldsService,
@@ -74,8 +68,7 @@ export class MyRecordsComponent implements OnInit, OnDestroy {
     this.searchFacade.setConfigRequestFields(allSearchFields)
     this.searchFacade.setPageSize(15)
 
-    this.sub = this.platformService.getMe().subscribe((user) => {
-      this.ownerId = user.id
+    this.platformService.getMe().subscribe((user) => {
       this.fieldsService
         .buildFiltersFromFieldValues({ owner: user.id })
         .subscribe((filters) => {
@@ -131,9 +124,5 @@ export class MyRecordsComponent implements OnInit, OnDestroy {
       this.overlayRef.dispose()
       this.cdr.markForCheck()
     }
-  }
-
-  ngOnDestroy(): void {
-    this.sub.unsubscribe()
   }
 }
