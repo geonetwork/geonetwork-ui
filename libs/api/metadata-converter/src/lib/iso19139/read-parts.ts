@@ -600,7 +600,6 @@ export function readAbstract(rootEl: XmlElement): string {
 }
 
 export function readContacts(rootEl: XmlElement): Individual[] {
-  console.log('converter : readContacts')
   return pipe(
     findChildrenElement('gmd:contact', false),
     mapArray(findChildElement('gmd:CI_ResponsibleParty', false)),
@@ -609,7 +608,6 @@ export function readContacts(rootEl: XmlElement): Individual[] {
 }
 
 export function readContactsForResource(rootEl: XmlElement): Individual[] {
-  console.log('converter : readContactsForResource')
   return pipe(
     findIdentification(),
     combine(

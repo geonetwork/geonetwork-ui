@@ -782,7 +782,6 @@ export function writeStatus(record: DatasetRecord, rootEl: XmlElement) {
 }
 
 export function writeContacts(record: CatalogRecord, rootEl: XmlElement) {
-  console.log('converter : writeContacts')
   pipe(
     removeChildrenByName('gmd:contact'),
     appendChildren(
@@ -797,7 +796,6 @@ export function writeContactsForResource(
   record: CatalogRecord,
   rootEl: XmlElement
 ) {
-  console.log('converter : writeContactsForResource')
   pipe(
     findOrCreateIdentification(),
     removeChildrenByName('gmd:pointOfContact'),

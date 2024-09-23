@@ -38,7 +38,7 @@ export const initialEditorState: EditorState = {
   saveError: null,
   changedSinceSave: false,
   editorConfig: DEFAULT_CONFIGURATION,
-  currentPage: 2, //todo: remove before merge
+  currentPage: 0,
 }
 
 const reducer = createReducer(

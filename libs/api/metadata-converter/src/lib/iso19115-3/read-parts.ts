@@ -229,7 +229,6 @@ export function readOwnerOrganization(rootEl: XmlElement): Organization {
 }
 
 export function readContacts(rootEl: XmlElement): Individual[] {
-  console.log('ici')
   return pipe(
     findNestedElements('mdb:contact', 'cit:CI_Responsibility'),
     mapArray(extractIndividuals()),

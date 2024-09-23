@@ -19,7 +19,6 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import {
   Individual,
   Organization,
-  Role,
 } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateModule } from '@ngx-translate/core'
 import {
@@ -64,8 +63,6 @@ export class FormFieldContactsComponent implements OnDestroy, OnChanges {
   subscription: Subscription = new Subscription()
 
   allUsers$: Observable<UserModel[]>
-
-  rolesToPick: Role[] = ['point_of_contact']
 
   allOrganizations: Map<string, Organization> = new Map()
 
