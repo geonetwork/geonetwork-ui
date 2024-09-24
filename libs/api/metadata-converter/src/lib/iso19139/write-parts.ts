@@ -19,9 +19,7 @@ import format from 'date-fns/format'
 import { Geometry } from 'geojson'
 import {
   ChainableFunction,
-  fallback,
   filterArray,
-  getAtIndex,
   map,
   mapArray,
   noop,
@@ -33,10 +31,10 @@ import {
   appendChildren,
   createChild,
   createElement,
-  findChildElement,
   findChildOrCreate,
   findChildrenElement,
   findNestedChildOrCreate,
+  findNestedElement,
   findNestedElements,
   readAttribute,
   removeAllChildren,
@@ -84,11 +82,9 @@ export function writeAnchor(
 export function writeDateTime(
   date: Date
 ): ChainableFunction<XmlElement, XmlElement> {
-  return tap(
-    pipe(
-      findChildOrCreate('gco:DateTime'),
-      setTextContent(format(date, "yyyy-MM-dd'T'HH:mm:ss"))
-    )
+  return pipe(
+    findChildOrCreate('gco:DateTime'),
+    setTextContent(format(date, "yyyy-MM-dd'T'HH:mm:ss"))
   )
 }
 
@@ -322,50 +318,6 @@ export function appendResponsibleParty(contact: Individual) {
             'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode'
           ),
           addAttribute('codeListValue', getRoleCode(contact.role))
-        )
-      )
-    )
-  )
-}
-
-export function updateCitationDate(
-  date: Date,
-  type: 'revision' | 'creation' | 'publication'
-) {
-  return pipe(
-    findNestedElements('gmd:date', 'gmd:CI_Date'),
-    filterArray(
-      pipe(
-        findChildElement('gmd:CI_DateTypeCode'),
-        readAttribute('codeListValue'),
-        map((value) => value === type)
-      )
-    ),
-    getAtIndex(0),
-    findChildElement('gmd:date'),
-    removeAllChildren(),
-    writeDateTime(date)
-  )
-}
-
-export function appendCitationDate(
-  date: Date,
-  type: 'revision' | 'creation' | 'publication'
-) {
-  return appendChildren(
-    pipe(
-      createElement('gmd:date'),
-      createChild('gmd:CI_Date'),
-      appendChildren(
-        pipe(createElement('gmd:date'), writeDateTime(date)),
-        pipe(
-          createElement('gmd:dateType'),
-          createChild('gmd:CI_DateTypeCode'),
-          addAttribute(
-            'codeList',
-            'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode'
-          ),
-          addAttribute('codeListValue', type)
         )
       )
     )
@@ -745,14 +697,6 @@ export function writeKind(record: CatalogRecord, rootEl: XmlElement) {
   )(rootEl)
 }
 
-export function writeRecordUpdated(record: CatalogRecord, rootEl: XmlElement) {
-  pipe(
-    findChildOrCreate('gmd:dateStamp'),
-    removeAllChildren(),
-    writeDateTime(record.recordUpdated)
-  )(rootEl)
-}
-
 export function writeTitle(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
     findOrCreateIdentification(),
@@ -912,49 +856,92 @@ export function writeUpdateFrequency(
   )(rootEl)
 }
 
+export function writeRecordUpdated(record: CatalogRecord, rootEl: XmlElement) {
+  pipe(
+    findChildOrCreate('gmd:dateStamp'),
+    removeAllChildren(),
+    writeDateTime(record.recordUpdated)
+  )(rootEl)
+}
+
+export function removeResourceDate(
+  type: 'revision' | 'creation' | 'publication'
+) {
+  return pipe(
+    findOrCreateIdentification(),
+    findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
+    removeChildren(
+      pipe(
+        findNestedElements('gmd:date'),
+        filterArray(
+          pipe(
+            findNestedElement(
+              'gmd:CI_Date',
+              'gmd:dateType',
+              'gmd:CI_DateTypeCode'
+            ),
+            readAttribute('codeListValue'),
+            map((value) => value === type)
+          )
+        )
+      )
+    )
+  )
+}
+
+export function appendResourceDate(
+  date: Date,
+  type: 'revision' | 'creation' | 'publication'
+) {
+  return pipe(
+    findOrCreateIdentification(),
+    findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
+    appendChildren(
+      pipe(
+        createElement('gmd:date'),
+        createChild('gmd:CI_Date'),
+        appendChildren(
+          pipe(createElement('gmd:date'), writeDateTime(date)),
+          pipe(
+            createElement('gmd:dateType'),
+            createChild('gmd:CI_DateTypeCode'),
+            addAttribute(
+              'codeList',
+              'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode'
+            ),
+            addAttribute('codeListValue', type)
+          )
+        )
+      )
+    )
+  )
+}
+
 export function writeResourceCreated(
   record: DatasetRecord,
   rootEl: XmlElement
 ) {
-  if (!('resourceCreated' in record)) return
-  pipe(
-    findOrCreateIdentification(),
-    findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
-    fallback(
-      updateCitationDate(record.resourceCreated, 'creation'),
-      appendCitationDate(record.resourceCreated, 'creation')
-    )
-  )(rootEl)
+  removeResourceDate('creation')(rootEl)
+  if (!record.resourceCreated) return
+  appendResourceDate(record.resourceCreated, 'creation')(rootEl)
 }
 
 export function writeResourceUpdated(
   record: DatasetRecord,
   rootEl: XmlElement
 ) {
-  if (!('resourceUpdated' in record)) return
-  pipe(
-    findOrCreateIdentification(),
-    findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
-    fallback(
-      updateCitationDate(record.resourceUpdated, 'revision'),
-      appendCitationDate(record.resourceUpdated, 'revision')
-    )
-  )(rootEl)
+  removeResourceDate('revision')(rootEl)
+  if (!record.resourceUpdated) return
+  appendResourceDate(record.resourceUpdated, 'revision')(rootEl)
 }
 
 export function writeResourcePublished(
   record: DatasetRecord,
   rootEl: XmlElement
 ) {
-  if (!('resourcePublished' in record)) return
-  pipe(
-    findOrCreateIdentification(),
-    findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
-    fallback(
-      updateCitationDate(record.resourcePublished, 'publication'),
-      appendCitationDate(record.resourcePublished, 'publication')
-    )
-  )(rootEl)
+  removeResourceDate('publication')(rootEl)
+  if (!record.resourcePublished) return
+  appendResourceDate(record.resourcePublished, 'publication')(rootEl)
 }
 
 export function writeSpatialRepresentation(

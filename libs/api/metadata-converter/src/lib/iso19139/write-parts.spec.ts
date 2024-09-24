@@ -11,6 +11,9 @@ import {
   getISODuration,
   writeKeywords,
   writeOnlineResources,
+  writeResourceCreated,
+  writeResourcePublished,
+  writeResourceUpdated,
   writeSpatialExtents,
   writeTemporalExtents,
 } from './write-parts'
@@ -26,6 +29,81 @@ describe('write parts', () => {
   beforeEach(() => {
     rootEl = createElement('root')()
     datasetRecord = { ...GENERIC_DATASET_RECORD }
+  })
+
+  describe('write dates', () => {
+    it('writes the record dates', () => {
+      const modified = {
+        ...datasetRecord,
+        resourcePublished: new Date('2024-01-01T00:00:00Z'),
+      }
+      writeResourceCreated(modified, rootEl)
+      writeResourceUpdated(modified, rootEl)
+      writeResourcePublished(modified, rootEl)
+      expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <gmd:citation>
+                <gmd:CI_Citation>
+                    <gmd:date>
+                        <gmd:CI_Date>
+                            <gmd:date>
+                                <gco:DateTime>2022-09-01T14:18:19</gco:DateTime>
+                            </gmd:date>
+                            <gmd:dateType>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation"/>
+                            </gmd:dateType>
+                        </gmd:CI_Date>
+                    </gmd:date>
+                    <gmd:date>
+                        <gmd:CI_Date>
+                            <gmd:date>
+                                <gco:DateTime>2022-12-04T15:12:00</gco:DateTime>
+                            </gmd:date>
+                            <gmd:dateType>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision"/>
+                            </gmd:dateType>
+                        </gmd:CI_Date>
+                    </gmd:date>
+                    <gmd:date>
+                        <gmd:CI_Date>
+                            <gmd:date>
+                                <gco:DateTime>2024-01-01T01:00:00</gco:DateTime>
+                            </gmd:date>
+                            <gmd:dateType>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+                            </gmd:dateType>
+                        </gmd:CI_Date>
+                    </gmd:date>
+                </gmd:CI_Citation>
+            </gmd:citation>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+    })
+    it('delete date if the date is not present in the record', () => {
+      // first write dates
+      writeResourceCreated(datasetRecord, rootEl)
+      writeResourceUpdated(datasetRecord, rootEl)
+      const modified = {
+        ...datasetRecord,
+        resourceUpdated: null,
+        resourceCreated: null,
+        resourcePublished: null,
+      }
+      writeResourceCreated(modified, rootEl)
+      writeResourceUpdated(modified, rootEl)
+      writeResourcePublished(modified, rootEl)
+      expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <gmd:citation>
+                <gmd:CI_Citation/>
+            </gmd:citation>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+    })
   })
 
   describe('writeOnlineResources', () => {
