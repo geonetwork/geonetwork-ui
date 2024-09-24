@@ -238,7 +238,7 @@ export function getISODuration(updateFrequency: UpdateFrequencyCustom): string {
   return `P${duration.years}Y${duration.months}M${duration.days}D${hours}`
 }
 
-export function appendResponsibleParty(contact: Individual) {
+function appendResponsibleParty(contact: Individual) {
   const fullName = namePartsToFull(contact.firstName, contact.lastName)
 
   const createAddress = pipe(
@@ -274,7 +274,7 @@ export function appendResponsibleParty(contact: Individual) {
         )
       : noop,
     appendChildren(createAddress),
-    'website' in contact.organization
+    contact.organization?.website
       ? appendChildren(
           pipe(
             createElement('gmd:onlineResource'),
@@ -304,11 +304,16 @@ export function appendResponsibleParty(contact: Individual) {
             )
           )
         : noop,
+
+      contact.organization?.name
+        ? appendChildren(
+            pipe(
+              createElement('gmd:organisationName'),
+              writeCharacterString(contact.organization.name)
+            )
+          )
+        : noop,
       appendChildren(
-        pipe(
-          createElement('gmd:organisationName'),
-          writeCharacterString(contact.organization.name)
-        ),
         createContact,
         pipe(
           createElement('gmd:role'),

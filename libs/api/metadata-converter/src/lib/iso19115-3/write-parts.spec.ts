@@ -1,5 +1,6 @@
 import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
 import {
+  writeContacts,
   writeContactsForResource,
   writeOnlineResources,
   writeRecordCreated,
@@ -449,6 +450,161 @@ describe('write parts', () => {
             </gmd:transferOptions>
         </gmd:MD_Distribution>
     </gmd:distributionInfo>
+</root>`)
+    })
+  })
+
+  describe('writeContacts', () => {
+    it('works with incomplete contacts', () => {
+      const contacts = [
+        {
+          firstName: 'John',
+          role: 'point_of_contact',
+          email: 'aaa@bbb.ccc',
+        },
+        {
+          lastName: 'Doe',
+          role: 'contributor',
+          email: 'abc@def.ghi',
+          organization: {
+            name: 'ACME',
+          },
+        },
+      ]
+      const modified: DatasetRecord = {
+        ...datasetRecord,
+        contacts,
+        contactsForResource: contacts,
+      }
+      writeContacts(modified, rootEl)
+      writeContactsForResource(modified, rootEl)
+      expect(rootAsString()).toEqual(`<root>
+    <gmd:contact>
+        <cit:CI_Responsibility>
+            <cit:role>
+                <cit:CI_RoleCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</cit:CI_RoleCode>
+            </cit:role>
+            <cit:party>
+                <cit:CI_Organisation>
+                    <cit:contactInfo>
+                        <cit:CI_Contact>
+                            <cit:address>
+                                <cit:CI_Address>
+                                    <cit:electronicMailAddress>
+                                        <gco:CharacterString>aaa@bbb.ccc</gco:CharacterString>
+                                    </cit:electronicMailAddress>
+                                </cit:CI_Address>
+                            </cit:address>
+                        </cit:CI_Contact>
+                    </cit:contactInfo>
+                    <cit:individual>
+                        <cit:CI_Individual>
+                            <cit:name>
+                                <gco:CharacterString>John</gco:CharacterString>
+                            </cit:name>
+                        </cit:CI_Individual>
+                    </cit:individual>
+                </cit:CI_Organisation>
+            </cit:party>
+        </cit:CI_Responsibility>
+    </gmd:contact>
+    <gmd:contact>
+        <cit:CI_Responsibility>
+            <cit:role>
+                <cit:CI_RoleCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="contributor">contributor</cit:CI_RoleCode>
+            </cit:role>
+            <cit:party>
+                <cit:CI_Organisation>
+                    <cit:name>
+                        <gco:CharacterString>ACME</gco:CharacterString>
+                    </cit:name>
+                    <cit:contactInfo>
+                        <cit:CI_Contact>
+                            <cit:address>
+                                <cit:CI_Address>
+                                    <cit:electronicMailAddress>
+                                        <gco:CharacterString>abc@def.ghi</gco:CharacterString>
+                                    </cit:electronicMailAddress>
+                                </cit:CI_Address>
+                            </cit:address>
+                        </cit:CI_Contact>
+                    </cit:contactInfo>
+                    <cit:individual>
+                        <cit:CI_Individual>
+                            <cit:name>
+                                <gco:CharacterString>Doe</gco:CharacterString>
+                            </cit:name>
+                        </cit:CI_Individual>
+                    </cit:individual>
+                </cit:CI_Organisation>
+            </cit:party>
+        </cit:CI_Responsibility>
+    </gmd:contact>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <mri:pointOfContact>
+                <cit:CI_Responsibility>
+                    <cit:role>
+                        <cit:CI_RoleCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</cit:CI_RoleCode>
+                    </cit:role>
+                    <cit:party>
+                        <cit:CI_Organisation>
+                            <cit:contactInfo>
+                                <cit:CI_Contact>
+                                    <cit:address>
+                                        <cit:CI_Address>
+                                            <cit:electronicMailAddress>
+                                                <gco:CharacterString>aaa@bbb.ccc</gco:CharacterString>
+                                            </cit:electronicMailAddress>
+                                        </cit:CI_Address>
+                                    </cit:address>
+                                </cit:CI_Contact>
+                            </cit:contactInfo>
+                            <cit:individual>
+                                <cit:CI_Individual>
+                                    <cit:name>
+                                        <gco:CharacterString>John</gco:CharacterString>
+                                    </cit:name>
+                                </cit:CI_Individual>
+                            </cit:individual>
+                        </cit:CI_Organisation>
+                    </cit:party>
+                </cit:CI_Responsibility>
+            </mri:pointOfContact>
+            <mri:pointOfContact>
+                <cit:CI_Responsibility>
+                    <cit:role>
+                        <cit:CI_RoleCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="contributor">contributor</cit:CI_RoleCode>
+                    </cit:role>
+                    <cit:party>
+                        <cit:CI_Organisation>
+                            <cit:name>
+                                <gco:CharacterString>ACME</gco:CharacterString>
+                            </cit:name>
+                            <cit:contactInfo>
+                                <cit:CI_Contact>
+                                    <cit:address>
+                                        <cit:CI_Address>
+                                            <cit:electronicMailAddress>
+                                                <gco:CharacterString>abc@def.ghi</gco:CharacterString>
+                                            </cit:electronicMailAddress>
+                                        </cit:CI_Address>
+                                    </cit:address>
+                                </cit:CI_Contact>
+                            </cit:contactInfo>
+                            <cit:individual>
+                                <cit:CI_Individual>
+                                    <cit:name>
+                                        <gco:CharacterString>Doe</gco:CharacterString>
+                                    </cit:name>
+                                </cit:CI_Individual>
+                            </cit:individual>
+                        </cit:CI_Organisation>
+                    </cit:party>
+                </cit:CI_Responsibility>
+            </mri:pointOfContact>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
 </root>`)
     })
   })

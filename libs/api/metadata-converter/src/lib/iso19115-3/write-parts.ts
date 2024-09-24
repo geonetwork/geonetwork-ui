@@ -17,7 +17,6 @@ import {
   findNestedElement,
   findNestedElements,
   readAttribute,
-  removeAllChildren,
   removeChildren,
   removeChildrenByName,
   setTextContent,
@@ -211,33 +210,6 @@ export function writeResourcePublished(
   removeResourceDate('publication')(rootEl)
   if (!record.resourcePublished) return
   appendResourceDate(record.resourcePublished, 'publication')(rootEl)
-}
-
-export function writeOwnerOrganization(
-  record: CatalogRecord,
-  rootEl: XmlElement
-) {
-  // if no contact matches the owner org, create an empty one
-  const ownerContact: Individual = record.contacts.find(
-    (contact) => contact.organization.name === record.ownerOrganization.name
-  )
-  pipe(
-    findChildOrCreate('mdb:contact'),
-    removeAllChildren(),
-    appendResponsibleParty(
-      ownerContact
-        ? {
-            ...ownerContact,
-            // owner responsible party is always point of contact
-            role: 'point_of_contact',
-          }
-        : {
-            organization: record.ownerOrganization,
-            email: 'missing@missing.com',
-            role: 'point_of_contact',
-          }
-    )
-  )(rootEl)
 }
 
 export function appendResponsibleParty(contact: Individual) {
