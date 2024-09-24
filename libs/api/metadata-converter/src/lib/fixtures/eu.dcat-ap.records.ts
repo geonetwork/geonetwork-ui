@@ -12,7 +12,7 @@ export const EU_SURVEY_DATASET_RECORD: DatasetRecord = {
       firstName: 'Rossalina',
       lastName: 'Latcheva (PhD)',
       email: 'missing@missing.com',
-      role: 'pointOfContact',
+      role: 'point_of_contact',
     },
   ],
   landingPage: new URL(
@@ -228,7 +228,7 @@ export const EU_SURVEY_DATASET_RECORD: DatasetRecord = {
     'http://publications.europa.eu/resource/authority/data-theme/SOCI',
     'http://publications.europa.eu/resource/authority/data-theme/EDUC',
   ],
-  lineage: undefined,
+  lineage: '',
   ownerOrganization: {
     name: 'http://publications.europa.eu/resource/authority/corporate-body/FRA',
   },
@@ -236,7 +236,7 @@ export const EU_SURVEY_DATASET_RECORD: DatasetRecord = {
   recordUpdated: new Date('2022-04-22T12:08:18.000Z'),
   resourceCreated: new Date('2017-12-19T00:00:00.000Z'),
   resourceUpdated: new Date('2018-12-14T00:00:00.000Z'),
-  status: undefined,
+  status: 'completed',
   updateFrequency: 'unknown',
 }
 
@@ -264,9 +264,9 @@ export const EU_WHOISWHO_DATASET_RECORD: DatasetRecord = {
                     If you detect any errors, please report them to: whoiswho@publications.europa.eu\r
                     \r
                     [Privacy statement of EU Whoiswho](https://op.europa.eu/en/web/about-us/legal-notices/op_whoiswho).`,
-  lineage: undefined,
+  lineage: '',
   ownerOrganization: undefined,
   recordUpdated: undefined,
-  status: undefined,
+  status: 'completed',
   updateFrequency: 'unknown',
 }

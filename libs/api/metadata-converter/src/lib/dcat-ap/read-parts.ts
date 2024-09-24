@@ -66,7 +66,7 @@ function mapContactFromStatement(
     ? email.value.replace(/^mailto:/, '')
     : 'missing@missing.com'
   return {
-    role: role?.value ?? 'pointOfContact',
+    role: role?.value ?? 'point_of_contact',
     email: emailValue,
     ...(firstName && { firstName }),
     ...(lastName && { lastName }),
@@ -303,7 +303,7 @@ export function readRecordUpdated(
 ): Date {
   const dateString = dataStore.the(recordNode, DCTERMS('modified'), null)?.value
   if (dateString) return new Date(dateString)
-  return null
+  return new Date() // record updated is a mandatory field
 }
 
 export function readResourceCreated(

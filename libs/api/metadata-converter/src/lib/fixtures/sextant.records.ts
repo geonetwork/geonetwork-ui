@@ -76,10 +76,10 @@ export const SEXTANT_BATHYMETRY_DATASET_RECORD: DatasetRecord = {
   abstract: `Modèle bathymétrique (MNT) d'une partie de l'édifice sédimentaire sous-marin du Golo, à l'Est du Cap Corse. Les données ont été acquises lors de la campagne océanographique Sigolo en 2008, avec les sondeurs multifaisceaux EM300 et EM1000.
                 Le pas de la grille est de 25m.
                 Produit interne Ifremer.`,
-  lineage: undefined,
+  lineage: '',
   ownerOrganization: null,
   recordUpdated: new Date('2020-06-03T22:34:05.000Z'),
   resourceUpdated: new Date('2020-06-03T22:34:05.000Z'),
-  status: undefined,
+  status: 'completed',
   updateFrequency: 'unknown',
 }

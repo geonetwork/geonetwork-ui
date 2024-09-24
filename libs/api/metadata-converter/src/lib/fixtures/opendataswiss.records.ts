@@ -8,7 +8,7 @@ export const OPENDATASWISS_DATASET_RECORD: DatasetRecord = {
   contactsForResource: [
     {
       email: 'geoinformation@bfe.admin.ch',
-      role: 'pointOfContact',
+      role: 'point_of_contact',
       firstName: 'geoinformation@bfe.admin.ch',
     },
   ],
@@ -97,7 +97,7 @@ export const OPENDATASWISS_DATASET_RECORD: DatasetRecord = {
     'http://dcat-ap.ch/vocabulary/themes/geography',
   ],
   abstract: `The Energy City label is used for certifying municipalities that develop and implement a sustainable energy policy. Municipalities that have been awarded this label promote renewable energy and ecological mobility, and focus on the efficient use of resources. In order to qualify for the label, a municipality must have realised or adopted at least 50 percent of its scope for action in the area of energy policy. Here the calculation is based on the Energy Cities catalogue. The European Energy Award®GOLD is the highest level of certification. This label is awarded to municipalities that have implemented at least 75 percent of the measures listed in the catalogue at the time of certification. Municipalities that qualify for this award demonstrate the highest level of commitment towards a sustainable energy future. The label is based on an assessment of municipal energy policy in the areas of development and spatial planning, municipal buildings and installations, supply and disposal, mobility, internal organisation, communication and cooperation.`,
-  lineage: undefined,
+  lineage: '',
   ownerOrganization: {
     name: 'Bundesamt für Energie',
   },
@@ -105,6 +105,6 @@ export const OPENDATASWISS_DATASET_RECORD: DatasetRecord = {
   recordUpdated: new Date('2022-06-16T20:06:22.000Z'),
   resourceCreated: new Date('2014-06-30T00:00:00.000'),
   resourceUpdated: new Date('2022-06-15T00:00:00.000'),
-  status: undefined,
+  status: 'completed',
   updateFrequency: 'unknown',
 }

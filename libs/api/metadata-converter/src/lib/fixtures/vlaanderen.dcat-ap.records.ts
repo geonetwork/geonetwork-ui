@@ -11,7 +11,7 @@ export const VLAANDEREN_DATASET_RECORD: DatasetRecord = {
       firstName: 'David',
       lastName: 'Buysse',
       email: 'david.buysse@inbo.be',
-      role: 'pointOfContact',
+      role: 'point_of_contact',
     },
   ],
   ownerOrganization: {
@@ -65,9 +65,9 @@ export const VLAANDEREN_DATASET_RECORD: DatasetRecord = {
   ],
   temporalExtents: [],
   topics: ['biodiversity'],
-  lineage: undefined,
+  lineage: '',
   recordUpdated: new Date('2024-09-19T01:15:09.732Z'),
   resourceUpdated: new Date('2021-04-14T11:15+02:00'),
-  status: undefined,
+  status: 'completed',
   updateFrequency: 'unknown',
 }
