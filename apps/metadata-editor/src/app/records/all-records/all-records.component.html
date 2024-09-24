@@ -1,69 +1,79 @@
-<main class="bg-white">
-  <div class="flex flex-row items-baseline gap-[8px] px-[32px] py-[20px]">
-    <ng-container *ngIf="searchText$ | async as searchText; else allRecords">
-      <h1
-        class="text-[16px] text-main font-title font-bold"
-        translate
-        [translateParams]="{ searchText: searchText }"
-      >
-        dashboard.records.search
-      </h1>
-      <div class="text-[12px]">
-        <md-editor-records-count></md-editor-records-count>
-      </div>
-    </ng-container>
-    <ng-template #allRecords>
-      <h1 class="text-[16px] text-main font-title font-bold" translate>
-        dashboard.records.all
-      </h1>
-      <div class="text-[12px]">
-        <md-editor-records-count></md-editor-records-count>
-      </div>
-    </ng-template>
+<header class="shrink-0 border-b border-gray-300">
+  <md-editor-search-header></md-editor-search-header>
+</header>
+<div class="relative overflow-y-auto">
+  <div class="absolute top-0 left-0 w-2/3 z-10 pointer-events-none">
+    <gn-ui-notifications-container></gn-ui-notifications-container>
   </div>
-  <div
-    class="flex flex-row items-center mx-[32px] my-[16px] py-[8px] gap-[16px]"
-  >
-    <div>
-      <span class="uppercase" translate>dashboard.results.listMetadata</span>
+  <main class="bg-white">
+    <div class="flex flex-row items-baseline gap-[8px] px-[32px] py-[20px]">
+      <ng-container *ngIf="searchText$ | async as searchText; else allRecords">
+        <h1
+          class="text-[16px] text-main font-title font-bold"
+          translate
+          [translateParams]="{ searchText: searchText }"
+        >
+          dashboard.records.search
+        </h1>
+        <div class="text-[12px]">
+          <md-editor-records-count></md-editor-records-count>
+        </div>
+      </ng-container>
+      <ng-template #allRecords>
+        <h1 class="text-[16px] text-main font-title font-bold" translate>
+          dashboard.records.all
+        </h1>
+        <div class="text-[12px]">
+          <md-editor-records-count></md-editor-records-count>
+        </div>
+      </ng-template>
     </div>
-    <div>
-      <span class="uppercase" translate>dashboard.results.listResources</span>
+    <div
+      class="flex flex-row items-center mx-[32px] my-[16px] py-[8px] gap-[16px]"
+    >
+      <div>
+        <span class="uppercase" translate>dashboard.results.listMetadata</span>
+      </div>
+      <div>
+        <span class="uppercase" translate>dashboard.results.listResources</span>
+      </div>
+      <div class="grow"></div>
+      <gn-ui-button
+        cdkOverlayOrigin
+        #importRecordButton
+        (buttonClick)="duplicateExternalRecord()"
+        type="gray"
+        data-test="import-record"
+      >
+        <span translate>dashboard.importRecord</span>
+        <mat-icon
+          *ngIf="!isImportMenuOpen"
+          class="material-symbols-outlined text-primary"
+          >keyboard_arrow_down</mat-icon
+        >
+        <mat-icon
+          *ngIf="isImportMenuOpen"
+          class="material-symbols-outlined text-primary"
+          >keyboard_arrow_up</mat-icon
+        >
+      </gn-ui-button>
+      <ng-template #template>
+        <gn-ui-import-record
+          (closeImportMenu)="closeImportMenu()"
+        ></gn-ui-import-record>
+      </ng-template>
+      <gn-ui-button
+        (buttonClick)="createRecord()"
+        type="primary"
+        data-cy="create-record"
+      >
+        <mat-icon class="material-symbols-outlined mr-2"
+          >edit_document</mat-icon
+        >
+        <span translate>dashboard.createRecord</span>
+      </gn-ui-button>
     </div>
-    <div class="grow"></div>
-    <gn-ui-button
-      cdkOverlayOrigin
-      #importRecordButton
-      (buttonClick)="duplicateExternalRecord()"
-      type="gray"
-      data-test="import-record"
-    >
-      <span translate>dashboard.importRecord</span>
-      <mat-icon
-        *ngIf="!isImportMenuOpen"
-        class="material-symbols-outlined text-primary"
-        >keyboard_arrow_down</mat-icon
-      >
-      <mat-icon
-        *ngIf="isImportMenuOpen"
-        class="material-symbols-outlined text-primary"
-        >keyboard_arrow_up</mat-icon
-      >
-    </gn-ui-button>
-    <ng-template #template>
-      <gn-ui-import-record
-        (closeImportMenu)="closeImportMenu()"
-      ></gn-ui-import-record>
-    </ng-template>
-    <gn-ui-button
-      (buttonClick)="createRecord()"
-      type="primary"
-      data-cy="create-record"
-    >
-      <mat-icon class="material-symbols-outlined mr-2">edit_document</mat-icon>
-      <span translate>dashboard.createRecord</span>
-    </gn-ui-button>
-  </div>
 
-  <md-editor-records-list></md-editor-records-list>
-</main>
+    <md-editor-records-list></md-editor-records-list>
+  </main>
+</div>

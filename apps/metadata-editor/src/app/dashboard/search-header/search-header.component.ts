@@ -4,7 +4,6 @@ import { MatIconModule } from '@angular/material/icon'
 import { LetDirective } from '@ngrx/component'
 import {
   FeatureSearchModule,
-  FuzzySearchComponent,
   SearchService,
 } from '@geonetwork-ui/feature/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
@@ -32,18 +31,13 @@ import { RouterFacade } from '@geonetwork-ui/feature/router'
 export class SearchHeaderComponent {
   public placeholder$ = this.avatarService.getPlaceholder()
   activeBtn = false
-  @ViewChild('fuzzySearch') fuzzySearch: FuzzySearchComponent
 
   constructor(
     public platformService: PlatformServiceInterface,
     private avatarService: AvatarServiceInterface,
     private searchService: SearchService,
     private routerFacade: RouterFacade
-  ) {
-    this.routerFacade.currentRoute$.subscribe(() => {
-      this.fuzzySearch?.autocomplete?.clear()
-    })
-  }
+  ) {}
 
   handleItemSelection(item: CatalogRecord) {
     this.searchService.updateFilters({ any: item.title })
