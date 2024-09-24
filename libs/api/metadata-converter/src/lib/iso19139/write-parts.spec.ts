@@ -37,7 +37,7 @@ describe('write parts', () => {
     it('writes the record dates', () => {
       const modified = {
         ...datasetRecord,
-        resourcePublished: new Date('2024-01-01T00:00:00Z'),
+        resourcePublished: new Date('2024-01-01T00:00:00'),
       }
       writeResourceCreated(modified, rootEl)
       writeResourceUpdated(modified, rootEl)
@@ -70,7 +70,7 @@ describe('write parts', () => {
                     <gmd:date>
                         <gmd:CI_Date>
                             <gmd:date>
-                                <gco:DateTime>2024-01-01T01:00:00</gco:DateTime>
+                                <gco:DateTime>2024-01-01T00:00:00</gco:DateTime>
                             </gmd:date>
                             <gmd:dateType>
                                 <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
