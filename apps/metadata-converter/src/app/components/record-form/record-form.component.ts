@@ -120,4 +120,14 @@ export class RecordFormComponent implements AfterViewInit {
     }
     this.recordChanged.emit(this.record)
   }
+
+  addOwnerOrg() {
+    this.record = {
+      ...this.record,
+      ownerOrganization: {
+        name: 'My Organization',
+      },
+    }
+    this.recordChanged.emit(this.record)
+  }
 }
