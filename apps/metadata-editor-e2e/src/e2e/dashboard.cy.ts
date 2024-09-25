@@ -213,35 +213,17 @@ describe('dashboard', () => {
       cy.clearRecordDrafts()
     })
   })
+
   describe('navigation', () => {
-    function checkDashboardFiltered() {
-      cy.get('gn-ui-autocomplete').type('Mat')
-      cy.get('mat-option').first().click()
-      cy.get('gn-ui-interactive-table')
-        .find('[data-cy="table-row"]')
-        .should('have.length', '1')
-    }
     beforeEach(() => {
       cy.login('admin', 'admin', false)
       cy.visit('/catalog/search')
     })
-    describe('search input', () => {
-      it('should filter the dashboard based on the search input', () => {
-        checkDashboardFiltered()
-      })
-      it('should navigate to list of all records and filter the dashboard based on the search input when on different page', () => {
-        cy.visit('/my-space/my-records')
-        checkDashboardFiltered()
-      })
-      it('should clear the search input when navigating to my records', () => {
-        cy.get('gn-ui-autocomplete').type('Mat')
-        cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
-        cy.get('gn-ui-autocomplete').should('have.value', '')
-      })
-      it('should clear the search input when navigating to my drafts', () => {
-        cy.get('gn-ui-autocomplete').type('Mat')
-        cy.get('md-editor-dashboard-menu').find('a').eq(6).click()
-        cy.get('gn-ui-autocomplete').should('have.value', '')
+    describe('all records', () => {
+      it('should display the correct amount of records', () => {
+        cy.get('gn-ui-results-table')
+          .find('[data-cy="table-row"]')
+          .should('have.length', '15')
       })
     })
     describe('my records', () => {
@@ -277,6 +259,58 @@ describe('dashboard', () => {
               .invoke('text')
               .should('not.eq', firstRecord)
           })
+      })
+    })
+  })
+
+  describe('search', () => {
+    function checkDashboardFiltered() {
+      cy.get('gn-ui-autocomplete').type('velo{enter}')
+      cy.get('gn-ui-interactive-table')
+        .find('[data-cy="table-row"]')
+        .should('have.length', '1')
+    }
+    function checkAutocompleteSelected() {
+      cy.get('gn-ui-autocomplete').type('velo')
+      cy.get('mat-option').first().click()
+      cy.url().should('include', '/edit/accroche_velos')
+    }
+    describe('allRecords search input', () => {
+      beforeEach(() => {
+        cy.login('admin', 'admin', false)
+        cy.visit('/catalog/search')
+      })
+      it('should filter the dashboard based on the search input', () => {
+        checkDashboardFiltered()
+      })
+      it('should navigate to the record selected in the autocomplete', () => {
+        checkAutocompleteSelected()
+      })
+      it('should clear the search input when navigating to my records', () => {
+        cy.get('gn-ui-autocomplete').type('velo')
+        cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
+        cy.get('gn-ui-autocomplete').should('have.value', '')
+      })
+      it('should hide the search input when navigating to my drafts', () => {
+        cy.get('md-editor-dashboard-menu').find('a').eq(6).click()
+        cy.get('gn-ui-autocomplete').should('not.exist')
+      })
+    })
+    describe('myRecords search input', () => {
+      beforeEach(() => {
+        cy.login('admin', 'admin', false)
+        cy.visit('/my-space/my-records')
+      })
+      it('should filter the dashboard based on the search input', () => {
+        checkDashboardFiltered()
+      })
+      it('should navigate to the record selected in the autocomplete', () => {
+        checkAutocompleteSelected()
+      })
+      it('should clear the search input when navigating to all records', () => {
+        cy.get('gn-ui-autocomplete').type('velo')
+        cy.get('md-editor-dashboard-menu').find('a').first().click()
+        cy.get('gn-ui-autocomplete').should('have.value', '')
       })
     })
   })
