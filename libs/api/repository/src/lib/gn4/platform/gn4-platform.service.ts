@@ -1,5 +1,13 @@
 import { Injectable } from '@angular/core'
 import { combineLatest, Observable, of, switchMap, throwError } from 'rxjs'
+import {
+  combineLatest,
+  forkJoin,
+  mergeMap,
+  Observable,
+  of,
+  switchMap,
+} from 'rxjs'
 import { catchError, filter, map, shareReplay, tap } from 'rxjs/operators'
 import {
   MeApiService,
@@ -16,6 +24,7 @@ import {
 } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 import {
+  CatalogRecord,
   Keyword,
   Organization,
   UserFeedback,
@@ -292,6 +301,47 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     )
   }
 
+  cleanRecordAttachments(record: CatalogRecord): Observable<void> {
+    return combineLatest([
+      this.recordsApiService.getAssociatedResources(record.uniqueIdentifier),
+      this.recordsApiService.getAllResources(record.uniqueIdentifier),
+    ]).pipe(
+      map(([associatedResources, recordResources]) => {
+        // Received object from API is not a RelatedResponseApiModel, so we need
+        // to cast it as any and do the bellow mappings to get the wanted values.
+        const resourceIdsToKeep = [
+          ...((associatedResources as any).onlines ?? [])
+            .map((o) => o.title)
+            .map((o) => o['']),
+          ...((associatedResources as any).thumbnails ?? [])
+            .map((o) => o.title)
+            .map((o) => o['']),
+        ]
+
+        const resourceIdsToRemove = recordResources
+          .map((r) => r.filename)
+          .filter((resourceId) => !resourceIdsToKeep.includes(resourceId))
+
+        return resourceIdsToRemove
+      }),
+      mergeMap((resourceIdsToRemove) =>
+        forkJoin(
+          resourceIdsToRemove.map((attachementId) =>
+            this.recordsApiService.delResource(
+              record.uniqueIdentifier,
+              attachementId
+            )
+          )
+        ).pipe(map(() => undefined))
+      ),
+      catchError((error) => {
+        console.error('Error while cleaning attachments:', error)
+        throw error
+      })
+    )
+  }
+
+  attachFileToRecord(recordUuid: string, file: File) {
   attachFileToRecord(recordUuid: string, file: File): Observable<UploadEvent> {
     let sizeBytes = -1
 

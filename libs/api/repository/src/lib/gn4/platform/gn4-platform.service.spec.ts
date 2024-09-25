@@ -15,11 +15,13 @@ import { AvatarServiceInterface } from '../auth/avatar.service.interface'
 import { Gn4PlatformMapper } from './gn4-platform.mapper'
 import { LangService } from '@geonetwork-ui/util/i18n'
 import {
+  datasetRecordsFixture,
   someUserFeedbacksFixture,
   userFeedbackFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { HttpClient, HttpEventType } from '@angular/common/http'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 let geonetworkVersion: string
 
@@ -171,6 +173,11 @@ class LangServiceMock {
   iso3 = 'fre'
 }
 
+const associatedResources = {
+  onlines: [],
+  thumbnails: [],
+}
+
 class RecordsApiServiceMock {
   getAllResources = jest.fn(() =>
     of([
@@ -184,6 +191,8 @@ class RecordsApiServiceMock {
       },
     ])
   )
+  getAssociatedResources = jest.fn(() => of(associatedResources))
+  delResource = jest.fn(() => of(undefined))
   putResource = jest.fn(() =>
     of({
       type: HttpEventType.UploadProgress,
@@ -766,6 +775,21 @@ describe('Gn4PlatformService', () => {
           ),
         },
       ])
+    })
+  })
+
+  describe('cleanRecordAttachments', () => {
+    it('calls api service', async () => {
+      const record = datasetRecordsFixture() as unknown as CatalogRecord
+
+      service.cleanRecordAttachments(record)
+
+      expect(recordsApiService.getAssociatedResources).toHaveBeenCalledWith(
+        record.uniqueIdentifier
+      )
+      expect(recordsApiService.getAllResources).toHaveBeenCalledWith(
+        record.uniqueIdentifier
+      )
     })
   })
 
