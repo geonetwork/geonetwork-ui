@@ -18,7 +18,6 @@ import {
 } from '@geonetwork-ui/feature/search'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { Router } from '@angular/router'
 import { Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
@@ -26,6 +25,8 @@ import { RecordsCountComponent } from '../records-count/records-count.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { MatIconModule } from '@angular/material/icon'
 import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
+import { SearchHeaderComponent } from '../../dashboard/search-header/search-header.component'
+import { NotificationsContainerComponent } from '@geonetwork-ui/feature/notifications'
 
 @Component({
   selector: 'md-editor-my-records',
@@ -43,6 +44,8 @@ import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
     MatIconModule,
     ImportRecordComponent,
     FeatureSearchModule,
+    SearchHeaderComponent,
+    NotificationsContainerComponent,
   ],
 })
 export class MyRecordsComponent implements OnInit {
@@ -64,6 +67,8 @@ export class MyRecordsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.searchFacade.resetSearch()
+
     this.platformService.getMe().subscribe((user) => {
       this.fieldsService
         .buildFiltersFromFieldValues({ owner: user.id })

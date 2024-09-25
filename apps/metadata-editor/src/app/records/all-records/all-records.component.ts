@@ -29,6 +29,8 @@ import { TemplatePortal } from '@angular/cdk/portal'
 import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
 import { RecordsListComponent } from '../records-list.component'
 import { map } from 'rxjs/operators'
+import { SearchHeaderComponent } from '../../dashboard/search-header/search-header.component'
+import { NotificationsContainerComponent } from '@geonetwork-ui/feature/notifications'
 
 @Component({
   selector: 'md-editor-all-records',
@@ -47,6 +49,8 @@ import { map } from 'rxjs/operators'
     CdkOverlayOrigin,
     CdkConnectedOverlay,
     RecordsListComponent,
+    SearchHeaderComponent,
+    NotificationsContainerComponent,
   ],
 })
 export class AllRecordsComponent {

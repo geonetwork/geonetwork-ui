@@ -6,7 +6,6 @@ import { TranslateModule } from '@ngx-translate/core'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { map, startWith, switchMap } from 'rxjs/operators'
 import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'md-editor-dashboard-menu',
@@ -30,12 +29,5 @@ export class DashboardMenuComponent {
   )
   activeLink = false
 
-  constructor(
-    private recordsRepository: RecordsRepositoryInterface,
-    private searchFacade: SearchFacade
-  ) {}
-
-  resetMainSearch() {
-    this.searchFacade.setFilters({})
-  }
+  constructor(private recordsRepository: RecordsRepositoryInterface) {}
 }
