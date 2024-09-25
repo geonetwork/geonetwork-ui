@@ -45,29 +45,6 @@
                     <gmd:title>
                         <gco:CharacterString>A very interesting dataset (un jeu de données très intéressant)</gco:CharacterString>
                     </gmd:title>
-                    <gmd:date>
-                        <gmd:CI_Date>
-                            <gmd:date>
-                                <gco:DateTime>2022-12-04T15:12:00</gco:DateTime>
-                            </gmd:date>
-                            <gmd:dateType>
-                                <gmd:CI_DateTypeCode
-                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                        codeListValue="revision"/>
-                            </gmd:dateType>
-                        </gmd:CI_Date>
-                    </gmd:date>
-                    <gmd:date>
-                        <gmd:CI_Date>
-                            <gmd:date>
-                                <gco:Date>2022-05-01</gco:Date>
-                            </gmd:date>
-                            <gmd:dateType>
-                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                                     codeListValue="publication"/>
-                            </gmd:dateType>
-                        </gmd:CI_Date>
-                    </gmd:date>
                     <gmd:identifier>
                         <gmd:MD_Identifier>
                             <gmd:code>
@@ -81,9 +58,17 @@
                                 <gco:DateTime>2022-09-01T14:18:19</gco:DateTime>
                             </gmd:date>
                             <gmd:dateType>
-                                <gmd:CI_DateTypeCode
-                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                        codeListValue="creation"/>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation"/>
+                            </gmd:dateType>
+                        </gmd:CI_Date>
+                    </gmd:date>
+                    <gmd:date>
+                        <gmd:CI_Date>
+                            <gmd:date>
+                                <gco:DateTime>2022-12-04T15:12:00</gco:DateTime>
+                            </gmd:date>
+                            <gmd:dateType>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision"/>
                             </gmd:dateType>
                         </gmd:CI_Date>
                     </gmd:date>

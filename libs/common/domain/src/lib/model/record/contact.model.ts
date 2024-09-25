@@ -60,7 +60,7 @@ export interface Individual {
   email: string
   role: Role
   position?: string
-  organization: Organization
+  organization?: Organization
   address?: string
   phone?: string
 }

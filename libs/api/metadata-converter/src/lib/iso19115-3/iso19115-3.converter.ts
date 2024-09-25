@@ -22,7 +22,6 @@ import {
   writeLandingPage,
   writeLineage,
   writeOnlineResources,
-  writeOwnerOrganization,
   writeRecordCreated,
   writeRecordPublished,
   writeRecordUpdated,
@@ -60,7 +59,7 @@ export class Iso191153Converter extends Iso19139Converter {
     this.writers['resourcePublished'] = writeResourcePublished
     this.writers['contacts'] = writeContacts
     this.writers['contactsForResource'] = writeContactsForResource
-    this.writers['ownerOrganization'] = writeOwnerOrganization
+    this.writers['ownerOrganization'] = () => undefined // fixme: find a way to store this value properly
     this.writers['landingPage'] = writeLandingPage
     this.writers['lineage'] = writeLineage
     this.writers['onlineResources'] = writeOnlineResources

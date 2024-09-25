@@ -1,8 +1,8 @@
 <div class="grid grid-cols-3 grid-rows-auto auto-rows-min h-full">
-  <header class="col-span-3 flex flex-row items-center">
+  <header class="col-span-3 flex flex-row items-start">
     <div>
       <h1 class="text-[50px] font-bold font-title my-6 mx-10">
-        Simple metadata editor<br />
+        <div class="whitespace-nowrap">Simple metadata editor</div>
         <gn-ui-status
           #status
           class="font-main font-normal text-gray-900 text-[16px]"
@@ -11,20 +11,37 @@
         ></gn-ui-status>
       </h1>
     </div>
-    <div class="grow p-3">
+    <div class="grow shrink-0 p-3 min-w-[50%]">
       <input
         type="file"
-        accept=".xml, application/xml"
+        accept=".xml, .rdf, application/xml, application/rdf+xml, .jsonld, application/ld+json, application/json, .ttl, text/turtle, .n3, text/n3, .nt, application/n-triples"
         class="mb-3 border border-gray-500 rounded-sm w-full bg-white p-2"
         (change)="onFileSelect($event)"
         placeholder="Upload a record from your computer"
       />
       <input
         type="text"
-        class="border border-gray-500 rounded-sm w-full bg-white p-2"
+        class="mb-3 border border-gray-500 rounded-sm w-full bg-white p-2"
         (change)="onFileUrlInput($event.target.value)"
         placeholder="...or enter a URL pointing to a metadata record"
       />
+      <div class="w-full">
+        <label
+          *ngFor="let format of formats | keyvalue"
+          class="mr-4"
+          [ngClass]="{ 'font-bold': format.key === originalFormat }"
+        >
+          <input
+            type="radio"
+            name="format"
+            [checked]="format.key === currentFormat"
+            [value]="format.key"
+            (change)="onFormatChange($event.target.value)"
+          />
+          {{ format.key }}
+          <span *ngIf="format.key === originalFormat">(native)</span>
+        </label>
+      </div>
     </div>
   </header>
   <gn-ui-record-form

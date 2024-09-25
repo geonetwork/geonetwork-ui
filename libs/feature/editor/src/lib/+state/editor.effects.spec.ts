@@ -78,6 +78,7 @@ describe('EditorEffects', () => {
         expect(effects.saveRecord$).toBeObservable(expected)
         expect(service.saveRecord).toHaveBeenCalledWith(
           datasetRecordsFixture()[0],
+          '<xml>blabla</xml>',
           [],
           false
         )
@@ -94,6 +95,7 @@ describe('EditorEffects', () => {
         await firstValueFrom(effects.saveRecord$)
         expect(service.saveRecord).toHaveBeenCalledWith(
           datasetRecordsFixture()[0],
+          '<xml>blabla</xml>',
           [],
           true
         )
@@ -158,7 +160,8 @@ describe('EditorEffects', () => {
           })
         )
         expect(service.saveRecordAsDraft).toHaveBeenCalledWith(
-          datasetRecordsFixture()[0]
+          datasetRecordsFixture()[0],
+          '<xml>blabla</xml>'
         )
       })
     })

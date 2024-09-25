@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/1999/02/22-rdf-syntax-ns# http://www.openarchives.org/OAI/2.0/rdf.xsd">
+    <dcat:Catalog xmlns:dcat="http://www.w3.org/ns/dcat#" rdf:about="https://ipt.inbo.be#Catalog">
+        <dct:title xmlns:dct="http://purl.org/dc/terms/">INBO IPT</dct:title>
+        <dct:description xmlns:dct="http://purl.org/dc/terms/">The INBO IPT is hosted at the Research Institute for Nature and Forest (INBO) in Brussels, Belgium.</dct:description>
+        <dct:publisher xmlns:dct="http://purl.org/dc/terms/">
+            <foaf:Agent xmlns:foaf="http://xmlns.com/foaf/0.1/" rdf:about="https://www.gbif.org/publisher/1cd669d0-80ea-11de-a9d0-f1765f95f18b#Organization">
+                <foaf:name>Research Institute for Nature and Forest (INBO)</foaf:name>
+            </foaf:Agent>
+        </dct:publisher>
+        <foaf:homepage xmlns:foaf="http://xmlns.com/foaf/0.1/">
+            <foaf:Document rdf:about="https://ipt.inbo.be" />
+        </foaf:homepage>
+        <dct:license xmlns:dct="http://purl.org/dc/terms/">
+            <dct:LicenseDocument rdf:about="https://creativecommons.org/publicdomain/zero/1.0/" />
+        </dct:license>
+        <dct:language xmlns:dct="http://purl.org/dc/terms/">
+            <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://id.loc.gov/vocabulary/iso639-1/en">
+                <rdf:type rdf:resource="dct:LinguisticSystem" />
+            </skos:Concept>
+        </dct:language>
+        <dct:issued xmlns:dct="http://purl.org/dc/terms/">2012-09-17T17:01+02:00</dct:issued>
+        <dct:modified xmlns:dct="http://purl.org/dc/terms/">2024-09-18T18:24+02:00</dct:modified>
+        <dct:spatial xmlns:dct="http://purl.org/dc/terms/">
+            <dct:Location>
+                <locn:geometry xmlns:locn="http://www.w3.org/ns/locn#">{ "type": "Point", "coordinates": [ 4.35018,50.86666 ] }</locn:geometry>
+            </dct:Location>
+        </dct:spatial>
+        <dcat:record>
+            <dcat:CatalogRecord rdf:about="https://ipt.inbo.be/resource?r=visschade-occurrences#Dataset-record">
+                <dct:identifier xmlns:dct="http://purl.org/dc/terms/">f3bd3e9b-cec1-38de-bb16-d063edace486</dct:identifier>
+                <foaf:primaryTopic xmlns:foaf="http://xmlns.com/foaf/0.1/" rdf:resource="https://ipt.inbo.be/resource?r=visschade-occurrences#Dataset" />
+                <dct:modified xmlns:dct="http://purl.org/dc/terms/">2024-09-19T01:15:09.732Z</dct:modified>
+                <dct:conformsTo xmlns:dct="http://purl.org/dc/terms/">
+                    <dct:Standard rdf:about="https://data.vlaanderen.be/doc/applicatieprofiel/DCAT-AP-VL/erkendestandaard/2019-10-03">
+                        <dct:title>Dcat-ap-vl</dct:title>
+                        <dct:description>Dit applicatieprofiel beschrijft Open Data Catalogi in Vlaanderen. DCAT-AP Vlaanderen (DCAT-AP VL) is een verdere specialisatie van DCAT-AP. De applicatie waarop dit profiel betrekking heeft is een Open Data Portaal in Vlaanderen. Open Data portalen zijn catalogussen van Open Data datasets. Ze hebben als belangrijkste doelstelling het vindbaar maken van data en hierdoor het hergebruik ervan te stimuleren. Open Data portalen vervullen een centrale rol in de overheidsopdracht om de toegankelijkheid tot overheidsinformatie te realiseren. Met dit applicatieprofiel bevorderen we de uniformiteit van de beschikbare informatie over datasets. Tevens vereenvoudigen we het aggregatie proces van meerdere Open Data Catalogi. Dit document bevat de verplichte elementen en bijkomende elementen waarover DCAT-AP Vlaanderen een uitspraak doet. Aanbevolen en optionele informatie waarvoor geen bijkomende afspraken in de context van DCAT-AP Vlaanderen zijn, zijn niet opgenomen in dit document. Hiervoor verwijzen we naar de DCAT-AP specificatie zelf.</dct:description>
+                        <owl:versionInfo xmlns:owl="http://www.w3.org/2002/07/owl#">2.0</owl:versionInfo>
+                    </dct:Standard>
+                </dct:conformsTo>
+                <adms:identifier xmlns:adms="http://www.w3.org/ns/adms#">
+                    <adms:Identifier>
+                        <skos:notation xmlns:skos="http://www.w3.org/2004/02/skos/core#">https://ipt.inbo.be/resource?r=visschade-occurrences#Dataset-record</skos:notation>
+                    </adms:Identifier>
+                </adms:identifier>
+            </dcat:CatalogRecord>
+        </dcat:record>
+        <dcat:dataset>
+            <dcat:Dataset rdf:about="https://ipt.inbo.be/resource?r=visschade-occurrences#Dataset">
+                <dct:identifier xmlns:dct="http://purl.org/dc/terms/">https://www.gbif.org/dataset/5d06d34c-f74d-461e-8d8b-c3351beb0db8</dct:identifier>
+                <dct:title xmlns:dct="http://purl.org/dc/terms/">Fish damage at pump stations</dct:title>
+                <dct:description xmlns:dct="http://purl.org/dc/terms/">Fish damage at pump stations is a sampling event dataset published by the Research Institute for Nature and Forest (INBO). It contains 7319 occurrences, recorded during 120 events as well as lengths and weights of the fish that were recorded. Issues with the dataset can be reported at https://github.com/inbo/data-publication/issues
+                    We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (https://www.inbo.be/en/norms-data-use) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.</dct:description>
+                <dcat:contactPoint>
+                    <vcard:Organization xmlns:vcard="http://www.w3.org/2006/vcard/ns#">
+                        <vcard:fn>David Buysse</vcard:fn>
+                        <vcard:hasEmail rdf:resource="mailto:david.buysse@inbo.be" />
+                    </vcard:Organization>
+                </dcat:contactPoint>
+                <dct:modified xmlns:dct="http://purl.org/dc/terms/">2021-04-14T11:15+02:00</dct:modified>
+                <dct:publisher xmlns:dct="http://purl.org/dc/terms/">
+                    <foaf:Agent xmlns:foaf="http://xmlns.com/foaf/0.1/" rdf:about="https://www.gbif.org/publisher/1cd669d0-80ea-11de-a9d0-f1765f95f18b#Organization">
+                        <foaf:name>Research Institute for Nature and Forest (INBO)</foaf:name>
+                    </foaf:Agent>
+                </dct:publisher>
+                <dcat:keyword xml:lang="nl">fish</dcat:keyword>
+                <dcat:keyword xml:lang="nl">pumping station</dcat:keyword>
+                <dcat:keyword xml:lang="nl">migration</dcat:keyword>
+                <dcat:keyword xml:lang="nl">Samplingevent</dcat:keyword>
+                <dcat:keyword xml:lang="nl">mortality</dcat:keyword>
+                <mdcat:statuut xmlns:mdcat="https://data.vlaanderen.be/ns/metadata-dcat#">
+                    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/VLOPENDATA">
+                        <skos:prefLabel xml:lang="nl">Vlaamse Open data</skos:prefLabel>
+                        <skos:prefLabel xml:lang="en">Vlaamse Open data</skos:prefLabel>
+                        <skos:prefLabel xml:lang="fr">Vlaamse Open data</skos:prefLabel>
+                        <skos:prefLabel xml:lang="de">Vlaamse Open data</skos:prefLabel>
+                        <skos:inScheme rdf:resource="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden" />
+                    </skos:Concept>
+                </mdcat:statuut>
+                <dcat:theme>
+                    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://eurovoc.europa.eu/5463">
+                        <skos:prefLabel xml:lang="en">biodiversity</skos:prefLabel>
+                        <skos:inScheme rdf:resource="http://eurovoc.europa.eu/218403" />
+                    </skos:Concept>
+                </dcat:theme>
+                <dcat:landingPage rdf:resource="https://ipt.inbo.be/resource?r=visschade-occurrences" />
+                <dct:language xmlns:dct="http://purl.org/dc/terms/">
+                    <skos:Concept xmlns:skos="http://www.w3.org/2004/02/skos/core#" rdf:about="http://id.loc.gov/vocabulary/iso639-1/en">
+                        <rdf:type rdf:resource="dct:LinguisticSystem" />
+                    </skos:Concept>
+                </dct:language>
+                <dct:spatial xmlns:dct="http://purl.org/dc/terms/">
+                    <dct:Location>
+                        <locn:geometry xmlns:locn="http://www.w3.org/ns/locn#">{ "type": "Polygon", "coordinates": [ [ [3.768,51.072], [3.768,51.31], [4.202,51.31], [4.202,51.072], [3.768,51.072] ] ] }</locn:geometry>
+                    </dct:Location>
+                </dct:spatial>
+                <dcat:distribution>
+                    <dcat:Distribution rdf:about="https://ipt.inbo.be/archive.do?r=visschade-occurrences">
+                        <dct:title xmlns:dct="http://purl.org/dc/terms/">Darwin Core Archive of Fish damage at pump stations</dct:title>
+                        <dct:description xmlns:dct="http://purl.org/dc/terms/">Darwin Core Archive</dct:description>
+                        <dcat:accessURL rdf:resource="https://ipt.inbo.be/resource?r=visschade-occurrences" />
+                        <dcat:downloadURL rdf:resource="https://ipt.inbo.be/archive.do?r=visschade-occurrences" />
+                        <dct:license xmlns:dct="http://purl.org/dc/terms/">
+                            <dct:LicenseDocument rdf:about="http://creativecommons.org/publicdomain/zero/1.0/legalcode" />
+                        </dct:license>
+                    </dcat:Distribution>
+                </dcat:distribution>
+            </dcat:Dataset>
+        </dcat:dataset>
+    </dcat:Catalog>
+</rdf:RDF>
+

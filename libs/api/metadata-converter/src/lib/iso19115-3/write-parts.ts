@@ -17,7 +17,6 @@ import {
   findNestedElement,
   findNestedElements,
   readAttribute,
-  removeAllChildren,
   removeChildren,
   removeChildrenByName,
   setTextContent,
@@ -125,7 +124,7 @@ export function writeRecordUpdated(record: CatalogRecord, rootEl: XmlElement) {
 
 export function writeRecordCreated(record: CatalogRecord, rootEl: XmlElement) {
   removeRecordDate('creation')(rootEl)
-  if (!('recordCreated' in record)) return
+  if (!record.recordCreated) return
   appendRecordDate(record.recordCreated, 'creation')(rootEl)
 }
 
@@ -134,14 +133,14 @@ export function writeRecordPublished(
   rootEl: XmlElement
 ) {
   removeRecordDate('publication')(rootEl)
-  if (!('recordPublished' in record)) return
+  if (!record.recordPublished) return
   appendRecordDate(record.recordPublished, 'publication')(rootEl)
 }
 
 function removeResourceDate(type: 'revision' | 'creation' | 'publication') {
   return pipe(
-    findIdentification(),
-    findNestedElement('mri:citation', 'cit:CI_Citation'),
+    findOrCreateIdentification(),
+    findNestedChildOrCreate('mri:citation', 'cit:CI_Citation'),
     removeChildren(
       pipe(
         findChildrenElement('cit:date', false),
@@ -191,7 +190,7 @@ export function writeResourceUpdated(
   rootEl: XmlElement
 ) {
   removeResourceDate('revision')(rootEl)
-  if (!('resourceUpdated' in record)) return
+  if (!record.resourceUpdated) return
   appendResourceDate(record.resourceUpdated, 'revision')(rootEl)
 }
 
@@ -200,7 +199,7 @@ export function writeResourceCreated(
   rootEl: XmlElement
 ) {
   removeResourceDate('creation')(rootEl)
-  if (!('resourceCreated' in record)) return
+  if (!record.resourceCreated) return
   appendResourceDate(record.resourceCreated, 'creation')(rootEl)
 }
 
@@ -209,35 +208,8 @@ export function writeResourcePublished(
   rootEl: XmlElement
 ) {
   removeResourceDate('publication')(rootEl)
-  if (!('resourcePublished' in record)) return
+  if (!record.resourcePublished) return
   appendResourceDate(record.resourcePublished, 'publication')(rootEl)
-}
-
-export function writeOwnerOrganization(
-  record: CatalogRecord,
-  rootEl: XmlElement
-) {
-  // if no contact matches the owner org, create an empty one
-  const ownerContact: Individual = record.contacts.find(
-    (contact) => contact.organization.name === record.ownerOrganization.name
-  )
-  pipe(
-    findChildOrCreate('mdb:contact'),
-    removeAllChildren(),
-    appendResponsibleParty(
-      ownerContact
-        ? {
-            ...ownerContact,
-            // owner responsible party is always point of contact
-            role: 'point_of_contact',
-          }
-        : {
-            organization: record.ownerOrganization,
-            email: 'missing@missing.com',
-            role: 'point_of_contact',
-          }
-    )
-  )(rootEl)
 }
 
 export function appendResponsibleParty(contact: Individual) {
