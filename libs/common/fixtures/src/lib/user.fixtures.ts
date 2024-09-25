@@ -28,6 +28,19 @@ export const barbieUserFixture = (): UserModel =>
       'https://www.gravatar.com/avatar/dbdffd183622800bcf8587328daf43a6?d=mp',
   })
 
+export const johnDoeUserFixture = (): UserModel =>
+  createUserFixture({
+    id: '12345',
+    profile: 'User',
+    username: 'johndoe',
+    name: 'John',
+    surname: 'Doe',
+    email: 'johndoe@email.com',
+    organisation: 'Doe Enterprises',
+    profileIcon:
+      'https://www.gravatar.com/avatar/5f6d74eabcb57186a12f7c8ba40b4c9f?d=mp',
+  })
+
 export const ghostUserFixture = (): UserModel =>
   createUserFixture({
     id: '161',
