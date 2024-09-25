@@ -112,5 +112,12 @@ describe('MyRecordsComponent', () => {
         owner: user.id,
       })
     })
+
+    it('should map search filters to searchText$', (done) => {
+      component.searchText$.subscribe((text) => {
+        expect(text).toBe('hello world')
+        done()
+      })
+    })
   })
 })

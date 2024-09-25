@@ -26,7 +26,7 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { MatIconModule } from '@angular/material/icon'
 import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
 import { SearchHeaderComponent } from '../../dashboard/search-header/search-header.component'
-import { NotificationsContainerComponent } from '@geonetwork-ui/feature/notifications'
+import { map, Observable } from 'rxjs'
 
 @Component({
   selector: 'md-editor-my-records',
@@ -45,7 +45,6 @@ import { NotificationsContainerComponent } from '@geonetwork-ui/feature/notifica
     ImportRecordComponent,
     FeatureSearchModule,
     SearchHeaderComponent,
-    NotificationsContainerComponent,
   ],
 })
 export class MyRecordsComponent implements OnInit {
@@ -53,6 +52,8 @@ export class MyRecordsComponent implements OnInit {
   private importRecordButton!: ElementRef
   @ViewChild('template') template!: TemplateRef<any>
   private overlayRef!: OverlayRef
+
+  searchText$: Observable<string | null>
 
   isImportMenuOpen = false
 
@@ -76,6 +77,10 @@ export class MyRecordsComponent implements OnInit {
           this.searchFacade.updateFilters(filters)
         })
     })
+
+    this.searchText$ = this.searchFacade.searchFilters$.pipe(
+      map((filters) => ('any' in filters ? (filters['any'] as string) : null))
+    )
   }
 
   createRecord() {

@@ -12,7 +12,6 @@ import { TranslateModule } from '@ngx-translate/core'
 import { startWith, switchMap } from 'rxjs'
 import { RecordsCountComponent } from '../records-count/records-count.component'
 import { RecordsListComponent } from '../records-list.component'
-import { NotificationsContainerComponent } from '@geonetwork-ui/feature/notifications'
 @Component({
   selector: 'md-editor-my-my-draft',
   templateUrl: './my-draft.component.html',
@@ -28,7 +27,6 @@ import { NotificationsContainerComponent } from '@geonetwork-ui/feature/notifica
     ResultsTableContainerComponent,
     UiElementsModule,
     ResultsTableComponent,
-    NotificationsContainerComponent,
   ],
 })
 export class MyDraftComponent {
