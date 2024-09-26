@@ -8,7 +8,7 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Guide', link: '/guide/why', activeMatch: '/guide/' },
+      { text: 'Guide', link: '/guide/introduction', activeMatch: '/guide/' },
       {
         text: 'Reference',
         link: '/reference/principles',
@@ -49,7 +49,7 @@ function sidebarGuide() {
     {
       text: 'Guide',
       items: [
-        { text: 'Why?', link: '/guide/why' },
+        { text: 'Introduction', link: '/guide/introduction' },
         { text: 'Prerequisites', link: '/guide/prerequisites' },
         { text: 'Deploy', link: '/guide/deploy' },
         { text: 'Configure', link: '/guide/configure' },
@@ -76,7 +76,7 @@ function sidebarGuide() {
       items: [
         { text: 'Development environment', link: '/guide/dev-environment' },
         { text: 'Create a Pull Request', link: '/guide/create-a-pr' },
-        { text: 'Best practices', link: '/guide/best-practices' },
+        { text: 'Code guide', link: '/guide/code-guide' },
         { text: 'Versioning', link: '/guide/versioning' },
       ],
     },
