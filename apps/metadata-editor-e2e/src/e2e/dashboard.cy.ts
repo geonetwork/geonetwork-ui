@@ -8,12 +8,15 @@ const fakeUser = {
 
 const gnBaseUrl = 'http://localhost:8080/geonetwork/srv/eng/'
 
-describe('dashboard', () => {
+describe('dashboard (authenticated)', () => {
+  beforeEach(() => {
+    cy.login('admin', 'admin', false)
+  })
+
   let pageOne
   describe('avatar', () => {
     describe('display avatar for user without gravatar hash', () => {
       it('should display placeholder url', () => {
-        cy.login('admin', 'admin', false)
         cy.visit(`${gnBaseUrl}admin.console#/organization`)
         cy.get('#gn-btn-user-add').click()
         cy.get('#username').type(fakeUser.username)
@@ -35,7 +38,6 @@ describe('dashboard', () => {
           .should('eq', 'https://www.gravatar.com/avatar/?d=mp')
       })
       it('should display monsterid', () => {
-        cy.login('admin', 'admin', false)
         cy.visit(`${gnBaseUrl}admin.console#/settings`)
         cy.get('[id="system/users/identicon"]').type(
           '{selectAll}gravatar:monsterid'
@@ -160,7 +162,6 @@ describe('dashboard', () => {
   })
   describe('columns', () => {
     beforeEach(() => {
-      cy.login('admin', 'admin', false)
       cy.visit('/catalog/search')
     })
     it('should display the right info for unpublished records', () => {
@@ -216,7 +217,6 @@ describe('dashboard', () => {
 
   describe('navigation', () => {
     beforeEach(() => {
-      cy.login('admin', 'admin', false)
       cy.visit('/catalog/search')
     })
     describe('all records', () => {
@@ -277,7 +277,6 @@ describe('dashboard', () => {
     }
     describe('allRecords search input', () => {
       beforeEach(() => {
-        cy.login('admin', 'admin', false)
         cy.visit('/catalog/search')
       })
       it('should filter the dashboard based on the search input', () => {
@@ -313,5 +312,14 @@ describe('dashboard', () => {
         cy.get('gn-ui-autocomplete').should('have.value', '')
       })
     })
+  })
+})
+
+describe('when the user is not logged in', () => {
+  beforeEach(() => {
+    cy.visit('/catalog/search')
+  })
+  it('redirects to the login page', () => {
+    cy.url().should('include', '/catalog.signin?redirect=')
   })
 })
