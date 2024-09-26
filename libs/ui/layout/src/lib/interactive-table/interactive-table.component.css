@@ -7,7 +7,7 @@
 }
 
 .table-header-cell {
-  @apply text-gray-700 px-4 py-5 flex items-center truncate bg-white;
+  @apply text-gray-700 px-3 py-3 flex items-center truncate bg-white;
 }
 
 button.table-header-cell {

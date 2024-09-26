@@ -133,11 +133,12 @@
   .gn-ui-badge {
     --rounded: var(--gn-ui-badge-rounded, 0.25em);
     --padding: var(--gn-ui-badge-padding, 0.375em 0.75em);
+    --text-size: var(--gn-ui-badge-text-size, 0.875em);
     --text-color: var(--gn-ui-badge-text-color, var(--color-gray-50));
     --background-color: var(--gn-ui-badge-background-color, black);
     --opacity: var(--gn-ui-badge-opacity, 0.7);
-    @apply inline-block opacity-[--opacity] p-[--padding] rounded-[--rounded]
-      font-medium text-[length:0.875em] leading-none text-[color:--text-color] bg-[color:--background-color];
+    @apply opacity-[--opacity] p-[--padding] rounded-[--rounded]
+      font-medium text-[length:--text-size] text-[color:--text-color] bg-[color:--background-color] flex justify-center items-center content-center;
   }
   /* makes sure icons will not make the badges grow vertically; also make size proportional */
   .gn-ui-badge mat-icon.mat-icon {

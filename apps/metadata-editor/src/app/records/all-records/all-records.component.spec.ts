@@ -1,38 +1,44 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MyRecordsComponent } from './my-records.component'
 import {
   FieldsService,
   SearchFacade,
   SearchService,
 } from '@geonetwork-ui/feature/search'
 import { ChangeDetectionStrategy } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject, of } from 'rxjs'
 import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
-import { EditorRouterService } from '../../router.service'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { MockBuilder, MockInstance, MockProviders } from 'ng-mocks'
 import { ActivatedRoute, Router } from '@angular/router'
-import { TranslateModule } from '@ngx-translate/core'
+import { AllRecordsComponent } from './all-records.component'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import {
+  MockBuilder,
+  MockInstance,
+  MockProviders,
+  NG_MOCKS_ROOT_PROVIDERS,
+} from 'ng-mocks'
+import { EditorRouterService } from '../../router.service'
+import { Overlay } from '@angular/cdk/overlay'
 
-describe('MyRecordsComponent', () => {
+describe('AllRecordsComponent', () => {
   MockInstance.scope()
 
   const searchFilters = new BehaviorSubject({
     any: 'hello world',
   })
 
-  let component: MyRecordsComponent
-  let fixture: ComponentFixture<MyRecordsComponent>
+  let component: AllRecordsComponent
+  let fixture: ComponentFixture<AllRecordsComponent>
 
   let router: Router
   let searchFacade: SearchFacade
   let platformService: PlatformServiceInterface
   let fieldsService: FieldsService
 
-  const user = barbieUserFixture()
-
   beforeEach(() => {
-    return MockBuilder(MyRecordsComponent)
+    return MockBuilder(AllRecordsComponent)
+      .keep(Overlay)
+      .keep(NG_MOCKS_ROOT_PROVIDERS)
   })
 
   beforeEach(() => {
@@ -48,7 +54,7 @@ describe('MyRecordsComponent', () => {
           SearchService
         ),
       ],
-    }).overrideComponent(MyRecordsComponent, {
+    }).overrideComponent(AllRecordsComponent, {
       set: {
         changeDetection: ChangeDetectionStrategy.Default,
       },
@@ -66,10 +72,10 @@ describe('MyRecordsComponent', () => {
       queryParams: new Map([['paramId', 'paramValue']]),
     })
 
-    fixture = TestBed.createComponent(MyRecordsComponent)
+    fixture = TestBed.createComponent(AllRecordsComponent)
 
-    searchFacade = TestBed.inject(SearchFacade)
     router = TestBed.inject(Router)
+    searchFacade = TestBed.inject(SearchFacade)
     platformService = TestBed.inject(PlatformServiceInterface)
     fieldsService = TestBed.inject(FieldsService)
 
@@ -106,18 +112,51 @@ describe('MyRecordsComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('filters on init', () => {
-    it('updates filters with owner', () => {
-      expect(searchFacade.updateFilters).toHaveBeenCalledWith({
-        owner: user.id,
-      })
+  it('should map search filters to searchText$', (done) => {
+    component.searchText$.subscribe((text) => {
+      expect(text).toBe('hello world')
+      done()
+    })
+  })
+
+  describe('when clicking createRecord', () => {
+    beforeEach(() => {
+      component.createRecord()
     })
 
-    it('should map search filters to searchText$', (done) => {
-      component.searchText$.subscribe((text) => {
-        expect(text).toBe('hello world')
-        done()
-      })
+    it('navigates to the create record page', () => {
+      expect(router.navigate).toHaveBeenCalledWith(['/create'])
+    })
+  })
+
+  describe('when importing a record', () => {
+    beforeEach(() => {
+      component.duplicateExternalRecord()
+    })
+
+    it('sets isImportMenuOpen to true', () => {
+      expect(component.isImportMenuOpen).toBe(true)
+    })
+  })
+
+  describe('when closing the import menu', () => {
+    let overlaySpy: any
+
+    beforeEach(() => {
+      overlaySpy = {
+        dispose: jest.fn(),
+      }
+      component['overlayRef'] = overlaySpy
+
+      component.closeImportMenu()
+    })
+
+    it('sets isImportMenuOpen to false', () => {
+      expect(component.isImportMenuOpen).toBe(false)
+    })
+
+    it('disposes the overlay', () => {
+      expect(overlaySpy.dispose).toHaveBeenCalled()
     })
   })
 })

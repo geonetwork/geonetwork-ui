@@ -1,55 +1,128 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordsListComponent } from '../records-list.component'
-import { FieldsService, SearchFacade } from '@geonetwork-ui/feature/search'
-import { AuthService } from '@geonetwork-ui/api/repository'
-import { EditorRouterService } from '../../router.service'
-import { Subscription } from 'rxjs'
+import {
+  FeatureSearchModule,
+  FieldsService,
+  ResultsTableContainerComponent,
+  SearchFacade,
+} from '@geonetwork-ui/feature/search'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { Router } from '@angular/router'
+import { Overlay, OverlayRef } from '@angular/cdk/overlay'
+import { TemplatePortal } from '@angular/cdk/portal'
+import { RecordsCountComponent } from '../records-count/records-count.component'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { MatIconModule } from '@angular/material/icon'
+import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
+import { SearchHeaderComponent } from '../../dashboard/search-header/search-header.component'
+import { map, Observable } from 'rxjs'
 
 @Component({
   selector: 'md-editor-my-records',
   templateUrl: './my-records.component.html',
   styleUrls: ['./my-records.component.css'],
   standalone: true,
-  imports: [CommonModule, TranslateModule, RecordsListComponent],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    RecordsListComponent,
+    ResultsTableContainerComponent,
+    UiElementsModule,
+    RecordsCountComponent,
+    ButtonComponent,
+    MatIconModule,
+    ImportRecordComponent,
+    FeatureSearchModule,
+    SearchHeaderComponent,
+  ],
 })
-export class MyRecordsComponent implements OnInit, OnDestroy {
-  private sub: Subscription
-  private ownerId: string
+export class MyRecordsComponent implements OnInit {
+  @ViewChild('importRecordButton', { read: ElementRef })
+  private importRecordButton!: ElementRef
+  @ViewChild('template') template!: TemplateRef<any>
+  private overlayRef!: OverlayRef
+
+  searchText$: Observable<string | null>
+
+  isImportMenuOpen = false
 
   constructor(
-    public fieldsService: FieldsService,
-    public searchFacade: SearchFacade,
+    private router: Router,
+    protected searchFacade: SearchFacade,
     private platformService: PlatformServiceInterface,
-    private router: EditorRouterService
+    private fieldsService: FieldsService,
+    private overlay: Overlay,
+    private viewContainerRef: ViewContainerRef,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.searchFacade.resetSearch()
-    this.sub = this.platformService.getMe().subscribe((user) => {
-      this.ownerId = user.id
+
+    this.platformService.getMe().subscribe((user) => {
       this.fieldsService
         .buildFiltersFromFieldValues({ owner: user.id })
         .subscribe((filters) => {
           this.searchFacade.updateFilters(filters)
         })
     })
-  }
 
-  getDatahubUrl(): string {
-    const url = new URL(
-      `${this.router.getDatahubSearchRoute()}`,
-      this.router.getDatahubSearchRoute().startsWith('http')
-        ? this.router.getDatahubSearchRoute()
-        : window.location.toString()
+    this.searchText$ = this.searchFacade.searchFilters$.pipe(
+      map((filters) => ('any' in filters ? (filters['any'] as string) : null))
     )
-    url.searchParams.append('owner', this.ownerId)
-    return url.toString()
   }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe()
+  createRecord() {
+    this.router.navigate(['/create']).catch((err) => console.error(err))
+  }
+
+  duplicateExternalRecord() {
+    this.isImportMenuOpen = true
+
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(this.importRecordButton)
+      .withPositions([
+        {
+          originX: 'end',
+          originY: 'bottom',
+          overlayX: 'end',
+          overlayY: 'top',
+        },
+      ])
+
+    this.overlayRef = this.overlay.create({
+      hasBackdrop: true,
+      backdropClass: 'cdk-overlay-transparent-backdrop',
+      positionStrategy: positionStrategy,
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+    })
+
+    const portal = new TemplatePortal(this.template, this.viewContainerRef)
+
+    this.overlayRef.attach(portal)
+
+    this.overlayRef.backdropClick().subscribe(() => {
+      this.closeImportMenu()
+    })
+  }
+
+  closeImportMenu() {
+    if (this.overlayRef) {
+      this.isImportMenuOpen = false
+      this.overlayRef.dispose()
+      this.cdr.markForCheck()
+    }
   }
 }

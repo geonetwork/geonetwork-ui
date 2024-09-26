@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
 import { LetDirective } from '@ngrx/component'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { TranslateModule } from '@ngx-translate/core'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'md-editor-search-header',
@@ -28,7 +29,11 @@ export class SearchHeaderComponent {
   activeBtn = false
 
   constructor(
-    public platformService: PlatformServiceInterface,
-    private avatarService: AvatarServiceInterface
+    private avatarService: AvatarServiceInterface,
+    private router: Router
   ) {}
+
+  handleItemSelection(item: CatalogRecord) {
+    this.router.navigate(['edit', item.uniqueIdentifier])
+  }
 }

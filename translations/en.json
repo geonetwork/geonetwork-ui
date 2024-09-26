@@ -30,6 +30,8 @@
   "dashboard.importRecord.useModel": "Use a model",
   "dashboard.labels.catalog": "Catalog",
   "dashboard.labels.mySpace": "My space",
+  "dashboard.myRecords.currentlyEdited": "Currently edited",
+  "dashboard.myRecords.publishedMetadatas": "Published metadatas",
   "dashboard.records.all": "Metadata records",
   "dashboard.records.hasDraft": "draft",
   "dashboard.records.myDraft": "My drafts",

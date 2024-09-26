@@ -1,4 +1,7 @@
-<main class="bg-white">
+<header class="shrink-0 border-b border-gray-300">
+  <md-editor-search-header></md-editor-search-header>
+</header>
+<main class="bg-white overflow-y-auto">
   <div class="flex flex-row items-baseline gap-[8px] px-[32px] py-[20px]">
     <ng-container *ngIf="searchText$ | async as searchText; else allRecords">
       <h1
@@ -25,10 +28,20 @@
     class="flex flex-row items-center mx-[32px] my-[16px] py-[8px] gap-[16px]"
   >
     <div>
-      <span class="uppercase" translate>dashboard.results.listMetadata</span>
+      <span
+        class="uppercase text-slate-300"
+        [title]="'editor.temporary.disabled' | translate"
+        translate
+        >dashboard.results.listMetadata</span
+      >
     </div>
     <div>
-      <span class="uppercase" translate>dashboard.results.listResources</span>
+      <span
+        class="uppercase text-slate-300"
+        [title]="'editor.temporary.disabled' | translate"
+        translate
+        >dashboard.results.listResources</span
+      >
     </div>
     <div class="grow"></div>
     <gn-ui-button
@@ -65,23 +78,5 @@
     </gn-ui-button>
   </div>
 
-  <div
-    class="shadow-md shadow-gray-300 border-[1px] border-gray-200 overflow-hidden rounded bg-white grow mx-[32px] my-[16px]"
-  >
-    <gn-ui-results-table-container
-      class="text-[14px]"
-      (recordClick)="editRecord($event)"
-      (duplicateRecord)="duplicateRecord($event)"
-    ></gn-ui-results-table-container>
-
-    <div class="px-5 py-5 flex justify-center gap-8 items-baseline">
-      <div class="grow">
-        <gn-ui-pagination-buttons
-          [currentPage]="searchFacade.currentPage$ | async"
-          [totalPages]="searchFacade.totalPages$ | async"
-          (newCurrentPageEvent)="searchService.setPage($event)"
-        ></gn-ui-pagination-buttons>
-      </div>
-    </div>
-  </div>
+  <md-editor-records-list></md-editor-records-list>
 </main>

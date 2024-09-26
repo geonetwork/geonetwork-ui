@@ -13,9 +13,7 @@ import {
   SearchService,
 } from '@geonetwork-ui/feature/search'
 import { TranslateModule } from '@ngx-translate/core'
-import { map } from 'rxjs/operators'
 import { Router } from '@angular/router'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { RecordsCountComponent } from '../records-count/records-count.component'
 import { Observable } from 'rxjs'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
@@ -29,11 +27,14 @@ import {
 } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
 import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
+import { RecordsListComponent } from '../records-list.component'
+import { map } from 'rxjs/operators'
+import { SearchHeaderComponent } from '../../dashboard/search-header/search-header.component'
 
 @Component({
-  selector: 'md-editor-search-records-list',
-  templateUrl: './search-records-list.component.html',
-  styleUrls: ['./search-records-list.component.css'],
+  selector: 'md-editor-all-records',
+  templateUrl: './all-records.component.html',
+  styleUrls: ['./all-records.component.css'],
   standalone: true,
   imports: [
     CommonModule,
@@ -46,11 +47,13 @@ import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
     ImportRecordComponent,
     CdkOverlayOrigin,
     CdkConnectedOverlay,
+    RecordsListComponent,
+    SearchHeaderComponent,
   ],
 })
-export class SearchRecordsComponent {
+export class AllRecordsComponent {
   @ViewChild('importRecordButton', { read: ElementRef })
-  private importRecordButton!: ElementRef
+  importRecordButton!: ElementRef
   @ViewChild('template') template!: TemplateRef<any>
   private overlayRef!: OverlayRef
 
@@ -68,22 +71,7 @@ export class SearchRecordsComponent {
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef,
     private cdr: ChangeDetectorRef
-  ) {
-    this.searchFacade.setPageSize(15)
-    this.searchFacade.resetSearch()
-  }
-
-  editRecord(record: CatalogRecord) {
-    this.router
-      .navigate(['/edit', record.uniqueIdentifier])
-      .catch((err) => console.error(err))
-  }
-
-  duplicateRecord(record: CatalogRecord) {
-    this.router
-      .navigate(['/duplicate', record.uniqueIdentifier])
-      .catch((err) => console.error(err))
-  }
+  ) {}
 
   createRecord() {
     this.router.navigate(['/create']).catch((err) => console.error(err))

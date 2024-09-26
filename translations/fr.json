@@ -30,6 +30,8 @@
   "dashboard.importRecord.useModel": "Utiliser un modèle",
   "dashboard.labels.catalog": "Catalogue",
   "dashboard.labels.mySpace": "Mon espace",
+  "dashboard.myRecords.currentlyEdited": "En cours d'édition",
+  "dashboard.myRecords.publishedMetadatas": "Fiches publiées",
   "dashboard.records.all": "Catalogue",
   "dashboard.records.hasDraft": "brouillon",
   "dashboard.records.myDraft": "Mes brouillons",

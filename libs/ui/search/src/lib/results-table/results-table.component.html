@@ -27,6 +27,7 @@
   <!-- TITLE COLUMN -->
   <gn-ui-interactive-table-column
     [sortable]="true"
+    [grow]="true"
     [activeSort]="isSortedBy('resourceTitleObject.default.keyword')"
     (sortChange)="setSortBy('resourceTitleObject.default.keyword', $event)"
   >
@@ -34,11 +35,12 @@
       <span translate>record.metadata.title</span>
     </ng-template>
     <ng-template #cell let-item>
-      <div class="flex flex-row items-center gap-2 max-w-full">
+      <div class="flex flex-row items-center gap-2 max-w-full font-semibold">
         <span class="overflow-hidden text-ellipsis">{{ item.title }}</span>
         <gn-ui-badge
           *ngIf="hasDraft(item)"
-          [style.--gn-ui-badge-padding]="'0.4em 0.6em'"
+          [style.--gn-ui-badge-padding]="'0.2em 0.6em'"
+          [style.--gn-ui-badge-text-size]="'12px'"
           [style.--gn-ui-badge-text-color]="'#3d2006'"
           [style.--gn-ui-badge-background-color]="'#ffbc7b'"
           [style.--gn-ui-badge-rounded]="'4px'"
@@ -56,25 +58,25 @@
     </ng-template>
     <ng-template #cell let-item>
       <div
-        class="flex justify-start items-center gap-2"
+        class="flex justify-start items-center gap-2 font-medium"
         *ngIf="getRecordFormats(item) as formats"
         [title]="formats.join(', ')"
       >
         <span
-          class="badge-btn min-w-[45px] text-sm text-white px-2 shrink-0"
+          class="badge-btn min-w-[45px] text-xs text-white px-2 shrink-0"
           [style.background-color]="getBadgeColor(formats[0])"
           *ngIf="formats[0]"
         >
           {{ formats[0] }}
         </span>
         <span
-          class="badge-btn min-w-[45px] text-sm text-white px-2 shrink-0"
+          class="badge-btn min-w-[45px] text-xs text-white px-2 shrink-0"
           [style.background-color]="getBadgeColor(formats[1])"
           *ngIf="formats[1]"
         >
           {{ formats[1] }}
         </span>
-        <div class="shrink-0" *ngIf="formats.slice(2).length > 0">
+        <div class="shrink-0 text-xs" *ngIf="formats.slice(2).length > 0">
           <span>+{{ formats.slice(2).length }}</span>
         </div>
       </div>
@@ -93,7 +95,7 @@
     </ng-template>
     <ng-template #cell let-item>
       <mat-icon class="material-symbols-outlined">person</mat-icon>
-      <span>{{ formatUserInfo(item.extras?.ownerInfo) }}</span>
+      <span class="text-xs">{{ formatUserInfo(item.extras?.ownerInfo) }}</span>
     </ng-template>
   </gn-ui-interactive-table-column>
 
@@ -103,12 +105,14 @@
       <span translate>record.metadata.status</span>
     </ng-template>
     <ng-template #cell let-item>
-      {{
-        (isUnsavedDraft(item)
-          ? 'record.metadata.status.notPublished'
-          : 'record.metadata.status.published'
-        ) | translate
-      }}
+      <span class="text-xs">
+        {{
+          (isUnsavedDraft(item)
+            ? 'record.metadata.status.notPublished'
+            : 'record.metadata.status.published'
+          ) | translate
+        }}</span
+      >
     </ng-template>
   </gn-ui-interactive-table-column>
 
@@ -122,7 +126,7 @@
       <span translate>record.metadata.updatedOn</span>
     </ng-template>
     <ng-template #cell let-item>
-      <div class="flex justify-center w-full">
+      <div class="flex justify-center w-full text-xs">
         {{ isUnsavedDraft(item) ? '-' : dateToString(item.recordUpdated) }}
       </div>
     </ng-template>

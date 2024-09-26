@@ -1,0 +1,4 @@
+/* set max-height for overflow-y-auto */
+main {
+  max-height: calc(100vh - 60px);
+}
