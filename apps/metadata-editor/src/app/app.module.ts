@@ -24,7 +24,11 @@ import { provideAnimations } from '@angular/platform-browser/animations'
 import { extModules } from './build-specifics'
 import { DashboardPageComponent } from './dashboard/dashboard-page.component'
 import { EditorRouterService } from './router.service'
-import { provideGn4, provideRepositoryUrl } from '@geonetwork-ui/api/repository'
+import {
+  LOGIN_URL,
+  provideGn4,
+  provideRepositoryUrl,
+} from '@geonetwork-ui/api/repository'
 import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
 
 @NgModule({
@@ -62,6 +66,10 @@ import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
     importProvidersFrom(EffectsModule.forRoot()),
     provideGn4(),
     provideAnimations(),
+    {
+      provide: LOGIN_URL,
+      useFactory: () => getGlobalConfig().LOGIN_URL,
+    },
   ],
   bootstrap: [AppComponent],
 })
