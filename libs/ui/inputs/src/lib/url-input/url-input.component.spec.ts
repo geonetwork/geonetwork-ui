@@ -78,15 +78,27 @@ describe('UrlInputComponent', () => {
     })
 
     describe('button', () => {
-      it('is disabled if value is input empty', () => {
+      it('is disabled if parent set it as disabled', () => {
+        component.disabled = true
         inputEl.value = ''
+        fixture.detectChanges()
+        expect(button.componentInstance.disabled).toBe(true)
+      })
+      it('is disabled if value is empty', () => {
+        inputEl.value = ''
+        fixture.detectChanges()
+        expect(button.componentInstance.disabled).toBe(true)
+      })
+      it('is disabled if asking for parseable URL and value is not an URL', () => {
+        component.urlCanParse = true
+        inputEl.value = 'hello'
         fixture.detectChanges()
         expect(button.componentInstance.disabled).toBe(true)
       })
       it('is not disabled otherwise', () => {
         inputEl.value = 'hello'
         fixture.detectChanges()
-        expect(button.componentInstance.disabled).toBe(false)
+        expect(button.componentInstance.disabled).toBeFalsy()
       })
     })
   })

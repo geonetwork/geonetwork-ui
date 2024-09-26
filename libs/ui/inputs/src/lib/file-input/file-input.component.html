@@ -12,6 +12,14 @@
     (dropFiles)="handleDropFiles($event)"
     (keydown.enter)="fileInput.click()"
   >
+    <input
+      #fileInput
+      type="file"
+      class="hidden"
+      (change)="handleFileInput($event)"
+      [disabled]="isUploadInProgress"
+    />
+
     <div
       class="w-14 h-14 rounded-md bg-gray-50 grid"
       *ngIf="!isUploadInProgress"
@@ -72,14 +80,6 @@
       >
       <span class="border-b border-gray-300 grow"></span>
     </p>
-    <input
-      #fileInput
-      type="file"
-      class="hidden"
-      (change)="handleFileInput($event)"
-      [disabled]="isUploadInProgress"
-    />
-
     <gn-ui-url-input
       class="w-full"
       [disabled]="isUploadInProgress"

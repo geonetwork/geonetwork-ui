@@ -27,7 +27,11 @@
   <gn-ui-button
     extraClass="absolute inset-y-[var(--side-padding)] right-[var(--side-padding)]"
     type="primary"
-    [disabled]="disabled || input.value === ''"
+    [disabled]="
+      disabled ||
+      input.value === '' ||
+      (urlCanParse && !URLcanParse(input.value))
+    "
     (buttonClick)="handleChange(input)"
   >
     <mat-icon class="material-symbols-outlined text-[20px] leading-[24px]">

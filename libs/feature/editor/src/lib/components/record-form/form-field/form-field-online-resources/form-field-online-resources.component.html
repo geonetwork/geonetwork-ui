@@ -1,13 +1,35 @@
+<gn-ui-switch-toggle
+  [options]="typeOptions"
+  (selectedValue)="onSelectedTypeChange($event.value)"
+  extraClasses="grow"
+  data-cy="online-resources-type"
+></gn-ui-switch-toggle>
+<div class="h-[8px]"></div>
 <gn-ui-file-input
+  *ngIf="selectedType === 'download'"
   [maxSizeMB]="MAX_UPLOAD_SIZE_MB"
   (fileChange)="handleFileChange($event)"
   (uploadCancel)="handleUploadCancel()"
   [uploadProgress]="uploadProgress"
-  (urlChange)="handleUrlChange($event)"
+  (urlChange)="handleDownloadUrlChange($event)"
 ></gn-ui-file-input>
+<div
+  *ngIf="selectedType === 'service'"
+  class="w-full border-2 border-dashed rounded-lg p-6 flex flex-col gap-[16px]"
+>
+  <gn-ui-online-service-resource-input
+    [service]="newService"
+  ></gn-ui-online-service-resource-input>
+  <span class="w-full border-b border-gray-300"></span>
+  <gn-ui-url-input
+    class="w-full"
+    [urlCanParse]="true"
+    (valueChange)="handleServiceUrlChange($event)"
+  ></gn-ui-url-input>
+</div>
 <div class="h-[8px]"></div>
 <gn-ui-sortable-list
-  [items]="linkResources"
+  [items]="notLinkResources"
   (itemsOrderChange)="handleResourcesChange($event)"
   [elementTemplate]="template"
 >
@@ -33,6 +55,12 @@
       </h3>
       <gn-ui-text-area [(value)]="onlineResource.description"></gn-ui-text-area>
     </div>
+    <ng-container *ngIf="onlineResource.type === 'service'">
+      <span class="w-full border-b border-gray-300"></span>
+      <gn-ui-online-service-resource-input
+        [service]="onlineResource"
+      ></gn-ui-online-service-resource-input>
+    </ng-container>
     <span class="w-full border-b border-gray-300"></span>
     <gn-ui-url-input
       class="w-full"
