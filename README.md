@@ -2,9 +2,13 @@
 
 # GeoNetwork UI
 
-GeoNetwork UI is a suite of Applications made to provide a modern facade to your GeoNetwork 4 catalog.
+GeoNetwork UI suite of applications provide a modern look for your GeoNetwork catalog.
 
 It also provides Web Components to embed various parts of your data catalog in third party websites.
+
+End users are [invited](https://discourse.osgeo.org/t/about-the-geonetwork-ui-category/59280) to join us on the [geonetwork-ui](https://discourse.osgeo.org/c/geonetwork/ui/59) forum.
+
+Developers should check out the [discussions](https://github.com/geonetwork/geonetwork-ui/discussions).
 
 ## Documentation
 
