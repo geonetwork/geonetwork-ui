@@ -18,10 +18,7 @@ import {
   someUserFeedbacksFixture,
   userFeedbackFixture,
 } from '@geonetwork-ui/common/fixtures'
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { HttpClient, HttpEventType } from '@angular/common/http'
 
 let geonetworkVersion: string
@@ -187,7 +184,11 @@ class RecordsApiServiceMock {
       },
     ])
   )
-  putResource = jest.fn(() => of(undefined))
+  putResource = jest.fn(() =>
+    of({
+      type: HttpEventType.UploadProgress,
+    })
+  )
 }
 
 class UserfeedbackApiServiceMock {
@@ -257,7 +258,6 @@ describe('Gn4PlatformService', () => {
     registriesApiService = TestBed.inject(RegistriesApiService)
     userFeedbackApiService = TestBed.inject(UserfeedbackApiService as any)
     recordsApiService = TestBed.inject(RecordsApiService)
-    TestBed.inject(HttpTestingController)
   })
 
   it('creates', () => {
@@ -775,7 +775,8 @@ describe('Gn4PlatformService', () => {
       file = new File([''], 'filename')
     })
     it('calls api service', async () => {
-      service.attachFileToRecord('12345', file)
+      await firstValueFrom(service.attachFileToRecord('12345', file))
+      expect(recordsApiService.getAllResources).toHaveBeenCalledWith('12345')
       expect(recordsApiService.putResource).toHaveBeenCalledWith(
         '12345',
         file,
@@ -784,6 +785,13 @@ describe('Gn4PlatformService', () => {
         'events',
         true
       )
+    })
+    it('disambiguates file name if an identical file already exists', async () => {
+      file = new File([''], 'doge.jpg')
+      await firstValueFrom(service.attachFileToRecord('12345', file))
+      const fileSent = (recordsApiService.putResource as jest.Mock).mock
+        .calls[0][1]
+      expect(fileSent.name).not.toEqual('doge.jpg')
     })
     it('handles progress event', () => {
       ;(recordsApiService.putResource as jest.Mock).mockReturnValue(

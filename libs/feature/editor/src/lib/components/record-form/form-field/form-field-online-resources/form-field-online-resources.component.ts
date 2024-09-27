@@ -133,7 +133,7 @@ export class FormFieldOnlineResourcesComponent {
             this.valueChange.emit([...this.allResources, newResource])
           }
         },
-        error: (error: Error) => this.handleError(error.message),
+        error: (error: Error) => this.handleError(error),
       })
   }
 
@@ -154,7 +154,7 @@ export class FormFieldOnlineResourcesComponent {
       }
       this.valueChange.emit([...this.allResources, newLink])
     } catch (e) {
-      this.handleError((e as Error).message)
+      this.handleError(e as Error)
     }
   }
 
@@ -190,7 +190,7 @@ export class FormFieldOnlineResourcesComponent {
     this.openEditDialog(resource, index)
   }
 
-  private handleError(error: string) {
+  private handleError(error: Error) {
     this.uploadProgress = undefined
     this.notificationsService.showNotification({
       type: 'error',
@@ -199,7 +199,7 @@ export class FormFieldOnlineResourcesComponent {
       ),
       text: `${this.translateService.instant(
         'editor.record.onlineResourceError.body'
-      )} ${error}`,
+      )} ${error.message}`,
       closeMessage: this.translateService.instant(
         'editor.record.onlineResourceError.closeMessage'
       ),

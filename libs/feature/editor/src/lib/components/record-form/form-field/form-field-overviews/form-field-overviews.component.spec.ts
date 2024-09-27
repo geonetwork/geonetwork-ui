@@ -1,17 +1,29 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { FormFieldOverviewsComponent } from './form-field-overviews.component'
-import { Subject } from 'rxjs'
+import { BehaviorSubject, Subject } from 'rxjs'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { MockBuilder, MockProvider } from 'ng-mocks'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import {
+  PlatformServiceInterface,
+  RecordAttachment,
+} from '@geonetwork-ui/common/domain/platform.service.interface'
 
 let uploadSubject: Subject<any>
+
+const recordAttachments = new BehaviorSubject<RecordAttachment[]>([
+  {
+    url: new URL('https://www.fakedomain.com/test.txt'),
+    fileName: 'test.txt',
+  },
+])
+
 class PlatformServiceInterfaceMock {
   attachFileToRecord = jest.fn(() => {
     uploadSubject = new Subject()
     return uploadSubject
   })
+  getRecordAttachments = jest.fn(() => recordAttachments)
 }
 
 describe('FormFieldOverviewsComponent', () => {
