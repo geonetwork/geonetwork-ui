@@ -2,7 +2,7 @@ import { DcatApConverter } from './dcat-ap.converter'
 import { loadGraph } from './utils/graph-utils'
 import { graph, NamedNode } from 'rdflib'
 import { DCAT, RDF } from './namespaces'
-import { mapOnlineResource } from './read-parts'
+import { mapOnlineResource, readDefaultLanguage } from './read-parts'
 
 describe('read parts', () => {
   describe('find Dataset if not part of a record', () => {
@@ -14,8 +14,8 @@ describe('read parts', () => {
     <dcat:Dataset rdf:about="http://mobielvlaanderen.be/store-x/man-dcat/dataset_ind075">
         <dcterms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2022-04-28</dcterms:modified>
         <dcterms:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2022-04-28</dcterms:issued>
-        <dcterms:title xml:lang="en">aantal ton gelost op de waterwegen</dcterms:title>
-        <dcterms:description xml:lang="en">hoeveelheid goederen gelost langs waterwegen beheerd door De Vlaamse Waterweg uitgedrukt in ton</dcterms:description>
+        <dcterms:title>aantal ton gelost op de waterwegen</dcterms:title>
+        <dcterms:description>hoeveelheid goederen gelost langs waterwegen beheerd door De Vlaamse Waterweg uitgedrukt in ton</dcterms:description>
     </dcat:Dataset>
 </rdf:RDF>`
     it('reads title and abstract but not unique identifier', async () => {
@@ -60,7 +60,7 @@ describe('read parts', () => {
           RDF('type'),
           DCAT('Distribution')
         ) as NamedNode
-        expect(mapOnlineResource(dataStore, node)).toEqual({
+        expect(mapOnlineResource(dataStore, node, 'en')).toEqual({
           name: 'NoiseContours_air_lnight',
           description: 'Description of the distribution',
           type: 'service',
@@ -68,6 +68,7 @@ describe('read parts', () => {
           url: new URL(
             'https://noise.discomap.eea.europa.eu/arcgis/services/noiseStoryMap/NoiseContours_air_lnight/ImageServer/WMSServer?request=GetCapabilities&service=WMS'
           ),
+          translations: {},
         })
       })
     })
@@ -92,14 +93,133 @@ describe('read parts', () => {
           RDF('type'),
           DCAT('Distribution')
         ) as NamedNode
-        expect(mapOnlineResource(dataStore, node)).toEqual({
+        expect(mapOnlineResource(dataStore, node, 'en')).toEqual({
           name: 'CSV distribution of imaginary dataset 001',
           description: 'A more complete description',
           type: 'download',
           url: new URL(
             'https://noise.discomap.eea.europa.eu/arcgis/services/noiseStoryMap/NoiseContours_air_lnight/ImageServer/WMSServer?request=GetCapabilities&service=WMS'
           ),
+          translations: {
+            name: {
+              es: 'distribución en CSV del conjunto de datos imaginario 001',
+            },
+          },
         })
+      })
+    })
+  })
+
+  describe('readDefaultLanguage', () => {
+    describe('language on catalog record', () => {
+      const doc = `
+<rdf:RDF xmlns:dct='http://purl.org/dc/terms/'
+        xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'
+        xmlns:skos='http://www.w3.org/2004/02/skos/core#'
+        xmlns:dcat='http://www.w3.org/ns/dcat#'>
+  <dcat:CatalogRecord rdf:about='http://data.europa.eu/88u/record/eu-whoiswho-the-official-directory-of-the-european-union'>
+    <dct:language>
+      <skos:Concept rdf:about='http://publications.europa.eu/resource/authority/language/NLD'>
+        <rdf:type rdf:resource='http://purl.org/dc/terms/LinguisticSystem'/>
+        <skos:prefLabel xml:lang='nl'>Nederlands</skos:prefLabel>
+        <skos:prefLabel xml:lang='en'>Dutch</skos:prefLabel>
+        <skos:prefLabel xml:lang='fr'>néerlandais</skos:prefLabel>
+        <skos:prefLabel xml:lang='de'>Niederländisch</skos:prefLabel>
+        <skos:inScheme rdf:resource='http://publications.europa.eu/resource/authority/language'/>
+      </skos:Concept>
+    </dct:language>
+  </dcat:CatalogRecord>
+</rdf:RDF>
+`
+      it('reads 2-char language code', async () => {
+        const dataStore = graph()
+        await loadGraph(dataStore, doc, 'application/rdf+xml')
+        const recordNode = dataStore.the(
+          null,
+          RDF('type'),
+          DCAT('CatalogRecord')
+        ) as NamedNode
+        expect(readDefaultLanguage(dataStore, recordNode)).toEqual('nl')
+      })
+    })
+
+    describe('language on catalog', () => {
+      const doc = `
+<rdf:RDF xmlns:dct='http://purl.org/dc/terms/'
+        xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'
+        xmlns:skos='http://www.w3.org/2004/02/skos/core#'
+        xmlns:dcat='http://www.w3.org/ns/dcat#'
+        xmlns:foaf="http://xmlns.com/foaf/0.1/">
+  <dcat:Catalog rdf:about="http://data.europa.eu/88u">
+    <dct:language>
+      <skos:Concept rdf:about='http://publications.europa.eu/resource/authority/language/NLD'>
+        <rdf:type rdf:resource='http://purl.org/dc/terms/LinguisticSystem'/>
+        <skos:prefLabel xml:lang='nl'>Nederlands</skos:prefLabel>
+        <skos:prefLabel xml:lang='en'>Dutch</skos:prefLabel>
+        <skos:prefLabel xml:lang='fr'>néerlandais</skos:prefLabel>
+        <skos:prefLabel xml:lang='de'>Niederländisch</skos:prefLabel>
+        <skos:inScheme rdf:resource='http://publications.europa.eu/resource/authority/language'/>
+      </skos:Concept>
+    </dct:language>
+    <dcat:record rdf:resource="http://data.europa.eu/88u/record/eu-whoiswho-the-official-directory-of-the-european-union"/>
+  </dcat:Catalog>
+  <dcat:CatalogRecord rdf:about='http://data.europa.eu/88u/record/eu-whoiswho-the-official-directory-of-the-european-union'>
+    <foaf:primaryTopic>
+      <dcat:Dataset rdf:about="http://data.europa.eu/88u/dataset/eu-whoiswho-the-official-directory-of-the-european-union">
+        <dct:subject rdf:resource="http://eurovoc.europa.eu/5645"/>
+      </dcat:Dataset>
+    </foaf:primaryTopic>
+  </dcat:CatalogRecord>
+</rdf:RDF>
+`
+      it('reads 2-char language code', async () => {
+        const dataStore = graph()
+        await loadGraph(dataStore, doc, 'application/rdf+xml')
+        const recordNode = dataStore.the(
+          null,
+          RDF('type'),
+          DCAT('CatalogRecord')
+        ) as NamedNode
+        expect(readDefaultLanguage(dataStore, recordNode)).toEqual('nl')
+      })
+    })
+
+    describe('language on anything else', () => {
+      const doc = `
+<rdf:RDF xmlns:dct='http://purl.org/dc/terms/'
+        xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'
+        xmlns:skos='http://www.w3.org/2004/02/skos/core#'
+        xmlns:dcat='http://www.w3.org/ns/dcat#'>
+  <dcat:Catalog rdf:about="http://data.europa.eu/88u">
+    <dcat:record rdf:resource="http://data.europa.eu/88u/record/eu-whoiswho-the-official-directory-of-the-european-union"/>
+  </dcat:Catalog>
+  <dcat:CatalogRecord rdf:about='http://data.europa.eu/88u/record/eu-whoiswho-the-official-directory-of-the-european-union'>
+    <dcat:distribution>
+      <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/a917249e-9fc1-449e-b527-c10beb2a469a">
+        <dct:language>
+          <skos:Concept rdf:about='http://publications.europa.eu/resource/authority/language/NLD'>
+            <rdf:type rdf:resource='http://purl.org/dc/terms/LinguisticSystem'/>
+            <skos:prefLabel xml:lang='nl'>Nederlands</skos:prefLabel>
+            <skos:prefLabel xml:lang='en'>Dutch</skos:prefLabel>
+            <skos:prefLabel xml:lang='fr'>néerlandais</skos:prefLabel>
+            <skos:prefLabel xml:lang='de'>Niederländisch</skos:prefLabel>
+            <skos:inScheme rdf:resource='http://publications.europa.eu/resource/authority/language'/>
+          </skos:Concept>
+        </dct:language>
+      </dcat:Distribution>
+    </dcat:distribution>
+  </dcat:CatalogRecord>
+</rdf:RDF>
+`
+      it('returns null', async () => {
+        const dataStore = graph()
+        await loadGraph(dataStore, doc, 'application/rdf+xml')
+        const recordNode = dataStore.the(
+          null,
+          RDF('type'),
+          DCAT('CatalogRecord')
+        ) as NamedNode
+        expect(readDefaultLanguage(dataStore, recordNode)).toEqual(null)
       })
     })
   })

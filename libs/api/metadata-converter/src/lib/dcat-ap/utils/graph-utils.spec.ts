@@ -1,8 +1,8 @@
 import { NamedNode, Store } from 'rdflib'
 import {
-  findNodeLocalized,
-  getOrAddLocalizedLiteral,
   loadGraph,
+  readLocalizedValue,
+  writeLocalizedLiteral,
 } from './graph-utils'
 import { DCAT, DCTERMS, RDF } from '../namespaces'
 
@@ -13,7 +13,7 @@ function graphToXml(dataStore: Store) {
 }
 
 describe('graph utils', () => {
-  describe('findNodeLocalized', () => {
+  describe('readLocalizedValue', () => {
     it('finds a node with a specific language if present', async () => {
       const dataStore = new Store()
       await loadGraph(
@@ -38,14 +38,22 @@ describe('graph utils', () => {
         RDF('type'),
         DCAT('Dataset')
       ) as NamedNode
-      const result = findNodeLocalized(
+      const [value, translations] = readLocalizedValue(
         dataStore,
         dataset,
         DCTERMS('title'),
         null,
+        'title',
+        {},
         'en'
       )
-      expect(result?.value).toBe('english title')
+      expect(value).toBe('english title')
+      expect(translations).toEqual({
+        title: {
+          de: 'guten morgen',
+          nl: 'aantal ton gelost op de waterwegen',
+        },
+      })
     })
     it('finds a node with no language if given language is absent', async () => {
       const dataStore = new Store()
@@ -70,16 +78,24 @@ describe('graph utils', () => {
         RDF('type'),
         DCAT('Dataset')
       ) as NamedNode
-      const result = findNodeLocalized(
+      const [value, translations] = readLocalizedValue(
         dataStore,
         dataset,
         DCTERMS('title'),
         null,
+        'title',
+        {},
         'en'
       )
-      expect(result?.value).toBe('bla bla')
+      expect(value).toBe('bla bla')
+      expect(translations).toEqual({
+        title: {
+          de: 'guten morgen',
+          nl: 'aantal ton gelost op de waterwegen',
+        },
+      })
     })
-    it('finds a node with any other language if no node without language', async () => {
+    it('returns placeholder if no node without language', async () => {
       const dataStore = new Store()
       await loadGraph(
         dataStore,
@@ -101,19 +117,91 @@ describe('graph utils', () => {
         RDF('type'),
         DCAT('Dataset')
       ) as NamedNode
-      const result = findNodeLocalized(
+      const [value, translations] = readLocalizedValue(
         dataStore,
         dataset,
         DCTERMS('title'),
         null,
+        'title',
+        {},
         'en'
       )
-      expect(result?.value).toBe('aantal ton gelost op de waterwegen')
+      expect(value).toBe('(value not found)')
+      expect(translations).toEqual({
+        title: {
+          de: 'guten morgen',
+          nl: 'aantal ton gelost op de waterwegen',
+        },
+      })
+    })
+    it('returns an empty object if no translations found', async () => {
+      const dataStore = new Store()
+      await loadGraph(
+        dataStore,
+        `
+<rdf:RDF
+    xmlns:dcat="http://www.w3.org/ns/dcat#"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <dcat:Dataset>
+      <dcterms:title>bla bla</dcterms:title>
+    </dcat:Dataset>
+</rdf:RDF>`,
+        'application/rdf+xml'
+      )
+
+      const dataset = dataStore.the(
+        null,
+        RDF('type'),
+        DCAT('Dataset')
+      ) as NamedNode
+      const [value, translations] = readLocalizedValue(
+        dataStore,
+        dataset,
+        DCTERMS('title'),
+        null,
+        'title',
+        {},
+        'en'
+      )
+      expect(value).toBe('bla bla')
+      expect(translations).toEqual({})
+    })
+    it('returns null if no matching literal found', async () => {
+      const dataStore = new Store()
+      await loadGraph(
+        dataStore,
+        `
+<rdf:RDF
+    xmlns:dcat="http://www.w3.org/ns/dcat#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <dcat:Dataset>
+    </dcat:Dataset>
+</rdf:RDF>`,
+        'application/rdf+xml'
+      )
+
+      const dataset = dataStore.the(
+        null,
+        RDF('type'),
+        DCAT('Dataset')
+      ) as NamedNode
+      const [value, translations] = readLocalizedValue(
+        dataStore,
+        dataset,
+        DCTERMS('title'),
+        null,
+        'title',
+        {},
+        'en'
+      )
+      expect(value).toBe(null)
+      expect(translations).toEqual({})
     })
   })
 
-  describe('getOrAddLocalizedObject', () => {
-    it('finds a node with a specific language if present', async () => {
+  describe('writeTranslatedLiteral', () => {
+    it('clears existing nodes and write new ones based on translations', async () => {
       const dataStore = new Store()
       await loadGraph(
         dataStore,
@@ -137,11 +225,15 @@ describe('graph utils', () => {
         RDF('type'),
         DCAT('Dataset')
       ) as NamedNode
-      getOrAddLocalizedLiteral(
+      writeLocalizedLiteral(
         dataStore,
         dataset,
         DCTERMS('title'),
         'new title in english',
+        {
+          de: 'neues Titel',
+          nl: 'nieuwe titel',
+        },
         'en'
       )
       expect(graphToXml(dataStore)).toBe(`<rdf:RDF
@@ -149,53 +241,9 @@ describe('graph utils', () => {
  xmlns:dcterms="http://purl.org/dc/terms/"
  xmlns:dcat="http://www.w3.org/ns/dcat#">
     <dcat:Dataset>
-        <dcterms:title rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString" xml:lang="nl">aantal ton gelost op de waterwegen</dcterms:title>
-        <dcterms:title rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString" xml:lang="de">guten morgen</dcterms:title>
-        <dcterms:title>bla bla</dcterms:title>
         <dcterms:title rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString" xml:lang="en">new title in english</dcterms:title>
-    </dcat:Dataset>
-</rdf:RDF>
-`)
-    })
-    it('modifies the first node without language if no language matches', async () => {
-      const dataStore = new Store()
-      await loadGraph(
-        dataStore,
-        `
-<rdf:RDF
-    xmlns:dcat="http://www.w3.org/ns/dcat#"
-    xmlns:dcterms="http://purl.org/dc/terms/"
-    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <dcat:Dataset>
-      <dcterms:title xml:lang="nl">aantal ton gelost op de waterwegen</dcterms:title>
-      <dcterms:title xml:lang="de">guten morgen</dcterms:title>
-      <dcterms:title>bla bla</dcterms:title>
-    </dcat:Dataset>
-</rdf:RDF>
-`,
-        'application/rdf+xml'
-      )
-
-      const dataset = dataStore.the(
-        null,
-        RDF('type'),
-        DCAT('Dataset')
-      ) as NamedNode
-      getOrAddLocalizedLiteral(
-        dataStore,
-        dataset,
-        DCTERMS('title'),
-        'new title in english',
-        'en'
-      )
-      expect(graphToXml(dataStore)).toBe(`<rdf:RDF
- xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
- xmlns:dcterms="http://purl.org/dc/terms/"
- xmlns:dcat="http://www.w3.org/ns/dcat#">
-    <dcat:Dataset>
-        <dcterms:title rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString" xml:lang="nl">aantal ton gelost op de waterwegen</dcterms:title>
-        <dcterms:title rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString" xml:lang="de">guten morgen</dcterms:title>
-        <dcterms:title rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString" xml:lang="en">new title in english</dcterms:title>
+        <dcterms:title rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString" xml:lang="de">neues Titel</dcterms:title>
+        <dcterms:title rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString" xml:lang="nl">nieuwe titel</dcterms:title>
     </dcat:Dataset>
 </rdf:RDF>
 `)

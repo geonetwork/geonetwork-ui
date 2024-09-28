@@ -2,6 +2,8 @@ import {
   CatalogRecord,
   CatalogRecordKeys,
   DatasetRecord,
+  LanguageCode,
+  RecordTranslations,
   ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import { BaseConverter, MetadataMapperContext } from '../base.converter'
@@ -10,6 +12,7 @@ import {
   readAbstract,
   readContacts,
   readContactsForResource,
+  readDefaultLanguage,
   readKeywords,
   readLandingPage,
   readLicenses,
@@ -35,7 +38,12 @@ import { exportGraphToXml } from './utils/serialize-to-xml'
 export class DcatApConverter extends BaseConverter<string> {
   protected readers: Record<
     CatalogRecordKeys,
-    (dataStore: Store, catalogRecord: NamedNode) => unknown
+    (
+      dataStore: Store,
+      catalogRecord: NamedNode,
+      translations: RecordTranslations,
+      defaultLanguage: LanguageCode
+    ) => unknown
   > = {
     uniqueIdentifier: readUniqueIdentifier,
     title: readTitle,
@@ -53,6 +61,8 @@ export class DcatApConverter extends BaseConverter<string> {
     resourceCreated: readResourceCreated,
     ownerOrganization: readOwnerOrganization,
     licenses: readLicenses,
+    defaultLanguage: readDefaultLanguage,
+    otherLanguages: () => [], // languages will be inferred from found translations
     // TODO
     kind: () => 'dataset',
     recordPublished: () => undefined,
@@ -67,7 +77,7 @@ export class DcatApConverter extends BaseConverter<string> {
     temporalExtents: () => [],
     spatialRepresentation: () => undefined,
     extras: () => undefined,
-    otherLanguages: () => [],
+    translations: () => undefined,
   }
 
   protected writers: Record<
@@ -104,7 +114,9 @@ export class DcatApConverter extends BaseConverter<string> {
     spatialExtents: () => undefined,
     extras: () => undefined,
     landingPage: () => undefined,
+    defaultLanguage: () => undefined,
     otherLanguages: () => undefined,
+    translations: () => undefined,
   }
 
   constructor(
@@ -124,92 +136,197 @@ export class DcatApConverter extends BaseConverter<string> {
       DCAT('CatalogRecord')
     ) as NamedNode
 
+    const tr: RecordTranslations = {}
+
+    // we need the default language first for the other fields
+    const defaultLanguage = this.readers['defaultLanguage'](
+      dataStore,
+      catalogRecord,
+      tr,
+      null
+    ) as string
     const uniqueIdentifier = this.readers['uniqueIdentifier'](
       dataStore,
-      catalogRecord
+      catalogRecord,
+      tr,
+      defaultLanguage
     )
-    const kind = this.readers['kind'](dataStore, catalogRecord)
+    const kind = this.readers['kind'](
+      dataStore,
+      catalogRecord,
+      tr,
+      defaultLanguage
+    )
     const ownerOrganization = this.readers['ownerOrganization'](
       dataStore,
-      catalogRecord
+      catalogRecord,
+      tr,
+      defaultLanguage
     )
-    const title = this.readers['title'](dataStore, catalogRecord)
-    const abstract = this.readers['abstract'](dataStore, catalogRecord)
-    const contacts = this.readers['contacts'](dataStore, catalogRecord)
+    const title = this.readers['title'](
+      dataStore,
+      catalogRecord,
+      tr,
+      defaultLanguage
+    )
+    const abstract = this.readers['abstract'](
+      dataStore,
+      catalogRecord,
+      tr,
+      defaultLanguage
+    )
+    const contacts = this.readers['contacts'](
+      dataStore,
+      catalogRecord,
+      tr,
+      defaultLanguage
+    )
     const contactsForResource = this.readers['contactsForResource'](
       dataStore,
-      catalogRecord
+      catalogRecord,
+      tr,
+      defaultLanguage
     )
     const recordUpdated = this.readers['recordUpdated'](
       dataStore,
-      catalogRecord
+      catalogRecord,
+      tr,
+      defaultLanguage
     )
     const recordCreated = this.readers['recordCreated'](
       dataStore,
-      catalogRecord
+      catalogRecord,
+      tr,
+      defaultLanguage
     )
     const recordPublished = this.readers['recordPublished'](
       dataStore,
-      catalogRecord
+      catalogRecord,
+      tr,
+      defaultLanguage
     )
     const resourceCreated = this.readers['resourceCreated'](
       dataStore,
-      catalogRecord
+      catalogRecord,
+      tr,
+      defaultLanguage
     )
     const resourceUpdated = this.readers['resourceUpdated'](
       dataStore,
-      catalogRecord
+      catalogRecord,
+      tr,
+      defaultLanguage
     )
     const resourcePublished = this.readers['resourcePublished'](
       dataStore,
-      catalogRecord
+      catalogRecord,
+      tr,
+      defaultLanguage
     )
-    const keywords = this.readers['keywords'](dataStore, catalogRecord)
-    const topics = this.readers['topics'](dataStore, catalogRecord)
+    const keywords = this.readers['keywords'](
+      dataStore,
+      catalogRecord,
+      tr,
+      defaultLanguage
+    )
+    const topics = this.readers['topics'](
+      dataStore,
+      catalogRecord,
+      tr,
+      defaultLanguage
+    )
     const legalConstraints = this.readers['legalConstraints'](
       dataStore,
-      catalogRecord
+      catalogRecord,
+      tr,
+      defaultLanguage
     )
     const otherConstraints = this.readers['otherConstraints'](
       dataStore,
-      catalogRecord
+      catalogRecord,
+      tr,
+      defaultLanguage
     )
     const securityConstraints = this.readers['securityConstraints'](
       dataStore,
-      catalogRecord
+      catalogRecord,
+      tr,
+      defaultLanguage
     )
-    const licenses = this.readers['licenses'](dataStore, catalogRecord)
-    const overviews = this.readers['overviews'](dataStore, catalogRecord)
-    const landingPage = this.readers['landingPage'](dataStore, catalogRecord)
+    const licenses = this.readers['licenses'](
+      dataStore,
+      catalogRecord,
+      tr,
+      defaultLanguage
+    )
+    const overviews = this.readers['overviews'](
+      dataStore,
+      catalogRecord,
+      tr,
+      defaultLanguage
+    )
+    const landingPage = this.readers['landingPage'](
+      dataStore,
+      catalogRecord,
+      tr,
+      defaultLanguage
+    )
+    const otherLanguages = this.readers['otherLanguages'](
+      dataStore,
+      catalogRecord,
+      tr,
+      defaultLanguage
+    )
 
     if (kind === 'dataset') {
-      const status = this.readers['status'](dataStore, catalogRecord)
+      const status = this.readers['status'](
+        dataStore,
+        catalogRecord,
+        tr,
+        defaultLanguage
+      )
       const spatialRepresentation = this.readers['spatialRepresentation'](
         dataStore,
-        catalogRecord
+        catalogRecord,
+        tr,
+        defaultLanguage
       )
       const spatialExtents = this.readers['spatialExtents'](
         dataStore,
-        catalogRecord
+        catalogRecord,
+        tr,
+        defaultLanguage
       )
       const temporalExtents = this.readers['temporalExtents'](
         dataStore,
-        catalogRecord
+        catalogRecord,
+        tr,
+        defaultLanguage
       )
-      const lineage = this.readers['lineage'](dataStore, catalogRecord)
+      const lineage = this.readers['lineage'](
+        dataStore,
+        catalogRecord,
+        tr,
+        defaultLanguage
+      )
       const onlineResources = this.readers['onlineResources'](
         dataStore,
-        catalogRecord
+        catalogRecord,
+        tr,
+        defaultLanguage
       )
       const updateFrequency = this.readers['updateFrequency'](
         dataStore,
-        catalogRecord
+        catalogRecord,
+        tr,
+        defaultLanguage
       )
 
       return {
         uniqueIdentifier,
         kind,
-        otherLanguages: [],
+        defaultLanguage,
+        otherLanguages,
         ...(recordCreated && { recordCreated }),
         ...(recordPublished && { recordPublished }),
         recordUpdated,
@@ -236,16 +353,20 @@ export class DcatApConverter extends BaseConverter<string> {
         onlineResources,
         updateFrequency,
         ...(landingPage && { landingPage }),
+        translations: tr,
       } as DatasetRecord
     } else {
       const onlineResources = this.readers['onlineResources'](
         dataStore,
-        catalogRecord
+        catalogRecord,
+        tr,
+        defaultLanguage
       )
       return {
         uniqueIdentifier,
         kind,
-        otherLanguages: [],
+        defaultLanguage,
+        otherLanguages,
         ...(recordCreated && { recordCreated }),
         ...(recordPublished && { recordPublished }),
         recordUpdated,
@@ -266,6 +387,7 @@ export class DcatApConverter extends BaseConverter<string> {
         overviews,
         onlineResources,
         ...(landingPage && { landingPage }),
+        translations: tr,
       } as ServiceRecord
     }
   }

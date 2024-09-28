@@ -24,6 +24,7 @@ export const VLAANDEREN_DATASET_RECORD: DatasetRecord = {
       name: 'Darwin Core Archive of Fish damage at pump stations',
       type: 'download',
       url: new URL('https://ipt.inbo.be/archive.do?r=visschade-occurrences'),
+      translations: {},
     },
   ],
   keywords: [
@@ -34,6 +35,7 @@ export const VLAANDEREN_DATASET_RECORD: DatasetRecord = {
     { label: 'mortality', type: 'theme' },
   ],
   kind: 'dataset',
+  defaultLanguage: 'en',
   otherLanguages: [],
   legalConstraints: [],
   licenses: [
@@ -70,4 +72,5 @@ export const VLAANDEREN_DATASET_RECORD: DatasetRecord = {
   resourceUpdated: new Date('2021-04-14T11:15+02:00'),
   status: 'completed',
   updateFrequency: 'unknown',
+  translations: {},
 }

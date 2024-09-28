@@ -37,6 +37,7 @@ export const SEXTANT_BATHYMETRY_DATASET_RECORD: DatasetRecord = {
       name: '',
       type: 'link',
       url: new URL('http://wwz.ifremer.fr/drogm/Cartographie'),
+      translations: {},
     },
   ],
   keywords: [],
@@ -86,6 +87,7 @@ export const SEXTANT_BATHYMETRY_DATASET_RECORD: DatasetRecord = {
   resourceUpdated: new Date('2020-06-03T22:34:05.000Z'),
   status: 'completed',
   updateFrequency: 'unknown',
+  translations: {},
 }
 
 export const SEXTANT_CURRENTS_DATASET_RECORD: CatalogRecord = {

@@ -11,12 +11,15 @@ import OPENDATASWISS_DATASET from '../fixtures/opendataswiss.dcat-ap.dataset.xml
 import VLAANDEREN_DATASET from '../fixtures/vlaanderen.dcat-ap.dataset.xml'
 // @ts-ignore
 import GENERIC_DATASET_PLUS_EU_SURVEY_DATASET from '../fixtures/generic-dataset+eu.dcat-ap.survey.xml'
+// @ts-ignore
+import GENERIC_DATASET from '../fixtures/generic-dataset.dcat-ap.xml'
 import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
 import { graph, parse } from 'rdflib'
 import { SEXTANT_BATHYMETRY_DATASET_RECORD } from '../fixtures/sextant.records'
 import { OPENDATASWISS_DATASET_RECORD } from '../fixtures/opendataswiss.records'
 import { VLAANDEREN_DATASET_RECORD } from '../fixtures/vlaanderen.dcat-ap.records'
 import { exportGraphToXml } from './utils/serialize-to-xml'
+import { parseXmlString, xmlToString } from '../xml-utils'
 
 // this makes the xml go through the same formatting as the converter
 async function formatRdf(rdfString: string) {
@@ -60,16 +63,17 @@ describe('DCAT-AP converter', () => {
   })
 
   describe('from model to RDF', () => {
-    // TODO: WRITE GENERIC DATASET FIXTURE
-    // it('produces a valid XML document based on a generic record', async () => {
-    //   // parse and output xml to guarantee identical formatting
-    //   const ref = xmlToString(parseXmlString(GENERIC_DATASET))
-    //   const xml = await converter.writeRecord(GENERIC_DATASET_RECORD)
-    //   expect(xml).toStrictEqual(ref)
-    // })
+    it('produces a valid XML document based on a generic record', async () => {
+      // parse and output xml to guarantee identical formatting
+      const ref = xmlToString(parseXmlString(GENERIC_DATASET))
+      const xml = await converter.writeRecord(GENERIC_DATASET_RECORD)
+      expect(xml).toStrictEqual(ref)
+    })
     it('produces a valid XML document by combining a generic record and a third-party XML', async () => {
       // parse and output xml to guarantee identical formatting
-      const ref = await formatRdf(GENERIC_DATASET_PLUS_EU_SURVEY_DATASET)
+      const ref = xmlToString(
+        parseXmlString(GENERIC_DATASET_PLUS_EU_SURVEY_DATASET)
+      )
       const output = await converter.writeRecord(
         GENERIC_DATASET_RECORD,
         EU_SURVEY_DATASET
