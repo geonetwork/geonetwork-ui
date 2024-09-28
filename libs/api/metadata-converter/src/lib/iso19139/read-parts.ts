@@ -73,7 +73,7 @@ export function extractCharacterString(): ChainableFunction<
  */
 export function extractLocalizedCharacterString<T extends ModelTranslations>(
   fieldName: string,
-  translations: T
+  translations?: T
 ): ChainableFunction<XmlElement, [string, T]> {
   return combine(
     pipe(
@@ -89,7 +89,8 @@ export function extractLocalizedCharacterString<T extends ModelTranslations>(
         'gmd:textGroup',
         'gmd:LocalisedCharacterString'
       )(el)
-      if (!translatedValues.length) return translations
+      const translationsSafe = translations ?? ({} as T)
+      if (!translatedValues.length) return translationsSafe
       const valueTranslations: FieldTranslation = translatedValues.reduce(
         (prev, translationEl) => {
           const lang = readAttribute('locale')(translationEl)
@@ -103,11 +104,11 @@ export function extractLocalizedCharacterString<T extends ModelTranslations>(
         },
         {}
       )
-      translations[fieldName] = {
-        ...translations[fieldName],
+      translationsSafe[fieldName] = {
+        ...translationsSafe[fieldName],
         ...valueTranslations,
       }
-      return translations
+      return translationsSafe
     }
   )
 }
@@ -186,7 +187,7 @@ export function extractOrganization(): ChainableFunction<
     combine(
       pipe(
         findChildElement('gmd:organisationName', false),
-        extractLocalizedCharacterString<OrganizationTranslations>('name', {})
+        extractLocalizedCharacterString<OrganizationTranslations>('name')
       ),
       getUrl
     ),
@@ -305,7 +306,7 @@ export function extractLegalConstraints(): ChainableFunction<
     flattenArray(),
     mapArray(
       combine(
-        extractLocalizedCharacterString<ConstraintTranslations>('text', {}),
+        extractLocalizedCharacterString<ConstraintTranslations>('text'),
         extractUrl()
       )
     ),
@@ -327,7 +328,7 @@ export function extractSecurityConstraints(): ChainableFunction<
     flattenArray(),
     mapArray(
       combine(
-        extractLocalizedCharacterString<ConstraintTranslations>('text', {}),
+        extractLocalizedCharacterString<ConstraintTranslations>('text'),
         extractUrl()
       )
     ),
@@ -349,7 +350,7 @@ export function extractOtherConstraints(): ChainableFunction<
     flattenArray(),
     mapArray(
       combine(
-        extractLocalizedCharacterString<ConstraintTranslations>('text', {}),
+        extractLocalizedCharacterString<ConstraintTranslations>('text'),
         extractUrl()
       )
     ),
@@ -385,7 +386,7 @@ export function extractLicenses(): ChainableFunction<
     flattenArray(),
     mapArray(
       combine(
-        extractLocalizedCharacterString<ConstraintTranslations>('text', {}),
+        extractLocalizedCharacterString<ConstraintTranslations>('text'),
         extractUrl()
       )
     ),
@@ -435,14 +436,11 @@ export function extractDatasetOnlineResources(
   )
   const getName = pipe(
     findChildElement('gmd:name'),
-    extractLocalizedCharacterString<OnlineResourceTranslations>('name', {})
+    extractLocalizedCharacterString<OnlineResourceTranslations>('name')
   )
   const getDescription = pipe(
     findChildElement('gmd:description'),
-    extractLocalizedCharacterString<OnlineResourceTranslations>(
-      'description',
-      {}
-    )
+    extractLocalizedCharacterString<OnlineResourceTranslations>('description')
   )
   return pipe(
     findNestedElements(
@@ -451,7 +449,7 @@ export function extractDatasetOnlineResources(
       'gmd:onLine',
       'gmd:CI_OnlineResource'
     ),
-    mapArray((el) =>
+    mapArray(
       combine(
         getIsService,
         getIsDownload,
@@ -460,7 +458,7 @@ export function extractDatasetOnlineResources(
         getName,
         getDescription,
         getMimeTypeFn
-      )(el)
+      )
     ),
     mapArray(
       ([
@@ -765,7 +763,7 @@ export function readKeywordGroup(rootEl: XmlElement): Keyword[] {
     findChildrenElement('gmd:keyword'),
     mapArray((el) => {
       const [label, translations] =
-        extractLocalizedCharacterString<KeywordTranslations>('label', {})(el)
+        extractLocalizedCharacterString<KeywordTranslations>('label')(el)
       return {
         ...(thesaurus ? { thesaurus } : {}),
         label,
@@ -920,7 +918,7 @@ export function extractServiceOnlineResources(): ChainableFunction<
   )
   const getName = pipe(
     findChildElement('gmd:name'),
-    extractLocalizedCharacterString<OnlineResourceTranslations>('name', {})
+    extractLocalizedCharacterString<OnlineResourceTranslations>('name')
   )
   const getDescription = pipe(
     findChildElement('gmd:description'),
@@ -1072,7 +1070,7 @@ export function readSpatialExtents(rootEl: XmlElement) {
         'gmd:MD_Identifier',
         'gmd:code'
       ),
-      extractLocalizedCharacterString('description', {})
+      extractLocalizedCharacterString('description')
     )(rootEl)
   }
 

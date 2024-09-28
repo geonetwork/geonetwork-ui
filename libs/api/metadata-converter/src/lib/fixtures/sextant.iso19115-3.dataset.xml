@@ -1,0 +1,1809 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdb:MD_Metadata xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/2.0" xmlns:cat="http://standards.iso.org/iso/19115/-3/cat/1.0" xmlns:gfc="http://standards.iso.org/iso/19110/gfc/1.1" xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/2.0" xmlns:gcx="http://standards.iso.org/iso/19115/-3/gcx/1.0" xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0" xmlns:lan="http://standards.iso.org/iso/19115/-3/lan/1.0" xmlns:srv="http://standards.iso.org/iso/19115/-3/srv/2.0" xmlns:mas="http://standards.iso.org/iso/19115/-3/mas/1.0" xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0" xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0" xmlns:mda="http://standards.iso.org/iso/19115/-3/mda/1.0" xmlns:mds="http://standards.iso.org/iso/19115/-3/mds/2.0" xmlns:mdt="http://standards.iso.org/iso/19115/-3/mdt/2.0" xmlns:mex="http://standards.iso.org/iso/19115/-3/mex/1.0" xmlns:mmi="http://standards.iso.org/iso/19115/-3/mmi/1.0" xmlns:mpc="http://standards.iso.org/iso/19115/-3/mpc/1.0" xmlns:mrc="http://standards.iso.org/iso/19115/-3/mrc/2.0" xmlns:mrd="http://standards.iso.org/iso/19115/-3/mrd/1.0" xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0" xmlns:mrl="http://standards.iso.org/iso/19115/-3/mrl/2.0" xmlns:mrs="http://standards.iso.org/iso/19115/-3/mrs/1.0" xmlns:msr="http://standards.iso.org/iso/19115/-3/msr/2.0" xmlns:mdq="http://standards.iso.org/iso/19157/-2/mdq/1.0" xmlns:dqm="http://standards.iso.org/iso/19157/-2/dqm/1.0" xmlns:mac="http://standards.iso.org/iso/19115/-3/mac/2.0" xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://standards.iso.org/iso/19115/-3/mdb/2.0 https://schemas.isotc211.org/19115/-3/mdb/2.0/mdb.xsd">
+    <mdb:metadataIdentifier>
+        <mcc:MD_Identifier>
+            <mcc:code>
+                <gco:CharacterString>74ce72b9-0196-4eca-abfe-8600f69bd5c4</gco:CharacterString>
+            </mcc:code>
+            <mcc:codeSpace>
+                <gco:CharacterString>urn:uuid</gco:CharacterString>
+            </mcc:codeSpace>
+        </mcc:MD_Identifier>
+    </mdb:metadataIdentifier>
+    <mdb:defaultLocale>
+        <lan:PT_Locale id="FR">
+            <lan:language>
+                <lan:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="fre" />
+            </lan:language>
+            <lan:characterEncoding>
+                <lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_CharacterSetCode" codeListValue="utf8" />
+            </lan:characterEncoding>
+        </lan:PT_Locale>
+    </mdb:defaultLocale>
+    <mdb:metadataScope>
+        <mdb:MD_MetadataScope>
+            <mdb:resourceScope>
+                <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="dataset" />
+            </mdb:resourceScope>
+        </mdb:MD_MetadataScope>
+    </mdb:metadataScope>
+    <mdb:dateInfo>
+        <cit:CI_Date>
+            <cit:date>
+                <gco:DateTime>2023-12-06T14:16:42.416Z</gco:DateTime>
+            </cit:date>
+            <cit:dateType>
+                <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="creation" />
+            </cit:dateType>
+        </cit:CI_Date>
+    </mdb:dateInfo>
+    <mdb:dateInfo>
+        <cit:CI_Date>
+            <cit:date>
+                <gco:DateTime>2024-09-17T13:54:59.711014Z</gco:DateTime>
+            </cit:date>
+            <cit:dateType>
+                <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="revision" />
+            </cit:dateType>
+        </cit:CI_Date>
+    </mdb:dateInfo>
+    <mdb:metadataStandard>
+        <cit:CI_Citation>
+            <cit:title xsi:type="lan:PT_FreeText_PropertyType">
+                <gco:CharacterString>ISO 19115-3:2018 - Remote Sensing</gco:CharacterString>
+                <lan:PT_FreeText>
+                    <lan:textGroup>
+                        <lan:LocalisedCharacterString locale="#FR">ISO 19115-3:2018 - Remote Sensing</lan:LocalisedCharacterString>
+                    </lan:textGroup>
+                </lan:PT_FreeText>
+            </cit:title>
+            <cit:edition>
+                <gco:CharacterString>1.0</gco:CharacterString>
+            </cit:edition>
+        </cit:CI_Citation>
+    </mdb:metadataStandard>
+    <mdb:otherLocale>
+        <lan:PT_Locale id="EN">
+            <lan:language>
+                <lan:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng" />
+            </lan:language>
+            <lan:characterEncoding>
+                <lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_CharacterSetCode" codeListValue="utf8" />
+            </lan:characterEncoding>
+        </lan:PT_Locale>
+    </mdb:otherLocale>
+    <mdb:metadataLinkage>
+        <cit:CI_OnlineResource>
+            <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
+                <gco:CharacterString>https://sextant.ifremer.fr/geonetwork/srv/api/records/74ce72b9-0196-4eca-abfe-8600f69bd5c4</gco:CharacterString>
+                <lan:PT_FreeText>
+                    <lan:textGroup>
+                        <lan:LocalisedCharacterString locale="#FR">https://sextant.ifremer.fr/geonetwork/srv/api/records/74ce72b9-0196-4eca-abfe-8600f69bd5c4</lan:LocalisedCharacterString>
+                    </lan:textGroup>
+                </lan:PT_FreeText>
+            </cit:linkage>
+            <cit:function>
+                <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="completeMetadata" />
+            </cit:function>
+        </cit:CI_OnlineResource>
+    </mdb:metadataLinkage>
+    <mdb:spatialRepresentationInfo>
+        <msr:MD_VectorSpatialRepresentation>
+            <msr:geometricObjects>
+                <msr:MD_GeometricObjects>
+                    <msr:geometricObjectType>
+                        <msr:MD_GeometricObjectTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_GeometricObjectTypeCode" codeListValue="point" />
+                    </msr:geometricObjectType>
+                </msr:MD_GeometricObjects>
+            </msr:geometricObjects>
+        </msr:MD_VectorSpatialRepresentation>
+    </mdb:spatialRepresentationInfo>
+    <mdb:referenceSystemInfo xmlns:gn="http://www.fao.org/geonetwork">
+        <mrs:MD_ReferenceSystem>
+            <mrs:referenceSystemIdentifier>
+                <mcc:MD_Identifier>
+                    <mcc:code>
+                        <gco:CharacterString>http://www.opengis.net/def/crs/EPSG/0/4326</gco:CharacterString>
+                    </mcc:code>
+                    <mcc:description xsi:type="lan:PT_FreeText_PropertyType">
+                        <gco:CharacterString>WGS 84 (EPSG:4326) - Equirectangular projection</gco:CharacterString>
+                        <lan:PT_FreeText>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#FR">WGS 84 (EPSG:4326) - Equirectangular projection</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                        </lan:PT_FreeText>
+                    </mcc:description>
+                </mcc:MD_Identifier>
+            </mrs:referenceSystemIdentifier>
+        </mrs:MD_ReferenceSystem>
+    </mdb:referenceSystemInfo>
+    <mdb:identificationInfo>
+        <mri:MD_DataIdentification>
+            <mri:citation>
+                <cit:CI_Citation>
+                    <cit:title xsi:type="lan:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Position des fronts du Courant Circumpolaire Antarctique</gco:CharacterString>
+                        <lan:PT_FreeText>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#FR">Position des fronts du Courant Circumpolaire Antarctique</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#EN">Position of the Antarctic Circumpolar Current fronts</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                        </lan:PT_FreeText>
+                    </cit:title>
+                    <cit:date>
+                        <cit:CI_Date>
+                            <cit:date>
+                                <gco:Date>2023-03-14</gco:Date>
+                            </cit:date>
+                            <cit:dateType>
+                                <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                            </cit:dateType>
+                        </cit:CI_Date>
+                    </cit:date>
+                    <cit:identifier>
+                        <mcc:MD_Identifier>
+                            <mcc:code gco:nilReason="missing">
+                                <gco:CharacterString />
+                            </mcc:code>
+                        </mcc:MD_Identifier>
+                    </cit:identifier>
+                </cit:CI_Citation>
+            </mri:citation>
+            <mri:abstract xsi:type="lan:PT_FreeText_PropertyType">
+                <gco:CharacterString>Position hebdomadaire des trois principaux fronts du Courant Circumpolaire Antarctique (ACC, Antarctic Circumpolar Current) : le Front Polaire (PF) et les branches nord et sud du front subantarctique (SAF-N et SAF-S), à partir de données altimétriques de topographie dynamique absolue (ADT).
+
+                    Les positions moyennes et la variabilité temporelle des principaux fronts polaires de l'océan Austral sont calculées à partir des données Copernicus Absolute Dynamic Topography (https://doi.org/10.48670/moi-00148
+
+                    La technique originale, développée par Sallée et al. (2008), suppose que les iso-contours de la topographie dynamique absolue (ADT) des satellites peuvent être des proxys pour la définition hydrographique traditionnelle de subsurface des principaux fronts de l'océan Austral. Cette version comprend des mises à jour avec les définitions suivantes :
+
+                    -Le front polaire (PF) est associé au contour de -0,30 m de l'ADT ;
+                    - La branche sud (principale) du front subantarctique (SAF) est associée au contour de -0,10 m ADT
+                    - La branche nord du Front subantarctique (SAF-N) est associée au contour de 0 m ADT.
+
+                    Ce produit est expérimental.
+
+                    Référence:
+                    - Auger, M. Etude de la variabilité de l’océan Austral à partir de 25 ans de mesures SURVOSTRAL. Masters Report, University Toulouse III, 2018. https://zenodo.org/doi/10.5281/zenodo.4094959
+                    - Sallée, J. B., K. Speer, and R. Morrow, 2008: Response of the Antarctic Circumpolar Current to Atmospheric Variability. J. Climate, 21, 3020–3039, https://doi.org/10.1175/2007JCLI1702.1</gco:CharacterString>
+                <lan:PT_FreeText>
+                    <lan:textGroup>
+                        <lan:LocalisedCharacterString locale="#FR">Position hebdomadaire des trois principaux fronts du Courant Circumpolaire Antarctique (ACC, Antarctic Circumpolar Current) : le Front Polaire (PF) et les branches nord et sud du front subantarctique (SAF-N et SAF-S), à partir de données altimétriques de topographie dynamique absolue (ADT).
+
+                            Les positions moyennes et la variabilité temporelle des principaux fronts polaires de l'océan Austral sont calculées à partir des données Copernicus Absolute Dynamic Topography (https://doi.org/10.48670/moi-00148
+
+                            La technique originale, développée par Sallée et al. (2008), suppose que les iso-contours de la topographie dynamique absolue (ADT) des satellites peuvent être des proxys pour la définition hydrographique traditionnelle de subsurface des principaux fronts de l'océan Austral. Cette version comprend des mises à jour avec les définitions suivantes :
+
+                            -Le front polaire (PF) est associé au contour de -0,30 m de l'ADT ;
+                            - La branche sud (principale) du front subantarctique (SAF) est associée au contour de -0,10 m ADT
+                            - La branche nord du Front subantarctique (SAF-N) est associée au contour de 0 m ADT.
+
+                            Ce produit est expérimental.
+
+                            Référence:
+                            - Auger, M. Etude de la variabilité de l’océan Austral à partir de 25 ans de mesures SURVOSTRAL. Masters Report, University Toulouse III, 2018. https://zenodo.org/doi/10.5281/zenodo.4094959
+                            - Sallée, J. B., K. Speer, and R. Morrow, 2008: Response of the Antarctic Circumpolar Current to Atmospheric Variability. J. Climate, 21, 3020–3039, https://doi.org/10.1175/2007JCLI1702.1</lan:LocalisedCharacterString>
+                    </lan:textGroup>
+                    <lan:textGroup>
+                        <lan:LocalisedCharacterString locale="#EN">Weekly position of the three main fronts of the Antarctic Circumpolar Current (ACC) - the Polar Front, and the northern and southern branches of the Subantarctic Front (SAF-N and SAF-S).
+                            The mean and time-varying positions of the main Southern Ocean polar fronts are calculated from the Copernicus Absolute Dynamic Topography data: the global 0.25° x 0.25° daily product (https://doi.org/10.48670/moi-00148
+                            This dataset is used to monitor the position of the three main fronts of the Antarctic Circumpolar Current (ACC) - the Polar Front, and the northern and southern branches of the Subantarctic Front (SAF-N and SAF-S).
+                            The original technique, developed by Sallée et al. (2008), assumes that iso-contours of satellite absolute dynamic topography (ADT) can be proxies for the traditional sub-surface hydrographic definition of the main Southern Ocean fronts. The technique identifies an ADT contour that coincides with a maximum sea surface height gradient. This version includes updates with the following definitions :
+                            - Polar Front (PF) is associated with the -0.30 m ADT contour;
+                            - Southern (main) branch of the Subantarctic Front (SAF) with the -0.10 m ADT contour;
+                            - Northern branch of the Subantarctic Front (SAF-N) with the 0 m ADT contour.
+
+                            The product is an experimental product.
+
+                            References:
+                            - Auger, M. Etude de la variabilité de l’océan Austral à partir de 25 ans de mesures SURVOSTRAL. Masters Report, University Toulouse III, 2018. https://zenodo.org/doi/10.5281/zenodo.4094959
+                            - Sallée, J. B., K. Speer, and R. Morrow, 2008: Response of the Antarctic Circumpolar Current to Atmospheric Variability. J. Climate, 21, 3020–3039, https://doi.org/10.1175/2007JCLI1702.1</lan:LocalisedCharacterString>
+                    </lan:textGroup>
+                </lan:PT_FreeText>
+            </mri:abstract>
+            <mri:credit xsi:type="lan:PT_FreeText_PropertyType">
+                <gco:CharacterString>CNES, CTOH/LEGOS</gco:CharacterString>
+                <lan:PT_FreeText>
+                    <lan:textGroup>
+                        <lan:LocalisedCharacterString locale="#FR">CNES, CTOH/LEGOS</lan:LocalisedCharacterString>
+                    </lan:textGroup>
+                    <lan:textGroup>
+                        <lan:LocalisedCharacterString locale="#EN">CNES, CTOH/LEGOS</lan:LocalisedCharacterString>
+                    </lan:textGroup>
+                </lan:PT_FreeText>
+            </mri:credit>
+            <mri:pointOfContact>
+                <cit:CI_Responsibility>
+                    <cit:role>
+                        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator" />
+                    </cit:role>
+                    <cit:party>
+                        <cit:CI_Organisation>
+                            <cit:name>
+                                <gco:CharacterString>CTOH/LEGOS</gco:CharacterString>
+                            </cit:name>
+                            <cit:contactInfo>
+                                <cit:CI_Contact>
+                                    <cit:address>
+                                        <cit:CI_Address>
+                                            <cit:electronicMailAddress>
+                                                <gco:CharacterString>ctoh_products@legos.obs-mip.fr</gco:CharacterString>
+                                            </cit:electronicMailAddress>
+                                        </cit:CI_Address>
+                                    </cit:address>
+                                </cit:CI_Contact>
+                            </cit:contactInfo>
+                            <cit:logo>
+                                <mcc:MD_BrowseGraphic>
+                                    <mcc:fileName gco:nilReason="missing">
+                                        <gco:CharacterString />
+                                    </mcc:fileName>
+                                    <mcc:linkage>
+                                        <cit:CI_OnlineResource>
+                                            <cit:linkage gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                                <gco:CharacterString />
+                                            </cit:linkage>
+                                            <cit:protocol gco:nilReason="missing">
+                                                <gco:CharacterString />
+                                            </cit:protocol>
+                                            <cit:name gco:nilReason="missing">
+                                                <gco:CharacterString />
+                                            </cit:name>
+                                            <cit:description gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                                <gco:CharacterString />
+                                            </cit:description>
+                                            <cit:protocolRequest gco:nilReason="missing">
+                                                <gco:CharacterString />
+                                            </cit:protocolRequest>
+                                        </cit:CI_OnlineResource>
+                                    </mcc:linkage>
+                                </mcc:MD_BrowseGraphic>
+                            </cit:logo>
+                            <cit:individual>
+                                <cit:CI_Individual>
+                                    <cit:name gco:nilReason="missing">
+                                        <gco:CharacterString />
+                                    </cit:name>
+                                </cit:CI_Individual>
+                            </cit:individual>
+                        </cit:CI_Organisation>
+                    </cit:party>
+                </cit:CI_Responsibility>
+            </mri:pointOfContact>
+            <mri:pointOfContact>
+                <cit:CI_Responsibility>
+                    <cit:role>
+                        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="pointOfContact" />
+                    </cit:role>
+                    <cit:party>
+                        <cit:CI_Organisation>
+                            <cit:name>
+                                <gco:CharacterString>AVISO</gco:CharacterString>
+                            </cit:name>
+                            <cit:contactInfo>
+                                <cit:CI_Contact>
+                                    <cit:address>
+                                        <cit:CI_Address>
+                                            <cit:electronicMailAddress>
+                                                <gco:CharacterString>aviso@altimetry.fr</gco:CharacterString>
+                                            </cit:electronicMailAddress>
+                                        </cit:CI_Address>
+                                    </cit:address>
+                                </cit:CI_Contact>
+                            </cit:contactInfo>
+                            <cit:individual>
+                                <cit:CI_Individual>
+                                    <cit:name gco:nilReason="missing">
+                                        <gco:CharacterString />
+                                    </cit:name>
+                                </cit:CI_Individual>
+                            </cit:individual>
+                        </cit:CI_Organisation>
+                    </cit:party>
+                </cit:CI_Responsibility>
+            </mri:pointOfContact>
+            <mri:pointOfContact>
+                <cit:CI_Responsibility>
+                    <cit:role>
+                        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="funder" />
+                    </cit:role>
+                    <cit:party>
+                        <cit:CI_Organisation>
+                            <cit:name>
+                                <gco:CharacterString>CNES</gco:CharacterString>
+                            </cit:name>
+                            <cit:contactInfo>
+                                <cit:CI_Contact>
+                                    <cit:address>
+                                        <cit:CI_Address>
+                                            <cit:electronicMailAddress gco:nilReason="missing">
+                                                <gco:CharacterString />
+                                            </cit:electronicMailAddress>
+                                        </cit:CI_Address>
+                                    </cit:address>
+                                </cit:CI_Contact>
+                            </cit:contactInfo>
+                            <cit:individual>
+                                <cit:CI_Individual>
+                                    <cit:name gco:nilReason="missing">
+                                        <gco:CharacterString />
+                                    </cit:name>
+                                </cit:CI_Individual>
+                            </cit:individual>
+                        </cit:CI_Organisation>
+                    </cit:party>
+                </cit:CI_Responsibility>
+            </mri:pointOfContact>
+            <mri:pointOfContact>
+                <cit:CI_Responsibility>
+                    <cit:role>
+                        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="distributor" />
+                    </cit:role>
+                    <cit:party>
+                        <cit:CI_Organisation>
+                            <cit:name>
+                                <gco:CharacterString>AVISO</gco:CharacterString>
+                            </cit:name>
+                            <cit:contactInfo>
+                                <cit:CI_Contact>
+                                    <cit:address>
+                                        <cit:CI_Address>
+                                            <cit:electronicMailAddress gco:nilReason="missing">
+                                                <gco:CharacterString />
+                                            </cit:electronicMailAddress>
+                                        </cit:CI_Address>
+                                    </cit:address>
+                                </cit:CI_Contact>
+                            </cit:contactInfo>
+                            <cit:individual>
+                                <cit:CI_Individual>
+                                    <cit:name gco:nilReason="missing">
+                                        <gco:CharacterString />
+                                    </cit:name>
+                                </cit:CI_Individual>
+                            </cit:individual>
+                        </cit:CI_Organisation>
+                    </cit:party>
+                </cit:CI_Responsibility>
+            </mri:pointOfContact>
+            <mri:spatialRepresentationType>
+                <mcc:MD_SpatialRepresentationTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="grid" />
+            </mri:spatialRepresentationType>
+            <mri:spatialResolution>
+                <mri:MD_Resolution>
+                    <mri:equivalentScale>
+                        <mri:MD_RepresentativeFraction>
+                            <mri:denominator>
+                                <gco:Integer />
+                            </mri:denominator>
+                        </mri:MD_RepresentativeFraction>
+                    </mri:equivalentScale>
+                </mri:MD_Resolution>
+            </mri:spatialResolution>
+            <mri:temporalResolution>
+                <gco:TM_PeriodDuration>P0Y0M7DT0H0M0S</gco:TM_PeriodDuration>
+            </mri:temporalResolution>
+            <mri:topicCategory>
+                <mri:MD_TopicCategoryCode>oceans</mri:MD_TopicCategoryCode>
+            </mri:topicCategory>
+            <mri:extent>
+                <gex:EX_Extent>
+                    <gex:geographicElement>
+                        <gex:EX_GeographicBoundingBox>
+                            <gex:westBoundLongitude>
+                                <gco:Decimal>-180.00</gco:Decimal>
+                            </gex:westBoundLongitude>
+                            <gex:eastBoundLongitude>
+                                <gco:Decimal>180.00</gco:Decimal>
+                            </gex:eastBoundLongitude>
+                            <gex:southBoundLatitude>
+                                <gco:Decimal>-66.00</gco:Decimal>
+                            </gex:southBoundLatitude>
+                            <gex:northBoundLatitude>
+                                <gco:Decimal>-35.00</gco:Decimal>
+                            </gex:northBoundLatitude>
+                        </gex:EX_GeographicBoundingBox>
+                    </gex:geographicElement>
+                    <gex:temporalElement>
+                        <gex:EX_TemporalExtent>
+                            <gex:extent>
+                                <gml:TimePeriod gml:id="d3098764e427a1050910">
+                                    <gml:beginPosition>1993-01</gml:beginPosition>
+                                    <gml:endPosition indeterminatePosition="before">2023-12</gml:endPosition>
+                                </gml:TimePeriod>
+                            </gex:extent>
+                        </gex:EX_TemporalExtent>
+                    </gex:temporalElement>
+                </gex:EX_Extent>
+            </mri:extent>
+            <mri:graphicOverview />
+            <mri:graphicOverview>
+                <mcc:MD_BrowseGraphic>
+                    <mcc:fileName>
+                        <gco:CharacterString>https://sextant.ifremer.fr/geonetwork/srv/api/records/74ce72b9-0196-4eca-abfe-8600f69bd5c4/attachments/CTOH_ACC_Frontplot_extr.png</gco:CharacterString>
+                    </mcc:fileName>
+                    <mcc:fileDescription xsi:type="lan:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Mean Polar Fronts positions during the week 2012/03/05. Credits Cnes/LEGOS/CTOH.</gco:CharacterString>
+                        <lan:PT_FreeText>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#FR">Mean Polar Fronts positions during the week 2012/03/05. Credits Cnes/LEGOS/CTOH.</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                        </lan:PT_FreeText>
+                    </mcc:fileDescription>
+                </mcc:MD_BrowseGraphic>
+            </mri:graphicOverview>
+            <mri:descriptiveKeywords>
+                <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                        <gco:CharacterString />
+                    </mri:keyword>
+                    <mri:type>
+                        <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </mri:type>
+                    <mri:thesaurusName>
+                        <cit:CI_Citation>
+                            <cit:title gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gcx:Anchor xlink:href="https://vocab.ifremer.fr/scheme/SXT/sextant-theme">Thèmes Sextant</gcx:Anchor>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">Thèmes Sextant</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:title>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2024-07-26</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2024-07-26</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gcx:Anchor xlink:href="https://sextant.ifremer.fr/geonetwork/srv/api/registries/vocabularies/local.theme.sextant-theme">geonetwork.thesaurus.local.theme.sextant-theme</gcx:Anchor>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </cit:identifier>
+                        </cit:CI_Citation>
+                    </mri:thesaurusName>
+                </mri:MD_Keywords>
+            </mri:descriptiveKeywords>
+            <mri:descriptiveKeywords>
+                <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                        <gco:CharacterString />
+                    </mri:keyword>
+                    <mri:type>
+                        <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </mri:type>
+                    <mri:thesaurusName>
+                        <cit:CI_Citation>
+                            <cit:title gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gcx:Anchor xlink:href="http://inspire.ec.europa.eu/theme">GEMET - INSPIRE themes, version 1.0</gcx:Anchor>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">GEMET - INSPIRE themes, version 1.0</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:title>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2018-01-01</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:DateTime>2018-07-27T14:39:48</gco:DateTime>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gcx:Anchor xlink:href="https://sextant.ifremer.fr/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme">geonetwork.thesaurus.external.theme.httpinspireeceuropaeutheme-theme</gcx:Anchor>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </cit:identifier>
+                        </cit:CI_Citation>
+                    </mri:thesaurusName>
+                </mri:MD_Keywords>
+            </mri:descriptiveKeywords>
+            <mri:descriptiveKeywords>
+                <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                        <gcx:Anchor xlink:href="https://vocab.ifremer.fr/scheme/SXT/odatis_centre_donnees/1500646c-46f5-4da2-b6b2-2bfa6eb9415d">CDS-SAT-AVISO</gcx:Anchor>
+                        <lan:PT_FreeText>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#FR">CDS-SAT-AVISO</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#EN">CDS-SAT-AVISO</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                        </lan:PT_FreeText>
+                    </mri:keyword>
+                    <mri:type>
+                        <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </mri:type>
+                    <mri:thesaurusName>
+                        <cit:CI_Citation>
+                            <cit:title gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gcx:Anchor xlink:href="https://vocab.ifremer.fr/scheme/SXT/odatis_centre_donnees">Centre de données ODATIS</gcx:Anchor>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">Centre de données ODATIS</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:title>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2024-07-26</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2024-07-26</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gcx:Anchor xlink:href="https://sextant.ifremer.fr/geonetwork/srv/api/registries/vocabularies/local.theme.odatis_centre_donnees">geonetwork.thesaurus.local.theme.odatis_centre_donnees</gcx:Anchor>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </cit:identifier>
+                        </cit:CI_Citation>
+                    </mri:thesaurusName>
+                </mri:MD_Keywords>
+            </mri:descriptiveKeywords>
+            <mri:descriptiveKeywords>
+                <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                        <gco:CharacterString />
+                    </mri:keyword>
+                    <mri:type>
+                        <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </mri:type>
+                    <mri:thesaurusName>
+                        <cit:CI_Citation>
+                            <cit:title xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>Variables ODATIS</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">Variables ODATIS</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:title>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2023-10-13</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gcx:Anchor xlink:href="https://sextant.ifremer.fr/geonetwork/srv/api/registries/vocabularies/local.theme.odatis_variables">geonetwork.thesaurus.local.theme.odatis_variables</gcx:Anchor>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </cit:identifier>
+                        </cit:CI_Citation>
+                    </mri:thesaurusName>
+                </mri:MD_Keywords>
+            </mri:descriptiveKeywords>
+            <mri:descriptiveKeywords>
+                <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                        <gcx:Anchor xlink:href="https://vocab.ifremer.fr/scheme/SXT/type_jeux_donnee/69c1d1e8-df22-458c-8daa-34c67bfb3f8d">Données d'observation</gcx:Anchor>
+                        <lan:PT_FreeText>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#FR">Données d'observation</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#EN">Observational data</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                        </lan:PT_FreeText>
+                    </mri:keyword>
+                    <mri:type>
+                        <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </mri:type>
+                    <mri:thesaurusName>
+                        <cit:CI_Citation>
+                            <cit:title gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gcx:Anchor xlink:href="https://vocab.ifremer.fr/scheme/SXT/type_jeux_donnee">Type de jeux de donnée ODATIS</gcx:Anchor>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">Type de jeux de donnée ODATIS</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:title>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2024-07-26</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2024-07-26</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gcx:Anchor xlink:href="https://sextant.ifremer.fr/geonetwork/srv/api/registries/vocabularies/local.theme.type_jeux_donnee">geonetwork.thesaurus.local.theme.type_jeux_donnee</gcx:Anchor>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </cit:identifier>
+                        </cit:CI_Citation>
+                    </mri:thesaurusName>
+                </mri:MD_Keywords>
+            </mri:descriptiveKeywords>
+            <mri:descriptiveKeywords>
+                <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                        <gcx:Anchor xlink:href="https://vocab.ifremer.fr/scheme/SXT/odatis_thematiques/d8166c48-eb58-44a0-bff1-88f150cae8ad">Télédétection</gcx:Anchor>
+                        <lan:PT_FreeText>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#FR">Télédétection</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#EN">Remote sensing</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                        </lan:PT_FreeText>
+                    </mri:keyword>
+                    <mri:type>
+                        <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </mri:type>
+                    <mri:thesaurusName>
+                        <cit:CI_Citation>
+                            <cit:title gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gcx:Anchor xlink:href="https://vocab.ifremer.fr/scheme/SXT/odatis_thematiques">Thèmatiques ODATIS</gcx:Anchor>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">Thèmatiques ODATIS</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:title>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2024-07-26</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2024-07-26</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gcx:Anchor xlink:href="https://sextant.ifremer.fr/geonetwork/srv/api/registries/vocabularies/local.theme.odatis_thematiques">geonetwork.thesaurus.local.theme.odatis_thematiques</gcx:Anchor>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </cit:identifier>
+                        </cit:CI_Citation>
+                    </mri:thesaurusName>
+                </mri:MD_Keywords>
+            </mri:descriptiveKeywords>
+            <mri:descriptiveKeywords>
+                <mri:MD_Keywords>
+                    <mri:keyword xsi:type="lan:PT_FreeText_PropertyType">
+                        <gco:CharacterString>front positions</gco:CharacterString>
+                        <lan:PT_FreeText>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#FR">front positions</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                        </lan:PT_FreeText>
+                    </mri:keyword>
+                    <mri:type>
+                        <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </mri:type>
+                </mri:MD_Keywords>
+            </mri:descriptiveKeywords>
+            <mri:descriptiveKeywords>
+                <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                        <gco:CharacterString />
+                    </mri:keyword>
+                    <mri:type>
+                        <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </mri:type>
+                    <mri:thesaurusName>
+                        <cit:CI_Citation>
+                            <cit:title gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gcx:Anchor xlink:href="https://vocab.ifremer.fr/scheme/SXT/IR">Infrastructures de recherche</gcx:Anchor>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">Infrastructures de recherche</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:title>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2024-07-26</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2024-07-26</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gcx:Anchor xlink:href="https://sextant.ifremer.fr/geonetwork/srv/api/registries/vocabularies/local.theme.IR">geonetwork.thesaurus.local.theme.IR</gcx:Anchor>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </cit:identifier>
+                        </cit:CI_Citation>
+                    </mri:thesaurusName>
+                </mri:MD_Keywords>
+            </mri:descriptiveKeywords>
+            <mri:descriptiveKeywords>
+                <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                        <gcx:Anchor xlink:href="https://vocab.ifremer.fr/scheme/SXT/SNO/b41e4ba1-3377-42d7-bbcc-9404b927ea3c">SNO-CTOH</gcx:Anchor>
+                        <lan:PT_FreeText>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#FR">SNO-CTOH</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#EN">SNO-CTOH</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                        </lan:PT_FreeText>
+                    </mri:keyword>
+                    <mri:type>
+                        <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </mri:type>
+                    <mri:thesaurusName>
+                        <cit:CI_Citation>
+                            <cit:title gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gcx:Anchor xlink:href="https://vocab.ifremer.fr/scheme/SXT/SNO">Services Nationaux d'Observation</gcx:Anchor>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">Services Nationaux d'Observation</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:title>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2024-07-26</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2024-07-26</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gcx:Anchor xlink:href="https://sextant.ifremer.fr/geonetwork/srv/api/registries/vocabularies/local.theme.SNO">geonetwork.thesaurus.local.theme.SNO</gcx:Anchor>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </cit:identifier>
+                        </cit:CI_Citation>
+                    </mri:thesaurusName>
+                </mri:MD_Keywords>
+            </mri:descriptiveKeywords>
+            <mri:descriptiveKeywords>
+                <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                        <gcx:Anchor xlink:href="http://vocab.nerc.ac.uk/collection/OD1/current/CURR/">Courants</gcx:Anchor>
+                        <lan:PT_FreeText>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#FR">Courants</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#EN">Currents</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                        </lan:PT_FreeText>
+                    </mri:keyword>
+                    <mri:keyword gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                        <gcx:Anchor xlink:href="http://vocab.nerc.ac.uk/collection/OD1/current/SEALVL/">Hauteur de la surface de la mer</gcx:Anchor>
+                        <lan:PT_FreeText>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#FR">Hauteur de la surface de la mer</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#EN">Sea surface height</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                        </lan:PT_FreeText>
+                    </mri:keyword>
+                    <mri:type>
+                        <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </mri:type>
+                    <mri:thesaurusName>
+                        <cit:CI_Citation>
+                            <cit:title gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gcx:Anchor xlink:href="http://vocab.nerc.ac.uk/collection/OD1/current/">ODATIS aggregation parameters and Essential Variable names</gcx:Anchor>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">ODATIS aggregation parameters and Essential Variable names</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:title>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2024-09-16</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2024-09-16</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gcx:Anchor xlink:href="https://sextant.ifremer.fr/geonetwork/srv/api/registries/vocabularies/external.theme.NVS.OD1">geonetwork.thesaurus.external.theme.NVS.OD1</gcx:Anchor>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </cit:identifier>
+                        </cit:CI_Citation>
+                    </mri:thesaurusName>
+                </mri:MD_Keywords>
+            </mri:descriptiveKeywords>
+            <mri:descriptiveKeywords>
+                <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                        <gcx:Anchor xlink:href="https://registry.sextant.ifremer.fr/thesaurus/Cersat-GCMDparameter/8afa890b-d040-44ec-b927-b4a74782edc9">/Ocean Circulation/Ocean Currents</gcx:Anchor>
+                        <lan:PT_FreeText>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#FR">/Ocean Circulation/Ocean Currents</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#EN">/Ocean Circulation/Ocean Currents</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                        </lan:PT_FreeText>
+                    </mri:keyword>
+                    <mri:type>
+                        <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+                    </mri:type>
+                    <mri:thesaurusName>
+                        <cit:CI_Citation>
+                            <cit:title gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gcx:Anchor xlink:href="https://registry.sextant.ifremer.fr/thesaurus/Cersat-GCMDparameter">Cersat - GCMD parameter</gcx:Anchor>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">Cersat - GCMD parameter</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:title>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2024-01-04</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:date>
+                                <cit:CI_Date>
+                                    <cit:date>
+                                        <gco:Date>2024-01-04</gco:Date>
+                                    </cit:date>
+                                    <cit:dateType>
+                                        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                                    </cit:dateType>
+                                </cit:CI_Date>
+                            </cit:date>
+                            <cit:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gcx:Anchor xlink:href="https://sextant.ifremer.fr/geonetwork/srv/api/registries/vocabularies/external.theme.GCMDparameter">geonetwork.thesaurus.external.theme.GCMDparameter</gcx:Anchor>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </cit:identifier>
+                        </cit:CI_Citation>
+                    </mri:thesaurusName>
+                </mri:MD_Keywords>
+            </mri:descriptiveKeywords>
+            <mri:resourceSpecificUsage>
+                <mri:MD_Usage>
+                    <mri:specificUsage gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                        <gco:CharacterString />
+                    </mri:specificUsage>
+                    <mri:userDeterminedLimitations xsi:type="lan:PT_FreeText_PropertyType">
+                        <gco:CharacterString>When using the Antarctic Circumpolar Current (ACC) - fronts product, please cite "The Antarctic Circumpolar Current (ACC) - fronts product DOI: 10.24400/527896/a01-2023.004 was produced by CTOH and distributed by AVISO+ (https://www.aviso.altimetry.fr/) with support from CNES. “</gco:CharacterString>
+                        <lan:PT_FreeText>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#FR">When using the Antarctic Circumpolar Current (ACC) - fronts product, please cite "The Antarctic Circumpolar Current (ACC) - fronts product DOI: 10.24400/527896/a01-2023.004 was produced by CTOH and distributed by AVISO+ (https://www.aviso.altimetry.fr/) with support from CNES. “</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#EN">When using the Antarctic Circumpolar Current (ACC) - fronts product, please cite "The Antarctic Circumpolar Current (ACC) - fronts product DOI: 10.24400/527896/a01-2023.004 was produced by CTOH and distributed by AVISO+ (https://www.aviso.altimetry.fr/) with support from CNES. “</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                        </lan:PT_FreeText>
+                    </mri:userDeterminedLimitations>
+                </mri:MD_Usage>
+            </mri:resourceSpecificUsage>
+            <mri:resourceConstraints>
+                <mco:MD_LegalConstraints>
+                    <mco:useLimitation xsi:type="lan:PT_FreeText_PropertyType">
+                        <gco:CharacterString>None</gco:CharacterString>
+                        <lan:PT_FreeText>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#FR">None</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                        </lan:PT_FreeText>
+                    </mco:useLimitation>
+                    <mco:accessConstraints>
+                        <mco:MD_RestrictionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_RestrictionCode" codeListValue="license" />
+                    </mco:accessConstraints>
+                    <mco:useConstraints>
+                        <mco:MD_RestrictionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_RestrictionCode" codeListValue="license" />
+                    </mco:useConstraints>
+                    <mco:otherConstraints gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                        <gco:CharacterString />
+                    </mco:otherConstraints>
+                    <mco:otherConstraints xsi:type="lan:PT_FreeText_PropertyType">
+                        <gco:CharacterString>These are standard products as stated in the licence agreement: https://www.aviso.altimetry.fr/fileadmin/documents/data/License_Aviso.pdf
+                            Citation: When using the Antarctic Circumpolar Current (ACC) - fronts product, please cite "The Antarctic Circumpolar Current (ACC) - fronts product DOI: 10.24400/527896/a01-2023.004 was produced by CTOH and distributed by AVISO+ (https://www.aviso.altimetry.fr/) with support from CNES."</gco:CharacterString>
+                        <lan:PT_FreeText>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#FR">These are standard products as stated in the licence agreement: https://www.aviso.altimetry.fr/fileadmin/documents/data/License_Aviso.pdf
+                                    Citation: When using the Antarctic Circumpolar Current (ACC) - fronts product, please cite "The Antarctic Circumpolar Current (ACC) - fronts product DOI: 10.24400/527896/a01-2023.004 was produced by CTOH and distributed by AVISO+ (https://www.aviso.altimetry.fr/) with support from CNES."</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#EN">These are standard products as stated in the licence agreement: https://www.aviso.altimetry.fr/fileadmin/documents/data/License_Aviso.pdf
+                                    Citation: When using the Antarctic Circumpolar Current (ACC) - fronts product, please cite "The Antarctic Circumpolar Current (ACC) - fronts product DOI: 10.24400/527896/a01-2023.004 was produced by CTOH and distributed by AVISO+ (https://www.aviso.altimetry.fr/) with support from CNES."</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                        </lan:PT_FreeText>
+                    </mco:otherConstraints>
+                </mco:MD_LegalConstraints>
+            </mri:resourceConstraints>
+            <mri:defaultLocale>
+                <lan:PT_Locale>
+                    <lan:language>
+                        <lan:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="fre" />
+                    </lan:language>
+                    <lan:characterEncoding>
+                        <lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_CharacterSetCode" codeListValue="utf8" />
+                    </lan:characterEncoding>
+                </lan:PT_Locale>
+            </mri:defaultLocale>
+        </mri:MD_DataIdentification>
+    </mdb:identificationInfo>
+    <mdb:distributionInfo>
+        <mrd:MD_Distribution>
+            <mrd:description gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                <gco:CharacterString />
+            </mrd:description>
+            <mrd:distributionFormat>
+                <mrd:MD_Format>
+                    <mrd:formatSpecificationCitation>
+                        <cit:CI_Citation>
+                            <cit:title xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>NetCDF</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">NetCDF</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#EN">NetCDF</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:title>
+                            <cit:date gco:nilReason="unknown" />
+                            <cit:edition gco:nilReason="unknown">
+                                <gco:CharacterString />
+                            </cit:edition>
+                        </cit:CI_Citation>
+                    </mrd:formatSpecificationCitation>
+                </mrd:MD_Format>
+            </mrd:distributionFormat>
+            <mrd:transferOptions>
+                <mrd:MD_DigitalTransferOptions>
+                    <mrd:onLine>
+                        <cit:CI_OnlineResource>
+                            <cit:linkage xmlns:gn="http://www.fao.org/geonetwork" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>https://doi.org/10.24400/527896/a01-2023.004</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">https://doi.org/10.24400/527896/a01-2023.004</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:linkage>
+                            <cit:protocol xmlns:gn="http://www.fao.org/geonetwork">
+                                <gco:CharacterString>DOI</gco:CharacterString>
+                            </cit:protocol>
+                            <cit:name xmlns:gn="http://www.fao.org/geonetwork">
+                                <gco:CharacterString>Digital Object Identifier (DOI)</gco:CharacterString>
+                            </cit:name>
+                        </cit:CI_OnlineResource>
+                    </mrd:onLine>
+                    <mrd:onLine>
+                        <cit:CI_OnlineResource>
+                            <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>https://www.aviso.altimetry.fr/fr/donnees/produits/produits-a-valeur-ajoutee/produit-fronts-acc.html</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">https://www.aviso.altimetry.fr/fr/donnees/produits/produits-a-valeur-ajoutee/produit-fronts-acc.html</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#EN">https://www.aviso.altimetry.fr/en/data/products/value-added-products/acc-fronts-product.html</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:linkage>
+                            <cit:protocol>
+                                <gco:CharacterString>WWW:LINK</gco:CharacterString>
+                            </cit:protocol>
+                            <cit:name>
+                                <gco:CharacterString>Web link (URL)</gco:CharacterString>
+                            </cit:name>
+                            <cit:description xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>Plus d'information sur AVISO</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">Plus d'information sur AVISO</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#EN">Further information on AVISO</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:description>
+                            <cit:function>
+                                <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="information" />
+                            </cit:function>
+                        </cit:CI_OnlineResource>
+                    </mrd:onLine>
+                    <mrd:onLine>
+                        <cit:CI_OnlineResource>
+                            <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>https://www.aviso.altimetry.fr/fileadmin/documents/data/tools/hdbk_ACC_fronts.pdf</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">https://www.aviso.altimetry.fr/fileadmin/documents/data/tools/hdbk_ACC_fronts.pdf</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#EN">https://www.aviso.altimetry.fr/fileadmin/documents/data/tools/hdbk_ACC_fronts.pdf</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:linkage>
+                            <cit:protocol>
+                                <gco:CharacterString>WWW:LINK</gco:CharacterString>
+                            </cit:protocol>
+                            <cit:name>
+                                <gco:CharacterString>Web link (URL)</gco:CharacterString>
+                            </cit:name>
+                            <cit:description xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>Manuel utilisateur</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">Manuel utilisateur</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#EN">User Handbook</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:description>
+                            <cit:function>
+                                <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="information" />
+                            </cit:function>
+                        </cit:CI_OnlineResource>
+                    </mrd:onLine>
+                    <mrd:onLine>
+                        <cit:CI_OnlineResource>
+                            <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>https://dataterra:odatis@tds-odatis.aviso.altimetry.fr/thredds/catalog/dataset-antarctic-circumpolar-current-fronts-weekly.xml/catalog.html?dataset=dataset-antarctic-circumpolar-current-fronts-weekly.xml/CTOH_SubantarcticFront_weekly_1993_2023.nc</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">https://dataterra:odatis@tds-odatis.aviso.altimetry.fr/thredds/catalog/dataset-antarctic-circumpolar-current-fronts-weekly.xml/catalog.html?dataset=dataset-antarctic-circumpolar-current-fronts-weekly.xml/CTOH_SubantarcticFront_weekly_1993_2023.nc</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:linkage>
+                            <cit:protocol>
+                                <gco:CharacterString>WWW:LINK</gco:CharacterString>
+                            </cit:protocol>
+                            <cit:name>
+                                <gco:CharacterString>Accès Thredds fichier SubantarcticFront</gco:CharacterString>
+                            </cit:name>
+                            <cit:description xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>THREDDS</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">THREDDS</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#EN">THREDDS</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:description>
+                            <cit:function>
+                                <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="download" />
+                            </cit:function>
+                            <cit:protocolRequest gco:nilReason="missing">
+                                <gco:CharacterString />
+                            </cit:protocolRequest>
+                        </cit:CI_OnlineResource>
+                    </mrd:onLine>
+                    <mrd:onLine>
+                        <cit:CI_OnlineResource>
+                            <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>https://dataterra:odatis@tds-odatis.aviso.altimetry.fr/thredds/catalog/dataset-antarctic-circumpolar-current-fronts-weekly.xml/catalog.html?dataset=dataset-antarctic-circumpolar-current-fronts-weekly.xml/CTOH_PolarFront_weekly_1993_2023.nc</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">https://dataterra:odatis@tds-odatis.aviso.altimetry.fr/thredds/catalog/dataset-antarctic-circumpolar-current-fronts-weekly.xml/catalog.html?dataset=dataset-antarctic-circumpolar-current-fronts-weekly.xml/CTOH_PolarFront_weekly_1993_2023.nc</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:linkage>
+                            <cit:protocol>
+                                <gco:CharacterString>WWW:LINK</gco:CharacterString>
+                            </cit:protocol>
+                            <cit:name>
+                                <gco:CharacterString>Accès Thredds fichier Polar Front</gco:CharacterString>
+                            </cit:name>
+                            <cit:description xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>THREDDS</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">THREDDS</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#EN">THREDDS</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:description>
+                            <cit:function>
+                                <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="download" />
+                            </cit:function>
+                        </cit:CI_OnlineResource>
+                    </mrd:onLine>
+                    <mrd:onLine>
+                        <cit:CI_OnlineResource>
+                            <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>https://dataterra:odatis@tds-odatis.aviso.altimetry.fr/thredds/catalog/dataset-antarctic-circumpolar-current-fronts-weekly.xml/catalog.html?dataset=dataset-antarctic-circumpolar-current-fronts-weekly.xml/CTOH_NorthernSubantarcticFront_weekly_1993_2023.nc</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">https://dataterra:odatis@tds-odatis.aviso.altimetry.fr/thredds/catalog/dataset-antarctic-circumpolar-current-fronts-weekly.xml/catalog.html?dataset=dataset-antarctic-circumpolar-current-fronts-weekly.xml/CTOH_NorthernSubantarcticFront_weekly_1993_2023.nc</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:linkage>
+                            <cit:protocol>
+                                <gco:CharacterString>WWW:LINK</gco:CharacterString>
+                            </cit:protocol>
+                            <cit:name>
+                                <gco:CharacterString>Accès Thredds fichier NorthernSubantarcticFront</gco:CharacterString>
+                            </cit:name>
+                            <cit:description xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>THREDDS</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">THREDDS</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#EN">THREDDS</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:description>
+                            <cit:function>
+                                <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="download" />
+                            </cit:function>
+                        </cit:CI_OnlineResource>
+                    </mrd:onLine>
+                    <mrd:onLine>
+                        <cit:CI_OnlineResource>
+                            <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>https://dataterra:odatis@tds-odatis.aviso.altimetry.fr/thredds/wms/dataset-antarctic-circumpolar-current-fronts-weekly.xml/CTOH_NorthernSubantarcticFront_weekly_1993_2023.nc?service=WMS&amp;version=1.3.0&amp;request=GetCapabilities</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">https://dataterra:odatis@tds-odatis.aviso.altimetry.fr/thredds/wms/dataset-antarctic-circumpolar-current-fronts-weekly.xml/CTOH_NorthernSubantarcticFront_weekly_1993_2023.nc?service=WMS&amp;version=1.3.0&amp;request=GetCapabilities</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:linkage>
+                            <cit:protocol>
+                                <gco:CharacterString>OGC:WMS</gco:CharacterString>
+                            </cit:protocol>
+                            <cit:description xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>NorthernSubantarcticFront</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">NorthernSubantarcticFront</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#EN">NorthernSubantarcticFront</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:description>
+                            <cit:function>
+                                <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="browsing" />
+                            </cit:function>
+                        </cit:CI_OnlineResource>
+                    </mrd:onLine>
+                    <mrd:onLine>
+                        <cit:CI_OnlineResource>
+                            <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>https://dataterra:odatis@tds-odatis.aviso.altimetry.fr/thredds/wms/dataset-antarctic-circumpolar-current-fronts-weekly.xml/CTOH_PolarFront_weekly_1993_2023.nc?service=WMS&amp;version=1.3.0&amp;request=GetCapabilities</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">https://dataterra:odatis@tds-odatis.aviso.altimetry.fr/thredds/wms/dataset-antarctic-circumpolar-current-fronts-weekly.xml/CTOH_PolarFront_weekly_1993_2023.nc?service=WMS&amp;version=1.3.0&amp;request=GetCapabilities</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:linkage>
+                            <cit:protocol>
+                                <gco:CharacterString>OGC:WMS</gco:CharacterString>
+                            </cit:protocol>
+                            <cit:description xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>PolarFront</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">PolarFront</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#EN">PolarFront</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:description>
+                            <cit:function>
+                                <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="browsing" />
+                            </cit:function>
+                        </cit:CI_OnlineResource>
+                    </mrd:onLine>
+                    <mrd:onLine>
+                        <cit:CI_OnlineResource>
+                            <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>https://dataterra:odatis@tds-odatis.aviso.altimetry.fr/thredds/wms/dataset-antarctic-circumpolar-current-fronts-weekly.xml/CTOH_SubantarcticFront_weekly_1993_2023.nc?service=WMS&amp;version=1.3.0&amp;request=GetCapabilities</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">https://dataterra:odatis@tds-odatis.aviso.altimetry.fr/thredds/wms/dataset-antarctic-circumpolar-current-fronts-weekly.xml/CTOH_SubantarcticFront_weekly_1993_2023.nc?service=WMS&amp;version=1.3.0&amp;request=GetCapabilities</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:linkage>
+                            <cit:protocol>
+                                <gco:CharacterString>OGC:WMS</gco:CharacterString>
+                            </cit:protocol>
+                            <cit:description xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString>SAF position computed from Copernicus global ADT</gco:CharacterString>
+                                <lan:PT_FreeText>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#FR">SAF position computed from Copernicus global ADT</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                    <lan:textGroup>
+                                        <lan:LocalisedCharacterString locale="#EN">SubantarcticFront</lan:LocalisedCharacterString>
+                                    </lan:textGroup>
+                                </lan:PT_FreeText>
+                            </cit:description>
+                            <cit:function>
+                                <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="browsing" />
+                            </cit:function>
+                        </cit:CI_OnlineResource>
+                    </mrd:onLine>
+                    <mrd:onLine />
+                    <mrd:onLine />
+                    <mrd:onLine />
+                </mrd:MD_DigitalTransferOptions>
+            </mrd:transferOptions>
+        </mrd:MD_Distribution>
+    </mdb:distributionInfo>
+    <mdb:resourceLineage>
+        <mrl:LI_Lineage>
+            <mrl:statement xsi:type="lan:PT_FreeText_PropertyType">
+                <gco:CharacterString>Sallée, J.B.; Speer, K and Morrow, R. Southern Ocean fronts and their variability to climate modes, Journ. of Climate, 2008, Vol. 21(12), pp. 3020-3039</gco:CharacterString>
+                <lan:PT_FreeText>
+                    <lan:textGroup>
+                        <lan:LocalisedCharacterString locale="#FR">Sallée, J.B.; Speer, K and Morrow, R. Southern Ocean fronts and their variability to climate modes, Journ. of Climate, 2008, Vol. 21(12), pp. 3020-3039</lan:LocalisedCharacterString>
+                    </lan:textGroup>
+                </lan:PT_FreeText>
+            </mrl:statement>
+            <mrl:scope>
+                <mcc:MD_Scope>
+                    <mcc:level>
+                        <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="dataset" />
+                    </mcc:level>
+                </mcc:MD_Scope>
+            </mrl:scope>
+        </mrl:LI_Lineage>
+    </mdb:resourceLineage>
+    <mdb:acquisitionInformation xmlns:gn="http://www.fao.org/geonetwork">
+        <mac:MI_AcquisitionInformation>
+            <mac:instrument>
+                <mac:MI_Instrument>
+                    <mac:identifier>
+                        <mcc:MD_Identifier>
+                            <mcc:code>
+                                <gco:CharacterString>AltiKa</gco:CharacterString>
+                            </mcc:code>
+                        </mcc:MD_Identifier>
+                    </mac:identifier>
+                    <mac:type>
+                        <mcc:code>
+                            <gco:CharacterString>grid</gco:CharacterString>
+                        </mcc:code>
+                    </mac:type>
+                    <mac:mountedOn>
+                        <mac:MI_Platform>
+                            <mac:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gco:CharacterString>SARAL</gco:CharacterString>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </mac:identifier>
+                            <mac:description gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString />
+                            </mac:description>
+                        </mac:MI_Platform>
+                    </mac:mountedOn>
+                </mac:MI_Instrument>
+            </mac:instrument>
+            <mac:instrument>
+                <mac:MI_Instrument>
+                    <mac:identifier>
+                        <mcc:MD_Identifier>
+                            <mcc:code>
+                                <gco:CharacterString>POSEIDON</gco:CharacterString>
+                            </mcc:code>
+                        </mcc:MD_Identifier>
+                    </mac:identifier>
+                    <mac:type>
+                        <mcc:code>
+                            <gco:CharacterString>grid</gco:CharacterString>
+                        </mcc:code>
+                    </mac:type>
+                    <mac:mountedOn>
+                        <mac:MI_Platform>
+                            <mac:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gco:CharacterString>TOPEX/Poseidon</gco:CharacterString>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </mac:identifier>
+                            <mac:description gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString />
+                            </mac:description>
+                        </mac:MI_Platform>
+                    </mac:mountedOn>
+                </mac:MI_Instrument>
+            </mac:instrument>
+            <mac:instrument>
+                <mac:MI_Instrument>
+                    <mac:identifier>
+                        <mcc:MD_Identifier>
+                            <mcc:code>
+                                <gco:CharacterString>ERS-RA</gco:CharacterString>
+                            </mcc:code>
+                        </mcc:MD_Identifier>
+                    </mac:identifier>
+                    <mac:type>
+                        <mcc:code>
+                            <gco:CharacterString>grid</gco:CharacterString>
+                        </mcc:code>
+                    </mac:type>
+                    <mac:mountedOn>
+                        <mac:MI_Platform>
+                            <mac:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gco:CharacterString>ERS-1</gco:CharacterString>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </mac:identifier>
+                            <mac:description gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString />
+                            </mac:description>
+                        </mac:MI_Platform>
+                    </mac:mountedOn>
+                </mac:MI_Instrument>
+            </mac:instrument>
+            <mac:instrument>
+                <mac:MI_Instrument>
+                    <mac:identifier>
+                        <mcc:MD_Identifier>
+                            <mcc:code>
+                                <gco:CharacterString>ERS-RA</gco:CharacterString>
+                            </mcc:code>
+                        </mcc:MD_Identifier>
+                    </mac:identifier>
+                    <mac:type>
+                        <mcc:code>
+                            <gco:CharacterString>grid</gco:CharacterString>
+                        </mcc:code>
+                    </mac:type>
+                    <mac:mountedOn>
+                        <mac:MI_Platform>
+                            <mac:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gco:CharacterString>ERS-2</gco:CharacterString>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </mac:identifier>
+                            <mac:description gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString />
+                            </mac:description>
+                        </mac:MI_Platform>
+                    </mac:mountedOn>
+                </mac:MI_Instrument>
+            </mac:instrument>
+            <mac:instrument>
+                <mac:MI_Instrument>
+                    <mac:identifier>
+                        <mcc:MD_Identifier>
+                            <mcc:code>
+                                <gco:CharacterString>RA2</gco:CharacterString>
+                            </mcc:code>
+                        </mcc:MD_Identifier>
+                    </mac:identifier>
+                    <mac:type>
+                        <mcc:code>
+                            <gco:CharacterString>grid</gco:CharacterString>
+                        </mcc:code>
+                    </mac:type>
+                    <mac:mountedOn>
+                        <mac:MI_Platform>
+                            <mac:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gco:CharacterString>ENVISAT</gco:CharacterString>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </mac:identifier>
+                            <mac:description gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString />
+                            </mac:description>
+                        </mac:MI_Platform>
+                    </mac:mountedOn>
+                </mac:MI_Instrument>
+            </mac:instrument>
+            <mac:instrument>
+                <mac:MI_Instrument>
+                    <mac:identifier>
+                        <mcc:MD_Identifier>
+                            <mcc:code gco:nilReason="missing">
+                                <gco:CharacterString />
+                            </mcc:code>
+                        </mcc:MD_Identifier>
+                    </mac:identifier>
+                    <mac:type>
+                        <mcc:code>
+                            <gco:CharacterString>grid</gco:CharacterString>
+                        </mcc:code>
+                    </mac:type>
+                    <mac:mountedOn>
+                        <mac:MI_Platform>
+                            <mac:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gco:CharacterString>GFO</gco:CharacterString>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </mac:identifier>
+                            <mac:description gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString />
+                            </mac:description>
+                        </mac:MI_Platform>
+                    </mac:mountedOn>
+                </mac:MI_Instrument>
+            </mac:instrument>
+            <mac:instrument>
+                <mac:MI_Instrument>
+                    <mac:identifier>
+                        <mcc:MD_Identifier>
+                            <mcc:code>
+                                <gco:CharacterString>POSEIDON-2</gco:CharacterString>
+                            </mcc:code>
+                        </mcc:MD_Identifier>
+                    </mac:identifier>
+                    <mac:type>
+                        <mcc:code>
+                            <gco:CharacterString>grid</gco:CharacterString>
+                        </mcc:code>
+                    </mac:type>
+                    <mac:mountedOn>
+                        <mac:MI_Platform>
+                            <mac:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gco:CharacterString>JASON-1</gco:CharacterString>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </mac:identifier>
+                            <mac:description gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString />
+                            </mac:description>
+                        </mac:MI_Platform>
+                    </mac:mountedOn>
+                </mac:MI_Instrument>
+            </mac:instrument>
+            <mac:instrument>
+                <mac:MI_Instrument>
+                    <mac:identifier>
+                        <mcc:MD_Identifier>
+                            <mcc:code>
+                                <gco:CharacterString>POSEIDON-3C</gco:CharacterString>
+                            </mcc:code>
+                        </mcc:MD_Identifier>
+                    </mac:identifier>
+                    <mac:type>
+                        <mcc:code>
+                            <gco:CharacterString>grid</gco:CharacterString>
+                        </mcc:code>
+                    </mac:type>
+                    <mac:mountedOn>
+                        <mac:MI_Platform>
+                            <mac:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gco:CharacterString>JASON-2</gco:CharacterString>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </mac:identifier>
+                            <mac:description gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString />
+                            </mac:description>
+                        </mac:MI_Platform>
+                    </mac:mountedOn>
+                </mac:MI_Instrument>
+            </mac:instrument>
+            <mac:instrument>
+                <mac:MI_Instrument>
+                    <mac:identifier>
+                        <mcc:MD_Identifier>
+                            <mcc:code>
+                                <gco:CharacterString>POSEIDON-3B</gco:CharacterString>
+                            </mcc:code>
+                        </mcc:MD_Identifier>
+                    </mac:identifier>
+                    <mac:type>
+                        <mcc:code>
+                            <gco:CharacterString>grid</gco:CharacterString>
+                        </mcc:code>
+                    </mac:type>
+                    <mac:mountedOn>
+                        <mac:MI_Platform>
+                            <mac:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gco:CharacterString>JASON-3</gco:CharacterString>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </mac:identifier>
+                            <mac:description gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString />
+                            </mac:description>
+                        </mac:MI_Platform>
+                    </mac:mountedOn>
+                </mac:MI_Instrument>
+            </mac:instrument>
+            <mac:instrument>
+                <mac:MI_Instrument>
+                    <mac:identifier>
+                        <mcc:MD_Identifier>
+                            <mcc:code>
+                                <gco:CharacterString>SRAL</gco:CharacterString>
+                            </mcc:code>
+                        </mcc:MD_Identifier>
+                    </mac:identifier>
+                    <mac:type>
+                        <mcc:code>
+                            <gco:CharacterString>grid</gco:CharacterString>
+                        </mcc:code>
+                    </mac:type>
+                    <mac:mountedOn>
+                        <mac:MI_Platform>
+                            <mac:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gco:CharacterString>Sentinel-3 A</gco:CharacterString>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </mac:identifier>
+                            <mac:description gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString />
+                            </mac:description>
+                        </mac:MI_Platform>
+                    </mac:mountedOn>
+                </mac:MI_Instrument>
+            </mac:instrument>
+            <mac:instrument>
+                <mac:MI_Instrument>
+                    <mac:identifier>
+                        <mcc:MD_Identifier>
+                            <mcc:code>
+                                <gco:CharacterString>SRAL</gco:CharacterString>
+                            </mcc:code>
+                        </mcc:MD_Identifier>
+                    </mac:identifier>
+                    <mac:type>
+                        <mcc:code>
+                            <gco:CharacterString>grid</gco:CharacterString>
+                        </mcc:code>
+                    </mac:type>
+                    <mac:mountedOn>
+                        <mac:MI_Platform>
+                            <mac:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gco:CharacterString>Sentinel-3 B</gco:CharacterString>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </mac:identifier>
+                            <mac:description gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString />
+                            </mac:description>
+                        </mac:MI_Platform>
+                    </mac:mountedOn>
+                </mac:MI_Instrument>
+            </mac:instrument>
+            <mac:instrument>
+                <mac:MI_Instrument>
+                    <mac:identifier>
+                        <mcc:MD_Identifier>
+                            <mcc:code gco:nilReason="missing">
+                                <gco:CharacterString />
+                            </mcc:code>
+                        </mcc:MD_Identifier>
+                    </mac:identifier>
+                    <mac:type>
+                        <mcc:code>
+                            <gco:CharacterString>grid</gco:CharacterString>
+                        </mcc:code>
+                    </mac:type>
+                    <mac:mountedOn>
+                        <mac:MI_Platform>
+                            <mac:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gco:CharacterString>Hai Yang 2</gco:CharacterString>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </mac:identifier>
+                            <mac:description gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString />
+                            </mac:description>
+                        </mac:MI_Platform>
+                    </mac:mountedOn>
+                </mac:MI_Instrument>
+            </mac:instrument>
+            <mac:instrument>
+                <mac:MI_Instrument>
+                    <mac:identifier>
+                        <mcc:MD_Identifier>
+                            <mcc:code>
+                                <gco:CharacterString>SIRAL</gco:CharacterString>
+                            </mcc:code>
+                        </mcc:MD_Identifier>
+                    </mac:identifier>
+                    <mac:type>
+                        <mcc:code>
+                            <gco:CharacterString>grid</gco:CharacterString>
+                        </mcc:code>
+                    </mac:type>
+                    <mac:mountedOn>
+                        <mac:MI_Platform>
+                            <mac:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code>
+                                        <gco:CharacterString>CryoSat-2</gco:CharacterString>
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </mac:identifier>
+                            <mac:description gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString />
+                            </mac:description>
+                        </mac:MI_Platform>
+                    </mac:mountedOn>
+                </mac:MI_Instrument>
+            </mac:instrument>
+            <mac:instrument>
+                <mac:MI_Instrument>
+                    <mac:identifier>
+                        <mcc:MD_Identifier>
+                            <mcc:code gco:nilReason="missing">
+                                <gco:CharacterString />
+                            </mcc:code>
+                        </mcc:MD_Identifier>
+                    </mac:identifier>
+                    <mac:type>
+                        <mcc:code>
+                            <gco:CharacterString>grid</gco:CharacterString>
+                        </mcc:code>
+                    </mac:type>
+                    <mac:mountedOn>
+                        <mac:MI_Platform>
+                            <mac:identifier>
+                                <mcc:MD_Identifier>
+                                    <mcc:code gco:nilReason="missing">
+                                        <gco:CharacterString />
+                                    </mcc:code>
+                                </mcc:MD_Identifier>
+                            </mac:identifier>
+                            <mac:description gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                                <gco:CharacterString />
+                            </mac:description>
+                        </mac:MI_Platform>
+                    </mac:mountedOn>
+                </mac:MI_Instrument>
+            </mac:instrument>
+        </mac:MI_AcquisitionInformation>
+    </mdb:acquisitionInformation>
+</mdb:MD_Metadata>

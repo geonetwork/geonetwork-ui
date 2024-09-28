@@ -753,21 +753,21 @@ Als solches ist es **überhaupt nicht interessant.**</gmd:LocalisedCharacterStri
         </gmd:MD_Distribution>
     </gmd:distributionInfo>
     <gmd:locale>
-        <gmd:PT_Locale id="#EN">
+        <gmd:PT_Locale id="EN">
             <gmd:languageCode>
                 <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng"/>
             </gmd:languageCode>
         </gmd:PT_Locale>
     </gmd:locale>
     <gmd:locale>
-        <gmd:PT_Locale id="#FR">
+        <gmd:PT_Locale id="FR">
             <gmd:languageCode>
                 <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="fre"/>
             </gmd:languageCode>
         </gmd:PT_Locale>
     </gmd:locale>
     <gmd:locale>
-        <gmd:PT_Locale id="#DE">
+        <gmd:PT_Locale id="DE">
             <gmd:languageCode>
                 <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ger"/>
             </gmd:languageCode>
