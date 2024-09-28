@@ -314,7 +314,19 @@ export function createElement(
   return () => new XmlElement(name, {}, [])
 }
 
-export function addAttribute(
+export function createNestedElement(
+  ...elementNames: string[]
+): ChainableFunction<void, XmlElement> {
+  return () => {
+    let current = null
+    for (const name of elementNames) {
+      current = current ? createChild(name)(current) : createElement(name)()
+    }
+    return current
+  }
+}
+
+export function writeAttribute(
   name: string,
   value: string
 ): ChainableFunction<XmlElement, XmlElement> {
@@ -370,6 +382,18 @@ export function createChild(
     element.children.push(child)
     child.parent = element
     return child
+  }
+}
+
+export function createNestedChild(
+  ...elementNames: string[]
+): ChainableFunction<XmlElement, XmlElement> {
+  return (element) => {
+    let current = element
+    for (const name of elementNames) {
+      current = createChild(name)(current)
+    }
+    return current
   }
 }
 

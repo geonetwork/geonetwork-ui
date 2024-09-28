@@ -4,7 +4,6 @@ import {
   Individual,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
-  addAttribute,
   allChildrenElement,
   appendChildren,
   appendChildTree,
@@ -20,6 +19,7 @@ import {
   removeChildren,
   removeChildrenByName,
   setTextContent,
+  writeAttribute,
   XmlElement,
 } from '../xml-utils'
 import {
@@ -68,11 +68,11 @@ export function writeKind(record: CatalogRecord, rootEl: XmlElement) {
       'mdb:resourceScope',
       'mcc:MD_ScopeCode'
     ),
-    addAttribute(
+    writeAttribute(
       'codeList',
       'https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode'
     ),
-    addAttribute('codeListValue', record.kind),
+    writeAttribute('codeListValue', record.kind),
     setTextContent(record.kind)
   )(rootEl)
 }
@@ -105,11 +105,11 @@ function appendRecordDate(
         pipe(
           createElement('cit:dateType'),
           createChild('cit:CI_DateTypeCode'),
-          addAttribute(
+          writeAttribute(
             'codeList',
             'https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode'
           ),
-          addAttribute('codeListValue', type),
+          writeAttribute('codeListValue', type),
           setTextContent(type)
         )
       )
@@ -172,11 +172,11 @@ function appendResourceDate(
           pipe(
             createElement('cit:dateType'),
             createChild('cit:CI_DateTypeCode'),
-            addAttribute(
+            writeAttribute(
               'codeList',
               'https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode'
             ),
-            addAttribute('codeListValue', type),
+            writeAttribute('codeListValue', type),
             setTextContent(type)
           )
         )
@@ -281,11 +281,11 @@ export function appendResponsibleParty(contact: Individual) {
   const createRole = pipe(
     createElement('cit:role'),
     createChild('cit:CI_RoleCode'),
-    addAttribute(
+    writeAttribute(
       'codeList',
       'https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode'
     ),
-    addAttribute('codeListValue', getRoleCode(contact.role)),
+    writeAttribute('codeListValue', getRoleCode(contact.role)),
     setTextContent(getRoleCode(contact.role))
   )
 
@@ -396,11 +396,11 @@ export function writeStatus(record: DatasetRecord, rootEl: XmlElement) {
   pipe(
     findOrCreateIdentification(),
     findNestedChildOrCreate('mri:status', 'mcc:MD_ProgressCode'),
-    addAttribute(
+    writeAttribute(
       'codeList',
       'https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode'
     ),
-    addAttribute('codeListValue', progressCode),
+    writeAttribute('codeListValue', progressCode),
     setTextContent(progressCode)
   )(rootEl)
 }
@@ -422,11 +422,11 @@ export function writeSpatialRepresentation(
       'mri:spatialRepresentationType',
       'mcc:MD_SpatialRepresentationTypeCode'
     ),
-    addAttribute(
+    writeAttribute(
       'codeList',
       'https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_SpatialRepresentationTypeCode'
     ),
-    addAttribute('codeListValue', record.spatialRepresentation),
+    writeAttribute('codeListValue', record.spatialRepresentation),
     setTextContent(record.spatialRepresentation)
   )(rootEl)
 }
