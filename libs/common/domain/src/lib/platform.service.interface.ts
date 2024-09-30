@@ -4,11 +4,11 @@ import type { Organization } from './model/record/organization.model'
 import { Keyword, UserFeedback } from './model/record'
 import { KeywordType } from './model/thesaurus'
 
-interface RecordAttachment {
+export interface RecordAttachment {
   url: URL
   fileName: string
 }
-type UploadEvent =
+export type UploadEvent =
   | {
       type: 'progress'
       progress: number // in percent

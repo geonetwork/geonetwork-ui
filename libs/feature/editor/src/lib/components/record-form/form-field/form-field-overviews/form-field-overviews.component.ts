@@ -68,7 +68,7 @@ export class FormFieldOverviewsComponent {
             })
           }
         },
-        error: this.errorHandle,
+        error: (error: Error) => this.handleError(error),
       })
   }
 
@@ -87,7 +87,7 @@ export class FormFieldOverviewsComponent {
         description: filename,
       })
     } catch (e) {
-      this.errorHandle(e)
+      this.handleError(e as Error)
     }
   }
 
@@ -106,8 +106,9 @@ export class FormFieldOverviewsComponent {
     this.valueChange.emit(overView ? [overView] : [])
   }
 
-  private errorHandle = (error) => {
+  private handleError = (error: Error) => {
     this.uploadProgress = undefined
+    this.cd.markForCheck()
     this.notificationsService.showNotification({
       type: 'error',
       title: this.translateService.instant('editor.record.resourceError.title'),
