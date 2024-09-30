@@ -340,9 +340,20 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       .filter((draft) => draft !== null)
     return from(
       Promise.all(
-        drafts.map((draft) => findConverterForDocument(draft).readRecord(draft))
+        drafts.map((draft) => {
+          return findConverterForDocument(draft).readRecord(draft)
+        })
       )
     )
+  }
+
+  getDraftsCount(): Observable<number> {
+    const items = { ...window.localStorage }
+    const draftCount = Object.keys(items)
+      .filter((key) => key.startsWith('geonetwork-ui-draft-'))
+      .map((key) => window.localStorage.getItem(key))
+      .filter((draft) => draft !== null).length
+    return of(draftCount)
   }
 
   private getRecordAsXml(uniqueIdentifier: string): Observable<string | null> {

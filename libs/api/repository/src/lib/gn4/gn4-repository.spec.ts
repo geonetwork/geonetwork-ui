@@ -551,6 +551,35 @@ describe('Gn4Repository', () => {
     })
   })
 
+  describe('#getDraftsCount', () => {
+    beforeEach(async () => {
+      window.localStorage.clear()
+      // save 3 drafts
+      await firstValueFrom(
+        repository.saveRecordAsDraft({
+          ...simpleDatasetRecordFixture(),
+          uniqueIdentifier: 'DRAFT-1',
+        })
+      )
+      await firstValueFrom(
+        repository.saveRecordAsDraft({
+          ...simpleDatasetRecordFixture(),
+          uniqueIdentifier: 'DRAFT-2',
+        })
+      )
+      await firstValueFrom(
+        repository.saveRecordAsDraft({
+          ...simpleDatasetRecordFixture(),
+          uniqueIdentifier: 'DRAFT-3',
+        })
+      )
+    })
+    it('returns all drafts', async () => {
+      const draftCount = await lastValueFrom(repository.getDraftsCount())
+      expect(draftCount).toBe(3)
+    })
+  })
+
   describe('importRecordFromExternalFileUrlAsDraft', () => {
     const recordDownloadUrl = 'https://example.com/record/xml'
     const mockXml = simpleDatasetRecordAsXmlFixture()

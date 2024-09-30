@@ -86,5 +86,6 @@ export abstract class RecordsRepositoryInterface {
 
   /** will return all pending drafts, both published and not published */
   abstract getAllDrafts(): Observable<CatalogRecord[]>
+  abstract getDraftsCount(): Observable<number>
   abstract draftsChanged$: Observable<void>
 }

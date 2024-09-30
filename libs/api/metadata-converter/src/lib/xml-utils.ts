@@ -199,6 +199,12 @@ export function xmlToString(
   el: XmlElement | XmlText | XmlComment | XmlDocument,
   indentationLevel = 0
 ) {
+  const encodeEntities = (text: string) => {
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+  }
   if (el instanceof XmlDocument)
     return `<?xml version="1.0" encoding="UTF-8"?>${xmlToString(
       el.children[0]
@@ -207,10 +213,7 @@ export function xmlToString(
     const text = el.text
     const isEmpty = !text || text.replace(/^\s+|\s+$/g, '') === ''
     if (isEmpty) return ''
-    return text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
+    return encodeEntities(text)
   }
   if (!(el instanceof XmlElement)) return `<!-- unknown -->`
 
@@ -225,7 +228,7 @@ export function xmlToString(
         .join('')
     : ''
   const attrs = Object.keys(el.attributes).reduce(
-    (prev, curr) => prev + ` ${curr}="${el.attributes[curr]}"`,
+    (prev, curr) => prev + ` ${curr}="${encodeEntities(el.attributes[curr])}"`,
     ''
   )
   const parentPadding = '    '.repeat(Math.max(0, indentationLevel - 1))
