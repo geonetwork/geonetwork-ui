@@ -43,11 +43,21 @@ end.
     })
 
     it('should properly escape special characters in text', () => {
-      const textNode = new XmlText('Text with <, >, &')
+      const textNode = new XmlElement(
+        'test',
+        {
+          'my-attribute': '<Attribute> & <value>',
+        },
+        [new XmlText('Text with <, >, &')]
+      )
 
       const result = xmlToString(textNode)
 
-      expect(result).toBe('Text with &lt;, &gt;, &amp;')
+      expect(result).toBe(
+        `
+<test my-attribute="&lt;Attribute&gt; &amp; &lt;value&gt;">Text with &lt;, &gt;, &amp;</test>
+`
+      )
     })
   })
 
