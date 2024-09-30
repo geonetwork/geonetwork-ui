@@ -1,0 +1,31 @@
+<div class="flex flex-row justify-between">
+  <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
+    editor.record.form.field.onlineResource.edit.protocol
+  </h3>
+  <span
+    *ngIf="protocolHint"
+    class="material-symbols-outlined m-2 gn-ui-icon-small"
+    [matTooltip]="protocolHint"
+    matTooltipPosition="above"
+  >
+    help
+  </span>
+</div>
+<div class="flex flex-row items-center gap-[16px] h-[48px]">
+  <mat-radio-group
+    aria-labelledby="example-radio-group-label"
+    class="flex flex-row gap-[8px]"
+    [(ngModel)]="service.accessServiceProtocol"
+  >
+    <mat-radio-button
+      *ngFor="let protocolOption of protocolOptions"
+      [value]="protocolOption.value"
+    >
+      {{ protocolOption.label | translate }}
+    </mat-radio-button>
+  </mat-radio-group>
+</div>
+<gn-ui-text-input
+  [(value)]="service.identifierInService"
+  data-cy="identifier-in-service"
+></gn-ui-text-input>
