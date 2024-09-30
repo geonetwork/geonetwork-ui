@@ -454,7 +454,7 @@ describe('editor form', () => {
         ).clear()
         cy.get(
           'gn-ui-modal-dialog [data-cy="identifier-in-service"] input'
-        ).type('new identifier')
+        ).type('{selectAll}{backspace}new identifier')
         cy.get('gn-ui-modal-dialog [data-cy=confirm-button]').click()
         cy.editor_publishAndReload()
         cy.get('@resourcePageBtn').click()
