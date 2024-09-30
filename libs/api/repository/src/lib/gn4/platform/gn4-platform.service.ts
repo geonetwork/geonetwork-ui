@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core'
-import { combineLatest, Observable, of, switchMap, throwError } from 'rxjs'
 import {
-  combineLatest,
-  forkJoin,
+  catchError,
+  filter,
+  map,
   mergeMap,
-  Observable,
-  of,
-  switchMap,
-} from 'rxjs'
-import { catchError, filter, map, shareReplay, tap } from 'rxjs/operators'
+  shareReplay,
+  tap,
+} from 'rxjs/operators'
 import {
   MeApiService,
   RecordsApiService,
@@ -39,6 +37,14 @@ import {
 } from '@geonetwork-ui/api/metadata-converter'
 import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
 import { noDuplicateFileName } from '@geonetwork-ui/util/shared'
+import {
+  combineLatest,
+  forkJoin,
+  Observable,
+  of,
+  switchMap,
+  throwError,
+} from 'rxjs'
 
 const minApiVersion = '4.2.2'
 
@@ -341,7 +347,6 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     )
   }
 
-  attachFileToRecord(recordUuid: string, file: File) {
   attachFileToRecord(recordUuid: string, file: File): Observable<UploadEvent> {
     let sizeBytes = -1
 

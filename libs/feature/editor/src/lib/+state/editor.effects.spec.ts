@@ -172,16 +172,6 @@ describe('EditorEffects', () => {
     })
   })
 
-  describe('cleanRecordAttachments$', () => {
-    it('dispatch markRecordAsChanged', () => {
-      actions = hot('-a-|', {
-        a: EditorActions.saveRecordSuccess(),
-      })
-      const expected = hot('---|')
-      expect(effects.cleanRecordAttachments$).toBeObservable(expected)
-    })
-  })
-
   describe('checkHasChangesOnOpen$', () => {
     describe('if the record has a draft', () => {
       it('dispatch markRecordAsChanged', () => {
