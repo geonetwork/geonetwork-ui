@@ -953,6 +953,13 @@ export function writeSpatialRepresentation(
   record: DatasetRecord,
   rootEl: XmlElement
 ) {
+  if (!record.spatialRepresentation) {
+    pipe(
+      findOrCreateIdentification(),
+      removeChildrenByName('gmd:spatialRepresentationType')
+    )(rootEl)
+    return
+  }
   pipe(
     findOrCreateIdentification(),
     findNestedChildOrCreate(

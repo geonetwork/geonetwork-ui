@@ -1,4 +1,4 @@
-import { XmlElement } from '@rgrove/parse-xml'
+import { XmlElement, XmlText } from '@rgrove/parse-xml'
 import {
   assertValidXml,
   createDocument,
@@ -40,6 +40,24 @@ end.
 `
       const doc = parseXmlString(input)
       expect(xmlToString(doc)).toEqual(input)
+    })
+
+    it('should properly escape special characters in text', () => {
+      const textNode = new XmlElement(
+        'test',
+        {
+          'my-attribute': '<Attribute> & <value>',
+        },
+        [new XmlText('Text with <, >, &')]
+      )
+
+      const result = xmlToString(textNode)
+
+      expect(result).toBe(
+        `
+<test my-attribute="&lt;Attribute&gt; &amp; &lt;value&gt;">Text with &lt;, &gt;, &amp;</test>
+`
+      )
     })
   })
 

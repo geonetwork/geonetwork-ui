@@ -17,6 +17,7 @@ import {
   writeResourcePublished,
   writeResourceUpdated,
   writeSpatialExtents,
+  writeSpatialRepresentation,
   writeTemporalExtents,
 } from './write-parts'
 
@@ -924,6 +925,34 @@ describe('write parts', () => {
           per: 'week',
         })
       ).toEqual('P0Y0M3D')
+    })
+  })
+
+  describe('writeSpatialRepresentation', () => {
+    it('writes the corresponding element', () => {
+      writeSpatialRepresentation(datasetRecord, rootEl)
+      expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <gmd:spatialRepresentationType>
+                <gmd:MD_SpatialRepresentationTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="grid"/>
+            </gmd:spatialRepresentationType>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+    })
+    it('clears the corresponding element if the record has no spatial representation', () => {
+      writeSpatialRepresentation(datasetRecord, rootEl)
+      const modified: DatasetRecord = {
+        ...datasetRecord,
+        spatialRepresentation: null,
+      }
+      writeSpatialRepresentation(modified, rootEl)
+      expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification/>
+    </gmd:identificationInfo>
+</root>`)
     })
   })
 })

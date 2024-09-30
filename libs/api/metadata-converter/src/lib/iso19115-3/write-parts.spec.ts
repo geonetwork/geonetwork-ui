@@ -7,6 +7,7 @@ import {
   writeResourceCreated,
   writeResourcePublished,
   writeResourceUpdated,
+  writeSpatialRepresentation,
 } from './write-parts'
 import {
   createElement,
@@ -604,6 +605,34 @@ describe('write parts', () => {
                 </cit:CI_Responsibility>
             </mri:pointOfContact>
         </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+    })
+  })
+
+  describe('writeSpatialRepresentation', () => {
+    it('writes the corresponding element', () => {
+      writeSpatialRepresentation(datasetRecord, rootEl)
+      expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <mri:spatialRepresentationType>
+                <mcc:MD_SpatialRepresentationTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="grid">grid</mcc:MD_SpatialRepresentationTypeCode>
+            </mri:spatialRepresentationType>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+    })
+    it('clears the corresponding element if the record has no spatial representation', () => {
+      writeSpatialRepresentation(datasetRecord, rootEl)
+      const modified: DatasetRecord = {
+        ...datasetRecord,
+        spatialRepresentation: null,
+      }
+      writeSpatialRepresentation(modified, rootEl)
+      expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification/>
     </gmd:identificationInfo>
 </root>`)
     })
