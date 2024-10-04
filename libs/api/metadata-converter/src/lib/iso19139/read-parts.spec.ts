@@ -38,6 +38,15 @@ describe('read parts', () => {
             email: 'rolf.giezendanner@are.admin.ch',
             organization: {
               name: 'Bundesamt für Raumentwicklung',
+              translations: {
+                name: {
+                  de: 'Bundesamt für Raumentwicklung',
+                  en: 'Federal Office for Spatial Development',
+                  fr: 'Office fédéral du développement territorial',
+                  it: 'Ufficio federale dello sviluppo territoriale',
+                  rm: 'Bundesamt für Raumentwicklung',
+                },
+              },
             },
             role: 'point_of_contact',
           },
@@ -48,6 +57,15 @@ describe('read parts', () => {
       it('returns an organization without website', () => {
         expect(readOwnerOrganization(recordRootEl)).toEqual({
           name: 'Bundesamt für Raumentwicklung',
+          translations: {
+            name: {
+              de: 'Bundesamt für Raumentwicklung',
+              en: 'Federal Office for Spatial Development',
+              fr: 'Office fédéral du développement territorial',
+              it: 'Ufficio federale dello sviluppo territoriale',
+              rm: 'Bundesamt für Raumentwicklung',
+            },
+          },
         })
       })
       describe('organization with website', () => {
@@ -89,6 +107,7 @@ describe('read parts', () => {
           expect(readOwnerOrganization(recordRootEl)).toEqual({
             name: 'MyOrganization',
             website: new URL('https://www.my.org/info'),
+            translations: {},
           })
         })
       })
@@ -120,6 +139,20 @@ describe('read parts', () => {
               'https://map.geo.admin.ch/?layers=ch.are.alpenkonvention'
             ),
             name: 'Vorschau map.geo.admin.ch',
+            translations: {
+              description: {
+                de: 'Vorschau map.geo.admin.ch',
+                en: 'Preview map.geo.admin.ch',
+                fr: 'Aperçu map.geo.admin.ch',
+                it: 'Previsione map.geo.admin.ch',
+              },
+              name: {
+                de: 'Vorschau map.geo.admin.ch',
+                en: 'Preview map.geo.admin.ch',
+                fr: 'Aperçu map.geo.admin.ch',
+                it: 'Previsione map.geo.admin.ch',
+              },
+            },
             type: 'link',
           },
           {
@@ -127,6 +160,12 @@ describe('read parts', () => {
             url: new URL(
               'https://www.are.admin.ch/are/de/home/laendliche-raeume-und-berggebiete/internationale-zusammenarbeit/alpenkonvention.html'
             ),
+            translations: {
+              description: {
+                de: 'Webseite des ARE über die Alpenkonvention',
+                fr: "Page web de l'ARE sur la Convention alpine",
+              },
+            },
             type: 'link',
           },
           {
@@ -135,6 +174,14 @@ describe('read parts', () => {
               'https://data.geo.admin.ch/browser/index.html#/collections/ch.are.alpenkonvention'
             ),
             mimeType: 'x-gis/x-shapefile',
+            translations: {
+              description: {
+                de: 'Download von data.geo.admin.ch',
+                en: 'Download server from geo.admin.ch',
+                fr: 'Serveur de téléchargement de geo.admin.ch',
+                it: 'Server di download di geo.admin.ch',
+              },
+            },
             type: 'download',
           },
           {
@@ -145,6 +192,17 @@ describe('read parts', () => {
             description: 'WMS Dienst von geo.admin.ch',
             identifierInService: 'ch.are.alpenkonvention',
             name: 'ch.are.alpenkonvention',
+            translations: {
+              description: {
+                de: 'WMS Dienst von geo.admin.ch',
+                en: 'WMS Service from geo.admin.ch',
+                fr: 'Service WMS de geo.admin.ch',
+                it: 'Servizio WMS di geo.admin.ch',
+              },
+              name: {
+                de: 'ch.are.alpenkonvention',
+              },
+            },
             type: 'service',
           },
           {
@@ -153,6 +211,12 @@ describe('read parts', () => {
               'https://www.are.admin.ch/are/de/home/raumentwicklung-und-raumplanung/grundlagen-und-daten/minimale-geodatenmodelle/alpenkonvention.html'
             ),
             mimeType: 'x-gis/x-shapefile',
+            translations: {
+              description: {
+                de: 'Minimales Geodatenmodell in INTERLIS 2.3',
+                fr: 'Modèle de données minimal en INTERLIS 2.3',
+              },
+            },
             type: 'download',
           },
           {
@@ -160,11 +224,25 @@ describe('read parts', () => {
             url: new URL(
               'http://map.are.admin.ch/?Y=660000&X=190000&zoom=1&bgLayer=ch.swisstopo.pixelkarte-grau&layers=ch.are.alpenkonvention&layers_opacity=0.2&layers_visibility=true&lang=de'
             ),
+            translations: {
+              description: {
+                de: 'Web-GIS ARE',
+                fr: 'Web-SIG ARE',
+              },
+            },
             type: 'link',
           },
           {
             description: 'Offizielle Homepage der Alpenkonvention',
             url: new URL('http://www.alpconv.org/'),
+            translations: {
+              description: {
+                de: 'Offizielle Homepage der Alpenkonvention',
+                en: 'Official Website of the Alpine Convention',
+                fr: 'Site web officiel de la Convention alpine',
+                it: 'Pagina web ufficiale della Convenzione delle alpi',
+              },
+            },
             type: 'link',
           },
           {
@@ -172,12 +250,25 @@ describe('read parts', () => {
             url: new URL(
               'http://map.geo.admin.ch/?selectedNode=LT1_1&Y=660000&X=190000&zoom=1&bgLayer=ch.swisstopo.pixelkarte-farbe&layers=ch.are.alpenkonvention&layers_opacity=0.6&layers_visibility=true&lang=de'
             ),
+            translations: {
+              description: {
+                de: 'Die Alpenkonvention im Bundesgeoportal',
+                fr: 'La convention alpine dans le géoportail fédéral',
+              },
+            },
             type: 'link',
           },
           {
             description:
               'Liste der administrativen Einheiten des Alpenraumes in der schweizerischen Eidgenossenschaft',
             url: new URL('http://www.admin.ch/ch/d/sr/0_700_1/app1.html'),
+            translations: {
+              description: {
+                de: 'Liste der administrativen Einheiten des Alpenraumes in der schweizerischen Eidgenossenschaft',
+                fr: "Liste des unités administratives de l'espace alpin dans la Confédération suisse",
+                it: 'Elenco delle unità amministrative dello spazio alpino nella Confederazione Svizzera',
+              },
+            },
             type: 'link',
           },
           {
@@ -187,6 +278,22 @@ describe('read parts', () => {
             ),
             description: 'RESTful API von geo.admin.ch',
             name: 'RESTful API von geo.admin.ch',
+            translations: {
+              description: {
+                de: 'RESTful API von geo.admin.ch',
+                en: 'RESTful API from geo.admin.ch',
+                fr: 'RESTful API de geo.admin.ch',
+                it: 'RESTful API da geo.admin.ch',
+                rm: 'RESTful API dad geo.admin.ch',
+              },
+              name: {
+                de: 'RESTful API von geo.admin.ch',
+                en: 'RESTful API from geo.admin.ch',
+                fr: 'RESTful API de geo.admin.ch',
+                it: 'RESTful API da geo.admin.ch',
+                rm: 'RESTful API dad geo.admin.ch',
+              },
+            },
             type: 'service',
           },
           {
@@ -195,6 +302,20 @@ describe('read parts', () => {
               'https://opendata.swiss/de/perma/8698bf0b-fceb-4f0f-989b-111e7c4af0a4@bundesamt-fur-raumentwicklung-are'
             ),
             name: 'Permalink opendata.swiss',
+            translations: {
+              description: {
+                de: 'Permalink opendata.swiss',
+                en: 'Permalink opendata.swiss',
+                fr: 'Permalink opendata.swiss',
+                it: 'Permalink opendata.swiss',
+              },
+              name: {
+                de: 'Permalink opendata.swiss',
+                en: 'Permalink opendata.swiss',
+                fr: 'Permalink opendata.swiss',
+                it: 'Permalink opendata.swiss',
+              },
+            },
             type: 'link',
           },
         ])
@@ -229,6 +350,7 @@ describe('read parts', () => {
               url: new URL('http://missing'),
               mimeType: 'x-gis/x-shapefile',
               type: 'download',
+              translations: {},
             },
           ])
         })
@@ -466,6 +588,7 @@ describe('read parts', () => {
                 47.5175655551557,
               ],
               description: 'AK',
+              translations: {},
             },
           ])
         })
@@ -475,12 +598,22 @@ describe('read parts', () => {
           expect(readSpatialExtents(recordRootEl)).toEqual([
             {
               description: 'AK',
+              translations: {
+                description: {
+                  de: 'AK',
+                  en: 'AC',
+                  fr: 'CA',
+                  it: 'CA',
+                  rm: 'null',
+                },
+              },
             },
             {
               bbox: [
                 6.75599105586694, 45.7887442565203, 10.5418236945627,
                 47.5175655551557,
               ],
+              translations: {},
             },
             {
               geometry: {
@@ -497,6 +630,7 @@ describe('read parts', () => {
                   ],
                 ],
               },
+              translations: {},
             },
           ])
         })
@@ -515,11 +649,23 @@ describe('read parts', () => {
             description: 'Verkehrsregelungsanlagen',
             url: new URL('https://metadata.geo.sg.ch/produkte/170'),
             type: 'link',
+            translations: {
+              description: {
+                de: 'https://services.geo.sg.ch/wss/service/SG00170_WMS/guest?request=GetCapabilities&service=WMS',
+                en: '',
+              },
+            },
           },
           {
             description: 'Geometadaten Kanton St.Gallen',
             url: new URL('https://metadata.geo.sg.ch/'),
             type: 'link',
+            translations: {
+              description: {
+                de: 'https://services.geo.sg.ch/wss/service/SG00170_WMS/guest?request=GetCapabilities&service=WMS',
+                en: '',
+              },
+            },
           },
           {
             description:
@@ -529,6 +675,12 @@ describe('read parts', () => {
             ),
             protocol: 'wms',
             type: 'endpoint',
+            translations: {
+              description: {
+                de: 'https://services.geo.sg.ch/wss/service/SG00170_WMS/guest?request=GetCapabilities&service=WMS',
+                en: '',
+              },
+            },
           },
         ])
       })
@@ -566,6 +718,7 @@ describe('read parts', () => {
             {
               url: new URL('http://missing'),
               type: 'link',
+              translations: {},
             },
           ])
         })

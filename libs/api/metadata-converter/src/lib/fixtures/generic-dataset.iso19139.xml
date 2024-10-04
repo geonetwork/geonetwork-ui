@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"
-                 xmlns:gco="http://www.isotc211.org/2005/gco"
-                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
-                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                 xmlns:gts="http://www.isotc211.org/2005/gts"
-                 xmlns:gml="http://www.opengis.net/gml/3.2">
+<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gml="http://www.opengis.net/gml/3.2">
     <gmd:fileIdentifier>
         <gco:CharacterString>my-dataset-001</gco:CharacterString>
     </gmd:fileIdentifier>
     <gmd:hierarchyLevel>
-        <gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
-                          codeListValue="dataset"/>
+        <gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset"/>
     </gmd:hierarchyLevel>
+    <gmd:language>
+        <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng"/>
+    </gmd:language>
     <gmd:contact>
         <gmd:CI_ResponsibleParty>
             <gmd:individualName>
@@ -42,8 +39,7 @@
                 </gmd:CI_Contact>
             </gmd:contactInfo>
             <gmd:role>
-                <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
-                                 codeListValue="pointOfContact"/>
+                <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact"/>
             </gmd:role>
         </gmd:CI_ResponsibleParty>
     </gmd:contact>
@@ -63,9 +59,7 @@
                                 <gco:DateTime>2022-09-01T14:18:19</gco:DateTime>
                             </gmd:date>
                             <gmd:dateType>
-                                <gmd:CI_DateTypeCode
-                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                        codeListValue="creation"/>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation"/>
                             </gmd:dateType>
                         </gmd:CI_Date>
                     </gmd:date>
@@ -75,9 +69,7 @@
                                 <gco:DateTime>2022-12-04T15:12:00</gco:DateTime>
                             </gmd:date>
                             <gmd:dateType>
-                                <gmd:CI_DateTypeCode
-                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
-                                        codeListValue="revision"/>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision"/>
                             </gmd:dateType>
                         </gmd:CI_Date>
                     </gmd:date>
@@ -123,9 +115,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                         </gmd:CI_Contact>
                     </gmd:contactInfo>
                     <gmd:role>
-                        <gmd:CI_RoleCode
-                                codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
-                                codeListValue="author"/>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="author"/>
                     </gmd:role>
                 </gmd:CI_ResponsibleParty>
             </gmd:pointOfContact>
@@ -327,6 +317,14 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                     </gmd:classification>
                     <gmd:useLimitation>
                         <gco:CharacterString>Contains sensitive information related to national defense</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">Contains sensitive information related to national defense</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">Contient des informations sensibles liées à la défense nationale</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
                     </gmd:useLimitation>
                 </gmd:MD_SecurityConstraints>
             </gmd:resourceConstraints>
@@ -358,9 +356,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                 </gmd:MD_Constraints>
             </gmd:resourceConstraints>
             <gmd:status>
-                <gmd:MD_ProgressCode
-                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"
-                        codeListValue="onGoing"/>
+                <gmd:MD_ProgressCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode" codeListValue="onGoing"/>
             </gmd:status>
             <gmd:resourceMaintenance>
                 <gmd:MD_MaintenanceInformation>
@@ -370,9 +366,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                 </gmd:MD_MaintenanceInformation>
             </gmd:resourceMaintenance>
             <gmd:spatialRepresentationType>
-                <gmd:MD_SpatialRepresentationTypeCode
-                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode"
-                        codeListValue="grid"/>
+                <gmd:MD_SpatialRepresentationTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="grid"/>
             </gmd:spatialRepresentationType>
             <gmd:graphicOverview>
                 <gmd:MD_BrowseGraphic>
@@ -396,19 +390,19 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                     <gmd:temporalElement>
                         <gmd:EX_TemporalExtent>
                             <gmd:extent>
-                            <gml:TimePeriod>
-                                <gml:beginPosition>2024-05-24</gml:beginPosition>
-                                <gml:endPosition indeterminatePosition="unknown"/>
-                            </gml:TimePeriod>
+                                <gml:TimePeriod>
+                                    <gml:beginPosition>2024-05-24</gml:beginPosition>
+                                    <gml:endPosition indeterminatePosition="unknown"/>
+                                </gml:TimePeriod>
                             </gmd:extent>
                         </gmd:EX_TemporalExtent>
                     </gmd:temporalElement>
                     <gmd:temporalElement>
                         <gmd:EX_TemporalExtent>
                             <gmd:extent>
-                            <gml:TimeInstant>
-                                <gml:timePosition>2024-05-30</gml:timePosition>
-                            </gml:TimeInstant>
+                                <gml:TimeInstant>
+                                    <gml:timePosition>2024-05-30</gml:timePosition>
+                                </gml:TimeInstant>
                             </gmd:extent>
                         </gmd:EX_TemporalExtent>
                     </gmd:temporalElement>
@@ -470,9 +464,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                                 <gco:CharacterString>WWW:DOWNLOAD</gco:CharacterString>
                             </gmd:protocol>
                             <gmd:function>
-                                <gmd:CI_OnLineFunctionCode
-                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
-                                        codeListValue="download"/>
+                                <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download"/>
                             </gmd:function>
                         </gmd:CI_OnlineResource>
                     </gmd:onLine>
@@ -506,9 +498,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                                 <gco:CharacterString>WWW:DOWNLOAD</gco:CharacterString>
                             </gmd:protocol>
                             <gmd:function>
-                                <gmd:CI_OnLineFunctionCode
-                                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
-                                        codeListValue="download"/>
+                                <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download"/>
                             </gmd:function>
                         </gmd:CI_OnlineResource>
                     </gmd:onLine>
@@ -578,9 +568,42 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                         <gco:CharacterString>This record was edited manually to test the conversion processes
 
 As such, **it is not very interesting at all.**</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">This record was edited manually to test the conversion processes
+
+As such, **it is not very interesting at all.**</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Dieser Datensatz wurde manuell bearbeitet, um die Konvertierungsprozesse zu testen
+
+Als solches ist es **überhaupt nicht interessant.**</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
                     </gmd:statement>
                 </gmd:LI_Lineage>
             </gmd:lineage>
         </gmd:DQ_DataQuality>
     </gmd:dataQualityInfo>
+    <gmd:locale>
+        <gmd:PT_Locale id="EN">
+            <gmd:languageCode>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng"/>
+            </gmd:languageCode>
+        </gmd:PT_Locale>
+    </gmd:locale>
+    <gmd:locale>
+        <gmd:PT_Locale id="FR">
+            <gmd:languageCode>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="fre"/>
+            </gmd:languageCode>
+        </gmd:PT_Locale>
+    </gmd:locale>
+    <gmd:locale>
+        <gmd:PT_Locale id="DE">
+            <gmd:languageCode>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ger"/>
+            </gmd:languageCode>
+        </gmd:PT_Locale>
+    </gmd:locale>
 </gmd:MD_Metadata>

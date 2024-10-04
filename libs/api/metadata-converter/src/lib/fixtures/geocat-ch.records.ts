@@ -8,6 +8,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
   kind: 'dataset',
   ownerOrganization: {
     name: 'Bundesamt für Raumentwicklung',
+    translations: {
+      name: {
+        en: 'Federal Office for Spatial Development',
+        fr: 'Office fédéral du développement territorial',
+        it: 'Ufficio federale dello sviluppo territoriale',
+        rm: 'Bundesamt für Raumentwicklung',
+      },
+    },
   },
   contacts: [
     {
@@ -16,6 +24,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       address: 'Ittigen, 3063, CH',
       organization: {
         name: 'Bundesamt für Raumentwicklung',
+        translations: {
+          name: {
+            en: 'Federal Office for Spatial Development',
+            fr: 'Office fédéral du développement territorial',
+            it: 'Ufficio federale dello sviluppo territoriale',
+            rm: 'Bundesamt für Raumentwicklung',
+          },
+        },
       },
     },
   ],
@@ -26,6 +42,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       address: 'Ittigen, 3063, CH',
       organization: {
         name: 'Bundesamt für Raumentwicklung',
+        translations: {
+          name: {
+            en: 'Federal Office for Spatial Development',
+            fr: 'Office fédéral du développement territorial',
+            it: 'Ufficio federale dello sviluppo territoriale',
+            rm: 'Bundesamt für Raumentwicklung',
+          },
+        },
       },
     },
     {
@@ -33,6 +57,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       role: 'owner',
       organization: {
         name: 'Bundesamt für Raumentwicklung',
+        translations: {},
       },
     },
   ],
@@ -54,6 +79,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       },
       type: 'theme',
       label: 'Aufbewahrungs- und Archivierungsplanung AAP - Bund',
+      translations: {
+        label: {
+          en: 'Conservation and archiving planning AAP - Confederation',
+          fr: "Planification de la conservation et de l'archivage AAP - Conféderation",
+          it: 'Pianificazione della conservazione e dell’archiviazione AAP - Confederazione',
+          rm: '',
+        },
+      },
     },
     {
       thesaurus: {
@@ -65,6 +98,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       },
       type: 'theme',
       label: 'Geobasisdaten',
+      translations: {
+        label: {
+          en: 'official geodata',
+          fr: 'géodonnées de base',
+          it: 'geodati di base',
+          rm: '',
+        },
+      },
     },
     {
       thesaurus: {
@@ -76,6 +117,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       },
       type: 'theme',
       label: 'e-geo.ch',
+      translations: {
+        label: {
+          en: 'e-geo.ch',
+          fr: 'e-geo.ch',
+          it: 'e-geo.ch',
+          rm: '',
+        },
+      },
     },
     {
       label: 'opendata.swiss',
@@ -87,6 +136,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         ),
       },
       type: 'theme',
+      translations: {
+        label: {
+          en: 'opendata.swiss',
+          fr: 'opendata.swiss',
+          it: 'opendata.swiss',
+          rm: 'opendata.swiss',
+        },
+      },
     },
     {
       label: 'Nachhaltige Entwicklung',
@@ -98,6 +155,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         ),
       },
       type: 'theme',
+      translations: {
+        label: {
+          en: 'sustainable development',
+          fr: 'développement durable',
+          it: 'sviluppo sostenibile',
+          rm: '',
+        },
+      },
     },
     {
       label: 'Raumplanung',
@@ -109,6 +174,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         ),
       },
       type: 'theme',
+      translations: {
+        label: {
+          en: 'physical planning',
+          fr: "planification de l'espace physique",
+          it: 'pianificazione dello spazio fisico',
+          rm: '',
+        },
+      },
     },
     {
       label: 'Bergschutz',
@@ -120,6 +193,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         ),
       },
       type: 'theme',
+      translations: {
+        label: {
+          en: 'mountain protection',
+          fr: 'protection de la montagne',
+          it: 'protezione della montagna',
+          rm: '',
+        },
+      },
     },
     {
       label: 'Bodenschutz',
@@ -131,6 +212,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         ),
       },
       type: 'theme',
+      translations: {
+        label: {
+          en: 'soil conservation',
+          fr: 'conservation du sol',
+          it: 'conservazione del suolo',
+          rm: '',
+        },
+      },
     },
     {
       label: 'Umweltpolitik',
@@ -142,6 +231,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         ),
       },
       type: 'theme',
+      translations: {
+        label: {
+          en: 'environmental policy',
+          fr: 'politique environnementale',
+          it: 'politica ambientale',
+          rm: '',
+        },
+      },
     },
     {
       label: 'Umweltpolitik',
@@ -153,6 +250,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         ),
       },
       type: 'theme',
+      translations: {
+        label: {
+          en: 'environmental policy',
+          fr: 'politique environnementale',
+          it: 'politica ambientale',
+          rm: '',
+        },
+      },
     },
     {
       label: 'Verkehr',
@@ -164,6 +269,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         ),
       },
       type: 'theme',
+      translations: {
+        label: {
+          en: 'transport',
+          fr: 'transport',
+          it: 'trasporti',
+          rm: '',
+        },
+      },
     },
     {
       label: 'Verkehr',
@@ -175,6 +288,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         ),
       },
       type: 'theme',
+      translations: {
+        label: {
+          en: 'transport',
+          fr: 'transport',
+          it: 'trasporti',
+          rm: '',
+        },
+      },
     },
     {
       label: 'Verkehr',
@@ -186,6 +307,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         ),
       },
       type: 'theme',
+      translations: {
+        label: {
+          en: 'transport',
+          fr: 'transport',
+          it: 'trasporti',
+          rm: '',
+        },
+      },
     },
     {
       label: 'Umweltüberwachung',
@@ -197,6 +326,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         ),
       },
       type: 'theme',
+      translations: {
+        label: {
+          en: 'Environmental monitoring facilities',
+          fr: 'Installations de suivi environnemental',
+          it: 'Impianti di monitoraggio ambientale',
+          rm: '',
+        },
+      },
     },
     {
       label: 'Verwaltungseinheiten',
@@ -208,6 +345,14 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         ),
       },
       type: 'theme',
+      translations: {
+        label: {
+          en: 'Administrative units',
+          fr: 'Unités administratives',
+          it: 'Unità amministrative',
+          rm: '',
+        },
+      },
     },
     {
       label: 'BGDI Bundesgeodaten-Infrastruktur',
@@ -219,6 +364,13 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         ),
       },
       type: 'theme',
+      translations: {
+        label: {
+          en: 'FSDI Federal Spatial Data Infrastructure',
+          fr: 'IFDG l’Infrastructure Fédérale de données géographiques',
+          it: 'IFDG Infrastruttura federale dei dati geografici',
+        },
+      },
     },
   ],
   spatialRepresentation: 'vector',
@@ -228,6 +380,18 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       url: new URL('https://map.geo.admin.ch/?layers=ch.are.alpenkonvention'),
       name: 'Vorschau map.geo.admin.ch',
       description: 'Vorschau map.geo.admin.ch',
+      translations: {
+        description: {
+          en: 'Preview map.geo.admin.ch',
+          fr: 'Aperçu map.geo.admin.ch',
+          it: 'Previsione map.geo.admin.ch',
+        },
+        name: {
+          en: 'Preview map.geo.admin.ch',
+          fr: 'Aperçu map.geo.admin.ch',
+          it: 'Previsione map.geo.admin.ch',
+        },
+      },
     },
     {
       type: 'link',
@@ -235,6 +399,11 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         'https://www.are.admin.ch/are/de/home/laendliche-raeume-und-berggebiete/internationale-zusammenarbeit/alpenkonvention.html'
       ),
       description: 'Webseite des ARE über die Alpenkonvention',
+      translations: {
+        description: {
+          fr: "Page web de l'ARE sur la Convention alpine",
+        },
+      },
     },
     {
       type: 'download',
@@ -243,6 +412,13 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       ),
       description: 'Download von data.geo.admin.ch',
       mimeType: 'x-gis/x-shapefile',
+      translations: {
+        description: {
+          en: 'Download server from geo.admin.ch',
+          fr: 'Serveur de téléchargement de geo.admin.ch',
+          it: 'Server di download di geo.admin.ch',
+        },
+      },
     },
     {
       type: 'service',
@@ -250,9 +426,16 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         'http://wms.geo.admin.ch/?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities&lang=de'
       ),
       accessServiceProtocol: 'wms',
+      description: 'WMS Dienst von geo.admin.ch',
       identifierInService: 'ch.are.alpenkonvention',
       name: 'ch.are.alpenkonvention',
-      description: 'WMS Dienst von geo.admin.ch',
+      translations: {
+        description: {
+          en: 'WMS Service from geo.admin.ch',
+          fr: 'Service WMS de geo.admin.ch',
+          it: 'Servizio WMS di geo.admin.ch',
+        },
+      },
     },
     {
       type: 'download',
@@ -261,6 +444,11 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       ),
       description: 'Minimales Geodatenmodell in INTERLIS 2.3',
       mimeType: 'x-gis/x-shapefile',
+      translations: {
+        description: {
+          fr: 'Modèle de données minimal en INTERLIS 2.3',
+        },
+      },
     },
     {
       type: 'link',
@@ -268,11 +456,23 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         'http://map.are.admin.ch/?Y=660000&X=190000&zoom=1&bgLayer=ch.swisstopo.pixelkarte-grau&layers=ch.are.alpenkonvention&layers_opacity=0.2&layers_visibility=true&lang=de'
       ),
       description: 'Web-GIS ARE',
+      translations: {
+        description: {
+          fr: 'Web-SIG ARE',
+        },
+      },
     },
     {
       type: 'link',
       url: new URL('http://www.alpconv.org'),
       description: 'Offizielle Homepage der Alpenkonvention',
+      translations: {
+        description: {
+          en: 'Official Website of the Alpine Convention',
+          fr: 'Site web officiel de la Convention alpine',
+          it: 'Pagina web ufficiale della Convenzione delle alpi',
+        },
+      },
     },
     {
       type: 'link',
@@ -280,12 +480,23 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         'http://map.geo.admin.ch/?selectedNode=LT1_1&Y=660000&X=190000&zoom=1&bgLayer=ch.swisstopo.pixelkarte-farbe&layers=ch.are.alpenkonvention&layers_opacity=0.6&layers_visibility=true&lang=de'
       ),
       description: 'Die Alpenkonvention im Bundesgeoportal',
+      translations: {
+        description: {
+          fr: 'La convention alpine dans le géoportail fédéral',
+        },
+      },
     },
     {
       type: 'link',
       url: new URL('http://www.admin.ch/ch/d/sr/0_700_1/app1.html'),
       description:
         'Liste der administrativen Einheiten des Alpenraumes in der schweizerischen Eidgenossenschaft',
+      translations: {
+        description: {
+          fr: "Liste des unités administratives de l'espace alpin dans la Confédération suisse",
+          it: 'Elenco delle unità amministrative dello spazio alpino nella Confederazione Svizzera',
+        },
+      },
     },
     {
       type: 'service',
@@ -293,8 +504,22 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
         'https://api3.geo.admin.ch/rest/services/api/MapServer/ch.are.alpenkonvention'
       ),
       accessServiceProtocol: 'esriRest',
-      name: 'RESTful API von geo.admin.ch',
       description: 'RESTful API von geo.admin.ch',
+      name: 'RESTful API von geo.admin.ch',
+      translations: {
+        description: {
+          en: 'RESTful API from geo.admin.ch',
+          fr: 'RESTful API de geo.admin.ch',
+          it: 'RESTful API da geo.admin.ch',
+          rm: 'RESTful API dad geo.admin.ch',
+        },
+        name: {
+          en: 'RESTful API from geo.admin.ch',
+          fr: 'RESTful API de geo.admin.ch',
+          it: 'RESTful API da geo.admin.ch',
+          rm: 'RESTful API dad geo.admin.ch',
+        },
+      },
     },
     {
       type: 'link',
@@ -303,6 +528,18 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       ),
       name: 'Permalink opendata.swiss',
       description: 'Permalink opendata.swiss',
+      translations: {
+        description: {
+          en: 'Permalink opendata.swiss',
+          fr: 'Permalink opendata.swiss',
+          it: 'Permalink opendata.swiss',
+        },
+        name: {
+          en: 'Permalink opendata.swiss',
+          fr: 'Permalink opendata.swiss',
+          it: 'Permalink opendata.swiss',
+        },
+      },
     },
   ],
   lineage:
@@ -310,6 +547,11 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
   licenses: [
     {
       text: "Licence passée entre l'Office fédéral de l'environnement (OFEV), et le canton de Fribourg, représenté par la Coordination SIT (SITel)",
+      translations: {
+        text: {
+          fr: "Licence passée entre l'Office fédéral de l'environnement (OFEV), et le canton de Fribourg, représenté par la Coordination SIT (SITel)",
+        },
+      },
     },
   ],
   legalConstraints: [
@@ -327,6 +569,7 @@ Diese Geodaten unterliegen folgenden Nutzungsbeschränkungen:
 - Sie dürfen ausschliesslich zu dem unter 4. beschriebenen Zweck genutzt werden.
 
 Die Quelle ist zu bezeichnen: „Quelle: Stadt Zürich“.`,
+      translations: {},
     },
   ],
   securityConstraints: [],
@@ -335,11 +578,20 @@ Die Quelle ist zu bezeichnen: „Quelle: Stadt Zürich“.`,
   spatialExtents: [
     {
       description: 'AK',
+      translations: {
+        description: {
+          en: 'AC',
+          fr: 'CA',
+          it: 'CA',
+          rm: 'null',
+        },
+      },
     },
     {
       bbox: [
         6.75599105586694, 45.7887442565203, 10.5418236945627, 47.5175655551557,
       ],
+      translations: {},
     },
     {
       geometry: {
@@ -356,6 +608,7 @@ Die Quelle ist zu bezeichnen: „Quelle: Stadt Zürich“.`,
           ],
         ],
       },
+      translations: {},
     },
   ],
   temporalExtents: [],
@@ -363,6 +616,20 @@ Die Quelle ist zu bezeichnen: „Quelle: Stadt Zürich“.`,
   updateFrequency: 'asNeeded',
   defaultLanguage: 'de',
   otherLanguages: ['fr', 'it', 'en', 'rm'],
+  translations: {
+    abstract: {
+      en: 'The perimeters of the Alpine Convention in Switzerland. The Alpine Convention is an international treaty between the eight Alpine countries: Germany, France, Italy, Liechtenstein, Monaco, Austria, Switzerland and Slovenia, plus the European Union. The aim of the treaty is to protect the Alps by means of cross-sectoral, integrated and sustainable policies.',
+      fr: 'Périmètre de la Convention alpine en Suisse. La Convention alpine est un traité de droit international conclu par huit Etats alpins (Allemagne, Autriche, France, Italie, Liechtenstein, Monaco, Suisse, Slovénie) et l`Union européenne. L`accord vise à assurer la préservation et la protection des Alpes à travers une politique plurisectorielle, globale et durable.',
+      it: "Il perimetro della Convenzione delle Alpi. La Convenzione delle Alpi è un trattato internazionale tra gli otto Paesi alpini Germania, Francia, Italia, Liechtenstein, Monaco, Austria, Svizzera, Slovenia e l'Unione europea. Lo scopo della Convenzione è la conservazione e la protezione delle Alpi mediante una politica intersettoriale, globale e durevole.",
+      rm: "Perimeter da la Convenziun da las Alps en Svizra. La Convenziun da las Alps è in contract internaziunal tranter ils otg pajais alpins (Austria, Frantscha, Germania, Italia, Liechtenstein, Monaco, Slovenia, Svizra) e l'Uniun europeica. La convenziun ha la finamira da proteger las Alps cun agid d'ina politica intersecturiala, cumplessiva e duraivla.",
+    },
+    title: {
+      en: 'Alpine Convention',
+      fr: 'Convention des Alpes',
+      it: 'Convenzione delle alpi',
+      rm: 'Convenziun da las Alps',
+    },
+  },
 }
 
 export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
@@ -371,6 +638,11 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
   ownerOrganization: {
     name: 'Amt für Raumentwicklung und Geoinformation (SG)',
     website: new URL('https://www.sg.ch/bauen/geoinformation/datenbezug.html'),
+    translations: {
+      name: {
+        en: '',
+      },
+    },
   },
   contacts: [
     {
@@ -383,6 +655,11 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
         website: new URL(
           'https://www.sg.ch/bauen/geoinformation/datenbezug.html'
         ),
+        translations: {
+          name: {
+            en: '',
+          },
+        },
       },
     },
   ],
@@ -397,6 +674,11 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
         website: new URL(
           'https://www.sg.ch/bauen/geoinformation/datenbezug.html'
         ),
+        translations: {
+          name: {
+            en: '',
+          },
+        },
       },
     },
     {
@@ -409,6 +691,11 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
         website: new URL(
           'https://www.sg.ch/bauen/geoinformation/datenbezug.html'
         ),
+        translations: {
+          name: {
+            en: '',
+          },
+        },
       },
     },
   ],
@@ -437,6 +724,11 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
         ),
       },
       type: 'other',
+      translations: {
+        label: {
+          en: '',
+        },
+      },
     },
     {
       label: 'opendata.swiss',
@@ -448,6 +740,11 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
         ),
       },
       type: 'other',
+      translations: {
+        label: {
+          en: '',
+        },
+      },
     },
   ],
   onlineResources: [
@@ -455,11 +752,21 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
       type: 'link',
       url: new URL('https://metadata.geo.sg.ch/produkte/170'),
       description: 'Verkehrsregelungsanlagen',
+      translations: {
+        description: {
+          en: '',
+        },
+      },
     },
     {
       type: 'link',
       url: new URL('https://metadata.geo.sg.ch'),
       description: 'Geometadaten Kanton St.Gallen',
+      translations: {
+        description: {
+          en: '',
+        },
+      },
     },
     {
       type: 'endpoint',
@@ -469,6 +776,11 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
       protocol: 'wms',
       description:
         'https://services.geo.sg.ch/wss/service/SG00170_WMS/guest?request=GetCapabilities&service=WMS',
+      translations: {
+        description: {
+          en: '',
+        },
+      },
     },
   ],
   licenses: [],
@@ -477,4 +789,12 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
   otherConstraints: [],
   defaultLanguage: 'de',
   otherLanguages: ['en'],
+  translations: {
+    abstract: {
+      en: '',
+    },
+    title: {
+      en: '',
+    },
+  },
 }

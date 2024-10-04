@@ -10,7 +10,7 @@
     </gmd:fileIdentifier>
     <gmd:language xmlns:gfc="http://www.isotc211.org/2005/gfc"
                   xmlns:gml="http://www.opengis.net/gml/3.2">
-        <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="fre"/>
+        <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng"/>
     </gmd:language>
     <gmd:parentIdentifier xmlns:gfc="http://www.isotc211.org/2005/gfc"
                           xmlns:gml="http://www.opengis.net/gml/3.2">
@@ -399,6 +399,14 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                     </gmd:classification>
                     <gmd:useLimitation>
                         <gco:CharacterString>Contains sensitive information related to national defense</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">Contains sensitive information related to national defense</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">Contient des informations sensibles liées à la défense nationale</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
                     </gmd:useLimitation>
                 </gmd:MD_SecurityConstraints>
             </gmd:resourceConstraints>
@@ -563,6 +571,18 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                         <gco:CharacterString>This record was edited manually to test the conversion processes
 
 As such, **it is not very interesting at all.**</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">This record was edited manually to test the conversion processes
+
+As such, **it is not very interesting at all.**</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#DE">Dieser Datensatz wurde manuell bearbeitet, um die Konvertierungsprozesse zu testen
+
+Als solches ist es **überhaupt nicht interessant.**</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
                     </gmd:statement>
                 </gmd:LI_Lineage>
             </gmd:lineage>
@@ -732,4 +752,25 @@ As such, **it is not very interesting at all.**</gco:CharacterString>
             </gmd:transferOptions>
         </gmd:MD_Distribution>
     </gmd:distributionInfo>
+    <gmd:locale>
+        <gmd:PT_Locale id="#EN">
+            <gmd:languageCode>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng"/>
+            </gmd:languageCode>
+        </gmd:PT_Locale>
+    </gmd:locale>
+    <gmd:locale>
+        <gmd:PT_Locale id="#FR">
+            <gmd:languageCode>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="fre"/>
+            </gmd:languageCode>
+        </gmd:PT_Locale>
+    </gmd:locale>
+    <gmd:locale>
+        <gmd:PT_Locale id="#DE">
+            <gmd:languageCode>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ger"/>
+            </gmd:languageCode>
+        </gmd:PT_Locale>
+    </gmd:locale>
 </gmd:MD_Metadata>

@@ -2,6 +2,8 @@ import {
   CatalogRecord,
   CatalogRecordKeys,
   DatasetRecord,
+  ModelTranslations,
+  RecordTranslations,
   ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import { XmlElement } from '@rgrove/parse-xml'
@@ -18,6 +20,7 @@ import {
   readAbstract,
   readContacts,
   readContactsForResource,
+  readDefaultLanguage,
   readIsoTopics,
   readKeywords,
   readKind,
@@ -26,6 +29,7 @@ import {
   readLineage,
   readOnlineResources,
   readOtherConstraints,
+  readOtherLanguages,
   readOverviews,
   readOwnerOrganization,
   readRecordUpdated,
@@ -45,9 +49,11 @@ import {
   writeAbstract,
   writeContacts,
   writeContactsForResource,
+  writeDefaultLanguage,
   writeGraphicOverviews,
   writeKeywords,
   writeKind,
+  writeLanguages,
   writeLegalConstraints,
   writeLicenses,
   writeLineage,
@@ -71,7 +77,7 @@ import {
 export class Iso19139Converter extends BaseConverter<string> {
   protected readers: Record<
     CatalogRecordKeys,
-    (rootEl: XmlElement) => unknown
+    (rootEl: XmlElement, translations: RecordTranslations) => unknown
   > = {
     uniqueIdentifier: readUniqueIdentifier,
     kind: readKind,
@@ -100,11 +106,11 @@ export class Iso19139Converter extends BaseConverter<string> {
     onlineResources: readOnlineResources,
     temporalExtents: readTemporalExtents,
     spatialExtents: readSpatialExtents,
+    otherLanguages: readOtherLanguages,
+    defaultLanguage: readDefaultLanguage,
     // TODO
     extras: () => undefined,
     landingPage: () => undefined,
-    otherLanguages: () => [],
-    defaultLanguage: () => undefined,
     translations: () => undefined,
   }
 
@@ -139,11 +145,11 @@ export class Iso19139Converter extends BaseConverter<string> {
     onlineResources: writeOnlineResources,
     temporalExtents: writeTemporalExtents,
     spatialExtents: writeSpatialExtents,
+    otherLanguages: writeLanguages,
+    defaultLanguage: writeDefaultLanguage,
     // TODO
     extras: () => undefined,
     landingPage: () => undefined,
-    otherLanguages: () => undefined,
-    defaultLanguage: () => undefined,
     translations: () => undefined,
   }
 
@@ -151,45 +157,94 @@ export class Iso19139Converter extends BaseConverter<string> {
     // to override
   }
 
+  protected afterRecordRead(record: CatalogRecord): CatalogRecord {
+    function fixLanguages(target: { translations?: ModelTranslations }) {
+      if (!('translations' in target)) return
+      for (const fieldName in target.translations) {
+        const fieldTranslations = target.translations[fieldName] ?? {}
+        // remove redundant translations
+        if (record.defaultLanguage in fieldTranslations) {
+          delete fieldTranslations[record.defaultLanguage]
+        }
+        // remove translated values if they have no translations
+        if (Object.keys(fieldTranslations).length === 0) {
+          delete target.translations[fieldName]
+          continue
+        }
+        // add languages that have translations to the root language list
+        for (const lang in fieldTranslations) {
+          if (!record.otherLanguages.includes(lang)) {
+            record.otherLanguages.push(lang)
+          }
+        }
+      }
+    }
+    fixLanguages(record)
+    record.keywords.map(fixLanguages)
+    record.onlineResources.map(fixLanguages)
+    record.licenses.map(fixLanguages)
+    record.legalConstraints.map(fixLanguages)
+    record.securityConstraints.map(fixLanguages)
+    record.otherConstraints.map(fixLanguages)
+    record.contacts.map((c) => fixLanguages(c.organization))
+    record.contactsForResource.map((c) => fixLanguages(c.organization))
+    fixLanguages(record.ownerOrganization)
+    if (record.kind === 'dataset') {
+      record.spatialExtents.map(fixLanguages)
+    }
+
+    // remove default language from otherLanguages list
+    if (record.otherLanguages.includes(record.defaultLanguage)) {
+      record.otherLanguages = record.otherLanguages.filter(
+        (lang) => lang !== record.defaultLanguage
+      )
+    }
+
+    return record
+  }
+
   async readRecord(document: string): Promise<CatalogRecord> {
     const doc = parseXmlString(document)
     const rootEl = getRootElement(doc)
 
-    const uniqueIdentifier = this.readers['uniqueIdentifier'](rootEl)
-    const kind = this.readers['kind'](rootEl)
-    const ownerOrganization = this.readers['ownerOrganization'](rootEl)
-    const title = this.readers['title'](rootEl)
-    const abstract = this.readers['abstract'](rootEl)
-    const contacts = this.readers['contacts'](rootEl)
-    const contactsForResource = this.readers['contactsForResource'](rootEl)
-    const recordUpdated = this.readers['recordUpdated'](rootEl)
-    const recordCreated = this.readers['recordCreated'](rootEl)
-    const recordPublished = this.readers['recordPublished'](rootEl)
-    const resourceCreated = this.readers['resourceCreated'](rootEl)
-    const resourceUpdated = this.readers['resourceUpdated'](rootEl)
-    const resourcePublished = this.readers['resourcePublished'](rootEl)
-    const keywords = this.readers['keywords'](rootEl)
-    const topics = this.readers['topics'](rootEl)
-    const legalConstraints = this.readers['legalConstraints'](rootEl)
-    const otherConstraints = this.readers['otherConstraints'](rootEl)
-    const securityConstraints = this.readers['securityConstraints'](rootEl)
-    const licenses = this.readers['licenses'](rootEl)
-    const overviews = this.readers['overviews'](rootEl)
-    const landingPage = this.readers['landingPage'](rootEl)
-    const onlineResources = this.readers['onlineResources'](rootEl)
-    const otherLanguages = this.readers['otherLanguages'](rootEl)
-    const defaultLanguage = this.readers['defaultLanguage'](rootEl)
+    const tr: RecordTranslations = {}
+    const uniqueIdentifier = this.readers['uniqueIdentifier'](rootEl, tr)
+    const kind = this.readers['kind'](rootEl, tr)
+    const ownerOrganization = this.readers['ownerOrganization'](rootEl, tr)
+    const title = this.readers['title'](rootEl, tr)
+    const abstract = this.readers['abstract'](rootEl, tr)
+    const contacts = this.readers['contacts'](rootEl, tr)
+    const contactsForResource = this.readers['contactsForResource'](rootEl, tr)
+    const recordUpdated = this.readers['recordUpdated'](rootEl, tr)
+    const recordCreated = this.readers['recordCreated'](rootEl, tr)
+    const recordPublished = this.readers['recordPublished'](rootEl, tr)
+    const resourceCreated = this.readers['resourceCreated'](rootEl, tr)
+    const resourceUpdated = this.readers['resourceUpdated'](rootEl, tr)
+    const resourcePublished = this.readers['resourcePublished'](rootEl, tr)
+    const keywords = this.readers['keywords'](rootEl, tr)
+    const topics = this.readers['topics'](rootEl, tr)
+    const legalConstraints = this.readers['legalConstraints'](rootEl, tr)
+    const otherConstraints = this.readers['otherConstraints'](rootEl, tr)
+    const securityConstraints = this.readers['securityConstraints'](rootEl, tr)
+    const licenses = this.readers['licenses'](rootEl, tr)
+    const overviews = this.readers['overviews'](rootEl, tr)
+    const landingPage = this.readers['landingPage'](rootEl, tr)
+    const onlineResources = this.readers['onlineResources'](rootEl, tr)
+    const otherLanguages = this.readers['otherLanguages'](rootEl, tr)
+    const defaultLanguage = this.readers['defaultLanguage'](rootEl, tr)
 
     if (kind === 'dataset') {
-      const status = this.readers['status'](rootEl)
-      const spatialRepresentation =
-        this.readers['spatialRepresentation'](rootEl)
-      const spatialExtents = this.readers['spatialExtents'](rootEl)
-      const temporalExtents = this.readers['temporalExtents'](rootEl)
-      const lineage = this.readers['lineage'](rootEl)
-      const updateFrequency = this.readers['updateFrequency'](rootEl)
+      const status = this.readers['status'](rootEl, tr)
+      const spatialRepresentation = this.readers['spatialRepresentation'](
+        rootEl,
+        tr
+      )
+      const spatialExtents = this.readers['spatialExtents'](rootEl, tr)
+      const temporalExtents = this.readers['temporalExtents'](rootEl, tr)
+      const lineage = this.readers['lineage'](rootEl, tr)
+      const updateFrequency = this.readers['updateFrequency'](rootEl, tr)
 
-      return {
+      return this.afterRecordRead({
         uniqueIdentifier,
         kind,
         otherLanguages,
@@ -219,10 +274,11 @@ export class Iso19139Converter extends BaseConverter<string> {
         temporalExtents,
         onlineResources,
         updateFrequency,
+        translations: tr,
         ...(landingPage && { landingPage }),
-      } as DatasetRecord
+      } as DatasetRecord)
     } else {
-      return {
+      return this.afterRecordRead({
         uniqueIdentifier,
         kind,
         otherLanguages,
@@ -246,8 +302,9 @@ export class Iso19139Converter extends BaseConverter<string> {
         otherConstraints,
         overviews,
         onlineResources,
+        translations: tr,
         ...(landingPage && { landingPage }),
-      } as ServiceRecord
+      } as ServiceRecord)
     }
   }
 
@@ -275,6 +332,8 @@ export class Iso19139Converter extends BaseConverter<string> {
     fieldChanged('uniqueIdentifier') &&
       this.writers['uniqueIdentifier'](record, rootEl)
     fieldChanged('kind') && this.writers['kind'](record, rootEl)
+    fieldChanged('defaultLanguage') &&
+      this.writers['defaultLanguage'](record, rootEl)
 
     fieldChanged('contacts') && this.writers['contacts'](record, rootEl)
     fieldChanged('ownerOrganization') &&
@@ -325,6 +384,9 @@ export class Iso19139Converter extends BaseConverter<string> {
         this.writers['spatialExtents'](record, rootEl)
       fieldChanged('lineage') && this.writers['lineage'](record, rootEl)
     }
+
+    fieldChanged('otherLanguages') &&
+      this.writers['otherLanguages'](record, rootEl)
 
     this.beforeDocumentCreation(rootEl)
 
