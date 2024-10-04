@@ -1042,7 +1042,7 @@ export function readSpatialExtents(rootEl: XmlElement) {
     return pipe(
       findChildElement('gmd:polygon', false),
       firstChildElement,
-      map((el) => readGeometry(el))
+      map((el) => (el ? readGeometry(el) : null))
     )(rootEl)
   }
 
@@ -1086,6 +1086,9 @@ export function readSpatialExtents(rootEl: XmlElement) {
           extractDescription
         )
       )
+    ),
+    filterArray(
+      ([geometry, bbox, [description]]) => !!geometry || !!bbox || !!description
     ),
     mapArray(([geometry, bbox, [description, translations]]) => {
       return {

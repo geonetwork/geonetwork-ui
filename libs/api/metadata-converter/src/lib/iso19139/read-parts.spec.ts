@@ -635,6 +635,27 @@ describe('read parts', () => {
           ])
         })
       })
+      describe('one empty spatial extent', () => {
+        beforeEach(() => {
+          const spatialExtent = getRootElement(
+            parseXmlString(`
+<gmd:geographicElement>
+  <gmd:EX_BoundingPolygon>
+    <gmd:polygon/>
+  </gmd:EX_BoundingPolygon>
+</gmd:geographicElement>`)
+          )
+          pipe(
+            findIdentification(),
+            findNestedElement('gmd:extent', 'gmd:EX_Extent'),
+            removeChildrenByName('gmd:geographicElement'),
+            appendChildren(() => spatialExtent)
+          )(recordRootEl)
+        })
+        it('returns an empty array', () => {
+          expect(readSpatialExtents(recordRootEl)).toEqual([])
+        })
+      })
     })
   })
 
