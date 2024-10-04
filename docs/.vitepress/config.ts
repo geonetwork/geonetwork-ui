@@ -51,6 +51,7 @@ function sidebarGuide() {
       items: [
         { text: 'Introduction', link: '/guide/introduction' },
         { text: 'Prerequisites', link: '/guide/prerequisites' },
+        { text: 'Run', link: '/guide/run' },
         { text: 'Deploy', link: '/guide/deploy' },
         { text: 'Configure', link: '/guide/configure' },
         { text: 'Theming', link: '/guide/theming' },
@@ -122,8 +123,8 @@ function sidebarApps() {
       text: 'Applications',
       items: [
         { text: 'Datahub', link: '/apps/datahub' },
+        { text: 'Metadata Editor', link: '/apps/editor' },
         { text: 'Datafeeder', link: '/apps/datafeeder' },
-        { text: 'Editor', link: '/apps/editor' },
       ],
     },
   ]

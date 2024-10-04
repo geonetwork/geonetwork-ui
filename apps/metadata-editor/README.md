@@ -2,6 +2,6 @@
 
 A UI application containing a dashboard for seeing metadata records, and a powerful form-based editor.
 
-## How to run it
+More information here: https://geonetwork.github.io/geonetwork-ui/main/docs/apps/editor.html
 
-> TODO
+See the [GeoNetwork-UI documentation](https://geonetwork.github.io/geonetwork-ui/main/docs/guide/run.html) to learn how to run and deploy the Metadata Editor.
