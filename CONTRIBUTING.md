@@ -42,12 +42,60 @@ You'll need manual configuration to make the application running:
 
 - Add `postcss.config.js` and `tailwind.config.js` at the root of your project if you want to use TailwindCSS.
 
-- If you want to an **application configuration**, follow the following steps:
-
-  1. Add the config file as asset for the application in `angular.json`:
+- Disable the properties `noPropertyAccessFromIndexSignature` / `noImplicitOverride` in `tsconfig.json`:
 
   ```json
-  "architect": {
+  "compilerOptions": {
+    ...
+    "noImplicitOverride": false,
+    "noPropertyAccessFromIndexSignature": false,
+    ... 
+  ```
+
+- Configure the `prefix` value in `project.json`, usually the application name:
+
+  ```json
+  {
+    "name": "my-app",
+    ...
+    "prefix": "my-app",
+    ...
+  ```
+
+- Configure the `prefix` value in `.eslintrc.json`, with the same value as specified in the previous step:
+
+  ```json
+  "@angular-eslint/component-selector": [
+    "error",
+    {
+      "type": "element",
+      "prefix": "my-app",
+      "style": "kebab-case"
+    }
+  ]
+  ```
+
+- Update the `selector` in `app.component.ts` to use the prefix specified in the previous steps:
+
+  ```ts
+  @Component({
+    selector: 'my-app-root',
+  ```
+
+- Update the `selector` in `index.html` to use the selection specified in the previous step:
+
+  ```html
+  <body>
+    <my-app-root></my-app-root>
+  </body>
+  ```
+    
+- If you want to use an **application configuration**, follow the following steps:
+
+  1. Add the config file as asset for the application in `project.json`:
+
+  ```json
+  "targets": {
     "build": {
       ...
       "options": {
@@ -61,7 +109,7 @@ You'll need manual configuration to make the application running:
           }
         ],
   ```
-
+  
   2. Load app config before bootstrapping the Angular app in `main.ts`:
 
   ```ts
@@ -78,7 +126,7 @@ You'll need manual configuration to make the application running:
     .catch(console.error)
   ```
 
-  3. Add a `preload` link for the config file to gain some boot time:
+  3. Add a `preload` link for the config file to gain some boot time in `index.html`:
 
   ```html
     <link rel="preload" href="assets/configuration/default.toml" as="fetch" />
@@ -88,7 +136,7 @@ You'll need manual configuration to make the application running:
 
   > Note that the config file is _always_ available at this path
 
-  4. Use the config using functions in `@geonetwork-ui/util/app-config`:
+  4. Use the config using functions in `@geonetwork-ui/util/app-config` in `app.module.ts`:
 
   ```ts
   // ...
@@ -254,19 +302,19 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 ...
 imports: [
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-      defaultLanguage: 'fr',
-    }),
+  TranslateModule.forRoot({
+    loader: {
+      provide: TranslateLoader,
+      useFactory: HttpLoaderFactory,
+      deps: [HttpClient],
+    },
+    defaultLanguage: 'fr',
+  }),
 ]
 
 // Library module, child
 imports: [
-    TranslateModule.forChild(),
+  TranslateModule.forChild(),
 ]
 ```
 
