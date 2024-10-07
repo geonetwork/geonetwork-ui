@@ -10,6 +10,8 @@ import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { EditorService } from '../services/editor.service'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { EditorPartialState } from './editor.reducer'
+import { MockProvider } from 'ng-mocks'
+import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
 
 class EditorServiceMock {
   saveRecord = jest.fn((record) => of([record, '<xml>blabla</xml>']))
@@ -54,6 +56,9 @@ describe('EditorEffects', () => {
           provide: RecordsRepositoryInterface,
           useClass: RecordsRepositoryMock,
         },
+        MockProvider(Gn4PlatformService, {
+          cleanRecordAttachments: jest.fn(() => of(undefined)),
+        }),
       ],
     })
 

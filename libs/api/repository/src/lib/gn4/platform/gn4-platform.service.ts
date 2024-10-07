@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core'
-import { combineLatest, Observable, of, switchMap, throwError } from 'rxjs'
-import { catchError, filter, map, shareReplay, tap } from 'rxjs/operators'
+import {
+  catchError,
+  filter,
+  map,
+  mergeMap,
+  shareReplay,
+  tap,
+} from 'rxjs/operators'
 import {
   MeApiService,
   RecordsApiService,
@@ -16,6 +22,7 @@ import {
 } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 import {
+  CatalogRecord,
   Keyword,
   Organization,
   UserFeedback,
@@ -30,6 +37,14 @@ import {
 } from '@geonetwork-ui/api/metadata-converter'
 import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
 import { noDuplicateFileName } from '@geonetwork-ui/util/shared'
+import {
+  combineLatest,
+  forkJoin,
+  Observable,
+  of,
+  switchMap,
+  throwError,
+} from 'rxjs'
 
 const minApiVersion = '4.2.2'
 
@@ -289,6 +304,46 @@ export class Gn4PlatformService implements PlatformServiceInterface {
           fileName: r.filename,
         }))
       )
+    )
+  }
+
+  cleanRecordAttachments(record: CatalogRecord): Observable<void> {
+    return combineLatest([
+      this.recordsApiService.getAssociatedResources(record.uniqueIdentifier),
+      this.recordsApiService.getAllResources(record.uniqueIdentifier),
+    ]).pipe(
+      map(([associatedResources, recordResources]) => {
+        // Received object from API is not a RelatedResponseApiModel, so we need
+        // to cast it as any and do the bellow mappings to get the wanted values.
+        const resourceIdsToKeep = [
+          ...((associatedResources as any).onlines ?? [])
+            .map((o) => o.title)
+            .map((o) => o['']),
+          ...((associatedResources as any).thumbnails ?? [])
+            .map((o) => o.title)
+            .map((o) => o['']),
+        ]
+
+        const resourceIdsToRemove = recordResources
+          .map((r) => r.filename)
+          .filter((resourceId) => !resourceIdsToKeep.includes(resourceId))
+
+        return resourceIdsToRemove
+      }),
+      mergeMap((resourceIdsToRemove) =>
+        forkJoin(
+          resourceIdsToRemove.map((attachementId) =>
+            this.recordsApiService.delResource(
+              record.uniqueIdentifier,
+              attachementId
+            )
+          )
+        ).pipe(map(() => undefined))
+      ),
+      catchError((error) => {
+        console.error('Error while cleaning attachments:', error)
+        throw error
+      })
     )
   }
 

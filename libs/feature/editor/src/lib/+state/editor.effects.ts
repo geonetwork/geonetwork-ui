@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { debounceTime, filter, of, withLatestFrom } from 'rxjs'
+import { debounceTime, EMPTY, filter, of, withLatestFrom } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
 import * as EditorActions from './editor.actions'
 import { EditorService } from '../services/editor.service'
@@ -12,12 +12,14 @@ import {
   selectRecordSource,
 } from './editor.selectors'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
 
 @Injectable()
 export class EditorEffects {
   private actions$ = inject(Actions)
   private editorService = inject(EditorService)
   private recordsRepository = inject(RecordsRepositoryInterface)
+  private gn4PlateformService = inject(Gn4PlatformService)
   private store = inject(Store)
 
   saveRecord$ = createEffect(() =>
@@ -53,6 +55,28 @@ export class EditorEffects {
           )
       )
     )
+  )
+
+  cleanRecordAttachments$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(EditorActions.saveRecordSuccess),
+        withLatestFrom(this.store.select(selectRecord)),
+        switchMap(([_, record]) => {
+          this.gn4PlateformService.cleanRecordAttachments(record).subscribe({
+            next: (_) => undefined,
+            error: (err) => {
+              console.error(err)
+            },
+          })
+          return EMPTY
+        }),
+        catchError((error) => {
+          console.error(error)
+          return EMPTY
+        })
+      ),
+    { dispatch: false }
   )
 
   markAsChanged$ = createEffect(() =>
