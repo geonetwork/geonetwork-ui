@@ -35,7 +35,7 @@ jobs:
   gh-pages:
     needs: checks
     if: github.event_name != 'issue_comment' || needs.checks.outputs.shouldRun
-    name: Deploy Storybook to GitHub Pages
+    name: Deploy docs, apps, Storybook to GitHub Pages
     runs-on: ubuntu-latest
     env:
       BRANCH_NAME: ${{needs.checks.outputs.ref || 'main'}}
@@ -78,6 +78,10 @@ jobs:
       - name: Build demo & web components
         run: npm run build:demo
 
+      - name: Build metadata-converter app
+        if: github.event_name != 'issue_comment' # This is not done on PR, only on main branch
+        run: npx nx build metadata-converter --prod --base-href=./
+
       - name: Build docs
         run: npm run docs:build -- --base=/geonetwork-ui/${{env.BRANCH_NAME}}/docs/ && mkdir -p dist/docs && mv docs/.vitepress/dist/* dist/docs
 
@@ -99,39 +103,9 @@ jobs:
 
             * (Documentation)[https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/docs/]
 
-            * (Demo & web components)[https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/demo/]
+            * (Web components demo)[https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/demo/webcomponents/]
 
             * (UI components storybook)[https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/]'
           comment_tag: github-links
           pr_number: ${{ github.event.issue.number }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  apps:
-    needs: checks
-    if: github.event_name != 'issue_comment'
-    name: Deploy Apps to GitHub Pages
-    runs-on: ubuntu-latest
-    env:
-      BRANCH_NAME: main
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-
-      - name: Install
-        run: npm ci
-
-      - name: Build metadata-converter
-        run: npx nx build metadata-converter --prod
-
-      - name: Deploy to directory ${{ env.BRANCH_NAME }}
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          npx gh-pages --dist dist/apps/ --dest ${{env.BRANCH_NAME}} --remove "${{env.BRANCH_NAME}}/**" --no-history --repo "https://${GITHUB_ACTOR}:${{secrets.GITHUB_TOKEN}}@github.com/${GITHUB_REPOSITORY}.git"
