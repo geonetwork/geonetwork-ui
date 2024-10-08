@@ -26,13 +26,13 @@ export class FormFieldOpenDataComponent implements OnChanges {
 
   openData = false
 
-  get config() {
+  get openDataLicenses() {
     return OPEN_DATA_LICENSES
   }
 
   ngOnChanges() {
     if (this.value && this.value.length > 0) {
-      this.openData = this.config.includes(this.value[0].text)
+      this.openData = this.openDataLicenses.includes(this.value[0].text)
     } else {
       this.openData = false
     }
@@ -42,7 +42,9 @@ export class FormFieldOpenDataComponent implements OnChanges {
   onOpenDataToggled(openData: boolean) {
     this.openDataChange.emit(openData)
     if (openData) {
-      this.valueChange.emit([{ text: this.config[0] }])
+      this.valueChange.emit([
+        { text: this.openDataLicenses.find((licence) => licence === 'etalab') },
+      ])
     }
   }
 }

@@ -2,7 +2,7 @@
   <gn-ui-form-field-open-data
     [value]="valueAsConstraints"
     (valueChange)="valueChange.emit($event)"
-    (openDataChange)="isHidden = $event"
+    (openDataChange)="toggleIsHidden($event)"
   ></gn-ui-form-field-open-data>
 </ng-container>
 <div class="flex flex-col h-full" *ngIf="!isHidden">
@@ -104,9 +104,10 @@
     </ng-container>
     <ng-container *ngSwitchCase="'licenses'">
       <gn-ui-form-field-license
+        *ngIf="!isHidden"
         [label]="config.labelKey! | translate"
-        [value]="valueAsConstraints"
-        (valueChange)="valueChange.emit($event)"
+        [recordConstraints]="valueAsConstraints"
+        (recordConstraintsChange)="valueChange.emit($event)"
       ></gn-ui-form-field-license>
     </ng-container>
     <ng-container *ngSwitchCase="'contactsForResource'">

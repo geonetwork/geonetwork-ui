@@ -241,11 +241,15 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
  ************************************************************
  */
 export const OPEN_DATA_LICENSES: string[] = [
+  'cc-by',
+  'cc-by-sa',
+  'cc-zero',
   'etalab',
   'etalab-v2',
   'odbl',
   'odc-by',
   'pddl',
+  'unknown',
 ]
 
 export const MAX_UPLOAD_SIZE_MB = 10

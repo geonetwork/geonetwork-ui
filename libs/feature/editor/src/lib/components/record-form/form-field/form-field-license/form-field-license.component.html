@@ -1,8 +1,80 @@
-<gn-ui-dropdown-selector
-  [title]="label"
-  [showTitle]="false"
-  [choices]="choices"
-  [selected]="selected"
-  (selectValue)="onSelectValue($event)"
->
-</gn-ui-dropdown-selector>
+<div class="flex flex-col gap-8">
+  <gn-ui-dropdown-selector
+    [title]="label"
+    [showTitle]="false"
+    [choices]="licenceOptions"
+    [selected]="selectedLicence"
+    (selectValue)="handleLicenceSelection($event)"
+  >
+  </gn-ui-dropdown-selector>
+
+  <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-1">
+      <gn-ui-check-toggle
+        [label]="'editor.record.form.constraint.not.applicable' | translate"
+        [value]="toggleApplicableConstraint"
+        (toggled)="onToggleChange('toggleApplicableConstraint')"
+        data-cy="openDataToggle"
+      >
+      </gn-ui-check-toggle>
+      <gn-ui-check-toggle
+        [label]="'editor.record.form.constraint.not.known' | translate"
+        [value]="toggleKnownConstraint"
+        (toggled)="onToggleChange('toggleKnownConstraint')"
+        data-cy="openDataToggle"
+      >
+      </gn-ui-check-toggle>
+    </div>
+
+    <div
+      *ngIf="
+        toggleApplicableConstraint === false && toggleKnownConstraint === false
+      "
+      class="flex flex-row flex-wrap gap-2"
+    >
+      <ng-container *ngFor="let constraint of constraintChoices">
+        <gn-ui-button
+          type="gray"
+          (buttonClick)="addConstraintToDisplay(constraint)"
+          [disabled]="isConstraintSectionDisabled(constraint)"
+        >
+          <mat-icon class="material-symbols-outlined text-primary"
+            >add</mat-icon
+          >
+          &nbsp;
+          <span translate>{{
+            'editor.record.form.constraint.' + constraint
+          }}</span>
+        </gn-ui-button>
+      </ng-container>
+    </div>
+
+    <div
+      class="mt-8"
+      *ngIf="
+        constraintSectionsToDisplay && constraintSectionsToDisplay.length > 0
+      "
+      data-test="displayedConstraints"
+    >
+      <div
+        *ngFor="
+          let constraintSection of constraintSectionsToDisplay;
+          let index = index;
+          let isLast = last
+        "
+        class="flex flex-col gap-4"
+      >
+        <gn-ui-sortable-list
+          [items]="['test']"
+          (itemsOrderChange)="
+            handleConstraintsOrderChange($event, constraintSection)
+          "
+          [elementTemplate]="constraintTemplate"
+        ></gn-ui-sortable-list>
+        <ng-template #constraintTemplate let-constraint>
+          <gn-ui-constraint-card></gn-ui-constraint-card>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

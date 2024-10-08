@@ -5,6 +5,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core'
@@ -76,7 +77,7 @@ import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency
     FormFieldContactsComponent,
   ],
 })
-export class FormFieldComponent {
+export class FormFieldComponent implements OnInit {
   @Input() uniqueIdentifier: string
   @Input() model: CatalogRecordKeys
   @Input() modelSpecifier: FieldModelSpecifier
@@ -87,7 +88,16 @@ export class FormFieldComponent {
 
   @ViewChild('titleInput') titleInput: ElementRef
 
+  ngOnInit(): void {
+    console.log('this.model', this.model)
+  }
+
   isHidden = false
+
+  toggleIsHidden(event: boolean) {
+    this.isHidden = event
+    console.log('this.isHidden', this.isHidden)
+  }
 
   focusTitleInput() {
     this.titleInput.nativeElement.children[0].focus()
@@ -117,6 +127,7 @@ export class FormFieldComponent {
     return this.value as Array<Keyword>
   }
   get valueAsConstraints() {
+    console.log('this.value', this.value)
     return this.value as Array<Constraint>
   }
   get valueAsIndividuals() {
