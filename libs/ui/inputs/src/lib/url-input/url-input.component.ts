@@ -25,6 +25,7 @@ export class UrlInputComponent implements OnChanges {
   @Input() placeholder = 'https://'
   @Input() disabled: boolean
   @Input() urlCanParse?: boolean
+  @Input() showUploadButton = true
   rawChange = new Subject<string>()
   @Output() valueChange = this.rawChange.pipe(filter((v) => !!v))
 
