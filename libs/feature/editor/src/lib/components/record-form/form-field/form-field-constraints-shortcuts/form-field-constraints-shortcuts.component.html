@@ -1,0 +1,37 @@
+<div class="flex flex-col gap-1">
+  <gn-ui-check-toggle
+    [label]="'editor.record.form.constraint.not.applicable' | translate"
+    [value]="toggleApplicableConstraint"
+    (toggled)="onToggleChange('toggleApplicableConstraint')"
+    data-cy="openDataToggle"
+  >
+  </gn-ui-check-toggle>
+  <gn-ui-check-toggle
+    [label]="'editor.record.form.constraint.not.known' | translate"
+    [value]="toggleKnownConstraint"
+    (toggled)="onToggleChange('toggleKnownConstraint')"
+    data-cy="openDataToggle"
+  >
+  </gn-ui-check-toggle>
+</div>
+
+<div
+  *ngIf="
+    toggleApplicableConstraint === false && toggleKnownConstraint === false
+  "
+  class="flex flex-row flex-wrap gap-2"
+>
+  <ng-container *ngFor="let constraint of constraintButtonChoices">
+    <gn-ui-button
+      type="gray"
+      (buttonClick)="addConstraintSectionToDisplay(constraint)"
+      [disabled]="isConstraintButtonDisabled$(constraint) | async"
+    >
+      <mat-icon class="material-symbols-outlined text-primary">add</mat-icon>
+      &nbsp;
+      <span translate="">{{
+        'editor.record.form.constraint.' + constraint
+      }}</span>
+    </gn-ui-button>
+  </ng-container>
+</div>

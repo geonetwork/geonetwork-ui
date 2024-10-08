@@ -23,13 +23,20 @@ export type FieldModelSpecifier =
   | OnlineLinkResourceSpecifier
   | DatasetDistributionsSpecifier
 
-export interface EditorField {
-  // configuration of the form field used as presentation
-  formFieldConfig: FormFieldConfig
+export type FormFieldComponentName = 'form-field-constraints-shortcuts'
 
+export interface EditorFieldIdentification {
   // name of the target field in the record; will not change the record directly if not defined
   model?: CatalogRecordKeys
   modelSpecifier?: FieldModelSpecifier
+
+  // if no model is given, a component can be shown instead
+  componentName?: FormFieldComponentName
+}
+
+export interface EditorField extends EditorFieldIdentification {
+  // configuration of the form field used as presentation
+  formFieldConfig: FormFieldConfig
 
   // grid column span; if unspecified, full width will be used
   gridColumnSpan?: number

@@ -1,11 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges,
-} from '@angular/core'
+import { ChangeDetectorRef, Component, Input, Output } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '../button/button.component'
 import { filter } from 'rxjs/operators'
@@ -30,22 +23,17 @@ import { iconoirArrowUp, iconoirLink } from '@ng-icons/iconoir'
     }),
   ],
 })
-export class UrlInputComponent implements OnChanges {
+export class UrlInputComponent {
   @Input() value = ''
   @Input() extraClass = ''
   @Input() placeholder = 'https://'
   @Input() disabled: boolean
   @Input() urlCanParse?: boolean
+  @Input() showUploadButton = true
   rawChange = new Subject<string>()
   @Output() valueChange = this.rawChange.pipe(filter((v) => !!v))
 
   constructor(private cd: ChangeDetectorRef) {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.value) {
-      console.log('changes.value', changes.value)
-    }
-  }
 
   handleInput() {
     this.cd.markForCheck()

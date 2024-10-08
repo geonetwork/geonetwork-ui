@@ -21,6 +21,7 @@
     <ng-icon name="iconoirLink"></ng-icon>
   </div>
   <gn-ui-button
+    *ngIf="showUploadButton"
     extraClass="absolute inset-y-[var(--side-padding)] right-[var(--side-padding)]"
     type="primary"
     [disabled]="

@@ -45,6 +45,7 @@
                 [modelSpecifier]="field.config.modelSpecifier!"
                 [config]="field.config.formFieldConfig"
                 [value]="field.value"
+                [componentName]="field.config.componentName"
                 (valueChange)="
                   handleFieldValueChange(field.config.model!, $event)
                 "

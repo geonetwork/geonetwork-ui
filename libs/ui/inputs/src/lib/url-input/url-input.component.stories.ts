@@ -39,3 +39,23 @@ export const WithCustomStyle: StoryObj<UrlInputComponent> = {
     </div>`,
   }),
 }
+
+export const WithoutUploadButton: StoryObj<UrlInputComponent> = {
+  args: {
+    value: '',
+    disabled: false,
+    placeholder: 'https://mysite.org/file',
+    showUploadButton: false,
+  },
+  argTypes: {
+    valueChange: {
+      action: 'valueChange',
+    },
+  },
+  render: (args) => ({
+    props: args,
+    template: `
+    <gn-ui-url-input [value]='value' [disabled]='disabled' [placeholder]='placeholder' [showUploadButton]='showUploadButton' (valueChange)='valueChange($event)'>
+    </gn-ui-url-input>`,
+  }),
+}

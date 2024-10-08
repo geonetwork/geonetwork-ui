@@ -1,8 +1,10 @@
-<gn-ui-dropdown-selector
-  [title]="label"
-  [showTitle]="false"
-  [choices]="choices"
-  [selected]="selected"
-  (selectValue)="onSelectValue($event)"
->
-</gn-ui-dropdown-selector>
+<div class="flex flex-col gap-8">
+  <gn-ui-dropdown-selector
+    [title]="label"
+    [showTitle]="false"
+    [choices]="licenceOptions"
+    [selected]="selectedLicence"
+    (selectValue)="handleLicenceSelection($event)"
+  >
+  </gn-ui-dropdown-selector>
+</div>

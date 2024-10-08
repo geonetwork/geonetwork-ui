@@ -5,6 +5,7 @@ import * as EditorSelectors from './editor.selectors'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { filter } from 'rxjs'
 import { Actions, ofType } from '@ngrx/effects'
+import { EditorFieldIdentification } from '../models'
 
 @Injectable()
 export class EditorFacade {
@@ -57,5 +58,9 @@ export class EditorFacade {
 
   setCurrentPage(page: number) {
     this.store.dispatch(EditorActions.setCurrentPage({ page }))
+  }
+
+  setFieldVisibility(field: EditorFieldIdentification, visible: boolean) {
+    this.store.dispatch(EditorActions.setFieldVisibility({ field, visible }))
   }
 }

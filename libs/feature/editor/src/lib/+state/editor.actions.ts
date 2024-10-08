@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { SaveRecordError } from './editor.models'
+import { EditorFieldIdentification } from '../models'
 
 export const openRecord = createAction(
   '[Editor] Open record',
@@ -34,4 +35,9 @@ export const undoRecordDraft = createAction('[Editor] Undo record draft')
 export const setCurrentPage = createAction(
   '[Editor] Set current page',
   props<{ page: number }>()
+)
+
+export const setFieldVisibility = createAction(
+  '[Editor] Set field visibility',
+  props<{ field: EditorFieldIdentification; visible: boolean }>()
 )

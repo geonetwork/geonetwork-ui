@@ -53,6 +53,33 @@ import { writeGeometry } from './utils/geometry'
 import { namePartsToFull } from './utils/individual-name'
 import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
 
+function writeLocalizedElement(
+  writeFn: ChainableFunction<XmlElement, XmlElement>,
+  text: string,
+  translations: FieldTranslation,
+  defaultLanguage: LanguageCode
+): ChainableFunction<XmlElement, XmlElement> {
+  if (!translations) return writeFn
+  function createLocalized(lang: LanguageCode, translation: string) {
+    return pipe(
+      createNestedElement('gmd:textGroup', 'gmd:LocalisedCharacterString'),
+      writeAttribute('locale', `#${lang.toUpperCase()}`),
+      setTextContent(translation)
+    )
+  }
+  return pipe(
+    writeFn,
+    removeChildrenByName('gmd:PT_FreeText'),
+    createChild('gmd:PT_FreeText'),
+    appendChildren(
+      createLocalized(defaultLanguage, text),
+      ...Object.entries(translations).map(([lang, translation]) =>
+        createLocalized(lang, translation)
+      )
+    )
+  )
+}
+
 export function writeCharacterString(
   text: string
 ): ChainableFunction<XmlElement, XmlElement> {
@@ -66,24 +93,11 @@ export function writeLocalizedCharacterString(
   translations: FieldTranslation,
   defaultLanguage: LanguageCode
 ): ChainableFunction<XmlElement, XmlElement> {
-  if (!translations) return writeCharacterString(text)
-  function createLocalized(lang: LanguageCode, translation: string) {
-    return pipe(
-      createNestedElement('gmd:textGroup', 'gmd:LocalisedCharacterString'),
-      writeAttribute('locale', `#${lang.toUpperCase()}`),
-      setTextContent(translation)
-    )
-  }
-  return pipe(
+  return writeLocalizedElement(
     writeCharacterString(text),
-    removeChildrenByName('gmd:PT_FreeText'),
-    createChild('gmd:PT_FreeText'),
-    appendChildren(
-      createLocalized(defaultLanguage, text),
-      ...Object.entries(translations).map(([lang, translation]) =>
-        createLocalized(lang, translation)
-      )
-    )
+    text,
+    translations,
+    defaultLanguage
   )
 }
 
@@ -108,6 +122,20 @@ export function writeAnchor(
       writeAttribute('xlink:href', url.toString()),
       text ? setTextContent(text) : noop
     )
+  )
+}
+
+export function writeLocalizedAnchor(
+  url: URL,
+  text: string,
+  translations: FieldTranslation,
+  defaultLanguage: LanguageCode
+): ChainableFunction<XmlElement, XmlElement> {
+  return writeLocalizedElement(
+    writeAnchor(url, text),
+    text,
+    translations,
+    defaultLanguage
   )
 }
 
@@ -466,11 +494,18 @@ export function createConstraint(
         ),
         pipe(
           createElement('gmd:useLimitation'),
-          writeLocalizedCharacterString(
-            constraint.text,
-            constraint.translations?.text,
-            defaultLanguage
-          )
+          'url' in constraint
+            ? writeLocalizedAnchor(
+                constraint.url,
+                constraint.text,
+                constraint.translations?.text,
+                defaultLanguage
+              )
+            : writeLocalizedCharacterString(
+                constraint.text,
+                constraint.translations?.text,
+                defaultLanguage
+              )
         )
       )
     )
@@ -491,11 +526,18 @@ export function createConstraint(
         ),
         pipe(
           createElement('gmd:otherConstraints'),
-          writeLocalizedCharacterString(
-            constraint.text,
-            constraint.translations?.text,
-            defaultLanguage
-          )
+          'url' in constraint
+            ? writeLocalizedAnchor(
+                constraint.url,
+                constraint.text,
+                constraint.translations?.text,
+                defaultLanguage
+              )
+            : writeLocalizedCharacterString(
+                constraint.text,
+                constraint.translations?.text,
+                defaultLanguage
+              )
         )
       )
     )
@@ -507,11 +549,18 @@ export function createConstraint(
       'gmd:MD_Constraints',
       'gmd:useLimitation'
     ),
-    writeLocalizedCharacterString(
-      constraint.text,
-      constraint.translations?.text,
-      defaultLanguage
-    )
+    'url' in constraint
+      ? writeLocalizedAnchor(
+          constraint.url,
+          constraint.text,
+          constraint.translations?.text,
+          defaultLanguage
+        )
+      : writeLocalizedCharacterString(
+          constraint.text,
+          constraint.translations?.text,
+          defaultLanguage
+        )
   )
 }
 
