@@ -37,7 +37,7 @@ You can start it with `npm run storybook`.
 You can either try complete applications or showcases of components using the following links:
 
 - [Storybook of UI components](https://geonetwork.github.io/geonetwork-ui/main/storybook/demo/)
-- [Metadata Converter app](https://geonetwork.github.io/geonetwork-ui/main/metadata-converter/)
+- [Metadata Converter app](https://geonetwork.github.io/geonetwork-ui/main/apps/metadata-converter/)
 - [Web Components demo](https://geonetwork.github.io/geonetwork-ui/main/demo/webcomponents/)
 
 ## More information
