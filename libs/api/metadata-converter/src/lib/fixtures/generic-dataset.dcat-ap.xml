@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dcat="http://www.w3.org/ns/dcat#"
+         xmlns:dct="http://purl.org/dc/terms/"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/">
+    <dcat:Catalog rdf:about="http://geonetwork-ui/catalog">
+        <dcat:record>
+            <dcat:CatalogRecord rdf:about="http://geonetwork-ui/record/my-dataset-001">
+                <dct:identifier>my-dataset-001</dct:identifier>
+                <foaf:primaryTopic rdf:resource="http://geonetwork-ui/dataset/my-dataset-001"/>
+            </dcat:CatalogRecord>
+        </dcat:record>
+        <dcat:dataset>
+            <dcat:Dataset rdf:about="http://geonetwork-ui/dataset/my-dataset-001">
+                <dct:title xml:lang="en">A very interesting dataset (un jeu de données très intéressant)</dct:title>
+                <dct:description xml:lang="en"># Introduction
+This dataset has been established for testing purposes.
+
+## Details
+This is a section about details. Here is an HTML tag: &lt;img src="http://google.com" /&gt;. And [a link](https://google.com).
+
+## Informations intéressantes
+Cette section contient des *caractères internationaux* (ainsi que des "caractères spéciaux"). 'çàü^@/~^&amp;</dct:description>
+            </dcat:Dataset>
+        </dcat:dataset>
+    </dcat:Catalog>
+</rdf:RDF>

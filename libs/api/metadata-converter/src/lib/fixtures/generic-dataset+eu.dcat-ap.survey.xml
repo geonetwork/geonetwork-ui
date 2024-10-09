@@ -1,84 +1,77 @@
-<?xml version="1.0"?>
-<rdf:RDF
-        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-        xmlns:j.0="http://data.europa.eu/88u/ontology/dcatapop#"
-        xmlns:schema="http://schema.org/"
-        xmlns:spdx="https://spdx.org/rdf/terms/#"
-        xmlns:edp="https://europeandataportal.eu/voc#"
-        xmlns:dct="http://purl.org/dc/terms/"
-        xmlns:adms="http://www.w3.org/ns/adms#"
-        xmlns:dqv="http://www.w3.org/ns/dqv#"
-        xmlns:owl="http://www.w3.org/2002/07/owl#"
-        xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
-        xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-        xmlns:dcat="http://www.w3.org/ns/dcat#"
-        xmlns:foaf="http://xmlns.com/foaf/0.1/">
-    <dcat:CatalogRecord rdf:about="http://data.europa.eu/88u/record/second-european-union-minorities-and-discrimination-survey">
-        <foaf:primaryTopic>
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:dcat="http://www.w3.org/ns/dcat#"
+         xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+         xmlns:vcard="http://www.w3.org/2006/vcard/ns#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xmlns:dqv="http://www.w3.org/ns/dqv#"
+         xmlns:adms="http://www.w3.org/ns/adms#"
+         xmlns:dct="http://purl.org/dc/terms/"
+         xmlns:edp="https://europeandataportal.eu/voc#"
+         xmlns:spdx="https://spdx.org/rdf/terms/#"
+         xmlns:schema="http://schema.org/"
+         xmlns:j.0="http://data.europa.eu/88u/ontology/dcatapop#"
+         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:schema_org="http://schema.org/">
+    <dcat:Catalog rdf:about="http://geonetwork-ui/catalog">
+        <dcat:record>
+            <dcat:CatalogRecord rdf:about="http://data.europa.eu/88u/record/second-european-union-minorities-and-discrimination-survey">
+                <foaf:primaryTopic rdf:resource="http://data.europa.eu/88u/dataset/second-european-union-minorities-and-discrimination-survey"/>
+                <spdx:checksum>
+                    <spdx:Checksum>
+                        <spdx:checksumValue>9d839391284f5b263074b7dfa3c7e5d0</spdx:checksumValue>
+                        <spdx:algorithm rdf:resource="https://spdx.org/rdf/terms/#checksumAlgorithm_md5"/>
+                    </spdx:Checksum>
+                </spdx:checksum>
+                <edp:originalLanguage>en</edp:originalLanguage>
+                <dct:modified>2022-04-22T12:08:18Z</dct:modified>
+                <edp:transIssued>2022-02-01T10:08:11Z</edp:transIssued>
+                <edp:transStatus rdf:resource="https://europeandataportal.eu/voc#TransCompleted"/>
+                <dct:creator rdf:resource="http://piveau.io"/>
+                <edp:transReceived>2022-02-04T01:19:57Z</edp:transReceived>
+                <dct:issued>2021-12-03T11:44:46Z</dct:issued>
+                <dqv:hasQualityMetadata rdf:resource="http://data.europa.eu/88u/metrics/second-european-union-minorities-and-discrimination-survey"/>
+                <dct:identifier>my-dataset-001</dct:identifier>
+            </dcat:CatalogRecord>
+        </dcat:record>
+        <dcat:dataset>
             <dcat:Dataset rdf:about="http://data.europa.eu/88u/dataset/second-european-union-minorities-and-discrimination-survey">
-                <dct:title xml:lang="fi-t-en-t0-mtec">Toinen Euroopan unionin vähemmistöjä ja syrjintää koskeva tutkimus</dct:title>
-                <dct:description xml:lang="fi-t-en-t0-mtec">Toisessa Euroopan unionin vähemmistöjä ja syrjintää koskevassa kyselyssä kerättiin tietoja yli 25 500:lta eri etnistä vähemmistöä ja maahanmuuttajataustaa edustavalta vastaajalta kaikissa EU:n 28 jäsenvaltiossa.</dct:description>
                 <dct:accessRights>
                     <dct:RightsStatement rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
                 </dct:accessRights>
                 <dct:subject rdf:resource="http://eurovoc.europa.eu/6727"/>
-                <dct:description xml:lang="pt-t-en-t0-mtec">O segundo Inquérito sobre Minorias e Discriminação na União Europeia recolheu informações de mais de 25 500 inquiridos de diferentes minorias étnicas e imigrantes em todos os 28 Estados-Membros da UE.</dct:description>
                 <dct:subject rdf:resource="http://eurovoc.europa.eu/6286"/>
                 <dct:subject rdf:resource="http://eurovoc.europa.eu/3910"/>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/MLT"/>
                 </dct:spatial>
-                <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
-                >2017-12-19</dct:issued>
-                <dct:description xml:lang="it-t-en-t0-mtec">La seconda indagine sulle minoranze e le discriminazioni nell'Unione europea ha raccolto informazioni da oltre 25 500 rispondenti con diverse minoranze etniche e contesti migratori in tutti i 28 Stati membri dell'UE.</dct:description>
+                <dct:issued>2017-12-19</dct:issued>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/FIN"/>
                 </dct:spatial>
-                <dct:description xml:lang="hr-t-en-t0-mtec">U drugom istraživanju Europske unije o manjinama i diskriminaciji prikupljene su informacije od više od 25 500 ispitanika različitih etničkih manjina i imigranata u svih 28 država članica EU-a.</dct:description>
-                <dct:description xml:lang="en"># Introduction
-This dataset has been established for testing purposes.
-
-## Details
-This is a section about details. Here is an HTML tag: &lt;img src=&quot;http://google.com&quot; />. And [a link](https://google.com).
-
-## Informations intéressantes
-Cette section contient des *caractères internationaux* (ainsi que des &quot;caractères spéciaux&quot;). 'çàü^@/~^&amp;</dct:description>
-                <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
-                >2018-12-14</dct:modified>
-                <dct:title xml:lang="el-t-en-t0-mtec">Δεύτερη έρευνα της Ευρωπαϊκής Ένωσης για τις μειονότητες και τις διακρίσεις</dct:title>
+                <dct:modified>2018-12-14</dct:modified>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/ITA"/>
                 </dct:spatial>
-                <dct:title xml:lang="da-t-en-t0-mtec">Den Europæiske Unions anden undersøgelse af mindretal og forskelsbehandling</dct:title>
-                <dct:title xml:lang="lv-t-en-t0-mtec">Otrais Eiropas Savienības minoritāšu un diskriminācijas apsekojums</dct:title>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/POL"/>
                 </dct:spatial>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/HRV"/>
                 </dct:spatial>
-                <dct:description xml:lang="lv-t-en-t0-mtec">Otrajā Eiropas Savienības minoritāšu un diskriminācijas apsekojumā tika apkopota informācija no vairāk nekā 25 500 respondentiem no dažādām etniskajām minoritātēm un imigrantiem visās 28 ES dalībvalstīs.</dct:description>
-                <dct:description xml:lang="ga-t-en-t0-mtec">Bhailigh an dara Suirbhé de chuid an Aontais Eorpaigh ar Mhionlaigh agus ar Idirdhealú faisnéis ó níos mó ná 25,500 freagróir a raibh cúlraí éagsúla mionlaigh eitnigh agus inimirceacha acu ar fud 28 mBallstát an AE.</dct:description>
-                <dct:title xml:lang="nl-t-en-t0-mtec">Tweede enquête van de Europese Unie naar minderheden en discriminatie</dct:title>
-                <dct:title xml:lang="es-t-en-t0-mtec">Segunda encuesta de la Unión Europea sobre las minorías y la discriminación</dct:title>
-                <dct:description xml:lang="da-t-en-t0-mtec">EU's anden undersøgelse af mindretal og forskelsbehandling indsamlede oplysninger fra over 25 500 respondenter med forskellig etnisk minoritets- og indvandrerbaggrund i alle 28 EU-medlemsstater.</dct:description>
                 <dct:type>
                     <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/dataset-type/STATISTICAL"/>
                 </dct:type>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/LUX"/>
                 </dct:spatial>
-                <dct:title xml:lang="sl-t-en-t0-mtec">Druga raziskava Evropske unije o manjšinah in diskriminaciji</dct:title>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/GBR"/>
                 </dct:spatial>
-                <dct:description xml:lang="nl-t-en-t0-mtec">In het tweede EU-onderzoek naar minderheden en discriminatie is informatie verzameld van meer dan 25 500 respondenten met verschillende etnische minderheden en immigranten in alle 28 EU-lidstaten.</dct:description>
-                <dct:description xml:lang="sv-t-en-t0-mtec">Den andra EU-undersökningen om minoriteter och diskriminering samlade in information från över 25 500 svarande med olika etnisk minoritets- och invandrarbakgrund i alla 28 EU-medlemsstater.</dct:description>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/CZE"/>
                 </dct:spatial>
                 <dct:subject rdf:resource="http://eurovoc.europa.eu/3943"/>
-                <dct:description xml:lang="bg-t-en-t0-mtec">Второто проучване на малцинствата и дискриминацията в Европейския съюз събра информация от над 25 500 респонденти с различен етнически произход и имигрантски произход във всички 28 държави — членки на ЕС.</dct:description>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/ESP"/>
                 </dct:spatial>
@@ -106,13 +99,14 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:description xml:lang="el-t-en-t0-mtec">Παρά τις προσπάθειες της Ευρωπαϊκής Ένωσης (ΕΕ) και των κρατών μελών της για τη μείωση των ανισοτήτων μεταξύ των φύλων μεταξύ των πολιτών καταγωγής Ρομά, εξακολουθούν να υπάρχουν σημαντικές διαφορές μεταξύ των φύλων. Με βάση την έρευνα του FRA σε εννέα κράτη μέλη της ΕΕ, η παρούσα έκθεση υπογραμμίζει τη θέση των γυναικών Ρομά στην εκπαίδευση, την απασχόληση και την υγεία, καθώς και τον βαθμό στον οποίο βιώνουν διακρίσεις, παρενόχληση και σωματική βία λόγω μίσους.</dct:description>
                         <dct:language rdf:resource="http://publications.europa.eu/resource/authority/language/ENG"/>
                         <dct:title xml:lang="da-t-en-t0-mtec">Romakvinder i ni EU-medlemsstater</dct:title>
-                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:rights>
+                            <dct:RightsStatement rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        </dct:rights>
                         <dct:title xml:lang="lt-t-en-t0-mtec">Romų tautybės moterys devyniose ES valstybėse narėse</dct:title>
                         <dct:title xml:lang="el-t-en-t0-mtec">Γυναίκες Ρομά σε εννέα κράτη μέλη της ΕΕ</dct:title>
                         <dct:description xml:lang="lv-t-en-t0-mtec">Neraugoties uz Eiropas Savienības (ES) un tās dalībvalstu centieniem samazināt dzimumu nevienlīdzību romu izcelsmes pilsoņu vidū, joprojām pastāv būtiskas dzimumu atšķirības. Pamatojoties uz FRA pētījumu deviņās ES dalībvalstīs, šis ziņojums uzsver romu sieviešu stāvokli izglītībā, nodarbinātībā un veselības aprūpē, kā arī to, cik lielā mērā viņas saskaras ar naida motivētu diskrimināciju, uzmākšanos un fizisku vardarbību.</dct:description>
                         <dct:description xml:lang="hu-t-en-t0-mtec">Az Európai Unió (EU) és tagállamai által a roma származású polgárok között a nemek közötti egyenlőtlenségek csökkentése érdekében tett erőfeszítések ellenére továbbra is jelentős különbségek vannak a nemek között. Az FRA kilenc uniós tagállamban végzett saját felmérésére támaszkodva ez a jelentés kiemeli a roma nők helyzetét az oktatásban, a foglalkoztatásban és az egészségügyben, valamint azt, hogy milyen mértékben tapasztalnak gyűlölet-indító megkülönböztetést, zaklatást és fizikai erőszakot.</dct:description>
-                        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
-                        >2019-04-05</dct:issued>
+                        <dct:issued>2019-04-05</dct:issued>
                         <dct:format>
                             <dct:MediaTypeOrExtent rdf:about="http://publications.europa.eu/resource/authority/file-type/PDF"/>
                         </dct:format>
@@ -154,17 +148,14 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/DEU"/>
                 </dct:spatial>
-                <dct:description xml:lang="ro-t-en-t0-mtec">Cel de-al doilea Sondaj privind minoritățile și discriminarea în Uniunea Europeană a colectat informații de la peste 25 500 de respondenți provenind din diferite minorități etnice și imigranți din toate cele 28 de state membre ale UE.</dct:description>
                 <dct:subject rdf:resource="http://eurovoc.europa.eu/3055"/>
                 <dct:subject rdf:resource="http://eurovoc.europa.eu/458"/>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/AUT"/>
                 </dct:spatial>
-                <dct:description xml:lang="el-t-en-t0-mtec">Η δεύτερη έρευνα της Ευρωπαϊκής Ένωσης για τις μειονότητες και τις διακρίσεις συγκέντρωσε πληροφορίες από περισσότερους από 25.500 ερωτηθέντες με διαφορετικές εθνοτικές μειονότητες και μεταναστευτικές καταβολές και στα 28 κράτη μέλη της ΕΕ.</dct:description>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/BEL"/>
                 </dct:spatial>
-                <dct:title xml:lang="ga-t-en-t0-mtec">Dara Suirbhé an Aontais Eorpaigh ar Mhionlaigh agus ar Idirdhealú</dct:title>
                 <adms:versionNotes xml:lang="en">Without multiple response questions</adms:versionNotes>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/EST"/>
@@ -178,16 +169,20 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                             <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/documentation-type/DOCUMENTATION_MAIN"/>
                         </dct:type>
                         <dct:title xml:lang="en">Second European Union Minorities and Discrimination Survey - Technical report</dct:title>
-                        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/PDF"/>
+                        <dct:format>
+                            <dct:MediaTypeOrExtent rdf:about="http://publications.europa.eu/resource/authority/file-type/PDF"/>
+                        </dct:format>
                         <foaf:topic rdf:resource="http://data.europa.eu/88u/dataset/second-european-union-minorities-and-discrimination-survey"/>
-                        <dcat:mediaType rdf:resource="http://www.iana.org/assignments/media-types/application/pdf"/>
-                        <schema:url xml:lang="en">http://fra.europa.eu/en/publication/2017/eumidis-ii-technical-report</schema:url>
+                        <dcat:mediaType>
+                            <dct:MediaType rdf:about="http://www.iana.org/assignments/media-types/application/pdf"/>
+                        </dcat:mediaType>
+                        <schema_org:url xml:lang="en">http://fra.europa.eu/en/publication/2017/eumidis-ii-technical-report</schema_org:url>
                         <dct:description xml:lang="en">This technical report presents a detailed overview of the research methods used by FRA when collecting the survey data.</dct:description>
                     </foaf:Document>
                 </foaf:page>
                 <dcat:landingPage>
                     <foaf:Document rdf:about="https://fra.europa.eu/en/publications-and-resources/data-and-maps/survey-data-explorer-second-eu-minorities-discrimination-survey">
-                        <schema:url>https://fra.europa.eu/en/publications-and-resources/data-and-maps/survey-data-explorer-second-eu-minorities-discrimination-survey</schema:url>
+                        <schema_org:url>https://fra.europa.eu/en/publications-and-resources/data-and-maps/survey-data-explorer-second-eu-minorities-discrimination-survey</schema_org:url>
                         <foaf:topic rdf:resource="http://data.europa.eu/88u/dataset/second-european-union-minorities-and-discrimination-survey"/>
                     </foaf:Document>
                 </dcat:landingPage>
@@ -205,7 +200,9 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:title xml:lang="ro-t-en-t0-mtec">Al doilea sondaj al Uniunii Europene privind minoritățile și discriminarea (EU-MIDIS II) romi – constatări selectate</dct:title>
                         <dct:description xml:lang="hu-t-en-t0-mtec">A jelentés egy olyan felmérésen alapul, amely az Európai Unió (EU) kilenc tagállamában közel 34 000 roma háztartásban élő személyről gyűjtött információkat, amelyek a romákkal folytatott közel 8000 személyes interjúból származnak. A jelentés az FRA második európai uniós kisebbségi és hátrányos megkülönböztetés-felmérésének (EU-MIDIS II) eredményeit mutatja be, amelyek mintegy 26 000, az EU-ban élő bevándorló vagy etnikai kisebbségi háttérrel rendelkező személyt vizsgáltak meg. Az Európai Unió Minorities and Discrimination Survey (Európai Uniós Kisebbségi és Megkülönböztetési Felmérés) jelentős része az ügynökség azon kötelezettségvállalásának, hogy adatokat gyűjt és tesz közzé az általános népességi felmérésekben nem szereplő csoportokra vonatkozóan. Ez az ügynökség harmadik felmérése, amely a romákra összpontosít.</dct:description>
                         <dct:description xml:lang="en">The report is based on a survey that collected information on almost 34,000 persons living in Roma households in nine European Union (EU) Member States, derived from nearly 8,000 face-to-face interviews with Roma. It presents a selection of results from FRA’s Second European Union Minorities and Discrimination Survey (EU-MIDIS II), which surveyed around 26,000 people with immigrant or ethnic minority background living in the EU. The European Union Minorities and Discrimination Survey is a major part of the agency’s commitment to collecting and publishing data on groups not covered in general population surveys. It is the third survey of the agency to focus on Roma.</dct:description>
-                        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/PDF"/>
+                        <dct:format>
+                            <dct:MediaTypeOrExtent rdf:about="http://publications.europa.eu/resource/authority/file-type/PDF"/>
+                        </dct:format>
                         <dct:description xml:lang="de-t-en-t0-mtec">Der Bericht stützt sich auf eine Umfrage, bei der Informationen über fast 34.000 Personen, die in Roma-Haushalten in neun Mitgliedstaaten der Europäischen Union (EU) leben, gesammelt wurden, die aus fast 8.000 persönlichen Interviews mit Roma stammen. Es stellt eine Auswahl von Ergebnissen der zweiten Erhebung der FRA für Minderheiten und Diskriminierung (EU-MIDIS II) der FRA vor, in der rund 26.000 Personen mit Migrationshintergrund oder ethnischer Minderheit in der EU befragt wurden. Die Erhebung über Minderheiten und Diskriminierung der Europäischen Union ist ein wichtiger Teil der Verpflichtung der Agentur, Daten zu Gruppen zu erheben und zu veröffentlichen, die nicht in allgemeinen Bevölkerungsumfragen erfasst sind. Es ist die dritte Umfrage der Agentur, die sich auf die Roma konzentriert.</dct:description>
                         <dct:description xml:lang="el-t-en-t0-mtec">Η έκθεση βασίζεται σε έρευνα που συγκέντρωσε πληροφορίες για σχεδόν 34.000 άτομα που ζουν σε νοικοκυριά Ρομά σε εννέα κράτη μέλη της Ευρωπαϊκής Ένωσης (ΕΕ), τα οποία προέκυψαν από σχεδόν 8.000 προσωπικές συνεντεύξεις με Ρομά. Παρουσιάζει μια επιλογή αποτελεσμάτων από τη δεύτερη έρευνα του FRA για τις μειονότητες και τις διακρίσεις (EU-MIDIS II), στην οποία συμμετείχαν περίπου 26.000 άτομα με καταγωγή μεταναστών ή εθνοτικών μειονοτήτων που ζουν στην ΕΕ. Η έρευνα της Ευρωπαϊκής Ένωσης για τις μειονότητες και τις διακρίσεις αποτελεί σημαντικό μέρος της δέσμευσης του οργανισμού για τη συλλογή και τη δημοσίευση στοιχείων σχετικά με ομάδες που δεν καλύπτονται από γενικές δημογραφικές έρευνες. Είναι η τρίτη έρευνα του οργανισμού που επικεντρώνεται στους Ρομά.</dct:description>
                         <dct:title xml:lang="bg-t-en-t0-mtec">Второ проучване на малцинствата и дискриминацията в Европейския съюз (EU-MIDIS II) роми — избрани констатации</dct:title>
@@ -223,17 +220,20 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:description xml:lang="fi-t-en-t0-mtec">Raportti perustuu kyselyyn, jossa kerättiin tietoa lähes 34 000 romanitalouksissa asuvasta henkilöstä yhdeksässä Euroopan unionin (EU) jäsenvaltiossa. Tiedot saatiin lähes 8 000:sta romanien henkilökohtaisesta haastattelusta. Siinä esitellään FRA:n toisen Euroopan unionin vähemmistöjä ja syrjintää koskevan tutkimuksen (EU-MIDIS II) tulokset. Tutkimuksessa tutkittiin noin 26 000 maahanmuuttaja- tai etniseen vähemmistöön kuuluvaa henkilöä, jotka asuvat eu:ssa. Euroopan unionin vähemmistöjä ja syrjintää koskeva tutkimus on merkittävä osa viraston sitoumusta kerätä ja julkaista tietoja ryhmistä, jotka eivät kuulu yleisten väestötutkimusten piiriin. Se on viraston kolmas tutkimus, jossa keskitytään romaneihin.</dct:description>
                         <dct:title xml:lang="da-t-en-t0-mtec">Den Europæiske Unions anden undersøgelse af mindretal og forskelsbehandling (EU-MIDIS II) romaer — udvalgte resultater</dct:title>
                         <dct:description xml:lang="sl-t-en-t0-mtec">Poročilo temelji na raziskavi, v kateri so bile zbrane informacije o skoraj 34 000 osebah, ki živijo v romskih gospodinjstvih v devetih državah članicah Evropske unije (EU), pridobljene pa so bile na podlagi skoraj 8 000 osebnih razgovorov z Romi. V njem so predstavljeni rezultati druge raziskave Evropske agencije za temeljne pravice o manjšinah in diskriminaciji (EU-MIDIS II), v kateri je bilo vključenih približno 26 000 ljudi s priseljenskim ali etničnim ozadjem, ki živijo v EU. Raziskava o manjšinah in diskriminaciji Evropske unije je pomemben del zavezanosti agencije k zbiranju in objavljanju podatkov o skupinah, ki niso vključene v splošne raziskave o prebivalstvu. To je tretja raziskava agencije, ki se osredotoča na Rome.</dct:description>
-                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        <dct:license>
+                            <dct:LicenseDocument rdf:about="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        </dct:license>
                         <adms:status>
                             <skos:Concept rdf:about="http://purl.org/adms/status/Completed"/>
                         </adms:status>
                         <dct:title xml:lang="fr-t-en-t0-mtec">Deuxième enquête de l’Union européenne sur les minorités et la discrimination (EU-MIDIS II) Roms — Résultats sélectionnés</dct:title>
-                        <dcat:mediaType rdf:resource="http://www.iana.org/assignments/media-types/application/pdf"/>
+                        <dcat:mediaType>
+                            <dct:MediaType rdf:about="http://www.iana.org/assignments/media-types/application/pdf"/>
+                        </dcat:mediaType>
                         <dct:description xml:lang="mt-t-en-t0-mtec">Ir-rapport huwa bbażat fuq stħarriġ li ġabar informazzjoni dwar kważi 34,000 persuna li jgħixu f’unitajiet domestiċi Rom f’disa’ Stati Membri tal-Unjoni Ewropea (UE), miksuba minn kważi 8,000 intervista wiċċ imb’wiċċ mar-Rom. Huwa jippreżenta għażla ta’ riżultati mit-Tieni Stħarriġ tal-FRA dwar il-Minoranzi u d-Diskriminazzjoni fl-Unjoni Ewropea (EU-MIDIS II), li stħarreġ madwar 26,000 persuna bi sfond ta’ immigrazzjoni jew minorità etnika li jgħixu fl-UE. L-Istħarriġ tal-Unjoni Ewropea dwar il-Minoranzi u d-Diskriminazzjoni huwa parti kbira mill-impenn tal-aġenzija li tiġbor u tippubblika data dwar gruppi mhux koperti fi stħarriġ ġenerali dwar il-popolazzjoni. Huwa t-tielet stħarriġ tal-aġenzija li jiffoka fuq ir-Rom.</dct:description>
                         <dct:title xml:lang="ga-t-en-t0-mtec">Dara Suirbhé an Aontais Eorpaigh ar Mhionlaigh agus ar Idirdhealú (EU-MIDIS II) — Torthaí roghnaithe</dct:title>
                         <dct:description xml:lang="fr-t-en-t0-mtec">Le rapport s’appuie sur une enquête qui a recueilli des informations sur près de 34 000 personnes vivant dans des ménages roms dans neuf États membres de l’Union européenne (UE), tirées de près de 8 000 entretiens en personne avec des Roms. Il présente une sélection des résultats de la deuxième enquête de l’Union européenne sur les minorités et la discrimination (EU-MIDIS II), qui a porté sur quelque 26 000 personnes issues de l’immigration ou d’une minorité ethnique vivant dans l’UE. L’enquête de l’Union européenne sur les minorités et la discrimination constitue une part importante de l’engagement pris par l’Agence de collecter et de publier des données sur les groupes non couverts par les enquêtes démographiques générales. Il s’agit de la troisième enquête menée par l’agence pour mettre l’accent sur les Roms.</dct:description>
-                        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
-                        >2017-12-19T11:41:41.537218+02:00</dct:issued>
+                        <dct:issued>2017-12-19T11:41:41.537218+02:00</dct:issued>
                         <dct:identifier>http://data.europa.eu/88u/distribution/05b2d8c6-8386-4a8a-8bd3-0cc0a066f775</dct:identifier>
                         <dct:title xml:lang="pt-t-en-t0-mtec">Segundo Inquérito sobre Minorias e Discriminação na União Europeia (EU-MIDIS II) Roma — Conclusões selecionadas</dct:title>
                         <dct:description xml:lang="da-t-en-t0-mtec">Rapporten er baseret på en undersøgelse, der indsamlede oplysninger om næsten 34 000 personer, der bor i romahusstande i ni EU-medlemsstater, og som stammer fra næsten 8 000 personlige interviews med romaer. Den præsenterer et udvalg af resultater fra FRA's anden undersøgelse af mindretal og forskelsbehandling i Den Europæiske Union (EU-MIDIS II), som undersøgte ca. 26 000 personer med indvandrerbaggrund eller etnisk minoritetsbaggrund, der bor i EU. EU's undersøgelse af mindretal og forskelsbehandling er en stor del af agenturets forpligtelse til at indsamle og offentliggøre data om grupper, der ikke er omfattet af generelle befolkningsundersøgelser. Det er den tredje undersøgelse foretaget af agenturet, der fokuserer på romaer.</dct:description>
@@ -243,8 +243,7 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:description xml:lang="nl-t-en-t0-mtec">Het verslag is gebaseerd op een enquête waarin informatie is verzameld over bijna 34 000 personen in Romahuishoudens in negen lidstaten van de Europese Unie (EU), afkomstig van bijna 8 000 persoonlijke interviews met Roma. Het bevat een selectie van de resultaten van de tweede enquête van het FRA naar minderheden en discriminatie van de Europese Unie (EU-MIDIS II), waarin ongeveer 26 000 mensen met een immigranten- of etnische minderheidsachtergrond in de EU werden ondervraagd. De enquête over minderheden en discriminatie van de Europese Unie is een belangrijk onderdeel van de toezegging van het agentschap om gegevens te verzamelen en te publiceren over groepen die niet onder algemene bevolkingsenquêtes vallen. Het is het derde onderzoek van het agentschap dat zich richt op de Roma.</dct:description>
                         <dct:description xml:lang="lt-t-en-t0-mtec">Ataskaita grindžiama apklausa, kurioje surinkta informacija apie beveik 34 000 romų namų ūkiuose gyvenančių asmenų devyniose Europos Sąjungos (ES) valstybėse narėse, gauta iš beveik 8 000 tiesioginių pokalbių su romais. Joje pateikiami FRA Antrojo Europos Sąjungos mažumų ir diskriminacijos tyrimo (EU-MIDIS II) rezultatai, kuriuose dalyvavo apie 26 000 imigrantų ar etninių mažumų kilmės asmenų, gyvenančių ES. Europos Sąjungos mažumų ir diskriminacijos tyrimas yra pagrindinė agentūros įsipareigojimo rinkti ir skelbti duomenis apie grupes, neįtrauktas į gyventojų apklausas, dalis. Tai trečiasis agentūros tyrimas, kuriame daugiausia dėmesio skiriama romams.</dct:description>
                         <dct:title xml:lang="sk-t-en-t0-mtec">Druhý prieskum Európskej únie týkajúci sa menšín a diskriminácie (EU-MIDIS II) – vybrané zistenia</dct:title>
-                        <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
-                        >2016-11-29T00:00:00+02:00</dct:modified>
+                        <dct:modified>2016-11-29T00:00:00+02:00</dct:modified>
                         <dct:title xml:lang="hu-t-en-t0-mtec">Második európai uniós felmérés a kisebbségekről és a hátrányos megkülönböztetésről (EU-MIDIS II) romákról – Válogatott megállapítások</dct:title>
                         <dct:title xml:lang="de-t-en-t0-mtec">Zweite Erhebung über Minderheiten und Diskriminierung der Europäischen Union (EU-MIDIS II) Roma – Ausgewählte Ergebnisse</dct:title>
                         <dct:description xml:lang="sk-t-en-t0-mtec">Správa je založená na prieskume, v ktorom sa zhromaždili informácie o takmer 34 000 osobách žijúcich v rómskych domácnostiach v deviatich členských štátoch Európskej únie (EÚ), ktoré boli odvodené z takmer 8 000 osobných rozhovorov s Rómami. Predstavuje výber výsledkov druhého prieskumu Európskej únie o menšinách a diskriminácii (EU-MIDIS II), v ktorom sa zúčastnilo približne 26 000 ľudí s prisťahovaleckým alebo etnickým menšinám žijúcich v EÚ. Prieskum Európskej únie týkajúci sa menšín a diskriminácie je hlavnou súčasťou záväzku agentúry zhromažďovať a zverejňovať údaje o skupinách, ktoré nie sú zahrnuté v prieskumoch všeobecnej populácie. Je to tretí prieskum agentúry, ktorý sa zameriava na Rómov.</dct:description>
@@ -252,7 +251,9 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:title xml:lang="el-t-en-t0-mtec">Δεύτερη έρευνα της Ευρωπαϊκής Ένωσης για τις μειονότητες και τις διακρίσεις (EU-MIDIS II) Ρομά — Επιλεγμένα πορίσματα</dct:title>
                         <dct:description xml:lang="pt-t-en-t0-mtec">O relatório baseia-se num inquérito que recolheu informações sobre quase 34 000 pessoas que vivem em agregados familiares ciganos em nove Estados-Membros da União Europeia (UE), provenientes de cerca de 8 000 entrevistas presenciais com ciganos. Apresenta uma seleção de resultados do Segundo Inquérito da FRA sobre Minorias e Discriminação na União Europeia (EU-MIDIS II), que inquiriu cerca de 26 000 pessoas oriundas de imigrantes ou minorias étnicas residentes na UE. O Inquérito sobre Minorias e Discriminação na União Europeia constitui uma parte importante do compromisso da agência de recolher e publicar dados sobre grupos não abrangidos por inquéritos à população em geral. É o terceiro inquérito da agência a centrar-se nos ciganos.</dct:description>
                         <dct:title xml:lang="nl-t-en-t0-mtec">Tweede enquête van de Europese Unie naar minderheden en discriminatie (EU-MIDIS II) Roma — Geselecteerde bevindingen</dct:title>
-                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:rights>
+                            <dct:RightsStatement rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        </dct:rights>
                         <dct:title xml:lang="et-t-en-t0-mtec">Teine Euroopa Liidu vähemuste ja diskrimineerimise uuring (EU-MIDIS II) Roma – Valitud järeldused</dct:title>
                         <dct:description xml:lang="lv-t-en-t0-mtec">Ziņojuma pamatā ir apsekojums, kurā apkopota informācija par gandrīz 34,000 personām, kas dzīvo romu mājsaimniecībās deviņās Eiropas Savienības (ES) dalībvalstīs, un kas iegūta no gandrīz 8000 klātienes intervijām ar romiem. Tajā apkopoti FRA otrā Eiropas Savienības minoritāšu un diskriminācijas apsekojuma (EU-MIDIS II) rezultāti, kas apsekoja aptuveni 26 000 cilvēku ar imigrantu vai etnisko minoritāšu izcelsmi, kuri dzīvo ES. Eiropas Savienības minoritāšu un diskriminācijas apsekojums ir būtiska daļa no aģentūras apņemšanās vākt un publicēt datus par grupām, kas nav iekļautas iedzīvotāju vispārējos apsekojumos. Tas ir trešais aģentūras pētījums, kurā galvenā uzmanība pievērsta romiem.</dct:description>
                         <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/FEED_INFO"/>
@@ -261,10 +262,7 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:title xml:lang="it-t-en-t0-mtec">Seconda indagine sulle minoranze e le discriminazioni nell'Unione europea (EU-MIDIS II) Roma — Risultati selezionati</dct:title>
                     </dcat:Distribution>
                 </dcat:distribution>
-                <dct:description xml:lang="de-t-en-t0-mtec">In der zweiten Erhebung über Minderheiten und Diskriminierungen der Europäischen Union wurden Informationen von mehr als 25 500 Befragten mit unterschiedlichem ethnischen Minderheiten- und Migrationshintergrund in allen 28 EU-Mitgliedstaaten erfasst.</dct:description>
                 <dct:subject rdf:resource="http://eurovoc.europa.eu/6219"/>
-                <dct:title xml:lang="it-t-en-t0-mtec">Seconda indagine sulle minoranze e le discriminazioni nell'Unione europea</dct:title>
-                <dct:description xml:lang="lt-t-en-t0-mtec">Per antrąjį Europos Sąjungos mažumų ir diskriminacijos tyrimą surinkta daugiau kaip 25 500 respondentų, turinčių skirtingą etninę mažumą ir imigrantų kilmę visose 28 ES valstybėse narėse.</dct:description>
                 <owl:versionInfo>1.0</owl:versionInfo>
                 <dcat:theme>
                     <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/data-theme/JUST"/>
@@ -276,16 +274,19 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:description xml:lang="de-t-en-t0-mtec">In dem Bericht wird untersucht, wie Merkmale wie Vor- und Nachname eines Individuums, Hautfarbe und das Tragen sichtbarer religiöser Symbole wie beispielsweise Kopftuch diskriminierende Behandlungen und Belästigungen auslösen können.</dct:description>
                         <dct:title xml:lang="ga-t-en-t0-mtec">Dara Suirbhé an Aontais Eorpaigh ar Mhionlaigh agus ar Idirdhealú (EU-MIDIS II) — Torthaí roghnaithe</dct:title>
                         <dcat:accessURL rdf:resource="http://fra.europa.eu/en/publication/2017/eumidis-ii-muslims-selected-findings"/>
-                        <dcat:mediaType rdf:resource="http://www.iana.org/assignments/media-types/application/pdf"/>
+                        <dcat:mediaType>
+                            <dct:MediaType rdf:about="http://www.iana.org/assignments/media-types/application/pdf"/>
+                        </dcat:mediaType>
                         <dct:description xml:lang="et-t-en-t0-mtec">Aruandes uuritakse, kuidas omadused, nagu näiteks isiku ees- ja perekonnanimi, nahavärv ja nähtavate ususümbolite, näiteks pearäti kandmine, võivad põhjustada diskrimineerivat kohtlemist ja ahistamist.</dct:description>
                         <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/FEED_INFO"/>
                         <dct:description xml:lang="nl-t-en-t0-mtec">In het verslag wordt onderzocht hoe kenmerken — zoals de voor- en achternaam van een individu, huidskleur en het dragen van zichtbare religieuze symbolen zoals een hoofddoek — tot discriminatie en intimidatie kunnen leiden.</dct:description>
                         <dct:title xml:lang="mt-t-en-t0-mtec">It-Tieni Stħarriġ tal-Unjoni Ewropea dwar il-Minoranzi u d-Diskriminazzjoni (EU-MIDIS II) Musulmani — Sejbiet magħżula</dct:title>
                         <dct:description xml:lang="el-t-en-t0-mtec">Η έκθεση εξετάζει τον τρόπο με τον οποίο χαρακτηριστικά — όπως το όνομα και το επώνυμο ενός ατόμου, το χρώμα του δέρματος και η χρήση ορατών θρησκευτικών συμβόλων όπως η μαντίλα, για παράδειγμα — μπορούν να προκαλέσουν διακριτική μεταχείριση και παρενόχληση.</dct:description>
-                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        <dct:license>
+                            <dct:LicenseDocument rdf:about="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        </dct:license>
                         <dct:title xml:lang="fr-t-en-t0-mtec">Deuxième enquête de l’Union européenne sur les minorités et la discrimination (EU-MIDIS II) Musulmans — Résultats sélectionnés</dct:title>
-                        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
-                        >2017-12-19T11:41:41.537188+02:00</dct:issued>
+                        <dct:issued>2017-12-19T11:41:41.537188+02:00</dct:issued>
                         <dct:title xml:lang="pt-t-en-t0-mtec">Segundo Inquérito sobre Minorias e Discriminação na União Europeia (EU-MIDIS II) Muçulmanos — Conclusões selecionadas</dct:title>
                         <dct:title xml:lang="hr-t-en-t0-mtec">Drugo istraživanje o manjinama i diskriminaciji Europske unije (EU-MIDIS II) muslimani – odabrani nalazi</dct:title>
                         <dct:description xml:lang="cs-t-en-t0-mtec">Zpráva zkoumá, jak mohou vlastnosti, jako je například jméno a příjmení jednotlivce, barva kůže a nošení viditelných náboženských symbolů, jako je šátek, vést k diskriminačnímu zacházení a obtěžování.</dct:description>
@@ -299,13 +300,19 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:title xml:lang="it-t-en-t0-mtec">Seconda indagine sulle minoranze e le discriminazioni nell'Unione europea (EU-MIDIS II) Musulmani — Risultati selezionati</dct:title>
                         <dct:title xml:lang="sk-t-en-t0-mtec">Druhý prieskum Európskej únie týkajúci sa menšín a diskriminácie (EU-MIDIS II) moslimovia – vybrané zistenia</dct:title>
                         <dct:title xml:lang="bg-t-en-t0-mtec">Второ проучване на малцинствата и дискриминацията в Европейския съюз (EU-MIDIS II) мюсюлмани — избрани констатации</dct:title>
-                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:rights>
+                            <dct:RightsStatement rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        </dct:rights>
                         <dct:title xml:lang="hu-t-en-t0-mtec">Második európai uniós felmérés a kisebbségekről és a hátrányos megkülönböztetésről (EU-MIDIS II) muzulmánok – Válogatott megállapítások</dct:title>
                         <dct:description xml:lang="hu-t-en-t0-mtec">A jelentés azt vizsgálja, hogy a jellemzők – például az egyén kereszt- és utóneve, bőrszíne és látható vallási szimbólumok, például fejkendő viselése – milyen módon idézhetnek elő megkülönböztető bánásmódot és zaklatást.</dct:description>
-                        <adms:status rdf:resource="http://purl.org/adms/status/Completed"/>
+                        <adms:status>
+                            <skos:Concept rdf:about="http://purl.org/adms/status/Completed"/>
+                        </adms:status>
                         <dct:description xml:lang="pt-t-en-t0-mtec">O relatório analisa como características — como o nome e o apelido de um indivíduo, a cor da pele e o uso de símbolos religiosos visíveis como um lenço de cabeça, por exemplo — podem desencadear tratamento discriminatório e assédio.</dct:description>
                         <dct:title xml:lang="de-t-en-t0-mtec">Zweite Umfrage der Europäischen Union für Minderheiten und Diskriminierung (EU-MIDIS II) Muslime – Ausgewählte Ergebnisse</dct:title>
-                        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/PDF"/>
+                        <dct:format>
+                            <dct:MediaTypeOrExtent rdf:about="http://publications.europa.eu/resource/authority/file-type/PDF"/>
+                        </dct:format>
                         <dct:identifier>http://data.europa.eu/88u/distribution/fc386e52-8f29-4f15-9ec0-1f08d4499fa1</dct:identifier>
                         <dct:description xml:lang="lt-t-en-t0-mtec">Ataskaitoje nagrinėjama, kaip charakteristikos, pvz., asmens vardas ir pavardė, odos spalva ir matomų religinių simbolių, pvz., skarelės, dėvėjimas, gali sukelti diskriminacinį elgesį ir priekabiavimą.</dct:description>
                         <dct:description xml:lang="pl-t-en-t0-mtec">W sprawozdaniu przeanalizowano, w jaki sposób cechy charakterystyczne – takie jak imię i nazwisko danej osoby, kolor skóry i noszenie widocznych symboli religijnych, takich jak chusta na głowy – mogą spowodować dyskryminujące traktowanie i nękanie.</dct:description>
@@ -315,8 +322,7 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:description xml:lang="da-t-en-t0-mtec">Rapporten undersøger, hvordan karakteristika — som f.eks. en persons for- og efternavn, hudfarve og brug af synlige religiøse symboler som f.eks. et hovedtørklæde — kan udløse forskelsbehandling og chikane.</dct:description>
                         <dct:description xml:lang="it-t-en-t0-mtec">La relazione esamina come caratteristiche — come ad esempio il nome e il cognome di un individuo, il colore della pelle e l'uso di simboli religiosi visibili come un velo, ad esempio — possano innescare trattamenti discriminatori e molestie.</dct:description>
                         <dct:title xml:lang="fi-t-en-t0-mtec">Toinen Euroopan unionin vähemmistöjä ja syrjintää koskeva tutkimus (EU-MIDIS II) Muslimit – Valitut havainnot</dct:title>
-                        <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
-                        >2017-09-21T00:00:00+02:00</dct:modified>
+                        <dct:modified>2017-09-21T00:00:00+02:00</dct:modified>
                         <dct:description xml:lang="hr-t-en-t0-mtec">U izvješću se ispituje kako obilježja, kao što su ime i prezime pojedinca, boja kože i nošenje vidljivih vjerskih simbola poput marame za glavu, mogu izazvati diskriminatorno postupanje i uznemiravanje.</dct:description>
                         <dct:title xml:lang="da-t-en-t0-mtec">Den Europæiske Unions anden undersøgelse af mindretal og forskelsbehandling (EU-MIDIS II) muslimer — udvalgte resultater</dct:title>
                         <dct:description xml:lang="ga-t-en-t0-mtec">Scrúdaítear sa tuarascáil conas a d’fhéadfadh tréithe — amhail céadainm agus sloinne an duine aonair, dath craicinn agus siombailí reiligiúnacha infheicthe amhail carf cinn, mar shampla — a bheith ina gcúis le cóireáil agus ciapadh idirdhealaitheach.</dct:description>
@@ -337,25 +343,21 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                 <dct:publisher>
                     <foaf:Agent rdf:about="http://publications.europa.eu/resource/authority/corporate-body/FRA"/>
                 </dct:publisher>
-                <dct:title xml:lang="hr-t-en-t0-mtec">Drugo istraživanje Europske unije o manjinama i diskriminaciji</dct:title>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/BGR"/>
                 </dct:spatial>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/SVK"/>
                 </dct:spatial>
-                <dct:description xml:lang="cs-t-en-t0-mtec">Druhý průzkum Evropské unie týkající se menšin a diskriminace shromáždil informace od více než 25 500 respondentů z různých etnických menšin a přistěhovalců ve všech 28 členských státech EU.</dct:description>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/NLD"/>
                 </dct:spatial>
-                <dct:title xml:lang="et-t-en-t0-mtec">Teine Euroopa Liidu vähemuste ja diskrimineerimise uuring</dct:title>
-                <dct:description xml:lang="pl-t-en-t0-mtec">Drugie badanie Unii Europejskiej na temat mniejszości i dyskryminacji zgromadziło informacje od ponad 25 500 respondentów z różnych mniejszości etnicznych i imigrantów we wszystkich 28 państwach członkowskich UE.</dct:description>
                 <dcat:contactPoint>
                     <vcard:Kind rdf:about="http://www.w3.org/2006/vcard/ns#Kind/fea134ae-6103-47e6-99ff-f876f2645d76">
                         <vcard:organisation-name>Rossalina Latcheva (PhD)</vcard:organisation-name>
                         <vcard:hasURL>
                             <foaf:Document rdf:about="http://fra.europa.eu/en/project/2015/eu-midis-ii-european-union-minorities-and-discrimination-survey/contact">
-                                <schema:url>http://fra.europa.eu/en/project/2015/eu-midis-ii-european-union-minorities-and-discrimination-survey/contact</schema:url>
+                                <schema_org:url>http://fra.europa.eu/en/project/2015/eu-midis-ii-european-union-minorities-and-discrimination-survey/contact</schema_org:url>
                                 <foaf:topic rdf:resource="file:///usr/verticles/"/>
                             </foaf:Document>
                         </vcard:hasURL>
@@ -365,13 +367,13 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/PRT"/>
                 </dct:spatial>
                 <dct:subject rdf:resource="http://eurovoc.europa.eu/459"/>
-                <dct:title xml:lang="de-t-en-t0-mtec">Zweite Erhebung über Minderheiten und Diskriminierung in der Europäischen Union</dct:title>
                 <j.0:debugInfo>EUODP Legacy-&gt;DEU xslt, version:20220321</j.0:debugInfo>
-                <dct:description xml:lang="et-t-en-t0-mtec">Teise Euroopa Liidu vähemuste ja diskrimineerimise uuringu käigus koguti teavet enam kui 25 500 erineva etnilise vähemuse ja sisserändaja taustaga vastajalt kõigis 28 ELi liikmesriigis.</dct:description>
                 <dcat:distribution>
                     <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/c7c1d983-dbd1-4e6c-ba47-d40a457d4907">
                         <dct:title xml:lang="ga-t-en-t0-mtec">Dara Suirbhé ar Mhionlaigh agus ar Idirdhealú an Aontais Eorpaigh — Mná Imirceacha — torthaí roghnaithe</dct:title>
-                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        <dct:license>
+                            <dct:LicenseDocument rdf:about="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        </dct:license>
                         <dct:description xml:lang="el-t-en-t0-mtec">Η δεύτερη έρευνα του FRA για τις μειονότητες και τις διακρίσεις (EU-MIDIS II) συγκέντρωσε πληροφορίες από περισσότερους από 25.000 ερωτηθέντες με διαφορετικές εθνοτικές μειονότητες και μεταναστευτικές καταβολές και στα 28 κράτη μέλη της ΕΕ. Τα κύρια πορίσματα της έρευνας, που δημοσιεύθηκε το 2017, κατέδειξαν ορισμένες διαφορές στον τρόπο με τον οποίο οι γυναίκες και οι άνδρες με μεταναστευτικό υπόβαθρο σε ολόκληρη την Ευρωπαϊκή Ένωση (ΕΕ) βιώνουν τον τρόπο με τον οποίο γίνονται σεβαστά τα δικαιώματά τους. Η παρούσα έκθεση συνοψίζει ορισμένα από τα πλέον συναφή πορίσματα της έρευνας, τα οποία καταδεικνύουν την ανάγκη για στοχευμένα και ευαισθητοποιημένα ως προς το φύλο μέτρα που προωθούν την ένταξη — ειδικά- των γυναικών που είναι μετανάστριες ή κατιόντες μεταναστών.</dct:description>
                         <dct:title xml:lang="de-t-en-t0-mtec">Zweite Erhebung über Minderheiten und Diskriminierung in der Europäischen Union – Migrantinnen – ausgewählte Ergebnisse</dct:title>
                         <dct:description xml:lang="ro-t-en-t0-mtec">Al doilea sondaj al FRA privind minoritățile și discriminarea în UE (EU-MIDIS II) a colectat informații de la peste 25 000 de respondenți care provin din minorități etnice și imigranți din toate cele 28 de state membre ale UE. Principalele constatări ale sondajului, publicat în 2017, au evidențiat o serie de diferențe în ceea ce privește modul în care femeile și bărbații care provin din familii de imigranți din Uniunea Europeană (UE) se confruntă cu modul în care drepturile lor sunt respectate. Prezentul raport sintetizează unele dintre cele mai relevante constatări ale sondajului în această privință, care arată necesitatea unor măsuri specifice, care să țină seama de dimensiunea de gen, care să promoveze integrarea – în special – a femeilor care sunt imigranți sau descendenți ai imigranților.</dct:description>
@@ -399,8 +401,12 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:title xml:lang="pl-t-en-t0-mtec">Drugie badanie Unii Europejskiej na temat mniejszości i dyskryminacji – kobiety migrujące – wybrane wyniki</dct:title>
                         <dct:description xml:lang="fi-t-en-t0-mtec">Perusoikeusviraston toisessa EU:n vähemmistöjä ja syrjintää koskevassa kyselyssä (EU-MIDIS II) kerättiin tietoja yli 25 000 vastaajalta, joilla oli eri etninen vähemmistö- ja maahanmuuttajatausta eri EU:n 28 jäsenvaltiossa. Vuonna 2017 julkaistun tutkimuksen tärkeimmät tulokset osoittivat, että maahanmuuttajataustaiset naiset ja miehet kokevat eri puolilla Euroopan unionia, miten heidän oikeuksiaan kunnioitetaan. Tässä kertomuksessa esitetään yhteenveto tärkeimmistä tutkimuksen tuloksista, jotka osoittavat, että tarvitaan kohdennettuja, sukupuolisensitiivisiä toimenpiteitä, joilla edistetään erityisesti maahanmuuttajanaisten tai maahanmuuttajien jälkeläisten kotoutumista.</dct:description>
                         <dct:title xml:lang="bg-t-en-t0-mtec">Второ проучване на малцинствата и дискриминацията в Европейския съюз — жени мигранти — избрани констатации</dct:title>
-                        <dcat:mediaType rdf:resource="http://www.iana.org/assignments/media-types/application/pdf"/>
-                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dcat:mediaType>
+                            <dct:MediaType rdf:about="http://www.iana.org/assignments/media-types/application/pdf"/>
+                        </dcat:mediaType>
+                        <dct:rights>
+                            <dct:RightsStatement rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        </dct:rights>
                         <dct:title xml:lang="da-t-en-t0-mtec">Den Europæiske Unions anden undersøgelse af mindretal og forskelsbehandling — migrantkvinder — udvalgte resultater</dct:title>
                         <dct:description xml:lang="ga-t-en-t0-mtec">Bhailigh an dara suirbhé de chuid FRA ar Mhionlaigh agus ar Idirdhealú (EU-MIDIS II) faisnéis ó bhreis agus 25,000 freagróir a bhfuil cúlraí mionlaigh eitneacha agus inimirceach éagsúla acu ar fud 28 mBallstát an AE. Léirigh príomhthorthaí an tsuirbhé, a foilsíodh in 2017, go raibh roinnt difríochtaí ann maidir leis an gcaoi a bhfaigheann mná agus fir a bhfuil cúlra inimirceach acu ar fud an Aontais Eorpaigh (AE) taithí ar an gcaoi a n-urramaítear a gcearta. Déanann an tuarascáil seo achoimre ar chuid de na torthaí suirbhé is ábhartha maidir leis seo, a léiríonn an gá atá le bearta spriocdhírithe, atá íogair ó thaobh inscne de, a chuireann lánpháirtiú na mban atá ina n-inimircigh nó sliocht na n-inimirceach chun cinn — go sonrach.</dct:description>
                         <dct:description xml:lang="fr-t-en-t0-mtec">La deuxième enquête de la FRA sur les minorités et la discrimination dans l’UE (EU-MIDIS II) a recueilli des informations auprès de plus de 25 000 personnes ayant des origines ethniques et immigrées différentes dans l’ensemble des 28 États membres de l’UE. Les principales conclusions de l’enquête, publiée en 2017, ont mis en évidence un certain nombre de différences dans la manière dont les femmes et les hommes issus de l’immigration dans l’Union européenne (UE) connaissent le respect de leurs droits. Le présent rapport résume certaines des conclusions les plus pertinentes de l’enquête à cet égard, qui montrent qu’il est nécessaire de prendre des mesures ciblées et tenant compte des sexospécificités qui favorisent l’intégration des femmes immigrées ou des descendants d’immigrants, en particulier.</dct:description>
@@ -410,7 +416,9 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                             Ez a jelentés összefoglalja az ezzel kapcsolatos legrelevánsabb felmérés megállapításait, amelyek azt mutatják, hogy célzott, a nemek közötti egyenlőséget figyelembe vevő intézkedésekre van szükség, amelyek előmozdítják különösen a bevándorló vagy bevándorló leszármazott nők integrációját.</dct:description>
                         <dct:description xml:lang="pt-t-en-t0-mtec">O segundo inquérito da FRA sobre as minorias e a discriminação na UE (EU-MIDIS II) recolheu informações de mais de 25 000 inquiridos de diferentes minorias étnicas e imigrantes em todos os 28 Estados-Membros da UE. As principais conclusões do inquérito, publicado em 2017, apontaram para uma série de diferenças na forma como as mulheres e os homens oriundos de imigrantes em toda a União Europeia (UE) experimentam a forma como os seus direitos são respeitados. O presente relatório resume alguns dos resultados mais relevantes do inquérito a este respeito, que mostram a necessidade de medidas específicas e sensíveis às questões de género que promovam a integração — especificamente — das mulheres imigrantes ou descendentes de imigrantes.</dct:description>
                         <dct:title xml:lang="it-t-en-t0-mtec">Seconda indagine sulle minoranze e le discriminazioni nell'Unione europea — Donne migranti — risultati selezionati</dct:title>
-                        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/PDF"/>
+                        <dct:format>
+                            <dct:MediaTypeOrExtent rdf:about="http://publications.europa.eu/resource/authority/file-type/PDF"/>
+                        </dct:format>
                         <dct:description xml:lang="nl-t-en-t0-mtec">In het tweede EU-onderzoek naar minderheden en discriminatie (EU-MIDIS II) van het FRA is informatie verzameld van meer dan 25 000 respondenten met verschillende etnische minderheden en immigranten in alle 28 EU-lidstaten. De belangrijkste bevindingen van de enquête, die in 2017 werd gepubliceerd, wezen op een aantal verschillen in de manier waarop vrouwen en mannen met een immigrantenachtergrond in de Europese Unie (EU) ervaren hoe hun rechten worden geëerbiedigd. In dit verslag worden enkele van de meest relevante onderzoeksresultaten in dit verband samengevat, waaruit blijkt dat er behoefte is aan gerichte, gendergevoelige maatregelen die de integratie bevorderen van — met name — vrouwen die immigranten of nakomelingen van immigranten zijn.</dct:description>
                         <dct:description xml:lang="en">FRA’s second EU Minorities and Discrimination survey (EU-MIDIS II) collected information from over 25,000 respondents with different ethnic minority and immigrant backgrounds across all 28 EU Member States. The main findings from the survey, published in 2017, pointed to a number of differences in the way women and men with immigrant backgrounds across the European Union (EU) experience how their rights are respected. This report summarises some of the most relevant survey findings in this regard, which show the need for targeted, gender-sensitive measures that promote the integration of – specifically – women who are immigrants or descendants of immigrants.</dct:description>
                         <dct:description xml:lang="et-t-en-t0-mtec">FRA teine ELi vähemuste ja diskrimineerimise uuring (EU-MIDIS II) kogus teavet enam kui 25 000 erineva etnilise vähemuse ja sisserändaja taustaga vastajalt kõigis 28 ELi liikmesriigis. 2017. aastal avaldatud uuringu peamised tulemused osutasid mitmetele erinevustele sisserändaja taustaga naiste ja meeste vahel kogu Euroopa Liidus, kuidas nende õigusi austatakse. Käesolevas aruandes võetakse kokku mõned kõige olulisemad uuringutulemused, mis näitavad vajadust sihipäraste sootundlike meetmete järele, mis edendaksid sisserändajatest või sisserändajate järeltulijatest naiste integreerimist.</dct:description>
@@ -433,7 +441,6 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/DNK"/>
                 </dct:spatial>
-                <dct:title xml:lang="pt-t-en-t0-mtec">Segundo Inquérito sobre Minorias e Discriminação na União Europeia</dct:title>
                 <dcat:theme>
                     <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/data-theme/HEAL"/>
                 </dcat:theme>
@@ -442,10 +449,8 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                 </dct:spatial>
                 <dct:temporal>
                     <dct:PeriodOfTime rdf:about="http://purl.org/dc/terms/PeriodOfTime/94075da3-3b88-4ca6-b537-bf5714e4edbe">
-                        <dcat:endDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
-                        >2016-07-31T00:00:00</dcat:endDate>
-                        <dcat:startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
-                        >2015-10-01T00:00:00</dcat:startDate>
+                        <dcat:endDate>2016-07-31T00:00:00</dcat:endDate>
+                        <dcat:startDate>2015-10-01T00:00:00</dcat:startDate>
                     </dct:PeriodOfTime>
                 </dct:temporal>
                 <dct:subject rdf:resource="http://eurovoc.europa.eu/3939"/>
@@ -455,20 +460,16 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/IRL"/>
                 </dct:spatial>
-                <dct:title xml:lang="sv-t-en-t0-mtec">Europeiska unionens andra undersökning av minoriteter och diskriminering</dct:title>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/LTU"/>
                 </dct:spatial>
-                <dct:title xml:lang="cs-t-en-t0-mtec">Druhý průzkum o menšinách a diskriminaci v Evropské unii</dct:title>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/ROU"/>
                 </dct:spatial>
                 <dcat:theme>
                     <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/data-theme/SOCI"/>
                 </dcat:theme>
-                <dct:title xml:lang="mt-t-en-t0-mtec">It-Tieni Stħarriġ tal-Unjoni Ewropea dwar il-Minoranzi u d-Diskriminazzjoni</dct:title>
                 <dct:subject rdf:resource="http://eurovoc.europa.eu/4728"/>
-                <dct:description xml:lang="mt-t-en-t0-mtec">It-tieni Stħarriġ tal-Unjoni Ewropea dwar il-Minoranzi u d-Diskriminazzjoni ġabar informazzjoni minn aktar minn 25,500 rispondent b’minoranza etnika u sfondi ta’ immigrazzjoni differenti fit-28 Stat Membru kollha tal-UE.</dct:description>
                 <dct:language rdf:resource="http://publications.europa.eu/resource/authority/language/ENG"/>
                 <dcat:distribution>
                     <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/4bf92658-1ad0-4909-b122-365d8faa1c05">
@@ -502,7 +503,9 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:description xml:lang="pl-t-en-t0-mtec">W całej UE osoby pochodzenia afrykańskiego borykają się z powszechnymi i zakorzenionymi uprzedzeniami i wykluczeniem. Dyskryminacja rasowa i molestowanie są powszechne. Doświadczenia z przemocą rasistowską różnią się, ale sięgają nawet 14 %. Dyskryminujące profilowanie przez policję jest wspólną rzeczywistością. Przeszkody w integracji są wieloaspektowe, zwłaszcza jeśli chodzi o poszukiwanie pracy i mieszkalnictwo.</dct:description>
                         <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/DOWNLOADABLE_FILE"/>
                         <dct:description xml:lang="nl-t-en-t0-mtec">In de hele EU worden mensen van Afrikaanse afkomst geconfronteerd met wijdverspreide en verankerde vooroordelen en uitsluiting. Rassendiscriminatie en intimidatie zijn gemeengoed. De ervaringen met racistisch geweld lopen uiteen, maar bereiken maar liefst 14 %. Discriminerende profilering door de politie is een gemeenschappelijke realiteit. Belemmeringen voor inclusie zijn veelzijdig, met name als het gaat om het zoeken naar werk en huisvesting.</dct:description>
-                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:rights>
+                            <dct:RightsStatement rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        </dct:rights>
                         <dct:description xml:lang="bg-t-en-t0-mtec">В целия ЕС хората от африкански произход са изправени пред широко разпространени и утвърдени предразсъдъци и изолация. Расовата дискриминация и тормозът са често срещани. Опитът с расисткото насилие варира, но достига 14 %. Дискриминационното профилиране от страна на полицията е често срещана реалност. Пречките пред приобщаването са многостранни, особено когато става въпрос за търсене на работа и жилищно настаняване.</dct:description>
                         <dct:title xml:lang="ga-t-en-t0-mtec">Bheith Dubh san Aontas Eorpach — Achoimre</dct:title>
                         <dct:description xml:lang="lv-t-en-t0-mtec">Visā ES afrikāņu izcelsmes cilvēki saskaras ar plaši izplatītiem un iesakņojušiem aizspriedumiem un atstumtību. Rasu diskriminācija un uzmākšanās ir ikdienišķa parādība. Pieredze ar rasistisku vardarbību atšķiras, bet sasniedz pat 14 %. Diskriminējoša profilēšana, ko veic policija, ir izplatīta realitāte.
@@ -519,7 +522,9 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:title xml:lang="mt">Li Tkun Iswed fl-UE It-Tieni Stħarriġ tal-Unjoni  Ewropea dwar il-Minoranzi  u d-Diskriminazzjoni - Sommarju</dct:title>
                         <dct:title xml:lang="sv">Att vara svart i EU Europeiska unionens andra  undersökning av minoriteter  och diskriminering - Sammanfattning</dct:title>
                         <dct:title xml:lang="pt">Ser negro na União Europeia Segundo Inquérito sobre Minorias  e Discriminação na União Europeia - Resumo</dct:title>
-                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        <dct:license>
+                            <dct:LicenseDocument rdf:about="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        </dct:license>
                         <dct:title xml:lang="en">Being Black in the EU - Summary</dct:title>
                         <dct:title xml:lang="fr">Être noir dans l’UE Deuxième enquête de l’Union  européenne sur les minorités  et la discrimination - Résumé</dct:title>
                         <dct:title xml:lang="cs-t-en-t0-mtec">Být černoch v EU – shrnutí</dct:title>
@@ -542,12 +547,6 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:description xml:lang="sl-t-en-t0-mtec">Prebivalci afriškega porekla se po vsej EU soočajo z razširjenimi in zakoreninjenimi predsodki in izključenostjo. Rasna diskriminacija in nadlegovanje sta običajna. Izkušnje z rasističnim nasiljem se razlikujejo, vendar dosegajo celo 14 %. Diskriminatorno oblikovanje profilov s strani policije je skupna realnost. Ovire za vključevanje so večplastne, zlasti pri iskanju delovnih mest in stanovanj.</dct:description>
                     </dcat:Distribution>
                 </dcat:distribution>
-                <dct:description xml:lang="sl-t-en-t0-mtec">Druga raziskava Evropske unije o manjšinah in diskriminaciji je zbrala informacije več kot 25 500 anketirancev iz različnih etničnih manjšin in priseljencev iz vseh 28 držav članic EU.</dct:description>
-                <dct:title xml:lang="lt-t-en-t0-mtec">Antrasis Europos Sąjungos mažumų ir diskriminacijos tyrimas</dct:title>
-                <dct:title xml:lang="en">A very interesting dataset (un jeu de données très intéressant)</dct:title>
-                <dct:description xml:lang="es-t-en-t0-mtec">La segunda encuesta de la Unión Europea sobre las minorías y la discriminación recogió información de más de 25 500 encuestados con diferentes orígenes étnicos e inmigrantes en los 28 Estados miembros de la UE.</dct:description>
-                <dct:description xml:lang="sk-t-en-t0-mtec">V rámci druhého prieskumu Európskej únie týkajúceho sa menšín a diskriminácie sa zozbierali informácie od viac ako 25 500 respondentov z rôznych etnických menšín a prisťahovalcov vo všetkých 28 členských štátoch EÚ.</dct:description>
-                <dct:title xml:lang="bg-t-en-t0-mtec">Второ проучване на малцинствата и дискриминацията в Европейския съюз</dct:title>
                 <dcat:distribution>
                     <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/817cfe1c-9c37-4eef-a8a3-32e99db10721">
                         <dct:title xml:lang="lt-t-en-t0-mtec">Antrasis Europos Sąjungos mažumų ir diskriminacijos tyrimas. Pagrindiniai rezultatai</dct:title>
@@ -562,8 +561,7 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:title xml:lang="sk-t-en-t0-mtec">Druhý prieskum Európskej únie týkajúci sa menšín a diskriminácie – hlavné výsledky</dct:title>
                         <dct:description xml:lang="et-t-en-t0-mtec">Aruandes käsitletakse ja täiendatakse FRA 2008. aastal läbi viidud esimest olulist kogu ELi hõlmavat uuringut vähemuste ja rändajate kogemuste kohta. Uuringus keskendutakse diskrimineerimisele erinevates keskkondades, politsei peatustele, kuriteo ohvriks langemisele, teadlikkusele õigustest ja ühiskondlikule osalusele.</dct:description>
                         <dct:description xml:lang="el-t-en-t0-mtec">Η έκθεση παρακολουθεί και διευρύνει την πρώτη σημαντική πανευρωπαϊκή έρευνα του FRA σχετικά με τις εμπειρίες των μειονοτήτων και των μεταναστών, η οποία πραγματοποιήθηκε το 2008. Η έρευνα επικεντρώνεται στις διακρίσεις σε διαφορετικά περιβάλλοντα, στις αστυνομικές στάσεις, στην ποινική θυματοποίηση, στην ευαισθητοποίηση σχετικά με τα δικαιώματα και στη συμμετοχή της κοινωνίας.</dct:description>
-                        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
-                        >2017-12-19T11:36:46.159274+02:00</dct:issued>
+                        <dct:issued>2017-12-19T11:36:46.159274+02:00</dct:issued>
                         <dct:title xml:lang="et-t-en-t0-mtec">Teine Euroopa Liidu vähemuste ja diskrimineerimise uuring – peamised tulemused</dct:title>
                         <dct:description xml:lang="es-t-en-t0-mtec">El informe da seguimiento y amplía la primera gran encuesta de la FRA sobre las experiencias de las minorías y los migrantes, realizada en 2008. La encuesta se centra en la discriminación en diferentes entornos, las detenciones policiales, la victimización de delitos, la sensibilización sobre los derechos y la participación social.</dct:description>
                         <dct:title xml:lang="fi-t-en-t0-mtec">Toinen Euroopan unionin vähemmistöjä ja syrjintää koskeva tutkimus – Tärkeimmät tulokset</dct:title>
@@ -578,10 +576,11 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                             <dcat:DataService rdf:about="http://data.europa.eu/88u/dataservice/f2ec416d-ad8a-4389-af26-69cc857218df">
                                 <dcat:servesDataset rdf:resource="http://data.europa.eu/88u/dataset/second-european-union-minorities-and-discrimination-survey"/>
                                 <dct:description xml:lang="en">The report follows up and expands on FRA’s first major EU-wide survey on minorities’ and migrants’ experiences, conducted in 2008. The survey focuses on discrimination in different settings, police stops, criminal victimisation, rights awareness and societal participation.</dct:description>
-                                <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
-                                >2017-12-19T11:36:46.159274+02:00</dct:issued>
+                                <dct:issued>2017-12-19T11:36:46.159274+02:00</dct:issued>
                                 <dcat:endpointURL rdf:resource="http://fra.europa.eu/en/publication/2017/eumidis-ii-main-results"/>
-                                <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                                <dct:license>
+                                    <dct:LicenseDocument rdf:about="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                                </dct:license>
                                 <dct:title xml:lang="en">Second European Union Minorities and Discrimination Survey - Main results</dct:title>
                             </dcat:DataService>
                         </dcat:accessService>
@@ -591,7 +590,9 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:description xml:lang="hu-t-en-t0-mtec">A jelentés az Európai Unió Alapjogi Ügynökségének a kisebbségek és migránsok tapasztalatairól 2008-ban végzett első nagyszabású felmérését követi nyomon és terjeszti ki. A felmérés a különböző helyszíneken történő megkülönböztetésre, a rendőrség leállítására, a bűncselekmények viktimizációjára, a jogokkal kapcsolatos tudatosságra és a társadalmi részvételre összpontosít.</dct:description>
                         <dct:description xml:lang="pt-t-en-t0-mtec">O relatório dá seguimento e alarga o primeiro grande inquérito da FRA à escala da UE sobre as experiências das minorias e dos migrantes, realizado em 2008. O inquérito centra-se na discriminação em diferentes contextos, nas paragens policiais, na vitimização criminal, na sensibilização para os direitos e na participação social.</dct:description>
                         <dct:title xml:lang="it-t-en-t0-mtec">Seconda indagine sulle minoranze e le discriminazioni nell'Unione europea — Principali risultati</dct:title>
-                        <adms:status rdf:resource="http://purl.org/adms/status/Completed"/>
+                        <adms:status>
+                            <skos:Concept rdf:about="http://purl.org/adms/status/Completed"/>
+                        </adms:status>
                         <dct:description xml:lang="fr-t-en-t0-mtec">Le rapport fait suite à la première grande enquête européenne sur l’expérience des minorités et des migrants menée par la FRA en 2008. L’enquête porte sur la discrimination dans différents contextes, les arrêts de la police, la victimisation criminelle, la sensibilisation aux droits et la participation de la société.</dct:description>
                         <dct:title xml:lang="pl-t-en-t0-mtec">Drugie badanie Unii Europejskiej na temat mniejszości i dyskryminacji – główne wyniki</dct:title>
                         <dct:description xml:lang="de-t-en-t0-mtec">In dem Bericht wird die erste umfassende EU-weite Umfrage der FRA über die Erfahrungen von Minderheiten und Migranten im Jahr 2008 weiterverfolgt und erweitert. Die Umfrage konzentriert sich auf Diskriminierung in verschiedenen Bereichen, polizeiliche Beendigungen, kriminelle Viktimisierung, Rechtebewusstsein und gesellschaftliche Teilhabe.</dct:description>
@@ -609,7 +610,9 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:description xml:lang="fi-t-en-t0-mtec">Raportissa seurataan ja laajennetaan perusoikeusviraston vuonna 2008 tekemää ensimmäistä merkittävää EU:n laajuista kyselytutkimusta vähemmistöjen ja maahanmuuttajien kokemuksista. Tutkimuksessa keskitytään syrjintään eri ympäristöissä, poliisin pysähdyksiin, rikoksen uhriksi joutumiseen, tietoisuutta oikeuksista ja yhteiskunnallista osallistumista.</dct:description>
                         <dct:description xml:lang="nl-t-en-t0-mtec">In het verslag wordt een vervolg gegeven aan en wordt ingegaan op de eerste grote EU-brede enquête van het FRA over de ervaringen van minderheden en migranten, die in 2008 is uitgevoerd. De enquête richt zich op discriminatie in verschillende omgevingen, politiestops, criminele victimisatie, rechtenbewustzijn en maatschappelijke participatie.</dct:description>
                         <dct:title xml:lang="nl-t-en-t0-mtec">Tweede enquête over minderheden en discriminatie van de Europese Unie — Belangrijkste resultaten</dct:title>
-                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        <dct:license>
+                            <dct:LicenseDocument rdf:about="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        </dct:license>
                         <dct:title xml:lang="fr-t-en-t0-mtec">Deuxième enquête de l’Union européenne sur les minorités et la discrimination — Principaux résultats</dct:title>
                         <dct:description xml:lang="sk-t-en-t0-mtec">Správa nadväzuje na prvý významný celoeurópsky prieskum o skúsenostiach menšín a migrantov, ktorý sa uskutočnil v roku 2008, a rozširuje ho. Prieskum sa zameriava na diskrimináciu v rôznych prostrediach, policajné zastávky, trestnú viktimizáciu, informovanosť o právach a spoločenskú účasť.</dct:description>
                         <dct:title xml:lang="hu-t-en-t0-mtec">Második európai uniós felmérés a kisebbségekről és a hátrányos megkülönböztetésről – főbb eredmények</dct:title>
@@ -617,7 +620,6 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:description xml:lang="bg-t-en-t0-mtec">В доклада се проследява и доразвива първото мащабно проучване на Агенцията на Европейския съюз за основните права (FRA) относно опита на малцинствата и мигрантите, проведено през 2008 г. Проучването е съсредоточено върху дискриминацията в различни среди, полицейските спирания, криминалната виктимизация, осведомеността за правата и участието на обществото.</dct:description>
                     </dcat:Distribution>
                 </dcat:distribution>
-                <dct:description xml:lang="hu-t-en-t0-mtec">A kisebbségekről és a hátrányos megkülönböztetésről szóló második európai uniós felmérés több mint 25 500 különböző etnikai kisebbséggel és bevándorló háttérrel rendelkező válaszadótól gyűjtött információkat mind a 28 uniós tagállamban.</dct:description>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/CYP"/>
                 </dct:spatial>
@@ -625,22 +627,19 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/FRA"/>
                 </dct:spatial>
-                <dct:title xml:lang="hu-t-en-t0-mtec">Második európai uniós felmérés a kisebbségekről és a hátrányos megkülönböztetésről</dct:title>
-                <dct:title xml:lang="pl-t-en-t0-mtec">Drugie badanie Unii Europejskiej na temat mniejszości i dyskryminacji</dct:title>
                 <dcat:theme>
                     <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/data-theme/EDUC"/>
                 </dcat:theme>
-                <dct:description xml:lang="fr-t-en-t0-mtec">La deuxième enquête de l’Union européenne sur les minorités et la discrimination a recueilli des informations auprès de plus de 25 500 personnes ayant des origines ethniques et immigrées différentes dans l’ensemble des 28 États membres de l’UE.</dct:description>
-                <dct:title xml:lang="sk-t-en-t0-mtec">Druhý prieskum Európskej únie týkajúci sa menšín a diskriminácie</dct:title>
                 <dct:subject rdf:resource="http://eurovoc.europa.eu/584"/>
                 <dct:spatial>
                     <dct:Location rdf:about="http://publications.europa.eu/resource/authority/country/SVN"/>
                 </dct:spatial>
-                <dct:title xml:lang="fr-t-en-t0-mtec">Deuxième enquête de l’Union européenne sur les minorités et la discrimination</dct:title>
                 <dcat:distribution>
                     <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/ab79d936-c062-4ff0-bbd8-205f653fc673">
                         <dct:title xml:lang="it-t-en-t0-mtec">Essere neri nell'UE</dct:title>
-                        <dcat:mediaType rdf:resource="http://www.iana.org/assignments/media-types/application/pdf"/>
+                        <dcat:mediaType>
+                            <dct:MediaType rdf:about="http://www.iana.org/assignments/media-types/application/pdf"/>
+                        </dcat:mediaType>
                         <dct:title xml:lang="mt-t-en-t0-mtec">Li tkun Iswed fl-UE</dct:title>
                         <dct:title xml:lang="fr-t-en-t0-mtec">Être Noir dans l’UE</dct:title>
                         <dct:title xml:lang="cs-t-en-t0-mtec">Být černoch v EU</dct:title>
@@ -670,7 +669,9 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:description xml:lang="el-t-en-t0-mtec">Σχεδόν είκοσι χρόνια μετά την έγκριση της νομοθεσίας της ΕΕ που απαγορεύει τις διακρίσεις, τα άτομα αφρικανικής καταγωγής στην ΕΕ αντιμετωπίζουν εκτεταμένες και παγιωμένες προκαταλήψεις και αποκλεισμό. Η παρούσα έκθεση περιγράφει τα επιλεγμένα αποτελέσματα της δεύτερης μεγάλης κλίμακας έρευνας του FRA για τους μετανάστες και τις μειονότητες (EU-MIDIS II).
                             Εξετάζει τις εμπειρίες σχεδόν 6.000 ατόμων αφρικανικής καταγωγής σε 12 κράτη μέλη της ΕΕ.</dct:description>
                         <dct:title xml:lang="da-t-en-t0-mtec">At være sort i EU</dct:title>
-                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        <dct:license>
+                            <dct:LicenseDocument rdf:about="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        </dct:license>
                         <dct:description xml:lang="nl-t-en-t0-mtec">Bijna twintig jaar na de aanneming van EU-wetgeving die discriminatie verbiedt, worden mensen van Afrikaanse afkomst in de EU geconfronteerd met wijdverbreide en hardnekkige vooroordelen en uitsluiting. Dit verslag schetst de geselecteerde resultaten van de tweede grootschalige EU-brede enquête over migranten en minderheden (EU-MIDIS II) van het FRA. Zij onderzoekt de ervaringen van bijna 6000 mensen van Afrikaanse afkomst in 12 EU-lidstaten.</dct:description>
                         <dct:title xml:lang="pl-t-en-t0-mtec">Bycie czarnym w UE</dct:title>
                         <dct:description xml:lang="ga-t-en-t0-mtec">Beagnach fiche bliain tar éis dlíthe an Aontais a ghlacadh lena gcuirtear cosc ar an idirdhealú, tá réamhchlaonadh agus eisiamh forleathan agus seanbhunaithe roimh dhaoine de bhunadh Afracach san Aontas. Leagtar amach sa tuarascáil seo torthaí roghnaithe ón dara suirbhé ar mhórscála a rinne FRA ar fud an Aontais maidir le himircigh agus mionlaigh (EU-MIDIS II). Scrúdaítear ann an taithí a bhí ag beagnach 6,000 duine de bhunadh Afracach in 12 Bhallstát de chuid an Aontais.</dct:description>
@@ -694,7 +695,9 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:title xml:lang="sk-t-en-t0-mtec">Byť čiernym v EÚ</dct:title>
                         <dct:title xml:lang="hu-t-en-t0-mtec">Feketeség az EU-ban</dct:title>
                         <dct:title xml:lang="et-t-en-t0-mtec">Mustanahaline olemine ELis</dct:title>
-                        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/PDF"/>
+                        <dct:format>
+                            <dct:MediaTypeOrExtent rdf:about="http://publications.europa.eu/resource/authority/file-type/PDF"/>
+                        </dct:format>
                         <dct:description xml:lang="mt-t-en-t0-mtec">Kważi għoxrin sena wara l-adozzjoni tal-liġijiet tal-UE li jipprojbixxu d-diskriminazzjoni, il-persuni ta’ nisel Afrikan fl-UE jiffaċċjaw preġudizzju u esklużjoni mifruxa u stabbiliti. Dan ir-rapport jiddeskrivi r-riżultati magħżula mit-tieni stħarriġ fuq skala kbira tal-FRA dwar il-migranti u l-minoranzi (EU-MIDIS II). Jeżamina l-esperjenzi ta’ kważi 6,000 persuna ta’ dixxendenza Afrikana fi 12-il Stat Membru tal-UE.</dct:description>
                         <dct:description xml:lang="lv-t-en-t0-mtec">Gandrīz divdesmit gadus pēc tam, kad pieņemti ES tiesību akti, kas aizliedz diskrimināciju, afrikāņu izcelsmes cilvēki ES saskaras ar plaši izplatītiem un iesakņojušiem aizspriedumiem un atstumtību. Šajā ziņojumā ir izklāstīti atlasītie rezultāti, kas iegūti FRA otrajā plašajā ES mēroga apsekojumā par migrantiem un minoritātēm (EU-MIDIS II).
                             Tajā aplūkota gandrīz 6000 afrikāņu izcelsmes cilvēku pieredze 12 ES dalībvalstīs.</dct:description>
@@ -704,27 +707,33 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:title xml:lang="ro-t-en-t0-mtec">Fiind negru în UE</dct:title>
                         <dct:description xml:lang="pl-t-en-t0-mtec">Prawie dwadzieścia lat po przyjęciu unijnych przepisów zakazujących dyskryminacji osoby pochodzenia afrykańskiego w UE napotykają powszechne i utrwalone uprzedzenia i wykluczenie. W niniejszym sprawozdaniu przedstawiono wybrane wyniki drugiego szeroko zakrojonego ogólnounijnego badania dotyczącego migrantów i mniejszości (EU-MIDIS II) przeprowadzonego przez FRA.
                             Przeanalizowano w nim doświadczenia prawie 6000 osób pochodzenia afrykańskiego w 12 państwach członkowskich UE.</dct:description>
-                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:rights>
+                            <dct:RightsStatement rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        </dct:rights>
                         <dcat:accessURL rdf:resource="https://fra.europa.eu/en/publication/2018/eumidis-ii-being-black"/>
                         <dct:title xml:lang="sv-t-en-t0-mtec">Att vara svart i EU</dct:title>
                         <dct:description xml:lang="pt-t-en-t0-mtec">Quase vinte anos após a adoção da legislação da UE que proíbe a discriminação, as pessoas de ascendência africana na UE enfrentam preconceitos e exclusões generalizados e enraizados. O presente relatório descreve os resultados selecionados do segundo inquérito em grande escala da FRA a nível da UE sobre migrantes e minorias (EU-MIDIS II). Examina as experiências de quase 6 000 pessoas de ascendência africana em 12 Estados-Membros da UE.</dct:description>
-                        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date"
-                        >2018-11-28</dct:issued>
+                        <dct:issued>2018-11-28</dct:issued>
                     </dcat:Distribution>
                 </dcat:distribution>
-                <dct:title xml:lang="ro-t-en-t0-mtec">Al doilea sondaj al Uniunii Europene privind minoritățile și discriminarea</dct:title>
                 <foaf:page>
                     <foaf:Document rdf:about="http://fra.europa.eu/sites/default/files/fra_uploads/fra-2017-eu-midis-ii-questionnaire_en.pdf">
-                        <dct:type rdf:resource="http://publications.europa.eu/resource/authority/documentation-type/DOCUMENTATION_MAIN"/>
+                        <dct:type>
+                            <skos:Concept rdf:about="http://publications.europa.eu/resource/authority/documentation-type/DOCUMENTATION_MAIN"/>
+                        </dct:type>
                         <dct:title xml:lang="en">Second European Union Minorities and Discrimination Survey - Questionnaire 2016</dct:title>
                         <dct:description xml:lang="en">The survey questionnaire was implemented&#xD;
                             by means of face-to-face interviewing&#xD;
                             using computer-assisted in-person interviewing&#xD;
                             (CAPI) in all the survey countries.</dct:description>
-                        <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/PDF"/>
+                        <dct:format>
+                            <dct:MediaTypeOrExtent rdf:about="http://publications.europa.eu/resource/authority/file-type/PDF"/>
+                        </dct:format>
                         <foaf:topic rdf:resource="http://data.europa.eu/88u/dataset/second-european-union-minorities-and-discrimination-survey"/>
-                        <dcat:mediaType rdf:resource="http://www.iana.org/assignments/media-types/application/pdf"/>
-                        <schema:url xml:lang="en">http://fra.europa.eu/sites/default/files/fra_uploads/fra-2017-eu-midis-ii-questionnaire_en.pdf</schema:url>
+                        <dcat:mediaType>
+                            <dct:MediaType rdf:about="http://www.iana.org/assignments/media-types/application/pdf"/>
+                        </dcat:mediaType>
+                        <schema_org:url xml:lang="en">http://fra.europa.eu/sites/default/files/fra_uploads/fra-2017-eu-midis-ii-questionnaire_en.pdf</schema_org:url>
                     </foaf:Document>
                 </foaf:page>
                 <dcat:distribution>
@@ -744,8 +753,7 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:title xml:lang="pl-t-en-t0-mtec">Drugie badanie Unii Europejskiej na temat mniejszości i dyskryminacji</dct:title>
                         <dct:title xml:lang="sk-t-en-t0-mtec">Druhý prieskum Európskej únie týkajúci sa menšín a diskriminácie</dct:title>
                         <dct:title xml:lang="el-t-en-t0-mtec">Δεύτερη έρευνα της Ευρωπαϊκής Ένωσης για τις μειονότητες και τις διακρίσεις</dct:title>
-                        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
-                        >2017-12-19T11:46:40.796965+02:00</dct:issued>
+                        <dct:issued>2017-12-19T11:46:40.796965+02:00</dct:issued>
                         <dct:description xml:lang="pt-t-en-t0-mtec">Esta ferramenta interativa oferece diferentes formas de explorar os dados por trás dos resultados do inquérito.</dct:description>
                         <dct:format>
                             <dct:MediaTypeOrExtent rdf:about="http://publications.europa.eu/resource/authority/file-type/DOC"/>
@@ -763,7 +771,9 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:description xml:lang="sv-t-en-t0-mtec">Detta interaktiva verktyg erbjuder olika sätt att utforska de data som ligger bakom enkätresultaten.</dct:description>
                         <dct:description xml:lang="bg-t-en-t0-mtec">Този интерактивен инструмент предлага различни начини за проучване на данните в основата на резултатите от проучването.</dct:description>
                         <dct:description xml:lang="ga-t-en-t0-mtec">Cuireann an uirlis idirghníomhach seo bealaí éagsúla ar fáil chun na sonraí atá taobh thiar de thorthaí an tsuirbhé a fhiosrú.</dct:description>
-                        <dct:rights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        <dct:rights>
+                            <dct:RightsStatement rdf:about="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+                        </dct:rights>
                         <dct:title xml:lang="ga-t-en-t0-mtec">Dara Suirbhé an Aontais Eorpaigh ar Mhionlaigh agus ar Idirdhealú</dct:title>
                         <dct:title xml:lang="et-t-en-t0-mtec">Teine Euroopa Liidu vähemuste ja diskrimineerimise uuring</dct:title>
                         <dct:type rdf:resource="http://publications.europa.eu/resource/authority/distribution-type/VISUALIZATION"/>
@@ -773,16 +783,19 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:description xml:lang="lv-t-en-t0-mtec">Šis interaktīvais rīks piedāvā dažādus veidus, kā izpētīt aptaujas rezultātus.</dct:description>
                         <dct:title xml:lang="ro-t-en-t0-mtec">Al doilea sondaj al Uniunii Europene privind minoritățile și discriminarea</dct:title>
                         <dct:description xml:lang="fi-t-en-t0-mtec">Tämä interaktiivinen työkalu tarjoaa erilaisia tapoja tutkia kyselyn tulosten taustalla olevia tietoja.</dct:description>
-                        <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
-                        >2017-12-06T00:00:00+02:00</dct:modified>
+                        <dct:modified>2017-12-06T00:00:00+02:00</dct:modified>
                         <dct:title xml:lang="cs-t-en-t0-mtec">Druhý průzkum o menšinách a diskriminaci v Evropské unii</dct:title>
-                        <dct:license rdf:resource="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        <dct:license>
+                            <dct:LicenseDocument rdf:about="http://publications.europa.eu/resource/authority/licence/COM_REUSE"/>
+                        </dct:license>
                         <dct:title xml:lang="sv-t-en-t0-mtec">Europeiska unionens andra undersökning av minoriteter och diskriminering</dct:title>
                         <dct:title xml:lang="hu-t-en-t0-mtec">Második európai uniós felmérés a kisebbségekről és a hátrányos megkülönböztetésről</dct:title>
                         <dct:description xml:lang="ro-t-en-t0-mtec">Acest instrument interactiv oferă diferite modalități de a explora datele din spatele rezultatelor sondajului.</dct:description>
                         <dct:title xml:lang="mt-t-en-t0-mtec">It-Tieni Stħarriġ tal-Unjoni Ewropea dwar il-Minoranzi u d-Diskriminazzjoni</dct:title>
                         <dct:title xml:lang="de-t-en-t0-mtec">Zweite Erhebung über Minderheiten und Diskriminierung in der Europäischen Union</dct:title>
-                        <adms:status rdf:resource="http://purl.org/adms/status/Completed"/>
+                        <adms:status>
+                            <skos:Concept rdf:about="http://purl.org/adms/status/Completed"/>
+                        </adms:status>
                         <dct:description xml:lang="it-t-en-t0-mtec">Questo strumento interattivo offre diversi modi per esplorare i dati alla base dei risultati dell'indagine.</dct:description>
                         <dct:title xml:lang="en">Second European Union Minorities and Discrimination Survey</dct:title>
                         <dct:title xml:lang="nl-t-en-t0-mtec">Tweede enquête van de Europese Unie naar minderheden en discriminatie</dct:title>
@@ -793,26 +806,16 @@ Cette section contient des *caractères internationaux* (ainsi que des &quot;car
                         <dct:description xml:lang="el-t-en-t0-mtec">Αυτό το διαδραστικό εργαλείο προσφέρει διάφορους τρόπους διερεύνησης των δεδομένων πίσω από τα αποτελέσματα της έρευνας.</dct:description>
                     </dcat:Distribution>
                 </dcat:distribution>
+                <dct:title xml:lang="en">A very interesting dataset (un jeu de données très intéressant)</dct:title>
+                <dct:description xml:lang="en"># Introduction
+This dataset has been established for testing purposes.
+
+## Details
+This is a section about details. Here is an HTML tag: &lt;img src="http://google.com" /&gt;. And [a link](https://google.com).
+
+## Informations intéressantes
+Cette section contient des *caractères internationaux* (ainsi que des "caractères spéciaux"). 'çàü^@/~^&amp;</dct:description>
             </dcat:Dataset>
-        </foaf:primaryTopic>
-        <spdx:checksum>
-            <spdx:Checksum>
-                <spdx:checksumValue>9d839391284f5b263074b7dfa3c7e5d0</spdx:checksumValue>
-                <spdx:algorithm rdf:resource="https://spdx.org/rdf/terms/#checksumAlgorithm_md5"/>
-            </spdx:Checksum>
-        </spdx:checksum>
-        <edp:originalLanguage>en</edp:originalLanguage>
-        <dct:identifier>second-european-union-minorities-and-discrimination-survey</dct:identifier>
-        <dct:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
-        >2022-04-22T12:08:18Z</dct:modified>
-        <edp:transIssued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
-        >2022-02-01T10:08:11Z</edp:transIssued>
-        <edp:transStatus rdf:resource="https://europeandataportal.eu/voc#TransCompleted"/>
-        <dct:creator rdf:resource="http://piveau.io"/>
-        <edp:transReceived rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
-        >2022-02-04T01:19:57Z</edp:transReceived>
-        <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime"
-        >2021-12-03T11:44:46Z</dct:issued>
-        <dqv:hasQualityMetadata rdf:resource="http://data.europa.eu/88u/metrics/second-european-union-minorities-and-discrimination-survey"/>
-    </dcat:CatalogRecord>
+        </dcat:dataset>
+    </dcat:Catalog>
 </rdf:RDF>

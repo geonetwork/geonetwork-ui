@@ -9,11 +9,14 @@ import GENERIC_DATASET_PLUS_METAWAL_DATASET from '../fixtures/generic-dataset+me
 import METAWAL_DATASET from '../fixtures/metawal.iso19115-3.dataset.xml'
 // @ts-ignore
 import METAWAL_SERVICE from '../fixtures/metawal.iso19115-3.service.xml'
+// @ts-ignore
+import SEXTANT_CURRENTS_DATASET from '../fixtures/sextant.iso19115-3.dataset.xml'
 import {
   METAWAL_DATASET_RECORD,
   METAWAL_SERVICE_RECORD,
 } from '../fixtures/metawal.records'
 import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
+import { SEXTANT_CURRENTS_DATASET_RECORD } from '../fixtures/sextant.records'
 
 // this makes the xml go through the same formatting as the converter
 function formatXml(xmlString: string) {
@@ -36,6 +39,10 @@ describe('ISO19115-3 converter', () => {
       const record = await converter.readRecord(METAWAL_SERVICE)
       expect(record).toStrictEqual(METAWAL_SERVICE_RECORD)
     })
+    it('produces the corresponding record (sextant dataset)', async () => {
+      const record = await converter.readRecord(SEXTANT_CURRENTS_DATASET)
+      expect(record).toStrictEqual(SEXTANT_CURRENTS_DATASET_RECORD)
+    })
     it('produces the corresponding record (generic dataset)', async () => {
       const record = await converter.readRecord(GENERIC_DATASET)
       // exclude unsupported fields
@@ -44,12 +51,14 @@ describe('ISO19115-3 converter', () => {
         ownerOrganization: {
           name: GENERIC_DATASET_RECORD.ownerOrganization.name,
           website: GENERIC_DATASET_RECORD.ownerOrganization.website,
+          translations: GENERIC_DATASET_RECORD.ownerOrganization.translations,
         },
         contacts: GENERIC_DATASET_RECORD.contacts.map((c) => ({
           ...c,
           organization: {
             name: c.organization.name,
             website: c.organization.website,
+            translations: c.organization.translations,
           },
         })),
         contactsForResource: GENERIC_DATASET_RECORD.contactsForResource.map(
@@ -58,6 +67,7 @@ describe('ISO19115-3 converter', () => {
             organization: {
               name: c.organization.name,
               website: c.organization.website,
+              translations: c.organization.translations,
             },
           })
         ),
@@ -115,12 +125,15 @@ describe('ISO19115-3 converter', () => {
             ownerOrganization: {
               name: GENERIC_DATASET_RECORD.ownerOrganization.name,
               website: GENERIC_DATASET_RECORD.ownerOrganization.website,
+              translations:
+                GENERIC_DATASET_RECORD.ownerOrganization.translations,
             },
             contacts: GENERIC_DATASET_RECORD.contacts.map((c) => ({
               ...c,
               organization: {
                 name: c.organization.name,
                 website: c.organization.website,
+                translations: c.organization.translations,
               },
             })),
             contactsForResource: GENERIC_DATASET_RECORD.contactsForResource.map(
@@ -129,6 +142,7 @@ describe('ISO19115-3 converter', () => {
                 organization: {
                   name: c.organization.name,
                   website: c.organization.website,
+                  translations: c.organization.translations,
                 },
               })
             ),

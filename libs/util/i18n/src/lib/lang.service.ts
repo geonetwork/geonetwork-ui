@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { LANG_2_TO_3_MAPPER } from './i18n.constants'
+import { LANG_2_TO_3_MAPPER } from './language-codes'
 import { TranslateService } from '@ngx-translate/core'
 
 @Injectable({

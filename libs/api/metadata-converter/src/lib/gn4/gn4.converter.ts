@@ -37,7 +37,8 @@ export class Gn4Converter extends BaseConverter<Gn4Record> {
       spatialExtents: [],
       temporalExtents: [],
       overviews: [],
-      languages: [],
+      defaultLanguage: null,
+      otherLanguages: [],
     }
     const record: CatalogRecord = Object.keys(_source).reduce(
       (prev, fieldName) =>

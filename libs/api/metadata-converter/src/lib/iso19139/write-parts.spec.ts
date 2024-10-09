@@ -287,7 +287,17 @@ describe('write parts', () => {
       writeOnlineResources(
         {
           ...datasetRecord,
-          onlineResources: [distributionLink],
+          onlineResources: [
+            {
+              ...distributionLink,
+              translations: {
+                description: {
+                  fr: "Un lien vers la documentation en ligne en PDF ; veuillez pardonner les fautes d'orthographes.",
+                  de: 'Ein Link zur Online-Dokumentation im PDF-Format; Bitte verzeihen Sie die Tippfehler.',
+                },
+              },
+            },
+          ],
         },
         rootEl
       )
@@ -303,6 +313,17 @@ describe('write parts', () => {
                             </gmd:linkage>
                             <gmd:description>
                                 <gco:CharacterString>A link to the online documentation in PDF; please forgive the typos.</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#EN">A link to the online documentation in PDF; please forgive the typos.</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#FR">Un lien vers la documentation en ligne en PDF ; veuillez pardonner les fautes d'orthographes.</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">Ein Link zur Online-Dokumentation im PDF-Format; Bitte verzeihen Sie die Tippfehler.</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
                             </gmd:description>
                             <gmd:name>
                                 <gco:CharacterString>Documentation</gco:CharacterString>

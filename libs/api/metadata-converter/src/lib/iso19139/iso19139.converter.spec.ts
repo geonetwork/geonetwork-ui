@@ -98,12 +98,15 @@ describe('ISO19139 converter', () => {
             ownerOrganization: {
               name: GENERIC_DATASET_RECORD.ownerOrganization.name,
               website: GENERIC_DATASET_RECORD.ownerOrganization.website,
+              translations:
+                GENERIC_DATASET_RECORD.ownerOrganization.translations,
             },
             contacts: GENERIC_DATASET_RECORD.contacts.map((c) => ({
               ...c,
               organization: {
                 name: c.organization.name,
                 website: c.organization.website,
+                translations: c.organization.translations,
               },
             })),
             contactsForResource: GENERIC_DATASET_RECORD.contactsForResource.map(
@@ -112,6 +115,7 @@ describe('ISO19139 converter', () => {
                 organization: {
                   name: c.organization.name,
                   website: c.organization.website,
+                  translations: c.organization.translations,
                 },
               })
             ),

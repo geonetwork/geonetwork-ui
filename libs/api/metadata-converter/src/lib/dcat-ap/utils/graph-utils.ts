@@ -1,86 +1,101 @@
-import { lit, Literal, Node, parse, Statement, Store } from 'rdflib'
+import { lit, Literal, parse, Statement, Store } from 'rdflib'
 import { Quad_Object, Quad_Predicate, Quad_Subject } from 'rdflib/lib/tf-types'
 import { ContentType } from 'rdflib/lib/types'
 import { BASE_URI } from './uri'
+import {
+  FieldTranslation,
+  LanguageCode,
+  ModelTranslations,
+} from '@geonetwork-ui/common/domain/model/record'
 
-export function findNodeLocalized(
+/**
+ * This will find all literal nodes matching the criteria
+ * and store their values inside the translations object. It will then
+ * return the value in the default language
+ */
+export function readLocalizedValue<T extends ModelTranslations>(
   dataStore: Store,
   subject: Quad_Subject,
   predicate: Quad_Predicate,
   object: Quad_Object,
-  language: string
-): Node | null {
+  fieldName: string,
+  translations: T,
+  defaultLanguage: string
+): [string | null, T] {
+  function readNodeLanguage(node: Literal): string {
+    return node.language.toLowerCase().substring(0, 2)
+  }
+
   const literals = dataStore
     .each(subject, predicate, object)
     .filter((node): node is Literal => node instanceof Literal)
-  const matchingLang = literals.find((node) =>
-    node.language.startsWith(language)
+
+  if (!literals.length) return [null, translations]
+
+  const matchingDefault = literals.find(
+    (node) => readNodeLanguage(node) === defaultLanguage
   )
   const noLang = literals.find((node) => !node.language)
-  const anyLang = literals[0]
-  return matchingLang ?? noLang ?? anyLang
+  const defaultValue =
+    matchingDefault?.value ?? noLang?.value ?? '(value not found)'
+  const translationsSafe = translations ?? ({} as T)
+
+  for (const literal of literals) {
+    const language = readNodeLanguage(literal)
+    if (language === defaultLanguage || !language) continue
+    translationsSafe[fieldName] = {
+      ...translationsSafe[fieldName],
+      [language]: literal.value,
+    }
+  }
+
+  return [defaultValue, translationsSafe]
 }
 
 export function getOrAddStatement(
   dataStore: Store,
   subject: Quad_Subject,
   predicate: Quad_Predicate,
-  object: Quad_Object | string
+  object: Quad_Object
 ): Statement {
-  let statement = dataStore.statementsMatching(
-    subject,
-    predicate,
-    typeof object === 'string' ? null : object
-  )[0]
+  let statement = dataStore.statementsMatching(subject, predicate, object)[0]
   if (!statement) {
     statement = dataStore.add(subject, predicate, object) as Statement
   }
   return statement
 }
 
-export function getOrAddLiteral(
+export function writeLiteral(
   dataStore: Store,
   subject: Quad_Subject,
   predicate: Quad_Predicate,
-  objectValue: string
-) {
-  let statement = dataStore.statementsMatching(subject, predicate, null)[0]
-  if (!statement) {
-    statement = dataStore.add(subject, predicate, lit(objectValue)) as Statement
-  } else {
-    statement.object = lit(objectValue)
-  }
-  return statement
+  literalValue: string
+): void {
+  dataStore.removeStatements(
+    dataStore.statementsMatching(subject, predicate, null)
+  )
+  dataStore.add(subject, predicate, lit(literalValue))
 }
 
-export function getOrAddLocalizedLiteral(
+export function writeLocalizedLiteral(
   dataStore: Store,
   subject: Quad_Subject,
   predicate: Quad_Predicate,
-  objectValue: string,
-  language: string
-) {
-  const statements = dataStore.statementsMatching(subject, predicate, null)
-  const withMatchingLanguage = statements.filter(
-    (statement) =>
-      statement.object instanceof Literal &&
-      statement.object.language.startsWith(language)
+  literalValue: string,
+  translations: FieldTranslation,
+  defaultLanguage: LanguageCode
+): void {
+  dataStore.removeStatements(
+    dataStore.statementsMatching(subject, predicate, null)
   )
-  const withNoLanguage = statements.filter(
-    (statement) =>
-      statement.object instanceof Literal && !statement.object.language
-  )
-  let statement = withMatchingLanguage[0] || withNoLanguage[0]
-  if (!statement) {
-    statement = dataStore.add(
-      subject,
-      predicate,
-      lit(objectValue, language)
-    ) as Statement
-  } else {
-    statement.object = lit(objectValue, language)
+  dataStore.add(subject, predicate, lit(literalValue, defaultLanguage))
+  if (!translations) {
+    return
   }
-  return statement
+  for (const language in translations) {
+    const translatedValue = translations[language]
+    dataStore.add(subject, predicate, lit(translatedValue, language))
+  }
 }
 
 export function loadGraph(

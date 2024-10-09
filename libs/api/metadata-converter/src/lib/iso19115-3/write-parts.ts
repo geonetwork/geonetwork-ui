@@ -2,9 +2,9 @@ import {
   CatalogRecord,
   DatasetRecord,
   Individual,
+  LanguageCode,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
-  addAttribute,
   allChildrenElement,
   appendChildren,
   appendChildTree,
@@ -20,6 +20,7 @@ import {
   removeChildren,
   removeChildrenByName,
   setTextContent,
+  writeAttribute,
   XmlElement,
 } from '../xml-utils'
 import {
@@ -44,18 +45,22 @@ import {
   writeCharacterString,
   writeDateTime,
   writeLinkage,
+  writeLocalizedCharacterString,
 } from '../iso19139/write-parts'
 import { findIdentification } from '../iso19139/read-parts'
 import { namePartsToFull } from '../iso19139/utils/individual-name'
+import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
 
 export function writeUniqueIdentifier(
   record: CatalogRecord,
   rootEl: XmlElement
 ) {
   pipe(
-    findChildOrCreate('mdb:metadataIdentifier'),
-    findChildOrCreate('mcc:MD_Identifier'),
-    findChildOrCreate('mcc:code'),
+    findNestedChildOrCreate(
+      'mdb:metadataIdentifier',
+      'mcc:MD_Identifier',
+      'mcc:code'
+    ),
     writeCharacterString(record.uniqueIdentifier)
   )(rootEl)
 }
@@ -68,11 +73,11 @@ export function writeKind(record: CatalogRecord, rootEl: XmlElement) {
       'mdb:resourceScope',
       'mcc:MD_ScopeCode'
     ),
-    addAttribute(
+    writeAttribute(
       'codeList',
       'https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode'
     ),
-    addAttribute('codeListValue', record.kind),
+    writeAttribute('codeListValue', record.kind),
     setTextContent(record.kind)
   )(rootEl)
 }
@@ -105,11 +110,11 @@ function appendRecordDate(
         pipe(
           createElement('cit:dateType'),
           createChild('cit:CI_DateTypeCode'),
-          addAttribute(
+          writeAttribute(
             'codeList',
             'https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode'
           ),
-          addAttribute('codeListValue', type),
+          writeAttribute('codeListValue', type),
           setTextContent(type)
         )
       )
@@ -172,11 +177,11 @@ function appendResourceDate(
           pipe(
             createElement('cit:dateType'),
             createChild('cit:CI_DateTypeCode'),
-            addAttribute(
+            writeAttribute(
               'codeList',
               'https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode'
             ),
-            addAttribute('codeListValue', type),
+            writeAttribute('codeListValue', type),
             setTextContent(type)
           )
         )
@@ -212,7 +217,10 @@ export function writeResourcePublished(
   appendResourceDate(record.resourcePublished, 'publication')(rootEl)
 }
 
-export function appendResponsibleParty(contact: Individual) {
+export function appendResponsibleParty(
+  contact: Individual,
+  defaultLanguage: LanguageCode
+) {
   const fullName = namePartsToFull(contact.firstName, contact.lastName)
 
   const createIndividual = pipe(
@@ -281,11 +289,11 @@ export function appendResponsibleParty(contact: Individual) {
   const createRole = pipe(
     createElement('cit:role'),
     createChild('cit:CI_RoleCode'),
-    addAttribute(
+    writeAttribute(
       'codeList',
       'https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode'
     ),
-    addAttribute('codeListValue', getRoleCode(contact.role)),
+    writeAttribute('codeListValue', getRoleCode(contact.role)),
     setTextContent(getRoleCode(contact.role))
   )
 
@@ -296,7 +304,11 @@ export function appendResponsibleParty(contact: Individual) {
       ? appendChildren(
           pipe(
             createElement('cit:name'),
-            writeCharacterString(contact.organization?.name)
+            writeLocalizedCharacterString(
+              contact.organization?.name,
+              contact.organization?.translations?.name,
+              defaultLanguage
+            )
           )
         )
       : noop,
@@ -316,7 +328,10 @@ export function writeContacts(record: CatalogRecord, rootEl: XmlElement) {
     removeChildrenByName('mdb:contact'),
     appendChildren(
       ...record.contacts.map((contact) =>
-        pipe(createElement('gmd:contact'), appendResponsibleParty(contact))
+        pipe(
+          createElement('gmd:contact'),
+          appendResponsibleParty(contact, record.defaultLanguage)
+        )
       )
     )
   )(rootEl)
@@ -339,7 +354,7 @@ export function writeContactsForResource(
       ...withoutDistributors.map((contact) =>
         pipe(
           createElement('mri:pointOfContact'),
-          appendResponsibleParty(contact)
+          appendResponsibleParty(contact, record.defaultLanguage)
         )
       )
     )
@@ -354,7 +369,7 @@ export function writeContactsForResource(
       ...distributors.map((contact) =>
         pipe(
           createElement('mrd:distributorContact'),
-          appendResponsibleParty(contact)
+          appendResponsibleParty(contact, record.defaultLanguage)
         )
       )
     )
@@ -365,7 +380,7 @@ export function writeKeywords(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
     findOrCreateIdentification(),
     removeKeywords(),
-    appendKeywords(record.keywords)
+    appendKeywords(record.keywords, record.defaultLanguage)
   )(rootEl)
 }
 
@@ -387,7 +402,11 @@ export function writeLineage(record: DatasetRecord, rootEl: XmlElement) {
       'mrl:LI_Lineage',
       'mrl:statement'
     ),
-    writeCharacterString(record.lineage)
+    writeLocalizedCharacterString(
+      record.lineage,
+      record.translations?.lineage,
+      record.defaultLanguage
+    )
   )(rootEl)
 }
 
@@ -396,11 +415,11 @@ export function writeStatus(record: DatasetRecord, rootEl: XmlElement) {
   pipe(
     findOrCreateIdentification(),
     findNestedChildOrCreate('mri:status', 'mcc:MD_ProgressCode'),
-    addAttribute(
+    writeAttribute(
       'codeList',
       'https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode'
     ),
-    addAttribute('codeListValue', progressCode),
+    writeAttribute('codeListValue', progressCode),
     setTextContent(progressCode)
   )(rootEl)
 }
@@ -422,11 +441,11 @@ export function writeSpatialRepresentation(
       'mri:spatialRepresentationType',
       'mcc:MD_SpatialRepresentationTypeCode'
     ),
-    addAttribute(
+    writeAttribute(
       'codeList',
       'https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_SpatialRepresentationTypeCode'
     ),
-    addAttribute('codeListValue', record.spatialRepresentation),
+    writeAttribute('codeListValue', record.spatialRepresentation),
     setTextContent(record.spatialRepresentation)
   )(rootEl)
 }
@@ -480,6 +499,7 @@ export function writeOnlineResources(
 
   if (record.kind === 'service') {
     appendServiceOnlineResources(record, rootEl)
+    return
   }
 
   // for each online resource, either find an existing distribution info or create a new one
@@ -492,7 +512,49 @@ export function writeOnlineResources(
         ),
         appendChildTree(createDistributionInfo())
       ),
-      appendOnlineResource(onlineResource, appendOnlineResourceFormat)
+      appendOnlineResource(
+        onlineResource,
+        appendOnlineResourceFormat,
+        record.translations,
+        record.defaultLanguage
+      )
     )(rootEl)
   })
+}
+
+function writeLocaleElement(language: LanguageCode) {
+  const lang3 = LANG_2_TO_3_MAPPER[language.toLowerCase()]
+  return pipe(
+    findChildOrCreate('lan:PT_Locale'),
+    writeAttribute('id', language.toUpperCase()),
+    findNestedChildOrCreate('lan:language', 'gmd:LanguageCode'),
+    writeAttribute('codeList', 'http://www.loc.gov/standards/iso639-2/'),
+    writeAttribute('codeListValue', lang3)
+  )
+}
+
+export function writeDefaultLanguage(
+  record: DatasetRecord,
+  rootEl: XmlElement
+) {
+  pipe(
+    findChildOrCreate('mdb:defaultLocale'),
+    writeLocaleElement(record.defaultLanguage)
+  )(rootEl)
+}
+
+export function writeOtherLanguages(record: DatasetRecord, rootEl: XmlElement) {
+  // clear existing
+  removeChildrenByName('mdb:otherLocale')(rootEl)
+
+  // do not write down languages if there is nothing else than the default one
+  if (!record.otherLanguages?.length) {
+    return
+  }
+
+  appendChildren(
+    ...record.otherLanguages.map((lang: LanguageCode) =>
+      pipe(createElement('mdb:otherLocale'), writeLocaleElement(lang))
+    )
+  )(rootEl)
 }

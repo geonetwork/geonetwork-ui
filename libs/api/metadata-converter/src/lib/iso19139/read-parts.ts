@@ -1,13 +1,21 @@
 import {
   Constraint,
+  ConstraintTranslations,
   DatasetOnlineResource,
+  FieldTranslation,
   GraphicOverview,
   Individual,
   Keyword,
+  KeywordTranslations,
+  LanguageCode,
+  ModelTranslations,
   OnlineResource,
+  OnlineResourceTranslations,
   Organization,
+  OrganizationTranslations,
   RecordKind,
   RecordStatus,
+  RecordTranslations,
   Role,
   ServiceOnlineResource,
   SpatialRepresentationType,
@@ -45,6 +53,7 @@ import { getKeywordTypeFromKeywordTypeCode } from './utils/keyword.mapper'
 import { getRoleFromRoleCode } from './utils/role.mapper'
 import { getStatusFromStatusCode } from './utils/status.mapper'
 import { getUpdateFrequencyFromFrequencyCode } from './utils/update-frequency.mapper'
+import { LANG_3_TO_2_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
 
 export function extractCharacterString(): ChainableFunction<
   XmlElement,
@@ -56,6 +65,51 @@ export function extractCharacterString(): ChainableFunction<
       findChildElement('gmx:Anchor', false)
     ),
     readText()
+  )
+}
+
+/**
+ * Translated values will also be collected in the translations object
+ */
+export function extractLocalizedCharacterString<T extends ModelTranslations>(
+  fieldName: string,
+  translations?: T
+): ChainableFunction<XmlElement, [string, T]> {
+  return combine(
+    pipe(
+      fallback(
+        findChildElement('gco:CharacterString', false),
+        findChildElement('gmx:Anchor', false)
+      ),
+      readText()
+    ),
+    (el) => {
+      const translatedValues = findNestedElements(
+        'gmd:PT_FreeText',
+        'gmd:textGroup',
+        'gmd:LocalisedCharacterString'
+      )(el)
+      const translationsSafe = translations ?? ({} as T)
+      if (!translatedValues.length) return translationsSafe
+      const valueTranslations: FieldTranslation = translatedValues.reduce(
+        (prev, translationEl) => {
+          const lang = readAttribute('locale')(translationEl)
+            .toLowerCase()
+            .replace(/^#/, '')
+          const value = readText()(translationEl)
+          if (!lang) {
+            return prev
+          }
+          return { ...prev, [lang]: value }
+        },
+        {}
+      )
+      translationsSafe[fieldName] = {
+        ...translationsSafe[fieldName],
+        ...valueTranslations,
+      }
+      return translationsSafe
+    }
   )
 }
 
@@ -133,13 +187,14 @@ export function extractOrganization(): ChainableFunction<
     combine(
       pipe(
         findChildElement('gmd:organisationName', false),
-        extractCharacterString()
+        extractLocalizedCharacterString<OrganizationTranslations>('name')
       ),
       getUrl
     ),
-    map(([name, website]) => ({
+    map(([[name, translations], website]) => ({
       name,
       ...(website && { website }),
+      translations,
     }))
   )
 }
@@ -249,10 +304,16 @@ export function extractLegalConstraints(): ChainableFunction<
     ),
     flattenArray(),
     flattenArray(),
-    mapArray(combine(extractCharacterString(), extractUrl())),
-    mapArray(([text, url]) => ({
+    mapArray(
+      combine(
+        extractLocalizedCharacterString<ConstraintTranslations>('text'),
+        extractUrl()
+      )
+    ),
+    mapArray(([[text, translations], url]) => ({
       ...(url && { url }),
       text,
+      translations,
     }))
   )
 }
@@ -265,10 +326,16 @@ export function extractSecurityConstraints(): ChainableFunction<
   return pipe(
     findNestedElements('gmd:MD_SecurityConstraints', 'gmd:useLimitation'),
     flattenArray(),
-    mapArray(combine(extractCharacterString(), extractUrl())),
-    mapArray(([text, url]) => ({
+    mapArray(
+      combine(
+        extractLocalizedCharacterString<ConstraintTranslations>('text'),
+        extractUrl()
+      )
+    ),
+    mapArray(([[text, translations], url]) => ({
       ...(url && { url }),
       text,
+      translations,
     }))
   )
 }
@@ -281,10 +348,16 @@ export function extractOtherConstraints(): ChainableFunction<
   return pipe(
     findNestedElements('gmd:MD_Constraints', 'gmd:useLimitation'),
     flattenArray(),
-    mapArray(combine(extractCharacterString(), extractUrl())),
-    mapArray(([text, url]) => ({
+    mapArray(
+      combine(
+        extractLocalizedCharacterString<ConstraintTranslations>('text'),
+        extractUrl()
+      )
+    ),
+    mapArray(([[text, translations], url]) => ({
       ...(url && { url }),
       text,
+      translations,
     }))
   )
 }
@@ -311,10 +384,16 @@ export function extractLicenses(): ChainableFunction<
     ),
     flattenArray(),
     flattenArray(),
-    mapArray(combine(extractCharacterString(), extractUrl())),
-    mapArray(([text, url]) => ({
+    mapArray(
+      combine(
+        extractLocalizedCharacterString<ConstraintTranslations>('text'),
+        extractUrl()
+      )
+    ),
+    mapArray(([[text, translations], url]) => ({
       ...(url && { url }),
       text,
+      translations,
     }))
   )
 }
@@ -355,10 +434,13 @@ export function extractDatasetOnlineResources(
         /download/i.test(protocolStr)
     )
   )
-  const getName = pipe(findChildElement('gmd:name'), extractCharacterString())
+  const getName = pipe(
+    findChildElement('gmd:name'),
+    extractLocalizedCharacterString<OnlineResourceTranslations>('name')
+  )
   const getDescription = pipe(
     findChildElement('gmd:description'),
-    extractCharacterString()
+    extractLocalizedCharacterString<OnlineResourceTranslations>('description')
   )
   return pipe(
     findNestedElements(
@@ -379,7 +461,19 @@ export function extractDatasetOnlineResources(
       )
     ),
     mapArray(
-      ([isService, isDownload, protocol, url, name, description, mimeType]) => {
+      ([
+        isService,
+        isDownload,
+        protocol,
+        url,
+        [name, nameTranslations],
+        [description, descriptionTranslations],
+        mimeType,
+      ]) => {
+        const translations = {
+          ...nameTranslations,
+          ...descriptionTranslations,
+        }
         if (isService) {
           const hasIdentifier = protocol === 'wms' || protocol === 'wfs'
           return {
@@ -389,6 +483,7 @@ export function extractDatasetOnlineResources(
             ...(name && hasIdentifier && { identifierInService: name }),
             ...(name && { name }),
             ...(description && { description }),
+            translations,
           }
         } else if (isDownload) {
           return {
@@ -397,6 +492,7 @@ export function extractDatasetOnlineResources(
             ...(name && { name }),
             ...(description && { description }),
             ...(mimeType && { mimeType }),
+            translations,
           }
         } else {
           return {
@@ -404,6 +500,7 @@ export function extractDatasetOnlineResources(
             url: url,
             ...(name && { name }),
             ...(description && { description }),
+            translations,
           }
         }
       }
@@ -583,19 +680,27 @@ export function readRecordUpdated(rootEl: XmlElement): Date {
   return pipe(findChildElement('gmd:dateStamp'), extractDateTime())(rootEl)
 }
 
-export function readTitle(rootEl: XmlElement): string {
+export function readTitle(
+  rootEl: XmlElement,
+  translations: RecordTranslations
+): string {
   return pipe(
     findIdentification(),
     findNestedElement('gmd:citation', 'gmd:CI_Citation', 'gmd:title'),
-    extractCharacterString()
+    extractLocalizedCharacterString('title', translations),
+    map(([title]) => title)
   )(rootEl)
 }
 
-export function readAbstract(rootEl: XmlElement): string {
+export function readAbstract(
+  rootEl: XmlElement,
+  translations: RecordTranslations
+): string {
   return pipe(
     findIdentification(),
     findChildElement('gmd:abstract', false),
-    extractCharacterString()
+    extractLocalizedCharacterString('abstract', translations),
+    map(([abstract]) => abstract)
   )(rootEl)
 }
 
@@ -657,11 +762,13 @@ export function readKeywordGroup(rootEl: XmlElement): Keyword[] {
   return pipe(
     findChildrenElement('gmd:keyword'),
     mapArray((el) => {
-      const label = extractCharacterString()(el)
+      const [label, translations] =
+        extractLocalizedCharacterString<KeywordTranslations>('label')(el)
       return {
         ...(thesaurus ? { thesaurus } : {}),
         label,
         type,
+        translations,
       } as Keyword
     })
   )(rootEl)
@@ -762,7 +869,10 @@ export function readOverviews(rootEl: XmlElement): GraphicOverview[] {
   )(rootEl)
 }
 
-export function readLineage(rootEl: XmlElement): string {
+export function readLineage(
+  rootEl: XmlElement,
+  translations: RecordTranslations
+): string {
   return pipe(
     findNestedElement(
       'gmd:dataQualityInfo',
@@ -771,7 +881,8 @@ export function readLineage(rootEl: XmlElement): string {
       'gmd:LI_Lineage',
       'gmd:statement'
     ),
-    extractCharacterString()
+    extractLocalizedCharacterString('lineage', translations),
+    map(([lineage]) => lineage)
   )(rootEl)
 }
 
@@ -805,10 +916,16 @@ export function extractServiceOnlineResources(): ChainableFunction<
     getOnlineFunction,
     map((onlineFunction) => onlineFunction === 'information')
   )
-  const getName = pipe(findChildElement('gmd:name'), extractCharacterString())
+  const getName = pipe(
+    findChildElement('gmd:name'),
+    extractLocalizedCharacterString<OnlineResourceTranslations>('name')
+  )
   const getDescription = pipe(
     findChildElement('gmd:description'),
-    extractCharacterString()
+    extractLocalizedCharacterString<OnlineResourceTranslations>(
+      'description',
+      {}
+    )
   )
   return pipe(
     findNestedElements(
@@ -818,23 +935,37 @@ export function extractServiceOnlineResources(): ChainableFunction<
       'gmd:CI_OnlineResource'
     ),
     mapArray(combine(getIsLink, getProtocol, getUrl, getName, getDescription)),
-    mapArray(([isLink, protocol, url, name, description]) => {
-      if (isLink) {
-        return {
-          type: 'link',
-          url: url,
-          ...(name && { name }),
-          ...(description && { description }),
+    mapArray(
+      ([
+        isLink,
+        protocol,
+        url,
+        [name, nameTranslations],
+        [description, descriptionTranslations],
+      ]) => {
+        const translations = {
+          ...nameTranslations,
+          ...descriptionTranslations,
         }
-      } else {
-        return {
-          type: 'endpoint',
-          endpointUrl: url,
-          protocol,
-          ...(description && { description }),
+        if (isLink) {
+          return {
+            type: 'link',
+            url: url,
+            ...(name && { name }),
+            ...(description && { description }),
+            translations,
+          }
+        } else {
+          return {
+            type: 'endpoint',
+            endpointUrl: url,
+            protocol,
+            ...(description && { description }),
+            translations,
+          }
         }
       }
-    })
+    )
   )
 }
 
@@ -842,7 +973,7 @@ export function readOnlineResources(rootEl: XmlElement): OnlineResource[] {
   if (readKind(rootEl) === 'dataset') {
     return pipe(
       findNestedElements('gmd:distributionInfo', 'gmd:MD_Distribution'),
-      mapArray(extractDatasetOnlineResources(getMimeType)),
+      mapArray((el) => extractDatasetOnlineResources(getMimeType)(el)),
       flattenArray()
     )(rootEl)
   }
@@ -911,7 +1042,7 @@ export function readSpatialExtents(rootEl: XmlElement) {
     return pipe(
       findChildElement('gmd:polygon', false),
       firstChildElement,
-      map((el) => readGeometry(el))
+      map((el) => (el ? readGeometry(el) : null))
     )(rootEl)
   }
 
@@ -929,15 +1060,17 @@ export function readSpatialExtents(rootEl: XmlElement) {
     )(rootEl)
   }
 
-  const extractDescription = (rootEl: XmlElement): string => {
-    if (!rootEl) return null
+  const extractDescription = (
+    rootEl: XmlElement
+  ): [string, ModelTranslations] => {
+    if (!rootEl) return [null, {}]
     return pipe(
       findNestedElement(
         'gmd:geographicIdentifier',
         'gmd:MD_Identifier',
         'gmd:code'
       ),
-      extractCharacterString()
+      extractLocalizedCharacterString('description')
     )(rootEl)
   }
 
@@ -954,12 +1087,40 @@ export function readSpatialExtents(rootEl: XmlElement) {
         )
       )
     ),
-    mapArray(([geometry, bbox, description]) => {
+    filterArray(
+      ([geometry, bbox, [description]]) => !!geometry || !!bbox || !!description
+    ),
+    mapArray(([geometry, bbox, [description, translations]]) => {
       return {
         ...(geometry && { geometry }),
         ...(bbox && { bbox }),
         ...(description && { description }),
+        translations,
       }
     })
+  )(rootEl)
+}
+
+export function readOtherLanguages(rootEl: XmlElement): LanguageCode[] {
+  const defaultLanguage = readDefaultLanguage(rootEl)
+  return pipe(
+    findChildrenElement('gmd:locale', false),
+    mapArray(
+      pipe(
+        findChildElement('gmd:LanguageCode'),
+        readAttribute('codeListValue'),
+        map((lang) => LANG_3_TO_2_MAPPER[lang.toLowerCase()])
+      )
+    ),
+    map((languages) => (languages.length ? languages : [defaultLanguage]))
+  )(rootEl)
+}
+
+export function readDefaultLanguage(rootEl: XmlElement): LanguageCode {
+  return pipe(
+    findChildElement('gmd:language', false),
+    findChildElement('gmd:LanguageCode'),
+    readAttribute('codeListValue'),
+    map((lang) => (lang ? LANG_3_TO_2_MAPPER[lang.toLowerCase()] : null))
   )(rootEl)
 }

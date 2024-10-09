@@ -59,6 +59,9 @@
       "@geonetwork-ui/ui/widgets": ["libs/ui/widgets/src/index.ts"],
       "@geonetwork-ui/util/app-config": ["libs/util/app-config/src/index.ts"],
       "@geonetwork-ui/util/i18n": ["libs/util/i18n/src/index.ts"],
+      "@geonetwork-ui/util/i18n/language-codes": [
+        "libs/util/i18n/src/lib/language-codes.ts"
+      ],
       "@geonetwork-ui/util/shared": ["libs/util/shared/src/index.ts"]
     },
     "allowJs": true,

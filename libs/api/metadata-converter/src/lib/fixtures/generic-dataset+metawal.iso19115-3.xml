@@ -40,10 +40,10 @@
         </mcc:MD_Identifier>
     </mdb:metadataIdentifier>
     <mdb:defaultLocale>
-        <lan:PT_Locale id="FR">
+        <lan:PT_Locale id="EN">
             <lan:language>
                 <lan:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/"
-                                  codeListValue="fre"/>
+                                  codeListValue="eng"/>
             </lan:language>
             <lan:characterEncoding>
                 <lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_CharacterSetCode"
@@ -515,6 +515,14 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                     </mco:classification>
                     <mco:useLimitation>
                         <gco:CharacterString>Contains sensitive information related to national defense</gco:CharacterString>
+                        <lan:PT_FreeText>
+                            <mdb:textGroup>
+                                <mdb:LocalisedCharacterString locale="#EN">Contains sensitive information related to national defense</mdb:LocalisedCharacterString>
+                            </mdb:textGroup>
+                            <mdb:textGroup>
+                                <mdb:LocalisedCharacterString locale="#FR">Contient des informations sensibles liées à la défense nationale</mdb:LocalisedCharacterString>
+                            </mdb:textGroup>
+                        </lan:PT_FreeText>
                     </mco:useLimitation>
                 </mco:MD_SecurityConstraints>
             </mri:resourceConstraints>
@@ -668,6 +676,18 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                 <gco:CharacterString>This record was edited manually to test the conversion processes
 
 As such, **it is not very interesting at all.**</gco:CharacterString>
+                <lan:PT_FreeText>
+                    <mdb:textGroup>
+                        <mdb:LocalisedCharacterString locale="#EN">This record was edited manually to test the conversion processes
+
+As such, **it is not very interesting at all.**</mdb:LocalisedCharacterString>
+                    </mdb:textGroup>
+                    <mdb:textGroup>
+                        <mdb:LocalisedCharacterString locale="#DE">Dieser Datensatz wurde manuell bearbeitet, um die Konvertierungsprozesse zu testen
+
+Als solches ist es **überhaupt nicht interessant.**</mdb:LocalisedCharacterString>
+                    </mdb:textGroup>
+                </lan:PT_FreeText>
             </mrl:statement>
             <mrl:scope>
                 <mcc:MD_Scope>
@@ -847,4 +867,18 @@ As such, **it is not very interesting at all.**</gco:CharacterString>
             </mrd:transferOptions>
         </mrd:MD_Distribution>
     </mdb:distributionInfo>
+    <mdb:otherLocale>
+        <lan:PT_Locale id="FR">
+            <lan:language>
+                <lan:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="fre"/>
+            </lan:language>
+        </lan:PT_Locale>
+    </mdb:otherLocale>
+    <mdb:otherLocale>
+        <lan:PT_Locale id="DE">
+            <lan:language>
+                <lan:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ger"/>
+            </lan:language>
+        </lan:PT_Locale>
+    </mdb:otherLocale>
 </mdb:MD_Metadata>

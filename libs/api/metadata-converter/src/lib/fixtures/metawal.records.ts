@@ -23,6 +23,7 @@ Toutes ces données sont reprises dans BDR.`,
       address: 'Boulevard du Nord, 8, Namur, 5000, Belgique',
       organization: {
         name: 'Direction Asset Management (SPW - Mobilité et Infrastructures - Direction Asset Management)',
+        translations: {},
       },
       role: 'point_of_contact',
     },
@@ -32,6 +33,7 @@ Toutes ces données sont reprises dans BDR.`,
       email: 'helpdesk.carto@spw.wallonie.be',
       organization: {
         name: "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées)",
+        translations: {},
       },
       role: 'point_of_contact',
     },
@@ -44,6 +46,7 @@ Toutes ces données sont reprises dans BDR.`,
       phone: '+32 (0)81/772760',
       organization: {
         name: 'Direction Asset Management (SPW - Mobilité et Infrastructures - Direction Asset Management)',
+        translations: {},
       },
       role: 'custodian',
     },
@@ -52,6 +55,7 @@ Toutes ces données sont reprises dans BDR.`,
       organization: {
         name: 'Service public de Wallonie (SPW)',
         website: new URL('https://geoportail.wallonie.be'),
+        translations: {},
       },
       role: 'owner',
     },
@@ -59,6 +63,7 @@ Toutes ces données sont reprises dans BDR.`,
       email: 'helpdesk.carto@spw.wallonie.be',
       organization: {
         name: 'Service public de Wallonie (SPW)',
+        translations: {},
       },
       role: 'distributor',
     },
@@ -75,6 +80,7 @@ Toutes ces données sont reprises dans BDR.`,
       name: 'Portail cartographique des routes - Application sécurisée',
       type: 'link',
       url: new URL('http://geoapps.spw.wallonie.be/portailRoutes/'),
+      translations: {},
     },
     {
       description:
@@ -82,6 +88,7 @@ Toutes ces données sont reprises dans BDR.`,
       name: 'Rapport pour les passages pour piétons dans la BDR - Application sécurisée',
       type: 'link',
       url: new URL('http://rapport.papiweb.spw.wallonie.be/RapportPaPi/'),
+      translations: {},
     },
     {
       description:
@@ -89,6 +96,7 @@ Toutes ces données sont reprises dans BDR.`,
       name: 'Portail autouroutes et routes de Wallonie',
       type: 'link',
       url: new URL('http://routes.wallonie.be/'),
+      translations: {},
     },
   ],
   keywords: [
@@ -102,6 +110,7 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'géographie',
@@ -113,6 +122,7 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'transport',
@@ -124,6 +134,7 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'infrastructure routière',
@@ -135,6 +146,7 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'contrôle de la circulation',
@@ -146,6 +158,7 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'réseau routier',
@@ -157,6 +170,7 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'route',
@@ -168,6 +182,7 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'route',
@@ -179,6 +194,7 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'surveillance du trafic',
@@ -190,6 +206,7 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'réglementation de la circulation',
@@ -201,6 +218,7 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'trafic routier',
@@ -212,6 +230,7 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'transport terrestre',
@@ -223,6 +242,7 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'véhicule',
@@ -234,6 +254,7 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'autoroute',
@@ -245,6 +266,7 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'route à grande circulation',
@@ -256,6 +278,7 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'transport en commun',
@@ -267,6 +290,7 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'BDInfraSIG',
@@ -278,66 +302,82 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'passage piéton',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'voirie régionale',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'route régionale',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'voie de communication',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'code de la rue',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'aménagement routier',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'usager faible',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'piéton',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'gestion de la circulation',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'visibilité',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'code de la route',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'accotement',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'marquage',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'pied',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'signalisation',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'Régional',
@@ -349,6 +389,7 @@ Toutes ces données sont reprises dans BDR.`,
         ),
       },
       type: 'theme',
+      translations: {},
     },
   ],
   kind: 'dataset',
@@ -359,12 +400,14 @@ Toutes ces données sont reprises dans BDR.`,
       url: new URL(
         'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf'
       ),
+      translations: {},
     },
     {
       text: "Les conditions générales d'utilisation s'appliquent.",
       url: new URL(
         'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGU.pdf'
       ),
+      translations: {},
     },
   ],
   lineage: `En 2002, la Direction de le Sécurité des aménagements de voiries a décidé de mener une analyse approfondie de la sécurité sur les passages piétons. En effet, depuis 1996 (loi du 21/12/2006), le piéton manifestant clairement son intention de traverser au droit d'un passage piéton bénéficie d'une priorité absolue sur les automobilistes.
@@ -386,11 +429,13 @@ Depuis, ce sont les Districts routiers qui assurent la tenue à jour de ces info
   ],
   ownerOrganization: {
     name: 'Direction Asset Management (SPW - Mobilité et Infrastructures - Direction Asset Management)',
+    translations: {},
   },
   securityConstraints: [],
   spatialExtents: [
     {
       bbox: [2.75, 49.45, 6.5, 50.85],
+      translations: {},
     },
   ],
   spatialRepresentation: 'vector',
@@ -402,7 +447,9 @@ Depuis, ce sont les Districts routiers qui assurent la tenue à jour de ces info
   landingPage: new URL(
     'https://metawal.wallonie.be/geonetwork/srv/api/records/2d974612-70b1-4662-a9f4-c43cbe453773'
   ),
-  languages: [],
+  defaultLanguage: 'fr',
+  otherLanguages: [],
+  translations: {},
 }
 
 export const METAWAL_SERVICE_RECORD: ServiceRecord = {
@@ -414,6 +461,7 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
       email: 'helpdesk.carto@spw.wallonie.be',
       organization: {
         name: "Direction de l'Intégration des géodonnées (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées)",
+        translations: {},
       },
       role: 'point_of_contact',
     },
@@ -423,6 +471,7 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
       email: 'helpdesk.carto@spw.wallonie.be',
       organization: {
         name: "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées)",
+        translations: {},
       },
       role: 'point_of_contact',
     },
@@ -430,6 +479,7 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
       email: 'helpdesk.carto@spw.wallonie.be',
       organization: {
         name: "Direction de l'Intégration des géodonnées (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées)",
+        translations: {},
       },
       role: 'custodian',
     },
@@ -438,6 +488,7 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
       organization: {
         name: 'Service public de Wallonie (SPW)',
         website: new URL('https://geoportail.wallonie.be/'),
+        translations: {},
       },
       role: 'owner',
     },
@@ -445,6 +496,7 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
       email: 'helpdesk.carto@spw.wallonie.be',
       organization: {
         name: 'Service public de Wallonie (SPW)',
+        translations: {},
       },
       role: 'distributor',
     },
@@ -460,6 +512,7 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'Données de base',
@@ -471,6 +524,7 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'administration',
@@ -482,6 +536,7 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'Reporting INSPIRENO',
@@ -493,58 +548,72 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
         ),
       },
       type: 'theme',
+      translations: {},
     },
     {
       label: 'Ministère des Finances',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'SPF Finances',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'Cadastre',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'Administration Générale de la Documentation Patrimoniale',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'Etat Fédéral',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'Cadmap',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'Cadgis',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'Propriété',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'Plan cadastral',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'Fiscal',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'Zonage',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'Privé',
       type: 'theme',
+      translations: {},
     },
     {
       label: 'Parcellaire cadastral',
       type: 'theme',
+      translations: {},
     },
   ],
   kind: 'service',
@@ -552,6 +621,7 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
   licenses: [
     {
       text: "Les conditions d'utilisation du service sont régies par les Conditions d’accès et d’utilisation des services web géographiques de visualisation du Service public de Wallonie consultables à l'adresse https://geoportail.wallonie.be/files/documents/ConditionsSPW/LicServicesSPW.pdf\n\n                            Elles s'appliquent sans préjudice des conditions d'accès à la donnée décrites dans la fiche de la donnée.",
+      translations: {},
     },
   ],
   onlineResources: [
@@ -563,12 +633,14 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
       ),
       protocol: 'esriRest',
       type: 'endpoint',
+      translations: {},
     },
   ],
   otherConstraints: [],
   overviews: [],
   ownerOrganization: {
     name: "Direction de l'Intégration des géodonnées (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées)",
+    translations: {},
   },
   recordCreated: new Date('2019-04-02T12:31:58'),
   recordUpdated: new Date('2022-02-09T11:31:06.766Z'),
@@ -577,7 +649,9 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
   title:
     'Plan parcellaire cadastral - situation au 01/01/2016 - Service de visualisation REST',
   topics: [],
-  languages: [],
+  otherLanguages: [],
+  defaultLanguage: 'fr',
+  translations: {},
   landingPage: new URL(
     'https://metawal.wallonie.be/geonetwork/srv/api/records/6d2b6fdb-f1ea-4d48-8697-a0c05512f1dc'
   ),

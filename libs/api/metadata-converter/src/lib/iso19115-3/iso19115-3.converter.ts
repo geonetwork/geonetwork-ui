@@ -4,24 +4,28 @@ import { Iso19139Converter } from '../iso19139'
 import { renameElements } from '../xml-utils'
 import {
   readContacts,
+  readContactsForResource,
+  readDefaultLanguage,
   readKind,
   readLandingPage,
   readLineage,
   readOnlineResources,
+  readOtherLanguages,
   readOwnerOrganization,
   readRecordCreated,
   readRecordPublished,
   readRecordUpdated,
-  readResourceContacts,
   readUniqueIdentifier,
 } from './read-parts'
 import {
   writeContacts,
   writeContactsForResource,
+  writeDefaultLanguage,
   writeKind,
   writeLandingPage,
   writeLineage,
   writeOnlineResources,
+  writeOtherLanguages,
   writeRecordCreated,
   writeRecordPublished,
   writeRecordUpdated,
@@ -43,11 +47,13 @@ export class Iso191153Converter extends Iso19139Converter {
     this.readers['recordCreated'] = readRecordCreated
     this.readers['recordPublished'] = readRecordPublished
     this.readers['contacts'] = readContacts
-    this.readers['contactsForResource'] = readResourceContacts
+    this.readers['contactsForResource'] = readContactsForResource
     this.readers['ownerOrganization'] = readOwnerOrganization
     this.readers['landingPage'] = readLandingPage
     this.readers['lineage'] = readLineage
     this.readers['onlineResources'] = readOnlineResources
+    this.readers['defaultLanguage'] = readDefaultLanguage
+    this.readers['otherLanguages'] = readOtherLanguages
 
     this.writers['uniqueIdentifier'] = writeUniqueIdentifier
     this.writers['kind'] = writeKind
@@ -65,6 +71,8 @@ export class Iso191153Converter extends Iso19139Converter {
     this.writers['onlineResources'] = writeOnlineResources
     this.writers['status'] = writeStatus
     this.writers['spatialRepresentation'] = writeSpatialRepresentation
+    this.writers['defaultLanguage'] = writeDefaultLanguage
+    this.writers['otherLanguages'] = writeOtherLanguages
   }
 
   beforeDocumentCreation(rootEl: XmlElement) {
@@ -81,7 +89,7 @@ export class Iso191153Converter extends Iso19139Converter {
 
       // languages
       'gmd:PT_Locale': 'lan:PT_Locale',
-      'gmd:languageCode': 'lan:languageCode',
+      'gmd:PT_FreeText': 'lan:PT_FreeText',
       'gmd:LanguageCode': 'lan:LanguageCode',
 
       // status

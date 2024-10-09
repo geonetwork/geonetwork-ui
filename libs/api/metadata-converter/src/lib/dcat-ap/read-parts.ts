@@ -1,24 +1,33 @@
 import { NamedNode, Statement, Store } from 'rdflib'
 import { DCAT, DCTERMS, FOAF, LOCN, RDF, SKOS, VCARD } from './namespaces'
-import { findNodeLocalized } from './utils/graph-utils'
+import { readLocalizedValue } from './utils/graph-utils'
 import {
   DatasetDownloadDistribution,
   DatasetServiceDistribution,
   DatasetSpatialExtent,
   Individual,
   Keyword,
+  LanguageCode,
   OnlineLinkResource,
   OnlineResource,
+  OnlineResourceTranslations,
   Organization,
+  RecordTranslations,
 } from '@geonetwork-ui/common/domain/model/record'
 import { getAsValidUrl } from '../common/url'
 import { fullNameToParts } from '../iso19139/utils/individual-name'
 import { readLicenseFromString } from '../common/license'
 import { matchProtocol } from '../common/distribution.mapper'
+import { LANG_3_TO_2_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
 
-function getDataset(dataStore: Store, recordNode: NamedNode): NamedNode {
+function getDatasetNode(dataStore: Store, recordNode: NamedNode): NamedNode {
   return (dataStore.the(recordNode, FOAF('primaryTopic'), null) ||
     dataStore.the(null, RDF('type'), DCAT('Dataset'))) as NamedNode
+}
+
+function getCatalogNode(dataStore: Store, recordNode: NamedNode): NamedNode {
+  return (dataStore.the(null, DCAT('record'), recordNode) ||
+    dataStore.the(null, RDF('type'), DCAT('Catalog'))) as NamedNode
 }
 
 export function readUniqueIdentifier(
@@ -28,21 +37,42 @@ export function readUniqueIdentifier(
   return dataStore.the(recordNode, DCTERMS('identifier'), null)?.value
 }
 
-export function readTitle(dataStore: Store, recordNode: NamedNode): string {
-  const dataset = getDataset(dataStore, recordNode)
-  return findNodeLocalized(dataStore, dataset, DCTERMS('title'), null, 'en')
-    ?.value
+export function readTitle(
+  dataStore: Store,
+  recordNode: NamedNode,
+  translations: RecordTranslations,
+  defaultLanguage: LanguageCode
+): string {
+  const dataset = getDatasetNode(dataStore, recordNode)
+  const [title] = readLocalizedValue<RecordTranslations>(
+    dataStore,
+    dataset,
+    DCTERMS('title'),
+    null,
+    'title',
+    translations,
+    defaultLanguage
+  )
+  return title
 }
 
-export function readAbstract(dataStore: Store, recordNode: NamedNode): string {
-  const dataset = getDataset(dataStore, recordNode)
-  return findNodeLocalized(
+export function readAbstract(
+  dataStore: Store,
+  recordNode: NamedNode,
+  translations: RecordTranslations,
+  defaultLanguage: LanguageCode
+): string {
+  const dataset = getDatasetNode(dataStore, recordNode)
+  const [abstract] = readLocalizedValue<RecordTranslations>(
     dataStore,
     dataset,
     DCTERMS('description'),
     null,
-    'en'
-  )?.value
+    'abstract',
+    translations,
+    defaultLanguage
+  )
+  return abstract
 }
 
 function mapContactFromStatement(
@@ -89,7 +119,7 @@ export function readContactsForResource(
   dataStore: Store,
   recordNode: NamedNode
 ): Individual[] {
-  const dataset = getDataset(dataStore, recordNode)
+  const dataset = getDatasetNode(dataStore, recordNode)
   const statements = dataStore.statementsMatching(
     dataset,
     DCAT('contactPoint'),
@@ -99,69 +129,84 @@ export function readContactsForResource(
 }
 
 export function readLandingPage(dataStore: Store, recordNode: NamedNode): URL {
-  const dataset = getDataset(dataStore, recordNode)
+  const dataset = getDatasetNode(dataStore, recordNode)
   const landingPage = dataStore.the(dataset, DCAT('landingPage'), null)
   return landingPage !== null ? getAsValidUrl(landingPage.value) : undefined
 }
 
 function readOnlineLinkResource(
   dataStore: Store,
-  distributionNode: NamedNode
+  distributionNode: NamedNode,
+  defaultLanguage: LanguageCode
 ): OnlineLinkResource {
   const accessUrl = dataStore.the(distributionNode, DCAT('accessURL'), null)
-  const description = findNodeLocalized(
+  const translations: OnlineResourceTranslations = {}
+  const [description] = readLocalizedValue(
     dataStore,
     distributionNode,
     DCTERMS('description'),
     null,
-    'en'
+    'description',
+    translations,
+    defaultLanguage
   )
-  const title = findNodeLocalized(
+  const [name] = readLocalizedValue(
     dataStore,
     distributionNode,
     DCTERMS('title'),
     null,
-    'en'
+    'name',
+    translations,
+    defaultLanguage
   )
   return {
     url: getAsValidUrl(accessUrl?.value),
     type: 'link',
-    ...(title && { name: title?.value }),
-    ...(description && { description: description?.value }),
+    ...(name !== null && { name }),
+    ...(description !== null && { description }),
+    translations,
   }
 }
 
 function readDownloadDistribution(
   dataStore: Store,
-  distributionNode: NamedNode
+  distributionNode: NamedNode,
+  defaultLanguage: LanguageCode
 ): DatasetDownloadDistribution {
   const downloadUrl = dataStore.the(distributionNode, DCAT('downloadURL'), null)
-  const description = findNodeLocalized(
+  const translations: OnlineResourceTranslations = {}
+  const [description] = readLocalizedValue(
     dataStore,
     distributionNode,
     DCTERMS('description'),
     null,
-    'en'
+    'description',
+    translations,
+    defaultLanguage
   )
-  const title = findNodeLocalized(
+  const [name] = readLocalizedValue(
     dataStore,
     distributionNode,
     DCTERMS('title'),
     null,
-    'en'
+    'name',
+    translations,
+    defaultLanguage
   )
   // todo mime type
   return {
     url: getAsValidUrl(downloadUrl?.value),
     type: 'download',
-    ...(title && { name: title?.value }),
-    ...(description && { description: description?.value }),
+    ...(name !== null && { name }),
+    ...(description !== null && { description }),
+    translations,
   }
 }
 
 function readServiceDistribution(
   dataStore: Store,
-  distributionNode: NamedNode
+  distributionNode: NamedNode,
+  defaultLanguage: LanguageCode
 ): DatasetServiceDistribution {
   const service = dataStore.the(
     distributionNode,
@@ -170,32 +215,39 @@ function readServiceDistribution(
   ) as NamedNode
   const conformsTo = dataStore.the(service, DCTERMS('conformsTo'), null)
   const accessUrl = dataStore.the(distributionNode, DCAT('accessURL'), null)
-  const description = findNodeLocalized(
+  const translations: OnlineResourceTranslations = {}
+  const [description] = readLocalizedValue(
     dataStore,
     distributionNode,
     DCTERMS('description'),
     null,
-    'en'
+    'description',
+    translations,
+    defaultLanguage
   )
-  const title = findNodeLocalized(
+  const [name] = readLocalizedValue(
     dataStore,
     distributionNode,
     DCTERMS('title'),
     null,
-    'en'
+    'name',
+    translations,
+    defaultLanguage
   )
   return {
     url: getAsValidUrl(accessUrl?.value),
     type: 'service',
     accessServiceProtocol: matchProtocol(conformsTo?.value),
-    ...(title && { name: title?.value }),
-    ...(description && { description: description?.value }),
+    ...(name !== null && { name }),
+    ...(description !== null && { description }),
+    translations,
   }
 }
 
 export function mapOnlineResource(
   dataStore: Store,
-  distributionNode: NamedNode
+  distributionNode: NamedNode,
+  defaultLanguage: LanguageCode
 ): OnlineResource {
   if (dataStore.holds(distributionNode, DCAT('accessService'), null)) {
     const service = dataStore.the(
@@ -205,27 +257,37 @@ export function mapOnlineResource(
     ) as NamedNode
     const conformsTo = dataStore.the(service, DCTERMS('conformsTo'), null)
     if (conformsTo) {
-      return readServiceDistribution(dataStore, distributionNode)
+      return readServiceDistribution(
+        dataStore,
+        distributionNode,
+        defaultLanguage
+      )
     }
   }
   if (dataStore.holds(distributionNode, DCAT('downloadURL'), null)) {
-    return readDownloadDistribution(dataStore, distributionNode)
+    return readDownloadDistribution(
+      dataStore,
+      distributionNode,
+      defaultLanguage
+    )
   }
-  return readOnlineLinkResource(dataStore, distributionNode)
+  return readOnlineLinkResource(dataStore, distributionNode, defaultLanguage)
 }
 
 export function readOnlineResources(
   dataStore: Store,
-  recordNode: NamedNode
+  recordNode: NamedNode,
+  translations: RecordTranslations,
+  defaultLanguage: LanguageCode
 ): OnlineResource[] {
-  const dataset = getDataset(dataStore, recordNode)
+  const dataset = getDatasetNode(dataStore, recordNode)
   const statements = dataStore.statementsMatching(
     dataset,
     DCAT('distribution'),
     null
   )
   return statements.map((statement) =>
-    mapOnlineResource(dataStore, statement.object as NamedNode)
+    mapOnlineResource(dataStore, statement.object as NamedNode, defaultLanguage)
   )
 }
 
@@ -233,7 +295,7 @@ export function readSpatialExtents(
   dataStore: Store,
   recordNode: NamedNode
 ): DatasetSpatialExtent[] {
-  const dataset = getDataset(dataStore, recordNode)
+  const dataset = getDatasetNode(dataStore, recordNode)
   const statements = dataStore.statementsMatching(
     dataset,
     DCTERMS('spatial'),
@@ -261,7 +323,7 @@ export function readKeywords(
   dataStore: Store,
   recordNode: NamedNode
 ): Keyword[] {
-  const dataset = getDataset(dataStore, recordNode)
+  const dataset = getDatasetNode(dataStore, recordNode)
   const statements = dataStore.statementsMatching(
     dataset,
     DCAT('keyword'),
@@ -276,7 +338,7 @@ export function readKeywords(
 }
 
 export function readTopics(dataStore: Store, recordNode: NamedNode): string[] {
-  const dataset = getDataset(dataStore, recordNode)
+  const dataset = getDatasetNode(dataStore, recordNode)
   const statements = dataStore.statementsMatching(dataset, DCAT('theme'), null)
   return statements.map((statement) => {
     const prefLabel = dataStore.the(
@@ -310,7 +372,7 @@ export function readResourceCreated(
   dataStore: Store,
   recordNode: NamedNode
 ): Date {
-  const dataset = getDataset(dataStore, recordNode)
+  const dataset = getDatasetNode(dataStore, recordNode)
   const dateString = dataStore.the(dataset, DCTERMS('issued'), null)?.value
   if (dateString) return new Date(dateString)
   return null
@@ -320,7 +382,7 @@ export function readResourceUpdated(
   dataStore: Store,
   recordNode: NamedNode
 ): Date {
-  const dataset = getDataset(dataStore, recordNode)
+  const dataset = getDatasetNode(dataStore, recordNode)
   const dateString = dataStore.the(dataset, DCTERMS('modified'), null)?.value
   if (dateString) return new Date(dateString)
   return null
@@ -342,7 +404,7 @@ export function readOwnerOrganization(dataStore: Store): Organization {
 }
 
 export function readLicenses(dataStore: Store, recordNode: NamedNode) {
-  const dataset = getDataset(dataStore, recordNode)
+  const dataset = getDatasetNode(dataStore, recordNode)
   const distributions = dataStore.statementsMatching(
     dataset,
     DCAT('distribution'),
@@ -367,4 +429,35 @@ export function readLicenses(dataStore: Store, recordNode: NamedNode) {
             l.text === license.text
         ) === index
     )
+}
+
+export function readDefaultLanguage(dataStore: Store, recordNode: NamedNode) {
+  const dataset = getDatasetNode(dataStore, recordNode)
+  const catalog = getCatalogNode(dataStore, recordNode)
+  let statements = dataStore.statementsMatching(
+    recordNode,
+    DCTERMS('language'),
+    null
+  )
+  if (!statements.length && dataset) {
+    statements = dataStore.statementsMatching(
+      dataset,
+      DCTERMS('language'),
+      null
+    )
+  }
+  if (!statements.length && catalog) {
+    statements = dataStore.statementsMatching(
+      catalog,
+      DCTERMS('language'),
+      null
+    )
+  }
+  if (!statements.length) return null
+  const languageNode = statements[0].object as NamedNode
+  let language = languageNode.value.split('/').pop().toLowerCase()
+  if (language.length === 3) {
+    language = LANG_3_TO_2_MAPPER[language] ?? language
+  }
+  return language.substring(0, 2)
 }
