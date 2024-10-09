@@ -306,6 +306,7 @@ export const NAMESPACES = {
 }
 
 /**
+ * Creates a single element, without parent or children
  * @param name Full name with namespace, e.g.: gmd:MD_Metadata
  */
 export function createElement(
@@ -314,6 +315,10 @@ export function createElement(
   return () => new XmlElement(name, {}, [])
 }
 
+/**
+ * Creates a tree of nested elements according to the given hierarchy
+ * @param elementNames Full names with namespaces
+ */
 export function createNestedElement(
   ...elementNames: string[]
 ): ChainableFunction<void, XmlElement> {
@@ -343,22 +348,13 @@ function getTreeRoot(element: XmlElement): XmlElement {
   return root
 }
 
-// stays on the parent element
-// if the given elements are part of a subtree, will add the root of subtree
-// will filter out falsy elements
-export function appendChildren(
-  ...childrenFns: Array<ChainableFunction<void, XmlElement>>
-): ChainableFunction<XmlElement, XmlElement> {
-  return (element) => {
-    if (!element) return null
-    childrenFns = childrenFns.filter((fn) => fn)
-    element.children.push(...childrenFns.map((fn) => fn()).map(getTreeRoot))
-    element.children.forEach((el) => (el.parent = element))
-    return element
-  }
-}
-
-// switch to the tip of the subtree
+/**
+ * Appends the element returned by the given function to the children of the current active one
+ * Note that if the function returns the tip of a subtree that was just created (i.e. not attached to the main document),
+ * then the whole subtree will be attached to the current element as children (instead of just the tip of the subtree).
+ * The created element (or tip of the created subtree) is returned and becomes the active element.
+ * @param childrenFn
+ */
 export function appendChildTree(
   childrenFn: ChainableFunction<void, XmlElement>
 ): ChainableFunction<XmlElement, XmlElement> {
@@ -372,7 +368,29 @@ export function appendChildTree(
   }
 }
 
-// switches to the child element
+/**
+ * Leaves the current element as the active one; all elements returned by the given functions will be added as
+ * children to this current element.
+ * Note that if a function returns the tip of a subtree that was just created (i.e. not attached to the main document),
+ * then the whole subtree will be attached to the current element as children (instead of just the tip of the subtree).
+ * @param childrenFns Each function takes the parent as input and should return an element; if the returned value is
+ * falsy then it will be ignored
+ */
+export function appendChildren(
+  ...childrenFns: Array<ChainableFunction<void, XmlElement>>
+): ChainableFunction<XmlElement, XmlElement> {
+  return (element) => {
+    if (!element) return null
+    childrenFns.filter((fn) => fn).forEach((fn) => appendChildTree(fn)(element))
+    return element
+  }
+}
+
+/**
+ * Creates an element, append it to the children of the current active element and switches to the
+ * new element as the active one.
+ * @param childName
+ */
 export function createChild(
   childName: string
 ): ChainableFunction<XmlElement, XmlElement> {
@@ -385,6 +403,11 @@ export function createChild(
   }
 }
 
+/**
+ * Creates a tree of nested elements according to the given hierarchy, appends it to the children of the current
+ * active element and switches to the tip of the newly created tree of elements as the active one.
+ * @param elementNames Full names with namespaces
+ */
 export function createNestedChild(
   ...elementNames: string[]
 ): ChainableFunction<XmlElement, XmlElement> {
@@ -397,12 +420,23 @@ export function createNestedChild(
   }
 }
 
+/**
+ * Returns the matching children if found, or create a new element, append it to the current active element
+ * and switch to it as the active one.
+ * @param name
+ */
 export function findChildOrCreate(
   name: string
 ): ChainableFunction<XmlElement, XmlElement> {
   return fallback(findChildElement(name, false), createChild(name))
 }
 
+/**
+ * For each element name in the given hierarchy, either switch to a matching element if found,
+ * or create a new one, append it to the children of the previous one and switch to it as the active one.
+ * Eventually, the tip of the hierarchy (either existing or new element) becomes the active element.
+ * @param elementNames
+ */
 export function findNestedChildOrCreate(
   ...elementNames: string[]
 ): ChainableFunction<XmlElement, XmlElement> {

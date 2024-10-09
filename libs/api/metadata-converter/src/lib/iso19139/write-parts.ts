@@ -1376,8 +1376,7 @@ export function writeDefaultLanguage(
 ) {
   const lang3 = LANG_2_TO_3_MAPPER[record.defaultLanguage.toLowerCase()]
   return pipe(
-    findChildOrCreate('gmd:language'),
-    findChildOrCreate('gmd:LanguageCode'),
+    findNestedChildOrCreate('gmd:language', 'gmd:LanguageCode'),
     writeAttribute('codeList', 'http://www.loc.gov/standards/iso639-2/'),
     writeAttribute('codeListValue', lang3)
   )(rootEl)

@@ -56,9 +56,11 @@ export function writeUniqueIdentifier(
   rootEl: XmlElement
 ) {
   pipe(
-    findChildOrCreate('mdb:metadataIdentifier'),
-    findChildOrCreate('mcc:MD_Identifier'),
-    findChildOrCreate('mcc:code'),
+    findNestedChildOrCreate(
+      'mdb:metadataIdentifier',
+      'mcc:MD_Identifier',
+      'mcc:code'
+    ),
     writeCharacterString(record.uniqueIdentifier)
   )(rootEl)
 }
@@ -497,6 +499,7 @@ export function writeOnlineResources(
 
   if (record.kind === 'service') {
     appendServiceOnlineResources(record, rootEl)
+    return
   }
 
   // for each online resource, either find an existing distribution info or create a new one
@@ -524,8 +527,7 @@ function writeLocaleElement(language: LanguageCode) {
   return pipe(
     findChildOrCreate('lan:PT_Locale'),
     writeAttribute('id', language.toUpperCase()),
-    findChildOrCreate('lan:language'),
-    findChildOrCreate('gmd:LanguageCode'),
+    findNestedChildOrCreate('lan:language', 'gmd:LanguageCode'),
     writeAttribute('codeList', 'http://www.loc.gov/standards/iso639-2/'),
     writeAttribute('codeListValue', lang3)
   )
