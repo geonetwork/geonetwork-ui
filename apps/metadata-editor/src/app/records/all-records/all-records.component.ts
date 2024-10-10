@@ -30,6 +30,7 @@ import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
 import { RecordsListComponent } from '../records-list.component'
 import { map } from 'rxjs/operators'
 import { SearchHeaderComponent } from '../../dashboard/search-header/search-header.component'
+import { SearchFiltersComponent } from '../../dashboard/search-filters/search-filters.component'
 
 @Component({
   selector: 'md-editor-all-records',
@@ -49,6 +50,7 @@ import { SearchHeaderComponent } from '../../dashboard/search-header/search-head
     CdkConnectedOverlay,
     RecordsListComponent,
     SearchHeaderComponent,
+    SearchFiltersComponent,
   ],
 })
 export class AllRecordsComponent {

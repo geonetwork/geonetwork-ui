@@ -10,6 +10,7 @@ import {
   OwnerSearchField,
   SimpleSearchField,
   TranslatedSearchField,
+  UserSearchField,
 } from './fields'
 import { forkJoin, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -33,6 +34,7 @@ marker('search.filters.topic')
 marker('search.filters.contact')
 marker('search.filters.producerOrg')
 marker('search.filters.publisherOrg')
+marker('search.filters.user')
 
 @Injectable({
   providedIn: 'root',
@@ -84,6 +86,7 @@ export class FieldsService {
       'asc',
       'key'
     ),
+    user: new UserSearchField(this.injector),
   } as Record<string, AbstractSearchField>
 
   get supportedFields() {
