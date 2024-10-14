@@ -44,6 +44,7 @@ import { FormFieldRichComponent } from './form-field-rich/form-field-rich.compon
 import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
+import { FormFieldConstraintsComponent } from './form-field-constraints/form-field-constraints.component'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -75,6 +76,7 @@ import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency
     FormFieldOnlineResourcesComponent,
     FormFieldOnlineLinkResourcesComponent,
     FormFieldContactsComponent,
+    FormFieldConstraintsComponent,
   ],
 })
 export class FormFieldComponent implements OnInit {
@@ -90,13 +92,14 @@ export class FormFieldComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('this.model', this.model)
+    console.log('ngOnInit this.isOpenData', this.isOpenData)
   }
 
-  isHidden = false
+  isOpenData = false
 
-  toggleIsHidden(event: boolean) {
-    this.isHidden = event
-    console.log('this.isHidden', this.isHidden)
+  toggleIsOpenData(event: boolean) {
+    this.isOpenData = event
+    console.log('toggleIsOpenData this.isOpenData', this.isOpenData)
   }
 
   focusTitleInput() {
@@ -104,7 +107,13 @@ export class FormFieldComponent implements OnInit {
   }
 
   get withoutWrapper() {
-    return this.model === 'title' || this.model === 'abstract'
+    return (
+      this.model === 'title' ||
+      this.model === 'abstract' ||
+      this.model === 'legalConstraints' ||
+      this.model === 'securityConstraints' ||
+      this.model === 'otherConstraints'
+    )
   }
 
   get valueAsString() {
@@ -127,7 +136,7 @@ export class FormFieldComponent implements OnInit {
     return this.value as Array<Keyword>
   }
   get valueAsConstraints() {
-    console.log('this.value', this.value)
+    console.log('valueAsConstraints this.value', this.value)
     return this.value as Array<Constraint>
   }
   get valueAsIndividuals() {

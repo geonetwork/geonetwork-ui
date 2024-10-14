@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Input,
   Output,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
@@ -28,7 +29,8 @@ import { TranslateModule } from '@ngx-translate/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConstraintCardComponent {
-  label = 'editor.record.form.constraint.markdown.placeholder' //TODO: translate
+  @Input() label: string
+  // label = 'editor.record.form.constraint.markdown.placeholder' //TODO: translate
   hint = 'editor.record.form.constraint.markdown.placeholder' // TODO: get text and translate
 
   showUrlInput = false

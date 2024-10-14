@@ -18,6 +18,25 @@ import { Keyword } from '@geonetwork-ui/common/domain/model/record'
  ************************************************************
  */
 
+export const LEGAL_CONSTRAINTS_FIELD: EditorField = {
+  model: 'legalConstraints',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.legalConstraints'),
+  },
+}
+export const SECURITY_CONSTRAINTS_FIELD: EditorField = {
+  model: 'securityConstraints',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.securityConstraints'),
+  },
+}
+export const OTHER_CONSTRAINTS_FIELD: EditorField = {
+  model: 'otherConstraints',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.otherConstraints'),
+  },
+}
+
 export const RECORD_LICENSE_FIELD: EditorField = {
   model: 'licenses',
   formFieldConfig: {
@@ -191,7 +210,12 @@ export const CLASSIFICATION_SECTION: EditorSection = {
 export const USE_AND_ACCESS_CONDITIONS_SECTION: EditorSection = {
   labelKey: marker('editor.record.form.section.useAndAccessConditions.label'),
   hidden: false,
-  fields: [RECORD_LICENSE_FIELD],
+  fields: [
+    RECORD_LICENSE_FIELD,
+    LEGAL_CONSTRAINTS_FIELD,
+    SECURITY_CONSTRAINTS_FIELD,
+    OTHER_CONSTRAINTS_FIELD,
+  ],
 }
 
 export const DATA_MANAGERS_SECTION: EditorSection = {

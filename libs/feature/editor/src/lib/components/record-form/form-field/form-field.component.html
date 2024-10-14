@@ -2,10 +2,10 @@
   <gn-ui-form-field-open-data
     [value]="valueAsConstraints"
     (valueChange)="valueChange.emit($event)"
-    (openDataChange)="toggleIsHidden($event)"
+    (openDataChange)="toggleIsOpenData($event)"
   ></gn-ui-form-field-open-data>
 </ng-container>
-<div class="flex flex-col h-full" *ngIf="!isHidden">
+<div class="flex flex-col h-full" *ngIf="!isOpenData">
   <ng-container *ngIf="withoutWrapper; else withGenericWrapper">
     <ng-container *ngTemplateOutlet="fieldContent"></ng-container>
   </ng-container>
@@ -102,14 +102,22 @@
         (valueChange)="valueChange.emit($event)"
       ></gn-ui-form-field-keywords>
     </ng-container>
+
     <ng-container *ngSwitchCase="'licenses'">
       <gn-ui-form-field-license
-        *ngIf="!isHidden"
         [label]="config.labelKey! | translate"
         [recordConstraints]="valueAsConstraints"
         (recordConstraintsChange)="valueChange.emit($event)"
       ></gn-ui-form-field-license>
     </ng-container>
+    <ng-container *ngSwitchCase="'legalConstraints'">
+      <gn-ui-form-field-constraints
+        [label]="config.labelKey! | translate"
+        [recordConstraints]="valueAsConstraints"
+        (recordConstraintsChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-constraints>
+    </ng-container>
+
     <ng-container *ngSwitchCase="'contactsForResource'">
       <gn-ui-form-field-contacts-for-resource
         [value]="valueAsIndividuals"
