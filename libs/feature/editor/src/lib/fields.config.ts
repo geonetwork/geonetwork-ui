@@ -240,7 +240,7 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
  ***************           LICENSES            **************
  ************************************************************
  */
-export const OPEN_DATA_LICENSES: string[] = [
+export const AVAILABLE_LICENSES: string[] = [
   'cc-by',
   'cc-by-sa',
   'cc-zero',
@@ -251,6 +251,8 @@ export const OPEN_DATA_LICENSES: string[] = [
   'pddl',
   'unknown',
 ]
+
+export const OPEN_DATA_LICENSE = 'etalab'
 
 export const MAX_UPLOAD_SIZE_MB = 10
 /************************************************************

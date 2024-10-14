@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core'
 import { MatIconModule } from '@angular/material/icon'
@@ -16,7 +17,7 @@ import {
 import { SortableListComponent } from '@geonetwork-ui/ui/layout'
 import { TranslateModule } from '@ngx-translate/core'
 import { ConstraintCardComponent } from '../../../constraint-card/constraint-card.component'
-import { OPEN_DATA_LICENSES } from '../../../../fields.config'
+import { AVAILABLE_LICENSES } from '../../../../fields.config'
 
 type ConstraintChoice = 'legal' | 'security' | 'other'
 type Licence = {
@@ -45,7 +46,7 @@ const NOT_KNOWN_CONSTRAINT = marker('editor.record.form.constraint.not-known')
     ConstraintCardComponent,
   ],
 })
-export class FormFieldLicenseComponent {
+export class FormFieldLicenseComponent implements OnInit {
   @Input() label: string
   @Input() recordConstraints: Constraint[] = []
   @Output() recordConstraintsChange: EventEmitter<Constraint[]> =
@@ -58,21 +59,42 @@ export class FormFieldLicenseComponent {
 
   constraintSectionsToDisplay: ConstraintChoice[] = []
 
-  selectedLicence = this.recordConstraints.find((constraint) =>
-    this.licenceOptions.find((licence) => licence.value === constraint.text)
-  )?.text // get the licence from the record constraints if it is one of the open data licence list
+  selectedLicence: string
+
+  ngOnInit(): void {
+    // get the licence from the record constraints if it is one of the open data licence list
+    this.selectedLicence = this.recordConstraints.find((constraint) => {
+      return this.licenceOptions.find((licence) => {
+        return licence.value === constraint.text
+      })
+    })?.text
+    // otherwise pre-select the first licence option
+    if (this.selectedLicence === undefined) {
+      this.selectedLicence = this.licenceOptions[0].value // cannot select 'etalab' as default as this would toggle the OpenData Toggle
+      this.recordConstraintsChange.emit([{ text: this.selectedLicence }])
+    }
+
+    // check if the constraints contain the 'not applicable' constraint
+    // check if the constraints contain the 'not known' constraint
+    this.toggleApplicableConstraint = !!this.recordConstraints.find(
+      (constraint) => constraint.text === NOT_APPLICABLE_CONSTRAINT
+    )
+    this.toggleKnownConstraint = !!this.recordConstraints.find(
+      (constraint) => constraint.text === NOT_KNOWN_CONSTRAINT
+    )
+  }
+
+  get licenceOptions(): Licence[] {
+    return AVAILABLE_LICENSES.map((license) => ({
+      label: marker(`editor.record.form.license.${license}`),
+      value: license,
+    }))
+  }
 
   handleLicenceSelection(licenceValue: string) {
     this.selectedLicence = licenceValue
     this.recordConstraintsChange.emit([{ text: licenceValue }])
     console.log('this.recordConstraints', this.recordConstraints)
-  }
-
-  get licenceOptions(): Licence[] {
-    return OPEN_DATA_LICENSES.map((license) => ({
-      label: marker(`editor.record.form.license.${license}`),
-      value: license,
-    }))
   }
 
   onToggleChange(toggleName: string) {
@@ -84,6 +106,9 @@ export class FormFieldLicenseComponent {
 
         this.addConstraintToRecord(NOT_APPLICABLE_CONSTRAINT)
         this.removeConstraintFromRecord(NOT_KNOWN_CONSTRAINT)
+      } else {
+        // if only toggle is turned off, remove the constraint
+        this.removeConstraintFromRecord(NOT_APPLICABLE_CONSTRAINT)
       }
     } else if (toggleName === 'toggleKnownConstraint') {
       this.toggleKnownConstraint = !this.toggleKnownConstraint
@@ -93,6 +118,9 @@ export class FormFieldLicenseComponent {
 
         this.addConstraintToRecord(NOT_KNOWN_CONSTRAINT)
         this.removeConstraintFromRecord(NOT_APPLICABLE_CONSTRAINT)
+      } else {
+        // if only toggle is turned off, remove the constraint
+        this.removeConstraintFromRecord(NOT_KNOWN_CONSTRAINT)
       }
     }
   }
