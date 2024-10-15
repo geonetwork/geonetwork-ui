@@ -22,6 +22,8 @@ These fields are used in the following context:
 
 This field targets the owner organization of a record. The exact meaning of a record's organization is defined by the "organization strategy" used; see [this documentation page](./organizations.md) for more details.
 
+_Note: The `organization` search field is set by some routing links within the datahub app. It is thus needed to unset such filters._
+
 ### Publisher
 
 > Field id: `publisherOrg`
