@@ -1,4 +1,6 @@
-<ng-container *ngIf="organization; else orgNotFound">
+<ng-container
+  *ngIf="currentOrganization$ | async as organization; else orgNotFound"
+>
   <ng-container *ngrxLet="lastPublishedDatasets$ as lastPublishedDatasets">
     <div id="organization-details-container" class="flex flex-col gap-[72px]">
       <div class="h-full container-lg mx-auto px-[25px] w-full">
@@ -21,7 +23,7 @@
           >
             <div
               data-test="organizationLogo"
-              class="bg-white border border-[#d8d8d8] w-full h-[185px] rounded-lg p-[30px] -mt-28"
+              class="border-solid border border-gray-300 rounded-md bg-white h-[185px] overflow-hidden -mt-28"
             >
               <gn-ui-thumbnail
                 class="relative"

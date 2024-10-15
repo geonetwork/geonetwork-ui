@@ -1,13 +1,9 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   Input,
-  OnChanges,
   OnDestroy,
   OnInit,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core'
 import { AsyncPipe, NgClass, NgForOf, NgIf } from '@angular/common'
@@ -39,7 +35,6 @@ import {
   combineLatest,
   distinctUntilChanged,
   Observable,
-  of,
   Subscription,
   switchMap,
 } from 'rxjs'
@@ -48,6 +43,7 @@ import { RouterLink } from '@angular/router'
 import { ROUTER_ROUTE_SEARCH } from '@geonetwork-ui/feature/router'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { startWith } from 'rxjs/operators'
 
 @Component({
   selector: 'datahub-organization-details',
@@ -76,18 +72,13 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
     NgClass,
   ],
 })
-export class OrganizationDetailsComponent
-  implements OnInit, AfterViewInit, OnDestroy, OnChanges
-{
-  protected readonly Error = Error
+export class OrganizationDetailsComponent implements OnInit, OnDestroy {
   protected readonly ErrorType = ErrorType
   protected readonly ROUTER_ROUTE_SEARCH = ROUTER_ROUTE_SEARCH
 
   protected get pages() {
     return new Array(this.totalPages).fill(0).map((_, i) => i + 1)
   }
-
-  lastPublishedDatasets$: Observable<CatalogRecord[]> = of([])
 
   subscriptions$: Subscription = new Subscription()
 
@@ -98,49 +89,36 @@ export class OrganizationDetailsComponent
   isFirstPage = this.currentPage === 1
   isLastPage = false
 
-  organizationHasChanged$ = new BehaviorSubject<void>(undefined)
-
-  @Input() organization?: Organization
+  currentOrganization$ = new BehaviorSubject<Organization>(null)
+  @Input() set organization(value: Organization) {
+    this.currentOrganization$.next(value)
+  }
   @Input() paginationContainerClass = 'w-full bottom-0 top-auto'
 
   @ViewChild(BlockListComponent) list: BlockListComponent
 
+  lastPublishedDatasets$: Observable<CatalogRecord[]> =
+    this.currentOrganization$.pipe(
+      switchMap((organization) =>
+        this.organizationsService.getFiltersForOrgs([organization])
+      ),
+      switchMap(
+        (filters) =>
+          this.searchFacade
+            .setFilters(filters)
+            .setSortBy(['desc', 'changeDate']).results$
+      ),
+      startWith([])
+    )
+
   constructor(
-    private changeDetector: ChangeDetectorRef,
     private searchFacade: SearchFacade,
     private organizationsService: OrganizationsServiceInterface
   ) {}
 
   ngOnInit(): void {
     this.searchFacade.setPageSize(3)
-
-    this.lastPublishedDatasets$ = this.organizationHasChanged$.pipe(
-      distinctUntilChanged(),
-      switchMap(() => {
-        return this.organizationsService
-          .getFiltersForOrgs([this.organization])
-          .pipe(
-            switchMap((filters) => {
-              return this.searchFacade
-                .setFilters(filters)
-                .setSortBy(['desc', 'changeDate']).results$
-            })
-          )
-      })
-    )
-
     this.manageSubscriptions()
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['organization']) {
-      this.organizationHasChanged$.next()
-    }
-  }
-
-  ngAfterViewInit() {
-    // this is required to show the pagination correctly
-    this.changeDetector.detectChanges()
   }
 
   ngOnDestroy(): void {

@@ -287,9 +287,23 @@ describe('OrganizationDetailsComponent', () => {
 
         const orgHasNoDataset = getHTMLElement('lastPubliDatasets')
 
-        console.log(orgHasNoDataset?.outerHTML)
-
         expect(orgHasNoDataset).toBeTruthy()
+      })
+    })
+  })
+
+  describe('when organization changes', () => {
+    const anotherOrg = someOrganizationsFixture()[1]
+    beforeEach(() => {
+      jest.clearAllMocks()
+      component.organization = anotherOrg
+      fixture.detectChanges()
+    })
+    it('updates the search filters', () => {
+      expect(searchFacade.setFilters).toHaveBeenCalledWith({
+        orgs: {
+          [anotherOrg.name]: true,
+        },
       })
     })
   })
