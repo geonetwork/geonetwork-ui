@@ -18,6 +18,13 @@ import { Keyword } from '@geonetwork-ui/common/domain/model/record'
  ************************************************************
  */
 
+export const CONSTRAINTS_SHORTCUTS: EditorField = {
+  componentName: 'form-field-constraints-shortcuts',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.constraintsShortcuts'),
+  },
+}
+
 export const LEGAL_CONSTRAINTS_FIELD: EditorField = {
   model: 'legalConstraints',
   formFieldConfig: {
@@ -212,6 +219,7 @@ export const USE_AND_ACCESS_CONDITIONS_SECTION: EditorSection = {
   hidden: false,
   fields: [
     RECORD_LICENSE_FIELD,
+    CONSTRAINTS_SHORTCUTS,
     LEGAL_CONSTRAINTS_FIELD,
     SECURITY_CONSTRAINTS_FIELD,
     OTHER_CONSTRAINTS_FIELD,

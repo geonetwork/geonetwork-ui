@@ -112,9 +112,23 @@
     </ng-container>
     <ng-container *ngSwitchCase="'legalConstraints'">
       <gn-ui-form-field-constraints
-        [label]="config.labelKey! | translate"
-        [recordConstraints]="valueAsConstraints"
-        (recordConstraintsChange)="valueChange.emit($event)"
+        [label]="config.labelKey"
+        [value]="valueAsConstraints"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-constraints>
+    </ng-container>
+    <ng-container *ngSwitchCase="'securityConstraints'">
+      <gn-ui-form-field-constraints
+        [label]="config.labelKey"
+        [value]="valueAsConstraints"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-constraints>
+    </ng-container>
+    <ng-container *ngSwitchCase="'otherConstraints'">
+      <gn-ui-form-field-constraints
+        [label]="config.labelKey"
+        [value]="valueAsConstraints"
+        (valueChange)="valueChange.emit($event)"
       ></gn-ui-form-field-constraints>
     </ng-container>
 
@@ -145,6 +159,16 @@
         [value]="valueAsOnlineResources"
         (valueChange)="valueChange.emit($event)"
       ></gn-ui-form-field-online-link-resources>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="!model">
+    <ng-container *ngIf="true">
+      <ng-container [ngSwitch]="componentName">
+        <ng-container *ngSwitchCase="'form-field-constraints-shortcuts'">
+          <gn-ui-form-field-constraints-shortcuts></gn-ui-form-field-constraints-shortcuts>
+        </ng-container>
+      </ng-container>
     </ng-container>
   </ng-container>
 </ng-template>

@@ -29,8 +29,7 @@ import { TranslateModule } from '@ngx-translate/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConstraintCardComponent {
-  @Input() label: string
-  // label = 'editor.record.form.constraint.markdown.placeholder' //TODO: translate
+  @Input() constraintText: string
   hint = 'editor.record.form.constraint.markdown.placeholder' // TODO: get text and translate
 
   showUrlInput = false
