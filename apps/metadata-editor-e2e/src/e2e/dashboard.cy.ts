@@ -313,6 +313,43 @@ describe('dashboard (authenticated)', () => {
       })
     })
   })
+  describe('search filters', () => {
+    describe('allRecords search filter', () => {
+      beforeEach(() => {
+        cy.visit('/catalog/search')
+      })
+      it('should filter the record list by editor (Barbara Roberts)', () => {
+        cy.get('md-editor-search-filters').find('gn-ui-button').first().click()
+        cy.get('.cdk-overlay-container')
+          .find('input[type="checkbox"]')
+          .eq(1)
+          .check()
+        cy.get('gn-ui-interactive-table')
+          .find('[data-cy="table-row"]')
+          .should('have.length', '5')
+        cy.get('gn-ui-results-table')
+          .find('[data-cy="table-row"]')
+          .first()
+          .as('record')
+        cy.get('@record')
+          .children('div')
+          .eq(4)
+          .find('span')
+          .invoke('text')
+          .should('eq', 'Barbara Roberts')
+      })
+    })
+    describe('myRecords search filters', () => {
+      beforeEach(() => {
+        cy.visit('/my-space/my-records')
+      })
+      it('should contain filter component with no search filter for now', () => {
+        cy.get('md-editor-search-filters')
+          .find('gn-ui-button')
+          .should('not.exist')
+      })
+    })
+  })
 })
 
 describe('when the user is not logged in', () => {

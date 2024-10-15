@@ -8,6 +8,7 @@ import {
   OrganizationSearchField,
   SimpleSearchField,
   MultilingualSearchField,
+  UserSearchField,
 } from './fields'
 import { TestBed } from '@angular/core/testing'
 import { Injector } from '@angular/core'
@@ -94,6 +95,25 @@ class RecordsRepositoryMock {
             {
               term: '30',
               count: 1489,
+            },
+          ],
+        },
+      })
+    if (aggName === 'userinfo.keyword')
+      return of({
+        'userinfo.keyword': {
+          buckets: [
+            {
+              term: 'admin|admin|admin|Administrator',
+              count: 10,
+            },
+            {
+              term: 'barbie|Roberts|Barbara|UserAdmin',
+              count: 5,
+            },
+            {
+              term: 'johndoe|Doe|John|Editor',
+              count: 1,
             },
           ],
         },
@@ -661,6 +681,43 @@ describe('search fields implementations', () => {
           {
             label: 'Office fédéral du développement territorial ARE (20)',
             value: 'Office fédéral du développement territorial ARE',
+          },
+        ])
+      })
+    })
+  })
+  describe('UserSearchField', () => {
+    beforeEach(() => {
+      searchField = new UserSearchField(injector)
+    })
+    describe('#getAvailableValues', () => {
+      let values
+      beforeEach(async () => {
+        values = await lastValueFrom(searchField.getAvailableValues())
+      })
+      it('orders results by ascending key', () => {
+        expect(repository.aggregate).toHaveBeenCalledWith({
+          'userinfo.keyword': {
+            type: 'terms',
+            limit: 1000,
+            field: 'userinfo.keyword',
+            sort: ['asc', 'key'],
+          },
+        })
+      })
+      it('returns the available editors, order by ascending key (alphabetical)', () => {
+        expect(values).toEqual([
+          {
+            label: 'admin admin (10)',
+            value: 'admin|admin|admin|Administrator',
+          },
+          {
+            label: 'Barbara Roberts (5)',
+            value: 'barbie|Roberts|Barbara|UserAdmin',
+          },
+          {
+            label: 'John Doe (1)',
+            value: 'johndoe|Doe|John|Editor',
           },
         ])
       })

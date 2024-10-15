@@ -365,8 +365,9 @@ export class UserSearchField extends SimpleSearchField {
 
   private formatUserInfo(userInfo: string | unknown): string {
     const infos = (typeof userInfo === 'string' ? userInfo : '').split('|')
+    const count = infos[3].split(' ')[1]
     if (infos && infos.length === 4) {
-      return `${infos[2]} ${infos[1]}`
+      return `${infos[2]} ${infos[1]} ${count}`
     }
     return undefined
   }

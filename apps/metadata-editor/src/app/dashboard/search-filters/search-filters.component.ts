@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon'
   styleUrls: ['./search-filters.component.css'],
 })
 export class SearchFiltersComponent implements OnInit {
-  @Input() searchFields: string[]
+  @Input() searchFields: string[] = []
   searchConfig: { fieldName: string; title: string }[]
 
   ngOnInit(): void {
