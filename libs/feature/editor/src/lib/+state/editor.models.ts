@@ -1,6 +1,6 @@
 import { EditorField, EditorFieldValue, EditorSection } from '../models'
 
-export type SaveRecordError = string
+export type SaveRecordError = Error
 
 export interface EditorFieldWithValue {
   config: EditorField

@@ -118,7 +118,7 @@ describe('EditorEffects', () => {
           a: EditorActions.saveRecord(),
         })
         const expected = hot('-a-|', {
-          a: EditorActions.saveRecordFailure({ error: 'oopsie' }),
+          a: EditorActions.saveRecordFailure({ error: new Error('oopsie') }),
         })
         expect(effects.saveRecord$).toBeObservable(expected)
       })

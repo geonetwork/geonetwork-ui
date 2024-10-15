@@ -6,25 +6,26 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { ActivatedRoute, Router } from '@angular/router'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
 import {
   EditorFacade,
   RecordFormComponent,
 } from '@geonetwork-ui/feature/editor'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
-import { PublishButtonComponent } from './components/publish-button/publish-button.component'
-import { TopToolbarComponent } from './components/top-toolbar/top-toolbar.component'
 import {
   NotificationsContainerComponent,
   NotificationsService,
 } from '@geonetwork-ui/feature/notifications'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { combineLatest, filter, firstValueFrom, Subscription, take } from 'rxjs'
-import { PageSelectorComponent } from './components/page-selector/page-selector.component'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { map } from 'rxjs/operators'
 import { SidebarComponent } from '../dashboard/sidebar/sidebar.component'
+import { PageSelectorComponent } from './components/page-selector/page-selector.component'
+import { PublishButtonComponent } from './components/publish-button/publish-button.component'
+import { TopToolbarComponent } from './components/top-toolbar/top-toolbar.component'
 
 marker('editor.record.form.bottomButtons.comeBackLater')
 marker('editor.record.form.bottomButtons.previous')
@@ -81,18 +82,34 @@ export class EditPageComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.facade.saveError$.subscribe((error) => {
-        this.notificationsService.showNotification({
-          type: 'error',
-          title: this.translateService.instant(
-            'editor.record.publishError.title'
-          ),
-          text: `${this.translateService.instant(
-            'editor.record.publishError.body'
-          )} ${error}`,
-          closeMessage: this.translateService.instant(
-            'editor.record.publishError.closeMessage'
-          ),
-        })
+        if (error instanceof PublicationVersionError) {
+          this.notificationsService.showNotification({
+            type: 'error',
+            title: this.translateService.instant(
+              'editor.record.publishVersionError.title'
+            ),
+            text: this.translateService.instant(
+              'editor.record.publishVersionError.body',
+              { currentVersion: error.detectedApiVersion }
+            ),
+            closeMessage: this.translateService.instant(
+              'editor.record.publishVersionError.closeMessage'
+            ),
+          })
+        } else {
+          this.notificationsService.showNotification({
+            type: 'error',
+            title: this.translateService.instant(
+              'editor.record.publishError.title'
+            ),
+            text: `${this.translateService.instant(
+              'editor.record.publishError.body'
+            )} ${error.message}`,
+            closeMessage: this.translateService.instant(
+              'editor.record.publishError.closeMessage'
+            ),
+          })
+        }
       })
     )
 
