@@ -1,6 +1,6 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
 import { NavigationButtonComponent } from './navigation-button.component'
-import { TranslateModule } from '@ngx-translate/core'=
+import { TranslateModule } from '@ngx-translate/core'
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,

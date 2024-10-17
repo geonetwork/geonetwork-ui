@@ -1,6 +1,5 @@
 import { DOCUMENT } from '@angular/common'
 import { importProvidersFrom, Inject, NgModule } from '@angular/core'
-import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
 import { Router, RouterModule } from '@angular/router'
 import {
@@ -104,6 +103,20 @@ import {
   DO_NOT_USE_DEFAULT_BASEMAP,
   MAP_VIEW_CONSTRAINTS,
 } from '@geonetwork-ui/ui/map'
+import {
+  matAccountBoxOutline,
+  matAddOutline,
+  matCloseOutline,
+  matEditOutline,
+  matExpandMoreOutline,
+  matMenuOutline,
+  matMoreHorizOutline,
+  matRemoveOutline,
+  matStarOutline,
+  matMyLocationOutline,
+  matSendOutline,
+} from '@ng-icons/material-icons/outline'
+import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -163,7 +176,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     FeatureCatalogModule,
     UiSearchModule,
     UtilSharedModule,
-    MatIconModule,
     UiLayoutModule,
     UiElementsModule,
     UiDatavizModule,
@@ -177,8 +189,24 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     BlockListComponent,
     PreviousNextButtonsComponent,
     LetDirective,
+    NgIconsModule.withIcons({
+      matMenuOutline,
+      matRemoveOutline,
+      matCloseOutline,
+      matMoreHorizOutline,
+      matAddOutline,
+      matExpandMoreOutline,
+      matEditOutline,
+      matAccountBoxOutline,
+      matStarOutline,
+      matMyLocationOutline,
+      matSendOutline,
+    }),
   ],
   providers: [
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
     importProvidersFrom(FeatureAuthModule),
     provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
     provideGn4(),
