@@ -7,8 +7,13 @@ import {
 } from '@angular/core'
 import { MatNativeDateModule } from '@angular/material/core'
 import { MatDatepickerModule } from '@angular/material/datepicker'
-import { MatIconModule } from '@angular/material/icon'
 import { ButtonComponent } from '../button/button.component'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { iconoirCalendar } from '@ng-icons/iconoir'
 
 @Component({
   selector: 'gn-ui-date-picker',
@@ -17,10 +22,16 @@ import { ButtonComponent } from '../button/button.component'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    MatIconModule,
     MatNativeDateModule,
     MatDatepickerModule,
     ButtonComponent,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({ iconoirCalendar }),
+    provideNgIconsConfig({
+      size: '1.5rem',
+    }),
   ],
 })
 export class DatePickerComponent {

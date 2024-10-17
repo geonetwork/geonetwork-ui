@@ -94,7 +94,7 @@
       <span translate>record.metadata.author</span>
     </ng-template>
     <ng-template #cell let-item>
-      <mat-icon class="material-symbols-outlined">person</mat-icon>
+      <ng-icon name="iconoirUser"></ng-icon>
       <span data-cy="ownerInfo" class="text-xs">{{
         formatUserInfo(item.extras?.ownerInfo)
       }}</span>
@@ -107,7 +107,7 @@
       <span translate>record.metadata.status</span>
     </ng-template>
     <ng-template #cell let-item>
-      <span class="text-xs">
+      <span>
         {{
           (isUnsavedDraft(item)
             ? 'record.metadata.status.notPublished'
@@ -128,7 +128,7 @@
       <span translate>record.metadata.updatedOn</span>
     </ng-template>
     <ng-template #cell let-item>
-      <div class="flex justify-center w-full text-xs">
+      <div class="flex justify-center w-full">
         {{ isUnsavedDraft(item) ? '-' : dateToString(item.recordUpdated) }}
       </div>
     </ng-template>

@@ -150,7 +150,7 @@ describe('GnUiLinkifyDirective', () => {
       const href = getAnchorElement()[0].nativeElement.getAttribute('href')
       const matIcon = getAnchorElement()[0].nativeElement.childNodes[1]
       expect(href).toBe(testWithHTML.output)
-      expect(matIcon.nodeName).toContain('MAT-ICON')
+      expect(matIcon.nodeName).toContain('NG-ICON')
     })
   })
 })

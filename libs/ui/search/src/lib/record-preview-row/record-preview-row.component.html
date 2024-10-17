@@ -42,16 +42,16 @@
     <div
       class="icons flex flex-row col-start-1 row-start-4 sm:col-start-2 sm:row-start-3 sm:absolute sm:right-[0.4em]"
     >
-      <mat-icon
+      <ng-icon
         *ngIf="isDownloadable"
-        class="material-symbols-outlined text-primary opacity-45 mx-1"
-        >cloud_download</mat-icon
-      >
-      <mat-icon
+        class="text-primary opacity-45 mx-1"
+        name="matCloudDownloadOutline"
+      ></ng-icon>
+      <ng-icon
         *ngIf="isViewable"
-        class="material-symbols-outlined text-primary opacity-45 mx-1"
-        >map</mat-icon
-      >
+        class="text-primary opacity-45 mx-1"
+        name="matMapOutline"
+      ></ng-icon>
     </div>
     <div
       *ngIf="metadataQualityDisplay"

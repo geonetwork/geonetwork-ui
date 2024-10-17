@@ -1,7 +1,6 @@
 import { OverlayModule } from '@angular/cdk/overlay'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { DropdownMultiselectComponent } from './dropdown-multiselect.component'
-import { MatIconModule } from '@angular/material/icon'
 import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import { ButtonComponent } from '../button/button.component'
@@ -18,7 +17,6 @@ describe('DropdownMultiselectComponent', () => {
       imports: [
         ButtonComponent,
         OverlayModule,
-        MatIconModule,
         TranslateModule.forRoot(),
         FormsModule,
       ],

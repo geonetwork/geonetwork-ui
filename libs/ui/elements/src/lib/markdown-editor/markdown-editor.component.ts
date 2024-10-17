@@ -10,7 +10,6 @@ import { FormsModule } from '@angular/forms'
 import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { ButtonComponent, TextAreaComponent } from '@geonetwork-ui/ui/inputs'
-import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 
 @Component({
@@ -22,7 +21,6 @@ import { MatTooltipModule } from '@angular/material/tooltip'
   imports: [
     CommonModule,
     FormsModule,
-    MatIconModule,
     MatTooltipModule,
     ButtonComponent,
     TextAreaComponent,
