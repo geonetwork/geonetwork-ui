@@ -280,15 +280,6 @@ describe('OrganizationDetailsComponent', () => {
 
         expect(orgPageLasPubDat?.children.length).toEqual(1)
       })
-
-      it('should display the orgHasNodataset error component if the org has no dataset', () => {
-        results.next([])
-        fixture.detectChanges()
-
-        const orgHasNoDataset = getHTMLElement('lastPubliDatasets')
-
-        expect(orgHasNoDataset).toBeTruthy()
-      })
     })
   })
 

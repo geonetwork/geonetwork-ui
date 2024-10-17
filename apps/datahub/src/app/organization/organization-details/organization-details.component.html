@@ -96,12 +96,7 @@
             </div>
 
             <div id="lastPublishedDatasets" data-test="lastPubliDatasets">
-              <ng-container
-                *ngIf="
-                  !isSearchFacadeLoading && lastPublishedDatasets.length > 0;
-                  else orgHasNoDataset
-                "
-              >
+              <ng-container *ngIf="!isSearchFacadeLoading">
                 <div
                   class="mb-4 flex flex-wrap gap-9 justify-center sm:justify-start px-[25px]"
                   data-test="orgPageLasPubDat"
@@ -136,16 +131,6 @@
                   <gn-ui-spinning-loader></gn-ui-spinning-loader>
                 </div>
               </ng-container>
-
-              <ng-template
-                #orgHasNoDataset
-                *ngIf="!isSearchFacadeLoading"
-                data-test="orgHasNoDataset"
-              >
-                <gn-ui-error
-                  [type]="ErrorType.ORGANIZATION_HAS_NO_DATASET"
-                ></gn-ui-error>
-              </ng-template>
             </div>
           </div>
         </div>
