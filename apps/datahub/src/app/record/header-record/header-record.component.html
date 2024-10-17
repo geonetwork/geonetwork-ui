@@ -7,7 +7,7 @@
         <gn-ui-navigation-button
           (click)="back()"
           [label]="'datahub.search.back' | translate"
-          [icon]="'arrow_back'"
+          [icon]="'matArrowBack'"
           [style.--navigation-button-color]="foregroundColor"
         >
         </gn-ui-navigation-button>
@@ -48,9 +48,7 @@
         [style.--gn-ui-badge-opacity]="'1'"
         [style.font-size]="'0.85em'"
       >
-        <mat-icon class="material-symbols-outlined mr-2">
-          my_location
-        </mat-icon>
+        <ng-icon class="mr-2" name="matMyLocationOutline"> </ng-icon>
         <span class="font-semibold" translate>record.metadata.type</span>
       </gn-ui-badge>
       <div *ngIf="metadata.recordUpdated">
