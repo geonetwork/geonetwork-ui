@@ -650,9 +650,10 @@ describe('api cards', () => {
   it('should display the open panel button', () => {
     cy.get('@firstCard')
       .find('button')
-      .children('mat-icon')
+      .children('ng-icon')
       .eq(1)
-      .should('have.text', 'more_horiz')
+      .invoke('attr', 'name')
+      .should('equal', 'matMoreHoriz')
   })
   it('should open and close the panel on click on open panel button', () => {
     cy.get('@firstCard').find('button').eq(1).click()

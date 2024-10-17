@@ -231,7 +231,7 @@ describe('dashboard (authenticated)', () => {
         cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
         cy.get('gn-ui-results-table')
           .find('[data-cy="table-row"]')
-          .find('mat-icon')
+          .find('ng-icon')
           .next()
           .should('contain', 'admin admin')
       })
