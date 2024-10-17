@@ -517,6 +517,7 @@
   "search.filters.topic": "Thèmes",
   "search.filters.useSpatialFilter": "Mettre en avant les résultats sur la zone d'intérêt",
   "search.filters.useSpatialFilterHelp": "Si cette option est activée, les fiches portant sur la zone d'intérêt du catalogue seront montrées en premier; les fiches en dehors de cette zone n'apparaîtront pas dans les résultats.",
+  "search.filters.user": "Éditeur",
   "share.tab.permalink": "Partager",
   "share.tab.webComponent": "Intégrer",
   "table.loading.data": "Chargement des données...",

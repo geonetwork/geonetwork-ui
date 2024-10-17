@@ -129,6 +129,16 @@
       border border-white focus:ring-4 focus:ring-gray-300;
   }
 
+  /* DROPDOWN MULTISELECT CLASS */
+  .gn-ui-multiselect-counter {
+    --text-color: var(--gn-ui-multiselect-counter-text-color, white);
+    --background-color: var(
+      --gn-ui-multiselect-counter-background-color,
+      var(--color-primary-lightest)
+    );
+    @apply bg-[color:--background-color] text-[color:--text-color];
+  }
+
   /* BADGE CLASS */
   .gn-ui-badge {
     --rounded: var(--gn-ui-badge-rounded, 0.25em);

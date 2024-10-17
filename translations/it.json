@@ -517,6 +517,7 @@
   "search.filters.topic": "Argomenti",
   "search.filters.useSpatialFilter": "Evidenzia i risultati nell'area di interesse",
   "search.filters.useSpatialFilterHelp": "Se attivata, le schede relative all'area di interesse del catalogo saranno mostrate per prime; le schede al di fuori di questa area non appariranno nei risultati.",
+  "search.filters.user": "",
   "share.tab.permalink": "Condividere",
   "share.tab.webComponent": "Incorporare",
   "table.loading.data": "Caricamento dei dati...",
