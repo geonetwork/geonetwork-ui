@@ -695,7 +695,7 @@ describe('search fields implementations', () => {
       beforeEach(async () => {
         values = await lastValueFrom(searchField.getAvailableValues())
       })
-      it('orders results by ascending key', () => {
+      it('calls aggregate with expected payload', () => {
         expect(repository.aggregate).toHaveBeenCalledWith({
           'userinfo.keyword': {
             type: 'terms',
@@ -705,7 +705,7 @@ describe('search fields implementations', () => {
           },
         })
       })
-      it('returns the available editors, order by ascending key (alphabetical)', () => {
+      it('returns the available users, in expected format', () => {
         expect(values).toEqual([
           {
             label: 'admin admin (10)',
