@@ -48,7 +48,7 @@ export class EditorEffects {
             catchError((error) =>
               of(
                 EditorActions.saveRecordFailure({
-                  error: error.message,
+                  error,
                 })
               )
             )

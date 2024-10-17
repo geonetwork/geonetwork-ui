@@ -1,9 +1,33 @@
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import {
+  assertValidXml,
+  findConverterForDocument,
+  Gn4Converter,
+  Gn4SearchResults,
+  Iso19139Converter,
+} from '@geonetwork-ui/api/metadata-converter'
+import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  Aggregations,
+  AggregationsParams,
+  FieldFilters,
+} from '@geonetwork-ui/common/domain/model/search'
+import {
+  SearchParams,
+  SearchResults,
+} from '@geonetwork-ui/common/domain/model/search/search.model'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import {
   RecordsApiService,
   SearchApiService,
 } from '@geonetwork-ui/data-access/gn4'
-import { ElasticsearchService } from './elasticsearch'
 import {
   combineLatest,
   exhaustMap,
@@ -14,30 +38,11 @@ import {
   switchMap,
   throwError,
 } from 'rxjs'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import {
-  SearchParams,
-  SearchResults,
-} from '@geonetwork-ui/common/domain/model/search/search.model'
-import {
-  Aggregations,
-  AggregationsParams,
-  FieldFilters,
-} from '@geonetwork-ui/common/domain/model/search'
 import { catchError, map, tap } from 'rxjs/operators'
-import {
-  assertValidXml,
-  findConverterForDocument,
-  Gn4Converter,
-  Gn4SearchResults,
-  Iso19139Converter,
-} from '@geonetwork-ui/api/metadata-converter'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http'
+import { lt } from 'semver'
+import { ElasticsearchService } from './elasticsearch'
+
+const minPublicationApiVersion = '4.2.5'
 
 const TEMPORARY_ID_PREFIX = 'TEMP-ID-'
 
@@ -53,7 +58,8 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     private gn4SearchApi: SearchApiService,
     private gn4SearchHelper: ElasticsearchService,
     private gn4Mapper: Gn4Converter,
-    private gn4RecordsApi: RecordsApiService
+    private gn4RecordsApi: RecordsApiService,
+    private platformService: PlatformServiceInterface
   ) {}
 
   search({
@@ -242,33 +248,36 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     record: CatalogRecord,
     referenceRecordSource?: string
   ): Observable<string> {
-    return this.serializeRecordToXml(record, referenceRecordSource).pipe(
+    return this.platformService.getApiVersion().pipe(
+      map((version) => {
+        if (lt(version, minPublicationApiVersion)) {
+          throw new PublicationVersionError(version)
+        }
+      }),
+      switchMap(() => this.serializeRecordToXml(record, referenceRecordSource)),
       switchMap((recordXml) =>
-        this.gn4RecordsApi
-          .insert(
-            'METADATA',
-            undefined,
-            undefined,
-            undefined,
-            true,
-            undefined,
-            'OVERWRITE',
-            undefined,
-            undefined,
-            undefined,
-            '_none_',
-            undefined,
-            undefined,
-            undefined,
-            recordXml
-          )
-          .pipe(
-            map((response) => {
-              const metadataId = Object.keys(response.metadataInfos)[0]
-              return response.metadataInfos[metadataId][0].uuid
-            })
-          )
-      )
+        this.gn4RecordsApi.insert(
+          'METADATA',
+          undefined,
+          undefined,
+          undefined,
+          true,
+          undefined,
+          'OVERWRITE',
+          undefined,
+          undefined,
+          undefined,
+          '_none_',
+          undefined,
+          undefined,
+          undefined,
+          recordXml
+        )
+      ),
+      map((response) => {
+        const metadataId = Object.keys(response.metadataInfos)[0]
+        return response.metadataInfos[metadataId][0].uuid
+      })
     )
   }
 

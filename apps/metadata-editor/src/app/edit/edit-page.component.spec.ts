@@ -13,6 +13,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { HttpClientModule } from '@angular/common/http'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { PageSelectorComponent } from './components/page-selector/page-selector.component'
+import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
 
 const getRoute = () => ({
   snapshot: {
@@ -117,9 +118,21 @@ describe('EditPageComponent', () => {
     beforeEach(() => {
       fixture.detectChanges()
     })
+    describe('publish version error', () => {
+      it('shows notification', () => {
+        ;(facade.saveError$ as any).next(new PublicationVersionError('1.0.0'))
+        expect(notificationsService.showNotification).toHaveBeenCalledWith({
+          type: 'error',
+          title: 'editor.record.publishVersionError.title',
+          text: 'editor.record.publishVersionError.body',
+          closeMessage: 'editor.record.publishVersionError.closeMessage',
+        })
+      })
+    })
+
     describe('publish error', () => {
       it('shows notification', () => {
-        ;(facade.saveError$ as any).next('oopsie')
+        ;(facade.saveError$ as any).next(new Error('oopsie'))
         expect(notificationsService.showNotification).toHaveBeenCalledWith({
           type: 'error',
           title: 'editor.record.publishError.title',

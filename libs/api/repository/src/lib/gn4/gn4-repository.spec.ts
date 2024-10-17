@@ -26,6 +26,8 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
 
 class Gn4MetadataMapperMock {
   readRecords = jest.fn((records) =>
@@ -91,11 +93,16 @@ class RecordsApiServiceMock {
   deleteRecord = jest.fn(() => of({}))
 }
 
+class PlatformServiceInterfaceMock {
+  getApiVersion = jest.fn(() => of('4.2.5'))
+}
+
 describe('Gn4Repository', () => {
   let repository: Gn4Repository
   let gn4Helper: ElasticsearchService
   let gn4SearchApi: SearchApiService
   let gn4RecordsApi: RecordsApiService
+  let platformService: PlatformServiceInterface
   let httpTestingController: HttpTestingController
 
   beforeEach(() => {
@@ -119,12 +126,17 @@ describe('Gn4Repository', () => {
           provide: Gn4Converter,
           useClass: Gn4MetadataMapperMock,
         },
+        {
+          provide: PlatformServiceInterface,
+          useClass: PlatformServiceInterfaceMock,
+        },
       ],
     })
     repository = TestBed.inject(Gn4Repository)
     gn4Helper = TestBed.inject(ElasticsearchService)
     gn4SearchApi = TestBed.inject(SearchApiService)
     gn4RecordsApi = TestBed.inject(RecordsApiService)
+    platformService = TestBed.inject(PlatformServiceInterface)
     httpTestingController = TestBed.inject(HttpTestingController)
   })
 
@@ -392,6 +404,21 @@ describe('Gn4Repository', () => {
   // note: we're using a simple record here otherwise there might be loss of information when converting
   describe('saveRecord', () => {
     let recordSource: string
+    describe('version error', () => {
+      it('throws an error if the publication API version is too low', async () => {
+        ;(platformService.getApiVersion as jest.Mock).mockReturnValueOnce(
+          of('4.2.4')
+        )
+        let error
+        await lastValueFrom(
+          repository.saveRecord(
+            simpleDatasetRecordFixture(),
+            simpleDatasetRecordAsXmlFixture()
+          )
+        ).catch((e) => (error = e))
+        expect(error).toEqual(new PublicationVersionError('4.2.4'))
+      })
+    })
     describe('with reference', () => {
       beforeEach(async () => {
         recordSource = await lastValueFrom(
