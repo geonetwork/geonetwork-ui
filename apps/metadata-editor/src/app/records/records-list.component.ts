@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common'
 import { Component, OnInit } from '@angular/core'
-import { MatIconModule } from '@angular/material/icon'
 import { Router } from '@angular/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
@@ -32,7 +31,6 @@ export const allSearchFields = [
   standalone: true,
   imports: [
     CommonModule,
-    MatIconModule,
     UiSearchModule,
     UiElementsModule,
     TranslateModule,

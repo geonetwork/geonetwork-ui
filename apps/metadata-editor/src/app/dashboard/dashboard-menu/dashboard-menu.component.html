@@ -7,7 +7,7 @@
       routerLinkActive="btn-active"
       #rlaAll="routerLinkActive"
     >
-      <mat-icon class="material-symbols-outlined">newsmode</mat-icon>
+      <ng-icon name="iconoirJournal"></ng-icon>
       <span translate="">dashboard.catalog.allRecords</span>
     </a>
     <a
@@ -17,7 +17,7 @@
       #rlaDiscussion="routerLinkActive"
       [title]="'editor.temporary.disabled' | translate"
     >
-      <mat-icon class="material-symbols-outlined">chat_bubble</mat-icon>
+      <ng-icon name="matChatBubbleOutlineOutline"></ng-icon>
       <span translate="">dashboard.catalog.discussion</span>
     </a>
     <a
@@ -27,7 +27,7 @@
       #rlaCalendar="routerLinkActive"
       [title]="'editor.temporary.disabled' | translate"
     >
-      <mat-icon class="material-symbols-outlined">calendar_today</mat-icon>
+      <ng-icon name="iconoirCalendar"></ng-icon>
       <span translate="">dashboard.catalog.calendar</span>
     </a>
     <a
@@ -37,7 +37,7 @@
       #rlaContacts="routerLinkActive"
       [title]="'editor.temporary.disabled' | translate"
     >
-      <mat-icon class="material-symbols-outlined">person</mat-icon>
+      <ng-icon name="iconoirUser"></ng-icon>
       <span translate="">dashboard.catalog.contacts</span>
     </a>
     <a
@@ -47,7 +47,7 @@
       #rlaThesaurus="routerLinkActive"
       [title]="'editor.temporary.disabled' | translate"
     >
-      <mat-icon class="material-symbols-outlined">label</mat-icon>
+      <ng-icon name="matLabelOutline"></ng-icon>
       <span translate="">dashboard.catalog.thesaurus</span>
     </a>
   </div>
@@ -60,7 +60,7 @@
       routerLinkActive="btn-active"
       #rlaMyRecords="routerLinkActive"
     >
-      <mat-icon class="material-symbols-outlined">post_add</mat-icon>
+      <ng-icon name="iconoirJournalPage"></ng-icon>
       <span translate="">dashboard.records.myRecords</span>
     </a>
     <a
@@ -69,7 +69,7 @@
       routerLinkActive="btn-active"
       #rlaMyDraft="routerLinkActive"
     >
-      <mat-icon class="material-symbols-outlined">edit_note</mat-icon>
+      <ng-icon name="iconoirPageEdit"></ng-icon>
       <span translate="">dashboard.records.myDraft</span>
       <ng-container *ngIf="draftsCount$ | async as draftsCount">
         <gn-ui-badge
@@ -88,7 +88,7 @@
       #rlaMyLibrary="routerLinkActive"
       [title]="'editor.temporary.disabled' | translate"
     >
-      <mat-icon class="material-symbols-outlined">lightbulb</mat-icon>
+      <ng-icon name="iconoirLightBulbOn"></ng-icon>
       <span translate="">dashboard.records.templates</span>
     </a>
   </div>

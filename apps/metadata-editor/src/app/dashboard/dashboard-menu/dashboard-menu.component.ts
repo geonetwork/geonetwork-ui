@@ -1,11 +1,27 @@
 import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { MatIconModule } from '@angular/material/icon'
 import { RouterModule } from '@angular/router'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { startWith, switchMap } from 'rxjs/operators'
 import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  matChatBubbleOutlineOutline,
+  matLabelOutline,
+} from '@ng-icons/material-icons/outline'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import {
+  iconoirCalendar,
+  iconoirJournal,
+  iconoirJournalPage,
+  iconoirLightBulbOn,
+  iconoirPageEdit,
+  iconoirUser,
+} from '@ng-icons/iconoir'
 
 @Component({
   selector: 'md-editor-dashboard-menu',
@@ -16,9 +32,24 @@ import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
   imports: [
     CommonModule,
     RouterModule,
-    MatIconModule,
     TranslateModule,
     BadgeComponent,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({
+      matChatBubbleOutlineOutline,
+      iconoirJournal,
+      iconoirCalendar,
+      iconoirUser,
+      matLabelOutline,
+      iconoirJournalPage,
+      iconoirPageEdit,
+      iconoirLightBulbOn,
+    }),
+    provideNgIconsConfig({
+      size: '1.2em',
+    }),
   ],
 })
 export class DashboardMenuComponent {

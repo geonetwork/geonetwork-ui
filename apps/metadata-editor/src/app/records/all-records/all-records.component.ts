@@ -18,7 +18,6 @@ import { RecordsCountComponent } from '../records-count/records-count.component'
 import { Observable } from 'rxjs'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { MatIconModule } from '@angular/material/icon'
 import {
   CdkConnectedOverlay,
   CdkOverlayOrigin,
@@ -31,6 +30,16 @@ import { RecordsListComponent } from '../records-list.component'
 import { map } from 'rxjs/operators'
 import { SearchHeaderComponent } from '../../dashboard/search-header/search-header.component'
 import { SearchFiltersComponent } from '../../dashboard/search-filters/search-filters.component'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import {
+  iconoirNavArrowDown,
+  iconoirNavArrowUp,
+  iconoirPagePlus,
+} from '@ng-icons/iconoir'
 
 @Component({
   selector: 'md-editor-all-records',
@@ -44,13 +53,23 @@ import { SearchFiltersComponent } from '../../dashboard/search-filters/search-fi
     ResultsTableContainerComponent,
     UiElementsModule,
     UiInputsModule,
-    MatIconModule,
     ImportRecordComponent,
     CdkOverlayOrigin,
     CdkConnectedOverlay,
     RecordsListComponent,
     SearchHeaderComponent,
     SearchFiltersComponent,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({
+      iconoirNavArrowDown,
+      iconoirNavArrowUp,
+      iconoirPagePlus,
+    }),
+    provideNgIconsConfig({
+      size: '1.5rem',
+    }),
   ],
 })
 export class AllRecordsComponent {

@@ -5,12 +5,17 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { TranslateModule } from '@ngx-translate/core'
-import { MatIconModule } from '@angular/material/icon'
 import { combineLatest, Observable } from 'rxjs'
 import { map, switchMap, take } from 'rxjs/operators'
 import { RecordsApiService } from '@geonetwork-ui/data-access/gn4'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { iconoirCloudUpload } from '@ng-icons/iconoir'
+import { matCheckCircleOutline } from '@ng-icons/material-icons/outline'
 
 export type RecordSaveStatus = 'saving' | 'upToDate' | 'hasChanges'
 
@@ -23,7 +28,13 @@ export type RecordSaveStatus = 'saving' | 'upToDate' | 'hasChanges'
     MatProgressSpinnerModule,
     MatTooltipModule,
     TranslateModule,
-    MatIconModule,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({ iconoirCloudUpload, matCheckCircleOutline }),
+    provideNgIconsConfig({
+      size: '1.5rem',
+    }),
   ],
   templateUrl: './publish-button.component.html',
   styleUrls: ['./publish-button.component.css'],

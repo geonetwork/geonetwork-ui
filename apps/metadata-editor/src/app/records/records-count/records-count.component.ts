@@ -5,7 +5,6 @@ import {
   InteractiveTableColumnComponent,
   InteractiveTableComponent,
 } from '@geonetwork-ui/ui/layout'
-import { MatIconModule } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
 import { SelectionService } from '@geonetwork-ui/api/repository'
 import { CommonModule } from '@angular/common'
@@ -21,7 +20,6 @@ import { SearchFacade } from '@geonetwork-ui/feature/search'
     UiInputsModule,
     InteractiveTableComponent,
     InteractiveTableColumnComponent,
-    MatIconModule,
     TranslateModule,
   ],
 })
