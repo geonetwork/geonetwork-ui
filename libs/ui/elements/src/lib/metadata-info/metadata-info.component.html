@@ -34,10 +34,10 @@
           class="cursor-pointer hover:underline transition-all"
         >
           {{ license.text }}
-          <mat-icon
-            class="material-symbols-outlined !w-[12px] !h-[12px] !text-[12px] opacity-75 shrink-0"
-            >open_in_new</mat-icon
-          >
+          <ng-icon
+            class="!w-[12px] !h-[12px] !text-[12px] opacity-75 shrink-0"
+            name="matOpenInNew"
+          ></ng-icon>
         </a>
       </div>
       <ng-template #noUrl>
@@ -111,19 +111,18 @@
           target="_blank"
           class="contact-website text-primary text-sm cursor-pointer hover:underline transition-all"
           >{{ resourceContact.organization.website }}
-          <mat-icon
-            class="material-symbols-outlined !w-[12px] !h-[12px] !text-[12px] opacity-75 shrink-0"
-            >open_in_new</mat-icon
-          >
+          <ng-icon
+            class="!w-[12px] !h-[12px] !text-[12px] opacity-75 shrink-0"
+            name="matOpenInNew"
+          ></ng-icon>
         </a>
       </div>
       <div class="mt-4" *ngIf="resourceContact.email">
         <div class="flex">
-          <mat-icon
-            class="material-symbols-outlined !w-5 !h-5 !text-[20px] opacity-75 shrink-0"
-          >
-            mail_outline</mat-icon
-          >
+          <ng-icon
+            class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
+            name="matMailOutline"
+          ></ng-icon>
           <a
             *ngIf="resourceContact.email"
             [href]="'mailto:' + resourceContact.email"

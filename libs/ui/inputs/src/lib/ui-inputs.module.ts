@@ -11,7 +11,6 @@ import { DragAndDropFileInputComponent } from './drag-and-drop-file-input/drag-a
 import { DropdownSelectorComponent } from './dropdown-selector/dropdown-selector.component'
 import { TextAreaComponent } from './text-area/text-area.component'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
-import { MatIconModule } from '@angular/material/icon'
 import { NavigationButtonComponent } from './navigation-button/navigation-button.component'
 import { StarToggleComponent } from './star-toggle/star-toggle.component'
 import { DropdownMultiselectComponent } from './dropdown-multiselect/dropdown-multiselect.component'
@@ -31,6 +30,20 @@ import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core'
 import { EditableLabelDirective } from './editable-label/editable-label.directive'
 import { ImageInputComponent } from './image-input/image-input.component'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import {
+  matExpandMore,
+  matExpandLess,
+  matStar,
+  matStarBorder,
+  matClose,
+  matContentCopy,
+  matArrowBack,
+} from '@ng-icons/material-icons/baseline'
 
 @NgModule({
   declarations: [
@@ -52,7 +65,6 @@ import { ImageInputComponent } from './image-input/image-input.component'
     TagInputModule,
     UtilSharedModule,
     MatAutocompleteModule,
-    MatIconModule,
     UiWidgetsModule,
     OverlayModule,
     MatCheckboxModule,
@@ -69,6 +81,21 @@ import { ImageInputComponent } from './image-input/image-input.component'
     DateRangePickerComponent,
     CheckToggleComponent,
     BadgeComponent,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({
+      matStar,
+      matStarBorder,
+      matClose,
+      matExpandMore,
+      matExpandLess,
+      matContentCopy,
+      matArrowBack,
+    }),
+    provideNgIconsConfig({
+      size: '0.9em',
+    }),
   ],
   exports: [
     DropdownSelectorComponent,

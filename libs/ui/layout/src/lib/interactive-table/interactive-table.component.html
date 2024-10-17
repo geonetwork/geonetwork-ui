@@ -4,21 +4,21 @@
       <button
         *ngIf="column.sortable"
         type="button"
-        class="table-header-cell"
+        class="table-header-cell gap-1"
         (click)="column.sortable && column.handleSortChange()"
       >
         <ng-container *ngTemplateOutlet="column.header"></ng-container>
         <div class="sort-button flex flex-col" *ngIf="column.sortable">
-          <mat-icon
-            class="material-symbols-outlined text-gray-600"
+          <ng-icon
+            class="text-gray-600 -mb-2"
             [ngClass]="{ 'text-main': column.activeSort === 'asc' }"
-            >expand_less</mat-icon
-          >
-          <mat-icon
-            class="material-symbols-outlined text-gray-600"
+            name="iconoirNavArrowUp"
+          ></ng-icon>
+          <ng-icon
+            class="text-gray-600"
             [ngClass]="{ 'text-main': column.activeSort === 'desc' }"
-            >expand_more</mat-icon
-          >
+            name="iconoirNavArrowDown"
+          ></ng-icon>
         </div>
       </button>
       <div *ngIf="!column.sortable" class="table-header-cell">

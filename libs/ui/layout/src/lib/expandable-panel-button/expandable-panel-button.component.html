@@ -6,12 +6,8 @@
 >
   <ng-container [ngTemplateOutlet]="titleTemplate"></ng-container>
   <div class="ml-3 grow"></div>
-  <mat-icon class="material-symbols-outlined" *ngIf="collapsed"
-    >expand_more</mat-icon
-  >
-  <mat-icon class="material-symbols-outlined" *ngIf="!collapsed"
-    >expand_less</mat-icon
-  >
+  <ng-icon *ngIf="collapsed" name="matExpandMore"></ng-icon>
+  <ng-icon name="matExpandLess" *ngIf="!collapsed"></ng-icon>
 </button>
 <div
   class="content transition-all pointer-events-auto bg-white"

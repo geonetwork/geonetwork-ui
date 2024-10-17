@@ -29,11 +29,7 @@
         (click)="resetSelection()"
         class="rounded bg-primary-opacity-25 text-white absolute right-[0.5em]"
       >
-        <mat-icon
-          class="material-symbols-outlined align-middle text-sm"
-          style="height: 21px"
-          >close</mat-icon
-        >
+        <ng-icon name="matClose" class="align-middle text-sm"></ng-icon>
       </button>
       <gn-ui-feature-detail [feature]="selection"></gn-ui-feature-detail>
     </div>
@@ -45,7 +41,7 @@
     <gn-ui-popup-alert
       *ngIf="error"
       type="warning"
-      icon="error_outline"
+      icon="matErrorOutlineOutline"
       class="absolute m-2 inset-0"
     >
       <span translate>{{ error }}</span>

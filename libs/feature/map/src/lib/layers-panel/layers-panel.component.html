@@ -2,7 +2,7 @@
   class="bg-white rounded shadow shadow-lg relative h-full w-[400px] overflow-hidden"
 >
   <div class="p-3 border-b border-gray-300 flex items-center">
-    <mat-icon class="material-symbols-outlined mr-2">layers</mat-icon>
+    <ng-icon class="mr-2" name="matLayersOutline"></ng-icon>
     <span translate>map.layers.list</span>
   </div>
   <div class="flex flex-col px-4 divide-y divide-y-gray-50">
@@ -10,9 +10,7 @@
       *ngFor="let layer of layers$ | async; let index = index"
       class="flex flex-row py-3"
     >
-      <mat-icon class="material-symbols-outlined -ml-2 mr-2 shrink-0"
-        >chevron_right</mat-icon
-      >
+      <ng-icon class="-ml-2 mr-2 shrink-0" name="matChevronRight"></ng-icon>
       <span class="mr-2 grow">{{ layer.label }}</span>
       <a
         href
@@ -58,6 +56,6 @@
 </div>
 
 <ng-template #addLayerTitle>
-  <mat-icon class="material-symbols-outlined mr-4">add_circle</mat-icon>
+  <ng-icon class="mr-4" name="matAddCircleOutlineOutline"> </ng-icon>
   <span translate>map.add.layer</span>
 </ng-template>

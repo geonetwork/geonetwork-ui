@@ -16,12 +16,12 @@
       <div
         class="record-header-image border border-gray-300 bg-white rounded-full w-16 h-16 object-contain mr-4 overflow-hidden transition duration-200 shrink-0"
       >
-        <mat-icon
+        <ng-icon
           *ngIf="!hasLogo"
-          class="material-symbols-outlined text-gray-200"
+          class="text-gray-200"
+          name="{{ hasOnlyPerson ? 'matFace' : 'matHomeWorkOutline' }}"
           style="width: 42px; height: 42px; font-size: 42px; margin: 10px"
-          >{{ hasOnlyPerson ? 'face' : 'home_work' }}</mat-icon
-        >
+        ></ng-icon>
         <gn-ui-thumbnail
           *ngIf="hasLogo"
           [thumbnailUrl]="record.ownerOrganization?.logoUrl?.toString()"
@@ -68,16 +68,18 @@
         [thumbnailUrl]="record.overviews?.[0]?.url.toString()"
       ></gn-ui-thumbnail>
       <div class="flex flex-row mt-3" *ngIf="isDownloadable || isViewable">
-        <mat-icon
+        <ng-icon
           *ngIf="isDownloadable"
-          class="material-symbols-outlined text-primary opacity-45 mr-3"
-          >cloud_download
-        </mat-icon>
-        <mat-icon
+          class="text-primary opacity-45 mr-3"
+          name="matCloudDownloadOutline"
+        >
+        </ng-icon>
+        <ng-icon
           *ngIf="isViewable"
-          class="material-symbols-outlined text-primary opacity-45 mr-3"
-          >map
-        </mat-icon>
+          class="text-primary opacity-45 mr-3"
+          name="matMapOutline"
+        >
+        </ng-icon>
       </div>
     </div>
   </a>

@@ -5,15 +5,26 @@ import {
   Output,
 } from '@angular/core'
 import { distinctUntilChanged, Subject } from 'rxjs'
-import { MatIconModule } from '@angular/material/icon'
 import { CommonModule } from '@angular/common'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { matClose, matSearch } from '@ng-icons/material-icons/baseline'
 
 @Component({
   selector: 'gn-ui-search-input',
   templateUrl: './search-input.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, NgIconComponent],
+  providers: [
+    provideIcons({ matSearch, matClose }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
+  ],
 })
 export class SearchInputComponent {
   @Input() value = ''

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MatIconModule } from '@angular/material/icon'
 
 import { NavigationButtonComponent } from './navigation-button.component'
 
@@ -10,7 +9,6 @@ describe('NavigationButtonComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [NavigationButtonComponent],
-      imports: [MatIconModule],
     }).compileComponents()
   })
 

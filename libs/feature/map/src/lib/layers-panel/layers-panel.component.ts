@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { MapFacade } from '../+state/map.facade'
 import { firstValueFrom, map } from 'rxjs'
 import { MapContextLayer } from '@geospatial-sdk/core'
-import { MatIconModule } from '@angular/material/icon'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { MatTabsModule } from '@angular/material/tabs'
 import { AddLayerFromOgcApiComponent } from '../add-layer-from-ogc-api/add-layer-from-ogc-api.component'
@@ -12,6 +11,16 @@ import { AddLayerFromCatalogComponent } from '../add-layer-from-catalog/add-laye
 import { AddLayerFromFileComponent } from '../add-layer-from-file/add-layer-from-file.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import {
+  matAddCircleOutlineOutline,
+  matLayersOutline,
+} from '@ng-icons/material-icons/outline'
+import { matChevronRight } from '@ng-icons/material-icons/baseline'
 
 @Component({
   selector: 'gn-ui-layers-panel',
@@ -20,7 +29,6 @@ import { CommonModule } from '@angular/common'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    MatIconModule,
     UiLayoutModule,
     MatTabsModule,
     AddLayerFromOgcApiComponent,
@@ -30,6 +38,17 @@ import { CommonModule } from '@angular/common'
     AddLayerFromFileComponent,
     TranslateModule,
     CommonModule,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({
+      matLayersOutline,
+      matAddCircleOutlineOutline,
+      matChevronRight,
+    }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
   ],
 })
 export class LayersPanelComponent {

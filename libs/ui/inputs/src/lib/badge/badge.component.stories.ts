@@ -1,13 +1,27 @@
-import { Meta, moduleMetadata } from '@storybook/angular'
+import { Meta, moduleMetadata, applicationConfig } from '@storybook/angular'
 import { BadgeComponent } from './badge.component'
-import { MatIconModule } from '@angular/material/icon'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
+import {
+  matDownloading,
+  matPestControl,
+  matWaves,
+} from '@ng-icons/material-icons/baseline'
 
 export default {
   title: 'Widgets/BadgeComponent',
   component: BadgeComponent,
   decorators: [
     moduleMetadata({
-      imports: [MatIconModule],
+      imports: [NgIconComponent],
+    }),
+    applicationConfig({
+      providers: [
+        provideIcons({
+          matDownloading,
+          matPestControl,
+          matWaves,
+        }),
+      ],
     }),
   ],
   argTypes: {
@@ -28,15 +42,15 @@ export const Primary = (args: BadgeComponentContent) => ({
     </gn-ui-badge>
     <gn-ui-badge [clickable]='clickable'
                  [removable]='removable' (badgeRemoveClicked)='badgeRemoveClicked($event)'>
-      with an icon&nbsp;<mat-icon class="material-symbols-outlined">downloading</mat-icon>
+      with an icon&nbsp;<ng-icon name="matDownloading"></ng-icon>
     </gn-ui-badge>
     <gn-ui-badge [clickable]='clickable' [style.font-size]='"1.3em"'
                  [removable]='removable' (badgeRemoveClicked)='badgeRemoveClicked($event)'>
-      <mat-icon class='material-symbols-outlined'>pest_control</mat-icon>&nbsp;larger (with css)
+      <ng-icon name="matPestControl"></ng-icon>&nbsp;larger (with css)
     </gn-ui-badge>
     <gn-ui-badge [clickable]='clickable' [style.--gn-ui-badge-padding]='"0.75em 3em"'
                  [removable]='removable' (badgeRemoveClicked)='badgeRemoveClicked($event)'>
-      different&nbsp;<mat-icon class="material-symbols-outlined">waves</mat-icon>&nbsp;shape
+      different&nbsp;<ng-icon name="matWaves"></ng-icon>&nbsp;shape
     </gn-ui-badge>
     <gn-ui-badge [clickable]='clickable' [style.--gn-ui-badge-rounded]='"10px"'
                  [removable]='removable' (badgeRemoveClicked)='badgeRemoveClicked($event)'>

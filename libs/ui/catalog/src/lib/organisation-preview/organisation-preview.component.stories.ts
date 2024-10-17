@@ -1,5 +1,4 @@
 import { HttpClientModule } from '@angular/common/http'
-import { MatIconModule } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
 import {
   applicationConfig,
@@ -31,7 +30,6 @@ export default {
     moduleMetadata({
       declarations: [ThumbnailComponent],
       imports: [
-        MatIconModule,
         UtilI18nModule,
         UtilSharedModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),

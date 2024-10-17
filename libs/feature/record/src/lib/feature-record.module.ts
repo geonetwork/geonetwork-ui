@@ -22,7 +22,6 @@ import {
   reducer,
 } from './state/mdview.reducer'
 import { MatTabsModule } from '@angular/material/tabs'
-import { MatIconModule } from '@angular/material/icon'
 import { PopupAlertComponent, UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { TranslateModule } from '@ngx-translate/core'
 import { ExternalViewerButtonComponent } from './external-viewer-button/external-viewer-button.component'
@@ -32,6 +31,8 @@ import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
 import { DataViewPermalinkComponent } from './data-view-permalink/data-view-permalink.component'
 import { DataViewWebComponentComponent } from './data-view-web-component/data-view-web-component.component'
 import { DataViewShareComponent } from './data-view-share/data-view-share.component'
+import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
+import { matClose, matOpenInNew } from '@ng-icons/material-icons/baseline'
 
 @NgModule({
   declarations: [
@@ -52,7 +53,6 @@ import { DataViewShareComponent } from './data-view-share/data-view-share.compon
     UiInputsModule,
     UiElementsModule,
     MatTabsModule,
-    MatIconModule,
     UiWidgetsModule,
     TranslateModule,
     TableComponent,
@@ -61,8 +61,17 @@ import { DataViewShareComponent } from './data-view-share/data-view-share.compon
     FeatureDetailComponent,
     MapStateContainerComponent,
     MapContainerComponent,
+    NgIconsModule.withIcons({
+      matClose,
+      matOpenInNew,
+    }),
   ],
-  providers: [MdViewFacade],
+  providers: [
+    MdViewFacade,
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
+  ],
   exports: [
     MapViewComponent,
     DataViewComponent,
