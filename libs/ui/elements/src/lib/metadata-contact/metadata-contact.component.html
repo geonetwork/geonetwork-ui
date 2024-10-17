@@ -29,20 +29,20 @@
           target="_blank"
           class="contact-website text-primary text-sm cursor-pointer hover:underline transition-all"
           >{{ shownOrganization.website }}
-          <mat-icon
-            class="material-symbols-outlined !w-[12px] !h-[12px] !text-[12px] opacity-75 shrink-0"
-            >open_in_new</mat-icon
-          >
+          <ng-icon
+            class="!w-[12px] !h-[12px] opacity-75 shrink-0"
+            name="matOpenInNew"
+          ></ng-icon>
         </a>
       </div>
     </div>
     <div class="grid gap-5 py-3 overflow-hidden">
       <div *ngIf="contacts[0]?.phone">
         <div class="flex">
-          <mat-icon
-            class="material-symbols-outlined !w-5 !h-5 !text-[20px] opacity-75 shrink-0"
-            >call_outline</mat-icon
-          >
+          <ng-icon
+            class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
+            name="matCallOutline"
+          ></ng-icon>
           <div class="flex flex-col ml-2">
             <p class="text-sm">{{ contacts[0].phone }}</p>
           </div>
@@ -50,11 +50,10 @@
       </div>
       <div *ngIf="contacts[0]?.email">
         <div class="flex">
-          <mat-icon
-            class="material-symbols-outlined !w-5 !h-5 !text-[20px] opacity-75 shrink-0"
-          >
-            mail_outline</mat-icon
-          >
+          <ng-icon
+            class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
+            name="matMailOutline"
+          ></ng-icon>
           <a
             *ngIf="contacts.length"
             [href]="'mailto:' + contacts[0].email"
@@ -67,10 +66,10 @@
       </div>
       <div *ngIf="contacts[0]?.firstName || contacts[0]?.lastName">
         <div class="flex">
-          <mat-icon
-            class="material-symbols-outlined !w-5 !h-5 !text-[20px] opacity-75 shrink-0"
-            >person_outline</mat-icon
-          >
+          <ng-icon
+            class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
+            name="matPersonOutline"
+          ></ng-icon>
           <div class="flex flex-col ml-2">
             <p class="text-sm">
               {{ contacts[0]?.firstName || '' }}
@@ -81,11 +80,10 @@
       </div>
       <div *ngIf="contacts[0]?.address">
         <div class="flex">
-          <mat-icon
-            class="material-symbols-outlined !w-5 !h-5 !text-[20px] opacity-75 shrink-0"
-          >
-            location_on</mat-icon
-          >
+          <ng-icon
+            class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
+            name="matLocationOnOutline"
+          ></ng-icon>
           <div class="flex flex-col ml-2">
             <p *ngFor="let addressPart of address" class="text-sm">
               {{ addressPart }}

@@ -5,7 +5,6 @@ import { TranslateModule } from '@ngx-translate/core'
 import { MetadataQualityItemComponent } from './metadata-quality-item.component'
 import { By } from '@angular/platform-browser'
 import { CommonModule } from '@angular/common'
-import { MatIconModule } from '@angular/material/icon'
 
 describe('MetadataQualityInfoComponent', () => {
   let component: MetadataQualityItemComponent
@@ -17,7 +16,6 @@ describe('MetadataQualityInfoComponent', () => {
       imports: [
         UtilSharedModule,
         CommonModule,
-        MatIconModule,
         UtilI18nModule,
         TranslateModule.forRoot(),
       ],
@@ -38,8 +36,8 @@ describe('MetadataQualityInfoComponent', () => {
     component.value = true
     fixture.detectChanges()
 
-    const iconElement = fixture.debugElement.query(By.css('mat-icon'))
-    expect(iconElement.nativeElement.innerHTML).toBe('check')
+    const iconElement = fixture.nativeElement.querySelector('ng-icon')
+    expect(iconElement.name).toBe('matCheck')
 
     const textElement = fixture.debugElement.query(By.css('.text'))
     expect(textElement.nativeElement.innerHTML).toBe(
@@ -52,8 +50,8 @@ describe('MetadataQualityInfoComponent', () => {
     component.value = false
     fixture.detectChanges()
 
-    const iconElement = fixture.debugElement.query(By.css('mat-icon'))
-    expect(iconElement.nativeElement.innerHTML).toBe('warning')
+    const iconElement = fixture.nativeElement.querySelector('ng-icon')
+    expect(iconElement.name).toBe('matWarningAmber')
 
     const textElement = fixture.debugElement.query(By.css('.text'))
     expect(textElement.nativeElement.innerHTML).toBe(
@@ -66,8 +64,8 @@ describe('MetadataQualityInfoComponent', () => {
     component.value = true
     fixture.detectChanges()
 
-    const iconElement = fixture.debugElement.query(By.css('mat-icon'))
-    expect(iconElement.nativeElement.innerHTML).toBe('check')
+    const iconElement = fixture.nativeElement.querySelector('ng-icon')
+    expect(iconElement.name).toBe('matCheck')
 
     const textElement = fixture.debugElement.query(By.css('.text'))
     expect(textElement.nativeElement.innerHTML).toBe(
@@ -80,8 +78,8 @@ describe('MetadataQualityInfoComponent', () => {
     component.value = false
     fixture.detectChanges()
 
-    const iconElement = fixture.debugElement.query(By.css('mat-icon'))
-    expect(iconElement.nativeElement.innerHTML).toBe('warning')
+    const iconElement = fixture.nativeElement.querySelector('ng-icon')
+    expect(iconElement.name).toBe('matWarningAmber')
 
     const textElement = fixture.debugElement.query(By.css('.text'))
     expect(textElement.nativeElement.innerHTML).toBe(

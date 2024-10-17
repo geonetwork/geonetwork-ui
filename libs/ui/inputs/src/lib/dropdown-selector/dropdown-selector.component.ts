@@ -20,8 +20,13 @@ import { firstValueFrom } from 'rxjs'
 import { DropdownChoice } from './dropdown-selector.model'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
-import { MatIconModule } from '@angular/material/icon'
 import { ButtonComponent } from '../button/button.component'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { matExpandLess, matExpandMore } from '@ng-icons/material-icons/baseline'
 
 const DEFAULT_ROW_NUMBERS = 6
 
@@ -35,8 +40,17 @@ const DEFAULT_ROW_NUMBERS = 6
     CommonModule,
     ButtonComponent,
     OverlayModule,
-    MatIconModule,
     TranslateModule,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({
+      matExpandLess,
+      matExpandMore,
+    }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
   ],
 })
 export class DropdownSelectorComponent implements OnInit {

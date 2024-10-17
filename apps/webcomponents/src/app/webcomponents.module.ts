@@ -2,7 +2,6 @@ import { OverlayContainer } from '@angular/cdk/overlay'
 import { CommonModule } from '@angular/common'
 import { CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
-import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
@@ -90,7 +89,6 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
         useClass: EmbeddedTranslateLoader,
       },
     }),
-    MatIconModule,
     FeatureDatavizModule,
     FeatureAuthModule,
     BrowserAnimationsModule,

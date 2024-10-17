@@ -32,8 +32,8 @@ describe('PaginationButtonsComponent', () => {
       const paginationButtons =
         fixture.nativeElement.querySelectorAll('gn-ui-button')
       paginationButtons.forEach((buttonElement) => {
-        const matIcon = buttonElement.querySelector('mat-icon')
-        if (matIcon && matIcon.textContent.trim() === 'chevron_right') {
+        const ngIcon = buttonElement.querySelector('ng-icon')
+        if (ngIcon && ngIcon.getAttribute('name') === 'iconoirNavArrowRight') {
           buttonElement.dispatchEvent(new Event('buttonClick'))
         }
       })
@@ -48,8 +48,8 @@ describe('PaginationButtonsComponent', () => {
       const paginationButtons =
         fixture.nativeElement.querySelectorAll('gn-ui-button')
       paginationButtons.forEach((buttonElement) => {
-        const matIcon = buttonElement.querySelector('mat-icon')
-        if (matIcon && matIcon.textContent.trim() === 'chevron_left') {
+        const ngIcon = buttonElement.querySelector('ng-icon')
+        if (ngIcon && ngIcon.getAttribute('name') === 'iconoirNavArrowLeft') {
           buttonElement.dispatchEvent(new Event('buttonClick'))
         }
       })
@@ -67,8 +67,8 @@ describe('PaginationButtonsComponent', () => {
       const paginationButtons =
         fixture.nativeElement.querySelectorAll('gn-ui-button')
       paginationButtons.forEach((buttonElement) => {
-        const matIcon = buttonElement.querySelector('mat-icon')
-        if (matIcon && matIcon.textContent.trim() === 'chevron_left') {
+        const ngIcon = buttonElement.querySelector('ng-icon')
+        if (ngIcon && ngIcon.textContent.trim() === 'chevron_left') {
           const prevBtn = buttonElement.disabled
           expect(prevBtn).toBeTruthy()
         }
@@ -84,8 +84,8 @@ describe('PaginationButtonsComponent', () => {
       const paginationButtons =
         fixture.nativeElement.querySelectorAll('gn-ui-button')
       paginationButtons.forEach((buttonElement) => {
-        const matIcon = buttonElement.querySelector('mat-icon')
-        if (matIcon && matIcon.textContent.trim() === 'chevron_right') {
+        const ngIcon = buttonElement.querySelector('ng-icon')
+        if (ngIcon && ngIcon.textContent.trim() === 'chevron_right') {
           const nextBtn = buttonElement.disabled
           expect(nextBtn).toBeTruthy()
         }
@@ -98,8 +98,8 @@ describe('PaginationButtonsComponent', () => {
         fixture.nativeElement.querySelectorAll('gn-ui-button')
       const pageBtnList = []
       paginationButtons.forEach((buttonElement) => {
-        const matIcon = buttonElement.querySelector('mat-icon')
-        if (!matIcon) {
+        const ngIcon = buttonElement.querySelector('ng-icon')
+        if (!ngIcon) {
           pageBtnList.push(buttonElement)
         }
       })

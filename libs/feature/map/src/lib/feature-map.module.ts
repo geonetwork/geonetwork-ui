@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
-import { MatIconModule } from '@angular/material/icon'
 import { MatTabsModule } from '@angular/material/tabs'
 import { TranslateModule } from '@ngx-translate/core'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
@@ -17,7 +16,6 @@ import { AddLayerFromOgcApiComponent } from './add-layer-from-ogc-api/add-layer-
   imports: [
     CommonModule,
     UiLayoutModule,
-    MatIconModule,
     MatTabsModule,
     TranslateModule,
     FeatureSearchModule,

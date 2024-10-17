@@ -5,7 +5,6 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core'
-import { MatIconModule } from '@angular/material/icon'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent, UrlInputComponent } from '@geonetwork-ui/ui/inputs'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
@@ -13,6 +12,17 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { Router } from '@angular/router'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import {
+  iconoirArrowLeft,
+  iconoirAttachment,
+  iconoirImport,
+  iconoirLightBulbOn,
+} from '@ng-icons/iconoir'
 
 interface ImportMenuItems {
   label: string
@@ -32,11 +42,21 @@ type ImportMenuPage = 'mainMenu' | 'importExternalFile'
   standalone: true,
   imports: [
     CommonModule,
-    MatIconModule,
     ButtonComponent,
     ThumbnailComponent,
     UrlInputComponent,
     TranslateModule,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({
+      iconoirImport,
+      iconoirLightBulbOn,
+      iconoirArrowLeft,
+    }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
   ],
 })
 export class ImportRecordComponent {
@@ -45,7 +65,7 @@ export class ImportRecordComponent {
   importMenuItems: ImportMenuItems[] = [
     {
       label: this.translateService.instant('dashboard.importRecord.useModel'),
-      icon: 'highlight',
+      icon: 'iconoirLightBulbOn',
       action: () => null,
       dataTest: 'useAModelButton',
       disabled: true,
@@ -54,7 +74,7 @@ export class ImportRecordComponent {
       label: this.translateService.instant(
         'dashboard.importRecord.importExternal'
       ),
-      icon: 'cloud_download',
+      icon: 'iconoirImport',
       action: this.displayImportExternal.bind(this),
       dataTest: 'importFromUrlButton',
     },

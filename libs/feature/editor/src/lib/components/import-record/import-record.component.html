@@ -15,8 +15,7 @@
             [title]="
               (menuItem.disabled ? 'editor.temporary.disabled' : '') | translate
             "
-            ><mat-icon class="material-symbols-outlined">
-              {{ menuItem.icon }} </mat-icon
+            ><ng-icon [name]="menuItem.icon"></ng-icon
             ><span>{{ menuItem.label }}</span></gn-ui-button
           >
         </li>
@@ -34,7 +33,7 @@
           type="light"
           (buttonClick)="displayMainMenu()"
         >
-          <mat-icon class="material-symbols-outlined">arrow_back</mat-icon>
+          <ng-icon name="iconoirArrowLeft"></ng-icon>
         </gn-ui-button>
         <span class="font-bold"> {{ externalImportBackLabel }}</span>
       </div>

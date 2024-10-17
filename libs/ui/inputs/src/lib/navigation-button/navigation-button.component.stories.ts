@@ -1,7 +1,6 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
 import { NavigationButtonComponent } from './navigation-button.component'
-import { TranslateModule } from '@ngx-translate/core'
-import { MatIconModule } from '@angular/material/icon'
+import { TranslateModule } from '@ngx-translate/core'=
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
@@ -20,7 +19,6 @@ export default {
       imports: [
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        MatIconModule,
       ],
     }),
   ],

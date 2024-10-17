@@ -8,7 +8,6 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { MatIconModule } from '@angular/material/icon'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { downgradeImage, megabytesToBytes } from '@geonetwork-ui/util/shared'
 import { firstValueFrom } from 'rxjs'
@@ -18,6 +17,19 @@ import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { UrlInputComponent } from '../url-input/url-input.component'
 import { TextInputComponent } from '../text-input/text-input.component'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import {
+  iconoirFramePlusIn,
+  iconoirMediaImage,
+  iconoirMediaImageXmark,
+  iconoirBin,
+  iconoirPlus,
+  iconoirLink,
+} from '@ng-icons/iconoir'
 
 @Component({
   selector: 'gn-ui-image-input',
@@ -28,12 +40,25 @@ import { TextInputComponent } from '../text-input/text-input.component'
   imports: [
     CommonModule,
     ButtonComponent,
-    MatIconModule,
     FilesDropDirective,
     MatProgressSpinnerModule,
     TranslateModule,
     UrlInputComponent,
     TextInputComponent,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({
+      iconoirMediaImage,
+      iconoirFramePlusIn,
+      iconoirMediaImageXmark,
+      iconoirBin,
+      iconoirPlus,
+      iconoirLink,
+    }),
+    provideNgIconsConfig({
+      size: '1.5rem',
+    }),
   ],
 })
 export class ImageInputComponent {

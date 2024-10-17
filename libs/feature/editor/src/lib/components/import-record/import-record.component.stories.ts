@@ -8,7 +8,6 @@ import {
 import { ImportRecordComponent } from './import-record.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
-import { MatIconModule } from '@angular/material/icon'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent, UrlInputComponent } from '@geonetwork-ui/ui/inputs'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
@@ -30,7 +29,6 @@ export default {
     moduleMetadata({
       imports: [
         CommonModule,
-        MatIconModule,
         ButtonComponent,
         ThumbnailComponent,
         UrlInputComponent,

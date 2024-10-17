@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MetadataQualityComponent } from './metadata-quality.component'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { MatIconModule } from '@angular/material/icon'
 import { CommonModule } from '@angular/common'
 import {
   TRANSLATE_DEFAULT_CONFIG,
@@ -44,7 +43,6 @@ describe('MetadataQualityComponent', () => {
       imports: [
         UtilSharedModule,
         CommonModule,
-        MatIconModule,
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
         PopoverComponent,

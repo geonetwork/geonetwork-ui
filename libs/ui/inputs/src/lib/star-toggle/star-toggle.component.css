@@ -5,15 +5,6 @@ button.disabled {
   color: var(--star-toggle-disabled-color, var(--color-primary));
 }
 
-mat-icon {
-  width: 1em;
-  height: 1em;
-  font-size: 1.5em;
-  margin-top: -0.1em;
-  font-variation-settings: 'opsz' 40;
-  stroke: var(--color-primary-darker);
-}
-
 .star-filled {
   font-variation-settings: 'FILL' 1;
 }

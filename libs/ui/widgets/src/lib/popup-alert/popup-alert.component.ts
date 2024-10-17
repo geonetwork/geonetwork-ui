@@ -8,7 +8,12 @@ import {
   ViewChild,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { MatIconModule } from '@angular/material/icon'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { matErrorOutlineOutline } from '@ng-icons/material-icons/outline'
 
 @Component({
   selector: 'gn-ui-popup-alert',
@@ -16,7 +21,8 @@ import { MatIconModule } from '@angular/material/icon'
   styleUrls: ['./popup-alert.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, NgIconComponent],
+  providers: [provideIcons({ matErrorOutlineOutline })],
 })
 export class PopupAlertComponent implements OnInit {
   @Input() icon: string

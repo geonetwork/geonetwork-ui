@@ -33,7 +33,7 @@ export class MetadataQualityItemComponent implements MetadataQualityItem {
   @Input() value: boolean
 
   get icon() {
-    return this.value ? 'check' : 'warning'
+    return this.value ? 'matCheck' : 'matWarningAmber'
   }
 
   get labelKey() {

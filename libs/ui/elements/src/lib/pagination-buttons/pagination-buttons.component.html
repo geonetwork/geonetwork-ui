@@ -6,7 +6,7 @@
       (buttonClick)="previousPage()"
       extraClass="!px-[3px]"
     >
-      <mat-icon class="material-symbols-outlined">chevron_left</mat-icon>
+      <ng-icon name="iconoirNavArrowLeft"></ng-icon>
     </gn-ui-button>
     <ng-container *ngFor="let page of visiblePages">
       <ng-container *ngIf="page === '...'">
@@ -27,7 +27,7 @@
       (buttonClick)="nextPage()"
       extraClass="!px-[3px]"
     >
-      <mat-icon class="material-symbols-outlined">chevron_right</mat-icon>
+      <ng-icon name="iconoirNavArrowRight"></ng-icon>
     </gn-ui-button>
   </div>
 </div>

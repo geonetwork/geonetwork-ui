@@ -14,7 +14,6 @@ import {
 import { fromEvent, merge, Observable, of, timer } from 'rxjs'
 import { delay, map, startWith, switchMap } from 'rxjs/operators'
 import { CommonModule } from '@angular/common'
-import { MatIconModule } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
 import {
   computeMapContextDiff,
@@ -42,6 +41,12 @@ import {
   DO_NOT_USE_DEFAULT_BASEMAP,
   MAP_VIEW_CONSTRAINTS,
 } from './map-settings.token'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { matSwipeOutline } from '@ng-icons/material-icons/outline'
 
 const DEFAULT_BASEMAP_LAYER: MapContextLayerXyz = {
   type: 'xyz',
@@ -60,7 +65,13 @@ const DEFAULT_VIEW: MapContextView = {
   styleUrls: ['./map-container.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, MatIconModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, NgIconComponent],
+  providers: [
+    provideIcons({ matSwipeOutline }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
+  ],
 })
 export class MapContainerComponent implements AfterViewInit, OnChanges {
   @Input() context: MapContext | null

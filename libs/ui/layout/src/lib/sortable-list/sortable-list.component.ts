@@ -14,7 +14,6 @@ import {
   Output,
   TemplateRef,
 } from '@angular/core'
-import { MatIconModule } from '@angular/material/icon'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
 @Component({
@@ -23,14 +22,7 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
   styleUrls: ['sortable-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    CdkDropList,
-    CdkDrag,
-    CdkDragHandle,
-    MatIconModule,
-    ButtonComponent,
-  ],
+  imports: [CommonModule, CdkDropList, CdkDrag, CdkDragHandle, ButtonComponent],
 })
 export class SortableListComponent {
   @Input() elementTemplate: TemplateRef<unknown>

@@ -7,7 +7,6 @@ import {
   ExternalViewerButtonComponent,
 } from './external-viewer-button.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { MatIconModule } from '@angular/material/icon'
 
 @Component({
   selector: 'gn-ui-button',
@@ -24,7 +23,7 @@ describe('ExternalViewerButtonComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ExternalViewerButtonComponent, MockButtonComponent],
-      imports: [TranslateModule.forRoot(), MatIconModule],
+      imports: [TranslateModule.forRoot()],
       providers: [
         {
           provide: EXTERNAL_VIEWER_URL_TEMPLATE,

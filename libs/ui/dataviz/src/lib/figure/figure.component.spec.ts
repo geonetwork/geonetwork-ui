@@ -50,17 +50,17 @@ describe('FigureComponent', () => {
     )
   })
   it('should render icon', () => {
-    expect(compiled.querySelector('mat-icon')?.textContent).toContain('group')
+    console.log(compiled.querySelector('ng-icon'))
+    const icon = compiled.querySelector('ng-icon') as HTMLElement
+    expect(icon['name']).toContain('group')
   })
   it('icon is primary color', () => {
-    expect(compiled.querySelector('mat-icon')?.className).toContain(
+    expect(compiled.querySelector('ng-icon')?.className).toContain(
       'text-primary'
     )
   })
   it('icon background is primary color', () => {
-    expect(compiled.querySelector('mat-icon')?.className).toContain(
-      'bg-primary'
-    )
+    expect(compiled.querySelector('ng-icon')?.className).toContain('bg-primary')
   })
   it('label is black text color', () => {
     expect(compiled.querySelector('.figure-block')?.className).toContain(
@@ -96,12 +96,12 @@ describe('FigureComponent', () => {
       fixture.detectChanges()
     })
     it('icon is secondary color', () => {
-      expect(compiled.querySelector('mat-icon')?.className).toContain(
+      expect(compiled.querySelector('ng-icon')?.className).toContain(
         'text-secondary'
       )
     })
     it('icon background is secondary color', () => {
-      expect(compiled.querySelector('mat-icon')?.className).toContain(
+      expect(compiled.querySelector('ng-icon')?.className).toContain(
         'bg-secondary'
       )
     })

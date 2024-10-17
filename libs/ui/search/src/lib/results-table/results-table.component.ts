@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common'
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { MatIconModule } from '@angular/material/icon'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
   FieldSort,
@@ -19,6 +18,8 @@ import {
 } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { ActionMenuComponent } from './action-menu/action-menu.component'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
+import { iconoirUser } from '@ng-icons/iconoir'
 
 @Component({
   selector: 'gn-ui-results-table',
@@ -30,11 +31,12 @@ import { ActionMenuComponent } from './action-menu/action-menu.component'
     UiInputsModule,
     InteractiveTableComponent,
     InteractiveTableColumnComponent,
-    MatIconModule,
     TranslateModule,
     BadgeComponent,
     ActionMenuComponent,
+    NgIconComponent,
   ],
+  providers: [provideIcons({ iconoirUser })],
 })
 export class ResultsTableComponent {
   @Input() records: CatalogRecord[] = []

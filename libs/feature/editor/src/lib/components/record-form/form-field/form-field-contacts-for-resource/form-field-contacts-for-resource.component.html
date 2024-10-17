@@ -2,7 +2,7 @@
   <div class="flex flex-row flex-wrap gap-2" data-test="rolesToPick">
     <ng-container *ngFor="let role of rolesToPick">
       <gn-ui-button type="gray" (buttonClick)="addRoleToDisplay(role)">
-        <mat-icon class="material-symbols-outlined text-primary">add</mat-icon>
+        <ng-icon name="iconoirPlus" class="text-primary"></ng-icon>
         &nbsp;
         <span translate>{{ roleToLabel(role) }}</span>
       </gn-ui-button>

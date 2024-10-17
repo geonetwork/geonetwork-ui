@@ -5,11 +5,7 @@
     [disabled]="isFirst"
     (buttonClick)="previousButtonClicked()"
   >
-    <mat-icon
-      class="material-symbols-outlined text-[14px] text-center pt-[5px]"
-    >
-      arrow_back
-    </mat-icon>
+    <ng-icon name="matArrowBack"></ng-icon>
   </gn-ui-button>
   <gn-ui-button
     data-test="nextButton"
@@ -17,10 +13,6 @@
     [disabled]="isLast"
     (buttonClick)="nextButtonClicked()"
   >
-    <mat-icon
-      class="material-symbols-outlined text-[14px] text-center pt-[5px]"
-    >
-      arrow_forward
-    </mat-icon>
+    <ng-icon name="matArrowForward"></ng-icon>
   </gn-ui-button>
 </div>

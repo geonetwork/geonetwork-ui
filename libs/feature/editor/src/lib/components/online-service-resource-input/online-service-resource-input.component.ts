@@ -6,7 +6,6 @@ import {
   OnChanges,
 } from '@angular/core'
 import { FormsModule } from '@angular/forms'
-import { MatIconModule } from '@angular/material/icon'
 import { MatRadioModule } from '@angular/material/radio'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -25,7 +24,6 @@ import { TranslateModule } from '@ngx-translate/core'
   standalone: true,
   imports: [
     CommonModule,
-    MatIconModule,
     MatTooltipModule,
     MatRadioModule,
     FormsModule,
