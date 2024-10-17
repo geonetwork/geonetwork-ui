@@ -27,7 +27,7 @@
         <datahub-header-badge-button
           [routerLink]="ROUTE_SEARCH"
           *ngIf="isAuthenticated$ | async"
-          icon="star"
+          icon="matStarOutline"
           label="datahub.header.myfavorites"
           [toggled]="searchFacade.favoritesOnly$ | async"
           (action)="listFavorites($event)"
@@ -66,7 +66,7 @@
     <!--
     <div class="flex">
       <datahub-header-badge-button
-        icon="star"
+        icon="matStarOutline"
         label="datahub.header.myfavorites"
       ></datahub-header-badge-button>
       <datahub-header-badge-button
