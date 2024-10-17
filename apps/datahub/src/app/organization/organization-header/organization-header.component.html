@@ -7,7 +7,7 @@
         <gn-ui-navigation-button
           (click)="back()"
           [label]="'datahub.search.back' | translate"
-          [icon]="'arrow_back'"
+          [icon]="'matArrowBack'"
           [style.--navigation-button-color]="foregroundColor"
         >
         </gn-ui-navigation-button>
@@ -33,7 +33,7 @@
         class="flex flex-row flex-wrap gap-2 mb-4 ml-4 sm:mr-[332px]"
         [style.color]="foregroundColor"
       >
-        <mat-icon class="material-symbols-outlined">folder</mat-icon>
+        <ng-icon name="matFolderOutline"></ng-icon>
         <p>
           {{ organization.recordCount }}
         </p>
@@ -49,10 +49,8 @@
             target="_blank"
           >
             {{ organization.website.href }}
-            <mat-icon class="material-symbols-outlined"
-              >open_in_new</mat-icon
-            ></a
-          >
+            <ng-icon name="matOpenInNewOutline"></ng-icon
+          ></a>
         </ng-container>
       </div>
     </ng-container>
