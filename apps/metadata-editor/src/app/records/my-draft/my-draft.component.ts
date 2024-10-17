@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common'
 import { Component } from '@angular/core'
-import { MatIconModule } from '@angular/material/icon'
 import { Router } from '@angular/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
@@ -22,7 +21,6 @@ import { RecordsListComponent } from '../records-list.component'
     TranslateModule,
     RecordsListComponent,
     ButtonComponent,
-    MatIconModule,
     RecordsCountComponent,
     ResultsTableContainerComponent,
     UiElementsModule,

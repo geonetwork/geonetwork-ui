@@ -23,10 +23,19 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
 import { RecordsCountComponent } from '../records-count/records-count.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { MatIconModule } from '@angular/material/icon'
 import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
 import { SearchHeaderComponent } from '../../dashboard/search-header/search-header.component'
 import { map, Observable } from 'rxjs'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import {
+  iconoirNavArrowDown,
+  iconoirNavArrowUp,
+  iconoirPagePlus,
+} from '@ng-icons/iconoir'
 
 @Component({
   selector: 'md-editor-my-records',
@@ -41,10 +50,20 @@ import { map, Observable } from 'rxjs'
     UiElementsModule,
     RecordsCountComponent,
     ButtonComponent,
-    MatIconModule,
     ImportRecordComponent,
     FeatureSearchModule,
     SearchHeaderComponent,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({
+      iconoirNavArrowDown,
+      iconoirNavArrowUp,
+      iconoirPagePlus,
+    }),
+    provideNgIconsConfig({
+      size: '1.5rem',
+    }),
   ],
 })
 export class MyRecordsComponent implements OnInit {

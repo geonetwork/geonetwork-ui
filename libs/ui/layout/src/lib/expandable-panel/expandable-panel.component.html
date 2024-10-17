@@ -8,10 +8,8 @@
   <div
     class="w-8 opacity-25 text-primary group-hover:opacity-100 transition-opacity"
   >
-    <mat-icon class="material-symbols-outlined" *ngIf="collapsed">add</mat-icon>
-    <mat-icon class="material-symbols-outlined" *ngIf="!collapsed"
-      >remove</mat-icon
-    >
+    <ng-icon name="matAdd" *ngIf="collapsed"></ng-icon>
+    <ng-icon name="matRemove" *ngIf="!collapsed"></ng-icon>
   </div>
 </div>
 <div
