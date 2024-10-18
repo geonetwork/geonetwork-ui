@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common'
 import { Subscription } from 'rxjs'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateService } from '@ngx-translate/core'
+import { SortByEnum } from '@geonetwork-ui/common/domain/model/search'
 
 @Component({
   selector: 'gn-ui-results-table-container',
@@ -48,7 +49,9 @@ export class ResultsTableContainerComponent implements OnDestroy {
     private recordsRepository: RecordsRepositoryInterface,
     private notificationsService: NotificationsService,
     private translateService: TranslateService
-  ) {}
+  ) {
+    this.searchService.setSortBy(SortByEnum.CHANGE_DATE)
+  }
 
   handleRecordClick(item: unknown) {
     this.recordClick.emit(item as CatalogRecord)
