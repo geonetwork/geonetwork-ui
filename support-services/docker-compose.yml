@@ -68,7 +68,8 @@ services:
       - '5601:5601'
 
   geonetwork:
-    image: geonetwork:${GEONETWORK_VERSION}
+#    image: geonetwork:${GEONETWORK_VERSION}
+    image: geonetwork/geonetwork-dcat-ap:latest
     environment:
       ES_HOST: elasticsearch
       ES_PROTOCOL: http
