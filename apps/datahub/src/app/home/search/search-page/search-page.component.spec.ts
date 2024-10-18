@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 
 import { SearchPageComponent } from './search-page.component'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 
@@ -14,6 +14,10 @@ const RouterFacadeMock = {
 const SearchFacadeMock = {
   setFilters: jest.fn(() => this),
   setResultsLayout: jest.fn(() => this),
+}
+
+const SearchServiceMock = {
+  setSortBy: jest.fn(),
 }
 
 describe('MainSearchComponent', () => {
@@ -33,6 +37,10 @@ describe('MainSearchComponent', () => {
         {
           provide: SearchFacade,
           useValue: SearchFacadeMock,
+        },
+        {
+          provide: SearchService,
+          useValue: SearchServiceMock,
         },
       ],
     }).compileComponents()
