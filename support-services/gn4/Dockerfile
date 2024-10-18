@@ -51,6 +51,9 @@ RUN cd /opt/geonetwork/ && \
      unzip -q geonetwork.war && \
      rm geonetwork.war
 
+COPY thesauri/place/* /opt/geonetwork/WEB-INF/data/config/codelist/external/thesauri/place/
+COPY thesauri/theme/* /opt/geonetwork/WEB-INF/data/config/codelist/external/thesauri/theme/
+
 COPY jetty/geonetwork_context_template.xml /usr/local/share/geonetwork/geonetwork_context_template.xml
 COPY ./docker-entrypoint.sh /geonetwork-entrypoint.sh
 
