@@ -95,7 +95,9 @@
     </ng-template>
     <ng-template #cell let-item>
       <mat-icon class="material-symbols-outlined">person</mat-icon>
-      <span class="text-xs">{{ formatUserInfo(item.extras?.ownerInfo) }}</span>
+      <span data-cy="ownerInfo" class="text-xs">{{
+        formatUserInfo(item.extras?.ownerInfo)
+      }}</span>
     </ng-template>
   </gn-ui-interactive-table-column>
 

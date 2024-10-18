@@ -101,6 +101,7 @@ describe('FieldsService', () => {
           'owner',
           'producerOrg',
           'publisherOrg',
+          'user',
         ])
       })
     })
@@ -184,6 +185,7 @@ describe('FieldsService', () => {
           owner: [],
           producerOrg: [],
           publisherOrg: [],
+          user: [],
         })
       })
     })

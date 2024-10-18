@@ -517,6 +517,7 @@
   "search.filters.topic": "Témy",
   "search.filters.useSpatialFilter": "Najskôr zobraziť záznamy v oblasti záujmu",
   "search.filters.useSpatialFilterHelp": "Keď je táto možnosť zapnutá, záznamy nachádzajúce sa v oblasti záujmu katalógu sa zobrazia ako prvé; záznamy mimo tejto oblasti sa nezobrazia.",
+  "search.filters.user": "",
   "share.tab.permalink": "Zdieľať",
   "share.tab.webComponent": "Integrovať",
   "table.loading.data": "Načítanie údajov...",

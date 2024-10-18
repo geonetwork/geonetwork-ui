@@ -517,6 +517,7 @@
   "search.filters.topic": "Topics",
   "search.filters.useSpatialFilter": "Show records in the area of interest first",
   "search.filters.useSpatialFilterHelp": "When this is enabled, records within the catalog's area of interest are shown first; records outside of this area will not appear.",
+  "search.filters.user": "Editor",
   "share.tab.permalink": "Share",
   "share.tab.webComponent": "Integrate",
   "table.loading.data": "Loading data...",

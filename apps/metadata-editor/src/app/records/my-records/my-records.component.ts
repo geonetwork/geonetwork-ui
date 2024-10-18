@@ -27,6 +27,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
 import { SearchHeaderComponent } from '../../dashboard/search-header/search-header.component'
 import { map, Observable } from 'rxjs'
+import { SearchFiltersComponent } from '../../dashboard/search-filters/search-filters.component'
 
 @Component({
   selector: 'md-editor-my-records',
@@ -45,6 +46,7 @@ import { map, Observable } from 'rxjs'
     ImportRecordComponent,
     FeatureSearchModule,
     SearchHeaderComponent,
+    SearchFiltersComponent,
   ],
 })
 export class MyRecordsComponent implements OnInit {
@@ -52,7 +54,7 @@ export class MyRecordsComponent implements OnInit {
   private importRecordButton!: ElementRef
   @ViewChild('template') template!: TemplateRef<any>
   private overlayRef!: OverlayRef
-
+  searchFields = []
   searchText$: Observable<string | null>
 
   isImportMenuOpen = false
