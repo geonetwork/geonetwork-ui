@@ -8,7 +8,6 @@ import {
   Output,
   ViewChild,
 } from '@angular/core'
-import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import {
   CatalogRecordKeys,
@@ -54,7 +53,6 @@ import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency
     CommonModule,
     TranslateModule,
     EditableLabelDirective,
-    MatIconModule,
     MatTooltipModule,
     FormFieldWrapperComponent,
     FormFieldLicenseComponent,

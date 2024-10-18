@@ -37,13 +37,13 @@
           matTooltipPosition="above"
           (click)="openRecordApiFormPanel()"
         >
-          <mat-icon
-            class="material-symbols-outlined pointer-events-none align-middle card-icon"
+          <ng-icon
+            class="pointer-events-none align-middle card-icon"
+            name="matMoreHoriz"
             [ngClass]="{
               'text-secondary opacity-100': currentlyActive
             }"
-            >more_horiz</mat-icon
-          >
+          ></ng-icon>
         </button>
       </div>
     </div>

@@ -5,9 +5,17 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiCatalogModule } from '@geonetwork-ui/ui/catalog'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { AsyncPipe, Location, NgIf } from '@angular/common'
-import { MatIconModule } from '@angular/material/icon'
 import { ErrorType, UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { Router } from '@angular/router'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import {
+  matFolderOutline,
+  matOpenInNewOutline,
+} from '@ng-icons/material-icons/outline'
 
 @Component({
   selector: 'datahub-organization-header',
@@ -20,9 +28,15 @@ import { Router } from '@angular/router'
     TranslateModule,
     UiCatalogModule,
     NgIf,
-    MatIconModule,
     AsyncPipe,
     UiElementsModule,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({ matFolderOutline, matOpenInNewOutline }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
   ],
 })
 export class OrganizationHeaderComponent {

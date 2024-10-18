@@ -4,7 +4,6 @@ import {
   Individual,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import { MatIconModule } from '@angular/material/icon'
 import { CommonModule } from '@angular/common'
 import {
   AutocompleteComponent,
@@ -29,12 +28,7 @@ describe('ContactCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        MatIconModule,
-        ButtonComponent,
-        ContactCardComponent,
-      ],
+      imports: [CommonModule, ButtonComponent, ContactCardComponent],
     })
       .overrideComponent(AutocompleteComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },

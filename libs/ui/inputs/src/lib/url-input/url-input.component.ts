@@ -8,16 +8,27 @@ import {
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '../button/button.component'
-import { MatIconModule } from '@angular/material/icon'
 import { filter } from 'rxjs/operators'
 import { Subject } from 'rxjs'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { iconoirArrowUp, iconoirLink } from '@ng-icons/iconoir'
 
 @Component({
   selector: 'gn-ui-url-input',
   templateUrl: './url-input.component.html',
   styleUrls: ['./url-input.component.css'],
   standalone: true,
-  imports: [CommonModule, ButtonComponent, MatIconModule],
+  imports: [CommonModule, ButtonComponent, NgIconComponent],
+  providers: [
+    provideIcons({ iconoirLink, iconoirArrowUp }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
+  ],
 })
 export class UrlInputComponent implements OnChanges {
   @Input() value = ''

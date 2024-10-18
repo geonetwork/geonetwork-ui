@@ -3,7 +3,7 @@
   --gn-ui-button-width: 32px;
   --gn-ui-button-padding: 0;
 
-  --side-padding: calc(var(--gn-ui-text-input-padding, 0.6em) - 6px);
+  --side-padding: calc(var(--gn-ui-text-input-padding, 0.6rem) - 6px);
   --2x-side-padding: calc(var(--side-padding) * 2);
   --text-padding: calc(var(--side-padding) + 40px);
 }

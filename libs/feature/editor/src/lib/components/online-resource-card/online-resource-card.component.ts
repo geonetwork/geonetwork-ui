@@ -12,10 +12,15 @@ import {
   OnlineResource,
 } from '@geonetwork-ui/common/domain/model/record'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
-import { MatIconModule } from '@angular/material/icon'
 import { bytesToMegabytes, getFileFormat } from '@geonetwork-ui/util/shared'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { iconoirAttachment } from '@ng-icons/iconoir'
 
 @Component({
   selector: 'gn-ui-online-resource-card',
@@ -23,9 +28,17 @@ import { TranslateModule } from '@ngx-translate/core'
   imports: [
     CommonModule,
     ThumbnailComponent,
-    MatIconModule,
     ButtonComponent,
     TranslateModule,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({
+      iconoirAttachment,
+    }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
   ],
   templateUrl: './online-resource-card.component.html',
   styleUrls: ['./online-resource-card.component.css'],

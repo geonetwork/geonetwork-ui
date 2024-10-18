@@ -15,12 +15,12 @@
       (badgeRemoveClicked)="removeKeyword(keyword)"
       >{{ keyword.label }}
 
-      <mat-icon
+      <ng-icon
         *ngIf="isPlaceWithoutExtent(keyword)"
         [title]="'editor.form.placeKeywordWithoutExtent' | translate"
-        class="material-symbols-outlined"
-        >warning</mat-icon
-      >
+        class="badge-warning"
+        name="matWarningAmberOutline"
+      ></ng-icon>
     </gn-ui-badge>
   </div>
 </div>

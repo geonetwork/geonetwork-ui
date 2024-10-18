@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MatIconModule } from '@angular/material/icon'
 
 import { PreviousNextButtonsComponent } from './previous-next-buttons.component'
 import { TranslateModule } from '@ngx-translate/core'
@@ -13,11 +12,7 @@ describe('PreviousNextButtonsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        MatIconModule,
-        PreviousNextButtonsComponent,
-        TranslateModule.forRoot(),
-      ],
+      imports: [PreviousNextButtonsComponent, TranslateModule.forRoot()],
     }).compileComponents()
   })
 

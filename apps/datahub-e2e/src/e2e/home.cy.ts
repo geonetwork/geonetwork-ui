@@ -40,14 +40,14 @@ describe('home', () => {
       it('datasets : should display the icon', () => {
         cy.get('gn-ui-figure')
           .eq(0)
-          .find('mat-icon')
-          .should('have.text', ' folder_open ')
+          .find('ng-icon')
+          .should('have.attr', 'ng-reflect-name', 'tablerFolderOpen')
       })
       it('organisations : should display the icon', () => {
         cy.get('gn-ui-figure')
           .eq(1)
-          .find('mat-icon')
-          .should('have.text', ' corporate_fare ')
+          .find('ng-icon')
+          .should('have.attr', 'ng-reflect-name', 'matCorporateFare')
       })
     })
   })

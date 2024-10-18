@@ -81,9 +81,9 @@
       focus:z-10 active:z-10 hover:z-10;
   }
   /* makes sure icons will not make the buttons grow vertically */
-  .gn-ui-btn mat-icon.mat-icon {
-    margin-top: -0.325em;
-    margin-bottom: -0.325em;
+  .gn-ui-btn ng-icon {
+    margin-top: -0.5em;
+    margin-bottom: -0.5em;
     flex-shrink: 0;
   }
 
@@ -151,14 +151,18 @@
       font-medium text-[length:--text-size] text-[color:--text-color] bg-[color:--background-color] flex justify-center items-center content-center;
   }
   /* makes sure icons will not make the badges grow vertically; also make size proportional */
-  .gn-ui-badge mat-icon.mat-icon {
+  .gn-ui-badge ng-icon {
     margin-top: -0.325em;
     margin-bottom: -0.325em;
     flex-shrink: 0;
     vertical-align: middle;
-    font-size: 1.4em;
+    font-size: 1.1em;
     width: 1em;
     height: 1em;
+  }
+
+  .gn-ui-badge ng-icon.badge-warning {
+    font-size: 1.4em;
   }
 
   /* TODO: replace by gn-ui-badge class above */

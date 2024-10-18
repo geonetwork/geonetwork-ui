@@ -8,14 +8,12 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { PaginationButtonsComponent } from './pagination-buttons.component'
 import { FormsModule } from '@angular/forms'
 import { action } from '@storybook/addon-actions'
-import { MatIcon } from '@angular/material/icon'
 
 export default {
   title: 'Elements/PaginationButtonsComponent',
   component: PaginationButtonsComponent,
   decorators: [
     moduleMetadata({
-      declarations: [MatIcon],
       imports: [
         ButtonComponent,
         UtilI18nModule,

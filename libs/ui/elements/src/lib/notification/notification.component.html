@@ -10,14 +10,11 @@
       'bg-green-500': type === 'success',
       'bg-blue-500': type === 'info'
     }"
-    [ngSwitch]="type"
   >
-    <mat-icon class="material-symbols-outlined !w-[18px] !h-[18px] text-[20px]">
-      <ng-container *ngSwitchCase="'success'">check_circle</ng-container>
-      <ng-container *ngSwitchCase="'info'">info</ng-container>
-      <ng-container *ngSwitchCase="'warning'">warning</ng-container>
-      <ng-container *ngSwitchCase="'error'">error</ng-container>
-    </mat-icon>
+    <ng-icon
+      class="!w-[20px] !h-[16px] text-[24px]"
+      [name]="getIconName(type)"
+    ></ng-icon>
   </div>
   <div
     class="flex flex-col items-start gap-[4px] pt-[3px] grow shrink overflow-hidden"
@@ -43,8 +40,9 @@
     [style.--gn-ui-button-width]="'21px'"
     [style.--gn-ui-button-height]="'21px'"
   >
-    <mat-icon class="material-symbols-outlined text-[22px] !w-[21px] !h-[21px]"
-      >close</mat-icon
-    >
+    <ng-icon
+      class="text-[22px] !w-[21px] !h-[21px]"
+      name="matCloseOutline"
+    ></ng-icon>
   </gn-ui-button>
 </div>

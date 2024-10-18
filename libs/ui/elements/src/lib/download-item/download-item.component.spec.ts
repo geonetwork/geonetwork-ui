@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MatIconModule } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
 import { DownloadItemComponent } from './download-item.component'
 import { By } from '@angular/platform-browser'
@@ -12,7 +11,7 @@ describe('DownloadsListItemComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DownloadItemComponent],
-      imports: [MatIconModule, TranslateModule.forRoot()],
+      imports: [TranslateModule.forRoot()],
     })
       .overrideComponent(DownloadItemComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
