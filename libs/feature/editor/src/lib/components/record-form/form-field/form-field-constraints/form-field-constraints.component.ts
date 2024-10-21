@@ -3,27 +3,97 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { SortableListComponent } from '@geonetwork-ui/ui/layout'
 import { ConstraintCardComponent } from '../../../constraint-card/constraint-card.component'
-import { Constraint } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecordKeys,
+  Constraint,
+} from '@geonetwork-ui/common/domain/model/record'
+import { EditorFacade } from '../../../../+state/editor.facade'
+import { ButtonComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { map, Observable } from 'rxjs'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('editor.record.form.constraint.add.legalConstraints')
+marker('editor.record.form.constraint.add.securityConstraints')
+marker('editor.record.form.constraint.add.otherConstraints')
 
 @Component({
   selector: 'gn-ui-form-field-constraints',
-  standalone: true,
-  imports: [CommonModule, SortableListComponent, ConstraintCardComponent],
+  imports: [
+    CommonModule,
+    SortableListComponent,
+    ConstraintCardComponent,
+    UiInputsModule,
+    ButtonComponent,
+  ],
   templateUrl: './form-field-constraints.component.html',
   styleUrls: ['./form-field-constraints.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
-export class FormFieldConstraintsComponent {
+export class FormFieldConstraintsComponent implements OnInit {
   @Input() label: string
   @Input() value: Constraint[] //constraintList
+  @Input() constraintType: CatalogRecordKeys
   @Output() valueChange = new EventEmitter<Constraint[]>() //constraintListChange
 
-  handleConstraintsOrderChange(event: unknown) {
-    console.log('constraints order changed')
+  legalConstraints$ = this.editorFacade.record$.pipe(
+    map((record) =>
+      'legalConstraints' in record ? record?.legalConstraints : []
+    )
+  )
+
+  securityConstraints$ = this.editorFacade.record$.pipe(
+    map((record) =>
+      'securityConstraints' in record ? record?.securityConstraints : []
+    )
+  )
+
+  otherConstraints$ = this.editorFacade.record$.pipe(
+    map((record) =>
+      'otherConstraints' in record ? record?.otherConstraints : []
+    )
+  )
+
+  additionalConstraintsButtonLabel = ''
+  isInsertAdditionalConstraintsButtonVisible$: Observable<boolean>
+
+  ngOnInit() {
+    this.additionalConstraintsButtonLabel = `editor.record.form.constraint.add.${this.constraintType}`
+
+    const constraintTypeObservableName = `${this.constraintType}$`
+    this.isInsertAdditionalConstraintsButtonVisible$ = this[
+      constraintTypeObservableName
+    ].pipe(map((constraints: Constraint[]) => constraints.length > 0))
+  }
+
+  constructor(private editorFacade: EditorFacade) {}
+
+  handleURLChange(url: URL, index: number) {
+    const updatedConstraints = [...this.value]
+    updatedConstraints[index].url = url
+    this.valueChange.emit(updatedConstraints)
+  }
+
+  handleConstraintTextChange(text: string, index: number) {
+    const updatedConstraints = [...this.value]
+    updatedConstraints[index].text = text
+    this.valueChange.emit(updatedConstraints)
+  }
+
+  handleConstraintsOrderChange(constraints: any) {
+    const updatedConstraints = [...constraints]
+    this.valueChange.emit(updatedConstraints)
+  }
+
+  addConstraintSectionToDisplay() {
+    const updatedConstraints = [...this.value]
+    updatedConstraints.push({ text: '' }) // url?
+    this.valueChange.emit(updatedConstraints)
   }
 }

@@ -1,12 +1,22 @@
 <div class="w-full mt-8" *ngIf="true" data-test="displayedConstraints">
+  <gn-ui-button
+    *ngIf="isInsertAdditionalConstraintsButtonVisible$ | async"
+    type="gray"
+    (buttonClick)="addConstraintSectionToDisplay()"
+    >{{ additionalConstraintsButtonLabel }}</gn-ui-button
+  >
   <gn-ui-sortable-list
     [items]="value"
     (itemsOrderChange)="handleConstraintsOrderChange($event)"
     [elementTemplate]="constraintTemplate"
   ></gn-ui-sortable-list>
-  <ng-template #constraintTemplate let-constraint>
+  <ng-template #constraintTemplate let-constraint let-index="index">
     <gn-ui-constraint-card
-      [constraintText]="constraint.text"
+      [label]="label"
+      [constraintText]="constraint.text ?? ''"
+      [constraintURL]="constraint.url ?? ''"
+      (urlChange)="handleURLChange($event, index)"
+      (constraintTextChange)="handleConstraintTextChange($event, index)"
     ></gn-ui-constraint-card>
   </ng-template>
 </div>

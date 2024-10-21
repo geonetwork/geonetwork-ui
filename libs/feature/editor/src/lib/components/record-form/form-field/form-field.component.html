@@ -102,7 +102,6 @@
         (valueChange)="valueChange.emit($event)"
       ></gn-ui-form-field-keywords>
     </ng-container>
-
     <ng-container *ngSwitchCase="'licenses'">
       <gn-ui-form-field-license
         [label]="config.labelKey! | translate"
@@ -114,6 +113,7 @@
       <gn-ui-form-field-constraints
         [label]="config.labelKey"
         [value]="valueAsConstraints"
+        [constraintType]="model"
         (valueChange)="valueChange.emit($event)"
       ></gn-ui-form-field-constraints>
     </ng-container>
@@ -121,6 +121,7 @@
       <gn-ui-form-field-constraints
         [label]="config.labelKey"
         [value]="valueAsConstraints"
+        [constraintType]="model"
         (valueChange)="valueChange.emit($event)"
       ></gn-ui-form-field-constraints>
     </ng-container>
@@ -128,10 +129,10 @@
       <gn-ui-form-field-constraints
         [label]="config.labelKey"
         [value]="valueAsConstraints"
+        [constraintType]="model"
         (valueChange)="valueChange.emit($event)"
       ></gn-ui-form-field-constraints>
     </ng-container>
-
     <ng-container *ngSwitchCase="'contactsForResource'">
       <gn-ui-form-field-contacts-for-resource
         [value]="valueAsIndividuals"
