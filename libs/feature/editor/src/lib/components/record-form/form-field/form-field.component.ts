@@ -110,6 +110,9 @@ export class FormFieldComponent {
     return (
       this.model === 'title' ||
       this.model === 'abstract' ||
+      this.model === 'legalConstraints' ||
+      this.model === 'securityConstraints' ||
+      this.model === 'otherConstraints' ||
       this.componentName === 'form-field-constraints-shortcuts'
     )
   }
