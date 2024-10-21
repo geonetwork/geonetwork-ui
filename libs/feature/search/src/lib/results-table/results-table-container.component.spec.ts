@@ -53,6 +53,12 @@ describe('ResultsTableContainerComponent', () => {
   })
 
   describe('sorting', () => {
+    it('should set the default sort order', () => {
+      expect(searchService.setSortBy).toHaveBeenCalledWith([
+        'desc',
+        'changeDate',
+      ])
+    })
     describe('#setSortBy', () => {
       it('calls the facade to change sort order', () => {
         component.handleSortByChange('title', 'asc')

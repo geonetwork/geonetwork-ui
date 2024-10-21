@@ -6,9 +6,12 @@ import { SearchPageComponent } from './search-page.component'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
+import { Params } from '@angular/router'
+import { Subject } from 'rxjs'
 
 const RouterFacadeMock = {
   goToMetadata: jest.fn(),
+  searchParams$: new Subject<Params>(),
 }
 
 const SearchFacadeMock = {
@@ -58,6 +61,20 @@ describe('MainSearchComponent', () => {
 
   it('should setResultsLayout to ROW', () => {
     expect(SearchFacadeMock.setResultsLayout).toHaveBeenCalledWith('ROW')
+  })
+
+  describe('initialize setSortBy', () => {
+    it('not call setSortBy if other params exist', () => {
+      RouterFacadeMock.searchParams$.next({ _sortBy: 'popularity' })
+      expect(SearchServiceMock.setSortBy).toHaveBeenCalledTimes(0)
+    })
+    it('should setSortBy to last created if no other params', () => {
+      RouterFacadeMock.searchParams$.next({})
+      expect(SearchServiceMock.setSortBy).toHaveBeenCalledWith([
+        'desc',
+        'createDate',
+      ])
+    })
   })
 
   describe('navigate to metadata record', () => {
