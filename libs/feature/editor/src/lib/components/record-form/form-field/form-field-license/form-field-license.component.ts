@@ -56,6 +56,5 @@ export class FormFieldLicenseComponent implements OnInit {
   handleLicenceSelection(licenceValue: string) {
     this.selectedLicence = licenceValue
     this.recordConstraintsChange.emit([{ text: licenceValue }])
-    console.log('this.recordConstraints', this.recordConstraints)
   }
 }
