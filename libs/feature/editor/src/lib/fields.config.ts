@@ -286,6 +286,16 @@ export const AVAILABLE_LICENSES: string[] = [
 
 export const OPEN_DATA_LICENSE = 'etalab'
 
+marker('editor.record.form.license.cc-by')
+marker('editor.record.form.license.cc-by-sa')
+marker('editor.record.form.license.cc-zero')
+marker('editor.record.form.license.etalab')
+marker('editor.record.form.license.etalab-v2')
+marker('editor.record.form.license.odbl')
+marker('editor.record.form.license.odc-by')
+marker('editor.record.form.license.pddl')
+marker('editor.record.form.license.unknown')
+
 export const MAX_UPLOAD_SIZE_MB = 10
 /************************************************************
  ***************        SPATIAL SCOPE            ************

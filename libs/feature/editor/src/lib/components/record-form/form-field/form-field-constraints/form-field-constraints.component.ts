@@ -17,6 +17,7 @@ import { EditorFacade } from '../../../../+state/editor.facade'
 import { ButtonComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { map, Observable } from 'rxjs'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { TranslateModule } from '@ngx-translate/core'
 
 marker('editor.record.form.constraint.add.legalConstraints')
 marker('editor.record.form.constraint.add.securityConstraints')
@@ -30,6 +31,7 @@ marker('editor.record.form.constraint.add.otherConstraints')
     ConstraintCardComponent,
     UiInputsModule,
     ButtonComponent,
+    TranslateModule,
   ],
   templateUrl: './form-field-constraints.component.html',
   styleUrls: ['./form-field-constraints.component.css'],

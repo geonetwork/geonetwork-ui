@@ -5,6 +5,11 @@ import { ButtonComponent, CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatIconModule } from '@angular/material/icon'
 import { combineLatest, map, Observable } from 'rxjs'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('editor.record.form.constraint.legalConstraints')
+marker('editor.record.form.constraint.securityConstraints')
+marker('editor.record.form.constraint.otherConstraints')
 
 export type ConstraintChoice =
   | 'legalConstraints'
