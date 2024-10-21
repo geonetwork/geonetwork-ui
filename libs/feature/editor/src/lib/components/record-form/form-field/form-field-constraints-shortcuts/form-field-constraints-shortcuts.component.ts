@@ -4,7 +4,7 @@ import { EditorFacade } from '../../../../+state/editor.facade'
 import { ButtonComponent, CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatIconModule } from '@angular/material/icon'
-import { firstValueFrom, map } from 'rxjs'
+import { combineLatest, map, Observable } from 'rxjs'
 
 export type ConstraintChoice =
   | 'legalConstraints'
@@ -35,6 +35,17 @@ export class FormFieldConstraintsShortcutsComponent implements OnInit {
     )
   )
 
+  securityConstraints$ = this.editorFacade.record$.pipe(
+    map((record) =>
+      'securityConstraints' in record ? record?.securityConstraints : []
+    )
+  )
+
+  otherConstraints$ = this.editorFacade.record$.pipe(
+    map((record) =>
+      'otherConstraints' in record ? record?.otherConstraints : []
+    )
+  )
   toggleApplicableConstraint = false
   toggleKnownConstraint = false
 
@@ -43,12 +54,11 @@ export class FormFieldConstraintsShortcutsComponent implements OnInit {
     'securityConstraints',
     'otherConstraints',
   ]
-  constraintSectionsToDisplay: ConstraintChoice[] = []
+  constraintSectionsToDisplay$: Observable<ConstraintChoice[]>
 
   ngOnInit(): void {
     // check if toggle needs to be turned on based on existing constraints in legalConstraints
     this.legalConstraints$.subscribe((constraints) => {
-      console.log('constraints', constraints)
       if (
         constraints.find(
           (constraint) => constraint.text === NOT_APPLICABLE_CONSTRAINT
@@ -63,6 +73,29 @@ export class FormFieldConstraintsShortcutsComponent implements OnInit {
         this.toggleKnownConstraint = true
       }
     })
+
+    // if constraint of one type is already present in the record, make the button for that type disabled
+    this.constraintSectionsToDisplay$ = combineLatest([
+      this.legalConstraints$,
+      this.securityConstraints$,
+      this.otherConstraints$,
+    ]).pipe(
+      map(([legalConstraints, securityConstraints, otherConstraints]) => {
+        const constraintSectionsToDisplay: ConstraintChoice[] = []
+
+        if (legalConstraints.length > 0) {
+          constraintSectionsToDisplay.push('legalConstraints')
+        }
+        if (securityConstraints.length > 0) {
+          constraintSectionsToDisplay.push('securityConstraints')
+        }
+        if (otherConstraints.length > 0) {
+          constraintSectionsToDisplay.push('otherConstraints')
+        }
+
+        return constraintSectionsToDisplay
+      })
+    )
   }
 
   constructor(private editorFacade: EditorFacade) {}
@@ -99,13 +132,17 @@ export class FormFieldConstraintsShortcutsComponent implements OnInit {
     }
   }
 
-  isConstraintButtonDisabled(constraintSection: ConstraintChoice) {
-    return this.constraintSectionsToDisplay.includes(constraintSection)
+  isConstraintButtonDisabled$(
+    constraintSection: ConstraintChoice
+  ): Observable<boolean> {
+    return this.constraintSectionsToDisplay$.pipe(
+      map((constraintSectionsToDisplay) => {
+        return constraintSectionsToDisplay.includes(constraintSection)
+      })
+    )
   }
 
   addConstraintSectionToDisplay(constraintSection: ConstraintChoice) {
-    if (!this.constraintSectionsToDisplay.includes(constraintSection)) {
-      this.constraintSectionsToDisplay.push(constraintSection)
-    }
+    this.editorFacade.updateRecordField(constraintSection, [{ text: '' }])
   }
 }

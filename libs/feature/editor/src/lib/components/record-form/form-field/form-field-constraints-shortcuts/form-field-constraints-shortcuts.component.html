@@ -25,7 +25,7 @@
     <gn-ui-button
       type="gray"
       (buttonClick)="addConstraintSectionToDisplay(constraint)"
-      [disabled]="isConstraintButtonDisabled(constraint)"
+      [disabled]="isConstraintButtonDisabled$(constraint) | async"
     >
       <mat-icon class="material-symbols-outlined text-primary">add</mat-icon>
       &nbsp;
