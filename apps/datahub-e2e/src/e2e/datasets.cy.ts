@@ -47,7 +47,7 @@ describe('datasets', () => {
       cy.get('@sortBy')
         .getActiveDropdownOption()
         .invoke('attr', 'data-cy-value')
-        .should('equal', 'desc,_score')
+        .should('equal', 'desc,createDate')
     })
   })
 
@@ -473,7 +473,7 @@ describe('datasets', () => {
         cy.intercept('GET', '/assets/configuration/default.toml', {
           fixture: 'config-with-geometry.toml',
         })
-        cy.visit('/search')
+        cy.visit('/search?_sort=-_score')
       })
       it('boosts records in the provided geometry', () => {
         cy.get('gn-ui-results-list-item')

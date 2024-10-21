@@ -25,7 +25,7 @@ export class SearchPageComponent implements OnInit {
 
   ngOnInit() {
     this.searchFacade.setResultsLayout('ROW')
-    this.searchService.setSortBy(SortByEnum.CHANGE_DATE)
+    this.searchService.setSortBy(SortByEnum.CREATE_DATE)
 
     const cfg: MetadataQualityConfig =
       getMetadataQualityConfig() || ({} as MetadataQualityConfig)

@@ -129,7 +129,7 @@ describe('header', () => {
         .should('have.length', 2)
     })
 
-    it('should sort results by latest date', () => {
+    it('should sort results by relevance', () => {
       cy.get('gn-ui-fuzzy-search').next().find('button').first().click()
       cy.get('gn-ui-record-preview-row').should('not.eq', '@initialList')
       cy.get('gn-ui-sort-by gn-ui-dropdown-selector')
