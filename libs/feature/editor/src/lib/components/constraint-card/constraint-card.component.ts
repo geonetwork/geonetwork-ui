@@ -29,11 +29,18 @@ import { TranslateModule } from '@ngx-translate/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConstraintCardComponent {
+  @Input() label: string
   @Input() constraintText: string
+  @Input() constraintURL: string
   hint = 'editor.record.form.constraint.markdown.placeholder' // TODO: get text and translate
 
   showUrlInput = false
   @Output() urlChange = new EventEmitter<URL>()
+  @Output() constraintTextChange = new EventEmitter<string>()
+
+  handleConstraintTextChange(text: string) {
+    this.constraintTextChange.emit(text)
+  }
 
   handleURLChange(url: string) {
     this.urlChange.emit(new URL(url))
