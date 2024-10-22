@@ -316,12 +316,12 @@ export class Gn4PlatformService implements PlatformServiceInterface {
         // Received object from API is not a RelatedResponseApiModel, so we need
         // to cast it as any and do the bellow mappings to get the wanted values.
         const resourceIdsToKeep = [
-          ...((associatedResources as any).onlines ?? [])
-            .map((o) => o.title)
-            .map((o) => o['']),
-          ...((associatedResources as any).thumbnails ?? [])
-            .map((o) => o.title)
-            .map((o) => o['']),
+          ...((associatedResources as any).onlines ?? []).map(
+            (o) => Object.values(o.title)[0]
+          ),
+          ...((associatedResources as any).thumbnails ?? []).map(
+            (o) => Object.values(o.title)[0]
+          ),
         ]
 
         const resourceIdsToRemove = recordResources
