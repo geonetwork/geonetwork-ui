@@ -1,11 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges,
-} from '@angular/core'
+import { ChangeDetectorRef, Component, Input, Output } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '../button/button.component'
 import { MatIconModule } from '@angular/material/icon'
@@ -19,7 +12,7 @@ import { Subject } from 'rxjs'
   standalone: true,
   imports: [CommonModule, ButtonComponent, MatIconModule],
 })
-export class UrlInputComponent implements OnChanges {
+export class UrlInputComponent {
   @Input() value = ''
   @Input() extraClass = ''
   @Input() placeholder = 'https://'
@@ -30,12 +23,6 @@ export class UrlInputComponent implements OnChanges {
   @Output() valueChange = this.rawChange.pipe(filter((v) => !!v))
 
   constructor(private cd: ChangeDetectorRef) {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.value) {
-      console.log('changes.value', changes.value)
-    }
-  }
 
   handleInput() {
     this.cd.markForCheck()
