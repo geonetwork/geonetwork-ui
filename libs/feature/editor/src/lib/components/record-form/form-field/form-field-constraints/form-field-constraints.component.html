@@ -1,4 +1,8 @@
 <div class="w-full mt-8" *ngIf="true" data-test="displayedConstraints">
+  <span
+    *ngIf="isInsertAdditionalConstraintsButtonVisible$ | async"
+    class="border-t border-gray-300 flex grow pb-7"
+  ></span>
   <gn-ui-button
     *ngIf="isInsertAdditionalConstraintsButtonVisible$ | async"
     type="gray"
