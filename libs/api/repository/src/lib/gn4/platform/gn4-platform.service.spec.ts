@@ -791,6 +791,37 @@ describe('Gn4PlatformService', () => {
         record.uniqueIdentifier
       )
     })
+    it('should clean record attachments no longer used', (done) => {
+      const record = { uniqueIdentifier: '123' } as CatalogRecord
+      const associatedResources = {
+        onlines: [{ title: { en: 'doge.jpg' } }],
+        thumbnails: [{ title: { en: 'flower.jpg' } }],
+      }
+      ;(recordsApiService.getAssociatedResources as jest.Mock).mockReturnValue(
+        of(associatedResources)
+      )
+      ;(recordsApiService.getAllResources as jest.Mock).mockReturnValue(
+        of([
+          { filename: 'doge.jpg' },
+          { filename: 'flower.jpg' },
+          { filename: 'remove1.jpg' },
+        ])
+      )
+      ;(recordsApiService.delResource as jest.Mock).mockReturnValue(
+        of(undefined)
+      )
+
+      service.cleanRecordAttachments(record).subscribe({
+        next: () => {
+          expect(recordsApiService.delResource).toHaveBeenCalledWith(
+            record.uniqueIdentifier,
+            'remove1.jpg'
+          )
+          done()
+        },
+        error: done.fail,
+      })
+    })
   })
 
   describe('attachFileToRecord', () => {
