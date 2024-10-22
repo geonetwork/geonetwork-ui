@@ -1,27 +1,39 @@
-<div class="w-full mt-8" *ngIf="true" data-test="displayedConstraints">
+<div
+  class="w-full mt-8 flex flex-col gap-4"
+  *ngIf="true"
+  data-test="displayedConstraints"
+>
   <span
-    *ngIf="isInsertAdditionalConstraintsButtonVisible$ | async"
+    *ngIf="isAdditonalElementsVisible$ | async"
     class="border-t border-gray-300 flex grow pb-7"
   ></span>
-  <gn-ui-button
-    *ngIf="isInsertAdditionalConstraintsButtonVisible$ | async"
-    type="gray"
-    (buttonClick)="addConstraintSectionToDisplay()"
+  <span
+    *ngIf="isAdditonalElementsVisible$ | async"
+    class="font-bold"
     translate=""
-    >{{ additionalConstraintsButtonLabel }}</gn-ui-button
+    >{{ constraintsHeader }}</span
   >
-  <gn-ui-sortable-list
-    [items]="value"
-    (itemsOrderChange)="handleConstraintsOrderChange($event)"
-    [elementTemplate]="constraintTemplate"
-  ></gn-ui-sortable-list>
-  <ng-template #constraintTemplate let-constraint let-index="index">
-    <gn-ui-constraint-card
-      [label]="label"
-      [constraintText]="constraint.text ?? ''"
-      [constraintURL]="constraint.url ?? ''"
-      (urlChange)="handleURLChange($event, index)"
-      (constraintTextChange)="handleConstraintTextChange($event, index)"
-    ></gn-ui-constraint-card>
-  </ng-template>
+  <div>
+    <gn-ui-button
+      *ngIf="isAdditonalElementsVisible$ | async"
+      type="gray"
+      (buttonClick)="addConstraintSectionToDisplay()"
+      translate=""
+      >{{ additionalConstraintsButtonLabel }}</gn-ui-button
+    >
+    <gn-ui-sortable-list
+      [items]="value"
+      (itemsOrderChange)="handleConstraintsOrderChange($event)"
+      [elementTemplate]="constraintTemplate"
+    ></gn-ui-sortable-list>
+    <ng-template #constraintTemplate let-constraint let-index="index">
+      <gn-ui-constraint-card
+        [label]="label"
+        [constraintText]="constraint.text ?? ''"
+        [constraintURL]="constraint.url ?? ''"
+        (urlChange)="handleURLChange($event, index)"
+        (constraintTextChange)="handleConstraintTextChange($event, index)"
+      ></gn-ui-constraint-card>
+    </ng-template>
+  </div>
 </div>

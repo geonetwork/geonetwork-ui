@@ -22,6 +22,9 @@ import { TranslateModule } from '@ngx-translate/core'
 marker('editor.record.form.constraint.add.legalConstraints')
 marker('editor.record.form.constraint.add.securityConstraints')
 marker('editor.record.form.constraint.add.otherConstraints')
+marker('editor.record.form.constraint.header.legalConstraints')
+marker('editor.record.form.constraint.header.securityConstraints')
+marker('editor.record.form.constraint.header.otherConstraints')
 
 @Component({
   selector: 'gn-ui-form-field-constraints',
@@ -62,16 +65,18 @@ export class FormFieldConstraintsComponent implements OnInit {
     )
   )
 
+  constraintsHeader = ''
   additionalConstraintsButtonLabel = ''
-  isInsertAdditionalConstraintsButtonVisible$: Observable<boolean>
+  isAdditonalElementsVisible$: Observable<boolean>
 
   ngOnInit() {
     this.additionalConstraintsButtonLabel = `editor.record.form.constraint.add.${this.constraintType}`
+    this.constraintsHeader = `editor.record.form.constraint.header.${this.constraintType}`
 
     const constraintTypeObservableName = `${this.constraintType}$`
-    this.isInsertAdditionalConstraintsButtonVisible$ = this[
-      constraintTypeObservableName
-    ].pipe(map((constraints: Constraint[]) => constraints.length > 0))
+    this.isAdditonalElementsVisible$ = this[constraintTypeObservableName].pipe(
+      map((constraints: Constraint[]) => constraints.length > 0)
+    )
   }
 
   constructor(private editorFacade: EditorFacade) {}
