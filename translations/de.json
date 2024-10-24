@@ -196,7 +196,7 @@
   "editor.record.delete.confirmation.cancelText": "Stornieren",
   "editor.record.delete.confirmation.confirmText": "Löschen",
   "editor.record.delete.confirmation.message": "Sind Sie sicher, dass Sie diesen Datensatz löschen möchten?",
-  "editor.record.delete.confirmation.title": "Datensatz löschen?",
+  "editor.record.delete.confirmation.title": "Datensatz löschen",
   "editor.record.deleteError.body": "Der Datensatz konnte nicht gelöscht werden:",
   "editor.record.deleteError.closeMessage": "Verstanden",
   "editor.record.deleteError.title": "Fehler beim Löschen des Datensatzes",
