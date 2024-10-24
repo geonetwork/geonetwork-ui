@@ -6,13 +6,9 @@
     data-test="could-not-reach-api-error"
   >
     <div class="relative opacity-40">
-      <mat-icon class="material-symbols-outlined face">face</mat-icon>
-      <mat-icon class="material-symbols-outlined question-mark1"
-        >question_mark
-      </mat-icon>
-      <mat-icon class="material-symbols-outlined question-mark2"
-        >question_mark
-      </mat-icon>
+      <ng-icon name="matFace" class="face"></ng-icon>
+      <ng-icon name="matQuestionMark" class="question-mark1"></ng-icon>
+      <ng-icon name="matQuestionMark" class="question-mark2"></ng-icon>
     </div>
     <div translate>search.error.couldNotReachApi</div>
   </div>
@@ -21,23 +17,21 @@
     data-test="dataset-has-no-link-error"
   >
     <div class="relative opacity-40">
-      <mat-icon class="material-symbols-outlined face">computer</mat-icon>
+      <ng-icon name="matComputerOutline"></ng-icon>
     </div>
     <div translate>search.error.recordHasnolink</div>
   </div>
   <div *ngIf="type === types.RECEIVED_ERROR" data-test="received-error-error">
     <div class="relative opacity-40">
-      <mat-icon class="material-symbols-outlined face">mood_bad</mat-icon>
+      <ng-icon name="matMoodBad" class="face"></ng-icon>
     </div>
     <div translate>search.error.receivedError</div>
     <div *ngIf="error">{{ error }}</div>
   </div>
   <div *ngIf="type === types.ORGANIZATION_HAS_NO_DATASET">
     <div class="relative opacity-40">
-      <mat-icon class="material-symbols-outlined computer">computer</mat-icon>
-      <mat-icon class="material-symbols-outlined computer-question-mark"
-        >question_mark
-      </mat-icon>
+      <ng-icon name="matComputerOutline" class="computer"></ng-icon>
+      <ng-icon name="matQuestionMark" class="computer-question-mark"> </ng-icon>
     </div>
     <div translate>search.error.organizationHasNoDataset</div>
   </div>
@@ -46,10 +40,8 @@
     data-test="record-not-found-error"
   >
     <div class="relative opacity-40">
-      <mat-icon class="material-symbols-outlined computer">computer</mat-icon>
-      <mat-icon class="material-symbols-outlined computer-question-mark"
-        >question_mark
-      </mat-icon>
+      <ng-icon name="matComputerOutline" class="computer"></ng-icon>
+      <ng-icon name="matQuestionMark" class="computer-question-mark"> </ng-icon>
     </div>
     <div translate [translateParams]="{ id: recordId }">
       search.error.recordNotFound
@@ -61,10 +53,8 @@
     data-test="org-not-found-error"
   >
     <div class="relative opacity-40">
-      <mat-icon class="material-symbols-outlined computer">computer</mat-icon>
-      <mat-icon class="material-symbols-outlined computer-question-mark"
-        >question_mark
-      </mat-icon>
+      <ng-icon name="matComputerOutline" class="computer"></ng-icon>
+      <ng-icon name="matQuestionMark" class="computer-question-mark"> </ng-icon>
     </div>
     <div translate [translateParams]="{ id: recordId }">
       search.error.organizationNotFound

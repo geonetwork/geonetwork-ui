@@ -4,8 +4,9 @@
     *ngFor="let addOption of addOptions$ | async"
     (buttonClick)="onAdd(addOption.eventName)"
   >
-    <mat-icon class="material-symbols-outlined text-primary">add</mat-icon>
-    &nbsp;{{ addOption.buttonLabel }}</gn-ui-button
+    <ng-icon name="iconoirPlus" class="text-primary"></ng-icon> &nbsp;{{
+      addOption.buttonLabel
+    }}</gn-ui-button
   >
 </div>
 <gn-ui-sortable-list

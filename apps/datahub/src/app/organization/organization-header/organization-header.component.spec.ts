@@ -5,7 +5,6 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { UiCatalogModule } from '@geonetwork-ui/ui/catalog'
 import { AsyncPipe, Location, NgIf } from '@angular/common'
-import { MatIconModule } from '@angular/material/icon'
 import { someOrganizationsFixture } from '@geonetwork-ui/common/fixtures'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
@@ -36,7 +35,6 @@ describe('OrganizationHeaderComponent', () => {
         TranslateModule,
         UiCatalogModule,
         NgIf,
-        MatIconModule,
         AsyncPipe,
         TranslateModule.forRoot(),
       ],

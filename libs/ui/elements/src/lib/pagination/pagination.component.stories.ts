@@ -11,7 +11,6 @@ import {
 } from '@geonetwork-ui/util/i18n'
 import { PaginationComponent } from './pagination.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { MatIcon } from '@angular/material/icon'
 import { FormsModule } from '@angular/forms'
 
 export default {
@@ -19,7 +18,6 @@ export default {
   component: PaginationComponent,
   decorators: [
     moduleMetadata({
-      declarations: [MatIcon],
       imports: [
         ButtonComponent,
         UtilI18nModule,

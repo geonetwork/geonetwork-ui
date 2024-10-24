@@ -5,7 +5,7 @@
     (buttonClick)="saveRecord()"
     [matTooltip]="'editor.record.publish' | translate"
   >
-    <mat-icon class="material-symbols-outlined">cloud_upload</mat-icon>
+    <ng-icon name="iconoirCloudUpload"></ng-icon>
   </gn-ui-button>
   <gn-ui-button *ngSwitchCase="'saving'" type="primary" [disabled]="true">
     <mat-spinner [diameter]="16"></mat-spinner>
@@ -17,6 +17,6 @@
     (buttonClick)="saveRecord()"
     [matTooltip]="'editor.record.upToDate' | translate"
   >
-    <mat-icon class="material-symbols-outlined">check_circle</mat-icon>
+    <ng-icon name="matCheckCircleOutline"></ng-icon>
   </gn-ui-button>
 </ng-container>

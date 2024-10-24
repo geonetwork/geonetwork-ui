@@ -20,18 +20,18 @@
     </div>
   </div>
   <button class="h-6 w-6" data-cy="clearSelection">
-    <mat-icon
-      class="material-symbols-outlined shrink-0 opacity-40 mr-1.5 hover:opacity-80 transition-colors clear-btn"
+    <ng-icon
+      class="shrink-0 opacity-40 mr-1.5 hover:opacity-80 transition-colors clear-btn"
       *ngIf="hasSelectedChoices && !overlayOpen"
       (click)="clearSelection($event)"
-    >
-      close
-    </mat-icon>
+      name="matClose"
+    ></ng-icon>
   </button>
-  <mat-icon class="material-symbols-outlined shrink-0 opacity-40">
-    <ng-container *ngIf="overlayOpen">expand_less</ng-container>
-    <ng-container *ngIf="!overlayOpen">expand_more</ng-container>
-  </mat-icon>
+  <ng-icon
+    [name]="overlayOpen ? 'matExpandLess' : 'matExpandMore'"
+    class="shrink-0 opacity-40"
+  >
+  </ng-icon>
 </gn-ui-button>
 
 <ng-template
@@ -74,11 +74,10 @@
         <div
           class="flex items-center justify-center rounded-full bg-white text-main h-[13px] w-[13px] pt-px -mt-px shrink-0"
         >
-          <mat-icon
-            class="material-symbols-outlined !h-[12px] !w-[12px] text-[12px]"
-          >
-            close</mat-icon
-          >
+          <ng-icon
+            name="matClose"
+            class="!h-[12px] !w-[11px] text-[12px]"
+          ></ng-icon>
         </div>
       </button>
 
@@ -94,11 +93,8 @@
           class="absolute top-1/2 -translate-y-1/2 right-0 px-[7px] leading-tight clear-search-input mr-2"
           (click)="clearSearchInputValue($event)"
         >
-          <mat-icon
-            class="material-symbols-outlined !h-[10px] !w-[12px] text-[12px]"
-          >
-            close
-          </mat-icon>
+          <ng-icon class="!h-[10px] !w-[12px] text-[12px]" name="matClose">
+          </ng-icon>
         </button>
       </div>
     </div>

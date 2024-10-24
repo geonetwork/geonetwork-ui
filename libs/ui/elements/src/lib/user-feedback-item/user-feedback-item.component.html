@@ -57,12 +57,8 @@
           "
           extraClass="!p-[0.5em] text-primary-darker border-primary-darker h-9"
         >
-          <mat-icon
-            class="material-symbols-outlined"
-            *ngIf="!isAddUserFeedbackLoading"
-          >
-            send
-          </mat-icon>
+          <ng-icon *ngIf="!isAddUserFeedbackLoading" name="matSendOutline">
+          </ng-icon>
           <ng-container *ngIf="isAddUserFeedbackLoading">
             <div class="flex justify-center w-full">
               <gn-ui-spinning-loader></gn-ui-spinning-loader>

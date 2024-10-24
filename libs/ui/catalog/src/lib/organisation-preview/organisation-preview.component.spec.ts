@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MatIconModule } from '@angular/material/icon'
 
 import { OrganisationPreviewComponent } from './organisation-preview.component'
 
@@ -30,7 +29,6 @@ describe('OrganisationPreviewComponent', () => {
         OrganisationPreviewComponent,
         RecordThumbnailMockComponent,
       ],
-      imports: [MatIconModule],
     }).compileComponents()
 
     fixture = TestBed.createComponent(OrganisationPreviewComponent)
