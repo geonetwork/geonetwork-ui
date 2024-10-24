@@ -80,7 +80,8 @@ background_color = "#fdfbff"
 
 # The advanced search filters available to the user can be customized with this setting.
 # The following fields can be used for filtering: 'organization', 'format', 'publicationYear', 'standard', 'inspireKeyword', 'keyword', 'topic', 'isSpatial', 'license', 'resourceType', 'representationType', 'producerOrg', 'publisherOrg'
-# any other field will be ignored
+# If not configured, the default values are 'organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license'
+# Note that some links in the datahub app set an 'organization' filter. So this field is needed to allow unsetting such filters.
 # advanced_filters = ['organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license']
 
 # One or several search presets can be defined here; every search preset is composed of:
