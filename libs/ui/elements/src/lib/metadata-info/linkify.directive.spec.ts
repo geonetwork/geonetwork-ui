@@ -148,9 +148,9 @@ describe('GnUiLinkifyDirective', () => {
       fixture.detectChanges()
       await fixture.whenStable()
       const href = getAnchorElement()[0].nativeElement.getAttribute('href')
-      const matIcon = getAnchorElement()[0].nativeElement.childNodes[1]
+      const ngIcon = getAnchorElement()[0].nativeElement.childNodes[1]
       expect(href).toBe(testWithHTML.output)
-      expect(matIcon.nodeName).toContain('NG-ICON')
+      expect(ngIcon.nodeName).toContain('NG-ICON')
     })
   })
 })

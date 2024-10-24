@@ -21,19 +21,13 @@ import {
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import { importProvidersFrom } from '@angular/core'
-import { MatIcon } from '@angular/material/icon'
 
 export default {
   title: 'Inputs/ChipsInputComponent',
   component: ChipsInputComponent,
   decorators: [
     moduleMetadata({
-      declarations: [
-        TagInputComponent,
-        TagComponent,
-        MatIcon,
-        DeleteIconComponent,
-      ],
+      declarations: [TagInputComponent, TagComponent, DeleteIconComponent],
       imports: [
         FormsModule,
         ReactiveFormsModule,

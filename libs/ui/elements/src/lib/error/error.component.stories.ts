@@ -13,14 +13,12 @@ import {
 import { TranslateModule } from '@ngx-translate/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
-import { MatIcon } from '@angular/material/icon'
 
 export default {
   title: 'Elements/ErrorComponent',
   component: ErrorComponent,
   decorators: [
     moduleMetadata({
-      declarations: [MatIcon],
       imports: [
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
