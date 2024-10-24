@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
   MetadataQualityConfig,
   getMetadataQualityConfig,
 } from '@geonetwork-ui/util/app-config'
+import { SortByEnum } from '@geonetwork-ui/common/domain/model/search'
 
 @Component({
   selector: 'datahub-search-page',
@@ -18,11 +19,18 @@ export class SearchPageComponent implements OnInit {
 
   constructor(
     private searchRouter: RouterFacade,
-    public searchFacade: SearchFacade
+    public searchFacade: SearchFacade,
+    private searchService: SearchService
   ) {}
 
   ngOnInit() {
     this.searchFacade.setResultsLayout('ROW')
+    this.searchRouter.searchParams$.subscribe((params) => {
+      console.log(Object.keys(params).length)
+      if (Object.keys(params).length === 0) {
+        this.searchService.setSortBy(SortByEnum.CREATE_DATE)
+      }
+    })
 
     const cfg: MetadataQualityConfig =
       getMetadataQualityConfig() || ({} as MetadataQualityConfig)

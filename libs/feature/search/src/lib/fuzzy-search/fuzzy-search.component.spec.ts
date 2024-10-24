@@ -20,6 +20,7 @@ class SearchFacadeMock {
 
 class SearchServiceMock {
   updateFilters = jest.fn()
+  setSortAndFilters = jest.fn()
 }
 
 class RecordsRepositoryMock {
@@ -118,9 +119,12 @@ describe('FuzzySearchComponent', () => {
         component.handleInputSubmission('blarg')
       })
       it('updates the search filters', () => {
-        expect(searchService.updateFilters).toHaveBeenCalledWith({
-          any: 'blarg',
-        })
+        expect(searchService.setSortAndFilters).toHaveBeenCalledWith(
+          {
+            any: 'blarg',
+          },
+          ['desc', '_score']
+        )
       })
     })
     describe('when output is defined', () => {

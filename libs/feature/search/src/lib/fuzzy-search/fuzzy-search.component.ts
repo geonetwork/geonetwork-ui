@@ -18,6 +18,7 @@ import { SearchService } from '../utils/service/search.service'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
+import { SortByEnum } from '@geonetwork-ui/common/domain/model/search'
 
 @Component({
   selector: 'gn-ui-fuzzy-search',
@@ -72,7 +73,7 @@ export class FuzzySearchComponent implements OnInit {
     if (this.inputSubmitted.observers.length > 0) {
       this.inputSubmitted.emit(any)
     } else {
-      this.searchService.updateFilters({ any })
+      this.searchService.setSortAndFilters({ any }, SortByEnum.RELEVANCY)
     }
   }
 

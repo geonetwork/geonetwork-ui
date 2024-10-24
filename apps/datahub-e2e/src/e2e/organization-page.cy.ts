@@ -84,7 +84,7 @@ describe('organizations', () => {
             const url = $link.prop('href')
             cy.wrap($link).click()
 
-            cy.url().should('eq', url)
+            cy.url().should('include', url)
           })
         })
 
@@ -109,7 +109,7 @@ describe('organizations', () => {
             const url = $link.prop('href')
             cy.wrap($link).click()
 
-            cy.url().should('eq', url)
+            cy.url().should('include', url)
           })
         })
       })

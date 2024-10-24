@@ -47,32 +47,40 @@ describe('datasets', () => {
       cy.get('@sortBy')
         .getActiveDropdownOption()
         .invoke('attr', 'data-cy-value')
-        .should('equal', 'desc,_score')
+        .should('equal', 'desc,createDate')
     })
   })
 
   describe('display of dataset previews', () => {
-    it('should display a logo for first and a placeholder for second result', () => {
-      cy.get('@sortBy').selectDropdownOption('desc,createDate') // this makes the order reliable
-      cy.get('@sampleResult')
-        .find('gn-ui-thumbnail')
-        .children('div')
-        .invoke('attr', 'data-cy-is-placeholder')
-        .should('equal', 'false')
-      cy.get('@sampleResult')
-        .find('gn-ui-thumbnail')
-        .find('img')
-        .invoke('attr', 'src')
-        .should(
-          'eql',
-          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/records/9e1ea778-d0ce-4b49-90b7-37bc0e448300/attachments/test.png'
-        )
+    it('should display a placeholder for first result and a logo for second result', () => {
+      cy.get('@sortBy').selectDropdownOption('desc,userSavedCount') // this makes the order reliable
       cy.get('@results')
         .first()
         .find('gn-ui-thumbnail')
         .children('div')
         .invoke('attr', 'data-cy-is-placeholder')
         .should('equal', 'true')
+      cy.get('@results')
+        .first()
+        .find('gn-ui-thumbnail')
+        .find('img')
+        .invoke('attr', 'src')
+        .should('include', 'data:image/png')
+      cy.get('@results')
+        .eq(1)
+        .find('gn-ui-thumbnail')
+        .children('div')
+        .invoke('attr', 'data-cy-is-placeholder')
+        .should('equal', 'false')
+      cy.get('@results')
+        .eq(1)
+        .find('gn-ui-thumbnail')
+        .find('img')
+        .invoke('attr', 'src')
+        .should(
+          'eq',
+          'https://www.geo2france.fr/public/vignettes_geonetwork/part_menage_5ans.jpg'
+        )
     })
     it('should display the title', () => {
       cy.get('@sampleResult')
@@ -473,7 +481,7 @@ describe('datasets', () => {
         cy.intercept('GET', '/assets/configuration/default.toml', {
           fixture: 'config-with-geometry.toml',
         })
-        cy.visit('/search')
+        cy.visit('/search?_sort=-_score')
       })
       it('boosts records in the provided geometry', () => {
         cy.get('gn-ui-results-list-item')
