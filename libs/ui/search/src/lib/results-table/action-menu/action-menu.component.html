@@ -1,26 +1,59 @@
-<gn-ui-button
-  type="light"
-  [matMenuTriggerFor]="menu"
-  (buttonClick)="openMenu()"
-  data-test="record-menu-button"
->
-  <ng-icon name="matMoreVert"></ng-icon>
-</gn-ui-button>
-<mat-menu #menu="matMenu">
-  <button
-    mat-menu-item
-    [disabled]="!canDuplicate"
-    (click)="duplicate.emit()"
-    data-test="record-menu-duplicate-button"
-  >
-    <span translate>record.action.duplicate</span>
-  </button>
-  <button
-    mat-menu-item
-    [disabled]="!canDelete"
-    (click)="openDeleteConfirmationDialog()"
-    data-test="record-menu-delete-button"
-  >
-    <span translate>record.action.delete</span>
-  </button>
-</mat-menu>
+<ng-container [ngSwitch]="sectionDisplayed">
+  <ng-container *ngSwitchCase="'mainMenu'">
+    <div
+      data-test="mainMenuSection"
+      class="mt-2 border border-gray-100 p-2 flex items-center bg-white shadow-2xl rounded-2xl"
+    >
+      <ul class="flex flex-col gap-2 w-full">
+        <gn-ui-button
+          type="light"
+          extraClass="flex flex-row items-center gap-2 w-full justify-start"
+          (buttonClick)="duplicate.emit()"
+          [disabled]="!canDuplicate"
+          data-test="record-menu-duplicate-button"
+          ><span translate>record.action.duplicate</span></gn-ui-button
+        >
+        <gn-ui-button
+          type="light"
+          extraClass="flex flex-row items-center gap-2 w-full justify-start"
+          (buttonClick)="displayDeleteMenu()"
+          [disabled]="!canDelete"
+          data-test="record-menu-delete-button"
+          ><span translate>record.action.delete</span></gn-ui-button
+        >
+      </ul>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'deleteMenu'">
+    <div
+      data-test="deleteMenuSection"
+      class="w-72 p-6 flex flex-col gap-3 mt-2 border border-gray-100 bg-white shadow-2xl rounded-2xl"
+    >
+      <span class="text-lg font-bold text-center">{{
+        'editor.record.delete.confirmation.title' | translate
+      }}</span>
+      <span class="text-center">{{
+        'editor.record.delete.confirmation.message' | translate
+      }}</span>
+      <div class="flex flex-row gap-8 justify-center">
+        <gn-ui-button
+          (buttonClick)="delete.emit()"
+          cdkFocusInitial
+          type="primary"
+          data-cy="confirm-button"
+          [style.--gn-ui-button-width]="'100px'"
+          >{{
+            'editor.record.delete.confirmation.confirmText' | translate
+          }}</gn-ui-button
+        >
+        <gn-ui-button
+          [style.--gn-ui-button-width]="'100px'"
+          (buttonClick)="closeActionMenu.emit()"
+          >{{
+            'editor.record.delete.confirmation.cancelText' | translate
+          }}</gn-ui-button
+        >
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
