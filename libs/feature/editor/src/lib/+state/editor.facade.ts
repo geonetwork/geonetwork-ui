@@ -40,6 +40,7 @@ export class EditorFacade {
     this.store.dispatch(
       EditorActions.openRecord({ record, recordSource, alreadySavedOnce })
     )
+    this.setCurrentPage(0)
   }
 
   saveRecord() {
