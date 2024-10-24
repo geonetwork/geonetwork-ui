@@ -161,10 +161,6 @@
     height: 1em;
   }
 
-  .gn-ui-badge ng-icon.badge-warning {
-    font-size: 1.4em;
-  }
-
   /* TODO: replace by gn-ui-badge class above */
   .badge-btn {
     @apply flex items-center justify-center px-4 py-1 text-white rounded backdrop-blur;
