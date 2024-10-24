@@ -76,6 +76,7 @@ import { iconoirNavArrowRight, iconoirNavArrowLeft } from '@ng-icons/iconoir'
     BadgeComponent,
     MaxLinesComponent,
     TextInputComponent,
+    // FIXME: these imports are required by non-standalone components and should be removed once all components have been made standalone
     NgIconsModule.withIcons({
       matMoreHoriz,
       matOpenInNew,

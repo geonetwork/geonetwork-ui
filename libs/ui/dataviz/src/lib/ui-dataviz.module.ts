@@ -10,6 +10,7 @@ import { tablerFolderOpen } from '@ng-icons/tabler-icons'
   imports: [
     CommonModule,
     TranslateModule.forChild(),
+    // FIXME: these imports are required by non-standalone components and should be removed once all components have been made standalone
     NgIconsModule.withIcons({
       matCorporateFare,
       tablerFolderOpen,

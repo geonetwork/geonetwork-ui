@@ -61,6 +61,7 @@ import { matClose, matOpenInNew } from '@ng-icons/material-icons/baseline'
     FeatureDetailComponent,
     MapStateContainerComponent,
     MapContainerComponent,
+    // FIXME: these imports are required by non-standalone components and should be removed once all components have been made standalone
     NgIconsModule.withIcons({
       matClose,
       matOpenInNew,

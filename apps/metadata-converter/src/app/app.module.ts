@@ -34,6 +34,7 @@ import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
     UiInputsModule,
     HttpClientModule,
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
+    // FIXME: these imports are required by non-standalone components and should be removed once all components have been made standalone
     NgIconsModule.withIcons({
       matDeleteForeverSharp,
     }),

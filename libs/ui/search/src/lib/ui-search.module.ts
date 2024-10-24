@@ -64,6 +64,7 @@ import { matFace } from '@ng-icons/material-icons/baseline'
     MatCheckboxModule,
     RouterLink,
     InteractiveTableComponent,
+    // FIXME: these imports are required by non-standalone components and should be removed once all components have been made standalone
     NgIconsModule.withIcons({
       matMapOutline,
       matCloudDownloadOutline,
