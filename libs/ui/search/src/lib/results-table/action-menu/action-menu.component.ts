@@ -12,8 +12,6 @@ import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu'
 import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
-import { NgIconComponent, provideIcons } from '@ng-icons/core'
-import { matMoreVert } from '@ng-icons/material-icons/baseline'
 
 type ActionMenuPage = 'mainMenu' | 'deleteMenu'
 
@@ -29,9 +27,7 @@ type ActionMenuPage = 'mainMenu' | 'deleteMenu'
     MatDialogModule,
     ConfirmationDialogComponent,
     TranslateModule,
-    NgIconComponent,
   ],
-  providers: [provideIcons({ matMoreVert })],
 })
 export class ActionMenuComponent {
   @Input() canDuplicate: boolean

@@ -37,6 +37,7 @@ import {
   OverlayRef,
 } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
+import { matMoreVert } from '@ng-icons/material-icons/baseline'
 
 @Component({
   selector: 'gn-ui-results-table',
@@ -55,7 +56,7 @@ import { TemplatePortal } from '@angular/cdk/portal'
     CdkOverlayOrigin,
     CdkConnectedOverlay,
   ],
-  providers: [provideIcons({ iconoirUser })],
+  providers: [provideIcons({ iconoirUser, matMoreVert })],
 })
 export class ResultsTableComponent {
   @Input() records: CatalogRecord[] = []
