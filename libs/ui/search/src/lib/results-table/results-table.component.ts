@@ -1,5 +1,15 @@
 import { CommonModule } from '@angular/common'
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  QueryList,
+  ViewChildren,
+  ViewContainerRef,
+} from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
   FieldSort,
@@ -20,6 +30,14 @@ import { TranslateModule } from '@ngx-translate/core'
 import { ActionMenuComponent } from './action-menu/action-menu.component'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { iconoirUser } from '@ng-icons/iconoir'
+import {
+  CdkConnectedOverlay,
+  CdkOverlayOrigin,
+  Overlay,
+  OverlayRef,
+} from '@angular/cdk/overlay'
+import { TemplatePortal } from '@angular/cdk/portal'
+import { matMoreVert } from '@ng-icons/material-icons/baseline'
 
 @Component({
   selector: 'gn-ui-results-table',
@@ -35,8 +53,10 @@ import { iconoirUser } from '@ng-icons/iconoir'
     BadgeComponent,
     ActionMenuComponent,
     NgIconComponent,
+    CdkOverlayOrigin,
+    CdkConnectedOverlay,
   ],
-  providers: [provideIcons({ iconoirUser })],
+  providers: [provideIcons({ iconoirUser, matMoreVert })],
 })
 export class ResultsTableComponent {
   @Input() records: CatalogRecord[] = []
@@ -55,6 +75,67 @@ export class ResultsTableComponent {
   @Output() recordsSelectedChange = new EventEmitter<
     [CatalogRecord[], boolean]
   >()
+
+  @ViewChildren('actionMenuButton', { read: ElementRef })
+  actionMenuButtons!: QueryList<ElementRef>
+  private overlayRef!: OverlayRef
+
+  isActionMenuOpen = false
+
+  constructor(
+    private overlay: Overlay,
+    private viewContainerRef: ViewContainerRef,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  openActionMenu(item, template) {
+    this.isActionMenuOpen = true
+    const index = this.records.indexOf(item)
+    const buttonElement = this.actionMenuButtons.toArray()[index]
+
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(buttonElement)
+      .withFlexibleDimensions(true)
+      .withPush(true)
+      .withPositions([
+        {
+          originX: 'end',
+          originY: 'bottom',
+          overlayX: 'end',
+          overlayY: 'top',
+        },
+        {
+          originX: 'end',
+          originY: 'top',
+          overlayX: 'end',
+          overlayY: 'bottom',
+        },
+      ])
+
+    this.overlayRef = this.overlay.create({
+      hasBackdrop: true,
+      backdropClass: 'cdk-overlay-transparent-backdrop',
+      positionStrategy: positionStrategy,
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+    })
+
+    const portal = new TemplatePortal(template, this.viewContainerRef)
+
+    this.overlayRef.attach(portal)
+
+    this.overlayRef.backdropClick().subscribe(() => {
+      this.closeActionMenu()
+    })
+  }
+
+  closeActionMenu() {
+    if (this.overlayRef) {
+      this.isActionMenuOpen = false
+      this.overlayRef.dispose()
+      this.cdr.markForCheck()
+    }
+  }
 
   dateToString(date: Date): string {
     return date?.toLocaleDateString(undefined, {
@@ -102,6 +183,7 @@ export class ResultsTableComponent {
 
   handleDelete(item: unknown) {
     this.deleteRecord.emit(item as CatalogRecord)
+    this.closeActionMenu()
   }
 
   setSortBy(col: string, order: 'asc' | 'desc') {

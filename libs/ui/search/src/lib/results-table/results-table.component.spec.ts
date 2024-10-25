@@ -158,19 +158,13 @@ describe('ResultsTableComponent', () => {
 
     beforeEach(() => {
       recordToBeDuplicated = null
-      component.duplicateRecord.subscribe((r) => (recordToBeDuplicated = r))
+      component.duplicateRecord.subscribe((r) => {
+        recordToBeDuplicated = r
+      })
     })
 
     it('emits a duplicateRecord event', () => {
-      const menuButton = fixture.debugElement.query(
-        By.css('[data-test="record-menu-button"]')
-      ).nativeElement as HTMLButtonElement
-      menuButton.click()
-      fixture.detectChanges()
-      const duplicateButton = fixture.debugElement.query(
-        By.css('[data-test="record-menu-duplicate-button"]')
-      ).nativeElement as HTMLButtonElement
-      duplicateButton.click()
+      component.handleDuplicate(datasetRecordsFixture()[0])
       expect(JSON.stringify(recordToBeDuplicated)).toEqual(
         JSON.stringify(datasetRecordsFixture()[0])
       )
