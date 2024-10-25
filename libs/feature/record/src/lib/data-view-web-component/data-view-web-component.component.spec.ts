@@ -2,10 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { DataViewWebComponentComponent } from './data-view-web-component.component'
 import { BehaviorSubject, firstValueFrom } from 'rxjs'
 import { MdViewFacade } from '../state'
-import { TranslateModule } from '@ngx-translate/core'
-import { Component, Input } from '@angular/core'
 import { GN_UI_VERSION } from '../gn-ui-version.token'
 import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
+import { MockBuilder } from 'ng-mocks'
 
 const chartConfig1 = {
   aggregation: 'sum',
@@ -32,28 +31,15 @@ class MdViewFacadeMock {
   metadata$ = new BehaviorSubject(metadata)
 }
 
-@Component({
-  selector: 'gn-ui-copy-text-button',
-  template: '<div></div>',
-})
-export class MockCopyTextButtonComponent {
-  @Input() text: string
-  @Input() tooltipText: string
-  @Input() rows: number
-}
-
 describe('DataViewWebComponentComponent', () => {
   let component: DataViewWebComponentComponent
   let fixture: ComponentFixture<DataViewWebComponentComponent>
   let facade
 
+  beforeEach(() => MockBuilder(DataViewWebComponentComponent))
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        DataViewWebComponentComponent,
-        MockCopyTextButtonComponent,
-      ],
-      imports: [TranslateModule.forRoot()],
       providers: [
         provideRepositoryUrl('http://gn-api.url/'),
         {
