@@ -61,7 +61,7 @@ export class RouterEffects {
         let sortBy =
           ROUTE_PARAMS.SORT in newParams
             ? sortByFromString(newParams[ROUTE_PARAMS.SORT])
-            : SortByEnum.RELEVANCY
+            : SortByEnum.CHANGE_DATE
         let pageNumber =
           ROUTE_PARAMS.PAGE in newParams
             ? parseInt(newParams[ROUTE_PARAMS.PAGE])
