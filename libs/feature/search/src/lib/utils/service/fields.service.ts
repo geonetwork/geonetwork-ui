@@ -1,6 +1,8 @@
 import { Injectable, Injector } from '@angular/core'
 import {
   AbstractSearchField,
+  DateRange,
+  DateRangeSearchField,
   FieldValue,
   FullTextSearchField,
   IsSpatialSearchField,
@@ -9,6 +11,7 @@ import {
   OrganizationSearchField,
   OwnerSearchField,
   SimpleSearchField,
+  TimestampRange,
   TranslatedSearchField,
   UserSearchField,
 } from './fields'
@@ -87,6 +90,7 @@ export class FieldsService {
       'key'
     ),
     user: new UserSearchField(this.injector),
+    changeDate: new DateRangeSearchField('changeDate', this.injector, 'desc'),
   } as Record<string, AbstractSearchField>
 
   get supportedFields() {
@@ -101,25 +105,37 @@ export class FieldsService {
     return this.fields[fieldName].getAvailableValues()
   }
 
-  private getFiltersForValues(fieldName: string, values: FieldValue[]) {
+  private getFiltersForValues(
+    fieldName: string,
+    values: FieldValue[] | DateRange
+  ) {
     return this.fields[fieldName].getFiltersForValues(values)
   }
   private getValuesForFilters(fieldName: string, filters: FieldFilters) {
     return this.fields[fieldName].getValuesForFilter(filters)
   }
 
+  getFieldType(fieldName: string) {
+    return this.fields[fieldName].getType()
+  }
+
   buildFiltersFromFieldValues(
-    fieldValues: FieldValues
+    fieldValues: FieldValues | DateRange
   ): Observable<FieldFilters> {
     const fieldNames = Object.keys(fieldValues).filter((fieldName) =>
       this.supportedFields.includes(fieldName)
     )
     if (!fieldNames.length) return of({})
     const filtersByField$ = fieldNames.map((fieldName) => {
-      const values = Array.isArray(fieldValues[fieldName])
-        ? fieldValues[fieldName]
-        : [fieldValues[fieldName]]
-      return this.getFiltersForValues(fieldName, values as FieldValue[])
+      const values =
+        Array.isArray(fieldValues[fieldName]) ||
+        Object.keys(fieldValues[fieldName]).length > 1
+          ? fieldValues[fieldName]
+          : [fieldValues[fieldName]]
+      return this.getFiltersForValues(
+        fieldName,
+        values as FieldValue[] | DateRange
+      )
     })
     return forkJoin(filtersByField$).pipe(
       map((filters) =>
@@ -128,7 +144,9 @@ export class FieldsService {
     )
   }
 
-  readFieldValuesFromFilters(filters: FieldFilters): Observable<FieldValues> {
+  readFieldValuesFromFilters(
+    filters: FieldFilters
+  ): Observable<FieldValues | TimestampRange> {
     const fieldValues$ = this.supportedFields.map((fieldName) =>
       this.getValuesForFilters(fieldName, filters).pipe(
         map((values) => ({ [fieldName]: values }))

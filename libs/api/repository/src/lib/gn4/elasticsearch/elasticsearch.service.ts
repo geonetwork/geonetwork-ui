@@ -12,6 +12,7 @@ import {
   FieldFilter,
   FieldFilters,
   FilterAggregationParams,
+  FiltersAggregationParams,
   SortByField,
 } from '@geonetwork-ui/common/domain/model/search'
 import { METADATA_LANGUAGE } from '../../metadata-language'
@@ -26,6 +27,9 @@ import {
   TermsAggregationResult,
 } from '@geonetwork-ui/api/metadata-converter'
 import { LangService } from '@geonetwork-ui/util/i18n'
+
+export type DateRange = { start?: Date; end?: Date }
+export type TimestampRange = { start?: number; end?: number }
 
 @Injectable({
   providedIn: 'root',
@@ -213,7 +217,10 @@ export class ElasticsearchService {
     return this.metadataLang === 'current'
   }
 
-  private filtersToQueryString(filters: FieldFilters): string {
+  // TODO: type this
+  private filtersToQuery(
+    filters: FieldFilters | FiltersAggregationParams | string
+  ): any[] {
     const makeQuery = (filter: FieldFilter): string => {
       if (typeof filter === 'string') {
         return filter
@@ -227,13 +234,67 @@ export class ElasticsearchService {
         })
         .join(' OR ')
     }
-    return Object.keys(filters)
+    const queryString = Object.keys(filters)
+      // .filter((fieldname) => !this.isDateRange(JSON.parse(filters[fieldname])))
+      .filter((fieldname) => fieldname !== 'changeDate') // TODO: make this generic
       .filter(
         (fieldname) =>
           filters[fieldname] && JSON.stringify(filters[fieldname]) !== '{}'
       )
       .map((fieldname) => `${fieldname}:(${makeQuery(filters[fieldname])})`)
       .join(' AND ')
+    const queryRange = Object.entries(filters)
+      // .filter(([key, value]) => this.isDateRange(JSON.parse(value)))
+      .filter(([key, value]) => key === 'changeDate') // TODO: make this generic
+      .map(([searchField, dateRange]) => {
+        console.log('dateRange', dateRange)
+        return {
+          searchField,
+          dateRange: this.parseUrlObject(dateRange[0]), // TODO: reading values on app load not working yet
+        } as unknown as {
+          searchField: string
+          dateRange: TimestampRange
+        }
+      })[0]
+    const queryParts = [
+      queryString && {
+        query_string: {
+          query: queryString,
+        },
+      },
+      queryRange &&
+        queryRange.dateRange && {
+          range: {
+            [queryRange.searchField]: {
+              gte: this.formatDate(queryRange.dateRange.start),
+              lte: this.formatDate(queryRange.dateRange.end),
+              format: 'yyyy-MM-dd',
+            },
+          },
+        },
+    ].filter(Boolean)
+    return queryParts.length > 0 ? queryParts : undefined
+  }
+
+  // TODO: move utility functions to right place
+  private isDateRange(filter: FieldFilter): boolean {
+    return typeof filter === 'object' && ('start' in filter || 'end' in filter)
+  }
+
+  private formatDate(timestamp: number): string {
+    const date = new Date(timestamp)
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    return `${year}-${month}-${day}`
+  }
+
+  private parseUrlObject(str: string): Record<string, unknown> {
+    try {
+      return JSON.parse(str)
+    } catch (e) {
+      return null
+    }
   }
 
   private buildPayloadQuery(
@@ -266,13 +327,9 @@ export class ElasticsearchService {
         },
       })
     }
-    const queryFilters = this.filtersToQueryString(fieldSearchFilters)
+    const queryFilters = this.filtersToQuery(fieldSearchFilters)
     if (queryFilters) {
-      filter.push({
-        query_string: {
-          query: queryFilters,
-        },
-      })
+      filter.push(...queryFilters)
     }
     if (uuids) {
       filter.push({
@@ -480,14 +537,7 @@ export class ElasticsearchService {
               const filter = aggregation.filters[curr]
               return {
                 ...prev,
-                [curr]: {
-                  query_string: {
-                    query:
-                      typeof filter === 'string'
-                        ? filter
-                        : this.filtersToQueryString(filter),
-                  },
-                },
+                [curr]: this.filtersToQuery(filter),
               }
             }, {}),
           }

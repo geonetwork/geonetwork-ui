@@ -10,7 +10,12 @@ import { catchError, filter, map, startWith } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FieldsService } from '../utils/service/fields.service'
-import { FieldAvailableValue, FieldValue } from '../utils/service/fields'
+import {
+  DateRange,
+  FieldAvailableValue,
+  FieldType,
+  FieldValue,
+} from '../utils/service/fields'
 
 @Component({
   selector: 'gn-ui-filter-dropdown',
@@ -22,6 +27,8 @@ export class FilterDropdownComponent implements OnInit {
   @Input() fieldName: string
   @Input() title: string
 
+  fieldType: FieldType
+  dateRange: DateRange
   choices$: Observable<Choice[]>
   selected$ = this.searchFacade.searchFilters$.pipe(
     switchMap((filters) =>
@@ -46,6 +53,7 @@ export class FilterDropdownComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.fieldType = this.fieldsService.getFieldType(this.fieldName)
     this.choices$ = this.fieldsService.getAvailableValues(this.fieldName).pipe(
       startWith([] as FieldAvailableValue[]),
       map((values) =>
@@ -56,5 +64,22 @@ export class FilterDropdownComponent implements OnInit {
       ),
       catchError(() => of([]))
     )
+  }
+
+  onStartDateChange(start: Date) {
+    this.dateRange = { ...this.dateRange, start }
+  }
+
+  onEndDateChange(end: Date) {
+    this.dateRange = { ...this.dateRange, end }
+    if (this.dateRange.start && this.dateRange.end) {
+      this.fieldsService
+        .buildFiltersFromFieldValues({
+          [this.fieldName]: this.dateRange,
+        })
+        .subscribe((filters) => {
+          return this.searchService.updateFilters(filters)
+        })
+    }
   }
 }

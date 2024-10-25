@@ -169,6 +169,13 @@ describe('ElasticsearchService', () => {
           Org: {
             world: true,
           },
+          someDate: {
+            start: new Date('2021-03-03'),
+          },
+          otherDate: {
+            start: new Date('2020-01-01'),
+            end: new Date('2020-12-31'),
+          },
           any: 'hello',
         },
         {},
@@ -185,6 +192,23 @@ describe('ElasticsearchService', () => {
             {
               query_string: {
                 query: 'Org:("world")',
+              },
+            },
+            {
+              range: {
+                someDate: {
+                  gte: '2021-03-03',
+                  format: 'yyyy-MM-dd',
+                },
+              },
+            },
+            {
+              range: {
+                otherDate: {
+                  gte: '2020-01-01',
+                  lte: '2020-12-31',
+                  format: 'yyyy-MM-dd',
+                },
               },
             },
             {

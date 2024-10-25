@@ -9,4 +9,8 @@ export enum ROUTE_PARAMS {
   PUBLISHER = 'publisher', // FIXME: this shouldn't be here as it is a search field
   PAGE = '_page',
 }
-export type SearchRouteParams = Record<string, string | string[] | number>
+export type TimestampRange = { start?: number; end?: number }
+export type SearchRouteParams = Record<
+  string,
+  string | string[] | number | TimestampRange
+>
