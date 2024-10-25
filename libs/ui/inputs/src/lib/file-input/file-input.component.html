@@ -24,16 +24,16 @@
       class="w-14 h-14 rounded-md bg-gray-50 grid"
       *ngIf="!isUploadInProgress"
     >
-      <mat-icon
+      <ng-icon
         *ngIf="!dragFilesOver"
-        class="material-symbols-outlined place-self-center text-primary"
-        >cloud_upload</mat-icon
-      >
-      <mat-icon
+        class="place-self-center text-primary"
+        name="iconoirCloudUpload"
+      ></ng-icon>
+      <ng-icon
         *ngIf="dragFilesOver"
-        class="material-symbols-outlined place-self-center text-primary"
-        >add_box</mat-icon
-      >
+        class="place-self-center text-primary"
+        name="iconoirFramePlusIn"
+      ></ng-icon>
     </div>
     <div
       *ngIf="isUploadInProgress"

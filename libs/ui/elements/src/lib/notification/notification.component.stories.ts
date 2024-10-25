@@ -5,15 +5,11 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { NotificationComponent } from './notification.component'
-import { MatIconModule } from '@angular/material/icon'
 
 export default {
   title: 'Elements/NotificationComponent',
   component: NotificationComponent,
   decorators: [
-    moduleMetadata({
-      imports: [MatIconModule],
-    }),
     componentWrapperDecorator(
       (story) => `
 <div class="border border-gray-300 p-2" style="width: 600px; resize: horizontal; overflow: auto">

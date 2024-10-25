@@ -16,7 +16,7 @@
         extraClass="absolute right-2 bottom-2 invisible group-hover:visible bg-background"
         (buttonClick)="handleDelete()"
       >
-        <mat-icon class="material-symbols-outlined">delete</mat-icon>
+        <ng-icon name="iconoirBin"></ng-icon>
       </gn-ui-button>
     </div>
     <gn-ui-text-input
@@ -28,9 +28,7 @@
     ></gn-ui-text-input>
     <div class="flex flex-row gap-2 mt-2">
       <gn-ui-button type="gray" (buttonClick)="handleDelete()">
-        <mat-icon class="material-symbols-outlined me-1 text-primary"
-          >delete</mat-icon
-        >
+        <ng-icon class="me-1 text-primary" name="iconoirBin"></ng-icon>
         {{ 'input.image.delete' | translate }}
       </gn-ui-button>
       <gn-ui-button
@@ -38,9 +36,7 @@
         type="gray"
         (buttonClick)="toggleAltTextInput()"
       >
-        <mat-icon class="material-symbols-outlined me-1 text-primary"
-          >add</mat-icon
-        >
+        <ng-icon name="iconoirPlus" class="me-1 text-primary"></ng-icon>
         {{ 'input.image.displayAltTextInput' | translate }}
       </gn-ui-button>
     </div>
@@ -69,16 +65,16 @@
         class="w-14 h-14 rounded-md bg-gray-50 grid"
         *ngIf="!isUploadInProgress && !uploadError"
       >
-        <mat-icon
+        <ng-icon
           *ngIf="!dragFilesOver"
-          class="material-symbols-outlined place-self-center text-primary"
-          >image</mat-icon
-        >
-        <mat-icon
+          class="place-self-center text-primary"
+          name="iconoirMediaImage"
+        ></ng-icon>
+        <ng-icon
           *ngIf="dragFilesOver"
-          class="material-symbols-outlined place-self-center text-primary"
-          >add_box</mat-icon
-        >
+          class="place-self-center text-primary"
+          name="iconoirFramePlusIn"
+        ></ng-icon>
       </div>
 
       <div
@@ -105,10 +101,10 @@
       </div>
 
       <div class="w-14 h-14 rounded-md bg-gray-50 grid" *ngIf="uploadError">
-        <mat-icon
-          class="material-symbols-outlined place-self-center text-rose-500"
-          >broken_image</mat-icon
-        >
+        <ng-icon
+          name="iconoirMediaImageXmark"
+          class="place-self-center text-rose-500"
+        ></ng-icon>
       </div>
 
       <div class="flex flex-col items-center gap-1">
@@ -136,9 +132,7 @@
 
     <div *ngIf="!showUrlInput" class="flex-none mt-2">
       <gn-ui-button (buttonClick)="displayUrlInput()" type="gray">
-        <mat-icon class="material-symbols-outlined me-1 text-primary"
-          >link</mat-icon
-        >
+        <ng-icon class="me-1 text-primary" name="iconoirLink"></ng-icon>
         {{ 'input.image.displayUrlInput' | translate }}
       </gn-ui-button>
     </div>

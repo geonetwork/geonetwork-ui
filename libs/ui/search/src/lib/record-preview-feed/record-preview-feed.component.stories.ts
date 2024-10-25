@@ -14,26 +14,37 @@ import { TranslateModule } from '@ngx-translate/core'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MatIconModule } from '@angular/material/icon'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { matStar } from '@ng-icons/material-icons/baseline'
 
 export default {
   title: 'Search/RecordPreviewFeedComponent',
   component: RecordPreviewFeedComponent,
   decorators: [
     moduleMetadata({
-      declarations: [ThumbnailComponent],
       imports: [
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
         UiDatavizModule,
-        MatIconModule,
         UtilSharedModule,
+        NgIconComponent,
+        ThumbnailComponent,
       ],
     }),
     applicationConfig({
       providers: [
         importProvidersFrom(HttpClientModule, BrowserAnimationsModule),
+        provideIcons({
+          matStar,
+        }),
+        provideNgIconsConfig({
+          size: '0.9em',
+        }),
       ],
     }),
   ],
@@ -48,7 +59,7 @@ export const Primary: StoryObj<RecordPreviewFeedTemplate> = {
     record: datasetRecordsFixture()[0] as CatalogRecord,
     linkTarget: '_blank',
     favoriteTemplateString: `<a href title="Mark '{{record.title}}' as favorite">
-    1234 <mat-icon class="material-symbols-outlined align-middle">star</mat-icon>
+    1234 <ng-icon name="matStar" class="align-middle"></ng-icon>
   </a>`,
   },
   render: (args) => ({

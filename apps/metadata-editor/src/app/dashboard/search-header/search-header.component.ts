@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core'
-import { MatIconModule } from '@angular/material/icon'
 import { LetDirective } from '@ngrx/component'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
@@ -17,7 +16,6 @@ import { Router } from '@angular/router'
   standalone: true,
   imports: [
     FeatureSearchModule,
-    MatIconModule,
     CommonModule,
     LetDirective,
     UiElementsModule,

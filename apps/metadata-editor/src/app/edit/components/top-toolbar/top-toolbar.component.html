@@ -4,21 +4,21 @@
     disabled="true"
     [title]="'editor.temporary.disabled' | translate"
   >
-    <mat-icon class="material-symbols-outlined">side_navigation</mat-icon>
+    <ng-icon name="iconoirSidebarCollapse"></ng-icon>
   </gn-ui-button>
   <gn-ui-button
     type="light"
     disabled="true"
     [title]="'editor.temporary.disabled' | translate"
   >
-    <mat-icon class="material-symbols-outlined">lightbulb</mat-icon>
+    <ng-icon name="iconoirLightBulb"></ng-icon>
   </gn-ui-button>
   <gn-ui-button
     type="light"
     disabled="true"
     [title]="'editor.temporary.disabled' | translate"
   >
-    <mat-icon class="material-symbols-outlined">download</mat-icon>
+    <ng-icon name="iconoirDownload"></ng-icon>
   </gn-ui-button>
   <ng-container *ngrxLet="saveStatus$ as saveStatus">
     <gn-ui-button
@@ -33,7 +33,7 @@
       "
       data-cy="undo-button"
     >
-      <mat-icon class="material-symbols-outlined">undo</mat-icon>
+      <ng-icon name="iconoirUndoAction"></ng-icon>
     </gn-ui-button>
   </ng-container>
   <div
@@ -43,25 +43,15 @@
     [ngSwitch]="saveStatus$ | async"
   >
     <ng-container *ngSwitchCase="'draft_only'">
-      <mat-icon
-        class="material-symbols-outlined text-slate-400"
-        style="font-variation-settings: 'FILL' 1"
-        >check_circle</mat-icon
-      >
+      <ng-icon class="text-slate-400" name="iconoirCheckCircle"></ng-icon>
       <span translate>editor.record.saveStatus.asDraftOnly</span>
     </ng-container>
     <ng-container *ngSwitchCase="'record_up_to_date'">
-      <mat-icon
-        class="material-symbols-outlined text-lime-400"
-        style="font-variation-settings: 'FILL' 1"
-        >check_circle</mat-icon
-      >
+      <ng-icon class="text-lime-400" name="iconoirCheckCircle"></ng-icon>
       <span translate>editor.record.saveStatus.recordUpToDate</span>
     </ng-container>
     <ng-container *ngSwitchCase="'draft_changes_pending'">
-      <mat-icon class="material-symbols-outlined text-sky-300"
-        >pending</mat-icon
-      >
+      <ng-icon class="text-sky-300" name="matPendingOutline"></ng-icon>
       <span translate>editor.record.saveStatus.draftWithChangesPending</span>
     </ng-container>
   </div>
@@ -70,14 +60,14 @@
     disabled="true"
     [title]="'editor.temporary.disabled' | translate"
   >
-    <mat-icon class="material-symbols-outlined">help</mat-icon>
+    <ng-icon name="matHelpOutlineOutline"></ng-icon>
   </gn-ui-button>
   <gn-ui-button
     type="light"
     disabled="true"
     [title]="'editor.temporary.disabled' | translate"
   >
-    <mat-icon class="material-symbols-outlined">verified</mat-icon>
+    <ng-icon name="iconoirBadgeCheck"></ng-icon>
   </gn-ui-button>
   <md-editor-publish-button></md-editor-publish-button>
 </div>

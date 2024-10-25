@@ -6,11 +6,16 @@ import {
   ViewChild,
 } from '@angular/core'
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
-import { MatIconModule } from '@angular/material/icon'
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu'
 import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { matMoreVert } from '@ng-icons/material-icons/baseline'
 
 @Component({
   selector: 'gn-ui-action-menu',
@@ -18,13 +23,14 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
   styleUrls: ['./action-menu.component.css'],
   standalone: true,
   imports: [
-    MatIconModule,
     ButtonComponent,
     MatMenuModule,
     MatDialogModule,
     ConfirmationDialogComponent,
     TranslateModule,
+    NgIconComponent,
   ],
+  providers: [provideIcons({ matMoreVert })],
 })
 export class ActionMenuComponent {
   @Input() canDuplicate: boolean

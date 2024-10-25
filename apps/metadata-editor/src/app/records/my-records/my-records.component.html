@@ -52,16 +52,16 @@
       data-test="import-record"
     >
       <span translate>dashboard.importRecord</span>
-      <mat-icon
+      <ng-icon
         *ngIf="!isImportMenuOpen"
-        class="material-symbols-outlined text-primary"
-        >keyboard_arrow_down</mat-icon
-      >
-      <mat-icon
+        class="text-primary"
+        name="iconoirNavArrowDown"
+      ></ng-icon>
+      <ng-icon
         *ngIf="isImportMenuOpen"
-        class="material-symbols-outlined text-primary"
-        >keyboard_arrow_up</mat-icon
-      >
+        class="text-primary"
+        name="iconoirNavArrowUp"
+      ></ng-icon>
     </gn-ui-button>
     <ng-template #template>
       <gn-ui-import-record
@@ -73,7 +73,7 @@
       type="primary"
       data-cy="create-record"
     >
-      <mat-icon class="material-symbols-outlined mr-2">edit_document</mat-icon>
+      <ng-icon class="mr-2" name="iconoirPagePlus"></ng-icon>
       <span translate>dashboard.createRecord</span>
     </gn-ui-button>
   </div>

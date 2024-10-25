@@ -1,12 +1,24 @@
-import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
+import {
+  Meta,
+  moduleMetadata,
+  StoryObj,
+  applicationConfig,
+} from '@storybook/angular'
 import { ButtonComponent } from './button.component'
 import { TranslateModule } from '@ngx-translate/core'
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
-import { MatIconModule } from '@angular/material/icon'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
+import {
+  matDownloading,
+  matPestControl,
+  matWaves,
+  matTravelExplore,
+  matFitScreen,
+} from '@ng-icons/material-icons/baseline'
 
 export default {
   title: 'Inputs/ButtonComponent',
@@ -16,8 +28,19 @@ export default {
       imports: [
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        MatIconModule,
         MatProgressSpinnerModule,
+        NgIconComponent,
+      ],
+    }),
+    applicationConfig({
+      providers: [
+        provideIcons({
+          matDownloading,
+          matPestControl,
+          matWaves,
+          matTravelExplore,
+          matFitScreen,
+        }),
       ],
     }),
   ],
@@ -53,22 +76,22 @@ export const Primary: StoryObj<ButtonComponentWithContent> = {
     {{ content }}
   </gn-ui-button>
   <gn-ui-button [type]="type" [disabled]="disabled" [extraClass]="extraClass">
-    with an icon&nbsp;<mat-icon class="material-symbols-outlined">downloading</mat-icon>
+    with an icon&nbsp;<ng-icon name="matDownloading"></ng-icon>
   </gn-ui-button>
   <gn-ui-button [type]="type" [disabled]="disabled"
     [style.--gn-ui-button-font-size]='"1.5em"'
     [extraClass]="extraClass">
-    <mat-icon class='material-symbols-outlined'>globe_asia</mat-icon>&nbsp;bigger (with variable)
+    <ng-icon name="matTravelExplore"></ng-icon>&nbsp;bigger (with variable)
   </gn-ui-button>
   <gn-ui-button [type]="type" [disabled]="disabled"
     [style.font-size]='"0.7em"'
     [extraClass]="extraClass">
-    <mat-icon class='material-symbols-outlined'>pest_control</mat-icon>&nbsp;smaller (with css)
+    <ng-icon name="matPestControl"></ng-icon>&nbsp;smaller (with css)
   </gn-ui-button>
   <gn-ui-button [type]="type" [disabled]="disabled"
     [style.--gn-ui-button-padding]='"0.5em 3em"'
     [extraClass]="extraClass">
-    different&nbsp;<mat-icon class="material-symbols-outlined">waves</mat-icon>&nbsp;shape
+    different&nbsp;<ng-icon name="matWaves"></ng-icon>&nbsp;shape
   </gn-ui-button>
   <gn-ui-button [type]="type" [disabled]="disabled"
     [style.--gn-ui-button-rounded]='"10px"'
@@ -79,7 +102,7 @@ export const Primary: StoryObj<ButtonComponentWithContent> = {
     <gn-ui-button [type]="type" [disabled]="disabled"
       [style.--gn-ui-button-width]='"100%"' [style.--gn-ui-button-height]='"100%"'
       [extraClass]="extraClass">
-      <mat-icon class="material-symbols-outlined">fit_screen</mat-icon>&nbsp;resize it
+      <ng-icon name="matFitScreen"></ng-icon>&nbsp;resize it
     </gn-ui-button>
   </div>
   <gn-ui-button [type]="type" [disabled]="disabled" [extraClass]="extraClass">

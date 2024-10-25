@@ -11,7 +11,7 @@
   <div
     class="absolute inset-y-0 left-0 pl-2.5 flex items-center peer-hover:text-primary peer-focus:text-primary"
   >
-    <mat-icon class="material-symbols-outlined">search</mat-icon>
+    <ng-icon name="matSearch"></ng-icon>
   </div>
   <button
     *ngIf="rawChange | async"
@@ -20,6 +20,6 @@
     aria-label="Clear"
     (click)="clear()"
   >
-    <mat-icon class="material-symbols-outlined align-middle">close</mat-icon>
+    <ng-icon name="matClose" class="align-middle"></ng-icon>
   </button>
 </div>

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core'
 import { CommonModule, NgOptimizedImage } from '@angular/common'
 import { RouterModule } from '@angular/router'
-import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { MetadataInfoComponent } from './metadata-info/metadata-info.component'
@@ -35,11 +34,32 @@ import { MarkdownParserComponent } from './markdown-parser/markdown-parser.compo
 import { ImageOverlayPreviewComponent } from './image-overlay-preview/image-overlay-preview.component'
 import { UserFeedbackItemComponent } from './user-feedback-item/user-feedback-item.component'
 import { TimeSincePipe } from './user-feedback-item/time-since.pipe'
+import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
+import {
+  matMailOutline,
+  matMoreHoriz,
+  matOpenInNew,
+  matPersonOutline,
+  matFace,
+  matQuestionMark,
+  matMoodBad,
+  matZoomOutMap,
+  matCheck,
+  matWarningAmber,
+  matChevronLeft,
+  matChevronRight,
+} from '@ng-icons/material-icons/baseline'
+import {
+  matCallOutline,
+  matLocationOnOutline,
+  matCloudDownloadOutline,
+  matComputerOutline,
+} from '@ng-icons/material-icons/outline'
+import { iconoirNavArrowRight, iconoirNavArrowLeft } from '@ng-icons/iconoir'
 
 @NgModule({
   imports: [
     CommonModule,
-    MatIconModule,
     MatTooltipModule,
     UiWidgetsModule,
     UiLayoutModule,
@@ -56,6 +76,32 @@ import { TimeSincePipe } from './user-feedback-item/time-since.pipe'
     BadgeComponent,
     MaxLinesComponent,
     TextInputComponent,
+    // FIXME: these imports are required by non-standalone components and should be removed once all components have been made standalone
+    NgIconsModule.withIcons({
+      matMoreHoriz,
+      matOpenInNew,
+      matMailOutline,
+      matCallOutline,
+      matPersonOutline,
+      matLocationOnOutline,
+      matCloudDownloadOutline,
+      matComputerOutline,
+      matFace,
+      matQuestionMark,
+      matMoodBad,
+      matZoomOutMap,
+      matCheck,
+      matWarningAmber,
+      iconoirNavArrowRight,
+      iconoirNavArrowLeft,
+      matChevronLeft,
+      matChevronRight,
+    }),
+  ],
+  providers: [
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
   ],
   declarations: [
     MetadataInfoComponent,

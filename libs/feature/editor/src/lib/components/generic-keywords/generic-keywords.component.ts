@@ -16,8 +16,13 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { map } from 'rxjs'
 import { Keyword } from '@geonetwork-ui/common/domain/model/record'
 import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
-import { MatIconModule } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { matWarningAmberOutline } from '@ng-icons/material-icons/outline'
 
 type AutocompleteItem = { title: string; value: Keyword }
 
@@ -33,8 +38,13 @@ type AutocompleteItem = { title: string; value: Keyword }
     CommonModule,
     UiWidgetsModule,
     AutocompleteComponent,
-    MatIconModule,
     TranslateModule,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({
+      matWarningAmberOutline,
+    }),
   ],
 })
 export class GenericKeywordsComponent {

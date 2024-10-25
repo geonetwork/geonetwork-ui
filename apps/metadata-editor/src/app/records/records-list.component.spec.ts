@@ -7,7 +7,6 @@ import { By } from '@angular/platform-browser'
 import { Router } from '@angular/router'
 import { BehaviorSubject } from 'rxjs'
 import { CommonModule } from '@angular/common'
-import { MatIconModule } from '@angular/material/icon'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 
 const results = [{ md: true }]
@@ -89,7 +88,6 @@ describe('RecordsListComponent', () => {
       set: {
         imports: [
           CommonModule,
-          MatIconModule,
           ResultsTableContainerComponent,
           PaginationButtonsComponent,
           RecordsCountComponent,

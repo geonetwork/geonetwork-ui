@@ -13,8 +13,9 @@ import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 import { HttpClientModule } from '@angular/common/http'
-import { MatIconModule } from '@angular/material/icon'
 import { RecordFieldObjectComponent } from './components/record-field-object/record-field-object.component'
+import { matDeleteForeverSharp } from '@ng-icons/material-icons/sharp'
+import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
 
 @NgModule({
   declarations: [
@@ -33,9 +34,16 @@ import { RecordFieldObjectComponent } from './components/record-field-object/rec
     UiInputsModule,
     HttpClientModule,
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-    MatIconModule,
+    // FIXME: these imports are required by non-standalone components and should be removed once all components have been made standalone
+    NgIconsModule.withIcons({
+      matDeleteForeverSharp,
+    }),
   ],
-  providers: [],
+  providers: [
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
+  ],
   bootstrap: [AppComponent],
   exports: [RecordFormComponent],
 })

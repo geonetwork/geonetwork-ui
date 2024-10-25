@@ -1,7 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
-import { MatIconModule } from '@angular/material/icon'
 import { CommonModule } from '@angular/common'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { matOpenInNew } from '@ng-icons/material-icons/baseline'
 
 @Component({
   selector: 'gn-ui-link-card',
@@ -9,7 +14,13 @@ import { CommonModule } from '@angular/common'
   styleUrls: ['./link-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, NgIconComponent],
+  providers: [
+    provideIcons({
+      matOpenInNew,
+    }),
+    provideNgIconsConfig({ size: '1.5em' }),
+  ],
 })
 export class LinkCardComponent {
   @Input() link: DatasetOnlineResource

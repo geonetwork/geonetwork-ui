@@ -19,7 +19,6 @@ import {
   ButtonComponent,
   PreviousNextButtonsComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { MatIconModule } from '@angular/material/icon'
 import {
   BlockListComponent,
   CarouselComponent,
@@ -96,7 +95,6 @@ describe('OrganizationDetailsComponent', () => {
         AsyncPipe,
         NgIf,
         ButtonComponent,
-        MatIconModule,
         TranslateModule,
         CarouselComponent,
         BlockListComponent,

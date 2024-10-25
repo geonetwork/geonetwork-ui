@@ -3,7 +3,7 @@
     class="absolute inset-y-[--icon-padding] left-[--icon-padding] w-[--icon-width] pointer-events-none"
     *ngIf="!allowSubmit"
   >
-    <mat-icon class="material-symbols-outlined text-primary"> search </mat-icon>
+    <ng-icon name="iconoirSearch" class="text-primary search"></ng-icon>
   </div>
   <input
     #searchInput
@@ -29,7 +29,7 @@
     aria-label="Clear"
     (buttonClick)="clear()"
   >
-    <mat-icon class="material-symbols-outlined">close</mat-icon>
+    <ng-icon name="matClose"></ng-icon>
   </gn-ui-button>
   <gn-ui-button
     type="light"
@@ -39,13 +39,13 @@
     data-test="autocomplete-submit-btn"
     (buttonClick)="handleClickSearch()"
   >
-    <mat-icon class="material-symbols-outlined">search</mat-icon>
+    <ng-icon name="iconoirSearch"></ng-icon>
   </gn-ui-button>
 
   <gn-ui-popup-alert
     *ngIf="error"
     class="absolute mt-2 w-full top-[100%] left-0"
-    icon="error_outline"
+    icon="matErrorOutlineOutline"
     position="top"
     type="warning"
   >

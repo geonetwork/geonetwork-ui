@@ -23,10 +23,11 @@
     <div class="grow font-medium truncate py-1 mr-2 text-left">
       {{ getChoiceLabel() | translate }}
     </div>
-    <mat-icon class="material-symbols-outlined shrink-0 opacity-40">
-      <ng-container *ngIf="overlayOpen">expand_less</ng-container>
-      <ng-container *ngIf="!overlayOpen">expand_more</ng-container>
-    </mat-icon>
+    <ng-icon
+      [name]="overlayOpen ? 'matExpandLess' : 'matExpandMore'"
+      class="shrink-0 opacity-40"
+    >
+    </ng-icon>
   </gn-ui-button>
 </div>
 

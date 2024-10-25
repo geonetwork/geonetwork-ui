@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
-import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
@@ -11,6 +10,23 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { combineLatest, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { PublishButtonComponent } from '../publish-button/publish-button.component'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import {
+  iconoirBadgeCheck,
+  iconoirCheckCircle,
+  iconoirDownload,
+  iconoirLightBulb,
+  iconoirSidebarCollapse,
+  iconoirUndoAction,
+} from '@ng-icons/iconoir'
+import {
+  matHelpOutlineOutline,
+  matPendingOutline,
+} from '@ng-icons/material-icons/outline'
 
 @Component({
   selector: 'md-editor-top-toolbar',
@@ -20,10 +36,25 @@ import { PublishButtonComponent } from '../publish-button/publish-button.compone
     PublishButtonComponent,
     ButtonComponent,
     LetDirective,
-    MatIconModule,
     MatTooltipModule,
     MatDialogModule,
     TranslateModule,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({
+      iconoirCheckCircle,
+      matPendingOutline,
+      iconoirSidebarCollapse,
+      iconoirLightBulb,
+      iconoirDownload,
+      iconoirUndoAction,
+      iconoirBadgeCheck,
+      matHelpOutlineOutline,
+    }),
+    provideNgIconsConfig({
+      size: '1.5rem',
+    }),
   ],
   templateUrl: './top-toolbar.component.html',
   styleUrls: ['./top-toolbar.component.css'],

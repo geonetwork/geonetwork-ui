@@ -15,7 +15,6 @@ import {
   ButtonComponent,
   PreviousNextButtonsComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { MatIconModule } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
 import {
   BlockListComponent,
@@ -55,7 +54,6 @@ import { startWith } from 'rxjs/operators'
     AsyncPipe,
     NgIf,
     ButtonComponent,
-    MatIconModule,
     TranslateModule,
     CarouselComponent,
     BlockListComponent,

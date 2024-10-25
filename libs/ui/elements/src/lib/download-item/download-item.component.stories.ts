@@ -9,14 +9,12 @@ import { DownloadItemComponent } from './download-item.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { TranslateModule } from '@ngx-translate/core'
 import { importProvidersFrom } from '@angular/core'
-import { MatIcon } from '@angular/material/icon'
 
 export default {
   title: 'Elements/DownloadsListItemComponent',
   component: DownloadItemComponent,
   decorators: [
     moduleMetadata({
-      declarations: [MatIcon],
       imports: [TranslateModule.forRoot()],
     }),
     applicationConfig({

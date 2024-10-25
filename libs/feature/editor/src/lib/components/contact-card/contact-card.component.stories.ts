@@ -8,7 +8,6 @@ import {
 import { ContactCardComponent } from './contact-card.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
-import { MatIconModule } from '@angular/material/icon'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
@@ -17,12 +16,7 @@ export default {
   component: ContactCardComponent,
   decorators: [
     moduleMetadata({
-      imports: [
-        CommonModule,
-        MatIconModule,
-        ButtonComponent,
-        ContactCardComponent,
-      ],
+      imports: [CommonModule, ButtonComponent, ContactCardComponent],
     }),
     applicationConfig({
       providers: [importProvidersFrom(BrowserAnimationsModule)],

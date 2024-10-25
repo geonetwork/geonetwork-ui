@@ -36,10 +36,10 @@
             (click)="close()"
           >
             <span class="text-sm" translate>search.filters.minimize</span>
-            <mat-icon
-              class="material-symbols-outlined ml-1 align-middle leading-none"
-              >remove</mat-icon
-            >
+            <ng-icon
+              class="ml-1 align-middle leading-none"
+              name="matRemoveOutline"
+            ></ng-icon>
           </button>
         </span>
       </div>
@@ -82,9 +82,7 @@
         (buttonClick)="toggleMyRecordsFilter(false)"
       >
         <span>{{ 'search.filters.otherRecords' | translate }}</span>
-        <mat-icon class="material-symbols-outlined ml-3 opacity-40"
-          >close</mat-icon
-        >
+        <ng-icon class="ml-3 opacity-40" name="matCloseOutline"></ng-icon>
       </gn-ui-button>
     </div>
   </div>
@@ -108,7 +106,7 @@
         extraClass="!px-[8px]"
         data-cy="filters-expand"
       >
-        <mat-icon class="material-symbols-outlined">more_horiz</mat-icon>
+        <ng-icon name="matMoreHorizOutline"></ng-icon>
       </gn-ui-button>
       <button
         type="button"
@@ -118,10 +116,10 @@
         data-cy="filters-expand"
       >
         <span class="text-sm" translate>search.filters.maximize</span>
-        <mat-icon
-          class="material-symbols-outlined ml-1 align-middle leading-none"
-          >add</mat-icon
-        >
+        <ng-icon
+          class="ml-1 align-middle leading-none"
+          name="matAddOutline"
+        ></ng-icon>
       </button>
       <gn-ui-sort-by
         [ngClass]="isOpen ? 'block text-white mb-1' : 'hidden sm:block'"
@@ -137,10 +135,10 @@
         data-cy="filters-collapse"
       >
         <span class="text-sm" translate>search.filters.minimize</span>
-        <mat-icon
-          class="material-symbols-outlined ml-1 align-middle leading-none"
-          >remove</mat-icon
-        >
+        <ng-icon
+          class="ml-1 align-middle leading-none"
+          name="matRemoveOutline"
+        ></ng-icon>
       </button>
     </div>
   </div>

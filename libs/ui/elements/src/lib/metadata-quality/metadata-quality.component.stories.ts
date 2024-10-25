@@ -12,7 +12,6 @@ import {
   PopoverComponent,
   ProgressBarComponent,
 } from '@geonetwork-ui/ui/widgets'
-import { MatIconModule } from '@angular/material/icon'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export default {
@@ -23,7 +22,6 @@ export default {
       declarations: [ProgressBarComponent, MetadataQualityItemComponent],
       imports: [
         CommonModule,
-        MatIconModule,
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
         PopoverComponent,

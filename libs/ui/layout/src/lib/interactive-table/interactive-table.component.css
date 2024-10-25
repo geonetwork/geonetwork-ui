@@ -1,15 +1,11 @@
-.sort-button mat-icon {
-  padding: 0;
-  margin: 0;
-  height: 8px;
-  line-height: 8px;
-  font-size: 18px;
-}
-
 .table-header-cell {
   @apply text-gray-700 px-3 py-3 flex items-center truncate bg-white;
 }
 
 button.table-header-cell {
   @apply transition-colors duration-75 hover:text-main hover:bg-gray-50 focus:text-main focus:bg-gray-50;
+}
+
+ng-icon {
+  @apply w-4 h-4;
 }

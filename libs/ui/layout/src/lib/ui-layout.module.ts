@@ -5,10 +5,26 @@ import { ExpandablePanelComponent } from './expandable-panel/expandable-panel.co
 import { StickyHeaderComponent } from './sticky-header/sticky-header.component'
 import { AnchorLinkDirective } from './anchor-link/anchor-link.directive'
 import { ExpandablePanelButtonComponent } from './expandable-panel-button/expandable-panel-button.component'
-import { MatIconModule } from '@angular/material/icon'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import {
+  matExpandMore,
+  matExpandLess,
+  matAdd,
+  matRemove,
+} from '@ng-icons/material-icons/baseline'
 
 @NgModule({
-  imports: [CommonModule, MatIconModule, TranslateModule.forChild()],
+  imports: [CommonModule, TranslateModule.forChild(), NgIconComponent],
+  providers: [
+    provideIcons({ matExpandMore, matExpandLess, matRemove, matAdd }),
+    provideNgIconsConfig({
+      size: '0.9em',
+    }),
+  ],
   declarations: [
     ExpandablePanelComponent,
     StickyHeaderComponent,

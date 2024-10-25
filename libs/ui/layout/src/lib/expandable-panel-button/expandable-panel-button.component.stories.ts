@@ -8,18 +8,31 @@ import {
 import { ExpandablePanelButtonComponent } from './expandable-panel-button.component'
 import { UiLayoutModule } from '../ui-layout.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MatIconModule } from '@angular/material/icon'
 import { importProvidersFrom } from '@angular/core'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { matKey } from '@ng-icons/material-icons/baseline'
 
 export default {
   title: 'Layout/Expandable Panel Button',
   component: ExpandablePanelButtonComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiLayoutModule, MatIconModule],
+      imports: [UiLayoutModule, NgIconComponent],
     }),
     applicationConfig({
-      providers: [importProvidersFrom(BrowserAnimationsModule)],
+      providers: [
+        importProvidersFrom(BrowserAnimationsModule),
+        provideIcons({
+          matKey,
+        }),
+        provideNgIconsConfig({
+          size: '0.9em',
+        }),
+      ],
     }),
     componentWrapperDecorator(
       (story) => `
@@ -38,7 +51,7 @@ type ExpandablePanelButtonTemplate = ExpandablePanelButtonComponent & {
 export const Primary: StoryObj<ExpandablePanelButtonTemplate> = {
   args: {
     titleTemplateString:
-      "<mat-icon class='material-symbols-outlined mr-4'>key</mat-icon> Open this menu to find out more",
+      "<ng-icon name='matKey' class='mr-4'></ng-icon> Open this menu to find out more",
   },
   render: (args) => ({
     props: args,
