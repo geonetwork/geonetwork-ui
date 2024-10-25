@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { MapFacade } from '../+state/map.facade'
 import { firstValueFrom, map } from 'rxjs'
 import { MapContextLayer } from '@geospatial-sdk/core'
-import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
+import { ExpandablePanelButtonComponent } from '@geonetwork-ui/ui/layout'
 import { MatTabsModule } from '@angular/material/tabs'
 import { AddLayerFromOgcApiComponent } from '../add-layer-from-ogc-api/add-layer-from-ogc-api.component'
 import { AddLayerFromWfsComponent } from '../add-layer-from-wfs/add-layer-from-wfs.component'
@@ -29,7 +29,6 @@ import { matChevronRight } from '@ng-icons/material-icons/baseline'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    UiLayoutModule,
     MatTabsModule,
     AddLayerFromOgcApiComponent,
     AddLayerFromWfsComponent,
@@ -39,6 +38,7 @@ import { matChevronRight } from '@ng-icons/material-icons/baseline'
     TranslateModule,
     CommonModule,
     NgIconComponent,
+    ExpandablePanelButtonComponent,
   ],
   providers: [
     provideIcons({
