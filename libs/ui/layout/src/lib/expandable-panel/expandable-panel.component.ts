@@ -1,16 +1,22 @@
 import {
-  Component,
   ChangeDetectionStrategy,
+  Component,
+  ElementRef,
   Input,
   ViewChild,
-  ElementRef,
 } from '@angular/core'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { CommonModule } from '@angular/common'
+import { matAdd, matRemove } from '@ng-icons/material-icons/baseline'
 
 @Component({
   selector: 'gn-ui-expandable-panel',
   templateUrl: './expandable-panel.component.html',
   styleUrls: ['./expandable-panel.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, NgIcon],
+  viewProviders: [provideIcons({ matAdd, matRemove })],
 })
 export class ExpandablePanelComponent {
   @Input() title: string
