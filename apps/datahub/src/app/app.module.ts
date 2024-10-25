@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { Router, RouterModule } from '@angular/router'
 import {
   FeatureCatalogModule,
+  OrganisationsComponent,
   ORGANIZATION_PAGE_URL_TOKEN,
   ORGANIZATION_URL_TOKEN,
 } from '@geonetwork-ui/feature/catalog'
@@ -29,19 +30,11 @@ import {
   RECORD_URL_TOKEN,
 } from '@geonetwork-ui/feature/search'
 import {
-  LinkCardComponent,
   THUMBNAIL_PLACEHOLDER,
   UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
-import {
-  PreviousNextButtonsComponent,
-  UiInputsModule,
-} from '@geonetwork-ui/ui/inputs'
-import {
-  BlockListComponent,
-  CarouselComponent,
-  UiLayoutModule,
-} from '@geonetwork-ui/ui/layout'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import {
   getGlobalConfig,
@@ -74,14 +67,16 @@ import { NewsPageComponent } from './home/news-page/news-page.component'
 import { OrganisationsPageComponent } from './home/organisations-page/organisations-page.component'
 import { SearchPageComponent } from './home/search/search-page/search-page.component'
 import { SearchFiltersComponent } from './home/search/search-filters/search-filters.component'
-import { HeaderRecordComponent } from './record/header-record/header-record.component'
 import { NavigationBarComponent } from './record/navigation-bar/navigation-bar.component'
 import { RecordPageComponent } from './record/record-page/record-page.component'
 import { DatahubRouterService } from './router/datahub-router.service'
 import { NavigationMenuComponent } from './home/navigation-menu/navigation-menu.component'
 import { FormsModule } from '@angular/forms'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
-import { LANGUAGES_LIST, UiCatalogModule } from '@geonetwork-ui/ui/catalog'
+import {
+  LANGUAGES_LIST,
+  LanguageSwitcherComponent,
+} from '@geonetwork-ui/ui/catalog'
 import {
   LOGIN_URL,
   METADATA_LANGUAGE,
@@ -89,14 +84,8 @@ import {
   provideRepositoryUrl,
 } from '@geonetwork-ui/api/repository'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { RecordRelatedRecordsComponent } from './record/record-related-records/record-related-records.component'
-import { RecordMetadataComponent } from './record/record-metadata/record-metadata.component'
-import { RecordOtherlinksComponent } from './record/record-otherlinks/record-otherlinks.component'
-import { RecordDownloadsComponent } from './record/record-downloads/record-downloads.component'
-import { RecordApisComponent } from './record/record-apis/record-apis.component'
 import { MatTabsModule } from '@angular/material/tabs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
-import { RecordUserFeedbacksComponent } from './record/record-user-feedbacks/record-user-feedbacks.component'
 import { LetDirective } from '@ngrx/component'
 import { OrganizationPageComponent } from './organization/organization-page/organization-page.component'
 import {
@@ -105,16 +94,11 @@ import {
   MAP_VIEW_CONSTRAINTS,
 } from '@geonetwork-ui/ui/map'
 import {
-  matAccountBoxOutline,
   matAddOutline,
-  matCloseOutline,
-  matEditOutline,
   matExpandMoreOutline,
-  matLocationSearchingOutline,
   matMenuOutline,
   matMoreHorizOutline,
   matRemoveOutline,
-  matSendOutline,
   matStarOutline,
 } from '@ng-icons/material-icons/outline'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
@@ -128,8 +112,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     HomePageComponent,
     HomeHeaderComponent,
     HeaderBadgeButtonComponent,
-    HeaderRecordComponent,
-    RecordPageComponent,
     SearchFiltersComponent,
     NavigationBarComponent,
     NewsPageComponent,
@@ -138,12 +120,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     LastCreatedComponent,
     KeyFiguresComponent,
     NavigationMenuComponent,
-    RecordRelatedRecordsComponent,
-    RecordUserFeedbacksComponent,
-    RecordMetadataComponent,
-    RecordOtherlinksComponent,
-    RecordDownloadsComponent,
-    RecordApisComponent,
   ],
   imports: [
     BrowserModule,
@@ -182,29 +158,21 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     UiDatavizModule,
     FormsModule,
     UiInputsModule,
-    UiCatalogModule,
     MatTabsModule,
     UiWidgetsModule,
-    LinkCardComponent,
-    CarouselComponent,
-    BlockListComponent,
-    PreviousNextButtonsComponent,
     RecordMetaComponent,
     LetDirective,
     // FIXME: these imports are required by non-standalone components and should be removed once all components have been made standalone
     NgIconsModule.withIcons({
       matMenuOutline,
       matRemoveOutline,
-      matCloseOutline,
       matMoreHorizOutline,
       matAddOutline,
       matExpandMoreOutline,
-      matEditOutline,
-      matAccountBoxOutline,
       matStarOutline,
-      matLocationSearchingOutline,
-      matSendOutline,
     }),
+    OrganisationsComponent,
+    LanguageSwitcherComponent,
   ],
   providers: [
     provideNgIconsConfig({

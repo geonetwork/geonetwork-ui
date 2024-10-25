@@ -1,16 +1,39 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { SearchService } from '@geonetwork-ui/feature/search'
+import {
+  FavoriteStarComponent,
+  SearchService,
+} from '@geonetwork-ui/feature/search'
 import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { combineLatest, map } from 'rxjs'
-import { TranslateService } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import {
+  BadgeComponent,
+  NavigationButtonComponent,
+} from '@geonetwork-ui/ui/inputs'
+import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
+import { CommonModule } from '@angular/common'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
+import { matArrowBack } from '@ng-icons/material-icons/baseline'
 
 @Component({
   selector: 'datahub-header-record',
   templateUrl: './header-record.component.html',
   styleUrls: ['./header-record.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    NavigationButtonComponent,
+    LanguageSwitcherComponent,
+    TranslateModule,
+    FavoriteStarComponent,
+    BadgeComponent,
+    NgIcon,
+  ],
+  viewProviders: [provideIcons({ matLocationSearchingOutline, matArrowBack })],
 })
 export class HeaderRecordComponent {
   @Input() metadata: DatasetRecord

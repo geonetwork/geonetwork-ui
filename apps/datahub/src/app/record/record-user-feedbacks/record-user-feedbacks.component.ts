@@ -14,11 +14,24 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
-import { DropdownChoice } from '@geonetwork-ui/ui/inputs'
+import {
+  ButtonComponent,
+  DropdownChoice,
+  DropdownSelectorComponent,
+  TextAreaComponent,
+} from '@geonetwork-ui/ui/inputs'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { TranslateService } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { AuthService, Gn4PlatformMapper } from '@geonetwork-ui/api/repository'
-import { UserApiModel } from '@geonetwork-ui/data-access/gn4'
+import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import {
+  matAccountBoxOutline,
+  matEditOutline,
+  matSendOutline,
+} from '@ng-icons/material-icons/outline'
+import { CommonModule } from '@angular/common'
+import { UserFeedbackItemComponent } from '@geonetwork-ui/ui/elements'
 
 type UserFeedbackSortingFunction = (
   userFeedbackA: UserFeedback,
@@ -30,6 +43,24 @@ type UserFeedbackSortingFunction = (
   templateUrl: './record-user-feedbacks.component.html',
   styleUrls: ['./record-user-feedbacks.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    DropdownSelectorComponent,
+    SpinningLoaderComponent,
+    NgIcon,
+    ButtonComponent,
+    TextAreaComponent,
+    TranslateModule,
+    UserFeedbackItemComponent,
+  ],
+  viewProviders: [
+    provideIcons({
+      matEditOutline,
+      matSendOutline,
+      matAccountBoxOutline,
+    }),
+  ],
 })
 export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
   @Input() organisationName$: Observable<string>

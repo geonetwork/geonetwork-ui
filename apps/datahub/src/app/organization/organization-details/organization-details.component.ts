@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core'
-import { AsyncPipe, NgClass, NgForOf, NgIf } from '@angular/common'
+import { CommonModule } from '@angular/common'
 import {
   CatalogRecord,
   Organization,
@@ -23,8 +23,10 @@ import {
 } from '@geonetwork-ui/ui/layout'
 import { LetDirective } from '@ngrx/component'
 import {
+  ErrorComponent,
   ErrorType,
   LinkCardComponent,
+  RelatedRecordCardComponent,
   UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
@@ -41,7 +43,10 @@ import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { RouterLink } from '@angular/router'
 import { ROUTER_ROUTE_SEARCH } from '@geonetwork-ui/feature/router'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import {
+  SpinningLoaderComponent,
+  UiWidgetsModule,
+} from '@geonetwork-ui/ui/widgets'
 import { startWith } from 'rxjs/operators'
 
 @Component({
@@ -51,15 +56,13 @@ import { startWith } from 'rxjs/operators'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    AsyncPipe,
-    NgIf,
+    CommonModule,
     ButtonComponent,
     TranslateModule,
     CarouselComponent,
     BlockListComponent,
     LetDirective,
     LinkCardComponent,
-    NgForOf,
     PreviousNextButtonsComponent,
     UiElementsModule,
     UiSearchModule,
@@ -67,7 +70,9 @@ import { startWith } from 'rxjs/operators'
     UiDatavizModule,
     RouterLink,
     UiWidgetsModule,
-    NgClass,
+    ErrorComponent,
+    SpinningLoaderComponent,
+    RelatedRecordCardComponent,
   ],
 })
 export class OrganizationDetailsComponent implements OnInit, OnDestroy {
