@@ -196,7 +196,7 @@
   "editor.record.delete.confirmation.cancelText": "Annuler",
   "editor.record.delete.confirmation.confirmText": "Supprimer",
   "editor.record.delete.confirmation.message": "Êtes-vous sûr de vouloir supprimer cette fiche ?",
-  "editor.record.delete.confirmation.title": "Supprimer la fiche ?",
+  "editor.record.delete.confirmation.title": "Supprimer la fiche",
   "editor.record.deleteError.body": "La fiche n'a pas pu être supprimée :",
   "editor.record.deleteError.closeMessage": "Compris",
   "editor.record.deleteError.title": "Erreur lors de la suppression",
