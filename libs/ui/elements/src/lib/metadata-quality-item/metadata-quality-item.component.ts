@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { TranslateModule } from '@ngx-translate/core'
+import { matCheck, matWarningAmber } from '@ng-icons/material-icons/baseline'
 
 marker('record.metadata.quality.title.success')
 marker('record.metadata.quality.title.failed')
@@ -27,6 +30,9 @@ export interface MetadataQualityItem {
   selector: 'gn-ui-metadata-quality-item',
   templateUrl: './metadata-quality-item.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgIcon, TranslateModule],
+  viewProviders: [provideIcons({ matCheck, matWarningAmber })],
 })
 export class MetadataQualityItemComponent implements MetadataQualityItem {
   @Input() name: string

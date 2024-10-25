@@ -1,4 +1,13 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { CommonModule } from '@angular/common'
+import {
+  matFace,
+  matMoodBad,
+  matQuestionMark,
+} from '@ng-icons/material-icons/baseline'
+import { matComputerOutline } from '@ng-icons/material-icons/outline'
+import { TranslateModule } from '@ngx-translate/core'
 
 export enum ErrorType {
   COULD_NOT_REACH_API,
@@ -14,6 +23,16 @@ export enum ErrorType {
   templateUrl: './error.component.html',
   styleUrls: ['./error.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, NgIcon, TranslateModule],
+  viewProviders: [
+    provideIcons({
+      matFace,
+      matQuestionMark,
+      matMoodBad,
+      matComputerOutline,
+    }),
+  ],
 })
 export class ErrorComponent {
   @Input() type!: ErrorType

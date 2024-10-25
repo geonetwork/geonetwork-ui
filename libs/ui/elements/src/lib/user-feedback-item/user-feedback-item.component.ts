@@ -11,12 +11,34 @@ import {
   UserFeedbackViewModel,
 } from '@geonetwork-ui/common/domain/model/record'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
+import { TimeSincePipe } from './time-since.pipe'
+import { CommonModule } from '@angular/common'
+import { ButtonComponent, TextAreaComponent } from '@geonetwork-ui/ui/inputs'
+import { TranslateModule } from '@ngx-translate/core'
+import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { matSendOutline } from '@ng-icons/material-icons/outline'
 
 @Component({
   selector: 'gn-ui-user-feedback-item',
   templateUrl: './user-feedback-item.component.html',
   styleUrls: ['./user-feedback-item.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    TimeSincePipe,
+    TextAreaComponent,
+    TranslateModule,
+    ButtonComponent,
+    SpinningLoaderComponent,
+    NgIcon,
+  ],
+  viewProviders: [
+    provideIcons({
+      matSendOutline,
+    }),
+  ],
 })
 export class UserFeedbackItemComponent implements OnInit {
   @Input() userFeedbackParent: UserFeedbackViewModel

@@ -8,10 +8,7 @@ import {
 } from '@geonetwork-ui/util/i18n'
 import { TranslateModule } from '@ngx-translate/core'
 import { MetadataQualityItemComponent } from '../metadata-quality-item/metadata-quality-item.component'
-import {
-  PopoverComponent,
-  ProgressBarComponent,
-} from '@geonetwork-ui/ui/widgets'
+import { PopoverComponent } from '@geonetwork-ui/ui/widgets'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { By } from '@angular/platform-browser'
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
@@ -35,12 +32,8 @@ describe('MetadataQualityComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      declarations: [
-        MetadataQualityComponent,
-        MetadataQualityItemComponent,
-        ProgressBarComponent,
-      ],
       imports: [
+        MetadataQualityComponent,
         UtilSharedModule,
         CommonModule,
         UtilI18nModule,

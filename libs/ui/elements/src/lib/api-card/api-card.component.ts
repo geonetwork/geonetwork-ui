@@ -9,12 +9,33 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { CopyTextButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { TranslateModule } from '@ngx-translate/core'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { matMoreHoriz } from '@ng-icons/material-icons/baseline'
+import { MatButtonModule } from '@angular/material/button'
 
 @Component({
   selector: 'gn-ui-api-card',
   templateUrl: './api-card.component.html',
   styleUrls: ['./api-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    CopyTextButtonComponent,
+    TranslateModule,
+    MatTooltipModule,
+    NgIcon,
+    MatButtonModule,
+  ],
+  viewProviders: [
+    provideIcons({
+      matMoreHoriz,
+    }),
+  ],
 })
 export class ApiCardComponent implements OnInit, OnChanges {
   @Input() link: DatasetServiceDistribution

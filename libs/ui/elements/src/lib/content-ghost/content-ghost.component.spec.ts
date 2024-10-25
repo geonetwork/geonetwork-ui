@@ -8,7 +8,7 @@ describe('ContentGhostComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ContentGhostComponent],
+      imports: [ContentGhostComponent],
     }).compileComponents()
   })
 

@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
-import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
 import { MetadataInfoComponent } from './metadata-info.component'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { TranslateTestingModule } from 'ngx-translate-testing'
@@ -26,8 +25,8 @@ describe('MetadataInfoComponent', () => {
         })
           .withDefaultLanguage('en')
           .withCompiler(new TranslateMessageFormatCompiler()),
+        MetadataInfoComponent,
       ],
-      declarations: [MetadataInfoComponent, ContentGhostComponent],
     }).compileComponents()
   })
 

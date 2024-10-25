@@ -10,12 +10,36 @@ import {
   Individual,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
+import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import {
+  matMailOutline,
+  matOpenInNew,
+  matPersonOutline,
+} from '@ng-icons/material-icons/baseline'
+import {
+  matCallOutline,
+  matLocationOnOutline,
+} from '@ng-icons/material-icons/outline'
+import { CommonModule } from '@angular/common'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-metadata-contact',
   templateUrl: './metadata-contact.component.html',
   styleUrls: ['./metadata-contact.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, ThumbnailComponent, NgIcon, TranslateModule],
+  viewProviders: [
+    provideIcons({
+      matOpenInNew,
+      matCallOutline,
+      matMailOutline,
+      matPersonOutline,
+      matLocationOnOutline,
+    }),
+  ],
 })
 export class MetadataContactComponent {
   @Input() metadata: Partial<CatalogRecord>
