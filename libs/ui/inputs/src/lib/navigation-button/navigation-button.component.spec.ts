@@ -8,7 +8,7 @@ describe('NavigationButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NavigationButtonComponent],
+      imports: [NavigationButtonComponent],
     }).compileComponents()
   })
 
