@@ -33,7 +33,6 @@ import {
   MapStateContainerComponent,
 } from '@geonetwork-ui/feature/map'
 import { GnDatasetViewChartComponent } from './components/gn-dataset-view-chart/gn-dataset-view-chart.component'
-import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
 import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { provideGn4 } from '@geonetwork-ui/api/repository'
@@ -89,7 +88,6 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
         useClass: EmbeddedTranslateLoader,
       },
     }),
-    FeatureDatavizModule,
     FeatureAuthModule,
     BrowserAnimationsModule,
     MapStateContainerComponent,

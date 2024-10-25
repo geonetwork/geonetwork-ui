@@ -1,25 +1,17 @@
-import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import {
   someFigureItemFixture,
   someHabFigureItemFixture,
 } from '../figure.fixtures'
 import { FigureContainerComponent } from './figure-container.component'
+import { MockBuilder } from 'ng-mocks'
+import { FigureService } from '../figure.service'
 
 describe('FigureContainerComponent', () => {
   let component: FigureContainerComponent
   let fixture: ComponentFixture<FigureContainerComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [FigureContainerComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-    })
-      .overrideComponent(FigureContainerComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
-      })
-      .compileComponents()
-  })
+  beforeEach(() => MockBuilder(FigureContainerComponent).keep(FigureService))
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FigureContainerComponent)
@@ -34,14 +26,14 @@ describe('FigureContainerComponent', () => {
     beforeEach(() => {
       component.dataset = someFigureItemFixture()
       component.expression = 'average|age'
-      component.ngOnChanges(null)
+      component.ngOnChanges()
     })
     it('computes the average', () => {
       expect(component.figure).toEqual('26.67')
     })
     it('with correct digits', () => {
       component.digits = 3
-      component.ngOnChanges(null)
+      component.ngOnChanges()
       expect(component.figure).toEqual('26.667')
     })
   })
@@ -49,7 +41,7 @@ describe('FigureContainerComponent', () => {
     beforeEach(() => {
       component.dataset = someHabFigureItemFixture()
       component.expression = 'sum|pop'
-      component.ngOnChanges(null)
+      component.ngOnChanges()
     })
     it('computes the sum', () => {
       expect(component.figure).toEqual('159176260999')
@@ -59,7 +51,7 @@ describe('FigureContainerComponent', () => {
     beforeEach(() => {
       component.dataset = someHabFigureItemFixture()
       component.expression = 'sumfds--fdfdspop'
-      component.ngOnChanges(null)
+      component.ngOnChanges()
     })
     it('returns Nan', () => {
       expect(component.figure).toEqual('NaN')

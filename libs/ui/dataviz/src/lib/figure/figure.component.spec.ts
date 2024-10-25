@@ -50,7 +50,6 @@ describe('FigureComponent', () => {
     )
   })
   it('should render icon', () => {
-    console.log(compiled.querySelector('ng-icon'))
     const icon = compiled.querySelector('ng-icon') as HTMLElement
     expect(icon['name']).toContain('group')
   })

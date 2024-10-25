@@ -1,56 +1,14 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Input,
-  NO_ERRORS_SCHEMA,
-  Output,
-} from '@angular/core'
+import { ChangeDetectorRef } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 import { GeoTableViewComponent } from './geo-table-view.component'
-import { MapContext } from '@geospatial-sdk/core'
-import { Subject } from 'rxjs'
-import type { FeatureCollection } from 'geojson'
-
-@Component({
-  selector: 'gn-ui-map-container',
-  template: '<div></div>',
-})
-export class MockMapContainerComponent {
-  @Input() context: MapContext
-  @Output() featuresClick = new Subject()
-  openlayersMap = Promise.resolve({})
-}
-
-@Component({
-  selector: 'gn-ui-table',
-  template: '<div></div>',
-})
-export class MockTableComponent {
-  @Input() data: FeatureCollection
-  @Input() activeId: string
-  scrollToItem = jest.fn()
-}
+import { MockBuilder } from 'ng-mocks'
 
 describe('GeoTableViewComponent', () => {
   let component: GeoTableViewComponent
   let fixture: ComponentFixture<GeoTableViewComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [
-        GeoTableViewComponent,
-        MockMapContainerComponent,
-        MockTableComponent,
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-    })
-      .overrideComponent(GeoTableViewComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
-      })
-      .compileComponents()
-  })
+  beforeEach(() => MockBuilder(GeoTableViewComponent))
 
   beforeEach(() => {
     fixture = TestBed.createComponent(GeoTableViewComponent)
