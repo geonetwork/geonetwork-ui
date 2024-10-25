@@ -16,6 +16,7 @@
   border-radius: 4px;
   border-left: none;
   font-family: var(--font-family-main);
+  font-size: 14px !important;
 }
 
 .mat-button-toggle-appearance-standard.mat-button-toggle-checked {
