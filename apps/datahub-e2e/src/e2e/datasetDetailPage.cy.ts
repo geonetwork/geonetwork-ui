@@ -26,14 +26,14 @@ beforeEach(() => {
   )
   cy.intercept(
     'GET',
-    '/geoserver/insee/ows?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=application%2Fjson*',
+    '/geoserver/insee/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=application%2Fjson*',
     {
       fixture: 'insee-rectangles_200m_menage_erbm.json',
     }
   )
   cy.intercept(
     'GET',
-    '/geoserver/insee/ows?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=csv',
+    '/geoserver/insee/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=csv',
     {
       fixture: 'insee-rectangles_200m_menage_erbm.csv',
     }
@@ -489,7 +489,7 @@ describe('dataset pages', () => {
             .find('gn-ui-download-item')
             .first()
             .click()
-          cy.readFile(path.join('cypress/downloads', 'ows.csv')).as(
+          cy.readFile(path.join('cypress/downloads', 'wfs.csv')).as(
             'downloadedFile'
           )
           cy.get('@downloadedFile').should('exist')
