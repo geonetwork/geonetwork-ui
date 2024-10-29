@@ -109,12 +109,12 @@ import {
   matCloseOutline,
   matEditOutline,
   matExpandMoreOutline,
+  matLocationSearchingOutline,
   matMenuOutline,
   matMoreHorizOutline,
   matRemoveOutline,
-  matStarOutline,
-  matMyLocationOutline,
   matSendOutline,
+  matStarOutline,
 } from '@ng-icons/material-icons/outline'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
 
@@ -200,7 +200,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
       matEditOutline,
       matAccountBoxOutline,
       matStarOutline,
-      matMyLocationOutline,
+      matLocationSearchingOutline,
       matSendOutline,
     }),
   ],

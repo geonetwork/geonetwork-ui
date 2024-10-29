@@ -1,5 +1,8 @@
 <div class="mb-6 md-description sm:mb-4 sm:pr-16">
-  <gn-ui-content-ghost ghostClass="h-32" [showContent]="fieldReady('abstract')">
+  <gn-ui-content-ghost
+    ghostClass="h-[178px]"
+    [showContent]="fieldReady('abstract')"
+  >
     <gn-ui-max-lines [maxLines]="6" *ngIf="metadata.abstract">
       <div class="mb-6">
         <gn-ui-markdown-parser
@@ -7,10 +10,21 @@
         ></gn-ui-markdown-parser>
       </div>
     </gn-ui-max-lines>
+  </gn-ui-content-ghost>
+
+  <p
+    class="mt-6 mb-3 font-medium text-primary text-sm"
+    translate
+    *ngIf="!fieldReady('keywords') || metadata.keywords?.length"
+  >
+    record.metadata.keywords
+  </p>
+
+  <gn-ui-content-ghost
+    ghostClass="h-[31px] w-3/4"
+    [showContent]="fieldReady('keywords')"
+  >
     <div *ngIf="metadata.keywords?.length">
-      <p class="mt-6 mb-3 font-medium text-primary text-sm" translate>
-        record.metadata.keywords
-      </p>
       <div class="sm:pb-4 flex flex-wrap gap-2">
         <gn-ui-badge
           class="inline-block lowercase"
@@ -24,7 +38,15 @@
   </gn-ui-content-ghost>
 </div>
 
-<gn-ui-expandable-panel [title]="'record.metadata.usage' | translate">
+<gn-ui-expandable-panel
+  *ngIf="
+    metadata.licenses ||
+    metadata.legalConstraints ||
+    metadata.securityConstraints ||
+    metadata.otherConstraints
+  "
+  [title]="'record.metadata.usage' | translate"
+>
   <div class="flex flex-col gap-[10px] mr-4 py-[12px] rounded text-gray-900">
     <ng-container *ngFor="let license of licenses">
       <div *ngIf="license.url; else noUrl" class="text-primary">
