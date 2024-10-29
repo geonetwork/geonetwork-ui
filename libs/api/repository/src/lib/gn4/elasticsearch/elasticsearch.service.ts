@@ -235,8 +235,10 @@ export class ElasticsearchService {
         .join(' OR ')
     }
     const queryString = Object.keys(filters)
-      // .filter((fieldname) => !this.isDateRange(JSON.parse(filters[fieldname])))
-      .filter((fieldname) => fieldname !== 'changeDate') // TODO: make this generic
+      .filter(
+        (fieldname) =>
+          !this.isDateRange(this.parseUrlObject(filters[fieldname]))
+      )
       .filter(
         (fieldname) =>
           filters[fieldname] && JSON.stringify(filters[fieldname]) !== '{}'
@@ -244,8 +246,7 @@ export class ElasticsearchService {
       .map((fieldname) => `${fieldname}:(${makeQuery(filters[fieldname])})`)
       .join(' AND ')
     const queryRange = Object.entries(filters)
-      // .filter(([key, value]) => this.isDateRange(JSON.parse(value)))
-      .filter(([key, value]) => key === 'changeDate') // TODO: make this generic
+      .filter(([, value]) => this.isDateRange(this.parseUrlObject(value)))
       .map(([searchField, dateRange]) => {
         console.log('dateRange', dateRange)
         return {
@@ -278,6 +279,7 @@ export class ElasticsearchService {
 
   // TODO: move utility functions to right place
   private isDateRange(filter: FieldFilter): boolean {
+    if (!filter) return false
     return typeof filter === 'object' && ('start' in filter || 'end' in filter)
   }
 
@@ -290,11 +292,14 @@ export class ElasticsearchService {
   }
 
   private parseUrlObject(str: string): Record<string, unknown> {
-    try {
-      return JSON.parse(str)
-    } catch (e) {
-      return null
+    if (typeof str === 'string') {
+      try {
+        return JSON.parse(str)
+      } catch (e) {
+        return null
+      }
     }
+    return null
   }
 
   private buildPayloadQuery(
