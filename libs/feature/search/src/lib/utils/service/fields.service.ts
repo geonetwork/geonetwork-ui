@@ -11,7 +11,6 @@ import {
   OrganizationSearchField,
   OwnerSearchField,
   SimpleSearchField,
-  TimestampRange,
   TranslatedSearchField,
   UserSearchField,
 } from './fields'
@@ -107,7 +106,7 @@ export class FieldsService {
 
   private getFiltersForValues(
     fieldName: string,
-    values: FieldValue[] | DateRange
+    values: FieldValue[] | DateRange | string
   ) {
     return this.fields[fieldName].getFiltersForValues(values)
   }
@@ -120,7 +119,7 @@ export class FieldsService {
   }
 
   buildFiltersFromFieldValues(
-    fieldValues: FieldValues | DateRange
+    fieldValues: FieldValues | DateRange | string
   ): Observable<FieldFilters> {
     const fieldNames = Object.keys(fieldValues).filter((fieldName) =>
       this.supportedFields.includes(fieldName)
@@ -134,7 +133,7 @@ export class FieldsService {
           : [fieldValues[fieldName]] //TODO: handle stringified ranges which are not an object properly
       return this.getFiltersForValues(
         fieldName,
-        values as FieldValue[] | DateRange
+        values as FieldValue[] | DateRange | string
       )
     })
     return forkJoin(filtersByField$).pipe(
@@ -144,9 +143,7 @@ export class FieldsService {
     )
   }
 
-  readFieldValuesFromFilters(
-    filters: FieldFilters
-  ): Observable<FieldValues | TimestampRange> {
+  readFieldValuesFromFilters(filters: FieldFilters): Observable<FieldValues> {
     const fieldValues$ = this.supportedFields.map((fieldName) =>
       this.getValuesForFilters(fieldName, filters).pipe(
         map((values) => ({ [fieldName]: values }))

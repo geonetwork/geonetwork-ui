@@ -32,7 +32,7 @@ export interface FieldAvailableValue {
 export abstract class AbstractSearchField {
   abstract getAvailableValues(): Observable<FieldAvailableValue[] | DateRange[]>
   abstract getFiltersForValues(
-    values: FieldValue[] | DateRange
+    values: FieldValue[] | DateRange | string
   ): Observable<FieldFilters>
   abstract getValuesForFilter(
     filters: FieldFilters
@@ -83,7 +83,9 @@ export class SimpleSearchField implements AbstractSearchField {
       })
     )
   }
-  getFiltersForValues(values: FieldValue[] /*| DateRange*/): Observable<any> {
+  getFiltersForValues(
+    values: FieldValue[] | DateRange | string
+  ): Observable<any> {
     // FieldValue[]
     if (Array.isArray(values) && this.getType() === 'values') {
       return of({
