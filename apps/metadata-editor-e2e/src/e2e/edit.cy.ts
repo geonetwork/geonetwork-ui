@@ -691,28 +691,29 @@ describe('editor form', () => {
       })
     })
     describe('Access and constraints', () => {
-      describe('Open data switch', () => {
-        beforeEach(() => {
-          cy.get('@accessContactPageBtn').click()
-        })
-        describe('When the open data switch is unchecked', () => {
-          it('should display the licence form field', () => {
-            cy.get('gn-ui-form-field-license').should('be.visible')
-            cy.get('gn-ui-form-field-license')
-              .find('button')
-              .children('div')
-              .first()
-              .invoke('text')
-              .should('eq', ' Creative Commons CC-BY ')
-          })
-        })
-        describe('When the open data switch is checked', () => {
-          it('should not display the licence form field', () => {
-            cy.get('[data-cy="openDataToggle"]').click()
-            cy.get('gn-ui-form-field-license').should('not.exist')
-          })
-        })
-      })
+      // TEMPORARY - to be removed when the open data switch is back
+      // describe('Open data switch', () => {
+      //   beforeEach(() => {
+      //     cy.get('@accessContactPageBtn').click()
+      //   })
+      //   describe('When the open data switch is unchecked', () => {
+      //     it('should display the licence form field', () => {
+      //       cy.get('gn-ui-form-field-license').should('be.visible')
+      //       cy.get('gn-ui-form-field-license')
+      //         .find('button')
+      //         .children('div')
+      //         .first()
+      //         .invoke('text')
+      //         .should('eq', ' Creative Commons CC-BY ')
+      //     })
+      //   })
+      //   describe('When the open data switch is checked', () => {
+      //     it('should not display the licence form field', () => {
+      //       cy.get('[data-cy="openDataToggle"]').click()
+      //       cy.get('gn-ui-form-field-license').should('not.exist')
+      //     })
+      //   })
+      // })
       describe('licenses', () => {
         beforeEach(() => {
           cy.get('@accessContactPageBtn').click()
