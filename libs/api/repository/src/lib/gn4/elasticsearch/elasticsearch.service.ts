@@ -250,7 +250,7 @@ export class ElasticsearchService {
         console.log('dateRange', dateRange)
         return {
           searchField,
-          dateRange: this.parseUrlObject(dateRange[0]), // TODO: reading values on app load not working yet
+          dateRange: this.parseUrlObject(dateRange),
         } as unknown as {
           searchField: string
           dateRange: TimestampRange

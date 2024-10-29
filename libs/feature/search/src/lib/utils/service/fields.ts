@@ -36,7 +36,7 @@ export abstract class AbstractSearchField {
   ): Observable<FieldFilters>
   abstract getValuesForFilter(
     filters: FieldFilters
-  ): Observable<FieldValue[] | TimestampRange>
+  ): Observable<FieldValue[] | FieldValue>
   abstract getType(): FieldType
 }
 
@@ -101,7 +101,7 @@ export class SimpleSearchField implements AbstractSearchField {
   }
   getValuesForFilter(
     filters: FieldFilters
-  ): Observable<FieldValue[] | TimestampRange> {
+  ): Observable<FieldValue[] | FieldValue> {
     const filter = filters[this.esFieldName]
     if (!filter) return of([])
     // filter by expression
@@ -115,7 +115,7 @@ export class SimpleSearchField implements AbstractSearchField {
         start: range.start.getTime(),
         end: range.end.getTime(),
       }
-      return of([JSON.stringify(timeStampFilter as TimestampRange)]) //TODO: check this
+      return of(JSON.stringify(timeStampFilter as TimestampRange))
     }
     // filter by values
     const values = Object.keys(filter).filter((v) => filter[v])
