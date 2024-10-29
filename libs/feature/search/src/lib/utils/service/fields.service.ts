@@ -131,7 +131,7 @@ export class FieldsService {
         Array.isArray(fieldValues[fieldName]) ||
         Object.keys(fieldValues[fieldName]).length > 1
           ? fieldValues[fieldName]
-          : [fieldValues[fieldName]]
+          : [fieldValues[fieldName]] //TODO: handle stringified ranges which are not an object properly
       return this.getFiltersForValues(
         fieldName,
         values as FieldValue[] | DateRange

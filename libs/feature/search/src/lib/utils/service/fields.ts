@@ -96,7 +96,7 @@ export class SimpleSearchField implements AbstractSearchField {
     }
     // DateRange
     return of({
-      [this.esFieldName]: values,
+      [this.esFieldName]: Array.isArray(values) ? values[0] : values,
     })
   }
   getValuesForFilter(
