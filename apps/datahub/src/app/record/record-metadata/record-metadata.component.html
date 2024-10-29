@@ -25,7 +25,7 @@
       </div>
       <div class="sm:mt-[-185px]">
         <gn-ui-image-overlay-preview
-          class="block h-[185px] mb-[20px]"
+          class="block h-[185px] mb-5"
           [imageUrl]="thumbnailUrl$ | async"
           (isPlaceholderShown)="showOverlay = !$event"
           *ngIf="showOverlay"
