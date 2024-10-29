@@ -70,7 +70,7 @@ export class RouterEffects {
           const oldSort =
             ROUTE_PARAMS.SORT in oldParams
               ? sortByFromString(oldParams[ROUTE_PARAMS.SORT])
-              : SortByEnum.RELEVANCY
+              : SortByEnum.CHANGE_DATE
           if (JSON.stringify(sortBy) === JSON.stringify(oldSort)) {
             sortBy = null
           }

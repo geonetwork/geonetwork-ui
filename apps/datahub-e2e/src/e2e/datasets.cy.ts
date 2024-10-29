@@ -43,7 +43,7 @@ describe('datasets', () => {
         .should('have.length', 1)
       cy.screenshot({ capture: 'viewport' })
     })
-    it('should sort by relevance initially', () => {
+    it('should sort by change date initially', () => {
       cy.get('@sortBy')
         .getActiveDropdownOption()
         .invoke('attr', 'data-cy-value')
