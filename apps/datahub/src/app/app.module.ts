@@ -274,7 +274,8 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     {
       provide: BASEMAP_LAYERS,
       useFactory: () =>
-        getOptionalMapConfig()?.MAP_LAYERS.map(getMapContextLayerFromConfig),
+        getOptionalMapConfig()?.MAP_LAYERS.map(getMapContextLayerFromConfig) ??
+        [],
     },
     {
       provide: MAP_VIEW_CONSTRAINTS,
