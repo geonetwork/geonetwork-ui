@@ -1,12 +1,12 @@
 <gn-ui-content-ghost
   [showContent]="imageUrl !== undefined"
-  ghostClass="h-48 mb-3"
+  ghostClass="h-full w-full"
 >
   <div
     *ngIf="imageUrl"
     [showContent]="imageUrl !== undefined"
     data-cy="record-thumbnail"
-    class="shrink-0 bg-gray-100 rounded-lg overflow-hidden w-full border border-gray-300 group-hover:shadow-xl group-hover:border-0 h-48 mb-3"
+    class="shrink-0 bg-gray-100 rounded-lg overflow-hidden w-full border border-gray-300 group-hover:shadow-xl group-hover:border-0 h-full w-full"
   >
     <gn-ui-thumbnail
       class="relative h-full w-full"

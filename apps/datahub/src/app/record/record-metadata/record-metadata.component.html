@@ -1,7 +1,7 @@
 <div *ngIf="(metadataViewFacade.error$ | async) === null">
   <div
     id="about"
-    class="container-lg px-4 mb-9 mt-8 sm:mb-16 sm:mt-10 lg:mx-auto"
+    class="container-lg px-4 mb-9 mt-8 sm:mb-16 sm:mt-[51px] lg:mx-auto"
   >
     <gn-ui-metadata-info
       class="sm:block"
@@ -23,8 +23,9 @@
         >
         </gn-ui-metadata-info>
       </div>
-      <div class="sm:-mt-44">
+      <div class="sm:mt-[-185px]">
         <gn-ui-image-overlay-preview
+          class="block h-[185px] mb-[20px]"
           [imageUrl]="thumbnailUrl$ | async"
           (isPlaceholderShown)="showOverlay = !$event"
           *ngIf="showOverlay"
@@ -44,7 +45,10 @@
             [metadataQualityDisplay]="metadataQualityDisplay"
           ></gn-ui-metadata-quality>
         </div>
-        <gn-ui-metadata-catalog [sourceLabel]="sourceLabel$ | async">
+        <gn-ui-metadata-catalog
+          *ngIf="sourceLabel$ | async as sourceLabel"
+          [sourceLabel]="sourceLabel"
+        >
         </gn-ui-metadata-catalog>
       </div>
     </div>
@@ -63,7 +67,6 @@
           <div
             class="text-[28px] text-title font-title transform sm:translate-y-10"
             translate
-            id="preview"
           >
             record.metadata.preview
           </div>
