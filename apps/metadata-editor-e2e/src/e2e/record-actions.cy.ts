@@ -26,6 +26,7 @@ describe('record-actions', () => {
         }).as('insertRecord')
         cy.get('md-editor-publish-button').click()
         cy.wait('@insertRecord')
+        cy.get('@abstractField').focus()
         cy.get('@abstractField').type('draft abstract')
         // Assert that the draft exists in the local storage
         cy.editor_readFormUniqueIdentifier().then((uniqueIdentifier) =>
