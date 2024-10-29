@@ -85,8 +85,6 @@ export class SimpleSearchField implements AbstractSearchField {
   }
   getFiltersForValues(values: FieldValue[] /*| DateRange*/): Observable<any> {
     // FieldValue[]
-    //TODO: check this
-    // if (Array.isArray(values)) {
     if (Array.isArray(values) && this.getType() === 'values') {
       return of({
         [this.esFieldName]: values.reduce((acc, val) => {
@@ -94,6 +92,7 @@ export class SimpleSearchField implements AbstractSearchField {
         }, {}),
       })
     }
+    //TODO: find proper solution to handle date ranges as objects and strings
     // DateRange
     return of({
       [this.esFieldName]: Array.isArray(values) ? values[0] : values,

@@ -11,7 +11,6 @@ import {
   AggregationsParams,
   FieldFilter,
   FieldFilters,
-  FilterAggregationParams,
   FilterQuery,
   FiltersAggregationParams,
   SortByField,
@@ -28,6 +27,7 @@ import {
   TermsAggregationResult,
 } from '@geonetwork-ui/api/metadata-converter'
 import { LangService } from '@geonetwork-ui/util/i18n'
+import { formatDate, isDateRange, parseUrlObject } from './date-range.utils'
 
 export type DateRange = { start?: Date; end?: Date }
 export type TimestampRange = { start?: number; end?: number }
@@ -235,10 +235,7 @@ export class ElasticsearchService {
         .join(' OR ')
     }
     const queryString = Object.keys(filters)
-      .filter(
-        (fieldname) =>
-          !this.isDateRange(this.parseUrlObject(filters[fieldname]))
-      )
+      .filter((fieldname) => !isDateRange(parseUrlObject(filters[fieldname])))
       .filter(
         (fieldname) =>
           filters[fieldname] && JSON.stringify(filters[fieldname]) !== '{}'
@@ -246,12 +243,11 @@ export class ElasticsearchService {
       .map((fieldname) => `${fieldname}:(${makeQuery(filters[fieldname])})`)
       .join(' AND ')
     const queryRange = Object.entries(filters)
-      .filter(([, value]) => this.isDateRange(this.parseUrlObject(value)))
+      .filter(([, value]) => isDateRange(parseUrlObject(value)))
       .map(([searchField, dateRange]) => {
-        console.log('dateRange', dateRange)
         return {
           searchField,
-          dateRange: this.parseUrlObject(dateRange),
+          dateRange: parseUrlObject(dateRange),
         } as unknown as {
           searchField: string
           dateRange: TimestampRange
@@ -267,39 +263,14 @@ export class ElasticsearchService {
         queryRange.dateRange && {
           range: {
             [queryRange.searchField]: {
-              gte: this.formatDate(queryRange.dateRange.start),
-              lte: this.formatDate(queryRange.dateRange.end),
+              gte: formatDate(queryRange.dateRange.start),
+              lte: formatDate(queryRange.dateRange.end),
               format: 'yyyy-MM-dd',
             },
           },
         },
     ].filter(Boolean)
     return queryParts.length > 0 ? (queryParts as FilterQuery) : undefined
-  }
-
-  // TODO: move utility functions to right place
-  private isDateRange(filter: FieldFilter): boolean {
-    if (!filter) return false
-    return typeof filter === 'object' && ('start' in filter || 'end' in filter)
-  }
-
-  private formatDate(timestamp: number): string {
-    const date = new Date(timestamp)
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
-    return `${year}-${month}-${day}`
-  }
-
-  private parseUrlObject(str: string): Record<string, unknown> {
-    if (typeof str === 'string') {
-      try {
-        return JSON.parse(str)
-      } catch (e) {
-        return null
-      }
-    }
-    return null
   }
 
   private buildPayloadQuery(
