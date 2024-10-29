@@ -12,6 +12,7 @@ import {
   FieldFilter,
   FieldFilters,
   FilterAggregationParams,
+  FilterQuery,
   FiltersAggregationParams,
   SortByField,
 } from '@geonetwork-ui/common/domain/model/search'
@@ -217,10 +218,9 @@ export class ElasticsearchService {
     return this.metadataLang === 'current'
   }
 
-  // TODO: type this
   private filtersToQuery(
     filters: FieldFilters | FiltersAggregationParams | string
-  ): any[] {
+  ): FilterQuery {
     const makeQuery = (filter: FieldFilter): string => {
       if (typeof filter === 'string') {
         return filter
@@ -274,7 +274,7 @@ export class ElasticsearchService {
           },
         },
     ].filter(Boolean)
-    return queryParts.length > 0 ? queryParts : undefined
+    return queryParts.length > 0 ? (queryParts as FilterQuery) : undefined
   }
 
   // TODO: move utility functions to right place

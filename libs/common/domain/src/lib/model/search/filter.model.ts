@@ -12,3 +12,11 @@ export type FieldFilter =
   | FieldFilterByValues
   | FieldFilterByRange
 export type FieldFilters = Record<FieldName, FieldFilter>
+
+export type QueryString = {
+  query_string: string
+}
+export type QueryRange = {
+  range: Record<string, { format: string; gte: string; lte: string }>
+}
+export type FilterQuery = Array<QueryString | QueryRange>
