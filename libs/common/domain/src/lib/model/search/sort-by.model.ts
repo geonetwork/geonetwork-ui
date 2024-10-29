@@ -5,4 +5,5 @@ export const SortByEnum: Record<string, SortByField> = {
   POPULARITY: ['desc', 'userSavedCount'],
   RELEVANCY: ['desc', '_score'],
   QUALITY_SCORE: ['desc', 'qualityScore'],
+  CHANGE_DATE: ['desc', 'changeDate'],
 }

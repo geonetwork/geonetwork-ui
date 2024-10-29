@@ -470,6 +470,7 @@
   "results.records.hits.found": "{hits, plural, =0{Keine Dokumente entsprechen der angegebenen Suche.} one{1 Datensatz gefunden.} other{{hits} Datensätze gefunden.}}",
   "results.records.hits.selected": "{ amount } ausgewählt",
   "results.showMore": "Mehr Ergebnisse anzeigen...",
+  "results.sortBy.changeDate": "",
   "results.sortBy.dateStamp": "Neueste",
   "results.sortBy.popularity": "Beliebtheit",
   "results.sortBy.qualityScore": "Qualitätsbewertung",

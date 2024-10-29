@@ -470,6 +470,7 @@
   "results.records.hits.found": "{hits, plural, =0{Nessuna corrispondenza.} one{1 record trovato.} other{{hits} risultati.}}",
   "results.records.hits.selected": "{amount, plural, one{1 selezionato} other{{ amount } selezionati}}",
   "results.showMore": "Altri risultati...",
+  "results.sortBy.changeDate": "",
   "results.sortBy.dateStamp": "Più recente",
   "results.sortBy.popularity": "Popolarità",
   "results.sortBy.qualityScore": "Indicatore di qualità",
