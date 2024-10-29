@@ -80,8 +80,8 @@ export class AppModule {
       getThemeConfig().SECONDARY_COLOR,
       getThemeConfig().MAIN_COLOR,
       getThemeConfig().BACKGROUND_COLOR,
-      getThemeConfig().MAIN_FONT || "'Rubik', sans-serif",
-      getThemeConfig().TITLE_FONT || "'Readex Pro', sans-serif",
+      getThemeConfig().MAIN_FONT || "'Inter', sans-serif",
+      getThemeConfig().TITLE_FONT || "'Petrona', sans-serif",
       getThemeConfig().FONTS_STYLESHEET_URL || 'assets/css/default-fonts.css'
     )
   }

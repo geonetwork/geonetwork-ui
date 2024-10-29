@@ -8,7 +8,7 @@
       #rlaAll="routerLinkActive"
     >
       <ng-icon name="iconoirJournal"></ng-icon>
-      <span translate="">dashboard.catalog.allRecords</span>
+      <span class="text-sm" translate="">dashboard.catalog.allRecords</span>
     </a>
     <a
       class="menu-item btn-inactive"
@@ -18,7 +18,7 @@
       [title]="'editor.temporary.disabled' | translate"
     >
       <ng-icon name="matChatBubbleOutlineOutline"></ng-icon>
-      <span translate="">dashboard.catalog.discussion</span>
+      <span class="text-sm" translate="">dashboard.catalog.discussion</span>
     </a>
     <a
       class="menu-item btn-inactive"
@@ -28,7 +28,7 @@
       [title]="'editor.temporary.disabled' | translate"
     >
       <ng-icon name="iconoirCalendar"></ng-icon>
-      <span translate="">dashboard.catalog.calendar</span>
+      <span class="text-sm" translate="">dashboard.catalog.calendar</span>
     </a>
     <a
       class="menu-item btn-inactive"
@@ -38,7 +38,7 @@
       [title]="'editor.temporary.disabled' | translate"
     >
       <ng-icon name="iconoirUser"></ng-icon>
-      <span translate="">dashboard.catalog.contacts</span>
+      <span class="text-sm" translate="">dashboard.catalog.contacts</span>
     </a>
     <a
       class="menu-item btn-inactive"
@@ -48,7 +48,7 @@
       [title]="'editor.temporary.disabled' | translate"
     >
       <ng-icon name="matLabelOutline"></ng-icon>
-      <span translate="">dashboard.catalog.thesaurus</span>
+      <span class="text-sm" translate="">dashboard.catalog.thesaurus</span>
     </a>
   </div>
 
@@ -61,7 +61,7 @@
       #rlaMyRecords="routerLinkActive"
     >
       <ng-icon name="iconoirJournalPage"></ng-icon>
-      <span translate="">dashboard.records.myRecords</span>
+      <span class="text-sm" translate="">dashboard.records.myRecords</span>
     </a>
     <a
       class="menu-item"
@@ -70,7 +70,7 @@
       #rlaMyDraft="routerLinkActive"
     >
       <ng-icon name="iconoirPageEdit"></ng-icon>
-      <span translate="">dashboard.records.myDraft</span>
+      <span class="text-sm" translate="">dashboard.records.myDraft</span>
       <ng-container *ngIf="draftsCount$ | async as draftsCount">
         <gn-ui-badge
           [style.--gn-ui-badge-padding]="'0.375em 0.875em'"
@@ -89,7 +89,7 @@
       [title]="'editor.temporary.disabled' | translate"
     >
       <ng-icon name="iconoirLightBulbOn"></ng-icon>
-      <span translate="">dashboard.records.templates</span>
+      <span class="text-sm" translate="">dashboard.records.templates</span>
     </a>
   </div>
 </div>

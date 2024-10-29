@@ -5,7 +5,7 @@
   <div class="flex flex-row items-baseline gap-[8px] px-[32px] py-[20px]">
     <ng-container *ngIf="searchText$ | async as searchText; else allRecords">
       <h1
-        class="text-[16px] text-main font-title font-bold"
+        class="text-[16px] text-main font-bold"
         translate
         [translateParams]="{ searchText: searchText }"
       >
@@ -16,7 +16,7 @@
       </div>
     </ng-container>
     <ng-template #allRecords>
-      <h1 class="text-[16px] text-main font-title font-bold" translate>
+      <h1 class="text-[16px] text-main font-bold" translate>
         dashboard.records.all
       </h1>
       <div class="text-[12px]">
@@ -29,7 +29,7 @@
   >
     <div>
       <span
-        class="uppercase text-slate-300"
+        class="uppercase text-slate-300 text-xs"
         [title]="'editor.temporary.disabled' | translate"
         translate
         >dashboard.results.listMetadata</span
@@ -37,7 +37,7 @@
     </div>
     <div>
       <span
-        class="uppercase text-slate-300"
+        class="uppercase text-slate-300 text-xs"
         [title]="'editor.temporary.disabled' | translate"
         translate
         >dashboard.results.listResources</span

@@ -22,7 +22,7 @@ body {
   @apply text-slate-400 cursor-default;
 }
 .menu-title {
-  @apply text-2xl px-9 py-3;
+  @apply font-title text-2xl px-9 py-3;
 }
 
 .cdk-overlay-transparent-backdrop {
