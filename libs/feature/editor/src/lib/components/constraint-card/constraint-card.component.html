@@ -2,24 +2,23 @@
   <gn-ui-form-field-rich
     [label]="label"
     [hint]="hint"
-    [value]="constraintText"
+    [value]="constraint.text ?? ''"
     (valueChange)="handleConstraintTextChange($event)"
   ></gn-ui-form-field-rich>
 
   <div *ngIf="!showUrlInput" class="flex-none mt-2">
-    <gn-ui-button (buttonClick)="displayUrlInput()" type="gray">
+    <gn-ui-button (buttonClick)="showUrlBtnClicked = true" type="gray">
       <mat-icon class="material-symbols-outlined me-1 text-primary"
         >link</mat-icon
       >
-      <span translate="">{{ 'input.image.displayUrlInput' }}</span>
+      <span translate>input.image.displayUrlInput</span>
     </gn-ui-button>
   </div>
   <gn-ui-url-input
     *ngIf="showUrlInput"
     class="mt-3.5"
-    [value]="constraintURL ?? ''"
+    [value]="constraint.url"
     (valueChange)="handleURLChange($event)"
-    [disabled]="false"
     [showUploadButton]="false"
   >
   </gn-ui-url-input>
