@@ -17,6 +17,7 @@ import {
 } from './router.actions'
 import { selectCurrentRoute, selectRouteParams } from './router.selectors'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { expandQueryParams, flattenQueryParams } from './query-params.utils'
 
 @Injectable()
 export class RouterFacade {
@@ -27,7 +28,8 @@ export class RouterFacade {
     filter((route) => !!route),
     filter((route) => route.url[0]?.path.startsWith(ROUTER_ROUTE_SEARCH)),
     map((route) => route.queryParams),
-    distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
+    distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
+    map(expandQueryParams)
   )
 
   constructor(
@@ -62,7 +64,7 @@ export class RouterFacade {
   updateSearch(query?: SearchRouteParams) {
     this.go({
       path: this.routerService.getSearchRoute(),
-      ...(query && { query }),
+      ...(query && flattenQueryParams({ query })),
       queryParamsHandling: 'merge',
     })
   }
@@ -70,7 +72,7 @@ export class RouterFacade {
   setSearch(query?: SearchRouteParams) {
     this.go({
       path: this.routerService.getSearchRoute(),
-      ...(query && { query }),
+      ...(query && flattenQueryParams({ query })),
     })
   }
 
