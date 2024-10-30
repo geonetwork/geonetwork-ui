@@ -11,7 +11,6 @@ export interface FormFieldConfig {
   hintKey?: string
   tooltipKey?: string
   required?: boolean
-  locked?: boolean
   invalid?: boolean
   invalidHintKey?: string
 }
