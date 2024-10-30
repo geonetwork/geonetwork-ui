@@ -96,30 +96,25 @@
         (recordConstraintsChange)="valueChange.emit($event)"
       ></gn-ui-form-field-license>
     </ng-container>
+
     <ng-container *ngSwitchCase="'legalConstraints'">
-      <gn-ui-form-field-constraints
-        [label]="config.labelKey"
-        [value]="valueAsConstraints"
-        [constraintType]="model"
-        (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-constraints>
+      <ng-container *ngTemplateOutlet="formFieldConstraints"></ng-container>
     </ng-container>
     <ng-container *ngSwitchCase="'securityConstraints'">
-      <gn-ui-form-field-constraints
-        [label]="config.labelKey"
-        [value]="valueAsConstraints"
-        [constraintType]="model"
-        (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-constraints>
+      <ng-container *ngTemplateOutlet="formFieldConstraints"></ng-container>
     </ng-container>
     <ng-container *ngSwitchCase="'otherConstraints'">
+      <ng-container *ngTemplateOutlet="formFieldConstraints"></ng-container
+    ></ng-container>
+    <ng-template #formFieldConstraints>
       <gn-ui-form-field-constraints
         [label]="config.labelKey"
         [value]="valueAsConstraints"
         [constraintType]="model"
         (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-constraints>
-    </ng-container>
+      ></gn-ui-form-field-constraints
+    ></ng-template>
+
     <ng-container *ngSwitchCase="'contactsForResource'">
       <gn-ui-form-field-contacts-for-resource
         [value]="valueAsIndividuals"

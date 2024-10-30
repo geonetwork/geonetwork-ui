@@ -1,23 +1,11 @@
 <div class="w-full mt-8 flex flex-col gap-4" data-test="displayedConstraints">
-  <span
-    *ngIf="isAdditonalElementsVisible$ | async"
-    class="border-t border-gray-300 flex grow pb-7"
-  ></span>
-  <span
-    *ngIf="isAdditonalElementsVisible$ | async"
-    class="font-bold"
-    translate=""
-    >{{ constraintsHeader }}</span
-  >
+  <span class="border-t border-gray-300 flex grow pb-7"></span>
+  <span class="font-bold">{{ constraintsHeader | translate }}</span>
   <div>
-    <gn-ui-button
-      *ngIf="isAdditonalElementsVisible$ | async"
-      type="gray"
-      (buttonClick)="addConstraintSectionToDisplay()"
-    >
+    <gn-ui-button type="gray" (buttonClick)="addConstraintSectionToDisplay()">
       <mat-icon class="material-symbols-outlined text-primary">add</mat-icon>
-      &nbsp;<span translate="">{{
-        additionalConstraintsButtonLabel
+      &nbsp;<span>{{
+        additionalConstraintsButtonLabel | translate
       }}</span></gn-ui-button
     >
     <gn-ui-sortable-list
@@ -28,10 +16,8 @@
     <ng-template #constraintTemplate let-constraint let-index="index">
       <gn-ui-constraint-card
         [label]="label"
-        [constraintText]="constraint.text ?? ''"
-        [constraintURL]="constraint.url ?? ''"
-        (urlChange)="handleURLChange($event, index)"
-        (constraintTextChange)="handleConstraintTextChange($event, index)"
+        [constraint]="constraint"
+        (constraintChange)="handleConstraintChange($event, index)"
       ></gn-ui-constraint-card>
     </ng-template>
   </div>

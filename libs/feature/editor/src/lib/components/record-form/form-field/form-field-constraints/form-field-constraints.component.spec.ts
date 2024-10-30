@@ -5,6 +5,8 @@ import { MockBuilder, MockInstance, MockProvider } from 'ng-mocks'
 import { EditorFacade } from '../../../../+state/editor.facade'
 import { BehaviorSubject, of } from 'rxjs'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
+import { importProvidersFrom } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
 
 const mockConstraints = new BehaviorSubject([
   {
@@ -33,7 +35,10 @@ describe('FormFieldConstraintsComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [FormFieldConstraintsComponent],
-      providers: [MockProvider(EditorFacade)],
+      providers: [
+        MockProvider(EditorFacade),
+        importProvidersFrom(TranslateModule.forRoot()),
+      ],
     })
     fixture = TestBed.createComponent(FormFieldConstraintsComponent)
     component = fixture.componentInstance
@@ -56,21 +61,12 @@ describe('FormFieldConstraintsComponent', () => {
     )
   })
 
-  it('#handleURLChange should emit the new value', () => {
+  it('#handleConstraintChange should emit the new value', () => {
     jest.spyOn(component.valueChange, 'emit')
-    const newURL = new URL('http://example.com')
-    component.handleURLChange(newURL, 0)
+    const newConstraint = { text: 'aaa', url: new URL('http://example.com') }
+    component.handleConstraintChange(newConstraint, 0)
 
-    expect(component.value[0].url).toBe(newURL)
-    expect(component.valueChange.emit).toHaveBeenCalledWith(component.value)
-  })
-
-  it('#handleConstraintTextChange should emit the new value', () => {
-    jest.spyOn(component.valueChange, 'emit')
-    const newText = 'New text'
-    component.handleConstraintTextChange(newText, 0)
-
-    expect(component.value[0].text).toBe(newText)
+    expect(component.value[0]).toBe(newConstraint)
     expect(component.valueChange.emit).toHaveBeenCalledWith(component.value)
   })
 
