@@ -1,8 +1,12 @@
-import { ChangeDetectorRef, Component, Input, Output } from '@angular/core'
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '../button/button.component'
-import { filter } from 'rxjs/operators'
-import { Subject } from 'rxjs'
 import {
   NgIconComponent,
   provideIcons,
@@ -24,27 +28,37 @@ import { iconoirArrowUp, iconoirLink } from '@ng-icons/iconoir'
   ],
 })
 export class UrlInputComponent {
-  @Input() value = ''
+  @Input() value?: string
   @Input() extraClass = ''
   @Input() placeholder = 'https://'
   @Input() disabled: boolean
-  @Input() urlCanParse?: boolean
   @Input() showUploadButton = true
-  rawChange = new Subject<string>()
-  @Output() valueChange = this.rawChange.pipe(filter((v) => !!v))
+
+  /**
+   * This will emit null if the field is emptied
+   */
+  @Output() valueChange = new EventEmitter<string | null>()
+  @Output() uploadClick = new EventEmitter<string>()
 
   constructor(private cd: ChangeDetectorRef) {}
 
-  handleInput() {
+  handleInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value
+    if (!value || !this.isValidUrl(value)) {
+      this.valueChange.next(null)
+      return
+    }
     this.cd.markForCheck()
+    this.valueChange.next(value)
   }
 
-  handleChange(element: HTMLInputElement) {
+  handleUpload(element: HTMLInputElement) {
     const value = element.value
-    this.rawChange.next(value)
+    if (!value || !this.isValidUrl(value)) return
+    this.uploadClick.next(value)
   }
 
-  URLcanParse(url: string): boolean {
+  isValidUrl(url: string): boolean {
     try {
       new URL(url)
       return true

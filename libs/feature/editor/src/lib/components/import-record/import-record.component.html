@@ -38,7 +38,7 @@
         <span class="font-bold"> {{ externalImportBackLabel }}</span>
       </div>
       <gn-ui-url-input
-        (valueChange)="importRecord($event)"
+        (uploadClick)="importRecord($event)"
         [disabled]="isRecordImportInProgress"
       ></gn-ui-url-input>
     </div>

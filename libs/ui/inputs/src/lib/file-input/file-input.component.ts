@@ -89,7 +89,8 @@ export class FileInputComponent {
     this.handleDropFiles(Array.from((event.target as HTMLInputElement).files))
   }
 
-  handleUrlChange(url: string) {
+  handleUrlChange(url: string | null) {
+    if (!url) return
     this.urlChange.emit(url)
   }
 
