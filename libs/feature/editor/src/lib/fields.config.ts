@@ -32,29 +32,11 @@ export const RECORD_KEYWORDS_FIELD: EditorField = {
   },
 }
 
-export const RECORD_UNIQUE_IDENTIFIER_FIELD: EditorField = {
-  model: 'uniqueIdentifier',
-  formFieldConfig: {
-    labelKey: marker('editor.record.form.field.uniqueIdentifier'),
-    locked: true,
-  },
-}
-
 export const RECORD_RESOURCE_UPDATED_FIELD: EditorField = {
   model: 'resourceUpdated',
   formFieldConfig: {
     labelKey: marker('editor.record.form.field.resourceUpdated'),
   },
-  gridColumnSpan: 1,
-}
-
-export const RECORD_UPDATED_FIELD: EditorField = {
-  model: 'recordUpdated',
-  formFieldConfig: {
-    labelKey: marker('editor.record.form.field.recordUpdated'),
-    locked: true,
-  },
-  onSaveProcess: '${dateNow()}',
   gridColumnSpan: 1,
 }
 
@@ -149,9 +131,7 @@ export const ABOUT_SECTION: EditorSection = {
   descriptionKey: marker('editor.record.form.section.about.description'),
   hidden: false,
   fields: [
-    RECORD_UNIQUE_IDENTIFIER_FIELD,
     RECORD_RESOURCE_UPDATED_FIELD,
-    RECORD_UPDATED_FIELD,
     RECORD_UPDATE_FREQUENCY_FIELD,
     RECORD_TEMPORAL_EXTENTS_FIELD,
   ],
