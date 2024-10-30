@@ -170,11 +170,8 @@ describe('dashboard (authenticated)', () => {
         .as('abstractField')
         .focus()
       cy.get('@abstractField').type('draft abstract')
-      cy.editor_readFormUniqueIdentifier().then((recordUuid) => {
-        cy.window()
-          .its('localStorage')
-          .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
-          .should('contain', 'draft abstract')
+      cy.editor_findDraftInLocalStorage().then((value) => {
+        expect(value).to.contain('draft abstract')
       })
       cy.visit('/my-space/my-draft')
       cy.get('gn-ui-results-table').find('[data-cy="table-row"]').as('draft')
