@@ -106,7 +106,7 @@ export class FieldsService {
 
   private getFiltersForValues(
     fieldName: string,
-    values: FieldValue[] | DateRange
+    values: FieldValue[] | DateRange[]
   ) {
     return this.fields[fieldName].getFiltersForValues(values)
   }
@@ -126,14 +126,12 @@ export class FieldsService {
     )
     if (!fieldNames.length) return of({})
     const filtersByField$ = fieldNames.map((fieldName) => {
-      const values =
-        Array.isArray(fieldValues[fieldName]) ||
-        Object.keys(fieldValues[fieldName]).length > 1
-          ? fieldValues[fieldName]
-          : [fieldValues[fieldName]] //TODO: handle stringified ranges which are not an object properly
+      const values = Array.isArray(fieldValues[fieldName])
+        ? fieldValues[fieldName]
+        : [fieldValues[fieldName]]
       return this.getFiltersForValues(
         fieldName,
-        values as FieldValue[] | DateRange
+        values as FieldValue[] | DateRange[]
       )
     })
     return forkJoin(filtersByField$).pipe(

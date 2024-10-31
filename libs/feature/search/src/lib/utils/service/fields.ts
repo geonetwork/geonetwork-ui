@@ -32,7 +32,7 @@ export interface FieldAvailableValue {
 export abstract class AbstractSearchField {
   abstract getAvailableValues(): Observable<FieldAvailableValue[] | DateRange[]>
   abstract getFiltersForValues(
-    values: FieldValue[] | DateRange
+    values: FieldValue[] | DateRange[]
   ): Observable<FieldFilters>
   abstract getValuesForFilter(
     filters: FieldFilters
@@ -83,21 +83,18 @@ export class SimpleSearchField implements AbstractSearchField {
       })
     )
   }
-  getFiltersForValues(
-    values: FieldValue[] | DateRange | string
-  ): Observable<any> {
+  getFiltersForValues(values: FieldValue[] | DateRange[]): Observable<any> {
     // FieldValue[]
-    if (Array.isArray(values) && this.getType() === 'values') {
+    if (this.getType() === 'values') {
       return of({
-        [this.esFieldName]: values.reduce((acc, val) => {
+        [this.esFieldName]: (values as FieldValue[]).reduce((acc, val) => {
           return { ...acc, [val.toString()]: true }
         }, {}),
       })
     }
-    //TODO: find proper solution to handle date ranges as objects and strings
     // DateRange
     return of({
-      [this.esFieldName]: Array.isArray(values) ? values[0] : values,
+      [this.esFieldName]: values[0],
     })
   }
   getValuesForFilter(
