@@ -15,6 +15,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/search'
 import {
   ElasticsearchService,
+  isDateRange,
   METADATA_LANGUAGE,
 } from '@geonetwork-ui/api/repository'
 import { LangService } from '@geonetwork-ui/util/i18n'
@@ -109,7 +110,7 @@ export class SimpleSearchField implements AbstractSearchField {
       return of([filter])
     }
     // filter by date range
-    if (typeof filter === 'object' && ('start' in filter || 'end' in filter)) {
+    if (isDateRange(filter)) {
       return of(filter)
     }
     // filter by values

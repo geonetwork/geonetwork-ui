@@ -1,3 +1,4 @@
+import { isDateRange } from '@geonetwork-ui/api/repository'
 import { ROUTE_PARAMS, SearchRouteParams } from '../constants'
 import { DateRange } from '@geonetwork-ui/feature/search'
 
@@ -51,11 +52,6 @@ export function expandQueryParams(
     }
   }
   return expanded
-}
-
-function isDateRange(filter: DateRange): boolean {
-  if (!filter) return false
-  return typeof filter === 'object' && ('start' in filter || 'end' in filter)
 }
 
 // this only matches if the separator ".." is present only once and not dots are present elsewhere
