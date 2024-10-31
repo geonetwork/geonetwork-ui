@@ -1,5 +1,7 @@
 <gn-ui-date-range-picker
   *ngIf="fieldType === 'dateRange'; else multiselect"
+  [startDate]="(displayDate$ | async)?.start"
+  [endDate]="(displayDate$ | async)?.end"
   (startDateChange)="onStartDateChange($event)"
   (endDateChange)="onEndDateChange($event)"
 ></gn-ui-date-range-picker>
@@ -8,7 +10,7 @@
     class="w-full"
     [title]="title"
     [maxRows]="6"
-    [choices]="choices$ | async"
+    [choices]="(choices$ | async) || []"
     [selected]="selected$ | async"
     [allowSearch]="true"
     (selectValues)="onSelectedValues($event)"

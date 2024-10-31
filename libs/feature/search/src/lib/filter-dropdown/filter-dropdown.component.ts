@@ -40,6 +40,16 @@ export class FilterDropdownComponent implements OnInit {
     catchError(() => of([]))
   ) as Observable<FieldValue[]>
 
+  displayDate$ = this.searchFacade.searchFilters$.pipe(
+    switchMap((filters) =>
+      this.fieldsService.readFieldValuesFromFilters(filters)
+    ),
+    map((fieldValues) => fieldValues[this.fieldName]),
+    filter((selected) => !!selected),
+    startWith([]),
+    catchError(() => of([]))
+  ) as Observable<DateRange>
+
   onSelectedValues(values: unknown[]) {
     this.fieldsService
       .buildFiltersFromFieldValues({ [this.fieldName]: values as FieldValue[] })
