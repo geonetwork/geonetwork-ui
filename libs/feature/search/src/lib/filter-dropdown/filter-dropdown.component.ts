@@ -77,10 +77,12 @@ export class FilterDropdownComponent implements OnInit {
   }
 
   onStartDateChange(start: Date) {
+    start.setUTCHours(24, 0, 0, 0)
     this.dateRange = { ...this.dateRange, start }
   }
 
   onEndDateChange(end: Date) {
+    end.setUTCHours(24, 0, 0, 0)
     this.dateRange = { ...this.dateRange, end }
     if (this.dateRange.start && this.dateRange.end) {
       this.fieldsService
