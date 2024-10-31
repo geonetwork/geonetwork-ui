@@ -44,7 +44,7 @@ describe('editor form', () => {
     cy.visit('/catalog/search')
     cy.get('gn-ui-fuzzy-search input').type('station épuration copy{enter}')
     cy.get('[data-cy="table-row"]').first().children('div').eq(2).click()
-
+    cy.url().should('include', '/edit/')
     cy.editor_readFormUniqueIdentifier().then((uuid) => {
       recordUuid = uuid
     })
