@@ -20,7 +20,6 @@ import {
 import { LangService } from '@geonetwork-ui/util/i18n'
 
 export type DateRange = { start?: Date; end?: Date }
-export type TimestampRange = { start?: number; end?: number }
 export type FieldType = 'values' | 'dateRange'
 
 export type FieldValue = string | number
@@ -32,11 +31,11 @@ export interface FieldAvailableValue {
 export abstract class AbstractSearchField {
   abstract getAvailableValues(): Observable<FieldAvailableValue[] | DateRange[]>
   abstract getFiltersForValues(
-    values: FieldValue[] | DateRange | string
+    values: FieldValue[] | DateRange
   ): Observable<FieldFilters>
   abstract getValuesForFilter(
     filters: FieldFilters
-  ): Observable<FieldValue[] | FieldValue>
+  ): Observable<FieldValue[] | FieldValue | DateRange>
   abstract getType(): FieldType
 }
 
@@ -102,7 +101,7 @@ export class SimpleSearchField implements AbstractSearchField {
   }
   getValuesForFilter(
     filters: FieldFilters
-  ): Observable<FieldValue[] | FieldValue> {
+  ): Observable<FieldValue[] | FieldValue | DateRange> {
     const filter = filters[this.esFieldName]
     if (!filter) return of([])
     // filter by expression
@@ -111,12 +110,7 @@ export class SimpleSearchField implements AbstractSearchField {
     }
     // filter by date range
     if (typeof filter === 'object' && ('start' in filter || 'end' in filter)) {
-      const range = filter as DateRange
-      const timeStampFilter = {
-        start: range.start.getTime(),
-        end: range.end.getTime(),
-      }
-      return of(JSON.stringify(timeStampFilter as TimestampRange))
+      return of(filter)
     }
     // filter by values
     const values = Object.keys(filter).filter((v) => filter[v])

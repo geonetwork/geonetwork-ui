@@ -20,7 +20,7 @@ import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 // key is the field name
-export type FieldValues = Record<string, FieldValue[] | FieldValue>
+export type FieldValues = Record<string, FieldValue[] | FieldValue | DateRange>
 
 marker('search.filters.format')
 marker('search.filters.inspireKeyword')
@@ -106,7 +106,7 @@ export class FieldsService {
 
   private getFiltersForValues(
     fieldName: string,
-    values: FieldValue[] | DateRange | string
+    values: FieldValue[] | DateRange
   ) {
     return this.fields[fieldName].getFiltersForValues(values)
   }
@@ -119,7 +119,7 @@ export class FieldsService {
   }
 
   buildFiltersFromFieldValues(
-    fieldValues: FieldValues | DateRange | string
+    fieldValues: FieldValues
   ): Observable<FieldFilters> {
     const fieldNames = Object.keys(fieldValues).filter((fieldName) =>
       this.supportedFields.includes(fieldName)
@@ -133,7 +133,7 @@ export class FieldsService {
           : [fieldValues[fieldName]] //TODO: handle stringified ranges which are not an object properly
       return this.getFiltersForValues(
         fieldName,
-        values as FieldValue[] | DateRange | string
+        values as FieldValue[] | DateRange
       )
     })
     return forkJoin(filtersByField$).pipe(

@@ -27,10 +27,9 @@ import {
   TermsAggregationResult,
 } from '@geonetwork-ui/api/metadata-converter'
 import { LangService } from '@geonetwork-ui/util/i18n'
-import { formatDate, isDateRange, parseUrlObject } from './date-range.utils'
+import { formatDate, isDateRange } from './date-range.utils'
 
 export type DateRange = { start?: Date; end?: Date }
-export type TimestampRange = { start?: number; end?: number }
 
 @Injectable({
   providedIn: 'root',
@@ -235,7 +234,7 @@ export class ElasticsearchService {
         .join(' OR ')
     }
     const queryString = Object.keys(filters)
-      .filter((fieldname) => !isDateRange(parseUrlObject(filters[fieldname])))
+      .filter((fieldname) => !isDateRange(filters[fieldname]))
       .filter(
         (fieldname) =>
           filters[fieldname] && JSON.stringify(filters[fieldname]) !== '{}'
@@ -243,14 +242,14 @@ export class ElasticsearchService {
       .map((fieldname) => `${fieldname}:(${makeQuery(filters[fieldname])})`)
       .join(' AND ')
     const queryRange = Object.entries(filters)
-      .filter(([, value]) => isDateRange(parseUrlObject(value)))
+      .filter(([, value]) => isDateRange(value))
       .map(([searchField, dateRange]) => {
         return {
           searchField,
-          dateRange: parseUrlObject(dateRange),
-        } as unknown as {
+          dateRange,
+        } as {
           searchField: string
-          dateRange: TimestampRange
+          dateRange: DateRange
         }
       })[0]
     const queryParts = [

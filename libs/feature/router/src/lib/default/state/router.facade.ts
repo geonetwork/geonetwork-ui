@@ -64,7 +64,7 @@ export class RouterFacade {
   updateSearch(query?: SearchRouteParams) {
     this.go({
       path: this.routerService.getSearchRoute(),
-      ...(query && flattenQueryParams({ query })),
+      ...(query && { query: flattenQueryParams(query) }),
       queryParamsHandling: 'merge',
     })
   }
@@ -72,7 +72,7 @@ export class RouterFacade {
   setSearch(query?: SearchRouteParams) {
     this.go({
       path: this.routerService.getSearchRoute(),
-      ...(query && flattenQueryParams({ query })),
+      ...(query && { query: flattenQueryParams(query) }),
     })
   }
 
