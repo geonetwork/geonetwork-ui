@@ -1,11 +1,30 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { EditorFacade } from '../../../../+state/editor.facade'
 import { ButtonComponent, CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatIconModule } from '@angular/material/icon'
-import { combineLatest, map, Observable } from 'rxjs'
+import {
+  combineLatest,
+  distinctUntilChanged,
+  map,
+  Observable,
+  Subject,
+  takeUntil,
+} from 'rxjs'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { Constraint } from '@geonetwork-ui/common/domain/model/record'
+import {
+  matchesNoApplicableConstraint,
+  matchesNoKnownConstraint,
+  NOT_APPLICABLE_CONSTRAINT,
+  NOT_KNOWN_CONSTRAINT,
+} from './constraints.utils'
 
 marker('editor.record.form.constraint.legalConstraints')
 marker('editor.record.form.constraint.securityConstraints')
@@ -16,9 +35,11 @@ export type ConstraintChoice =
   | 'securityConstraints'
   | 'otherConstraints'
 
-const NOT_APPLICABLE_CONSTRAINT = 'editor.record.form.constraint.not-applicable'
-const NOT_KNOWN_CONSTRAINT = 'editor.record.form.constraint.not-known'
-
+/**
+ * This component offers two toggles to easily define common constraints (no applicable constraint
+ * and no known constraint) and shows and hides the various constraints fields accordingly using
+ * the facade
+ */
 @Component({
   selector: 'gn-ui-form-field-constraints-shortcuts',
   standalone: true,
@@ -33,99 +54,86 @@ const NOT_KNOWN_CONSTRAINT = 'editor.record.form.constraint.not-known'
   styleUrls: ['./form-field-constraints-shortcuts.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FormFieldConstraintsShortcutsComponent implements OnInit {
+export class FormFieldConstraintsShortcutsComponent
+  implements OnInit, OnDestroy
+{
   legalConstraints$ = this.editorFacade.record$.pipe(
-    map((record) =>
-      'legalConstraints' in record ? record?.legalConstraints : []
-    )
+    map((record) => record?.legalConstraints ?? [])
   )
-
   securityConstraints$ = this.editorFacade.record$.pipe(
-    map((record) =>
-      'securityConstraints' in record ? record?.securityConstraints : []
-    )
+    map((record) => record?.securityConstraints ?? [])
+  )
+  otherConstraints$ = this.editorFacade.record$.pipe(
+    map((record) => record?.otherConstraints ?? [])
   )
 
-  otherConstraints$ = this.editorFacade.record$.pipe(
-    map((record) =>
-      'otherConstraints' in record ? record?.otherConstraints : []
+  noApplicableConstraint$: Observable<boolean> = this.legalConstraints$.pipe(
+    map((constraints) =>
+      constraints.some((constraint) =>
+        matchesNoApplicableConstraint(constraint)
+      )
     )
   )
-  toggleApplicableConstraint = false
-  toggleKnownConstraint = false
+  noKnownConstraint$: Observable<boolean> = this.legalConstraints$.pipe(
+    map((constraints) =>
+      constraints.some((constraint) => matchesNoKnownConstraint(constraint))
+    )
+  )
+  anyToggleActivated$ = combineLatest([
+    this.noApplicableConstraint$,
+    this.noKnownConstraint$,
+  ]).pipe(
+    map(
+      ([noApplicableConstraint, noKnownConstraint]) =>
+        noApplicableConstraint || noKnownConstraint
+    )
+  )
 
   constraintButtonChoices: ConstraintChoice[] = [
     'legalConstraints',
     'securityConstraints',
     'otherConstraints',
   ]
-  constraintSectionsToDisplay$: Observable<ConstraintChoice[]>
+
+  onDestroy$ = new Subject<void>()
+
+  constructor(private editorFacade: EditorFacade) {}
 
   ngOnInit(): void {
-    // check if toggle needs to be turned on based on existing constraints in legalConstraints
-    this.legalConstraints$.subscribe((constraints) => {
-      if (
-        constraints.find(
-          (constraint) => constraint.text === NOT_APPLICABLE_CONSTRAINT
-        )
-      ) {
-        this.toggleApplicableConstraint = true
+    // hide all constraints if any toggle is activated
+    this.anyToggleActivated$
+      .pipe(takeUntil(this.onDestroy$), distinctUntilChanged())
+      .subscribe((anyToggleActivated) => {
+        if (anyToggleActivated) {
+          this.hideAllConstraintSections()
+        }
+      })
 
-        this.hideAllConstraintSections()
-      } else if (
-        constraints.find(
-          (constraint) => constraint.text === NOT_KNOWN_CONSTRAINT
-        )
-      ) {
-        this.toggleKnownConstraint = true
-
-        this.hideAllConstraintSections()
-      }
-    })
-
-    // if constraint of one type is already present in the record, make the button for that type disabled
-    this.handleConstraintSectionsToDisplay()
+    // also hide constraints which are empty arrays
+    const hideEmptyConstraints = (
+      constraints$: Observable<Constraint[]>,
+      model: ConstraintChoice
+    ) => {
+      const isConstraintNotEmpty$ = constraints$.pipe(
+        takeUntil(this.onDestroy$),
+        map((c) => c.length > 0),
+        distinctUntilChanged()
+      )
+      combineLatest([
+        isConstraintNotEmpty$,
+        this.anyToggleActivated$,
+      ]).subscribe(([isNotEmpty, anyToggleActivated]) => {
+        const visible = isNotEmpty && !anyToggleActivated
+        this.editorFacade.setFieldVisibility({ model }, visible)
+      })
+    }
+    hideEmptyConstraints(this.legalConstraints$, 'legalConstraints')
+    hideEmptyConstraints(this.securityConstraints$, 'securityConstraints')
+    hideEmptyConstraints(this.otherConstraints$, 'otherConstraints')
   }
 
-  handleConstraintSectionsToDisplay() {
-    this.constraintSectionsToDisplay$ = combineLatest([
-      this.legalConstraints$,
-      this.securityConstraints$,
-      this.otherConstraints$,
-    ]).pipe(
-      map(([legalConstraints, securityConstraints, otherConstraints]) => {
-        const constraints = [
-          {
-            type: 'legalConstraints' as ConstraintChoice,
-            data: legalConstraints,
-          },
-          {
-            type: 'securityConstraints' as ConstraintChoice,
-            data: securityConstraints,
-          },
-          {
-            type: 'otherConstraints' as ConstraintChoice,
-            data: otherConstraints,
-          },
-        ]
-
-        const constraintSectionsToDisplay = constraints
-          .filter(({ data }) => data.length > 0)
-          .map(({ type }) => {
-            this.editorFacade.setFieldVisibility({ model: type }, true)
-            return type
-          })
-
-        // Set field visibility to false for constraints with no data
-        constraints
-          .filter(({ data }) => data.length === 0)
-          .forEach(({ type }) => {
-            this.editorFacade.setFieldVisibility({ model: type }, false)
-          })
-
-        return constraintSectionsToDisplay
-      })
-    )
+  ngOnDestroy() {
+    this.onDestroy$.next()
   }
 
   hideAllConstraintSections() {
@@ -137,60 +145,42 @@ export class FormFieldConstraintsShortcutsComponent implements OnInit {
     this.editorFacade.setFieldVisibility({ model: 'otherConstraints' }, false)
   }
 
-  showSpecificConstraintsTextAreas(constraintSection: ConstraintChoice) {
-    this.editorFacade.setFieldVisibility({ model: constraintSection }, true)
-  }
-
-  constructor(private editorFacade: EditorFacade) {}
-
-  onToggleChange(toggleName: string) {
-    if (toggleName === 'toggleApplicableConstraint') {
-      this.toggleApplicableConstraint = !this.toggleApplicableConstraint
-
-      if (this.toggleApplicableConstraint) {
-        this.toggleKnownConstraint = false // if toggleApplicableConstraint is turned on, toggleKnownConstraint must be off
-
-        this.editorFacade.updateRecordField('legalConstraints', [
-          { text: NOT_APPLICABLE_CONSTRAINT },
-        ])
-        this.hideAllConstraintSections()
-      } else {
-        // if only toggle is turned off, remove the constraint
-        this.editorFacade.updateRecordField('legalConstraints', []) //remove all legal constraints
-        // TODO: show the constraint sections that are already present in the record
-      }
-    } else if (toggleName === 'toggleKnownConstraint') {
-      this.toggleKnownConstraint = !this.toggleKnownConstraint
-
-      if (this.toggleKnownConstraint) {
-        this.toggleApplicableConstraint = false // if toggleKnownConstraint is turned on, toggleApplicableConstraint must be off
-
-        this.editorFacade.updateRecordField('legalConstraints', [
-          { text: NOT_KNOWN_CONSTRAINT },
-        ])
-        this.hideAllConstraintSections()
-      } else {
-        // if only toggle is turned off, remove the constraint
-        this.editorFacade.updateRecordField('legalConstraints', []) //remove all legal constraints
-        // TODO: show the constraint sections that are already present in the record
-      }
+  onToggleChange(
+    toggleName: 'noApplicableConstraint' | 'noKnownConstraint',
+    value: boolean
+  ) {
+    if (value) {
+      const presetConstraint =
+        toggleName === 'noApplicableConstraint'
+          ? NOT_APPLICABLE_CONSTRAINT
+          : NOT_KNOWN_CONSTRAINT
+      this.editorFacade.updateRecordField('legalConstraints', [
+        presetConstraint,
+      ])
+      this.hideAllConstraintSections()
+    } else {
+      // if the toggle is turned off, remove the constraint
+      this.editorFacade.updateRecordField('legalConstraints', []) //remove all legal constraints
     }
   }
 
   isConstraintButtonDisabled$(
     constraintSection: ConstraintChoice
   ): Observable<boolean> {
-    return this.constraintSectionsToDisplay$.pipe(
-      map((constraintSectionsToDisplay) => {
-        if (constraintSectionsToDisplay.includes(constraintSection)) {
-          this.editorFacade.setFieldVisibility(
-            { model: constraintSection },
-            true
-          )
-        }
-        return constraintSectionsToDisplay.includes(constraintSection)
-      })
-    )
+    switch (constraintSection) {
+      case 'legalConstraints':
+        return this.legalConstraints$.pipe(
+          map((constraints) => constraints.length > 0)
+        )
+      case 'securityConstraints':
+        return this.securityConstraints$.pipe(
+          map((constraints) => constraints.length > 0)
+        )
+      case 'otherConstraints':
+        return this.otherConstraints$.pipe(
+          map((constraints) => constraints.length > 0)
+        )
+    }
   }
 
   addConstraintSectionToDisplay(constraintSection: ConstraintChoice) {

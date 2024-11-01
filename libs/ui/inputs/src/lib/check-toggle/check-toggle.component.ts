@@ -20,9 +20,9 @@ export class CheckToggleComponent {
   @Input() label: string
   @Input() value: boolean
   @Input() color: 'primary' | 'secondary' = 'primary'
-  @Output() toggled = new EventEmitter()
+  @Output() toggled = new EventEmitter<boolean>()
 
-  toggle(event: Event) {
-    this.toggled.emit(event)
+  toggle(value: boolean) {
+    this.toggled.emit(value)
   }
 }
