@@ -4,7 +4,7 @@ import { FormFieldOpenDataComponent } from './form-field-open-data.component'
 
 jest.mock('./../../../../fields.config', () => {
   return {
-    OPEN_DATA_LICENSES: ['CC-BY'],
+    OPEN_DATA_LICENSE: 'CC-BY',
   }
 })
 
