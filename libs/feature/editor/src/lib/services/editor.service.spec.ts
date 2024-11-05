@@ -15,7 +15,7 @@ const SAMPLE_RECORD: CatalogRecord = datasetRecordsFixture()[0]
 class RecordsRepositoryMock {
   openRecordForEdition = jest.fn(() =>
     of([
-      { ...SAMPLE_RECORD, resourceUpdated: new Date() },
+      { ...SAMPLE_RECORD, recordUpdated: new Date() },
       '<xml>blabla</xml>',
       false,
     ])
@@ -67,7 +67,7 @@ describe('EditorService', () => {
     it('calls repository.saveRecord and repository.clearRecordDraft', () => {
       const expected = {
         ...SAMPLE_RECORD,
-        resourceUpdated: expect.any(Date),
+        recordUpdated: expect.any(Date),
       }
       expect(repository.saveRecord).toHaveBeenCalledWith(
         expected,
@@ -80,7 +80,7 @@ describe('EditorService', () => {
     })
     it('applies field processes (update date in record)', () => {
       const arg = (repository.saveRecord as jest.Mock).mock.calls[0][0]
-      expect(arg.recordUpdated).not.toEqual(SAMPLE_RECORD.resourceUpdated)
+      expect(arg.recordUpdated).not.toEqual(SAMPLE_RECORD.recordUpdated)
     })
     describe('if a new one has to be generated', () => {
       beforeEach(() => {
