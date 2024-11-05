@@ -1,11 +1,12 @@
-<ng-container *ngIf="model === 'licenses'">
+<!-- TEMPORARY - disabling the open data switch -->
+<!-- <ng-container *ngIf="model === 'licenses'">
   <gn-ui-form-field-open-data
     [value]="valueAsConstraints"
     (valueChange)="valueChange.emit($event)"
     (openDataChange)="isHidden = $event"
   ></gn-ui-form-field-open-data>
-</ng-container>
-<div class="flex flex-col h-full" *ngIf="!isHidden">
+</ng-container> -->
+<div class="flex flex-col h-full">
   <ng-container *ngIf="withoutWrapper; else withGenericWrapper">
     <ng-container *ngTemplateOutlet="fieldContent"></ng-container>
   </ng-container>
