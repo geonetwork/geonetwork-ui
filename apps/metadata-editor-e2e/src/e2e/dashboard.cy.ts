@@ -296,9 +296,31 @@ describe('dashboard (authenticated)', () => {
     })
   })
   describe('search filters', () => {
+    function checkFilterByChangeDate() {
+      cy.get('mat-calendar-header').find('button').first().click()
+      cy.get('mat-multi-year-view').contains('button', '2024').click()
+      cy.get('mat-year-view').contains('button', 'AUG').click()
+      cy.get('mat-month-view').contains('button', '1').click()
+      cy.get('mat-month-view').contains('button', '30').click()
+      cy.get('gn-ui-interactive-table')
+        .find('[data-cy="table-row"]')
+        .should('have.length', '1')
+      cy.get('gn-ui-results-table')
+        .find('[data-cy="resultItemTitle"]')
+        .each(($resultItemTitle) => {
+          cy.wrap($resultItemTitle)
+            .invoke('text')
+            .should('eq', 'Accroches vélos MEL')
+        })
+    }
     describe('allRecords search filter', () => {
       beforeEach(() => {
         cy.visit('/catalog/search')
+      })
+      it('should contain filter component with one search filter', () => {
+        cy.get('md-editor-search-filters')
+          .find('gn-ui-button')
+          .should('have.length', 2)
       })
       it('should filter the record list by editor (Barbara Roberts)', () => {
         cy.get('md-editor-search-filters').find('gn-ui-button').first().click()
@@ -315,15 +337,34 @@ describe('dashboard (authenticated)', () => {
             cy.wrap($ownerInfo).invoke('text').should('eq', 'Barbara Roberts')
           })
       })
+      it('should filter the record list by last update (changeDate)', () => {
+        cy.get('md-editor-search-filters').find('gn-ui-button').eq(1).click()
+        checkFilterByChangeDate()
+      })
+      it('should display the expand icon for the date range dropdown correctly', () => {
+        cy.get('md-editor-search-filters')
+          .find('gn-ui-date-range-dropdown')
+          .find('mat-icon')
+          .should('contain.text', 'expand_more')
+        cy.get('md-editor-search-filters').find('gn-ui-button').eq(1).click()
+        cy.get('md-editor-search-filters')
+          .find('gn-ui-date-range-dropdown')
+          .find('mat-icon')
+          .should('contain.text', 'expand_less')
+      })
     })
     describe('myRecords search filters', () => {
       beforeEach(() => {
         cy.visit('/my-space/my-records')
       })
-      it('should contain filter component with no search filter for now', () => {
+      it('should contain filter component with one search filter', () => {
         cy.get('md-editor-search-filters')
           .find('gn-ui-button')
-          .should('not.exist')
+          .should('have.length', 1)
+      })
+      it('should filter the record list by last update (changeDate)', () => {
+        cy.get('md-editor-search-filters').find('gn-ui-button').first().click()
+        checkFilterByChangeDate()
       })
     })
   })
