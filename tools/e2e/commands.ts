@@ -166,21 +166,22 @@ Cypress.Commands.add('editor_readFormUniqueIdentifier', () => {
 
 Cypress.Commands.add('editor_findDraftInLocalStorage', () => {
   cy.window().then((win) => {
-    return new Cypress.Promise((resolve, reject) => {
-      const checkLocalStorage = () => {
+    cy.get('body', { timeout: 10000 })
+      .should(() => {
         const keys = Object.keys(win.localStorage)
         const matchingKey = keys.find((key) =>
           key.startsWith('geonetwork-ui-draft-')
         )
 
-        if (matchingKey) {
-          resolve(win.localStorage.getItem(matchingKey))
-        } else {
-          setTimeout(checkLocalStorage, 100) // Retry after 100ms
-        }
-      }
-      checkLocalStorage()
-    })
+        expect(matchingKey).to.not.be.undefined
+      })
+      .then(() => {
+        const keys = Object.keys(win.localStorage)
+        const matchingKey = keys.find((key) =>
+          key.startsWith('geonetwork-ui-draft-')
+        )
+        return win.localStorage.getItem(matchingKey)
+      })
   })
 })
 
