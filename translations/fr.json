@@ -496,6 +496,7 @@
   "search.error.recordNotFound": "Cette donnée n'a pu être trouvée.",
   "search.field.any.placeholder": "Rechercher une donnée...",
   "search.field.sortBy": "Trier par :",
+  "search.filters.changeDate": "Dernière mise à jour",
   "search.filters.clear": "Réinitialiser",
   "search.filters.contact": "Contacts",
   "search.filters.format": "Formats",

@@ -1,0 +1,21 @@
+<gn-ui-button
+  type="outline"
+  extraClass="bg-background w-full !p-[8px] !pl-[16px]"
+  (buttonClick)="picker.open()"
+>
+  <div class="grow flex items-center mr-2 gap-2 overflow-hidden">
+    <div class="text-left font-medium truncate py-1">
+      {{ title }}
+    </div>
+  </div>
+  <mat-icon class="material-symbols-outlined shrink-0 opacity-40">
+    <ng-container *ngIf="isPickerDisplayed">expand_less</ng-container>
+    <ng-container *ngIf="!isPickerDisplayed">expand_more</ng-container>
+  </mat-icon>
+</gn-ui-button>
+<!--date range input is just present for output events and hidden from the DOM-->
+<mat-date-range-input [rangePicker]="picker">
+  <input matStartDate (dateInput)="startDateChange.emit($event.value)" />
+  <input matEndDate (dateInput)="endDateChange.emit($event.value)" />
+</mat-date-range-input>
+<mat-date-range-picker #picker></mat-date-range-picker>
