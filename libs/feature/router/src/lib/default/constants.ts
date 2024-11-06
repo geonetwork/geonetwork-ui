@@ -1,8 +1,5 @@
-import {
-  DateRange,
-  FieldsService,
-  FieldValue,
-} from '@geonetwork-ui/feature/search'
+import { DateRange } from '@geonetwork-ui/api/repository'
+// import { FieldsService, FieldValue } from '@geonetwork-ui/feature/search'
 
 export const ROUTER_STATE_KEY = 'router'
 

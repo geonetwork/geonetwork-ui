@@ -11,11 +11,11 @@ import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FieldsService } from '../utils/service/fields.service'
 import {
-  DateRange,
   FieldAvailableValue,
   FieldType,
   FieldValue,
 } from '../utils/service/fields'
+import { DateRange } from '@geonetwork-ui/api/repository'
 
 @Component({
   selector: 'gn-ui-filter-dropdown',

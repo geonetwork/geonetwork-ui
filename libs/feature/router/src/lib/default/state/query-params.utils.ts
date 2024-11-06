@@ -1,6 +1,5 @@
-import { isDateRange } from '@geonetwork-ui/api/repository'
+import { DateRange, isDateRange } from '@geonetwork-ui/api/repository'
 import { ROUTE_PARAMS, SearchRouteParams } from '../constants'
-import { DateRange } from '@geonetwork-ui/feature/search'
 
 export function flattenQueryParams(
   params: SearchRouteParams

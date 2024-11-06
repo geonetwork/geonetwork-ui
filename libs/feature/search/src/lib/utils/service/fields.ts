@@ -14,13 +14,13 @@ import {
   TermBucket,
 } from '@geonetwork-ui/common/domain/model/search'
 import {
+  DateRange,
   ElasticsearchService,
   isDateRange,
   METADATA_LANGUAGE,
 } from '@geonetwork-ui/api/repository'
 import { LangService } from '@geonetwork-ui/util/i18n'
 
-export type DateRange = { start?: Date; end?: Date }
 export type FieldType = 'values' | 'dateRange'
 
 export type FieldValue = string | number

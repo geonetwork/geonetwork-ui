@@ -1,7 +1,6 @@
 import { Injectable, Injector } from '@angular/core'
 import {
   AbstractSearchField,
-  DateRange,
   DateRangeSearchField,
   FieldValue,
   FullTextSearchField,
@@ -18,6 +17,7 @@ import { forkJoin, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { DateRange } from '@geonetwork-ui/api/repository'
 
 // key is the field name
 export type FieldValues = Record<string, FieldValue[] | FieldValue | DateRange>
