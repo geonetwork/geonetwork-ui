@@ -233,14 +233,20 @@ export class ElasticsearchService {
         })
         .join(' OR ')
     }
-    const queryString = Object.keys(filters)
-      .filter((fieldname) => !isDateRange(filters[fieldname]))
-      .filter(
-        (fieldname) =>
-          filters[fieldname] && JSON.stringify(filters[fieldname]) !== '{}'
-      )
-      .map((fieldname) => `${fieldname}:(${makeQuery(filters[fieldname])})`)
-      .join(' AND ')
+    const queryString =
+      typeof filters === 'string'
+        ? filters
+        : Object.keys(filters)
+            .filter((fieldname) => !isDateRange(filters[fieldname]))
+            .filter(
+              (fieldname) =>
+                filters[fieldname] &&
+                JSON.stringify(filters[fieldname]) !== '{}'
+            )
+            .map(
+              (fieldname) => `${fieldname}:(${makeQuery(filters[fieldname])})`
+            )
+            .join(' AND ')
     const queryRange = Object.entries(filters)
       .filter(([, value]) => isDateRange(value))
       .map(([searchField, dateRange]) => {
@@ -262,8 +268,12 @@ export class ElasticsearchService {
         queryRange.dateRange && {
           range: {
             [queryRange.searchField]: {
-              gte: formatDate(queryRange.dateRange.start),
-              lte: formatDate(queryRange.dateRange.end),
+              ...(queryRange.dateRange.start && {
+                gte: formatDate(queryRange.dateRange.start),
+              }),
+              ...(queryRange.dateRange.end && {
+                lte: formatDate(queryRange.dateRange.end),
+              }),
               format: 'yyyy-MM-dd',
             },
           },
@@ -512,7 +522,7 @@ export class ElasticsearchService {
               const filter = aggregation.filters[curr]
               return {
                 ...prev,
-                [curr]: this.filtersToQuery(filter),
+                [curr]: this.filtersToQuery(filter)[0],
               }
             }, {}),
           }

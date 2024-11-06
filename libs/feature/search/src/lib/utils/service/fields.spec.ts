@@ -9,6 +9,7 @@ import {
   SimpleSearchField,
   MultilingualSearchField,
   UserSearchField,
+  DateRangeSearchField,
 } from './fields'
 import { TestBed } from '@angular/core/testing'
 import { Injector } from '@angular/core'
@@ -325,6 +326,72 @@ describe('search fields implementations', () => {
         })
         it('returns an empty array', () => {
           expect(values).toEqual([])
+        })
+      })
+    })
+  })
+
+  describe('DateRangeSearchField (SimpleSearchField with date range)', () => {
+    beforeEach(() => {
+      searchField = new DateRangeSearchField('changeDate', injector, 'desc')
+    })
+    describe('#getAvailableValues', () => {
+      let values
+      beforeEach(async () => {
+        values = await lastValueFrom(searchField.getAvailableValues())
+      })
+      it('returns an empty list of values for now', () => {
+        expect(values).toEqual([])
+      })
+    })
+    describe('#getFiltersForValues', () => {
+      let filter
+      beforeEach(async () => {
+        filter = await lastValueFrom(
+          searchField.getFiltersForValues([
+            { start: new Date('2020-01-01'), end: new Date('2020-12-31') },
+          ])
+        )
+      })
+      it('returns appropriate filters', () => {
+        expect(filter).toEqual({
+          changeDate: {
+            start: new Date('2020-01-01'),
+            end: new Date('2020-12-31'),
+          },
+        })
+      })
+    })
+    describe('#getValuesForFilters', () => {
+      let values
+      describe('with several values', () => {
+        beforeEach(async () => {
+          values = await lastValueFrom(
+            searchField.getValuesForFilter({
+              changeDate: {
+                start: new Date('2020-01-01'),
+                end: new Date('2020-12-31'),
+              },
+            })
+          )
+        })
+        it('returns filtered values', () => {
+          expect(values).toEqual({
+            start: new Date('2020-01-01'),
+            end: new Date('2020-12-31'),
+          })
+        })
+      })
+      describe('with a unique value', () => {
+        beforeEach(async () => {
+          values = await lastValueFrom(
+            searchField.getValuesForFilter({
+              changeDate: { start: new Date('2020-01-01') },
+            })
+          )
+        })
+        it('returns the only value', () => {
+          expect(values).toEqual({ start: new Date('2020-01-01') })
         })
       })
     })

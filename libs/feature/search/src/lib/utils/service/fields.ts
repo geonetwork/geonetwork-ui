@@ -418,7 +418,7 @@ export class DateRangeSearchField extends SimpleSearchField {
     super(esFieldName, injector, order, orderType)
   }
 
-  getAvailableValues(): Observable<FieldAvailableValue[] /*DateRange[]*/> {
+  getAvailableValues(): Observable<FieldAvailableValue[]> {
     // TODO: return an array of dates to show which one are available in the date picker
     return of([])
   }
