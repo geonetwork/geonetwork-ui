@@ -44,7 +44,7 @@ describe('constraints utils', () => {
         })
       ).toBe(true)
     })
-    it('returns false otherwide', () => {
+    it('returns false otherwise', () => {
       expect(
         matchesNoApplicableConstraint({
           text: ' bonjour monde ',
@@ -88,7 +88,7 @@ describe('constraints utils', () => {
         })
       ).toBe(true)
     })
-    it('returns false otherwide', () => {
+    it('returns false otherwise', () => {
       expect(
         matchesNoKnownConstraint({
           text: ' bonjour monde ',

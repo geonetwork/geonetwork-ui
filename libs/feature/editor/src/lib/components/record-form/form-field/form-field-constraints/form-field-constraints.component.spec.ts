@@ -8,9 +8,11 @@ import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { importProvidersFrom } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 
+const mockLegalConstraints = [...datasetRecordsFixture()[0].legalConstraints]
+
 const mockConstraints = new BehaviorSubject([
   {
-    legalConstraints: [...datasetRecordsFixture()[0].legalConstraints],
+    legalConstraints: mockLegalConstraints,
     securityConstraints: [],
     otherConstraints: [],
   },
@@ -65,9 +67,10 @@ describe('FormFieldConstraintsComponent', () => {
     jest.spyOn(component.valueChange, 'emit')
     const newConstraint = { text: 'aaa', url: new URL('http://example.com') }
     component.handleConstraintChange(newConstraint, 0)
-
-    expect(component.value[0]).toBe(newConstraint)
-    expect(component.valueChange.emit).toHaveBeenCalledWith(component.value)
+    expect(component.valueChange.emit).toHaveBeenCalledWith([
+      newConstraint,
+      mockLegalConstraints[1],
+    ])
   })
 
   it('#handleConstraintsOrderChange should emit the new value', () => {

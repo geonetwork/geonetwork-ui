@@ -84,6 +84,24 @@ describe('FormFieldConstraintsShortcutsComponent', () => {
   })
 
   describe('onToggleChange', () => {
+    beforeEach(() => {
+      sampleRecord$.next({
+        ...sampleRecord,
+        legalConstraints: [
+          {
+            text: 'no known',
+            url: NOT_KNOWN_CONSTRAINT.url,
+          },
+          {
+            text: 'another constraint',
+          },
+          {
+            text: 'no applicable',
+            url: NOT_APPLICABLE_CONSTRAINT.url,
+          },
+        ],
+      })
+    })
     it('should update legal constraints and hide all sections when noApplicableConstraint toggled on', () => {
       component.onToggleChange('noApplicableConstraint', true)
       expect(editorFacade.updateRecordField).toHaveBeenCalledWith(
@@ -123,11 +141,34 @@ describe('FormFieldConstraintsShortcutsComponent', () => {
         false
       )
     })
-    it('should remove all legal constraints when toggled off', () => {
-      component.onToggleChange('noApplicableConstraint', false)
+    it('should remove all legal constraints matching "no applicable" when toggled off', async () => {
+      await component.onToggleChange('noApplicableConstraint', false)
       expect(editorFacade.updateRecordField).toHaveBeenCalledWith(
         'legalConstraints',
-        []
+        [
+          {
+            text: 'no known',
+            url: NOT_KNOWN_CONSTRAINT.url,
+          },
+          {
+            text: 'another constraint',
+          },
+        ]
+      )
+    })
+    it('should remove all legal constraints matching "no known" when toggled off', async () => {
+      await component.onToggleChange('noKnownConstraint', false)
+      expect(editorFacade.updateRecordField).toHaveBeenCalledWith(
+        'legalConstraints',
+        [
+          {
+            text: 'another constraint',
+          },
+          {
+            text: 'no applicable',
+            url: NOT_APPLICABLE_CONSTRAINT.url,
+          },
+        ]
       )
     })
   })

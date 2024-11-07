@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon'
 import {
   combineLatest,
   distinctUntilChanged,
+  firstValueFrom,
   map,
   Observable,
   Subject,
@@ -145,7 +146,7 @@ export class FormFieldConstraintsShortcutsComponent
     this.editorFacade.setFieldVisibility({ model: 'otherConstraints' }, false)
   }
 
-  onToggleChange(
+  async onToggleChange(
     toggleName: 'noApplicableConstraint' | 'noKnownConstraint',
     value: boolean
   ) {
@@ -159,8 +160,16 @@ export class FormFieldConstraintsShortcutsComponent
       ])
       this.hideAllConstraintSections()
     } else {
-      // if the toggle is turned off, remove the constraint
-      this.editorFacade.updateRecordField('legalConstraints', []) //remove all legal constraints
+      const matcher =
+        toggleName === 'noApplicableConstraint'
+          ? matchesNoApplicableConstraint
+          : matchesNoKnownConstraint
+      // if the toggle is turned off, remove all matching constraints
+      const constraints = await firstValueFrom(this.legalConstraints$)
+      this.editorFacade.updateRecordField(
+        'legalConstraints',
+        constraints.filter((c) => !matcher(c))
+      )
     }
   }
 

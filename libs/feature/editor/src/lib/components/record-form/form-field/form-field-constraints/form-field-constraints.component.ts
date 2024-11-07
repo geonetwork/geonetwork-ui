@@ -56,9 +56,9 @@ export class FormFieldConstraintsComponent implements OnInit {
   }
 
   handleConstraintChange(constraint: Constraint, index: number) {
-    this.value = [...this.value]
-    this.value[index] = constraint
-    this.valueChange.emit(this.value)
+    const newValue = [...this.value]
+    newValue[index] = constraint
+    this.valueChange.emit(newValue)
   }
 
   handleConstraintsOrderChange(constraints: Constraint[]) {
