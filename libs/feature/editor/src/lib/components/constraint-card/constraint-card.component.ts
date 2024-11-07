@@ -12,6 +12,12 @@ import { ButtonComponent, UrlInputComponent } from '@geonetwork-ui/ui/inputs'
 import { MatIconModule } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
 import { Constraint } from '@geonetwork-ui/common/domain/model/record'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { iconoirPlus } from '@ng-icons/iconoir'
 
 @Component({
   selector: 'gn-ui-constraint-card',
@@ -24,6 +30,13 @@ import { Constraint } from '@geonetwork-ui/common/domain/model/record'
     ButtonComponent,
     MatIconModule,
     TranslateModule,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({ iconoirPlus }),
+    provideNgIconsConfig({
+      size: '1.5rem',
+    }),
   ],
   templateUrl: './constraint-card.component.html',
   styleUrls: ['./constraint-card.component.css'],

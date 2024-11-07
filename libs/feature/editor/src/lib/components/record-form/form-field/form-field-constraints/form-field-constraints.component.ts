@@ -16,7 +16,12 @@ import {
 import { ButtonComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { TranslateModule } from '@ngx-translate/core'
-import { MatIconModule } from '@angular/material/icon'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { iconoirPlus } from '@ng-icons/iconoir'
 
 marker('editor.record.form.constraint.add.legalConstraints')
 marker('editor.record.form.constraint.add.securityConstraints')
@@ -34,7 +39,13 @@ marker('editor.record.form.constraint.header.otherConstraints')
     UiInputsModule,
     ButtonComponent,
     TranslateModule,
-    MatIconModule,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({ iconoirPlus }),
+    provideNgIconsConfig({
+      size: '1.5rem',
+    }),
   ],
   templateUrl: './form-field-constraints.component.html',
   styleUrls: ['./form-field-constraints.component.css'],

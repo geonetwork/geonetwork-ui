@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common'
 import { EditorFacade } from '../../../../+state/editor.facade'
 import { ButtonComponent, CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
-import { MatIconModule } from '@angular/material/icon'
 import {
   combineLatest,
   distinctUntilChanged,
@@ -26,6 +25,12 @@ import {
   NOT_APPLICABLE_CONSTRAINT,
   NOT_KNOWN_CONSTRAINT,
 } from './constraints.utils'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { iconoirPlus } from '@ng-icons/iconoir'
 
 marker('editor.record.form.constraint.legalConstraints')
 marker('editor.record.form.constraint.securityConstraints')
@@ -49,7 +54,13 @@ export type ConstraintChoice =
     CheckToggleComponent,
     ButtonComponent,
     TranslateModule,
-    MatIconModule,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({ iconoirPlus }),
+    provideNgIconsConfig({
+      size: '1.5rem',
+    }),
   ],
   templateUrl: './form-field-constraints-shortcuts.component.html',
   styleUrls: ['./form-field-constraints-shortcuts.component.css'],
