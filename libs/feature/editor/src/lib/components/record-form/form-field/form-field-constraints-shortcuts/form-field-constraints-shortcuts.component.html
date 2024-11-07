@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-2 mb-2">
+<div class="flex flex-col gap-2 mb-2" data-cy="constraints-shortcut-toggles">
   <gn-ui-check-toggle
     [label]="'editor.record.form.constraint.not.applicable' | translate"
     [value]="noApplicableConstraint$ | async"
@@ -16,6 +16,7 @@
 <div
   *ngIf="(anyToggleActivated$ | async) === false"
   class="flex flex-row flex-wrap gap-2"
+  data-cy="constraints-shortcut-btns"
 >
   <ng-container *ngFor="let constraint of constraintButtonChoices">
     <gn-ui-button

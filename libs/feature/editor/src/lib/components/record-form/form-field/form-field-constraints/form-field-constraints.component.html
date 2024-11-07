@@ -1,7 +1,11 @@
-<div class="w-full flex flex-col gap-2" data-test="displayedConstraints">
+<div class="w-full flex flex-col gap-2" [attr.data-cy]="constraintType">
   <span class="border-t border-gray-300 flex grow pb-[32px]"></span>
   <span class="font-bold mb-3">{{ constraintsHeader | translate }}</span>
-  <gn-ui-button type="gray" (buttonClick)="addConstraintSectionToDisplay()">
+  <gn-ui-button
+    type="gray"
+    (buttonClick)="addConstraintSectionToDisplay()"
+    data-cy="add-constraint-btn"
+  >
     <ng-icon name="iconoirPlus" class="text-primary"></ng-icon>
     &nbsp;<span>{{ additionalConstraintsButtonLabel | translate }}</span>
   </gn-ui-button>

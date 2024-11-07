@@ -30,6 +30,7 @@ import {
   tap,
 } from '../function-utils'
 import {
+  allChildrenElement,
   appendChildren,
   createChild,
   createElement,
@@ -542,7 +543,7 @@ export function createConstraint(
       )
     )
   }
-
+  // other
   return pipe(
     createNestedElement(
       'gmd:resourceConstraints',
@@ -565,13 +566,20 @@ export function createConstraint(
 }
 
 export function removeOtherConstraints() {
-  return removeChildren(
+  return tap(
     pipe(
       findChildrenElement('gmd:resourceConstraints'),
-      filterArray(
-        pipe(
-          findNestedElements('gmd:MD_Constraints', 'gmd:useLimitation'),
-          (array) => array.length > 0
+      mapArray(
+        removeChildren(
+          pipe(
+            findChildrenElement('gmd:MD_Constraints'),
+            filterArray(
+              pipe(
+                findNestedElements('gmd:useLimitation'),
+                (array) => array.length > 0
+              )
+            )
+          )
         )
       )
     )
@@ -579,13 +587,20 @@ export function removeOtherConstraints() {
 }
 
 export function removeSecurityConstraints() {
-  return removeChildren(
+  return tap(
     pipe(
       findChildrenElement('gmd:resourceConstraints'),
-      filterArray(
-        pipe(
-          findNestedElements('gmd:MD_SecurityConstraints', 'gmd:useLimitation'),
-          (array) => array.length > 0
+      mapArray(
+        removeChildren(
+          pipe(
+            findChildrenElement('gmd:MD_SecurityConstraints'),
+            filterArray(
+              pipe(
+                findNestedElements('gmd:useLimitation'),
+                (array) => array.length > 0
+              )
+            )
+          )
         )
       )
     )
@@ -593,21 +608,36 @@ export function removeSecurityConstraints() {
 }
 
 export function removeLegalConstraints() {
+  return tap(
+    pipe(
+      findChildrenElement('gmd:resourceConstraints'),
+      mapArray(
+        removeChildren(
+          pipe(
+            findChildrenElement('gmd:MD_LegalConstraints'),
+            filterArray(
+              pipe(
+                findNestedElements(
+                  'gmd:accessConstraints',
+                  'gmd:MD_RestrictionCode'
+                ),
+                mapArray(readAttribute('codeListValue')),
+                (restrictionCodes) =>
+                  restrictionCodes.every((code) => code !== 'license')
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+}
+
+export function removeEmptyResourceConstraints() {
   return removeChildren(
     pipe(
       findChildrenElement('gmd:resourceConstraints'),
-      filterArray(
-        pipe(
-          findNestedElements(
-            'gmd:MD_LegalConstraints',
-            'gmd:accessConstraints',
-            'gmd:MD_RestrictionCode'
-          ),
-          mapArray(readAttribute('codeListValue')),
-          (restrictionCodes) =>
-            restrictionCodes.every((code) => code !== 'license')
-        )
-      )
+      filterArray(pipe(allChildrenElement, (array) => array.length === 0))
     )
   )
 }
@@ -933,6 +963,7 @@ export function writeLegalConstraints(
   pipe(
     findOrCreateIdentification(),
     removeLegalConstraints(),
+    removeEmptyResourceConstraints(),
     appendChildren(
       ...record.legalConstraints.map((c) =>
         createConstraint(c, 'legal', record.defaultLanguage)
@@ -948,6 +979,7 @@ export function writeSecurityConstraints(
   pipe(
     findOrCreateIdentification(),
     removeSecurityConstraints(),
+    removeEmptyResourceConstraints(),
     appendChildren(
       ...record.securityConstraints.map((c) =>
         createConstraint(c, 'security', record.defaultLanguage)
@@ -963,6 +995,7 @@ export function writeOtherConstraints(
   pipe(
     findOrCreateIdentification(),
     removeOtherConstraints(),
+    removeEmptyResourceConstraints(),
     appendChildren(
       ...record.otherConstraints.map((c) =>
         createConstraint(c, 'other', record.defaultLanguage)

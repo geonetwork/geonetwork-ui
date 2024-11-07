@@ -8,7 +8,11 @@
   ></gn-ui-form-field-rich>
 
   <div *ngIf="!showUrlInput" class="flex-none mt-1">
-    <gn-ui-button (buttonClick)="showUrlBtnClicked = true" type="gray">
+    <gn-ui-button
+      (buttonClick)="showUrlBtnClicked = true"
+      type="gray"
+      data-cy="add-url-btn"
+    >
       <ng-icon name="iconoirPlus" class="text-primary"></ng-icon>&nbsp;
       <span translate>input.image.displayUrlInput</span>
     </gn-ui-button>
