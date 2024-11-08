@@ -8,7 +8,8 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirFilterList } from '@ng-icons/iconoir'
-import { SearchFiltersSummaryComponent } from '../search-filters-summary/search-filters-summary.component'
+import { MatIconModule } from '@angular/material/icon'
+import { SearchFiltersSummaryItemComponent } from '../search-filters-summary-item/search-filters-summary-item.component'
 
 @Component({
   selector: 'md-editor-search-filters',
@@ -18,7 +19,8 @@ import { SearchFiltersSummaryComponent } from '../search-filters-summary/search-
     TranslateModule,
     FeatureSearchModule,
     NgIconComponent,
-    SearchFiltersSummaryComponent,
+    MatIconModule,
+    SearchFiltersSummaryItemComponent,
   ],
   providers: [
     provideIcons({

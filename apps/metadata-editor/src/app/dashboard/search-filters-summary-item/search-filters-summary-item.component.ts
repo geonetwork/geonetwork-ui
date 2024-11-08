@@ -21,13 +21,13 @@ import { TranslateModule } from '@ngx-translate/core'
 import { DateRange } from '@geonetwork-ui/api/repository'
 
 @Component({
-  selector: 'md-editor-search-filters-summary',
+  selector: 'md-editor-search-filters-summary-item',
   standalone: true,
   imports: [CommonModule, TranslateModule, BadgeComponent],
-  templateUrl: './search-filters-summary.component.html',
-  styleUrls: ['./search-filters-summary.component.css'],
+  templateUrl: './search-filters-summary-item.component.html',
+  styleUrls: ['./search-filters-summary-item.component.css'],
 })
-export class SearchFiltersSummaryComponent implements OnInit {
+export class SearchFiltersSummaryItemComponent implements OnInit {
   @Input() fieldName: string
   fieldType: FieldType
 
