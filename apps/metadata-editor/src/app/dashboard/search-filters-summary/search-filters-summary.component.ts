@@ -1,7 +1,8 @@
-import { Component } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import {
   FieldsService,
+  FieldType,
   FieldValue,
   FieldValues,
   SearchFacade,
@@ -17,7 +18,7 @@ import {
 } from 'rxjs'
 import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
-import { isDateRange } from '@geonetwork-ui/api/repository'
+import { DateRange } from '@geonetwork-ui/api/repository'
 
 @Component({
   selector: 'md-editor-search-filters-summary',
@@ -26,36 +27,46 @@ import { isDateRange } from '@geonetwork-ui/api/repository'
   templateUrl: './search-filters-summary.component.html',
   styleUrls: ['./search-filters-summary.component.css'],
 })
-export class SearchFiltersSummaryComponent {
+export class SearchFiltersSummaryComponent implements OnInit {
+  @Input() fieldName: string
+  fieldType: FieldType
+
   fieldValues$ = this.searchFacade.searchFilters$.pipe(
     switchMap((filters) =>
       this.fieldsService.readFieldValuesFromFilters(filters)
     ),
     tap((fieldValues) => console.log(fieldValues)),
-    map((fieldValues) => this.filterEmptyValues(fieldValues)),
+    map((fieldValues) =>
+      Array.isArray(fieldValues[this.fieldName]) //TODO: handle date ranges as arrays averywhere?
+        ? fieldValues[this.fieldName]
+        : [fieldValues[this.fieldName]]
+    ),
     tap((fieldValues) => console.log(fieldValues))
-    // map((fieldValues) => fieldValues[this.fieldName]),
-    // filter((selected) => !!selected),
     // startWith([]),
     // catchError(() => of([]))
-  ) as Observable<Record<string, FieldValue[]>> // TODO: transform date objects to arrays
+  ) as Observable<FieldValue[] | DateRange[]>
+
+  dateRange$ = this.fieldValues$.pipe(
+    filter(() => this.fieldType === 'dateRange'),
+    map((fieldValues) => fieldValues as DateRange[])
+  )
+
+  values$ = this.fieldValues$.pipe(
+    filter(() => this.fieldType === 'values'),
+    map((fieldValues) => fieldValues as FieldValue[])
+  )
 
   constructor(
     private searchFacade: SearchFacade,
     private fieldsService: FieldsService
   ) {}
 
-  filterEmptyValues(fieldValues: any): any {
-    return Object.fromEntries(
-      Object.entries(fieldValues).filter(
-        ([key, value]) =>
-          (Array.isArray(value) && value.length > 0) || isDateRange(value)
-      )
-    )
+  ngOnInit() {
+    this.fieldType = this.fieldsService.getFieldType(this.fieldName)
   }
 
-  removeFilterValue(key: string, fieldValue: any) {
+  removeFilterValue(fieldValue: any) {
     // TODO
-    console.log('removeFilterValue', key, fieldValue)
+    console.log('removeFilterValue', this.fieldName, fieldValue)
   }
 }
