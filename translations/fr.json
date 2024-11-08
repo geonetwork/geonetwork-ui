@@ -527,6 +527,8 @@
   "search.filters.representationType": "Type de représentation",
   "search.filters.resourceType": "Type de ressource",
   "search.filters.standard": "Standard",
+  "search.filters.summaryLabel.changeDate": "Modifiée le",
+  "search.filters.summaryLabel.user": "Modifiée par",
   "search.filters.title": "Affiner votre recherche",
   "search.filters.topic": "Thèmes",
   "search.filters.useSpatialFilter": "Mettre en avant les résultats sur la zone d'intérêt",

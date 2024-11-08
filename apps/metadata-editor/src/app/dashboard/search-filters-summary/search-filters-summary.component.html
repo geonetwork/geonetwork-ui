@@ -1,0 +1,13 @@
+<div *ngIf="fieldValues$ | async as fieldValues">
+  <div *ngFor="let item of fieldValues | keyvalue">
+    <!-- <div *ngIf="item.value && item.value['length']"> -->
+    <span translate>search.filters.summaryLabel.{{ item.key }}</span
+    ><gn-ui-badge
+      *ngFor="let itemValue of item.value"
+      [removable]="true"
+      (badgeRemoveClicked)="removeFilterValue(item.key, itemValue)"
+      >{{ itemValue }}</gn-ui-badge
+    >
+    <!-- </div> -->
+  </div>
+</div>

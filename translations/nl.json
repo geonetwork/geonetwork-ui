@@ -527,6 +527,8 @@
   "search.filters.representationType": "",
   "search.filters.resourceType": "",
   "search.filters.standard": "",
+  "search.filters.summaryLabel.changeDate": "",
+  "search.filters.summaryLabel.user": "",
   "search.filters.title": "",
   "search.filters.topic": "",
   "search.filters.useSpatialFilter": "",
