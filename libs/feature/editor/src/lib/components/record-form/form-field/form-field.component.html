@@ -41,6 +41,7 @@
             >edit</span
           >
           <span
+            *ngIf="config.hintKey"
             class="material-symbols-outlined gn-ui-icon-small m-2"
             [matTooltip]="config.hintKey! | translate"
             matTooltipPosition="above"
