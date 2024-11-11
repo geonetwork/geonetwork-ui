@@ -273,7 +273,7 @@ describe('dashboard (authenticated)', () => {
         cy.get('gn-ui-autocomplete').should('have.value', '')
       })
       it('should hide the search input when navigating to my drafts', () => {
-        cy.get('md-editor-dashboard-menu').find('a').eq(6).click()
+        cy.get('md-editor-dashboard-menu').find('a').eq(4).click()
         cy.get('gn-ui-autocomplete').should('not.exist')
       })
     })
