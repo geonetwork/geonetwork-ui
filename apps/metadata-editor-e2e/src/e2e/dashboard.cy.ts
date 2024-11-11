@@ -211,7 +211,7 @@ describe('dashboard (authenticated)', () => {
     })
     describe('my records', () => {
       it('should only display records I own', () => {
-        cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
+        cy.get('md-editor-dashboard-menu').find('a').eq(3).click()
         cy.get('gn-ui-results-table')
           .find('[data-cy="table-row"]')
           .find('ng-icon')
@@ -219,19 +219,18 @@ describe('dashboard (authenticated)', () => {
           .should('contain', 'admin admin')
       })
       it('should display the correct amount of records', () => {
-        cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
+        cy.get('md-editor-dashboard-menu').find('a').eq(3).click()
         cy.get('gn-ui-results-table')
           .find('[data-cy="table-row"]')
           .should('have.length', '10')
       })
       it('should sort the records by title', () => {
-        cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
+        cy.get('md-editor-dashboard-menu').find('a').eq(3).click()
         cy.get('gn-ui-results-table')
           .find('[data-cy="table-row"]')
           .first()
           .invoke('text')
           .then((firstRecord) => {
-            console.log(firstRecord)
             cy.get('gn-ui-results-table')
               .find('.table-header-cell')
               .eq(1)
