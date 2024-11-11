@@ -63,13 +63,13 @@ export class ImportRecordComponent {
   @Output() closeImportMenu = new EventEmitter<void>()
 
   importMenuItems: ImportMenuItems[] = [
-    {
-      label: this.translateService.instant('dashboard.importRecord.useModel'),
-      icon: 'iconoirLightBulbOn',
-      action: () => null,
-      dataTest: 'useAModelButton',
-      disabled: true,
-    },
+    // {
+    //   label: this.translateService.instant('dashboard.importRecord.useModel'),
+    //   icon: 'iconoirLightBulbOn',
+    //   action: () => null,
+    //   dataTest: 'useAModelButton',
+    //   disabled: true,
+    // },
     {
       label: this.translateService.instant(
         'dashboard.importRecord.importExternal'
