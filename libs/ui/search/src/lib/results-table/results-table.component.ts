@@ -212,24 +212,4 @@ export class ResultsTableComponent {
   handleRecordSelectedChange(selected: boolean, record: CatalogRecord) {
     this.recordsSelectedChange.emit([[record], selected])
   }
-
-  async toggleSelectAll() {
-    this.recordsSelectedChange.emit([this.records, !this.isAllSelected()])
-  }
-
-  isAllSelected(): boolean {
-    return this.records.every((record) =>
-      this.selectedRecordsIdentifiers.includes(record.uniqueIdentifier)
-    )
-  }
-
-  isSomeSelected(): boolean {
-    const allSelected = this.records.every((record) =>
-      this.selectedRecordsIdentifiers.includes(record.uniqueIdentifier)
-    )
-    const someSelected = this.records.some((record) =>
-      this.selectedRecordsIdentifiers.includes(record.uniqueIdentifier)
-    )
-    return !allSelected && someSelected
-  }
 }

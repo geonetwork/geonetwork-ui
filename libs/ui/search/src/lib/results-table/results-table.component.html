@@ -4,16 +4,7 @@
 >
   <!-- SELECTED COLUMN -->
   <gn-ui-interactive-table-column [width]="'3rem'">
-    <ng-template #header>
-      <gn-ui-checkbox
-        [checked]="isAllSelected()"
-        [indeterminate]="isSomeSelected()"
-        (changed)="toggleSelectAll()"
-        type="default"
-        class="-m-2 mr-3"
-      >
-      </gn-ui-checkbox>
-    </ng-template>
+    <ng-template #header> </ng-template>
     <ng-template #cell let-item>
       <gn-ui-checkbox
         [checked]="isChecked(item)"
