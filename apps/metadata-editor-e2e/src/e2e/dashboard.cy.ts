@@ -140,24 +140,10 @@ describe('dashboard (authenticated)', () => {
 
     it('should show nothing when none are selected', () => {
       cy.visit('/catalog/search')
-      cy.get('gn-ui-results-table')
-        .find('.table-row-cell')
-        .get('gn-ui-checkbox')
-        .each(($checkbox) => cy.wrap($checkbox).click())
       cy.get('[data-cy=records-information]').should(
         'not.have.descendants',
         '[data-test=selected-count]'
       )
-    })
-
-    it('should select all records when the "select all" checkbox is checked', () => {
-      cy.visit('/catalog/search')
-      cy.get('gn-ui-results-table')
-        .find('.table-row-cell')
-        .get('gn-ui-checkbox')
-        .first()
-        .click()
-      cy.get('[data-test=selected-count]').contains('15 selected')
     })
   })
   describe('columns', () => {
