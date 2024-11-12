@@ -26,16 +26,12 @@ describe('record-actions', () => {
         }).as('insertRecord')
         cy.get('md-editor-publish-button').click()
         cy.wait('@insertRecord')
+        // Assert that the draft exists in the local storage
+        cy.editor_findDraftInLocalStorage().then((value) =>
+          expect(value).to.not.equal('null')
+        )
         cy.get('@abstractField').focus()
         cy.get('@abstractField').type('draft abstract')
-        // Assert that the draft exists in the local storage
-        cy.editor_readFormUniqueIdentifier().then((uniqueIdentifier) =>
-          cy
-            .window()
-            .its('localStorage')
-            .invoke('getItem', `geonetwork-ui-draft-${uniqueIdentifier}`)
-            .should('exist')
-        )
         cy.visit('/my-space/my-records')
         cy.get('[data-cy="table-row"]')
           .contains(recordId)
@@ -64,11 +60,8 @@ describe('record-actions', () => {
           .as('abstractField')
           .focus()
         cy.get('@abstractField').type('draft abstract')
-        cy.editor_readFormUniqueIdentifier().then((recordUuid) => {
-          cy.window()
-            .its('localStorage')
-            .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
-            .should('contain', 'draft abstract')
+        cy.editor_findDraftInLocalStorage().then((value) => {
+          expect(value).to.contain('draft abstract')
         })
         cy.visit('/my-space/my-draft')
         cy.get('[data-cy="table-row"]')
@@ -152,11 +145,8 @@ describe('record-actions', () => {
         .as('abstractField')
         .focus()
       cy.get('@abstractField').type('record abstract')
-      cy.editor_readFormUniqueIdentifier().then((recordUuid) => {
-        cy.window()
-          .its('localStorage')
-          .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
-          .should('exist')
+      cy.editor_findDraftInLocalStorage().then((value) => {
+        expect(value).to.not.equal('null')
       })
 
       cy.intercept({
@@ -170,11 +160,8 @@ describe('record-actions', () => {
       cy.get('@abstractField').clear()
       cy.get('@abstractField').focus()
       cy.get('@abstractField').type('draft abstract')
-      cy.editor_readFormUniqueIdentifier().then((recordUuid) => {
-        cy.window()
-          .its('localStorage')
-          .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
-          .should('contain', 'draft abstract')
+      cy.editor_findDraftInLocalStorage().then((value) => {
+        expect(value).to.contain('draft abstract')
       })
 
       cy.get('[data-cy="undo-button"]').click()

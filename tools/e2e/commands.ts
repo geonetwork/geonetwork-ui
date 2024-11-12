@@ -19,6 +19,7 @@ declare namespace Cypress {
     editor_readFormUniqueIdentifier(): Chainable<string | number | string[]>
     editor_wrapPreviousDraft(): void
     editor_publishAndReload(): void
+    editor_findDraftInLocalStorage(): Chainable<string | number | string[]>
 
     // interaction with gn-ui-dropdown-selector
     openDropdown(): Chainable<JQuery<HTMLElement>>
@@ -156,9 +157,32 @@ Cypress.Commands.add('clearRecordDrafts', () => {
 })
 
 Cypress.Commands.add('editor_readFormUniqueIdentifier', () => {
-  return cy
-    .get('gn-ui-form-field[ng-reflect-model=uniqueIdentifier] input')
-    .invoke('val')
+  cy.url().then((url) => {
+    if (url.includes('/edit/')) {
+      return url.split('edit/').pop()
+    }
+  })
+})
+
+Cypress.Commands.add('editor_findDraftInLocalStorage', () => {
+  cy.window().then((win) => {
+    cy.get('body', { timeout: 10000 })
+      .should(() => {
+        const keys = Object.keys(win.localStorage)
+        const matchingKey = keys.find((key) =>
+          key.startsWith('geonetwork-ui-draft-')
+        )
+
+        expect(matchingKey).to.not.be.undefined
+      })
+      .then(() => {
+        const keys = Object.keys(win.localStorage)
+        const matchingKey = keys.find((key) =>
+          key.startsWith('geonetwork-ui-draft-')
+        )
+        return win.localStorage.getItem(matchingKey)
+      })
+  })
 })
 
 // this needs a recordUuid to have been wrapped

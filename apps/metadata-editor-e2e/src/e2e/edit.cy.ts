@@ -35,11 +35,8 @@ describe('editor form', () => {
       .click()
     cy.get('[data-test="record-menu-duplicate-button"]').click()
     cy.url().should('include', '/duplicate/')
-    cy.editor_readFormUniqueIdentifier().then((recordUuid) => {
-      cy.window()
-        .its('localStorage')
-        .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
-        .should('exist')
+    cy.editor_findDraftInLocalStorage().then((value) => {
+      expect(value).to.not.equal(null)
     })
     cy.get('md-editor-publish-button').click()
 
@@ -47,7 +44,7 @@ describe('editor form', () => {
     cy.visit('/catalog/search')
     cy.get('gn-ui-fuzzy-search input').type('station épuration copy{enter}')
     cy.get('[data-cy="table-row"]').first().children('div').eq(2).click()
-
+    cy.url().should('include', '/edit/')
     cy.editor_readFormUniqueIdentifier().then((uuid) => {
       recordUuid = uuid
     })
@@ -220,19 +217,6 @@ describe('editor form', () => {
           .children('div')
           .eq(1)
           .as('aboutSection')
-      })
-      describe('unique identifier', () => {
-        it('shows the unique identifier', () => {
-          cy.get('@aboutSection')
-            .find('gn-ui-form-field')
-            .eq(0)
-            .find('gn-ui-form-field-simple')
-            .find('input')
-            .invoke('val')
-            .then((val) => {
-              cy.get('@recordUuid').should('eq', val)
-            })
-        })
       })
       describe('resource updated', () => {
         beforeEach(() => {

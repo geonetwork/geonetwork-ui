@@ -1,13 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
 import { TranslateModule } from '@ngx-translate/core'
 import { MockBuilder } from 'ng-mocks'
 import { FormFieldLicenseComponent } from './form-field-license/form-field-license.component'
 import { FormFieldOverviewsComponent } from './form-field-overviews/form-field-overviews.component'
 import { FormFieldDateUpdatedComponent } from './form-field-date-updated/form-field-date-updated.component'
 import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
-import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
 import { FormFieldTemporalExtentsComponent } from './form-field-temporal-extents/form-field-temporal-extents.component'
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
@@ -102,29 +100,6 @@ describe('FormFieldComponent', () => {
     })
     it('creates a temporal extents form field', () => {
       expect(formField).toBeTruthy()
-    })
-  })
-  describe('simple field', () => {
-    let fieldWrapper
-    let formField
-    beforeEach(async () => {
-      component.model = 'uniqueIdentifier'
-      fixture.detectChanges()
-      await fixture.whenStable()
-      fieldWrapper = fixture.debugElement.query(
-        By.directive(FormFieldWrapperComponent)
-      ).componentInstance
-      formField = fixture.debugElement.query(
-        By.directive(FormFieldSimpleComponent)
-      ).componentInstance
-    })
-    it('creates a simple field field (unique identifier)', () => {
-      expect(formField).toBeTruthy()
-      expect(formField.type).toEqual('text')
-      expect(formField.readonly).toEqual(true)
-    })
-    it('creates a form field wrapper', () => {
-      expect(fieldWrapper).toBeTruthy()
     })
   })
   describe('spatial extent field', () => {

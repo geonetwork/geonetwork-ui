@@ -18,6 +18,14 @@ import { Keyword } from '@geonetwork-ui/common/domain/model/record'
  ************************************************************
  */
 
+export const RECORD_UNIQUE_IDENTIFIER_FIELD: EditorField = {
+  model: 'uniqueIdentifier',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.uniqueIdentifier'),
+  },
+  hidden: true,
+}
+
 export const RECORD_LICENSE_FIELD: EditorField = {
   model: 'licenses',
   formFieldConfig: {
@@ -29,14 +37,6 @@ export const RECORD_KEYWORDS_FIELD: EditorField = {
   model: 'keywords',
   formFieldConfig: {
     labelKey: marker('editor.record.form.field.keywords'),
-  },
-}
-
-export const RECORD_UNIQUE_IDENTIFIER_FIELD: EditorField = {
-  model: 'uniqueIdentifier',
-  formFieldConfig: {
-    labelKey: marker('editor.record.form.field.uniqueIdentifier'),
-    locked: true,
   },
 }
 
@@ -52,10 +52,10 @@ export const RECORD_UPDATED_FIELD: EditorField = {
   model: 'recordUpdated',
   formFieldConfig: {
     labelKey: marker('editor.record.form.field.recordUpdated'),
-    locked: true,
   },
   onSaveProcess: '${dateNow()}',
   gridColumnSpan: 1,
+  hidden: true,
 }
 
 export const RECORD_UPDATE_FREQUENCY_FIELD: EditorField = {
