@@ -6,4 +6,7 @@
     *ngFor="let field of searchFields; let i = index"
     [fieldName]="field"
   ></md-editor-search-filters-summary-item>
+  <button class="bg-white text-black" (click)="clearFilters()">
+    {{ 'search.filters.clearFilters' | translate }}
+  </button>
 </div>

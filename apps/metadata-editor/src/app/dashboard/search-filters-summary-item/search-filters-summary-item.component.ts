@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import {
   FieldsService,
@@ -6,10 +6,12 @@ import {
   FieldValue,
   FieldValues,
   SearchFacade,
+  SearchService,
 } from '@geonetwork-ui/feature/search'
 import {
   catchError,
   filter,
+  firstValueFrom,
   map,
   Observable,
   startWith,
@@ -37,7 +39,7 @@ export class SearchFiltersSummaryItemComponent implements OnInit {
     ),
     tap((fieldValues) => console.log(fieldValues)),
     map((fieldValues) =>
-      Array.isArray(fieldValues[this.fieldName]) //TODO: handle date ranges as arrays averywhere?
+      Array.isArray(fieldValues[this.fieldName]) //TODO: handle date ranges as arrays everywhere?
         ? fieldValues[this.fieldName]
         : [fieldValues[this.fieldName]]
     ),
@@ -58,6 +60,7 @@ export class SearchFiltersSummaryItemComponent implements OnInit {
 
   constructor(
     private searchFacade: SearchFacade,
+    private searchService: SearchService,
     private fieldsService: FieldsService
   ) {}
 
@@ -65,8 +68,17 @@ export class SearchFiltersSummaryItemComponent implements OnInit {
     this.fieldType = this.fieldsService.getFieldType(this.fieldName)
   }
 
-  removeFilterValue(fieldValue: any) {
-    // TODO
-    console.log('removeFilterValue', this.fieldName, fieldValue)
+  async removeFilterValue(fieldValue: FieldValue | DateRange) {
+    const currentFieldValues: (FieldValue | DateRange)[] = await firstValueFrom(
+      this.fieldValues$
+    )
+    const updatedFieldValues = currentFieldValues.filter(
+      (value: string | DateRange) => value !== fieldValue
+    )
+    this.fieldsService
+      .buildFiltersFromFieldValues({
+        [this.fieldName]: updatedFieldValues as FieldValue[],
+      })
+      .subscribe((filters) => this.searchService.updateFilters(filters))
   }
 }
