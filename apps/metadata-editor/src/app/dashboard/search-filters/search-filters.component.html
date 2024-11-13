@@ -14,13 +14,7 @@
       [style.--gn-ui-multiselect-counter-background-color]="'white'"
     ></gn-ui-filter-dropdown>
   </div>
-  <div
-    class="flex flex-row py-3 px-4 gap-4 overflow-hidden grow border-[1px] border-gray-200"
-    *ngIf="searchFilterActive$ | async"
-  >
-    <md-editor-search-filters-summary-item
-      *ngFor="let filter of searchConfig; let i = index"
-      [fieldName]="filter.fieldName"
-    ></md-editor-search-filters-summary-item>
-  </div>
+  <md-editor-search-filters-summary
+    [searchFields]="searchFields"
+  ></md-editor-search-filters-summary>
 </div>
