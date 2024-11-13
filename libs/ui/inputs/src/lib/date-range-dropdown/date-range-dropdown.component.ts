@@ -32,6 +32,8 @@ import { OverlayContainer } from '@angular/cdk/overlay'
 })
 export class DateRangeDropdownComponent implements AfterViewChecked {
   @Input() title: string
+  @Input() startDate: Date
+  @Input() endDate: Date
   @Output() startDateChange = new EventEmitter<Date>()
   @Output() endDateChange = new EventEmitter<Date>()
 

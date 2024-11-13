@@ -1,6 +1,8 @@
 <gn-ui-date-range-dropdown
   *ngIf="fieldType === 'dateRange'; else multiselect"
   [title]="title"
+  [startDate]="(selectedDateRange$ | async)?.start"
+  [endDate]="(selectedDateRange$ | async)?.end"
   (startDateChange)="onStartDateChange($event)"
   (endDateChange)="onEndDateChange($event)"
 ></gn-ui-date-range-dropdown>

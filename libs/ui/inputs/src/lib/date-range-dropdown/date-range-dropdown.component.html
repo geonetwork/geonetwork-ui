@@ -15,7 +15,15 @@
 </gn-ui-button>
 <!--date range input is just present for output events and hidden from the DOM-->
 <mat-date-range-input [rangePicker]="picker">
-  <input matStartDate (dateInput)="startDateChange.emit($event.value)" />
-  <input matEndDate (dateInput)="endDateChange.emit($event.value)" />
+  <input
+    matStartDate
+    [value]="startDate"
+    (dateInput)="startDateChange.emit($event.value)"
+  />
+  <input
+    matEndDate
+    [value]="endDate"
+    (dateInput)="endDateChange.emit($event.value)"
+  />
 </mat-date-range-input>
 <mat-date-range-picker #picker></mat-date-range-picker>
