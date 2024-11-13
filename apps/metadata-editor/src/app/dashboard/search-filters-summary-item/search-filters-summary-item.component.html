@@ -1,20 +1,22 @@
-<div *ngIf="fieldType === 'dateRange'; else valuesBadge">
-  <span translate>search.filters.summaryLabel.{{ fieldName }}</span>
-  <gn-ui-badge
-    #valuesBadge
-    *ngFor="let fieldValue of dateRange$ | async"
-    [removable]="true"
-    (badgeRemoveClicked)="removeFilterValue(fieldValue)"
-    >{{ fieldValue['start'] }} - >{{ fieldValue['end'] }}</gn-ui-badge
-  >
+<div *ngIf="(fieldValues$ | async)?.length > 0">
+  <div *ngIf="fieldType === 'dateRange'; else valuesBadge">
+    <span translate>search.filters.summaryLabel.{{ fieldName }}</span>
+    <gn-ui-badge
+      #valuesBadge
+      *ngFor="let fieldValue of dateRange$ | async"
+      [removable]="true"
+      (badgeRemoveClicked)="removeFilterValue(fieldValue)"
+      >{{ fieldValue['start'] }} - >{{ fieldValue['end'] }}</gn-ui-badge
+    >
+  </div>
+  <ng-template #valuesBadge>
+    <span translate>search.filters.summaryLabel.{{ fieldName }}</span>
+    <gn-ui-badge
+      #valuesBadge
+      *ngFor="let fieldValue of values$ | async"
+      [removable]="true"
+      (badgeRemoveClicked)="removeFilterValue(fieldValue)"
+      >{{ fieldValue }}</gn-ui-badge
+    >
+  </ng-template>
 </div>
-<ng-template #valuesBadge>
-  <span translate>search.filters.summaryLabel.{{ fieldName }}</span>
-  <gn-ui-badge
-    #valuesBadge
-    *ngFor="let fieldValue of values$ | async"
-    [removable]="true"
-    (badgeRemoveClicked)="removeFilterValue(fieldValue)"
-    >{{ fieldValue }}</gn-ui-badge
-  >
-</ng-template>

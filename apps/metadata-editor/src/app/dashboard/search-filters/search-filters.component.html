@@ -16,6 +16,7 @@
   </div>
   <div
     class="flex flex-row py-3 px-4 gap-4 overflow-hidden grow border-[1px] border-gray-200"
+    *ngIf="searchFilterActive$ | async"
   >
     <md-editor-search-filters-summary-item
       *ngFor="let filter of searchConfig; let i = index"
