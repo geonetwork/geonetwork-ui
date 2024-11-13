@@ -53,7 +53,7 @@ export function expandQueryParams(
   return expanded
 }
 
-// this only matches if the separator ".." is present only once and not dots are present elsewhere
+// this only matches if the separator ".." is present only once and no dots are present elsewhere
 function isDateUrl(value: string) {
   return value.match(/^[^.]*(\.\.)[^.]*$/)
 }

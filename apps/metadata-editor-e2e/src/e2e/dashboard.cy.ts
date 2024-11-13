@@ -317,7 +317,7 @@ describe('dashboard (authenticated)', () => {
       beforeEach(() => {
         cy.visit('/catalog/search')
       })
-      it('should contain filter component with one search filter', () => {
+      it('should contain filter component with two search filters', () => {
         cy.get('md-editor-search-filters')
           .find('gn-ui-button')
           .should('have.length', 2)
