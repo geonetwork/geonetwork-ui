@@ -123,7 +123,7 @@ describe('editor form', () => {
         it('shows the title', () => {
           cy.get('gn-ui-form-field')
             .first()
-            .find('input')
+            .find('textarea')
             .invoke('val')
             .should(
               'eq',
@@ -132,16 +132,16 @@ describe('editor form', () => {
         })
         it('edits and saves the title', () => {
           cy.editor_wrapPreviousDraft()
-          cy.get('gn-ui-form-field').first().find('input').clear()
+          cy.get('gn-ui-form-field').first().find('textarea').clear()
           cy.get('gn-ui-form-field')
             .first()
-            .find('input')
+            .find('textarea')
             .type('Test record modified')
           cy.editor_publishAndReload()
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('gn-ui-form-field')
             .first()
-            .find('input')
+            .find('textarea')
             .invoke('val')
             .should('eq', 'Test record modified')
         })
