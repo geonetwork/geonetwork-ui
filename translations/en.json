@@ -296,6 +296,7 @@
   "editor.record.undo.tooltip.disabled": "There are no pending changes on this record",
   "editor.record.undo.tooltip.enabled": "Clicking this button will cancel the pending changes on this record.",
   "editor.record.upToDate": "This record is up to date",
+  "editor.sidebar.logout": "Log out",
   "editor.sidebar.menu.editor": "Editor",
   "editor.temporary.disabled": "Not implemented yet",
   "externalviewer.dataset.unnamed": "Datahub layer",

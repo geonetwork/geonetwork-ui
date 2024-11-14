@@ -296,6 +296,7 @@
   "editor.record.undo.tooltip.disabled": "Il n'y a pas de modifications en cours sur cette fiche",
   "editor.record.undo.tooltip.enabled": "Cliquez sur ce bouton pour annuler les modifications apportées à cette fiche",
   "editor.record.upToDate": "",
+  "editor.sidebar.logout": "Se déconnecter",
   "editor.sidebar.menu.editor": "",
   "editor.temporary.disabled": "Pas encore implémenté",
   "externalviewer.dataset.unnamed": "Couche du datahub",
