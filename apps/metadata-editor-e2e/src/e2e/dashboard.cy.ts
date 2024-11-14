@@ -344,11 +344,23 @@ describe('dashboard (authenticated)', () => {
   })
 })
 
-describe('when the user is not logged in', () => {
-  beforeEach(() => {
-    cy.visit('/catalog/search')
+describe('Logging in and out', () => {
+  describe('when the user is not logged in', () => {
+    beforeEach(() => {
+      cy.visit('/catalog/search')
+    })
+    it('redirects to the login page', () => {
+      cy.url().should('include', '/catalog.signin?redirect=')
+    })
   })
-  it('redirects to the login page', () => {
-    cy.url().should('include', '/catalog.signin?redirect=')
+  describe('Logging out', () => {
+    beforeEach(() => {
+      cy.login('admin', 'admin', false)
+      cy.visit('/catalog/search')
+    })
+    it('logs out the user', () => {
+      cy.get('md-editor-sidebar').find('gn-ui-button').eq(1).click()
+      cy.url().should('include', '/catalog.signin?redirect=')
+    })
   })
 })

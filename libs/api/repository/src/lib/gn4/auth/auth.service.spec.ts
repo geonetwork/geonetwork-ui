@@ -82,4 +82,13 @@ describe('AuthService', () => {
       )
     })
   })
+
+  describe('Logout', () => {
+    beforeEach(() => {
+      service = TestBed.inject(AuthService)
+    })
+    it('should return the logout url', () => {
+      expect(service.logoutUrl).toEqual('/geonetwork/signout')
+    })
+  })
 })
