@@ -26,6 +26,7 @@ import { DashboardPageComponent } from './dashboard/dashboard-page.component'
 import { EditorRouterService } from './router.service'
 import {
   LOGIN_URL,
+  LOGOUT_URL,
   provideGn4,
   provideRepositoryUrl,
 } from '@geonetwork-ui/api/repository'
@@ -69,6 +70,10 @@ import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
     {
       provide: LOGIN_URL,
       useFactory: () => getGlobalConfig().LOGIN_URL,
+    },
+    {
+      provide: LOGOUT_URL,
+      useFactory: () => getGlobalConfig().LOGOUT_URL,
     },
   ],
   bootstrap: [AppComponent],

@@ -6,6 +6,7 @@ export interface GlobalConfig {
   PROXY_PATH?: string
   METADATA_LANGUAGE?: string
   LOGIN_URL?: string
+  LOGOUT_URL?: string
   WEB_COMPONENT_EMBEDDER_URL?: string
   LANGUAGES?: string[]
   CONTACT_EMAIL?: string
