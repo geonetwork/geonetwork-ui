@@ -24,14 +24,18 @@
   <ng-container [ngSwitch]="model">
     <ng-container *ngSwitchCase="'title'">
       <div class="flex flex-row flex-start items-center gap-3 mb-[12px]">
-        <span
-          #titleInput
+        <textarea
+          [autofocus]="isEditing"
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
           data-test="recordTitleInput"
-          class="grow font-title text-3xl font-normal"
-          [gnUiEditableLabel]="valueAsString"
-          (editableLabelChanged)="valueChange.emit($event)"
-        ></span>
-        <div class="flex flex-row justify-between">
+          class="grow font-title text-3xl font-normal overflow-hidden"
+          (click)="isEditing = true"
+          (change)="valueChange.emit($event.target.value)"
+          >{{ valueAsString }}</textarea
+        >
+        <div class="flex flex-row justify-between self-start mt-0.5">
           <span
             class="material-symbols-outlined gn-ui-icon-small m-2 cursor-pointer"
             (click)="focusTitleInput()"
