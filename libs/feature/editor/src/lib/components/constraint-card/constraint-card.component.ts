@@ -44,25 +44,26 @@ import { iconoirPlus } from '@ng-icons/iconoir'
 })
 export class ConstraintCardComponent {
   @Input() label: string
-  @Input() constraint: Constraint
+  constraint_: Constraint
+  @Input() set constraint(v: Constraint) {
+    this.constraint_ = v
+    this.showUrl = this.showUrl || !!v.url
+  }
   @Output() constraintChange = new EventEmitter<Constraint>()
 
   hint = 'editor.record.form.constraint.markdown.placeholder' // TODO: get text and translate
-  showUrlBtnClicked = false
-  get showUrlInput() {
-    return this.showUrlBtnClicked || !!this.constraint.url?.toString()
-  }
+  showUrl = false
 
   handleConstraintTextChange(text: string) {
     this.constraintChange.emit({
-      ...this.constraint,
+      ...this.constraint_,
       text,
     })
   }
 
   handleURLChange(url: string | null) {
     this.constraintChange.emit({
-      text: this.constraint.text,
+      text: this.constraint_.text,
       ...(url && { url: new URL(url) }),
     })
   }

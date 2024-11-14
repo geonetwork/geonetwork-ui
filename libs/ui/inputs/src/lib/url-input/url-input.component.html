@@ -4,7 +4,7 @@
     class="gn-ui-text-input px-[var(--text-padding)]"
     [ngClass]="extraClass"
     type="url"
-    [value]="value?.toString() ?? ''"
+    [value]="inputValue"
     (input)="handleInput($event)"
     (keydown.enter)="handleUpload(input)"
     [placeholder]="placeholder"

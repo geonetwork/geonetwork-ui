@@ -27,15 +27,18 @@ describe('ConstraintCardComponent', () => {
 
   describe('showUrlInput', () => {
     it('returns true if url is not nullish', () => {
-      component.constraint.url = new URL('https://example.com/my-license.pdf')
-      expect(component.showUrlInput).toBe(true)
+      component.constraint = {
+        text: 'abcd',
+        url: new URL('https://example.com/my-license.pdf'),
+      }
+      expect(component.showUrl).toBe(true)
     })
     it('returns true if showUrl button was clicked once', () => {
-      component.showUrlBtnClicked = true
-      expect(component.showUrlInput).toBe(true)
+      component.showUrl = true
+      expect(component.showUrl).toBe(true)
     })
     it('returns false otherwise', () => {
-      expect(component.showUrlInput).toBe(false)
+      expect(component.showUrl).toBe(false)
     })
   })
 })

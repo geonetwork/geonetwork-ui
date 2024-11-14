@@ -120,23 +120,51 @@ describe('UrlInputComponent', () => {
       it('is disabled if parent set it as disabled', () => {
         component.disabled = true
         inputEl.value = ''
+        inputEl.dispatchEvent(new Event('input'))
         fixture.detectChanges()
         expect(button.componentInstance.disabled).toBe(true)
       })
       it('is disabled if value is empty', () => {
         inputEl.value = ''
+        inputEl.dispatchEvent(new Event('input'))
         fixture.detectChanges()
         expect(button.componentInstance.disabled).toBe(true)
       })
       it('is disabled if value is not an URL', () => {
         inputEl.value = 'hello'
+        inputEl.dispatchEvent(new Event('input'))
         fixture.detectChanges()
         expect(button.componentInstance.disabled).toBe(true)
       })
       it('is not disabled otherwise', () => {
         inputEl.value = 'http://hello.org'
+        inputEl.dispatchEvent(new Event('input'))
         fixture.detectChanges()
         expect(button.componentInstance.disabled).toBeFalsy()
+      })
+    })
+
+    describe('input value', () => {
+      it('changes if the component input resolves to a different url', () => {
+        inputEl.value = 'http://aaa.com/1234'
+        inputEl.dispatchEvent(new Event('input'))
+        component.value = 'http://aaa.com/bcd'
+        fixture.detectChanges()
+        expect(inputEl.value).toEqual('http://aaa.com/bcd')
+      })
+      it('does not change if the component input is different that the current value but resolves to the same url', () => {
+        inputEl.value = 'http://aaa.com/1234 5678'
+        inputEl.dispatchEvent(new Event('input'))
+        component.value = 'http://aaa.com/1234%205678'
+        fixture.detectChanges()
+        expect(inputEl.value).toEqual('http://aaa.com/1234 5678')
+      })
+      it('does not change if both the component input and the current input are not valid urls', () => {
+        inputEl.value = 'blargz'
+        inputEl.dispatchEvent(new Event('input'))
+        component.value = undefined
+        fixture.detectChanges()
+        expect(inputEl.value).toEqual('blargz')
       })
     })
   })

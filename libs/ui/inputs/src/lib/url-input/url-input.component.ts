@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
@@ -26,9 +27,21 @@ import { iconoirArrowUp, iconoirLink } from '@ng-icons/iconoir'
       size: '1.5em',
     }),
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UrlInputComponent {
-  @Input() value?: string
+  @Input() set value(v: string) {
+    // we're making sure to only update the input if the URL representation of it has changed; otherwise we keep it identical
+    // to avoid glitches when starting to write a URL and having some characters added/replaced automatically
+    if (!v || !this.isValidUrl(v)) return
+    if (
+      this.isValidUrl(this.inputValue) &&
+      new URL(v).toString() === new URL(this.inputValue).toString()
+    )
+      return
+    this.inputValue = v
+    this.cd.markForCheck()
+  }
   @Input() extraClass = ''
   @Input() placeholder = 'https://'
   @Input() disabled: boolean
@@ -40,10 +53,13 @@ export class UrlInputComponent {
   @Output() valueChange = new EventEmitter<string | null>()
   @Output() uploadClick = new EventEmitter<string>()
 
+  inputValue = ''
+
   constructor(private cd: ChangeDetectorRef) {}
 
   handleInput(event: Event) {
     const value = (event.target as HTMLInputElement).value
+    this.inputValue = value
     if (!value || !this.isValidUrl(value)) {
       this.valueChange.next(null)
       return
