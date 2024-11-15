@@ -113,7 +113,37 @@ describe('read parts', () => {
       })
     })
     describe('getUpdateFrequencyFromCustomPeriod', () => {
-      it('keeps a partial weekly period', () => {
+      it('returns null for empty input', () => {
+        expect(getUpdateFrequencyFromCustomPeriod('')).toBeNull()
+      })
+      it('returns null for invalid input', () => {
+        expect(getUpdateFrequencyFromCustomPeriod('RSYZ45')).toBeNull()
+      })
+      it('handles yearly period', () => {
+        expect(getUpdateFrequencyFromCustomPeriod('P1Y')).toEqual({
+          updatedTimes: 1,
+          per: 'year',
+        })
+      })
+      it('handles monthly period of 1 month', () => {
+        expect(getUpdateFrequencyFromCustomPeriod('P0Y1M')).toEqual({
+          updatedTimes: 1,
+          per: 'month',
+        })
+      })
+      it('handles monthly period of more than 1 month', () => {
+        expect(getUpdateFrequencyFromCustomPeriod('P0Y3M')).toEqual({
+          updatedTimes: 4,
+          per: 'year',
+        })
+      })
+      it('handles daily period of 1 day', () => {
+        expect(getUpdateFrequencyFromCustomPeriod('P0Y0M1D')).toEqual({
+          updatedTimes: 1,
+          per: 'day',
+        })
+      })
+      it('handles weekly period of 1 to 7 days', () => {
         expect(getUpdateFrequencyFromCustomPeriod('P0Y0M2D')).toEqual({
           updatedTimes: 3,
           per: 'week',
@@ -121,6 +151,22 @@ describe('read parts', () => {
         expect(getUpdateFrequencyFromCustomPeriod('P0Y0M3D')).toEqual({
           updatedTimes: 2,
           per: 'week',
+        })
+        expect(getUpdateFrequencyFromCustomPeriod('P0Y0M7D')).toEqual({
+          updatedTimes: 1,
+          per: 'week',
+        })
+      })
+      it('handles monthly period of more than 7 days', () => {
+        expect(getUpdateFrequencyFromCustomPeriod('P0Y0M10D')).toEqual({
+          updatedTimes: 3,
+          per: 'month',
+        })
+      })
+      it('handles hourly period', () => {
+        expect(getUpdateFrequencyFromCustomPeriod('P0Y0M0DT6H')).toEqual({
+          updatedTimes: 4,
+          per: 'day',
         })
       })
     })
