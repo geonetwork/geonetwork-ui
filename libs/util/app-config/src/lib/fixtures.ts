@@ -6,7 +6,7 @@ geonetwork4_api_url = "/geonetwork/srv/api"
 proxy_path = "/proxy/?url="
 metadata_language = "fre"
 login_url = "/cas/login?service="
-logout_url = "/geonetwork/signout?redirectUrl="
+logout_url = "/geonetwork/signout"
 web_component_embedder_url = "/datahub/wc-embedder.html"
 
 [map]
