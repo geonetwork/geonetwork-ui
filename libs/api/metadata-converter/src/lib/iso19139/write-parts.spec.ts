@@ -12,10 +12,13 @@ import {
   writeContacts,
   writeContactsForResource,
   writeKeywords,
+  writeLegalConstraints,
   writeOnlineResources,
+  writeOtherConstraints,
   writeResourceCreated,
   writeResourcePublished,
   writeResourceUpdated,
+  writeSecurityConstraints,
   writeSpatialExtents,
   writeSpatialRepresentation,
   writeTemporalExtents,
@@ -972,6 +975,57 @@ describe('write parts', () => {
       expect(rootAsString()).toEqual(`<root>
     <gmd:identificationInfo>
         <gmd:MD_DataIdentification/>
+    </gmd:identificationInfo>
+</root>`)
+    })
+  })
+
+  describe('write constraints', () => {
+    it('writes elements without deleting others, remove empty constraints', () => {
+      writeSecurityConstraints(datasetRecord, rootEl)
+      writeLegalConstraints(datasetRecord, rootEl)
+      writeOtherConstraints(datasetRecord, rootEl)
+      writeLegalConstraints({ ...datasetRecord, legalConstraints: [] }, rootEl)
+      writeOtherConstraints(
+        {
+          ...datasetRecord,
+          otherConstraints: [
+            {
+              text: 'new constraint',
+            },
+          ],
+        },
+        rootEl
+      )
+      expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <gmd:resourceConstraints>
+                <gmd:MD_SecurityConstraints>
+                    <gmd:classification>
+                        <gmd:MD_ClassificationCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ClassificationCode" codeListValue="restricted"/>
+                    </gmd:classification>
+                    <gmd:useLimitation>
+                        <gmx:Anchor xlink:href="https://security.org/document.pdf">Contains sensitive information related to national defense</gmx:Anchor>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">Contains sensitive information related to national defense</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">Contient des informations sensibles liées à la défense nationale</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:useLimitation>
+                </gmd:MD_SecurityConstraints>
+            </gmd:resourceConstraints>
+            <gmd:resourceConstraints>
+                <gmd:MD_Constraints>
+                    <gmd:useLimitation>
+                        <gco:CharacterString>new constraint</gco:CharacterString>
+                    </gmd:useLimitation>
+                </gmd:MD_Constraints>
+            </gmd:resourceConstraints>
+        </gmd:MD_DataIdentification>
     </gmd:identificationInfo>
 </root>`)
     })

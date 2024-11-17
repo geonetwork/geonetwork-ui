@@ -1,15 +1,13 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
-  OnChanges,
   Output,
-  SimpleChanges,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '../button/button.component'
-import { filter } from 'rxjs/operators'
-import { Subject } from 'rxjs'
 import {
   NgIconComponent,
   provideIcons,
@@ -29,34 +27,54 @@ import { iconoirArrowUp, iconoirLink } from '@ng-icons/iconoir'
       size: '1.5em',
     }),
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UrlInputComponent implements OnChanges {
-  @Input() value = ''
+export class UrlInputComponent {
+  @Input() set value(v: string) {
+    // we're making sure to only update the input if the URL representation of it has changed; otherwise we keep it identical
+    // to avoid glitches when starting to write a URL and having some characters added/replaced automatically
+    if (!v || !this.isValidUrl(v)) return
+    if (
+      this.isValidUrl(this.inputValue) &&
+      new URL(v).toString() === new URL(this.inputValue).toString()
+    )
+      return
+    this.inputValue = v
+    this.cd.markForCheck()
+  }
   @Input() extraClass = ''
   @Input() placeholder = 'https://'
   @Input() disabled: boolean
-  @Input() urlCanParse?: boolean
-  rawChange = new Subject<string>()
-  @Output() valueChange = this.rawChange.pipe(filter((v) => !!v))
+  @Input() showUploadButton = true
+
+  /**
+   * This will emit null if the field is emptied
+   */
+  @Output() valueChange = new EventEmitter<string | null>()
+  @Output() uploadClick = new EventEmitter<string>()
+
+  inputValue = ''
 
   constructor(private cd: ChangeDetectorRef) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.value) {
-      console.log('changes.value', changes.value)
+  handleInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value
+    this.inputValue = value
+    if (!value || !this.isValidUrl(value)) {
+      this.valueChange.next(null)
+      return
     }
-  }
-
-  handleInput() {
     this.cd.markForCheck()
+    this.valueChange.next(value)
   }
 
-  handleChange(element: HTMLInputElement) {
+  handleUpload(element: HTMLInputElement) {
     const value = element.value
-    this.rawChange.next(value)
+    if (!value || !this.isValidUrl(value)) return
+    this.uploadClick.next(value)
   }
 
-  URLcanParse(url: string): boolean {
+  isValidUrl(url: string): boolean {
     try {
       new URL(url)
       return true

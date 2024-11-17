@@ -27,7 +27,11 @@ import {
   FormFieldLicenseComponent,
   FormFieldTemporalExtentsComponent,
 } from '.'
-import { FieldModelSpecifier, FormFieldConfig } from '../../../models'
+import {
+  FieldModelSpecifier,
+  FormFieldComponentName,
+  FormFieldConfig,
+} from '../../../models'
 import { FormFieldArrayComponent } from './form-field-array/form-field-array.component'
 import { FormFieldContactsForResourceComponent } from './form-field-contacts-for-resource/form-field-contacts-for-resource.component'
 import { FormFieldContactsComponent } from './form-field-contacts/form-field-contacts.component'
@@ -42,6 +46,8 @@ import { FormFieldRichComponent } from './form-field-rich/form-field-rich.compon
 import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
+import { FormFieldConstraintsShortcutsComponent } from './form-field-constraints-shortcuts/form-field-constraints-shortcuts.component'
+import { FormFieldConstraintsComponent } from './form-field-constraints/form-field-constraints.component'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -72,27 +78,41 @@ import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency
     FormFieldOnlineResourcesComponent,
     FormFieldOnlineLinkResourcesComponent,
     FormFieldContactsComponent,
+    FormFieldConstraintsComponent,
+    FormFieldConstraintsShortcutsComponent,
   ],
 })
 export class FormFieldComponent {
   @Input() uniqueIdentifier: string
   @Input() model: CatalogRecordKeys
   @Input() modelSpecifier: FieldModelSpecifier
+  @Input() componentName: FormFieldComponentName
+
   @Input() config: FormFieldConfig
   @Input() value: unknown
 
   @Output() valueChange: EventEmitter<unknown> = new EventEmitter()
 
   @ViewChild('titleInput') titleInput: ElementRef
+  isOpenData = false
 
-  isHidden = false
+  toggleIsOpenData(event: boolean) {
+    this.isOpenData = event
+  }
 
   focusTitleInput() {
     this.titleInput.nativeElement.children[0].focus()
   }
 
   get withoutWrapper() {
-    return this.model === 'title' || this.model === 'abstract'
+    return (
+      this.model === 'title' ||
+      this.model === 'abstract' ||
+      this.model === 'legalConstraints' ||
+      this.model === 'securityConstraints' ||
+      this.model === 'otherConstraints' ||
+      this.componentName === 'form-field-constraints-shortcuts'
+    )
   }
 
   get valueAsString() {

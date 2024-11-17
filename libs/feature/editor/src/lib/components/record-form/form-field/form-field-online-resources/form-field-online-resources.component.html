@@ -24,7 +24,7 @@
   <gn-ui-url-input
     class="w-full"
     [urlCanParse]="true"
-    (valueChange)="handleServiceUrlChange($event)"
+    (uploadClick)="handleServiceUrlChange($event)"
   ></gn-ui-url-input>
 </div>
 <div class="h-[8px]"></div>
@@ -66,6 +66,7 @@
       class="w-full"
       [disabled]="true"
       [value]="onlineResource.url"
+      [showUploadButton]="false"
     ></gn-ui-url-input>
   </div>
 </ng-template>

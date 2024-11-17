@@ -4,9 +4,9 @@
     class="gn-ui-text-input px-[var(--text-padding)]"
     [ngClass]="extraClass"
     type="url"
-    [value]="value"
-    (input)="handleInput()"
-    (keydown.enter)="handleChange(input)"
+    [value]="inputValue"
+    (input)="handleInput($event)"
+    (keydown.enter)="handleUpload(input)"
     [placeholder]="placeholder"
     [attr.aria-label]="placeholder"
     [disabled]="disabled"
@@ -21,14 +21,11 @@
     <ng-icon name="iconoirLink"></ng-icon>
   </div>
   <gn-ui-button
+    *ngIf="showUploadButton"
     extraClass="absolute inset-y-[var(--side-padding)] right-[var(--side-padding)]"
     type="primary"
-    [disabled]="
-      disabled ||
-      input.value === '' ||
-      (urlCanParse && !URLcanParse(input.value))
-    "
-    (buttonClick)="handleChange(input)"
+    [disabled]="disabled || input.value === '' || !isValidUrl(input.value)"
+    (buttonClick)="handleUpload(input)"
   >
     <ng-icon name="iconoirArrowUp"> </ng-icon>
   </gn-ui-button>

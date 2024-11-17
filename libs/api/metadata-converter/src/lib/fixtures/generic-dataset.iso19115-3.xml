@@ -377,7 +377,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                                 codeListValue="restricted"/>
                     </mco:classification>
                     <mco:useLimitation>
-                        <gco:CharacterString>Contains sensitive information related to national defense</gco:CharacterString>
+                        <gcx:Anchor xlink:href="https://security.org/document.pdf">Contains sensitive information related to national defense</gcx:Anchor>
                         <lan:PT_FreeText>
                             <mdb:textGroup>
                                 <mdb:LocalisedCharacterString locale="#EN">Contains sensitive information related to national defense</mdb:LocalisedCharacterString>

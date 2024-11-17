@@ -1,6 +1,6 @@
 <div class="h-full flex flex-col" *ngIf="label; else onlyContent">
   <div class="flex-none w-full flex flex-row items-center">
-    <span class="flex-none font-bold">{{ label }}</span>
+    <span class="flex-none font-bold" translate="">{{ label }}</span>
     <div class="flex-1 flex justify-end items-center">
       <ng-content select="[form-field-interaction]"></ng-content>
       <span

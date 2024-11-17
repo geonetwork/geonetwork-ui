@@ -140,7 +140,7 @@
     <gn-ui-url-input
       *ngIf="showUrlInput"
       class="mt-3.5"
-      (valueChange)="downloadUrl($event)"
+      (uploadClick)="downloadUrl($event)"
       [disabled]="isUploadInProgress"
     >
     </gn-ui-url-input>

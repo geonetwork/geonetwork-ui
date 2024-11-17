@@ -211,6 +211,7 @@ As such, **it is not very interesting at all.**`,
   securityConstraints: [
     {
       text: 'Contains sensitive information related to national defense',
+      url: new URL('https://security.org/document.pdf'),
       translations: {
         text: {
           fr: 'Contient des informations sensibles liées à la défense nationale',

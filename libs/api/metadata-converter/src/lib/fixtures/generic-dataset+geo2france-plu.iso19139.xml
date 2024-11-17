@@ -398,7 +398,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
                         <gmd:MD_ClassificationCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ClassificationCode" codeListValue="restricted"/>
                     </gmd:classification>
                     <gmd:useLimitation>
-                        <gco:CharacterString>Contains sensitive information related to national defense</gco:CharacterString>
+                        <gmx:Anchor xlink:href="https://security.org/document.pdf">Contains sensitive information related to national defense</gmx:Anchor>
                         <gmd:PT_FreeText>
                             <gmd:textGroup>
                                 <gmd:LocalisedCharacterString locale="#EN">Contains sensitive information related to national defense</gmd:LocalisedCharacterString>

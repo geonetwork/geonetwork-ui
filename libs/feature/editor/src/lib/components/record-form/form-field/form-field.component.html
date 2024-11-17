@@ -3,7 +3,7 @@
   <gn-ui-form-field-open-data
     [value]="valueAsConstraints"
     (valueChange)="valueChange.emit($event)"
-    (openDataChange)="isHidden = $event"
+    (openDataChange)="toggleIsOpenData($event)"
   ></gn-ui-form-field-open-data>
 </ng-container> -->
 <div class="flex flex-col h-full">
@@ -92,10 +92,29 @@
     <ng-container *ngSwitchCase="'licenses'">
       <gn-ui-form-field-license
         [label]="config.labelKey! | translate"
-        [value]="valueAsConstraints"
-        (valueChange)="valueChange.emit($event)"
+        [recordConstraints]="valueAsConstraints"
+        (recordConstraintsChange)="valueChange.emit($event)"
       ></gn-ui-form-field-license>
     </ng-container>
+
+    <ng-container *ngSwitchCase="'legalConstraints'">
+      <ng-container *ngTemplateOutlet="formFieldConstraints"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'securityConstraints'">
+      <ng-container *ngTemplateOutlet="formFieldConstraints"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="'otherConstraints'">
+      <ng-container *ngTemplateOutlet="formFieldConstraints"></ng-container
+    ></ng-container>
+    <ng-template #formFieldConstraints>
+      <gn-ui-form-field-constraints
+        [label]="config.labelKey"
+        [value]="valueAsConstraints"
+        [constraintType]="model"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-constraints
+    ></ng-template>
+
     <ng-container *ngSwitchCase="'contactsForResource'">
       <gn-ui-form-field-contacts-for-resource
         [value]="valueAsIndividuals"
@@ -123,6 +142,14 @@
         [value]="valueAsOnlineResources"
         (valueChange)="valueChange.emit($event)"
       ></gn-ui-form-field-online-link-resources>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="!model">
+    <ng-container [ngSwitch]="componentName">
+      <ng-container *ngSwitchCase="'form-field-constraints-shortcuts'">
+        <gn-ui-form-field-constraints-shortcuts></gn-ui-form-field-constraints-shortcuts>
+      </ng-container>
     </ng-container>
   </ng-container>
 </ng-template>
