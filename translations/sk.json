@@ -213,6 +213,7 @@
   "editor.record.form.constraint.header.otherConstraints": "",
   "editor.record.form.constraint.header.securityConstraints": "",
   "editor.record.form.constraint.legalConstraints": "",
+  "editor.record.form.constraint.markdown.placeholder": "",
   "editor.record.form.constraint.not.applicable": "",
   "editor.record.form.constraint.not.known": "",
   "editor.record.form.constraint.otherConstraints": "",

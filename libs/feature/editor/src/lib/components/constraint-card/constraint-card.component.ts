@@ -18,6 +18,7 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirPlus } from '@ng-icons/iconoir'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 @Component({
   selector: 'gn-ui-constraint-card',
@@ -51,7 +52,7 @@ export class ConstraintCardComponent {
   }
   @Output() constraintChange = new EventEmitter<Constraint>()
 
-  hint = 'editor.record.form.constraint.markdown.placeholder' // TODO: get text and translate
+  hint = marker('editor.record.form.constraint.markdown.placeholder')
   showUrl = false
 
   handleConstraintTextChange(text: string) {

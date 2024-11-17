@@ -2,7 +2,7 @@
   <gn-ui-form-field-rich
     class="mt-[-8px]"
     [label]="label"
-    [hint]="hint"
+    [hint]="hint | translate"
     [value]="constraint_.text ?? ''"
     (valueChange)="handleConstraintTextChange($event)"
   ></gn-ui-form-field-rich>

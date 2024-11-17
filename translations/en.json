@@ -213,6 +213,7 @@
   "editor.record.form.constraint.header.otherConstraints": "Other applicable conditions",
   "editor.record.form.constraint.header.securityConstraints": "Applicable security conditions",
   "editor.record.form.constraint.legalConstraints": "Legal constraints",
+  "editor.record.form.constraint.markdown.placeholder": "Your text here",
   "editor.record.form.constraint.not.applicable": "No conditions apply.",
   "editor.record.form.constraint.not.known": "The conditions are unknown.",
   "editor.record.form.constraint.otherConstraints": "Other constraints",
