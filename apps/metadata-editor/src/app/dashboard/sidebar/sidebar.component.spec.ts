@@ -53,18 +53,14 @@ describe('SidebarComponent', () => {
         ok: true,
       } as Response)
 
-      delete window.location
-      Object.defineProperty(window, 'location', {
-        value: { href: 'http://app-url.com' },
-        writable: true,
-      })
+      const originalUrl = window.location.href
 
       await component.logOut()
 
       expect(window.fetch).toHaveBeenCalledWith(service.logoutUrl, {
         method: 'GET',
       })
-      expect(window.location.href).toBe('http://localhost:4200')
+      expect(window.location.href).toBe(originalUrl)
     })
   })
 })

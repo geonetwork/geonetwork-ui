@@ -47,12 +47,13 @@ export class SidebarComponent implements OnInit {
   }
 
   logOut() {
+    const current_url = window.location.toString()
     fetch(this.authService.logoutUrl, {
       method: 'GET',
     })
       .then((response) => {
         if (response.ok) {
-          window.location.href = 'http://localhost:4200'
+          window.location.href = current_url
         } else {
           console.error('Logout failed')
         }
