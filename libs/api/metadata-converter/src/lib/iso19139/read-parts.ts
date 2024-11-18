@@ -540,7 +540,7 @@ export function getUpdateFrequencyFromCustomPeriod(
       per: 'day',
       updatedTimes: 1,
     }
-  } else if (days <= 7) {
+  } else if (days >= 1 && days <= 7) {
     return {
       per: 'week',
       updatedTimes: Math.round(7 / days - 0.0001), // this is to make sure that 'every 2 days' = '3 times per week'
@@ -553,7 +553,7 @@ export function getUpdateFrequencyFromCustomPeriod(
   } else if (hours) {
     return {
       per: 'day',
-      updatedTimes: Math.round(24 / days),
+      updatedTimes: Math.round(24 / hours),
     }
   }
   return null
