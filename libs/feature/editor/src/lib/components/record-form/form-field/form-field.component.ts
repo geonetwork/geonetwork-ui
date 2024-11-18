@@ -100,7 +100,6 @@ export class FormFieldComponent {
 
   @ViewChild('titleInput') titleInput: ElementRef
   isOpenData = false
-  isHidden = false
 
   toggleIsOpenData(event: boolean) {
     this.isOpenData = event
