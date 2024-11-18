@@ -359,8 +359,10 @@ describe('Logging in and out', () => {
       cy.visit('/catalog/search')
     })
     it('logs out the user', () => {
+      cy.get('gn-ui-avatar').should('be.visible')
       cy.get('md-editor-sidebar').find('gn-ui-button').eq(1).click()
       cy.url().should('include', '/catalog.signin?redirect=')
+      cy.get('gn-ui-avatar').should('not.exist')
     })
   })
 })
