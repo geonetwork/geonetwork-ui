@@ -130,6 +130,16 @@ describe('editor form', () => {
               "Stations d'épuration selon la directive Eaux Résiduelles Urbaines (91/271/CEE) en Wallonie (Copy)"
             )
         })
+        it('shows very long titles entirely', () => {
+          cy.editor_wrapPreviousDraft()
+          cy.get('gn-ui-form-field').first().find('textarea').focus()
+          cy.focused().clear()
+          cy.get('gn-ui-form-field').first().find('textarea').focus()
+          cy.focused().type(
+            'Metadata for E2E testing purpose. (this title is very long and should take several lines, so we can test the behavior of the title field when it is very long. just keep going until it hits 4 lines, now it should be long enough)'
+          )
+          cy.get('gn-ui-form-field').first().invoke('height').should('eq', 156)
+        })
         it('edits and saves the title', () => {
           cy.editor_wrapPreviousDraft()
           cy.get('gn-ui-form-field').first().find('textarea').focus()
