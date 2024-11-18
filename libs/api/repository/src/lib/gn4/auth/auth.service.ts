@@ -6,7 +6,7 @@ export const DEFAULT_GN4_LOGIN_URL = `/geonetwork/srv/\${lang3}/catalog.signin?r
 export const LOGIN_URL = new InjectionToken<string>('loginUrl')
 
 export const DEFAULT_GN4_LOGOUT_URL = `/geonetwork/signout`
-export const LOGOUT_URL = new InjectionToken<string>('loginUrl')
+export const LOGOUT_URL = new InjectionToken<string>('logoutUrl')
 
 @Injectable({
   providedIn: 'root',
