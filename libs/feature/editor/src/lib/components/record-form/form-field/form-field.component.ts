@@ -101,14 +101,13 @@ export class FormFieldComponent {
   @ViewChild('titleInput') titleInput: ElementRef
   isOpenData = false
   isHidden = false
-  isEditing = false
 
   toggleIsOpenData(event: boolean) {
     this.isOpenData = event
   }
 
   focusTitleInput() {
-    this.isEditing = !this.isEditing
+    this.titleInput.nativeElement.focus()
   }
 
   get withoutWrapper() {

@@ -25,13 +25,13 @@
     <ng-container *ngSwitchCase="'title'">
       <div class="flex flex-row flex-start items-center gap-3 mb-[12px]">
         <textarea
+          #titleInput
           [autofocus]="isEditing"
           cdkTextareaAutosize
           #autosize="cdkTextareaAutosize"
           cdkAutosizeMinRows="1"
           data-test="recordTitleInput"
           class="grow font-title text-3xl font-normal overflow-hidden"
-          (click)="isEditing = true"
           (change)="valueChange.emit($event.target.value)"
           >{{ valueAsString }}</textarea
         >
