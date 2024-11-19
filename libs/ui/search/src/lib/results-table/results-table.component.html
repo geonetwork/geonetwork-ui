@@ -52,7 +52,9 @@
   </gn-ui-interactive-table-column>
 
   <!-- FORMATS COLUMN -->
-  <gn-ui-interactive-table-column>
+  <gn-ui-interactive-table-column
+    [width]="'9rem'"
+  >
     <ng-template #header>
       <span translate>record.metadata.formats</span>
     </ng-template>
@@ -86,6 +88,7 @@
 
   <!-- OWNER COLUMN -->
   <gn-ui-interactive-table-column
+    [width]="'9rem'"
     [sortable]="true"
     [activeSort]="isSortedBy('recordOwner')"
     (sortChange)="setSortBy('recordOwner', $event)"
@@ -102,7 +105,9 @@
   </gn-ui-interactive-table-column>
 
   <!-- STATUS COLUMN -->
-  <gn-ui-interactive-table-column>
+  <gn-ui-interactive-table-column
+    [width]="'6rem'"
+  >
     <ng-template #header>
       <span translate>record.metadata.status</span>
     </ng-template>
@@ -120,6 +125,7 @@
 
   <!-- UPDATE DATE COLUMN -->
   <gn-ui-interactive-table-column
+    [width]="'8rem'"
     [sortable]="true"
     [activeSort]="isSortedBy('changeDate')"
     (sortChange)="setSortBy('changeDate', $event)"
