@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordMetaComponent } from './record-meta.component'
 
-describe('ExternalViewerButtonComponent', () => {
+describe('RecordMetaComponent', () => {
   let component: RecordMetaComponent
   let fixture: ComponentFixture<RecordMetaComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecordMetaComponent],
-      imports: [],
+      declarations: [],
+      imports: [RecordMetaComponent],
       providers: [],
     }).compileComponents()
   })

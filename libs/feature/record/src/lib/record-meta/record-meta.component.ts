@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   Input,
@@ -7,15 +6,13 @@ import {
   OnDestroy,
 } from '@angular/core'
 import { Meta } from '@angular/platform-browser'
-import {
-  DatasetRecord,
-  ServiceRecord,
-} from '@geonetwork-ui/common/domain/model/record'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-record-meta',
-  template: '<>',
+  template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class RecordMetaComponent implements OnDestroy, OnChanges {
   @Input() metadata: DatasetRecord

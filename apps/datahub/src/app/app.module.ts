@@ -13,6 +13,7 @@ import {
   FeatureRecordModule,
   GN_UI_VERSION,
   WEB_COMPONENT_EMBEDDER_URL,
+  RecordMetaComponent,
 } from '@geonetwork-ui/feature/record'
 import {
   DefaultRouterModule,
@@ -188,6 +189,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     CarouselComponent,
     BlockListComponent,
     PreviousNextButtonsComponent,
+    RecordMetaComponent,
     LetDirective,
     // FIXME: these imports are required by non-standalone components and should be removed once all components have been made standalone
     NgIconsModule.withIcons({
