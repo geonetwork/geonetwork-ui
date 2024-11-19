@@ -17,7 +17,7 @@ import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 export class SearchFiltersSummaryComponent {
   @Input() searchFields: string[] = []
 
-  searchFilterActive$ = this.searchFacade.searchFilters$.pipe(
+  searchFilterActive$ = this.searchFacade.searchFilters$?.pipe(
     map((filters) => this.hasNonEmptyValues(filters))
   )
 
