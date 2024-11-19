@@ -459,7 +459,7 @@
   "record.metadata.temporalExtent.fromDateToDate": "Du { start } au { end }",
   "record.metadata.temporalExtent.sinceDate": "Depuis le { start }",
   "record.metadata.temporalExtent.untilDate": "Jusqu'au { end }",
-  "record.metadata.title": "Titre",
+  "record.metadata.title": "Intitulé",
   "record.metadata.topics": "Catégories",
   "record.metadata.type": "Donnée géographique",
   "record.metadata.uniqueId": "Identificateur de ressource unique",
