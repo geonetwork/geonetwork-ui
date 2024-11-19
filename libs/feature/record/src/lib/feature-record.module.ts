@@ -79,6 +79,7 @@ import { matClose, matOpenInNew } from '@ng-icons/material-icons/baseline'
     DataViewPermalinkComponent,
     DataViewWebComponentComponent,
     DataViewShareComponent,
+    ExternalViewerButtonComponent,
   ],
 })
 export class FeatureRecordModule {}
