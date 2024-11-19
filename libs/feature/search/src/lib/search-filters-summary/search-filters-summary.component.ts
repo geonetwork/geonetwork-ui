@@ -1,12 +1,14 @@
 import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { map } from 'rxjs'
 import { SearchFiltersSummaryItemComponent } from '../search-filters-summary-item/search-filters-summary-item.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { SearchFacade } from '../state/search.facade'
+import { SearchService } from '../utils/service/search.service'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 
 @Component({
-  selector: 'md-editor-search-filters-summary',
+  selector: 'gn-ui-search-filters-summary',
   imports: [CommonModule, SearchFiltersSummaryItemComponent, TranslateModule],
   templateUrl: './search-filters-summary.component.html',
   styleUrls: ['./search-filters-summary.component.css'],
@@ -24,7 +26,7 @@ export class SearchFiltersSummaryComponent {
     private searchService: SearchService
   ) {}
 
-  hasNonEmptyValues(filters: any): boolean {
+  hasNonEmptyValues(filters: FieldFilters): boolean {
     return Object.values(filters).some(
       (value) =>
         value !== undefined &&

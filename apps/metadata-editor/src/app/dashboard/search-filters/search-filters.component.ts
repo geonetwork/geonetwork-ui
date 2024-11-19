@@ -7,9 +7,11 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirFilterList } from '@ng-icons/iconoir'
-import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import {
+  FeatureSearchModule,
+  SearchFiltersSummaryComponent,
+} from '@geonetwork-ui/feature/search'
 import { MatIconModule } from '@angular/material/icon'
-import { SearchFiltersSummaryComponent } from '../search-filters-summary/search-filters-summary.component'
 
 @Component({
   selector: 'md-editor-search-filters',

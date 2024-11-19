@@ -1,12 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { CommonModule, DatePipe } from '@angular/common'
 import {
-  FieldsService,
-  FieldValue,
-  SearchFacade,
-  SearchService,
-} from '@geonetwork-ui/feature/search'
-import {
   catchError,
   firstValueFrom,
   map,
@@ -17,9 +11,13 @@ import {
 import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { DateRange, isDateRange } from '@geonetwork-ui/api/repository'
+import { FieldValue } from '../utils/service/fields'
+import { SearchFacade } from '../state/search.facade'
+import { SearchService } from '../utils/service/search.service'
+import { FieldsService } from '../utils/service/fields.service'
 
 @Component({
-  selector: 'md-editor-search-filters-summary-item',
+  selector: 'gn-ui-search-filters-summary-item',
   standalone: true,
   imports: [CommonModule, TranslateModule, BadgeComponent],
   templateUrl: './search-filters-summary-item.component.html',
