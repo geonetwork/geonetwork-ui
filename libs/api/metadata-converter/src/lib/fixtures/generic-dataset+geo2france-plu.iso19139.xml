@@ -45,13 +45,6 @@
                     <gmd:title>
                         <gco:CharacterString>A very interesting dataset (un jeu de données très intéressant)</gco:CharacterString>
                     </gmd:title>
-                    <gmd:identifier>
-                        <gmd:MD_Identifier>
-                            <gmd:code>
-                                <gco:CharacterString>https://www.geoportail-urbanisme.gouv.fr/document/60036_PLU_20220329</gco:CharacterString>
-                            </gmd:code>
-                        </gmd:MD_Identifier>
-                    </gmd:identifier>
                     <gmd:date>
                         <gmd:CI_Date>
                             <gmd:date>

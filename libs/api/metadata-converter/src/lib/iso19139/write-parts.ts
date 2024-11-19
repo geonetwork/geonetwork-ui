@@ -1463,3 +1463,20 @@ export function writeDefaultLanguage(
     writeAttribute('codeListValue', lang3)
   )(rootEl)
 }
+
+export function writeResourceIdentifier(
+  record: DatasetRecord,
+  rootEl: XmlElement
+) {
+  pipe(
+    findOrCreateIdentification(),
+    findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
+    removeChildrenByName('gmd:identifier'),
+    record.resourceIdentifier
+      ? pipe(
+          createNestedChild('gmd:identifier', 'gmd:MD_Identifier', 'gmd:code'),
+          writeCharacterString(record.resourceIdentifier)
+        )
+      : noop
+  )(rootEl)
+}

@@ -146,4 +146,6 @@ Ce lot de données produit en 2019, a été numérisé à partir du PCI Vecteur 
   defaultLanguage: 'fr',
   otherLanguages: [],
   translations: {},
+  resourceIdentifier:
+    'https://www.geoportail-urbanisme.gouv.fr/document/60036_PLU_20220329',
 }
