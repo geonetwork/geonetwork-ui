@@ -1,26 +1,22 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { CommonModule } from '@angular/common'
+import { Component, Input } from '@angular/core'
+import { CommonModule, DatePipe } from '@angular/common'
 import {
   FieldsService,
-  FieldType,
   FieldValue,
-  FieldValues,
   SearchFacade,
   SearchService,
 } from '@geonetwork-ui/feature/search'
 import {
   catchError,
-  filter,
   firstValueFrom,
   map,
   Observable,
-  startWith,
+  of,
   switchMap,
-  tap,
 } from 'rxjs'
 import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
-import { DateRange } from '@geonetwork-ui/api/repository'
+import { DateRange, isDateRange } from '@geonetwork-ui/api/repository'
 
 @Component({
   selector: 'md-editor-search-filters-summary-item',
@@ -28,44 +24,40 @@ import { DateRange } from '@geonetwork-ui/api/repository'
   imports: [CommonModule, TranslateModule, BadgeComponent],
   templateUrl: './search-filters-summary-item.component.html',
   styleUrls: ['./search-filters-summary-item.component.css'],
+  providers: [DatePipe],
 })
-export class SearchFiltersSummaryItemComponent implements OnInit {
+export class SearchFiltersSummaryItemComponent {
   @Input() fieldName: string
-  fieldType: FieldType
 
   fieldValues$ = this.searchFacade.searchFilters$.pipe(
     switchMap((filters) =>
       this.fieldsService.readFieldValuesFromFilters(filters)
     ),
-    tap((fieldValues) => console.log(fieldValues)),
     map((fieldValues) =>
-      Array.isArray(fieldValues[this.fieldName]) //TODO: handle date ranges as arrays everywhere?
-        ? fieldValues[this.fieldName]
-        : [fieldValues[this.fieldName]]
+      Array.isArray(fieldValues[this.fieldName])
+        ? (fieldValues[this.fieldName] as FieldValue[])
+        : ([fieldValues[this.fieldName]] as FieldValue[])
     ),
-    tap((fieldValues) => console.log(fieldValues))
-    // startWith([]),
-    // catchError(() => of([]))
-  ) as Observable<FieldValue[] | DateRange[]>
-
-  dateRange$ = this.fieldValues$.pipe(
-    filter(() => this.fieldType === 'dateRange'),
-    map((fieldValues) => fieldValues as DateRange[])
-  )
-
-  values$ = this.fieldValues$.pipe(
-    filter(() => this.fieldType === 'values'),
-    map((fieldValues) => fieldValues as FieldValue[])
-  )
+    map((fieldValues) => this.getReadableValues(fieldValues) as FieldValue[]),
+    catchError(() => of([]))
+  ) as Observable<FieldValue[]>
 
   constructor(
     private searchFacade: SearchFacade,
     private searchService: SearchService,
-    private fieldsService: FieldsService
+    private fieldsService: FieldsService,
+    private datePipe: DatePipe
   ) {}
 
-  ngOnInit() {
-    this.fieldType = this.fieldsService.getFieldType(this.fieldName)
+  getReadableValues(fieldValues: FieldValue[] | DateRange[]): FieldValue[] {
+    return fieldValues.map((value) =>
+      isDateRange(value)
+        ? `${this.datePipe.transform(
+            value.start,
+            'dd.MM.yyyy'
+          )} - ${this.datePipe.transform(value.end, 'dd.MM.yyyy')}`
+        : value
+    )
   }
 
   async removeFilterValue(fieldValue: FieldValue | DateRange) {

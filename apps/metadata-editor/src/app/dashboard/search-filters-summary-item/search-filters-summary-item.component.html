@@ -1,36 +1,20 @@
-<div *ngIf="(fieldValues$ | async)?.length > 0">
-  <div
-    *ngIf="fieldType === 'dateRange'; else valuesBadge"
-    class="flex flex-row items-center gap-2"
+<div
+  *ngIf="(fieldValues$ | async)?.length > 0"
+  class="flex flex-row items-center gap-2"
+>
+  <span class="text-gray-800" translate
+    >search.filters.summaryLabel.{{ fieldName }}</span
   >
-    <span class="text-gray-800" translate
-      >search.filters.summaryLabel.{{ fieldName }}</span
-    >
-    <gn-ui-badge
-      *ngFor="let fieldValue of dateRange$ | async"
-      [style.--gn-ui-badge-text-color]="'black'"
-      [style.--gn-ui-badge-background-color]="'#F2F2F2'"
-      [style.--gn-ui-badge-font-weight]="'700'"
-      [removable]="true"
-      (badgeRemoveClicked)="removeFilterValue(fieldValue)"
-      >{{ fieldValue['start'] | date: 'dd.MM.yyyy' }} -
-      {{ fieldValue['end'] | date: 'dd.MM.yyyy' }}</gn-ui-badge
-    >
-  </div>
-  <ng-template #valuesBadge>
-    <div class="flex flex-row items-center gap-2">
-      <span class="text-gray-800" translate
-        >search.filters.summaryLabel.{{ fieldName }}</span
-      >
-      <gn-ui-badge
-        *ngFor="let fieldValue of values$ | async"
-        [style.--gn-ui-badge-text-color]="'black'"
-        [style.--gn-ui-badge-background-color]="'#F2F2F2'"
-        [style.--gn-ui-badge-font-weight]="'700'"
-        [removable]="true"
-        (badgeRemoveClicked)="removeFilterValue(fieldValue)"
-        >{{ fieldValue }}</gn-ui-badge
-      >
-    </div>
-  </ng-template>
+  <gn-ui-badge
+    *ngFor="let fieldValue of fieldValues$ | async"
+    class="gn-ui-badge"
+    [style.--gn-ui-badge-rounded]="'8px'"
+    [style.--gn-ui-badge-padding]="'3px 4px'"
+    [style.--gn-ui-badge-text-color]="'black'"
+    [style.--gn-ui-badge-background-color]="'#F2F2F2'"
+    [style.--gn-ui-badge-font-weight]="'700'"
+    [removable]="true"
+    (badgeRemoveClicked)="removeFilterValue(fieldValue)"
+    >{{ fieldValue }}</gn-ui-badge
+  >
 </div>
