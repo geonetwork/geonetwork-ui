@@ -91,7 +91,7 @@
     [ngClass]="{ 'sm:col-span-3 lg:col-span-2': !isOpen }"
   >
     <div
-      class="flex flex-row"
+      class="flex flex-row gap-7 sm:gap-4"
       [ngClass]="
         isOpen
           ? 'justify-start sm:justify-end'
@@ -122,6 +122,7 @@
         ></ng-icon>
       </button>
       <gn-ui-sort-by
+        class="overflow-hidden"
         [ngClass]="isOpen ? 'block text-white mb-1' : 'hidden sm:block'"
         [isQualitySortable]="isQualitySortable"
       ></gn-ui-sort-by>
