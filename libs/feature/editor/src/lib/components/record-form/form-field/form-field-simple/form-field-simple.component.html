@@ -1,29 +1,8 @@
 <input
-  *ngIf="!isSelect"
-  [type]="inputType"
+  [type]="type"
   [readonly]="readonly"
   [placeholder]="placeholder"
-  [value]="value"
-  (valueChange)="valueChange.emit($event)"
-  class="border rounded-md p-3 w-full bg-white transition-colors"
-  [ngClass]="{
-    'border-pink-500': invalid,
-    'border-gray-200': !invalid,
-    'text-gray-600': readonly
-  }"
+  [ngModel]="value"
+  (ngModelChange)="valueChange.emit($event)"
+  class="gn-ui-text-input border-gray-300 hover:border-main"
 />
-<select
-  *ngIf="isSelect"
-  [value]="value"
-  (valueChange)="valueChange.emit($event)"
-  class="border rounded-md p-3 w-full bg-white transition-colors"
-  [ngClass]="{
-    'border-pink-500': invalid,
-    'border-gray-200': !invalid,
-    'text-gray-600': readonly
-  }"
->
-  <option *ngFor="let option of options" [value]="option.value">
-    {{ option.label }}
-  </option>
-</select>

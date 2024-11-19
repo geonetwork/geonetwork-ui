@@ -6,6 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
+import { FormsModule } from '@angular/forms'
 
 @Component({
   selector: 'gn-ui-form-field-simple',
@@ -13,35 +14,14 @@ import {
   styleUrls: ['./form-field-simple.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
 })
 export class FormFieldSimpleComponent {
-  @Input() type: 'date' | 'url' | 'text' | 'number' | 'list' | 'toggle'
+  @Input() type: 'text' | 'number'
   @Input() readonly = false
   @Input() invalid = false
   @Input() placeholder = ''
-  @Input() options?: { label: string; value: unknown }[]
   @Input() value: unknown
 
   @Output() valueChange: EventEmitter<unknown> = new EventEmitter()
-
-  get inputType() {
-    switch (this.type) {
-      case 'url':
-      case 'text':
-        return 'text'
-      case 'date':
-        return 'datetime-local'
-      case 'number':
-        return 'number'
-      case 'toggle':
-        return 'checkbox'
-      default:
-        return ''
-    }
-  }
-
-  get isSelect() {
-    return this.type === 'list'
-  }
 }
