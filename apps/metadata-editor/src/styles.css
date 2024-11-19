@@ -32,3 +32,7 @@ body {
 .mat-mdc-button-base {
   line-height: normal;
 }
+
+.input-as-button {
+  @apply border-2 border-gray-300 hover:border-main bg-transparent gn-ui-text-input hover:text-main py-[11.5px] pl-[14px] pr-2;
+}
