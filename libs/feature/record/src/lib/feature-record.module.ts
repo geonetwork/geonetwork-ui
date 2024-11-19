@@ -33,6 +33,7 @@ import { DataViewWebComponentComponent } from './data-view-web-component/data-vi
 import { DataViewShareComponent } from './data-view-share/data-view-share.component'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
 import { matClose, matOpenInNew } from '@ng-icons/material-icons/baseline'
+import { RecordMetaComponent } from './record-meta/record-meta.component'
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { matClose, matOpenInNew } from '@ng-icons/material-icons/baseline'
     DataViewPermalinkComponent,
     DataViewWebComponentComponent,
     DataViewShareComponent,
+    RecordMetaComponent,
   ],
   imports: [
     CommonModule,
@@ -79,6 +81,8 @@ import { matClose, matOpenInNew } from '@ng-icons/material-icons/baseline'
     DataViewPermalinkComponent,
     DataViewWebComponentComponent,
     DataViewShareComponent,
+    ExternalViewerButtonComponent,
+    RecordMetaComponent,
   ],
 })
 export class FeatureRecordModule {}
