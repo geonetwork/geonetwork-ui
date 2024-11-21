@@ -31,6 +31,13 @@ export class SidebarComponent implements OnInit {
   public placeholder$ = this.avatarService.getPlaceholder()
   organisations$: Observable<Organization[]>
 
+  get settingsUrl() {
+    return (
+      this.authService.loginUrl.split('/catalog')[0] +
+      '/admin.console#/organization/users?userOrGroup='
+    )
+  }
+
   constructor(
     public platformService: PlatformServiceInterface,
     private avatarService: AvatarServiceInterface,
