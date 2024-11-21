@@ -2,9 +2,7 @@
   *ngIf="(fieldValues$ | async)?.length > 0"
   class="flex flex-row items-center gap-2"
 >
-  <span class="text-gray-800" translate
-    >search.filters.summaryLabel.{{ fieldName }}</span
-  >
+  <span class="text-gray-800">{{ translatedLabel }}</span>
   <gn-ui-badge
     *ngFor="let fieldValue of fieldValues$ | async"
     class="gn-ui-badge"

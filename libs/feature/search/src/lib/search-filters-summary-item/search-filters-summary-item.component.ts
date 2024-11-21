@@ -9,13 +9,17 @@ import {
   switchMap,
 } from 'rxjs'
 import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { DateRange } from '@geonetwork-ui/api/repository'
 import { FieldType, FieldValue } from '../utils/service/fields'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FieldsService } from '../utils/service/fields.service'
 import { formatUserInfo } from '@geonetwork-ui/util/shared'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('search.filters.summaryLabel.user')
+marker('search.filters.summaryLabel.changeDate')
 
 interface DisplayedValue {
   label: string
@@ -33,6 +37,7 @@ interface DisplayedValue {
 export class SearchFiltersSummaryItemComponent implements OnInit {
   @Input() fieldName: string
   fieldType: FieldType
+  translatedLabel: string
 
   fieldValues$ = this.searchFacade.searchFilters$.pipe(
     switchMap((filters) =>
@@ -53,11 +58,27 @@ export class SearchFiltersSummaryItemComponent implements OnInit {
     private searchFacade: SearchFacade,
     private searchService: SearchService,
     private fieldsService: FieldsService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
     this.fieldType = this.fieldsService.getFieldType(this.fieldName)
+    this.translateLabel()
+  }
+
+  translateLabel() {
+    const labelKey = `search.filters.summaryLabel.${this.fieldName}`
+    const fallbackKey = `search.filters.${this.fieldName}`
+    this.translate.get(labelKey).subscribe((value: string) => {
+      if (value === labelKey) {
+        this.translate.get(fallbackKey).subscribe((fallbackValue: string) => {
+          this.translatedLabel = fallbackValue
+        })
+      } else {
+        this.translatedLabel = value
+      }
+    })
   }
 
   getReadableValues(fieldValues: FieldValue[] | DateRange[]): DisplayedValue[] {

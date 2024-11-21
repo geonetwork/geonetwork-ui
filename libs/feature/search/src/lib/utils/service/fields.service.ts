@@ -39,9 +39,6 @@ marker('search.filters.publisherOrg')
 marker('search.filters.user')
 marker('search.filters.changeDate')
 
-marker('search.filters.summaryLabel.user')
-marker('search.filters.summaryLabel.changeDate')
-
 @Injectable({
   providedIn: 'root',
 })
