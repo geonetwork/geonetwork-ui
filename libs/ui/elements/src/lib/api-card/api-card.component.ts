@@ -15,7 +15,6 @@ import { TranslateModule } from '@ngx-translate/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matMoreHoriz } from '@ng-icons/material-icons/baseline'
-import { MatButtonModule } from '@angular/material/button'
 
 @Component({
   selector: 'gn-ui-api-card',
@@ -29,7 +28,6 @@ import { MatButtonModule } from '@angular/material/button'
     TranslateModule,
     MatTooltipModule,
     NgIcon,
-    MatButtonModule,
   ],
   viewProviders: [
     provideIcons({

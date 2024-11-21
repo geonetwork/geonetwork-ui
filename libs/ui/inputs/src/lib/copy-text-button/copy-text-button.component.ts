@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { MatButtonModule } from '@angular/material/button'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matContentCopy } from '@ng-icons/material-icons/baseline'
@@ -11,7 +10,7 @@ import { matContentCopy } from '@ng-icons/material-icons/baseline'
   styleUrls: ['./copy-text-button.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatTooltipModule, NgIcon],
+  imports: [CommonModule, MatTooltipModule, NgIcon],
   viewProviders: [provideIcons({ matContentCopy })],
 })
 export class CopyTextButtonComponent {

@@ -3,7 +3,6 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 import { RouterLink } from '@angular/router'
 import { MatTooltipModule } from '@angular/material/tooltip'
-import { MatButtonModule } from '@angular/material/button'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { matOpenInNew } from '@ng-icons/material-icons/baseline'
@@ -17,7 +16,6 @@ import { matOpenInNew } from '@ng-icons/material-icons/baseline'
     ThumbnailComponent,
     RouterLink,
     MatTooltipModule,
-    MatButtonModule,
     NgIcon,
     TranslateModule,
   ],
