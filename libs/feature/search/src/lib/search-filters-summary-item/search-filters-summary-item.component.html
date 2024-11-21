@@ -14,7 +14,7 @@
     [style.--gn-ui-badge-background-color]="'#F2F2F2'"
     [style.--gn-ui-badge-font-weight]="'700'"
     [removable]="true"
-    (badgeRemoveClicked)="removeFilterValue(fieldValue)"
-    >{{ fieldValue }}</gn-ui-badge
+    (badgeRemoveClicked)="removeFilterValue(fieldValue.value)"
+    >{{ fieldValue.label }}</gn-ui-badge
   >
 </div>

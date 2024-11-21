@@ -20,8 +20,9 @@ import {
   METADATA_LANGUAGE,
 } from '@geonetwork-ui/api/repository'
 import { LangService } from '@geonetwork-ui/util/i18n'
+import { formatUserInfo } from '@geonetwork-ui/util/shared'
 
-export type FieldType = 'values' | 'dateRange'
+export type FieldType = 'values' | 'dateRange' | 'userInfo'
 
 export type FieldValue = string | number
 export interface FieldAvailableValue {
@@ -83,9 +84,11 @@ export class SimpleSearchField implements AbstractSearchField {
       })
     )
   }
-  getFiltersForValues(values: FieldValue[] | DateRange[]): Observable<any> {
+  getFiltersForValues(
+    values: FieldValue[] | DateRange[]
+  ): Observable<FieldFilters> {
     // FieldValue[]
-    if (this.getType() === 'values') {
+    if (this.getType() === 'values' || this.getType() === 'userInfo') {
       return of({
         [this.esFieldName]: (values as FieldValue[]).reduce((acc, val) => {
           return { ...acc, [val.toString()]: true }
@@ -392,19 +395,14 @@ export class UserSearchField extends SimpleSearchField {
       map((values) =>
         values.map((v) => ({
           ...v,
-          label: this.formatUserInfo(v.label),
+          label: formatUserInfo(v.label, true),
         }))
       )
     )
   }
 
-  private formatUserInfo(userInfo: string | unknown): string {
-    const infos = (typeof userInfo === 'string' ? userInfo : '').split('|')
-    const count = infos[3].split(' ')[1]
-    if (infos && infos.length === 4) {
-      return `${infos[2]} ${infos[1]} ${count}`
-    }
-    return undefined
+  getType(): FieldType {
+    return 'userInfo'
   }
 }
 
