@@ -342,6 +342,18 @@ describe('dashboard (authenticated)', () => {
       })
     })
   })
+  describe('Account settings access', () => {
+    it('should navigate to the account settings page', () => {
+      cy.visit('/catalog/search')
+      cy.get('md-editor-sidebar')
+        .find('gn-ui-button')
+        .first()
+        .find('a')
+        .invoke('removeAttr', 'target')
+        .click()
+      cy.url().should('include', '/admin.console')
+    })
+  })
 })
 
 describe('Logging in and out', () => {
