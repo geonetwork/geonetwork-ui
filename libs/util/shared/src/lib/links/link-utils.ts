@@ -117,7 +117,6 @@ export const FORMATS = {
   },
 } as const
 
-
 export type FileFormat = keyof typeof FORMATS
 
 export function getFormatPriority(linkFormat: FileFormat): number {

@@ -3,7 +3,7 @@
   (itemClick)="handleRecordClick($event)"
 >
   <!-- SELECTED COLUMN -->
-  <gn-ui-interactive-table-column>
+  <gn-ui-interactive-table-column [width]="'3rem'">
     <ng-template #header>
       <gn-ui-checkbox
         [checked]="isAllSelected()"
@@ -52,9 +52,7 @@
   </gn-ui-interactive-table-column>
 
   <!-- FORMATS COLUMN -->
-  <gn-ui-interactive-table-column
-    [width]="'9rem'"
-  >
+  <gn-ui-interactive-table-column [width]="'9rem'">
     <ng-template #header>
       <span translate>record.metadata.formats</span>
     </ng-template>
@@ -105,9 +103,7 @@
   </gn-ui-interactive-table-column>
 
   <!-- STATUS COLUMN -->
-  <gn-ui-interactive-table-column
-    [width]="'6rem'"
-  >
+  <gn-ui-interactive-table-column [width]="'6rem'">
     <ng-template #header>
       <span translate>record.metadata.status</span>
     </ng-template>
