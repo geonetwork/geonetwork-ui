@@ -7,7 +7,7 @@ export const FORMATS = {
   csv: {
     extensions: ['csv'],
     priority: 1,
-    color: '#559d7f',
+    color: '#a6d6c0',
     mimeTypes: ['text/csv', 'application/csv'],
   },
   excel: {
@@ -19,7 +19,7 @@ export const FORMATS = {
       'openxmlformats-officedocument',
     ],
     priority: 2,
-    color: '#0f4395',
+    color: '#acc5e4',
     mimeTypes: [
       'application/vnd.ms-excel',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -28,31 +28,31 @@ export const FORMATS = {
   geojson: {
     extensions: ['geojson'],
     priority: 3,
-    color: '#1e5180',
+    color: '#b3cde8',
     mimeTypes: ['application/geo+json', 'application/vnd.geo+json'],
   },
   json: {
     extensions: ['json'],
     priority: 3,
-    color: '#1e5180',
+    color: '#b3cde8',
     mimeTypes: ['application/json'],
   },
   shp: {
     extensions: ['shp', 'shape', 'zipped-shapefile'],
     priority: 4,
-    color: '#328556',
+    color: '#b2d8ba',
     mimeTypes: ['x-gis/x-shapefile'],
   },
   gml: {
     extensions: ['gml'],
     priority: 5,
-    color: '#c92bce',
+    color: '#e3b3e5',
     mimeTypes: ['application/gml+xml', 'text/xml; subtype=gml'],
   },
   kml: {
     extensions: ['kml', 'kmz'],
     priority: 6,
-    color: '#348009',
+    color: '#c1e6a0',
     mimeTypes: [
       'application/vnd.google-earth.kml+xml',
       'application/vnd.google-earth.kmz',
@@ -61,61 +61,62 @@ export const FORMATS = {
   gpkg: {
     extensions: ['gpkg', 'geopackage'],
     priority: 7,
-    color: '#ea79ba',
+    color: '#f7cce6',
     mimeTypes: ['application/geopackage+sqlite3'],
   },
   zip: {
     extensions: ['zip', 'tar.gz'],
     priority: 8,
-    color: '#f2bb3a',
+    color: '#ffe7a3',
     mimeTypes: ['application/zip', 'application/x-zip'],
   },
   pdf: {
     extensions: ['pdf'],
     priority: 9,
-    color: '#db544a',
+    color: '#f5b2a3',
     mimeTypes: ['application/pdf'],
   },
   jpg: {
     extensions: ['jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp'],
     priority: 9,
-    color: '#673ab7',
+    color: '#d1c1e9',
     mimeTypes: ['image/jpg'],
   },
   svg: {
     extensions: ['svg'],
     priority: 10,
-    color: '#d98294',
+    color: '#f3c1c9',
     mimeTypes: ['image/svg+xml'],
   },
   dxf: {
     extensions: ['dxf'],
     priority: 11,
-    color: '#de630b',
+    color: '#f6ceac',
     mimeTypes: ['application/x-dxf', 'image/x-dxf'],
   },
   html: {
     extensions: ['html', 'htm'],
     priority: 12,
-    color: '#f2bb3a',
+    color: '#FFF2CC',
     mimeTypes: ['text/html'],
   },
   fgb: {
     extensions: ['fgb', 'flatgeobuf'],
     priority: 13,
-    color: '#f2bb3a',
+    color: '#ffe7a3',
     mimeTypes: ['application/flatgeobuf'],
   },
   jsonfg: {
     extensions: ['jsonfg', 'jsonfgc'],
     priority: 14,
-    color: '#f2bb3a',
+    color: '#ffe7a3',
     mimeTypes: [
       'application/vnd.ogc.fg+json',
       'application/vnd.ogc.fg+json;compatibility=geojson',
     ],
   },
 } as const
+
 
 export type FileFormat = keyof typeof FORMATS
 
