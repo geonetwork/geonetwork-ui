@@ -71,6 +71,7 @@ Toutes ces données sont reprises dans BDR.`,
   recordCreated: new Date('2019-04-02T12:34:35'),
   recordUpdated: new Date('2022-06-16T05:01:21'),
   resourceCreated: new Date('2002-01-01'),
+  resourceIdentifier: '2d974612-70b1-4662-a9f4-c43cbe453773',
   resourceUpdated: new Date('2022-06-16'),
   resourcePublished: new Date('2022-06-16'),
   onlineResources: [
@@ -644,6 +645,7 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
   },
   recordCreated: new Date('2019-04-02T12:31:58'),
   recordUpdated: new Date('2022-02-09T11:31:06.766Z'),
+  resourceIdentifier: '6d2b6fdb-f1ea-4d48-8697-a0c05512f1dc',
   resourcePublished: new Date('2016-12-01'),
   securityConstraints: [],
   title:
