@@ -66,6 +66,13 @@ export const RECORD_KEYWORDS_FIELD: EditorField = {
   },
 }
 
+export const RESOURCE_IDENTIFIER_FIELD: EditorField = {
+  model: 'resourceIdentifier',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.resourceIdentifier'),
+  },
+}
+
 export const RECORD_RESOURCE_UPDATED_FIELD: EditorField = {
   model: 'resourceUpdated',
   formFieldConfig: {
@@ -176,6 +183,7 @@ export const ABOUT_SECTION: EditorSection = {
   hidden: false,
   fields: [
     RECORD_UNIQUE_IDENTIFIER_FIELD,
+    RESOURCE_IDENTIFIER_FIELD,
     RECORD_RESOURCE_UPDATED_FIELD,
     RECORD_UPDATED_FIELD,
     RECORD_UPDATE_FREQUENCY_FIELD,

@@ -34,6 +34,7 @@ import {
   readOwnerOrganization,
   readRecordUpdated,
   readResourceCreated,
+  readResourceIdentifier,
   readResourcePublished,
   readResourceUpdated,
   readSecurityConstraints,
@@ -61,6 +62,7 @@ import {
   writeOtherConstraints,
   writeRecordUpdated,
   writeResourceCreated,
+  writeResourceIdentifier,
   writeResourcePublished,
   writeResourceUpdated,
   writeSecurityConstraints,
@@ -85,6 +87,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     recordUpdated: readRecordUpdated,
     recordCreated: () => undefined, // not supported in ISO19139
     recordPublished: () => undefined, // not supported in ISO19139
+    resourceIdentifier: readResourceIdentifier,
     resourceUpdated: readResourceUpdated,
     resourceCreated: readResourceCreated,
     resourcePublished: readResourcePublished,
@@ -124,6 +127,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     recordUpdated: writeRecordUpdated,
     recordCreated: () => undefined, // not supported in ISO19139
     recordPublished: () => undefined, // not supported in ISO19139
+    resourceIdentifier: writeResourceIdentifier,
     resourceUpdated: writeResourceUpdated,
     resourceCreated: writeResourceCreated,
     resourcePublished: writeResourcePublished,
@@ -232,6 +236,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     const onlineResources = this.readers['onlineResources'](rootEl, tr)
     const otherLanguages = this.readers['otherLanguages'](rootEl, tr)
     const defaultLanguage = this.readers['defaultLanguage'](rootEl, tr)
+    const resourceIdentifier = this.readers['resourceIdentifier'](rootEl, tr)
 
     if (kind === 'dataset') {
       const status = this.readers['status'](rootEl, tr)
@@ -246,6 +251,7 @@ export class Iso19139Converter extends BaseConverter<string> {
 
       return this.afterRecordRead({
         uniqueIdentifier,
+        ...(resourceIdentifier && { resourceIdentifier }),
         kind,
         otherLanguages,
         defaultLanguage,
@@ -280,6 +286,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     } else {
       return this.afterRecordRead({
         uniqueIdentifier,
+        ...(resourceIdentifier && { resourceIdentifier }),
         kind,
         otherLanguages,
         defaultLanguage,
@@ -370,6 +377,8 @@ export class Iso19139Converter extends BaseConverter<string> {
       this.writers['otherConstraints'](record, rootEl)
     fieldChanged('onlineResources') &&
       this.writers['onlineResources'](record, rootEl)
+    fieldChanged('resourceIdentifier') &&
+      this.writers['resourceIdentifier'](record, rootEl)
 
     if (record.kind === 'dataset') {
       fieldChanged('status') && this.writers['status'](record, rootEl)

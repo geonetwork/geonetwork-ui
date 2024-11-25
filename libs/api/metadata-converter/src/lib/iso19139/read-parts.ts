@@ -1124,3 +1124,17 @@ export function readDefaultLanguage(rootEl: XmlElement): LanguageCode {
     map((lang) => (lang ? LANG_3_TO_2_MAPPER[lang.toLowerCase()] : null))
   )(rootEl)
 }
+
+export function readResourceIdentifier(rootEl: XmlElement): string {
+  return pipe(
+    findIdentification(),
+    findNestedElement(
+      'gmd:citation',
+      'gmd:CI_Citation',
+      'gmd:identifier',
+      'gmd:MD_Identifier',
+      'gmd:code'
+    ),
+    extractCharacterString()
+  )(rootEl)
+}
