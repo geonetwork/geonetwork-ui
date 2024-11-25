@@ -73,6 +73,13 @@
                             </gmd:dateType>
                         </gmd:CI_Date>
                     </gmd:date>
+                    <gmd:identifier>
+                        <gmd:MD_Identifier>
+                            <gmd:code>
+                                <gco:CharacterString>2d974612-70b1-4662-a9f4-c43cbe453773</gco:CharacterString>
+                            </gmd:code>
+                        </gmd:MD_Identifier>
+                    </gmd:identifier>
                 </gmd:CI_Citation>
             </gmd:citation>
             <gmd:abstract>
