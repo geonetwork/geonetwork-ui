@@ -47,7 +47,7 @@ export class SidebarComponent implements OnInit {
   }
 
   logOut() {
-    const current_url = window.location.toString()
+    const current_url = window.origin.toString()
     fetch(this.authService.logoutUrl, {
       method: 'GET',
     })
