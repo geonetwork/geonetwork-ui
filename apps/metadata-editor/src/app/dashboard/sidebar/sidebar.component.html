@@ -31,8 +31,14 @@
         <gn-ui-button
           type="default"
           class="w-10 h-10 flex justify-center items-center hover:cursor-pointer"
+          (click)="logOut()"
         >
-          <img src="assets/system-shut.svg" alt="Log out" class="w-4 h-4" />
+          <img
+            src="assets/system-shut.svg"
+            [alt]="'editor.sidebar.logout' | translate"
+            [title]="'editor.sidebar.logout' | translate"
+            class="w-4 h-4 hover:invert-[.5]"
+          />
         </gn-ui-button>
       </div>
     </ng-container>

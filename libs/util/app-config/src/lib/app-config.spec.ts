@@ -133,6 +133,7 @@ describe('app config utils', () => {
           PROXY_PATH: '/proxy/?url=',
           METADATA_LANGUAGE: 'fre',
           LOGIN_URL: '/cas/login?service=',
+          LOGOUT_URL: '/geonetwork/signout',
           WEB_COMPONENT_EMBEDDER_URL: '/datahub/wc-embedder.html',
         })
       })
