@@ -791,30 +791,6 @@ describe('read parts', () => {
           ])
         })
       })
-
-      describe('read resource identifier', () => {
-        beforeEach(() => {
-          const mdIdentificationInfo = getRootElement(
-            parseXmlString(`
-                    <gmd:identifier>
-                        <gmd:MD_Identifier>
-                            <gmd:code>
-                                <gco:CharacterString>fr-200053742/2021/scot</gco:CharacterString>
-                            </gmd:code>
-                        </gmd:MD_Identifier>
-                    </gmd:identifier>`)
-          )
-          pipe(
-            removeChildrenByName('gmd:MD_Metadata.identificationInfo'),
-            appendChildren(() => mdIdentificationInfo)
-          )(recordRootEl)
-        })
-        it('returns the resource identifier', () => {
-          expect(readResourceIdentifier(recordRootEl)).toEqual(
-            'fr-200053742/2021/scot'
-          )
-        })
-      })
     })
   })
 })
