@@ -22,7 +22,7 @@ import {
 import { LangService } from '@geonetwork-ui/util/i18n'
 import { formatUserInfo } from '@geonetwork-ui/util/shared'
 
-export type FieldType = 'values' | 'dateRange' | 'userInfo'
+export type FieldType = 'values' | 'dateRange'
 
 export type FieldValue = string | number
 export interface FieldAvailableValue {
@@ -88,7 +88,7 @@ export class SimpleSearchField implements AbstractSearchField {
     values: FieldValue[] | DateRange[]
   ): Observable<FieldFilters> {
     // FieldValue[]
-    if (this.getType() === 'values' || this.getType() === 'userInfo') {
+    if (this.getType() === 'values') {
       return of({
         [this.esFieldName]: (values as FieldValue[]).reduce((acc, val) => {
           return { ...acc, [val.toString()]: true }
@@ -399,10 +399,6 @@ export class UserSearchField extends SimpleSearchField {
         }))
       )
     )
-  }
-
-  getType(): FieldType {
-    return 'userInfo'
   }
 }
 

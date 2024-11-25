@@ -83,19 +83,18 @@ export class SearchFiltersSummaryItemComponent implements OnInit {
 
   getReadableValues(fieldValues: FieldValue[] | DateRange[]): DisplayedValue[] {
     return fieldValues.map((value) => {
-      switch (this.fieldType) {
-        case 'dateRange':
-          return {
-            value,
-            label: `${this.datePipe.transform(
-              value.start,
-              'dd.MM.yyyy'
-            )} - ${this.datePipe.transform(value.end, 'dd.MM.yyyy')}`,
-          }
-        case 'userInfo':
-          return { value, label: formatUserInfo(value) }
-        default:
-          return { value, label: value }
+      if (this.fieldType === 'dateRange') {
+        return {
+          value,
+          label: `${this.datePipe.transform(
+            value.start,
+            'dd.MM.yyyy'
+          )} - ${this.datePipe.transform(value.end, 'dd.MM.yyyy')}`,
+        }
+      } else if (this.fieldName === 'user') {
+        return { value, label: formatUserInfo(value) }
+      } else {
+        return { value, label: value }
       }
     })
   }
