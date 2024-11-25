@@ -239,7 +239,6 @@ export class AutocompleteComponent
       this.lastInputValue$.pipe(first()).subscribe((lastInputValue) => {
         this.inputRef.nativeElement.value = lastInputValue
       })
-      return
     }
     if (this.clearOnSelection) {
       this.inputRef.nativeElement.value = ''
