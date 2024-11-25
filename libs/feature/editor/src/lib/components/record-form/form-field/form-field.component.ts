@@ -4,9 +4,12 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Injector,
   Input,
   Output,
   ViewChild,
+  afterNextRender,
+  inject,
 } from '@angular/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import {
@@ -48,6 +51,7 @@ import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/for
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
 import { FormFieldConstraintsShortcutsComponent } from './form-field-constraints-shortcuts/form-field-constraints-shortcuts.component'
 import { FormFieldConstraintsComponent } from './form-field-constraints/form-field-constraints.component'
+import { TextFieldModule } from '@angular/cdk/text-field'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -80,6 +84,7 @@ import { FormFieldConstraintsComponent } from './form-field-constraints/form-fie
     FormFieldContactsComponent,
     FormFieldConstraintsComponent,
     FormFieldConstraintsShortcutsComponent,
+    TextFieldModule,
   ],
 })
 export class FormFieldComponent {
@@ -101,7 +106,7 @@ export class FormFieldComponent {
   }
 
   focusTitleInput() {
-    this.titleInput.nativeElement.children[0].focus()
+    this.titleInput.nativeElement.focus()
   }
 
   get withoutWrapper() {

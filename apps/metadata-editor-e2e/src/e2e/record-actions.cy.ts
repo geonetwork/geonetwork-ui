@@ -189,7 +189,7 @@ describe('record-actions', () => {
 
       cy.get('gn-ui-form-field')
         .first()
-        .find('input')
+        .find('textarea')
         .invoke('val')
         .should('eq', 'Accroches vélos MEL (Copy)')
 
@@ -254,7 +254,7 @@ describe('record-actions', () => {
         cy.get('gn-ui-record-form')
           .find('gn-ui-form-field')
           .eq(0)
-          .find('input')
+          .find('textarea')
           .invoke('val')
           .should('contain', 'Copy')
       })
