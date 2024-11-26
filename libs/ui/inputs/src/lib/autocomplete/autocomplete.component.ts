@@ -20,7 +20,15 @@ import {
   MatAutocompleteSelectedEvent,
   MatAutocompleteTrigger,
 } from '@angular/material/autocomplete'
-import { first, merge, Observable, of, ReplaySubject, Subscription } from 'rxjs'
+import {
+  first,
+  merge,
+  Observable,
+  of,
+  ReplaySubject,
+  Subject,
+  Subscription,
+} from 'rxjs'
 import {
   catchError,
   debounceTime,
@@ -30,6 +38,7 @@ import {
   map,
   switchMap,
   take,
+  takeUntil,
   tap,
 } from 'rxjs/operators'
 import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
@@ -98,6 +107,7 @@ export class AutocompleteComponent
   error: string | null = null
   suggestions$: Observable<AutocompleteItem[]>
   subscription = new Subscription()
+  clearSuggestions$ = new Subject<void>()
 
   @Input() displayWithFn: (item: AutocompleteItem) => string = (item) =>
     item.toString()
@@ -130,33 +140,47 @@ export class AutocompleteComponent
       )
     )
 
-    const externalValueChange$ = this.control.valueChanges.pipe(
-      filter((value) => typeof value === 'object' && value.title),
-      map((item) => item.title)
-    )
-
     // this observable emits arrays of suggestions loaded using the given action
-    const suggestionsFromAction = merge(
-      newValue$.pipe(
-        filter((value: string) => value.length >= this.minCharacterCount)
-      ),
-      externalValueChange$
-    ).pipe(
+    const suggestionsFromAction = newValue$.pipe(
+      switchMap((value: string) => {
+        if (value.length === 0) {
+          return of([]) // Emit an empty array for an empty value
+        } else if (value.length >= this.minCharacterCount) {
+          return merge(
+            of(value),
+            this.control.valueChanges.pipe(
+              filter(
+                (controlValue) =>
+                  typeof controlValue === 'object' && controlValue.title
+              ),
+              map((item) => item.title),
+              distinctUntilChanged()
+            )
+          ).pipe(
+            takeUntil(this.clearSuggestions$), // Stop emitting when suggestions are cleared
+            switchMap((title) =>
+              this.action(title).pipe(
+                catchError((error: Error) => {
+                  this.error = error.message
+                  return of([])
+                }),
+                finalize(() => (this.searching = false))
+              )
+            )
+          )
+        } else {
+          return of([])
+        }
+      }),
       tap(() => {
         this.searching = true
         this.error = null
-      }),
-      switchMap((value) => this.action(value)),
-      catchError((error: Error) => {
-        this.error = error.message
-        return of([])
-      }),
-      finalize(() => (this.searching = false))
+      })
     )
 
     this.suggestions$ = merge(
+      this.clearSuggestions$.pipe(map(() => [])), // Clearing has the highest priority
       suggestionsFromAction,
-      // if a new value is under the min char count, clear suggestions
       newValue$.pipe(
         filter((value: string) => value.length < this.minCharacterCount),
         map(() => [])
@@ -204,11 +228,15 @@ export class AutocompleteComponent
     if (this.inputRef) {
       this.inputRef.nativeElement.value = (value as any)?.title || ''
     }
+    if (this.clearOnSelection) {
+      this.clearSuggestions$.next()
+    }
   }
 
   clear(): void {
     this.inputRef.nativeElement.value = ''
     this.inputCleared.emit()
+    this.clearSuggestions$.next()
     this.selectionSubject
       .pipe(take(1))
       .subscribe((selection) => selection && selection.option.deselect())
@@ -241,7 +269,7 @@ export class AutocompleteComponent
       })
     }
     if (this.clearOnSelection) {
-      this.inputRef.nativeElement.value = ''
+      this.clear()
     }
   }
 }
