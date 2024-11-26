@@ -5,7 +5,7 @@ export default {
   title: 'Elements/GnUiLinkifyDirective',
   decorators: [
     moduleMetadata({
-      declarations: [GnUiLinkifyDirective],
+      imports: [GnUiLinkifyDirective],
     }),
   ],
 } as Meta<GnUiLinkifyDirective>

@@ -5,7 +5,6 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { RecordPreviewCardComponent } from './record-preview-card.component'
-import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { importProvidersFrom } from '@angular/core'
 import { HttpClientModule } from '@angular/common/http'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
@@ -19,7 +18,6 @@ export default {
   component: RecordPreviewCardComponent,
   decorators: [
     moduleMetadata({
-      declarations: [ThumbnailComponent],
       imports: [UiDatavizModule, UtilSharedModule],
     }),
     applicationConfig({

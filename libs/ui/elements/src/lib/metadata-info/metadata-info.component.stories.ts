@@ -11,7 +11,6 @@ import {
 } from '@storybook/angular'
 import { MetadataInfoComponent } from './metadata-info.component'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
-import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 
@@ -20,7 +19,6 @@ export default {
   component: MetadataInfoComponent,
   decorators: [
     moduleMetadata({
-      declarations: [ContentGhostComponent],
       imports: [
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),

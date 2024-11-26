@@ -5,7 +5,6 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { RecordPreviewTextComponent } from './record-preview-text.component'
-import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { importProvidersFrom } from '@angular/core'
 import { RecordPreviewTitleComponent } from '../record-preview-title/record-preview-title.component'
@@ -22,7 +21,6 @@ export default {
   component: RecordPreviewTextComponent,
   decorators: [
     moduleMetadata({
-      declarations: [ThumbnailComponent],
       imports: [
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
         UtilSharedModule,
