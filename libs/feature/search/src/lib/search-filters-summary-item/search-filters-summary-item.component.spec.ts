@@ -48,7 +48,7 @@ class TranslateServiceMock {
   get = jest.fn(() => of(''))
 }
 
-describe('SearchFiltersSummaryComponent', () => {
+describe('SearchFiltersSummaryItemComponent', () => {
   let component: SearchFiltersSummaryItemComponent
   let fixture: ComponentFixture<SearchFiltersSummaryItemComponent>
   let searchFacade: SearchFacade

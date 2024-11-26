@@ -11,7 +11,6 @@ import {
   FeatureSearchModule,
   SearchFiltersSummaryComponent,
 } from '@geonetwork-ui/feature/search'
-import { MatIconModule } from '@angular/material/icon'
 
 @Component({
   selector: 'md-editor-search-filters',
@@ -21,7 +20,6 @@ import { MatIconModule } from '@angular/material/icon'
     TranslateModule,
     FeatureSearchModule,
     NgIconComponent,
-    MatIconModule,
     SearchFiltersSummaryComponent,
   ],
   providers: [
