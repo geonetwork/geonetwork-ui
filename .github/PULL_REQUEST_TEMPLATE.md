@@ -42,4 +42,5 @@ Please only check items relevant to your contribution. Thank you very much for y
 Please give credit to the sponsor of this work if possible.
 -->
 
-**This work is sponsored by [Organization ABC](xx)**.
+<!-- **This work is sponsored by [Organization ABC](xx)**. -->
+
