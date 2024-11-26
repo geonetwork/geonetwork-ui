@@ -5,11 +5,23 @@ import {
   OnChanges,
   Output,
 } from '@angular/core'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { CommonModule } from '@angular/common'
+import { iconoirNavArrowLeft, iconoirNavArrowRight } from '@ng-icons/iconoir'
 
 @Component({
   selector: 'gn-ui-pagination-buttons',
   templateUrl: './pagination-buttons.component.html',
   styleUrls: ['./pagination-buttons.component.css'],
+  standalone: true,
+  imports: [CommonModule, ButtonComponent, NgIcon],
+  viewProviders: [
+    provideIcons({
+      iconoirNavArrowRight,
+      iconoirNavArrowLeft,
+    }),
+  ],
 })
 export class PaginationButtonsComponent implements OnChanges {
   @Input() currentPage: number

@@ -1,4 +1,3 @@
-import { Component, EventEmitter, Output } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import {
@@ -6,25 +5,21 @@ import {
   EXTERNAL_VIEWER_URL_TEMPLATE,
   ExternalViewerButtonComponent,
 } from './external-viewer-button.component'
+import { MockBuilder } from 'ng-mocks'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { importProvidersFrom } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
-
-@Component({
-  selector: 'gn-ui-button',
-  template: '<div></div>',
-})
-export class MockButtonComponent {
-  @Output() buttonClick = new EventEmitter()
-}
 
 describe('ExternalViewerButtonComponent', () => {
   let component: ExternalViewerButtonComponent
   let fixture: ComponentFixture<ExternalViewerButtonComponent>
 
+  beforeEach(() => MockBuilder(ExternalViewerButtonComponent))
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ExternalViewerButtonComponent, MockButtonComponent],
-      imports: [TranslateModule.forRoot()],
       providers: [
+        importProvidersFrom(TranslateModule.forRoot()),
         {
           provide: EXTERNAL_VIEWER_URL_TEMPLATE,
           useValue:
@@ -56,7 +51,7 @@ describe('ExternalViewerButtonComponent', () => {
     })
   })
   describe('with mapConfig and valid external links', () => {
-    let buttonComponent: MockButtonComponent
+    let buttonComponent: ButtonComponent
     let componentSpy
     let windowSpy
     const openMock = jest.fn().mockReturnThis()
@@ -79,7 +74,7 @@ describe('ExternalViewerButtonComponent', () => {
       describe('click button', () => {
         beforeEach(() => {
           buttonComponent = fixture.debugElement.query(
-            By.directive(MockButtonComponent)
+            By.directive(ButtonComponent)
           ).componentInstance
           componentSpy = jest.spyOn(component, 'openInExternalViewer')
           windowSpy = jest
@@ -127,7 +122,7 @@ describe('ExternalViewerButtonComponent', () => {
       describe('click button', () => {
         beforeEach(() => {
           buttonComponent = fixture.debugElement.query(
-            By.directive(MockButtonComponent)
+            By.directive(ButtonComponent)
           ).componentInstance
           componentSpy = jest.spyOn(component, 'openInExternalViewer')
           windowSpy = jest
@@ -172,7 +167,7 @@ describe('ExternalViewerButtonComponent', () => {
       describe('click button', () => {
         beforeEach(() => {
           buttonComponent = fixture.debugElement.query(
-            By.directive(MockButtonComponent)
+            By.directive(ButtonComponent)
           ).componentInstance
           componentSpy = jest.spyOn(component, 'openInExternalViewer')
           windowSpy = jest

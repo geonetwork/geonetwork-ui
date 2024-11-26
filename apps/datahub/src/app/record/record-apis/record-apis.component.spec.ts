@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { BehaviorSubject } from 'rxjs'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
+import { MockBuilder } from 'ng-mocks'
 
 class MdViewFacadeMock {
   selectedApiLink$ = new BehaviorSubject([])
@@ -20,11 +20,11 @@ describe('RecordApisComponent', () => {
   let component: RecordApisComponent
   let fixture: ComponentFixture<RecordApisComponent>
 
+  beforeEach(() => MockBuilder(RecordApisComponent))
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecordApisComponent],
       imports: [TranslateModule.forRoot()],
-      schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
           provide: MdViewFacade,

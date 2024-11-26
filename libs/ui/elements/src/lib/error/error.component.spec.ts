@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ErrorComponent, ErrorType } from './error.component'
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core'
 import { By } from '@angular/platform-browser'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('ErrorComponent', () => {
   let component: ErrorComponent
@@ -11,7 +12,7 @@ describe('ErrorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ErrorComponent],
+      imports: [ErrorComponent, TranslateModule.forRoot()],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   })

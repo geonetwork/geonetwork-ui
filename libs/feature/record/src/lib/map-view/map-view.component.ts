@@ -34,16 +34,40 @@ import {
   MapContextLayer,
 } from '@geospatial-sdk/core'
 import {
+  FeatureDetailComponent,
   MapContainerComponent,
   prioritizePageScroll,
 } from '@geonetwork-ui/ui/map'
 import { Feature } from 'geojson'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
+import { matClose } from '@ng-icons/material-icons/baseline'
+import { CommonModule } from '@angular/common'
+import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
+import { TranslateModule } from '@ngx-translate/core'
+import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component'
+import {
+  LoadingMaskComponent,
+  PopupAlertComponent,
+} from '@geonetwork-ui/ui/widgets'
 
 @Component({
   selector: 'gn-ui-map-view',
   templateUrl: './map-view.component.html',
   styleUrls: ['./map-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    DropdownSelectorComponent,
+    MapContainerComponent,
+    FeatureDetailComponent,
+    PopupAlertComponent,
+    TranslateModule,
+    LoadingMaskComponent,
+    NgIconComponent,
+    ExternalViewerButtonComponent,
+  ],
+  viewProviders: [provideIcons({ matClose })],
 })
 export class MapViewComponent implements AfterViewInit {
   @ViewChild('mapContainer') mapContainer: MapContainerComponent

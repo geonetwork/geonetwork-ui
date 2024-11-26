@@ -2,6 +2,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { RelatedRecordCardComponent } from './related-record-card.component'
+import { RouterTestingModule } from '@angular/router/testing'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: jest.fn(() => ({
@@ -15,9 +16,12 @@ describe('RelatedRecordCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RelatedRecordCardComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [TranslateModule.forRoot()],
+      imports: [
+        RelatedRecordCardComponent,
+        TranslateModule.forRoot(),
+        RouterTestingModule,
+      ],
     }).compileComponents()
   })
 

@@ -1,6 +1,5 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
 import { RecordPreviewTitleComponent } from './record-preview-title.component'
-import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
@@ -13,7 +12,6 @@ export default {
   component: RecordPreviewTitleComponent,
   decorators: [
     moduleMetadata({
-      declarations: [ThumbnailComponent],
       imports: [
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
         UtilSharedModule,

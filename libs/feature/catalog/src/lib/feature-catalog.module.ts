@@ -1,8 +1,8 @@
 import { InjectionToken, NgModule } from '@angular/core'
 import { SiteTitleComponent } from './site-title/site-title.component'
 import {
+  CatalogTitleComponent,
   OrganisationsFilterComponent,
-  UiCatalogModule,
 } from '@geonetwork-ui/ui/catalog'
 import {
   GroupsApiService,
@@ -11,7 +11,6 @@ import {
 import { CommonModule } from '@angular/common'
 import { SourceLabelComponent } from './source-label/source-label.component'
 import { LangService, UtilI18nModule } from '@geonetwork-ui/util/i18n'
-import { OrganisationsComponent } from './organisations/organisations.component'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
@@ -55,21 +54,17 @@ const organizationsServiceFactory = (
       )
 
 @NgModule({
-  declarations: [
-    SiteTitleComponent,
-    SourceLabelComponent,
-    OrganisationsComponent,
-  ],
+  declarations: [SiteTitleComponent, SourceLabelComponent],
   imports: [
-    UiCatalogModule,
     UiLayoutModule,
     CommonModule,
     UtilI18nModule,
     TranslateModule.forChild(),
     UiElementsModule,
     OrganisationsFilterComponent,
+    CatalogTitleComponent,
   ],
-  exports: [SiteTitleComponent, SourceLabelComponent, OrganisationsComponent],
+  exports: [SiteTitleComponent, SourceLabelComponent],
   providers: [
     {
       provide: OrganizationsServiceInterface,

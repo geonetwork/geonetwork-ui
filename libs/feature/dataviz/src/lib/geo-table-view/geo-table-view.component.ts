@@ -15,13 +15,18 @@ import {
 import type { Feature, FeatureCollection } from 'geojson'
 import { Subscription } from 'rxjs'
 import { MapContext } from '@geospatial-sdk/core'
-import { MapContainerComponent } from '@geonetwork-ui/ui/map'
+import {
+  FeatureDetailComponent,
+  MapContainerComponent,
+} from '@geonetwork-ui/ui/map'
 
 @Component({
   selector: 'gn-ui-geo-table-view',
   templateUrl: './geo-table-view.component.html',
   styleUrls: ['./geo-table-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [TableComponent, MapContainerComponent, FeatureDetailComponent],
+  standalone: true,
 })
 export class GeoTableViewComponent implements OnInit, OnDestroy {
   @Input() data: FeatureCollection = { type: 'FeatureCollection', features: [] }

@@ -6,12 +6,23 @@ import {
   Output,
 } from '@angular/core'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
+import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { tablerFolderOpen } from '@ng-icons/tabler-icons'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-organisation-preview',
   templateUrl: './organisation-preview.component.html',
   styleUrls: ['./organisation-preview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [ThumbnailComponent, NgIcon, TranslateModule],
+  viewProviders: [
+    provideIcons({
+      tablerFolderOpen,
+    }),
+  ],
+  standalone: true,
 })
 export class OrganisationPreviewComponent {
   @Input() organization: Organization

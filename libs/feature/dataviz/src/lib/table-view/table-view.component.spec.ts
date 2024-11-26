@@ -8,18 +8,15 @@ import {
 } from '@angular/core/testing'
 import { TableViewComponent } from './table-view.component'
 import { of, throwError } from 'rxjs'
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
+import { ChangeDetectionStrategy, importProvidersFrom } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { DataService } from '../service/data.service'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
+import { MockBuilder } from 'ng-mocks'
+import { TranslateModule } from '@ngx-translate/core'
+import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
+import { TableComponent } from '@geonetwork-ui/ui/dataviz'
 
 const SAMPLE_DATA_ITEMS = [
   { type: 'Feature', properties: { id: 1 } },
@@ -38,50 +35,22 @@ class DataServiceMock {
   )
 }
 
-@Component({
-  selector: 'gn-ui-table',
-  template: '<div></div>',
-})
-export class MockTableComponent {
-  @Input() data: []
-  @Input() activeId
-  @Output() selected = new EventEmitter<number>()
-}
-
-@Component({
-  selector: 'gn-ui-loading-mask',
-  template: '<div></div>',
-})
-export class MockLoadingMaskComponent {
-  @Input() message
-}
-
-@Component({
-  selector: 'gn-ui-popup-alert',
-  template: '<div></div>',
-})
-export class MockPopupAlertComponent {}
-
 describe('TableViewComponent', () => {
   let component: TableViewComponent
   let fixture: ComponentFixture<TableViewComponent>
   let dataService: DataService
 
+  beforeEach(() => MockBuilder(TableViewComponent))
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        TableViewComponent,
-        MockTableComponent,
-        MockLoadingMaskComponent,
-        MockPopupAlertComponent,
-      ],
       providers: [
+        importProvidersFrom(TranslateModule.forRoot()),
         {
           provide: DataService,
           useClass: DataServiceMock,
         },
       ],
-      imports: [TranslateModule.forRoot()],
     })
       .overrideComponent(TableViewComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
@@ -102,7 +71,7 @@ describe('TableViewComponent', () => {
   })
 
   describe('initial state', () => {
-    let tableComponent: MockTableComponent
+    let tableComponent: TableComponent
 
     it('loads the data from the first available link', () => {
       expect(dataService.getDataset).toHaveBeenCalledWith(
@@ -119,7 +88,7 @@ describe('TableViewComponent', () => {
 
       it('shows a loading indicator', () => {
         expect(
-          fixture.debugElement.query(By.directive(MockLoadingMaskComponent))
+          fixture.debugElement.query(By.directive(LoadingMaskComponent))
         ).toBeTruthy()
       })
     })
@@ -130,7 +99,7 @@ describe('TableViewComponent', () => {
         fixture.detectChanges()
         flushMicrotasks()
         tableComponent = fixture.debugElement.query(
-          By.directive(MockTableComponent)
+          By.directive(TableComponent)
         ).componentInstance
         fixture.detectChanges()
       }))

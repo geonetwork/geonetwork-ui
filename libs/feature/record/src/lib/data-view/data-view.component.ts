@@ -10,12 +10,27 @@ import { map, tap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  ChartViewComponent,
+  TableViewComponent,
+} from '@geonetwork-ui/feature/dataviz'
+import { CommonModule } from '@angular/common'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-data-view',
   templateUrl: './data-view.component.html',
   styleUrls: ['./data-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    DropdownSelectorComponent,
+    TableViewComponent,
+    TranslateModule,
+    ChartViewComponent,
+  ],
 })
 export class DataViewComponent {
   @Input() mode: 'table' | 'chart'

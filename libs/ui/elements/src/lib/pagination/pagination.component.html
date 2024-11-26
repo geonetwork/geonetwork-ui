@@ -31,7 +31,6 @@
       >
       <gn-ui-button
         (buttonClick)="previousPage()"
-        id="navigate_previous"
         class="mr-2"
         [disabled]="currentPage === 1"
         [type]="'light'"
@@ -42,7 +41,6 @@
       </gn-ui-button>
       <gn-ui-button
         (buttonClick)="nextPage()"
-        id="navigate_next"
         [disabled]="currentPage === nPages"
         [type]="'light'"
         extraClass="!px-[3px]"

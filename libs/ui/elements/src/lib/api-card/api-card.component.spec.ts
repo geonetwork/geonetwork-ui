@@ -9,8 +9,7 @@ describe('ApiCardComponent', () => {
   let openRecordApiFormEmit
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ApiCardComponent],
-      imports: [TranslateModule.forRoot()],
+      imports: [ApiCardComponent, TranslateModule.forRoot()],
     }).compileComponents()
   })
 

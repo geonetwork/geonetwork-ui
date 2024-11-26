@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
+import { ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { PaginationComponent } from './pagination.component'
+import { TranslateModule } from '@ngx-translate/core'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
 describe('PaginationComponent', () => {
   let component: PaginationComponent
@@ -9,9 +11,7 @@ describe('PaginationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PaginationComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-      imports: [],
+      imports: [PaginationComponent, TranslateModule.forRoot()],
     })
       .overrideComponent(PaginationComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
@@ -52,15 +52,17 @@ describe('PaginationComponent', () => {
     })
   })
 
-  it('should navigation_next be disabled', () => {
-    const isDisabled = fixture.debugElement.query(By.css('#navigate_next'))
-      .nativeElement.disabled
+  it('should navigate_next be disabled', () => {
+    const isDisabled = fixture.debugElement.queryAll(
+      By.directive(ButtonComponent)
+    )[0].componentInstance.disabled
     expect(isDisabled).toBeTruthy()
   })
 
   it('should navigate_previous be enabled', () => {
-    const isDisabled = fixture.debugElement.query(By.css('#navigate_previous'))
-      .nativeElement.disabled
+    const isDisabled = fixture.debugElement.queryAll(
+      By.directive(ButtonComponent)
+    )[1].componentInstance.disabled
     expect(isDisabled).toBeFalsy()
   })
 })

@@ -10,8 +10,7 @@ describe('DownloadsListItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DownloadItemComponent],
-      imports: [TranslateModule.forRoot()],
+      imports: [DownloadItemComponent, TranslateModule.forRoot()],
     })
       .overrideComponent(DownloadItemComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
