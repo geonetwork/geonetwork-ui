@@ -135,7 +135,6 @@ export class AutocompleteComponent
       this.inputCleared.pipe(map(() => '')),
       this.control.valueChanges.pipe(
         filter((value) => typeof value === 'string'),
-        distinctUntilChanged(),
         debounceTime(400)
       )
     )
@@ -153,8 +152,7 @@ export class AutocompleteComponent
                 (controlValue) =>
                   typeof controlValue === 'object' && controlValue.title
               ),
-              map((item) => item.title),
-              distinctUntilChanged()
+              map((item) => item.title)
             )
           ).pipe(
             takeUntil(this.clearSuggestions$), // Stop emitting when suggestions are cleared
