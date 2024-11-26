@@ -1,5 +1,4 @@
 import { DateRange } from '@geonetwork-ui/api/repository'
-// import { FieldsService, FieldValue } from '@geonetwork-ui/feature/search'
 
 export const ROUTER_STATE_KEY = 'router'
 
@@ -16,9 +15,3 @@ export type SearchRouteParams = Record<
   string,
   string | string[] | number | DateRange
 >
-//TODO: type RouteParamKey correctly
-// type RouteParamKey = ROUTE_PARAMS[string] | FieldsService['fields'][string]
-// export type SearchRouteParams = Record<
-//   RouteParamKey,
-//   FieldValue[] | FieldValue | DateRange
-// >
