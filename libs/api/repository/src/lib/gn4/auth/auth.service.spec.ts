@@ -91,4 +91,14 @@ describe('AuthService', () => {
       expect(service.logoutUrl).toEqual('/geonetwork/signout')
     })
   })
+  describe('Settings', () => {
+    beforeEach(() => {
+      service = TestBed.inject(AuthService)
+    })
+    it('should return the logout url', () => {
+      expect(service.settingsUrl).toEqual(
+        '/geonetwork/srv/fre/admin.console#/organization/users?userOrGroup='
+      )
+    })
+  })
 })

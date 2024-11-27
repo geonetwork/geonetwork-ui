@@ -126,6 +126,7 @@ export function loadAppConfig() {
                 : undefined,
               LOGIN_URL: parsedGlobalSection.login_url,
               LOGOUT_URL: parsedGlobalSection.logout_url,
+              SETTINGS_URL: parsedGlobalSection.settings_url,
               WEB_COMPONENT_EMBEDDER_URL:
                 parsedGlobalSection.web_component_embedder_url,
               LANGUAGES: parsedGlobalSection.languages,

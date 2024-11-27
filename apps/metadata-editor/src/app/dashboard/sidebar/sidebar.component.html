@@ -20,13 +20,15 @@
       >
         <gn-ui-button
           type="default"
-          class="w-10 h-10 flex justify-center items-center hover:cursor-pointer"
+          class="w-10 h-10 flex justify-center items-center hover:cursor-pointer mb-1"
         >
-          <gn-ui-user-preview
-            [user]="user"
-            [avatarPlaceholder]="placeholder$ | async"
-            extraClass="w-10 h-10"
-          ></gn-ui-user-preview>
+          <a [href]="settingsUrl" target="_blank">
+            <gn-ui-user-preview
+              [user]="user"
+              [avatarPlaceholder]="placeholder$ | async"
+              extraClass="w-10 h-10"
+            ></gn-ui-user-preview>
+          </a>
         </gn-ui-button>
         <gn-ui-button
           type="default"

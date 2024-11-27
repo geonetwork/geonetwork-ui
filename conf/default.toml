@@ -24,6 +24,7 @@ proxy_path = ""
 # Example to use the georchestra login page:
 # login_url = "/cas/login?service=${current_url}"
 # logout_url = "/geonetwork/signout"
+# settings_url = "/geonetwork/srv/\${lang3}/admin.console#/organization/users?userOrGroup="
 # This optional URL should point to the static html page wc-embedder.html which allows to display a web component (like chart and table) via a permalink.
 # URLs can be indicated from the root of the same server starting with a "/" or as an external URL. Be conscious of potential CORS issues when using an external URL.
 # The default location in the dockerized datahub app for example is "/datahub/wc-embedder.html".
