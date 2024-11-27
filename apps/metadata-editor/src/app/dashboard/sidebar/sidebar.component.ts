@@ -32,10 +32,7 @@ export class SidebarComponent implements OnInit {
   organisations$: Observable<Organization[]>
 
   get settingsUrl() {
-    return (
-      this.authService.loginUrl.split('/catalog')[0] +
-      '/admin.console#/organization/users?userOrGroup='
-    )
+    return this.authService.settingsUrl
   }
 
   constructor(
