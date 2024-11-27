@@ -36,7 +36,11 @@ export class InteractiveTableComponent {
     return {
       'grid-template-columns': this.columns
         .map((column) =>
-          column.grow ? `minmax(0px,1fr)` : `minmax(0px,max-content)`
+          column.width
+            ? column.width
+            : column.grow
+            ? `minmax(0px,1fr)`
+            : `minmax(0px,max-content)`
         )
         .join(' '),
     }

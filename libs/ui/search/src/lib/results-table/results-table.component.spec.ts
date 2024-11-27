@@ -40,7 +40,7 @@ describe('ResultsTableComponent', () => {
             datasetRecordsFixture()[0] as CatalogRecord
           )[0]
         )
-      ).toEqual('#1e5180') // geojson
+      ).toEqual('#b3cde8') // geojson
     })
   })
 

@@ -22,6 +22,7 @@ export class InteractiveTableColumnComponent {
   @ContentChild('cell') cell: TemplateRef<unknown>
 
   @Input() grow = false
+  @Input() width: string
   @Input() sortable = false
   @Input() activeSort: 'asc' | 'desc' | null = null
   @Output() sortChange = new EventEmitter<'asc' | 'desc'>()

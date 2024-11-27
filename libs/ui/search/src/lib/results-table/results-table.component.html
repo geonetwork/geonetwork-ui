@@ -3,7 +3,7 @@
   (itemClick)="handleRecordClick($event)"
 >
   <!-- SELECTED COLUMN -->
-  <gn-ui-interactive-table-column>
+  <gn-ui-interactive-table-column [width]="'3rem'">
     <ng-template #header>
       <gn-ui-checkbox
         [checked]="isAllSelected()"
@@ -52,7 +52,7 @@
   </gn-ui-interactive-table-column>
 
   <!-- FORMATS COLUMN -->
-  <gn-ui-interactive-table-column>
+  <gn-ui-interactive-table-column [width]="'9rem'">
     <ng-template #header>
       <span translate>record.metadata.formats</span>
     </ng-template>
@@ -63,14 +63,14 @@
         [title]="formats.join(', ')"
       >
         <span
-          class="badge-btn min-w-[45px] text-xs text-white px-2 shrink-0"
+          class="badge-btn min-w-[45px] text-xs text-gray-900 px-2 shrink-0"
           [style.background-color]="getBadgeColor(formats[0])"
           *ngIf="formats[0]"
         >
           {{ formats[0] }}
         </span>
         <span
-          class="badge-btn min-w-[45px] text-xs text-white px-2 shrink-0"
+          class="badge-btn min-w-[45px] text-xs text-gray-900 px-2 shrink-0"
           [style.background-color]="getBadgeColor(formats[1])"
           *ngIf="formats[1]"
         >
@@ -86,6 +86,7 @@
 
   <!-- OWNER COLUMN -->
   <gn-ui-interactive-table-column
+    [width]="'9rem'"
     [sortable]="true"
     [activeSort]="isSortedBy('recordOwner')"
     (sortChange)="setSortBy('recordOwner', $event)"
@@ -94,7 +95,7 @@
       <span translate>record.metadata.author</span>
     </ng-template>
     <ng-template #cell let-item>
-      <ng-icon name="iconoirUser"></ng-icon>
+      <ng-icon name="iconoirUser" size="16px"></ng-icon>
       <span data-cy="ownerInfo" class="text-xs">{{
         formatUserInfo(item.extras?.ownerInfo)
       }}</span>
@@ -102,7 +103,7 @@
   </gn-ui-interactive-table-column>
 
   <!-- STATUS COLUMN -->
-  <gn-ui-interactive-table-column>
+  <gn-ui-interactive-table-column [width]="'6rem'">
     <ng-template #header>
       <span translate>record.metadata.status</span>
     </ng-template>
@@ -120,6 +121,7 @@
 
   <!-- UPDATE DATE COLUMN -->
   <gn-ui-interactive-table-column
+    [width]="'8rem'"
     [sortable]="true"
     [activeSort]="isSortedBy('changeDate')"
     (sortChange)="setSortBy('changeDate', $event)"
@@ -128,7 +130,7 @@
       <span translate>record.metadata.updatedOn</span>
     </ng-template>
     <ng-template #cell let-item>
-      <div class="flex justify-center w-full text-xs">
+      <div class="flex text-left w-full text-xs">
         {{ isUnsavedDraft(item) ? '-' : dateToString(item.recordUpdated) }}
       </div>
     </ng-template>
