@@ -39,6 +39,7 @@ class EditorFacadeMock {
   editorConfig$ = new BehaviorSubject(editorConfigFixture())
   currentPage$ = new BehaviorSubject(0)
   pagesCount$ = new BehaviorSubject(2)
+  hasRecordChanged$ = new BehaviorSubject(false)
 }
 class NotificationsServiceMock {
   showNotification = jest.fn()

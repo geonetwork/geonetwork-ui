@@ -127,4 +127,44 @@ describe('PublishButtonComponent', () => {
       )
     })
   })
+  describe('#confirmPublish', () => {
+    it('should call saveRecord', () => {
+      const saveRecordSpy = jest.spyOn(component, 'saveRecord')
+      component.confirmPublish()
+      expect(saveRecordSpy).toHaveBeenCalled()
+    })
+  })
+
+  describe('#cancelPublish', () => {
+    it('should set isActionMenuOpen to false', () => {
+      component.cancelPublish()
+      expect(component.isActionMenuOpen).toBe(false)
+    })
+  })
+
+  describe('#openConfirmationMenu', () => {
+    it('should set isActionMenuOpen to true', () => {
+      component.openConfirmationMenu()
+      expect(component.isActionMenuOpen).toBe(true)
+    })
+  })
+
+  describe('#publishRecord', () => {
+    it('should call openConfirmationMenu if publishWarning has length', () => {
+      component.publishWarning = ['Warning']
+      const openConfirmationMenuSpy = jest.spyOn(
+        component,
+        'openConfirmationMenu'
+      )
+      component.publishRecord()
+      expect(openConfirmationMenuSpy).toHaveBeenCalled()
+    })
+
+    it('should call saveRecord if publishWarning is empty', () => {
+      component.publishWarning = []
+      const saveRecordSpy = jest.spyOn(component, 'saveRecord')
+      component.publishRecord()
+      expect(saveRecordSpy).toHaveBeenCalled()
+    })
+  })
 })

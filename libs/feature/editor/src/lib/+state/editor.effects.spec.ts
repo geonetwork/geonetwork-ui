@@ -16,6 +16,7 @@ import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
 class EditorServiceMock {
   saveRecord = jest.fn((record) => of([record, '<xml>blabla</xml>']))
   saveRecordAsDraft = jest.fn(() => of('<xml>blabla</xml>'))
+  hasRecordChangedSinceDraft = jest.fn((record) => of(['change1', 'change2']))
 }
 class RecordsRepositoryMock {
   recordHasDraft = jest.fn(() => true)
@@ -203,6 +204,21 @@ describe('EditorEffects', () => {
         const expected = hot('---|')
         expect(effects.checkHasChangesOnOpen$).toBeObservable(expected)
       })
+    })
+  })
+  describe('hasRecordChangedSinceDraft$', () => {
+    it('dispatches hasRecordChangedSinceDraftSuccess on success', () => {
+      const record = datasetRecordsFixture()[0]
+      actions = hot('-a-|', {
+        a: EditorActions.hasRecordChangedSinceDraft({ record }),
+      })
+      const expected = hot('-a-|', {
+        a: EditorActions.hasRecordChangedSinceDraftSuccess({
+          changes: ['change1', 'change2'],
+        }),
+      })
+      expect(effects.hasRecordChangedSinceDraft$).toBeObservable(expected)
+      expect(service.hasRecordChangedSinceDraft).toHaveBeenCalledWith(record)
     })
   })
 })

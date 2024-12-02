@@ -21,6 +21,7 @@ describe('Editor Selectors', () => {
         saveError: 'something went wrong',
         saving: false,
         changedSinceSave: true,
+        hasRecordChanged: ['date', 'user'],
       },
     }
   })
@@ -59,6 +60,11 @@ describe('Editor Selectors', () => {
     it('selectRecordFieldsConfig() should return the current "fieldsConfig" state', () => {
       const result = EditorSelectors.selectEditorConfig(state)
       expect(result).toEqual(DEFAULT_CONFIGURATION)
+    })
+
+    it('selectHasRecordChanged() should return the current "hasRecordChanged" state', () => {
+      const result = EditorSelectors.selectHasRecordChanged(state)
+      expect(result).toEqual(['date', 'user'])
     })
 
     describe('selectRecordFields', () => {
