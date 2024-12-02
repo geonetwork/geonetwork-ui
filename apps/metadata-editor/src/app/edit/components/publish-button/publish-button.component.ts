@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
@@ -16,9 +25,16 @@ import {
 } from '@ng-icons/core'
 import { iconoirCloudUpload } from '@ng-icons/iconoir'
 import { matCheckCircleOutline } from '@ng-icons/material-icons/outline'
+import { MatMenuTrigger } from '@angular/material/menu'
+import {
+  CdkOverlayOrigin,
+  CdkConnectedOverlay,
+  Overlay,
+  OverlayRef,
+} from '@angular/cdk/overlay'
+import { TemplatePortal } from '@angular/cdk/portal'
 
 export type RecordSaveStatus = 'saving' | 'upToDate' | 'hasChanges'
-
 @Component({
   selector: 'md-editor-publish-button',
   standalone: true,
@@ -29,6 +45,8 @@ export type RecordSaveStatus = 'saving' | 'upToDate' | 'hasChanges'
     MatTooltipModule,
     TranslateModule,
     NgIconComponent,
+    CdkOverlayOrigin,
+    CdkConnectedOverlay,
   ],
   providers: [
     provideIcons({ iconoirCloudUpload, matCheckCircleOutline }),
@@ -41,6 +59,7 @@ export type RecordSaveStatus = 'saving' | 'upToDate' | 'hasChanges'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PublishButtonComponent {
+  @Input() publishWarning = []
   status$: Observable<RecordSaveStatus> = combineLatest([
     this.facade.changedSinceSave$,
     this.facade.saving$,
@@ -58,11 +77,73 @@ export class PublishButtonComponent {
 
   record$ = this.facade.record$
 
+  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger
+
+  @ViewChild('actionMenuButton', { read: ElementRef })
+  actionMenuButton!: ElementRef
+  @ViewChild('template') template!: TemplateRef<any>
+  private overlayRef!: OverlayRef
+
+  isActionMenuOpen = false
+
   constructor(
     private facade: EditorFacade,
     private recordsApiService: RecordsApiService,
-    private platformService: PlatformServiceInterface
+    private platformService: PlatformServiceInterface,
+    private overlay: Overlay,
+    private viewContainerRef: ViewContainerRef,
+    private cdr: ChangeDetectorRef
   ) {}
+
+  confirmPublish() {
+    this.saveRecord()
+  }
+
+  cancelPublish() {
+    if (this.overlayRef) {
+      this.isActionMenuOpen = false
+      this.overlayRef.dispose()
+      this.cdr.markForCheck()
+    }
+  }
+
+  openConfirmationMenu() {
+    this.isActionMenuOpen = true
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(this.actionMenuButton)
+      .withPositions([
+        {
+          originX: 'end',
+          originY: 'bottom',
+          overlayX: 'end',
+          overlayY: 'top',
+        },
+      ])
+
+    this.overlayRef = this.overlay.create({
+      hasBackdrop: true,
+      backdropClass: 'cdk-overlay-transparent-backdrop',
+      positionStrategy: positionStrategy,
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+    })
+
+    const portal = new TemplatePortal(this.template, this.viewContainerRef)
+
+    this.overlayRef.attach(portal)
+
+    this.overlayRef.backdropClick().subscribe(() => {
+      this.cancelPublish()
+    })
+  }
+
+  publishRecord() {
+    if (this.publishWarning.length) {
+      this.openConfirmationMenu()
+    } else {
+      this.saveRecord()
+    }
+  }
 
   saveRecord() {
     this.facade.saveRecord()
