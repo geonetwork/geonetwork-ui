@@ -1,8 +1,10 @@
 <ng-container [ngSwitch]="status$ | async">
   <gn-ui-button
+    cdkOverlayOrigin
+    #actionMenuButton
     *ngSwitchCase="'hasChanges'"
     type="primary"
-    (buttonClick)="saveRecord()"
+    (buttonClick)="publishRecord()"
     [matTooltip]="'editor.record.publish' | translate"
   >
     <ng-icon name="iconoirCloudUpload"></ng-icon>
@@ -11,12 +13,49 @@
     <mat-spinner [diameter]="16"></mat-spinner>
   </gn-ui-button>
   <gn-ui-button
+    cdkOverlayOrigin
+    #actionMenuButton
     *ngSwitchCase="'upToDate'"
     type="secondary"
     [disabled]="true"
-    (buttonClick)="saveRecord()"
+    (buttonClick)="publishRecord()"
     [matTooltip]="'editor.record.upToDate' | translate"
   >
     <ng-icon name="matCheckCircleOutline"></ng-icon>
   </gn-ui-button>
+  <ng-template #template>
+    <div
+      data-test="publish-warning"
+      class="w-96 p-5 flex flex-col gap-3 mt-2 border border-gray-100 bg-white shadow-2xl rounded-2xl mr-2"
+    >
+      <span
+        class="text-center"
+        translate
+        [translateParams]="{
+          date: publishWarning[0],
+          user: publishWarning[1]
+        }"
+        >editor.record.publish.confirmation.message</span
+      >
+      <div class="flex flex-row gap-8 justify-center">
+        <gn-ui-button
+          [style.--gn-ui-button-width]="'100px'"
+          (buttonClick)="cancelPublish()"
+          >{{
+            'editor.record.publish.confirmation.cancelText' | translate
+          }}</gn-ui-button
+        >
+        <gn-ui-button
+          (buttonClick)="confirmPublish()"
+          cdkFocusInitial
+          type="primary"
+          data-cy="publish-confirm-button"
+          [style.--gn-ui-button-width]="'100px'"
+          >{{
+            'editor.record.publish.confirmation.confirmText' | translate
+          }}</gn-ui-button
+        >
+      </div>
+    </div>
+  </ng-template>
 </ng-container>
