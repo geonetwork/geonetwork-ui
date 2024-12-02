@@ -41,6 +41,7 @@ import {
 import { catchError, map, tap } from 'rxjs/operators'
 import { lt } from 'semver'
 import { ElasticsearchService } from './elasticsearch'
+import { TranslateService } from '@ngx-translate/core'
 
 const minPublicationApiVersion = '4.2.5'
 
@@ -59,7 +60,8 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     private gn4SearchHelper: ElasticsearchService,
     private gn4Mapper: Gn4Converter,
     private gn4RecordsApi: RecordsApiService,
-    private platformService: PlatformServiceInterface
+    private platformService: PlatformServiceInterface,
+    private translateService: TranslateService
   ) {}
 
   search({
@@ -363,6 +365,47 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       .map((key) => window.localStorage.getItem(key))
       .filter((draft) => draft !== null).length
     return of(draftCount)
+  }
+
+  hasRecordChangedSinceDraft(localRecord: CatalogRecord) {
+    const isUnsaved = this.isRecordNotYetSaved(localRecord.uniqueIdentifier)
+    const hasDraft = this.recordHasDraft(localRecord.uniqueIdentifier)
+
+    if (isUnsaved || !hasDraft) {
+      return of([])
+    }
+
+    return combineLatest([
+      this.getAllDrafts().pipe(
+        map((drafts) => {
+          const matchingRecord = drafts.find(
+            (draft) => draft.uniqueIdentifier === localRecord.uniqueIdentifier
+          )
+          return matchingRecord ? matchingRecord.recordUpdated : null
+        })
+      ),
+      this.getRecord(localRecord.uniqueIdentifier),
+    ]).pipe(
+      map(([draftRecordUpdated, recentRecord]) => {
+        if (recentRecord.recordUpdated > draftRecordUpdated) {
+          return [
+            this.formatDate(recentRecord.recordUpdated),
+            recentRecord.extras?.['ownerInfo'].toString().split('|')[0],
+          ]
+        }
+        return []
+      })
+    )
+  }
+
+  formatDate(date: Date): string {
+    return date.toLocaleDateString(this.translateService.currentLang, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    })
   }
 
   private getRecordAsXml(uniqueIdentifier: string): Observable<string | null> {

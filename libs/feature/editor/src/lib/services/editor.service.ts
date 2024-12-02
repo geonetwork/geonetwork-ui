@@ -59,6 +59,7 @@ export class EditorService {
     record: CatalogRecord,
     recordSource: string
   ): Observable<void> {
+    record.recordUpdated = new Date()
     return this.recordsRepository
       .saveRecordAsDraft(record, recordSource)
       .pipe(map(() => undefined))
@@ -69,5 +70,9 @@ export class EditorService {
   ): Observable<[CatalogRecord, string, boolean]> {
     this.recordsRepository.clearRecordDraft(record.uniqueIdentifier)
     return this.recordsRepository.openRecordForEdition(record.uniqueIdentifier)
+  }
+
+  hasRecordChangedSinceDraft(localRecord: CatalogRecord): Observable<string[]> {
+    return this.recordsRepository.hasRecordChangedSinceDraft(localRecord)
   }
 }

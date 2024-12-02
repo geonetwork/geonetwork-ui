@@ -41,3 +41,13 @@ export const setFieldVisibility = createAction(
   '[Editor] Set field visibility',
   props<{ field: EditorFieldIdentification; visible: boolean }>()
 )
+
+export const hasRecordChangedSinceDraft = createAction(
+  '[Editor] Has Record Changed Since Draft',
+  props<{ record: CatalogRecord }>()
+)
+
+export const hasRecordChangedSinceDraftSuccess = createAction(
+  '[Editor] Has Record Changed Since Draft Success',
+  props<{ changes: any[] }>()
+)
