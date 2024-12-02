@@ -18,6 +18,7 @@ declare namespace Cypress {
     clearRecordDrafts(): void
     editor_readFormUniqueIdentifier(): Chainable<string | number | string[]>
     editor_wrapPreviousDraft(): void
+    editor_wrapFirstDraft(): void
     editor_publishAndReload(): void
     editor_findDraftInLocalStorage(): Chainable<string | number | string[]>
 
@@ -181,6 +182,18 @@ Cypress.Commands.add('editor_findDraftInLocalStorage', () => {
           key.startsWith('geonetwork-ui-draft-')
         )
         return win.localStorage.getItem(matchingKey)
+      })
+  })
+})
+
+// this needs a recordUuid to have been wrapped
+Cypress.Commands.add('editor_wrapFirstDraft', () => {
+  cy.get('@recordUuid').then((recordUuid) => {
+    cy.window()
+      .its('localStorage')
+      .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
+      .then((previousDraft) => {
+        cy.wrap(previousDraft).as('firstDraft')
       })
   })
 })
