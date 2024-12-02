@@ -4,13 +4,34 @@
   </aside>
   <div class="flex flex-col h-full w-full">
     <div class="w-full h-auto shrink-0 relative">
+<<<<<<< HEAD
       <md-editor-top-toolbar></md-editor-top-toolbar>
       <div class="absolute top-full left-0 w-2/3 z-50 pointer-events-none">
+=======
+      <md-editor-top-toolbar
+        [publishWarning]="hasRecordChanged$ | async"
+      ></md-editor-top-toolbar>
+      <div class="absolute top-full left-0 w-2/3 z-10 pointer-events-none">
+>>>>>>> 4aeaddd7f (feat: warning in toolbar)
         <gn-ui-notifications-container></gn-ui-notifications-container>
       </div>
     </div>
     <div class="grow overflow-auto p-[32px]" #scrollContainer>
       <div class="container-lg mx-auto flex flex-col gap-[32px]">
+        <div *ngIf="hasRecordChanged$ | async as hasChanged">
+          <div
+            *ngIf="hasChanged.length > 0"
+            class="p-4 border border-primary bg-primary-lightest rounded-lg text-center"
+            translate
+            [translateParams]="{
+              date: hasChanged[0],
+              user: hasChanged[1]
+            }"
+            data-test="draft-alert"
+          >
+            editor.record.form.draft.updateAlert
+          </div>
+        </div>
         <md-editor-page-selector></md-editor-page-selector>
         <gn-ui-record-form></gn-ui-record-form>
         <div
