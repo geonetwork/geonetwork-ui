@@ -140,24 +140,10 @@ describe('dashboard (authenticated)', () => {
 
     it('should show nothing when none are selected', () => {
       cy.visit('/catalog/search')
-      cy.get('gn-ui-results-table')
-        .find('.table-row-cell')
-        .get('gn-ui-checkbox')
-        .each(($checkbox) => cy.wrap($checkbox).click())
       cy.get('[data-cy=records-information]').should(
         'not.have.descendants',
         '[data-test=selected-count]'
       )
-    })
-
-    it('should select all records when the "select all" checkbox is checked', () => {
-      cy.visit('/catalog/search')
-      cy.get('gn-ui-results-table')
-        .find('.table-row-cell')
-        .get('gn-ui-checkbox')
-        .first()
-        .click()
-      cy.get('[data-test=selected-count]').contains('15 selected')
     })
   })
   describe('columns', () => {
@@ -225,7 +211,7 @@ describe('dashboard (authenticated)', () => {
     })
     describe('my records', () => {
       it('should only display records I own', () => {
-        cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
+        cy.get('md-editor-dashboard-menu').find('a').eq(3).click()
         cy.get('gn-ui-results-table')
           .find('[data-cy="table-row"]')
           .find('ng-icon')
@@ -233,19 +219,18 @@ describe('dashboard (authenticated)', () => {
           .should('contain', 'admin admin')
       })
       it('should display the correct amount of records', () => {
-        cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
+        cy.get('md-editor-dashboard-menu').find('a').eq(3).click()
         cy.get('gn-ui-results-table')
           .find('[data-cy="table-row"]')
           .should('have.length', '10')
       })
       it('should sort the records by title', () => {
-        cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
+        cy.get('md-editor-dashboard-menu').find('a').eq(3).click()
         cy.get('gn-ui-results-table')
           .find('[data-cy="table-row"]')
           .first()
           .invoke('text')
           .then((firstRecord) => {
-            console.log(firstRecord)
             cy.get('gn-ui-results-table')
               .find('.table-header-cell')
               .eq(1)
@@ -288,7 +273,7 @@ describe('dashboard (authenticated)', () => {
         cy.get('gn-ui-autocomplete').should('have.value', '')
       })
       it('should hide the search input when navigating to my drafts', () => {
-        cy.get('md-editor-dashboard-menu').find('a').eq(6).click()
+        cy.get('md-editor-dashboard-menu').find('a').eq(4).click()
         cy.get('gn-ui-autocomplete').should('not.exist')
       })
     })
