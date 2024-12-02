@@ -98,3 +98,11 @@ $ npm run storybook
 ```
 
 For a guide on how to write Angular component stories, see: https://storybook.js.org/docs/angular/writing-stories/introduction
+
+### Users
+
+For development purposes, three users have been created :
+
+- username : admin, password : admin
+- username: johndoe, password: p4ssworD\_
+- username: barbie, password: p4ssworD\_
