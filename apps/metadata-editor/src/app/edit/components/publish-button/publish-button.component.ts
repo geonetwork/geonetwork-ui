@@ -138,7 +138,7 @@ export class PublishButtonComponent {
   }
 
   publishRecord() {
-    if (this.publishWarning.length) {
+    if (this.publishWarning && this.publishWarning.length) {
       this.openConfirmationMenu()
     } else {
       this.saveRecord()
