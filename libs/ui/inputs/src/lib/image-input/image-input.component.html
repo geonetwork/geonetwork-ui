@@ -15,6 +15,7 @@
         style="--gn-ui-button-height: 40px; --gn-ui-button-width: 40px"
         extraClass="absolute right-2 bottom-2 invisible group-hover:visible bg-background"
         (buttonClick)="handleDelete()"
+        [disabled]="disabled"
       >
         <ng-icon name="iconoirBin"></ng-icon>
       </gn-ui-button>
@@ -25,6 +26,7 @@
       [value]="altText ?? ''"
       (valueChange)="handleAltTextChange($event)"
       extraClass="gn-ui-editor-textarea"
+      [disabled]="disabled"
     ></gn-ui-text-input>
     <div class="flex flex-row gap-2 mt-2">
       <gn-ui-button type="gray" (buttonClick)="handleDelete()">
@@ -52,10 +54,11 @@
         'border-primary-lighter bg-primary-white': dragFilesOver,
         'border-gray-300': !dragFilesOver,
         'cursor-pointer hover:border-gray-500':
-          !isUploadInProgress && !uploadError && !showUrlInput
+          !isUploadInProgress && !uploadError && !showUrlInput && !disabled,
+        'cursor-not-allowed': disabled
       }"
       [attr.tabindex]="
-        isUploadInProgress || uploadError || showUrlInput ? null : 0
+        isUploadInProgress || uploadError || showUrlInput || disabled ? null : 0
       "
       (keydown.enter)="fileInput.click()"
       (dragFilesOver)="handleDragFilesOver($event)"
@@ -126,12 +129,19 @@
         type="file"
         class="hidden"
         (change)="handleFileInput($event)"
-        [disabled]="showUrlInput || isUploadInProgress || uploadError"
+        [disabled]="
+          showUrlInput || isUploadInProgress || uploadError || disabled
+        "
       />
     </label>
 
     <div *ngIf="!showUrlInput" class="flex-none mt-2">
-      <gn-ui-button (buttonClick)="displayUrlInput()" type="gray">
+      <gn-ui-button
+        (buttonClick)="displayUrlInput()"
+        type="gray"
+        [disabled]="disabled"
+        [extraClass]="disabled && 'cursor-not-allowed'"
+      >
         <ng-icon class="me-1 text-primary" name="iconoirLink"></ng-icon>
         {{ 'input.image.displayUrlInput' | translate }}
       </gn-ui-button>
@@ -141,7 +151,7 @@
       *ngIf="showUrlInput"
       class="mt-3.5"
       (uploadClick)="downloadUrl($event)"
-      [disabled]="isUploadInProgress"
+      [disabled]="isUploadInProgress || disabled"
     >
     </gn-ui-url-input>
   </div>

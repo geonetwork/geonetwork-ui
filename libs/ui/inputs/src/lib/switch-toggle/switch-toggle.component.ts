@@ -27,6 +27,7 @@ export class SwitchToggleComponent {
   @Input() options: SwitchToggleOption[]
   @Input() ariaLabel? = ''
   @Input() extraClasses? = ''
+  @Input() disabled? = false
   @Output() selectedValue = new EventEmitter<SwitchToggleOption>()
 
   onChange(selectedOption: SwitchToggleOption) {

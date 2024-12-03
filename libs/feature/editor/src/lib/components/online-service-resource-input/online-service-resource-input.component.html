@@ -16,6 +16,7 @@
     aria-labelledby="example-radio-group-label"
     class="flex flex-row gap-[8px]"
     [(ngModel)]="service.accessServiceProtocol"
+    [disabled]="disabled"
   >
     <mat-radio-button
       *ngFor="let protocolOption of protocolOptions"
@@ -28,4 +29,5 @@
 <gn-ui-text-input
   [(value)]="service.identifierInService"
   data-cy="identifier-in-service"
+  [disabled]="disabled"
 ></gn-ui-text-input>
