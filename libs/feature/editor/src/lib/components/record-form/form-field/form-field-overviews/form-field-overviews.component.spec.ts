@@ -8,6 +8,7 @@ import {
   PlatformServiceInterface,
   RecordAttachment,
 } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { EditorFacade } from '../../../../+state/editor.facade'
 
 let uploadSubject: Subject<any>
 
@@ -24,6 +25,10 @@ class PlatformServiceInterfaceMock {
     return uploadSubject
   })
   getRecordAttachments = jest.fn(() => recordAttachments)
+}
+
+class EditorFacadeMock {
+  alreadySavedOnce$ = new BehaviorSubject(false)
 }
 
 describe('FormFieldOverviewsComponent', () => {
@@ -46,6 +51,7 @@ describe('FormFieldOverviewsComponent', () => {
           'useClass'
         ),
         MockProvider(NotificationsService),
+        MockProvider(EditorFacade, EditorFacadeMock, 'useClass'),
       ],
     }).compileComponents()
 
