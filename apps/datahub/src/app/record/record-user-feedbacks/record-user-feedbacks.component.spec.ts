@@ -8,11 +8,7 @@ import { RecordUserFeedbacksComponent } from './record-user-feedbacks.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { BehaviorSubject, of, Subject } from 'rxjs'
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core'
+import { ChangeDetectionStrategy } from '@angular/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
   barbieUserFixture,
@@ -24,8 +20,9 @@ import {
   UserFeedbackViewModel,
 } from '@geonetwork-ui/common/domain/model/record'
 import { Gn4PlatformMapper } from '@geonetwork-ui/api/repository'
+import { MockBuilder, MockProvider } from 'ng-mocks'
 
-describe('RelatedRecordsComponent', () => {
+describe('RecordUserFeedbacksComponent', () => {
   const allUserFeedbacks = someUserFeedbacksFixture()
   let mockDestroy$: Subject<void>
 
@@ -48,10 +45,6 @@ describe('RelatedRecordsComponent', () => {
     },
   }
 
-  const changeDetectorRefMock: Partial<ChangeDetectorRef> = {
-    markForCheck: jest.fn(),
-  }
-
   const platformServiceInterfaceMock: Partial<PlatformServiceInterface> = {
     getUserFeedbacks: jest.fn(),
     getMe: jest.fn(() => new BehaviorSubject(activeUser)),
@@ -60,30 +53,17 @@ describe('RelatedRecordsComponent', () => {
   let component: RecordUserFeedbacksComponent
   let fixture: ComponentFixture<RecordUserFeedbacksComponent>
 
+  beforeEach(() => MockBuilder(RecordUserFeedbacksComponent))
+
   beforeEach(async () => {
     mockDestroy$ = new Subject()
 
     await TestBed.configureTestingModule({
-      declarations: [RecordUserFeedbacksComponent],
       imports: [TranslateModule.forRoot()],
-      schemas: [NO_ERRORS_SCHEMA],
       providers: [
-        {
-          provide: MdViewFacade,
-          useValue: mdViewFacadeMock,
-        },
-        {
-          provide: ChangeDetectorRef,
-          useValue: changeDetectorRefMock,
-        },
-        {
-          provide: PlatformServiceInterface,
-          useValue: platformServiceInterfaceMock,
-        },
-        {
-          provide: Gn4PlatformMapper,
-          useValue: gn4PlatformMapperMock,
-        },
+        MockProvider(MdViewFacade, mdViewFacadeMock),
+        MockProvider(PlatformServiceInterface, platformServiceInterfaceMock),
+        MockProvider(Gn4PlatformMapper, gn4PlatformMapperMock),
       ],
     })
       .overrideComponent(RecordUserFeedbacksComponent, {

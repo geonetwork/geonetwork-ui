@@ -12,7 +12,10 @@ import {
   FieldAggregation,
   getJsonDataItemsProxy,
 } from '@geonetwork-ui/data-fetcher'
-import { DropdownChoice } from '@geonetwork-ui/ui/inputs'
+import {
+  DropdownChoice,
+  DropdownSelectorComponent,
+} from '@geonetwork-ui/ui/inputs'
 import { BehaviorSubject, combineLatest, EMPTY, Observable } from 'rxjs'
 import {
   catchError,
@@ -26,7 +29,13 @@ import {
 import { DataService } from '../service/data.service'
 import { InputChartType } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
-import { TranslateService } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { CommonModule } from '@angular/common'
+import { ChartComponent } from '@geonetwork-ui/ui/dataviz'
+import {
+  LoadingMaskComponent,
+  PopupAlertComponent,
+} from '@geonetwork-ui/ui/widgets'
 
 marker('chart.type.bar')
 marker('chart.type.barHorizontal')
@@ -45,6 +54,15 @@ marker('chart.aggregation.count')
   templateUrl: './chart-view.component.html',
   styleUrls: ['./chart-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    DropdownSelectorComponent,
+    TranslateModule,
+    ChartComponent,
+    LoadingMaskComponent,
+    PopupAlertComponent,
+  ],
+  standalone: true,
 })
 export class ChartViewComponent {
   @Input() set link(value: DatasetOnlineResource) {

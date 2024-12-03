@@ -2,6 +2,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { MetadataContactComponent } from './metadata-contact.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('MetadataContactComponent', () => {
   let component: MetadataContactComponent
@@ -9,7 +10,7 @@ describe('MetadataContactComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MetadataContactComponent],
+      imports: [MetadataContactComponent, TranslateModule.forRoot()],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   })

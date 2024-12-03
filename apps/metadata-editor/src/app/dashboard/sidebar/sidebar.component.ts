@@ -3,7 +3,10 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { DashboardMenuComponent } from '../dashboard-menu/dashboard-menu.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
+import {
+  AuthService,
+  AvatarServiceInterface,
+} from '@geonetwork-ui/api/repository'
 import { LetDirective } from '@ngrx/component'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
@@ -28,10 +31,15 @@ export class SidebarComponent implements OnInit {
   public placeholder$ = this.avatarService.getPlaceholder()
   organisations$: Observable<Organization[]>
 
+  get settingsUrl() {
+    return this.authService.settingsUrl
+  }
+
   constructor(
     public platformService: PlatformServiceInterface,
     private avatarService: AvatarServiceInterface,
-    public organisationsService: OrganizationsServiceInterface
+    public organisationsService: OrganizationsServiceInterface,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -40,5 +48,22 @@ export class SidebarComponent implements OnInit {
       this.platformService.getMe(),
       (orgs, me) => orgs.filter((org) => org.name === me?.organisation)
     )
+  }
+
+  logOut() {
+    const current_url = window.origin.toString()
+    fetch(this.authService.logoutUrl, {
+      method: 'GET',
+    })
+      .then((response) => {
+        if (response.ok) {
+          window.location.href = current_url
+        } else {
+          console.error('Logout failed')
+        }
+      })
+      .catch((error) => {
+        console.error('Error during logout request:', error)
+      })
   }
 }

@@ -8,10 +8,12 @@ import {
   SearchService,
 } from '@geonetwork-ui/feature/search'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import {
+  PaginationButtonsComponent,
+  UiElementsModule,
+} from '@geonetwork-ui/ui/elements'
 import { TranslateModule } from '@ngx-translate/core'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { RecordsCountComponent } from './records-count/records-count.component'
 
 export const allSearchFields = [
   'uuid',
@@ -36,7 +38,7 @@ export const allSearchFields = [
     TranslateModule,
     ResultsTableContainerComponent,
     UiInputsModule,
-    RecordsCountComponent,
+    PaginationButtonsComponent,
   ],
 })
 export class RecordsListComponent implements OnInit {

@@ -8,8 +8,12 @@ import {
 } from '@angular/core'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { TranslateService } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { getFileFormat } from '@geonetwork-ui/util/shared'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { CommonModule } from '@angular/common'
+import { matOpenInNew } from '@ng-icons/material-icons/baseline'
 
 marker('externalviewer.dataset.unnamed')
 
@@ -26,6 +30,9 @@ export const EXTERNAL_VIEWER_OPEN_NEW_TAB = new InjectionToken<boolean>(
   templateUrl: './external-viewer-button.component.html',
   styleUrls: ['./external-viewer-button.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, ButtonComponent, NgIcon, TranslateModule],
+  viewProviders: [provideIcons({ matOpenInNew })],
 })
 export class ExternalViewerButtonComponent {
   @Input() link: DatasetOnlineResource

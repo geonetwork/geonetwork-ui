@@ -21,7 +21,10 @@ import { TagInputModule } from 'ngx-chips'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ResultsListItemComponent } from './results-list-item/results-list-item.component'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import {
+  MetadataQualityComponent,
+  UiElementsModule,
+} from '@geonetwork-ui/ui/elements'
 import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview-feed.component'
 import { CommonModule } from '@angular/common'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
@@ -29,9 +32,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
 import { InteractiveTableComponent } from '@geonetwork-ui/ui/layout'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
 import {
-  matMapOutline,
   matCloudDownloadOutline,
   matHomeWorkOutline,
+  matMapOutline,
 } from '@ng-icons/material-icons/outline'
 import { matFace } from '@ng-icons/material-icons/baseline'
 
@@ -71,6 +74,7 @@ import { matFace } from '@ng-icons/material-icons/baseline'
       matFace,
       matHomeWorkOutline,
     }),
+    MetadataQualityComponent,
   ],
   exports: [
     RecordPreviewListComponent,

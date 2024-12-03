@@ -1,8 +1,6 @@
 import {
   ChangeDetectionStrategy,
-  Component,
   DebugElement,
-  Input,
   NO_ERRORS_SCHEMA,
 } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
@@ -11,21 +9,8 @@ import { LinkClassifierService } from '@geonetwork-ui/util/shared'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 import { DownloadsListComponent } from './downloads-list.component'
-import {
-  DatasetDownloadDistribution,
-  DatasetOnlineResource,
-} from '@geonetwork-ui/common/domain/model/record'
-
-@Component({
-  selector: 'gn-ui-download-item',
-  template: ``,
-})
-class MockDownloadItemComponent {
-  @Input() link: DatasetOnlineResource
-  @Input() color: string
-  @Input() format: string
-  @Input() isFromWfs: boolean
-}
+import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { DownloadItemComponent } from '../download-item/download-item.component'
 
 describe('DownloadsListComponent', () => {
   let component: DownloadsListComponent
@@ -34,13 +19,14 @@ describe('DownloadsListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
-      declarations: [DownloadsListComponent, MockDownloadItemComponent],
+      imports: [TranslateModule.forRoot(), DownloadsListComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [LinkClassifierService],
     })
       .overrideComponent(DownloadsListComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
+        set: {
+          changeDetection: ChangeDetectionStrategy.Default,
+        },
       })
       .compileComponents()
   })
@@ -67,7 +53,7 @@ describe('DownloadsListComponent', () => {
         aSetOfLinksFixture().dataPdf(),
       ]
       fixture.detectChanges()
-      items = de.queryAll(By.directive(MockDownloadItemComponent))
+      items = de.queryAll(By.directive(DownloadItemComponent))
     })
     it('contains three links', () => {
       expect(items.length).toBe(3)
@@ -93,7 +79,7 @@ describe('DownloadsListComponent', () => {
     beforeEach(() => {
       component.links = [aSetOfLinksFixture().unknownFormat()]
       fixture.detectChanges()
-      items = de.queryAll(By.directive(MockDownloadItemComponent))
+      items = de.queryAll(By.directive(DownloadItemComponent))
     })
     it('contains one link in "others" section', () => {
       expect(items.length).toBe(1)
@@ -111,7 +97,7 @@ describe('DownloadsListComponent', () => {
         } as DatasetDownloadDistribution,
       ]
       fixture.detectChanges()
-      items = de.queryAll(By.directive(MockDownloadItemComponent))
+      items = de.queryAll(By.directive(DownloadItemComponent))
     })
     it('contains one link and mime type is ignored', () => {
       expect(items.length).toBe(1)
@@ -124,7 +110,7 @@ describe('DownloadsListComponent', () => {
     beforeEach(() => {
       component.links = [aSetOfLinksFixture().geodataShpWithMimeType()]
       fixture.detectChanges()
-      items = de.queryAll(By.directive(MockDownloadItemComponent))
+      items = de.queryAll(By.directive(DownloadItemComponent))
     })
     it('contains color, isWfs & format', () => {
       expect(items.length).toBe(1)
@@ -144,7 +130,7 @@ describe('DownloadsListComponent', () => {
     beforeEach(() => {
       component.links = [aSetOfLinksFixture().geodataWfsDownload()]
       fixture.detectChanges()
-      items = de.queryAll(By.directive(MockDownloadItemComponent))
+      items = de.queryAll(By.directive(DownloadItemComponent))
     })
     it('sets isFromWfs to true', () => {
       expect(items[0].componentInstance.isFromWfs).toEqual(true)

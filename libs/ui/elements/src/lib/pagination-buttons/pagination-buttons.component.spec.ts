@@ -11,7 +11,7 @@ describe('PaginationButtonsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PaginationButtonsComponent],
+      imports: [PaginationButtonsComponent],
     }).compileComponents()
 
     fixture = TestBed.createComponent(PaginationButtonsComponent)

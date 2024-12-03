@@ -140,24 +140,10 @@ describe('dashboard (authenticated)', () => {
 
     it('should show nothing when none are selected', () => {
       cy.visit('/catalog/search')
-      cy.get('gn-ui-results-table')
-        .find('.table-row-cell')
-        .get('gn-ui-checkbox')
-        .each(($checkbox) => cy.wrap($checkbox).click())
       cy.get('[data-cy=records-information]').should(
         'not.have.descendants',
         '[data-test=selected-count]'
       )
-    })
-
-    it('should select all records when the "select all" checkbox is checked', () => {
-      cy.visit('/catalog/search')
-      cy.get('gn-ui-results-table')
-        .find('.table-row-cell')
-        .get('gn-ui-checkbox')
-        .first()
-        .click()
-      cy.get('[data-test=selected-count]').contains('15 selected')
     })
   })
   describe('columns', () => {
@@ -225,7 +211,7 @@ describe('dashboard (authenticated)', () => {
     })
     describe('my records', () => {
       it('should only display records I own', () => {
-        cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
+        cy.get('md-editor-dashboard-menu').find('a').eq(3).click()
         cy.get('gn-ui-results-table')
           .find('[data-cy="table-row"]')
           .find('ng-icon')
@@ -233,19 +219,18 @@ describe('dashboard (authenticated)', () => {
           .should('contain', 'admin admin')
       })
       it('should display the correct amount of records', () => {
-        cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
+        cy.get('md-editor-dashboard-menu').find('a').eq(3).click()
         cy.get('gn-ui-results-table')
           .find('[data-cy="table-row"]')
           .should('have.length', '10')
       })
       it('should sort the records by title', () => {
-        cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
+        cy.get('md-editor-dashboard-menu').find('a').eq(3).click()
         cy.get('gn-ui-results-table')
           .find('[data-cy="table-row"]')
           .first()
           .invoke('text')
           .then((firstRecord) => {
-            console.log(firstRecord)
             cy.get('gn-ui-results-table')
               .find('.table-header-cell')
               .eq(1)
@@ -288,7 +273,7 @@ describe('dashboard (authenticated)', () => {
         cy.get('gn-ui-autocomplete').should('have.value', '')
       })
       it('should hide the search input when navigating to my drafts', () => {
-        cy.get('md-editor-dashboard-menu').find('a').eq(6).click()
+        cy.get('md-editor-dashboard-menu').find('a').eq(4).click()
         cy.get('gn-ui-autocomplete').should('not.exist')
       })
     })
@@ -342,13 +327,39 @@ describe('dashboard (authenticated)', () => {
       })
     })
   })
+  describe('Account settings access', () => {
+    it('should navigate to the account settings page', () => {
+      cy.visit('/catalog/search')
+      cy.get('md-editor-sidebar')
+        .find('gn-ui-button')
+        .first()
+        .find('a')
+        .invoke('removeAttr', 'target')
+        .click()
+      cy.url().should('include', '/admin.console')
+    })
+  })
 })
 
-describe('when the user is not logged in', () => {
-  beforeEach(() => {
-    cy.visit('/catalog/search')
+describe('Logging in and out', () => {
+  describe('when the user is not logged in', () => {
+    beforeEach(() => {
+      cy.visit('/catalog/search')
+    })
+    it('redirects to the login page', () => {
+      cy.url().should('include', '/catalog.signin?redirect=')
+    })
   })
-  it('redirects to the login page', () => {
-    cy.url().should('include', '/catalog.signin?redirect=')
+  describe('Logging out', () => {
+    beforeEach(() => {
+      cy.login('admin', 'admin', false)
+      cy.visit('/catalog/search')
+    })
+    it('logs out the user', () => {
+      cy.get('gn-ui-avatar').should('be.visible')
+      cy.get('md-editor-sidebar').find('gn-ui-button').eq(1).click()
+      cy.url().should('include', '/catalog.signin?redirect=')
+      cy.get('gn-ui-avatar').should('not.exist')
+    })
   })
 })

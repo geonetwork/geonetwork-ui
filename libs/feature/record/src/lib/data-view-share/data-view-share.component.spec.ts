@@ -1,36 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { DataViewShareComponent } from './data-view-share.component'
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core'
-import { WEB_COMPONENT_EMBEDDER_URL } from '../data-view-permalink/data-view-permalink.component'
+import {
+  DataViewPermalinkComponent,
+  WEB_COMPONENT_EMBEDDER_URL,
+} from '../data-view-permalink/data-view-permalink.component'
 import { By } from '@angular/platform-browser'
-
-@Component({
-  selector: 'gn-ui-data-view-permalink',
-  template: '<div></div>',
-})
-export class MockDataViewPermalinkComponent {}
-
-@Component({
-  selector: 'gn-ui-data-view-web-component',
-  template: '<div></div>',
-})
-export class MockDataViewWebComponentComponent {}
+import { MockBuilder } from 'ng-mocks'
+import { DataViewWebComponentComponent } from '../data-view-web-component/data-view-web-component.component'
 
 const baseUrl = 'https://example.com/wc-embedder'
 describe('DataViewShareComponent', () => {
   let component: DataViewShareComponent
   let fixture: ComponentFixture<DataViewShareComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [
-        DataViewShareComponent,
-        MockDataViewPermalinkComponent,
-        MockDataViewWebComponentComponent,
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents()
-  })
+  beforeEach(() => MockBuilder(DataViewShareComponent))
 
   describe('if no WEB_COMPONENT_EMBEDDER_URL is defined', () => {
     beforeEach(() => {
@@ -51,14 +34,12 @@ describe('DataViewShareComponent', () => {
     })
     it('does not render a data view permalink component', () => {
       expect(
-        fixture.debugElement.query(By.directive(MockDataViewPermalinkComponent))
+        fixture.debugElement.query(By.directive(DataViewPermalinkComponent))
       ).toBeFalsy()
     })
     it('renders a data view web component component', () => {
       expect(
-        fixture.debugElement.query(
-          By.directive(MockDataViewWebComponentComponent)
-        )
+        fixture.debugElement.query(By.directive(DataViewWebComponentComponent))
       ).toBeTruthy()
     })
   })
@@ -78,14 +59,12 @@ describe('DataViewShareComponent', () => {
     })
     it('renders a data view permalink component', () => {
       expect(
-        fixture.debugElement.query(By.directive(MockDataViewPermalinkComponent))
+        fixture.debugElement.query(By.directive(DataViewPermalinkComponent))
       ).toBeTruthy()
     })
     it('renders a data view web component component', () => {
       expect(
-        fixture.debugElement.query(
-          By.directive(MockDataViewWebComponentComponent)
-        )
+        fixture.debugElement.query(By.directive(DataViewWebComponentComponent))
       ).toBeTruthy()
     })
   })

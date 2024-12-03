@@ -19,6 +19,7 @@ import {
   readContacts,
   readOnlineResources,
   readOwnerOrganization,
+  readResourceIdentifier,
   readSpatialExtents,
   readTemporalExtents,
 } from './read-parts'

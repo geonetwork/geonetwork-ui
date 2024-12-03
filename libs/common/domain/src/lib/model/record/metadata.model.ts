@@ -104,6 +104,7 @@ export interface BaseRecord {
   updateFrequency?: UpdateFrequency
 
   // information related to the resource (dataset, service)
+  resourceIdentifier?: string
   contactsForResource: Array<Individual>
   resourceCreated?: Date
   resourcePublished?: Date

@@ -12,7 +12,6 @@ import {
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
-import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { OrganisationPreviewComponent } from './organisation-preview.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
@@ -28,7 +27,6 @@ export default {
       ],
     }),
     moduleMetadata({
-      declarations: [ThumbnailComponent],
       imports: [
         UtilI18nModule,
         UtilSharedModule,

@@ -41,6 +41,7 @@
             >edit</span
           >
           <span
+            *ngIf="config.hintKey"
             class="material-symbols-outlined gn-ui-icon-small m-2"
             [matTooltip]="config.hintKey! | translate"
             matTooltipPosition="above"
@@ -70,6 +71,13 @@
         [value]="valueAsDate"
         (valueChange)="valueChange.emit($event)"
       ></gn-ui-form-field-date-updated>
+    </ng-container>
+    <ng-container *ngSwitchCase="'resourceIdentifier'">
+      <gn-ui-form-field-simple
+        [type]="'text'"
+        [value]="valueAsString"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-simple>
     </ng-container>
     <ng-container *ngSwitchCase="'resourceUpdated'">
       <gn-ui-form-field-date-updated

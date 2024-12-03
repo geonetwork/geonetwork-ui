@@ -10,15 +10,28 @@ import {
 } from 'rxjs/operators'
 import { DataItem, FetchError } from '@geonetwork-ui/data-fetcher'
 import { DataService } from '../service/data.service'
-import { TableItemModel } from '@geonetwork-ui/ui/dataviz'
+import { TableComponent, TableItemModel } from '@geonetwork-ui/ui/dataviz'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
-import { TranslateService } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import {
+  LoadingMaskComponent,
+  PopupAlertComponent,
+} from '@geonetwork-ui/ui/widgets'
+import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'gn-ui-table-view',
   templateUrl: './table-view.component.html',
   styleUrls: ['./table-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    TableComponent,
+    LoadingMaskComponent,
+    PopupAlertComponent,
+    TranslateModule,
+  ],
+  standalone: true,
 })
 export class TableViewComponent {
   @Input() set link(value: DatasetOnlineResource) {

@@ -8,7 +8,7 @@ describe('ImageOverlayPreviewComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ImageOverlayPreviewComponent],
+      imports: [ImageOverlayPreviewComponent],
     })
     fixture = TestBed.createComponent(ImageOverlayPreviewComponent)
     component = fixture.componentInstance

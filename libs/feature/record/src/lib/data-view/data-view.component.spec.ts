@@ -1,4 +1,3 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
 import {
   ComponentFixture,
   fakeAsync,
@@ -6,16 +5,20 @@ import {
   TestBed,
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { BehaviorSubject, Subject } from 'rxjs'
+import { Subject } from 'rxjs'
 import { MdViewFacade } from '../state'
 import { DataViewComponent } from './data-view.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import {
   someDataLinksFixture,
   someGeoDatalinksFixture,
 } from '@geonetwork-ui/common/fixtures'
+import { MockBuilder } from 'ng-mocks'
+import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  ChartViewComponent,
+  TableViewComponent,
+} from '@geonetwork-ui/feature/dataviz'
 
 class MdViewFacadeMock {
   dataLinks$ = new Subject()
@@ -30,49 +33,18 @@ const chartConfigMock = {
   chartType: 'bar',
 }
 
-@Component({
-  selector: 'gn-ui-table-view',
-  template: '<div></div>',
-})
-export class MockTableViewComponent {
-  @Input() link: DatasetOnlineResource
-}
-
-@Component({
-  selector: 'gn-ui-chart-view',
-  template: '<div></div>',
-})
-export class MockChartViewComponent {
-  @Input() link: DatasetOnlineResource
-  @Output() chartConfig$ = new BehaviorSubject<DatavizConfigurationModel>(null)
-}
-
-@Component({
-  selector: 'gn-ui-dropdown-selector',
-  template: '<div></div>',
-})
-export class MockDropdownSelectorComponent {
-  @Input() choices: unknown[]
-  @Input() showTitle
-  @Output() selectValue = new EventEmitter()
-}
-
 describe('DataViewComponent', () => {
   let component: DataViewComponent
   let fixture: ComponentFixture<DataViewComponent>
   let facade
-  let dropdownComponent: MockDropdownSelectorComponent
-  let tableViewComponent: MockTableViewComponent
-  let chartViewComponent: MockChartViewComponent
+  let dropdownComponent: DropdownSelectorComponent
+  let tableViewComponent: TableViewComponent
+  let chartViewComponent: ChartViewComponent
+
+  beforeEach(() => MockBuilder(DataViewComponent))
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        DataViewComponent,
-        MockTableViewComponent,
-        MockChartViewComponent,
-        MockDropdownSelectorComponent,
-      ],
       providers: [
         {
           provide: MdViewFacade,
@@ -103,10 +75,10 @@ describe('DataViewComponent', () => {
       fixture.detectChanges()
 
       dropdownComponent = fixture.debugElement.query(
-        By.directive(MockDropdownSelectorComponent)
+        By.directive(DropdownSelectorComponent)
       ).componentInstance
       tableViewComponent = fixture.debugElement.query(
-        By.directive(MockTableViewComponent)
+        By.directive(TableViewComponent)
       ).componentInstance
     }))
     describe('when component is rendered', () => {
@@ -155,18 +127,18 @@ describe('DataViewComponent', () => {
       component.mode = 'chart'
       fixture.detectChanges()
       chartViewComponent = fixture.debugElement.query(
-        By.directive(MockChartViewComponent)
+        By.directive(ChartViewComponent)
       ).componentInstance
       chartViewComponent.chartConfig$.next(chartConfigMock)
     }))
     it('creates a chart view component to render data', () => {
       expect(
-        fixture.debugElement.query(By.directive(MockChartViewComponent))
+        fixture.debugElement.query(By.directive(ChartViewComponent))
       ).toBeTruthy()
     })
     it('does not create a table view component to render data', () => {
       expect(
-        fixture.debugElement.query(By.directive(MockTableViewComponent))
+        fixture.debugElement.query(By.directive(TableViewComponent))
       ).toBeFalsy()
     })
     it('calls setChartConfig', () => {

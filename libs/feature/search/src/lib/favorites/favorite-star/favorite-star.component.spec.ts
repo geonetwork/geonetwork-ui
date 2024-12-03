@@ -37,8 +37,11 @@ describe('FavoriteStarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FavoriteStarComponent, StarToggleComponent],
-      imports: [TranslateModule.forRoot()],
+      imports: [
+        TranslateModule.forRoot(),
+        FavoriteStarComponent,
+        StarToggleComponent,
+      ],
       providers: [
         {
           provide: PlatformServiceInterface,
@@ -66,7 +69,7 @@ describe('FavoriteStarComponent', () => {
     favoritesService = TestBed.inject(FavoritesService)
     fixture = TestBed.createComponent(FavoriteStarComponent)
     component = fixture.componentInstance
-    component.displayCount = 'true'
+    component.displayCount = true
     fixture.detectChanges()
     starToggle = fixture.debugElement.query(
       By.directive(StarToggleComponent)

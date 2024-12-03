@@ -1,48 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
+import {
+  ResultsTableContainerComponent,
+  SearchFacade,
+  SearchService,
+} from '@geonetwork-ui/feature/search'
 import { allSearchFields, RecordsListComponent } from './records-list.component'
-import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { By } from '@angular/platform-browser'
 import { Router } from '@angular/router'
 import { BehaviorSubject } from 'rxjs'
-import { CommonModule } from '@angular/common'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
+import { MockBuilder } from 'ng-mocks'
+import { PaginationButtonsComponent } from '@geonetwork-ui/ui/elements'
 
 const results = [{ md: true }]
 const currentPage = 5
 const totalPages = 25
-
-@Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'gn-ui-results-table-container',
-  template: '',
-  standalone: true,
-})
-export class ResultsTableContainerComponent {
-  @Output() recordClick = new EventEmitter<CatalogRecord>()
-  @Output() duplicateRecord = new EventEmitter<CatalogRecord>()
-}
-
-@Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'gn-ui-pagination-buttons',
-  template: '',
-  standalone: true,
-})
-export class PaginationButtonsComponent {
-  @Input() currentPage = 1
-  @Input() totalPages = 1
-  @Input() hideButton = false
-  @Output() newCurrentPageEvent = new EventEmitter<number>()
-}
-
-@Component({
-  selector: 'md-editor-records-count',
-  template: '',
-  standalone: true,
-})
-export class RecordsCountComponent {}
 
 class SearchFacadeMock {
   results$ = new BehaviorSubject(results)
@@ -68,6 +40,8 @@ describe('RecordsListComponent', () => {
   let searchService: SearchService
   let searchFacade: SearchFacade
 
+  beforeEach(() => MockBuilder(RecordsListComponent))
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -84,15 +58,6 @@ describe('RecordsListComponent', () => {
           useClass: SearchServiceMock,
         },
       ],
-    }).overrideComponent(RecordsListComponent, {
-      set: {
-        imports: [
-          CommonModule,
-          ResultsTableContainerComponent,
-          PaginationButtonsComponent,
-          RecordsCountComponent,
-        ],
-      },
     })
     router = TestBed.inject(Router)
     searchService = TestBed.inject(SearchService)

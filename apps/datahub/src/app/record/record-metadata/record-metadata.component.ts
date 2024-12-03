@@ -1,7 +1,15 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { SearchService } from '@geonetwork-ui/feature/search'
-import { ErrorType } from '@geonetwork-ui/ui/elements'
+import {
+  ErrorComponent,
+  ErrorType,
+  ImageOverlayPreviewComponent,
+  MetadataCatalogComponent,
+  MetadataContactComponent,
+  MetadataInfoComponent,
+  MetadataQualityComponent,
+} from '@geonetwork-ui/ui/elements'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { filter, map, mergeMap, startWith } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
@@ -9,13 +17,46 @@ import {
   Keyword,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import {
+  DataViewComponent,
+  DataViewShareComponent,
+  MapViewComponent,
+  MdViewFacade,
+} from '@geonetwork-ui/feature/record'
+import { CommonModule } from '@angular/common'
+import { MatTabsModule } from '@angular/material/tabs'
+import { RecordUserFeedbacksComponent } from '../record-user-feedbacks/record-user-feedbacks.component'
+import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component'
+import { RecordApisComponent } from '../record-apis/record-apis.component'
+import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
+import { RecordRelatedRecordsComponent } from '../record-related-records/record-related-records.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'datahub-record-metadata',
   templateUrl: './record-metadata.component.html',
   styleUrls: ['./record-metadata.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    ImageOverlayPreviewComponent,
+    MatTabsModule,
+    ErrorComponent,
+    RecordUserFeedbacksComponent,
+    RecordDownloadsComponent,
+    RecordApisComponent,
+    RecordOtherlinksComponent,
+    DataViewShareComponent,
+    MetadataInfoComponent,
+    MetadataContactComponent,
+    MetadataQualityComponent,
+    MetadataCatalogComponent,
+    RecordRelatedRecordsComponent,
+    DataViewComponent,
+    MapViewComponent,
+    TranslateModule,
+  ],
 })
 export class RecordMetadataComponent {
   @Input() metadataQualityDisplay: boolean

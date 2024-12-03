@@ -10,6 +10,7 @@ interface ColorScheme {
   selector: 'gn-ui-progress-bar',
   templateUrl: './progress-bar.component.html',
   styleUrls: ['./progress-bar.component.css'],
+  standalone: true,
 })
 export class ProgressBarComponent {
   @Input() value = 0

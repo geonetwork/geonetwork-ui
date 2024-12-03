@@ -1,15 +1,28 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
-  MetadataQualityConfig,
+  MdViewFacade,
+  RecordMetaComponent,
+} from '@geonetwork-ui/feature/record'
+import {
   getMetadataQualityConfig,
+  MetadataQualityConfig,
 } from '@geonetwork-ui/util/app-config'
+import { RecordMetadataComponent } from '../record-metadata/record-metadata.component'
+import { HeaderRecordComponent } from '../header-record/header-record.component'
+import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'datahub-record-page',
   templateUrl: './record-page.component.html',
   styleUrls: ['./record-page.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    RecordMetadataComponent,
+    HeaderRecordComponent,
+    RecordMetaComponent,
+  ],
 })
 export class RecordPageComponent implements OnDestroy {
   metadataQualityDisplay: boolean

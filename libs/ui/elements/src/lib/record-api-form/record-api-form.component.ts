@@ -6,6 +6,13 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { mimeTypeToFormat } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, filter, map, switchMap } from 'rxjs'
+import {
+  CopyTextButtonComponent,
+  DropdownSelectorComponent,
+  TextInputComponent,
+} from '@geonetwork-ui/ui/inputs'
+import { CommonModule } from '@angular/common'
+import { TranslateModule } from '@ngx-translate/core'
 
 const DEFAULT_PARAMS = {
   OFFSET: '',
@@ -23,6 +30,14 @@ interface OutputFormats {
   templateUrl: './record-api-form.component.html',
   styleUrls: ['./record-api-form.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    TextInputComponent,
+    DropdownSelectorComponent,
+    CopyTextButtonComponent,
+    TranslateModule,
+  ],
 })
 export class RecordApiFormComponent {
   @Input() set apiLink(value: DatasetServiceDistribution) {

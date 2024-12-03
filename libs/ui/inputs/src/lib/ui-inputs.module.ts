@@ -11,15 +11,12 @@ import { DragAndDropFileInputComponent } from './drag-and-drop-file-input/drag-a
 import { DropdownSelectorComponent } from './dropdown-selector/dropdown-selector.component'
 import { TextAreaComponent } from './text-area/text-area.component'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
-import { NavigationButtonComponent } from './navigation-button/navigation-button.component'
-import { StarToggleComponent } from './star-toggle/star-toggle.component'
 import { DropdownMultiselectComponent } from './dropdown-multiselect/dropdown-multiselect.component'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { OverlayModule } from '@angular/cdk/overlay'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { ViewportIntersectorComponent } from './viewport-intersector/viewport-intersector.component'
 import { CheckToggleComponent } from './check-toggle/check-toggle.component'
-import { CopyTextButtonComponent } from './copy-text-button/copy-text-button.component'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { CommonModule } from '@angular/common'
 import { CheckboxComponent } from './checkbox/checkbox.component'
@@ -36,24 +33,17 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import {
-  matExpandMore,
-  matExpandLess,
-  matStar,
-  matStarBorder,
   matClose,
-  matContentCopy,
-  matArrowBack,
+  matExpandLess,
+  matExpandMore,
 } from '@ng-icons/material-icons/baseline'
 
 @NgModule({
   declarations: [
     DragAndDropFileInputComponent,
     ChipsInputComponent,
-    NavigationButtonComponent,
-    StarToggleComponent,
     DropdownMultiselectComponent,
     ViewportIntersectorComponent,
-    CopyTextButtonComponent,
     CheckboxComponent,
   ],
   imports: [
@@ -85,13 +75,9 @@ import {
   ],
   providers: [
     provideIcons({
-      matStar,
-      matStarBorder,
       matClose,
       matExpandMore,
       matExpandLess,
-      matContentCopy,
-      matArrowBack,
     }),
     provideNgIconsConfig({
       size: '0.9em',
@@ -103,12 +89,9 @@ import {
     DragAndDropFileInputComponent,
     TextAreaComponent,
     ChipsInputComponent,
-    NavigationButtonComponent,
-    StarToggleComponent,
     DropdownMultiselectComponent,
     ViewportIntersectorComponent,
     CheckToggleComponent,
-    CopyTextButtonComponent,
     CheckboxComponent,
     DateRangePickerComponent,
     EditableLabelDirective,

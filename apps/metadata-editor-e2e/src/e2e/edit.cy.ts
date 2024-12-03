@@ -227,6 +227,31 @@ describe('editor form', () => {
           .eq(1)
           .as('aboutSection')
       })
+      describe('resource identifier', () => {
+        it('shows the resource identifier', () => {
+          cy.get('@aboutSection')
+            .find('gn-ui-form-field-simple')
+            .first()
+            .find('input')
+            .invoke('val')
+            .should('eq', 'UWWTD_WASTE_WATER_TREATMENT')
+        })
+        it('edits and saves the resource identifiert', () => {
+          cy.editor_wrapPreviousDraft()
+          cy.get('gn-ui-form-field-simple').first().find('input').clear()
+          cy.get('gn-ui-form-field-simple')
+            .first()
+            .find('input')
+            .type('Test - resource identifier')
+          cy.editor_publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
+          cy.get('gn-ui-form-field-simple')
+            .first()
+            .find('input')
+            .invoke('val')
+            .should('eq', 'Test - resource identifier')
+        })
+      })
       describe('resource created', () => {
         beforeEach(() => {
           cy.get('@aboutSection')

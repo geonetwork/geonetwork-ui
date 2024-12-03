@@ -68,6 +68,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
   abstract: `Perimeter der Alpenkonvention in der Schweiz. Die Alpenkonvention ist ein völkerrechtlicher Vertrag zwischen den acht Alpenländern Deutschland, Frankreich, Italien, Liechtenstein, Monaco, Österreich, Schweiz, Slowenien sowie der Europäischen Union. Das Ziel des Übereinkommens ist der Schutz der Alpen durch eine sektorübergreifende, ganzheitliche und nachhaltige Politik.`,
   overviews: [],
   topics: ['planningCadastre', 'planningCadastre_Planning'],
+  resourceIdentifier: 'ch.are.alpenkonvention',
   keywords: [
     {
       thesaurus: {

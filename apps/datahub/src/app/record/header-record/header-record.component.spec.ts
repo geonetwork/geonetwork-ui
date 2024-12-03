@@ -1,12 +1,12 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import { TranslateModule } from '@ngx-translate/core'
-import { BehaviorSubject } from 'rxjs'
 
 import { HeaderRecordComponent } from './header-record.component'
+import { MockBuilder, MockProvider } from 'ng-mocks'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
@@ -20,30 +20,20 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
   },
 }))
 
-const searchServiceMock = {
-  updateFilters: jest.fn(),
-}
-
-class MdViewFacadeMock {
-  mapApiLinks$ = new BehaviorSubject([])
-  geoDataLinks$ = new BehaviorSubject([])
-}
-
 describe('HeaderRecordComponent', () => {
   let component: HeaderRecordComponent
   let fixture: ComponentFixture<HeaderRecordComponent>
 
+  beforeEach(() => MockBuilder(HeaderRecordComponent))
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [HeaderRecordComponent],
       imports: [TranslateModule.forRoot()],
-      schemas: [NO_ERRORS_SCHEMA],
       providers: [
-        { provide: SearchService, useValue: searchServiceMock },
-        {
-          provide: MdViewFacade,
-          useClass: MdViewFacadeMock,
-        },
+        MockProvider(MdViewFacade),
+        MockProvider(SearchService, {
+          updateFilters: jest.fn(),
+        }),
       ],
     }).compileComponents()
   })
@@ -53,7 +43,7 @@ describe('HeaderRecordComponent', () => {
     component = fixture.componentInstance
     component.metadata = {
       ...datasetRecordsFixture()[0],
-    }
+    } as DatasetRecord
     fixture.detectChanges()
   })
 
@@ -63,8 +53,9 @@ describe('HeaderRecordComponent', () => {
 
   describe('#back', () => {
     it('searchFilter updateSearch', () => {
+      const searchService = TestBed.inject(SearchService)
       component.back()
-      expect(searchServiceMock.updateFilters).toHaveBeenCalledWith({})
+      expect(searchService.updateFilters).toHaveBeenCalledWith({})
     })
   })
 })

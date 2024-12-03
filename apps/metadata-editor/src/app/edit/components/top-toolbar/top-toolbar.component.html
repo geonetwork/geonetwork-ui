@@ -1,5 +1,5 @@
 <div class="flex flex-row items-center w-full border-b-[1px]">
-  <gn-ui-button
+  <!-- <gn-ui-button
     type="light"
     disabled="true"
     [title]="'editor.temporary.disabled' | translate"
@@ -19,7 +19,7 @@
     [title]="'editor.temporary.disabled' | translate"
   >
     <ng-icon name="iconoirDownload"></ng-icon>
-  </gn-ui-button>
+  </gn-ui-button> -->
   <ng-container *ngrxLet="saveStatus$ as saveStatus">
     <gn-ui-button
       type="light"
@@ -55,7 +55,7 @@
       <span translate>editor.record.saveStatus.draftWithChangesPending</span>
     </ng-container>
   </div>
-  <gn-ui-button
+  <!-- <gn-ui-button
     type="light"
     disabled="true"
     [title]="'editor.temporary.disabled' | translate"
@@ -68,6 +68,6 @@
     [title]="'editor.temporary.disabled' | translate"
   >
     <ng-icon name="iconoirBadgeCheck"></ng-icon>
-  </gn-ui-button>
+  </gn-ui-button> -->
   <md-editor-publish-button></md-editor-publish-button>
 </div>

@@ -1,7 +1,8 @@
-import { TestBed, ComponentFixture, waitForAsync } from '@angular/core/testing'
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing'
 import { Component, DebugElement } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { GnUiLinkifyDirective } from './linkify.directive'
+import { CommonModule } from '@angular/common'
 
 const testingUrls = [
   ['First link http://bla.org no slash', 'http://bla.org'],
@@ -81,6 +82,8 @@ const testWithHTML = {
     <div *ngIf="!customInnerHTML" [gnUiLinkify]>
       {{ text }}
     </div>`,
+  standalone: true,
+  imports: [CommonModule, GnUiLinkifyDirective],
 })
 class TestComponent {
   text = ''
@@ -94,7 +97,7 @@ describe('GnUiLinkifyDirective', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [GnUiLinkifyDirective, TestComponent],
+      imports: [GnUiLinkifyDirective, TestComponent],
     })
 
     fixture = TestBed.createComponent(TestComponent)
