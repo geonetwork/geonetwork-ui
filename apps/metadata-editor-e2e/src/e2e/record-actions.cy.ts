@@ -114,7 +114,7 @@ describe('record-actions', () => {
         .should('contain.text', 'Next')
     })
 
-    it.only('the created record should not allow upload of resources and show info message as it was not saved yet', () => {
+    it('the created record should not allow upload of resources and show info message as it was not saved yet', () => {
       // first page
       cy.get('gn-ui-form-field-overviews')
         .find('gn-ui-image-input')
