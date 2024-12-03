@@ -1,44 +1,57 @@
-<gn-ui-file-input
-  [maxSizeMB]="MAX_UPLOAD_SIZE_MB"
-  (fileChange)="handleFileChange($event)"
-  (uploadCancel)="handleUploadCancel()"
-  [uploadProgress]="uploadProgress"
-  (urlChange)="handleUrlChange($event)"
-></gn-ui-file-input>
-<div class="h-[8px]"></div>
-<gn-ui-sortable-list
-  [items]="linkResources"
-  (itemsOrderChange)="handleResourcesChange($event)"
-  [elementTemplate]="template"
->
-</gn-ui-sortable-list>
-<ng-template #template let-onlineResource let-index="index">
-  <gn-ui-online-resource-card
-    [onlineResource]="onlineResource"
-    (modifyClick)="handleResourceModify(onlineResource, index)"
-  ></gn-ui-online-resource-card>
-</ng-template>
+<div class="flex flex-col">
+  <gn-ui-file-input
+    [maxSizeMB]="MAX_UPLOAD_SIZE_MB"
+    (fileChange)="handleFileChange($event)"
+    (uploadCancel)="handleUploadCancel()"
+    [uploadProgress]="uploadProgress"
+    (urlChange)="handleUrlChange($event)"
+    [disabled]="disabled$ | async"
+  ></gn-ui-file-input>
+  <div class="h-[8px]"></div>
+  <gn-ui-sortable-list
+    [items]="linkResources"
+    (itemsOrderChange)="handleResourcesChange($event)"
+    [elementTemplate]="template"
+  >
+  </gn-ui-sortable-list>
+  <ng-template #template let-onlineResource let-index="index">
+    <gn-ui-online-resource-card
+      [onlineResource]="onlineResource"
+      (modifyClick)="handleResourceModify(onlineResource, index)"
+    ></gn-ui-online-resource-card>
+  </ng-template>
 
-<ng-template #dialogTemplate let-onlineResource>
-  <div class="flex flex-col gap-[16px]">
-    <div>
-      <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
-        editor.record.form.field.onlineResource.edit.title
-      </h3>
-      <gn-ui-text-input [(value)]="onlineResource.name"></gn-ui-text-input>
+  <ng-template #dialogTemplate let-onlineResource>
+    <div class="flex flex-col gap-[16px]">
+      <div>
+        <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
+          editor.record.form.field.onlineResource.edit.title
+        </h3>
+        <gn-ui-text-input [(value)]="onlineResource.name"></gn-ui-text-input>
+      </div>
+      <div>
+        <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
+          editor.record.form.field.onlineResource.edit.description
+        </h3>
+        <gn-ui-text-area
+          [(value)]="onlineResource.description"
+        ></gn-ui-text-area>
+      </div>
+      <span class="w-full border-b border-gray-300"></span>
+      <gn-ui-url-input
+        class="w-full"
+        [disabled]="true"
+        [value]="onlineResource.url"
+        [showUploadButton]="false"
+        [disabled]="disabled$ | async"
+      ></gn-ui-url-input>
     </div>
-    <div>
-      <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
-        editor.record.form.field.onlineResource.edit.description
-      </h3>
-      <gn-ui-text-area [(value)]="onlineResource.description"></gn-ui-text-area>
-    </div>
-    <span class="w-full border-b border-gray-300"></span>
-    <gn-ui-url-input
-      class="w-full"
-      [disabled]="true"
-      [value]="onlineResource.url"
-      [showUploadButton]="false"
-    ></gn-ui-url-input>
+  </ng-template>
+  <div
+    *ngIf="disabled$ | async"
+    class="p-4 text-sm border border-primary bg-primary-lightest rounded-lg"
+    translate
+  >
+    editor.record.form.field.draft.only.disabled
   </div>
-</ng-template>
+</div>

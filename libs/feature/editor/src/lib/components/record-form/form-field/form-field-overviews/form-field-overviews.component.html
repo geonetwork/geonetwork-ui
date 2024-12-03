@@ -1,11 +1,21 @@
-<gn-ui-image-input
-  [maxSizeMB]="MAX_UPLOAD_SIZE_MB"
-  [previewUrl]="firstOverview.url"
-  [altText]="firstOverview.description"
-  (fileChange)="handleFileChange($event)"
-  (urlChange)="handleUrlChange($event)"
-  (altTextChange)="handleAltTextChange($event)"
-  (delete)="handleDelete()"
-  [uploadProgress]="uploadProgress"
-  (uploadCancel)="handleUploadCancel()"
-></gn-ui-image-input>
+<div class="flex flex-col gap-2">
+  <gn-ui-image-input
+    [maxSizeMB]="MAX_UPLOAD_SIZE_MB"
+    [previewUrl]="firstOverview.url"
+    [altText]="firstOverview.description"
+    (fileChange)="handleFileChange($event)"
+    (urlChange)="handleUrlChange($event)"
+    (altTextChange)="handleAltTextChange($event)"
+    (delete)="handleDelete()"
+    [uploadProgress]="uploadProgress"
+    (uploadCancel)="handleUploadCancel()"
+    [disabled]="disabled$ | async"
+  ></gn-ui-image-input>
+  <div
+    *ngIf="disabled$ | async"
+    class="p-4 text-sm border border-primary bg-primary-lightest rounded-lg"
+    translate
+  >
+    editor.record.form.field.draft.only.disabled
+  </div>
+</div>
