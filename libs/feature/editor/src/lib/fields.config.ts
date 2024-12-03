@@ -66,6 +66,14 @@ export const RECORD_KEYWORDS_FIELD: EditorField = {
   },
 }
 
+export const RECORD_RESOURCE_CREATED_FIELD: EditorField = {
+  model: 'resourceCreated',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.resourceCreated'),
+  },
+  gridColumnSpan: 1,
+}
+
 export const RECORD_RESOURCE_UPDATED_FIELD: EditorField = {
   model: 'resourceUpdated',
   formFieldConfig: {
@@ -176,6 +184,7 @@ export const ABOUT_SECTION: EditorSection = {
   hidden: false,
   fields: [
     RECORD_UNIQUE_IDENTIFIER_FIELD,
+    RECORD_RESOURCE_CREATED_FIELD,
     RECORD_RESOURCE_UPDATED_FIELD,
     RECORD_UPDATED_FIELD,
     RECORD_UPDATE_FREQUENCY_FIELD,
