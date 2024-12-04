@@ -1,12 +1,16 @@
-import { Component, Input } from '@angular/core'
+import { Component, Inject, Input, OnInit, Optional } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { map } from 'rxjs'
+import { map, Observable } from 'rxjs'
 import { SearchFiltersSummaryItemComponent } from '../search-filters-summary-item/search-filters-summary-item.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
+import { InjectionToken } from '@angular/core'
 
+export const FILTER_SUMMARY_IGNORE_LIST = new InjectionToken<string[]>(
+  'FILTER_SUMMARY_IGNORE_LIST'
+)
 @Component({
   selector: 'gn-ui-search-filters-summary',
   imports: [CommonModule, SearchFiltersSummaryItemComponent, TranslateModule],
@@ -14,20 +18,36 @@ import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
   styleUrls: ['./search-filters-summary.component.css'],
   standalone: true,
 })
-export class SearchFiltersSummaryComponent {
+export class SearchFiltersSummaryComponent implements OnInit {
   @Input() searchFields: string[] = []
+  filterSummaryIgnoreList: string[]
 
-  searchFilterActive$ = this.searchFacade.searchFilters$?.pipe(
-    map((filters) => this.hasNonEmptyValues(filters))
-  )
+  searchFilterActive$: Observable<boolean>
 
   constructor(
     private searchFacade: SearchFacade,
-    private searchService: SearchService
-  ) {}
+    private searchService: SearchService,
+    @Optional()
+    @Inject(FILTER_SUMMARY_IGNORE_LIST)
+    filterSummaryIgnoreList: string[]
+  ) {
+    this.filterSummaryIgnoreList = filterSummaryIgnoreList || []
+  }
+
+  ngOnInit(): void {
+    this.searchFilterActive$ = this.searchFacade.searchFilters$.pipe(
+      map((filters) => this.hasNonEmptyValues(filters))
+    )
+  }
 
   hasNonEmptyValues(filters: FieldFilters): boolean {
-    return Object.values(filters).some(
+    const filteredFilters = {}
+    for (const [key, value] of Object.entries(filters)) {
+      if (!this.filterSummaryIgnoreList.includes(key)) {
+        filteredFilters[key] = value
+      }
+    }
+    return Object.values(filteredFilters).some(
       (value) =>
         value !== undefined &&
         (typeof value !== 'object' ||
