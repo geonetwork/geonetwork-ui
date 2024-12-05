@@ -91,13 +91,17 @@ export class SimpleSearchField implements AbstractSearchField {
     if (this.getType() === 'values') {
       return of({
         [this.esFieldName]: (values as FieldValue[]).reduce((acc, val) => {
-          return { ...acc, [val.toString()]: true }
+          const value = val.toString()
+          if (value !== '') {
+            return { ...acc, [value]: true }
+          }
+          return acc
         }, {}),
       })
     }
     // DateRange
     return of({
-      [this.esFieldName]: values[0],
+      [this.esFieldName]: values[0] !== '' ? values[0] : {},
     })
   }
   getValuesForFilter(
