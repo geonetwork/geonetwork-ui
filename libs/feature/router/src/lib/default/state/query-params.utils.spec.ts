@@ -37,11 +37,11 @@ describe('query params utilities', () => {
         [ROUTE_PARAMS.SORT]: 'createDate',
         publisher: ['john', 'barbie'],
         updateDate: {
-          start: new Date('2010-03-10'),
-          end: new Date('2014-01-01'),
+          start: new Date('2010-03-10T00:00:00'),
+          end: new Date('2014-01-01T00:00:00'),
         },
         changeDate: {
-          end: new Date('2008-08-14'),
+          end: new Date('2008-08-14T00:00:00'),
         },
       })
     })
@@ -51,7 +51,7 @@ describe('query params utilities', () => {
       })
       expect(params).toEqual({
         changeDate: {
-          end: new Date('2008-08-14'),
+          end: new Date('2008-08-14T00:00:00'),
         },
       })
     })

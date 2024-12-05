@@ -275,15 +275,26 @@ describe('search fields implementations', () => {
       let filter
       beforeEach(async () => {
         filter = await lastValueFrom(
-          searchField.getFiltersForValues(['First value', 'Second value'])
+          searchField.getFiltersForValues(['First value', 'Second value', ''])
         )
       })
-      it('returns appropriate filters', () => {
+      it('returns appropriate filters (ignoring empty strings)', () => {
         expect(filter).toEqual({
           myField: {
             'First value': true,
             'Second value': true,
           },
+        })
+      })
+    })
+    describe('#getFiltersForValues with empty value', () => {
+      let filter
+      beforeEach(async () => {
+        filter = await lastValueFrom(searchField.getFiltersForValues(['']))
+      })
+      it('returns empty filter', () => {
+        expect(filter).toEqual({
+          myField: {},
         })
       })
     })
@@ -359,6 +370,17 @@ describe('search fields implementations', () => {
             start: new Date('2020-01-01'),
             end: new Date('2020-12-31'),
           },
+        })
+      })
+    })
+    describe('#getFiltersForValues with empty value', () => {
+      let filter
+      beforeEach(async () => {
+        filter = await lastValueFrom(searchField.getFiltersForValues(['']))
+      })
+      it('returns empty filter', () => {
+        expect(filter).toEqual({
+          changeDate: {},
         })
       })
     })

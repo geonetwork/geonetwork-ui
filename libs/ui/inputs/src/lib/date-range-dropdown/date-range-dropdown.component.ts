@@ -9,23 +9,28 @@ import {
   ViewChild,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { DateRangePickerComponent } from '../date-range-picker/date-range-picker.component'
-import { MatIconModule } from '@angular/material/icon'
 import { MatNativeDateModule } from '@angular/material/core'
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { ButtonComponent } from '../button/button.component'
 import { OverlayContainer } from '@angular/cdk/overlay'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
+import { matExpandLess, matExpandMore } from '@ng-icons/material-icons/baseline'
 
 @Component({
   selector: 'gn-ui-date-range-dropdown',
   standalone: true,
   imports: [
     CommonModule,
-    DateRangePickerComponent,
-    MatIconModule,
+    NgIconComponent,
     MatNativeDateModule,
     MatDatepickerModule,
     ButtonComponent,
+  ],
+  providers: [
+    provideIcons({
+      matExpandMore,
+      matExpandLess,
+    }),
   ],
   templateUrl: './date-range-dropdown.component.html',
   styleUrls: ['./date-range-dropdown.component.css'],
