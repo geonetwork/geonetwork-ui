@@ -8,10 +8,11 @@
       {{ title }}
     </div>
   </div>
-  <mat-icon class="material-symbols-outlined shrink-0 opacity-40">
-    <ng-container *ngIf="isPickerDisplayed">expand_less</ng-container>
-    <ng-container *ngIf="!isPickerDisplayed">expand_more</ng-container>
-  </mat-icon>
+  <ng-icon
+    [name]="isPickerDisplayed ? 'matExpandLess' : 'matExpandMore'"
+    class="shrink-0 opacity-40"
+  >
+  </ng-icon>
 </gn-ui-button>
 <!--date range input is just present for output events and hidden from the DOM-->
 <mat-date-range-input [rangePicker]="picker">

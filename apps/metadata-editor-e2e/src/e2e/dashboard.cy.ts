@@ -355,13 +355,13 @@ describe('dashboard (authenticated)', () => {
       it('should display the expand icon for the date range dropdown correctly', () => {
         cy.get('md-editor-search-filters')
           .find('gn-ui-date-range-dropdown')
-          .find('mat-icon')
-          .should('contain.text', 'expand_more')
+          .find('ng-icon')
+          .should('have.attr', 'ng-reflect-name', 'matExpandMore')
         cy.get('md-editor-search-filters').find('gn-ui-button').eq(1).click()
         cy.get('md-editor-search-filters')
           .find('gn-ui-date-range-dropdown')
-          .find('mat-icon')
-          .should('contain.text', 'expand_less')
+          .find('ng-icon')
+          .should('have.attr', 'ng-reflect-name', 'matExpandLess')
       })
     })
     describe('myRecords search filters', () => {
