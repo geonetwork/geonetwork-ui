@@ -234,6 +234,7 @@ export class ElasticsearchService {
   private filtersToQuery(
     filters: FieldFilters | FiltersAggregationParams | string
   ): FilterQuery {
+    const addQuote = (key: string) => (/^\/.+\/$/.test(key) ? key : `"${key}"`)
     const makeQuery = (filter: FieldFilter): string => {
       if (typeof filter === 'string') {
         return filter
@@ -241,9 +242,9 @@ export class ElasticsearchService {
       return Object.keys(filter)
         .map((key) => {
           if (filter[key] === true) {
-            return `"${key}"`
+            return addQuote(key)
           }
-          return `-"${key}"`
+          return `-${addQuote(key)}`
         })
         .join(' OR ')
     }
@@ -532,13 +533,15 @@ export class ElasticsearchService {
       switch (aggregation.type) {
         case 'filters':
           return {
-            filters: Object.keys(aggregation.filters).reduce((prev, curr) => {
-              const filter = aggregation.filters[curr]
-              return {
-                ...prev,
-                [curr]: this.filtersToQuery(filter)[0],
-              }
-            }, {}),
+            filters: {
+              filters: Object.keys(aggregation.filters).reduce((prev, curr) => {
+                const filter = aggregation.filters[curr]
+                return {
+                  ...prev,
+                  [curr]: this.filtersToQuery(filter)[0],
+                }
+              }, {}),
+            },
           }
         case 'terms':
           return {
