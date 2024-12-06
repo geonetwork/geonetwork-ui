@@ -50,7 +50,7 @@ export class ElasticsearchService {
     size = 0,
     from = 0,
     sortBy: SortByField = null,
-    requestFields: RequestFields = [],
+    requestFields: RequestFields = null,
     searchFilters: SearchFilters = {},
     configFilters: SearchFilters = {},
     uuids?: string[],
@@ -68,7 +68,7 @@ export class ElasticsearchService {
         geometry
       ),
       ...(size > 0 ? { track_total_hits: true } : {}),
-      _source: requestFields,
+      ...(requestFields && { _source: requestFields }),
     }
     this.processRuntimeFields(payload)
     return payload
