@@ -285,7 +285,6 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
                   filter: [{ terms: { isTemplate: ['n'] } }],
                 },
               },
-              _source: [],
             })
           )
         })
