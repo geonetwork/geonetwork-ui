@@ -19,9 +19,9 @@ export const FIELDS_SUMMARY: FieldName[] = [
   'userSavedCount',
   'cl_topic',
   'cl_maintenanceAndUpdateFrequency',
-  'tag',
   'MD_LegalConstraintsUseLimitationObject',
   'qualityScore',
+  'allKeywords',
 ]
 
 export const FIELDS_BRIEF: FieldName[] = [
