@@ -473,6 +473,37 @@ describe('ElasticsearchService', () => {
         },
       })
     })
+    it('handle values expressed as reg exp', () => {
+      const query = service['buildPayloadQuery'](
+        {
+          Org: {
+            '/world.*/': true,
+            '/*country^[fr|en]/': false,
+          },
+        },
+        {},
+        []
+      )
+      expect(query).toMatchObject({
+        bool: {
+          filter: [
+            {
+              terms: {
+                isTemplate: ['n'],
+              },
+            },
+            {
+              query_string: {
+                query: 'Org:(/world.*/ OR -/*country^[fr|en]/)',
+              },
+            },
+            {
+              ids: { values: [] },
+            },
+          ],
+        },
+      })
+    })
     describe('any has special characters', () => {
       let query
       beforeEach(() => {
@@ -920,14 +951,16 @@ describe('ElasticsearchService', () => {
       ).toStrictEqual({
         myFilters: {
           filters: {
-            filter1: {
-              query_string: { query: 'field1:(100)' },
-            },
-            filter2: {
-              query_string: { query: 'field2:("value1" OR "value3")' },
-            },
-            filter3: {
-              query_string: { query: 'my own query' },
+            filters: {
+              filter1: {
+                query_string: { query: 'field1:(100)' },
+              },
+              filter2: {
+                query_string: { query: 'field2:("value1" OR "value3")' },
+              },
+              filter3: {
+                query_string: { query: 'my own query' },
+              },
             },
           },
         },
