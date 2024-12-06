@@ -1,6 +1,11 @@
 import { OverlayContainer } from '@angular/cdk/overlay'
 import { CommonModule } from '@angular/common'
-import { CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule } from '@angular/core'
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  inject,
+  Injector,
+  NgModule,
+} from '@angular/core'
 import { createCustomElement } from '@angular/elements'
 import { BrowserModule } from '@angular/platform-browser'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
@@ -46,6 +51,8 @@ import {
   ChartViewComponent,
   TableViewComponent,
 } from '@geonetwork-ui/feature/dataviz'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],
@@ -129,6 +136,14 @@ export class WebcomponentsModule {
         customElements.define(ceTagName, customElement)
       }
     })
+
+    // define global props
+    const recordsRepository = inject(RecordsRepositoryInterface)
+    const platformService = inject(PlatformServiceInterface)
+    window['GNUI'] = {
+      recordsRepository,
+      platformService,
+    }
   }
 
   // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method, @angular-eslint/use-lifecycle-interface, @typescript-eslint/no-empty-function
