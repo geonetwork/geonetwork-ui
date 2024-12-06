@@ -63,6 +63,19 @@ describe('FormFieldComponent', () => {
       expect(formField).toBeTruthy()
     })
   })
+  describe('resource created field', () => {
+    let formField
+    beforeEach(() => {
+      component.model = 'resourceCreated'
+      fixture.detectChanges()
+      formField = fixture.debugElement.query(
+        By.directive(FormFieldDateUpdatedComponent)
+      ).componentInstance
+    })
+    it('creates a resource created form field', () => {
+      expect(formField).toBeTruthy()
+    })
+  })
   describe('resource updated field', () => {
     let formField
     beforeEach(() => {

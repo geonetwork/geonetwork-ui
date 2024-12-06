@@ -25,6 +25,7 @@ export const editorSectionAboutFixture = () => ({
   fields: [
     editorFieldTitleFixture(),
     editorFieldAbstractFixture(),
+    editorFieldResourceCreatedFixture(),
     editorFieldResourceUpdatedFixture(),
     editorFieldRecordUpdatedFixture(),
     editorFieldUpdateFrequencyFixture(),
@@ -68,6 +69,14 @@ export const editorFieldAbstractFixture = () => ({
   value: 'Abstract',
   formFieldConfig: {
     labelKey: 'editor.record.form.field.abstract',
+  },
+})
+
+export const editorFieldResourceCreatedFixture = () => ({
+  model: 'resourceCreated',
+  hidden: false,
+  formFieldConfig: {
+    labelKey: 'editor.record.form.field.resourceCreated',
   },
 })
 
@@ -144,6 +153,7 @@ export const editorFieldsFixture = () => [
   editorFieldTitleFixture(),
   editorFieldAbstractFixture(),
   editorFieldResourceUpdatedFixture(),
+  editorFieldResourceCreatedFixture(),
   editorFieldRecordUpdatedFixture(),
   editorFieldUpdateFrequencyFixture(),
   editorFieldTemporalExtentsFixture(),

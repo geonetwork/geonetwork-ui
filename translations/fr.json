@@ -234,6 +234,7 @@
   "editor.record.form.field.otherConstraints": "Contrainte générale",
   "editor.record.form.field.overviews": "Aperçus",
   "editor.record.form.field.recordUpdated": "Date de dernière révision",
+  "editor.record.form.field.resourceCreated": "",
   "editor.record.form.field.resourceIdentifier": "",
   "editor.record.form.field.resourceUpdated": "Date de dernière révision",
   "editor.record.form.field.securityConstraints": "Contrainte de sécurité",
