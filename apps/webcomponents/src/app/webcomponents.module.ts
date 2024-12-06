@@ -46,6 +46,7 @@ import {
   ChartViewComponent,
   TableViewComponent,
 } from '@geonetwork-ui/feature/dataviz'
+import { StandaloneSearchModule } from './standalone-search.module'
 
 const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],
@@ -101,6 +102,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     TableViewComponent,
     ChartViewComponent,
     MapViewComponent,
+    StandaloneSearchModule,
   ],
   providers: [
     provideGn4(),
@@ -131,6 +133,7 @@ export class WebcomponentsModule {
     })
   }
 
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method, @angular-eslint/use-lifecycle-interface, @typescript-eslint/no-empty-function
-  ngDoBootstrap() {}
+  ngDoBootstrap() {
+    console.log(`[geonetwork-ui] GeoNetwork-UI Web Components v${} loaded`)
+  }
 }
