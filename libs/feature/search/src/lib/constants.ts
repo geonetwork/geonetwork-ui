@@ -22,6 +22,7 @@ export const FIELDS_SUMMARY: FieldName[] = [
   'tag',
   'MD_LegalConstraintsUseLimitationObject',
   'qualityScore',
+  'allKeywords',
 ]
 
 export const FIELDS_BRIEF: FieldName[] = [
