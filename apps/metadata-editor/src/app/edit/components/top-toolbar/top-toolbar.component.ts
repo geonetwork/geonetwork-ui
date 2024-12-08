@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
@@ -61,6 +61,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopToolbarComponent {
+  @Input() publishWarning = []
   protected SaveStatus = [
     'draft_only', // => when creating a record
     'record_up_to_date', // => when the record was just published (ie saved on the server)
