@@ -5,9 +5,10 @@
     [ngClass]="{
       'border-primary-lighter bg-primary-white': dragFilesOver,
       'border-gray-300': !dragFilesOver,
-      'cursor-pointer hover:border-gray-500': !isUploadInProgress
+      'cursor-pointer hover:border-gray-500': !isUploadInProgress && !disabled,
+      'cursor-not-allowed': disabled
     }"
-    [attr.tabindex]="isUploadInProgress ? null : 0"
+    [attr.tabindex]="isUploadInProgress || disabled ? null : 0"
     (dragFilesOver)="handleDragFilesOver($event)"
     (dropFiles)="handleDropFiles($event)"
     (keydown.enter)="fileInput.click()"
@@ -17,7 +18,7 @@
       type="file"
       class="hidden"
       (change)="handleFileInput($event)"
-      [disabled]="isUploadInProgress"
+      [disabled]="isUploadInProgress || disabled"
     />
 
     <div
@@ -82,7 +83,7 @@
     </p>
     <gn-ui-url-input
       class="w-full"
-      [disabled]="isUploadInProgress"
+      [disabled]="isUploadInProgress || disabled"
       (uploadClick)="handleUrlChange($event)"
     ></gn-ui-url-input>
   </label>

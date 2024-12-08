@@ -67,6 +67,7 @@ export class ImageInputComponent {
   @Input() altText?: string
   @Input() uploadProgress?: number
   @Input() uploadError?: boolean
+  @Input() disabled?: boolean = false
   @Output() fileChange: EventEmitter<File> = new EventEmitter()
   @Output() urlChange: EventEmitter<string> = new EventEmitter()
   @Output() uploadCancel: EventEmitter<void> = new EventEmitter()

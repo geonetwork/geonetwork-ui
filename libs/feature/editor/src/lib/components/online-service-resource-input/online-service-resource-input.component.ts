@@ -34,6 +34,7 @@ import { TranslateModule } from '@ngx-translate/core'
 export class OnlineServiceResourceInputComponent implements OnChanges {
   @Input() service: Omit<DatasetServiceDistribution, 'url'>
   @Input() protocolHint?: string
+  @Input() disabled? = false
 
   selectedProtocol: ServiceProtocol
 
