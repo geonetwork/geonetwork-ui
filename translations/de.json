@@ -496,6 +496,7 @@
   "search.error.recordNotFound": "Der Datensatz mit der Kennung \"{ id }\" konnte nicht gefunden werden.",
   "search.field.any.placeholder": "Suche Datensätze ...",
   "search.field.sortBy": "Sortieren nach:",
+  "search.filters.changeDate": "Letzte Aktualisierung",
   "search.filters.clear": "Zurücksetzen",
   "search.filters.contact": "Kontakte",
   "search.filters.format": "Formate",

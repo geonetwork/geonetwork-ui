@@ -496,6 +496,7 @@
   "search.error.recordNotFound": "The record with identifier \"{ id }\" could not be found.",
   "search.field.any.placeholder": "Search datasets ...",
   "search.field.sortBy": "Sort by:",
+  "search.filters.changeDate": "Last updated",
   "search.filters.clear": "Reset",
   "search.filters.contact": "Contacts",
   "search.filters.format": "Formats",

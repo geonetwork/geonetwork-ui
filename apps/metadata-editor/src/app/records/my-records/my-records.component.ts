@@ -73,7 +73,7 @@ export class MyRecordsComponent implements OnInit {
   private importRecordButton!: ElementRef
   @ViewChild('template') template!: TemplateRef<any>
   private overlayRef!: OverlayRef
-  searchFields = []
+  searchFields = ['changeDate']
   searchText$: Observable<string | null>
 
   isImportMenuOpen = false

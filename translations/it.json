@@ -496,6 +496,7 @@
   "search.error.recordNotFound": "Impossibile trovare questo dato",
   "search.field.any.placeholder": "Cerca un dato...",
   "search.field.sortBy": "Ordina per:",
+  "search.filters.changeDate": "",
   "search.filters.clear": "Ripristina",
   "search.filters.contact": "Contatti",
   "search.filters.format": "Formati",

@@ -1,0 +1,5 @@
+:host {
+  .mat-date-range-input-container {
+    display: none;
+  }
+}

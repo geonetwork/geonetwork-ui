@@ -1,6 +1,7 @@
 import { Injectable, Injector } from '@angular/core'
 import {
   AbstractSearchField,
+  DateRangeSearchField,
   FieldValue,
   FullTextSearchField,
   IsSpatialSearchField,
@@ -16,9 +17,10 @@ import { forkJoin, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { DateRange } from '@geonetwork-ui/api/repository'
 
 // key is the field name
-export type FieldValues = Record<string, FieldValue[] | FieldValue>
+export type FieldValues = Record<string, FieldValue[] | FieldValue | DateRange>
 
 marker('search.filters.format')
 marker('search.filters.inspireKeyword')
@@ -35,6 +37,7 @@ marker('search.filters.contact')
 marker('search.filters.producerOrg')
 marker('search.filters.publisherOrg')
 marker('search.filters.user')
+marker('search.filters.changeDate')
 
 @Injectable({
   providedIn: 'root',
@@ -87,6 +90,7 @@ export class FieldsService {
       'key'
     ),
     user: new UserSearchField(this.injector),
+    changeDate: new DateRangeSearchField('changeDate', this.injector, 'desc'),
   } as Record<string, AbstractSearchField>
 
   get supportedFields() {
@@ -101,11 +105,18 @@ export class FieldsService {
     return this.fields[fieldName].getAvailableValues()
   }
 
-  private getFiltersForValues(fieldName: string, values: FieldValue[]) {
+  private getFiltersForValues(
+    fieldName: string,
+    values: FieldValue[] | DateRange[]
+  ) {
     return this.fields[fieldName].getFiltersForValues(values)
   }
   private getValuesForFilters(fieldName: string, filters: FieldFilters) {
     return this.fields[fieldName].getValuesForFilter(filters)
+  }
+
+  getFieldType(fieldName: string) {
+    return this.fields[fieldName].getType()
   }
 
   buildFiltersFromFieldValues(
@@ -119,7 +130,10 @@ export class FieldsService {
       const values = Array.isArray(fieldValues[fieldName])
         ? fieldValues[fieldName]
         : [fieldValues[fieldName]]
-      return this.getFiltersForValues(fieldName, values as FieldValue[])
+      return this.getFiltersForValues(
+        fieldName,
+        values as FieldValue[] | DateRange[]
+      )
     })
     return forkJoin(filtersByField$).pipe(
       map((filters) =>

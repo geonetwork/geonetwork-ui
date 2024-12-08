@@ -102,6 +102,7 @@ describe('FieldsService', () => {
           'producerOrg',
           'publisherOrg',
           'user',
+          'changeDate',
         ])
       })
     })
@@ -186,7 +187,16 @@ describe('FieldsService', () => {
           producerOrg: [],
           publisherOrg: [],
           user: [],
+          changeDate: [],
         })
+      })
+    })
+    describe('#getFieldType', () => {
+      it('returns the field type', () => {
+        expect(service.getFieldType('organization')).toEqual('values')
+        expect(service.getFieldType('publicationYear')).toEqual('values')
+        expect(service.getFieldType('format')).toEqual('values')
+        expect(service.getFieldType('changeDate')).toEqual('dateRange')
       })
     })
   })

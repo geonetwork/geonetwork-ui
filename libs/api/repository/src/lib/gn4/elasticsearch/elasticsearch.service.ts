@@ -11,7 +11,8 @@ import {
   AggregationsParams,
   FieldFilter,
   FieldFilters,
-  FilterAggregationParams,
+  FilterQuery,
+  FiltersAggregationParams,
   SortByField,
 } from '@geonetwork-ui/common/domain/model/search'
 import { METADATA_LANGUAGE } from '../../metadata-language'
@@ -26,6 +27,9 @@ import {
   TermsAggregationResult,
 } from '@geonetwork-ui/api/metadata-converter'
 import { LangService } from '@geonetwork-ui/util/i18n'
+import { formatDate, isDateRange } from './date-range.utils'
+
+export type DateRange = { start?: Date; end?: Date }
 
 @Injectable({
   providedIn: 'root',
@@ -213,7 +217,9 @@ export class ElasticsearchService {
     return this.metadataLang === 'current'
   }
 
-  private filtersToQueryString(filters: FieldFilters): string {
+  private filtersToQuery(
+    filters: FieldFilters | FiltersAggregationParams | string
+  ): FilterQuery {
     const makeQuery = (filter: FieldFilter): string => {
       if (typeof filter === 'string') {
         return filter
@@ -227,13 +233,53 @@ export class ElasticsearchService {
         })
         .join(' OR ')
     }
-    return Object.keys(filters)
-      .filter(
-        (fieldname) =>
-          filters[fieldname] && JSON.stringify(filters[fieldname]) !== '{}'
-      )
-      .map((fieldname) => `${fieldname}:(${makeQuery(filters[fieldname])})`)
-      .join(' AND ')
+    const queryString =
+      typeof filters === 'string'
+        ? filters
+        : Object.keys(filters)
+            .filter((fieldname) => !isDateRange(filters[fieldname]))
+            .filter(
+              (fieldname) =>
+                filters[fieldname] &&
+                JSON.stringify(filters[fieldname]) !== '{}'
+            )
+            .map(
+              (fieldname) => `${fieldname}:(${makeQuery(filters[fieldname])})`
+            )
+            .join(' AND ')
+    const queryRange = Object.entries(filters)
+      .filter(([, value]) => isDateRange(value))
+      .map(([searchField, dateRange]) => {
+        return {
+          searchField,
+          dateRange,
+        } as {
+          searchField: string
+          dateRange: DateRange
+        }
+      })[0]
+    const queryParts = [
+      queryString && {
+        query_string: {
+          query: queryString,
+        },
+      },
+      queryRange &&
+        queryRange.dateRange && {
+          range: {
+            [queryRange.searchField]: {
+              ...(queryRange.dateRange.start && {
+                gte: formatDate(queryRange.dateRange.start),
+              }),
+              ...(queryRange.dateRange.end && {
+                lte: formatDate(queryRange.dateRange.end),
+              }),
+              format: 'yyyy-MM-dd',
+            },
+          },
+        },
+    ].filter(Boolean)
+    return queryParts.length > 0 ? (queryParts as FilterQuery) : undefined
   }
 
   private buildPayloadQuery(
@@ -266,13 +312,9 @@ export class ElasticsearchService {
         },
       })
     }
-    const queryFilters = this.filtersToQueryString(fieldSearchFilters)
+    const queryFilters = this.filtersToQuery(fieldSearchFilters)
     if (queryFilters) {
-      filter.push({
-        query_string: {
-          query: queryFilters,
-        },
-      })
+      filter.push(...queryFilters)
     }
     if (uuids) {
       filter.push({
@@ -480,14 +522,7 @@ export class ElasticsearchService {
               const filter = aggregation.filters[curr]
               return {
                 ...prev,
-                [curr]: {
-                  query_string: {
-                    query:
-                      typeof filter === 'string'
-                        ? filter
-                        : this.filtersToQueryString(filter),
-                  },
-                },
+                [curr]: this.filtersToQuery(filter)[0],
               }
             }, {}),
           }

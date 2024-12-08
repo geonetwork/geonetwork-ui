@@ -496,6 +496,7 @@
   "search.error.recordNotFound": "Záznam s identifikátorom \"{ id }\" sa nepodarilo nájsť.",
   "search.field.any.placeholder": "Hľadať datasety ...",
   "search.field.sortBy": "Zoradiť podľa:",
+  "search.filters.changeDate": "",
   "search.filters.clear": "Obnoviť",
   "search.filters.contact": "Kontakty",
   "search.filters.format": "Formáty",
