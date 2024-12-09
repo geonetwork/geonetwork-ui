@@ -1,13 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { PaginationButtonsComponent } from './pagination-buttons.component'
+import { Paginable } from '../paginable.interface'
+
+class MockPaginable implements Paginable {
+  currentPage = 1
+  pagesCount = 5
+  isFirstPage = true
+  isLastPage = false
+  goToPage = jest.fn()
+  goToPrevPage = jest.fn()
+  goToNextPage = jest.fn()
+}
 
 describe('PaginationButtonsComponent', () => {
   let component: PaginationButtonsComponent
   let fixture: ComponentFixture<PaginationButtonsComponent>
-
-  const mockChangePage = (page) => {
-    component.setPage(page)
-  }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -16,19 +23,17 @@ describe('PaginationButtonsComponent', () => {
 
     fixture = TestBed.createComponent(PaginationButtonsComponent)
     component = fixture.componentInstance
-    component.currentPage = 3
-    component.totalPages = 10
+    component.listComponent = new MockPaginable()
     component.calculateVisiblePages()
-    component.changePage = mockChangePage
     fixture.detectChanges()
   })
 
   it('should create', () => {
     expect(component).toBeTruthy()
   })
+
   describe('when using next arrow', () => {
     beforeEach(() => {
-      component.currentPage = 2
       const paginationButtons =
         fixture.nativeElement.querySelectorAll('gn-ui-button')
       paginationButtons.forEach((buttonElement) => {
@@ -39,12 +44,11 @@ describe('PaginationButtonsComponent', () => {
       })
     })
     it('should access next page on click', () => {
-      expect(component.currentPage).toBe(3)
+      expect(component.listComponent.goToNextPage).toHaveBeenCalled()
     })
   })
   describe('when using previous arrow', () => {
     beforeEach(() => {
-      component.currentPage = 4
       const paginationButtons =
         fixture.nativeElement.querySelectorAll('gn-ui-button')
       paginationButtons.forEach((buttonElement) => {
@@ -54,13 +58,13 @@ describe('PaginationButtonsComponent', () => {
         }
       })
     })
-    it('is should access previous page', () => {
-      expect(component.currentPage).toBe(3)
+    it('should access previous page on click', () => {
+      expect(component.listComponent.goToPrevPage).toHaveBeenCalled()
     })
   })
   describe('when accessing first page', () => {
     beforeEach(() => {
-      component.currentPage = 1
+      component.listComponent.isFirstPage = true
       fixture.detectChanges()
     })
     it('is should disable the previous arrow', () => {
@@ -77,7 +81,7 @@ describe('PaginationButtonsComponent', () => {
   })
   describe('when accessing last page', () => {
     beforeEach(() => {
-      component.currentPage = 10
+      component.listComponent.isLastPage = true
       fixture.detectChanges()
     })
     it('is should disable the next arrow', () => {
@@ -106,7 +110,7 @@ describe('PaginationButtonsComponent', () => {
       pageBtnList[1].dispatchEvent(new Event('buttonClick'))
     })
     it('is should access the requested page', () => {
-      expect(component.currentPage).toBe(2)
+      expect(component.listComponent.goToPage).toHaveBeenCalledWith(2)
     })
   })
 })

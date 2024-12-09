@@ -2,8 +2,8 @@
   <div class="flex flex-row gap-[5px] items-center">
     <gn-ui-button
       type="light"
-      [disabled]="currentPage === 1"
-      (buttonClick)="previousPage()"
+      [disabled]="listComponent.isFirstPage"
+      (buttonClick)="listComponent.goToPrevPage()"
       extraClass="!px-[3px]"
     >
       <ng-icon name="iconoirNavArrowLeft"></ng-icon>
@@ -14,8 +14,8 @@
       </ng-container>
       <ng-container *ngIf="page !== '...'">
         <gn-ui-button
-          [type]="page === currentPage ? 'primary' : 'light'"
-          [disabled]="page === currentPage"
+          [type]="page === listComponent.currentPage ? 'primary' : 'light'"
+          [disabled]="page === listComponent.currentPage"
           (buttonClick)="changePage(page)"
           >{{ page }}</gn-ui-button
         >
@@ -23,8 +23,8 @@
     </ng-container>
     <gn-ui-button
       type="light"
-      [disabled]="currentPage === totalPages"
-      (buttonClick)="nextPage()"
+      [disabled]="listComponent.isLastPage"
+      (buttonClick)="listComponent.goToNextPage()"
       extraClass="!px-[3px]"
     >
       <ng-icon name="iconoirNavArrowRight"></ng-icon>

@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core'
-import { ButtonComponent } from '../button/button.component'
+import { Component, Input } from '@angular/core'
 import {
   NgIconComponent,
   provideIcons,
@@ -15,12 +8,13 @@ import {
   matArrowBack,
   matArrowForward,
 } from '@ng-icons/material-icons/baseline'
+import { Paginable } from '../paginable.interface'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
 @Component({
   selector: 'gn-ui-previous-next-buttons',
   templateUrl: './previous-next-buttons.component.html',
   styleUrls: ['./previous-next-buttons.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [ButtonComponent, NgIconComponent],
   providers: [
@@ -31,16 +25,5 @@ import {
   ],
 })
 export class PreviousNextButtonsComponent {
-  @Input() isFirst: boolean
-  @Input() isLast: boolean
-
-  @Output() directionButtonClicked: EventEmitter<string> = new EventEmitter()
-
-  previousButtonClicked() {
-    this.directionButtonClicked.next('previous')
-  }
-
-  nextButtonClicked() {
-    this.directionButtonClicked.next('next')
-  }
+  @Input() listComponent: Paginable
 }

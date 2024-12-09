@@ -1,14 +1,9 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-} from '@angular/core'
+import { Component, Input, OnChanges } from '@angular/core'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { CommonModule } from '@angular/common'
 import { iconoirNavArrowLeft, iconoirNavArrowRight } from '@ng-icons/iconoir'
+import { Paginable } from '../paginable.interface'
 
 @Component({
   selector: 'gn-ui-pagination-buttons',
@@ -24,10 +19,8 @@ import { iconoirNavArrowLeft, iconoirNavArrowRight } from '@ng-icons/iconoir'
   ],
 })
 export class PaginationButtonsComponent implements OnChanges {
-  @Input() currentPage: number
-  @Input() totalPages: number
+  @Input() listComponent: Paginable
   visiblePages: (number | '...')[] = []
-  @Output() newCurrentPageEvent = new EventEmitter<number>()
 
   ngOnChanges(): void {
     this.calculateVisiblePages()
@@ -36,8 +29,11 @@ export class PaginationButtonsComponent implements OnChanges {
   calculateVisiblePages(): void {
     const maxVisiblePages = 5
     const halfVisible = Math.floor(maxVisiblePages / 2)
-    const startPage = Math.max(this.currentPage - halfVisible, 1)
-    const endPage = Math.min(this.currentPage + halfVisible, this.totalPages)
+    const startPage = Math.max(this.listComponent.currentPage - halfVisible, 1)
+    const endPage = Math.min(
+      this.listComponent.currentPage + halfVisible,
+      this.listComponent.pagesCount
+    )
 
     const visiblePages: (number | '...')[] = []
     if (startPage > 1) {
@@ -49,11 +45,11 @@ export class PaginationButtonsComponent implements OnChanges {
     for (let page = startPage; page <= endPage; page++) {
       visiblePages.push(page)
     }
-    if (endPage < this.totalPages) {
-      if (endPage < this.totalPages - 1) {
+    if (endPage < this.listComponent.pagesCount) {
+      if (endPage < this.listComponent.pagesCount - 1) {
         visiblePages.push('...')
       }
-      visiblePages.push(this.totalPages)
+      visiblePages.push(this.listComponent.pagesCount)
     }
 
     this.visiblePages = visiblePages
@@ -63,18 +59,9 @@ export class PaginationButtonsComponent implements OnChanges {
     this.setPage(page)
   }
 
-  nextPage() {
-    this.setPage(this.currentPage + 1)
-  }
-
-  previousPage() {
-    this.setPage(this.currentPage - 1)
-  }
-
   setPage(newPage) {
     if (!Number.isInteger(newPage)) return
-    this.currentPage = newPage
+    this.listComponent.goToPage(newPage)
     this.calculateVisiblePages()
-    this.newCurrentPageEvent.emit(this.currentPage)
   }
 }

@@ -1,9 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-
 import { PreviousNextButtonsComponent } from './previous-next-buttons.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 import { DebugElement } from '@angular/core'
+import { Paginable } from '../paginable.interface'
+
+class MockPaginable implements Paginable {
+  currentPage = 1
+  pagesCount = 5
+  isFirstPage = true
+  isLastPage = false
+  goToPage = jest.fn()
+  goToPrevPage = jest.fn()
+  goToNextPage = jest.fn()
+}
 
 describe('PreviousNextButtonsComponent', () => {
   let component: PreviousNextButtonsComponent
@@ -19,6 +29,7 @@ describe('PreviousNextButtonsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PreviousNextButtonsComponent)
     component = fixture.componentInstance
+    component.listComponent = new MockPaginable()
     compiled = fixture.debugElement
   })
 
@@ -28,8 +39,8 @@ describe('PreviousNextButtonsComponent', () => {
 
   describe('onFirstElement', () => {
     beforeEach(() => {
-      component.isFirst = true
-      component.isLast = false
+      component.listComponent.isFirstPage = true
+      component.listComponent.isLastPage = false
       fixture.detectChanges()
     })
 
@@ -48,8 +59,8 @@ describe('PreviousNextButtonsComponent', () => {
 
   describe('onLastElement', () => {
     beforeEach(() => {
-      component.isFirst = false
-      component.isLast = true
+      component.listComponent.isFirstPage = false
+      component.listComponent.isLastPage = true
       fixture.detectChanges()
     })
 
