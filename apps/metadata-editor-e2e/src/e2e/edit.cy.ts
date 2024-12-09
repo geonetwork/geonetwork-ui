@@ -252,11 +252,37 @@ describe('editor form', () => {
             .should('eq', 'Test - resource identifier')
         })
       })
+      describe('resource created', () => {
+        beforeEach(() => {
+          cy.get('@aboutSection')
+            .find('gn-ui-form-field-date')
+            .eq(0)
+            .as('resourceCreatedField')
+        })
+        it('shows the resource creation date', () => {
+          cy.get('@resourceCreatedField')
+            .find('input')
+            .invoke('val')
+            .should('eq', '1/1/2005')
+        })
+        it('edits and saves the resource creation date', () => {
+          cy.editor_wrapPreviousDraft()
+          cy.get('@resourceCreatedField')
+            .find('input')
+            .type('{selectall}{del}01/01/2019{enter}')
+          cy.editor_publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
+          cy.get('@resourceCreatedField')
+            .find('input')
+            .invoke('val')
+            .should('eq', '1/1/2019')
+        })
+      })
       describe('resource updated', () => {
         beforeEach(() => {
           cy.get('@aboutSection')
-            .find('gn-ui-form-field-date-updated')
-            .eq(0)
+            .find('gn-ui-form-field-date')
+            .eq(1)
             .as('resourceUpdatedField')
         })
         it('shows the resource update date', () => {

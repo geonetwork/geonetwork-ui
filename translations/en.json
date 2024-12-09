@@ -234,6 +234,7 @@
   "editor.record.form.field.otherConstraints": "Other constraint",
   "editor.record.form.field.overviews": "Overviews",
   "editor.record.form.field.recordUpdated": "Record Updated",
+  "editor.record.form.field.resourceCreated": "Resource Created",
   "editor.record.form.field.resourceIdentifier": "Identifier",
   "editor.record.form.field.resourceUpdated": "Resource Updated",
   "editor.record.form.field.securityConstraints": "Security constraint",

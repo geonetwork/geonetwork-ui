@@ -1,6 +1,6 @@
 export * from './form-field-keywords/form-field-keywords.component'
 export * from './form-field-license/form-field-license.component'
-export * from './form-field-date-updated/form-field-date-updated.component'
+export * from './form-field-date/form-field-date.component'
 export * from './form-field-temporal-extents/form-field-temporal-extents.component'
 export * from './form-field-simple/form-field-simple.component'
 export * from './form-field-file/form-field-file.component'

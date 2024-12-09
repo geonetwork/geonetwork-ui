@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { MockBuilder } from 'ng-mocks'
 import { FormFieldLicenseComponent } from './form-field-license/form-field-license.component'
 import { FormFieldOverviewsComponent } from './form-field-overviews/form-field-overviews.component'
-import { FormFieldDateUpdatedComponent } from './form-field-date-updated/form-field-date-updated.component'
+import { FormFieldDateComponent } from './form-field-date/form-field-date.component'
 import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent/form-field-spatial-extent.component'
 import { FormFieldTemporalExtentsComponent } from './form-field-temporal-extents/form-field-temporal-extents.component'
@@ -63,13 +63,26 @@ describe('FormFieldComponent', () => {
       expect(formField).toBeTruthy()
     })
   })
+  describe('resource created field', () => {
+    let formField
+    beforeEach(() => {
+      component.model = 'resourceCreated'
+      fixture.detectChanges()
+      formField = fixture.debugElement.query(
+        By.directive(FormFieldDateComponent)
+      ).componentInstance
+    })
+    it('creates a resource created form field', () => {
+      expect(formField).toBeTruthy()
+    })
+  })
   describe('resource updated field', () => {
     let formField
     beforeEach(() => {
       component.model = 'resourceUpdated'
       fixture.detectChanges()
       formField = fixture.debugElement.query(
-        By.directive(FormFieldDateUpdatedComponent)
+        By.directive(FormFieldDateComponent)
       ).componentInstance
     })
     it('creates a resource updated form field', () => {

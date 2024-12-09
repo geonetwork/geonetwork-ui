@@ -73,11 +73,17 @@
         (valueChange)="valueChange.emit($event)"
       ></gn-ui-form-field-simple>
     </ng-container>
-    <ng-container *ngSwitchCase="'resourceUpdated'">
-      <gn-ui-form-field-date-updated
+    <ng-container *ngSwitchCase="'resourceCreated'">
+      <gn-ui-form-field-date
         [value]="valueAsDate"
         (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-date-updated>
+      ></gn-ui-form-field-date>
+    </ng-container>
+    <ng-container *ngSwitchCase="'resourceUpdated'">
+      <gn-ui-form-field-date
+        [value]="valueAsDate"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-date>
     </ng-container>
     <ng-container *ngSwitchCase="'updateFrequency'">
       <gn-ui-form-field-update-frequency
