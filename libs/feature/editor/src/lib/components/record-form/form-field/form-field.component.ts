@@ -26,7 +26,7 @@ import { EditableLabelDirective } from '@geonetwork-ui/ui/inputs'
 import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
 import { TranslateModule } from '@ngx-translate/core'
 import {
-  FormFieldDateUpdatedComponent,
+  FormFieldDateComponent,
   FormFieldLicenseComponent,
   FormFieldTemporalExtentsComponent,
 } from '.'
@@ -66,7 +66,7 @@ import { TextFieldModule } from '@angular/cdk/text-field'
     MatTooltipModule,
     FormFieldWrapperComponent,
     FormFieldLicenseComponent,
-    FormFieldDateUpdatedComponent,
+    FormFieldDateComponent,
     FormFieldUpdateFrequencyComponent,
     FormFieldTemporalExtentsComponent,
     FormFieldSimpleComponent,

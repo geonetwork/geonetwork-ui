@@ -255,7 +255,7 @@ describe('editor form', () => {
       describe('resource created', () => {
         beforeEach(() => {
           cy.get('@aboutSection')
-            .find('gn-ui-form-field-date-updated')
+            .find('gn-ui-form-field-date')
             .eq(0)
             .as('resourceCreatedField')
         })
@@ -281,7 +281,7 @@ describe('editor form', () => {
       describe('resource updated', () => {
         beforeEach(() => {
           cy.get('@aboutSection')
-            .find('gn-ui-form-field-date-updated')
+            .find('gn-ui-form-field-date')
             .eq(1)
             .as('resourceUpdatedField')
         })
