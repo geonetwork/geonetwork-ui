@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core'
+import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { TranslateModule } from '@ngx-translate/core'
@@ -14,32 +9,12 @@ import {
   datasetRecordsFixture,
   someOrganizationsFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common'
-import {
-  ButtonComponent,
-  PreviousNextButtonsComponent,
-} from '@geonetwork-ui/ui/inputs'
-import {
-  BlockListComponent,
-  CarouselComponent,
-  MaxLinesComponent,
-} from '@geonetwork-ui/ui/layout'
-import { LetDirective } from '@ngrx/component'
-import { LinkCardComponent, UiElementsModule } from '@geonetwork-ui/ui/elements'
-import { UiSearchModule } from '@geonetwork-ui/ui/search'
-import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
-import { RouterLink } from '@angular/router'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { RouterTestingModule } from '@angular/router/testing'
 import { By } from '@angular/platform-browser'
 import { ROUTER_ROUTE_SEARCH } from '@geonetwork-ui/feature/router'
 
 let getHTMLElement: (dataTest: string) => HTMLElement | undefined
-
-const changeDetectorRefMock: Partial<ChangeDetectorRef> = {
-  markForCheck: jest.fn(),
-}
 
 class OrganisationsServiceMock {
   getFiltersForOrgs = jest.fn((orgs) =>
@@ -58,7 +33,7 @@ const manyDatasets = datasetRecordsFixture().concat(datasetRecordsFixture()[0])
 
 const organizationIsLoading = new BehaviorSubject(false)
 const totalPages = new BehaviorSubject(10)
-const currentPage = new BehaviorSubject(0)
+const currentPage = new BehaviorSubject(1)
 const results = new BehaviorSubject(manyDatasets)
 
 const desiredPageSize = 3
@@ -72,11 +47,9 @@ class SearchFacadeMock {
   results$ = results.asObservable()
   isLoading$ = organizationIsLoading.asObservable()
   totalPages$ = totalPages.asObservable()
-  isBeginningOfResults$ = of(currentPage.getValue() === 1)
-  isEndOfResults$ = of(totalPages.getValue() === currentPage.getValue())
   currentPage$ = currentPage.asObservable()
-  paginate = jest.fn(() => {
-    currentPage.next(currentPage.getValue() + 1)
+  paginate = jest.fn((newPage) => {
+    currentPage.next(newPage)
     return new SearchFacadeMock()
   })
 }
@@ -89,25 +62,8 @@ describe('OrganizationDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [],
-      schemas: [NO_ERRORS_SCHEMA],
       imports: [
-        AsyncPipe,
-        NgIf,
-        ButtonComponent,
-        TranslateModule,
-        CarouselComponent,
-        BlockListComponent,
-        LetDirective,
-        LinkCardComponent,
-        NgForOf,
-        PreviousNextButtonsComponent,
-        UiElementsModule,
-        UiSearchModule,
-        MaxLinesComponent,
-        UiDatavizModule,
-        RouterLink,
-        UiWidgetsModule,
+        OrganizationDetailsComponent,
         TranslateModule.forRoot(),
         RouterTestingModule,
       ],
@@ -119,10 +75,6 @@ describe('OrganizationDetailsComponent', () => {
         {
           provide: SearchFacade,
           useClass: SearchFacadeMock,
-        },
-        {
-          provide: ChangeDetectorRef,
-          useValue: changeDetectorRefMock,
         },
       ],
     })

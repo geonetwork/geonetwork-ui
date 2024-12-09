@@ -9,12 +9,7 @@
     [recordUrlGetter]="recordUrlGetter"
     (mdSelect)="onMetadataSelection($event)"
   ></gn-ui-results-list>
-  <ng-container
-    *ngIf="
-      (facade.isLoading$ | async) === false &&
-      (facade.isEndOfResults$ | async) === false
-    "
-  >
+  <ng-container *ngIf="allowShowMore$ | async">
     <div class="show-more h-[100px] pt-[30px]" *ngIf="showMore === 'button'">
       <gn-ui-button
         data-cy="addMoreBtn"

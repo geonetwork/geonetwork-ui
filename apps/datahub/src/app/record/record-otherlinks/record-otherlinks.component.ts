@@ -6,8 +6,12 @@ import {
   ViewChild,
 } from '@angular/core'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { BlockListComponent, CarouselComponent } from '@geonetwork-ui/ui/layout'
-import { PreviousNextButtonsComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  BlockListComponent,
+  CarouselComponent,
+  Paginable,
+  PreviousNextButtonsComponent,
+} from '@geonetwork-ui/ui/layout'
 import { CommonModule } from '@angular/common'
 import { LinkCardComponent } from '@geonetwork-ui/ui/elements'
 import { LetDirective } from '@ngrx/component'
@@ -34,33 +38,14 @@ export class RecordOtherlinksComponent implements AfterViewInit {
 
   @ViewChild(CarouselComponent) carousel: CarouselComponent
   @ViewChild(BlockListComponent) list: BlockListComponent
+  get paginableElement(): Paginable {
+    return this.carousel || this.list
+  }
 
   constructor(
     public facade: MdViewFacade,
     private changeDetector: ChangeDetectorRef
   ) {}
-
-  get isFirstStepOrPage() {
-    return this.carousel?.isFirstStep ?? this.list?.isFirstPage ?? true
-  }
-
-  get isLastStepOrPage() {
-    return this.carousel?.isLastStep ?? this.list?.isLastPage ?? false
-  }
-
-  get hasPagination() {
-    return (this.carousel?.stepsCount || this.list?.pagesCount) > 1
-  }
-
-  changeStepOrPage(direction: string) {
-    if (direction === 'next') {
-      this.list?.nextPage()
-      this.carousel?.slideToNext()
-    } else {
-      this.carousel?.slideToPrevious()
-      this.list?.previousPage()
-    }
-  }
 
   updateView() {
     this.changeDetector.detectChanges()

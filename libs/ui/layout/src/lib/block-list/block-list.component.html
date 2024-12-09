@@ -6,15 +6,7 @@
 >
   <ng-content></ng-content>
 </div>
-<div
-  *ngIf="pagesCount > 1"
-  class="absolute flex flex-row justify-center gap-[14px] p-1"
-  [ngClass]="paginationContainerClass"
->
-  <button
-    *ngFor="let page of pages"
-    class="list-page-dot"
-    (click)="goToPage(page)"
-    [ngClass]="currentPage === page ? 'bg-primary' : 'bg-gray-400'"
-  ></button>
-</div>
+<gn-ui-pagination-dots
+  [containerClass]="'absolute ' + paginationContainerClass"
+  [listComponent]="this"
+></gn-ui-pagination-dots>

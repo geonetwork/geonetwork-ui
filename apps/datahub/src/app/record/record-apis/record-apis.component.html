@@ -6,13 +6,15 @@
     record.metadata.api
   </p>
   <gn-ui-previous-next-buttons
-    *ngIf="hasPagination"
-    [isFirst]="isFirstStep"
-    [isLast]="isLastStep"
-    (directionButtonClicked)="changeStepOrPage($event)"
+    *ngIf="carousel.pagesCount > 1"
+    [listComponent]="carousel"
   ></gn-ui-previous-next-buttons>
 </div>
-<gn-ui-carousel (currentStepChange)="updateView()" containerClass="gap-4 py-10">
+<gn-ui-carousel
+  (currentStepChange)="updateView()"
+  containerClass="gap-4 py-10"
+  #carousel
+>
   <gn-ui-api-card
     *ngFor="let link of apiLinks$ | async"
     [title]="link.name"

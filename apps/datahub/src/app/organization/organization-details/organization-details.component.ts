@@ -4,28 +4,23 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  ViewChild,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import {
   CatalogRecord,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import {
-  ButtonComponent,
-  PreviousNextButtonsComponent,
-} from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import {
-  BlockListComponent,
-  CarouselComponent,
   MaxLinesComponent,
+  Paginable,
+  PaginationDotsComponent,
+  PreviousNextButtonsComponent,
 } from '@geonetwork-ui/ui/layout'
 import { LetDirective } from '@ngrx/component'
 import {
   ErrorComponent,
   ErrorType,
-  LinkCardComponent,
   RelatedRecordCardComponent,
   UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
@@ -57,12 +52,8 @@ import { startWith } from 'rxjs/operators'
   standalone: true,
   imports: [
     CommonModule,
-    ButtonComponent,
     TranslateModule,
-    CarouselComponent,
-    BlockListComponent,
     LetDirective,
-    LinkCardComponent,
     PreviousNextButtonsComponent,
     UiElementsModule,
     UiSearchModule,
@@ -73,32 +64,24 @@ import { startWith } from 'rxjs/operators'
     ErrorComponent,
     SpinningLoaderComponent,
     RelatedRecordCardComponent,
+    PaginationDotsComponent,
   ],
 })
-export class OrganizationDetailsComponent implements OnInit, OnDestroy {
+export class OrganizationDetailsComponent
+  implements OnInit, OnDestroy, Paginable
+{
   protected readonly ErrorType = ErrorType
   protected readonly ROUTER_ROUTE_SEARCH = ROUTER_ROUTE_SEARCH
-
-  protected get pages() {
-    return new Array(this.totalPages).fill(0).map((_, i) => i + 1)
-  }
 
   subscriptions$: Subscription = new Subscription()
 
   isSearchFacadeLoading = true
-
-  totalPages = 0
-  currentPage = 1
-  isFirstPage = this.currentPage === 1
-  isLastPage = false
 
   currentOrganization$ = new BehaviorSubject<Organization>(null)
   @Input() set organization(value: Organization) {
     this.currentOrganization$.next(value)
   }
   @Input() paginationContainerClass = 'w-full bottom-0 top-auto'
-
-  @ViewChild(BlockListComponent) list: BlockListComponent
 
   lastPublishedDatasets$: Observable<CatalogRecord[]> =
     this.currentOrganization$.pipe(
@@ -129,17 +112,31 @@ export class OrganizationDetailsComponent implements OnInit, OnDestroy {
   }
 
   get hasPagination() {
-    return this.totalPages > 1
+    return this.pagesCount > 1
   }
 
-  changeStepOrPage(direction: string) {
-    if (direction === 'next') {
-      this.searchFacade.paginate(this.currentPage + 1)
-    } else {
-      this.searchFacade.paginate(this.currentPage - 1)
-    }
-  }
+  pagesCount_ = 0
+  currentPage_ = 1
 
+  // Paginable API
+  get currentPage() {
+    return this.currentPage_
+  }
+  get pagesCount() {
+    return this.pagesCount_
+  }
+  get isFirstPage() {
+    return this.currentPage === 1
+  }
+  get isLastPage() {
+    return this.currentPage === this.pagesCount
+  }
+  goToPrevPage() {
+    this.searchFacade.paginate(this.currentPage - 1)
+  }
+  goToNextPage() {
+    this.searchFacade.paginate(this.currentPage + 1)
+  }
   goToPage(page: number) {
     this.searchFacade.paginate(page)
   }
@@ -149,24 +146,12 @@ export class OrganizationDetailsComponent implements OnInit, OnDestroy {
       combineLatest([
         this.searchFacade.isLoading$.pipe(distinctUntilChanged()),
         this.searchFacade.totalPages$.pipe(distinctUntilChanged()),
-        this.searchFacade.isBeginningOfResults$.pipe(distinctUntilChanged()),
-        this.searchFacade.isEndOfResults$.pipe(distinctUntilChanged()),
         this.searchFacade.currentPage$.pipe(distinctUntilChanged()),
-      ]).subscribe(
-        ([
-          isSearchFacadeLoading,
-          totalPages,
-          isBeginningOfResults,
-          isEndOfResults,
-          currentPage,
-        ]) => {
-          this.isSearchFacadeLoading = isSearchFacadeLoading
-          this.totalPages = totalPages
-          this.isFirstPage = isBeginningOfResults
-          this.isLastPage = isEndOfResults
-          this.currentPage = currentPage
-        }
-      )
+      ]).subscribe(([isSearchFacadeLoading, totalPages, currentPage]) => {
+        this.isSearchFacadeLoading = isSearchFacadeLoading
+        this.pagesCount_ = totalPages
+        this.currentPage_ = currentPage
+      })
     )
   }
 

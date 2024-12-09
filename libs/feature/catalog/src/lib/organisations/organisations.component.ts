@@ -14,16 +14,14 @@ import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/orga
 import { SortByField } from '@geonetwork-ui/common/domain/model/search'
 import { createFuzzyFilter } from '@geonetwork-ui/util/shared'
 import { ORGANIZATION_PAGE_URL_TOKEN } from '../organization-url.token'
-import {
-  ContentGhostComponent,
-  PaginationComponent,
-} from '@geonetwork-ui/ui/elements'
+import { ContentGhostComponent } from '@geonetwork-ui/ui/elements'
 import { CommonModule } from '@angular/common'
 import {
   OrganisationPreviewComponent,
   OrganisationsFilterComponent,
   OrganisationsResultComponent,
 } from '@geonetwork-ui/ui/catalog'
+import { Paginable, PaginationComponent } from '@geonetwork-ui/ui/layout'
 
 @Component({
   selector: 'gn-ui-organisations',
@@ -40,7 +38,7 @@ import {
     PaginationComponent,
   ],
 })
-export class OrganisationsComponent {
+export class OrganisationsComponent implements Paginable {
   @Input() itemsOnPage = 12
   @Output() orgSelect = new EventEmitter<Organization>()
 
@@ -89,10 +87,6 @@ export class OrganisationsComponent {
     )
   )
 
-  protected setCurrentPage(page: number): void {
-    this.currentPage$.next(page)
-  }
-
   protected setFilterBy(value: string): void {
     this.currentPage$.next(1)
     this.filterBy$.next(value)
@@ -139,5 +133,28 @@ export class OrganisationsComponent {
   getOrganisationUrl(organisation: Organization): string {
     if (!this.urlTemplate) return null
     return this.urlTemplate.replace('${name}', organisation.name)
+  }
+
+  // Paginable API
+  get isFirstPage() {
+    return this.currentPage === 1
+  }
+  get isLastPage() {
+    return this.currentPage === this.totalPages
+  }
+  get pagesCount() {
+    return this.totalPages
+  }
+  get currentPage() {
+    return this.currentPage$.value
+  }
+  goToPage(index: number) {
+    this.currentPage$.next(index)
+  }
+  goToNextPage() {
+    this.goToPage(this.currentPage + 1)
+  }
+  goToPrevPage() {
+    this.goToPage(this.currentPage - 1)
   }
 }

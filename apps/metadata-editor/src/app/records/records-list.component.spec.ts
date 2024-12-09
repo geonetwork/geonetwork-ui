@@ -10,7 +10,7 @@ import { Router } from '@angular/router'
 import { BehaviorSubject } from 'rxjs'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { MockBuilder } from 'ng-mocks'
-import { PaginationButtonsComponent } from '@geonetwork-ui/ui/elements'
+import { PaginationButtonsComponent } from '@geonetwork-ui/ui/layout'
 
 const results = [{ md: true }]
 const currentPage = 5
@@ -97,8 +97,7 @@ describe('RecordsListComponent', () => {
     })
     it('displays pagination', () => {
       expect(pagination).toBeTruthy()
-      expect(pagination.currentPage).toEqual(currentPage)
-      expect(pagination.totalPages).toEqual(totalPages)
+      expect(pagination.listComponent).toBe(component)
     })
     describe('when click on a record', () => {
       const uniqueIdentifier = 123
@@ -128,7 +127,7 @@ describe('RecordsListComponent', () => {
     })
     describe('when click on pagination', () => {
       beforeEach(() => {
-        pagination.newCurrentPageEvent.emit(3)
+        component.goToPage(3)
       })
       it('paginates', () => {
         expect(searchService.setPage).toHaveBeenCalledWith(3)

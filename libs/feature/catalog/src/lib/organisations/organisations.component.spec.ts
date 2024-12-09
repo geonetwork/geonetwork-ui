@@ -15,7 +15,6 @@ import {
   OrganisationsFilterComponent,
   OrganisationsResultComponent,
 } from '@geonetwork-ui/ui/catalog'
-import { PaginationComponent } from '@geonetwork-ui/ui/elements'
 
 class OrganisationsServiceMock {
   organisations$ = of(someOrganizationsFixture())
@@ -67,12 +66,7 @@ describe('OrganisationsComponent', () => {
   describe('on component init', () => {
     let orgPreviewComponents: OrganisationPreviewComponent[]
     let orgResultComponent: OrganisationsResultComponent
-    let paginationComponentDE: DebugElement
-    let setCurrentPageSpy
     let setSortBySpy
-    beforeEach(() => {
-      paginationComponentDE = de.query(By.directive(PaginationComponent))
-    })
     describe('pass organisations to ui preview components', () => {
       beforeEach(() => {
         orgPreviewComponents = de
@@ -88,17 +82,16 @@ describe('OrganisationsComponent', () => {
     })
     describe('pass params to ui pagination component', () => {
       it('should init ui pagination component with currentPage = 1', () => {
-        expect(paginationComponentDE.componentInstance.currentPage).toEqual(1)
+        expect(component.currentPage).toEqual(1)
       })
       it('should init ui pagination component with correct value for total nPages', () => {
-        expect(paginationComponentDE.componentInstance.nPages).toEqual(
+        expect(component.pagesCount).toEqual(
           Math.ceil(someOrganizationsFixture().length / ITEMS_ON_PAGE)
         )
       })
-      describe('navigate to second page (and trigger newCurrentPageEvent output)', () => {
+      describe('navigate to second page', () => {
         beforeEach(() => {
-          setCurrentPageSpy = jest.spyOn(component, 'setCurrentPage')
-          paginationComponentDE.triggerEventHandler('newCurrentPageEvent', 2)
+          component.goToPage(2)
           fixture.detectChanges()
           orgPreviewComponents = de
             .queryAll(By.directive(OrganisationPreviewComponent))
@@ -107,11 +100,8 @@ describe('OrganisationsComponent', () => {
         afterEach(() => {
           jest.restoreAllMocks()
         })
-        it('should call setcurrentPage() with correct value', () => {
-          expect(setCurrentPageSpy).toHaveBeenCalledWith(2)
-        })
         it('should set currentPage in ui component to correct value', () => {
-          expect(paginationComponentDE.componentInstance.currentPage).toEqual(2)
+          expect(component.currentPage).toEqual(2)
         })
         it('should pass first organisation of second page (sorted by name-asc) to first ui preview component', () => {
           expect(orgPreviewComponents[0].organization.name).toEqual(
@@ -127,12 +117,12 @@ describe('OrganisationsComponent', () => {
         it('should not change currentPage when sorting results', () => {
           component['setSortBy'](['desc', 'recordCount'])
           fixture.detectChanges()
-          expect(paginationComponentDE.componentInstance.currentPage).toEqual(2)
+          expect(component.currentPage).toEqual(2)
         })
         it('should set currentPage to 1 when filtering to display results', () => {
           component['setFilterBy']('Data')
           fixture.detectChanges()
-          expect(paginationComponentDE.componentInstance.currentPage).toEqual(1)
+          expect(component.currentPage).toEqual(1)
         })
       })
     })

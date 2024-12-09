@@ -10,6 +10,8 @@ import {
   ViewChild,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { Paginable } from '../paginable.interface'
+import { PaginationDotsComponent } from '../pagination-dots/pagination-dots.component'
 
 @Component({
   selector: 'gn-ui-block-list',
@@ -17,9 +19,9 @@ import { CommonModule } from '@angular/common'
   styleUrls: ['./block-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PaginationDotsComponent],
 })
-export class BlockListComponent implements AfterViewInit {
+export class BlockListComponent implements AfterViewInit, Paginable {
   @Input() pageSize = 5
   @Input() containerClass = ''
   @Input() paginationContainerClass = 'w-full bottom-0 top-auto'
@@ -30,19 +32,22 @@ export class BlockListComponent implements AfterViewInit {
 
   protected minHeight = 0
 
-  protected currentPage = 0
+  protected currentPage_ = 0
   protected get pages() {
     return new Array(this.pagesCount).fill(0).map((_, i) => i)
   }
 
   get isFirstPage() {
-    return this.currentPage === 0
+    return this.currentPage_ === 0
   }
   get isLastPage() {
-    return this.currentPage === this.pagesCount - 1
+    return this.currentPage_ === this.pagesCount - 1
   }
   get pagesCount() {
     return this.blocks ? Math.ceil(this.blocks.length / this.pageSize) : 1
+  }
+  get currentPage() {
+    return this.currentPage_ + 1 // this is 1-based
   }
 
   constructor(private changeDetector: ChangeDetectorRef) {}
@@ -59,25 +64,29 @@ export class BlockListComponent implements AfterViewInit {
   protected refreshBlocksVisibility = () => {
     this.blocks.forEach((block, index) => {
       block.nativeElement.style.display =
-        index >= this.currentPage * this.pageSize &&
-        index < (this.currentPage + 1) * this.pageSize
+        index >= this.currentPage_ * this.pageSize &&
+        index < (this.currentPage_ + 1) * this.pageSize
           ? null
           : 'none'
     })
   }
 
-  public goToPage(index: number) {
-    this.currentPage = Math.max(Math.min(index, this.pagesCount - 1), 0)
+  // pageIndex is 1-based
+  public goToPage(pageIndex: number) {
+    this.currentPage_ = Math.max(
+      Math.min(pageIndex - 1, this.pagesCount - 1),
+      0
+    )
     this.changeDetector.detectChanges()
     this.refreshBlocksVisibility()
   }
 
-  public previousPage() {
+  public goToPrevPage() {
     if (this.isFirstPage) return
     this.goToPage(this.currentPage - 1)
   }
 
-  public nextPage() {
+  public goToNextPage() {
     if (this.isLastPage) return
     this.goToPage(this.currentPage + 1)
   }

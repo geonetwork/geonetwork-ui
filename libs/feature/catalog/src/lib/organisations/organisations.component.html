@@ -26,9 +26,5 @@
   </gn-ui-content-ghost>
 </div>
 <div class="py-20">
-  <gn-ui-pagination
-    [currentPage]="currentPage$ | async"
-    [nPages]="totalPages"
-    (newCurrentPageEvent)="setCurrentPage($event)"
-  ></gn-ui-pagination>
+  <gn-ui-pagination [listComponent]="this"></gn-ui-pagination>
 </div>

@@ -6,10 +6,8 @@
     record.metadata.links
   </p>
   <gn-ui-previous-next-buttons
-    *ngIf="hasPagination"
-    [isFirst]="isFirstStepOrPage"
-    [isLast]="isLastStepOrPage"
-    (directionButtonClicked)="changeStepOrPage($event)"
+    *ngIf="paginableElement?.pagesCount > 1"
+    [listComponent]="paginableElement"
   ></gn-ui-previous-next-buttons>
 </div>
 <ng-container *ngrxLet="otherLinks$ as otherLinks">

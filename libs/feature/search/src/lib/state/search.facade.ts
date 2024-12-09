@@ -38,8 +38,6 @@ import {
   getSearchResultsLoading,
   getSearchSortBy,
   getSpatialFilterEnabled,
-  isBeginningOfResults,
-  isEndOfResults,
   totalPages,
 } from './selectors'
 import { FILTER_GEOMETRY } from '../filter-geometry.token'
@@ -60,8 +58,6 @@ export class SearchFacade {
   layout$: Observable<string>
   sortBy$: Observable<SortByField>
   isLoading$: Observable<boolean>
-  isBeginningOfResults$: Observable<boolean>
-  isEndOfResults$: Observable<boolean>
   totalPages$: Observable<number>
   currentPage$: Observable<number>
   pageSize$: Observable<number>
@@ -101,10 +97,6 @@ export class SearchFacade {
     this.isLoading$ = this.store.pipe(select(getSearchResultsLoading, searchId))
     this.searchFilters$ = this.store.pipe(select(getSearchFilters, searchId))
     this.resultsHits$ = this.store.pipe(select(getSearchResultsHits, searchId))
-    this.isBeginningOfResults$ = this.store.pipe(
-      select(isBeginningOfResults, searchId)
-    )
-    this.isEndOfResults$ = this.store.pipe(select(isEndOfResults, searchId))
     this.totalPages$ = this.store.pipe(select(totalPages, searchId))
     this.currentPage$ = this.store.pipe(select(currentPage, searchId))
     this.pageSize$ = this.store.pipe(select(getPageSize, searchId))
