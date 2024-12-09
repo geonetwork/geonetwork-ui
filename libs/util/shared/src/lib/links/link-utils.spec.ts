@@ -202,11 +202,11 @@ describe('link utils', () => {
   })
 
   describe('#getBadgeColor for format', () => {
-    it('returns #1e5180', () => {
-      expect(getBadgeColor('json')).toEqual('#1e5180')
+    it('returns #b3cde8', () => {
+      expect(getBadgeColor('json')).toEqual('#b3cde8')
     })
-    it('returns #559d7f', () => {
-      expect(getBadgeColor('csv')).toEqual('#559d7f')
+    it('returns #a6d6c0', () => {
+      expect(getBadgeColor('csv')).toEqual('#a6d6c0')
     })
   })
   describe('#sortPriority from formats object', () => {

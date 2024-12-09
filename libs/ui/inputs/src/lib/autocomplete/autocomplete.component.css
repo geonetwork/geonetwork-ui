@@ -1,28 +1,28 @@
-:host {
-  --input-height: 3.5em;
+span {
+  --icon-padding: var(--gn-ui-text-input-border-size, 2px);
+  --icon-width: calc(var(--gn-ui-text-input-padding, 0.6em) * 2 + 1.25em);
 }
-.clear-btn {
-  width: var(--input-height);
-  height: 100%;
+/* this is because we don't want to change the popup alert font size */
+span > *:not(gn-ui-popup-alert) {
+  font-size: var(--gn-ui-text-input-font-size, 1em);
 }
-.search-btn {
-  width: var(--input-height);
-  height: 100%;
-  border-left-width: 0.1em;
-}
-mat-icon {
-  width: 100%;
-  height: 100%;
-  padding: 0.65em;
-  font-size: 1.5em;
-}
-input {
-  height: var(--input-height);
-  padding: 1.05em;
-  padding-right: calc(2 * var(--input-height));
-}
+
 input:placeholder-shown {
   text-overflow: ellipsis;
+}
+gn-ui-button {
+  --gn-ui-button-rounded: 0;
+  --gn-ui-button-width: var(--icon-width);
+  --gn-ui-button-padding: 0;
+  font-size: 1em;
+}
+ng-icon.search {
+  margin-top: 0.6rem;
+  margin-left: 0.6rem;
+}
+gn-ui-button:last-of-type {
+  --gn-ui-button-rounded: 0 var(--gn-ui-text-input-rounded, 0.25em)
+    var(--gn-ui-text-input-rounded, 0.25em) 0;
 }
 
 .mat-mdc-option.suggestion.mat-mdc-option-active {

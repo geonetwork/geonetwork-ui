@@ -26,14 +26,14 @@ beforeEach(() => {
   )
   cy.intercept(
     'GET',
-    '/geoserver/insee/ows?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=application%2Fjson*',
+    '/geoserver/insee/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=application%2Fjson*',
     {
       fixture: 'insee-rectangles_200m_menage_erbm.json',
     }
   )
   cy.intercept(
     'GET',
-    '/geoserver/insee/ows?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=csv',
+    '/geoserver/insee/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=csv',
     {
       fixture: 'insee-rectangles_200m_menage_erbm.csv',
     }
@@ -332,7 +332,9 @@ describe('dataset pages', () => {
           .should('have.length.gt', 1)
       })
       it('should display the map', () => {
-        cy.get('@previewSection').find('gn-ui-map').should('be.visible')
+        cy.get('@previewSection')
+          .find('gn-ui-map-container')
+          .should('be.visible')
       })
       it('should display the table', () => {
         cy.get('@previewSection')
@@ -487,7 +489,7 @@ describe('dataset pages', () => {
             .find('gn-ui-download-item')
             .first()
             .click()
-          cy.readFile(path.join('cypress/downloads', 'ows.csv')).as(
+          cy.readFile(path.join('cypress/downloads', 'wfs.csv')).as(
             'downloadedFile'
           )
           cy.get('@downloadedFile').should('exist')
@@ -648,9 +650,10 @@ describe('api cards', () => {
   it('should display the open panel button', () => {
     cy.get('@firstCard')
       .find('button')
-      .children('mat-icon')
+      .children('ng-icon')
       .eq(1)
-      .should('have.text', 'more_horiz')
+      .invoke('attr', 'name')
+      .should('equal', 'matMoreHoriz')
   })
   it('should open and close the panel on click on open panel button', () => {
     cy.get('@firstCard').find('button').eq(1).click()

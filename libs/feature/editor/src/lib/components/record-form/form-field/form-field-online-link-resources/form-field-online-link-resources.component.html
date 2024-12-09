@@ -5,6 +5,7 @@
   [uploadProgress]="uploadProgress"
   (urlChange)="handleUrlChange($event)"
 ></gn-ui-file-input>
+<div class="h-[8px]"></div>
 <gn-ui-sortable-list
   [items]="linkResources"
   (itemsOrderChange)="handleResourcesChange($event)"
@@ -19,15 +20,25 @@
 </ng-template>
 
 <ng-template #dialogTemplate let-onlineResource>
-  <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
-    editor.record.form.field.onlineResource.edit.title
-  </h3>
-  <gn-ui-text-input
-    extraClass="mb-[16px]"
-    [(value)]="onlineResource.name"
-  ></gn-ui-text-input>
-  <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
-    editor.record.form.field.onlineResource.edit.description
-  </h3>
-  <gn-ui-text-area [(value)]="onlineResource.description"></gn-ui-text-area>
+  <div class="flex flex-col gap-[16px]">
+    <div>
+      <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
+        editor.record.form.field.onlineResource.edit.title
+      </h3>
+      <gn-ui-text-input [(value)]="onlineResource.name"></gn-ui-text-input>
+    </div>
+    <div>
+      <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
+        editor.record.form.field.onlineResource.edit.description
+      </h3>
+      <gn-ui-text-area [(value)]="onlineResource.description"></gn-ui-text-area>
+    </div>
+    <span class="w-full border-b border-gray-300"></span>
+    <gn-ui-url-input
+      class="w-full"
+      [disabled]="true"
+      [value]="onlineResource.url"
+      [showUploadButton]="false"
+    ></gn-ui-url-input>
+  </div>
 </ng-template>

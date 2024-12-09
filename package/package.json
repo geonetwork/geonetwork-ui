@@ -1,6 +1,6 @@
 {
   "name": "geonetwork-ui",
-  "version": "2.4.0-dev",
+  "version": "2.4.0-alpha.2",
   "engines": {
     "node": ">=14.17.0"
   },
@@ -38,8 +38,10 @@
   },
   "dependencies": {
     "@biesbjerg/ngx-translate-extract-marker": "^1.0.0",
-    "@camptocamp/ogc-client": "1.1.1-dev.ad6d9ab",
-    "@geospatial-sdk/geocoding": "^0.0.5-alpha.2",
+    "@camptocamp/ogc-client": "1.1.1-dev.c75dcba",
+    "@geospatial-sdk/core": "^0.0.5-dev.20",
+    "@geospatial-sdk/geocoding": "^0.0.5-dev.20",
+    "@geospatial-sdk/openlayers": "^0.0.5-dev.20",
     "@ltd/j-toml": "~1.35.2",
     "@messageformat/core": "^3.0.1",
     "@nx/angular": "16.6.0",

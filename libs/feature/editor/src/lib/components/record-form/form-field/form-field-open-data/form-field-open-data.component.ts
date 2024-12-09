@@ -9,7 +9,7 @@ import {
 import { Constraint } from '@geonetwork-ui/common/domain/model/record'
 import { CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
-import { OPEN_DATA_LICENSES } from './../../../../fields.config'
+import { OPEN_DATA_LICENSE } from './../../../../fields.config'
 
 @Component({
   selector: 'gn-ui-form-field-open-data',
@@ -24,25 +24,28 @@ export class FormFieldOpenDataComponent implements OnChanges {
   @Output() valueChange = new EventEmitter<Array<Constraint>>()
   @Output() openDataChange = new EventEmitter<boolean>()
 
-  openData = false
-
-  get config() {
-    return OPEN_DATA_LICENSES
+  get isOpenDataLicense(): boolean {
+    return !!this.value.find(
+      (constraint) => constraint.text === OPEN_DATA_LICENSE
+    )
   }
 
   ngOnChanges() {
-    if (this.value && this.value.length > 0) {
-      this.openData = this.config.includes(this.value[0].text)
-    } else {
-      this.openData = false
-    }
-    this.openDataChange.emit(this.openData)
+    this.openDataChange.emit(this.isOpenDataLicense)
   }
 
   onOpenDataToggled(openData: boolean) {
     this.openDataChange.emit(openData)
     if (openData) {
-      this.valueChange.emit([{ text: this.config[0] }])
+      this.valueChange.emit([
+        {
+          text: OPEN_DATA_LICENSE,
+        },
+      ])
+    } else {
+      this.valueChange.emit(
+        this.value.filter((constraint) => constraint.text !== OPEN_DATA_LICENSE)
+      )
     }
   }
 }

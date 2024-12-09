@@ -1,68 +1,16 @@
-<main class="bg-white">
-  <div class="flex gap-8 justify-between">
-    <div class="flex content-start gap-5">
-      <div
-        *ngIf="logo"
-        class="shrink-0 bg-gray-100 rounded-lg overflow-hidden border border-gray-300 h-20 w-20"
-      >
-        <gn-ui-thumbnail
-          class="relative"
-          [thumbnailUrl]="logo"
-          [fit]="'contain'"
-        >
-        </gn-ui-thumbnail>
-      </div>
-      <div class="flex flex-row items-baseline gap-[8px] px-[32px] py-[20px]">
-        <h1 class="text-[16px] text-main font-title font-bold">
-          {{ title }}
-        </h1>
-        <div class="text-[12px]">
-          <md-editor-records-count></md-editor-records-count>
-        </div>
-      </div>
-    </div>
-    <div class="flex flex-col justify-items-start gap-3 items-center">
-      <a
-        *ngIf="linkToDatahub"
-        [href]="linkToDatahub"
-        target="_blank"
-        class="flex justify-center gap-2 items-center hover:text-gray-900 text-gray-800 cursor-pointer"
-        data-cy="link-to-datahub"
-        ><span>{{ searchFacade.resultsHits$ | async }}</span>
-        <span
-          translate
-          [translateParams]="{ count: searchFacade.resultsHits$ | async }"
-          >dashboard.records.publishedRecords</span
-        ></a
-      >
-      <gn-ui-button
-        type="light"
-        *ngIf="userCount > 0"
-        (buttonClick)="showUsers()"
-        data-cy="link-to-users"
-      >
-        {{ userCount }}&nbsp;
-        <span translate [translateParams]="{ count: userCount }">
-          dashboard.records.users
-        </span>
-      </gn-ui-button>
-    </div>
+<div
+  class="shadow-md shadow-gray-300 border-[1px] border-gray-200 overflow-hidden rounded bg-white grow mx-[32px] my-[16px] text-sm"
+>
+  <gn-ui-results-table-container
+    (recordClick)="editRecord($event)"
+    (duplicateRecord)="duplicateRecord($event)"
+  ></gn-ui-results-table-container>
+
+  <div class="px-5 py-5 flex justify-center gap-8 items-baseline">
+    <gn-ui-pagination-buttons
+      [currentPage]="searchFacade.currentPage$ | async"
+      [totalPages]="searchFacade.totalPages$ | async"
+      (newCurrentPageEvent)="paginate($event)"
+    ></gn-ui-pagination-buttons>
   </div>
-  <div
-    class="shadow-md shadow-gray-300 border-[1px] border-gray-200 overflow-hidden rounded bg-white grow mx-[32px] my-[16px]"
-  >
-    <gn-ui-results-table-container
-      (recordClick)="editRecord($event)"
-      (duplicateRecord)="duplicateRecord($event)"
-    ></gn-ui-results-table-container>
-    <div class="px-5 py-5 flex justify-center gap-8 items-baseline">
-      <div class="grow">
-        <gn-ui-pagination-buttons
-          [currentPage]="searchFacade.currentPage$ | async"
-          [totalPages]="searchFacade.totalPages$ | async"
-          (newCurrentPageEvent)="paginate($event)"
-        ></gn-ui-pagination-buttons>
-      </div>
-    </div>
-  </div>
-</main>
+</div>

@@ -39,7 +39,7 @@ function filterResults(value: string) {
   })
 }
 
-export const Primary: StoryObj<AutocompleteComponentWithActionResult> = {
+export const SubmitAllowed: StoryObj<AutocompleteComponentWithActionResult> = {
   args: {
     placeholder: 'Full text search',
     minCharacterCount: 3,
@@ -68,6 +68,47 @@ export const Primary: StoryObj<AutocompleteComponentWithActionResult> = {
     },
   }),
 }
+
+export const NoSubmit: StoryObj<AutocompleteComponentWithActionResult> = {
+  args: {
+    placeholder: 'This will only show suggestions, there is no submit button',
+    minCharacterCount: 3,
+    actionThrowsError: false,
+    clearOnSelection: false,
+    allowSubmit: false,
+  },
+  argTypes: {
+    itemSelected: {
+      action: 'itemSelected',
+    },
+    inputSubmitted: {
+      action: 'inputSubmitted',
+    },
+    actionThrowsError: {
+      type: 'boolean',
+    },
+  },
+  render: (args) => ({
+    props: {
+      ...args,
+      action: (value: string) =>
+        args.actionThrowsError
+          ? throwError(() => new Error('Something went terribly wrong!'))
+          : of(filterResults(value)),
+    },
+  }),
+}
+
+export const WithCustomStyle: StoryObj<AutocompleteComponentWithActionResult> =
+  {
+    ...NoSubmit,
+    render: (args) => ({
+      props: args,
+      styles: [
+        ':host { --gn-ui-text-input-rounded: 10px; --gn-ui-text-input-padding: 20px; --gn-ui-text-input-font-size: 18px }',
+      ],
+    }),
+  }
 
 export const NoMinimumCharacterCount: StoryObj<AutocompleteComponentWithActionResult> =
   {

@@ -16,13 +16,15 @@ import { ResultsHitsContainerComponent } from './results-hits-number/results-hit
 import { SearchStateContainerDirective } from './state/container/search-state.container.directive'
 import { AutocompleteComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { NgModule } from '@angular/core'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
-import { FavoriteStarComponent } from './favorites/favorite-star/favorite-star.component'
-import { MatIconModule } from '@angular/material/icon'
+import { ErrorComponent, UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { FilterDropdownComponent } from './filter-dropdown/filter-dropdown.component'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import {
+  SpinningLoaderComponent,
+  UiWidgetsModule,
+} from '@geonetwork-ui/ui/widgets'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { Gn4Repository } from '@geonetwork-ui/api/repository'
+import { FavoriteStarComponent } from './favorites/favorite-star/favorite-star.component'
 
 @NgModule({
   declarations: [
@@ -33,7 +35,6 @@ import { Gn4Repository } from '@geonetwork-ui/api/repository'
     ResultsListContainerComponent,
     ResultsHitsContainerComponent,
     SearchStateContainerDirective,
-    FavoriteStarComponent,
     FilterDropdownComponent,
   ],
   imports: [
@@ -49,9 +50,11 @@ import { Gn4Repository } from '@geonetwork-ui/api/repository'
     UiInputsModule,
     UiElementsModule,
     FacetsModule,
-    MatIconModule,
     UiWidgetsModule,
     AutocompleteComponent,
+    SpinningLoaderComponent,
+    ErrorComponent,
+    FavoriteStarComponent,
   ],
   exports: [
     SortByComponent,
@@ -62,7 +65,6 @@ import { Gn4Repository } from '@geonetwork-ui/api/repository'
     ResultsHitsContainerComponent,
     FacetsModule,
     SearchStateContainerDirective,
-    FavoriteStarComponent,
     FilterDropdownComponent,
   ],
   providers: [

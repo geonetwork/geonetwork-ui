@@ -1,15 +1,24 @@
 import { Component, OnDestroy } from '@angular/core'
-import { catchError, from, Subject, takeUntil } from 'rxjs'
+import { catchError, firstValueFrom, from, Subject, takeUntil } from 'rxjs'
 import { debounceTime, switchMap } from 'rxjs/operators'
-import { MapManagerService } from '../manager/map-manager.service'
-import { fromLonLat } from 'ol/proj'
-import { Polygon } from 'ol/geom'
 import { GeocodingService } from '../geocoding.service'
+import { MapFacade } from '../+state/map.facade'
+import { CommonModule } from '@angular/common'
+import { SearchInputComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { TranslateModule } from '@ngx-translate/core'
+import { MapContextView } from '@geospatial-sdk/core'
 
 @Component({
   selector: 'gn-ui-geocoding',
   templateUrl: './geocoding.component.html',
   styleUrls: ['./geocoding.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    UiInputsModule,
+    TranslateModule,
+    SearchInputComponent,
+  ],
 })
 export class GeocodingComponent implements OnDestroy {
   searchText = ''
@@ -19,7 +28,7 @@ export class GeocodingComponent implements OnDestroy {
   errorMessage: string | null = null
 
   constructor(
-    private mapManager: MapManagerService,
+    private mapFacade: MapFacade,
     private geocodingService: GeocodingService
   ) {
     this.searchTextChanged
@@ -62,32 +71,41 @@ export class GeocodingComponent implements OnDestroy {
     this.errorMessage = null
   }
 
-  zoomToLocation(result: any) {
-    const map = this.mapManager.map
-    const view = map.getView()
+  async zoomToLocation(result: any) {
     const geometry = result.geom
 
     if (geometry.type === 'Point') {
-      this.zoomToPoint(geometry.coordinates, view)
+      await this.zoomToPoint(geometry.coordinates)
     } else if (geometry.type === 'Polygon') {
-      this.zoomToPolygon(geometry.coordinates, view)
+      await this.zoomToPolygon(geometry.coordinates)
     } else {
       console.error(`Unsupported geometry type: ${geometry.type}`)
     }
   }
 
-  zoomToPoint(pointCoords: [number, number], view: any) {
-    const transformedCoords = fromLonLat(pointCoords)
-    view.setCenter(transformedCoords)
-    view.setZoom(12)
+  async zoomToPoint(pointCoords: [number, number]) {
+    const context = await firstValueFrom(this.mapFacade.context$)
+    const view: MapContextView = {
+      center: pointCoords,
+      zoom: 10,
+    }
+    this.mapFacade.applyContext({
+      ...context,
+      view,
+    })
   }
 
-  zoomToPolygon(polygonCoords: [[number, number][]], view: any) {
-    const transformedCoords = polygonCoords[0].map((coord) => fromLonLat(coord))
-    const polygon = new Polygon([transformedCoords])
-    view.fit(polygon, {
-      duration: 100,
-      maxZoom: 12,
+  async zoomToPolygon(polygonCoords: [[number, number][]]) {
+    const context = await firstValueFrom(this.mapFacade.context$)
+    const view: MapContextView = {
+      geometry: {
+        type: 'Polygon',
+        coordinates: polygonCoords,
+      },
+    }
+    this.mapFacade.applyContext({
+      ...context,
+      view,
     })
   }
 

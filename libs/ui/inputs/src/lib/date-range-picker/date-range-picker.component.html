@@ -1,24 +1,27 @@
-<div
-  class="flex items-center justify-between rounded-lg border border-gray-300 bg-white"
->
-  <div class="pl-3 flex justify-center">
-    <mat-date-range-input [rangePicker]="picker" class="w-full">
-      <input
-        matStartDate
-        placeholder="Start date"
-        [value]="startDate"
-        (dateInput)="startDateChange.emit($event.value)"
-      />
-      <input
-        matEndDate
-        placeholder="End date"
-        [value]="endDate"
-        (dateInput)="endDateChange.emit($event.value)"
-      />
-    </mat-date-range-input>
-  </div>
-  <mat-datepicker-toggle matSuffix [for]="picker">
-    <mat-icon>calendar_today</mat-icon>
-  </mat-datepicker-toggle>
-</div>
+<span class="w-full inline-block relative">
+  <mat-date-range-input [rangePicker]="picker" class="gn-ui-text-input">
+    <input
+      matStartDate
+      placeholder="Start date"
+      [value]="startDate"
+      (dateInput)="startDateChange.emit($event.value)"
+    />
+    <input
+      matEndDate
+      placeholder="End date"
+      [value]="endDate"
+      (dateInput)="endDateChange.emit($event.value)"
+    />
+  </mat-date-range-input>
+
+  <gn-ui-button
+    type="light"
+    class="absolute inset-y-[var(--side-padding)] right-[var(--side-padding)] z-10"
+    (buttonClick)="picker.open()"
+    extraClass="h-full"
+    data-cy="date-picker-button"
+  >
+    <ng-icon name="iconoirCalendar" class="text-primary"></ng-icon>
+  </gn-ui-button>
+</span>
 <mat-date-range-picker #picker></mat-date-range-picker>

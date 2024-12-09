@@ -1,0 +1,16 @@
+<div class="h-full w-full" #map></div>
+<div
+  class="absolute inset-0 p-2 rounded z-40 transition-all flex flex-col justify-center items-center text-primary font-sans pointer-events-none"
+  [ngClass]="
+    (displayMessage$ | async) ? 'visible opacity-100' : 'invisible opacity-0'
+  "
+>
+  <div
+    class="absolute z-[-1] inset-0 bg-gradient-to-b from-white to-primary-lightest opacity-60"
+  ></div>
+  <ng-icon
+    class="!w-16 !h-16 text-[64px] mb-4"
+    name="matSwipeOutline"
+  ></ng-icon>
+  <p translate>map.navigation.message</p>
+</div>

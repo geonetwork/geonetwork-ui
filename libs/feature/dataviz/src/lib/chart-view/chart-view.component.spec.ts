@@ -6,14 +6,7 @@ import {
   tick,
 } from '@angular/core/testing'
 import { ChartViewComponent } from './chart-view.component'
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  NO_ERRORS_SCHEMA,
-  Output,
-} from '@angular/core'
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { DataService } from '../service/data.service'
 import { firstValueFrom, of, throwError } from 'rxjs'
@@ -21,28 +14,8 @@ import { By } from '@angular/platform-browser'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
-
-@Component({
-  selector: 'gn-ui-chart',
-  template: '<div></div>',
-})
-export class MockChartComponent {
-  @Input() data: object[]
-  @Input() labelProperty: string
-  @Input() valueProperty: string
-  @Input() secondaryValueProperty: string
-  @Input() type: string
-}
-
-@Component({
-  selector: 'gn-ui-dropdown-selector',
-  template: '<div></div>',
-})
-export class MockDropdownSelectorComponent {
-  @Input() selected: any
-  @Input() choices: unknown[]
-  @Output() selectValue = new EventEmitter<any>()
-}
+import { MockBuilder } from 'ng-mocks'
+import { ChartComponent } from '@geonetwork-ui/ui/dataviz'
 
 const SAMPLE_DATA_ITEMS = [
   { type: 'Feature', properties: { id: 1 } },
@@ -109,15 +82,12 @@ describe('ChartViewComponent', () => {
   let component: ChartViewComponent
   let fixture: ComponentFixture<ChartViewComponent>
   let dataService: DataService
-  let chartComponent: MockChartComponent
+  let chartComponent: ChartComponent
+
+  beforeEach(() => MockBuilder(ChartViewComponent))
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        ChartViewComponent,
-        MockDropdownSelectorComponent,
-        MockChartComponent,
-      ],
       imports: [TranslateModule.forRoot()],
       providers: [
         {
@@ -143,7 +113,7 @@ describe('ChartViewComponent', () => {
     component.link = aSetOfLinksFixture().dataCsv()
     flushMicrotasks()
     chartComponent = fixture.debugElement.query(
-      By.directive(MockChartComponent)
+      By.directive(ChartComponent)
     ).componentInstance
     fixture.detectChanges()
   }))

@@ -1,13 +1,14 @@
 import { getRootElement, parseXmlString } from '../xml-utils'
 import {
   readContacts,
+  readContactsForResource,
   readOwnerOrganization,
-  readResourceContacts,
 } from './read-parts'
 import {
   Individual,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
+import { readKeywords } from '../iso19139/read-parts'
 
 describe('read parts', () => {
   describe('readContacts, readContactsForResource, readOwnerOrganization', () => {
@@ -275,7 +276,7 @@ describe('read parts', () => {
 </mdb:MD_Metadata>`)
         )
         contacts = readContacts(withContacts)
-        contactsForResource = readResourceContacts(withContacts)
+        contactsForResource = readContactsForResource(withContacts)
         ownerOrg = readOwnerOrganization(withContacts)
       })
 
@@ -289,6 +290,7 @@ describe('read parts', () => {
             address: 'Boulevard du Nord, 8, Namur, 5000, Belgique',
             organization: {
               name: 'Direction Asset Management (SPW - Mobilité et Infrastructures - Direction Asset Management)',
+              translations: {},
             },
             role: 'custodian',
           },
@@ -298,6 +300,7 @@ describe('read parts', () => {
             lastName: 'Bob',
             organization: {
               name: 'OpenWork Ltd',
+              translations: {},
             },
             role: 'owner',
           },
@@ -308,6 +311,7 @@ describe('read parts', () => {
             organization: {
               name: 'MyOrganization',
               website: new URL('https://www.my.org/info'),
+              translations: {},
             },
             position: 'developer',
             role: 'point_of_contact',
@@ -320,6 +324,7 @@ describe('read parts', () => {
             email: 'info@openwork.nz',
             organization: {
               name: 'OpenWork Ltd',
+              translations: {},
             },
             role: 'author',
           },
@@ -329,6 +334,7 @@ describe('read parts', () => {
             email: 'byron@openwork.nz',
             organization: {
               name: 'Missing Organization',
+              translations: {},
             },
             role: 'publisher',
           },
@@ -336,6 +342,7 @@ describe('read parts', () => {
             email: 'helpdesk.carto@spw.wallonie.be',
             organization: {
               name: "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées)",
+              translations: {},
             },
             role: 'point_of_contact',
           },
@@ -343,6 +350,7 @@ describe('read parts', () => {
             email: 'info@openwork.nz',
             organization: {
               name: 'OpenWork Ltd',
+              translations: {},
             },
             role: 'distributor',
           },
@@ -352,8 +360,78 @@ describe('read parts', () => {
         expect(ownerOrg).toEqual({
           name: 'MyOrganization',
           website: new URL('https://www.my.org/info'),
+          translations: {},
         })
       })
+    })
+  })
+  describe('readKeywords', () => {
+    it('reads keywords', () => {
+      const withKeywords = getRootElement(
+        parseXmlString(`
+<mdb:MD_Metadata>
+  <mdb:identificationInfo>
+    <mri:MD_DataIdentification>
+      <mri:descriptiveKeywords>
+          <mri:MD_Keywords>
+              <mri:keyword gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                  <gcx:Anchor xlink:href="https://vocab.ifremer.fr/scheme/SXT/odatis_centre_donnees/1500646c-46f5-4da2-b6b2-2bfa6eb9415d">CDS-SAT-AVISO</gcx:Anchor>
+                  <lan:PT_FreeText>
+                      <lan:textGroup>
+                          <lan:LocalisedCharacterString locale="#FR">CDS-SAT-AVISO</lan:LocalisedCharacterString>
+                      </lan:textGroup>
+                      <lan:textGroup>
+                          <lan:LocalisedCharacterString locale="#EN">CDS-SAT-AVISO</lan:LocalisedCharacterString>
+                      </lan:textGroup>
+                  </lan:PT_FreeText>
+              </mri:keyword>
+              <mri:type>
+                  <mri:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
+              </mri:type>   
+        </mri:MD_Keywords>
+      </mri:descriptiveKeywords>
+      <mri:descriptiveKeywords>
+                <mri:MD_Keywords>
+                    <mri:keyword gco:nilReason="missing" xsi:type="lan:PT_FreeText_PropertyType">
+                        <gcx:Anchor xlink:href="https://vocab.ifremer.fr/scheme/SXT/type_jeux_donnee/69c1d1e8-df22-458c-8daa-34c67bfb3f8d">Données d'observation</gcx:Anchor>
+                        <lan:PT_FreeText>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#FR">Données d'observation</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                            <lan:textGroup>
+                                <lan:LocalisedCharacterString locale="#EN">Observational data</lan:LocalisedCharacterString>
+                            </lan:textGroup>
+                        </lan:PT_FreeText>
+                    </mri:keyword>
+                    </mri:MD_Keywords>
+                    </mri:descriptiveKeywords>
+    </mri:MD_DataIdentification>
+  </mdb:identificationInfo>
+</mdb:MD_Metadata>`)
+      )
+      const keywords = readKeywords(withKeywords)
+      expect(keywords).toEqual([
+        {
+          label: 'CDS-SAT-AVISO',
+          translations: {
+            label: {
+              en: 'CDS-SAT-AVISO',
+              fr: 'CDS-SAT-AVISO',
+            },
+          },
+          type: 'theme',
+        },
+        {
+          label: "Données d'observation",
+          translations: {
+            label: {
+              en: 'Observational data',
+              fr: "Données d'observation",
+            },
+          },
+          type: 'other',
+        },
+      ])
     })
   })
 })

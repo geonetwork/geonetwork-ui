@@ -34,6 +34,12 @@ import {
 } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { ContactCardComponent } from '../../../contact-card/contact-card.component'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { iconoirPlus } from '@ng-icons/iconoir'
 
 @Component({
   selector: 'gn-ui-form-field-contacts-for-resource',
@@ -50,6 +56,13 @@ import { ContactCardComponent } from '../../../contact-card/contact-card.compone
     TranslateModule,
     ContactCardComponent,
     SortableListComponent,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({ iconoirPlus }),
+    provideNgIconsConfig({
+      size: '1.5rem',
+    }),
   ],
 })
 export class FormFieldContactsForResourceComponent
@@ -107,15 +120,14 @@ export class FormFieldContactsForResourceComponent
 
   updateContactsForRessource() {
     this.contactsForRessourceByRole = this.value.reduce((acc, contact) => {
-      const completeOrganization = this.allOrganizations.get(
-        contact.organization.name
-      )
+      const completeOrganization = contact.organization
+        ? this.allOrganizations.get(contact.organization.name)
+        : null
+      const organization = completeOrganization ?? contact.organization
 
       const updatedContact = {
         ...contact,
-        organization:
-          completeOrganization ??
-          ({ name: contact.organization.name } as Organization),
+        ...(organization && { organization }),
       }
 
       if (!acc.has(contact.role)) {
@@ -145,9 +157,8 @@ export class FormFieldContactsForResourceComponent
     this.valueChange.emit(newContactsforRessource)
   }
 
-  handleContactsChanged(items: unknown[]) {
+  handleContactsChanged(items: unknown[], role: Role) {
     const contacts = items as Individual[]
-    const role = contacts[0].role
 
     this.contactsForRessourceByRole.set(role, contacts)
 

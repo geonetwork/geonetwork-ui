@@ -1,8 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddLayerFromOgcApiComponent } from './add-layer-from-ogc-api.component'
-import { TranslateModule } from '@ngx-translate/core'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { MapContextLayerTypeEnum } from '../map-context/map-context.model'
+import { MockBuilder } from 'ng-mocks'
 
 jest.mock('@camptocamp/ogc-client', () => ({
   OgcApiEndpoint: class {
@@ -79,12 +77,12 @@ describe('AddLayerFromOgcApiComponent', () => {
   let component: AddLayerFromOgcApiComponent
   let fixture: ComponentFixture<AddLayerFromOgcApiComponent>
 
+  beforeEach(() => {
+    return MockBuilder(AddLayerFromOgcApiComponent)
+  })
+
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), AddLayerFromOgcApiComponent],
-      declarations: [],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents()
+    await TestBed.configureTestingModule({}).compileComponents()
 
     fixture = TestBed.createComponent(AddLayerFromOgcApiComponent)
     component = fixture.componentInstance
@@ -138,33 +136,32 @@ describe('AddLayerFromOgcApiComponent', () => {
       const layerAddedSpy = jest.spyOn(component.layerAdded, 'emit')
       await component.addLayer('layer1', 'features')
       expect(layerAddedSpy).toHaveBeenCalledWith({
-        name: 'layer1',
+        collection: 'layer1',
         url: 'http://example.com/collections/layer1/items',
-        type: MapContextLayerTypeEnum.OGCAPI,
-        layerType: 'features',
-        title: 'layer1',
+        type: 'ogcapi',
+        label: 'layer1',
       })
     })
     it('should add vector tile collection to map', async () => {
       const layerAddedSpy = jest.spyOn(component.layerAdded, 'emit')
       await component.addLayer('layer1', 'vectorTiles')
       expect(layerAddedSpy).toHaveBeenCalledWith({
-        name: 'layer1',
+        collection: 'layer1',
         url: 'http://example.com/collections/layer1/tiles/vector',
-        type: MapContextLayerTypeEnum.OGCAPI,
-        layerType: 'vectorTiles',
-        title: 'layer1',
+        type: 'ogcapi',
+        useTiles: 'vector',
+        label: 'layer1',
       })
     })
     it('should add map tile collection to map', async () => {
       const layerAddedSpy = jest.spyOn(component.layerAdded, 'emit')
       await component.addLayer('layer1', 'mapTiles')
       expect(layerAddedSpy).toHaveBeenCalledWith({
-        name: 'layer1',
+        collection: 'layer1',
         url: 'http://example.com/collections/layer1/tiles/map',
-        type: MapContextLayerTypeEnum.OGCAPI,
-        layerType: 'mapTiles',
-        title: 'layer1',
+        type: 'ogcapi',
+        useTiles: 'map',
+        label: 'layer1',
       })
     })
   })

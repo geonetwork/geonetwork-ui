@@ -9,9 +9,18 @@ import {
 } from '../xml-utils'
 import {
   getISODuration,
+  writeContacts,
+  writeContactsForResource,
   writeKeywords,
+  writeLegalConstraints,
   writeOnlineResources,
+  writeOtherConstraints,
+  writeResourceCreated,
+  writeResourcePublished,
+  writeResourceUpdated,
+  writeSecurityConstraints,
   writeSpatialExtents,
+  writeSpatialRepresentation,
   writeTemporalExtents,
 } from './write-parts'
 
@@ -26,6 +35,81 @@ describe('write parts', () => {
   beforeEach(() => {
     rootEl = createElement('root')()
     datasetRecord = { ...GENERIC_DATASET_RECORD }
+  })
+
+  describe('write dates', () => {
+    it('writes the record dates', () => {
+      const modified = {
+        ...datasetRecord,
+        resourcePublished: new Date('2024-01-01T00:00:00'),
+      }
+      writeResourceCreated(modified, rootEl)
+      writeResourceUpdated(modified, rootEl)
+      writeResourcePublished(modified, rootEl)
+      expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <gmd:citation>
+                <gmd:CI_Citation>
+                    <gmd:date>
+                        <gmd:CI_Date>
+                            <gmd:date>
+                                <gco:DateTime>2022-09-01T14:18:19</gco:DateTime>
+                            </gmd:date>
+                            <gmd:dateType>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation"/>
+                            </gmd:dateType>
+                        </gmd:CI_Date>
+                    </gmd:date>
+                    <gmd:date>
+                        <gmd:CI_Date>
+                            <gmd:date>
+                                <gco:DateTime>2022-12-04T15:12:00</gco:DateTime>
+                            </gmd:date>
+                            <gmd:dateType>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision"/>
+                            </gmd:dateType>
+                        </gmd:CI_Date>
+                    </gmd:date>
+                    <gmd:date>
+                        <gmd:CI_Date>
+                            <gmd:date>
+                                <gco:DateTime>2024-01-01T00:00:00</gco:DateTime>
+                            </gmd:date>
+                            <gmd:dateType>
+                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+                            </gmd:dateType>
+                        </gmd:CI_Date>
+                    </gmd:date>
+                </gmd:CI_Citation>
+            </gmd:citation>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+    })
+    it('delete date if the date is not present in the record', () => {
+      // first write dates
+      writeResourceCreated(datasetRecord, rootEl)
+      writeResourceUpdated(datasetRecord, rootEl)
+      const modified = {
+        ...datasetRecord,
+        resourceUpdated: null,
+        resourceCreated: null,
+        resourcePublished: null,
+      }
+      writeResourceCreated(modified, rootEl)
+      writeResourceUpdated(modified, rootEl)
+      writeResourcePublished(modified, rootEl)
+      expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <gmd:citation>
+                <gmd:CI_Citation/>
+            </gmd:citation>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+    })
   })
 
   describe('writeOnlineResources', () => {
@@ -206,7 +290,17 @@ describe('write parts', () => {
       writeOnlineResources(
         {
           ...datasetRecord,
-          onlineResources: [distributionLink],
+          onlineResources: [
+            {
+              ...distributionLink,
+              translations: {
+                description: {
+                  fr: "Un lien vers la documentation en ligne en PDF ; veuillez pardonner les fautes d'orthographes.",
+                  de: 'Ein Link zur Online-Dokumentation im PDF-Format; Bitte verzeihen Sie die Tippfehler.',
+                },
+              },
+            },
+          ],
         },
         rootEl
       )
@@ -222,6 +316,17 @@ describe('write parts', () => {
                             </gmd:linkage>
                             <gmd:description>
                                 <gco:CharacterString>A link to the online documentation in PDF; please forgive the typos.</gco:CharacterString>
+                                <gmd:PT_FreeText>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#EN">A link to the online documentation in PDF; please forgive the typos.</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#FR">Un lien vers la documentation en ligne en PDF ; veuillez pardonner les fautes d'orthographes.</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                    <gmd:textGroup>
+                                        <gmd:LocalisedCharacterString locale="#DE">Ein Link zur Online-Dokumentation im PDF-Format; Bitte verzeihen Sie die Tippfehler.</gmd:LocalisedCharacterString>
+                                    </gmd:textGroup>
+                                </gmd:PT_FreeText>
                             </gmd:description>
                             <gmd:name>
                                 <gco:CharacterString>Documentation</gco:CharacterString>
@@ -707,6 +812,129 @@ describe('write parts', () => {
     })
   })
 
+  describe('writeContacts', () => {
+    it('works with incomplete contacts', () => {
+      const contacts = [
+        {
+          firstName: 'John',
+          role: 'point_of_contact',
+          email: 'aaa@bbb.ccc',
+        },
+        {
+          lastName: 'Doe',
+          role: 'contributor',
+          email: 'abc@def.ghi',
+          organization: {
+            name: 'ACME',
+          },
+        },
+      ]
+      const modified: DatasetRecord = {
+        ...datasetRecord,
+        contacts,
+        contactsForResource: contacts,
+      }
+      writeContacts(modified, rootEl)
+      writeContactsForResource(modified, rootEl)
+      expect(rootAsString()).toEqual(`<root>
+    <gmd:contact>
+        <gmd:CI_ResponsibleParty>
+            <gmd:individualName>
+                <gco:CharacterString>John</gco:CharacterString>
+            </gmd:individualName>
+            <gmd:contactInfo>
+                <gmd:CI_Contact>
+                    <gmd:address>
+                        <gmd:CI_Address>
+                            <gmd:electronicMailAddress>
+                                <gco:CharacterString>aaa@bbb.ccc</gco:CharacterString>
+                            </gmd:electronicMailAddress>
+                        </gmd:CI_Address>
+                    </gmd:address>
+                </gmd:CI_Contact>
+            </gmd:contactInfo>
+            <gmd:role>
+                <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact"/>
+            </gmd:role>
+        </gmd:CI_ResponsibleParty>
+    </gmd:contact>
+    <gmd:contact>
+        <gmd:CI_ResponsibleParty>
+            <gmd:individualName>
+                <gco:CharacterString>Doe</gco:CharacterString>
+            </gmd:individualName>
+            <gmd:organisationName>
+                <gco:CharacterString>ACME</gco:CharacterString>
+            </gmd:organisationName>
+            <gmd:contactInfo>
+                <gmd:CI_Contact>
+                    <gmd:address>
+                        <gmd:CI_Address>
+                            <gmd:electronicMailAddress>
+                                <gco:CharacterString>abc@def.ghi</gco:CharacterString>
+                            </gmd:electronicMailAddress>
+                        </gmd:CI_Address>
+                    </gmd:address>
+                </gmd:CI_Contact>
+            </gmd:contactInfo>
+            <gmd:role>
+                <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="contributor"/>
+            </gmd:role>
+        </gmd:CI_ResponsibleParty>
+    </gmd:contact>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <gmd:pointOfContact>
+                <gmd:CI_ResponsibleParty>
+                    <gmd:individualName>
+                        <gco:CharacterString>John</gco:CharacterString>
+                    </gmd:individualName>
+                    <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                            <gmd:address>
+                                <gmd:CI_Address>
+                                    <gmd:electronicMailAddress>
+                                        <gco:CharacterString>aaa@bbb.ccc</gco:CharacterString>
+                                    </gmd:electronicMailAddress>
+                                </gmd:CI_Address>
+                            </gmd:address>
+                        </gmd:CI_Contact>
+                    </gmd:contactInfo>
+                    <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact"/>
+                    </gmd:role>
+                </gmd:CI_ResponsibleParty>
+            </gmd:pointOfContact>
+            <gmd:pointOfContact>
+                <gmd:CI_ResponsibleParty>
+                    <gmd:individualName>
+                        <gco:CharacterString>Doe</gco:CharacterString>
+                    </gmd:individualName>
+                    <gmd:organisationName>
+                        <gco:CharacterString>ACME</gco:CharacterString>
+                    </gmd:organisationName>
+                    <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                            <gmd:address>
+                                <gmd:CI_Address>
+                                    <gmd:electronicMailAddress>
+                                        <gco:CharacterString>abc@def.ghi</gco:CharacterString>
+                                    </gmd:electronicMailAddress>
+                                </gmd:CI_Address>
+                            </gmd:address>
+                        </gmd:CI_Contact>
+                    </gmd:contactInfo>
+                    <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="contributor"/>
+                    </gmd:role>
+                </gmd:CI_ResponsibleParty>
+            </gmd:pointOfContact>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+    })
+  })
+
   describe('getISODuration', () => {
     it('keeps a partial weekly period', () => {
       expect(
@@ -721,6 +949,85 @@ describe('write parts', () => {
           per: 'week',
         })
       ).toEqual('P0Y0M3D')
+    })
+  })
+
+  describe('writeSpatialRepresentation', () => {
+    it('writes the corresponding element', () => {
+      writeSpatialRepresentation(datasetRecord, rootEl)
+      expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <gmd:spatialRepresentationType>
+                <gmd:MD_SpatialRepresentationTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="grid"/>
+            </gmd:spatialRepresentationType>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
+    })
+    it('clears the corresponding element if the record has no spatial representation', () => {
+      writeSpatialRepresentation(datasetRecord, rootEl)
+      const modified: DatasetRecord = {
+        ...datasetRecord,
+        spatialRepresentation: null,
+      }
+      writeSpatialRepresentation(modified, rootEl)
+      expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification/>
+    </gmd:identificationInfo>
+</root>`)
+    })
+  })
+
+  describe('write constraints', () => {
+    it('writes elements without deleting others, remove empty constraints', () => {
+      writeSecurityConstraints(datasetRecord, rootEl)
+      writeLegalConstraints(datasetRecord, rootEl)
+      writeOtherConstraints(datasetRecord, rootEl)
+      writeLegalConstraints({ ...datasetRecord, legalConstraints: [] }, rootEl)
+      writeOtherConstraints(
+        {
+          ...datasetRecord,
+          otherConstraints: [
+            {
+              text: 'new constraint',
+            },
+          ],
+        },
+        rootEl
+      )
+      expect(rootAsString()).toEqual(`<root>
+    <gmd:identificationInfo>
+        <gmd:MD_DataIdentification>
+            <gmd:resourceConstraints>
+                <gmd:MD_SecurityConstraints>
+                    <gmd:classification>
+                        <gmd:MD_ClassificationCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ClassificationCode" codeListValue="restricted"/>
+                    </gmd:classification>
+                    <gmd:useLimitation>
+                        <gmx:Anchor xlink:href="https://security.org/document.pdf">Contains sensitive information related to national defense</gmx:Anchor>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#EN">Contains sensitive information related to national defense</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#FR">Contient des informations sensibles liées à la défense nationale</gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </gmd:useLimitation>
+                </gmd:MD_SecurityConstraints>
+            </gmd:resourceConstraints>
+            <gmd:resourceConstraints>
+                <gmd:MD_Constraints>
+                    <gmd:useLimitation>
+                        <gco:CharacterString>new constraint</gco:CharacterString>
+                    </gmd:useLimitation>
+                </gmd:MD_Constraints>
+            </gmd:resourceConstraints>
+        </gmd:MD_DataIdentification>
+    </gmd:identificationInfo>
+</root>`)
     })
   })
 })

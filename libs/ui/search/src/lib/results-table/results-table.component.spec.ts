@@ -40,7 +40,7 @@ describe('ResultsTableComponent', () => {
             datasetRecordsFixture()[0] as CatalogRecord
           )[0]
         )
-      ).toEqual('#1e5180') // geojson
+      ).toEqual('#b3cde8') // geojson
     })
   })
 
@@ -106,32 +106,6 @@ describe('ResultsTableComponent', () => {
         expect(emitted).toEqual([[record], true])
       })
     })
-
-    describe('#isAllSelected', () => {
-      it('returns true if all records in the page are selected', () => {
-        component.selectedRecordsIdentifiers = ['1', '2', '3', '4', '5']
-        expect(component.isAllSelected()).toBe(true)
-      })
-      it('returns false otherwise', () => {
-        component.selectedRecordsIdentifiers = ['1']
-        expect(component.isAllSelected()).toBe(false)
-      })
-    })
-
-    describe('#isSomeSelected', () => {
-      it('returns false if all records in the page are selected', () => {
-        component.selectedRecordsIdentifiers = ['1', '2', '3', '4', '5']
-        expect(component.isSomeSelected()).toBe(false)
-      })
-      it('returns true if one or more records in the page is selected', () => {
-        component.selectedRecordsIdentifiers = ['2', '3']
-        expect(component.isSomeSelected()).toBe(true)
-      })
-      it('returns false if no record in the page is selected', () => {
-        component.selectedRecordsIdentifiers = ['4', '5']
-        expect(component.isSomeSelected()).toBe(false)
-      })
-    })
   })
 
   describe('clicking on a dataset', () => {
@@ -158,19 +132,13 @@ describe('ResultsTableComponent', () => {
 
     beforeEach(() => {
       recordToBeDuplicated = null
-      component.duplicateRecord.subscribe((r) => (recordToBeDuplicated = r))
+      component.duplicateRecord.subscribe((r) => {
+        recordToBeDuplicated = r
+      })
     })
 
     it('emits a duplicateRecord event', () => {
-      const menuButton = fixture.debugElement.query(
-        By.css('[data-test="record-menu-button"]')
-      ).nativeElement as HTMLButtonElement
-      menuButton.click()
-      fixture.detectChanges()
-      const duplicateButton = fixture.debugElement.query(
-        By.css('[data-test="record-menu-duplicate-button"]')
-      ).nativeElement as HTMLButtonElement
-      duplicateButton.click()
+      component.handleDuplicate(datasetRecordsFixture()[0])
       expect(JSON.stringify(recordToBeDuplicated)).toEqual(
         JSON.stringify(datasetRecordsFixture()[0])
       )

@@ -15,14 +15,12 @@ import { TimeSincePipe } from './time-since.pipe'
 import { HttpClientModule } from '@angular/common/http'
 import { importProvidersFrom } from '@angular/core'
 import { ButtonComponent, TextAreaComponent } from '@geonetwork-ui/ui/inputs'
-import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 
 export default {
   title: 'Elements/UserFeedbackItemComponent',
   component: UserFeedbackItemComponent,
   decorators: [
     moduleMetadata({
-      declarations: [UserFeedbackItemComponent, SpinningLoaderComponent],
       imports: [
         CommonModule,
         UtilI18nModule,

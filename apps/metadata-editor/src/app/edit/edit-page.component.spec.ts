@@ -5,7 +5,7 @@ import {
   datasetRecordsFixture,
   editorConfigFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { BehaviorSubject, Subject } from 'rxjs'
+import { BehaviorSubject, firstValueFrom, Subject } from 'rxjs'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { MockBuilder } from 'ng-mocks'
@@ -13,6 +13,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { HttpClientModule } from '@angular/common/http'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { PageSelectorComponent } from './components/page-selector/page-selector.component'
+import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
 
 const getRoute = () => ({
   snapshot: {
@@ -36,6 +37,8 @@ class EditorFacadeMock {
   saveSuccess$ = new Subject()
   draftSaveSuccess$ = new Subject()
   editorConfig$ = new BehaviorSubject(editorConfigFixture())
+  currentPage$ = new BehaviorSubject(0)
+  pagesCount$ = new BehaviorSubject(2)
 }
 class NotificationsServiceMock {
   showNotification = jest.fn()
@@ -115,9 +118,21 @@ describe('EditPageComponent', () => {
     beforeEach(() => {
       fixture.detectChanges()
     })
+    describe('publish version error', () => {
+      it('shows notification', () => {
+        ;(facade.saveError$ as any).next(new PublicationVersionError('1.0.0'))
+        expect(notificationsService.showNotification).toHaveBeenCalledWith({
+          type: 'error',
+          title: 'editor.record.publishVersionError.title',
+          text: 'editor.record.publishVersionError.body',
+          closeMessage: 'editor.record.publishVersionError.closeMessage',
+        })
+      })
+    })
+
     describe('publish error', () => {
       it('shows notification', () => {
-        ;(facade.saveError$ as any).next('oopsie')
+        ;(facade.saveError$ as any).next(new Error('oopsie'))
         expect(notificationsService.showNotification).toHaveBeenCalledWith({
           type: 'error',
           title: 'editor.record.publishError.title',
@@ -170,6 +185,23 @@ describe('EditPageComponent', () => {
         uniqueIdentifier: 'new-uuid',
       })
       expect(navigateSpy).toHaveBeenCalledWith(['edit', 'new-uuid'])
+    })
+  })
+
+  describe('isLastPage$', () => {
+    let editorFacade: EditorFacadeMock
+    beforeEach(() => {
+      editorFacade = TestBed.inject(EditorFacade) as unknown as EditorFacadeMock
+    })
+    it('returns true if last page', async () => {
+      editorFacade.currentPage$.next(3)
+      editorFacade.pagesCount$.next(4)
+      expect(await firstValueFrom(component.isLastPage$)).toBe(true)
+    })
+    it('returns false if not', async () => {
+      editorFacade.currentPage$.next(1)
+      editorFacade.pagesCount$.next(3)
+      expect(await firstValueFrom(component.isLastPage$)).toBe(false)
     })
   })
 })

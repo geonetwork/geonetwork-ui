@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 
 import { MetadataCatalogComponent } from './metadata-catalog.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('MetadataCatalogComponent', () => {
   let component: MetadataCatalogComponent
@@ -9,7 +10,7 @@ describe('MetadataCatalogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MetadataCatalogComponent],
+      imports: [MetadataCatalogComponent, TranslateModule.forRoot()],
     }).compileComponents()
   })
 

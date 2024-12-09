@@ -8,12 +8,16 @@ import {
   DatasetServiceDistribution,
 } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import { CommonModule } from '@angular/common'
+import { DownloadsListComponent } from '@geonetwork-ui/ui/elements'
 
 @Component({
   selector: 'datahub-record-downloads',
   templateUrl: './record-downloads.component.html',
   styleUrls: ['./record-downloads.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, DownloadsListComponent],
 })
 export class RecordDownloadsComponent {
   constructor(public facade: MdViewFacade, private dataService: DataService) {}

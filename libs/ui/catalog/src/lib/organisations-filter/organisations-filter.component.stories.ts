@@ -10,14 +10,12 @@ import {
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import { OrganisationsFilterComponent } from './organisations-filter.component'
-import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 
 export default {
   title: 'Catalog/OrganisationsFilterComponent',
   component: OrganisationsFilterComponent,
   decorators: [
     moduleMetadata({
-      declarations: [DropdownSelectorComponent],
       imports: [
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),

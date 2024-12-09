@@ -1,6 +1,6 @@
 <header class="h-full px-5" [style.background]="backgroundCss">
   <div
-    class="container-lg h-full mx-auto flex flex-col-reverse justify-between sm:flex-col sm:justify-end"
+    class="container-lg relative h-full mx-auto flex flex-col-reverse justify-between sm:flex-col sm:justify-end"
   >
     <div
       class="py-8 relative z-40 mb-[184px] sm:mb-0"
@@ -16,14 +16,21 @@
       ></div>
       <gn-ui-fuzzy-search
         class="text-[18px] pointer-events-auto"
+        style="
+          --gn-ui-text-input-padding: 1.1em;
+          --gn-ui-text-input-border-size: 0px;
+        "
         (itemSelected)="onFuzzySearchSelection($event)"
         [autoFocus]="true"
       ></gn-ui-fuzzy-search>
-      <div class="flex h-0 py-5 gap-3" [style.opacity]="-0.6 + expandRatio * 2">
+      <div
+        class="flex flex-wrap h-0 py-5 gap-3"
+        [style.opacity]="-0.6 + expandRatio * 2"
+      >
         <datahub-header-badge-button
           [routerLink]="ROUTE_SEARCH"
           *ngIf="isAuthenticated$ | async"
-          icon="star"
+          icon="matStarOutline"
           label="datahub.header.myfavorites"
           [toggled]="searchFacade.favoritesOnly$ | async"
           (action)="listFavorites($event)"
@@ -62,7 +69,7 @@
     <!--
     <div class="flex">
       <datahub-header-badge-button
-        icon="star"
+        icon="matStarOutline"
         label="datahub.header.myfavorites"
       ></datahub-header-badge-button>
       <datahub-header-badge-button
@@ -76,9 +83,13 @@
         class="tabs flex justify-between font-medium -mx-5 sm:mx-0 sm:mt-32 inset-x-0 bottom-0 z-50"
       ></datahub-navigation-menu>
     </div>
+    <gn-ui-language-switcher
+      *ngIf="showLanguageSwitcher"
+      class="language-switcher absolute top-3.5 right-6 text-[13px]"
+      [style.--color-main]="foregroundColor"
+      [style.--color-gray-300]="foregroundColor"
+      [style.--color-primary-darker]="foregroundColor"
+      [style.--color-primary-black]="foregroundColor"
+    ></gn-ui-language-switcher>
   </div>
-  <gn-ui-language-switcher
-    *ngIf="showLanguageSwitcher"
-    class="language-switcher absolute top-2.5 left-2.5 text-[13px]"
-  ></gn-ui-language-switcher>
 </header>

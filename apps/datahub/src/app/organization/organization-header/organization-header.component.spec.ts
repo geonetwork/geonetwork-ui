@@ -3,9 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { OrganizationHeaderComponent } from './organization-header.component'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
-import { UiCatalogModule } from '@geonetwork-ui/ui/catalog'
 import { AsyncPipe, Location, NgIf } from '@angular/common'
-import { MatIconModule } from '@angular/material/icon'
 import { someOrganizationsFixture } from '@geonetwork-ui/common/fixtures'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
@@ -34,9 +32,7 @@ describe('OrganizationHeaderComponent', () => {
         OrganizationHeaderComponent,
         UiInputsModule,
         TranslateModule,
-        UiCatalogModule,
         NgIf,
-        MatIconModule,
         AsyncPipe,
         TranslateModule.forRoot(),
       ],

@@ -1,5 +1,4 @@
 import { HttpClientModule } from '@angular/common/http'
-import { MatIconModule } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
 import {
   applicationConfig,
@@ -13,7 +12,6 @@ import {
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
-import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { OrganisationPreviewComponent } from './organisation-preview.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
@@ -29,9 +27,7 @@ export default {
       ],
     }),
     moduleMetadata({
-      declarations: [ThumbnailComponent],
       imports: [
-        MatIconModule,
         UtilI18nModule,
         UtilSharedModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),

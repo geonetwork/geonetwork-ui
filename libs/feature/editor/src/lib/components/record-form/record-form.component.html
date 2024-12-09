@@ -1,32 +1,32 @@
-<ng-container>
-  <div class="flex flex-col gap-6 p-8">
-    <ng-container
-      *ngFor="
-        let section of facade.currentSections$ | async;
-        trackBy: sectionTracker
-      "
-    >
-      <ng-container *ngIf="!section.hidden">
-        <div class="flex flex-col gap-8 border p-8 rounded-[8px] shadow">
+<div class="flex flex-col gap-6">
+  <ng-container
+    *ngFor="
+      let section of facade.currentSections$ | async;
+      trackBy: sectionTracker
+    "
+  >
+    <ng-container *ngIf="!section.hidden">
+      <div class="flex flex-col gap-8 border p-8 rounded-[8px] shadow">
+        <div
+          class="flex flex-col gap-2"
+          [ngClass]="section.labelKey ? 'mb-4' : 'hidden'"
+        >
           <div
-            class="flex flex-col gap-2"
-            [ngClass]="section.labelKey ? 'mb-4' : 'hidden'"
+            *ngIf="section.labelKey"
+            class="text-2xl font-title text-main"
+            translate
           >
-            <div
-              *ngIf="section.labelKey"
-              class="text-2xl font-title text-secondary"
-              translate
-            >
-              {{ section.labelKey }}
-            </div>
-            <div
-              *ngIf="section.descriptionKey"
-              class="text-secondary-lightest"
-              translate
-            >
-              {{ section.descriptionKey }}
-            </div>
+            {{ section.labelKey }}
           </div>
+          <div
+            *ngIf="section.descriptionKey"
+            class="text-gray-800 text-sm"
+            translate
+          >
+            {{ section.descriptionKey }}
+          </div>
+        </div>
+        <div class="grid auto-rows-auto grid-cols-2 gap-[32px]">
           <ng-container
             *ngFor="
               let field of section.fieldsWithValues;
@@ -35,11 +35,17 @@
           >
             <ng-container *ngIf="!field.config.hidden">
               <gn-ui-form-field
+                [ngClass]="
+                  field.config.gridColumnSpan === 1
+                    ? 'col-span-1'
+                    : 'col-span-2'
+                "
                 [uniqueIdentifier]="recordUniqueIdentifier$ | async"
                 [model]="field.config.model!"
                 [modelSpecifier]="field.config.modelSpecifier!"
                 [config]="field.config.formFieldConfig"
                 [value]="field.value"
+                [componentName]="field.config.componentName"
                 (valueChange)="
                   handleFieldValueChange(field.config.model!, $event)
                 "
@@ -47,7 +53,7 @@
             </ng-container>
           </ng-container>
         </div>
-      </ng-container>
+      </div>
     </ng-container>
-  </div>
-</ng-container>
+  </ng-container>
+</div>

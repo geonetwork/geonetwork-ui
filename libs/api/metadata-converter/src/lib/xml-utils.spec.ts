@@ -1,11 +1,14 @@
-import { XmlElement } from '@rgrove/parse-xml'
+import { XmlElement, XmlText } from '@rgrove/parse-xml'
 import {
+  assertValidXml,
+  createDocument,
   getRootElement,
   parseXmlString,
   readText,
   renameElements,
   xmlToString,
 } from './xml-utils'
+import { simpleDatasetRecordAsXmlFixture } from '@geonetwork-ui/common/fixtures'
 
 describe('xml utils', () => {
   describe('xmlToString', () => {
@@ -37,6 +40,24 @@ end.
 `
       const doc = parseXmlString(input)
       expect(xmlToString(doc)).toEqual(input)
+    })
+
+    it('should properly escape special characters in text', () => {
+      const textNode = new XmlElement(
+        'test',
+        {
+          'my-attribute': '<Attribute> & <value>',
+        },
+        [new XmlText('Text with <, >, &')]
+      )
+
+      const result = xmlToString(textNode)
+
+      expect(result).toBe(
+        `
+<test my-attribute="&lt;Attribute&gt; &amp; &lt;value&gt;">Text with &lt;, &gt;, &amp;</test>
+`
+      )
     })
   })
 
@@ -160,6 +181,49 @@ world</root>
     })
     it('returns null if applied to a falsy element', () => {
       expect(readText()(null)).toEqual(null)
+    })
+  })
+
+  describe('createDocument', () => {
+    it('succeeds when custom namespaces are present inside the tree', () => {
+      const originalDoc = parseXmlString(`
+<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:custom="http://my.namespace/that/i.just/made/up" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+    <gmd:referenceSystemInfo xmlns:xl="http://www.w3.org/1999/xlink">
+        <gmd:MD_ReferenceSystem>
+            <gmd:referenceSystemIdentifier custom:myAttr="this is a test">
+                <gmd:RS_Identifier>
+                    <gmd:code>
+                        <gmx:Anchor xl:href="http://www.opengis.net/def/crs/EPSG/0/2154">EPSG:2154</gmx:Anchor>
+                    </gmd:code>
+                </gmd:RS_Identifier>
+            </gmd:referenceSystemIdentifier>
+        </gmd:MD_ReferenceSystem>
+    </gmd:referenceSystemInfo>
+</gmd:MD_Metadata>`)
+      const rootEl = getRootElement(originalDoc)
+      const newDoc = createDocument(rootEl)
+      expect(newDoc).toBeTruthy()
+    })
+  })
+
+  describe('parseAndValidateXml', () => {
+    it('should parse valid XML without errors', () => {
+      const validXml = simpleDatasetRecordAsXmlFixture()
+      const xmlDoc = assertValidXml(validXml)
+
+      expect(xmlDoc).toBeDefined()
+      expect(xmlDoc.querySelector('mdb\\:MD_Metadata')).toBeTruthy()
+      expect(
+        xmlDoc.querySelector('gco\\:CharacterString')?.textContent
+      ).toContain('my-dataset-001')
+    })
+
+    it('should throw an error for invalid XML', () => {
+      const invalidXml = `<root><element>Invalid XML</element`
+
+      expect(() => assertValidXml(invalidXml)).toThrow(
+        new Error('File is not a valid XML.')
+      )
     })
   })
 })

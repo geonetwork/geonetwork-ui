@@ -5,12 +5,10 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { RecordPreviewCardComponent } from './record-preview-card.component'
-import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { importProvidersFrom } from '@angular/core'
 import { HttpClientModule } from '@angular/common/http'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MatIconModule } from '@angular/material/icon'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -20,8 +18,7 @@ export default {
   component: RecordPreviewCardComponent,
   decorators: [
     moduleMetadata({
-      declarations: [ThumbnailComponent],
-      imports: [UiDatavizModule, MatIconModule, UtilSharedModule],
+      imports: [UiDatavizModule, UtilSharedModule],
     }),
     applicationConfig({
       providers: [

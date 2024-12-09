@@ -2,10 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { LANGUAGE_STORAGE_KEY } from '@geonetwork-ui/util/i18n'
 import { TranslateService } from '@ngx-translate/core'
 import { LanguageSwitcherComponent } from './language-switcher.component'
+import { MockBuilder } from 'ng-mocks'
 
 class TranslateServiceMock {
   use = jest.fn()
   currentLang = 'en'
+  get = jest.fn()
 }
 
 window.console.warn = jest.fn()
@@ -15,9 +17,10 @@ describe('LanguageSwitcherComponent', () => {
   let fixture: ComponentFixture<LanguageSwitcherComponent>
   let service: TranslateService
 
+  beforeEach(() => MockBuilder(LanguageSwitcherComponent))
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LanguageSwitcherComponent],
       providers: [
         {
           provide: TranslateService,

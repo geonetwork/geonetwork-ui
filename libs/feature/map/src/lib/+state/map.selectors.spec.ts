@@ -3,7 +3,7 @@ import * as MapSelectors from './map.selectors'
 import {
   mapCtxLayerGeojsonFixture,
   mapCtxLayerWmsFixture,
-} from '../map-context/map-context.fixtures'
+} from '@geonetwork-ui/common/fixtures'
 
 describe('Map Selectors', () => {
   let state: MapPartialState
@@ -11,29 +11,37 @@ describe('Map Selectors', () => {
   beforeEach(() => {
     state = {
       map: {
-        layers: [
+        context: {
+          layers: [mapCtxLayerWmsFixture(), mapCtxLayerGeojsonFixture()],
+          view: null,
+        },
+        selectedFeatures: [
           {
-            ...mapCtxLayerWmsFixture(),
-            title: 'wms',
-            error: null,
-            loading: false,
-          },
-          {
-            ...mapCtxLayerGeojsonFixture(),
-            title: 'geojson',
-            error: null,
-            loading: false,
+            type: 'Feature',
+            geometry: { type: 'Point', coordinates: [0, 0] },
+            properties: {},
           },
         ],
       },
     }
   })
 
-  describe('getLayers', () => {
-    it('returns the list of layers', () => {
-      const results = MapSelectors.getMapLayers(state)
-      expect(results.length).toBe(2)
-      expect(results.map((l) => l.title)).toEqual(['wms', 'geojson'])
+  describe('getMapContext', () => {
+    it('returns the context', () => {
+      const result = MapSelectors.getMapContext(state)
+      expect(result.layers.map((l) => l.type)).toEqual(['wms', 'geojson'])
+    })
+  })
+  describe('getSelectedFeatures', () => {
+    it('returns the selected features', () => {
+      const result = MapSelectors.getSelectedFeatures(state)
+      expect(result).toEqual([
+        {
+          type: 'Feature',
+          geometry: { type: 'Point', coordinates: [0, 0] },
+          properties: {},
+        },
+      ])
     })
   })
 })

@@ -163,7 +163,7 @@ describe('FormFieldContactsForResourceComponent', () => {
 
       const reorderedElements = [mockContacts[1], mockContacts[0]]
 
-      component.handleContactsChanged(reorderedElements)
+      component.handleContactsChanged(reorderedElements, 'owner')
 
       expect(spy).toHaveBeenCalledWith([mockContacts[1], mockContacts[0]])
     })

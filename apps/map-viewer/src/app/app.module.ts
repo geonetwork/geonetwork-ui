@@ -4,7 +4,9 @@ import { BrowserModule } from '@angular/platform-browser'
 import { AppComponent } from './app.component'
 import {
   FeatureMapModule,
+  GeocodingComponent,
   LayersPanelComponent,
+  MapStateContainerComponent,
 } from '@geonetwork-ui/feature/map'
 import { ThemeService } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
@@ -39,6 +41,8 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     EffectsModule.forRoot(),
     FeatureCatalogModule,
     LayersPanelComponent,
+    MapStateContainerComponent,
+    GeocodingComponent,
   ],
   providers: [
     importProvidersFrom(FeatureAuthModule),

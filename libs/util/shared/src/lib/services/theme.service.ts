@@ -109,6 +109,7 @@ export class ThemeService {
     applyColor('gray-700', scale(0.7))
     applyColor('gray-800', scale(0.8))
     applyColor('gray-900', scale(0.9))
+    applyColor('gray-950', scale(0.95))
 
     if (mainFont) {
       document.documentElement.style.setProperty(`--font-family-main`, mainFont)

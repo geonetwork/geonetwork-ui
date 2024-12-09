@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
-import { debounceTime, filter, of, withLatestFrom } from 'rxjs'
+import { debounceTime, EMPTY, filter, of, withLatestFrom } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
 import * as EditorActions from './editor.actions'
 import { EditorService } from '../services/editor.service'
@@ -9,14 +9,17 @@ import {
   selectEditorConfig,
   selectRecord,
   selectRecordAlreadySavedOnce,
+  selectRecordSource,
 } from './editor.selectors'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
 
 @Injectable()
 export class EditorEffects {
   private actions$ = inject(Actions)
   private editorService = inject(EditorService)
   private recordsRepository = inject(RecordsRepositoryInterface)
+  private gn4PlateformService = inject(Gn4PlatformService)
   private store = inject(Store)
 
   saveRecord$ = createEffect(() =>
@@ -24,12 +27,13 @@ export class EditorEffects {
       ofType(EditorActions.saveRecord),
       withLatestFrom(
         this.store.select(selectRecord),
+        this.store.select(selectRecordSource),
         this.store.select(selectEditorConfig),
         this.store.select(selectRecordAlreadySavedOnce)
       ),
-      switchMap(([, record, fieldsConfig, alreadySavedOnce]) =>
+      switchMap(([, record, recordSource, fieldsConfig, alreadySavedOnce]) =>
         this.editorService
-          .saveRecord(record, fieldsConfig, !alreadySavedOnce)
+          .saveRecord(record, recordSource, fieldsConfig, !alreadySavedOnce)
           .pipe(
             switchMap(([record, recordSource]) =>
               of(
@@ -44,13 +48,35 @@ export class EditorEffects {
             catchError((error) =>
               of(
                 EditorActions.saveRecordFailure({
-                  error: error.message,
+                  error,
                 })
               )
             )
           )
       )
     )
+  )
+
+  cleanRecordAttachments$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(EditorActions.saveRecordSuccess),
+        withLatestFrom(this.store.select(selectRecord)),
+        switchMap(([_, record]) => {
+          this.gn4PlateformService.cleanRecordAttachments(record).subscribe({
+            next: (_) => undefined,
+            error: (err) => {
+              console.error(err)
+            },
+          })
+          return EMPTY
+        }),
+        catchError((error) => {
+          console.error(error)
+          return EMPTY
+        })
+      ),
+    { dispatch: false }
   )
 
   markAsChanged$ = createEffect(() =>
@@ -64,8 +90,13 @@ export class EditorEffects {
     this.actions$.pipe(
       ofType(EditorActions.updateRecordField),
       debounceTime(1000),
-      withLatestFrom(this.store.select(selectRecord)),
-      switchMap(([, record]) => this.editorService.saveRecordAsDraft(record)),
+      withLatestFrom(
+        this.store.select(selectRecord),
+        this.store.select(selectRecordSource)
+      ),
+      switchMap(([, record, recordSource]) =>
+        this.editorService.saveRecordAsDraft(record, recordSource)
+      ),
       map(() => EditorActions.draftSaveSuccess())
     )
   )

@@ -18,6 +18,40 @@ import { Keyword } from '@geonetwork-ui/common/domain/model/record'
  ************************************************************
  */
 
+export const RECORD_UNIQUE_IDENTIFIER_FIELD: EditorField = {
+  model: 'uniqueIdentifier',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.uniqueIdentifier'),
+  },
+  hidden: true,
+}
+
+export const CONSTRAINTS_SHORTCUTS: EditorField = {
+  componentName: 'form-field-constraints-shortcuts',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.constraintsShortcuts'),
+  },
+}
+
+export const LEGAL_CONSTRAINTS_FIELD: EditorField = {
+  model: 'legalConstraints',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.legalConstraints'),
+  },
+}
+export const SECURITY_CONSTRAINTS_FIELD: EditorField = {
+  model: 'securityConstraints',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.securityConstraints'),
+  },
+}
+export const OTHER_CONSTRAINTS_FIELD: EditorField = {
+  model: 'otherConstraints',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.otherConstraints'),
+  },
+}
+
 export const RECORD_LICENSE_FIELD: EditorField = {
   model: 'licenses',
   formFieldConfig: {
@@ -32,11 +66,10 @@ export const RECORD_KEYWORDS_FIELD: EditorField = {
   },
 }
 
-export const RECORD_UNIQUE_IDENTIFIER_FIELD: EditorField = {
-  model: 'uniqueIdentifier',
+export const RESOURCE_IDENTIFIER_FIELD: EditorField = {
+  model: 'resourceIdentifier',
   formFieldConfig: {
-    labelKey: marker('editor.record.form.field.uniqueIdentifier'),
-    locked: true,
+    labelKey: marker('editor.record.form.field.resourceIdentifier'),
   },
 }
 
@@ -45,23 +78,25 @@ export const RECORD_RESOURCE_UPDATED_FIELD: EditorField = {
   formFieldConfig: {
     labelKey: marker('editor.record.form.field.resourceUpdated'),
   },
+  gridColumnSpan: 1,
 }
 
 export const RECORD_UPDATED_FIELD: EditorField = {
   model: 'recordUpdated',
   formFieldConfig: {
     labelKey: marker('editor.record.form.field.recordUpdated'),
-    locked: true,
   },
   onSaveProcess: '${dateNow()}',
+  gridColumnSpan: 1,
+  hidden: true,
 }
 
 export const RECORD_UPDATE_FREQUENCY_FIELD: EditorField = {
   model: 'updateFrequency',
-  formFieldConfig: {
-    labelKey: marker('editor.record.form.field.updateFrequency'),
-  },
+  formFieldConfig: {},
 }
+// keeping track of the label to not lose existing translation
+marker('editor.record.form.field.updateFrequency')
 
 export const RECORD_TEMPORAL_EXTENTS_FIELD: EditorField = {
   model: 'temporalExtents',
@@ -91,6 +126,13 @@ export const CONTACTS_FOR_RESOURCE_FIELD: EditorField = {
   },
 }
 
+export const CONTACTS: EditorField = {
+  model: 'contacts',
+  formFieldConfig: {
+    labelKey: '',
+  },
+}
+
 export const RECORD_GRAPHICAL_OVERVIEW_FIELD: EditorField = {
   model: 'overviews',
   formFieldConfig: {
@@ -102,6 +144,14 @@ export const RECORD_SPATIAL_EXTENTS_FIELD: EditorField = {
   model: 'spatialExtents',
   formFieldConfig: {
     labelKey: marker('editor.record.form.field.spatialExtents'),
+  },
+}
+
+export const RECORD_ONLINE_RESOURCES: EditorField = {
+  model: 'onlineResources',
+  modelSpecifier: 'onlineResourceType:!link',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.onlineResources'),
   },
 }
 
@@ -133,6 +183,7 @@ export const ABOUT_SECTION: EditorSection = {
   hidden: false,
   fields: [
     RECORD_UNIQUE_IDENTIFIER_FIELD,
+    RESOURCE_IDENTIFIER_FIELD,
     RECORD_RESOURCE_UPDATED_FIELD,
     RECORD_UPDATED_FIELD,
     RECORD_UPDATE_FREQUENCY_FIELD,
@@ -152,11 +203,12 @@ export const ASSOCIATED_RESOURCES_SECTION: EditorSection = {
     'editor.record.form.section.associatedResources.description'
   ),
   hidden: false,
-  fields: [],
+  fields: [RECORD_ONLINE_RESOURCES],
 }
 
 export const ANNEXES_SECTION: EditorSection = {
   labelKey: marker('editor.record.form.section.annexes.label'),
+  descriptionKey: marker('editor.record.form.section.annexes.description'),
   hidden: false,
   fields: [RECORD_ONLINE_LINK_RESOURCES],
 }
@@ -173,7 +225,13 @@ export const CLASSIFICATION_SECTION: EditorSection = {
 export const USE_AND_ACCESS_CONDITIONS_SECTION: EditorSection = {
   labelKey: marker('editor.record.form.section.useAndAccessConditions.label'),
   hidden: false,
-  fields: [RECORD_LICENSE_FIELD],
+  fields: [
+    RECORD_LICENSE_FIELD,
+    CONSTRAINTS_SHORTCUTS,
+    LEGAL_CONSTRAINTS_FIELD,
+    SECURITY_CONSTRAINTS_FIELD,
+    OTHER_CONSTRAINTS_FIELD,
+  ],
 }
 
 export const DATA_MANAGERS_SECTION: EditorSection = {
@@ -189,7 +247,7 @@ export const DATA_POINT_OF_CONTACT_SECTION: EditorSection = {
     'editor.record.form.section.dataPointOfContact.description'
   ),
   hidden: false,
-  fields: [],
+  fields: [CONTACTS],
 }
 
 /************************************************************
@@ -222,13 +280,29 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
  ***************           LICENSES            **************
  ************************************************************
  */
-export const OPEN_DATA_LICENSES: string[] = [
+export const AVAILABLE_LICENSES: string[] = [
+  'cc-by',
+  'cc-by-sa',
+  'cc-zero',
   'etalab',
   'etalab-v2',
   'odbl',
   'odc-by',
   'pddl',
+  'unknown',
 ]
+
+export const OPEN_DATA_LICENSE = 'etalab'
+
+marker('editor.record.form.license.cc-by')
+marker('editor.record.form.license.cc-by-sa')
+marker('editor.record.form.license.cc-zero')
+marker('editor.record.form.license.etalab')
+marker('editor.record.form.license.etalab-v2')
+marker('editor.record.form.license.odbl')
+marker('editor.record.form.license.odc-by')
+marker('editor.record.form.license.pddl')
+marker('editor.record.form.license.unknown')
 
 export const MAX_UPLOAD_SIZE_MB = 10
 /************************************************************

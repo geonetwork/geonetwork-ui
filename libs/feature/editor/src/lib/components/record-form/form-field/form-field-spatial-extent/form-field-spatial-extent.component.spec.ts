@@ -416,5 +416,50 @@ describe('FormFieldSpatialExtentComponent', () => {
         )
       })
     })
+
+    describe('#emitChanges', () => {
+      const allKeywords = [
+        ...datasetRecordsFixture()[0].keywords,
+        ...SAMPLE_PLACE_KEYWORDS,
+        NATIONAL_KEYWORD,
+      ] as Keyword[]
+
+      beforeEach(() => {
+        editorFacade.record$ = from([
+          { ...SAMPLE_RECORD, keywords: allKeywords } as CatalogRecord,
+        ])
+      })
+
+      it('should filter out keywords that are not of type place and spatial scope keywords', async () => {
+        const placeKeywords = [...SAMPLE_PLACE_KEYWORDS].map((k) => ({
+          label: k.label,
+          type: k.type,
+          thesaurus: k.thesaurus,
+        })) // remove bbox
+        const placeKeywordsWithExtent = placeKeywords.map((k) => ({
+          ...k,
+          _doNotSave: false,
+          _linkedExtent: SAMPLE_SPATIAL_EXTENTS[0],
+        }))
+        const spatialExtents = SAMPLE_SPATIAL_EXTENTS
+
+        await component.emitChanges(placeKeywordsWithExtent, spatialExtents)
+
+        expect(editorFacade.updateRecordField).toHaveBeenNthCalledWith(
+          1,
+          'keywords',
+          [
+            ...datasetRecordsFixture()[0].keywords,
+            NATIONAL_KEYWORD,
+            ...placeKeywords,
+          ]
+        )
+        expect(editorFacade.updateRecordField).toHaveBeenNthCalledWith(
+          2,
+          'spatialExtents',
+          spatialExtents
+        )
+      })
+    })
   })
 })

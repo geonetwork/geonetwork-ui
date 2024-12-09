@@ -1,9 +1,12 @@
 <gn-ui-results-table
-  [records]="records$ | async"
+  *ngIf="searchFacade.results$ | async as records"
+  [records]="records"
   [hasDraft]="hasDraft"
   [selectedRecordsIdentifiers]="selectedRecords$ | async"
   [sortOrder]="sortBy$ | async"
   [isUnsavedDraft]="isUnsavedDraft"
+  [canDelete]="canDelete"
+  [canDuplicate]="canDuplicate"
   (recordClick)="handleRecordClick($event)"
   (duplicateRecord)="handleDuplicateRecord($event)"
   (deleteRecord)="handleDeleteRecord($event)"

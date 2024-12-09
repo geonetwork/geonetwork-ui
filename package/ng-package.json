@@ -7,6 +7,8 @@
   "allowedNonPeerDependencies": [
     "@biesbjerg/ngx-translate-extract-marker",
     "@camptocamp/ogc-client",
+    "@geospatial-sdk/core",
+    "@geospatial-sdk/openlayers",
     "@geospatial-sdk/geocoding",
     "@ltd/j-toml",
     "@messageformat/core",

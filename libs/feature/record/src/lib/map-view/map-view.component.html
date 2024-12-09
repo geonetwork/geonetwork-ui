@@ -1,7 +1,7 @@
 <div class="w-full h-full flex flex-col p-1">
-  <div class="w-full flex justify-end mb-7 mt-1">
+  <div class="w-full flex justify-end">
     <gn-ui-dropdown-selector
-      class="truncate p-1 -mx-1"
+      class="truncate p-1 -mx-1 mb-1"
       extraBtnClass="!text-primary font-sans font-medium"
       [title]="'map.select.layer' | translate"
       [choices]="dropdownChoices$ | async"
@@ -10,17 +10,17 @@
     <gn-ui-external-viewer-button
       class="shrink-0 py-1 place-self-end"
       [link]="selectedLink$ | async"
-      [mapConfig]="mapConfig"
     >
     </gn-ui-external-viewer-button>
   </div>
   <div
     class="relative w-full h-full bg-white border border-gray-300 rounded-lg overflow-hidden"
   >
-    <gn-ui-map-context
+    <gn-ui-map-container
+      #mapContainer
       [context]="mapContext$ | async"
-      [mapConfig]="mapConfig"
-    ></gn-ui-map-context>
+      (featuresClick)="onMapFeatureSelect($event)"
+    ></gn-ui-map-container>
     <div
       class="top-[1em] right-[1em] p-3 bg-white absolute overflow-y-auto overflow-x-hidden max-h-72 w-56"
       [class.hidden]="!selection"
@@ -29,11 +29,7 @@
         (click)="resetSelection()"
         class="rounded bg-primary-opacity-25 text-white absolute right-[0.5em]"
       >
-        <mat-icon
-          class="material-symbols-outlined align-middle text-sm"
-          style="height: 21px"
-          >close</mat-icon
-        >
+        <ng-icon name="matClose" class="align-middle text-sm"></ng-icon>
       </button>
       <gn-ui-feature-detail [feature]="selection"></gn-ui-feature-detail>
     </div>
@@ -45,7 +41,7 @@
     <gn-ui-popup-alert
       *ngIf="error"
       type="warning"
-      icon="error_outline"
+      icon="matErrorOutlineOutline"
       class="absolute m-2 inset-0"
     >
       <span translate>{{ error }}</span>

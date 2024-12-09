@@ -6,12 +6,19 @@ import {
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { SortByField } from '@geonetwork-ui/common/domain/model/search'
-import { Subject, debounceTime } from 'rxjs'
+import { debounceTime, Subject } from 'rxjs'
+import {
+  DropdownSelectorComponent,
+  SearchInputComponent,
+} from '@geonetwork-ui/ui/inputs'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-organisations-filter',
   templateUrl: './organisations-filter.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [SearchInputComponent, DropdownSelectorComponent, TranslateModule],
 })
 export class OrganisationsFilterComponent {
   choices: { value: string; label: string }[] = [

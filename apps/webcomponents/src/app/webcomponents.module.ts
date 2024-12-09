@@ -2,7 +2,6 @@ import { OverlayContainer } from '@angular/cdk/overlay'
 import { CommonModule } from '@angular/common'
 import { CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
-import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
@@ -28,9 +27,12 @@ import { GnResultsListComponent } from './components/gn-results-list/gn-results-
 import { GnSearchInputComponent } from './components/gn-search-input/gn-search-input.component'
 import { GnDatasetViewTableComponent } from './components/gn-dataset-view-table/gn-dataset-view-table.component'
 import { GnMapViewerComponent } from './components/gn-map-viewer/gn-map-viewer.component'
-import { FeatureMapModule } from '@geonetwork-ui/feature/map'
+import {
+  FeatureMapModule,
+  LayersPanelComponent,
+  MapStateContainerComponent,
+} from '@geonetwork-ui/feature/map'
 import { GnDatasetViewChartComponent } from './components/gn-dataset-view-chart/gn-dataset-view-chart.component'
-import { FeatureDatavizModule } from '@geonetwork-ui/feature/dataviz'
 import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { provideGn4 } from '@geonetwork-ui/api/repository'
@@ -86,10 +88,10 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
         useClass: EmbeddedTranslateLoader,
       },
     }),
-    MatIconModule,
-    FeatureDatavizModule,
     FeatureAuthModule,
     BrowserAnimationsModule,
+    MapStateContainerComponent,
+    LayersPanelComponent,
   ],
   providers: [
     provideGn4(),

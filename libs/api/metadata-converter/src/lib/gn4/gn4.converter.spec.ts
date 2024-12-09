@@ -118,7 +118,8 @@ describe('Gn4Converter', () => {
                 start: new Date('2013-01-01T00:00:00.000Z'),
               },
             ],
-            languages: ['en'],
+            defaultLanguage: 'en',
+            otherLanguages: [],
           },
           {
             kind: 'dataset',
@@ -165,7 +166,8 @@ describe('Gn4Converter', () => {
                 start: new Date('2013-01-01T00:00:00.000Z'),
               },
             ],
-            languages: ['en'],
+            defaultLanguage: 'en',
+            otherLanguages: [],
           },
         ] as CatalogRecord[])
       })
@@ -1655,7 +1657,399 @@ describe('Gn4Converter', () => {
               },
             ],
             temporalExtents: [{ start: new Date('1974-01-01T00:00:00.000Z') }],
-            languages: ['fr'],
+            defaultLanguage: 'fr',
+            otherLanguages: [],
+          } as CatalogRecord)
+        })
+      })
+
+      describe('full record, multilingual', () => {
+        it('builds a complete record object', async () => {
+          const record = await service.readRecord(
+            elasticFullResponseFixture().hits.hits[1] as Gn4Record
+          )
+          expect(record).toEqual({
+            abstract:
+              'Perimeter der Alpenkonvention in der Schweiz. Die Alpenkonvention ist ein völkerrechtlicher Vertrag zwischen den acht Alpenländern Deutschland, Frankreich, Italien, Liechtenstein, Monaco, Österreich, Schweiz, Slowenien sowie der Europäischen Union. Das Ziel des Übereinkommens ist der Schutz der Alpen durch eine sektorübergreifende, ganzheitliche und nachhaltige Politik.',
+            contacts: [
+              {
+                address: 'Ittigen, 3063, CH',
+                email: 'rolf.giezendanner@are.admin.ch',
+                lastName: 'Rolf Giezendanner',
+                organization: {
+                  name: 'Bundesamt für Raumentwicklung',
+                },
+                role: 'point_of_contact',
+              },
+            ],
+            contactsForResource: [
+              {
+                address: 'Ittigen, 3063, CH',
+                email: 'rolf.giezendanner@are.admin.ch',
+                lastName: 'Rolf Giezendanner',
+                organization: {
+                  name: 'Bundesamt für Raumentwicklung',
+                },
+                role: 'point_of_contact',
+              },
+              {
+                email: 'info@are.admin.ch',
+                lastName: '',
+                organization: {
+                  name: 'Bundesamt für Raumentwicklung',
+                },
+                role: 'owner',
+              },
+            ],
+            extras: {
+              catalogUuid: '7ea582d4-9ddf-422e-b28f-29760a4c0147',
+              favoriteCount: 0,
+              id: '39253641',
+              isOpenData: true,
+              isPublishedToAll: true,
+              ownerInfo: 'AREadmin|admin|ARE|UserAdmin',
+            },
+            keywords: [
+              {
+                key: 'http://inspire.ec.europa.eu/theme/ef',
+                label: 'Umweltüberwachung',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.httpinspireeceuropaeutheme-theme',
+                  name: 'GEMET - INSPIRE themes, version 1.0',
+                  url: new URL(
+                    'https://www.geocat.ch/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme'
+                  ),
+                },
+                type: 'theme',
+              },
+              {
+                key: 'http://inspire.ec.europa.eu/theme/au',
+                label: 'Verwaltungseinheiten',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.httpinspireeceuropaeutheme-theme',
+                  name: 'GEMET - INSPIRE themes, version 1.0',
+                  url: new URL(
+                    'https://www.geocat.ch/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme'
+                  ),
+                },
+                type: 'theme',
+              },
+              {
+                key: 'http://www.eionet.europa.eu/gemet/concept/8247',
+                label: 'Nachhaltige Entwicklung',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.gemet',
+                  name: 'GEMET',
+                  url: new URL(
+                    'https://www.geocat.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
+                  ),
+                },
+                type: 'theme',
+              },
+              {
+                key: 'http://www.eionet.europa.eu/gemet/concept/6225',
+                label: 'Raumplanung',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.gemet',
+                  name: 'GEMET',
+                  url: new URL(
+                    'https://www.geocat.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
+                  ),
+                },
+                type: 'theme',
+              },
+              {
+                key: 'http://www.eionet.europa.eu/gemet/concept/10236',
+                label: 'Bergschutz',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.gemet',
+                  name: 'GEMET',
+                  url: new URL(
+                    'https://www.geocat.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
+                  ),
+                },
+                type: 'theme',
+              },
+              {
+                key: 'http://www.eionet.europa.eu/gemet/concept/7852',
+                label: 'Bodenschutz',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.gemet',
+                  name: 'GEMET',
+                  url: new URL(
+                    'https://www.geocat.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
+                  ),
+                },
+                type: 'theme',
+              },
+              {
+                key: 'http://www.eionet.europa.eu/gemet/theme/11',
+                label: 'Umweltpolitik',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.gemet',
+                  name: 'GEMET',
+                  url: new URL(
+                    'https://www.geocat.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
+                  ),
+                },
+                type: 'theme',
+              },
+              {
+                key: 'http://www.eionet.europa.eu/gemet/theme/11',
+                label: 'Umweltpolitik',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.gemet',
+                  name: 'GEMET',
+                  url: new URL(
+                    'https://www.geocat.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
+                  ),
+                },
+                type: 'theme',
+              },
+              {
+                key: 'http://www.eionet.europa.eu/gemet/theme/37',
+                label: 'Verkehr',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.gemet',
+                  name: 'GEMET',
+                  url: new URL(
+                    'https://www.geocat.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
+                  ),
+                },
+                type: 'theme',
+              },
+              {
+                key: 'http://www.eionet.europa.eu/gemet/theme/37',
+                label: 'Verkehr',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.gemet',
+                  name: 'GEMET',
+                  url: new URL(
+                    'https://www.geocat.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
+                  ),
+                },
+                type: 'theme',
+              },
+              {
+                key: 'http://www.eionet.europa.eu/gemet/theme/37',
+                label: 'Verkehr',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.gemet',
+                  name: 'GEMET',
+                  url: new URL(
+                    'https://www.geocat.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
+                  ),
+                },
+                type: 'theme',
+              },
+              {
+                key: 'http://geocat.ch/concept#94202915-c2c1-44fd-a106-71488110e399',
+                label: 'Aufbewahrungs- und Archivierungsplanung AAP - Bund',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.geocat.ch',
+                  name: 'geocat.ch',
+                  url: new URL(
+                    'https://www.geocat.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+                  ),
+                },
+                type: 'theme',
+              },
+              {
+                key: 'http://geocat.ch/concept#e6485c01-fe69-485e-b194-035f682463db',
+                label: 'opendata.swiss',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.geocat.ch',
+                  name: 'geocat.ch',
+                  url: new URL(
+                    'https://www.geocat.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+                  ),
+                },
+                type: 'theme',
+              },
+              {
+                key: 'http://custom.shared.obj.ch/concept#ab642d3d-d74f-400c-bb01-81c6dde26247',
+                label: 'Geobasisdaten',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.geocat.ch',
+                  name: 'geocat.ch',
+                  url: new URL(
+                    'https://www.geocat.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+                  ),
+                },
+                type: 'theme',
+              },
+              {
+                key: 'http://custom.shared.obj.ch/concept#948082ad-0adf-4d3c-8c4f-685f9d4d9372',
+                label: 'e-geo.ch',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.geocat.ch',
+                  name: 'geocat.ch',
+                  url: new URL(
+                    'https://www.geocat.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+                  ),
+                },
+                type: 'theme',
+              },
+              {
+                key: 'http://custom.shared.obj.ch/concept#ae677a16-f81a-4533-9243-a87831115079',
+                label: 'BGDI Bundesgeodaten-Infrastruktur',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.local.theme.geocat.ch',
+                  name: 'geocat.ch',
+                  url: new URL(
+                    'https://www.geocat.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+                  ),
+                },
+                type: 'theme',
+              },
+            ],
+            kind: 'dataset',
+            landingPage: new URL(
+              'http://my.catalog.org/metadata/8698bf0b-fceb-4f0f-989b-111e7c4af0a4'
+            ),
+            defaultLanguage: 'de',
+            otherLanguages: ['fr', 'it'],
+            legalConstraints: [],
+            licenses: [
+              {
+                text: 'Opendata BY: Freie Nutzung. Quellenangabe ist Pflicht.',
+                url: new URL(
+                  'https://opendata.swiss/en/terms-of-use/#terms_by'
+                ),
+              },
+            ],
+            lineage:
+              'Digitalisiert nach den administrativen Einheiten der Schweiz, die im Anhang des Übereinkommens erscheinen.',
+            onlineResources: [
+              {
+                description: 'Vorschau map.geo.admin.ch',
+                name: 'Vorschau map.geo.admin.ch',
+                type: 'link',
+                url: new URL(
+                  'https://map.geo.admin.ch/?layers=ch.are.alpenkonvention'
+                ),
+              },
+              {
+                accessServiceProtocol: 'wms',
+                description: 'WMS-BGDI Dienst, Layer "Alpenkonvention"',
+                name: 'ch.are.alpenkonvention',
+                type: 'service',
+                url: new URL(
+                  'https://wms.geo.admin.ch/?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities&lang=de'
+                ),
+              },
+              {
+                accessServiceProtocol: 'wmts',
+                description: 'WMTS-BGDI Dienst, Layer "Alpenkonvention"',
+                name: 'ch.are.alpenkonvention',
+                type: 'service',
+                url: new URL(
+                  'https://wmts.geo.admin.ch/EPSG/3857/1.0.0/WMTSCapabilities.xml?lang=de'
+                ),
+              },
+              {
+                description: 'Webseite des ARE über die Alpenkonvention',
+                type: 'link',
+                url: new URL(
+                  'https://www.are.admin.ch/are/de/home/laendliche-raeume-und-berggebiete/internationale-zusammenarbeit/alpenkonvention.html'
+                ),
+              },
+              {
+                description: 'Download von data.geo.admin.ch',
+                type: 'download',
+                url: new URL(
+                  'https://data.geo.admin.ch/browser/index.html#/collections/ch.are.alpenkonvention'
+                ),
+              },
+              {
+                description: 'Minimales Geodatenmodell in INTERLIS 2.3',
+                type: 'download',
+                url: new URL(
+                  'https://www.are.admin.ch/are/de/home/raumentwicklung-und-raumplanung/grundlagen-und-daten/minimale-geodatenmodelle/alpenkonvention.html'
+                ),
+              },
+              {
+                description: 'Web-GIS ARE',
+                type: 'link',
+                url: new URL(
+                  'http://map.are.admin.ch/?Y=660000&X=190000&zoom=1&bgLayer=ch.swisstopo.pixelkarte-grau&layers=ch.are.alpenkonvention&layers_opacity=0.2&layers_visibility=true&lang=de'
+                ),
+              },
+              {
+                description: 'Offizielle Homepage der Alpenkonvention',
+                type: 'link',
+                url: new URL('http://www.alpconv.org/'),
+              },
+              {
+                description: 'Die Alpenkonvention im Bundesgeoportal',
+                type: 'link',
+                url: new URL(
+                  'http://map.geo.admin.ch/?selectedNode=LT1_1&Y=660000&X=190000&zoom=1&bgLayer=ch.swisstopo.pixelkarte-farbe&layers=ch.are.alpenkonvention&layers_opacity=0.6&layers_visibility=true&lang=de'
+                ),
+              },
+              {
+                description:
+                  'Liste der administrativen Einheiten des Alpenraumes in der schweizerischen Eidgenossenschaft',
+                type: 'link',
+                url: new URL('http://www.admin.ch/ch/d/sr/0_700_1/app1.html'),
+              },
+              {
+                description: 'RESTful API von geo.admin.ch',
+                name: 'RESTful API von geo.admin.ch',
+                type: 'link',
+                url: new URL(
+                  'https://api3.geo.admin.ch/rest/services/api/MapServer/ch.are.alpenkonvention'
+                ),
+              },
+              {
+                description: 'Permalink opendata.swiss',
+                name: 'Permalink opendata.swiss',
+                type: 'link',
+                url: new URL(
+                  'https://opendata.swiss/de/perma/8698bf0b-fceb-4f0f-989b-111e7c4af0a4@bundesamt-fur-raumentwicklung-are'
+                ),
+              },
+            ],
+            otherConstraints: [],
+            overviews: [],
+            ownerOrganization: {
+              name: 'My Organization',
+              website: new URL('http://my.org/'),
+            },
+            recordPublished: null,
+            recordCreated: new Date('2021-04-12T07:50:54.000Z'),
+            recordUpdated: new Date('2022-12-16T16:16:01.912Z'),
+            resourceCreated: new Date('1999-01-01T00:00:00.000Z'),
+            resourceUpdated: new Date('2009-01-01T00:00:00.000Z'),
+            securityConstraints: [],
+            spatialExtents: [
+              {
+                description: 'Alpenkonvention',
+                geometry: {
+                  coordinates: [
+                    [
+                      [6.756, 47.5176],
+                      [10.5418, 47.478],
+                      [10.4463, 45.7887],
+                      [6.7771, 45.8271],
+                      [6.756, 47.5176],
+                    ],
+                  ],
+                  type: 'Polygon',
+                },
+              },
+            ],
+            status: 'completed',
+            temporalExtents: [],
+            title: 'Alpenkonvention',
+            topics: [
+              'Umweltüberwachung',
+              'Verwaltungseinheiten',
+              'Planungsunterlagen, Kataster',
+              'E1 Raumplanung, Raumentwicklung',
+            ],
+            uniqueIdentifier: '8698bf0b-fceb-4f0f-989b-111e7c4af0a4',
+            updateFrequency: 'asNeeded',
           } as CatalogRecord)
         })
       })

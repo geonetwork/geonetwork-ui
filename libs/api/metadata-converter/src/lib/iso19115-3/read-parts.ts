@@ -21,6 +21,7 @@ import {
   extractCharacterString,
   extractDatasetOnlineResources,
   extractDateTime,
+  extractLocalizedCharacterString,
   extractRole,
   extractServiceOnlineResources,
   extractUrl,
@@ -28,13 +29,17 @@ import {
 } from '../iso19139/read-parts'
 import {
   Individual,
+  LanguageCode,
   OnlineResource,
   Organization,
+  OrganizationTranslations,
   RecordKind,
+  RecordTranslations,
   Role,
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchMimeType } from '../common/distribution.mapper'
 import { fullNameToParts } from '../iso19139/utils/individual-name'
+import { LANG_3_TO_2_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
 
 export function readKind(rootEl: XmlElement): RecordKind {
   return pipe(
@@ -74,12 +79,16 @@ export function extractOrganization(): ChainableFunction<
   )
   return pipe(
     combine(
-      pipe(findChildElement('cit:name', false), extractCharacterString()),
+      pipe(
+        findChildElement('cit:name', false),
+        extractLocalizedCharacterString<OrganizationTranslations>('name')
+      ),
       getUrl
     ),
-    map(([name, website]) => ({
+    map(([[name, translations], website]) => ({
       name,
       ...(website && { website }),
+      translations,
     }))
   )
 }
@@ -132,6 +141,7 @@ export function extractIndividual(
   )
   const defaultOrg: Organization = {
     name: 'Missing Organization',
+    translations: {},
   }
 
   let defaultIndividual: Partial<Individual> = {}
@@ -196,13 +206,11 @@ export function extractIndividuals(): ChainableFunction<
   const getRole = pipe(findChildElement('cit:role'), extractRole())
   const getIndividuals = pipe(
     combine(getRole, findNestedElements('cit:party', 'cit:CI_Individual')),
-    ([role, els]) => els.map((el) => extractIndividual(role)(el))
+    ([role, els]) => els.map(extractIndividual(role))
   )
   const getOrgIndividuals = pipe(
     combine(getRole, findNestedElements('cit:party', 'cit:CI_Organisation')),
-    map(([role, els]) =>
-      els.map((el) => extractOrganizationIndividuals(role)(el))
-    ),
+    map(([role, els]) => els.map(extractOrganizationIndividuals(role))),
     flattenArray()
   )
 
@@ -222,10 +230,11 @@ export function readUniqueIdentifier(rootEl: XmlElement): string {
 
 export function readOwnerOrganization(rootEl: XmlElement): Organization {
   const contacts = readContacts(rootEl)
+  const contactsForResource = readContactsForResource(rootEl)
   const pointOfContact = contacts.filter(
     (c) => c.role === 'point_of_contact'
   )[0]
-  return (pointOfContact || contacts[0]).organization
+  return (pointOfContact || contacts[0] || contactsForResource[0]).organization
 }
 
 export function readContacts(rootEl: XmlElement): Individual[] {
@@ -236,7 +245,7 @@ export function readContacts(rootEl: XmlElement): Individual[] {
   )(rootEl)
 }
 
-export function readResourceContacts(rootEl: XmlElement): Individual[] {
+export function readContactsForResource(rootEl: XmlElement): Individual[] {
   return pipe(
     combine(
       pipe(
@@ -271,10 +280,14 @@ export function readLandingPage(rootEl: XmlElement): URL {
   )(rootEl)
 }
 
-export function readLineage(rootEl: XmlElement): string {
+export function readLineage(
+  rootEl: XmlElement,
+  translations: RecordTranslations
+): string {
   return pipe(
     findNestedElement('mdb:resourceLineage', 'mrl:LI_Lineage', 'mrl:statement'),
-    extractCharacterString()
+    extractLocalizedCharacterString('lineage', translations),
+    map(([lineage]) => lineage)
   )(rootEl)
 }
 
@@ -333,5 +346,27 @@ export function readOnlineResources(rootEl: XmlElement): OnlineResource[] {
     findNestedElements('mrd:distributionInfo', 'mrd:MD_Distribution'),
     mapArray(extractServiceOnlineResources()),
     flattenArray()
+  )(rootEl)
+}
+
+function readLocaleElement(): ChainableFunction<XmlElement, LanguageCode> {
+  return pipe(
+    findChildElement('lan:LanguageCode'),
+    readAttribute('codeListValue'),
+    map((lang) => (lang ? LANG_3_TO_2_MAPPER[lang.toLowerCase()] : null))
+  )
+}
+
+export function readDefaultLanguage(rootEl: XmlElement): LanguageCode {
+  return pipe(
+    findChildElement('mdb:defaultLocale', false),
+    readLocaleElement()
+  )(rootEl)
+}
+
+export function readOtherLanguages(rootEl: XmlElement): LanguageCode[] {
+  return pipe(
+    findChildrenElement('mdb:otherLocale', false),
+    mapArray(readLocaleElement())
   )(rootEl)
 }

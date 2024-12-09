@@ -1,16 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { CatalogTitleComponent } from './catalog-title.component'
+import { MockBuilder } from 'ng-mocks'
 
 describe('CatalogTitleComponent', () => {
   let component: CatalogTitleComponent
   let fixture: ComponentFixture<CatalogTitleComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [CatalogTitleComponent],
-    }).compileComponents()
-  })
+  beforeEach(() => MockBuilder(CatalogTitleComponent))
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CatalogTitleComponent)

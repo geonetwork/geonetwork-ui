@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core'
-import { MatIconModule } from '@angular/material/icon'
 import { RouterLink } from '@angular/router'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
@@ -22,12 +21,22 @@ import { TagInputModule } from 'ngx-chips'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ResultsListItemComponent } from './results-list-item/results-list-item.component'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import {
+  MetadataQualityComponent,
+  UiElementsModule,
+} from '@geonetwork-ui/ui/elements'
 import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview-feed.component'
 import { CommonModule } from '@angular/common'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { InteractiveTableComponent } from '@geonetwork-ui/ui/layout'
+import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
+import {
+  matCloudDownloadOutline,
+  matHomeWorkOutline,
+  matMapOutline,
+} from '@ng-icons/material-icons/outline'
+import { matFace } from '@ng-icons/material-icons/baseline'
 
 @NgModule({
   declarations: [
@@ -55,10 +64,17 @@ import { InteractiveTableComponent } from '@geonetwork-ui/ui/layout'
     UiWidgetsModule,
     UiInputsModule,
     UiElementsModule,
-    MatIconModule,
     MatCheckboxModule,
     RouterLink,
     InteractiveTableComponent,
+    // FIXME: these imports are required by non-standalone components and should be removed once all components have been made standalone
+    NgIconsModule.withIcons({
+      matMapOutline,
+      matCloudDownloadOutline,
+      matFace,
+      matHomeWorkOutline,
+    }),
+    MetadataQualityComponent,
   ],
   exports: [
     RecordPreviewListComponent,
@@ -74,6 +90,9 @@ import { InteractiveTableComponent } from '@geonetwork-ui/ui/layout'
     RecordPreviewRowComponent,
   ],
   providers: [
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
     { provide: RESULTS_LAYOUT_CONFIG, useValue: DEFAULT_RESULTS_LAYOUT_CONFIG },
   ],
 })

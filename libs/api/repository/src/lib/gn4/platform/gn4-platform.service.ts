@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core'
-import { combineLatest, Observable, of, switchMap } from 'rxjs'
-import { catchError, filter, map, shareReplay, tap } from 'rxjs/operators'
+import {
+  catchError,
+  filter,
+  map,
+  mergeMap,
+  shareReplay,
+  tap,
+} from 'rxjs/operators'
 import {
   MeApiService,
   RecordsApiService,
@@ -10,9 +16,13 @@ import {
   UserfeedbackApiService,
   UsersApiService,
 } from '@geonetwork-ui/data-access/gn4'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import {
+  PlatformServiceInterface,
+  UploadEvent,
+} from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
 import {
+  CatalogRecord,
   Keyword,
   Organization,
   UserFeedback,
@@ -26,6 +36,15 @@ import {
   ThesaurusApiResponse,
 } from '@geonetwork-ui/api/metadata-converter'
 import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
+import { noDuplicateFileName } from '@geonetwork-ui/util/shared'
+import {
+  combineLatest,
+  forkJoin,
+  Observable,
+  of,
+  switchMap,
+  throwError,
+} from 'rxjs'
 
 const minApiVersion = '4.2.2'
 
@@ -288,34 +307,97 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     )
   }
 
-  attachFileToRecord(recordUuid: string, file: File) {
+  cleanRecordAttachments(record: CatalogRecord): Observable<void> {
+    return combineLatest([
+      this.recordsApiService.getAssociatedResources(record.uniqueIdentifier),
+      this.recordsApiService.getAllResources(record.uniqueIdentifier),
+    ]).pipe(
+      map(([associatedResources, recordResources]) => {
+        // Received object from API is not a RelatedResponseApiModel, so we need
+        // to cast it as any and do the bellow mappings to get the wanted values.
+        const resourceIdsToKeep = [
+          ...((associatedResources as any).onlines ?? []).map(
+            (o) => Object.values(o.title)[0]
+          ),
+          ...((associatedResources as any).thumbnails ?? []).map(
+            (o) => Object.values(o.title)[0]
+          ),
+        ]
+
+        const resourceIdsToRemove = recordResources
+          .map((r) => r.filename)
+          .filter((resourceId) => !resourceIdsToKeep.includes(resourceId))
+
+        return resourceIdsToRemove
+      }),
+      mergeMap((resourceIdsToRemove) =>
+        forkJoin(
+          resourceIdsToRemove.map((attachementId) =>
+            this.recordsApiService.delResource(
+              record.uniqueIdentifier,
+              attachementId
+            )
+          )
+        ).pipe(map(() => undefined))
+      ),
+      catchError((error) => {
+        console.error('Error while cleaning attachments:', error)
+        throw error
+      })
+    )
+  }
+
+  attachFileToRecord(recordUuid: string, file: File): Observable<UploadEvent> {
     let sizeBytes = -1
-    return this.recordsApiService
-      .putResource(recordUuid, file, 'public', undefined, 'events', true)
-      .pipe(
-        map((event) => {
-          if (event.type === HttpEventType.UploadProgress) {
-            sizeBytes = event.total
-            return {
-              type: 'progress',
-              progress: event.total
-                ? Math.round((100 * event.loaded) / event.total)
-                : 0,
-            } as const
-          }
-          if (event.type === HttpEventType.Response) {
-            return {
-              type: 'success',
-              attachment: {
-                url: new URL(event.body.url),
-                fileName: event.body.filename,
-              },
-              sizeBytes,
-            } as const
-          }
-          return undefined
-        }),
-        filter((event) => !!event)
-      )
+
+    // Check if the resource already exists on the server and rename it if that's the case
+    return this.getRecordAttachments(recordUuid).pipe(
+      map((recordAttachement) => recordAttachement.map((r) => r.fileName)),
+      switchMap((fileNames) => {
+        const fileName = noDuplicateFileName(file.name, fileNames)
+
+        const fileCopy = new File([file], fileName, { type: file.type })
+
+        return this.recordsApiService
+          .putResource(
+            recordUuid,
+            fileCopy,
+            'public',
+            undefined,
+            'events',
+            true
+          )
+          .pipe(
+            map((event) => {
+              if (event.type === HttpEventType.UploadProgress) {
+                sizeBytes = event.total
+                return {
+                  type: 'progress',
+                  progress: event.total
+                    ? Math.round((100 * event.loaded) / event.total)
+                    : 0,
+                } as UploadEvent
+              }
+              if (event.type === HttpEventType.Response) {
+                return {
+                  type: 'success',
+                  attachment: {
+                    url: new URL(event.body.url),
+                    fileName: event.body.filename,
+                  },
+                  sizeBytes,
+                } as UploadEvent
+              }
+              return undefined
+            }),
+            filter((event) => !!event)
+          )
+      }),
+      catchError((error) => {
+        return throwError(
+          () => new Error(error.error?.message ?? error.message)
+        )
+      })
+    )
   }
 }

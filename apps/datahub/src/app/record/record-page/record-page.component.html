@@ -1,4 +1,7 @@
 <div id="record-page" class="overflow-hidden">
+  <gn-ui-record-meta
+    [metadata]="mdViewFacade.metadata$ | async"
+  ></gn-ui-record-meta>
   <datahub-header-record
     [metadata]="mdViewFacade.metadata$ | async"
   ></datahub-header-record>

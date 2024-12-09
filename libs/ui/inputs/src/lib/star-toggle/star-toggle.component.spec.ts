@@ -8,7 +8,7 @@ describe('StarToggleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [StarToggleComponent],
+      imports: [StarToggleComponent],
     }).compileComponents()
 
     fixture = TestBed.createComponent(StarToggleComponent)

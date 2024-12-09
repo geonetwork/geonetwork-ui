@@ -23,7 +23,7 @@ describe('CopyTextButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CopyTextButtonComponent],
+      imports: [CopyTextButtonComponent],
     }).compileComponents()
 
     fixture = TestBed.createComponent(CopyTextButtonComponent)

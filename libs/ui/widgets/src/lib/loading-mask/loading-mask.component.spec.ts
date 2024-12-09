@@ -8,8 +8,7 @@ describe('LoadingMaskComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LoadingMaskComponent],
-      imports: [MatProgressSpinnerModule],
+      imports: [LoadingMaskComponent, MatProgressSpinnerModule],
     }).compileComponents()
   })
 

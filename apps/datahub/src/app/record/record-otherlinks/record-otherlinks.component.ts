@@ -7,12 +7,27 @@ import {
 } from '@angular/core'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { BlockListComponent, CarouselComponent } from '@geonetwork-ui/ui/layout'
+import { PreviousNextButtonsComponent } from '@geonetwork-ui/ui/inputs'
+import { CommonModule } from '@angular/common'
+import { LinkCardComponent } from '@geonetwork-ui/ui/elements'
+import { LetDirective } from '@ngrx/component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'datahub-record-otherlinks',
   templateUrl: './record-otherlinks.component.html',
   styleUrls: ['./record-otherlinks.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    PreviousNextButtonsComponent,
+    BlockListComponent,
+    LinkCardComponent,
+    CarouselComponent,
+    LetDirective,
+    TranslateModule,
+  ],
 })
 export class RecordOtherlinksComponent implements AfterViewInit {
   otherLinks$ = this.facade.otherLinks$

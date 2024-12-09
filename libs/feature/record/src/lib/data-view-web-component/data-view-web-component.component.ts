@@ -8,12 +8,17 @@ import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { MdViewFacade } from '../state'
 import { BehaviorSubject, combineLatest, map } from 'rxjs'
 import { GN_UI_VERSION } from '../gn-ui-version.token'
+import { CopyTextButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { CommonModule } from '@angular/common'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-data-view-web-component',
   templateUrl: './data-view-web-component.component.html',
   styleUrls: ['./data-view-web-component.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, CopyTextButtonComponent, TranslateModule],
 })
 export class DataViewWebComponentComponent {
   viewType$ = new BehaviorSubject<string>('map')

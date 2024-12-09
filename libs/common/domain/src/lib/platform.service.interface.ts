@@ -1,14 +1,14 @@
 import type { Observable } from 'rxjs'
 import type { UserModel } from './model/user/user.model'
 import type { Organization } from './model/record/organization.model'
-import { Keyword, UserFeedback } from './model/record'
+import { CatalogRecord, Keyword, UserFeedback } from './model/record'
 import { KeywordType } from './model/thesaurus'
 
-interface RecordAttachment {
+export interface RecordAttachment {
   url: URL
   fileName: string
 }
-type UploadEvent =
+export type UploadEvent =
   | {
       type: 'progress'
       progress: number // in percent
@@ -49,6 +49,7 @@ export abstract class PlatformServiceInterface {
   abstract getRecordAttachments(
     recordUuid: string
   ): Observable<RecordAttachment[]>
+  abstract cleanRecordAttachments(recordUuid: CatalogRecord): Observable<void>
   abstract attachFileToRecord(
     recordUuid: string,
     file: File

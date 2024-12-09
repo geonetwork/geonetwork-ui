@@ -1,30 +1,32 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  NO_ERRORS_SCHEMA,
-  Output,
-} from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
-import { MapManagerService } from '@geonetwork-ui/feature/map'
 import { SearchService } from '@geonetwork-ui/feature/search'
-import { ErrorComponent, ErrorType } from '@geonetwork-ui/ui/elements'
+import {
+  ErrorComponent,
+  ErrorType,
+  ImageOverlayPreviewComponent,
+  MetadataCatalogComponent,
+  MetadataContactComponent,
+  MetadataInfoComponent,
+} from '@geonetwork-ui/ui/elements'
 import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject, of } from 'rxjs'
 import { RecordMetadataComponent } from './record-metadata.component'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
-  CatalogRecord,
-  DatasetRecord,
-  DatasetServiceDistribution,
-  Individual,
-  Keyword,
-  Organization,
-} from '@geonetwork-ui/common/domain/model/record'
+  DataViewComponent,
+  DataViewShareComponent,
+  MapViewComponent,
+  MdViewFacade,
+} from '@geonetwork-ui/feature/record'
+import { MockBuilder } from 'ng-mocks'
+import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component'
+import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
+import { RecordApisComponent } from '../record-apis/record-apis.component'
+import { RecordRelatedRecordsComponent } from '../record-related-records/record-related-records.component'
+import { MatTab, MatTabGroup } from '@angular/material/tabs'
 
 const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
@@ -64,100 +66,6 @@ class OrganisationsServiceMock {
   )
 }
 
-@Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'gn-ui-map-view',
-  template: '<div></div>',
-})
-export class MockDataMapComponent {}
-
-@Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'gn-ui-data-view',
-  template: '<div></div>',
-})
-export class MockDataViewComponent {}
-
-@Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'gn-ui-data-view-share',
-  template: '<div></div>',
-})
-export class MockDataViewShareComponent {}
-
-@Component({
-  selector: 'datahub-record-downloads',
-  template: '<div></div>',
-})
-export class MockDataDownloadsComponent {}
-
-@Component({
-  selector: 'datahub-record-otherlinks',
-  template: '<div></div>',
-})
-export class MockDataOtherlinksComponent {}
-
-@Component({
-  selector: 'datahub-record-apis',
-  template: '<div></div>',
-})
-export class MockDataApisComponent {}
-
-@Component({
-  selector: 'datahub-record-related-records',
-  template: '<div></div>',
-})
-export class MockRelatedComponent {}
-
-@Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'gn-ui-metadata-info',
-  template: '<div></div>',
-})
-export class MockMetadataInfoComponent {
-  @Input() metadata: Partial<DatasetRecord>
-  @Input() incomplete: boolean
-  @Output() keyword = new EventEmitter<Keyword>()
-}
-
-@Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'gn-ui-metadata-contact',
-  template: '<div></div>',
-})
-export class MockMetadataContactComponent {
-  @Input() metadata: Partial<CatalogRecord>
-  @Output() organizationClick = new EventEmitter<Organization>()
-  @Output() contactClick = new EventEmitter<Individual>()
-}
-
-@Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'gn-ui-metadata-catalog',
-  template: '<div></div>',
-})
-export class MockMetadataCatalogComponent {
-  @Input() sourceLabel: string
-}
-
-@Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'gn-ui-record-api-form',
-  template: '<div></div>',
-})
-export class MockRecordApiFormComponent {
-  @Input() apiLink: DatasetServiceDistribution
-}
-@Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'gn-ui-image-overlay-preview',
-  template: '<div></div>',
-})
-export class MockImgOverlayPreviewComponent {
-  @Input() imageUrl: string
-  @Output() isPlaceholderShown = new EventEmitter<boolean>()
-}
-
 describe('RecordMetadataComponent', () => {
   let component: RecordMetadataComponent
   let fixture: ComponentFixture<RecordMetadataComponent>
@@ -165,34 +73,15 @@ describe('RecordMetadataComponent', () => {
   let searchService: SearchService
   let sourcesService: SourcesService
 
+  beforeEach(() => MockBuilder(RecordMetadataComponent))
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        RecordMetadataComponent,
-        MockDataMapComponent,
-        MockDataViewComponent,
-        MockDataViewShareComponent,
-        MockDataDownloadsComponent,
-        MockDataOtherlinksComponent,
-        MockDataApisComponent,
-        MockRelatedComponent,
-        ErrorComponent,
-        MockMetadataInfoComponent,
-        MockMetadataCatalogComponent,
-        MockMetadataContactComponent,
-        MockRecordApiFormComponent,
-        MockImgOverlayPreviewComponent,
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
       imports: [TranslateModule.forRoot()],
       providers: [
         {
           provide: MdViewFacade,
           useClass: MdViewFacadeMock,
-        },
-        {
-          provide: MapManagerService,
-          useValue: {},
         },
         {
           provide: SearchService,
@@ -224,21 +113,21 @@ describe('RecordMetadataComponent', () => {
   })
 
   describe('about', () => {
-    let metadataInfo: MockMetadataInfoComponent
-    let metadataContact: MockMetadataContactComponent
-    let catalogComponent: MockMetadataCatalogComponent
+    let metadataInfo: MetadataInfoComponent
+    let metadataContact: MetadataContactComponent
+    let catalogComponent: MetadataCatalogComponent
 
     beforeEach(() => {
       facade.isPresent$.next(true)
       fixture.detectChanges()
       metadataInfo = fixture.debugElement.query(
-        By.directive(MockMetadataInfoComponent)
+        By.directive(MetadataInfoComponent)
       ).componentInstance
       metadataContact = fixture.debugElement.query(
-        By.directive(MockMetadataContactComponent)
+        By.directive(MetadataContactComponent)
       ).componentInstance
       catalogComponent = fixture.debugElement.query(
-        By.directive(MockMetadataCatalogComponent)
+        By.directive(MetadataCatalogComponent)
       ).componentInstance
     })
     describe('if metadata present', () => {
@@ -260,7 +149,7 @@ describe('RecordMetadataComponent', () => {
         facade.isPresent$.next(false)
         fixture.detectChanges()
         metadataInfo = fixture.debugElement.query(
-          By.directive(MockMetadataInfoComponent)
+          By.directive(MetadataInfoComponent)
         ).componentInstance
       })
       it('shows a placeholder', () => {
@@ -269,31 +158,29 @@ describe('RecordMetadataComponent', () => {
       })
       it('does not display the metadata contact component', () => {
         expect(
-          fixture.debugElement.query(By.directive(MockMetadataContactComponent))
+          fixture.debugElement.query(By.directive(MetadataContactComponent))
         ).toBeFalsy()
       })
       it('does not display the metadata catalog component', () => {
         expect(
-          fixture.debugElement.query(By.directive(MockMetadataCatalogComponent))
+          fixture.debugElement.query(By.directive(MetadataCatalogComponent))
         ).toBeFalsy()
       })
       it('does not display the image overlay preview', () => {
         expect(
-          fixture.debugElement.query(
-            By.directive(MockImgOverlayPreviewComponent)
-          )
+          fixture.debugElement.query(By.directive(ImageOverlayPreviewComponent))
         ).toBeFalsy()
       })
     })
     describe('Image Overlay Preview', () => {
       describe('if metadata without overview', () => {
-        let imgOverlayPreview: MockImgOverlayPreviewComponent
+        let imgOverlayPreview: ImageOverlayPreviewComponent
         beforeEach(() => {
           facade.isPresent$.next(true)
           facade.metadata$.next({})
           fixture.detectChanges()
           imgOverlayPreview = fixture.debugElement.query(
-            By.directive(MockImgOverlayPreviewComponent)
+            By.directive(ImageOverlayPreviewComponent)
           ).componentInstance
         })
         it('should send undefined as imageUrl to imgOverlayPreview component', () => {
@@ -302,12 +189,12 @@ describe('RecordMetadataComponent', () => {
         })
       })
       describe('if metadata with overview', () => {
-        let imgOverlayPreview: MockImgOverlayPreviewComponent
+        let imgOverlayPreview: ImageOverlayPreviewComponent
         beforeEach(() => {
           facade.isPresent$.next(true)
           fixture.detectChanges()
           imgOverlayPreview = fixture.debugElement.query(
-            By.directive(MockImgOverlayPreviewComponent)
+            By.directive(ImageOverlayPreviewComponent)
           ).componentInstance
         })
         describe('and url defined', () => {
@@ -347,18 +234,18 @@ describe('RecordMetadataComponent', () => {
       beforeEach(() => {
         facade.dataLinks$.next(['link'])
         fixture.detectChanges()
-        mapTab = fixture.debugElement.queryAll(By.css('mat-tab'))[0]
-        tabGroup = fixture.debugElement.queryAll(By.css('mat-tab-group'))[0]
+        mapTab = fixture.debugElement.queryAll(By.directive(MatTab))[0]
+        tabGroup = fixture.debugElement.queryAll(By.directive(MatTabGroup))[0]
       })
       it('renders preview, map tab is disabled', () => {
-        expect(mapTab.nativeNode.disabled).toBe(true)
+        expect(mapTab.componentInstance.disabled).toBe(true)
       })
       it('renders preview, table tab is selected', () => {
-        expect(tabGroup.nativeNode.selectedIndex).toBe(1)
+        expect(tabGroup.componentInstance.selectedIndex).toBe(1)
       })
       it('does not render map component', () => {
         expect(
-          fixture.debugElement.query(By.directive(MockDataMapComponent))
+          fixture.debugElement.query(By.directive(MapViewComponent))
         ).toBeFalsy()
       })
     })
@@ -366,14 +253,14 @@ describe('RecordMetadataComponent', () => {
       beforeEach(() => {
         facade.mapApiLinks$.next(['link'])
         fixture.detectChanges()
-        mapTab = fixture.debugElement.queryAll(By.css('mat-tab'))[0]
+        mapTab = fixture.debugElement.queryAll(By.directive(MatTab))[0]
       })
       it('renders preview, map tab is enabled', () => {
-        expect(mapTab.nativeNode.disabled).toBe(false)
+        expect(mapTab.componentInstance.disabled).toBe(false)
       })
       it('renders map component', () => {
         expect(
-          fixture.debugElement.query(By.directive(MockDataMapComponent))
+          fixture.debugElement.query(By.directive(MapViewComponent))
         ).toBeTruthy()
       })
     })
@@ -382,14 +269,14 @@ describe('RecordMetadataComponent', () => {
         facade.geoDataLinksWithGeometry$.next(['link'])
         facade.geoDataLinks$.next(['link'])
         fixture.detectChanges()
-        mapTab = fixture.debugElement.queryAll(By.css('mat-tab'))[0]
+        mapTab = fixture.debugElement.queryAll(By.directive(MatTab))[0]
       })
       it('renders preview, map tab is enabled', () => {
-        expect(mapTab.nativeNode.disabled).toBe(false)
+        expect(mapTab.componentInstance.disabled).toBe(false)
       })
       it('renders map component', () => {
         expect(
-          fixture.debugElement.query(By.directive(MockDataMapComponent))
+          fixture.debugElement.query(By.directive(MapViewComponent))
         ).toBeTruthy()
       })
     })
@@ -404,27 +291,27 @@ describe('RecordMetadataComponent', () => {
         facade.dataLinks$.next(null)
         facade.geoDataLinksWithGeometry$.next(null)
         fixture.detectChanges()
-        tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
-        chartTab = fixture.debugElement.queryAll(By.css('mat-tab'))[2]
-        tabGroup = fixture.debugElement.queryAll(By.css('mat-tab-group'))[0]
+        tableTab = fixture.debugElement.queryAll(By.directive(MatTab))[1]
+        chartTab = fixture.debugElement.queryAll(By.directive(MatTab))[2]
+        tabGroup = fixture.debugElement.queryAll(By.directive(MatTabGroup))[0]
       })
       it('renders preview, table tab is disabled', () => {
-        expect(tableTab.nativeNode.disabled).toBe(true)
+        expect(tableTab.componentInstance.disabled).toBe(true)
       })
       it('renders preview, chart tab is disabled', () => {
-        expect(chartTab.nativeNode.disabled).toBe(true)
+        expect(chartTab.componentInstance.disabled).toBe(true)
       })
       it('renders preview, map tab is selected', () => {
-        expect(tabGroup.nativeNode.selectedIndex).toBe(0)
+        expect(tabGroup.componentInstance.selectedIndex).toBe(0)
       })
       it('does not render any data view component', () => {
         expect(
-          fixture.debugElement.query(By.directive(MockDataViewComponent))
+          fixture.debugElement.query(By.directive(DataViewComponent))
         ).toBeFalsy()
       })
       it('does render the permalink component', () => {
         expect(
-          fixture.debugElement.query(By.directive(MockDataViewShareComponent))
+          fixture.debugElement.query(By.directive(DataViewShareComponent))
         ).toBeTruthy()
       })
     })
@@ -432,24 +319,23 @@ describe('RecordMetadataComponent', () => {
       beforeEach(() => {
         facade.dataLinks$.next(['link'])
         fixture.detectChanges()
-        tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
-        chartTab = fixture.debugElement.queryAll(By.css('mat-tab'))[2]
+        tableTab = fixture.debugElement.queryAll(By.directive(MatTab))[1]
+        chartTab = fixture.debugElement.queryAll(By.directive(MatTab))[2]
       })
       it('renders preview, table tab is enabled', () => {
-        expect(tableTab.nativeNode.disabled).toBe(false)
+        expect(tableTab.componentInstance.disabled).toBe(false)
       })
       it('renders preview, chart tab is enabled', () => {
-        expect(chartTab.nativeNode.disabled).toBe(false)
+        expect(chartTab.componentInstance.disabled).toBe(false)
       })
       it('renders two data view components (for table and chart tabs)', () => {
         expect(
-          fixture.debugElement.queryAll(By.directive(MockDataViewComponent))
-            .length
+          fixture.debugElement.queryAll(By.directive(DataViewComponent)).length
         ).toEqual(2)
       })
       it('does render the permalink component', () => {
         expect(
-          fixture.debugElement.query(By.directive(MockDataViewShareComponent))
+          fixture.debugElement.query(By.directive(DataViewShareComponent))
         ).toBeTruthy()
       })
       describe('when selectedView$ is chart', () => {
@@ -459,7 +345,7 @@ describe('RecordMetadataComponent', () => {
         })
         it('renders the permalink component', () => {
           expect(
-            fixture.debugElement.query(By.directive(MockDataViewShareComponent))
+            fixture.debugElement.query(By.directive(DataViewShareComponent))
           ).toBeTruthy()
         })
       })
@@ -468,19 +354,18 @@ describe('RecordMetadataComponent', () => {
       beforeEach(() => {
         facade.geoDataLinks$.next(['link'])
         fixture.detectChanges()
-        tableTab = fixture.debugElement.queryAll(By.css('mat-tab'))[1]
-        chartTab = fixture.debugElement.queryAll(By.css('mat-tab'))[2]
+        tableTab = fixture.debugElement.queryAll(By.directive(MatTab))[1]
+        chartTab = fixture.debugElement.queryAll(By.directive(MatTab))[2]
       })
       it('renders preview, table tab is enabled', () => {
-        expect(tableTab.nativeNode.disabled).toBe(false)
+        expect(tableTab.componentInstance.disabled).toBe(false)
       })
       it('renders preview, chart tab is enabled', () => {
-        expect(chartTab.nativeNode.disabled).toBe(false)
+        expect(chartTab.componentInstance.disabled).toBe(false)
       })
       it('renders two data view components (for table and chart tabs)', () => {
         expect(
-          fixture.debugElement.queryAll(By.directive(MockDataViewComponent))
-            .length
+          fixture.debugElement.queryAll(By.directive(DataViewComponent)).length
         ).toEqual(2)
       })
     })
@@ -491,7 +376,7 @@ describe('RecordMetadataComponent', () => {
       beforeEach(() => {
         fixture.detectChanges()
         downloadsComponent = fixture.debugElement.query(
-          By.directive(MockDataDownloadsComponent)
+          By.directive(RecordDownloadsComponent)
         )
       })
       it('download component does not render', () => {
@@ -503,7 +388,7 @@ describe('RecordMetadataComponent', () => {
         facade.downloadLinks$.next(['link'])
         fixture.detectChanges()
         downloadsComponent = fixture.debugElement.query(
-          By.directive(MockDataDownloadsComponent)
+          By.directive(RecordDownloadsComponent)
         )
       })
       it('download component renders', () => {
@@ -517,7 +402,7 @@ describe('RecordMetadataComponent', () => {
       beforeEach(() => {
         fixture.detectChanges()
         otherLinksComponent = fixture.debugElement.query(
-          By.directive(MockDataOtherlinksComponent)
+          By.directive(RecordOtherlinksComponent)
         )
       })
       it('otherlink component does not render', () => {
@@ -529,7 +414,7 @@ describe('RecordMetadataComponent', () => {
         facade.otherLinks$.next(['link'])
         fixture.detectChanges()
         otherLinksComponent = fixture.debugElement.query(
-          By.directive(MockDataOtherlinksComponent)
+          By.directive(RecordOtherlinksComponent)
         )
       })
       it('otherlink component renders', () => {
@@ -543,7 +428,7 @@ describe('RecordMetadataComponent', () => {
       beforeEach(() => {
         fixture.detectChanges()
         apiComponent = fixture.debugElement.query(
-          By.directive(MockDataApisComponent)
+          By.directive(RecordApisComponent)
         )
       })
       it('API component does not render', () => {
@@ -555,7 +440,7 @@ describe('RecordMetadataComponent', () => {
         facade.apiLinks$.next(['link'])
         fixture.detectChanges()
         apiComponent = fixture.debugElement.query(
-          By.directive(MockDataApisComponent)
+          By.directive(RecordApisComponent)
         )
       })
       it('API component renders', () => {
@@ -571,7 +456,7 @@ describe('RecordMetadataComponent', () => {
         facade.related$.next([])
         fixture.detectChanges()
         relatedComponent = fixture.debugElement.query(
-          By.directive(MockRelatedComponent)
+          By.directive(RecordRelatedRecordsComponent)
         )
       })
       it('Related component does not render', () => {
@@ -583,7 +468,7 @@ describe('RecordMetadataComponent', () => {
         facade.related$.next([{ title: 'title' }])
         fixture.detectChanges()
         relatedComponent = fixture.debugElement.query(
-          By.directive(MockRelatedComponent)
+          By.directive(RecordRelatedRecordsComponent)
         )
       })
       it('Related component renders', () => {

@@ -1,10 +1,12 @@
 <div class="flex gap-2 mb-2">
   <gn-ui-button
+    type="gray"
     *ngFor="let addOption of addOptions$ | async"
     (buttonClick)="onAdd(addOption.eventName)"
   >
-    <span class="material-symbols-outlined gn-ui-icon-small"> add </span>
-    &nbsp;{{ addOption.buttonLabel }}</gn-ui-button
+    <ng-icon name="iconoirPlus" class="text-primary"></ng-icon> &nbsp;{{
+      addOption.buttonLabel
+    }}</gn-ui-button
   >
 </div>
 <gn-ui-sortable-list

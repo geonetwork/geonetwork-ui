@@ -1,21 +1,20 @@
 import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { openLayerFeatureFixture } from '@geonetwork-ui/common/fixtures'
-import { Feature } from 'ol'
-import { Geometry } from 'ol/geom'
-
 import { FeatureDetailComponent } from './feature-detail.component'
+import { MockBuilder } from 'ng-mocks'
 
 describe('FeatureDetailComponent', () => {
   let component: FeatureDetailComponent
   let fixture: ComponentFixture<FeatureDetailComponent>
   let de: DebugElement
 
+  beforeEach(() => {
+    return MockBuilder(FeatureDetailComponent)
+  })
+
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [FeatureDetailComponent],
-    })
+    await TestBed.configureTestingModule({})
       .overrideComponent(FeatureDetailComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
       })
@@ -36,12 +35,15 @@ describe('FeatureDetailComponent', () => {
     })
   })
   describe('when a feature is given', () => {
-    let feature
     beforeEach(() => {
-      feature = new Feature()
-      feature.set('id', 123)
-      feature.set('name', 'ol_feature')
-      component.feature = openLayerFeatureFixture()
+      component.feature = {
+        type: 'Feature',
+        properties: {
+          id: 123,
+          name: 'ol_feature',
+        },
+        geometry: null,
+      }
       fixture.detectChanges()
     })
     it('displays the info', () => {
@@ -53,7 +55,7 @@ describe('FeatureDetailComponent', () => {
       expect(props.length).toBe(2)
     })
     it('ignore geometry columns', () => {
-      feature.set('geometry', new Geometry())
+      component.feature['geometry'] = { type: 'Point', coordinates: [0, 0] }
       const props = de.queryAll(By.css('.property'))
       expect(props.length).toBe(2)
     })

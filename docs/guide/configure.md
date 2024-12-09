@@ -31,7 +31,7 @@ Some additional notes:
 
   This should point to a proxy to avoid CORS errors on some requests (data preview, OGC capabilities etc.). The actual URL will be appended after this path, e.g. : https://my.proxy/?url=http%3A%2F%2Fencoded.url%2Fservice.
 
-  This is an optional parameter: leave empty to disable proxy usage.
+  This is an optional parameter: leave empty to disable proxy usage. See [this section of the run guide](./run#proxy) for more information.
 
 - `languages` (optional)
 

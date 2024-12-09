@@ -2,29 +2,15 @@
 outline: deep
 ---
 
-# Deployment
+# GeoNetwork-UI applications deployment guide
 
 This guide will offer you indications and advices for successfully deploying one or several GeoNetwork-UI applications in your infrastructure.
 
 ::: tip
 
-Before diving into this guide, please refer yourself to the [prerequisites](./prerequisites.md) page to make sure your environment is ready for deploying GeoNetwork-UI applications.
+Before diving into this guide, please refer yourself to the [prerequisites](./prerequisites.md) page to make sure your environment is ready for deploying GeoNetwork-UI applications, and to the [run guide](./run.md) to have a basic understanding on how GeoNetwork-UI applications are run.
 
 :::
-
-## Basic principle
-
-Applications can be built using the following command:
-
-```shell
-$ npx nx build <app-name>
-# <app-name> is e.g. datahub or datafeeder
-```
-
-All build artifacts for this application will end up in the `dist/<app-name>` folder.
-These artifacts can be deployed in any HTTP server (e.g. Nginx, Apache, Azure Static Website with Blob storage...).
-
-Simply move the content of `dist/<app-name>` folder into the appropriate place for your server and adjust your configuration file (if needed).
 
 ## Web Server
 

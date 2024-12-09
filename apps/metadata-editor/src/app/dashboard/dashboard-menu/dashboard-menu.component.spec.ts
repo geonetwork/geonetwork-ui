@@ -35,9 +35,9 @@ describe('DashboardMenuComponent', () => {
     recordsRepository.draftsChanged$ = hot('-a-|', {
       a: void 0,
     })
-    recordsRepository.getAllDrafts = jest
+    recordsRepository.getDraftsCount = jest
       .fn()
-      .mockReturnValue(hot('ab-|', { a: [], b: [{}] }))
+      .mockReturnValue(hot('ab-|', { a: 0, b: 1 }))
 
     // Define the expected marble diagram
     const expected = cold('ab-|', { a: 0, b: 1 })

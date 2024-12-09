@@ -1,14 +1,17 @@
-<gn-ui-check-toggle
-  [label]="'editor.record.form.updateFrequency.planned' | translate"
-  [value]="planned"
-  (toggled)="onPlannedToggled()"
-></gn-ui-check-toggle>
-<gn-ui-dropdown-selector
-  title="updateFrequency"
-  [showTitle]="false"
-  [choices]="choices"
-  [selected]="selectedFrequency"
-  (selectValue)="onSelectFrequencyValue($event)"
-  [disabled]="!planned"
->
-</gn-ui-dropdown-selector>
+<div class="flex flex-col gap-2">
+  <gn-ui-check-toggle
+    [label]="'editor.record.form.updateFrequency.planned' | translate"
+    [value]="planned"
+    (toggled)="onPlannedToggled()"
+  ></gn-ui-check-toggle>
+  <gn-ui-dropdown-selector
+    title="updateFrequency"
+    [showTitle]="false"
+    [choices]="choices"
+    [selected]="selectedFrequency"
+    (selectValue)="onSelectFrequencyValue($event)"
+    [disabled]="!planned"
+    [extraBtnClass]="'input-as-button gn-ui-text-input'"
+  >
+  </gn-ui-dropdown-selector>
+</div>

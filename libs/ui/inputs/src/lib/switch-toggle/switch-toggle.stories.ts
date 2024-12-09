@@ -1,15 +1,27 @@
-import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
+import {
+  applicationConfig,
+  Meta,
+  moduleMetadata,
+  StoryObj,
+} from '@storybook/angular'
 import { SwitchToggleComponent } from './switch-toggle.component'
-import { MatButtonToggleModule } from '@angular/material/button-toggle'
-import { CommonModule } from '@angular/common'
+import { importProvidersFrom } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
+import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
+import { HttpClientModule } from '@angular/common/http'
 
 export default {
   title: 'Inputs/SwitchToggle',
   component: SwitchToggleComponent,
   decorators: [
     moduleMetadata({
-      declarations: [],
-      imports: [SwitchToggleComponent, MatButtonToggleModule, CommonModule],
+      imports: [SwitchToggleComponent],
+    }),
+    applicationConfig({
+      providers: [
+        importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
+        importProvidersFrom(HttpClientModule),
+      ],
     }),
   ],
 } as Meta<SwitchToggleComponent>

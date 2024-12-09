@@ -43,11 +43,11 @@ describe('datasets', () => {
         .should('have.length', 1)
       cy.screenshot({ capture: 'viewport' })
     })
-    it('should sort by relevance initially', () => {
+    it('should sort by change date initially', () => {
       cy.get('@sortBy')
         .getActiveDropdownOption()
         .invoke('attr', 'data-cy-value')
-        .should('equal', 'desc,_score')
+        .should('equal', 'desc,changeDate')
     })
   })
 
@@ -345,7 +345,7 @@ describe('datasets', () => {
 
     describe('isSpatial filter', () => {
       beforeEach(() => {
-        cy.get('@filters').eq(4).click()
+        cy.get('@filters').eq(5).click()
         getFilterOptions()
       })
       it('should have options', () => {
@@ -473,7 +473,7 @@ describe('datasets', () => {
         cy.intercept('GET', '/assets/configuration/default.toml', {
           fixture: 'config-with-geometry.toml',
         })
-        cy.visit('/search')
+        cy.visit('/search?_sort=-_score')
       })
       it('boosts records in the provided geometry', () => {
         cy.get('gn-ui-results-list-item')
@@ -541,7 +541,7 @@ describe('datasets', () => {
         cy.get('.cdk-overlay-container')
           .find('[role=listbox]')
           .find('button')
-          .should('have.length', 3)
+          .should('have.length', 4)
       })
     })
 

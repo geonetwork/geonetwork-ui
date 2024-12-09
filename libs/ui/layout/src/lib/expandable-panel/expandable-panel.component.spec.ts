@@ -10,7 +10,7 @@ describe('ExpandablePanelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ExpandablePanelComponent],
+      imports: [ExpandablePanelComponent],
       schemas: [NO_ERRORS_SCHEMA],
     })
       .overrideComponent(ExpandablePanelComponent, {

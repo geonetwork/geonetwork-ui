@@ -1,12 +1,18 @@
-<div
-  class="flex items-center justify-between rounded-lg border border-gray-300 bg-white"
->
+<span class="w-full inline-block relative">
   <input
-    class="pl-3"
+    class="gn-ui-text-input pr-[var(--text-padding)]"
     [matDatepicker]="picker"
     [value]="date"
     (dateChange)="dateChange.emit($event.value)"
   />
-  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-</div>
+  <gn-ui-button
+    type="light"
+    class="absolute inset-y-[var(--side-padding)] right-[var(--side-padding)] z-10"
+    (buttonClick)="picker.open()"
+    data-cy="date-picker-button"
+    extraClass="h-full"
+  >
+    <ng-icon name="iconoirCalendar" class="text-primary"></ng-icon>
+  </gn-ui-button>
+</span>
 <mat-datepicker #picker></mat-datepicker>

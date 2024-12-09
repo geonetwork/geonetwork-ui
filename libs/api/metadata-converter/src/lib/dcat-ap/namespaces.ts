@@ -1,0 +1,17 @@
+import { Namespace } from 'rdflib'
+
+export const RDF = Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
+export const RDFS = Namespace('http://www.w3.org/2000/01/rdf-schema#')
+export const FOAF = Namespace('http://xmlns.com/foaf/0.1/')
+export const XSD = Namespace('http://www.w3.org/2001/XMLSchema#')
+export const DCAT = Namespace('http://www.w3.org/ns/dcat#')
+export const DCTERMS = Namespace('http://purl.org/dc/terms/')
+export const SKOS = Namespace('http://www.w3.org/2004/02/skos/core#')
+export const SCHEMA_ORG = Namespace('http://schema.org/')
+export const SPDX = Namespace('https://spdx.org/rdf/terms/#')
+export const ADMS = Namespace('http://www.w3.org/ns/adms#')
+export const DQV = Namespace('http://www.w3.org/ns/dqv#')
+export const OWL = Namespace('http://www.w3.org/2002/07/owl#')
+export const VCARD = Namespace('http://www.w3.org/2006/vcard/ns#')
+export const TIME = Namespace('http://www.w3.org/2006/time#')
+export const LOCN = Namespace('http://www.w3.org/ns/locn#')

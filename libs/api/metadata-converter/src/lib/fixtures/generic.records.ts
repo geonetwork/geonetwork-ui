@@ -8,6 +8,7 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
     website: new URL('https://www.my.org/info'),
     logoUrl: new URL('https://www.my.org/logo.png'),
     description: 'A generic organization',
+    translations: {},
   },
   contacts: [
     {
@@ -18,6 +19,7 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
         website: new URL('https://www.my.org/info'),
         logoUrl: new URL('https://www.my.org/logo.png'),
         description: 'A generic organization',
+        translations: {},
       },
       firstName: 'Bob',
       lastName: 'TheGreat',
@@ -33,6 +35,7 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
         website: new URL('https://www.my.org/info'),
         logoUrl: new URL('https://www.my.org/logo.png'),
         description: 'A generic organization',
+        translations: {},
       },
       firstName: 'Bob',
       lastName: 'TheGreat',
@@ -44,6 +47,7 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
       organization: {
         name: 'Another Organization',
         website: new URL('https://www.another.org/docs'),
+        translations: {},
       },
       position: 'manager',
     },
@@ -53,6 +57,7 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
       organization: {
         name: 'Another Organization',
         website: new URL('https://www.another.org/docs'),
+        translations: {},
       },
       position: 'randomWorker',
       address: '123 rue des moulins, 10808 Montargis, FR',
@@ -65,6 +70,7 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
   recordCreated: new Date('2021-11-15T09:00:00'),
   recordPublished: new Date('2022-01-01T10:00:00'),
   recordUpdated: new Date('2022-02-01T15:12:00'),
+  resourceIdentifier: '2d974612-70b1-4662-a9f4-c43cbe453773',
   resourceCreated: new Date('2022-09-01T14:18:19'),
   resourceUpdated: new Date('2022-12-04T15:12:00'),
   title: 'A very interesting dataset (un jeu de données très intéressant)',
@@ -93,6 +99,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
       },
       type: 'other',
       label: 'international',
+      translations: {},
     },
     {
       thesaurus: {
@@ -101,6 +108,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
       },
       type: 'other',
       label: 'test',
+      translations: {},
     },
     {
       thesaurus: {
@@ -109,6 +117,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
       },
       type: 'other',
       label: '_another_keyword_',
+      translations: {},
     },
     {
       thesaurus: {
@@ -117,6 +126,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
       },
       type: 'theme',
       label: 'test theme',
+      translations: {},
     },
     {
       thesaurus: {
@@ -125,18 +135,22 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
       },
       type: 'place',
       label: 'test place',
+      translations: {},
     },
     {
       type: 'theme',
       label: 'themeNoThesaurus',
+      translations: {},
     },
     {
       type: 'theme',
       label: 'themeNoThesaurus 2',
+      translations: {},
     },
     {
       type: 'temporal',
       label: 'temporalNoThesaurus',
+      translations: {},
     },
   ],
   topics: ['agriculture'],
@@ -148,12 +162,14 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
       mimeType: 'x-gis/x-shapefile',
       name: 'Direct download',
       description: 'Dataset downloaded as a shapefile',
+      translations: {},
     },
     {
       type: 'download',
       url: new URL('http://my-org.net/download/2.geojson'),
       mimeType: 'application/geo+json',
       name: 'Direct download',
+      translations: {},
     },
     {
       type: 'link',
@@ -161,6 +177,7 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
       name: 'Documentation',
       description:
         'A link to the online documentation in PDF; please forgive the typos.',
+      translations: {},
     },
     {
       type: 'service',
@@ -169,35 +186,45 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
       name: 'my:featuretype', // FIXME: same as identifier otherwise it will be lost in iso...
       description: 'This WFS service offers direct download capability',
       identifierInService: 'my:featuretype',
+      translations: {},
     },
   ],
   lineage: `This record was edited manually to test the conversion processes
 
 As such, **it is not very interesting at all.**`,
   otherConstraints: [
-    { text: 'Should only be used as a testing tool' },
-    { text: 'Might cause minor annoyance in people' },
+    { text: 'Should only be used as a testing tool', translations: {} },
+    { text: 'Might cause minor annoyance in people', translations: {} },
   ],
   licenses: [
     {
       text: 'Licence ODbL mai 2013 (basée sur ODbL 1.0)',
       url: new URL('https://data.rennesmetropole.fr/pages/licence/'),
+      translations: {},
     },
   ],
   legalConstraints: [
     {
       text: "Dataset access isn't possible since it does not really exist",
+      translations: {},
     },
   ],
   securityConstraints: [
     {
       text: 'Contains sensitive information related to national defense',
+      url: new URL('https://security.org/document.pdf'),
+      translations: {
+        text: {
+          fr: 'Contient des informations sensibles liées à la défense nationale',
+        },
+      },
     },
   ],
   spatialExtents: [
     {
       bbox: [-11.5, 35.3, 43.2, 81.4],
       description: 'http://www.naturalearthdata.com/ne_admin#Continent/Europe',
+      translations: {},
     },
   ],
   temporalExtents: [
@@ -213,5 +240,11 @@ As such, **it is not very interesting at all.**`,
     updatedTimes: 3,
     per: 'month',
   },
-  languages: [],
+  otherLanguages: ['fr', 'de'],
+  defaultLanguage: 'en',
+  translations: {
+    lineage: {
+      de: 'Dieser Datensatz wurde manuell bearbeitet, um die Konvertierungsprozesse zu testen\n\nAls solches ist es **überhaupt nicht interessant.**',
+    },
+  },
 }

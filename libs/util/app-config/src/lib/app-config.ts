@@ -98,6 +98,7 @@ export function loadAppConfig() {
           'proxy_path',
           'metadata_language',
           'login_url',
+          'logout_url',
           'web_component_embedder_url',
           'languages',
           'contact_email',
@@ -124,6 +125,8 @@ export function loadAppConfig() {
                   ).toLowerCase()
                 : undefined,
               LOGIN_URL: parsedGlobalSection.login_url,
+              LOGOUT_URL: parsedGlobalSection.logout_url,
+              SETTINGS_URL: parsedGlobalSection.settings_url,
               WEB_COMPONENT_EMBEDDER_URL:
                 parsedGlobalSection.web_component_embedder_url,
               LANGUAGES: parsedGlobalSection.languages,

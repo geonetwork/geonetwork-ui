@@ -1,7 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser'
 import { importProvidersFrom, NgModule } from '@angular/core'
 import { ApiModule, Configuration } from '@geonetwork-ui/data-access/datafeeder'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import {
+  ProgressBarComponent,
+  UiWidgetsModule,
+} from '@geonetwork-ui/ui/widgets'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { environment } from '../environments/environment'
@@ -36,7 +39,6 @@ import { SummarizeIllustrationComponent } from './presentation/components/svg/su
 import { SummarizeBackgroundComponent } from './presentation/components/svg/summarize-background/summarize-background.component'
 import { DATAFEEDER_STATE_KEY, reducer } from './store/datafeeder.reducer'
 import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
-import { MatIconModule } from '@angular/material/icon'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { DatasetValidationCsvPageComponent } from './presentation/pages/dataset-validation-csv-page/dataset-validation-csv-page'
 
@@ -76,7 +78,6 @@ export function apiConfigurationFactory() {
     UiInputsModule,
     UiWidgetsModule,
     HttpClientModule,
-    MatIconModule,
     UtilI18nModule,
     FeatureEditorModule,
     BrowserAnimationsModule,
@@ -86,6 +87,7 @@ export function apiConfigurationFactory() {
       [DATAFEEDER_STATE_KEY]: reducer,
     }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
+    ProgressBarComponent,
   ],
   providers: [importProvidersFrom(FeatureAuthModule)],
   bootstrap: [AppComponent],

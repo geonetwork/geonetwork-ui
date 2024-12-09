@@ -16,12 +16,15 @@ import { Observable, Subscription } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { AuthService, FavoritesService } from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'gn-ui-favorite-star',
   templateUrl: './favorite-star.component.html',
   styleUrls: ['./favorite-star.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, StarToggleComponent],
 })
 export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   @Input() displayCount? = true

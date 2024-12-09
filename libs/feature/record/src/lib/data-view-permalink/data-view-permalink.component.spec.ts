@@ -6,10 +6,10 @@ import {
 } from './data-view-permalink.component'
 import { BehaviorSubject, firstValueFrom } from 'rxjs'
 import { MdViewFacade } from '../state'
-import { Component, Input } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { GN_UI_VERSION } from '../gn-ui-version.token'
 import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
+import { MockBuilder } from 'ng-mocks'
 
 const chartConfig1 = {
   aggregation: 'sum',
@@ -38,23 +38,15 @@ const baseUrl = 'https://example.com/wc-embedder'
 
 const gnUiVersion = 'v1.2.3'
 
-@Component({
-  selector: 'gn-ui-copy-text-button',
-  template: '<div></div>',
-})
-export class MockCopyTextButtonComponent {
-  @Input() text: string
-  @Input() tooltipText: string
-  @Input() rows: number
-}
 describe('DataViewPermalinkComponent', () => {
   let component: DataViewPermalinkComponent
   let fixture: ComponentFixture<DataViewPermalinkComponent>
   let facade
 
+  beforeEach(() => MockBuilder(DataViewPermalinkComponent))
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DataViewPermalinkComponent, MockCopyTextButtonComponent],
       imports: [TranslateModule.forRoot()],
       providers: [
         provideRepositoryUrl('http://gn-api.url/'),

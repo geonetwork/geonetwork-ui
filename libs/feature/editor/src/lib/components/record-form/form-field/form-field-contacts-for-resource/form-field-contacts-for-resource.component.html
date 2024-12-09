@@ -1,16 +1,10 @@
 <div class="flex flex-col gap-3">
   <div class="flex flex-row flex-wrap gap-2" data-test="rolesToPick">
     <ng-container *ngFor="let role of rolesToPick">
-      <gn-ui-button
-        extraClass="px-2 py-1.5"
-        (buttonClick)="addRoleToDisplay(role)"
-      >
-        <div class="flex flex-row gap-1 items-center">
-          <span class="text-primary text-[20px] leading-[0] font-bold pb-[5px]"
-            >&#8330;</span
-          >
-          <span class="font-bold" translate>{{ roleToLabel(role) }}</span>
-        </div>
+      <gn-ui-button type="gray" (buttonClick)="addRoleToDisplay(role)">
+        <ng-icon name="iconoirPlus" class="text-primary"></ng-icon>
+        &nbsp;
+        <span translate>{{ roleToLabel(role) }}</span>
       </gn-ui-button>
     </ng-container>
   </div>
@@ -43,33 +37,19 @@
         [displayWithFn]="displayWithFn"
         [minCharacterCount]="1"
         [clearOnSelection]="true"
+        [allowSubmit]="false"
       >
       </gn-ui-autocomplete>
 
       <ng-container *ngIf="contactsForRessourceByRole.get(role) as contacts">
-        <ng-container *ngIf="contacts.length > 1">
-          <gn-ui-sortable-list
-            [items]="contacts"
-            (itemsOrderChange)="handleContactsChanged($event)"
-            [elementTemplate]="contactTemplate"
-          ></gn-ui-sortable-list>
-          <ng-template #contactTemplate let-contact>
-            <div class="flex flex-row items-center gap-2">
-              <gn-ui-contact-card
-                [contact]="contact"
-                [removable]="false"
-              ></gn-ui-contact-card>
-            </div>
-          </ng-template>
-        </ng-container>
-        <ng-container *ngIf="contacts.length === 1">
-          <ng-container *ngFor="let contact of contacts">
-            <gn-ui-contact-card
-              [contact]="contact"
-              (contactRemoved)="removeContact(index)"
-            ></gn-ui-contact-card>
-          </ng-container>
-        </ng-container>
+        <gn-ui-sortable-list
+          [items]="contacts"
+          (itemsOrderChange)="handleContactsChanged($event, role)"
+          [elementTemplate]="contactTemplate"
+        ></gn-ui-sortable-list>
+        <ng-template #contactTemplate let-contact>
+          <gn-ui-contact-card [contact]="contact"></gn-ui-contact-card>
+        </ng-template>
       </ng-container>
 
       <hr class="border-t-[#D6D3D1] mt-4 mb-6" *ngIf="!isLast" />

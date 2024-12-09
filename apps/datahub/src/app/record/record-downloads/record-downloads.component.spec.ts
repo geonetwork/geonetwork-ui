@@ -6,11 +6,12 @@ import {
 } from '@angular/core/testing'
 import { BehaviorSubject, of, throwError } from 'rxjs'
 import { RecordDownloadsComponent } from './record-downloads.component'
-import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import { MockBuilder } from 'ng-mocks'
+import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 
 // This is used to work around a very weird bug when comparing URL objects would fail
 // if the `searchParams` of the object wasn't accessed beforehand in some cases...
@@ -71,34 +72,15 @@ class DataServiceMock {
   )
 }
 
-@Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'gn-ui-download-item',
-  template: '<div></div>',
-})
-export class MockDownloadsListItemComponent {
-  @Input() link: DatasetOnlineResource
-}
-
-@Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'gn-ui-popup-alert',
-  template: '<div></div>',
-})
-export class MockPopupAlertComponent {}
-
-describe('DataDownloadsComponent', () => {
+describe('RecordDownloadsComponent', () => {
   let component: RecordDownloadsComponent
   let fixture: ComponentFixture<RecordDownloadsComponent>
   let facade
 
+  beforeEach(() => MockBuilder(RecordDownloadsComponent))
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        RecordDownloadsComponent,
-        MockDownloadsListItemComponent,
-        MockPopupAlertComponent,
-      ],
       providers: [
         {
           provide: MdViewFacade,
@@ -109,7 +91,6 @@ describe('DataDownloadsComponent', () => {
           useClass: DataServiceMock,
         },
       ],
-      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
     facade = TestBed.inject(MdViewFacade)
   })
@@ -162,7 +143,7 @@ describe('DataDownloadsComponent', () => {
       // disable error handling in UI
       it.skip('shows an error', () => {
         const popup = fixture.debugElement.query(
-          By.directive(MockPopupAlertComponent)
+          By.directive(PopupAlertComponent)
         )
         expect(popup).toBeTruthy()
       })

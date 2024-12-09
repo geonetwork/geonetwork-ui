@@ -1,3 +1,8 @@
+/* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+::ng-deep .mat-mdc-tab-labels {
+  /* move tabs on the right to let the title show */
+  margin-left: 140px;
+}
 ::ng-deep .mat-mdc-tab.mdc-tab {
   letter-spacing: 0.88px;
 }
@@ -16,6 +21,9 @@
 }
 @media only screen and (max-width: 639px) {
   /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
+  ::ng-deep .mat-mdc-tab-labels {
+    margin-left: 0px;
+  }
   ::ng-deep .mat-mdc-tab.mdc-tab {
     padding: 0px !important;
     margin-right: 24px;

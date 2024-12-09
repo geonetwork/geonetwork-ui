@@ -39,7 +39,6 @@
             'py-2 px-4 rounded-r-md bg-gray-400 hover:bg-gray-600 focus:bg-gray-800 text-white':
               displayText
           }"
-          mat-raised-button
           [matTooltip]="
             !currentlyActive
               ? ('record.metadata.api.form.openForm' | translate)
@@ -48,13 +47,13 @@
           matTooltipPosition="above"
           (click)="openRecordApiFormPanel()"
         >
-          <mat-icon
-            class="material-symbols-outlined pointer-events-none align-middle card-icon"
+          <ng-icon
+            class="pointer-events-none align-middle card-icon"
+            name="matMoreHoriz"
             [ngClass]="{
               'text-secondary opacity-100': currentlyActive
             }"
-            >more_horiz</mat-icon
-          >
+          ></ng-icon>
         </button>
       </div>
     </div>

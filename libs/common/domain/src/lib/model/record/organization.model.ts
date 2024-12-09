@@ -1,3 +1,5 @@
+import { OrganizationTranslations } from './translation.model'
+
 export interface Organization {
   name: string
   email?: string
@@ -5,4 +7,6 @@ export interface Organization {
   website?: URL
   logoUrl?: URL
   recordCount?: number
+
+  translations?: OrganizationTranslations
 }

@@ -135,7 +135,6 @@ export default {
 export const Edition: StoryObj<MarkdownEditorComponent> = {
   args: {
     preview: false,
-    helperText: 'Some helper text',
     placeholder: 'Some placeholder',
     textContent,
   },
@@ -150,7 +149,6 @@ export const Edition: StoryObj<MarkdownEditorComponent> = {
     <div style="width: 600px;height: 400px;">
       <gn-ui-markdown-editor
         [preview]="preview"
-        [helperText]="helperText"
         [placeholder]="placeholder"
         [textContent]="textContent"
       ></gn-ui-markdown-editor>
@@ -161,7 +159,6 @@ export const Edition: StoryObj<MarkdownEditorComponent> = {
 export const Preview: StoryObj<MarkdownEditorComponent> = {
   args: {
     preview: true,
-    helperText: 'Some helper text',
     placeholder: 'Some placeholder',
     textContent,
   },
@@ -176,7 +173,6 @@ export const Preview: StoryObj<MarkdownEditorComponent> = {
     <div style="width: 600px;height: 400px;">
       <gn-ui-markdown-editor
         [preview]="preview"
-        [helperText]="helperText"
         [placeholder]="placeholder"
         [textContent]="textContent"
       ></gn-ui-markdown-editor>

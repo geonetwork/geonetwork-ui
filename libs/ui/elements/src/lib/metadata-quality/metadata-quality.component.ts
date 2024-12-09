@@ -5,14 +5,29 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core'
-import { MetadataQualityItem } from '../metadata-quality-item/metadata-quality-item.component'
+import {
+  MetadataQualityItem,
+  MetadataQualityItemComponent,
+} from '../metadata-quality-item/metadata-quality-item.component'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  PopoverComponent,
+  ProgressBarComponent,
+} from '@geonetwork-ui/ui/widgets'
+import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'gn-ui-metadata-quality',
   templateUrl: './metadata-quality.component.html',
   styleUrls: ['./metadata-quality.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    PopoverComponent,
+    ProgressBarComponent,
+    MetadataQualityItemComponent,
+  ],
 })
 export class MetadataQualityComponent implements OnChanges {
   @Input() metadata: Partial<CatalogRecord>

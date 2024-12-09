@@ -83,6 +83,27 @@ const reducer = createReducer(
   on(EditorActions.setCurrentPage, (state, { page }) => ({
     ...state,
     currentPage: page,
+  })),
+  on(EditorActions.setFieldVisibility, (state, { field, visible }) => ({
+    ...state,
+    editorConfig: {
+      ...state.editorConfig,
+      pages: state.editorConfig.pages.map((page) => ({
+        ...page,
+        sections: page.sections.map((section) => ({
+          ...section,
+          fields: section.fields.map((f) => {
+            if (f.model === field.model) {
+              return {
+                ...f,
+                hidden: !visible,
+              }
+            }
+            return f
+          }),
+        })),
+      })),
+    },
   }))
 )
 

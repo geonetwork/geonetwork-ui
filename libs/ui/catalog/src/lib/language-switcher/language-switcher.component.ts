@@ -1,12 +1,7 @@
-import {
-  Component,
-  Inject,
-  InjectionToken,
-  OnInit,
-  Optional,
-} from '@angular/core'
+import { Component, Inject, InjectionToken, Optional } from '@angular/core'
 import { LANGUAGE_STORAGE_KEY } from '@geonetwork-ui/util/i18n'
 import { TranslateService } from '@ngx-translate/core'
+import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 
 export const LANGUAGES_LIST = new InjectionToken<string[]>('languages-list')
 
@@ -16,14 +11,21 @@ const DEFAULT_LANGUAGES = ['en', 'fr']
   selector: 'gn-ui-language-switcher',
   templateUrl: './language-switcher.component.html',
   styleUrls: ['./language-switcher.component.css'],
+  imports: [DropdownSelectorComponent],
+  standalone: true,
 })
-export class LanguageSwitcherComponent implements OnInit {
-  languageList = this.languagePlaceholder || DEFAULT_LANGUAGES
+export class LanguageSwitcherComponent {
+  languageChoices = (this.languagesList || DEFAULT_LANGUAGES).map(
+    (language) => ({
+      label: `${language}`.toUpperCase(),
+      value: language,
+    })
+  )
 
   constructor(
     @Optional()
     @Inject(LANGUAGES_LIST)
-    private languagePlaceholder,
+    private languagesList: string[],
     private translate: TranslateService
   ) {}
 
@@ -31,22 +33,14 @@ export class LanguageSwitcherComponent implements OnInit {
     return this.translate.currentLang
   }
 
-  ngOnInit(): void {
-    const languages = this.languagePlaceholder || DEFAULT_LANGUAGES
-    this.languageList = languages.map((language) => ({
-      label: `${language}`.toUpperCase(),
-      value: language,
-    }))
-  }
-
-  changeLanguage(value) {
+  changeLanguage(value: unknown) {
     try {
-      localStorage.setItem(LANGUAGE_STORAGE_KEY, value)
+      localStorage.setItem(LANGUAGE_STORAGE_KEY, value as string)
       location.reload()
     } catch (error) {
       console.warn(`Language choice could not be persisted`, error)
     }
 
-    this.translate.use(value)
+    this.translate.use(value as string)
   }
 }

@@ -11,20 +11,16 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { ApiCardComponent } from './api-card.component'
-import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
-import { CopyTextButtonComponent } from '@geonetwork-ui/ui/libs/copy-text-button'
 
 export default {
   title: 'Elements/ApiCardComponent',
   component: ApiCardComponent,
   decorators: [
     moduleMetadata({
-      declarations: [CopyTextButtonComponent],
       imports: [
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        MatIconModule,
         MatTooltipModule,
       ],
     }),

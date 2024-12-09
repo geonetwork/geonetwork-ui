@@ -1,21 +1,14 @@
-<div class="h-full flex flex-col">
-  <p
-    *ngIf="helperText"
-    class="flex-none mb-2 font-medium text-sm text-gray-900"
-  >
-    {{ helperText }}
-  </p>
-  <div class="flex-1" [hidden]="preview">
-    <gn-ui-text-area
-      [placeholder]="placeholder"
-      [value]="textContent"
-      (valueChange)="textContentChangedHandler($event)"
-    ></gn-ui-text-area>
-  </div>
-  <div
-    class="flex-1 border border-gray-800 rounded overflow-y-scroll"
-    [hidden]="!preview"
-  >
-    <gn-ui-markdown-parser [textContent]="textContent"></gn-ui-markdown-parser>
-  </div>
+<gn-ui-text-area
+  [hidden]="preview"
+  [placeholder]="placeholder"
+  [value]="textContent"
+  [extraClass]="textAreaExtraClass + ' !leading-normal'"
+  (valueChange)="textContentChangedHandler($event)"
+></gn-ui-text-area>
+
+<div
+  class="gn-ui-text-input border-gray-100 hover:border-gray-100"
+  [hidden]="!preview"
+>
+  <gn-ui-markdown-parser [textContent]="textContent"></gn-ui-markdown-parser>
 </div>

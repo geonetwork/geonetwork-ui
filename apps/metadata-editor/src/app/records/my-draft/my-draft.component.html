@@ -1,4 +1,5 @@
-<main class="bg-white">
+<header class="h-[60px] border-b border-gray-300"></header>
+<main class="bg-white overflow-y-auto">
   <div class="flex flex-row items-baseline gap-[8px] px-[32px] py-[20px]">
     <h1 class="text-[16px] text-main font-title font-bold" translate>
       dashboard.records.myDraft
@@ -6,7 +7,7 @@
   </div>
 
   <div
-    class="shadow-md shadow-gray-300 border-[1px] border-gray-200 overflow-hidden rounded bg-white grow mx-[32px] my-[16px]"
+    class="shadow-md shadow-gray-300 border-[1px] border-gray-200 overflow-hidden rounded bg-white grow mx-[32px] my-[16px] text-sm"
   >
     <gn-ui-results-table
       [records]="records$ | async"

@@ -18,7 +18,14 @@ export class ButtonComponent {
   private btnClass = 'gn-ui-btn-default'
 
   @Input() set type(
-    value: 'primary' | 'secondary' | 'default' | 'outline' | 'light'
+    value:
+      | 'primary'
+      | 'secondary'
+      | 'default'
+      | 'outline'
+      | 'light'
+      | 'gray'
+      | 'black'
   ) {
     // btn-classes are written in full to be picked up by tailwind
     switch (value) {
@@ -34,6 +41,13 @@ export class ButtonComponent {
       case 'light':
         this.btnClass = 'gn-ui-btn-light'
         break
+      case 'gray':
+        this.btnClass = 'gn-ui-btn-gray'
+        break
+      case 'black':
+        this.btnClass = 'gn-ui-btn-black'
+        break
+      case 'default':
       default:
         this.btnClass = 'gn-ui-btn-default'
         break

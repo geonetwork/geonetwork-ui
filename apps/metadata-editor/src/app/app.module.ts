@@ -24,7 +24,13 @@ import { provideAnimations } from '@angular/platform-browser/animations'
 import { extModules } from './build-specifics'
 import { DashboardPageComponent } from './dashboard/dashboard-page.component'
 import { EditorRouterService } from './router.service'
-import { provideGn4, provideRepositoryUrl } from '@geonetwork-ui/api/repository'
+import {
+  LOGIN_URL,
+  LOGOUT_URL,
+  SETTINGS_URL,
+  provideGn4,
+  provideRepositoryUrl,
+} from '@geonetwork-ui/api/repository'
 import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
 
 @NgModule({
@@ -62,6 +68,18 @@ import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
     importProvidersFrom(EffectsModule.forRoot()),
     provideGn4(),
     provideAnimations(),
+    {
+      provide: LOGIN_URL,
+      useFactory: () => getGlobalConfig().LOGIN_URL,
+    },
+    {
+      provide: LOGOUT_URL,
+      useFactory: () => getGlobalConfig().LOGOUT_URL,
+    },
+    {
+      provide: SETTINGS_URL,
+      useFactory: () => getGlobalConfig().SETTINGS_URL,
+    },
   ],
   bootstrap: [AppComponent],
 })
@@ -72,8 +90,8 @@ export class AppModule {
       getThemeConfig().SECONDARY_COLOR,
       getThemeConfig().MAIN_COLOR,
       getThemeConfig().BACKGROUND_COLOR,
-      getThemeConfig().MAIN_FONT || "'Rubik', sans-serif",
-      getThemeConfig().TITLE_FONT || "'Readex Pro', sans-serif",
+      getThemeConfig().MAIN_FONT || "'Inter', sans-serif",
+      getThemeConfig().TITLE_FONT || "'Petrona', sans-serif",
       getThemeConfig().FONTS_STYLESHEET_URL || 'assets/css/default-fonts.css'
     )
   }

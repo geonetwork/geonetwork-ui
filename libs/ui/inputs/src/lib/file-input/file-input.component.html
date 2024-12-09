@@ -4,29 +4,40 @@
     class="flex-1 border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center gap-4 transition-colors duration-100"
     [ngClass]="{
       'border-primary-lighter bg-primary-white': dragFilesOver,
-      'border-gray-300': !dragFilesOver
+      'border-gray-300': !dragFilesOver,
+      'cursor-pointer hover:border-gray-500': !isUploadInProgress
     }"
+    [attr.tabindex]="isUploadInProgress ? null : 0"
     (dragFilesOver)="handleDragFilesOver($event)"
     (dropFiles)="handleDropFiles($event)"
+    (keydown.enter)="fileInput.click()"
   >
+    <input
+      #fileInput
+      type="file"
+      class="hidden"
+      (change)="handleFileInput($event)"
+      [disabled]="isUploadInProgress"
+    />
+
     <div
       class="w-14 h-14 rounded-md bg-gray-50 grid"
       *ngIf="!isUploadInProgress"
     >
-      <mat-icon
+      <ng-icon
         *ngIf="!dragFilesOver"
-        class="material-symbols-outlined place-self-center text-primary"
-        >cloud_upload</mat-icon
-      >
-      <mat-icon
+        class="place-self-center text-primary"
+        name="iconoirCloudUpload"
+      ></ng-icon>
+      <ng-icon
         *ngIf="dragFilesOver"
-        class="material-symbols-outlined place-self-center text-primary"
-        >add_box</mat-icon
-      >
+        class="place-self-center text-primary"
+        name="iconoirFramePlusIn"
+      ></ng-icon>
     </div>
     <div
       *ngIf="isUploadInProgress"
-      class="w-14 h-14 grid items-center justify-center"
+      class="w-14 h-14 grid items-center justify-center relative"
     >
       <div class="text-gray-100 absolute">
         <mat-progress-spinner
@@ -69,17 +80,10 @@
       >
       <span class="border-b border-gray-300 grow"></span>
     </p>
-    <input
-      type="file"
-      class="hidden"
-      (change)="handleFileInput($event)"
-      [disabled]="isUploadInProgress"
-    />
-
     <gn-ui-url-input
       class="w-full"
       [disabled]="isUploadInProgress"
-      (valueChange)="handleUrlChange($event)"
+      (uploadClick)="handleUrlChange($event)"
     ></gn-ui-url-input>
   </label>
 </div>

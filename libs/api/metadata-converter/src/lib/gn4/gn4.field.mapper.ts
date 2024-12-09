@@ -146,9 +146,21 @@ export class Gn4FieldMapper {
         selectField<string>(source, 'resourceLanguage')
       )
       const languages = langList.map((lang) => LANG_3_TO_2_MAPPER[lang])
+      const defaultLanguage = output.defaultLanguage ?? languages[0] ?? null // set the first language as main one as fallback
+      const otherLanguages = languages.filter(
+        (lang) => lang !== defaultLanguage
+      )
       return {
         ...output,
-        languages,
+        defaultLanguage,
+        otherLanguages,
+      }
+    },
+    mainLanguage: (output, source) => {
+      const language = selectField<string>(source, 'mainLanguage')
+      return {
+        ...output,
+        defaultLanguage: language ? LANG_3_TO_2_MAPPER[language] : null,
       }
     },
     link: (output, source) => {
@@ -246,7 +258,6 @@ export class Gn4FieldMapper {
       ...output,
       lineage: selectTranslatedField(source, 'lineageObject', this.lang3),
     }),
-    mainLanguage: (output) => output,
     userSavedCount: (output, source) =>
       this.addExtra(
         {

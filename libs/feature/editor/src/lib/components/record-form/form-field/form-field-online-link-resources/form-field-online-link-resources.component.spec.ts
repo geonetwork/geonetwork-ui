@@ -3,19 +3,32 @@ import { FormFieldOnlineLinkResourcesComponent } from './form-field-online-link-
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { TranslateModule } from '@ngx-translate/core'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import {
+  PlatformServiceInterface,
+  RecordAttachment,
+} from '@geonetwork-ui/common/domain/platform.service.interface'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
-import { Subject } from 'rxjs'
+import { BehaviorSubject, Subject } from 'rxjs'
 import { MatDialog, MatDialogRef } from '@angular/material/dialog'
 import { OnlineLinkResource } from '@geonetwork-ui/common/domain/model/record'
 import { ModalDialogComponent } from '@geonetwork-ui/ui/layout'
+import { ChangeDetectorRef } from '@angular/core'
 
 let uploadSubject: Subject<any>
+
+const recordAttachments = new BehaviorSubject<RecordAttachment[]>([
+  {
+    url: new URL('https://www.fakedomain.com/test.txt'),
+    fileName: 'test.txt',
+  },
+])
+
 class PlatformServiceInterfaceMock {
   attachFileToRecord = jest.fn(() => {
     uploadSubject = new Subject()
     return uploadSubject
   })
+  getRecordAttachments = jest.fn(() => recordAttachments)
 }
 export class MatDialogMock {
   _subject = new Subject()
@@ -44,8 +57,13 @@ describe('FormFieldOnlineLinkResourcesComponent', () => {
           PlatformServiceInterfaceMock,
           'useClass'
         ),
-        MockProvider(NotificationsService),
+        MockProvider(NotificationsService, {
+          showNotification: jest.fn(),
+        }),
         MockProvider(MatDialogRef),
+        MockProvider(ChangeDetectorRef, {
+          detectChanges: jest.fn(),
+        }),
         MockProvider(MatDialog, MatDialogMock, 'useClass'),
       ],
     }).compileComponents()

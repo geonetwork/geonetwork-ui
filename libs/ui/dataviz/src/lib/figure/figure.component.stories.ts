@@ -9,6 +9,8 @@ import { FigureComponent } from './figure.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiDatavizModule } from '../ui-dataviz.module'
 import { importProvidersFrom } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
+import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 
 export default {
   title: 'Dataviz/FigureComponent',
@@ -18,7 +20,10 @@ export default {
       imports: [UiDatavizModule],
     }),
     applicationConfig({
-      providers: [importProvidersFrom(BrowserAnimationsModule)],
+      providers: [
+        importProvidersFrom(BrowserAnimationsModule),
+        importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
+      ],
     }),
     componentWrapperDecorator(
       (story) => `

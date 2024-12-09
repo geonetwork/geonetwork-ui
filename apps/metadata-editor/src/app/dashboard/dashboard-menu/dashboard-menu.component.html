@@ -7,44 +7,48 @@
       routerLinkActive="btn-active"
       #rlaAll="routerLinkActive"
     >
-      <mat-icon class="material-symbols-outlined">newsmode</mat-icon>
-      <span translate="">dashboard.catalog.allRecords</span>
+      <ng-icon name="iconoirJournal"></ng-icon>
+      <span class="text-sm" translate="">dashboard.catalog.allRecords</span>
     </a>
-    <a
-      class="menu-item"
-      routerLink="/catalog/discussion"
+    <!-- <a
+      class="menu-item btn-inactive"
+      [routerLink]="activeLink ? '/catalog/discussion' : null"
       routerLinkActive="btn-active"
       #rlaDiscussion="routerLinkActive"
+      [title]="'editor.temporary.disabled' | translate"
     >
-      <mat-icon class="material-symbols-outlined">chat_bubble</mat-icon>
-      <span translate="">dashboard.catalog.discussion</span>
+      <ng-icon name="matChatBubbleOutlineOutline"></ng-icon>
+      <span class="text-sm" translate="">dashboard.catalog.discussion</span>
     </a>
     <a
-      class="menu-item"
-      routerLink="/catalog/calendar"
+      class="menu-item btn-inactive"
+      [routerLink]="activeLink ? '/catalog/calendar' : null"
       routerLinkActive="btn-active"
       #rlaCalendar="routerLinkActive"
+      [title]="'editor.temporary.disabled' | translate"
     >
-      <mat-icon class="material-symbols-outlined">calendar_today</mat-icon>
-      <span translate="">dashboard.catalog.calendar</span>
-    </a>
+      <ng-icon name="iconoirCalendar"></ng-icon>
+      <span class="text-sm" translate="">dashboard.catalog.calendar</span>
+    </a> -->
     <a
-      class="menu-item"
-      routerLink="/catalog/contacts"
+      class="menu-item btn-inactive"
+      [routerLink]="activeLink ? '/catalog/contacts' : null"
       routerLinkActive="btn-active"
       #rlaContacts="routerLinkActive"
+      [title]="'editor.temporary.disabled' | translate"
     >
-      <mat-icon class="material-symbols-outlined">person</mat-icon>
-      <span translate="">dashboard.catalog.contacts</span>
+      <ng-icon name="iconoirUser"></ng-icon>
+      <span class="text-sm" translate="">dashboard.catalog.contacts</span>
     </a>
     <a
-      class="menu-item"
-      routerLink="/catalog/thesaurus"
+      class="menu-item btn-inactive"
+      [routerLink]="activeLink ? '/catalog/thesaurus' : null"
       routerLinkActive="btn-active"
       #rlaThesaurus="routerLinkActive"
+      [title]="'editor.temporary.disabled' | translate"
     >
-      <mat-icon class="material-symbols-outlined">label</mat-icon>
-      <span translate="">dashboard.catalog.thesaurus</span>
+      <ng-icon name="matLabelOutline"></ng-icon>
+      <span class="text-sm" translate="">dashboard.catalog.thesaurus</span>
     </a>
   </div>
 
@@ -56,8 +60,8 @@
       routerLinkActive="btn-active"
       #rlaMyRecords="routerLinkActive"
     >
-      <mat-icon class="material-symbols-outlined">post_add</mat-icon>
-      <span translate="">dashboard.records.myRecords</span>
+      <ng-icon name="iconoirJournalPage"></ng-icon>
+      <span class="text-sm" translate="">dashboard.records.myRecords</span>
     </a>
     <a
       class="menu-item"
@@ -65,22 +69,27 @@
       routerLinkActive="btn-active"
       #rlaMyDraft="routerLinkActive"
     >
-      <mat-icon class="material-symbols-outlined">edit_note</mat-icon>
-      <span translate="">dashboard.records.myDraft</span>
-      <gn-ui-badge
-        [style.--gn-ui-badge-rounded]="'100px'"
-        data-cy="dashboard-drafts-count"
-        >{{ draftsCount$ | async }}</gn-ui-badge
-      >
+      <ng-icon name="iconoirPageEdit"></ng-icon>
+      <span class="text-sm" translate="">dashboard.records.myDraft</span>
+      <ng-container *ngIf="draftsCount$ | async as draftsCount">
+        <gn-ui-badge
+          [style.--gn-ui-badge-padding]="'0.375em 0.875em'"
+          [style.--gn-ui-badge-text-size]="'12px'"
+          *ngIf="draftsCount > 0"
+          data-cy="dashboard-drafts-count"
+          >{{ draftsCount }}</gn-ui-badge
+        >
+      </ng-container>
     </a>
     <a
-      class="menu-item"
-      routerLink="/my-space/templates"
+      class="menu-item btn-inactive"
+      [routerLink]="activeLink ? '/my-space/templates' : null"
       routerLinkActive="btn-active"
       #rlaMyLibrary="routerLinkActive"
+      [title]="'editor.temporary.disabled' | translate"
     >
-      <mat-icon class="material-symbols-outlined">lightbulb</mat-icon>
-      <span translate="">dashboard.records.templates</span>
+      <ng-icon name="iconoirLightBulbOn"></ng-icon>
+      <span class="text-sm" translate="">dashboard.records.templates</span>
     </a>
   </div>
 </div>

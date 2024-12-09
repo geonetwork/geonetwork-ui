@@ -11,16 +11,13 @@ import {
 } from '@storybook/angular'
 import { TableViewComponent } from './table-view.component'
 import { TableComponent, UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
-import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
 import { importProvidersFrom } from '@angular/core'
-import { MatProgressSpinner } from '@angular/material/progress-spinner'
 
 export default {
   title: 'Smart/Dataviz/TableView',
   component: TableViewComponent,
   decorators: [
     moduleMetadata({
-      declarations: [LoadingMaskComponent, MatProgressSpinner],
       imports: [
         TableComponent,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),

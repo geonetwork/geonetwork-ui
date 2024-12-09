@@ -1,13 +1,25 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { TranslateModule } from '@ngx-translate/core'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { UiCatalogModule } from '@geonetwork-ui/ui/catalog'
+import {
+  NavigationButtonComponent,
+  UiInputsModule,
+} from '@geonetwork-ui/ui/inputs'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { AsyncPipe, Location, NgIf } from '@angular/common'
-import { MatIconModule } from '@angular/material/icon'
 import { ErrorType, UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { Router } from '@angular/router'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import {
+  matFolderOutline,
+  matOpenInNewOutline,
+} from '@ng-icons/material-icons/outline'
+import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
+import { matArrowBack } from '@ng-icons/material-icons/baseline'
 
 @Component({
   selector: 'datahub-organization-header',
@@ -18,11 +30,18 @@ import { Router } from '@angular/router'
   imports: [
     UiInputsModule,
     TranslateModule,
-    UiCatalogModule,
     NgIf,
-    MatIconModule,
     AsyncPipe,
     UiElementsModule,
+    NgIconComponent,
+    LanguageSwitcherComponent,
+    NavigationButtonComponent,
+  ],
+  providers: [
+    provideIcons({ matFolderOutline, matOpenInNewOutline, matArrowBack }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
   ],
 })
 export class OrganizationHeaderComponent {

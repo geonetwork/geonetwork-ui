@@ -7,12 +7,7 @@ import {
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import { TranslateModule } from '@ngx-translate/core'
-import { MetadataQualityItemComponent } from '../metadata-quality-item/metadata-quality-item.component'
-import {
-  PopoverComponent,
-  ProgressBarComponent,
-} from '@geonetwork-ui/ui/widgets'
-import { MatIconModule } from '@angular/material/icon'
+import { PopoverComponent } from '@geonetwork-ui/ui/widgets'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export default {
@@ -20,10 +15,8 @@ export default {
   component: MetadataQualityComponent,
   decorators: [
     moduleMetadata({
-      declarations: [ProgressBarComponent, MetadataQualityItemComponent],
       imports: [
         CommonModule,
-        MatIconModule,
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
         PopoverComponent,

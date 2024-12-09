@@ -251,7 +251,7 @@ describe('RouterEffects', () => {
           a: new SetFilters({ any: 'any' }, 'main'),
           b: new SetSortBy(['desc', 'createDate'], 'main'),
           c: new Paginate(2, 'main'),
-          d: new SetSortBy(['desc', '_score'], 'main'),
+          d: new SetSortBy(['desc', 'changeDate'], 'main'),
           e: new Paginate(1, 'main'),
         })
         expect(effects.syncSearchState$).toBeObservable(expected)
@@ -273,7 +273,7 @@ describe('RouterEffects', () => {
           a: new SetFilters({ any: 'any' }, 'main'),
           b: new SetSortBy(['desc', 'createDate'], 'main'),
           c: new Paginate(2, 'main'),
-          d: new SetSortBy(['desc', '_score'], 'main'),
+          d: new SetSortBy(['desc', 'changeDate'], 'main'),
           e: new Paginate(12, 'main'),
         })
         expect(effects.syncSearchState$).toBeObservable(expected)

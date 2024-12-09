@@ -1,28 +1,18 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { of } from 'rxjs'
 
 import { RecordPageComponent } from './record-page.component'
-
-class MdViewFacadeMock {
-  metadata$ = of()
-}
+import { MockBuilder, MockProvider } from 'ng-mocks'
 
 describe('RecordPageComponent', () => {
   let component: RecordPageComponent
   let fixture: ComponentFixture<RecordPageComponent>
 
+  beforeEach(() => MockBuilder(RecordPageComponent))
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecordPageComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-      providers: [
-        {
-          provide: MdViewFacade,
-          useClass: MdViewFacadeMock,
-        },
-      ],
+      providers: [MockProvider(MdViewFacade)],
     }).compileComponents()
   })
 

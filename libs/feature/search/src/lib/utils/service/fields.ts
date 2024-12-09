@@ -346,3 +346,29 @@ export class OwnerSearchField extends SimpleSearchField {
     return of([])
   }
 }
+
+export class UserSearchField extends SimpleSearchField {
+  constructor(injector: Injector) {
+    super('userinfo.keyword', injector, 'asc')
+  }
+
+  getAvailableValues(): Observable<FieldAvailableValue[]> {
+    return super.getAvailableValues().pipe(
+      map((values) =>
+        values.map((v) => ({
+          ...v,
+          label: this.formatUserInfo(v.label),
+        }))
+      )
+    )
+  }
+
+  private formatUserInfo(userInfo: string | unknown): string {
+    const infos = (typeof userInfo === 'string' ? userInfo : '').split('|')
+    const count = infos[3].split(' ')[1]
+    if (infos && infos.length === 4) {
+      return `${infos[2]} ${infos[1]} ${count}`
+    }
+    return undefined
+  }
+}

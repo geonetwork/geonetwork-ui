@@ -3,7 +3,7 @@ import { MdViewActions } from '@geonetwork-ui/feature/record'
 import { RouterService } from '../router.service'
 import { RouterReducerState } from '@ngrx/router-store'
 import { select, Store } from '@ngrx/store'
-import { distinctUntilChanged, filter, map, take, tap } from 'rxjs/operators'
+import { distinctUntilChanged, filter, map, take } from 'rxjs/operators'
 import {
   ROUTER_ROUTE_DATASET,
   ROUTER_ROUTE_SEARCH,

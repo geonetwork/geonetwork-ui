@@ -1,8 +1,9 @@
 /* eslint-disable @angular-eslint/directive-selector */
-import { Directive, ElementRef, Renderer2, OnInit } from '@angular/core'
+import { Directive, ElementRef, OnInit, Renderer2 } from '@angular/core'
 
 @Directive({
   selector: '[gnUiLinkify]',
+  standalone: true,
 })
 export class GnUiLinkifyDirective implements OnInit {
   constructor(private el: ElementRef, private renderer: Renderer2) {}
@@ -75,6 +76,6 @@ export class GnUiLinkifyDirective implements OnInit {
   }
 
   private createLink(displayValue: string, url: string): string {
-    return `<a href="${url}" target="_blank" class="text-primary cursor-pointer hover:underline">${displayValue} <mat-icon class="material-symbols-outlined !w-[12px] !h-[14px] !text-[14px] opacity-75">open_in_new</mat-icon></a>`
+    return `<a href="${url}" target="_blank" class="text-primary cursor-pointer hover:underline">${displayValue} <ng-icon class="!w-[12px] !h-[14px] !text-[14px] opacity-75" name="matOpenInNew"></ng-icon></a>`
   }
 }

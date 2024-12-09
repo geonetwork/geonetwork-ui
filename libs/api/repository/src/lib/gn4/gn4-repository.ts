@@ -1,11 +1,36 @@
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import {
+  assertValidXml,
+  findConverterForDocument,
+  Gn4Converter,
+  Gn4SearchResults,
+  Iso19139Converter,
+} from '@geonetwork-ui/api/metadata-converter'
+import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  Aggregations,
+  AggregationsParams,
+  FieldFilters,
+} from '@geonetwork-ui/common/domain/model/search'
+import {
+  SearchParams,
+  SearchResults,
+} from '@geonetwork-ui/common/domain/model/search/search.model'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import {
   RecordsApiService,
   SearchApiService,
 } from '@geonetwork-ui/data-access/gn4'
-import { ElasticsearchService } from './elasticsearch'
 import {
   combineLatest,
+  exhaustMap,
   from,
   Observable,
   of,
@@ -13,27 +38,15 @@ import {
   switchMap,
   throwError,
 } from 'rxjs'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import {
-  SearchParams,
-  SearchResults,
-} from '@geonetwork-ui/common/domain/model/search/search.model'
-import {
-  Aggregations,
-  AggregationsParams,
-  FieldFilters,
-} from '@geonetwork-ui/common/domain/model/search'
 import { catchError, map, tap } from 'rxjs/operators'
-import {
-  findConverterForDocument,
-  Gn4Converter,
-  Gn4SearchResults,
-  Iso19139Converter,
-} from '@geonetwork-ui/api/metadata-converter'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { HttpErrorResponse } from '@angular/common/http'
+import { lt } from 'semver'
+import { ElasticsearchService } from './elasticsearch'
+
+const minPublicationApiVersion = '4.2.5'
 
 const TEMPORARY_ID_PREFIX = 'TEMP-ID-'
+
+export type RecordAsXml = string
 
 @Injectable()
 export class Gn4Repository implements RecordsRepositoryInterface {
@@ -41,10 +54,12 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   draftsChanged$ = this._draftsChanged.asObservable()
 
   constructor(
+    private httpClient: HttpClient,
     private gn4SearchApi: SearchApiService,
     private gn4SearchHelper: ElasticsearchService,
     private gn4Mapper: Gn4Converter,
-    private gn4RecordsApi: RecordsApiService
+    private gn4RecordsApi: RecordsApiService,
+    private platformService: PlatformServiceInterface
   ) {}
 
   search({
@@ -140,6 +155,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         )
       )
   }
+
   aggregate(params: AggregationsParams): Observable<Aggregations> {
     // if aggregations are empty, return an empty object right away
     if (Object.keys(params).length === 0) return of({})
@@ -184,10 +200,172 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       )
   }
 
-  /**
-   * Returns null if the record is not found
-   */
-  private loadRecordAsXml(uniqueIdentifier: string): Observable<string | null> {
+  openRecordForEdition(
+    uniqueIdentifier: string
+  ): Observable<[CatalogRecord, string, boolean] | null> {
+    const draft$ = of(this.getRecordFromLocalStorage(uniqueIdentifier))
+    const recordAsXml$ = this.getRecordAsXml(uniqueIdentifier)
+
+    return combineLatest([draft$, recordAsXml$]).pipe(
+      switchMap(([draft, recordAsXml]) => {
+        const xml = draft ?? recordAsXml
+        const isSavedAlready = recordAsXml !== null
+        return findConverterForDocument(xml)
+          .readRecord(xml)
+          .then(
+            (record) =>
+              [record, xml, isSavedAlready] as [CatalogRecord, string, boolean]
+          )
+      })
+    )
+  }
+
+  openRecordForDuplication(
+    uniqueIdentifier: string
+  ): Observable<[CatalogRecord, string, false] | null> {
+    return this.getRecordAsXml(uniqueIdentifier).pipe(
+      switchMap(async (fetchedRecordAsXml) => {
+        const converter = findConverterForDocument(fetchedRecordAsXml)
+        const record = await converter.readRecord(fetchedRecordAsXml)
+
+        record.uniqueIdentifier = `${TEMPORARY_ID_PREFIX}${Date.now()}`
+        record.title = `${record.title} (Copy)`
+
+        const recordAsXml = await converter.writeRecord(
+          record,
+          fetchedRecordAsXml
+        )
+
+        this.saveRecordToLocalStorage(recordAsXml, record.uniqueIdentifier)
+        this._draftsChanged.next()
+
+        return [record, recordAsXml, false] as [CatalogRecord, string, false]
+      })
+    )
+  }
+
+  saveRecord(
+    record: CatalogRecord,
+    referenceRecordSource?: string
+  ): Observable<string> {
+    return this.platformService.getApiVersion().pipe(
+      map((version) => {
+        if (lt(version, minPublicationApiVersion)) {
+          throw new PublicationVersionError(version)
+        }
+      }),
+      switchMap(() => this.serializeRecordToXml(record, referenceRecordSource)),
+      switchMap((recordXml) =>
+        this.gn4RecordsApi.insert(
+          'METADATA',
+          undefined,
+          undefined,
+          undefined,
+          true,
+          undefined,
+          'OVERWRITE',
+          undefined,
+          undefined,
+          undefined,
+          '_none_',
+          undefined,
+          undefined,
+          undefined,
+          recordXml
+        )
+      ),
+      map((response) => {
+        const metadataId = Object.keys(response.metadataInfos)[0]
+        return response.metadataInfos[metadataId][0].uuid
+      })
+    )
+  }
+
+  duplicateExternalRecord(recordDownloadUrl: string): Observable<string> {
+    return this.getExternalRecordAsXml(recordDownloadUrl).pipe(
+      exhaustMap(async (fetchedRecordAsXml: string) => {
+        const converter = findConverterForDocument(fetchedRecordAsXml)
+        const record = await converter.readRecord(fetchedRecordAsXml)
+        const tempId = this.generateTemporaryId()
+
+        record.title = `${record.title} (Copy)`
+        record.uniqueIdentifier = tempId
+
+        const recordAsXml = await converter.writeRecord(
+          record,
+          fetchedRecordAsXml
+        )
+
+        this.saveRecordToLocalStorage(recordAsXml, record.uniqueIdentifier)
+        this._draftsChanged.next()
+
+        return tempId
+      }),
+      catchError((error: HttpErrorResponse) => {
+        return throwError(() => error)
+      })
+    )
+  }
+
+  deleteRecord(uniqueIdentifier: string): Observable<void> {
+    return this.gn4RecordsApi.deleteRecord(uniqueIdentifier)
+  }
+
+  generateTemporaryId(): string {
+    return `${TEMPORARY_ID_PREFIX}${Date.now()}`
+  }
+
+  saveRecordAsDraft(
+    record: CatalogRecord,
+    referenceRecordSource?: string
+  ): Observable<string> {
+    return this.serializeRecordToXml(record, referenceRecordSource).pipe(
+      tap((recordXml) => {
+        this.saveRecordToLocalStorage(recordXml, record.uniqueIdentifier)
+        this._draftsChanged.next()
+      })
+    )
+  }
+
+  clearRecordDraft(uniqueIdentifier: string): void {
+    this.removeRecordFromLocalStorage(uniqueIdentifier)
+    this._draftsChanged.next()
+  }
+
+  recordHasDraft(uniqueIdentifier: string): boolean {
+    return this.getRecordFromLocalStorage(uniqueIdentifier) !== null
+  }
+
+  isRecordNotYetSaved(uniqueIdentifier: string): boolean {
+    return uniqueIdentifier.startsWith(TEMPORARY_ID_PREFIX)
+  }
+
+  // generated by copilot
+  getAllDrafts(): Observable<CatalogRecord[]> {
+    const items = { ...window.localStorage }
+    const drafts = Object.keys(items)
+      .filter((key) => key.startsWith('geonetwork-ui-draft-'))
+      .map((key) => window.localStorage.getItem(key))
+      .filter((draft) => draft !== null)
+    return from(
+      Promise.all(
+        drafts.map((draft) => {
+          return findConverterForDocument(draft).readRecord(draft)
+        })
+      )
+    )
+  }
+
+  getDraftsCount(): Observable<number> {
+    const items = { ...window.localStorage }
+    const draftCount = Object.keys(items)
+      .filter((key) => key.startsWith('geonetwork-ui-draft-'))
+      .map((key) => window.localStorage.getItem(key))
+      .filter((draft) => draft !== null).length
+    return of(draftCount)
+  }
+
+  private getRecordAsXml(uniqueIdentifier: string): Observable<string | null> {
     return this.gn4RecordsApi
       .getRecordAs(
         uniqueIdentifier,
@@ -209,53 +387,6 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       )
   }
 
-  private getLocalStorageKeyForRecord(uniqueIdentifier: string) {
-    return `geonetwork-ui-draft-${uniqueIdentifier}`
-  }
-
-  openRecordForEdition(
-    uniqueIdentifier: string
-  ): Observable<[CatalogRecord, string, boolean] | null> {
-    const draft$ = of(
-      window.localStorage.getItem(
-        this.getLocalStorageKeyForRecord(uniqueIdentifier)
-      )
-    )
-    const recordAsXml$ = this.loadRecordAsXml(uniqueIdentifier)
-    return combineLatest([draft$, recordAsXml$]).pipe(
-      switchMap(([draft, recordAsXml]) => {
-        const xml = draft ?? recordAsXml
-        const isSavedAlready = recordAsXml !== null
-        return findConverterForDocument(xml)
-          .readRecord(xml)
-          .then(
-            (record) =>
-              [record, xml, isSavedAlready] as [CatalogRecord, string, boolean]
-          )
-      })
-    )
-  }
-
-  openRecordForDuplication(
-    uniqueIdentifier: string
-  ): Observable<[CatalogRecord, string, false] | null> {
-    return this.loadRecordAsXml(uniqueIdentifier).pipe(
-      switchMap(async (recordAsXml) => {
-        const converter = findConverterForDocument(recordAsXml)
-        const record = await converter.readRecord(recordAsXml)
-        record.uniqueIdentifier = `${TEMPORARY_ID_PREFIX}${Date.now()}`
-        record.title = `${record.title} (Copy)`
-        const xml = await converter.writeRecord(record, recordAsXml)
-        window.localStorage.setItem(
-          this.getLocalStorageKeyForRecord(record.uniqueIdentifier),
-          xml
-        )
-        this._draftsChanged.next()
-        return [record, xml, false] as [CatalogRecord, string, false]
-      })
-    )
-  }
-
   private serializeRecordToXml(
     record: CatalogRecord,
     referenceRecordSource?: string
@@ -267,93 +398,46 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return from(converter.writeRecord(record, referenceRecordSource))
   }
 
-  saveRecord(
-    record: CatalogRecord,
-    referenceRecordSource?: string
+  private getExternalRecordAsXml(
+    recordDownloadUrl: string
   ): Observable<string> {
-    return this.serializeRecordToXml(record, referenceRecordSource).pipe(
-      switchMap((recordXml) =>
-        this.gn4RecordsApi
-          .insert(
-            'METADATA',
-            undefined,
-            undefined,
-            undefined,
-            true,
-            undefined,
-            'OVERWRITE',
-            undefined,
-            undefined,
-            undefined,
-            '_none_',
-            undefined,
-            undefined,
-            undefined,
-            recordXml
-          )
-          .pipe(
-            map((response) => {
-              const metadataId = Object.keys(response.metadataInfos)[0]
-              return response.metadataInfos[metadataId][0].uuid
-            })
-          )
-      )
-    )
-  }
+    let headers = new HttpHeaders()
+    const responseType_ = 'text'
+    headers = headers.set('Accept', 'text/xml,application/xml')
 
-  deleteRecord(uniqueIdentifier: string): Observable<void> {
-    return this.gn4RecordsApi.deleteRecord(uniqueIdentifier)
-  }
-
-  generateTemporaryId(): string {
-    return `${TEMPORARY_ID_PREFIX}${Date.now()}`
-  }
-
-  saveRecordAsDraft(
-    record: CatalogRecord,
-    referenceRecordSource?: string
-  ): Observable<string> {
-    return this.serializeRecordToXml(record, referenceRecordSource).pipe(
-      tap((recordXml) => {
-        window.localStorage.setItem(
-          this.getLocalStorageKeyForRecord(record.uniqueIdentifier),
-          recordXml
-        )
-        this._draftsChanged.next()
+    return this.httpClient
+      .get<string>(recordDownloadUrl, {
+        responseType: <any>responseType_,
+        headers: headers,
+        observe: 'body',
       })
-    )
-  }
+      .pipe(
+        map((recordAsXmlFile) => {
+          assertValidXml(recordAsXmlFile)
 
-  clearRecordDraft(uniqueIdentifier: string): void {
-    window.localStorage.removeItem(
-      this.getLocalStorageKeyForRecord(uniqueIdentifier)
-    )
-    this._draftsChanged.next()
-  }
-
-  recordHasDraft(uniqueIdentifier: string): boolean {
-    return (
-      window.localStorage.getItem(
-        this.getLocalStorageKeyForRecord(uniqueIdentifier)
-      ) !== null
-    )
-  }
-
-  isRecordNotYetSaved(uniqueIdentifier: string): boolean {
-    return uniqueIdentifier.startsWith(TEMPORARY_ID_PREFIX)
-  }
-
-  // generated by copilot
-  getAllDrafts(): Observable<CatalogRecord[]> {
-    const items = { ...window.localStorage }
-    const drafts = Object.keys(items)
-      .filter((key) => key.startsWith('geonetwork-ui-draft-'))
-      .map((key) => window.localStorage.getItem(key))
-      .filter((draft) => draft !== null)
-    return from(
-      Promise.all(
-        drafts.map((draft) => findConverterForDocument(draft).readRecord(draft))
+          return recordAsXmlFile
+        })
       )
+  }
+
+  private getLocalStorageKeyForRecord(recordId: string): string {
+    return `geonetwork-ui-draft-${recordId}` // Never change this prefix as it is a breaking change
+  }
+
+  private saveRecordToLocalStorage(recordAsXml: RecordAsXml, recordId: string) {
+    window.localStorage.setItem(
+      this.getLocalStorageKeyForRecord(recordId),
+      recordAsXml
     )
+  }
+
+  private getRecordFromLocalStorage(recordId: string): RecordAsXml {
+    return window.localStorage.getItem(
+      this.getLocalStorageKeyForRecord(recordId)
+    )
+  }
+
+  private removeRecordFromLocalStorage(recordId: string): void {
+    window.localStorage.removeItem(this.getLocalStorageKeyForRecord(recordId))
   }
 }

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component, Input } from '@angular/core'
-import { MatIconModule } from '@angular/material/icon'
+import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
@@ -9,12 +8,14 @@ import {
   SearchService,
 } from '@geonetwork-ui/feature/search'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import {
+  PaginationButtonsComponent,
+  UiElementsModule,
+} from '@geonetwork-ui/ui/elements'
 import { TranslateModule } from '@ngx-translate/core'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { RecordsCountComponent } from './records-count/records-count.component'
 
-const includes = [
+export const allSearchFields = [
   'uuid',
   'resourceTitleObject',
   'createDate',
@@ -25,7 +26,6 @@ const includes = [
   'link',
   'owner',
 ]
-
 @Component({
   selector: 'md-editor-records-list',
   templateUrl: './records-list.component.html',
@@ -33,34 +33,28 @@ const includes = [
   standalone: true,
   imports: [
     CommonModule,
-    MatIconModule,
     UiSearchModule,
     UiElementsModule,
     TranslateModule,
     ResultsTableContainerComponent,
     UiInputsModule,
-    RecordsCountComponent,
+    PaginationButtonsComponent,
   ],
 })
-export class RecordsListComponent {
-  @Input() title: string
-  @Input() logo: string
-  @Input() linkToDatahub?: string
-  @Input() userCount = 0
-
+export class RecordsListComponent implements OnInit {
   constructor(
     private router: Router,
     public searchFacade: SearchFacade,
-    public searchService: SearchService
-  ) {
-    this.searchFacade.setPageSize(15).setConfigRequestFields(includes)
+    private searchService: SearchService
+  ) {}
+
+  ngOnInit(): void {
+    this.searchFacade.setConfigRequestFields(allSearchFields)
+    this.searchFacade.setPageSize(15)
   }
 
   paginate(page: number) {
     this.searchService.setPage(page)
-  }
-  createRecord() {
-    this.router.navigate(['/create'])
   }
 
   editRecord(record: CatalogRecord) {
@@ -69,9 +63,5 @@ export class RecordsListComponent {
 
   duplicateRecord(record: CatalogRecord) {
     this.router.navigate(['/duplicate', record.uniqueIdentifier])
-  }
-
-  showUsers() {
-    this.router.navigate(['/users/my-org'])
   }
 }

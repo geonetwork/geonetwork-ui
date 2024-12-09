@@ -36,7 +36,8 @@ export function createDocument(rootEl: XmlElement): XmlDocument {
     if (namespace === 'xmlns' || namespace === null) return
     if (rootEl.attributes[`xmlns:${namespace}`]) return
     if (!NAMESPACES[namespace]) {
-      throw new Error(`No known URI for namespace ${namespace}`)
+      // the namespace is unknown but it might still be declared correctly: ignore it
+      return
     }
     rootEl.attributes[`xmlns:${namespace}`] = NAMESPACES[namespace]
   }
@@ -198,6 +199,12 @@ export function xmlToString(
   el: XmlElement | XmlText | XmlComment | XmlDocument,
   indentationLevel = 0
 ) {
+  const encodeEntities = (text: string) => {
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+  }
   if (el instanceof XmlDocument)
     return `<?xml version="1.0" encoding="UTF-8"?>${xmlToString(
       el.children[0]
@@ -206,10 +213,7 @@ export function xmlToString(
     const text = el.text
     const isEmpty = !text || text.replace(/^\s+|\s+$/g, '') === ''
     if (isEmpty) return ''
-    return text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
+    return encodeEntities(text)
   }
   if (!(el instanceof XmlElement)) return `<!-- unknown -->`
 
@@ -224,7 +228,7 @@ export function xmlToString(
         .join('')
     : ''
   const attrs = Object.keys(el.attributes).reduce(
-    (prev, curr) => prev + ` ${curr}="${el.attributes[curr]}"`,
+    (prev, curr) => prev + ` ${curr}="${encodeEntities(el.attributes[curr])}"`,
     ''
   )
   const parentPadding = '    '.repeat(Math.max(0, indentationLevel - 1))
@@ -248,7 +252,7 @@ function extractNamespace(name: string): string | null {
   return colon > -1 ? name.substring(0, colon) : null
 }
 
-const NAMESPACES = {
+export const NAMESPACES = {
   gmd: 'http://www.isotc211.org/2005/gmd',
   gco: 'http://www.isotc211.org/2005/gco',
   gfc: 'http://www.isotc211.org/2005/gfc',
@@ -283,9 +287,26 @@ const NAMESPACES = {
   cat: 'http://standards.iso.org/iso/19115/-3/cat/1.0',
   lan: 'http://standards.iso.org/iso/19115/-3/lan/1.0',
   mrc: 'http://standards.iso.org/iso/19115/-3/mrc/2.0',
+  rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+  rdfs: 'http://www.w3.org/2000/01/rdf-schema#',
+  foaf: 'http://xmlns.com/foaf/0.1/',
+  xsd: 'http://www.w3.org/2001/XMLSchema#',
+  dcat: 'http://www.w3.org/ns/dcat#',
+  dct: 'http://purl.org/dc/terms/',
+  skos: 'http://www.w3.org/2004/02/skos/core#',
+  schema_org: 'http://schema.org/',
+  spdx: 'https://spdx.org/rdf/terms/#',
+  adms: 'http://www.w3.org/ns/adms#',
+  dqv: 'http://www.w3.org/ns/dqv#',
+  owl: 'http://www.w3.org/2002/07/owl#',
+  vcard: 'http://www.w3.org/2006/vcard/ns#',
+  time: 'http://www.w3.org/2006/time#',
+  locn: 'http://www.w3.org/ns/locn#',
+  mdcat: 'https://data.vlaanderen.be/ns/metadata-dcat#',
 }
 
 /**
+ * Creates a single element, without parent or children
  * @param name Full name with namespace, e.g.: gmd:MD_Metadata
  */
 export function createElement(
@@ -294,7 +315,23 @@ export function createElement(
   return () => new XmlElement(name, {}, [])
 }
 
-export function addAttribute(
+/**
+ * Creates a tree of nested elements according to the given hierarchy
+ * @param elementNames Full names with namespaces
+ */
+export function createNestedElement(
+  ...elementNames: string[]
+): ChainableFunction<void, XmlElement> {
+  return () => {
+    let current = null
+    for (const name of elementNames) {
+      current = current ? createChild(name)(current) : createElement(name)()
+    }
+    return current
+  }
+}
+
+export function writeAttribute(
   name: string,
   value: string
 ): ChainableFunction<XmlElement, XmlElement> {
@@ -311,22 +348,13 @@ function getTreeRoot(element: XmlElement): XmlElement {
   return root
 }
 
-// stays on the parent element
-// if the given elements are part of a subtree, will add the root of subtree
-// will filter out falsy elements
-export function appendChildren(
-  ...childrenFns: Array<ChainableFunction<void, XmlElement>>
-): ChainableFunction<XmlElement, XmlElement> {
-  return (element) => {
-    if (!element) return null
-    childrenFns = childrenFns.filter((fn) => fn)
-    element.children.push(...childrenFns.map((fn) => fn()).map(getTreeRoot))
-    element.children.forEach((el) => (el.parent = element))
-    return element
-  }
-}
-
-// switch to the tip of the subtree
+/**
+ * Appends the element returned by the given function to the children of the current active one
+ * Note that if the function returns the tip of a subtree that was just created (i.e. not attached to the main document),
+ * then the whole subtree will be attached to the current element as children (instead of just the tip of the subtree).
+ * The created element (or tip of the created subtree) is returned and becomes the active element.
+ * @param childrenFn
+ */
 export function appendChildTree(
   childrenFn: ChainableFunction<void, XmlElement>
 ): ChainableFunction<XmlElement, XmlElement> {
@@ -340,7 +368,29 @@ export function appendChildTree(
   }
 }
 
-// switches to the child element
+/**
+ * Leaves the current element as the active one; all elements returned by the given functions will be added as
+ * children to this current element.
+ * Note that if a function returns the tip of a subtree that was just created (i.e. not attached to the main document),
+ * then the whole subtree will be attached to the current element as children (instead of just the tip of the subtree).
+ * @param childrenFns Each function takes the parent as input and should return an element; if the returned value is
+ * falsy then it will be ignored
+ */
+export function appendChildren(
+  ...childrenFns: Array<ChainableFunction<void, XmlElement>>
+): ChainableFunction<XmlElement, XmlElement> {
+  return (element) => {
+    if (!element) return null
+    childrenFns.filter((fn) => fn).forEach((fn) => appendChildTree(fn)(element))
+    return element
+  }
+}
+
+/**
+ * Creates an element, append it to the children of the current active element and switches to the
+ * new element as the active one.
+ * @param childName
+ */
 export function createChild(
   childName: string
 ): ChainableFunction<XmlElement, XmlElement> {
@@ -353,12 +403,40 @@ export function createChild(
   }
 }
 
+/**
+ * Creates a tree of nested elements according to the given hierarchy, appends it to the children of the current
+ * active element and switches to the tip of the newly created tree of elements as the active one.
+ * @param elementNames Full names with namespaces
+ */
+export function createNestedChild(
+  ...elementNames: string[]
+): ChainableFunction<XmlElement, XmlElement> {
+  return (element) => {
+    let current = element
+    for (const name of elementNames) {
+      current = createChild(name)(current)
+    }
+    return current
+  }
+}
+
+/**
+ * Returns the matching children if found, or create a new element, append it to the current active element
+ * and switch to it as the active one.
+ * @param name
+ */
 export function findChildOrCreate(
   name: string
 ): ChainableFunction<XmlElement, XmlElement> {
   return fallback(findChildElement(name, false), createChild(name))
 }
 
+/**
+ * For each element name in the given hierarchy, either switch to a matching element if found,
+ * or create a new one, append it to the children of the previous one and switch to it as the active one.
+ * Eventually, the tip of the hierarchy (either existing or new element) becomes the active element.
+ * @param elementNames
+ */
 export function findNestedChildOrCreate(
   ...elementNames: string[]
 ): ChainableFunction<XmlElement, XmlElement> {
@@ -455,4 +533,22 @@ export function renameElements(
   }
   doReplace(rootElement)
   return rootElement
+}
+
+/**
+ * This function use the DOMParser to check if the given xmlString is a valid XML file or throw an error
+ * (Generated by chatGPT)
+ * @param xmlString
+ */
+export function assertValidXml(xmlString: string): Document {
+  const parser = new DOMParser()
+  const xmlDoc = parser.parseFromString(xmlString, 'application/xml')
+  const parserError = xmlDoc.querySelector('parsererror')
+
+  if (parserError) {
+    console.error(parserError)
+    throw new Error('File is not a valid XML.')
+  }
+
+  return xmlDoc
 }

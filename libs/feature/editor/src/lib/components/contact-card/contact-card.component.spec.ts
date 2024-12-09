@@ -4,7 +4,6 @@ import {
   Individual,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import { MatIconModule } from '@angular/material/icon'
 import { CommonModule } from '@angular/common'
 import {
   AutocompleteComponent,
@@ -29,12 +28,7 @@ describe('ContactCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        MatIconModule,
-        ButtonComponent,
-        ContactCardComponent,
-      ],
+      imports: [CommonModule, ButtonComponent, ContactCardComponent],
     })
       .overrideComponent(AutocompleteComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
@@ -51,11 +45,5 @@ describe('ContactCardComponent', () => {
 
   it('should create the component', () => {
     expect(component).toBeTruthy()
-  })
-
-  it('should emit contactRemoved event with the correct contact', () => {
-    const contactRemovedSpy = jest.spyOn(component.contactRemoved, 'emit')
-    component.removeContact(mockContact)
-    expect(contactRemovedSpy).toHaveBeenCalledWith(mockContact)
   })
 })

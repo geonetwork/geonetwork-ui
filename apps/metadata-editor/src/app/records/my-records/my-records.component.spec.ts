@@ -1,84 +1,104 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MyRecordsComponent } from './my-records.component'
-import { FieldsService, SearchFacade } from '@geonetwork-ui/feature/search'
-import { Component, importProvidersFrom, Input } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
-import { RecordsListComponent } from '../records-list.component'
+import {
+  FieldsService,
+  SearchFacade,
+  SearchService,
+} from '@geonetwork-ui/feature/search'
+import { ChangeDetectionStrategy } from '@angular/core'
 import { BehaviorSubject, of } from 'rxjs'
 import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
 import { EditorRouterService } from '../../router.service'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-
-@Component({
-  selector: 'md-editor-records-list',
-  template: '',
-  standalone: true,
-})
-export class MockRecordsListComponent {
-  @Input() linkToDatahub: string
-}
-const user = barbieUserFixture()
-
-class SearchFacadeMock {
-  resetSearch = jest.fn()
-  updateFilters = jest.fn()
-}
-class EditorRouterServiceMock {
-  getDatahubSearchRoute = jest.fn(() => `/datahub/`)
-}
-
-class AuthServiceMock {
-  user$ = new BehaviorSubject(user)
-  authReady = jest.fn(() => this._authSubject$)
-  _authSubject$ = new BehaviorSubject({})
-}
-
-class FieldsServiceMock {
-  buildFiltersFromFieldValues = jest.fn((val) => of(val))
-}
-
-const me$ = new BehaviorSubject(barbieUserFixture())
-class PlatformServiceMock {
-  getMe = jest.fn(() => me$)
-}
+import { MockBuilder, MockInstance, MockProviders } from 'ng-mocks'
+import { ActivatedRoute, Router } from '@angular/router'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('MyRecordsComponent', () => {
+  MockInstance.scope()
+
+  const searchFilters = new BehaviorSubject({
+    any: 'hello world',
+  })
+
   let component: MyRecordsComponent
   let fixture: ComponentFixture<MyRecordsComponent>
+
+  let router: Router
   let searchFacade: SearchFacade
+  let platformService: PlatformServiceInterface
+  let fieldsService: FieldsService
+
+  const user = barbieUserFixture()
+
+  beforeEach(() => {
+    return MockBuilder(MyRecordsComponent)
+  })
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [TranslateModule.forRoot()],
       providers: [
-        importProvidersFrom(TranslateModule.forRoot()),
-        {
-          provide: FieldsService,
-          useClass: FieldsServiceMock,
-        },
-        {
-          provide: SearchFacade,
-          useClass: SearchFacadeMock,
-        },
-        {
-          provide: PlatformServiceInterface,
-          useClass: PlatformServiceMock,
-        },
-        {
-          provide: EditorRouterService,
-          useClass: EditorRouterServiceMock,
-        },
+        MockProviders(
+          FieldsService,
+          SearchFacade,
+          PlatformServiceInterface,
+          EditorRouterService,
+          ActivatedRoute,
+          SearchService
+        ),
       ],
     }).overrideComponent(MyRecordsComponent, {
-      remove: {
-        imports: [RecordsListComponent],
-      },
-      add: {
-        imports: [MockRecordsListComponent],
+      set: {
+        changeDetection: ChangeDetectionStrategy.Default,
       },
     })
-    searchFacade = TestBed.inject(SearchFacade)
+
+    MockInstance(
+      SearchFacade,
+      'searchFilters$',
+      jest.fn(),
+      'get'
+    ).mockReturnValue(searchFilters)
+
+    MockInstance(ActivatedRoute, 'snapshot', jest.fn(), 'get').mockReturnValue({
+      paramMap: new Map([['paramId', 'paramValue']]),
+      queryParams: new Map([['paramId', 'paramValue']]),
+    })
+
     fixture = TestBed.createComponent(MyRecordsComponent)
+
+    searchFacade = TestBed.inject(SearchFacade)
+    router = TestBed.inject(Router)
+    platformService = TestBed.inject(PlatformServiceInterface)
+    fieldsService = TestBed.inject(FieldsService)
+
+    router.navigate = jest.fn().mockReturnValue(Promise.resolve(true))
+
+    platformService.getMe = jest.fn(
+      () => new BehaviorSubject(barbieUserFixture())
+    )
+
+    fieldsService.buildFiltersFromFieldValues = jest.fn((fieldValues) =>
+      of(
+        Object.keys(fieldValues).reduce(
+          (_, curr) => ({
+            [curr]: fieldValues[curr],
+          }),
+          {}
+        )
+      )
+    )
+
+    searchFacade.resetSearch = jest.fn(() => this)
+    searchFacade.updateFilters = jest.fn(() => this)
+    searchFacade.setFilters = jest.fn(() => this)
+    searchFacade.setSortBy = jest.fn(() => this)
+    searchFacade.setPageSize = jest.fn(() => this)
+    searchFacade.setConfigRequestFields = jest.fn(() => this)
+
     component = fixture.componentInstance
+
     fixture.detectChanges()
   })
 
@@ -86,22 +106,18 @@ describe('MyRecordsComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  describe('filters', () => {
-    it('clears filters on init', () => {
-      expect(searchFacade.resetSearch).toHaveBeenCalled()
-    })
-    it('Update filters on init', () => {
+  describe('filters on init', () => {
+    it('updates filters with owner', () => {
       expect(searchFacade.updateFilters).toHaveBeenCalledWith({
         owner: user.id,
       })
     })
-  })
 
-  describe('datahub url', () => {
-    it('get correct url', () => {
-      expect(component.getDatahubUrl()).toEqual(
-        'http://localhost/datahub/?owner=46798'
-      )
+    it('should map search filters to searchText$', (done) => {
+      component.searchText$.subscribe((text) => {
+        expect(text).toBe('hello world')
+        done()
+      })
     })
   })
 })

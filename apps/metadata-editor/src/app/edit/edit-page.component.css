@@ -1,6 +1,7 @@
 :host {
   --gn-ui-text-input-rounded: 8px;
   --gn-ui-text-input-padding: 14px;
+  --gn-ui-text-input-font-size: 14px;
 }
 
 .card {

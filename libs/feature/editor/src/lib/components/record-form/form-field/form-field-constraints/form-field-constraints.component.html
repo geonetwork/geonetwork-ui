@@ -1,0 +1,24 @@
+<div class="w-full flex flex-col gap-2" [attr.data-cy]="constraintType">
+  <span class="border-t border-gray-300 flex grow pb-[32px]"></span>
+  <span class="font-bold mb-3">{{ constraintsHeader | translate }}</span>
+  <gn-ui-button
+    type="gray"
+    (buttonClick)="addConstraintSectionToDisplay()"
+    data-cy="add-constraint-btn"
+  >
+    <ng-icon name="iconoirPlus" class="text-primary"></ng-icon>
+    &nbsp;<span>{{ additionalConstraintsButtonLabel | translate }}</span>
+  </gn-ui-button>
+  <gn-ui-sortable-list
+    [items]="value"
+    (itemsOrderChange)="handleConstraintsOrderChange($event)"
+    [elementTemplate]="constraintTemplate"
+  ></gn-ui-sortable-list>
+  <ng-template #constraintTemplate let-constraint let-index="index">
+    <gn-ui-constraint-card
+      [label]="label"
+      [constraint]="constraint"
+      (constraintChange)="handleConstraintChange($event, index)"
+    ></gn-ui-constraint-card>
+  </ng-template>
+</div>

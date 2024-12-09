@@ -8,12 +8,18 @@ import {
   ViewChild,
 } from '@angular/core'
 import { propagateToDocumentOnly } from '@geonetwork-ui/util/shared'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { CommonModule } from '@angular/common'
+import { matStar, matStarBorder } from '@ng-icons/material-icons/baseline'
 
 @Component({
   selector: 'gn-ui-star-toggle',
   templateUrl: './star-toggle.component.html',
   styleUrls: ['./star-toggle.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, NgIcon],
+  viewProviders: [provideIcons({ matStar, matStarBorder })],
 })
 export class StarToggleComponent {
   @Input() toggled!: boolean

@@ -35,7 +35,7 @@ jobs:
   gh-pages:
     needs: checks
     if: github.event_name != 'issue_comment' || needs.checks.outputs.shouldRun
-    name: Deploy Storybook to GitHub Pages
+    name: Deploy docs, apps, Storybook to GitHub Pages
     runs-on: ubuntu-latest
     env:
       BRANCH_NAME: ${{needs.checks.outputs.ref || 'main'}}
@@ -78,6 +78,10 @@ jobs:
       - name: Build demo & web components
         run: npm run build:demo
 
+      - name: Build metadata-converter app
+        if: github.event_name != 'issue_comment' # This is not done on PR, only on main branch
+        run: npx nx build metadata-converter --prod --base-href=./
+
       - name: Build docs
         run: npm run docs:build -- --base=/geonetwork-ui/${{env.BRANCH_NAME}}/docs/ && mkdir -p dist/docs && mv docs/.vitepress/dist/* dist/docs
 
@@ -99,7 +103,7 @@ jobs:
 
             * (Documentation)[https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/docs/]
 
-            * (Demo & web components)[https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/demo/]
+            * (Web components demo)[https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/demo/webcomponents/]
 
             * (UI components storybook)[https://geonetwork.github.io/geonetwork-ui/${{env.BRANCH_NAME}}/storybook/demo/]'
           comment_tag: github-links

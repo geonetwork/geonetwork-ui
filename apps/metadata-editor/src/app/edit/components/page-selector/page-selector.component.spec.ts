@@ -39,14 +39,16 @@ describe('PageSelectorComponent', () => {
   })
 
   it('should render the correct number of pages', () => {
-    const pages = fixture.debugElement.queryAll(By.css('.w-10.h-10'))
+    const pages = fixture.debugElement.queryAll(
+      By.css('[data-test=page-number]')
+    )
     expect(pages.length).toBe(editorConfigFixture().pages.length)
   })
 
   it('should highlight the current page', () => {
     const currentPageIndex = facade.currentPage$.getValue()
     const currentPageElement = fixture.debugElement.queryAll(
-      By.css('.w-10.h-10')
+      By.css('[data-test=page-number]')
     )[currentPageIndex]
     expect(currentPageElement.nativeElement.classList).toContain('bg-primary')
   })

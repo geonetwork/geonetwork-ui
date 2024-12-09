@@ -86,7 +86,7 @@ export function map<U, V>(mapper: (el: U) => V) {
   return (input: U) => mapper(input)
 }
 
-export function mapArray<U, V>(mapper: (el: U) => V) {
+export function mapArray<U, V>(mapper: (el: U, index: number) => V) {
   return (input: Array<U>) => input.map(mapper)
 }
 

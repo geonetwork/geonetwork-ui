@@ -1,14 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { LayersPanelComponent } from './layers-panel.component'
 import { of } from 'rxjs'
-import { mapCtxLayerXyzFixture } from '../map-context/map-context.fixtures'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { MapFacade } from '../+state/map.facade'
-
-class MapFacadeMock {
-  layers$ = of([mapCtxLayerXyzFixture()])
-  removeLayer = jest.fn()
-}
+import { mapCtxFixture } from '@geonetwork-ui/common/fixtures'
 
 describe('LayersPanelComponent', () => {
   let component: LayersPanelComponent
@@ -21,7 +16,11 @@ describe('LayersPanelComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [LayersPanelComponent],
-      providers: [MockProvider(MapFacade, MapFacadeMock, 'useClass')],
+      providers: [
+        MockProvider(MapFacade, {
+          context$: of(mapCtxFixture()),
+        }),
+      ],
     }).compileComponents()
   })
 

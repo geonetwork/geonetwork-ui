@@ -1,8 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { AddLayerFromWfsComponent } from './add-layer-from-wfs.component'
 import { MapFacade } from '../+state/map.facade'
-import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
+import { MockBuilder, MockProvider } from 'ng-mocks'
+import { of } from 'rxjs'
+import { mapCtxFixture } from '@geonetwork-ui/common/fixtures'
 
 jest.mock('@camptocamp/ogc-client', () => ({
   WfsEndpoint: class {
@@ -37,23 +39,22 @@ jest.mock('@camptocamp/ogc-client', () => ({
   },
 }))
 
-class MapFacadeMock {
-  addLayer = jest.fn()
-}
-
 describe('AddLayerFromWfsComponent', () => {
   let component: AddLayerFromWfsComponent
   let fixture: ComponentFixture<AddLayerFromWfsComponent>
   let mapFacade: MapFacade
 
+  beforeEach(() => {
+    return MockBuilder(AddLayerFromWfsComponent)
+  })
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), AddLayerFromWfsComponent],
       providers: [
-        {
-          provide: MapFacade,
-          useClass: MapFacadeMock,
-        },
+        MockProvider(MapFacade, {
+          applyContext: jest.fn(),
+          context$: of(mapCtxFixture()),
+        }),
       ],
     }).compileComponents()
 
@@ -153,11 +154,17 @@ describe('AddLayerFromWfsComponent', () => {
       })
     })
     it('should add the selected layer in the current map context', () => {
-      expect(mapFacade.addLayer).toHaveBeenCalledWith({
-        name: 'ft1',
-        title: 'Feature Type 1',
-        url: 'http://my.service.org/wfs',
-        type: 'wfs',
+      expect(mapFacade.applyContext).toHaveBeenCalledWith({
+        ...mapCtxFixture(),
+        layers: [
+          ...mapCtxFixture().layers,
+          {
+            featureType: 'ft1',
+            label: 'Feature Type 1',
+            url: 'http://my.service.org/wfs',
+            type: 'wfs',
+          },
+        ],
       })
     })
   })

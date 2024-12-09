@@ -7,12 +7,35 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { FormsModule } from '@angular/forms'
+import {
+  matChevronLeft,
+  matChevronRight,
+} from '@ng-icons/material-icons/baseline'
+import { CommonModule } from '@angular/common'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-pagination',
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    ButtonComponent,
+    NgIcon,
+    FormsModule,
+    TranslateModule,
+  ],
+  viewProviders: [
+    provideIcons({
+      matChevronLeft,
+      matChevronRight,
+    }),
+  ],
 })
 export class PaginationComponent implements OnChanges {
   @Input() currentPage = 1

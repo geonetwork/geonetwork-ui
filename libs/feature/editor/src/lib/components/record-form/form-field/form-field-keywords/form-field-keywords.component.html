@@ -1,9 +1,10 @@
 <div class="flex flex-col gap-3">
   <gn-ui-generic-keywords
-    [keywords]="value"
+    [keywords]="filteredKeywords"
     [keywordTypes]="keywordTypes"
-    [placeholder]="placeholder | translate"
+    [placeholder]="'editor.form.keywords.placeholder' | translate"
     (changedKeywords)="handleKeywordsChange($event)"
+    [allowSubmit]="false"
   >
   </gn-ui-generic-keywords>
 </div>

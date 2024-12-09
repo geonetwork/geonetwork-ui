@@ -1,8 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { TranslateService } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { getBadgeColor, getFileFormat } from '@geonetwork-ui/util/shared'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import { CommonModule } from '@angular/common'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { DownloadItemComponent } from '../download-item/download-item.component'
 
 marker('datahub.search.filter.all')
 marker('datahub.search.filter.others')
@@ -15,6 +18,13 @@ type FilterFormat = typeof FILTER_FORMATS[number]
   templateUrl: './downloads-list.component.html',
   styleUrls: ['./downloads-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    ButtonComponent,
+    DownloadItemComponent,
+    TranslateModule,
+  ],
 })
 export class DownloadsListComponent {
   constructor(private translateService: TranslateService) {}

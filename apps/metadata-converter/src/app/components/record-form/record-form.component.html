@@ -29,29 +29,39 @@
   ></gn-ui-record-field-simple>
 </p>
 <p>
-  <gn-ui-record-field-group label="Owner Organisation">
-    <gn-ui-record-field-simple
-      label="Name"
-      [(fieldValue)]="record.ownerOrganization.name"
-      (confirm)="emitChangedRecord()"
-    ></gn-ui-record-field-simple>
-    <gn-ui-record-field-simple
-      label="Description"
-      [(fieldValue)]="record.ownerOrganization.description"
-      (confirm)="emitChangedRecord()"
-    ></gn-ui-record-field-simple>
-    <gn-ui-record-field-simple
-      label="Website"
-      [(fieldValue)]="record.ownerOrganization.website"
-      (confirm)="emitChangedRecord()"
-      [type]="'url'"
-    ></gn-ui-record-field-simple>
-    <gn-ui-record-field-simple
-      label="Logo URL"
-      [(fieldValue)]="record.ownerOrganization.logoUrl"
-      (confirm)="emitChangedRecord()"
-      [type]="'url'"
-    ></gn-ui-record-field-simple>
+  <gn-ui-record-field-group label="Owner Organization">
+    <gn-ui-button
+      *ngIf="!record.ownerOrganization"
+      [type]="'outline'"
+      (buttonClick)="addOwnerOrg()"
+      extraClass="m-2 py-[0.5em] px-[1em]"
+    >
+      <span class="opacity-70">Add a owner organization to this record</span>
+    </gn-ui-button>
+    <ng-container *ngIf="record.ownerOrganization">
+      <gn-ui-record-field-simple
+        label="Name"
+        [(fieldValue)]="record.ownerOrganization.name"
+        (confirm)="emitChangedRecord()"
+      ></gn-ui-record-field-simple>
+      <gn-ui-record-field-simple
+        label="Description"
+        [(fieldValue)]="record.ownerOrganization.description"
+        (confirm)="emitChangedRecord()"
+      ></gn-ui-record-field-simple>
+      <gn-ui-record-field-simple
+        label="Website"
+        [(fieldValue)]="record.ownerOrganization.website"
+        (confirm)="emitChangedRecord()"
+        [type]="'url'"
+      ></gn-ui-record-field-simple>
+      <gn-ui-record-field-simple
+        label="Logo URL"
+        [(fieldValue)]="record.ownerOrganization.logoUrl"
+        (confirm)="emitChangedRecord()"
+        [type]="'url'"
+      ></gn-ui-record-field-simple>
+    </ng-container>
   </gn-ui-record-field-group>
 </p>
 <p>
@@ -119,7 +129,7 @@
       (fieldValueChange)="set($event, 'position')"
       (confirm)="emitChangedRecord()"
     ></gn-ui-record-field-simple>
-    <gn-ui-record-field-group label="Organisation">
+    <gn-ui-record-field-group label="Organisation" *ngIf="get().organization">
       <gn-ui-record-field-simple
         label="Name"
         [fieldValue]="get().organization.name"

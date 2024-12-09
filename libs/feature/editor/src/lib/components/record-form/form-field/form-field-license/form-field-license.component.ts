@@ -3,11 +3,18 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { Constraint } from '@geonetwork-ui/common/domain/model/record'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
+import { AVAILABLE_LICENSES } from '../../../../fields.config'
+
+type Licence = {
+  label: string
+  value: string
+}
 
 @Component({
   selector: 'gn-ui-form-field-license',
@@ -17,56 +24,37 @@ import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
   standalone: true,
   imports: [DropdownSelectorComponent],
 })
-export class FormFieldLicenseComponent {
+export class FormFieldLicenseComponent implements OnInit {
   @Input() label: string
-  @Input() value: Array<Constraint>
+  @Input() recordConstraints: Constraint[] = []
+  @Output() recordConstraintsChange: EventEmitter<Constraint[]> =
+    new EventEmitter()
 
-  @Output() valueChange: EventEmitter<Array<Constraint>> = new EventEmitter()
+  selectedLicence: string
 
-  get selected() {
-    return this.value[0]?.text
+  ngOnInit(): void {
+    // get the licence from the record constraints if it is one of the open data licence list
+    this.selectedLicence = this.recordConstraints.find((constraint) => {
+      return this.licenceOptions.find((licence) => {
+        return licence.value === constraint.text
+      })
+    })?.text
+    // otherwise pre-select the first licence option
+    if (this.selectedLicence === undefined) {
+      this.selectedLicence = this.licenceOptions[0].value // cannot select 'etalab' as default as this would toggle the OpenData Toggle
+      this.recordConstraintsChange.emit([{ text: this.selectedLicence }])
+    }
   }
 
-  onSelectValue(value: unknown) {
-    this.valueChange.emit([{ text: value as string }])
+  get licenceOptions(): Licence[] {
+    return AVAILABLE_LICENSES.map((license) => ({
+      label: marker(`editor.record.form.license.${license}`),
+      value: license,
+    }))
   }
 
-  choices = [
-    {
-      value: 'cc-by',
-      label: marker('editor.record.form.license.cc-by'),
-    },
-    {
-      value: 'cc-by-sa',
-      label: marker('editor.record.form.license.cc-by-sa'),
-    },
-    {
-      value: 'cc-zero',
-      label: marker('editor.record.form.license.cc-zero'),
-    },
-    {
-      value: 'etalab',
-      label: marker('editor.record.form.license.etalab'),
-    },
-    {
-      value: 'etalab-v2',
-      label: marker('editor.record.form.license.etalab-v2'),
-    },
-    {
-      value: 'odbl',
-      label: marker('editor.record.form.license.odbl'),
-    },
-    {
-      value: 'odc-by',
-      label: marker('editor.record.form.license.odc-by'),
-    },
-    {
-      value: 'pddl',
-      label: marker('editor.record.form.license.pddl'),
-    },
-    {
-      value: 'unknown',
-      label: marker('editor.record.form.license.unknown'),
-    },
-  ]
+  handleLicenceSelection(licenceValue: string) {
+    this.selectedLicence = licenceValue
+    this.recordConstraintsChange.emit([{ text: licenceValue }])
+  }
 }

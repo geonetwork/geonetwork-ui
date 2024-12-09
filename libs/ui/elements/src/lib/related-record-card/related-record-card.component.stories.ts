@@ -15,8 +15,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterModule } from '@angular/router'
 import { APP_BASE_HREF } from '@angular/common'
 import { importProvidersFrom } from '@angular/core'
-import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
-import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
@@ -27,12 +25,10 @@ export default {
   component: RelatedRecordCardComponent,
   decorators: [
     moduleMetadata({
-      declarations: [ThumbnailComponent],
       imports: [
         RouterModule,
         UtilI18nModule,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        MatIconModule,
         MatTooltipModule,
         UtilSharedModule,
       ],

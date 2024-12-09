@@ -11,8 +11,11 @@ describe('UserFeedbackItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [UserFeedbackItemComponent],
-      imports: [TranslateModule.forRoot(), TimeSincePipe],
+      imports: [
+        UserFeedbackItemComponent,
+        TranslateModule.forRoot(),
+        TimeSincePipe,
+      ],
     })
       .overrideComponent(UserFeedbackItemComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },

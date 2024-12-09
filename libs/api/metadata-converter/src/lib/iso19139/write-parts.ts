@@ -4,9 +4,12 @@ import {
   DatasetOnlineResource,
   DatasetRecord,
   DatasetServiceDistribution,
+  FieldTranslation,
   Individual,
   Keyword,
+  LanguageCode,
   RecordStatus,
+  RecordTranslations,
   Role,
   ServiceEndpoint,
   ServiceOnlineResource,
@@ -19,9 +22,7 @@ import format from 'date-fns/format'
 import { Geometry } from 'geojson'
 import {
   ChainableFunction,
-  fallback,
   filterArray,
-  getAtIndex,
   map,
   mapArray,
   noop,
@@ -29,31 +30,75 @@ import {
   tap,
 } from '../function-utils'
 import {
-  addAttribute,
+  allChildrenElement,
   appendChildren,
   createChild,
   createElement,
-  findChildElement,
+  createNestedChild,
+  createNestedElement,
   findChildOrCreate,
   findChildrenElement,
   findNestedChildOrCreate,
+  findNestedElement,
   findNestedElements,
   readAttribute,
   removeAllChildren,
   removeChildren,
   removeChildrenByName,
   setTextContent,
+  writeAttribute,
   XmlElement,
 } from '../xml-utils'
 import { readKind } from './read-parts'
 import { writeGeometry } from './utils/geometry'
 import { namePartsToFull } from './utils/individual-name'
+import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
+
+function writeLocalizedElement(
+  writeFn: ChainableFunction<XmlElement, XmlElement>,
+  text: string,
+  translations: FieldTranslation,
+  defaultLanguage: LanguageCode
+): ChainableFunction<XmlElement, XmlElement> {
+  if (!translations) return writeFn
+  function createLocalized(lang: LanguageCode, translation: string) {
+    return pipe(
+      createNestedElement('gmd:textGroup', 'gmd:LocalisedCharacterString'),
+      writeAttribute('locale', `#${lang.toUpperCase()}`),
+      setTextContent(translation)
+    )
+  }
+  return pipe(
+    writeFn,
+    removeChildrenByName('gmd:PT_FreeText'),
+    createChild('gmd:PT_FreeText'),
+    appendChildren(
+      createLocalized(defaultLanguage, text),
+      ...Object.entries(translations).map(([lang, translation]) =>
+        createLocalized(lang, translation)
+      )
+    )
+  )
+}
 
 export function writeCharacterString(
   text: string
 ): ChainableFunction<XmlElement, XmlElement> {
   return tap(
     pipe(findChildOrCreate('gco:CharacterString'), setTextContent(text))
+  )
+}
+
+export function writeLocalizedCharacterString(
+  text: string,
+  translations: FieldTranslation,
+  defaultLanguage: LanguageCode
+): ChainableFunction<XmlElement, XmlElement> {
+  return writeLocalizedElement(
+    writeCharacterString(text),
+    text,
+    translations,
+    defaultLanguage
   )
 }
 
@@ -75,20 +120,32 @@ export function writeAnchor(
   return tap(
     pipe(
       findChildOrCreate('gmx:Anchor'),
-      addAttribute('xlink:href', url.toString()),
+      writeAttribute('xlink:href', url.toString()),
       text ? setTextContent(text) : noop
     )
+  )
+}
+
+export function writeLocalizedAnchor(
+  url: URL,
+  text: string,
+  translations: FieldTranslation,
+  defaultLanguage: LanguageCode
+): ChainableFunction<XmlElement, XmlElement> {
+  return writeLocalizedElement(
+    writeAnchor(url, text),
+    text,
+    translations,
+    defaultLanguage
   )
 }
 
 export function writeDateTime(
   date: Date
 ): ChainableFunction<XmlElement, XmlElement> {
-  return tap(
-    pipe(
-      findChildOrCreate('gco:DateTime'),
-      setTextContent(format(date, "yyyy-MM-dd'T'HH:mm:ss"))
-    )
+  return pipe(
+    findChildOrCreate('gco:DateTime'),
+    setTextContent(format(date, "yyyy-MM-dd'T'HH:mm:ss"))
   )
 }
 
@@ -242,12 +299,15 @@ export function getISODuration(updateFrequency: UpdateFrequencyCustom): string {
   return `P${duration.years}Y${duration.months}M${duration.days}D${hours}`
 }
 
-export function appendResponsibleParty(contact: Individual) {
+function appendResponsibleParty(
+  contact: Individual,
+  translations: RecordTranslations,
+  defaultLanguage: LanguageCode
+) {
   const fullName = namePartsToFull(contact.firstName, contact.lastName)
 
   const createAddress = pipe(
-    createElement('gmd:address'),
-    createChild('gmd:CI_Address'),
+    createNestedElement('gmd:address', 'gmd:CI_Address'),
     appendChildren(
       pipe(
         createElement('gmd:electronicMailAddress'),
@@ -265,24 +325,20 @@ export function appendResponsibleParty(contact: Individual) {
   )
 
   const createContact = pipe(
-    createElement('gmd:contactInfo'),
-    createChild('gmd:CI_Contact'),
+    createNestedElement('gmd:contactInfo', 'gmd:CI_Contact'),
     contact.phone
       ? appendChildren(
           pipe(
-            createElement('gmd:phone'),
-            createChild('gmd:CI_Telephone'),
-            createChild('gmd:voice'),
+            createNestedElement('gmd:phone', 'gmd:CI_Telephone', 'gmd:voice'),
             writeCharacterString(contact.phone)
           )
         )
       : noop,
     appendChildren(createAddress),
-    'website' in contact.organization
+    contact.organization?.website
       ? appendChildren(
           pipe(
-            createElement('gmd:onlineResource'),
-            createChild('gmd:CI_OnlineResource'),
+            createNestedElement('gmd:onlineResource', 'gmd:CI_OnlineResource'),
             writeLinkage(contact.organization.website)
           )
         )
@@ -308,64 +364,24 @@ export function appendResponsibleParty(contact: Individual) {
             )
           )
         : noop,
+
+      contact.organization?.name
+        ? appendChildren(
+            pipe(
+              createElement('gmd:organisationName'),
+              writeCharacterString(contact.organization.name)
+            )
+          )
+        : noop,
       appendChildren(
-        pipe(
-          createElement('gmd:organisationName'),
-          writeCharacterString(contact.organization.name)
-        ),
         createContact,
         pipe(
-          createElement('gmd:role'),
-          createChild('gmd:CI_RoleCode'),
-          addAttribute(
+          createNestedElement('gmd:role', 'gmd:CI_RoleCode'),
+          writeAttribute(
             'codeList',
             'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode'
           ),
-          addAttribute('codeListValue', getRoleCode(contact.role))
-        )
-      )
-    )
-  )
-}
-
-export function updateCitationDate(
-  date: Date,
-  type: 'revision' | 'creation' | 'publication'
-) {
-  return pipe(
-    findNestedElements('gmd:date', 'gmd:CI_Date'),
-    filterArray(
-      pipe(
-        findChildElement('gmd:CI_DateTypeCode'),
-        readAttribute('codeListValue'),
-        map((value) => value === type)
-      )
-    ),
-    getAtIndex(0),
-    findChildElement('gmd:date'),
-    removeAllChildren(),
-    writeDateTime(date)
-  )
-}
-
-export function appendCitationDate(
-  date: Date,
-  type: 'revision' | 'creation' | 'publication'
-) {
-  return appendChildren(
-    pipe(
-      createElement('gmd:date'),
-      createChild('gmd:CI_Date'),
-      appendChildren(
-        pipe(createElement('gmd:date'), writeDateTime(date)),
-        pipe(
-          createElement('gmd:dateType'),
-          createChild('gmd:CI_DateTypeCode'),
-          addAttribute(
-            'codeList',
-            'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode'
-          ),
-          addAttribute('codeListValue', type)
+          writeAttribute('codeListValue', getRoleCode(contact.role))
         )
       )
     )
@@ -379,16 +395,14 @@ export function removeKeywords() {
 // returns a <gmd:thesaurusName> element
 export function createThesaurus(thesaurus: ThesaurusModel) {
   return pipe(
-    createElement('gmd:thesaurusName'),
-    createChild('gmd:CI_Citation'),
+    createNestedElement('gmd:thesaurusName', 'gmd:CI_Citation'),
     appendChildren(
       pipe(
         createElement('gmd:title'),
         writeCharacterString(thesaurus.name || thesaurus.id)
       ),
       pipe(
-        createElement('gmd:identifier'),
-        createChild('gmd:MD_Identifier'),
+        createNestedElement('gmd:identifier', 'gmd:MD_Identifier'),
         appendChildren(
           pipe(
             createElement('gmd:code'),
@@ -402,7 +416,10 @@ export function createThesaurus(thesaurus: ThesaurusModel) {
   )
 }
 
-export function appendKeywords(keywords: Keyword[]) {
+export function appendKeywords(
+  keywords: Keyword[],
+  defaultLanguage: LanguageCode
+) {
   // keywords are grouped by thesaurus if they have one, otherwise by type
   const keywordsByThesaurus: Keyword[][] = keywords.reduce((acc, keyword) => {
     const thesaurusId = keyword.thesaurus?.id
@@ -422,17 +439,15 @@ export function appendKeywords(keywords: Keyword[]) {
   return appendChildren(
     ...keywordsByThesaurus.map((keywords) =>
       pipe(
-        createElement('gmd:descriptiveKeywords'),
-        createChild('gmd:MD_Keywords'),
+        createNestedElement('gmd:descriptiveKeywords', 'gmd:MD_Keywords'),
         appendChildren(
           pipe(
-            createElement('gmd:type'),
-            createChild('gmd:MD_KeywordTypeCode'),
-            addAttribute(
+            createNestedElement('gmd:type', 'gmd:MD_KeywordTypeCode'),
+            writeAttribute(
               'codeList',
               'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode'
             ),
-            addAttribute('codeListValue', keywords[0].type)
+            writeAttribute('codeListValue', keywords[0].type)
           )
         ),
         keywords[0].thesaurus
@@ -442,7 +457,11 @@ export function appendKeywords(keywords: Keyword[]) {
           ...keywords.map((keyword) =>
             pipe(
               createElement('gmd:keyword'),
-              writeCharacterString(keyword.label)
+              writeLocalizedCharacterString(
+                keyword.label,
+                keyword.translations?.label,
+                defaultLanguage
+              )
             )
           )
         )
@@ -453,70 +472,114 @@ export function appendKeywords(keywords: Keyword[]) {
 
 export function createConstraint(
   constraint: Constraint,
-  type: 'legal' | 'security' | 'other'
+  type: 'legal' | 'security' | 'other',
+  defaultLanguage: LanguageCode
 ) {
   if (type === 'security') {
     return pipe(
-      createElement('gmd:resourceConstraints'),
-      createChild('gmd:MD_SecurityConstraints'),
+      createNestedElement(
+        'gmd:resourceConstraints',
+        'gmd:MD_SecurityConstraints'
+      ),
       appendChildren(
         pipe(
-          createElement('gmd:classification'),
-          createChild('gmd:MD_ClassificationCode'),
-          addAttribute(
+          createNestedElement(
+            'gmd:classification',
+            'gmd:MD_ClassificationCode'
+          ),
+          writeAttribute(
             'codeList',
             'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ClassificationCode'
           ),
-          addAttribute('codeListValue', 'restricted')
+          writeAttribute('codeListValue', 'restricted')
         ),
         pipe(
           createElement('gmd:useLimitation'),
-          writeCharacterString(constraint.text)
+          'url' in constraint
+            ? writeLocalizedAnchor(
+                constraint.url,
+                constraint.text,
+                constraint.translations?.text,
+                defaultLanguage
+              )
+            : writeLocalizedCharacterString(
+                constraint.text,
+                constraint.translations?.text,
+                defaultLanguage
+              )
         )
       )
     )
   } else if (type === 'legal') {
     return pipe(
-      createElement('gmd:resourceConstraints'),
-      createChild('gmd:MD_LegalConstraints'),
+      createNestedElement('gmd:resourceConstraints', 'gmd:MD_LegalConstraints'),
       appendChildren(
         pipe(
-          createElement('gmd:accessConstraints'),
-          createChild('gmd:MD_RestrictionCode'),
-          addAttribute(
+          createNestedElement(
+            'gmd:accessConstraints',
+            'gmd:MD_RestrictionCode'
+          ),
+          writeAttribute(
             'codeList',
             'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode'
           ),
-          addAttribute('codeListValue', 'otherRestrictions')
+          writeAttribute('codeListValue', 'otherRestrictions')
         ),
         pipe(
           createElement('gmd:otherConstraints'),
-          writeCharacterString(constraint.text)
+          'url' in constraint
+            ? writeLocalizedAnchor(
+                constraint.url,
+                constraint.text,
+                constraint.translations?.text,
+                defaultLanguage
+              )
+            : writeLocalizedCharacterString(
+                constraint.text,
+                constraint.translations?.text,
+                defaultLanguage
+              )
         )
       )
     )
   }
-
+  // other
   return pipe(
-    createElement('gmd:resourceConstraints'),
-    createChild('gmd:MD_Constraints'),
-    appendChildren(
-      pipe(
-        createElement('gmd:useLimitation'),
-        writeCharacterString(constraint.text)
-      )
-    )
+    createNestedElement(
+      'gmd:resourceConstraints',
+      'gmd:MD_Constraints',
+      'gmd:useLimitation'
+    ),
+    'url' in constraint
+      ? writeLocalizedAnchor(
+          constraint.url,
+          constraint.text,
+          constraint.translations?.text,
+          defaultLanguage
+        )
+      : writeLocalizedCharacterString(
+          constraint.text,
+          constraint.translations?.text,
+          defaultLanguage
+        )
   )
 }
 
 export function removeOtherConstraints() {
-  return removeChildren(
+  return tap(
     pipe(
       findChildrenElement('gmd:resourceConstraints'),
-      filterArray(
-        pipe(
-          findNestedElements('gmd:MD_Constraints', 'gmd:useLimitation'),
-          (array) => array.length > 0
+      mapArray(
+        removeChildren(
+          pipe(
+            findChildrenElement('gmd:MD_Constraints'),
+            filterArray(
+              pipe(
+                findNestedElements('gmd:useLimitation'),
+                (array) => array.length > 0
+              )
+            )
+          )
         )
       )
     )
@@ -524,13 +587,20 @@ export function removeOtherConstraints() {
 }
 
 export function removeSecurityConstraints() {
-  return removeChildren(
+  return tap(
     pipe(
       findChildrenElement('gmd:resourceConstraints'),
-      filterArray(
-        pipe(
-          findNestedElements('gmd:MD_SecurityConstraints', 'gmd:useLimitation'),
-          (array) => array.length > 0
+      mapArray(
+        removeChildren(
+          pipe(
+            findChildrenElement('gmd:MD_SecurityConstraints'),
+            filterArray(
+              pipe(
+                findNestedElements('gmd:useLimitation'),
+                (array) => array.length > 0
+              )
+            )
+          )
         )
       )
     )
@@ -538,21 +608,36 @@ export function removeSecurityConstraints() {
 }
 
 export function removeLegalConstraints() {
+  return tap(
+    pipe(
+      findChildrenElement('gmd:resourceConstraints'),
+      mapArray(
+        removeChildren(
+          pipe(
+            findChildrenElement('gmd:MD_LegalConstraints'),
+            filterArray(
+              pipe(
+                findNestedElements(
+                  'gmd:accessConstraints',
+                  'gmd:MD_RestrictionCode'
+                ),
+                mapArray(readAttribute('codeListValue')),
+                (restrictionCodes) =>
+                  restrictionCodes.every((code) => code !== 'license')
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+}
+
+export function removeEmptyResourceConstraints() {
   return removeChildren(
     pipe(
       findChildrenElement('gmd:resourceConstraints'),
-      filterArray(
-        pipe(
-          findNestedElements(
-            'gmd:MD_LegalConstraints',
-            'gmd:accessConstraints',
-            'gmd:MD_RestrictionCode'
-          ),
-          mapArray(readAttribute('codeListValue')),
-          (restrictionCodes) =>
-            restrictionCodes.every((code) => code !== 'license')
-        )
-      )
+      filterArray(pipe(allChildrenElement, (array) => array.length === 0))
     )
   )
 }
@@ -577,48 +662,51 @@ export function removeLicenses() {
   )
 }
 
-export function createLicense(license: Constraint) {
+export function createLicense(
+  license: Constraint,
+  defaultLanguage: LanguageCode
+) {
   return pipe(
-    createElement('gmd:resourceConstraints'),
-    createChild('gmd:MD_LegalConstraints'),
+    createNestedElement('gmd:resourceConstraints', 'gmd:MD_LegalConstraints'),
     appendChildren(
       pipe(
-        createElement('gmd:accessConstraints'),
-        createChild('gmd:MD_RestrictionCode'),
-        addAttribute(
+        createNestedElement('gmd:accessConstraints', 'gmd:MD_RestrictionCode'),
+        writeAttribute(
           'codeList',
           'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode'
         ),
-        addAttribute('codeListValue', 'license')
+        writeAttribute('codeListValue', 'license')
       ),
       pipe(
-        createElement('gmd:accessConstraints'),
-        createChild('gmd:MD_RestrictionCode'),
-        addAttribute(
+        createNestedElement('gmd:accessConstraints', 'gmd:MD_RestrictionCode'),
+        writeAttribute(
           'codeList',
           'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode'
         ),
-        addAttribute('codeListValue', 'otherRestrictions')
+        writeAttribute('codeListValue', 'otherRestrictions')
       ),
       pipe(
         createElement('gmd:otherConstraints'),
         'url' in license
           ? writeAnchor(license.url, license.text)
-          : writeCharacterString(license.text)
+          : writeLocalizedCharacterString(
+              license.text,
+              license.translations?.text,
+              defaultLanguage
+            )
       )
     )
   )
 }
 
 export function removeOnlineResources() {
-  return pipe(removeChildrenByName('gmd:distributionInfo'))
+  return removeChildrenByName('gmd:distributionInfo')
 }
 
 function appendOnlineResourceFormat(mimeType: string) {
   return appendChildren(
     pipe(
-      createElement('gmd:distributionFormat'),
-      createChild('gmd:MD_Format'),
+      createNestedElement('gmd:distributionFormat', 'gmd:MD_Format'),
       appendChildren(
         pipe(createElement('gmd:name'), writeCharacterString(mimeType)),
         pipe(
@@ -631,10 +719,7 @@ function appendOnlineResourceFormat(mimeType: string) {
 }
 
 export function createDistributionInfo() {
-  return pipe(
-    createElement('gmd:distributionInfo'),
-    createChild('gmd:MD_Distribution')
-  )
+  return createNestedElement('gmd:distributionInfo', 'gmd:MD_Distribution')
 }
 
 // apply to MD_Distribution
@@ -642,7 +727,9 @@ export function appendOnlineResource(
   onlineResource: DatasetOnlineResource,
   appendFormatFn: (
     mimeType: string
-  ) => ChainableFunction<XmlElement, XmlElement>
+  ) => ChainableFunction<XmlElement, XmlElement>,
+  translations: RecordTranslations,
+  defaultLanguage: LanguageCode
 ) {
   let name: string
   let functionCode: string
@@ -662,34 +749,46 @@ export function appendOnlineResource(
   }
   const appendTransferOptions = appendChildren(
     pipe(
-      createElement('gmd:transferOptions'),
-      createChild('gmd:MD_DigitalTransferOptions'),
-      createChild('gmd:onLine'),
-      createChild('gmd:CI_OnlineResource'),
+      createNestedElement(
+        'gmd:transferOptions',
+        'gmd:MD_DigitalTransferOptions',
+        'gmd:onLine',
+        'gmd:CI_OnlineResource'
+      ),
       writeLinkage(onlineResource.url),
       'description' in onlineResource
         ? appendChildren(
             pipe(
               createElement('gmd:description'),
-              writeCharacterString(onlineResource.description)
+              writeLocalizedCharacterString(
+                onlineResource.description,
+                onlineResource.translations?.description,
+                defaultLanguage
+              )
             )
           )
         : noop,
       name !== undefined
         ? appendChildren(
-            pipe(createElement('gmd:name'), writeCharacterString(name))
+            pipe(
+              createElement('gmd:name'),
+              writeLocalizedCharacterString(
+                name,
+                onlineResource.translations?.name,
+                defaultLanguage
+              )
+            )
           )
         : noop,
       appendChildren(
         pipe(createElement('gmd:protocol'), writeCharacterString(protocol)),
         pipe(
-          createElement('gmd:function'),
-          createChild('gmd:CI_OnLineFunctionCode'),
-          addAttribute(
+          createNestedElement('gmd:function', 'gmd:CI_OnLineFunctionCode'),
+          writeAttribute(
             'codeList',
             'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode'
           ),
-          addAttribute('codeListValue', functionCode)
+          writeAttribute('codeListValue', functionCode)
         )
       )
     )
@@ -737,46 +836,11 @@ export function writeUniqueIdentifier(
 export function writeKind(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
     findNestedChildOrCreate('gmd:hierarchyLevel', 'gmd:MD_ScopeCode'),
-    addAttribute(
+    writeAttribute(
       'codeList',
       'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode'
     ),
-    addAttribute('codeListValue', record.kind)
-  )(rootEl)
-}
-
-export function writeOwnerOrganization(
-  record: CatalogRecord,
-  rootEl: XmlElement
-) {
-  // if no contact matches the owner org, create an empty one
-  const ownerContact: Individual = record.contacts.find(
-    (contact) => contact.organization.name === record.ownerOrganization.name
-  )
-  pipe(
-    findChildOrCreate('gmd:contact'),
-    removeAllChildren(),
-    appendResponsibleParty(
-      ownerContact
-        ? {
-            ...ownerContact,
-            // owner responsible party is always point of contact
-            role: 'point_of_contact',
-          }
-        : {
-            organization: record.ownerOrganization,
-            email: '',
-            role: 'point_of_contact',
-          }
-    )
-  )(rootEl)
-}
-
-export function writeRecordUpdated(record: CatalogRecord, rootEl: XmlElement) {
-  pipe(
-    findChildOrCreate('gmd:dateStamp'),
-    removeAllChildren(),
-    writeDateTime(record.recordUpdated)
+    writeAttribute('codeListValue', record.kind)
   )(rootEl)
 }
 
@@ -784,7 +848,11 @@ export function writeTitle(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
     findOrCreateIdentification(),
     findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation', 'gmd:title'),
-    writeCharacterString(record.title)
+    writeLocalizedCharacterString(
+      record.title,
+      record.translations?.title,
+      record.defaultLanguage
+    )
   )(rootEl)
 }
 
@@ -792,7 +860,11 @@ export function writeAbstract(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
     findOrCreateIdentification(),
     findChildOrCreate('gmd:abstract'),
-    writeCharacterString(record.abstract)
+    writeLocalizedCharacterString(
+      record.abstract,
+      record.translations?.abstract,
+      record.defaultLanguage
+    )
   )(rootEl)
 }
 
@@ -800,11 +872,11 @@ export function writeStatus(record: DatasetRecord, rootEl: XmlElement) {
   pipe(
     findOrCreateIdentification(),
     findNestedChildOrCreate('gmd:status', 'gmd:MD_ProgressCode'),
-    addAttribute(
+    writeAttribute(
       'codeList',
       'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode'
     ),
-    addAttribute('codeListValue', getProgressCode(record.status))
+    writeAttribute('codeListValue', getProgressCode(record.status))
   )(rootEl)
 }
 
@@ -813,7 +885,14 @@ export function writeContacts(record: CatalogRecord, rootEl: XmlElement) {
     removeChildrenByName('gmd:contact'),
     appendChildren(
       ...record.contacts.map((contact) =>
-        pipe(createElement('gmd:contact'), appendResponsibleParty(contact))
+        pipe(
+          createElement('gmd:contact'),
+          appendResponsibleParty(
+            contact,
+            record.translations,
+            record.defaultLanguage
+          )
+        )
       )
     )
   )(rootEl)
@@ -831,7 +910,11 @@ export function writeContactsForResource(
       ...record.contactsForResource.map((contact) =>
         pipe(
           createElement('gmd:pointOfContact'),
-          appendResponsibleParty(contact)
+          appendResponsibleParty(
+            contact,
+            record.translations,
+            record.defaultLanguage
+          )
         )
       )
     )
@@ -842,7 +925,7 @@ export function writeKeywords(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
     findOrCreateIdentification(),
     removeKeywords(),
-    appendKeywords(record.keywords)
+    appendKeywords(record.keywords, record.defaultLanguage)
   )(rootEl)
 }
 
@@ -853,8 +936,7 @@ export function writeTopics(record: CatalogRecord, rootEl: XmlElement) {
     appendChildren(
       ...record.topics.map((topic) =>
         pipe(
-          createElement('gmd:topicCategory'),
-          createChild('gmd:MD_TopicCategoryCode'),
+          createNestedElement('gmd:topicCategory', 'gmd:MD_TopicCategoryCode'),
           setTextContent(topic)
         )
       )
@@ -866,7 +948,11 @@ export function writeLicenses(record: CatalogRecord, rootEl: XmlElement) {
   pipe(
     findOrCreateIdentification(),
     removeLicenses(),
-    appendChildren(...record.licenses.map(createLicense))
+    appendChildren(
+      ...record.licenses.map((license) =>
+        createLicense(license, record.defaultLanguage)
+      )
+    )
   )(rootEl)
 }
 
@@ -877,8 +963,11 @@ export function writeLegalConstraints(
   pipe(
     findOrCreateIdentification(),
     removeLegalConstraints(),
+    removeEmptyResourceConstraints(),
     appendChildren(
-      ...record.legalConstraints.map((c) => createConstraint(c, 'legal'))
+      ...record.legalConstraints.map((c) =>
+        createConstraint(c, 'legal', record.defaultLanguage)
+      )
     )
   )(rootEl)
 }
@@ -890,8 +979,11 @@ export function writeSecurityConstraints(
   pipe(
     findOrCreateIdentification(),
     removeSecurityConstraints(),
+    removeEmptyResourceConstraints(),
     appendChildren(
-      ...record.securityConstraints.map((c) => createConstraint(c, 'security'))
+      ...record.securityConstraints.map((c) =>
+        createConstraint(c, 'security', record.defaultLanguage)
+      )
     )
   )(rootEl)
 }
@@ -903,8 +995,11 @@ export function writeOtherConstraints(
   pipe(
     findOrCreateIdentification(),
     removeOtherConstraints(),
+    removeEmptyResourceConstraints(),
     appendChildren(
-      ...record.otherConstraints.map((c) => createConstraint(c, 'other'))
+      ...record.otherConstraints.map((c) =>
+        createConstraint(c, 'other', record.defaultLanguage)
+      )
     )
   )(rootEl)
 }
@@ -920,18 +1015,22 @@ export function writeUpdateFrequency(
     findChildOrCreate('gmd:MD_MaintenanceInformation'),
     typeof record.updateFrequency === 'object'
       ? pipe(
-          createChild('gmd:userDefinedMaintenanceFrequency'),
-          createChild('gts:TM_PeriodDuration'),
+          createNestedChild(
+            'gmd:userDefinedMaintenanceFrequency',
+            'gts:TM_PeriodDuration'
+          ),
           setTextContent(getISODuration(record.updateFrequency))
         )
       : pipe(
-          createChild('gmd:maintenanceAndUpdateFrequency'),
-          createChild('gmd:MD_MaintenanceFrequencyCode'),
-          addAttribute(
+          createNestedChild(
+            'gmd:maintenanceAndUpdateFrequency',
+            'gmd:MD_MaintenanceFrequencyCode'
+          ),
+          writeAttribute(
             'codeList',
             'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_MaintenanceFrequencyCode'
           ),
-          addAttribute(
+          writeAttribute(
             'codeListValue',
             getMaintenanceFrequencyCode(record.updateFrequency)
           )
@@ -939,66 +1038,114 @@ export function writeUpdateFrequency(
   )(rootEl)
 }
 
+export function writeRecordUpdated(record: CatalogRecord, rootEl: XmlElement) {
+  pipe(
+    findChildOrCreate('gmd:dateStamp'),
+    removeAllChildren(),
+    writeDateTime(record.recordUpdated)
+  )(rootEl)
+}
+
+export function removeResourceDate(
+  type: 'revision' | 'creation' | 'publication'
+) {
+  return pipe(
+    findOrCreateIdentification(),
+    findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
+    removeChildren(
+      pipe(
+        findNestedElements('gmd:date'),
+        filterArray(
+          pipe(
+            findNestedElement(
+              'gmd:CI_Date',
+              'gmd:dateType',
+              'gmd:CI_DateTypeCode'
+            ),
+            readAttribute('codeListValue'),
+            map((value) => value === type)
+          )
+        )
+      )
+    )
+  )
+}
+
+export function appendResourceDate(
+  date: Date,
+  type: 'revision' | 'creation' | 'publication'
+) {
+  return pipe(
+    findOrCreateIdentification(),
+    findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
+    appendChildren(
+      pipe(
+        createNestedElement('gmd:date', 'gmd:CI_Date'),
+        appendChildren(
+          pipe(createElement('gmd:date'), writeDateTime(date)),
+          pipe(
+            createNestedElement('gmd:dateType', 'gmd:CI_DateTypeCode'),
+            writeAttribute(
+              'codeList',
+              'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode'
+            ),
+            writeAttribute('codeListValue', type)
+          )
+        )
+      )
+    )
+  )
+}
+
 export function writeResourceCreated(
   record: DatasetRecord,
   rootEl: XmlElement
 ) {
-  if (!('resourceCreated' in record)) return
-  pipe(
-    findOrCreateIdentification(),
-    findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
-    fallback(
-      updateCitationDate(record.resourceCreated, 'creation'),
-      appendCitationDate(record.resourceCreated, 'creation')
-    )
-  )(rootEl)
+  removeResourceDate('creation')(rootEl)
+  if (!record.resourceCreated) return
+  appendResourceDate(record.resourceCreated, 'creation')(rootEl)
 }
 
 export function writeResourceUpdated(
   record: DatasetRecord,
   rootEl: XmlElement
 ) {
-  if (!('resourceUpdated' in record)) return
-  pipe(
-    findOrCreateIdentification(),
-    findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
-    fallback(
-      updateCitationDate(record.resourceUpdated, 'revision'),
-      appendCitationDate(record.resourceUpdated, 'revision')
-    )
-  )(rootEl)
+  removeResourceDate('revision')(rootEl)
+  if (!record.resourceUpdated) return
+  appendResourceDate(record.resourceUpdated, 'revision')(rootEl)
 }
 
 export function writeResourcePublished(
   record: DatasetRecord,
   rootEl: XmlElement
 ) {
-  if (!('resourcePublished' in record)) return
-  pipe(
-    findOrCreateIdentification(),
-    findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
-    fallback(
-      updateCitationDate(record.resourcePublished, 'publication'),
-      appendCitationDate(record.resourcePublished, 'publication')
-    )
-  )(rootEl)
+  removeResourceDate('publication')(rootEl)
+  if (!record.resourcePublished) return
+  appendResourceDate(record.resourcePublished, 'publication')(rootEl)
 }
 
 export function writeSpatialRepresentation(
   record: DatasetRecord,
   rootEl: XmlElement
 ) {
+  if (!record.spatialRepresentation) {
+    pipe(
+      findOrCreateIdentification(),
+      removeChildrenByName('gmd:spatialRepresentationType')
+    )(rootEl)
+    return
+  }
   pipe(
     findOrCreateIdentification(),
     findNestedChildOrCreate(
       'gmd:spatialRepresentationType',
       'gmd:MD_SpatialRepresentationTypeCode'
     ),
-    addAttribute(
+    writeAttribute(
       'codeList',
       'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode'
     ),
-    addAttribute('codeListValue', record.spatialRepresentation)
+    writeAttribute('codeListValue', record.spatialRepresentation)
   )(rootEl)
 }
 
@@ -1012,8 +1159,7 @@ export function writeGraphicOverviews(
     appendChildren(
       ...record.overviews.map((overview) =>
         pipe(
-          createElement('gmd:graphicOverview'),
-          createChild('gmd:MD_BrowseGraphic'),
+          createNestedElement('gmd:graphicOverview', 'gmd:MD_BrowseGraphic'),
           appendChildren(
             pipe(
               createElement('gmd:fileName'),
@@ -1043,7 +1189,11 @@ export function writeLineage(record: DatasetRecord, rootEl: XmlElement) {
       'gmd:LI_Lineage',
       'gmd:statement'
     ),
-    writeCharacterString(record.lineage)
+    writeLocalizedCharacterString(
+      record.lineage,
+      record.translations?.lineage,
+      record.defaultLanguage
+    )
   )(rootEl)
 }
 
@@ -1074,9 +1224,11 @@ export function createOnlineResource(onlineResource: ServiceOnlineResource) {
   const appendTransferOptions = appendChildren(
     pipe(
       createElement('gmd:transferOptions'),
-      createChild('gmd:MD_DigitalTransferOptions'),
-      createChild('gmd:onLine'),
-      createChild('gmd:CI_OnlineResource'),
+      createNestedChild(
+        'gmd:MD_DigitalTransferOptions',
+        'gmd:onLine',
+        'gmd:CI_OnlineResource'
+      ),
       writeLinkage(linkageUrl),
       'description' in onlineResource
         ? appendChildren(
@@ -1097,20 +1249,18 @@ export function createOnlineResource(onlineResource: ServiceOnlineResource) {
       appendChildren(
         pipe(createElement('gmd:protocol'), writeCharacterString(protocol)),
         pipe(
-          createElement('gmd:function'),
-          createChild('gmd:CI_OnLineFunctionCode'),
-          addAttribute(
+          createNestedElement('gmd:function', 'gmd:CI_OnLineFunctionCode'),
+          writeAttribute(
             'codeList',
             'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode'
           ),
-          addAttribute('codeListValue', functionCode)
+          writeAttribute('codeListValue', functionCode)
         )
       )
     )
   )
   return pipe(
-    createElement('gmd:distributionInfo'),
-    createChild('gmd:MD_Distribution'),
+    createNestedElement('gmd:distributionInfo', 'gmd:MD_Distribution'),
     appendTransferOptions
   )
 }
@@ -1123,7 +1273,12 @@ export function appendDatasetOnlineResources(
     ...record.onlineResources.map((d) =>
       pipe(
         createDistributionInfo(),
-        appendOnlineResource(d, appendOnlineResourceFormat)
+        appendOnlineResource(
+          d,
+          appendOnlineResourceFormat,
+          record.translations,
+          record.defaultLanguage
+        )
       )
     )
   )(rootEl)
@@ -1160,20 +1315,18 @@ export function writeTemporalExtents(
     appendChildren(
       ...record.temporalExtents.map((extent) =>
         pipe(
-          createElement('gmd:temporalElement'),
-          createChild('gmd:EX_TemporalExtent'),
+          createNestedElement('gmd:temporalElement', 'gmd:EX_TemporalExtent'),
           appendChildren(
             'start' in extent && 'end' in extent
               ? pipe(
-                  createElement('gmd:extent'),
-                  createChild('gml:TimePeriod'),
+                  createNestedElement('gmd:extent', 'gml:TimePeriod'),
                   appendChildren(
                     pipe(
                       createElement('gml:beginPosition'),
                       pipe(
                         extent.start
                           ? setTextContent(format(extent.start, 'yyyy-MM-dd'))
-                          : addAttribute('indeterminatePosition', 'unknown')
+                          : writeAttribute('indeterminatePosition', 'unknown')
                       )
                     ),
                     pipe(
@@ -1181,24 +1334,20 @@ export function writeTemporalExtents(
                       pipe(
                         extent.end
                           ? setTextContent(format(extent.end, 'yyyy-MM-dd'))
-                          : addAttribute('indeterminatePosition', 'unknown')
+                          : writeAttribute('indeterminatePosition', 'unknown')
                       )
                     )
                   )
                 )
               : pipe(
-                  createElement('gmd:extent'),
-                  createChild('gml:TimeInstant'),
-                  appendChildren(
-                    pipe(
-                      createElement('gml:timePosition'),
-                      pipe(
-                        extent.start
-                          ? setTextContent(format(extent.start, 'yyyy-MM-dd'))
-                          : addAttribute('indeterminatePosition', 'unknown')
-                      )
-                    )
-                  )
+                  createNestedElement(
+                    'gmd:extent',
+                    'gml:TimeInstant',
+                    'gml:timePosition'
+                  ),
+                  extent.start
+                    ? setTextContent(format(extent.start, 'yyyy-MM-dd'))
+                    : writeAttribute('indeterminatePosition', 'unknown')
                 )
           )
         )
@@ -1236,14 +1385,23 @@ export function writeSpatialExtents(record: DatasetRecord, rootEl: XmlElement) {
     )
   }
 
-  const appendGeographicDescription = (description?: string) => {
+  const appendGeographicDescription = (
+    description?: string,
+    translations?: FieldTranslation
+  ) => {
     if (!description) return null
     return pipe(
-      createElement('gmd:EX_GeographicDescription'),
-      createChild('gmd:geographicIdentifier'),
-      createChild('gmd:MD_Identifier'),
-      createChild('gmd:code'),
-      writeCharacterString(description)
+      createNestedElement(
+        'gmd:EX_GeographicDescription',
+        'gmd:geographicIdentifier',
+        'gmd:MD_Identifier',
+        'gmd:code'
+      ),
+      writeLocalizedCharacterString(
+        description,
+        translations,
+        record.defaultLanguage
+      )
     )
   }
 
@@ -1258,10 +1416,67 @@ export function writeSpatialExtents(record: DatasetRecord, rootEl: XmlElement) {
           appendChildren(
             appendBoundingPolygon(extent.geometry),
             appendGeographicBoundingBox(extent.bbox),
-            appendGeographicDescription(extent.description)
+            appendGeographicDescription(
+              extent.description,
+              extent.translations?.description
+            )
           )
         )
       )
     )
+  )(rootEl)
+}
+
+export function writeLanguages(record: DatasetRecord, rootEl: XmlElement) {
+  // clear existing
+  removeChildrenByName('gmd:locale')(rootEl)
+
+  // do not write down languages if there is nothing else than the default one
+  if (!record.otherLanguages?.length) {
+    return
+  }
+
+  const createLanguageEl = (lang: LanguageCode) =>
+    pipe(
+      createNestedElement('gmd:locale', 'gmd:PT_Locale'),
+      writeAttribute('id', lang.toUpperCase()),
+      createNestedChild('gmd:languageCode', 'gmd:LanguageCode'),
+      writeAttribute('codeList', 'http://www.loc.gov/standards/iso639-2/'),
+      writeAttribute('codeListValue', LANG_2_TO_3_MAPPER[lang])
+    )
+
+  // add new languages (only if other than default one)
+  appendChildren(
+    createLanguageEl(record.defaultLanguage),
+    ...record.otherLanguages.map(createLanguageEl)
+  )(rootEl)
+}
+
+export function writeDefaultLanguage(
+  record: DatasetRecord,
+  rootEl: XmlElement
+) {
+  const lang3 = LANG_2_TO_3_MAPPER[record.defaultLanguage.toLowerCase()]
+  return pipe(
+    findNestedChildOrCreate('gmd:language', 'gmd:LanguageCode'),
+    writeAttribute('codeList', 'http://www.loc.gov/standards/iso639-2/'),
+    writeAttribute('codeListValue', lang3)
+  )(rootEl)
+}
+
+export function writeResourceIdentifier(
+  record: DatasetRecord,
+  rootEl: XmlElement
+) {
+  pipe(
+    findOrCreateIdentification(),
+    findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
+    removeChildrenByName('gmd:identifier'),
+    record.resourceIdentifier
+      ? pipe(
+          createNestedChild('gmd:identifier', 'gmd:MD_Identifier', 'gmd:code'),
+          writeCharacterString(record.resourceIdentifier)
+        )
+      : noop
   )(rootEl)
 }

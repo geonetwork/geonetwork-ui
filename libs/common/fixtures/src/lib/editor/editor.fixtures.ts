@@ -84,7 +84,6 @@ export const editorFieldRecordUpdatedFixture = () => ({
   hidden: false,
   formFieldConfig: {
     labelKey: 'editor.record.form.field.recordUpdated',
-    locked: true,
   },
   value: '2024-07-16T05:18:53.000Z',
   onSaveProcess: '${dateNow()}',
@@ -129,7 +128,6 @@ export const editorFieldUniqueIdentifierFixture = () => ({
   hidden: false,
   formFieldConfig: {
     labelKey: 'editor.record.form.field.uniqueIdentifier',
-    locked: true,
   },
   value: 'accroche_velos',
 })
@@ -139,7 +137,6 @@ export const editorFieldLicenseFixture = () => ({
   hidden: false,
   formFieldConfig: {
     labelKey: 'editor.record.form.field.license',
-    locked: true,
   },
 })
 

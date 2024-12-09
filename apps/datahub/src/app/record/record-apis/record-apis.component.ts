@@ -8,12 +8,36 @@ import {
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { CarouselComponent } from '@geonetwork-ui/ui/layout'
+import { PreviousNextButtonsComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  ApiCardComponent,
+  RecordApiFormComponent,
+} from '@geonetwork-ui/ui/elements'
+import { CommonModule } from '@angular/common'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { matCloseOutline } from '@ng-icons/material-icons/outline'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'datahub-record-apis',
   templateUrl: './record-apis.component.html',
   styleUrls: ['./record-apis.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    CarouselComponent,
+    PreviousNextButtonsComponent,
+    ApiCardComponent,
+    RecordApiFormComponent,
+    NgIcon,
+    TranslateModule,
+  ],
+  viewProviders: [
+    provideIcons({
+      matCloseOutline,
+    }),
+  ],
 })
 export class RecordApisComponent implements OnInit {
   @ViewChild(CarouselComponent) carousel: CarouselComponent

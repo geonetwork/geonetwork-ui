@@ -10,6 +10,9 @@ export * from './lib/record-link.fixtures'
 export * from './lib/records.fixtures'
 export * from './lib/repository.fixtures'
 export * from './lib/user.fixtures'
+export * from './lib/individual.fixtures'
 export * from './lib/user-feedbacks.fixtures'
 
 export * from './lib/editor'
+
+export * from './lib/map'

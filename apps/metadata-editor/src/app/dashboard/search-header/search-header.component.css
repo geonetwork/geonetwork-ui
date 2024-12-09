@@ -1,8 +1,14 @@
 :host ::ng-deep gn-ui-autocomplete input {
-  @apply bg-blue-50 rounded-3xl shadow-none !py-2 !px-8 !pl-14 hover:shadow-none focus:outline-4 focus:outline-offset-1 focus:outline-blue-100 focus:outline-dotted;
+  @apply rounded-3xl shadow-none !py-2 !px-8 !pl-14 hover:shadow-none;
 }
-:host ::ng-deep gn-ui-autocomplete button {
-  @apply bg-blue-50 hover:bg-blue-50 border-none shadow-none hover:shadow-none text-gray-500 hover:text-gray-600 left-0 right-auto rounded-3xl;
+:host ::ng-deep gn-ui-autocomplete gn-ui-button button {
+  @apply border-none shadow-none hover:shadow-none text-gray-500 hover:text-gray-600 rounded-3xl;
+}
+:host ::ng-deep gn-ui-autocomplete gn-ui-button:first-of-type button {
+  @apply right-0 left-auto;
+}
+:host ::ng-deep gn-ui-autocomplete gn-ui-button:last-of-type button {
+  @apply left-0 right-auto;
 }
 
 ::ng-deep .mdc-menu-surface.mat-mdc-autocomplete-panel {

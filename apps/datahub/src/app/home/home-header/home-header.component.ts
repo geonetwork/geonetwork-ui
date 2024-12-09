@@ -48,6 +48,7 @@ export class HomeHeaderComponent {
   SORT_BY_PARAMS = SortByEnum
   searchConfig: SearchConfig = getOptionalSearchConfig()
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
+  foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
 
   constructor(
     public routerFacade: RouterFacade,

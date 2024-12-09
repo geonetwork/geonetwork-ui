@@ -1,45 +1,59 @@
-<div class="relative">
+<span class="w-full inline-block relative">
+  <div
+    class="absolute inset-y-[--icon-padding] left-[--icon-padding] w-[--icon-width] pointer-events-none"
+    *ngIf="!allowSubmit"
+  >
+    <ng-icon name="iconoirSearch" class="text-primary search"></ng-icon>
+  </div>
   <input
     #searchInput
     type="text"
-    class="appearance-none focus:outline-white focus:outline-2 focus:outline-dotted focus:outline-offset-2 leading-tight rounded w-full text-black shadow-xl focus:shadow-[0_0_24px_0_rgba(21,40,184,0.09)]"
+    class="gn-ui-text-input"
+    [ngClass]="{
+      'px-[--icon-width]': !allowSubmit
+    }"
     [placeholder]="placeholder"
     [formControl]="control"
     [matAutocomplete]="auto"
     (keyup.enter)="handleEnter(searchInput.value)"
   />
-  <div class="flex flex-row absolute inset-y-0 right-0">
-    <button
-      type="button"
-      class="text-primary-lightest hover:text-primary hover:bg-gray-50 transition-all duration-100 clear-btn"
-      *ngIf="searchInput.value"
-      aria-label="Clear"
-      (click)="clear()"
-    >
-      <mat-icon class="material-symbols-outlined">close</mat-icon>
-    </button>
-    <button
-      type="button"
-      class="text-primary bg-white hover:text-primary-darkest hover:bg-gray-100 border-gray-300 hover:border-gray-500 transition-all duration-100 search-btn rounded-r"
-      aria-label="Trigger search"
-      *ngIf="allowSubmit"
-      data-test="autocomplete-submit-btn"
-      (click)="handleClickSearch()"
-    >
-      <mat-icon class="material-symbols-outlined">search</mat-icon>
-    </button>
-  </div>
+  <gn-ui-button
+    type="light"
+    extraClass="border-0 text-primary-lightest hover:text-primary focus:text-primary absolute inset-y-[--icon-padding] {{
+      allowSubmit
+        ? 'right-[calc(var(--icon-width)+var(--icon-padding))]'
+        : 'right-[--icon-padding]'
+    }}"
+    data-test="clear-btn"
+    *ngIf="searchInput.value"
+    aria-label="Clear"
+    (buttonClick)="clear()"
+  >
+    <ng-icon name="matClose"></ng-icon>
+  </gn-ui-button>
+  <gn-ui-button
+    type="light"
+    extraClass="border-0 border-l-[1px] border-gray-300 hover:border-gray-500 text-primary hover:text-primary-darkest focus:text-primary-darkest absolute inset-y-[--icon-padding] right-[--icon-padding]"
+    aria-label="Trigger search"
+    *ngIf="allowSubmit"
+    data-test="autocomplete-submit-btn"
+    (buttonClick)="handleClickSearch()"
+  >
+    <ng-icon name="iconoirSearch"></ng-icon>
+  </gn-ui-button>
+
   <gn-ui-popup-alert
     *ngIf="error"
     class="absolute mt-2 w-full top-[100%] left-0"
-    icon="error_outline"
+    icon="matErrorOutlineOutline"
     position="top"
     type="warning"
   >
     <span translate>search.autocomplete.error</span>
     {{ error }}
   </gn-ui-popup-alert>
-</div>
+</span>
+
 <mat-autocomplete
   #auto="matAutocomplete"
   (optionSelected)="handleSelection($event)"

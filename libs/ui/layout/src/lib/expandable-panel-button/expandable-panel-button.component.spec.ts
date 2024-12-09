@@ -8,7 +8,7 @@ describe('ExpandablePanelButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ExpandablePanelButtonComponent],
+      imports: [ExpandablePanelButtonComponent],
     }).compileComponents()
   })
 

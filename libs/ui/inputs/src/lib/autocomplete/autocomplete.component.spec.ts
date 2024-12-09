@@ -127,7 +127,9 @@ describe('AutocompleteComponent', () => {
         fixture.detectChanges()
       })
       it('is not visible', () => {
-        expect(fixture.debugElement.query(By.css('.clear-btn'))).toBeNull()
+        expect(
+          fixture.debugElement.query(By.css('[data-test=clear-btn] button'))
+        ).toBeNull()
       })
     })
     describe('when input is not empty', () => {
@@ -143,7 +145,9 @@ describe('AutocompleteComponent', () => {
         component.inputSubmitted.subscribe(() => (anyEmitted = true))
         component.inputCleared.subscribe(() => (clearEmitted = true))
         fixture.detectChanges()
-        button = fixture.debugElement.query(By.css('.clear-btn'))
+        button = fixture.debugElement.query(
+          By.css('[data-test=clear-btn] button')
+        )
         button.nativeElement.click()
       })
       it('is visible', () => {
@@ -171,6 +175,7 @@ describe('AutocompleteComponent', () => {
     let anyEmitted
     beforeEach(() => {
       anyEmitted = []
+      component.allowSubmit = true
     })
     describe('with a text value', () => {
       beforeEach(() => {
@@ -178,7 +183,9 @@ describe('AutocompleteComponent', () => {
         component.triggerRef.closePanel = jest.fn()
         component.inputSubmitted.subscribe((event) => anyEmitted.push(event))
         component.inputRef.nativeElement.value = 'bla'
-        const button = fixture.debugElement.query(By.css('.search-btn'))
+        const button = fixture.debugElement.query(
+          By.css('[data-test=autocomplete-submit-btn] button')
+        )
         button.nativeElement.click()
       })
       it('sends a submitted value', () => {
@@ -190,7 +197,9 @@ describe('AutocompleteComponent', () => {
         fixture.detectChanges()
         component.inputSubmitted.subscribe((event) => anyEmitted.push(event))
         component.inputRef.nativeElement.value = ''
-        const button = fixture.debugElement.query(By.css('.search-btn'))
+        const button = fixture.debugElement.query(
+          By.css('[data-test=autocomplete-submit-btn] button')
+        )
         button.nativeElement.click()
       })
       it('sends an empty value', () => {
@@ -215,7 +224,7 @@ describe('AutocompleteComponent', () => {
       })
       it('does not show a submit button', () => {
         const button = fixture.debugElement.query(
-          By.css('[data-test=autocomplete-submit-btn]')
+          By.css('[data-test=autocomplete-submit-btn] button')
         )
         expect(button).toBeFalsy()
       })

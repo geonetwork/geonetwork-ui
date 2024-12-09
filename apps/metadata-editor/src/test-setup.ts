@@ -3,7 +3,6 @@ import '../../../jest.setup'
 
 import { CommonModule } from '@angular/common'
 import { getTestBed } from '@angular/core/testing'
-import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
 import {
   BrowserDynamicTestingModule,
@@ -32,7 +31,6 @@ ngMocks.globalKeep(CommonModule, true)
 ngMocks.globalKeep(BrowserModule, true)
 ngMocks.globalKeep(RouterModule, true)
 ngMocks.globalKeep(TranslateModule, true)
-ngMocks.globalKeep(MatIconModule, true)
 
 ngMocks.defaultMock(AvatarServiceInterface, () => ({
   getPlaceholder: jest.fn(),

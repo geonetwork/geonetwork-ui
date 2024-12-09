@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordApiFormComponent } from './record-api-form.component'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { firstValueFrom } from 'rxjs'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 
 const mockDatasetServiceDistribution: DatasetServiceDistribution = {
@@ -72,8 +71,7 @@ describe('RecordApiFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecordApiFormComponent],
-      imports: [UiInputsModule, TranslateModule.forRoot()],
+      imports: [RecordApiFormComponent, TranslateModule.forRoot()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(RecordApiFormComponent)

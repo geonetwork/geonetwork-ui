@@ -10,12 +10,49 @@ import {
   Keyword,
 } from '@geonetwork-ui/common/domain/model/record'
 import { getTemporalRangeUnion } from '@geonetwork-ui/util/shared'
+import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component'
+import {
+  ExpandablePanelComponent,
+  MaxLinesComponent,
+} from '@geonetwork-ui/ui/layout'
+import { TranslateModule } from '@ngx-translate/core'
+import {
+  BadgeComponent,
+  CopyTextButtonComponent,
+} from '@geonetwork-ui/ui/inputs'
+import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { CommonModule } from '@angular/common'
+import { matOpenInNew } from '@ng-icons/material-icons/baseline'
+import { matMailOutline } from '@ng-icons/material-icons/outline'
+import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
+import { GnUiLinkifyDirective } from './linkify.directive'
 
 @Component({
   selector: 'gn-ui-metadata-info',
   templateUrl: './metadata-info.component.html',
   styleUrls: ['./metadata-info.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    TranslateModule,
+    MarkdownParserComponent,
+    ExpandablePanelComponent,
+    BadgeComponent,
+    ContentGhostComponent,
+    ThumbnailComponent,
+    MaxLinesComponent,
+    CopyTextButtonComponent,
+    NgIcon,
+    GnUiLinkifyDirective,
+  ],
+  viewProviders: [
+    provideIcons({
+      matOpenInNew,
+      matMailOutline,
+    }),
+  ],
 })
 export class MetadataInfoComponent {
   @Input() metadata: Partial<DatasetRecord>

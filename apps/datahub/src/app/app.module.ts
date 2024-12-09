@@ -1,17 +1,20 @@
 import { DOCUMENT } from '@angular/common'
 import { importProvidersFrom, Inject, NgModule } from '@angular/core'
-import { MatIconModule } from '@angular/material/icon'
 import { BrowserModule } from '@angular/platform-browser'
 import { Router, RouterModule } from '@angular/router'
 import {
   FeatureCatalogModule,
+  OrganisationsComponent,
   ORGANIZATION_PAGE_URL_TOKEN,
   ORGANIZATION_URL_TOKEN,
 } from '@geonetwork-ui/feature/catalog'
 import {
+  EXTERNAL_VIEWER_OPEN_NEW_TAB,
+  EXTERNAL_VIEWER_URL_TEMPLATE,
   FeatureRecordModule,
   GN_UI_VERSION,
   WEB_COMPONENT_EMBEDDER_URL,
+  RecordMetaComponent,
 } from '@geonetwork-ui/feature/record'
 import {
   DefaultRouterModule,
@@ -27,23 +30,17 @@ import {
   RECORD_URL_TOKEN,
 } from '@geonetwork-ui/feature/search'
 import {
-  LinkCardComponent,
   THUMBNAIL_PLACEHOLDER,
   UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
-import {
-  PreviousNextButtonsComponent,
-  UiInputsModule,
-} from '@geonetwork-ui/ui/inputs'
-import {
-  BlockListComponent,
-  CarouselComponent,
-  UiLayoutModule,
-} from '@geonetwork-ui/ui/layout'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { IgnApiDlComponent } from '@geonetwork-ui/feature/record'
 import {
   getGlobalConfig,
+  getMapContextLayerFromConfig,
+  getOptionalMapConfig,
   getOptionalSearchConfig,
   getThemeConfig,
   TRANSLATE_WITH_OVERRIDES_CONFIG,
@@ -71,14 +68,16 @@ import { NewsPageComponent } from './home/news-page/news-page.component'
 import { OrganisationsPageComponent } from './home/organisations-page/organisations-page.component'
 import { SearchPageComponent } from './home/search/search-page/search-page.component'
 import { SearchFiltersComponent } from './home/search/search-filters/search-filters.component'
-import { HeaderRecordComponent } from './record/header-record/header-record.component'
 import { NavigationBarComponent } from './record/navigation-bar/navigation-bar.component'
 import { RecordPageComponent } from './record/record-page/record-page.component'
 import { DatahubRouterService } from './router/datahub-router.service'
 import { NavigationMenuComponent } from './home/navigation-menu/navigation-menu.component'
 import { FormsModule } from '@angular/forms'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
-import { LANGUAGES_LIST, UiCatalogModule } from '@geonetwork-ui/ui/catalog'
+import {
+  LANGUAGES_LIST,
+  LanguageSwitcherComponent,
+} from '@geonetwork-ui/ui/catalog'
 import {
   LOGIN_URL,
   METADATA_LANGUAGE,
@@ -86,17 +85,27 @@ import {
   provideRepositoryUrl,
 } from '@geonetwork-ui/api/repository'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { RecordRelatedRecordsComponent } from './record/record-related-records/record-related-records.component'
-import { RecordMetadataComponent } from './record/record-metadata/record-metadata.component'
-import { RecordOtherlinksComponent } from './record/record-otherlinks/record-otherlinks.component'
-import { RecordDownloadsComponent } from './record/record-downloads/record-downloads.component'
-import { RecordApisComponent } from './record/record-apis/record-apis.component'
 import { MatTabsModule } from '@angular/material/tabs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
-import { RecordUserFeedbacksComponent } from './record/record-user-feedbacks/record-user-feedbacks.component'
 import { LetDirective } from '@ngrx/component'
 import { OrganizationPageComponent } from './organization/organization-page/organization-page.component'
+
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
+import {
+  BASEMAP_LAYERS,
+  DO_NOT_USE_DEFAULT_BASEMAP,
+  MAP_VIEW_CONSTRAINTS,
+} from '@geonetwork-ui/ui/map'
+import {
+  matAddOutline,
+  matExpandMoreOutline,
+  matMenuOutline,
+  matMoreHorizOutline,
+  matRemoveOutline,
+  matStarOutline,
+} from '@ng-icons/material-icons/outline'
+import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
+
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -107,8 +116,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     HomePageComponent,
     HomeHeaderComponent,
     HeaderBadgeButtonComponent,
-    HeaderRecordComponent,
-    RecordPageComponent,
     SearchFiltersComponent,
     NavigationBarComponent,
     NewsPageComponent,
@@ -117,12 +124,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     LastCreatedComponent,
     KeyFiguresComponent,
     NavigationMenuComponent,
-    RecordRelatedRecordsComponent,
-    RecordUserFeedbacksComponent,
-    RecordMetadataComponent,
-    RecordOtherlinksComponent,
-    RecordDownloadsComponent,
-    RecordApisComponent,
   ],
   imports: [
     BrowserModule,
@@ -156,23 +157,32 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     FeatureCatalogModule,
     UiSearchModule,
     UtilSharedModule,
-    MatIconModule,
     UiLayoutModule,
     UiElementsModule,
     UiDatavizModule,
     FormsModule,
     UiInputsModule,
-    UiCatalogModule,
     MatTabsModule,
     UiWidgetsModule,
-    LinkCardComponent,
-    CarouselComponent,
-    BlockListComponent,
-    PreviousNextButtonsComponent,
+    RecordMetaComponent,
     LetDirective,
     MatButtonToggleModule,
+    // FIXME: these imports are required by non-standalone components and should be removed once all components have been made standalone
+    NgIconsModule.withIcons({
+      matMenuOutline,
+      matRemoveOutline,
+      matMoreHorizOutline,
+      matAddOutline,
+      matExpandMoreOutline,
+      matStarOutline,
+    }),
+    OrganisationsComponent,
+    LanguageSwitcherComponent,
   ],
   providers: [
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
     importProvidersFrom(FeatureAuthModule),
     provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
     provideGn4(),
@@ -231,6 +241,31 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     {
       provide: ORGANIZATION_URL_TOKEN,
       useValue: `${ROUTER_ROUTE_SEARCH}?${ROUTE_PARAMS.PUBLISHER}=\${name}`,
+    },
+    {
+      provide: DO_NOT_USE_DEFAULT_BASEMAP,
+      useFactory: () => getOptionalMapConfig()?.DO_NOT_USE_DEFAULT_BASEMAP,
+    },
+    {
+      provide: BASEMAP_LAYERS,
+      useFactory: () =>
+        getOptionalMapConfig()?.MAP_LAYERS.map(getMapContextLayerFromConfig) ??
+        [],
+    },
+    {
+      provide: MAP_VIEW_CONSTRAINTS,
+      useFactory: () => ({
+        maxExtent: getOptionalMapConfig()?.MAX_EXTENT,
+        maxZoom: getOptionalMapConfig()?.MAX_ZOOM,
+      }),
+    },
+    {
+      provide: EXTERNAL_VIEWER_URL_TEMPLATE,
+      useFactory: () => getOptionalMapConfig()?.EXTERNAL_VIEWER_URL_TEMPLATE,
+    },
+    {
+      provide: EXTERNAL_VIEWER_OPEN_NEW_TAB,
+      useFactory: () => getOptionalMapConfig()?.EXTERNAL_VIEWER_OPEN_NEW_TAB,
     },
   ],
   bootstrap: [AppComponent],

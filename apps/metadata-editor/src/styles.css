@@ -18,10 +18,21 @@ body {
 .btn-active {
   @apply bg-neutral-200 text-blue-600 font-bold;
 }
+.btn-inactive {
+  @apply text-slate-400 cursor-default;
+}
 .menu-title {
-  @apply text-2xl px-9 py-3;
+  @apply font-title text-2xl px-9 py-3;
+}
+
+.cdk-overlay-transparent-backdrop {
+  @apply bg-transparent;
 }
 
 .mat-mdc-button-base {
   line-height: normal;
+}
+
+.input-as-button {
+  @apply border-2 border-gray-300 hover:border-main bg-transparent hover:text-main py-[11.5px] pl-[14px] pr-2;
 }

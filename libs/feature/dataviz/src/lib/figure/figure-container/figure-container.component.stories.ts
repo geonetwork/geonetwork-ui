@@ -13,6 +13,8 @@ import {
   UiDatavizModule,
 } from '@geonetwork-ui/ui/dataviz'
 import { importProvidersFrom } from '@angular/core'
+import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
+import { TranslateModule } from '@ngx-translate/core'
 
 export default {
   title: 'Dataviz/FigureContainerComponent',
@@ -22,7 +24,10 @@ export default {
       imports: [UiDatavizModule],
     }),
     applicationConfig({
-      providers: [importProvidersFrom(BrowserAnimationsModule)],
+      providers: [
+        importProvidersFrom(BrowserAnimationsModule),
+        importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
+      ],
     }),
     componentWrapperDecorator(
       (story) => `

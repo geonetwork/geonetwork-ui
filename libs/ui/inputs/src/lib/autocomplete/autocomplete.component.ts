@@ -32,10 +32,17 @@ import {
   take,
   tap,
 } from 'rxjs/operators'
-import { MatIconModule } from '@angular/material/icon'
 import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
+import { ButtonComponent } from '../button/button.component'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { iconoirSearch } from '@ng-icons/iconoir'
+import { matClose } from '@ng-icons/material-icons/baseline'
 
 export type AutocompleteItem = unknown
 
@@ -46,12 +53,22 @@ export type AutocompleteItem = unknown
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    MatIconModule,
     PopupAlertComponent,
     MatAutocompleteModule,
     CommonModule,
     TranslateModule,
     ReactiveFormsModule,
+    ButtonComponent,
+    NgIconComponent,
+  ],
+  providers: [
+    provideIcons({
+      iconoirSearch,
+      matClose,
+    }),
+    provideNgIconsConfig({
+      size: '1.5rem',
+    }),
   ],
 })
 export class AutocompleteComponent
@@ -64,7 +81,8 @@ export class AutocompleteComponent
   @Input() preventCompleteOnSelection = false
   @Input() autoFocus = false
   @Input() minCharacterCount? = 3
-  @Input() allowSubmit = true
+  // this will show a submit button next to the input; if false, a search icon will appear on the left
+  @Input() allowSubmit = false
   @Output() itemSelected = new EventEmitter<AutocompleteItem>()
   @Output() inputSubmitted = new EventEmitter<string>()
   @Output() inputCleared = new EventEmitter<void>()

@@ -30,6 +30,7 @@ module.exports = {
           700: 'var(--color-gray-700)',
           800: 'var(--color-gray-800)',
           900: 'var(--color-gray-900)',
+          950: 'var(--color-gray-950)',
         },
         orange: {
           50: '#fff8f1',

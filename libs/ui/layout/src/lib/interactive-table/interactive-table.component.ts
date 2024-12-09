@@ -9,7 +9,12 @@ import {
 } from '@angular/core'
 import { InteractiveTableColumnComponent } from './interactive-table-column/interactive-table-column.component'
 import { CommonModule } from '@angular/common'
-import { MatIconModule } from '@angular/material/icon'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { iconoirNavArrowDown, iconoirNavArrowUp } from '@ng-icons/iconoir'
 
 @Component({
   selector: 'gn-ui-interactive-table',
@@ -17,7 +22,8 @@ import { MatIconModule } from '@angular/material/icon'
   styleUrls: ['./interactive-table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, InteractiveTableColumnComponent, MatIconModule],
+  imports: [CommonModule, InteractiveTableColumnComponent, NgIconComponent],
+  providers: [provideIcons({ iconoirNavArrowDown, iconoirNavArrowUp })],
 })
 export class InteractiveTableComponent {
   @ContentChildren(InteractiveTableColumnComponent)
@@ -30,7 +36,11 @@ export class InteractiveTableComponent {
     return {
       'grid-template-columns': this.columns
         .map((column) =>
-          column.grow ? `minmax(0px,1fr)` : `minmax(0px,max-content)`
+          column.width
+            ? column.width
+            : column.grow
+            ? `minmax(0px,1fr)`
+            : `minmax(0px,max-content)`
         )
         .join(' '),
     }

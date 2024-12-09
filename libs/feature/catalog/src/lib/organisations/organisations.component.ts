@@ -14,12 +14,31 @@ import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/orga
 import { SortByField } from '@geonetwork-ui/common/domain/model/search'
 import { createFuzzyFilter } from '@geonetwork-ui/util/shared'
 import { ORGANIZATION_PAGE_URL_TOKEN } from '../organization-url.token'
+import {
+  ContentGhostComponent,
+  PaginationComponent,
+} from '@geonetwork-ui/ui/elements'
+import { CommonModule } from '@angular/common'
+import {
+  OrganisationPreviewComponent,
+  OrganisationsFilterComponent,
+  OrganisationsResultComponent,
+} from '@geonetwork-ui/ui/catalog'
 
 @Component({
   selector: 'gn-ui-organisations',
   templateUrl: './organisations.component.html',
   styleUrls: ['./organisations.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    ContentGhostComponent,
+    OrganisationsFilterComponent,
+    OrganisationsResultComponent,
+    OrganisationPreviewComponent,
+    PaginationComponent,
+  ],
 })
 export class OrganisationsComponent {
   @Input() itemsOnPage = 12

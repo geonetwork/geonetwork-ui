@@ -175,16 +175,27 @@ export class FormFieldSpatialExtentComponent {
             ...(thesaurus && { thesaurus }),
           } as Keyword)
       )
-    const notPlaceKeywords = await firstValueFrom(
+
+    const notPlaceKwAndSpatialScopeKw = await firstValueFrom(
       this.editorFacade.record$.pipe(
-        map((record) => record.keywords.filter((k) => k.type !== 'place'))
+        map((record) =>
+          record.keywords.filter(
+            (k) =>
+              k.type !== 'place' ||
+              SPATIAL_SCOPES.some(
+                (spatialScope) => spatialScope.label === k.label // get back spatialScope keywords
+              )
+          )
+        )
       )
     )
 
-    this.editorFacade.updateRecordField('keywords', [
-      ...notPlaceKeywords,
+    const allKeywords = [
+      ...notPlaceKwAndSpatialScopeKw,
       ...filteredPlaceKeywords,
-    ])
+    ]
+
+    this.editorFacade.updateRecordField('keywords', allKeywords)
     this.editorFacade.updateRecordField('spatialExtents', spatialExtents)
   }
 

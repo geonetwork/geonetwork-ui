@@ -1,46 +1,36 @@
 <div
-  class="w-full flex flex-row p-8 items-center gap-6"
+  class="w-full flex flex-row items-center gap-[8px]"
   data-test="pageSelectorButtons"
 >
   <ng-container
     *ngFor="let page of pages$ | async; let index = index; let isLast = last"
   >
-    <div class="flex flex-row items-center gap-4">
-      <div class="flex flex-row items-center gap-4 hover:cursor-pointer">
-        <gn-ui-button
-          (buttonClick)="pageSectionClickHandler(index)"
-          class="flex flex-row items-center"
-          [type]="
-            (facade.currentPage$ | async) === index ? 'primary' : 'default'
-          "
-          extraClass="bg-transparent border-none"
-        >
-          <div
-            class="w-10 h-10 rounded-[8px] pt-3 text-center"
-            [ngClass]="
-              (facade.currentPage$ | async) === index
-                ? 'bg-primary font-bold'
-                : 'bg-gray-200'
-            "
-          >
-            {{ index + 1 }}
-          </div>
-          <div
-            class="ms-4"
-            [ngClass]="
-              (facade.currentPage$ | async) === index
-                ? 'text-center text-black font-bold'
-                : 'text-gray-400'
-            "
-            translate
-          >
-            {{ page.labelKey }}
-          </div>
-        </gn-ui-button>
+    <gn-ui-button
+      (buttonClick)="pageSectionClickHandler(index)"
+      class="flex flex-row items-center"
+      type="light"
+      extraClass="bg-transparent border-none"
+      style="--gn-ui-button-padding: 0 16px 0 0"
+      *ngrxLet="isCurrentPage(index) as isCurrentPage"
+    >
+      <div
+        class="w-[40px] h-[40px] rounded-[8px] grid items-center font-bold transition-colors"
+        data-test="page-number"
+        [ngClass]="isCurrentPage ? 'bg-primary text-white' : 'bg-gray-200'"
+      >
+        {{ index + 1 }}
       </div>
-      <div *ngIf="!isLast" class="w-10">
-        <hr class="border-t-[2px]" />
+      <div
+        class="ms-[16px] transition-colors"
+        [ngClass]="isCurrentPage ? 'text-black font-bold' : 'text-gray-600'"
+        translate
+      >
+        {{ page.labelKey }}
       </div>
-    </div>
+    </gn-ui-button>
+    <div
+      *ngIf="!isLast"
+      class="w-10 mr-[8px] border-t-[2px] border-gray-500"
+    ></div>
   </ng-container>
 </div>
