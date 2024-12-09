@@ -128,18 +128,11 @@ export class AutocompleteComponent
         distinctUntilChanged(),
         debounceTime(400)
       )
-    ).pipe(
-      tap((suggestionsFromAction) => {
-        console.log('newValue', suggestionsFromAction)
-      })
     )
 
     const externalValueChange$ = this.control.valueChanges.pipe(
       filter((value) => typeof value === 'object' && value.title),
-      map((item) => item.title),
-      tap((suggestionsFromAction) => {
-        console.log('externalValueChange', suggestionsFromAction)
-      })
+      map((item) => item.title)
     )
 
     // this observable emits arrays of suggestions loaded using the given action
@@ -158,9 +151,6 @@ export class AutocompleteComponent
         this.error = error.message
         return of([])
       }),
-      tap((suggestionsFromAction) => {
-        console.log('suggestionsfromaction', suggestionsFromAction)
-      }),
       finalize(() => (this.searching = false))
     )
 
@@ -169,10 +159,7 @@ export class AutocompleteComponent
       // if a new value is under the min char count, clear suggestions
       newValue$.pipe(
         filter((value: string) => value.length < this.minCharacterCount),
-        map(() => []),
-        tap((suggestionsFromAction) => {
-          console.log('suggestionsfromCLEAR', suggestionsFromAction)
-        })
+        map(() => [])
       )
     )
 
