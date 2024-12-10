@@ -22,6 +22,7 @@ class SearchFacadeMock {
 class SearchServiceMock {
   setFilters = jest.fn()
 }
+
 describe('SearchFiltersSummaryComponent', () => {
   let component: SearchFiltersSummaryComponent
   let fixture: ComponentFixture<SearchFiltersSummaryComponent>
@@ -134,6 +135,22 @@ describe('SearchFiltersSummaryComponent', () => {
       )
       const isActive = await firstValueFrom(component.searchFilterActive$)
       expect(isActive).toBeTruthy()
+    })
+    it('should clear filters except with keys from FILTER_SUMMARY_IGNORE_LIST', () => {
+      const filters = {
+        owner: { 1: true },
+        format: {},
+        isSpatial: {},
+        license: {},
+        'userInfo.keyword': { 'admin|admin|admin|Administrator': true },
+      }
+      ;(searchFacade.searchFilters$ as BehaviorSubject<FieldFilters>).next(
+        filters
+      )
+      component.clearFilters()
+      expect(searchService.setFilters).toHaveBeenCalledWith({
+        owner: { 1: true },
+      })
     })
   })
 })

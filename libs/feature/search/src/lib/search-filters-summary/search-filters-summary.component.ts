@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnInit, Optional } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { map, Observable } from 'rxjs'
+import { first, map, Observable } from 'rxjs'
 import { SearchFiltersSummaryItemComponent } from '../search-filters-summary-item/search-filters-summary-item.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { SearchFacade } from '../state/search.facade'
@@ -56,6 +56,19 @@ export class SearchFiltersSummaryComponent implements OnInit {
   }
 
   clearFilters() {
-    this.searchService.setFilters({})
+    this.searchFacade.searchFilters$
+      .pipe(
+        first(),
+        map((filters) => {
+          const newFilters = { ...filters }
+          Object.keys(newFilters).forEach((key) => {
+            if (!this.filterSummaryIgnoreList.includes(key)) {
+              delete newFilters[key]
+            }
+          })
+          return newFilters
+        })
+      )
+      .subscribe((filters) => this.searchService.setFilters(filters))
   }
 }
