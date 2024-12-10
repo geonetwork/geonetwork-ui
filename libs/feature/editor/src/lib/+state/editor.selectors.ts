@@ -61,3 +61,8 @@ export const selectRecordSections = createSelector(
     })) as EditorSectionWithValues[]
   }
 )
+
+export const selectHasRecordChanged = createSelector(
+  selectEditorState,
+  (state: EditorState) => state.hasRecordChanged
+)
