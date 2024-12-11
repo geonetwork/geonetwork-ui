@@ -142,7 +142,8 @@ export class ImportRecordComponent {
               'editor.record.importFromExternalFile.failure.body'
             )} ${error.message ?? ''}`,
           },
-          2500
+          2500,
+          error
         )
         this.isRecordImportInProgress = false
         this.cdr.markForCheck()

@@ -75,12 +75,16 @@ describe('EditRecordResolver', () => {
       expect(resolvedData).toBeUndefined()
     })
     it('should show error notification', () => {
-      expect(notificationsService.showNotification).toHaveBeenCalledWith({
-        type: 'error',
-        title: 'editor.record.loadError.title',
-        text: 'editor.record.loadError.body oopsie',
-        closeMessage: 'editor.record.loadError.closeMessage',
-      })
+      expect(notificationsService.showNotification).toHaveBeenCalledWith(
+        {
+          type: 'error',
+          title: 'editor.record.loadError.title',
+          text: 'editor.record.loadError.body oopsie',
+          closeMessage: 'editor.record.loadError.closeMessage',
+        },
+        undefined,
+        expect.any(Error)
+      )
     })
   })
 })

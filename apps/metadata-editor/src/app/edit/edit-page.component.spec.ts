@@ -121,24 +121,32 @@ describe('EditPageComponent', () => {
     describe('publish version error', () => {
       it('shows notification', () => {
         ;(facade.saveError$ as any).next(new PublicationVersionError('1.0.0'))
-        expect(notificationsService.showNotification).toHaveBeenCalledWith({
-          type: 'error',
-          title: 'editor.record.publishVersionError.title',
-          text: 'editor.record.publishVersionError.body',
-          closeMessage: 'editor.record.publishVersionError.closeMessage',
-        })
+        expect(notificationsService.showNotification).toHaveBeenCalledWith(
+          {
+            type: 'error',
+            title: 'editor.record.publishVersionError.title',
+            text: 'editor.record.publishVersionError.body',
+            closeMessage: 'editor.record.publishVersionError.closeMessage',
+          },
+          undefined,
+          expect.any(PublicationVersionError)
+        )
       })
     })
 
     describe('publish error', () => {
       it('shows notification', () => {
         ;(facade.saveError$ as any).next(new Error('oopsie'))
-        expect(notificationsService.showNotification).toHaveBeenCalledWith({
-          type: 'error',
-          title: 'editor.record.publishError.title',
-          text: 'editor.record.publishError.body oopsie',
-          closeMessage: 'editor.record.publishError.closeMessage',
-        })
+        expect(notificationsService.showNotification).toHaveBeenCalledWith(
+          {
+            type: 'error',
+            title: 'editor.record.publishError.title',
+            text: 'editor.record.publishError.body oopsie',
+            closeMessage: 'editor.record.publishError.closeMessage',
+          },
+          undefined,
+          expect.any(Error)
+        )
       })
     })
 

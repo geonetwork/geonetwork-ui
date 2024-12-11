@@ -7,6 +7,7 @@ import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { of, throwError } from 'rxjs'
 import { MockBuilder, MockComponent, MockModule, MockProviders } from 'ng-mocks'
+import exp from 'constants'
 
 describe('ImportRecordComponent', () => {
   let component: ImportRecordComponent
@@ -112,7 +113,8 @@ describe('ImportRecordComponent', () => {
         title: 'editor.record.importFromExternalFile.failure.title',
         text: `editor.record.importFromExternalFile.failure.body `,
       }),
-      2500
+      2500,
+      mockError
     )
 
     expect(component.isRecordImportInProgress).toBe(false)
