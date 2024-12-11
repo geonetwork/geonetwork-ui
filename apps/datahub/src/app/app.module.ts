@@ -36,6 +36,7 @@ import {
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
+import { IgnApiDlComponent } from '@geonetwork-ui/feature/record'
 import {
   getGlobalConfig,
   getMapContextLayerFromConfig,
@@ -88,6 +89,8 @@ import { MatTabsModule } from '@angular/material/tabs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { LetDirective } from '@ngrx/component'
 import { OrganizationPageComponent } from './organization/organization-page/organization-page.component'
+
+import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import {
   BASEMAP_LAYERS,
   DO_NOT_USE_DEFAULT_BASEMAP,
@@ -102,6 +105,7 @@ import {
   matStarOutline,
 } from '@ng-icons/material-icons/outline'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
+
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -162,6 +166,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     UiWidgetsModule,
     RecordMetaComponent,
     LetDirective,
+    MatButtonToggleModule,
     // FIXME: these imports are required by non-standalone components and should be removed once all components have been made standalone
     NgIconsModule.withIcons({
       matMenuOutline,
