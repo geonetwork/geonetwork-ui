@@ -23,18 +23,22 @@ export class DuplicateRecordResolver {
       .openRecordForDuplication(route.paramMap.get('uuid'))
       .pipe(
         catchError((error) => {
-          this.notificationsService.showNotification({
-            type: 'error',
-            title: this.translateService.instant(
-              'editor.record.loadError.title'
-            ),
-            text: `${this.translateService.instant(
-              'editor.record.loadError.body'
-            )} ${error.message}`,
-            closeMessage: this.translateService.instant(
-              'editor.record.loadError.closeMessage'
-            ),
-          })
+          this.notificationsService.showNotification(
+            {
+              type: 'error',
+              title: this.translateService.instant(
+                'editor.record.loadError.title'
+              ),
+              text: `${this.translateService.instant(
+                'editor.record.loadError.body'
+              )} ${error.message}`,
+              closeMessage: this.translateService.instant(
+                'editor.record.loadError.closeMessage'
+              ),
+            },
+            undefined,
+            error
+          )
           return EMPTY
         })
       )

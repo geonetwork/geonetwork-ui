@@ -83,32 +83,40 @@ export class EditPageComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.facade.saveError$.subscribe((error) => {
         if (error instanceof PublicationVersionError) {
-          this.notificationsService.showNotification({
-            type: 'error',
-            title: this.translateService.instant(
-              'editor.record.publishVersionError.title'
-            ),
-            text: this.translateService.instant(
-              'editor.record.publishVersionError.body',
-              { currentVersion: error.detectedApiVersion }
-            ),
-            closeMessage: this.translateService.instant(
-              'editor.record.publishVersionError.closeMessage'
-            ),
-          })
+          this.notificationsService.showNotification(
+            {
+              type: 'error',
+              title: this.translateService.instant(
+                'editor.record.publishVersionError.title'
+              ),
+              text: this.translateService.instant(
+                'editor.record.publishVersionError.body',
+                { currentVersion: error.detectedApiVersion }
+              ),
+              closeMessage: this.translateService.instant(
+                'editor.record.publishVersionError.closeMessage'
+              ),
+            },
+            undefined,
+            error
+          )
         } else {
-          this.notificationsService.showNotification({
-            type: 'error',
-            title: this.translateService.instant(
-              'editor.record.publishError.title'
-            ),
-            text: `${this.translateService.instant(
-              'editor.record.publishError.body'
-            )} ${error.message}`,
-            closeMessage: this.translateService.instant(
-              'editor.record.publishError.closeMessage'
-            ),
-          })
+          this.notificationsService.showNotification(
+            {
+              type: 'error',
+              title: this.translateService.instant(
+                'editor.record.publishError.title'
+              ),
+              text: `${this.translateService.instant(
+                'editor.record.publishError.body'
+              )} ${error.message}`,
+              closeMessage: this.translateService.instant(
+                'editor.record.publishError.closeMessage'
+              ),
+            },
+            undefined,
+            error
+          )
         }
       })
     )
