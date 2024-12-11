@@ -22,6 +22,7 @@ import {
 } from '@geonetwork-ui/ui/layout'
 import {
   FileFormat,
+  formatUserInfo,
   getBadgeColor,
   getFileFormat,
   getFormatPriority,
@@ -162,11 +163,7 @@ export class ResultsTableComponent {
   }
 
   formatUserInfo(userInfo: string | unknown): string {
-    const infos = (typeof userInfo === 'string' ? userInfo : '').split('|')
-    if (infos && infos.length === 4) {
-      return `${infos[2]} ${infos[1]}`
-    }
-    return undefined
+    return formatUserInfo(userInfo)
   }
 
   getBadgeColor(format: FileFormat): string {

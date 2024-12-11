@@ -1,4 +1,8 @@
-import { DateRange, isDateRange } from '@geonetwork-ui/api/repository'
+import {
+  DateRange,
+  formatDate,
+  isDateRange,
+} from '@geonetwork-ui/api/repository'
 import { ROUTE_PARAMS, SearchRouteParams } from '../constants'
 
 export function flattenQueryParams(
@@ -12,12 +16,10 @@ export function flattenQueryParams(
     ) {
       flattened[key] = [(flattened[key] as string[]).join(',')]
     } else if (isDateRange(flattened[key] as DateRange)) {
+      const start = (flattened[key] as DateRange).start
+      const end = (flattened[key] as DateRange).end
       flattened[key] = [
-        `${
-          (flattened[key] as DateRange).start?.toISOString().split('T')[0] || ''
-        }..${
-          (flattened[key] as DateRange).end?.toISOString().split('T')[0] || ''
-        }`,
+        `${start ? formatDate(start) : ''}..${formatDate(end) || ''}`,
       ]
     }
   }
@@ -42,8 +44,8 @@ export function expandQueryParams(
       } else if (isDateUrl(value)) {
         const [start, end] = value.split('..')
         expanded[key] = {
-          ...(start && { start: new Date(start) }),
-          ...(end && { end: new Date(end) }),
+          ...(start && { start: new Date(`${start}T00:00:00`) }),
+          ...(end && { end: new Date(`${end}T00:00:00`) }),
         }
       } else {
         expanded[key] = value.split(',')

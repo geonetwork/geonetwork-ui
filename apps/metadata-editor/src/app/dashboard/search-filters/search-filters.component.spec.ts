@@ -2,13 +2,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { SearchFiltersComponent } from './search-filters.component'
 import { MockBuilder } from 'ng-mocks'
 import { TranslateModule } from '@ngx-translate/core'
+import { By } from '@angular/platform-browser'
+import { SearchFiltersSummaryComponent } from '@geonetwork-ui/feature/search'
 
 describe('SearchFiltersComponent', () => {
   let component: SearchFiltersComponent
   let fixture: ComponentFixture<SearchFiltersComponent>
 
   beforeEach(() => {
-    return MockBuilder(SearchFiltersComponent)
+    return MockBuilder(SearchFiltersComponent).mock(
+      SearchFiltersSummaryComponent
+    )
   })
 
   beforeEach(async () => {
@@ -39,6 +43,16 @@ describe('SearchFiltersComponent', () => {
       component.searchFields = []
       fixture.detectChanges()
       expect(component.searchConfig).toEqual([])
+    })
+
+    it('should pass searchFields to SearchFiltersSummaryComponent', () => {
+      const searchFields = ['user', 'publisherOrg', 'format', 'isSpatial']
+      component.searchFields = searchFields
+      fixture.detectChanges()
+      const summaryComponent = fixture.debugElement.query(
+        By.directive(SearchFiltersSummaryComponent)
+      ).componentInstance
+      expect(summaryComponent.searchFields).toEqual(searchFields)
     })
   })
 })
