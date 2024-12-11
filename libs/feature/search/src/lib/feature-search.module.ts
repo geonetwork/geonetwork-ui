@@ -14,7 +14,11 @@ import { SearchEffects } from './state/effects'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './state/reducer'
 import { ResultsHitsContainerComponent } from './results-hits-number/results-hits.container.component'
 import { SearchStateContainerDirective } from './state/container/search-state.container.directive'
-import { AutocompleteComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import {
+  AutocompleteComponent,
+  DateRangeDropdownComponent,
+  UiInputsModule,
+} from '@geonetwork-ui/ui/inputs'
 import { NgModule } from '@angular/core'
 import { ErrorComponent, UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { FilterDropdownComponent } from './filter-dropdown/filter-dropdown.component'
@@ -55,6 +59,7 @@ import { FavoriteStarComponent } from './favorites/favorite-star/favorite-star.c
     SpinningLoaderComponent,
     ErrorComponent,
     FavoriteStarComponent,
+    DateRangeDropdownComponent,
   ],
   exports: [
     SortByComponent,

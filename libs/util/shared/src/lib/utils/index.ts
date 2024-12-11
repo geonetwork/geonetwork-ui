@@ -1,5 +1,6 @@
 export * from './bytes-convert'
 export * from './event'
+export * from './format-fields'
 export * from './fuzzy-filter'
 export * from './geojson'
 export * from './image-resize'

@@ -1,3 +1,5 @@
+import { DateRange } from '@geonetwork-ui/api/repository'
+
 export const ROUTER_STATE_KEY = 'router'
 
 export const ROUTER_ROUTE_SEARCH = 'search'
@@ -9,4 +11,7 @@ export enum ROUTE_PARAMS {
   PUBLISHER = 'publisher', // FIXME: this shouldn't be here as it is a search field
   PAGE = '_page',
 }
-export type SearchRouteParams = Record<string, string | string[] | number>
+export type SearchRouteParams = Record<
+  string,
+  string | string[] | number | DateRange
+>

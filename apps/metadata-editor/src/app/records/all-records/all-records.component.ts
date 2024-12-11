@@ -77,7 +77,7 @@ export class AllRecordsComponent {
   importRecordButton!: ElementRef
   @ViewChild('template') template!: TemplateRef<any>
   private overlayRef!: OverlayRef
-  searchFields = ['user']
+  searchFields = ['user', 'changeDate']
   searchText$: Observable<string | null> =
     this.searchFacade.searchFilters$.pipe(
       map((filters) => ('any' in filters ? (filters['any'] as string) : null))

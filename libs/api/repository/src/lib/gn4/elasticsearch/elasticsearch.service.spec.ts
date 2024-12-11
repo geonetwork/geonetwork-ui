@@ -163,11 +163,15 @@ describe('ElasticsearchService', () => {
         },
       })
     })
-    it('add any and other fields query_strings and limit search payload by ids', () => {
+    it('add any, other fields query_strings and date range and limit search payload by ids', () => {
       const query = service['buildPayloadQuery'](
         {
           Org: {
             world: true,
+          },
+          someDate: {
+            start: new Date('2020-01-01'),
+            end: new Date('2020-12-31'),
           },
           any: 'hello',
         },
@@ -185,6 +189,81 @@ describe('ElasticsearchService', () => {
             {
               query_string: {
                 query: 'Org:("world")',
+              },
+            },
+            {
+              range: {
+                someDate: {
+                  gte: '2020-01-01',
+                  lte: '2020-12-31',
+                  format: 'yyyy-MM-dd',
+                },
+              },
+            },
+            {
+              ids: {
+                values: ['record-1', 'record-2', 'record-3'],
+              },
+            },
+          ],
+          should: [],
+          must: [
+            {
+              query_string: {
+                default_operator: 'AND',
+                fields: [
+                  'resourceTitleObject.langfre^5',
+                  'tag.langfre^4',
+                  'resourceAbstractObject.langfre^3',
+                  'lineageObject.langfre^2',
+                  'any.langfre',
+                  'uuid',
+                ],
+                query: 'hello',
+              },
+            },
+          ],
+          must_not: {
+            terms: {
+              resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+            },
+          },
+        },
+      })
+    })
+    it('handles date range object with start only, and limit search payload by ids', () => {
+      const query = service['buildPayloadQuery'](
+        {
+          Org: {
+            world: true,
+          },
+          otherDate: {
+            start: new Date('2021-03-03'),
+          },
+          any: 'hello',
+        },
+        {},
+        ['record-1', 'record-2', 'record-3']
+      )
+      expect(query).toEqual({
+        bool: {
+          filter: [
+            {
+              terms: {
+                isTemplate: ['n'],
+              },
+            },
+            {
+              query_string: {
+                query: 'Org:("world")',
+              },
+            },
+            {
+              range: {
+                otherDate: {
+                  gte: '2021-03-03',
+                  format: 'yyyy-MM-dd',
+                },
               },
             },
             {

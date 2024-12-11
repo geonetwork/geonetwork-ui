@@ -14,10 +14,15 @@ import {
   TermBucket,
 } from '@geonetwork-ui/common/domain/model/search'
 import {
+  DateRange,
   ElasticsearchService,
+  isDateRange,
   METADATA_LANGUAGE,
 } from '@geonetwork-ui/api/repository'
 import { LangService } from '@geonetwork-ui/util/i18n'
+import { formatUserInfo } from '@geonetwork-ui/util/shared'
+
+export type FieldType = 'values' | 'dateRange'
 
 export type FieldValue = string | number
 export interface FieldAvailableValue {
@@ -26,9 +31,14 @@ export interface FieldAvailableValue {
 }
 
 export abstract class AbstractSearchField {
-  abstract getAvailableValues(): Observable<FieldAvailableValue[]>
-  abstract getFiltersForValues(values: FieldValue[]): Observable<FieldFilters>
-  abstract getValuesForFilter(filters: FieldFilters): Observable<FieldValue[]>
+  abstract getAvailableValues(): Observable<FieldAvailableValue[] | DateRange[]>
+  abstract getFiltersForValues(
+    values: FieldValue[] | DateRange[]
+  ): Observable<FieldFilters>
+  abstract getValuesForFilter(
+    filters: FieldFilters
+  ): Observable<FieldValue[] | FieldValue | DateRange>
+  abstract getType(): FieldType
 }
 
 export class SimpleSearchField implements AbstractSearchField {
@@ -74,21 +84,46 @@ export class SimpleSearchField implements AbstractSearchField {
       })
     )
   }
-  getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
+  getFiltersForValues(
+    values: FieldValue[] | DateRange[]
+  ): Observable<FieldFilters> {
+    // FieldValue[]
+    if (this.getType() === 'values') {
+      return of({
+        [this.esFieldName]: (values as FieldValue[]).reduce((acc, val) => {
+          const value = val.toString()
+          if (value !== '') {
+            return { ...acc, [value]: true }
+          }
+          return acc
+        }, {}),
+      })
+    }
+    // DateRange
     return of({
-      [this.esFieldName]: values.reduce((acc, val) => {
-        return { ...acc, [val.toString()]: true }
-      }, {}),
+      [this.esFieldName]: values[0] !== '' ? values[0] : {},
     })
   }
-  getValuesForFilter(filters: FieldFilters): Observable<FieldValue[]> {
+  getValuesForFilter(
+    filters: FieldFilters
+  ): Observable<FieldValue[] | FieldValue | DateRange> {
     const filter = filters[this.esFieldName]
     if (!filter) return of([])
-    const values =
-      typeof filter === 'string'
-        ? [filter]
-        : Object.keys(filter).filter((v) => filter[v])
+    // filter by expression
+    if (typeof filter === 'string') {
+      return of([filter])
+    }
+    // filter by date range
+    if (isDateRange(filter)) {
+      return of(filter)
+    }
+    // filter by values
+    const values = Object.keys(filter).filter((v) => filter[v])
     return of(values)
+  }
+
+  getType(): FieldType {
+    return 'values'
   }
 }
 
@@ -162,6 +197,9 @@ export class FullTextSearchField implements AbstractSearchField {
   }
   getValuesForFilter(filters: FieldFilters): Observable<FieldValue[]> {
     return of(filters.any ? [filters.any as FieldFilterByExpression] : [])
+  }
+  getType(): FieldType {
+    return 'values'
   }
 }
 
@@ -336,6 +374,10 @@ export class OrganizationSearchField implements AbstractSearchField {
       )
     )
   }
+
+  getType(): FieldType {
+    return 'values'
+  }
 }
 export class OwnerSearchField extends SimpleSearchField {
   constructor(injector: Injector) {
@@ -357,18 +399,29 @@ export class UserSearchField extends SimpleSearchField {
       map((values) =>
         values.map((v) => ({
           ...v,
-          label: this.formatUserInfo(v.label),
+          label: formatUserInfo(v.label, true),
         }))
       )
     )
   }
+}
 
-  private formatUserInfo(userInfo: string | unknown): string {
-    const infos = (typeof userInfo === 'string' ? userInfo : '').split('|')
-    const count = infos[3].split(' ')[1]
-    if (infos && infos.length === 4) {
-      return `${infos[2]} ${infos[1]} ${count}`
-    }
-    return undefined
+export class DateRangeSearchField extends SimpleSearchField {
+  constructor(
+    protected esFieldName: string,
+    protected injector: Injector,
+    protected order: 'asc' | 'desc' = 'asc',
+    protected orderType: 'key' | 'count' = 'key'
+  ) {
+    super(esFieldName, injector, order, orderType)
+  }
+
+  getAvailableValues(): Observable<FieldAvailableValue[]> {
+    // TODO: return an array of dates to show which one are available in the date picker
+    return of([])
+  }
+
+  getType(): FieldType {
+    return 'dateRange'
   }
 }

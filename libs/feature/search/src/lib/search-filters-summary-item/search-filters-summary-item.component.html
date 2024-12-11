@@ -1,0 +1,20 @@
+<div
+  *ngIf="(fieldValues$ | async)?.length > 0"
+  class="flex flex-row items-center gap-2"
+>
+  <span class="text-gray-800" data-cy="filterSummaryLabel">{{
+    translatedLabel
+  }}</span>
+  <gn-ui-badge
+    *ngFor="let fieldValue of fieldValues$ | async"
+    class="gn-ui-badge"
+    [style.--gn-ui-badge-rounded]="'8px'"
+    [style.--gn-ui-badge-padding]="'3px 4px'"
+    [style.--gn-ui-badge-text-color]="'black'"
+    [style.--gn-ui-badge-background-color]="'#F2F2F2'"
+    [style.--gn-ui-badge-font-weight]="'700'"
+    [removable]="true"
+    (badgeRemoveClicked)="removeFilterValue(fieldValue.value)"
+    >{{ fieldValue.label }}</gn-ui-badge
+  >
+</div>
