@@ -148,6 +148,14 @@ export const RECORD_GRAPHICAL_OVERVIEW_FIELD: EditorField = {
   },
 }
 
+export const RECORD_SPATIAL_TOGGLE_FIELD: EditorField = {
+  // model: 'keywords',
+  componentName: 'form-field-spatial-toggle',
+  formFieldConfig: {
+    labelKey: marker('editor.record.form.field.spatialExtents'),
+  },
+}
+
 export const RECORD_SPATIAL_EXTENTS_FIELD: EditorField = {
   model: 'spatialExtents',
   formFieldConfig: {
@@ -203,7 +211,7 @@ export const ABOUT_SECTION: EditorSection = {
 export const GEOGRAPHICAL_COVERAGE_SECTION: EditorSection = {
   labelKey: marker('editor.record.form.section.geographicalCoverage.label'),
   hidden: false,
-  fields: [RECORD_SPATIAL_EXTENTS_FIELD],
+  fields: [RECORD_SPATIAL_TOGGLE_FIELD, RECORD_SPATIAL_EXTENTS_FIELD],
 }
 
 export const ASSOCIATED_RESOURCES_SECTION: EditorSection = {
