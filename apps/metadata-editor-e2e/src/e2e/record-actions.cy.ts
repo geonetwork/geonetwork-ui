@@ -122,8 +122,11 @@ describe('record-actions', () => {
         .should('be.disabled')
       cy.get('gn-ui-form-field-overviews')
         .children()
-        .find('div')
-        .should('contain.text', ' This field will be enabled once published ')
+        .find('[data-test="disabled-message"]')
+        .should(
+          'contain.text',
+          ' This field will be enabled once the data has been published '
+        )
 
       // second page
       cy.get('[data-test="previousNextPageButtons"]')
@@ -140,7 +143,10 @@ describe('record-actions', () => {
       cy.get('gn-ui-form-field-online-resources')
         .children()
         .find('div')
-        .should('contain.text', ' This field will be enabled once published ')
+        .should(
+          'contain.text',
+          ' This field will be enabled once the data has been published '
+        )
 
       cy.get('gn-ui-form-field-online-link-resources')
         .find('input')
@@ -148,7 +154,10 @@ describe('record-actions', () => {
       cy.get('gn-ui-form-field-online-link-resources')
         .children()
         .find('div')
-        .should('contain.text', ' This field will be enabled once published ')
+        .should(
+          'contain.text',
+          ' This field will be enabled once the data has been published '
+        )
     })
 
     it('back navigation should go to search after creating a record', () => {
