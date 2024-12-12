@@ -149,11 +149,9 @@ export const RECORD_GRAPHICAL_OVERVIEW_FIELD: EditorField = {
 }
 
 export const RECORD_SPATIAL_TOGGLE_FIELD: EditorField = {
-  // model: 'keywords',
   componentName: 'form-field-spatial-toggle',
-  formFieldConfig: {
-    labelKey: marker('editor.record.form.field.spatialExtents'),
-  },
+  formFieldConfig: {},
+  hidden: true,
 }
 
 export const RECORD_SPATIAL_EXTENTS_FIELD: EditorField = {

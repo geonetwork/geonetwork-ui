@@ -118,7 +118,6 @@ export class FormFieldComponent {
       this.model === 'legalConstraints' ||
       this.model === 'securityConstraints' ||
       this.model === 'otherConstraints' ||
-      this.model === 'spatialExtents' ||
       this.componentName === 'form-field-constraints-shortcuts'
     )
   }
