@@ -643,6 +643,17 @@ describe('editor form', () => {
             .find('span')
             .should('have.text', 'Addresses ')
         })
+        it('should close the autocomplete and clear the input after selecting a keyword', () => {
+          cy.get('gn-ui-form-field-keywords')
+            .find('gn-ui-autocomplete')
+            .type('a')
+          cy.get('mat-option').first().click()
+          cy.get('mat-option').should('not.exist')
+          cy.get('gn-ui-form-field-keywords')
+            .find('gn-ui-autocomplete')
+            .find('input')
+            .should('have.value', '')
+        })
         it('should delete a keyword', () => {
           cy.editor_wrapPreviousDraft()
           cy.get('gn-ui-form-field-keywords')
