@@ -27,9 +27,10 @@ import {
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { Subscription } from 'rxjs'
+import { map, Subscription } from 'rxjs'
 import { MatDialog } from '@angular/material/dialog'
 import { MAX_UPLOAD_SIZE_MB } from '../../../../fields.config'
+import { EditorFacade } from '../../../../+state/editor.facade'
 
 @Component({
   selector: 'gn-ui-form-field-online-link-resources',
@@ -68,12 +69,17 @@ export class FormFieldOnlineLinkResourcesComponent {
 
   protected MAX_UPLOAD_SIZE_MB = MAX_UPLOAD_SIZE_MB
 
+  disabled$ = this.editorFacade.alreadySavedOnce$.pipe(
+    map((alreadySavedOnce) => !alreadySavedOnce)
+  )
+
   constructor(
     private notificationsService: NotificationsService,
     private translateService: TranslateService,
     private platformService: PlatformServiceInterface,
     private cd: ChangeDetectorRef,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private editorFacade: EditorFacade
   ) {}
 
   handleFileChange(file: File) {

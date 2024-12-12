@@ -34,6 +34,7 @@ export default {
 export const WithoutImage: StoryObj<ImageInputComponent> = {
   args: {
     maxSizeMB: 5,
+    disabled: false,
   },
   render: (args) => ({
     props: {
@@ -46,7 +47,9 @@ export const WithoutImage: StoryObj<ImageInputComponent> = {
     },
     template: `
     <div style="width: 600px;height: 400px;">
-      <gn-ui-image-input [maxSizeMB]="maxSizeMB"
+      <gn-ui-image-input
+        [maxSizeMB]="maxSizeMB"
+        [disabled]="disabled"
         (fileChange)='fileChange($event)'
         (urlChange)='urlChange($event)'
         (uploadCancel)='uploadCancel($event)'

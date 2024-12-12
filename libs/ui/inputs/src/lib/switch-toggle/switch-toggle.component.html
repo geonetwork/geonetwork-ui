@@ -2,6 +2,7 @@
   #group="matButtonToggleGroup"
   multiple="false"
   class="flex w-full"
+  [disabled]="disabled"
 >
   <mat-button-toggle
     *ngFor="let option of options"
