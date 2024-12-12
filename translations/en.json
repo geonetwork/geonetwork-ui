@@ -215,7 +215,7 @@
   "editor.record.form.field.constraintsShortcuts": "",
   "editor.record.form.field.contacts.noContact": "Please provide at least one point of contact.",
   "editor.record.form.field.contactsForResource.noContact": "Please provide at least one point of contact responsible for the data.",
-  "editor.record.form.field.draft.only.disabled": "This field will be enabled once published",
+  "editor.record.form.field.draft.only.disabled": "This field will be enabled once the data has been published",
   "editor.record.form.field.keywords": "Keywords",
   "editor.record.form.field.legalConstraints": "Legal constraint",
   "editor.record.form.field.license": "License",

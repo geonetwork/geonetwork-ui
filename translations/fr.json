@@ -215,7 +215,7 @@
   "editor.record.form.field.constraintsShortcuts": "",
   "editor.record.form.field.contacts.noContact": "Veuillez renseigner au moins un point de contact.",
   "editor.record.form.field.contactsForResource.noContact": "Veuillez renseigner au moins un point de contact responsable de la donnée.",
-  "editor.record.form.field.draft.only.disabled": "",
+  "editor.record.form.field.draft.only.disabled": "Ce champ sera activé une fois les données publiées",
   "editor.record.form.field.keywords": "Mots-clés",
   "editor.record.form.field.legalConstraints": "Contrainte légale",
   "editor.record.form.field.license": "Licence",
