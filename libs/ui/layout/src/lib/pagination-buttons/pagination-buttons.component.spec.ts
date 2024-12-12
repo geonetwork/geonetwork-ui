@@ -24,7 +24,6 @@ describe('PaginationButtonsComponent', () => {
     fixture = TestBed.createComponent(PaginationButtonsComponent)
     component = fixture.componentInstance
     component.listComponent = new MockPaginable()
-    component.calculateVisiblePages()
     fixture.detectChanges()
   })
 
@@ -98,18 +97,11 @@ describe('PaginationButtonsComponent', () => {
   })
   describe('when clicking on page button', () => {
     beforeEach(() => {
-      const paginationButtons =
-        fixture.nativeElement.querySelectorAll('gn-ui-button')
-      const pageBtnList = []
-      paginationButtons.forEach((buttonElement) => {
-        const ngIcon = buttonElement.querySelector('ng-icon')
-        if (!ngIcon) {
-          pageBtnList.push(buttonElement)
-        }
-      })
-      pageBtnList[1].dispatchEvent(new Event('buttonClick'))
+      const paginationButton =
+        fixture.nativeElement.querySelector('[data-test=page-2]')
+      paginationButton.dispatchEvent(new Event('buttonClick'))
     })
-    it('is should access the requested page', () => {
+    it('should access the requested page', () => {
       expect(component.listComponent.goToPage).toHaveBeenCalledWith(2)
     })
   })
