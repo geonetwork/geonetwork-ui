@@ -34,6 +34,7 @@ export const Primary: StoryObj<SwitchToggleComponent> = {
       { label: 'state', checked: false },
     ],
     extraClasses: 'grow',
+    disabled: false,
   },
   render: (args) => ({
     props: { ...args },

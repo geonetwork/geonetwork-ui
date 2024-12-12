@@ -48,6 +48,7 @@ import { iconoirCloudUpload, iconoirFramePlusIn } from '@ng-icons/iconoir'
 export class FileInputComponent {
   @Input() maxSizeMB: number
   @Input() uploadProgress?: number
+  @Input() disabled? = false
   @Output() fileChange: EventEmitter<File> = new EventEmitter()
   @Output() urlChange: EventEmitter<string> = new EventEmitter()
   @Output() uploadCancel: EventEmitter<void> = new EventEmitter()
