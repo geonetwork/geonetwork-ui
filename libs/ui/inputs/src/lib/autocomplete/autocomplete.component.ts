@@ -243,6 +243,7 @@ export class AutocompleteComponent
     }
     if (this.clearOnSelection) {
       this.inputRef.nativeElement.value = ''
+      this.control.setValue('')
     }
   }
 }
