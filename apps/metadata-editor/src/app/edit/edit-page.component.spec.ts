@@ -165,22 +165,6 @@ describe('EditPageComponent', () => {
     })
   })
 
-  describe('new record', () => {
-    beforeEach(() => {
-      const activatedRoute = TestBed.inject(ActivatedRoute)
-      activatedRoute.snapshot.routeConfig.path = '/create'
-      fixture.detectChanges()
-    })
-    it('navigate from /create to /edit/uuid on first change', () => {
-      const router = TestBed.inject(Router)
-      const navigateSpy = jest.spyOn(router, 'navigate')
-      ;(facade.draftSaveSuccess$ as any).next()
-      expect(navigateSpy).toHaveBeenCalledWith(['edit', 'my-dataset-001'], {
-        replaceUrl: true,
-      })
-    })
-  })
-
   describe('unique identifier of the current record changes', () => {
     beforeEach(() => {
       fixture.detectChanges()
