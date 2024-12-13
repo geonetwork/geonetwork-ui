@@ -47,6 +47,7 @@ export class SearchFiltersSummaryComponent implements OnInit {
         filteredFilters[key] = value
       }
     }
+    delete filteredFilters['any'] //ignore search field
     return Object.values(filteredFilters).some(
       (value) =>
         value !== undefined &&
@@ -62,7 +63,7 @@ export class SearchFiltersSummaryComponent implements OnInit {
         map((filters) => {
           const newFilters = { ...filters }
           Object.keys(newFilters).forEach((key) => {
-            if (!this.filterSummaryIgnoreList.includes(key)) {
+            if (!this.filterSummaryIgnoreList.includes(key) && key !== 'any') {
               delete newFilters[key]
             }
           })
