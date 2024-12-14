@@ -7,7 +7,7 @@ import {
   Optional,
   Output,
 } from '@angular/core'
-import { Observable, tap } from 'rxjs'
+import { combineLatest, Observable, tap } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchError } from '../state/reducer'
@@ -39,6 +39,7 @@ export class ResultsListContainerComponent implements OnInit {
   errorCode$: Observable<number>
   errorMessage$: Observable<string>
   pipelineForQualityScoreActivated: Observable<boolean>
+  allowShowMore$: Observable<boolean>
 
   errorTypes = ErrorType
   recordUrlGetter = this.getRecordUrl.bind(this)
@@ -80,6 +81,16 @@ export class ResultsListContainerComponent implements OnInit {
     this.errorMessage$ = this.error$.pipe(
       filter((error) => error !== null),
       map((error) => error.message)
+    )
+    this.allowShowMore$ = combineLatest([
+      this.facade.isLoading$,
+      this.facade.currentPage$,
+      this.facade.totalPages$,
+    ]).pipe(
+      map(
+        ([loading, currentPage, totalPages]) =>
+          !loading && currentPage < totalPages
+      )
     )
   }
 

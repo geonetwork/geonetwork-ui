@@ -56,7 +56,7 @@ describe('BlockListComponent', () => {
     })
     describe('click on step', () => {
       beforeEach(() => {
-        component.goToPage(1)
+        component.goToPage(2)
       })
       it('updates visibility', () => {
         const blocksVisibility = blockEls.map(
@@ -73,7 +73,7 @@ describe('BlockListComponent', () => {
         ])
       })
       it('emits the selected page', () => {
-        expect(component['currentPage']).toEqual(1)
+        expect(component['currentPage']).toEqual(2)
       })
     })
     describe('custom page size', () => {
@@ -103,7 +103,7 @@ describe('BlockListComponent', () => {
     beforeEach(() => {
       component.pageSize = 2
       component.goToPage(2)
-      component.previousPage()
+      component.goToPrevPage()
     })
     it('changes to previous page', () => {
       expect(component['currentPage']).toEqual(1)
@@ -114,7 +114,7 @@ describe('BlockListComponent', () => {
     beforeEach(() => {
       component.pageSize = 2
       component.goToPage(1)
-      component.nextPage()
+      component.goToNextPage()
     })
     it('changes to next page', () => {
       expect(component['currentPage']).toEqual(2)
@@ -129,7 +129,7 @@ describe('BlockListComponent', () => {
       expect(component.isFirstPage).toBe(true)
     })
     it('returns false if the current page is not the first one', () => {
-      component.goToPage(1)
+      component.goToPage(2)
       expect(component.isFirstPage).toBe(false)
     })
   })
@@ -139,11 +139,11 @@ describe('BlockListComponent', () => {
       component.pageSize = 3
     })
     it('returns true if the current page is the last one', () => {
-      component.goToPage(2)
+      component.goToPage(3)
       expect(component.isLastPage).toBe(true)
     })
     it('returns false if the current page is not the last one', () => {
-      component.goToPage(1)
+      component.goToPage(2)
       expect(component.isLastPage).toBe(false)
     })
   })

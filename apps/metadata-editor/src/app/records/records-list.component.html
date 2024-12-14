@@ -7,10 +7,6 @@
   ></gn-ui-results-table-container>
 
   <div class="px-5 py-5 flex justify-center gap-8 items-baseline">
-    <gn-ui-pagination-buttons
-      [currentPage]="searchFacade.currentPage$ | async"
-      [totalPages]="searchFacade.totalPages$ | async"
-      (newCurrentPageEvent)="paginate($event)"
-    ></gn-ui-pagination-buttons>
+    <gn-ui-pagination-buttons [listComponent]="this"></gn-ui-pagination-buttons>
   </div>
 </div>

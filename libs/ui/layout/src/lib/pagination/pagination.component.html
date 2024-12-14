@@ -1,9 +1,9 @@
 <div class="relative">
   <div class="sm:absolute sm:inset-0" *ngIf="!hideButton">
     <gn-ui-button
-      (buttonClick)="nextPage()"
+      (buttonClick)="listComponent.goToNextPage()"
       type="secondary"
-      [disabled]="currentPage === nPages"
+      [disabled]="listComponent.isLastPage"
       extraClass="lg:m-auto !p-[22px]"
     >
       <span class="uppercase font-medium tracking-widest" translate
@@ -20,19 +20,20 @@
       >
       <input
         type="number"
-        [ngModel]="currentPage"
+        [ngModel]="listComponent.currentPage"
         [min]="1"
-        [max]="nPages"
+        [max]="listComponent.pagesCount"
         (ngModelChange)="setPage($event)"
         class="border border-gray-300 rounded w-[54px] h-[34px] pl-[12px] mr-3 text-center"
       />
       <span class="mr-3 text-sm text-gray-900"
-        ><span translate>pagination.pageOf</span> {{ nPages }}</span
+        ><span translate>pagination.pageOf</span>
+        {{ listComponent.pagesCount }}</span
       >
       <gn-ui-button
-        (buttonClick)="previousPage()"
+        (buttonClick)="listComponent.goToPrevPage()"
         class="mr-2"
-        [disabled]="currentPage === 1"
+        [disabled]="listComponent.isFirstPage"
         [type]="'light'"
         extraClass="!px-[3px]"
         data-cy="prev-page"
@@ -40,8 +41,8 @@
         <ng-icon name="matChevronLeft"></ng-icon>
       </gn-ui-button>
       <gn-ui-button
-        (buttonClick)="nextPage()"
-        [disabled]="currentPage === nPages"
+        (buttonClick)="listComponent.goToNextPage()"
+        [disabled]="listComponent.isLastPage"
         [type]="'light'"
         extraClass="!px-[3px]"
         data-cy="next-page"

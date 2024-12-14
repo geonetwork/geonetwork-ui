@@ -77,9 +77,7 @@
                 <gn-ui-previous-next-buttons
                   data-test="orgDetailsNavBtn"
                   *ngIf="hasPagination"
-                  [isFirst]="isFirstPage"
-                  [isLast]="isLastPage"
-                  (directionButtonClicked)="changeStepOrPage($event)"
+                  [listComponent]="this"
                 ></gn-ui-previous-next-buttons>
                 <div class="ml-auto">
                   <a
@@ -107,20 +105,11 @@
                     [extraClass]="'w-[300px]'"
                   ></gn-ui-related-record-card>
                 </div>
-                <div
-                  *ngIf="totalPages > 1"
-                  class="flex flex-row justify-center gap-[14px] p-1 mx-auto"
-                  [ngClass]="paginationContainerClass"
+                <gn-ui-pagination-dots
+                  [listComponent]="this"
+                  [containerClass]="paginationContainerClass"
                 >
-                  <button
-                    *ngFor="let page of pages"
-                    class="list-page-dot"
-                    (click)="goToPage(page)"
-                    [ngClass]="
-                      currentPage === page ? 'bg-primary' : 'bg-gray-400'
-                    "
-                  ></button>
-                </div>
+                </gn-ui-pagination-dots>
               </ng-container>
 
               <ng-container *ngIf="isSearchFacadeLoading">

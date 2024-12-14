@@ -1,0 +1,15 @@
+<div
+  *ngIf="listComponent.pagesCount > 1"
+  class="overflow-hidden flex flex-row justify-center gap-[14px] p-1"
+  [ngClass]="containerClass"
+>
+  <button
+    type="button"
+    *ngFor="let step of steps"
+    class="pagination-dot"
+    (click)="listComponent.goToPage(step)"
+    [ngClass]="
+      listComponent.currentPage === step ? 'bg-primary' : 'bg-gray-400'
+    "
+  ></button>
+</div>

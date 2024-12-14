@@ -7,8 +7,10 @@ import {
 } from '@angular/core'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { CarouselComponent } from '@geonetwork-ui/ui/layout'
-import { PreviousNextButtonsComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  CarouselComponent,
+  PreviousNextButtonsComponent,
+} from '@geonetwork-ui/ui/layout'
 import {
   ApiCardComponent,
   RecordApiFormComponent,
@@ -58,20 +60,8 @@ export class RecordApisComponent implements OnInit {
     this.selectedApiLink = undefined
   }
 
-  get hasPagination() {
-    return this.carousel?.stepsCount > 1
-  }
-
   updateView() {
     this.changeDetector.detectChanges()
-  }
-
-  get isFirstStep() {
-    return this.carousel?.isFirstStep
-  }
-
-  get isLastStep() {
-    return this.carousel?.isLastStep
   }
 
   openRecordApiForm(link: DatasetServiceDistribution) {
@@ -87,13 +77,5 @@ export class RecordApisComponent implements OnInit {
   setStyle(link: DatasetServiceDistribution) {
     this.maxHeight = link === undefined ? '0px' : '500px'
     this.opacity = link === undefined ? 0 : 1
-  }
-
-  changeStepOrPage(direction: string) {
-    if (direction === 'next') {
-      this.carousel?.slideToNext()
-    } else {
-      this.carousel?.slideToPrevious()
-    }
   }
 }

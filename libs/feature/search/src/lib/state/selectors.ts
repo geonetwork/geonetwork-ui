@@ -50,24 +50,6 @@ export const getSearchResultsHits = createSelector(
   (state: SearchStateSearch) => state.results.count
 )
 
-export const isBeginningOfResults = createSelector(
-  getSearchStateSearch,
-  (state: SearchStateSearch) => {
-    return state.params.currentPage === 0
-  }
-)
-
-export const isEndOfResults = createSelector(
-  getSearchStateSearch,
-  (state: SearchStateSearch) => {
-    return (
-      state.params.currentPage * state.params.pageSize +
-        state.params.pageSize >=
-      state.results.count
-    )
-  }
-)
-
 export const totalPages = createSelector(
   getSearchStateSearch,
   (state: SearchStateSearch) => {

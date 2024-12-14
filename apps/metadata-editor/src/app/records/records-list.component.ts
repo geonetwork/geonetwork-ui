@@ -8,12 +8,10 @@ import {
   SearchService,
 } from '@geonetwork-ui/feature/search'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
-import {
-  PaginationButtonsComponent,
-  UiElementsModule,
-} from '@geonetwork-ui/ui/elements'
+import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { TranslateModule } from '@ngx-translate/core'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { Paginable, PaginationButtonsComponent } from '@geonetwork-ui/ui/layout'
 
 export const allSearchFields = [
   'uuid',
@@ -41,7 +39,7 @@ export const allSearchFields = [
     PaginationButtonsComponent,
   ],
 })
-export class RecordsListComponent implements OnInit {
+export class RecordsListComponent implements OnInit, Paginable {
   constructor(
     private router: Router,
     public searchFacade: SearchFacade,
@@ -51,10 +49,13 @@ export class RecordsListComponent implements OnInit {
   ngOnInit(): void {
     this.searchFacade.setConfigRequestFields(allSearchFields)
     this.searchFacade.setPageSize(15)
-  }
 
-  paginate(page: number) {
-    this.searchService.setPage(page)
+    this.searchFacade.currentPage$.subscribe((page) => {
+      this.currentPage_ = page
+    })
+    this.searchFacade.totalPages$.subscribe((total) => {
+      this.totalPages_ = total
+    })
   }
 
   editRecord(record: CatalogRecord) {
@@ -63,5 +64,32 @@ export class RecordsListComponent implements OnInit {
 
   duplicateRecord(record: CatalogRecord) {
     this.router.navigate(['/duplicate', record.uniqueIdentifier])
+  }
+
+  // these are 0 based
+  totalPages_: number
+  currentPage_: number
+
+  // Paginable API
+  get isFirstPage() {
+    return this.currentPage_ === 1
+  }
+  get isLastPage() {
+    return this.currentPage_ === this.totalPages_
+  }
+  get pagesCount() {
+    return this.totalPages_
+  }
+  get currentPage() {
+    return this.currentPage_
+  }
+  goToPage(page: number) {
+    this.searchService.setPage(page)
+  }
+  goToNextPage() {
+    this.searchService.setPage(this.currentPage_ + 1)
+  }
+  goToPrevPage() {
+    this.searchService.setPage(this.currentPage_ - 1)
   }
 }

@@ -29,7 +29,8 @@ class ViewportIntersectorMockComponent {}
 
 class SearchFacadeMock {
   isLoading$ = new BehaviorSubject(false)
-  isEndOfResults$ = new BehaviorSubject(false)
+  currentPage$ = new BehaviorSubject(3)
+  totalPages$ = new BehaviorSubject(5)
   results$ = of(['one'])
   layout$ = of('CARD')
   setResultsLayout = jest.fn()
@@ -134,7 +135,7 @@ describe('ResultsListContainerComponent', () => {
     })
     describe('when there are no more results', () => {
       beforeEach(() => {
-        searchFacade.isEndOfResults$.next(true)
+        searchFacade.currentPage$.next(5)
         fixture.detectChanges()
       })
       it('show-more element is hidden', () => {

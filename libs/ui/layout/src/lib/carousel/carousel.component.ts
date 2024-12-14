@@ -11,6 +11,8 @@ import {
 } from '@angular/core'
 import EmblaCarousel, { EmblaCarouselType } from 'embla-carousel'
 import { CommonModule } from '@angular/common'
+import { Paginable } from '../paginable.interface'
+import { PaginationDotsComponent } from '../pagination-dots/pagination-dots.component'
 
 @Component({
   selector: 'gn-ui-carousel',
@@ -18,9 +20,9 @@ import { CommonModule } from '@angular/common'
   styleUrls: ['./carousel.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PaginationDotsComponent],
 })
-export class CarouselComponent implements AfterViewInit {
+export class CarouselComponent implements AfterViewInit, Paginable {
   @ViewChild('carouselOverflowContainer') carouselOverflowContainer: ElementRef
 
   @Input() containerClass = ''
@@ -38,14 +40,29 @@ export class CarouselComponent implements AfterViewInit {
     this.changeDetector.detectChanges()
   }
 
-  get isFirstStep() {
+  // Paginable API
+  get isFirstPage() {
     return this.currentStep === 0
   }
-  get isLastStep() {
+  get isLastPage() {
     return this.currentStep === this.steps.length - 1
   }
-  get stepsCount() {
+  get currentPage() {
+    return this.currentStep + 1 // this is 1-based
+  }
+  get pagesCount() {
     return this.steps.length
+  }
+  public goToPage(stepIndex: number) {
+    this.emblaApi.scrollTo(stepIndex - 1) // this is 0-based
+  }
+  public goToPrevPage() {
+    if (this.isFirstPage) return
+    this.emblaApi.scrollPrev()
+  }
+  public goToNextPage() {
+    if (this.isLastPage) return
+    this.emblaApi.scrollNext()
   }
 
   constructor(private changeDetector: ChangeDetectorRef) {}
@@ -62,19 +79,5 @@ export class CarouselComponent implements AfterViewInit {
       .on('init', this.refreshSteps)
       .on('reInit', this.refreshSteps)
       .on('select', this.refreshSteps)
-  }
-
-  public scrollToStep(stepIndex: number) {
-    this.emblaApi.scrollTo(stepIndex)
-  }
-
-  public slideToPrevious() {
-    if (this.isFirstStep) return
-    this.emblaApi.scrollPrev()
-  }
-
-  public slideToNext() {
-    if (this.isLastStep) return
-    this.emblaApi.scrollNext()
   }
 }

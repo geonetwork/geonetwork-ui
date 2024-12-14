@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular'
-import { BlockListComponent } from './block-list.component'
 import { componentWrapperDecorator } from '@storybook/angular'
+import { BlockListComponent } from './block-list.component'
 
 const meta: Meta<BlockListComponent> = {
   component: BlockListComponent,

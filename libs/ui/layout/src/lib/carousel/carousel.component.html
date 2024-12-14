@@ -3,15 +3,7 @@
     <ng-content></ng-content>
   </div>
 </div>
-<div
-  *ngIf="steps.length > 1"
-  class="absolute flex flex-row justify-center gap-[14px] p-1"
-  [ngClass]="stepsContainerClass"
->
-  <button
-    *ngFor="let step of steps; let i = index"
-    class="carousel-step-dot"
-    (click)="scrollToStep(i)"
-    [ngClass]="currentStep === i ? 'bg-primary' : 'bg-gray-400'"
-  ></button>
-</div>
+<gn-ui-pagination-dots
+  [containerClass]="'absolute ' + stepsContainerClass"
+  [listComponent]="this"
+></gn-ui-pagination-dots>

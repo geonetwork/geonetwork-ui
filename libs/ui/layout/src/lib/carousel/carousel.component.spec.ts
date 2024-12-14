@@ -73,7 +73,7 @@ describe('CarouselComponent', () => {
     })
     describe('click on step', () => {
       beforeEach(() => {
-        component.scrollToStep(2)
+        component.goToPage(3)
       })
       it('calls #scrollTo', () => {
         expect(component.emblaApi.scrollTo).toHaveBeenCalledWith(2)
@@ -88,30 +88,30 @@ describe('CarouselComponent', () => {
     it('emits the current step index', () => {
       const spy = jest.fn()
       component.currentStepChange.subscribe(spy)
-      component.scrollToStep(2)
+      component.goToPage(3)
       expect(spy).toHaveBeenCalledWith(2)
       expect(spy).toHaveBeenCalledTimes(1)
     })
   })
 
-  describe('isFirstStep', () => {
+  describe('isFirstPage', () => {
     it('returns true if the current step is the first one', () => {
-      expect(component.isFirstStep).toBe(true)
+      expect(component.isFirstPage).toBe(true)
     })
     it('returns false if the current step is not the first one', () => {
-      component.scrollToStep(2)
-      expect(component.isFirstStep).toBe(false)
+      component.goToPage(3)
+      expect(component.isFirstPage).toBe(false)
     })
   })
 
-  describe('isLastStep', () => {
+  describe('isLastPage', () => {
     it('returns true if the current step is the last one', () => {
-      component.scrollToStep(3)
-      expect(component.isLastStep).toBe(true)
+      component.goToPage(4)
+      expect(component.isLastPage).toBe(true)
     })
     it('returns false if the current step is not the last one', () => {
-      component.scrollToStep(1)
-      expect(component.isLastStep).toBe(false)
+      component.goToPage(2)
+      expect(component.isLastPage).toBe(false)
     })
   })
 })
