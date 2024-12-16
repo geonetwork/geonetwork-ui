@@ -31,7 +31,11 @@ export class SearchFiltersSummaryComponent implements OnInit {
     @Inject(FILTER_SUMMARY_IGNORE_LIST)
     filterSummaryIgnoreList: string[]
   ) {
-    this.filterSummaryIgnoreList = filterSummaryIgnoreList || []
+    const defaultIgnoreList = ['any']
+    this.filterSummaryIgnoreList = [
+      ...defaultIgnoreList,
+      ...(filterSummaryIgnoreList ?? []),
+    ]
   }
 
   ngOnInit(): void {
@@ -47,7 +51,6 @@ export class SearchFiltersSummaryComponent implements OnInit {
         filteredFilters[key] = value
       }
     }
-    delete filteredFilters['any'] //ignore search field
     return Object.values(filteredFilters).some(
       (value) =>
         value !== undefined &&
@@ -63,7 +66,7 @@ export class SearchFiltersSummaryComponent implements OnInit {
         map((filters) => {
           const newFilters = { ...filters }
           Object.keys(newFilters).forEach((key) => {
-            if (!this.filterSummaryIgnoreList.includes(key) && key !== 'any') {
+            if (!this.filterSummaryIgnoreList.includes(key)) {
               delete newFilters[key]
             }
           })
