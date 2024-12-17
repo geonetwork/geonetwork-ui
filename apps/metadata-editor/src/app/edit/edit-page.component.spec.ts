@@ -212,4 +212,25 @@ describe('EditPageComponent', () => {
       expect(await firstValueFrom(component.isLastPage$)).toBe(false)
     })
   })
+
+  describe('subscriptions', () => {
+    it('should add 3 subscriptions to component.subscription', () => {
+      const addSpy = jest.spyOn(component.subscription, 'add')
+      component.ngOnInit()
+      expect(addSpy).toHaveBeenCalledTimes(3)
+    })
+    it('should add 4 subscriptions to component.subscription when on /create route', () => {
+      const activatedRoute = TestBed.inject(ActivatedRoute)
+      activatedRoute.snapshot.routeConfig.path = '/create'
+      fixture.detectChanges()
+      const addSpy = jest.spyOn(component.subscription, 'add')
+      component.ngOnInit()
+      expect(addSpy).toHaveBeenCalledTimes(4)
+    })
+    it('unsubscribes', () => {
+      const unsubscribeSpy = jest.spyOn(component.subscription, 'unsubscribe')
+      component.ngOnDestroy()
+      expect(unsubscribeSpy).toHaveBeenCalled()
+    })
+  })
 })
