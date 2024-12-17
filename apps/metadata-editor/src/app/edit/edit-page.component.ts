@@ -137,6 +137,18 @@ export class EditPageComponent implements OnInit, OnDestroy {
         )
       })
     )
+    // if the record unique identifier changes, navigate to /edit/newUuid
+    this.facade.record$
+      .pipe(
+        filter(
+          (record) =>
+            record?.uniqueIdentifier !== currentRecord.uniqueIdentifier
+        ),
+        take(1)
+      )
+      .subscribe((savedRecord) => {
+        this.router.navigate(['edit', savedRecord.uniqueIdentifier])
+      })
   }
 
   ngOnDestroy() {

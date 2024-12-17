@@ -165,6 +165,21 @@ describe('EditPageComponent', () => {
     })
   })
 
+  describe('unique identifier of the current record changes', () => {
+    beforeEach(() => {
+      fixture.detectChanges()
+    })
+    it('navigates to /edit/newUuid', () => {
+      const router = TestBed.inject(Router)
+      const navigateSpy = jest.spyOn(router, 'navigate')
+      ;(facade.record$ as any).next({
+        ...datasetRecordsFixture()[0],
+        uniqueIdentifier: 'new-uuid',
+      })
+      expect(navigateSpy).toHaveBeenCalledWith(['edit', 'new-uuid'])
+    })
+  })
+
   describe('isLastPage$', () => {
     let editorFacade: EditorFacadeMock
     beforeEach(() => {
