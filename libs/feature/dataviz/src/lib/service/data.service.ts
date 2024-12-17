@@ -174,7 +174,7 @@ export class DataService {
   }
 
   async getDownloadUrlsFromOgcApi(url: string): Promise<OgcApiCollectionInfo> {
-    const endpoint = new OgcApiEndpoint(this.proxy.getProxiedUrl(url))
+    const endpoint = new OgcApiEndpoint(url)
     return await endpoint.allCollections
       .then((collections) => {
         return endpoint.getCollectionInfo(collections[0].name)
@@ -185,7 +185,7 @@ export class DataService {
   }
 
   async getItemsFromOgcApi(url: string): Promise<OgcApiRecord> {
-    const endpoint = new OgcApiEndpoint(this.proxy.getProxiedUrl(url))
+    const endpoint = new OgcApiEndpoint(url)
     return await endpoint.featureCollections
       .then((collections) => {
         return collections.length
