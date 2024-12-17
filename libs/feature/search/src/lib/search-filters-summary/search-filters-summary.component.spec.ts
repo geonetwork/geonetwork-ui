@@ -13,6 +13,7 @@ import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 
 class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject<FieldFilters>({
+    any: 'search should be ignored',
     format: {},
     isSpatial: {},
     license: {},
@@ -94,7 +95,9 @@ describe('SearchFiltersSummaryComponent', () => {
 
     it('should clear filters', () => {
       component.clearFilters()
-      expect(searchService.setFilters).toHaveBeenCalledWith({})
+      expect(searchService.setFilters).toHaveBeenCalledWith({
+        any: 'search should be ignored',
+      })
     })
   })
 
@@ -139,6 +142,7 @@ describe('SearchFiltersSummaryComponent', () => {
     it('should clear filters except with keys from FILTER_SUMMARY_IGNORE_LIST', () => {
       const filters = {
         owner: { 1: true },
+        any: 'search should be ignored',
         format: {},
         isSpatial: {},
         license: {},
@@ -150,6 +154,7 @@ describe('SearchFiltersSummaryComponent', () => {
       component.clearFilters()
       expect(searchService.setFilters).toHaveBeenCalledWith({
         owner: { 1: true },
+        any: 'search should be ignored',
       })
     })
   })

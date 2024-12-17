@@ -31,7 +31,11 @@ export class SearchFiltersSummaryComponent implements OnInit {
     @Inject(FILTER_SUMMARY_IGNORE_LIST)
     filterSummaryIgnoreList: string[]
   ) {
-    this.filterSummaryIgnoreList = filterSummaryIgnoreList || []
+    const defaultIgnoreList = ['any']
+    this.filterSummaryIgnoreList = [
+      ...defaultIgnoreList,
+      ...(filterSummaryIgnoreList ?? []),
+    ]
   }
 
   ngOnInit(): void {
