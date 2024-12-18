@@ -37,19 +37,22 @@ import {
   FeatureDetailComponent,
   MapContainerComponent,
   prioritizePageScroll,
+  MapLegendComponent,
 } from '@geonetwork-ui/ui/map'
 import { Feature } from 'geojson'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matClose } from '@ng-icons/material-icons/baseline'
 import { CommonModule } from '@angular/common'
-import { ButtonComponent, DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  ButtonComponent,
+  DropdownSelectorComponent,
+} from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component'
 import {
   LoadingMaskComponent,
   PopupAlertComponent,
 } from '@geonetwork-ui/ui/widgets'
-import { MapLegendComponent } from '../../../../../ui/map/src/lib/components/map-legend/map-legend.component'
 
 @Component({
   selector: 'gn-ui-map-view',
@@ -67,8 +70,8 @@ import { MapLegendComponent } from '../../../../../ui/map/src/lib/components/map
     LoadingMaskComponent,
     NgIconComponent,
     ExternalViewerButtonComponent,
-    MapLegendComponent,
     ButtonComponent,
+    MapLegendComponent,
   ],
   viewProviders: [provideIcons({ matClose })],
 })

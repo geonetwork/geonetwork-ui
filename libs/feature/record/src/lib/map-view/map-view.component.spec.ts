@@ -22,6 +22,7 @@ import * as geoSdkCore from '@geospatial-sdk/core'
 import { MapContext } from '@geospatial-sdk/core'
 import {
   MapContainerComponent,
+  MapLegendComponent,
   prioritizePageScroll,
 } from '@geonetwork-ui/ui/map'
 import { MockBuilder } from 'ng-mocks'
@@ -161,7 +162,7 @@ describe('MapViewComponent', () => {
           useClass: DataServiceMock,
         },
       ],
-      imports: [TranslateModule.forRoot()],
+      imports: [TranslateModule.forRoot(), MapLegendComponent],
     }).compileComponents()
     mdViewFacade = TestBed.inject(MdViewFacade)
   })
@@ -768,6 +769,25 @@ describe('MapViewComponent', () => {
     })
   })
 
+  describe('display legend', () => {
+    it('should render the MapLegendComponent', () => {
+      const legendComponent = fixture.debugElement.query(
+        By.directive(MapLegendComponent)
+      )
+      expect(legendComponent).toBeTruthy()
+    })
+    it('should handle legendStatusChange event', () => {
+      const legendComponent = fixture.debugElement.query(
+        By.directive(MapLegendComponent)
+      ).componentInstance
+      const legendStatusChangeSpy = jest.spyOn(
+        component,
+        'onLegendStatusChange'
+      )
+      legendComponent.legendStatusChange.emit(true)
+      expect(legendStatusChangeSpy).toHaveBeenCalledWith(true)
+    })
+  })
   describe('map view extent', () => {
     describe('if no record extent', () => {
       beforeEach(fakeAsync(() => {
