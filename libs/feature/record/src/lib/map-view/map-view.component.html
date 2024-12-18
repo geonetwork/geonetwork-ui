@@ -31,8 +31,46 @@
       >
         <ng-icon name="matClose" class="align-middle text-sm"></ng-icon>
       </button>
+      <gn-ui-button
+        type="primary"
+        (buttonClick)="resetSelection()"
+        extraClass="rounded absolute right-[0.5em] p-2 text-xs"
+      >
+        <ng-icon name="matClose" class="align-middle text-sm"></ng-icon>
+      </gn-ui-button>
       <gn-ui-feature-detail [feature]="selection"></gn-ui-feature-detail>
     </div>
+
+    <div
+      class="top-[1em] p-3 bg-white absolute overflow-y-auto overflow-x-hidden max-h-72 w-56"
+      [ngClass]="{ 'right-[1em]': !selection, 'right-[16em]': selection }"
+      [hidden]="!showLegend || !legendExists"
+    >
+      <div class="flex justify-between items-center mb-2">
+        <div class="text-primary font-bold">Legend</div>
+        <gn-ui-button
+          type="primary"
+          (buttonClick)="toggleLegend()"
+          extraClass="rounded p-2 text-xs"
+        >
+          <ng-icon name="matClose" class="align-middle text-sm"></ng-icon>
+        </gn-ui-button>
+      </div>
+      <gn-ui-map-legend
+        [context]="mapContext$ | async"
+        (legendStatusChange)="onLegendStatusChange($event)"
+      ></gn-ui-map-legend>
+    </div>
+
+    <gn-ui-button
+      *ngIf="!showLegend && legendExists && !selection"
+      type="primary"
+      (buttonClick)="toggleLegend()"
+      extraClass="absolute top-[1em] right-[1em] rounded p-2 text-sm"
+    >
+      Legend
+    </gn-ui-button>
+
     <gn-ui-loading-mask
       *ngIf="loading"
       class="absolute inset-0"
