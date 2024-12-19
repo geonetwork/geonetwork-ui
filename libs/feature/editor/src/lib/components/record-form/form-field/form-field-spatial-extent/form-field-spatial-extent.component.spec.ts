@@ -1,115 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormFieldSpatialExtentComponent } from './form-field-spatial-extent.component'
-import { BehaviorSubject, firstValueFrom, from, of } from 'rxjs'
+import { BehaviorSubject, from, of } from 'rxjs'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
   CatalogRecord,
-  DatasetSpatialExtent,
   Keyword,
 } from '@geonetwork-ui/common/domain/model/record'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { EditorFacade } from '../../../../+state/editor.facade'
-import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
+import {
+  datasetRecordsFixture,
+  NATIONAL_KEYWORD,
+  SAMPLE_PLACE_KEYWORDS,
+  SAMPLE_PLACE_KEYWORDS_FROM_XML,
+  SAMPLE_RECORD,
+  SAMPLE_SPATIAL_EXTENTS,
+} from '@geonetwork-ui/common/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
-
-const NATIONAL_KEYWORD = {
-  key: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/national',
-  label: 'National',
-  description: '',
-  type: 'theme',
-}
-
-const SAMPLE_PLACE_KEYWORDS: Keyword[] = [
-  // these keywords come from a thesaurus available locally
-  {
-    key: 'uri1',
-    label: 'Berlin',
-    thesaurus: {
-      id: '1',
-      name: 'places',
-    },
-    type: 'place',
-    bbox: [13.27, 52.63, 52.5, 13.14],
-  },
-  {
-    key: 'uri2',
-    label: 'Hamburg',
-    thesaurus: {
-      id: '1',
-      name: 'places',
-    },
-    type: 'place',
-    bbox: [10.5, 53.66, 53.53, 10],
-  },
-  // this keyword is available locally but has no extent linked to it
-  {
-    key: 'uri3',
-    label: 'Munich',
-    thesaurus: {
-      id: '1',
-      name: 'places',
-    },
-    type: 'place',
-    bbox: [11.64, 48.65, 48.51, 11.5],
-  },
-  // this keyword comes from a thesaurus not available locally
-  {
-    label: 'Europe',
-    thesaurus: {
-      id: '2',
-      name: 'otherPlaces',
-    },
-    type: 'place',
-  },
-  // this keyword has no thesaurus
-  {
-    label: 'Narnia',
-    type: 'place',
-  },
-]
-
-// records coming from XML do not have a key or a bbox in them
-const SAMPLE_PLACE_KEYWORDS_FROM_XML = SAMPLE_PLACE_KEYWORDS.map(
-  ({ label, thesaurus, type }) => ({
-    label,
-    type,
-    ...(thesaurus && { thesaurus }),
-  })
-)
-
-const SAMPLE_SPATIAL_EXTENTS: DatasetSpatialExtent[] = [
-  // these extents are linked to keywords known locally
-  {
-    description: 'uri1',
-    bbox: [13.5, 52.5, 14.5, 53.5],
-  },
-  {
-    description: 'uri2',
-    bbox: [10, 53.5, 11, 53.4],
-  },
-  {
-    description: 'uri4',
-    bbox: [11.5, 48.5, 11.5, 48.3],
-  },
-  // this extent is linked to a keyword not available locally
-  {
-    description: 'URI-Paris',
-    bbox: [1, 2, 3, 4],
-  },
-  // this extent is not linked to any keyword
-  {
-    bbox: [5, 6, 7, 8],
-  },
-]
-
-const SAMPLE_RECORD = {
-  ...datasetRecordsFixture()[0],
-  spatialExtents: SAMPLE_SPATIAL_EXTENTS,
-  keywords: [
-    ...datasetRecordsFixture()[0].keywords,
-    ...SAMPLE_PLACE_KEYWORDS_FROM_XML,
-  ],
-}
 
 class PlatformServiceInterfaceMock {
   // this simulates a search of a complete keyword with bbox, key...
@@ -354,69 +261,6 @@ describe('FormFieldSpatialExtentComponent', () => {
     })
   })
   describe('spatial coverage', () => {
-    describe('switch toggle option is based on the keywords present in the record', () => {
-      it('should return true if the record has a national keyword', async () => {
-        const keywords = [
-          ...SAMPLE_PLACE_KEYWORDS,
-          NATIONAL_KEYWORD,
-        ] as Keyword[]
-        editorFacade = TestBed.inject(EditorFacade)
-        editorFacade.record$ = from([
-          { ...SAMPLE_RECORD, keywords } as CatalogRecord,
-        ])
-        fixture = TestBed.createComponent(FormFieldSpatialExtentComponent)
-        component = fixture.componentInstance
-        fixture.detectChanges()
-
-        const results = await firstValueFrom(component.switchToggleOptions$)
-        const nationalOption = results.filter(
-          (result) => result.label === 'National'
-        )[0]
-
-        expect(nationalOption.checked).toBe(true)
-      })
-      it('should return false if the record does not have a national keyword', async () => {
-        const keywords2 = [...SAMPLE_PLACE_KEYWORDS] as Keyword[]
-        editorFacade = TestBed.inject(EditorFacade)
-        editorFacade.record$ = from([
-          { ...SAMPLE_RECORD, keywords: keywords2 } as CatalogRecord,
-        ])
-        fixture = TestBed.createComponent(FormFieldSpatialExtentComponent)
-        component = fixture.componentInstance
-        fixture.detectChanges()
-
-        const results = await firstValueFrom(component.switchToggleOptions$)
-        const nationalOption = results.filter(
-          (result) => result.label === 'National'
-        )[0]
-
-        expect(nationalOption.checked).toBe(false)
-      })
-    })
-    describe('#onSpatialScopeChange', () => {
-      it('removes all existing spatial scope keywords and add the selected one', async () => {
-        const spatialScopes = [{ label: 'National' }, { label: 'Regional' }]
-
-        const allKeywords = await firstValueFrom(component.allKeywords$)
-        const filteredKeywords = allKeywords.filter((keyword) => {
-          const spatialScopeLabels = spatialScopes.map((scope) => scope.label)
-          return !spatialScopeLabels.includes(keyword.label)
-        })
-
-        const selectedOption = {
-          label: 'National',
-          value: NATIONAL_KEYWORD,
-          checked: true,
-        }
-        await component.onSpatialScopeChange(selectedOption)
-
-        expect(editorFacade.updateRecordField).toHaveBeenCalledWith(
-          'keywords',
-          [...filteredKeywords, NATIONAL_KEYWORD]
-        )
-      })
-    })
-
     describe('#emitChanges', () => {
       const allKeywords = [
         ...datasetRecordsFixture()[0].keywords,

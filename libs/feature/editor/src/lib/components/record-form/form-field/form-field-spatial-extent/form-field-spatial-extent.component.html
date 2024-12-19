@@ -1,9 +1,4 @@
 <div class="flex flex-col gap-8">
-  <gn-ui-switch-toggle
-    [options]="switchToggleOptions$ | async"
-    (selectedValue)="onSpatialScopeChange($event)"
-    extraClasses="grow text-sm"
-  ></gn-ui-switch-toggle>
   <gn-ui-generic-keywords
     [placeholder]="'Search for place keywords'"
     [keywords]="shownKeywords$ | async"

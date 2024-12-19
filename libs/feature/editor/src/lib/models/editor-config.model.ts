@@ -23,7 +23,9 @@ export type FieldModelSpecifier =
   | OnlineLinkResourceSpecifier
   | DatasetDistributionsSpecifier
 
-export type FormFieldComponentName = 'form-field-constraints-shortcuts'
+export type FormFieldComponentName =
+  | 'form-field-constraints-shortcuts'
+  | 'form-field-spatial-toggle'
 
 export interface EditorFieldIdentification {
   // name of the target field in the record; will not change the record directly if not defined

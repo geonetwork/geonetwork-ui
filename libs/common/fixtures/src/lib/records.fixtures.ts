@@ -1,6 +1,8 @@
 import {
   CatalogRecord,
   DatasetRecord,
+  DatasetSpatialExtent,
+  Keyword,
 } from '@geonetwork-ui/common/domain/model/record'
 
 export const datasetRecordsFixture: () => CatalogRecord[] = () => [
@@ -464,3 +466,102 @@ export const simpleDatasetRecordAsXmlFixture =
         </mrl:LI_Lineage>
     </mdb:resourceLineage>
 </mdb:MD_Metadata>`
+
+export const NATIONAL_KEYWORD = {
+  key: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/national',
+  label: 'National',
+  description: '',
+  type: 'theme',
+}
+
+export const SAMPLE_PLACE_KEYWORDS: Keyword[] = [
+  // these keywords come from a thesaurus available locally
+  {
+    key: 'uri1',
+    label: 'Berlin',
+    thesaurus: {
+      id: '1',
+      name: 'places',
+    },
+    type: 'place',
+    bbox: [13.27, 52.63, 52.5, 13.14],
+  },
+  {
+    key: 'uri2',
+    label: 'Hamburg',
+    thesaurus: {
+      id: '1',
+      name: 'places',
+    },
+    type: 'place',
+    bbox: [10.5, 53.66, 53.53, 10],
+  },
+  // this keyword is available locally but has no extent linked to it
+  {
+    key: 'uri3',
+    label: 'Munich',
+    thesaurus: {
+      id: '1',
+      name: 'places',
+    },
+    type: 'place',
+    bbox: [11.64, 48.65, 48.51, 11.5],
+  },
+  // this keyword comes from a thesaurus not available locally
+  {
+    label: 'Europe',
+    thesaurus: {
+      id: '2',
+      name: 'otherPlaces',
+    },
+    type: 'place',
+  },
+  // this keyword has no thesaurus
+  {
+    label: 'Narnia',
+    type: 'place',
+  },
+]
+
+// records coming from XML do not have a key or a bbox in them
+export const SAMPLE_PLACE_KEYWORDS_FROM_XML = SAMPLE_PLACE_KEYWORDS.map(
+  ({ label, thesaurus, type }) => ({
+    label,
+    type,
+    ...(thesaurus && { thesaurus }),
+  })
+)
+
+export const SAMPLE_SPATIAL_EXTENTS: DatasetSpatialExtent[] = [
+  // these extents are linked to keywords known locally
+  {
+    description: 'uri1',
+    bbox: [13.5, 52.5, 14.5, 53.5],
+  },
+  {
+    description: 'uri2',
+    bbox: [10, 53.5, 11, 53.4],
+  },
+  {
+    description: 'uri4',
+    bbox: [11.5, 48.5, 11.5, 48.3],
+  },
+  // this extent is linked to a keyword not available locally
+  {
+    description: 'URI-Paris',
+    bbox: [1, 2, 3, 4],
+  },
+  // this extent is not linked to any keyword
+  {
+    bbox: [5, 6, 7, 8],
+  },
+]
+
+export const SAMPLE_RECORD = {
+  ...datasetRecordsFixture()[0],
+  spatialExtents: SAMPLE_SPATIAL_EXTENTS,
+  keywords: [
+    ...datasetRecordsFixture()[0].keywords,
+    ...SAMPLE_PLACE_KEYWORDS_FROM_XML,
+  ],
+}

@@ -52,6 +52,7 @@ import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency
 import { FormFieldConstraintsShortcutsComponent } from './form-field-constraints-shortcuts/form-field-constraints-shortcuts.component'
 import { FormFieldConstraintsComponent } from './form-field-constraints/form-field-constraints.component'
 import { TextFieldModule } from '@angular/cdk/text-field'
+import { FormFieldSpatialToggleComponent } from './form-field-spatial-toggle/form-field-spatial-toggle.component'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -84,6 +85,7 @@ import { TextFieldModule } from '@angular/cdk/text-field'
     FormFieldContactsComponent,
     FormFieldConstraintsComponent,
     FormFieldConstraintsShortcutsComponent,
+    FormFieldSpatialToggleComponent,
     TextFieldModule,
   ],
 })
