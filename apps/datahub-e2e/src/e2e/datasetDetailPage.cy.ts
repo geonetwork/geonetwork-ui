@@ -331,10 +331,12 @@ describe('dataset pages', () => {
           .children('button')
           .should('have.length.gt', 1)
       })
-      it('should display the map', () => {
+      it('should display the map and the legend', () => {
         cy.get('@previewSection')
           .find('gn-ui-map-container')
           .should('be.visible')
+
+        cy.get('@previewSection').find('gn-ui-map-legend').should('be.visible')
       })
       it('should display the table', () => {
         cy.get('@previewSection')
