@@ -49,5 +49,5 @@ export const hasRecordChangedSinceDraft = createAction(
 
 export const hasRecordChangedSinceDraftSuccess = createAction(
   '[Editor] Has Record Changed Since Draft Success',
-  props<{ changes: any[] }>()
+  props<{ changes: { user: string; date: Date } }>()
 )
