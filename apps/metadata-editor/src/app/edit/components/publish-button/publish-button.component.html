@@ -4,7 +4,7 @@
     #actionMenuButton
     *ngSwitchCase="'hasChanges'"
     type="primary"
-    (buttonClick)="publishRecord()"
+    (buttonClick)="verifyPublishConditions()"
     [matTooltip]="'editor.record.publish' | translate"
   >
     <ng-icon name="iconoirCloudUpload"></ng-icon>
@@ -18,7 +18,7 @@
     *ngSwitchCase="'upToDate'"
     type="secondary"
     [disabled]="true"
-    (buttonClick)="publishRecord()"
+    (buttonClick)="verifyPublishConditions()"
     [matTooltip]="'editor.record.upToDate' | translate"
   >
     <ng-icon name="matCheckCircleOutline"></ng-icon>
@@ -32,8 +32,8 @@
         class="text-center"
         translate
         [translateParams]="{
-          date: publishWarning[0],
-          user: publishWarning[1]
+          date: formatDate(publishWarning.date),
+          user: publishWarning.user
         }"
         >editor.record.publish.confirmation.message</span
       >
