@@ -72,7 +72,9 @@ export class EditorService {
     return this.recordsRepository.openRecordForEdition(record.uniqueIdentifier)
   }
 
-  hasRecordChangedSinceDraft(localRecord: CatalogRecord): Observable<string[]> {
+  hasRecordChangedSinceDraft(
+    localRecord: CatalogRecord
+  ): Observable<{ user: string; date: Date }> {
     return this.recordsRepository.hasRecordChangedSinceDraft(localRecord)
   }
 }

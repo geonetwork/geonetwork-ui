@@ -90,5 +90,5 @@ export abstract class RecordsRepositoryInterface {
   abstract draftsChanged$: Observable<void>
   abstract hasRecordChangedSinceDraft(
     localRecord: CatalogRecord
-  ): Observable<string[]>
+  ): Observable<{ user: string; date: Date }>
 }

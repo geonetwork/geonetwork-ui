@@ -24,7 +24,7 @@ export interface EditorState {
   changedSinceSave: boolean
   editorConfig: EditorConfig
   currentPage: number
-  hasRecordChanged: any[]
+  hasRecordChanged: { user: string; date: Date }
 }
 
 export interface EditorPartialState {
@@ -40,7 +40,7 @@ export const initialEditorState: EditorState = {
   changedSinceSave: false,
   editorConfig: DEFAULT_CONFIGURATION,
   currentPage: 0,
-  hasRecordChanged: [],
+  hasRecordChanged: null,
 }
 
 const reducer = createReducer(
