@@ -22,6 +22,7 @@ import {
   distinctUntilChanged,
   finalize,
   map,
+  shareReplay,
   switchMap,
   tap,
 } from 'rxjs/operators'
@@ -37,12 +38,16 @@ import {
   FeatureDetailComponent,
   MapContainerComponent,
   prioritizePageScroll,
+  MapLegendComponent,
 } from '@geonetwork-ui/ui/map'
 import { Feature } from 'geojson'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matClose } from '@ng-icons/material-icons/baseline'
 import { CommonModule } from '@angular/common'
-import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  ButtonComponent,
+  DropdownSelectorComponent,
+} from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component'
 import {
@@ -66,6 +71,8 @@ import {
     LoadingMaskComponent,
     NgIconComponent,
     ExternalViewerButtonComponent,
+    ButtonComponent,
+    MapLegendComponent,
   ],
   viewProviders: [provideIcons({ matClose })],
 })
@@ -73,6 +80,19 @@ export class MapViewComponent implements AfterViewInit {
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
 
   selection: Feature
+  showLegend = true
+  legendExists = false
+
+  toggleLegend() {
+    this.showLegend = !this.showLegend
+  }
+
+  onLegendStatusChange(status: boolean) {
+    this.legendExists = status
+    if (!status) {
+      this.showLegend = false
+    }
+  }
 
   compatibleMapLinks$ = combineLatest([
     this.mdViewFacade.mapApiLinks$,
@@ -148,7 +168,8 @@ export class MapViewComponent implements AfterViewInit {
         ...context,
         view,
       }
-    })
+    }),
+    shareReplay(1)
   )
 
   constructor(
