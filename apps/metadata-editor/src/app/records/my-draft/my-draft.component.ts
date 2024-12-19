@@ -12,7 +12,7 @@ import { startWith, switchMap } from 'rxjs'
 import { RecordsCountComponent } from '../records-count/records-count.component'
 import { RecordsListComponent } from '../records-list.component'
 @Component({
-  selector: 'md-editor-my-my-draft',
+  selector: 'md-editor-my-draft',
   templateUrl: './my-draft.component.html',
   styleUrls: ['./my-draft.component.css'],
   standalone: true,
