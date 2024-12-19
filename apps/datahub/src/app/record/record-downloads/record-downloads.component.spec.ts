@@ -17,7 +17,7 @@ import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 // if the `searchParams` of the object wasn't accessed beforehand in some cases...
 const newUrl = (url: string) => {
   const obj = new URL(url)
-  obj.searchParams // try commenting this out to see the bug
+  // obj.searchParams // try commenting this out to see the bug
   return obj
 }
 

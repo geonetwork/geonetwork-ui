@@ -3,9 +3,10 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/api/metadata-converter/src",
   "projectType": "library",
+  "tags": ["type:api"],
   "targets": {
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/api/metadata-converter/**/*.ts"]
@@ -15,10 +16,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/api/metadata-converter"],
       "options": {
-        "jestConfig": "libs/api/metadata-converter/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/api/metadata-converter/jest.config.ts"
       }
     }
-  },
-  "tags": ["type:api"]
+  }
 }

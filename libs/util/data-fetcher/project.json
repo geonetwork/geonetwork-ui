@@ -3,6 +3,7 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/util/data-fetcher/src",
   "projectType": "library",
+  "tags": ["type:util"],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
@@ -16,7 +17,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": ["libs/util/data-fetcher/**/*.ts"]
       },
@@ -26,10 +27,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/util/data-fetcher"],
       "options": {
-        "jestConfig": "libs/util/data-fetcher/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/util/data-fetcher/jest.config.ts"
       }
     }
-  },
-  "tags": ["type:util"]
+  }
 }

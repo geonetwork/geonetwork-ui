@@ -10,7 +10,12 @@
           "error",
           {
             "enforceBuildableLibDependency": true,
-            "allow": [],
+            "allow": [
+              "^.+/jest.setup",
+              "^.+/translations/.*.json$",
+              "^.+/tools/e2e/.+$",
+              "^.+/package.json"
+            ],
             "depConstraints": [
               {
                 "sourceTag": "type:feature",
@@ -23,12 +28,10 @@
                 ],
                 "bannedExternalImports": ["*app-config"]
               },
-              // data-access libs should only depend on data-access libs
               {
                 "sourceTag": "type:data-access",
                 "onlyDependOnLibsWithTags": ["type:data-access"]
               },
-              // ui libs should only depend on ui libs and shared & i18n utils
               {
                 "sourceTag": "type:ui",
                 "onlyDependOnLibsWithTags": [
@@ -37,12 +40,10 @@
                   "scope:shared"
                 ]
               },
-              // util libs should only depend on util libs
               {
                 "sourceTag": "type:util",
                 "onlyDependOnLibsWithTags": ["type:util"]
               },
-              // apps should depend on all kind of libs
               {
                 "sourceTag": "type:app",
                 "onlyDependOnLibsWithTags": [
@@ -53,7 +54,6 @@
                   "type:api"
                 ]
               },
-              // api libs should only depend on api libs
               {
                 "sourceTag": "type:api",
                 "onlyDependOnLibsWithTags": ["type:api", "scope:shared"],
@@ -67,12 +67,28 @@
     {
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nx/typescript"],
-      "rules": {}
+      "rules": {
+        "@typescript-eslint/no-unused-expressions": [
+          "error",
+          {
+            "allowShortCircuit": true,
+            "allowTernary": true
+          }
+        ]
+      }
     },
     {
       "files": ["*.js", "*.jsx"],
       "extends": ["plugin:@nx/javascript"],
-      "rules": {}
+      "rules": {
+        "@typescript-eslint/no-unused-expressions": [
+          "error",
+          {
+            "allowShortCircuit": true,
+            "allowTernary": true
+          }
+        ]
+      }
     },
     {
       "files": ["*.spec.ts", "*.cy.ts"],

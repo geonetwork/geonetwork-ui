@@ -3,6 +3,8 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/metadata-editor-e2e/src",
   "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["metadata-editor", "database-dump"],
   "targets": {
     "e2e": {
       "executor": "@nx/cypress:cypress",
@@ -25,13 +27,11 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["apps/metadata-editor-e2e/**/*.{js,ts}"]
       }
     }
-  },
-  "tags": [],
-  "implicitDependencies": ["metadata-editor", "database-dump"]
+  }
 }
