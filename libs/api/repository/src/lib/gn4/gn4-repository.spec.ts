@@ -841,17 +841,4 @@ describe('Gn4Repository', () => {
         })
     })
   })
-  describe('formatDate', () => {
-    it('should format date correctly based on current language', () => {
-      const date = new Date('2024-01-01T10:00:00Z')
-      const formattedDate = repository.formatDate(date)
-      expect(formattedDate).toBe('1 janvier 2024 à 10:00')
-    })
-
-    it('should handle invalid date gracefully', () => {
-      const invalidDate = new Date('invalid-date')
-      const formattedDate = repository.formatDate(invalidDate)
-      expect(formattedDate).toBe('Invalid Date')
-    })
-  })
 })

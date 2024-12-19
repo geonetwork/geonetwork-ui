@@ -67,7 +67,7 @@ export class EditorFacade {
     this.store.dispatch(EditorActions.setFieldVisibility({ field, visible }))
   }
 
-  hasRecordChangedSinceDraft(record: CatalogRecord) {
+  checkHasRecordChanged(record: CatalogRecord) {
     this.store.dispatch(EditorActions.hasRecordChangedSinceDraft({ record }))
   }
 }
