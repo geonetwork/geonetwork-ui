@@ -28,7 +28,7 @@ describe('MapLegendComponent', () => {
   })
 
   describe('Change of map-context', () => {
-    it('should not create legend on first change', async () => {
+    it('should create legend on first change', async () => {
       const mockContext: MapContext = {
         layers: [
           {
@@ -54,8 +54,9 @@ describe('MapLegendComponent', () => {
         },
       })
 
-      expect(createLegendFromLayer).not.toHaveBeenCalled()
-      expect(legendStatusChangeSpy).not.toHaveBeenCalled()
+      expect(createLegendFromLayer).toHaveBeenCalledWith(mockContext.layers[0])
+      expect(component.legendHTML).toBe(mockLegendElement)
+      expect(legendStatusChangeSpy).toHaveBeenCalledWith(true)
     })
 
     it('should create legend and emit status on subsequent context changes', async () => {
@@ -89,11 +90,10 @@ describe('MapLegendComponent', () => {
       expect(legendStatusChangeSpy).toHaveBeenCalledWith(true)
     })
 
-    it('should emit false when no legend is created', async () => {
+    it('should emit nothing when no legend is created', async () => {
       const mockContext: MapContext = {
         layers: [
           {
-            // mock layer properties
             id: 'test-layer',
           },
         ],
@@ -117,7 +117,7 @@ describe('MapLegendComponent', () => {
 
       expect(createLegendFromLayer).toHaveBeenCalledWith(mockContext.layers[0])
       expect(component.legendHTML).toBe(false)
-      expect(legendStatusChangeSpy).toHaveBeenCalledWith(false)
+      expect(legendStatusChangeSpy).not.toHaveBeenCalled()
     })
 
     it('should handle multiple layers', async () => {

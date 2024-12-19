@@ -25,12 +25,15 @@ export class MapLegendComponent implements OnChanges {
   legendHTML: HTMLElement | false
 
   async ngOnChanges(changes: SimpleChanges) {
-    if ('context' in changes && !changes['context'].isFirstChange()) {
-      const mapContectLayer = changes['context'].currentValue.layers[0]
-      console.log(mapContectLayer)
-      this.legendHTML = await createLegendFromLayer(mapContectLayer)
-      console.log(this.legendHTML)
-      this.legendStatusChange.emit(!!this.legendHTML)
+    if ('context' in changes) {
+      const mapContext = changes['context'].currentValue
+      if (mapContext.layers && mapContext.layers.length > 0) {
+        const mapContextLayer = mapContext.layers[0]
+        this.legendHTML = await createLegendFromLayer(mapContextLayer)
+        if (this.legendHTML) {
+          this.legendStatusChange.emit(true)
+        }
+      }
     }
   }
 }
