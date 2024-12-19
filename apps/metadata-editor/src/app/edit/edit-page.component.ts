@@ -137,6 +137,12 @@ export class EditPageComponent implements OnInit, OnDestroy {
       })
     )
 
+    this.subscription.add(
+      this.facade.record$.subscribe((record) => {
+        this.facade.checkHasRecordChanged(record)
+      })
+    )
+
     // if we're on the /create route, go to /edit/{uuid} on first change
     if (this.route.snapshot.routeConfig?.path.includes('create')) {
       this.subscription.add(
@@ -165,7 +171,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.facade.record$.subscribe((record) => {
-        this.facade.hasRecordChangedSinceDraft(record)
+        this.facade.checkHasRecordChanged(record)
       })
     )
   }
@@ -197,6 +203,16 @@ export class EditPageComponent implements OnInit, OnDestroy {
     this.scrollContainer.nativeElement.scroll({
       behavior: 'instant',
       top: 0,
+    })
+  }
+
+  formatDate(date: Date): string {
+    return date.toLocaleDateString(this.translateService.currentLang, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
     })
   }
 }
