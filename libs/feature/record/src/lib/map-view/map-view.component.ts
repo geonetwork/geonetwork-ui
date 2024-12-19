@@ -22,6 +22,7 @@ import {
   distinctUntilChanged,
   finalize,
   map,
+  shareReplay,
   switchMap,
   tap,
 } from 'rxjs/operators'
@@ -167,7 +168,8 @@ export class MapViewComponent implements AfterViewInit {
         ...context,
         view,
       }
-    })
+    }),
+    shareReplay(1)
   )
 
   constructor(
