@@ -14,7 +14,7 @@ export class ResultsLayoutConfigItem {
   constructor(
     public component: Type<RecordPreviewComponent>,
     public itemClass: string = DEFAULT_ITEM_CLS,
-    public itemStyle: string = '',
+    public itemStyle = '',
     public containerClass: string = DEFAULT_CONTAINER_CLS
   ) {}
 }

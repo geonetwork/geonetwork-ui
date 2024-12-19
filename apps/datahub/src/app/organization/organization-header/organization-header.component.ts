@@ -6,7 +6,7 @@ import {
   UiInputsModule,
 } from '@geonetwork-ui/ui/inputs'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
-import { AsyncPipe, Location, NgIf } from '@angular/common'
+import { Location, NgIf } from '@angular/common'
 import { ErrorType, UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { Router } from '@angular/router'
 import {
@@ -31,7 +31,6 @@ import { matArrowBack } from '@ng-icons/material-icons/baseline'
     UiInputsModule,
     TranslateModule,
     NgIf,
-    AsyncPipe,
     UiElementsModule,
     NgIconComponent,
     LanguageSwitcherComponent,

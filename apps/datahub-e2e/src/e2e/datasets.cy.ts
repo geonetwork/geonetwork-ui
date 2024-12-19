@@ -156,7 +156,7 @@ describe('datasets', () => {
       const hasDuplicates = options.some(
         (text, index) => options.indexOf(text) !== index
       )
-      expect(hasDuplicates).to.be.false
+      expect(hasDuplicates).to.eql(false)
     }
 
     beforeEach(() => {

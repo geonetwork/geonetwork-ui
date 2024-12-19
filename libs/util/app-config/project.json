@@ -6,7 +6,7 @@
   "tags": ["type:util", "scope:app-config"],
   "targets": {
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": ["libs/util/app-config/**/*.ts"]
       },
