@@ -13,9 +13,9 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { MatTooltipModule } from '@angular/material/tooltip'
-import { TranslateModule } from '@ngx-translate/core'
-import { combineLatest, Observable } from 'rxjs'
-import { map, switchMap, take } from 'rxjs/operators'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { combineLatest, Observable, Subscription } from 'rxjs'
+import { defaultIfEmpty, map, skip, switchMap, take } from 'rxjs/operators'
 import { RecordsApiService } from '@geonetwork-ui/data-access/gn4'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
@@ -59,7 +59,7 @@ export type RecordSaveStatus = 'saving' | 'upToDate' | 'hasChanges'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PublishButtonComponent {
-  @Input() publishWarning = []
+  subscription = new Subscription()
   status$: Observable<RecordSaveStatus> = combineLatest([
     this.facade.changedSinceSave$,
     this.facade.saving$,
@@ -81,10 +81,11 @@ export class PublishButtonComponent {
 
   @ViewChild('actionMenuButton', { read: ElementRef })
   actionMenuButton!: ElementRef
-  @ViewChild('template') template!: TemplateRef<any>
+  @ViewChild('template') template!: TemplateRef<HTMLElement>
   private overlayRef!: OverlayRef
 
   isActionMenuOpen = false
+  publishWarning = null
 
   constructor(
     private facade: EditorFacade,
@@ -92,19 +93,29 @@ export class PublishButtonComponent {
     private platformService: PlatformServiceInterface,
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translateService: TranslateService
   ) {}
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
+  }
 
   confirmPublish() {
     this.saveRecord()
+    this.closeMenu()
   }
 
   cancelPublish() {
     if (this.overlayRef) {
-      this.isActionMenuOpen = false
-      this.overlayRef.dispose()
-      this.cdr.markForCheck()
+      this.closeMenu()
     }
+  }
+
+  closeMenu() {
+    this.isActionMenuOpen = false
+    this.overlayRef.dispose()
+    this.cdr.markForCheck()
   }
 
   openConfirmationMenu() {
@@ -137,12 +148,24 @@ export class PublishButtonComponent {
     })
   }
 
-  publishRecord() {
-    if (this.publishWarning && this.publishWarning.length) {
-      this.openConfirmationMenu()
-    } else {
-      this.saveRecord()
-    }
+  verifyPublishConditions() {
+    this.subscription.add(
+      this.facade.record$
+        .pipe(
+          switchMap((record) => {
+            this.facade.checkHasRecordChanged(record)
+            return this.facade.hasRecordChanged$.pipe(skip(1))
+          })
+        )
+        .subscribe((hasChanged) => {
+          if (hasChanged.date && hasChanged.user) {
+            this.publishWarning = hasChanged
+            this.openConfirmationMenu()
+          } else {
+            this.saveRecord()
+          }
+        })
+    )
   }
 
   saveRecord() {
@@ -164,5 +187,15 @@ export class PublishButtonComponent {
         )
       )
       .subscribe()
+  }
+
+  formatDate(date: Date): string {
+    return date.toLocaleDateString(this.translateService.currentLang, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    })
   }
 }
