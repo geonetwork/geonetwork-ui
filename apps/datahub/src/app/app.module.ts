@@ -138,7 +138,9 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
         },
       }
     ),
-    !environment.production ? StoreDevtoolsModule.instrument({connectInZone: true}) : [],
+    !environment.production
+      ? StoreDevtoolsModule.instrument({ connectInZone: true })
+      : [],
     EffectsModule.forRoot(),
     UtilI18nModule,
     TranslateModule.forRoot(TRANSLATE_WITH_OVERRIDES_CONFIG),

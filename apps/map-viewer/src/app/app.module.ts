@@ -37,7 +37,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
     UtilI18nModule,
     StoreModule.forRoot({}, { metaReducers }),
-    StoreDevtoolsModule.instrument({connectInZone: true}),
+    StoreDevtoolsModule.instrument({ connectInZone: true }),
     EffectsModule.forRoot(),
     FeatureCatalogModule,
     LayersPanelComponent,

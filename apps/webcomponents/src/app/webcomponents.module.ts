@@ -78,7 +78,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     FeatureRecordModule,
     FeatureMapModule,
     StoreModule.forRoot({}),
-    StoreDevtoolsModule.instrument({connectInZone: true}),
+    StoreDevtoolsModule.instrument({ connectInZone: true }),
     EffectsModule.forRoot(),
     UtilI18nModule,
     TranslateModule.forRoot({
