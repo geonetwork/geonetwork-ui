@@ -7,3 +7,6 @@
 # OpenAPI generated specs
 **/spec.yaml
 /.nx
+
+/.nx/cache
+/.nx/workspace-data

@@ -4,13 +4,13 @@
   "projectType": "library",
   "sourceRoot": "libs/ui/search/src",
   "prefix": "gn-ui",
+  "tags": ["type:ui"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/ui/search"],
       "options": {
-        "jestConfig": "libs/ui/search/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/ui/search/jest.config.ts"
       }
     },
     "lint": {
@@ -23,6 +23,5 @@
       },
       "outputs": ["{options.outputFile}"]
     }
-  },
-  "tags": ["type:ui"]
+  }
 }

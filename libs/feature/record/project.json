@@ -4,13 +4,13 @@
   "projectType": "library",
   "sourceRoot": "libs/feature/record/src",
   "prefix": "gn-ui",
+  "tags": ["type:feature"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/feature/record"],
       "options": {
-        "jestConfig": "libs/feature/record/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/feature/record/jest.config.ts"
       }
     },
     "lint": {
@@ -23,6 +23,5 @@
       },
       "outputs": ["{options.outputFile}"]
     }
-  },
-  "tags": ["type:feature"]
+  }
 }

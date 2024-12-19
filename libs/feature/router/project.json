@@ -4,13 +4,13 @@
   "projectType": "library",
   "sourceRoot": "libs/feature/router/src",
   "prefix": "geonetwork-ui",
+  "tags": ["type:feature"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/feature/router"],
       "options": {
-        "jestConfig": "libs/feature/router/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/feature/router/jest.config.ts"
       }
     },
     "lint": {
@@ -23,6 +23,5 @@
       },
       "outputs": ["{options.outputFile}"]
     }
-  },
-  "tags": ["type:feature"]
+  }
 }
