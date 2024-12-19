@@ -79,18 +79,22 @@ export class ResultsTableContainerComponent implements OnDestroy {
           )
         },
         error: (error) => {
-          this.notificationsService.showNotification({
-            type: 'error',
-            title: this.translateService.instant(
-              'editor.record.deleteError.title'
-            ),
-            text: `${this.translateService.instant(
-              'editor.record.deleteError.body'
-            )} ${error}`,
-            closeMessage: this.translateService.instant(
-              'editor.record.deleteError.closeMessage'
-            ),
-          })
+          this.notificationsService.showNotification(
+            {
+              type: 'error',
+              title: this.translateService.instant(
+                'editor.record.deleteError.title'
+              ),
+              text: `${this.translateService.instant(
+                'editor.record.deleteError.body'
+              )} ${error}`,
+              closeMessage: this.translateService.instant(
+                'editor.record.deleteError.closeMessage'
+              ),
+            },
+            undefined,
+            error
+          )
         },
       })
     )

@@ -24,7 +24,6 @@ import { combineLatest, filter, firstValueFrom, Subscription, take } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { SidebarComponent } from '../dashboard/sidebar/sidebar.component'
 import { PageSelectorComponent } from './components/page-selector/page-selector.component'
-import { PublishButtonComponent } from './components/publish-button/publish-button.component'
 import { TopToolbarComponent } from './components/top-toolbar/top-toolbar.component'
 
 marker('editor.record.form.bottomButtons.comeBackLater')
@@ -41,7 +40,6 @@ marker('editor.record.form.bottomButtons.next')
     CommonModule,
     ButtonComponent,
     MatProgressSpinnerModule,
-    PublishButtonComponent,
     TopToolbarComponent,
     NotificationsContainerComponent,
     PageSelectorComponent,
@@ -83,32 +81,40 @@ export class EditPageComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.facade.saveError$.subscribe((error) => {
         if (error instanceof PublicationVersionError) {
-          this.notificationsService.showNotification({
-            type: 'error',
-            title: this.translateService.instant(
-              'editor.record.publishVersionError.title'
-            ),
-            text: this.translateService.instant(
-              'editor.record.publishVersionError.body',
-              { currentVersion: error.detectedApiVersion }
-            ),
-            closeMessage: this.translateService.instant(
-              'editor.record.publishVersionError.closeMessage'
-            ),
-          })
+          this.notificationsService.showNotification(
+            {
+              type: 'error',
+              title: this.translateService.instant(
+                'editor.record.publishVersionError.title'
+              ),
+              text: this.translateService.instant(
+                'editor.record.publishVersionError.body',
+                { currentVersion: error.detectedApiVersion }
+              ),
+              closeMessage: this.translateService.instant(
+                'editor.record.publishVersionError.closeMessage'
+              ),
+            },
+            undefined,
+            error
+          )
         } else {
-          this.notificationsService.showNotification({
-            type: 'error',
-            title: this.translateService.instant(
-              'editor.record.publishError.title'
-            ),
-            text: `${this.translateService.instant(
-              'editor.record.publishError.body'
-            )} ${error.message}`,
-            closeMessage: this.translateService.instant(
-              'editor.record.publishError.closeMessage'
-            ),
-          })
+          this.notificationsService.showNotification(
+            {
+              type: 'error',
+              title: this.translateService.instant(
+                'editor.record.publishError.title'
+              ),
+              text: `${this.translateService.instant(
+                'editor.record.publishError.body'
+              )} ${error.message}`,
+              closeMessage: this.translateService.instant(
+                'editor.record.publishError.closeMessage'
+              ),
+            },
+            undefined,
+            error
+          )
         }
       })
     )
@@ -132,25 +138,29 @@ export class EditPageComponent implements OnInit, OnDestroy {
 
     // if we're on the /create route, go to /edit/{uuid} on first change
     if (this.route.snapshot.routeConfig?.path.includes('create')) {
-      this.facade.draftSaveSuccess$.pipe(take(1)).subscribe(() => {
-        this.router.navigate(['edit', currentRecord.uniqueIdentifier], {
-          replaceUrl: true,
+      this.subscription.add(
+        this.facade.draftSaveSuccess$.pipe(take(1)).subscribe(() => {
+          this.router.navigate(['edit', currentRecord.uniqueIdentifier], {
+            replaceUrl: true,
+          })
         })
-      })
+      )
     }
 
     // if the record unique identifier changes, navigate to /edit/newUuid
-    this.facade.record$
-      .pipe(
-        filter(
-          (record) =>
-            record?.uniqueIdentifier !== currentRecord.uniqueIdentifier
-        ),
-        take(1)
-      )
-      .subscribe((savedRecord) => {
-        this.router.navigate(['edit', savedRecord.uniqueIdentifier])
-      })
+    this.subscription.add(
+      this.facade.record$
+        .pipe(
+          filter(
+            (record) =>
+              record?.uniqueIdentifier !== currentRecord.uniqueIdentifier
+          ),
+          take(1)
+        )
+        .subscribe((savedRecord) => {
+          this.router.navigate(['edit', savedRecord.uniqueIdentifier])
+        })
+    )
   }
 
   ngOnDestroy() {

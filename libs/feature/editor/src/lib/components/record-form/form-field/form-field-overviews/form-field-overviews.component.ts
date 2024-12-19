@@ -115,15 +115,21 @@ export class FormFieldOverviewsComponent {
   private handleError = (error: Error) => {
     this.uploadProgress = undefined
     this.cd.markForCheck()
-    this.notificationsService.showNotification({
-      type: 'error',
-      title: this.translateService.instant('editor.record.resourceError.title'),
-      text: `${this.translateService.instant(
-        'editor.record.resourceError.body'
-      )} ${error.message}`,
-      closeMessage: this.translateService.instant(
-        'editor.record.resourceError.closeMessage'
-      ),
-    })
+    this.notificationsService.showNotification(
+      {
+        type: 'error',
+        title: this.translateService.instant(
+          'editor.record.resourceError.title'
+        ),
+        text: `${this.translateService.instant(
+          'editor.record.resourceError.body'
+        )} ${error.message}`,
+        closeMessage: this.translateService.instant(
+          'editor.record.resourceError.closeMessage'
+        ),
+      },
+      undefined,
+      error
+    )
   }
 }

@@ -198,18 +198,22 @@ export class FormFieldOnlineResourcesComponent {
 
   private handleError(error: Error) {
     this.uploadProgress = undefined
-    this.notificationsService.showNotification({
-      type: 'error',
-      title: this.translateService.instant(
-        'editor.record.onlineResourceError.title'
-      ),
-      text: `${this.translateService.instant(
-        'editor.record.onlineResourceError.body'
-      )} ${error.message}`,
-      closeMessage: this.translateService.instant(
-        'editor.record.onlineResourceError.closeMessage'
-      ),
-    })
+    this.notificationsService.showNotification(
+      {
+        type: 'error',
+        title: this.translateService.instant(
+          'editor.record.onlineResourceError.title'
+        ),
+        text: `${this.translateService.instant(
+          'editor.record.onlineResourceError.body'
+        )} ${error.message}`,
+        closeMessage: this.translateService.instant(
+          'editor.record.onlineResourceError.closeMessage'
+        ),
+      },
+      undefined,
+      error
+    )
   }
 
   private openEditDialog(resource: OnlineNotLinkResource, index: number) {

@@ -112,7 +112,8 @@ describe('ImportRecordComponent', () => {
         title: 'editor.record.importFromExternalFile.failure.title',
         text: `editor.record.importFromExternalFile.failure.body `,
       }),
-      2500
+      2500,
+      mockError
     )
 
     expect(component.isRecordImportInProgress).toBe(false)

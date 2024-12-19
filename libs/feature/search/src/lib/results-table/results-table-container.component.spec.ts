@@ -120,12 +120,16 @@ describe('ResultsTableContainerComponent', () => {
           throwError(() => 'oopsie')
         )
         component.handleDeleteRecord(datasetRecordsFixture()[0])
-        expect(notificationsService.showNotification).toHaveBeenCalledWith({
-          type: 'error',
-          title: 'editor.record.deleteError.title',
-          text: 'editor.record.deleteError.body oopsie',
-          closeMessage: 'editor.record.deleteError.closeMessage',
-        })
+        expect(notificationsService.showNotification).toHaveBeenCalledWith(
+          {
+            type: 'error',
+            title: 'editor.record.deleteError.title',
+            text: 'editor.record.deleteError.body oopsie',
+            closeMessage: 'editor.record.deleteError.closeMessage',
+          },
+          undefined,
+          'oopsie'
+        )
       })
     })
 

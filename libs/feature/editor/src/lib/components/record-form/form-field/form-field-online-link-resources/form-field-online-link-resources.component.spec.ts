@@ -149,12 +149,16 @@ describe('FormFieldOnlineLinkResourcesComponent', () => {
       expect(component.uploadProgress).toBeUndefined()
       component.handleFileChange(file)
       uploadSubject.error(new Error('something went wrong'))
-      expect(notificationsService.showNotification).toHaveBeenCalledWith({
-        type: 'error',
-        closeMessage: 'editor.record.onlineResourceError.closeMessage',
-        text: 'editor.record.onlineResourceError.body something went wrong',
-        title: 'editor.record.onlineResourceError.title',
-      })
+      expect(notificationsService.showNotification).toHaveBeenCalledWith(
+        {
+          type: 'error',
+          closeMessage: 'editor.record.onlineResourceError.closeMessage',
+          text: 'editor.record.onlineResourceError.body something went wrong',
+          title: 'editor.record.onlineResourceError.title',
+        },
+        undefined,
+        expect.any(Error)
+      )
     })
   })
   describe('handleUploadCancel', () => {

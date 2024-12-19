@@ -10,7 +10,12 @@ type NotificationWithIdentity = NotificationContent & { id: number }
 export class NotificationsService {
   notifications$ = new BehaviorSubject<NotificationWithIdentity[]>([])
 
-  showNotification(content: NotificationContent, timeoutMs?: number) {
+  showNotification(
+    content: NotificationContent,
+    timeoutMs?: number,
+    error?: Error
+  ) {
+    error && console.error(error)
     const id = Math.floor(Math.random() * 1000000)
     this.notifications$.next([...this.notifications$.value, { ...content, id }])
     if (typeof timeoutMs === 'undefined') return

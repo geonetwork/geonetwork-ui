@@ -125,12 +125,16 @@ describe('FormFieldOverviewsComponent', () => {
       expect(component.uploadProgress).toBeUndefined()
       component.handleFileChange(file)
       uploadSubject.error(new Error('something went wrong'))
-      expect(notificationsService.showNotification).toHaveBeenCalledWith({
-        type: 'error',
-        closeMessage: 'editor.record.resourceError.closeMessage',
-        text: 'editor.record.resourceError.body something went wrong',
-        title: 'editor.record.resourceError.title',
-      })
+      expect(notificationsService.showNotification).toHaveBeenCalledWith(
+        {
+          type: 'error',
+          closeMessage: 'editor.record.resourceError.closeMessage',
+          text: 'editor.record.resourceError.body something went wrong',
+          title: 'editor.record.resourceError.title',
+        },
+        undefined,
+        expect.any(Error)
+      )
     })
   })
 
