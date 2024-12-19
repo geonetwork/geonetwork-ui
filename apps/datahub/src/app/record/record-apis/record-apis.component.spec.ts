@@ -50,7 +50,7 @@ describe('RecordApisComponent', () => {
       expect(component.selectedApiLink).toEqual(serviceDistributionMock)
     })
     it('should update maxHeight for transition', () => {
-      expect(component.maxHeight).toEqual('500px')
+      expect(component.maxHeight).toEqual('700px')
     })
     it('should update opacity for transition', () => {
       expect(component.opacity).toEqual(1)
