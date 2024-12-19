@@ -61,7 +61,6 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopToolbarComponent {
-  @Input() publishWarning = []
   protected SaveStatus = [
     'draft_only', // => when creating a record
     'record_up_to_date', // => when the record was just published (ie saved on the server)
