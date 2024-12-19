@@ -1,25 +1,13 @@
 <main class="bg-white overflow-y-auto">
   <div class="flex flex-row items-baseline gap-[8px] px-[32px] py-[20px]">
-    <ng-container *ngIf="searchText$ | async as searchText; else myRecords">
-      <h1
-        class="text-[16px] text-main font-bold"
-        translate
-        [translateParams]="{ searchText: searchText }"
-      >
-        dashboard.records.search
-      </h1>
-      <div class="text-[12px]">
-        <md-editor-records-count></md-editor-records-count>
-      </div>
-    </ng-container>
-    <ng-template #myRecords>
+    <ng-container *ngIf="searchFacade.searchFilters$ | async">
       <h1 class="text-[16px] text-main font-bold" translate>
         dashboard.records.myRecords
       </h1>
       <div class="text-[12px]">
         <md-editor-records-count></md-editor-records-count>
       </div>
-    </ng-template>
+    </ng-container>
   </div>
   <div
     class="flex flex-row items-center mx-[32px] my-[16px] py-[8px] gap-[16px]"
