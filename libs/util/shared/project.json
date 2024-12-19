@@ -4,13 +4,13 @@
   "projectType": "library",
   "sourceRoot": "libs/util/shared/src",
   "prefix": "gn-ui",
+  "tags": ["type:util", "scope:shared"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/util/shared"],
       "options": {
-        "jestConfig": "libs/util/shared/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/util/shared/jest.config.ts"
       }
     },
     "lint": {
@@ -23,6 +23,5 @@
       },
       "outputs": ["{options.outputFile}"]
     }
-  },
-  "tags": ["type:util", "scope:shared"]
+  }
 }

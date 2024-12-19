@@ -112,7 +112,8 @@
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz",
     "zone.js": "0.14.10",
     "@storybook/addon-interactions": "^8.2.8",
-    "storybook": "^8.2.8"
+    "storybook": "^8.2.8",
+    "@ngrx/operators": "^18.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "18.2.12",
@@ -121,7 +122,7 @@
     "@angular-eslint/eslint-plugin": "17.3.0",
     "@angular-eslint/eslint-plugin-template": "17.3.0",
     "@angular-eslint/template-parser": "17.3.0",
-    "@angular/cli": "18.2.12",
+    "@angular/cli": "~18.2.0",
     "@angular/compiler-cli": "18.2.13",
     "@angular/language-service": "18.2.13",
     "@nestjs/schematics": "10.0.1",
@@ -177,7 +178,6 @@
     "ngrx-store-freeze": "^0.2.4",
     "ngx-translate-testing": "^6.1.0",
     "nx": "20.2.2",
-    "nx-cloud": "19.1.0",
     "postcss": "^8.4.31",
     "prettier": "2.7.1",
     "react": "^18.2.0",

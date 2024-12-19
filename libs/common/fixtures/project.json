@@ -4,13 +4,13 @@
   "sourceRoot": "libs/common/fixtures/src",
   "prefix": "gn-ui",
   "projectType": "library",
+  "tags": ["type:util", "scope:shared"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/common/fixtures"],
       "options": {
-        "jestConfig": "libs/util/i18n/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/util/i18n/jest.config.ts"
       }
     },
     "lint": {
@@ -20,6 +20,5 @@
         "lintFilePatterns": ["libs/common/fixtures/**/*.ts"]
       }
     }
-  },
-  "tags": ["type:util", "scope:shared"]
+  }
 }
