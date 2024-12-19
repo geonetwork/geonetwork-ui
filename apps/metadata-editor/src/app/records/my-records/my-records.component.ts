@@ -24,8 +24,6 @@ import { TemplatePortal } from '@angular/cdk/portal'
 import { RecordsCountComponent } from '../records-count/records-count.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
-import { SearchHeaderComponent } from '../../dashboard/search-header/search-header.component'
-import { map, Observable } from 'rxjs'
 import { SearchFiltersComponent } from '../../dashboard/search-filters/search-filters.component'
 import {
   NgIconComponent,
@@ -54,7 +52,6 @@ const FILTER_OWNER = 'owner'
     ButtonComponent,
     ImportRecordComponent,
     FeatureSearchModule,
-    SearchHeaderComponent,
     SearchFiltersComponent,
     NgIconComponent,
   ],
@@ -76,7 +73,6 @@ export class MyRecordsComponent implements OnInit {
   @ViewChild('template') template!: TemplateRef<any>
   private overlayRef!: OverlayRef
   searchFields = ['changeDate']
-  searchText$: Observable<string | null>
 
   isImportMenuOpen = false
 
@@ -100,10 +96,6 @@ export class MyRecordsComponent implements OnInit {
           this.searchFacade.updateFilters(filters)
         })
     })
-
-    this.searchText$ = this.searchFacade.searchFilters$.pipe(
-      map((filters) => ('any' in filters ? (filters['any'] as string) : null))
-    )
   }
 
   createRecord() {
