@@ -272,10 +272,6 @@ describe('dashboard (authenticated)', () => {
         cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
         cy.get('gn-ui-autocomplete').should('have.value', '')
       })
-      it('should hide the search input when navigating to my drafts', () => {
-        cy.get('md-editor-dashboard-menu').find('a').eq(4).click()
-        cy.get('gn-ui-autocomplete').should('not.exist')
-      })
     })
     describe('myRecords search input', () => {
       beforeEach(() => {
@@ -292,6 +288,14 @@ describe('dashboard (authenticated)', () => {
         cy.get('gn-ui-autocomplete').type('velo')
         cy.get('md-editor-dashboard-menu').find('a').first().click()
         cy.get('gn-ui-autocomplete').should('have.value', '')
+      })
+      it('should allow to search in the entire catalog', () => {
+        cy.get('gn-ui-autocomplete').type('mat{enter}')
+        cy.get('gn-ui-interactive-table')
+          .find('[data-cy="table-row"]')
+          .should('have.length', '1')
+        cy.url().should('include', '/search?q=mat')
+        cy.url().should('not.include', 'owner')
       })
     })
   })

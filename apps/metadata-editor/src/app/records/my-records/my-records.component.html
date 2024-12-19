@@ -1,11 +1,8 @@
-<header class="shrink-0 border-b border-gray-300">
-  <md-editor-search-header></md-editor-search-header>
-</header>
 <main class="bg-white overflow-y-auto">
   <div class="flex flex-row items-baseline gap-[8px] px-[32px] py-[20px]">
     <ng-container *ngIf="searchText$ | async as searchText; else myRecords">
       <h1
-        class="text-[16px] text-main font-title font-bold"
+        class="text-[16px] text-main font-bold"
         translate
         [translateParams]="{ searchText: searchText }"
       >
@@ -16,7 +13,7 @@
       </div>
     </ng-container>
     <ng-template #myRecords>
-      <h1 class="text-[16px] text-main font-title font-bold" translate>
+      <h1 class="text-[16px] text-main font-bold" translate>
         dashboard.records.myRecords
       </h1>
       <div class="text-[12px]">
