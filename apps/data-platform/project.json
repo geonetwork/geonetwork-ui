@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/data-platform/src",
   "projectType": "application",
+  "tags": ["type:app"],
   "targets": {
     "build": {
       "executor": "@nx/webpack:webpack",
@@ -37,7 +38,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["apps/data-platform/**/*.ts"]
@@ -47,14 +48,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/data-platform/jest.config.ts",
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
+        "jestConfig": "apps/data-platform/jest.config.ts"
       }
     },
     "docker-build": {
@@ -66,6 +60,5 @@
         ]
       }
     }
-  },
-  "tags": ["type:app"]
+  }
 }

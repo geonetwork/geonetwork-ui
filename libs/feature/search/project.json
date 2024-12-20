@@ -4,17 +4,17 @@
   "projectType": "library",
   "sourceRoot": "libs/feature/search/src",
   "prefix": "gn-ui",
+  "tags": ["type:feature"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/feature/search"],
       "options": {
-        "jestConfig": "libs/feature/search/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/feature/search/jest.config.ts"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
           "libs/feature/search/src/**/*.ts",
@@ -23,6 +23,5 @@
       },
       "outputs": ["{options.outputFile}"]
     }
-  },
-  "tags": ["type:feature"]
+  }
 }
