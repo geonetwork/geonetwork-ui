@@ -24,6 +24,7 @@ export interface EditorState {
   changedSinceSave: boolean
   editorConfig: EditorConfig
   currentPage: number
+  hasRecordChanged: { user: string; date: Date }
 }
 
 export interface EditorPartialState {
@@ -39,6 +40,7 @@ export const initialEditorState: EditorState = {
   changedSinceSave: false,
   editorConfig: DEFAULT_CONFIGURATION,
   currentPage: 0,
+  hasRecordChanged: null,
 }
 
 const reducer = createReducer(
@@ -104,6 +106,10 @@ const reducer = createReducer(
         })),
       })),
     },
+  })),
+  on(EditorActions.hasRecordChangedSinceDraftSuccess, (state, { changes }) => ({
+    ...state,
+    hasRecordChanged: changes,
   }))
 )
 

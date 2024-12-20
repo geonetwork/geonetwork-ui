@@ -78,5 +78,12 @@ describe('EditorFacade', () => {
       })
       expect(spy).toHaveBeenCalledWith(action)
     })
+    it('checkHasRecordChanged() should dispatch hasRecordChangedSinceDraft action', () => {
+      const spy = jest.spyOn(store, 'dispatch')
+      const record = datasetRecordsFixture()[0]
+      facade.checkHasRecordChanged(record)
+      const action = EditorActions.hasRecordChangedSinceDraft({ record })
+      expect(spy).toHaveBeenCalledWith(action)
+    })
   })
 })

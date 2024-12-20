@@ -21,7 +21,7 @@ import {
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { combineLatest, filter, firstValueFrom, Subscription, take } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, skip } from 'rxjs/operators'
 import { SidebarComponent } from '../dashboard/sidebar/sidebar.component'
 import { PageSelectorComponent } from './components/page-selector/page-selector.component'
 import { TopToolbarComponent } from './components/top-toolbar/top-toolbar.component'
@@ -57,6 +57,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
   isLastPage$ = combineLatest([this.currentPage$, this.pagesLength$]).pipe(
     map(([currentPage, pagesCount]) => currentPage >= pagesCount - 1)
   )
+  hasRecordChanged$ = this.facade.hasRecordChanged$.pipe(skip(1))
 
   @ViewChild('scrollContainer') scrollContainer: ElementRef<HTMLElement>
 
@@ -136,6 +137,12 @@ export class EditPageComponent implements OnInit, OnDestroy {
       })
     )
 
+    this.subscription.add(
+      this.facade.record$.subscribe((record) => {
+        this.facade.checkHasRecordChanged(record)
+      })
+    )
+
     // if we're on the /create route, go to /edit/{uuid} on first change
     if (this.route.snapshot.routeConfig?.path.includes('create')) {
       this.subscription.add(
@@ -160,6 +167,12 @@ export class EditPageComponent implements OnInit, OnDestroy {
         .subscribe((savedRecord) => {
           this.router.navigate(['edit', savedRecord.uniqueIdentifier])
         })
+    )
+
+    this.subscription.add(
+      this.facade.record$.subscribe((record) => {
+        this.facade.checkHasRecordChanged(record)
+      })
     )
   }
 
@@ -190,6 +203,16 @@ export class EditPageComponent implements OnInit, OnDestroy {
     this.scrollContainer.nativeElement.scroll({
       behavior: 'instant',
       top: 0,
+    })
+  }
+
+  formatDate(date: Date): string {
+    return date.toLocaleDateString(this.translateService.currentLang, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
     })
   }
 }

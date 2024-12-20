@@ -32,6 +32,9 @@ export class EditorFacade {
   draftSaveSuccess$ = this.actions$.pipe(ofType(EditorActions.draftSaveSuccess))
   currentPage$ = this.store.pipe(select(EditorSelectors.selectCurrentPage))
   editorConfig$ = this.store.pipe(select(EditorSelectors.selectEditorConfig))
+  hasRecordChanged$ = this.store.pipe(
+    select(EditorSelectors.selectHasRecordChanged)
+  )
 
   openRecord(
     record: CatalogRecord,
@@ -62,5 +65,9 @@ export class EditorFacade {
 
   setFieldVisibility(field: EditorFieldIdentification, visible: boolean) {
     this.store.dispatch(EditorActions.setFieldVisibility({ field, visible }))
+  }
+
+  checkHasRecordChanged(record: CatalogRecord) {
+    this.store.dispatch(EditorActions.hasRecordChangedSinceDraft({ record }))
   }
 }

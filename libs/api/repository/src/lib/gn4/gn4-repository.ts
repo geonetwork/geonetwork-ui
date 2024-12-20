@@ -365,6 +365,41 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return of(draftCount)
   }
 
+  hasRecordChangedSinceDraft(localRecord: CatalogRecord) {
+    const isUnsaved = this.isRecordNotYetSaved(localRecord.uniqueIdentifier)
+    const hasDraft = this.recordHasDraft(localRecord.uniqueIdentifier)
+
+    if (isUnsaved || !hasDraft) {
+      return of(null)
+    }
+
+    return combineLatest([
+      this.getAllDrafts().pipe(
+        map((drafts) => {
+          const matchingRecord = drafts.find(
+            (draft) => draft.uniqueIdentifier === localRecord.uniqueIdentifier
+          )
+          return matchingRecord ? matchingRecord.recordUpdated : null
+        })
+      ),
+      this.getRecord(localRecord.uniqueIdentifier),
+    ]).pipe(
+      map(([draftRecordUpdated, recentRecord]) => {
+        if (recentRecord.recordUpdated > draftRecordUpdated) {
+          const user = recentRecord.extras?.['ownerInfo'].toString().split('|')
+          return {
+            user: `${user[2]} ${user[1]}`,
+            date: recentRecord.recordUpdated,
+          }
+        }
+        return {
+          user: undefined,
+          date: undefined,
+        }
+      })
+    )
+  }
+
   private getRecordAsXml(uniqueIdentifier: string): Observable<string | null> {
     return this.gn4RecordsApi
       .getRecordAs(

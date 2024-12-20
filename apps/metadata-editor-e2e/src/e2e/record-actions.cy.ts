@@ -317,4 +317,67 @@ describe('record-actions', () => {
       })
     })
   })
+  describe('drafting', () => {
+    let recordUuid: any
+    describe('if a user edits the record in the meantime', () => {
+      beforeEach(() => {
+        cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
+        cy.url().should('include', '/edit/')
+        cy.editor_readFormUniqueIdentifier().then((uuid) => {
+          recordUuid = uuid
+          cy.wrap(uuid).as('recordUuid')
+        })
+        cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
+          'abstractField'
+        )
+        cy.get('@abstractField').clear()
+        cy.get('@abstractField').type('modified abstract')
+        cy.editor_findDraftInLocalStorage().then((value) => {
+          expect(value).to.contain('modified abstract')
+        })
+        cy.editor_wrapFirstDraft()
+        cy.clearRecordDrafts()
+        cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
+        cy.editor_wrapPreviousDraft()
+        cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
+          'abstractField'
+        )
+        cy.get('@abstractField').clear()
+        cy.get('@abstractField').type('modified by someone else')
+        cy.editor_publishAndReload()
+        cy.window().then((win) => {
+          cy.get('@firstDraft').then((firstDraft) => {
+            return win.localStorage.setItem(
+              `geonetwork-ui-draft-${recordUuid}`,
+              firstDraft.toString()
+            )
+          })
+        })
+        cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
+      })
+      it('should show the warning banner and the warning menu when publishing', () => {
+        cy.get('[data-test="draft-alert"]').should('be.visible')
+        cy.get('md-editor-publish-button').click()
+        cy.get('[data-test="publish-warning"]').should('be.visible')
+      })
+    })
+    describe('if nobody edits the record in the meantime', () => {
+      beforeEach(() => {
+        cy.clearRecordDrafts()
+        cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
+        cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
+          'abstractField'
+        )
+        cy.get('@abstractField').clear()
+        cy.get('@abstractField').type('modified abstract')
+        cy.visit('/catalog/search')
+      })
+      it('should not show any warning', () => {
+        cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
+        cy.get('[data-test="draft-alert"]').should('not.exist')
+        cy.get('md-editor-publish-button').click()
+        cy.get('[data-test="publish-warning"]').should('not.exist')
+      })
+    })
+  })
 })
