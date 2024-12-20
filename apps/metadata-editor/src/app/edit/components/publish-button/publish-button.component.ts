@@ -14,8 +14,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { combineLatest, Observable, Subscription } from 'rxjs'
-import { defaultIfEmpty, map, skip, switchMap, take } from 'rxjs/operators'
+import { combineLatest, Observable, of, Subject, Subscription } from 'rxjs'
+import { catchError, first, map, skip, switchMap, take } from 'rxjs/operators'
 import { RecordsApiService } from '@geonetwork-ui/data-access/gn4'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
@@ -154,11 +154,16 @@ export class PublishButtonComponent {
         .pipe(
           switchMap((record) => {
             this.facade.checkHasRecordChanged(record)
-            return this.facade.hasRecordChanged$.pipe(skip(1))
-          })
+            return this.facade.hasRecordChanged$.pipe(
+              skip(1),
+              take(1),
+              catchError(() => of(null))
+            )
+          }),
+          first()
         )
         .subscribe((hasChanged) => {
-          if (hasChanged.date && hasChanged.user) {
+          if (hasChanged !== null && hasChanged.date) {
             this.publishWarning = hasChanged
             this.openConfirmationMenu()
           } else {

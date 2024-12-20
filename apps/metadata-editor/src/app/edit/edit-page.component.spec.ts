@@ -215,18 +215,18 @@ describe('EditPageComponent', () => {
   })
 
   describe('subscriptions', () => {
-    it('should add 3 subscriptions to component.subscription', () => {
+    it('should add 5 subscriptions to component.subscription', () => {
       const addSpy = jest.spyOn(component.subscription, 'add')
       component.ngOnInit()
-      expect(addSpy).toHaveBeenCalledTimes(3)
+      expect(addSpy).toHaveBeenCalledTimes(5)
     })
-    it('should add 4 subscriptions to component.subscription when on /create route', () => {
+    it('should add 6 subscriptions to component.subscription when on /create route', () => {
       const activatedRoute = TestBed.inject(ActivatedRoute)
       activatedRoute.snapshot.routeConfig.path = '/create'
       fixture.detectChanges()
       const addSpy = jest.spyOn(component.subscription, 'add')
       component.ngOnInit()
-      expect(addSpy).toHaveBeenCalledTimes(4)
+      expect(addSpy).toHaveBeenCalledTimes(6)
     })
     it('unsubscribes', () => {
       const unsubscribeSpy = jest.spyOn(component.subscription, 'unsubscribe')

@@ -1,7 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing'
 import { PublishButtonComponent } from './publish-button.component'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
-import { BehaviorSubject, firstValueFrom, of } from 'rxjs'
+import { BehaviorSubject, Subject, firstValueFrom, of } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
 import { HttpClientModule } from '@angular/common/http'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
@@ -10,6 +15,7 @@ import {
   RecordsApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
+import { OverlayRef } from '@angular/cdk/overlay'
 
 class EditorFacadeMock {
   changedSinceSave$ = new BehaviorSubject(false)
@@ -18,9 +24,26 @@ class EditorFacadeMock {
   record$ = new BehaviorSubject({
     ownerOrganization: { name: 'Group 1', id: 1 },
     uniqueIdentifier: 304,
+    recordUpdated: new Date('2023-01-01'),
+    extras: { ownerInfo: '1|John|Doe' },
   })
   saveRecord = jest.fn()
   saveSuccess$ = new BehaviorSubject(true)
+  checkHasRecordChanged = jest.fn()
+  hasRecordChanged$ = new Subject()
+  isRecordNotYetSaved = jest.fn().mockReturnValue(false)
+  recordHasDraft = jest.fn().mockReturnValue(true)
+  getAllDrafts = jest
+    .fn()
+    .mockReturnValue(
+      of([{ uniqueIdentifier: 304, recordUpdated: new Date('2023-01-01') }])
+    )
+  getRecord = jest.fn().mockReturnValue(
+    of({
+      recordUpdated: new Date('2023-02-01'),
+      extras: { ownerInfo: '1|John|Doe' },
+    })
+  )
 }
 
 const user = barbieUserFixture()
@@ -47,6 +70,7 @@ describe('PublishButtonComponent', () => {
   let fixture: ComponentFixture<PublishButtonComponent>
   let facade: EditorFacadeMock
   let recordsApiService: RecordsApiService
+  let overlaySpy: any
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -79,6 +103,12 @@ describe('PublishButtonComponent', () => {
     facade = TestBed.inject(EditorFacade) as any
     fixture = TestBed.createComponent(PublishButtonComponent)
     component = fixture.componentInstance
+    overlaySpy = {
+      dispose: jest.fn(),
+      attach: jest.fn(),
+      backdropClick: jest.fn().mockReturnValue(of()),
+    }
+    component['overlayRef'] = overlaySpy
     fixture.detectChanges()
   })
 
@@ -137,41 +167,48 @@ describe('PublishButtonComponent', () => {
 
   describe('#cancelPublish', () => {
     it('should set isActionMenuOpen to false', () => {
+      component.isActionMenuOpen = true
       component.cancelPublish()
       expect(component.isActionMenuOpen).toBe(false)
     })
   })
 
-  describe('#openConfirmationMenu', () => {
-    it('should set isActionMenuOpen to true', () => {
-      component.openConfirmationMenu()
-      expect(component.isActionMenuOpen).toBe(true)
-    })
-  })
-
-  describe('#publishRecord', () => {
-    it('should call openConfirmationMenu if publishWarning has length', () => {
-      component.publishWarning = ['Warning']
+  describe('#verifyPublishConditions', () => {
+    it('should call openConfirmationMenu if hasRecordChanged emits with a date', () => {
       const openConfirmationMenuSpy = jest.spyOn(
         component,
         'openConfirmationMenu'
       )
-      component.publishRecord()
+      const saveRecordSpy = jest.spyOn(component, 'saveRecord')
+
+      component.verifyPublishConditions()
+      facade.hasRecordChanged$.next(null)
+      facade.hasRecordChanged$.next({ date: new Date(), user: 'John Doe' })
+
       expect(openConfirmationMenuSpy).toHaveBeenCalled()
+      expect(saveRecordSpy).not.toHaveBeenCalled()
     })
 
-    it('should call saveRecord if publishWarning is empty', () => {
-      component.publishWarning = []
+    it('should call saveRecord if hasRecordChanged emits without a date', () => {
+      const openConfirmationMenuSpy = jest.spyOn(
+        component,
+        'openConfirmationMenu'
+      )
       const saveRecordSpy = jest.spyOn(component, 'saveRecord')
-      component.publishRecord()
+
+      component.verifyPublishConditions()
+      facade.hasRecordChanged$.next(null)
+      facade.hasRecordChanged$.next({ date: undefined, user: undefined })
+
       expect(saveRecordSpy).toHaveBeenCalled()
+      expect(openConfirmationMenuSpy).not.toHaveBeenCalled()
     })
   })
   describe('formatDate', () => {
     it('should format date correctly based on current language', () => {
       const date = new Date('2024-01-01T10:00:00Z')
       const formattedDate = component.formatDate(date)
-      expect(formattedDate).toBe('1 janvier 2024 à 10:00')
+      expect(formattedDate).toBe('January 1, 2024 at 11:00 AM')
     })
 
     it('should handle invalid date gracefully', () => {
