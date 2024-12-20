@@ -6,7 +6,7 @@ import {
 } from '@geonetwork-ui/feature/search'
 import { ChangeDetectionStrategy } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
-import { BehaviorSubject, of } from 'rxjs'
+import { BehaviorSubject, firstValueFrom, of } from 'rxjs'
 import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
 import { ActivatedRoute, Router } from '@angular/router'
 import { AllRecordsComponent } from './all-records.component'
@@ -25,6 +25,7 @@ describe('AllRecordsComponent', () => {
 
   const searchFilters = new BehaviorSubject({
     any: 'hello world',
+    owner: {},
   })
 
   let component: AllRecordsComponent
@@ -34,6 +35,7 @@ describe('AllRecordsComponent', () => {
   let searchFacade: SearchFacade
   let platformService: PlatformServiceInterface
   let fieldsService: FieldsService
+  let searchService: SearchService
 
   beforeEach(() => {
     return MockBuilder(AllRecordsComponent)
@@ -76,6 +78,7 @@ describe('AllRecordsComponent', () => {
 
     router = TestBed.inject(Router)
     searchFacade = TestBed.inject(SearchFacade)
+    searchService = TestBed.inject(SearchService)
     platformService = TestBed.inject(PlatformServiceInterface)
     fieldsService = TestBed.inject(FieldsService)
 
@@ -103,6 +106,8 @@ describe('AllRecordsComponent', () => {
     searchFacade.setPageSize = jest.fn(() => this)
     searchFacade.setConfigRequestFields = jest.fn(() => this)
 
+    searchService.setFilters = jest.fn(() => this)
+
     component = fixture.componentInstance
 
     fixture.detectChanges()
@@ -116,6 +121,35 @@ describe('AllRecordsComponent', () => {
     component.searchText$.subscribe((text) => {
       expect(text).toBe('hello world')
       done()
+    })
+  })
+
+  describe('when updating the search filters', () => {
+    beforeEach(() => {
+      searchFilters.next({ any: 'new search', owner: { 1: true } })
+    })
+
+    it('updates the search text', async () => {
+      const searchText = await firstValueFrom(component.searchText$)
+      expect(searchText).toBe('new search')
+    })
+    it('resets the owner filter', () => {
+      expect(searchService.setFilters).toHaveBeenCalledWith({
+        any: 'new search',
+      })
+    })
+  })
+
+  describe('when destroying the component', () => {
+    beforeEach(() => {
+      component.ngOnDestroy()
+    })
+
+    it('resets the search filters', () => {
+      expect(searchFacade.updateFilters).toHaveBeenCalledWith({ any: '' })
+    })
+    it('unsubscribes from component subscription', () => {
+      expect(component.subscription.closed).toBe(true)
     })
   })
 
