@@ -3,32 +3,24 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  OnDestroy,
+  OnInit,
   TemplateRef,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core'
-import {
-  ResultsTableContainerComponent,
-  SearchFacade,
-  SearchService,
-} from '@geonetwork-ui/feature/search'
+import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
 import { TranslateModule } from '@ngx-translate/core'
 import { Router } from '@angular/router'
 import { RecordsCountComponent } from '../records-count/records-count.component'
-import { Observable } from 'rxjs'
+import { Observable, Subscription } from 'rxjs'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import {
-  CdkConnectedOverlay,
-  CdkOverlayOrigin,
-  Overlay,
-  OverlayRef,
-} from '@angular/cdk/overlay'
+import { CdkOverlayOrigin, Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
 import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
 import { RecordsListComponent } from '../records-list.component'
-import { map } from 'rxjs/operators'
-import { SearchHeaderComponent } from '../../dashboard/search-header/search-header.component'
+import { map, take } from 'rxjs/operators'
 import { SearchFiltersComponent } from '../../dashboard/search-filters/search-filters.component'
 import {
   NgIconComponent,
@@ -50,14 +42,11 @@ import {
     CommonModule,
     TranslateModule,
     RecordsCountComponent,
-    ResultsTableContainerComponent,
     UiElementsModule,
     UiInputsModule,
     ImportRecordComponent,
     CdkOverlayOrigin,
-    CdkConnectedOverlay,
     RecordsListComponent,
-    SearchHeaderComponent,
     SearchFiltersComponent,
     NgIconComponent,
   ],
@@ -72,16 +61,14 @@ import {
     }),
   ],
 })
-export class AllRecordsComponent {
+export class AllRecordsComponent implements OnInit, OnDestroy {
   @ViewChild('importRecordButton', { read: ElementRef })
   importRecordButton!: ElementRef
   @ViewChild('template') template!: TemplateRef<any>
   private overlayRef!: OverlayRef
   searchFields = ['user', 'changeDate']
-  searchText$: Observable<string | null> =
-    this.searchFacade.searchFilters$.pipe(
-      map((filters) => ('any' in filters ? (filters['any'] as string) : null))
-    )
+  searchText$: Observable<string | null>
+  subscription: Subscription
 
   isImportMenuOpen = false
 
@@ -93,6 +80,31 @@ export class AllRecordsComponent {
     private viewContainerRef: ViewContainerRef,
     private cdr: ChangeDetectorRef
   ) {}
+
+  ngOnInit() {
+    this.subscription = this.searchFacade.searchFilters$
+      .pipe(
+        map((filters) => {
+          if ('owner' in filters) {
+            const { owner, ...rest } = filters
+            return rest
+          }
+          return filters
+        }),
+        take(1)
+      )
+      .subscribe((filters) => {
+        this.searchService.setFilters(filters)
+      })
+    this.searchText$ = this.searchFacade.searchFilters$.pipe(
+      map((filters) => ('any' in filters ? (filters['any'] as string) : null))
+    )
+  }
+
+  ngOnDestroy() {
+    this.searchFacade.updateFilters({ any: '' })
+    this.subscription.unsubscribe()
+  }
 
   createRecord() {
     this.router.navigate(['/create']).catch((err) => console.error(err))
