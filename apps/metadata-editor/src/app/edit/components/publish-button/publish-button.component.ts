@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   Input,
+  OnDestroy,
   TemplateRef,
   ViewChild,
   ViewContainerRef,
@@ -58,7 +59,7 @@ export type RecordSaveStatus = 'saving' | 'upToDate' | 'hasChanges'
   styleUrls: ['./publish-button.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PublishButtonComponent {
+export class PublishButtonComponent implements OnDestroy {
   subscription = new Subscription()
   status$: Observable<RecordSaveStatus> = combineLatest([
     this.facade.changedSinceSave$,

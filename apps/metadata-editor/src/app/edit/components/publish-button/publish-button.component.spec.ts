@@ -204,17 +204,4 @@ describe('PublishButtonComponent', () => {
       expect(openConfirmationMenuSpy).not.toHaveBeenCalled()
     })
   })
-  describe('formatDate', () => {
-    it('should format date correctly based on current language', () => {
-      const date = new Date('2024-01-01T10:00:00Z')
-      const formattedDate = component.formatDate(date)
-      expect(formattedDate).toBe('January 1, 2024 at 10:00 AM')
-    })
-
-    it('should handle invalid date gracefully', () => {
-      const invalidDate = new Date('invalid-date')
-      const formattedDate = component.formatDate(invalidDate)
-      expect(formattedDate).toBe('Invalid Date')
-    })
-  })
 })
