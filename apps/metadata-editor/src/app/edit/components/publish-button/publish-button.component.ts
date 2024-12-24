@@ -16,7 +16,18 @@ import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { combineLatest, Observable, of, Subject, Subscription } from 'rxjs'
-import { catchError, first, map, skip, switchMap, take } from 'rxjs/operators'
+import {
+  catchError,
+  concatMap,
+  distinctUntilChanged,
+  first,
+  map,
+  skip,
+  startWith,
+  switchMap,
+  take,
+  toArray,
+} from 'rxjs/operators'
 import { RecordsApiService } from '@geonetwork-ui/data-access/gn4'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
@@ -153,18 +164,18 @@ export class PublishButtonComponent implements OnDestroy {
     this.subscription.add(
       this.facade.record$
         .pipe(
-          switchMap((record) => {
+          take(1),
+          concatMap((record) => {
             this.facade.checkHasRecordChanged(record)
             return this.facade.hasRecordChanged$.pipe(
-              skip(1),
               take(1),
-              catchError(() => of(null))
+              catchError(() => of({ user: undefined, date: undefined }))
             )
-          }),
-          first()
+          })
         )
         .subscribe((hasChanged) => {
-          if (hasChanged !== null && hasChanged.date) {
+          console.log('Has Changed:', hasChanged)
+          if (hasChanged?.date) {
             this.publishWarning = hasChanged
             this.openConfirmationMenu()
           } else {

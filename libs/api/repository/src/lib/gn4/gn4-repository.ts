@@ -38,7 +38,7 @@ import {
   switchMap,
   throwError,
 } from 'rxjs'
-import { catchError, map, tap } from 'rxjs/operators'
+import { catchError, map, startWith, tap } from 'rxjs/operators'
 import { lt } from 'semver'
 import { ElasticsearchService } from './elasticsearch'
 
@@ -366,36 +366,39 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   }
 
   hasRecordChangedSinceDraft(localRecord: CatalogRecord) {
-    const isUnsaved = this.isRecordNotYetSaved(localRecord.uniqueIdentifier)
-    const hasDraft = this.recordHasDraft(localRecord.uniqueIdentifier)
-
-    if (isUnsaved || !hasDraft) {
-      return of(null)
-    }
-
-    return combineLatest([
-      this.getAllDrafts().pipe(
-        map((drafts) => {
-          const matchingRecord = drafts.find(
-            (draft) => draft.uniqueIdentifier === localRecord.uniqueIdentifier
-          )
-          return matchingRecord ? matchingRecord.recordUpdated : null
-        })
-      ),
-      this.getRecord(localRecord.uniqueIdentifier),
-    ]).pipe(
-      map(([draftRecordUpdated, recentRecord]) => {
-        if (recentRecord.recordUpdated > draftRecordUpdated) {
-          const user = recentRecord.extras?.['ownerInfo'].toString().split('|')
-          return {
-            user: `${user[2]} ${user[1]}`,
-            date: recentRecord.recordUpdated,
-          }
+    return of({
+      isUnsaved: this.isRecordNotYetSaved(localRecord.uniqueIdentifier),
+      hasDraft: this.recordHasDraft(localRecord.uniqueIdentifier),
+    }).pipe(
+      switchMap(({ isUnsaved, hasDraft }) => {
+        if (isUnsaved || !hasDraft) {
+          return of({ user: undefined, date: undefined })
         }
-        return {
-          user: undefined,
-          date: undefined,
-        }
+        return combineLatest([
+          this.getAllDrafts().pipe(
+            map((drafts) => {
+              const matchingRecord = drafts.find(
+                (draft) =>
+                  draft.uniqueIdentifier === localRecord.uniqueIdentifier
+              )
+              return matchingRecord?.recordUpdated || null
+            })
+          ),
+          this.getRecord(localRecord.uniqueIdentifier),
+        ]).pipe(
+          map(([draftRecordUpdated, recentRecord]) => {
+            if (recentRecord?.recordUpdated > draftRecordUpdated) {
+              const user = recentRecord.extras?.['ownerInfo']
+                ?.toString()
+                ?.split('|')
+              return {
+                user: `${user[2]} ${user[1]}`,
+                date: recentRecord.recordUpdated,
+              }
+            }
+            return { user: undefined, date: undefined }
+          })
+        )
       })
     )
   }
