@@ -29,7 +29,7 @@ export interface ListUrl {
   url: string
 }
 
-export interface listChoice {
+export interface ListChoice {
   zone: Choice[]
   format: Choice[]
   editionDate: Choice[]
