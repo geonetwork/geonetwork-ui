@@ -119,8 +119,6 @@ export class IgnApiDlComponent implements OnInit {
 
   listFilteredProduct$ = this.apiQueryUrl$.pipe(
     mergeMap((url) => {
-      console.log(url)
-
       return this.getFilteredProduct$(url).pipe(
         map((response) => response['entry'])
         // startWith([])
