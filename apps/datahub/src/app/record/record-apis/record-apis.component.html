@@ -71,10 +71,9 @@
         </button>
       </div>
 
-      <gn-ui-ign-api-dl
-        *ngIf="displayApiIgnForm"
-        [apiLink]="selectedApiLink"
-      ></gn-ui-ign-api-dl>
+      <gn-ui-ign-api-dl *ngIf="displayApiIgnForm" [apiLink]="selectedApiLink"
+        >hello</gn-ui-ign-api-dl
+      >
       <gn-ui-record-api-form
         *ngIf="!displayApiIgnForm"
         [apiLink]="selectedApiLink"

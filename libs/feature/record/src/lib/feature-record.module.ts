@@ -20,18 +20,10 @@ import { TranslateModule } from '@ngx-translate/core'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { TableComponent } from '@geonetwork-ui/ui/dataviz'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
+import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 
 @NgModule({
-  declarations: [
-    MapViewComponent,
-    DataViewComponent,
-    ExternalViewerButtonComponent,
-    DataViewPermalinkComponent,
-    DataViewWebComponentComponent,
-    DataViewShareComponent,
-    IgnApiDlComponent,
-    IgnApiProduitComponent,
-  ],
+  declarations: [IgnApiDlComponent, IgnApiProduitComponent],
   imports: [
     CommonModule,
     StoreModule.forFeature(METADATA_VIEW_FEATURE_STATE_KEY, reducer),
@@ -46,13 +38,14 @@ import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
     TranslateModule,
     TableComponent,
     NgIconsModule,
+    DropdownSelectorComponent,
   ],
   providers: [
     MdViewFacade,
     provideNgIconsConfig({
       size: '1.5em',
     }),
-    IgnApiDlComponent,
   ],
+  exports: [IgnApiDlComponent],
 })
 export class FeatureRecordModule {}
