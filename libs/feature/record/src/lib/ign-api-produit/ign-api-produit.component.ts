@@ -1,14 +1,6 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http'
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
-import { Observable, catchError, map, mergeMap, tap, throwError } from 'rxjs'
+import { HttpClient } from '@angular/common/http'
+import { Component, Input, OnInit } from '@angular/core'
+import { Observable, map, mergeMap } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-ign-api-produit',
