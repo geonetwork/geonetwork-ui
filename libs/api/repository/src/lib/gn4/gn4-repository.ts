@@ -31,6 +31,7 @@ import {
 import {
   combineLatest,
   exhaustMap,
+  forkJoin,
   from,
   Observable,
   of,
@@ -38,7 +39,7 @@ import {
   switchMap,
   throwError,
 } from 'rxjs'
-import { catchError, map, startWith, tap } from 'rxjs/operators'
+import { catchError, map, tap } from 'rxjs/operators'
 import { lt } from 'semver'
 import { ElasticsearchService } from './elasticsearch'
 
@@ -374,7 +375,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         if (isUnsaved || !hasDraft) {
           return of({ user: undefined, date: undefined })
         }
-        return combineLatest([
+        return forkJoin([
           this.getAllDrafts().pipe(
             map((drafts) => {
               const matchingRecord = drafts.find(

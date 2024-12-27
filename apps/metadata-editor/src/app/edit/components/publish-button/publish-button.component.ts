@@ -1,35 +1,28 @@
 import {
+  CdkConnectedOverlay,
+  CdkOverlayOrigin,
+  Overlay,
+  OverlayRef,
+} from '@angular/cdk/overlay'
+import { TemplatePortal } from '@angular/cdk/portal'
+import { CommonModule } from '@angular/common'
+import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
-  Input,
   OnDestroy,
   TemplateRef,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { MatMenuTrigger } from '@angular/material/menu'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
-import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { MatTooltipModule } from '@angular/material/tooltip'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { combineLatest, Observable, of, Subject, Subscription } from 'rxjs'
-import {
-  catchError,
-  concatMap,
-  distinctUntilChanged,
-  first,
-  map,
-  skip,
-  startWith,
-  switchMap,
-  take,
-  toArray,
-} from 'rxjs/operators'
-import { RecordsApiService } from '@geonetwork-ui/data-access/gn4'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { RecordsApiService } from '@geonetwork-ui/data-access/gn4'
+import { EditorFacade } from '@geonetwork-ui/feature/editor'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import {
   NgIconComponent,
   provideIcons,
@@ -37,14 +30,17 @@ import {
 } from '@ng-icons/core'
 import { iconoirCloudUpload } from '@ng-icons/iconoir'
 import { matCheckCircleOutline } from '@ng-icons/material-icons/outline'
-import { MatMenuTrigger } from '@angular/material/menu'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { combineLatest, Observable, of, Subscription } from 'rxjs'
 import {
-  CdkOverlayOrigin,
-  CdkConnectedOverlay,
-  Overlay,
-  OverlayRef,
-} from '@angular/cdk/overlay'
-import { TemplatePortal } from '@angular/cdk/portal'
+  catchError,
+  concatMap,
+  map,
+  skip,
+  switchMap,
+  take,
+  withLatestFrom,
+} from 'rxjs/operators'
 
 export type RecordSaveStatus = 'saving' | 'upToDate' | 'hasChanges'
 @Component({
@@ -161,28 +157,29 @@ export class PublishButtonComponent implements OnDestroy {
   }
 
   verifyPublishConditions() {
-    this.subscription.add(
-      this.facade.record$
-        .pipe(
-          take(1),
-          concatMap((record) => {
-            this.facade.checkHasRecordChanged(record)
-            return this.facade.hasRecordChanged$.pipe(
-              take(1),
-              catchError(() => of({ user: undefined, date: undefined }))
-            )
-          })
-        )
-        .subscribe((hasChanged) => {
-          console.log('Has Changed:', hasChanged)
-          if (hasChanged?.date) {
-            this.publishWarning = hasChanged
-            this.openConfirmationMenu()
-          } else {
-            this.saveRecord()
-          }
+    this.facade.hasRecordChanged$
+      .pipe(
+        skip(1),
+        take(1),
+        catchError(() => of({ user: undefined, date: undefined }))
+      )
+      .subscribe((hasChanged) => {
+        if (hasChanged?.date) {
+          this.publishWarning = hasChanged
+          this.openConfirmationMenu()
+        } else {
+          this.saveRecord()
+        }
+      })
+
+    this.facade.record$
+      .pipe(
+        take(1),
+        map((record) => {
+          this.facade.checkHasRecordChanged(record)
         })
-    )
+      )
+      .subscribe()
   }
 
   saveRecord() {
