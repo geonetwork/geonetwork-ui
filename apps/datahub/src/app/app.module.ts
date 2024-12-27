@@ -89,6 +89,7 @@ import { MatTabsModule } from '@angular/material/tabs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { LetDirective } from '@ngrx/component'
 import { OrganizationPageComponent } from './organization/organization-page/organization-page.component'
+
 import {
   BASEMAP_LAYERS,
   DO_NOT_USE_DEFAULT_BASEMAP,
