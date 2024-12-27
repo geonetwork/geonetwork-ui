@@ -7,6 +7,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core'
+import { TranslateModule } from '@ngx-translate/core'
 import { Observable, catchError, map, mergeMap, tap, throwError } from 'rxjs'
 
 @Component({

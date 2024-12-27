@@ -6,7 +6,10 @@ import {
   ViewChild,
 } from '@angular/core'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import {
+  FeatureRecordModule,
+  MdViewFacade,
+} from '@geonetwork-ui/feature/record'
 import { CarouselComponent } from '@geonetwork-ui/ui/layout'
 import { PreviousNextButtonsComponent } from '@geonetwork-ui/ui/inputs'
 import {
@@ -32,6 +35,7 @@ import { TranslateModule } from '@ngx-translate/core'
     RecordApiFormComponent,
     NgIcon,
     TranslateModule,
+    FeatureRecordModule,
   ],
   viewProviders: [
     provideIcons({
@@ -76,8 +80,9 @@ export class RecordApisComponent implements OnInit {
   }
 
   openRecordApiForm(link: DatasetServiceDistribution) {
-    this.displayApiIgnForm =
-      link.accessServiceProtocol === 'GPFDL' ? true : false
+    this.displayApiIgnForm = link.accessServiceProtocol === 'GPFDL'
+    console.log(this.displayApiIgnForm)
+
     this.selectedApiLink = link
     this.setStyle(link)
   }
