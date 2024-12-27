@@ -40,17 +40,14 @@
       <div class="flex flex-wrap justify-between sm:mb-2 ng-star-inserted">
         <p
           class="text-[21px] text-title font-title"
-          *ngIf="selectedApiLink?.accessServiceProtocol !== 'GPFDL'"
+          *ngIf="selectedApiLink?.accessServiceProtocol"
           translate
         >
-          record.metadata.api.form.title
-        </p>
-        <p
-          class="text-[21px] text-title font-title"
-          *ngIf="selectedApiLink?.accessServiceProtocol === 'GPFDL'"
-          translate
-        >
-          record.metadata.api.form.title.gpf
+          {{
+            selectedApiLink?.accessServiceProtocol === 'GPFDL'
+              ? 'record.metadata.api.form.title.gpf'
+              : 'record.metadata.api.form.title'
+          }}
         </p>
         <button
           type="button"
