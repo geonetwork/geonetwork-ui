@@ -10,7 +10,7 @@
 
 :host ::ng-deep gn-ui-copy-text-button button,
 host ::ng-deep gn-ui-copy-text-button button:hover {
-  background-color: var(--color-secondary) !important;
+  background-color: var(--color-secondary);
 }
 
 :host ::ng-deep gn-ui-copy-text-button button mat-icon {
