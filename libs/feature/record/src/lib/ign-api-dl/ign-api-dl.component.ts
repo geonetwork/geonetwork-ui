@@ -62,7 +62,6 @@ export class IgnApiDlComponent implements OnInit {
   format$ = new BehaviorSubject('')
   crs$ = new BehaviorSubject('')
   page$ = new BehaviorSubject(1)
-  // a passer en config
   url =
     'https://data.geopf.fr/telechargement/capabilities?outputFormat=application/json'
   choices: any
@@ -114,14 +113,12 @@ export class IgnApiDlComponent implements OnInit {
       }
       return outputUrl
     })
-    // startWith(() => this.apiBaseUrl)
   )
 
   listFilteredProduct$ = this.apiQueryUrl$.pipe(
     mergeMap((url) => {
       return this.getFilteredProduct$(url).pipe(
         map((response) => response['entry'])
-        // startWith([])
       )
     })
   )
@@ -175,7 +172,6 @@ export class IgnApiDlComponent implements OnInit {
   }
 
   resetUrl() {
-    // this.offset$.next(DEFAULT_PARAMS.OFFSET)
     this.zone$.next('null')
     this.format$.next('null')
     this.crs$.next('null')
