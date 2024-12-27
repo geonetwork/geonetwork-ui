@@ -26,12 +26,12 @@
     <div *ngFor="let entry of liste$ | async">
       <a [href]="entry['link'][0]['href']"
         >{{ entry['link'][0]['href'].split('/').slice(-1) }}
-        <mat-icon
-          class="!w-7 !h-7 card-icon text-3xl material-symbols-outlined"
+        <ng-icon
+          class="text-primary opacity-45 mr-3"
+          name="matCloudDownloadOutline"
         >
-          cloud_download
-        </mat-icon></a
-      >
+        </ng-icon>
+      </a>
     </div>
   </div>
 </a>
