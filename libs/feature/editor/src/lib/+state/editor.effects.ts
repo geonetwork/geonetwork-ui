@@ -126,4 +126,19 @@ export class EditorEffects {
       map(() => EditorActions.markRecordAsChanged())
     )
   )
+
+  hasRecordChangedSinceDraft$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(EditorActions.hasRecordChangedSinceDraft),
+      switchMap(({ record }) =>
+        this.editorService
+          .hasRecordChangedSinceDraft(record)
+          .pipe(
+            map((changes) =>
+              EditorActions.hasRecordChangedSinceDraftSuccess({ changes })
+            )
+          )
+      )
+    )
+  )
 }

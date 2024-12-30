@@ -88,4 +88,7 @@ export abstract class RecordsRepositoryInterface {
   abstract getAllDrafts(): Observable<CatalogRecord[]>
   abstract getDraftsCount(): Observable<number>
   abstract draftsChanged$: Observable<void>
+  abstract hasRecordChangedSinceDraft(
+    localRecord: CatalogRecord
+  ): Observable<{ user: string; date: Date }>
 }

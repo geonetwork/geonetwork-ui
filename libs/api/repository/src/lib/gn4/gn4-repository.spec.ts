@@ -28,6 +28,7 @@ import {
 } from '@angular/common/http/testing'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
+import { TranslateService } from '@ngx-translate/core'
 
 class Gn4MetadataMapperMock {
   readRecords = jest.fn((records) =>
@@ -97,6 +98,17 @@ class PlatformServiceInterfaceMock {
   getApiVersion = jest.fn(() => of('4.2.5'))
 }
 
+const SAMPLE_RECORD = {
+  ...datasetRecordsFixture()[0],
+  extras: {
+    ownerInfo: 'Owner|SomeDetails',
+  },
+}
+
+const translateServiceMock = {
+  currentLang: 'fr',
+}
+
 describe('Gn4Repository', () => {
   let repository: Gn4Repository
   let gn4Helper: ElasticsearchService
@@ -129,6 +141,10 @@ describe('Gn4Repository', () => {
         {
           provide: PlatformServiceInterface,
           useClass: PlatformServiceInterfaceMock,
+        },
+        {
+          provide: TranslateService,
+          useValue: translateServiceMock,
         },
       ],
     })
@@ -747,6 +763,82 @@ describe('Gn4Repository', () => {
 
     it('returns false if the record does not have a temporary ID', () => {
       expect(repository.isRecordNotYetSaved('1234-5678')).toBe(false)
+    })
+  })
+  describe('hasRecordChangedSinceDraft', () => {
+    it('should return an empty array if the record is unsaved', () => {
+      // Mock dependencies
+      repository.isRecordNotYetSaved = jest.fn().mockReturnValue(true)
+      repository.recordHasDraft = jest.fn().mockReturnValue(true)
+
+      repository
+        .hasRecordChangedSinceDraft(SAMPLE_RECORD)
+        .subscribe((result) => {
+          expect(result).toEqual([])
+        })
+    })
+
+    it('should return an empty array if there is no draft', () => {
+      // Mock dependencies
+      repository.isRecordNotYetSaved = jest.fn().mockReturnValue(false)
+      repository.recordHasDraft = jest.fn().mockReturnValue(false)
+
+      repository
+        .hasRecordChangedSinceDraft(SAMPLE_RECORD)
+        .subscribe((result) => {
+          expect(result).toEqual([])
+        })
+    })
+
+    it('should return updated date and owner info if the recent record is newer than the draft', () => {
+      const mockDrafts = [
+        {
+          uniqueIdentifier: 'my-dataset-001',
+          recordUpdated: new Date('2023-01-01'),
+        },
+      ]
+      const mockRecentRecord = {
+        uniqueIdentifier: 'my-dataset-001',
+        recordUpdated: new Date('2024-01-01'),
+        extras: { ownerInfo: 'Owner|SomeDetails' },
+      }
+
+      // Mock dependencies
+      repository.isRecordNotYetSaved = jest.fn().mockReturnValue(false)
+      repository.recordHasDraft = jest.fn().mockReturnValue(true)
+      repository.getAllDrafts = jest.fn().mockReturnValue(of(mockDrafts))
+      repository.getRecord = jest.fn().mockReturnValue(of(mockRecentRecord))
+
+      repository
+        .hasRecordChangedSinceDraft(SAMPLE_RECORD)
+        .subscribe((result) => {
+          expect(result).toEqual([expect.any(String), 'Owner'])
+        })
+    })
+
+    it('should return an empty array if the draft is more recent than the recent record', () => {
+      const mockDrafts = [
+        {
+          uniqueIdentifier: 'my-dataset-001',
+          recordUpdated: new Date('2024-01-01'),
+        },
+      ]
+      const mockRecentRecord = {
+        uniqueIdentifier: 'my-dataset-001',
+        recordUpdated: new Date('2023-01-01'),
+      }
+
+      // Mock dependencies
+      repository.isRecordNotYetSaved = jest.fn().mockReturnValue(false)
+      repository.recordHasDraft = jest.fn().mockReturnValue(true)
+      repository.getAllDrafts = jest.fn().mockReturnValue(of(mockDrafts))
+      repository.getRecord = jest.fn().mockReturnValue(of(mockRecentRecord))
+
+      repository
+        .hasRecordChangedSinceDraft(SAMPLE_RECORD)
+        .subscribe((result) => {
+          expect(result).toEqual([])
+        })
     })
   })
 })

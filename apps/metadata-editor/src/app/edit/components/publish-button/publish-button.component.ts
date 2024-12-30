@@ -1,14 +1,28 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import {
+  CdkConnectedOverlay,
+  CdkOverlayOrigin,
+  Overlay,
+  OverlayRef,
+} from '@angular/cdk/overlay'
+import { TemplatePortal } from '@angular/cdk/portal'
 import { CommonModule } from '@angular/common'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core'
+import { MatMenuTrigger } from '@angular/material/menu'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
-import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { MatTooltipModule } from '@angular/material/tooltip'
-import { TranslateModule } from '@ngx-translate/core'
-import { combineLatest, Observable } from 'rxjs'
-import { map, switchMap, take } from 'rxjs/operators'
-import { RecordsApiService } from '@geonetwork-ui/data-access/gn4'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { RecordsApiService } from '@geonetwork-ui/data-access/gn4'
+import { EditorFacade } from '@geonetwork-ui/feature/editor'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import {
   NgIconComponent,
   provideIcons,
@@ -16,9 +30,19 @@ import {
 } from '@ng-icons/core'
 import { iconoirCloudUpload } from '@ng-icons/iconoir'
 import { matCheckCircleOutline } from '@ng-icons/material-icons/outline'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { combineLatest, Observable, of, Subscription } from 'rxjs'
+import {
+  catchError,
+  concatMap,
+  map,
+  skip,
+  switchMap,
+  take,
+  withLatestFrom,
+} from 'rxjs/operators'
 
 export type RecordSaveStatus = 'saving' | 'upToDate' | 'hasChanges'
-
 @Component({
   selector: 'md-editor-publish-button',
   standalone: true,
@@ -29,6 +53,8 @@ export type RecordSaveStatus = 'saving' | 'upToDate' | 'hasChanges'
     MatTooltipModule,
     TranslateModule,
     NgIconComponent,
+    CdkOverlayOrigin,
+    CdkConnectedOverlay,
   ],
   providers: [
     provideIcons({ iconoirCloudUpload, matCheckCircleOutline }),
@@ -40,7 +66,8 @@ export type RecordSaveStatus = 'saving' | 'upToDate' | 'hasChanges'
   styleUrls: ['./publish-button.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PublishButtonComponent {
+export class PublishButtonComponent implements OnDestroy {
+  subscription = new Subscription()
   status$: Observable<RecordSaveStatus> = combineLatest([
     this.facade.changedSinceSave$,
     this.facade.saving$,
@@ -58,11 +85,102 @@ export class PublishButtonComponent {
 
   record$ = this.facade.record$
 
+  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger
+
+  @ViewChild('actionMenuButton', { read: ElementRef })
+  actionMenuButton!: ElementRef
+  @ViewChild('template') template!: TemplateRef<HTMLElement>
+  private overlayRef!: OverlayRef
+
+  isActionMenuOpen = false
+  publishWarning = null
+
   constructor(
     private facade: EditorFacade,
     private recordsApiService: RecordsApiService,
-    private platformService: PlatformServiceInterface
+    private platformService: PlatformServiceInterface,
+    private overlay: Overlay,
+    private viewContainerRef: ViewContainerRef,
+    private cdr: ChangeDetectorRef,
+    private translateService: TranslateService
   ) {}
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
+  }
+
+  confirmPublish() {
+    this.saveRecord()
+    this.closeMenu()
+  }
+
+  cancelPublish() {
+    if (this.overlayRef) {
+      this.closeMenu()
+    }
+  }
+
+  closeMenu() {
+    this.isActionMenuOpen = false
+    this.overlayRef.dispose()
+    this.cdr.markForCheck()
+  }
+
+  openConfirmationMenu() {
+    this.isActionMenuOpen = true
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(this.actionMenuButton)
+      .withPositions([
+        {
+          originX: 'end',
+          originY: 'bottom',
+          overlayX: 'end',
+          overlayY: 'top',
+        },
+      ])
+
+    this.overlayRef = this.overlay.create({
+      hasBackdrop: true,
+      backdropClass: 'cdk-overlay-transparent-backdrop',
+      positionStrategy: positionStrategy,
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+    })
+
+    const portal = new TemplatePortal(this.template, this.viewContainerRef)
+
+    this.overlayRef.attach(portal)
+
+    this.overlayRef.backdropClick().subscribe(() => {
+      this.cancelPublish()
+    })
+  }
+
+  verifyPublishConditions() {
+    this.facade.hasRecordChanged$
+      .pipe(
+        skip(1),
+        take(1),
+        catchError(() => of({ user: undefined, date: undefined }))
+      )
+      .subscribe((hasChanged) => {
+        if (hasChanged?.date) {
+          this.publishWarning = hasChanged
+          this.openConfirmationMenu()
+        } else {
+          this.saveRecord()
+        }
+      })
+
+    this.facade.record$
+      .pipe(
+        take(1),
+        map((record) => {
+          this.facade.checkHasRecordChanged(record)
+        })
+      )
+      .subscribe()
+  }
 
   saveRecord() {
     this.facade.saveRecord()
@@ -83,5 +201,15 @@ export class PublishButtonComponent {
         )
       )
       .subscribe()
+  }
+
+  formatDate(date: Date): string {
+    return date.toLocaleDateString(this.translateService.currentLang, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    })
   }
 }

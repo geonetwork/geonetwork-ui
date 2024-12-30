@@ -31,6 +31,7 @@ import {
 import {
   combineLatest,
   exhaustMap,
+  forkJoin,
   from,
   Observable,
   of,
@@ -363,6 +364,44 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       .map((key) => window.localStorage.getItem(key))
       .filter((draft) => draft !== null).length
     return of(draftCount)
+  }
+
+  hasRecordChangedSinceDraft(localRecord: CatalogRecord) {
+    return of({
+      isUnsaved: this.isRecordNotYetSaved(localRecord.uniqueIdentifier),
+      hasDraft: this.recordHasDraft(localRecord.uniqueIdentifier),
+    }).pipe(
+      switchMap(({ isUnsaved, hasDraft }) => {
+        if (isUnsaved || !hasDraft) {
+          return of({ user: undefined, date: undefined })
+        }
+        return forkJoin([
+          this.getAllDrafts().pipe(
+            map((drafts) => {
+              const matchingRecord = drafts.find(
+                (draft) =>
+                  draft.uniqueIdentifier === localRecord.uniqueIdentifier
+              )
+              return matchingRecord?.recordUpdated || null
+            })
+          ),
+          this.getRecord(localRecord.uniqueIdentifier),
+        ]).pipe(
+          map(([draftRecordUpdated, recentRecord]) => {
+            if (recentRecord?.recordUpdated > draftRecordUpdated) {
+              const user = recentRecord.extras?.['ownerInfo']
+                ?.toString()
+                ?.split('|')
+              return {
+                user: `${user[2]} ${user[1]}`,
+                date: recentRecord.recordUpdated,
+              }
+            }
+            return { user: undefined, date: undefined }
+          })
+        )
+      })
+    )
   }
 
   private getRecordAsXml(uniqueIdentifier: string): Observable<string | null> {

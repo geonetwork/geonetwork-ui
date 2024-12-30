@@ -113,6 +113,18 @@ describe('Editor Reducer', () => {
 
       expect(result.changedSinceSave).toBe(true)
     })
+    it('hasRecordChangedSinceDraftSuccess action', () => {
+      const changes = ['change1', 'change2']
+      const action = EditorActions.hasRecordChangedSinceDraftSuccess({
+        changes,
+      })
+      const result: EditorState = editorReducer(
+        { ...initialEditorState, hasRecordChanged: [] },
+        action
+      )
+
+      expect(result.hasRecordChanged).toEqual(changes)
+    })
   })
 
   describe('unknown action', () => {
