@@ -137,7 +137,7 @@ export function loadAppConfig() {
         parsed,
         'map_layer',
         ['type'],
-        ['name', 'url', 'data'],
+        ['name', 'url', 'data', 'styleUrl', 'accessToken'],
         warnings,
         errors
       )
@@ -177,6 +177,8 @@ export function loadAppConfig() {
                     URL: map_layer.url,
                     NAME: map_layer.name,
                     DATA: map_layer.data,
+                    STYLE_URL: map_layer.styleUrl,
+                    ACCESS_TOKEN: map_layer.accessToken,
                   } as LayerConfig)
               ),
             } as MapConfig)
