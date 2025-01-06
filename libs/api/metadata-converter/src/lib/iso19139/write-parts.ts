@@ -18,7 +18,7 @@ import {
   UpdateFrequencyCustom,
 } from '@geonetwork-ui/common/domain/model/record'
 import { ThesaurusModel } from '@geonetwork-ui/common/domain/model/thesaurus'
-import format from 'date-fns/format'
+import { format } from 'date-fns/format'
 import { Geometry } from 'geojson'
 import {
   ChainableFunction,

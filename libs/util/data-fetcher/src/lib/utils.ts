@@ -8,8 +8,8 @@ import {
 } from './model'
 import { sharedFetch, useCache } from '@camptocamp/ogc-client'
 import { parseHeaders } from './headers'
-import parseDate from 'date-fns/parse'
-import parseIsoDate from 'date-fns/parseISO'
+import { parse as parseDate } from 'date-fns/parse'
+import { parseISO as parseIsoDate } from 'date-fns/parseISO'
 
 export async function inferDatasetType(
   url: string,
@@ -89,20 +89,22 @@ export function fetchDataAsArrayBuffer(url: string): Promise<ArrayBuffer> {
   })
 }
 
-export function tryParseDate(input: string): Date | null {
-  function tryIso() {
-    const parsed = parseIsoDate(input)
+export function tryParseDate(input: unknown): Date | null {
+  if (typeof input !== 'string') return null
+
+  function tryIso(value: string) {
+    const parsed = parseIsoDate(value)
     return isNaN(parsed.getDate()) ? null : parsed
   }
-  function tryFormat(format: string) {
-    const parsed = parseDate(input, format, new Date())
+  function tryFormat(value: string, format: string) {
+    const parsed = parseDate(value, format, new Date())
     return isNaN(parsed.getDate()) ? null : parsed
   }
   return (
-    tryIso() ||
-    tryFormat('dd/MM/yyyy') ||
-    tryFormat('dd.MM.yyyy') ||
-    tryFormat('MM/dd/yyyy') ||
+    tryIso(input) ||
+    tryFormat(input, 'dd/MM/yyyy') ||
+    tryFormat(input, 'dd.MM.yyyy') ||
+    tryFormat(input, 'MM/dd/yyyy') ||
     null
   )
 }

@@ -1,4 +1,9 @@
-export function getTemporalRangeUnion(ranges) {
+export function getTemporalRangeUnion(
+  ranges: {
+    start?: Date
+    end?: Date
+  }[]
+) {
   let earliestStartDate = Infinity
   let latestEndDate = -Infinity
   if (ranges.length) {
