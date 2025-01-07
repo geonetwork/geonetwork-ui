@@ -217,8 +217,9 @@ describe('json parsing', () => {
         42.9178728416,
         1.17961253606
       ],
-      "nom_dep": "ARIEGE",`)
-        ).toThrowError('Unexpected end')
+      'nom_dep': "ARIEGE",
+    }]`)
+        ).toThrowError('Expected double-quoted property')
       })
     })
   })

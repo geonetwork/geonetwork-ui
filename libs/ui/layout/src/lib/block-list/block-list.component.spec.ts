@@ -152,6 +152,7 @@ describe('BlockListComponent', () => {
     beforeEach(() => {
       Object.defineProperties(component.blockContainer.nativeElement, {
         clientHeight: {
+          configurable: true,
           value: 150,
         },
       })

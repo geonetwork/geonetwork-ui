@@ -742,12 +742,12 @@
                 </dcat:distribution>
                 <dct:title xml:lang="pl">EU Whoiswho: Urzędowa organizacyjna baza danych Unii Europejskiej</dct:title>
                 <dct:description xml:lang="de">EU Whoiswho ist ein elektronisches Verzeichnis, das die Organisationsstruktur der Organe, Institutionen, Ämter, Agenturen und sonstigen Einrichtungen der Europäischen Union in allen EU-Amtssprachen wiedergibt.</dct:description>
-                <dct:description xml:lang="en">EU Whoiswho is an electronic directory which presents the organisational charts of the EU institutions, bodies and agencies in all official EU languages. The personal data in this directory are provided by the institutions, bodies and agencies of EU. The SPARQL endpoint allows to query the full current content visible in EU whoiswho website. For historical content, PDF are available from 1981.&#xD;
-                    &#xD;
-                    It is strictly forbidden to use these data for direct marketing purposes. &#xD;
-                    &#xD;
-                    If you detect any errors, please report them to: whoiswho@publications.europa.eu&#xD;
-                    &#xD;
+                <dct:description xml:lang="en">EU Whoiswho is an electronic directory which presents the organisational charts of the EU institutions, bodies and agencies in all official EU languages. The personal data in this directory are provided by the institutions, bodies and agencies of EU. The SPARQL endpoint allows to query the full current content visible in EU whoiswho website. For historical content, PDF are available from 1981.
+
+                    It is strictly forbidden to use these data for direct marketing purposes.
+
+                    If you detect any errors, please report them to: whoiswho@publications.europa.eu
+
                     [Privacy statement of EU Whoiswho](https://op.europa.eu/en/web/about-us/legal-notices/op_whoiswho).</dct:description>
                 <dcat:distribution>
                     <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/a3988edd-3ce9-4718-b136-226681ab6e5a">
