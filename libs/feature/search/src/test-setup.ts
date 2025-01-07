@@ -1,13 +1,8 @@
-import 'jest-preset-angular/setup-jest'
+import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone'
 import '../../../../jest.setup'
 
 import { CommonModule } from '@angular/common'
-import { getTestBed } from '@angular/core/testing'
 import { BrowserModule } from '@angular/platform-browser'
-import {
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting,
-} from '@angular/platform-browser-dynamic/testing'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { TranslateModule } from '@ngx-translate/core'
 import { ngMocks } from 'ng-mocks'
@@ -15,12 +10,7 @@ import { BehaviorSubject } from 'rxjs'
 import { SearchFacade } from './lib/state/search.facade'
 import { SearchService } from './lib/utils/service/search.service'
 
-getTestBed().resetTestEnvironment()
-getTestBed().initTestEnvironment(
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting(),
-  { teardown: { destroyAfterEach: false } }
-)
+setupZoneTestEnv({ teardown: { destroyAfterEach: false } })
 
 // ng-mocks global configuration
 ngMocks.autoSpy('jest')

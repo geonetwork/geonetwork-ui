@@ -9,6 +9,8 @@ import tippy from 'tippy.js'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { FavoritesService } from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { MockProvider } from 'ng-mocks'
+import { Location } from '@angular/common'
 
 tippy = jest.fn()
 const isAnonymous$ = new BehaviorSubject(false)
@@ -55,6 +57,9 @@ describe('FavoriteStarComponent', () => {
           provide: TranslateService,
           useClass: TranslateServiceMock,
         },
+        MockProvider(Location, {
+          path: () => '/',
+        }),
       ],
       schemas: [NO_ERRORS_SCHEMA],
     })

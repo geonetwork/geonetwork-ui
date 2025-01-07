@@ -1,8 +1,10 @@
-import 'jest-preset-angular/setup-jest'
+import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone'
 import { TestBed } from '@angular/core/testing'
 import { TranslateService } from '@ngx-translate/core'
 import { MetadataUrlService } from './metadata-url.service'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
+
+setupZoneTestEnv()
 
 const translateServiceMock = {
   currentLang: 'en',

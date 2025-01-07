@@ -1,4 +1,4 @@
-import 'jest-preset-angular/setup-jest'
+import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone'
 import {
   elasticFullResponseFixture,
   elasticHitsOnlyFixture,
@@ -14,6 +14,8 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateService } from '@ngx-translate/core'
 import { Gn4Record } from '../gn4/types/metadata.model'
+
+setupZoneTestEnv()
 
 class MetadataUrlServiceMock {
   translate = undefined

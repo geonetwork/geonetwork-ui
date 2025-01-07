@@ -2,6 +2,8 @@ import { AuthService, LOGIN_URL } from './auth.service'
 import { TestBed } from '@angular/core/testing'
 import { TranslateService } from '@ngx-translate/core'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { MockProvider } from 'ng-mocks'
+import { Location } from '@angular/common'
 
 let loginUrlTokenMock
 const translateServiceMock = {
@@ -9,11 +11,6 @@ const translateServiceMock = {
 }
 
 let windowLocation
-Object.defineProperties((global as any).window, {
-  location: {
-    get: () => new URL(windowLocation),
-  },
-})
 
 describe('AuthService', () => {
   let service: AuthService
@@ -30,6 +27,9 @@ describe('AuthService', () => {
           provide: TranslateService,
           useValue: translateServiceMock,
         },
+        MockProvider(Location, {
+          path: () => windowLocation,
+        }),
       ],
       imports: [HttpClientTestingModule],
     })
@@ -71,14 +71,13 @@ describe('AuthService', () => {
   })
   describe('login URL from config (special georchestra case, appending a query param with existing query params)', () => {
     beforeEach(() => {
-      windowLocation =
-        'https://my.georchestra/datahub/?org=Abcd&keywords=bla;bla&location'
+      windowLocation = '/datahub/?org=Abcd&keywords=bla;bla&location'
       loginUrlTokenMock = '${current_url}?login&something=else'
       service = TestBed.inject(AuthService)
     })
     it('should construct a login URL based on the injected value', () => {
       expect(service.loginUrl).toEqual(
-        'https://my.georchestra/datahub/?org=Abcd&keywords=bla;bla&location&login&something=else'
+        'http://localhost/datahub/?org=Abcd&keywords=bla;bla&location&login&something=else'
       )
     })
   })

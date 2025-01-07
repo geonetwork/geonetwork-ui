@@ -3,6 +3,8 @@ import { DataService } from './data.service'
 import { openDataset } from '@geonetwork-ui/data-fetcher'
 import { PROXY_PATH } from '@geonetwork-ui/util/shared'
 import { lastValueFrom } from 'rxjs'
+import { MockProvider } from 'ng-mocks'
+import { Location } from '@angular/common'
 
 const newEndpointCall = jest.fn()
 
@@ -637,6 +639,9 @@ describe('DataService', () => {
             provide: PROXY_PATH,
             useValue: 'http://proxy.local/?url=',
           },
+          MockProvider(Location, {
+            path: () => '/',
+          }),
         ],
       })
       service = TestBed.inject(DataService)
