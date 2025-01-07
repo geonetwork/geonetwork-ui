@@ -1,8 +1,12 @@
 import {
   parseXml,
+  XmlCdata,
   XmlComment,
+  XmlDeclaration,
   XmlDocument,
+  XmlDocumentType,
   XmlElement,
+  XmlProcessingInstruction,
   XmlText,
 } from '@rgrove/parse-xml'
 import { ChainableFunction, fallback } from './function-utils'
@@ -196,7 +200,15 @@ export function readAttribute(
 }
 
 export function xmlToString(
-  el: XmlElement | XmlText | XmlComment | XmlDocument,
+  el:
+    | XmlDocument
+    | XmlElement
+    | XmlComment
+    | XmlProcessingInstruction
+    | XmlDeclaration
+    | XmlDocumentType
+    | XmlCdata
+    | XmlText,
   indentationLevel = 0
 ) {
   const encodeEntities = (text: string) => {

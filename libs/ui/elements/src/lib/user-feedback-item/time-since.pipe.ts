@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
-import { formatDistance } from 'date-fns'
-import { de, enUS, es, fr, it, nl, pt, sk } from 'date-fns/locale'
+import { formatDistance } from 'date-fns/formatDistance'
+import { de, enUS, es, fr, it, Locale, nl, pt, sk } from 'date-fns/locale'
 
 @Pipe({
   name: 'timeSince',
