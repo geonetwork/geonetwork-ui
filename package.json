@@ -192,6 +192,10 @@
   "overrides": {
     "jasmine-marbles": {
       "rxjs": "^7.4.0"
+    },
+    "jest-environment-jsdom": {
+      "jsdom": "25.0.1",
+      "rrweb-cssom": "0.8.0"
     }
   }
 }
