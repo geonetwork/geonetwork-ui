@@ -231,6 +231,8 @@ The map section lets you customize how maps appear and behave across GeoNetwork-
   - `url` (mandatory for "xyz", "wms" and "wfs" types): Layer endpoint URL.
   - `name` (mandatory for "wms" and "wfs" types): indicates the layer name or feature type.
   - `data` (for "geojson" type only): inline GeoJSON data as string.
+  - `styleUrl` (mandatory for "maplibre-style" type only): Maplibre style URL.
+  - `accessToken` (optional for "maplibre-style" type only): credential to access the basemap styles service
 
   Layer order in the config is the same as in the map, the foreground layer being the last defined one.
 
@@ -254,6 +256,11 @@ The map section lets you customize how maps appear and behave across GeoNetwork-
   "features": [{"type": "Feature", "geometry": {"type": "Point", "coordinates": [125.6, 10.1]}}]
   }
   """
+
+  [[map_layer]]
+  type = "maplibre-style"
+  styleUrl = "https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/gris.json"
+  accessToken = "token_if_needed" # optional
   ```
 
 - `external_viewer_url_template` (optional)

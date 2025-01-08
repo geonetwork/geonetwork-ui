@@ -27,5 +27,11 @@ export function getMapContextLayerFromConfig(
         type: config.TYPE,
         ...(config.DATA ? { data: config.DATA } : { url: config.URL }),
       }
+    case 'maplibre-style':
+      return {
+        type: config.TYPE,
+        styleUrl: config.STYLE_URL,
+        accessToken: config.ACCESS_TOKEN,
+      }
   }
 }

@@ -14,10 +14,12 @@ export interface GlobalConfig {
 }
 
 export interface LayerConfig {
-  TYPE: 'xyz' | 'wms' | 'wfs' | 'geojson'
+  TYPE: 'xyz' | 'wms' | 'wfs' | 'geojson' | 'maplibre-style'
   URL?: string
   NAME?: string
   DATA?: string
+  STYLE_URL?: string
+  ACCESS_TOKEN?: string
 }
 
 export interface MapConfig {

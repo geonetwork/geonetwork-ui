@@ -160,6 +160,9 @@ background_color = "#fdfbff"
 # Each layer is defined in its own [[map_layer]] section.
 # Example:
 # [[map_layer]]
+# type = "maplibre-style"
+# styleUrl = "https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/gris.json"
+# [[map_layer]]
 # type = "xyz"
 # url = "https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
 # [[map_layer]]
