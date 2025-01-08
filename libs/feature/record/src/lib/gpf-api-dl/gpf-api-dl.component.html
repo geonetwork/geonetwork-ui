@@ -1,105 +1,125 @@
-<div class="flex flex-col gap-8">
-  <div class="flex flex-col bg-white p-8 ng-star-inserted shadow-xl">
-    <div class="flex flex-row">
-      <div class="text-[16px] text-black truncate font-title w-11/12" translate>
-        record.metadata.api.form.create
-      </div>
-      <button
-        (click)="resetUrl()"
-        class="bg-primary-opacity-50 inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded capitalize text-primary-lightest hover:bg-primary transition-colors"
+<div class="flex flex-col gap-6 p-8 bg-white shadow-xl rounded-lg">
+  <!-- Header with Filter Title and Reset Button -->
+  <div class="flex items-center justify-between">
+    <h2
+      class="text-xl font-semibold"
+      translate
+      [attr.aria-label]="
+        'record.metadata.api.form.filterDescription' | translate
+      "
+    >
+      record.metadata.api.form.filter
+    </h2>
+    <button
+      (click)="resetUrl()"
+      class="bg-primary-opacity-50 inline-flex items-center justify-center px-4 py-2 text-white rounded hover:bg-primary transition"
+      [attr.title]="'record.metadata.api.form.resetTooltip' | translate"
+      [attr.aria-label]="'record.metadata.api.form.resetTooltip' | translate"
+    >
+      <span translate>record.metadata.api.form.reset</span>
+    </button>
+  </div>
+
+  <!-- Dropdown Selectors -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <gn-ui-dropdown-selector
+      #zone
+      [title]="'record.metadata.api.form.zoneTitle' | translate"
+      [choices]="bucketPromisesZone"
+      (selectValue)="setZone($event)"
+      [selected]="zone$ | async"
+      class="w-full"
+      [attr.title]="'record.metadata.api.form.zoneTooltip' | translate"
+      [attr.aria-label]="'record.metadata.api.form.zoneTooltip' | translate"
+    ></gn-ui-dropdown-selector>
+
+    <gn-ui-dropdown-selector
+      #format
+      [title]="'record.metadata.api.form.formatTitle' | translate"
+      [choices]="bucketPromisesFormat"
+      (selectValue)="setFormat($event)"
+      [selected]="format$ | async"
+      class="w-full"
+      [attr.title]="'record.metadata.api.form.formatTooltip' | translate"
+      [attr.aria-label]="'record.metadata.api.form.formatTooltip' | translate"
+    ></gn-ui-dropdown-selector>
+
+    <gn-ui-dropdown-selector
+      #crs
+      [title]="'record.metadata.api.form.crsTitle' | translate"
+      [choices]="bucketPromisesCrs"
+      (selectValue)="setCrs($event)"
+      [selected]="crs$ | async"
+      class="w-full"
+      [attr.title]="'record.metadata.api.form.crsTooltip' | translate"
+      [attr.aria-label]="'record.metadata.api.form.crsTooltip' | translate"
+    ></gn-ui-dropdown-selector>
+  </div>
+
+  <!-- Filtered Items Section -->
+  <div class="bg-gray-50 p-4 rounded-lg">
+    <h3
+      class="text-lg font-medium"
+      translate
+      [attr.aria-label]="
+        'record.metadata.api.form.itemsDescription' | translate
+      "
+    >
+      record.metadata.api.form.items
+    </h3>
+    <div
+      class="overflow-auto max-h-60"
+      [attr.title]="'record.metadata.api.form.itemsTooltip' | translate"
+      [attr.aria-label]="'record.metadata.api.form.itemsTooltip' | translate"
+    >
+      <div
+        *ngFor="let link of listFilteredProduct$ | async"
+        class="mb-2 sm:mb-3"
       >
-        <p class="text-[13px] uppercase" translate>
-          record.metadata.api.form.reset
-        </p>
-      </button>
-    </div>
-    <div class="flex flex-row flex-wrap justify-between flex-grow gap-5">
-      <div class="flex flex-col gap-3">
-        <gn-ui-dropdown-selector
-          #zone
-          [title]="''"
-          extraBtnClass="secondary min-w-full !w-40 !text-black"
-          [showTitle]="false"
-          class="text-black"
-          [choices]="bucketPromisesZone"
-          (selectValue)="setZone($event)"
-          [selected]="zone$ | async"
-        >
-        </gn-ui-dropdown-selector>
-      </div>
-      <div class="flex flex-col gap-3">
-        <gn-ui-dropdown-selector
-          #format
-          [title]="''"
-          extraBtnClass="secondary min-w-full !w-40 !text-black"
-          [showTitle]="false"
-          class="text-black"
-          [choices]="bucketPromisesFormat"
-          (selectValue)="setFormat($event)"
-          [selected]="format$ | async"
-        >
-        </gn-ui-dropdown-selector>
-      </div>
-      <div class="flex flex-col gap-3">
-        <gn-ui-dropdown-selector
-          #format
-          [title]="'CRS'"
-          [choices]="bucketPromisesCrs"
-          (selectValue)="setCrs($event)"
-          [selected]="crs$ | async"
-        >
-        </gn-ui-dropdown-selector>
+        <gn-ui-gpf-api-dl-produit
+          [link]="link"
+          color="rgb(124 45 18)"
+          [format]="getLinkFormat(link)"
+          [isFromWfs]="true"
+          [attr.title]="'record.metadata.api.form.productTooltip' | translate"
+          [attr.aria-label]="
+            'record.metadata.api.form.productTooltip' | translate
+          "
+        ></gn-ui-gpf-api-dl-produit>
       </div>
     </div>
-    <div class="bg-white rounded-lg h-min">
-      <div class="overflow-auto h-60 w-65 bg-white-300 m-2">
-        <table class="w-full text-left border-collapse">
-          <tbody class="align-baseline">
-            <tr>
-              <div *ngFor="let link of listFilteredProduct$ | async">
-                <div class="mb-2 sm:mb-3">
-                  <gn-ui-gpf-api-dl-produit
-                    [link]="link"
-                    color="rgb(124 45 18)"
-                    [format]="getLinkFormat(link)"
-                    [isFromWfs]="true"
-                  ></gn-ui-gpf-api-dl-produit>
-                </div>
-              </div>
-            </tr>
-            <tr class="flex items-center justify-between">
-              <div class="w-1/3">
-                <button
-                  *ngIf="page$.value > 1"
-                  (click)="lessResult()"
-                  class="bg-primary-opacity-50 inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded capitalize text-primary-lightest hover:bg-primary transition-colors float-left"
-                >
-                  <p class="text-[13px] uppercase" translate>Page précédente</p>
-                </button>
-                <div *ngIf="page$.value <= 1"></div>
-              </div>
-              <div class="w-1/3 flex items-center justify-center">
-                <div
-                  *ngIf="(pageMax$ | async) !== 1"
-                  class="sticky z-10 leading-6 font-semibold"
-                >
-                  {{ page$.value }}/{{ pageMax$ | async }}
-                </div>
-              </div>
-              <div class="w-1/3">
-                <button
-                  *ngIf="page$.value < (pageMax$ | async)"
-                  (click)="moreResult()"
-                  class="bg-primary-opacity-50 inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded capitalize text-primary-lightest hover:bg-primary transition-colors float-right"
-                >
-                  <p class="text-[13px] uppercase" translate>Page suivante</p>
-                </button>
-                <div *ngIf="page$.value >= (pageMax$ | async)"></div>
-              </div>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  </div>
+
+  <!-- Pagination Section -->
+  <div class="flex items-center justify-between">
+    <button
+      *ngIf="page$.value > 1"
+      (click)="lessResult()"
+      class="bg-primary-opacity-50 px-4 py-2 text-white rounded hover:bg-primary transition"
+      [attr.title]="'record.metadata.api.form.previousPageTooltip' | translate"
+      [attr.aria-label]="
+        'record.metadata.api.form.previousPageTooltip' | translate
+      "
+    >
+      <span translate>record.metadata.api.form.previousPage</span>
+    </button>
+    <div
+      *ngIf="(pageMax$ | async) !== 1"
+      class="font-semibold"
+      [attr.aria-label]="
+        'record.metadata.api.form.paginationDescription' | translate
+      "
+    >
+      {{ page$.value }}/{{ pageMax$ | async }}
     </div>
+    <button
+      *ngIf="page$.value < (pageMax$ | async)"
+      (click)="moreResult()"
+      class="bg-primary-opacity-50 px-4 py-2 text-white rounded hover:bg-primary transition"
+      [attr.title]="'record.metadata.api.form.nextPageTooltip' | translate"
+      [attr.aria-label]="'record.metadata.api.form.nextPageTooltip' | translate"
+    >
+      <span translate>record.metadata.api.form.nextPage</span>
+    </button>
   </div>
 </div>
