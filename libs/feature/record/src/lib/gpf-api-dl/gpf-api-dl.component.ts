@@ -47,12 +47,12 @@ export interface Field {
 }
 
 @Component({
-  selector: 'gn-ui-ign-api-dl',
-  templateUrl: './ign-api-dl.component.html',
-  styleUrls: ['./ign-api-dl.component.css'],
+  selector: 'gn-ui-gpf-api-dl',
+  templateUrl: './gpf-api-dl.component.html',
+  styleUrls: ['./gpf-api-dl.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IgnApiDlComponent implements OnInit {
+export class GpfApiDlComponent implements OnInit {
   isOpen = false
   collapsed = false
   initialLimit = 50

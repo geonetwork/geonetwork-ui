@@ -58,12 +58,12 @@
             <tr>
               <div *ngFor="let link of listFilteredProduct$ | async">
                 <div class="mb-2 sm:mb-3">
-                  <gn-ui-ign-api-produit
+                  <gn-ui-gpf-api-dl-produit
                     [link]="link"
                     color="rgb(124 45 18)"
                     [format]="getLinkFormat(link)"
                     [isFromWfs]="true"
-                  ></gn-ui-ign-api-produit>
+                  ></gn-ui-gpf-api-dl-produit>
                 </div>
               </div>
             </tr>

@@ -4,7 +4,7 @@ import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/r
 import { firstValueFrom } from 'rxjs'
 import { Choice, UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
-import { IgnApiDlComponent } from './ign-api-dl.component'
+import { GpfApiDlComponent as GpfApiDlComponent } from './gpf-api-dl.component'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import exp from 'constants'
 
@@ -14,13 +14,13 @@ const mockDatasetServiceDistribution: DatasetServiceDistribution = {
   accessServiceProtocol: 'GPFDL',
 }
 
-describe('IgnApiDlComponent', () => {
-  let component: IgnApiDlComponent
-  let fixture: ComponentFixture<IgnApiDlComponent>
+describe('GpfApiDlComponent', () => {
+  let component: GpfApiDlComponent
+  let fixture: ComponentFixture<GpfApiDlComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [IgnApiDlComponent],
+      declarations: [GpfApiDlComponent],
       imports: [
         UiInputsModule,
         HttpClientTestingModule,
@@ -28,7 +28,7 @@ describe('IgnApiDlComponent', () => {
       ],
     }).compileComponents()
 
-    fixture = TestBed.createComponent(IgnApiDlComponent)
+    fixture = TestBed.createComponent(GpfApiDlComponent)
     component = fixture.componentInstance
     component.apiLink = mockDatasetServiceDistribution
   })

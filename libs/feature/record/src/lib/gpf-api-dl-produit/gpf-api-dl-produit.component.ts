@@ -3,11 +3,11 @@ import { Component, Input, OnInit } from '@angular/core'
 import { Observable, map, mergeMap } from 'rxjs'
 
 @Component({
-  selector: 'gn-ui-ign-api-produit',
-  templateUrl: './ign-api-produit.component.html',
-  styleUrls: ['./ign-api-produit.component.css'],
+  selector: 'gn-ui-gpf-api-dl-produit',
+  templateUrl: './gpf-api-dl-produit.component.html',
+  styleUrls: ['./gpf-api-dl-produit.component.css'],
 })
-export class IgnApiProduitComponent implements OnInit {
+export class GpfApiDlProduitComponent implements OnInit {
   @Input() link
   @Input() color: string
   @Input() format: string
