@@ -241,6 +241,21 @@ describe('dataset pages', () => {
             .children('div')
             .should('have.length', 5)
         })
+        it('should not display the same text twice in the constraints', () => {
+          // this dataset has the same text for the license and the legal constraints
+          cy.visit('/dataset/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
+          cy.get('datahub-record-metadata')
+            .find('gn-ui-expandable-panel')
+            .first()
+            .click()
+          cy.get('datahub-record-metadata')
+            .find('gn-ui-expandable-panel')
+            .first()
+            .children('div')
+            .eq(1)
+            .children('div')
+            .should('have.length', 1)
+        })
       })
     })
     describe('features', () => {
@@ -300,12 +315,37 @@ describe('dataset pages', () => {
         })
         cy.reload()
       })
-
-      it('should display quality widget', () => {
-        cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
-          .eq(0)
-          .should('have.attr', 'ng-reflect-value', 87)
-        cy.screenshot({ capture: 'fullPage' })
+      describe('Score is less than 100%', () => {
+        it('should display the score', () => {
+          cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
+            .eq(0)
+            .should('have.attr', 'ng-reflect-value', 87)
+          cy.screenshot({ capture: 'fullPage' })
+        })
+        it('should not check all the criteria', () => {
+          cy.get('gn-ui-metadata-quality').realHover()
+          cy.get('gn-ui-metadata-quality-item')
+            .find('ng-icon')
+            .eq(4)
+            .should('have.attr', 'ng-reflect-name', 'matWarningAmber')
+        })
+      })
+      describe('Score is 100%', () => {
+        beforeEach(() => {
+          cy.visit('/dataset/6d0bfdf4-4e94-48c6-9740-3f9facfd453c')
+        })
+        it('should display the score', () => {
+          cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
+            .eq(0)
+            .should('have.attr', 'ng-reflect-value', 100)
+        })
+        it('should check all the criteria if score is 100%', () => {
+          cy.get('gn-ui-metadata-quality').realHover()
+          cy.get('gn-ui-metadata-quality-item')
+            .find('ng-icon')
+            .eq(4)
+            .should('have.attr', 'ng-reflect-name', 'matCheck')
+        })
       })
     })
   })
