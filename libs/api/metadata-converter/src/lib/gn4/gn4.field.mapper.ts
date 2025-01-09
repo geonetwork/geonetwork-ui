@@ -378,16 +378,6 @@ export class Gn4FieldMapper {
       ...output,
       [outputField]: outputArray,
     }
-    // avoid legal constraints being duplicates of licenses
-    if (
-      'legalConstraints' in result &&
-      (type === 'legal' || type === 'license')
-    ) {
-      result.legalConstraints = result.legalConstraints.filter(
-        (constraint) =>
-          !output.licenses?.some((license) => license.text === constraint.text)
-      )
-    }
     return result
   }
 
