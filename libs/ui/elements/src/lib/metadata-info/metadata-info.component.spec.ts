@@ -131,4 +131,35 @@ describe('MetadataInfoComponent', () => {
       })
     })
   })
+  describe('legalConstraints', () => {
+    beforeEach(() => {
+      fixture = TestBed.createComponent(MetadataInfoComponent)
+      component = fixture.componentInstance
+      component.metadata = datasetRecordsFixture()[0] as DatasetRecord
+      fixture.detectChanges()
+    })
+    it('should filter out the licenses from the legal constraints', () => {
+      component.metadata = {
+        ...datasetRecordsFixture()[0],
+        licenses: [
+          ...datasetRecordsFixture()[0].licenses,
+          {
+            text: 'Contains sensitive information related to national defense',
+            url: new URL('https:/google.com/pages/licence/'),
+          },
+        ],
+      } as DatasetRecord
+      expect(component.legalConstraints).toEqual([
+        "Dataset access isn't possible since it does not really exist",
+      ])
+    })
+    it('should not return anything if the license is the only legal constraint', () => {
+      component.metadata = {
+        ...datasetRecordsFixture()[0],
+        legalConstraints: datasetRecordsFixture()[0].licenses,
+      } as DatasetRecord
+      fixture.detectChanges()
+      expect(component.legalConstraints).toEqual([])
+    })
+  })
 })

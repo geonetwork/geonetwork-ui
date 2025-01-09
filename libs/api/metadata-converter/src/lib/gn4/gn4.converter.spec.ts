@@ -857,7 +857,15 @@ describe('Gn4Converter', () => {
 
         it('parses the legal constraints', async () => {
           const record = (await service.readRecord(hit)) as DatasetRecord
-          expect(record.legalConstraints).toEqual([])
+          expect(record.legalConstraints).toEqual([
+            {
+              text: 'Öffentlich zugängliche Geobasisdaten: Zugangsberechtigungsstufe A (nach GeoIV, Art. 21).',
+              url: new URL('https://registry.geocat.ch/use-limitation/levelA'),
+            },
+            {
+              text: 'Es gelten die Nutzungsbedingungen für Geodaten des Kantons Wallis (https://www.vs.ch/de/web/guest/rechtliches).',
+            },
+          ])
         })
 
         it('parses the security constraints', async () => {
@@ -1013,6 +1021,15 @@ describe('Gn4Converter', () => {
             legalConstraints: [
               {
                 text: "Restriction légale d'utilisation à préciser",
+              },
+              {
+                text: 'Pas de restriction d’accès public',
+                url: new URL(
+                  'http://inspire.ec.europa.eu/metadatacodelist/LimitationsOnPublicAccess/noLimitations'
+                ),
+              },
+              {
+                text: 'Licence Ouverte version 2.0  https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf',
               },
             ],
             securityConstraints: [],
@@ -1909,7 +1926,14 @@ describe('Gn4Converter', () => {
             ),
             defaultLanguage: 'de',
             otherLanguages: ['fr', 'it'],
-            legalConstraints: [],
+            legalConstraints: [
+              {
+                text: 'Opendata BY: Freie Nutzung. Quellenangabe ist Pflicht.',
+                url: new URL(
+                  'https://opendata.swiss/en/terms-of-use/#terms_by'
+                ),
+              },
+            ],
             licenses: [
               {
                 text: 'Opendata BY: Freie Nutzung. Quellenangabe ist Pflicht.',
