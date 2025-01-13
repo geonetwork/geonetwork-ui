@@ -15,6 +15,7 @@ import {
   ProgressBarComponent,
 } from '@geonetwork-ui/ui/widgets'
 import { CommonModule } from '@angular/common'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-metadata-quality',
@@ -27,6 +28,7 @@ import { CommonModule } from '@angular/common'
     PopoverComponent,
     ProgressBarComponent,
     MetadataQualityItemComponent,
+    TranslateModule,
   ],
 })
 export class MetadataQualityComponent implements OnChanges {

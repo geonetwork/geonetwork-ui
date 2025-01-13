@@ -74,8 +74,13 @@ export class MetadataInfoComponent {
   get legalConstraints() {
     let array = []
     if (this.metadata.legalConstraints?.length) {
+      const licensesTexts = this.metadata.licenses.map(
+        (license) => license.text
+      )
       array = array.concat(
-        this.metadata.legalConstraints.filter((c) => c.text).map((c) => c.text)
+        this.metadata.legalConstraints
+          .filter((c) => c.text && !licensesTexts.includes(c.text))
+          .map((c) => c.text)
       )
     }
     return array
