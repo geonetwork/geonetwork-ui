@@ -52,7 +52,10 @@ export class OrganizationHeaderComponent {
   foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
 
-  constructor(private location: Location, private router: Router) {}
+  constructor(
+    private location: Location,
+    private router: Router
+  ) {}
 
   back() {
     this.organization
