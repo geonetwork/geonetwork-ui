@@ -173,6 +173,7 @@ npm install --save \
   @ngrx/router-store \
   @ngrx/store \
   @ngrx/store-devtools \
+  @ngrx/operators \
   @ngx-translate/core \
   @ngx-translate/http-loader
 ```

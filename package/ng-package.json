@@ -11,6 +11,7 @@
     "@geospatial-sdk/legend",
     "@geospatial-sdk/openlayers",
     "@geospatial-sdk/geocoding",
+    "@geospatial-sdk/legend",
     "@ltd/j-toml",
     "@messageformat/core",
     "@ng-icons/core",
