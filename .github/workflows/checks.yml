@@ -2,7 +2,7 @@ name: Checks
 run-name: 🩺 Quality assurance checks on ${{ github.event_name == 'pull_request' && 'PR' || '🌱' }} ${{ github.event_name == 'pull_request' && github.event.number || github.ref_name }}
 
 env:
-  NODE_VERSION: 18.16.1
+  NODE_VERSION: 20.18.1
   TEST_HIDE_CONSOLE: true
 
 # This workflow runs for Pull Requests which are not draft,

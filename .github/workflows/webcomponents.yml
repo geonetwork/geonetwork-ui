@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: 18.16.1
+  NODE_VERSION: 20.18.1
   PUBLISH_BRANCH: wc-dist
 
 jobs:
