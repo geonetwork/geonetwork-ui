@@ -7,11 +7,15 @@ import {
   AuthService,
   AvatarServiceInterface,
 } from '@geonetwork-ui/api/repository'
-import { LetDirective } from '@ngrx/component'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { Observable, combineLatest } from 'rxjs'
+import { combineLatest, Observable } from 'rxjs'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { RouterLink } from '@angular/router'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { iconoirSystemShut } from '@ng-icons/iconoir'
+import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'md-editor-sidebar',
@@ -23,8 +27,16 @@ import { Organization } from '@geonetwork-ui/common/domain/model/record'
     DashboardMenuComponent,
     CommonModule,
     TranslateModule,
-    LetDirective,
     UiElementsModule,
+    ButtonComponent,
+    RouterLink,
+    NgIcon,
+    FeatureSearchModule,
+  ],
+  providers: [
+    provideIcons({
+      iconoirSystemShut,
+    }),
   ],
 })
 export class SidebarComponent implements OnInit {

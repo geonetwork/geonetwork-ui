@@ -523,9 +523,7 @@ describe('dashboard (authenticated)', () => {
     it('should navigate to the account settings page', () => {
       cy.visit('/catalog/search')
       cy.get('md-editor-sidebar')
-        .find('gn-ui-button')
-        .first()
-        .find('a')
+        .find('[data-cy=account-link]')
         .invoke('removeAttr', 'target')
         .click()
       cy.url().should('include', '/admin.console')
@@ -549,7 +547,7 @@ describe('Logging in and out', () => {
     })
     it('logs out the user', () => {
       cy.get('gn-ui-avatar').should('be.visible')
-      cy.get('md-editor-sidebar').find('gn-ui-button').eq(1).click()
+      cy.get('md-editor-sidebar').find('[data-cy=logout-button]').click()
       cy.url().should('include', '/catalog.signin?redirect=')
       cy.get('gn-ui-avatar').should('not.exist')
     })

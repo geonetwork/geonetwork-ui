@@ -16,31 +16,30 @@
     <ng-container *ngIf="platformService.getMe() | async as user">
       <div
         *ngIf="user && user.name"
-        class="basis-1/12 mb-2 flex flex-col justify-center items-center"
+        class="mb-3 gap-2 flex flex-col justify-center items-center"
+        [style.--gn-ui-button-height]="'40px'"
+        [style.--gn-ui-button-width]="'40px'"
+        [style.--gn-ui-button-rounded]="'40px'"
       >
-        <gn-ui-button
-          type="default"
-          class="w-10 h-10 flex justify-center items-center hover:cursor-pointer mb-1"
+        <a
+          [href]="settingsUrl"
+          target="_blank"
+          class="gn-ui-btn-black"
+          data-cy="account-link"
         >
-          <a [href]="settingsUrl" target="_blank">
-            <gn-ui-user-preview
-              [user]="user"
-              [avatarPlaceholder]="placeholder$ | async"
-              extraClass="w-10 h-10"
-            ></gn-ui-user-preview>
-          </a>
-        </gn-ui-button>
+          <gn-ui-user-preview
+            [user]="user"
+            [avatarPlaceholder]="placeholder$ | async"
+          ></gn-ui-user-preview>
+        </a>
         <gn-ui-button
-          type="default"
-          class="w-10 h-10 flex justify-center items-center hover:cursor-pointer"
-          (click)="logOut()"
+          type="black"
+          class="flex justify-center items-center"
+          data-cy="logout-button"
+          (buttonClick)="logOut()"
+          [title]="'editor.sidebar.logout' | translate"
         >
-          <img
-            src="assets/system-shut.svg"
-            [alt]="'editor.sidebar.logout' | translate"
-            [title]="'editor.sidebar.logout' | translate"
-            class="w-4 h-4 hover:invert-[.5]"
-          />
+          <ng-icon name="iconoirSystemShut" size="16px" />
         </gn-ui-button>
       </div>
     </ng-container>
@@ -52,7 +51,7 @@
         <gn-ui-button
           *ngIf="organisations[0].logoUrl?.href"
           type="default"
-          class="flex flex-col gap-3 items-center gap-2"
+          class="flex flex-col items-center gap-2"
           [routerLink]="['/organizations', organisations[0].id]"
         >
           <img
