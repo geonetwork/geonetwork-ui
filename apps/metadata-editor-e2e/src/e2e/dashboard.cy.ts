@@ -544,6 +544,10 @@ describe('Logging in and out', () => {
     beforeEach(() => {
       cy.login('admin', 'admin', false)
       cy.visit('/catalog/search')
+      // wait for results
+      cy.get('gn-ui-results-table')
+        .find('[data-cy=table-row]')
+        .should('have.length.above', 1)
     })
     it('logs out the user', () => {
       cy.get('gn-ui-avatar').should('be.visible')
