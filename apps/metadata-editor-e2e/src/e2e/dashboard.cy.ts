@@ -222,7 +222,7 @@ describe('dashboard (authenticated)', () => {
         cy.get('md-editor-dashboard-menu').find('a').eq(3).click()
         cy.get('gn-ui-results-table')
           .find('[data-cy="table-row"]')
-          .should('have.length', '10')
+          .should('have.length', '11')
       })
       it('should sort the records by title', () => {
         cy.get('md-editor-dashboard-menu').find('a').eq(3).click()
