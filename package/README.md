@@ -40,6 +40,8 @@ cd package/dist
 npm publish
 ```
 
+Note: To use the generated package locally, be sure to follow [these hints](https://geonetwork.github.io/geonetwork-ui/main/docs/guide/custom-app.html#using-the-npm-package-in-development-mode).
+
 ## Using the package
 
 Using the package requires creating a custom GeoNetwork-UI application.
