@@ -47,6 +47,7 @@
     "tslib",
     "typeorm",
     "whatwg-fetch",
-    "xlsx"
+    "xlsx",
+    "url"
   ]
 }
