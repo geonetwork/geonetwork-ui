@@ -17,7 +17,8 @@ interface CodeListEntry extends MultilingualField {
 type MaybeArray<T> = T | T[]
 
 interface Contact {
-  organisation: string
+  organisation?: string
+  organisationObject?: MultilingualField
   role: string
   email: string
   website: string
@@ -110,15 +111,15 @@ export type MetadataObject = Partial<{
   feedbackCount: string
   geom: Geometry
   groupOwner: string
-  groupPublished: string[]
-  groupPublishedId: string
+  groupPublished: string | string[]
+  groupPublishedId: string | string[]
   harvesterUuid: string
   hasInspireTheme: BooleanString
   hasOverview: BooleanString
   hasxlinks: BooleanString
   id: string
   indexingDate: string
-  indexingError: string[]
+  indexingError: string | string[]
   indexingErrorMsg: string[]
   inspireAnnex: string[]
   inspireAnnexForFirstTheme: string
@@ -137,8 +138,8 @@ export type MetadataObject = Partial<{
   lineageObject: MultilingualField
   link: Link[]
   linkProtocol: string[]
-  linkUrl: string[]
-  linkUrlProtocolOGCWFS: string[]
+  linkUrl: string | string[]
+  linkUrlProtocolOGCWFS: string | string[]
   linkUrlProtocolOGCWMS: string[]
   linkUrlProtocolWWWLINK10httplink: MaybeArray<string>
   linkUrlProtocolWWWLINK10httprelated: string

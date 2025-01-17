@@ -219,6 +219,7 @@ export type ServiceOnlineResource = (ServiceEndpoint | OnlineLinkResource) & {
 export interface ServiceRecord extends BaseRecord {
   kind: 'service'
   onlineResources: Array<ServiceOnlineResource>
+  spatialExtents: Array<DatasetSpatialExtent>
 }
 
 export type OnlineResource = DatasetOnlineResource | ServiceOnlineResource
