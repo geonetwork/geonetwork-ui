@@ -33,12 +33,37 @@ export class DownloadsListComponent {
 
   activeFilterFormats: FilterFormat[] = ['all']
 
+  private filterByProtocol(
+    links: DatasetOnlineResource[]
+  ): DatasetOnlineResource[] {
+    const preferredLinks = new Map<string, DatasetOnlineResource>()
+    const OGC_FEATURES_PROTOCOL = 'ogcFeatures'
+
+    links.forEach((link) => {
+      const format = getFileFormat(link)
+      if (!preferredLinks.has(format)) {
+        preferredLinks.set(format, link)
+      } else {
+        const existingLink = preferredLinks.get(format)
+        if (
+          link.accessServiceProtocol === OGC_FEATURES_PROTOCOL &&
+          existingLink?.accessServiceProtocol !== OGC_FEATURES_PROTOCOL
+        ) {
+          preferredLinks.set(format, link)
+        }
+      }
+    })
+
+    return Array.from(preferredLinks.values())
+  }
+
   get filteredLinks(): DatasetOnlineResource[] {
-    return this.links.filter((link) =>
+    const filteredByFormat = this.links.filter((link) =>
       this.activeFilterFormats.some((format) =>
         this.isLinkOfFormat(link, format)
       )
     )
+    return this.filterByProtocol(filteredByFormat)
   }
 
   get visibleFormats(): FilterFormat[] {

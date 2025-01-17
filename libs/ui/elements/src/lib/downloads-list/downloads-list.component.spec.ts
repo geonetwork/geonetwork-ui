@@ -9,7 +9,11 @@ import { LinkClassifierService } from '@geonetwork-ui/util/shared'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 import { DownloadsListComponent } from './downloads-list.component'
-import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/record'
+import {
+  DatasetDownloadDistribution,
+  DatasetOnlineResource,
+  ServiceProtocol,
+} from '@geonetwork-ui/common/domain/model/record'
 import { DownloadItemComponent } from '../download-item/download-item.component'
 
 describe('DownloadsListComponent', () => {
@@ -50,7 +54,7 @@ describe('DownloadsListComponent', () => {
       component.links = [
         aSetOfLinksFixture().dataCsv(),
         aSetOfLinksFixture().dataPdf(),
-        aSetOfLinksFixture().dataPdf(),
+        aSetOfLinksFixture().dataJson(),
       ]
       fixture.detectChanges()
       items = de.queryAll(By.directive(DownloadItemComponent))
@@ -272,6 +276,56 @@ describe('DownloadsListComponent', () => {
         )
         expect(displayedFormats).toEqual(['all', 'others'])
       })
+    })
+  })
+  describe('filtering by protocol', () => {
+    it('removes duplicate formats', () => {
+      const links = [
+        aSetOfLinksFixture().dataCsv(),
+        aSetOfLinksFixture().dataCsv(),
+        aSetOfLinksFixture().dataJson(),
+      ]
+
+      const result = component['filterByProtocol'](links)
+
+      expect(JSON.stringify(result)).toEqual(
+        JSON.stringify([
+          aSetOfLinksFixture().dataCsv(),
+          aSetOfLinksFixture().dataJson(),
+        ])
+      )
+    })
+    it('prioritizes ogcFeatures protocol', () => {
+      const links: DatasetOnlineResource[] = [
+        {
+          ...aSetOfLinksFixture().dataCsv(),
+          accessServiceProtocol: 'wfs' as ServiceProtocol,
+        },
+        {
+          ...aSetOfLinksFixture().dataCsv(),
+          accessServiceProtocol: 'ogcFeatures' as ServiceProtocol,
+        },
+        aSetOfLinksFixture().dataJson(),
+      ]
+
+      const result = component['filterByProtocol'](links)
+
+      expect(
+        result.map((link) => ({
+          ...link,
+          url: link.url.toString(),
+        }))
+      ).toEqual([
+        {
+          ...aSetOfLinksFixture().dataCsv(),
+          accessServiceProtocol: 'ogcFeatures',
+          url: aSetOfLinksFixture().dataCsv().url.toString(),
+        },
+        {
+          ...aSetOfLinksFixture().dataJson(),
+          url: aSetOfLinksFixture().dataJson().url.toString(),
+        },
+      ])
     })
   })
 })
