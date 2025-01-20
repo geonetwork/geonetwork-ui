@@ -721,7 +721,7 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
         id: 'geonetwork.thesaurus.external.theme.gemet',
         name: 'GEMET',
         url: new URL(
-          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
         ),
       },
       type: 'other',
@@ -798,4 +798,12 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
       en: '',
     },
   },
+  spatialExtents: [
+    {
+      bbox: [
+        8.749927283333331, 46.853613697777774, 9.697637729444445, 47.5586926625,
+      ],
+      translations: {}
+    },
+  ],
 }
