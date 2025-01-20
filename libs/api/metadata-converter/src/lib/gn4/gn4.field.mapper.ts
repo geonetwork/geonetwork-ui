@@ -287,10 +287,7 @@ export class Gn4FieldMapper {
         output
       ),
     resourceType: (output, source) => {
-      const resourceType = selectField(
-        getFirstValue(selectField(source, 'resourceType')),
-        'key'
-      )
+      const resourceType = getFirstValue(selectField(source, 'resourceType'))
       const kind = resourceType === 'service' ? 'service' : 'dataset'
       return {
         ...output,

@@ -116,6 +116,7 @@ export class RecordFormComponent implements AfterViewInit {
       this.record = {
         ...record,
         kind: 'service',
+        spatialExtents: [],
       }
     }
     this.recordChanged.emit(this.record)
