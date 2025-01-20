@@ -12,10 +12,10 @@
     <span
       class="material-symbols-outlined gn-ui-icon-small"
       [ngClass]="{ 'text-primary': !preview }"
-      >{{ preview ? 'visibility' : 'visibility_off' }}</span
+      >{{ preview ? 'visibility_off' : 'visibility' }}</span
     >
     &nbsp;
-    {{ preview ? 'WYSIWYG' : 'Markdown' }}
+    {{ preview ? 'Edit' : 'Preview' }}
   </gn-ui-button>
   <gn-ui-markdown-editor
     [preview]="preview"
