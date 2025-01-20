@@ -803,7 +803,7 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
       bbox: [
         8.749927283333331, 46.853613697777774, 9.697637729444445, 47.5586926625,
       ],
-      translations: {}
+      translations: {},
     },
   ],
 }

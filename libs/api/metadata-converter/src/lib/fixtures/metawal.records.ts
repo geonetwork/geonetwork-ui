@@ -657,4 +657,10 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
   landingPage: new URL(
     'https://metawal.wallonie.be/geonetwork/srv/api/records/6d2b6fdb-f1ea-4d48-8697-a0c05512f1dc'
   ),
+  spatialExtents: [
+    {
+      bbox: [2.75, 49.45, 6.5, 50.85],
+      translations: {},
+    },
+  ],
 }
