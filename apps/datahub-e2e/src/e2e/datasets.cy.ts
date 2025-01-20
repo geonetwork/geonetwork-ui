@@ -5,9 +5,7 @@ describe('datasets', () => {
     cy.visit('/search')
 
     // aliases
-    cy.get('gn-ui-results-list-item', { timeout: 10000 })
-      .find('a')
-      .as('results')
+    cy.get('gn-ui-results-list-item').find('a').as('results')
     cy.get('@results').eq(2).as('sampleResult')
     cy.get('@results')
       .then(($results) => $results.length)

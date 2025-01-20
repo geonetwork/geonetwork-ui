@@ -116,7 +116,7 @@ describe('DownloadsListComponent', () => {
       fixture.detectChanges()
       items = de.queryAll(By.directive(DownloadItemComponent))
     })
-    it('contains color, isWfs & format', () => {
+    it('contains color, isAPI & format', () => {
       expect(items.length).toBe(1)
       expect(items[0].componentInstance.link).toEqual(
         aSetOfLinksFixture().geodataShpWithMimeType()
@@ -125,7 +125,7 @@ describe('DownloadsListComponent', () => {
       expect(items[0].componentInstance.color).toEqual(
         expect.stringMatching(/#[0-9a-b]{2,6}/i)
       )
-      expect(items[0].componentInstance.isFromWfs).toEqual(false)
+      expect(items[0].componentInstance.isFromAPI).toEqual(false)
     })
   })
   describe('displaying download links from WFS', () => {
@@ -136,8 +136,20 @@ describe('DownloadsListComponent', () => {
       fixture.detectChanges()
       items = de.queryAll(By.directive(DownloadItemComponent))
     })
-    it('sets isFromWfs to true', () => {
-      expect(items[0].componentInstance.isFromWfs).toEqual(true)
+    it('sets isFromAPI to true', () => {
+      expect(items[0].componentInstance.isFromAPI).toEqual(true)
+    })
+  })
+  describe('displaying download links from OGC Features', () => {
+    let items: DebugElement[]
+
+    beforeEach(() => {
+      component.links = [aSetOfLinksFixture().geodataOgcApiDownload()]
+      fixture.detectChanges()
+      items = de.queryAll(By.directive(DownloadItemComponent))
+    })
+    it('sets isFromAPI to true', () => {
+      expect(items[0].componentInstance.isFromAPI).toEqual(true)
     })
   })
   describe('filtering links', () => {

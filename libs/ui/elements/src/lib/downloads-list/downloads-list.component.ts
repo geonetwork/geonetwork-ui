@@ -129,7 +129,11 @@ export class DownloadsListComponent {
     return getBadgeColor(getFileFormat(link))
   }
 
-  isFromWfs(link: DatasetOnlineResource) {
-    return link.type === 'download' && link.accessServiceProtocol === 'wfs'
+  isFromAPI(link: DatasetOnlineResource) {
+    return (
+      link.type === 'download' &&
+      (link.accessServiceProtocol === 'wfs' ||
+        link.accessServiceProtocol === 'ogcFeatures')
+    )
   }
 }
