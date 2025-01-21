@@ -640,7 +640,7 @@ describe('dataset pages', () => {
             .find('h4')
             .should(
               'have.text',
-              ` Bénéficiaires de l'Aide à la Garde d'Enfants (AGE) en région Hauts-de-France `
+              ` Mat éolien construit ou en projet dans les Hauts de France `
             )
         })
         it('goes to dataset on click', () => {
