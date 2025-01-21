@@ -11,6 +11,7 @@
     <gn-ui-table-view
       *ngIf="mode === 'table'"
       [link]="selectedLink$ | async"
+      [paginate]="paginate"
     ></gn-ui-table-view>
     <gn-ui-chart-view
       *ngIf="mode === 'chart'"

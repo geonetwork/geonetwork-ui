@@ -37,6 +37,7 @@ export class TableViewComponent {
   @Input() set link(value: DatasetOnlineResource) {
     this.currentLink$.next(value)
   }
+  @Input() paginate = false
   private currentLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
 
   loading = false

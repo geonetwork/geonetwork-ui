@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Input,
   ViewChild,
 } from '@angular/core'
 import { MapUtilsService } from '@geonetwork-ui/feature/map'
@@ -77,6 +78,7 @@ import {
   viewProviders: [provideIcons({ matClose })],
 })
 export class MapViewComponent implements AfterViewInit {
+  @Input() excludeWfs = false
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
 
   selection: Feature
@@ -104,6 +106,11 @@ export class MapViewComponent implements AfterViewInit {
   )
 
   dropdownChoices$ = this.compatibleMapLinks$.pipe(
+    map((links) =>
+      this.excludeWfs
+        ? links.filter((link) => link.accessServiceProtocol !== 'wfs')
+        : links
+    ),
     map((links) =>
       links.length
         ? links.map((link, index) => ({

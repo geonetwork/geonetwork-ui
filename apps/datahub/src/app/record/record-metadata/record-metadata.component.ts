@@ -10,7 +10,7 @@ import {
   MetadataInfoComponent,
   MetadataQualityComponent,
 } from '@geonetwork-ui/ui/elements'
-import { BehaviorSubject, combineLatest } from 'rxjs'
+import { BehaviorSubject, combineLatest, of } from 'rxjs'
 import { filter, map, mergeMap, startWith } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
@@ -31,6 +31,7 @@ import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
 import { RecordRelatedRecordsComponent } from '../record-related-records/record-related-records.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -56,6 +57,7 @@ import { TranslateModule } from '@ngx-translate/core'
     DataViewComponent,
     MapViewComponent,
     TranslateModule,
+    PopupAlertComponent,
   ],
 })
 export class RecordMetadataComponent {
@@ -109,6 +111,8 @@ export class RecordMetadataComponent {
         !displayOtherLinks
     )
   )
+
+  exceedsDatasetLimit$ = of(true)
 
   organisationName$ = this.metadataViewFacade.metadata$.pipe(
     map((record) => record?.ownerOrganization?.name),
