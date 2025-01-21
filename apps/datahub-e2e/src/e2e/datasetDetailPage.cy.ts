@@ -630,7 +630,18 @@ describe('dataset pages', () => {
           cy.get('#related-records')
             .find('datahub-record-related-records')
             .find('gn-ui-related-record-card')
-            .should('have.length.gt', 0)
+            .should('have.length', 3)
+        })
+        it('should display a similar related record', () => {
+          cy.get('#related-records')
+            .find('datahub-record-related-records')
+            .find('gn-ui-related-record-card')
+            .first()
+            .find('h4')
+            .should(
+              'have.text',
+              ` Bénéficiaires de l'Aide à la Garde d'Enfants (AGE) en région Hauts-de-France `
+            )
         })
         it('goes to dataset on click', () => {
           let targetLink

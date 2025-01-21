@@ -716,9 +716,14 @@ describe('ElasticsearchService', () => {
                   fields: [
                     'resourceTitleObject.default',
                     'resourceAbstractObject.default',
-                    'tag.raw',
+                    'allKeywords',
                   ],
-                  like: 'record title',
+                  like: [
+                    {
+                      _index: 'gn-records',
+                      _id: 'some-uuid',
+                    },
+                  ],
                   max_query_terms: 12,
                   min_term_freq: 1,
                 },
