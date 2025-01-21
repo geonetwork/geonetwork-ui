@@ -148,9 +148,14 @@ export class ElasticsearchService {
                 fields: [
                   'resourceTitleObject.default',
                   'resourceAbstractObject.default',
-                  'tag.raw',
+                  'allKeywords',
                 ],
-                like: title,
+                like: [
+                  {
+                    _index: 'gn-records',
+                    _id: uuid,
+                  },
+                ],
                 min_term_freq: 1,
                 max_query_terms: 12,
               },
