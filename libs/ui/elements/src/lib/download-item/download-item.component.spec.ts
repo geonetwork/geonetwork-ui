@@ -87,7 +87,7 @@ describe('DownloadsListItemComponent', () => {
     })
     describe('when it is WFS or OGC API', () => {
       beforeEach(() => {
-        component.isFromAPI = true
+        component.isFromApi = true
         fixture.detectChanges()
       })
       it('add WFS or OGC API information', () => {

@@ -171,7 +171,6 @@ export type DatasetOnlineResource = (
   | OnlineLinkResource
 ) & {
   type: OnlineResourceType
-  accessServiceProtocol?: ServiceProtocol
 }
 
 export interface GraphicOverview {

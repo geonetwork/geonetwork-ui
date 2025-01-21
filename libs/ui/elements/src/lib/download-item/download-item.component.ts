@@ -28,7 +28,7 @@ export class DownloadItemComponent {
   @Input() link: DatasetOnlineResource
   @Input() color: string
   @Input() format: string
-  @Input() isFromAPI: boolean
+  @Input() isFromApi: boolean
   @Output() exportUrl = new EventEmitter<string>()
 
   openUrl() {

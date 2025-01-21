@@ -11,7 +11,6 @@ import { TranslateModule } from '@ngx-translate/core'
 import { DownloadsListComponent } from './downloads-list.component'
 import {
   DatasetDownloadDistribution,
-  DatasetOnlineResource,
   ServiceProtocol,
 } from '@geonetwork-ui/common/domain/model/record'
 import { DownloadItemComponent } from '../download-item/download-item.component'
@@ -125,7 +124,7 @@ describe('DownloadsListComponent', () => {
       expect(items[0].componentInstance.color).toEqual(
         expect.stringMatching(/#[0-9a-b]{2,6}/i)
       )
-      expect(items[0].componentInstance.isFromAPI).toEqual(false)
+      expect(items[0].componentInstance.isFromApi).toEqual(false)
     })
   })
   describe('displaying download links from WFS', () => {
@@ -136,8 +135,8 @@ describe('DownloadsListComponent', () => {
       fixture.detectChanges()
       items = de.queryAll(By.directive(DownloadItemComponent))
     })
-    it('sets isFromAPI to true', () => {
-      expect(items[0].componentInstance.isFromAPI).toEqual(true)
+    it('sets isFromApi to true', () => {
+      expect(items[0].componentInstance.isFromApi).toEqual(true)
     })
   })
   describe('displaying download links from OGC Features', () => {
@@ -148,8 +147,8 @@ describe('DownloadsListComponent', () => {
       fixture.detectChanges()
       items = de.queryAll(By.directive(DownloadItemComponent))
     })
-    it('sets isFromAPI to true', () => {
-      expect(items[0].componentInstance.isFromAPI).toEqual(true)
+    it('sets isFromApi to true', () => {
+      expect(items[0].componentInstance.isFromApi).toEqual(true)
     })
   })
   describe('filtering links', () => {
@@ -291,24 +290,33 @@ describe('DownloadsListComponent', () => {
     })
   })
   describe('filtering by protocol', () => {
-    it('removes duplicate formats', () => {
+    it('removes duplicate formats if the lqyernqme is the same', () => {
       const links = [
         aSetOfLinksFixture().dataCsv(),
-        aSetOfLinksFixture().dataCsv(),
+        { ...aSetOfLinksFixture().dataCsv(), name: 'hello world' },
+        {
+          ...aSetOfLinksFixture().dataCsv(),
+          name: 'chqnged:' + aSetOfLinksFixture().dataCsv().name,
+        },
+        {
+          ...aSetOfLinksFixture().dataCsv(),
+          url: new URL('http://my.server/files/different.csv'),
+        },
         aSetOfLinksFixture().dataJson(),
       ]
 
-      const result = component['filterByProtocol'](links)
+      const result = component['removeDuplicateFormats'](links)
 
       expect(JSON.stringify(result)).toEqual(
         JSON.stringify([
           aSetOfLinksFixture().dataCsv(),
+          { ...aSetOfLinksFixture().dataCsv(), name: 'hello world' },
           aSetOfLinksFixture().dataJson(),
         ])
       )
     })
     it('prioritizes ogcFeatures protocol', () => {
-      const links: DatasetOnlineResource[] = [
+      const links: DatasetDownloadDistribution[] = [
         {
           ...aSetOfLinksFixture().dataCsv(),
           accessServiceProtocol: 'wfs' as ServiceProtocol,
@@ -320,7 +328,7 @@ describe('DownloadsListComponent', () => {
         aSetOfLinksFixture().dataJson(),
       ]
 
-      const result = component['filterByProtocol'](links)
+      const result = component['removeDuplicateFormats'](links)
 
       expect(
         result.map((link) => ({

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { getBadgeColor, getFileFormat } from '@geonetwork-ui/util/shared'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { DownloadItemComponent } from '../download-item/download-item.component'
@@ -29,27 +29,28 @@ type FilterFormat = typeof FILTER_FORMATS[number]
 export class DownloadsListComponent {
   constructor(private translateService: TranslateService) {}
 
-  @Input() links: DatasetOnlineResource[]
+  @Input() links: DatasetDownloadDistribution[]
 
   activeFilterFormats: FilterFormat[] = ['all']
 
-  private filterByProtocol(
-    links: DatasetOnlineResource[]
-  ): DatasetOnlineResource[] {
-    const preferredLinks = new Map<string, DatasetOnlineResource>()
-    const OGC_FEATURES_PROTOCOL = 'ogcFeatures'
+  private removeDuplicateFormats(
+    links: DatasetDownloadDistribution[]
+  ): DatasetDownloadDistribution[] {
+    const preferredLinks = new Map<string, DatasetDownloadDistribution>()
 
     links.forEach((link) => {
       const format = getFileFormat(link)
-      if (!preferredLinks.has(format)) {
-        preferredLinks.set(format, link)
+      const withoutNameSpace = link.name.replace(/^.*?:/, '')
+      const uniqueKey = `${format}-${withoutNameSpace}`
+      if (!preferredLinks.has(uniqueKey)) {
+        preferredLinks.set(uniqueKey, link)
       } else {
-        const existingLink = preferredLinks.get(format)
+        const existingLink = preferredLinks.get(uniqueKey)
         if (
-          link.accessServiceProtocol === OGC_FEATURES_PROTOCOL &&
-          existingLink?.accessServiceProtocol !== OGC_FEATURES_PROTOCOL
+          link.accessServiceProtocol === 'ogcFeatures' &&
+          existingLink?.accessServiceProtocol !== 'ogcFeatures'
         ) {
-          preferredLinks.set(format, link)
+          preferredLinks.set(uniqueKey, link)
         }
       }
     })
@@ -57,13 +58,13 @@ export class DownloadsListComponent {
     return Array.from(preferredLinks.values())
   }
 
-  get filteredLinks(): DatasetOnlineResource[] {
+  get filteredLinks(): DatasetDownloadDistribution[] {
     const filteredByFormat = this.links.filter((link) =>
       this.activeFilterFormats.some((format) =>
         this.isLinkOfFormat(link, format)
       )
     )
-    return this.filterByProtocol(filteredByFormat)
+    return this.removeDuplicateFormats(filteredByFormat)
   }
 
   get visibleFormats(): FilterFormat[] {
@@ -103,7 +104,10 @@ export class DownloadsListComponent {
     return format
   }
 
-  isLinkOfFormat(link: DatasetOnlineResource, format: FilterFormat): boolean {
+  isLinkOfFormat(
+    link: DatasetDownloadDistribution,
+    format: FilterFormat
+  ): boolean {
     if (format === 'all') {
       return true
     }
@@ -121,15 +125,15 @@ export class DownloadsListComponent {
     return getFileFormat(link).includes(format)
   }
 
-  getLinkFormat(link: DatasetOnlineResource) {
+  getLinkFormat(link: DatasetDownloadDistribution) {
     return getFileFormat(link)
   }
 
-  getLinkColor(link: DatasetOnlineResource) {
+  getLinkColor(link: DatasetDownloadDistribution) {
     return getBadgeColor(getFileFormat(link))
   }
 
-  isFromAPI(link: DatasetOnlineResource) {
+  isFromApi(link: DatasetDownloadDistribution) {
     return (
       link.type === 'download' &&
       (link.accessServiceProtocol === 'wfs' ||
