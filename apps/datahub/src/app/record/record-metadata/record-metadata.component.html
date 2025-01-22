@@ -129,7 +129,7 @@
     </div>
   </div>
   <gn-ui-data-view-share
-    *ngIf="(displayMap$ | async) || (displayData$ | async)"
+    *ngIf="displayViewShare$ | async"
     [viewType]="selectedView$ | async"
   ></gn-ui-data-view-share>
   <div

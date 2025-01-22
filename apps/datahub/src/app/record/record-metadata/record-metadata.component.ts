@@ -17,7 +17,7 @@ import {
   MetadataInfoComponent,
   MetadataQualityComponent,
 } from '@geonetwork-ui/ui/elements'
-import { BehaviorSubject, combineLatest } from 'rxjs'
+import { BehaviorSubject, combineLatest, of } from 'rxjs'
 import {
   filter,
   map,
@@ -135,9 +135,11 @@ export class RecordMetadataComponent {
           links.filter((link) => link.accessServiceProtocol === 'wfs')[0]
       ),
       switchMap((link) =>
-        this.dataService
-          .getWfsFeatureCount(link.url.toString(), link.name)
-          .pipe(map((count) => !count || count > this.maxFeatureCount))
+        link
+          ? this.dataService
+              .getWfsFeatureCount(link.url.toString(), link.name)
+              .pipe(map((count) => !count || count > this.maxFeatureCount))
+          : of(false)
       )
     )
 
@@ -160,6 +162,19 @@ export class RecordMetadataComponent {
   errorTypes = ErrorType
 
   selectedView$ = new BehaviorSubject('map')
+
+  displayViewShare$ = combineLatest([
+    this.displayMap$,
+    this.displayData$,
+    this.selectedView$,
+    this.exceedsWfsFeatureCountLimit$,
+  ]).pipe(
+    map(
+      ([displayMap, displayData, selectedView, exceedsWfsFeatureCountLimit]) =>
+        (displayData || displayMap) &&
+        !(selectedView === 'chart' && exceedsWfsFeatureCountLimit)
+    )
+  )
 
   thumbnailUrl$ = this.metadataViewFacade.metadata$.pipe(
     map((metadata) => {
