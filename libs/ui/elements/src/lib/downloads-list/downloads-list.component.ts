@@ -40,7 +40,10 @@ export class DownloadsListComponent {
 
     links.forEach((link) => {
       const format = getFileFormat(link)
-      const withoutNameSpace = link.name.replace(/^.*?:/, '')
+      const withoutNameSpace = (link.name || link.description || '').replace(
+        /^.*?:/,
+        ''
+      )
       const uniqueKey = `${format}-${withoutNameSpace}`
       if (!preferredLinks.has(uniqueKey)) {
         preferredLinks.set(uniqueKey, link)
