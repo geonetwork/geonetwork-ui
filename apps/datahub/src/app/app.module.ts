@@ -102,6 +102,7 @@ import {
   matStarOutline,
 } from '@ng-icons/material-icons/outline'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
+import { MAX_FEATURE_COUNT } from './record/record-metadata/record-metadata.component'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -255,6 +256,10 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
         maxExtent: getOptionalMapConfig()?.MAX_EXTENT,
         maxZoom: getOptionalMapConfig()?.MAX_ZOOM,
       }),
+    },
+    {
+      provide: MAX_FEATURE_COUNT,
+      useFactory: () => getOptionalMapConfig()?.MAX_FEATURE_COUNT,
     },
     {
       provide: EXTERNAL_VIEWER_URL_TEMPLATE,

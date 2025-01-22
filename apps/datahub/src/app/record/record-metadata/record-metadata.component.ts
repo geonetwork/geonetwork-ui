@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  InjectionToken,
+  Input,
+  Optional,
+} from '@angular/core'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import {
@@ -11,7 +18,14 @@ import {
   MetadataQualityComponent,
 } from '@geonetwork-ui/ui/elements'
 import { BehaviorSubject, combineLatest } from 'rxjs'
-import { filter, map, mergeMap, startWith, switchMap } from 'rxjs/operators'
+import {
+  filter,
+  map,
+  mergeMap,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
   Keyword,
@@ -34,6 +48,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 
+export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
 @Component({
   selector: 'datahub-record-metadata',
   templateUrl: './record-metadata.component.html',
@@ -122,7 +137,7 @@ export class RecordMetadataComponent {
       switchMap((link) =>
         this.dataService
           .getWfsFeatureCount(link.url.toString(), link.name)
-          .pipe(map((count) => !count || count > 1000))
+          .pipe(map((count) => !count || count > this.maxFeatureCount))
       )
     )
 
@@ -166,7 +181,10 @@ export class RecordMetadataComponent {
     private searchService: SearchService,
     private sourceService: SourcesService,
     private orgsService: OrganizationsServiceInterface,
-    private dataService: DataService
+    private dataService: DataService,
+    @Inject(MAX_FEATURE_COUNT)
+    @Optional()
+    private maxFeatureCount: number
   ) {}
 
   onTabIndexChange(index: number): void {
