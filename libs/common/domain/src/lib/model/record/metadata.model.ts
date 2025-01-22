@@ -40,7 +40,7 @@ export type UpdateFrequencyCustom = {
 }
 export type UpdateFrequency = UpdateFrequencyCode | UpdateFrequencyCustom
 
-export type RecordKind = 'dataset' | 'service'
+export type RecordKind = 'dataset' | 'service' | 'reuse'
 
 marker('domain.record.status.completed')
 marker('domain.record.status.ongoing')
@@ -222,8 +222,22 @@ export interface ServiceRecord extends BaseRecord {
   spatialExtents: Array<DatasetSpatialExtent>
 }
 
+export interface ReuseRecord extends BaseRecord {
+  kind: 'reuse'
+  lineage: string // Explanation of the origin of this record (e.g: how, why)"
+  onlineResources: Array<OnlineLinkResource>
+  reuseType: ReuseType
+  spatialExtents: Array<DatasetSpatialExtent>
+  temporalExtents: Array<DatasetTemporalExtent>
+}
+
+export type ReuseType = 'application' | 'map' | 'other'
+
 export type OnlineResource = DatasetOnlineResource | ServiceOnlineResource
 
-export type CatalogRecord = ServiceRecord | DatasetRecord
+export type CatalogRecord = DatasetRecord | ReuseRecord | ServiceRecord
 
-export type CatalogRecordKeys = keyof ServiceRecord | keyof DatasetRecord
+export type CatalogRecordKeys =
+  | keyof DatasetRecord
+  | keyof ReuseRecord
+  | keyof ServiceRecord
