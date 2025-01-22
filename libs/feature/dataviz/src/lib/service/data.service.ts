@@ -52,10 +52,7 @@ interface WfsDownloadUrls {
 export class DataService {
   constructor(private proxy: ProxyService) {}
 
-  getDownloadUrlsFromWfs(
-    wfsUrl: string,
-    featureTypeName: string
-  ): Observable<WfsDownloadUrls> {
+  getWfsEndpoint(wfsUrl: string): Observable<WfsEndpoint> {
     return from(
       new WfsEndpoint(this.proxy.getProxiedUrl(wfsUrl)).isReady()
     ).pipe(
@@ -78,7 +75,15 @@ export class DataService {
             throw new Error(`wfs.unreachable.unknown`)
           }
         }
-      }),
+      })
+    )
+  }
+
+  getDownloadUrlsFromWfs(
+    wfsUrl: string,
+    featureTypeName: string
+  ): Observable<WfsDownloadUrls> {
+    return this.getWfsEndpoint(wfsUrl).pipe(
       map((endpoint) => {
         const featureTypes = endpoint.getFeatureTypes()
         const featureType = endpoint.getFeatureTypeSummary(
@@ -124,6 +129,24 @@ export class DataService {
               : null,
         }
       })
+    )
+  }
+
+  getWfsFeatureCount(
+    wfsUrl: string,
+    featureTypeName: string
+  ): Observable<number> {
+    return this.getWfsEndpoint(wfsUrl).pipe(
+      switchMap((endpoint) =>
+        from(endpoint.getFeatureTypeFull(featureTypeName)).pipe(
+          map((featureType) => {
+            if (!featureType) {
+              throw new Error('wfs.featuretype.notfound')
+            }
+            return featureType.objectCount
+          })
+        )
+      )
     )
   }
 

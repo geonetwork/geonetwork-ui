@@ -10,8 +10,8 @@ import {
   MetadataInfoComponent,
   MetadataQualityComponent,
 } from '@geonetwork-ui/ui/elements'
-import { BehaviorSubject, combineLatest, of } from 'rxjs'
-import { filter, map, mergeMap, startWith } from 'rxjs/operators'
+import { BehaviorSubject, combineLatest } from 'rxjs'
+import { filter, map, mergeMap, startWith, switchMap } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
   Keyword,
@@ -32,6 +32,7 @@ import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlink
 import { RecordRelatedRecordsComponent } from '../record-related-records/record-related-records.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
+import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -112,7 +113,18 @@ export class RecordMetadataComponent {
     )
   )
 
-  exceedsDatasetLimit$ = of(true)
+  exceedsWfsFeatureCountLimit$ =
+    this.metadataViewFacade.geoDataLinksWithGeometry$.pipe(
+      map(
+        (links) =>
+          links.filter((link) => link.accessServiceProtocol === 'wfs')[0]
+      ),
+      switchMap((link) =>
+        this.dataService
+          .getWfsFeatureCount(link.url.toString(), link.name)
+          .pipe(map((count) => count > 1000))
+      )
+    )
 
   organisationName$ = this.metadataViewFacade.metadata$.pipe(
     map((record) => record?.ownerOrganization?.name),
@@ -153,7 +165,8 @@ export class RecordMetadataComponent {
     public metadataViewFacade: MdViewFacade,
     private searchService: SearchService,
     private sourceService: SourcesService,
-    private orgsService: OrganizationsServiceInterface
+    private orgsService: OrganizationsServiceInterface,
+    private dataService: DataService
   ) {}
 
   onTabIndexChange(index: number): void {
