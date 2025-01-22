@@ -115,7 +115,11 @@
                     icon="matErrorOutlineOutline"
                     class="block h-12 p-1"
                   >
-                    <span translate="">record.feature.limit</span>
+                    <span
+                      translate
+                      [translateParams]="{ count: maxFeatureCount }"
+                      >record.feature.limit</span
+                    >
                   </gn-ui-popup-alert>
                 </ng-container>
                 <ng-template #chartView>

@@ -199,7 +199,7 @@ export class RecordMetadataComponent {
     private dataService: DataService,
     @Inject(MAX_FEATURE_COUNT)
     @Optional()
-    private maxFeatureCount: number
+    protected maxFeatureCount: number
   ) {}
 
   onTabIndexChange(index: number): void {

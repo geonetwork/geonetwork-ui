@@ -401,6 +401,7 @@
   "record.action.duplicate": "",
   "record.action.view": "Anzeigen",
   "record.externalViewer.open": "In externem Kartenviewer öffnen",
+  "record.feature.limit": "Die Ressource enthält mehr als {count} Features und kann hier nicht angezeigt werden.",
   "record.metadata.about": "Beschreibung",
   "record.metadata.api": "API",
   "record.metadata.api.form.closeButton": "Schließen",
