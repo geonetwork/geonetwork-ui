@@ -78,9 +78,12 @@ import {
   viewProviders: [provideIcons({ matClose })],
 })
 export class MapViewComponent implements AfterViewInit {
-  @Input() excludeWfs = false
+  @Input() set excludeWfs(value: boolean) {
+    this.excludeWfs$.next(value)
+  }
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
 
+  excludeWfs$ = new BehaviorSubject(false)
   selection: Feature
   showLegend = true
   legendExists = false
@@ -105,9 +108,12 @@ export class MapViewComponent implements AfterViewInit {
     })
   )
 
-  dropdownChoices$ = this.compatibleMapLinks$.pipe(
-    map((links) =>
-      this.excludeWfs
+  dropdownChoices$ = combineLatest([
+    this.compatibleMapLinks$,
+    this.excludeWfs$,
+  ]).pipe(
+    map(([links, excludeWfs]) =>
+      excludeWfs
         ? links.filter((link) => link.accessServiceProtocol !== 'wfs')
         : links
     ),
