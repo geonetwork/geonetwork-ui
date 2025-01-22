@@ -128,7 +128,7 @@ export class RecordMetadataComponent {
     )
   )
 
-  exceedsWfsFeatureCountLimit$ =
+  exceedsMaxFeatureCount$ =
     this.metadataViewFacade.geoDataLinksWithGeometry$.pipe(
       map(
         (links) =>
@@ -167,12 +167,12 @@ export class RecordMetadataComponent {
     this.displayMap$,
     this.displayData$,
     this.selectedView$,
-    this.exceedsWfsFeatureCountLimit$,
+    this.exceedsMaxFeatureCount$,
   ]).pipe(
     map(
-      ([displayMap, displayData, selectedView, exceedsWfsFeatureCountLimit]) =>
+      ([displayMap, displayData, selectedView, exceedsMaxFeatureCount]) =>
         (displayData || displayMap) &&
-        !(selectedView === 'chart' && exceedsWfsFeatureCountLimit)
+        !(selectedView === 'chart' && exceedsMaxFeatureCount)
     )
   )
 

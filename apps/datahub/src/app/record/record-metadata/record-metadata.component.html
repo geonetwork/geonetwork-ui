@@ -87,7 +87,7 @@
                 *ngIf="displayMap$ | async"
               >
                 <gn-ui-map-view
-                  [excludeWfs]="exceedsWfsFeatureCountLimit$ | async"
+                  [excludeWfs]="exceedsMaxFeatureCount$ | async"
                 ></gn-ui-map-view>
               </div>
             </mat-tab>
@@ -98,7 +98,7 @@
               <div class="block" *ngIf="displayData$ | async">
                 <gn-ui-data-view
                   mode="table"
-                  [paginate]="exceedsWfsFeatureCountLimit$ | async"
+                  [paginate]="exceedsMaxFeatureCount$ | async"
                 ></gn-ui-data-view>
               </div>
             </mat-tab>
@@ -108,7 +108,7 @@
               </ng-template>
               <div class="block" *ngIf="displayData$ | async">
                 <ng-container
-                  *ngIf="exceedsWfsFeatureCountLimit$ | async; else chartView"
+                  *ngIf="exceedsMaxFeatureCount$ | async; else chartView"
                 >
                   <gn-ui-popup-alert
                     type="warning"
