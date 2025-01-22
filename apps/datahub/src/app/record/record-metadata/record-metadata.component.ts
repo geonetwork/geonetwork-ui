@@ -122,7 +122,7 @@ export class RecordMetadataComponent {
       switchMap((link) =>
         this.dataService
           .getWfsFeatureCount(link.url.toString(), link.name)
-          .pipe(map((count) => count > 1000))
+          .pipe(map((count) => !count || count > 1000))
       )
     )
 
