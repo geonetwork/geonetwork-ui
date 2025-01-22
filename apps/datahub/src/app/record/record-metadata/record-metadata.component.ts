@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  InjectionToken,
-  Input,
-  Optional,
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import {
@@ -17,26 +10,14 @@ import {
   MetadataInfoComponent,
   MetadataQualityComponent,
 } from '@geonetwork-ui/ui/elements'
-import { BehaviorSubject, combineLatest, of } from 'rxjs'
-import {
-  filter,
-  map,
-  mergeMap,
-  startWith,
-  switchMap,
-  tap,
-} from 'rxjs/operators'
+import { combineLatest } from 'rxjs'
+import { filter, map, mergeMap } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
   Keyword,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import {
-  DataViewComponent,
-  DataViewShareComponent,
-  MapViewComponent,
-  MdViewFacade,
-} from '@geonetwork-ui/feature/record'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { CommonModule } from '@angular/common'
 import { MatTabsModule } from '@angular/material/tabs'
 import { RecordUserFeedbacksComponent } from '../record-user-feedbacks/record-user-feedbacks.component'
@@ -45,10 +26,8 @@ import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
 import { RecordRelatedRecordsComponent } from '../record-related-records/record-related-records.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
-import { DataService } from '@geonetwork-ui/feature/dataviz'
+import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
 
-export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
 @Component({
   selector: 'datahub-record-metadata',
   templateUrl: './record-metadata.component.html',
@@ -64,40 +43,17 @@ export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
     RecordDownloadsComponent,
     RecordApisComponent,
     RecordOtherlinksComponent,
-    DataViewShareComponent,
     MetadataInfoComponent,
     MetadataContactComponent,
     MetadataQualityComponent,
     MetadataCatalogComponent,
     RecordRelatedRecordsComponent,
-    DataViewComponent,
-    MapViewComponent,
     TranslateModule,
-    PopupAlertComponent,
+    RecordDataPreviewComponent,
   ],
 })
 export class RecordMetadataComponent {
   @Input() metadataQualityDisplay: boolean
-
-  displayMap$ = combineLatest([
-    this.metadataViewFacade.mapApiLinks$,
-    this.metadataViewFacade.geoDataLinksWithGeometry$,
-  ]).pipe(
-    map(([mapApiLinks, geoDataLinksWithGeometry]) => {
-      return mapApiLinks?.length > 0 || geoDataLinksWithGeometry?.length > 0
-    }),
-    startWith(false)
-  )
-
-  displayData$ = combineLatest([
-    this.metadataViewFacade.dataLinks$,
-    this.metadataViewFacade.geoDataLinks$,
-  ]).pipe(
-    map(
-      ([dataLinks, geoDataLinks]) =>
-        dataLinks?.length > 0 || geoDataLinks?.length > 0
-    )
-  )
 
   displayDownload$ = this.metadataViewFacade.downloadLinks$.pipe(
     map((links) => links?.length > 0)
@@ -128,21 +84,6 @@ export class RecordMetadataComponent {
     )
   )
 
-  exceedsMaxFeatureCount$ =
-    this.metadataViewFacade.geoDataLinksWithGeometry$.pipe(
-      map(
-        (links) =>
-          links.filter((link) => link.accessServiceProtocol === 'wfs')[0]
-      ),
-      switchMap((link) =>
-        link
-          ? this.dataService
-              .getWfsFeatureCount(link.url.toString(), link.name)
-              .pipe(map((count) => !count || count > this.maxFeatureCount))
-          : of(false)
-      )
-    )
-
   organisationName$ = this.metadataViewFacade.metadata$.pipe(
     map((record) => record?.ownerOrganization?.name),
     filter(Boolean)
@@ -160,21 +101,6 @@ export class RecordMetadataComponent {
   )
 
   errorTypes = ErrorType
-
-  selectedView$ = new BehaviorSubject('map')
-
-  displayViewShare$ = combineLatest([
-    this.displayMap$,
-    this.displayData$,
-    this.selectedView$,
-    this.exceedsMaxFeatureCount$,
-  ]).pipe(
-    map(
-      ([displayMap, displayData, selectedView, exceedsMaxFeatureCount]) =>
-        (displayData || displayMap) &&
-        !(selectedView === 'chart' && exceedsMaxFeatureCount)
-    )
-  )
 
   thumbnailUrl$ = this.metadataViewFacade.metadata$.pipe(
     map((metadata) => {
@@ -195,30 +121,8 @@ export class RecordMetadataComponent {
     public metadataViewFacade: MdViewFacade,
     private searchService: SearchService,
     private sourceService: SourcesService,
-    private orgsService: OrganizationsServiceInterface,
-    private dataService: DataService,
-    @Inject(MAX_FEATURE_COUNT)
-    @Optional()
-    protected maxFeatureCount: number
+    private orgsService: OrganizationsServiceInterface
   ) {}
-
-  onTabIndexChange(index: number): void {
-    let view
-    switch (index) {
-      case 0:
-        view = 'map'
-        break
-      case 1:
-        view = 'table'
-        break
-      default:
-        view = 'chart'
-    }
-    this.selectedView$.next(view)
-    setTimeout(() => {
-      window.dispatchEvent(new Event('resize'))
-    }, 0)
-  }
 
   onInfoKeywordClick(keyword: Keyword) {
     this.searchService.updateFilters({ any: keyword.label })

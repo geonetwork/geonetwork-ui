@@ -102,7 +102,7 @@ import {
   matStarOutline,
 } from '@ng-icons/material-icons/outline'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
-import { MAX_FEATURE_COUNT } from './record/record-metadata/record-metadata.component'
+import { MAX_FEATURE_COUNT } from './record/record-data-preview/record-data-preview.component'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
