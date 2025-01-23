@@ -27,6 +27,7 @@ import {
 import { matchProtocol } from '../common/distribution.mapper'
 import { Thesaurus } from './types'
 import { LANG_3_TO_2_MAPPER, LangService } from '@geonetwork-ui/util/i18n'
+import { getResourceType, getReuseType } from '../common/resource-types'
 
 type ESResponseSource = SourceWithUnknownProps
 
@@ -287,34 +288,9 @@ export class Gn4FieldMapper {
         output
       ),
     resourceType: (output, source) => {
-      const possibleResourceTypes = {
-        application: 'reuse',
-        dataset: 'dataset',
-        map: 'reuse',
-        'map/static': 'reuse',
-        mapDigital: 'reuse',
-        interactiveMap: 'reuse',
-        service: 'service',
-      } as const
-      const possibleReuseTypes = {
-        application: 'application',
-        map: 'map',
-        'map/static': 'map',
-        mapDigital: 'map',
-        interactiveMap: 'map',
-      } as const
       const resourceType = getFirstValue(selectField(source, 'resourceType'))
-      const kind =
-        possibleResourceTypes[
-          resourceType as keyof typeof possibleResourceTypes
-        ] || 'dataset'
-      const reuseType =
-        kind === 'reuse'
-          ? possibleReuseTypes[
-              resourceType as keyof typeof possibleReuseTypes
-            ] || 'other'
-          : undefined
-
+      const kind = getResourceType(resourceType)
+      const reuseType = getReuseType(resourceType)
       return {
         ...output,
         kind,

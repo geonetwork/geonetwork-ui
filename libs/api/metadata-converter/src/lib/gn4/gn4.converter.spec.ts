@@ -3005,7 +3005,7 @@ describe('Gn4Converter', () => {
         })
       })
 
-      describe('full record reuse(interactive map) metadata geo2france', () => {
+      describe('full record reuse (interactive map) metadata geo2france', () => {
         it('builds a complete record object', async () => {
           const record = await service.readRecord(
             elasticReuseMetadataHistsFixture().hits.hits[1] as Gn4Record
@@ -3262,6 +3262,110 @@ describe('Gn4Converter', () => {
             ],
             title:
               'Carte dynamique sur la répartition des ongulés sauvages en France',
+          })
+        })
+      })
+
+      describe('full record reuse (static map) metadata georhena', () => {
+        it('builds a complete record object', async () => {
+          const record = await service.readRecord(
+            elasticReuseMetadataHistsFixture().hits.hits[2] as Gn4Record
+          )
+
+          expect(record).toEqual({
+            kind: 'reuse',
+            status: 'completed',
+            lineage: null,
+            recordUpdated: new Date('2024-01-25T07:45:05.215Z'),
+            recordPublished: new Date('2023-12-20T14:23:54.000Z'),
+            ownerOrganization: {
+              name: 'My Organization',
+              website: new URL('http://my.org/'),
+            },
+            licenses: [],
+            legalConstraints: [],
+            securityConstraints: [],
+            otherConstraints: [],
+            contacts: [
+              {
+                lastName: '',
+                organization: {
+                  name: 'TRION-climate / GeoRhena',
+                },
+                email: '',
+                role: 'distributor',
+              },
+            ],
+            contactsForResource: [
+              {
+                lastName: '',
+                organization: {
+                  name: 'GeoRhena',
+                },
+                email: 'contact@georhena.eu',
+                role: 'point_of_contact',
+              },
+            ],
+            keywords: [
+              {
+                label: 'Wasserstoff',
+                type: 'theme',
+              },
+              {
+                label: 'Innovation',
+                type: 'theme',
+              },
+              {
+                label: 'Mviewer',
+                type: 'theme',
+              },
+            ],
+            topics: ['Umwelt'],
+            spatialExtents: [],
+            temporalExtents: [],
+            overviews: [
+              {
+                url: new URL(
+                  'https://geoportal.georhena.eu/geonetwork/srv/api/records/be209d24-586f-48f5-b944-e284079b7823/attachments/hydrogene_mviewer.jpg'
+                ),
+              },
+            ],
+            defaultLanguage: 'fr',
+            otherLanguages: ['de'],
+            reuseType: 'map',
+            title:
+              'Herstellung, Verwendung, Forschung und Verteilung von Wasserstoff am Oberrhein',
+            abstract:
+              'Im Rahmen des Interreg-Projekts CO2-InnO hat TRION-climate rund 50 Wasserstoffprojekte am Oberrhein erfasst und beschrieben. Auf diese Weise findet man die verschiedenen Standorte der Wasserstoffproduktion, die wichtigsten Forschungsprojekte, die Transport- und Verteilungsnetze sowie die großen Abnehmer von grünem Wasserstoff in der Region. GeoRhena, das Geoinformationssystem des Oberrheins, präsentierte diese Anlagen auf einer interaktiven Karte der Wasserstoffanlagen und -projekte.',
+            extras: {
+              isOpenData: false,
+              ownerInfo: 'sritzenthaler|Ritzenthaler|Stéphane|Administrator',
+              isPublishedToAll: true,
+              id: '8705',
+              favoriteCount: 0,
+              catalogUuid: 'ce008f24-8e0d-45a8-97f8-9f10399f0190',
+            },
+            onlineResources: [
+              {
+                name: 'Carte interactive "Hydrogène" en français',
+                type: 'link',
+                url: new URL(
+                  'https://geoportal.georhena.eu/mviewer/?config=apps/hydrogene.xml'
+                ),
+              },
+              {
+                name: 'Carte interactive "Hydrogène" en allemand',
+                type: 'link',
+                url: new URL(
+                  'https://geoportal.georhena.eu/mviewer/?config=apps/wasserstoff.xml'
+                ),
+              },
+            ],
+            uniqueIdentifier: 'be209d24-586f-48f5-b944-e284079b7823',
+            landingPage: new URL(
+              'http://my.catalog.org/metadata/be209d24-586f-48f5-b944-e284079b7823'
+            ),
+            recordCreated: new Date('2024-01-25T07:19:13.493Z'),
           })
         })
       })
