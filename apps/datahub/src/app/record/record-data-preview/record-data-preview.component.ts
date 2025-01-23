@@ -74,7 +74,7 @@ export class RecordDataPreviewComponent {
         link
           ? this.dataService
               .getWfsFeatureCount(link.url.toString(), link.name)
-              .pipe(map((count) => !count || count > this.maxFeatureCount))
+              .pipe(map((count) => count > this.maxFeatureCount))
           : of(false)
       )
     )
@@ -90,7 +90,10 @@ export class RecordDataPreviewComponent {
     map(
       ([displayMap, displayData, selectedView, exceedsMaxFeatureCount]) =>
         (displayData || displayMap) &&
-        !(selectedView === 'chart' && exceedsMaxFeatureCount)
+        !(
+          (selectedView === 'chart' || selectedView === 'table') &&
+          exceedsMaxFeatureCount
+        )
     )
   )
 
