@@ -72,7 +72,6 @@
       "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)"
     ]
   },
-  "nxCloudAccessToken": "OTliYjUyNDYtYmI2Ny00NGRiLThiMWMtMTM5ZDNiMWE1MTYzfHJlYWQtd3JpdGU=",
   "parallel": 1,
   "useInferencePlugins": false,
   "defaultBase": "remotes/origin/main",
