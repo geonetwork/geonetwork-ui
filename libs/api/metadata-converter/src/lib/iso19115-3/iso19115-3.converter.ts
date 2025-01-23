@@ -15,6 +15,7 @@ import {
   readRecordCreated,
   readRecordPublished,
   readRecordUpdated,
+  readReuseType,
   readUniqueIdentifier,
 } from './read-parts'
 import {
@@ -54,6 +55,7 @@ export class Iso191153Converter extends Iso19139Converter {
     this.readers['onlineResources'] = readOnlineResources
     this.readers['defaultLanguage'] = readDefaultLanguage
     this.readers['otherLanguages'] = readOtherLanguages
+    this.readers['reuseType'] = readReuseType
 
     this.writers['uniqueIdentifier'] = writeUniqueIdentifier
     this.writers['kind'] = writeKind

@@ -9,6 +9,7 @@ import {
   KeywordTranslations,
   LanguageCode,
   ModelTranslations,
+  OnlineLinkResource,
   OnlineResource,
   OnlineResourceTranslations,
   Organization,
@@ -16,6 +17,7 @@ import {
   RecordKind,
   RecordStatus,
   RecordTranslations,
+  ReuseType,
   Role,
   ServiceOnlineResource,
   SpatialRepresentationType,
@@ -54,6 +56,7 @@ import { getRoleFromRoleCode } from './utils/role.mapper'
 import { getStatusFromStatusCode } from './utils/status.mapper'
 import { getUpdateFrequencyFromFrequencyCode } from './utils/update-frequency.mapper'
 import { LANG_3_TO_2_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
+import { getResourceType, getReuseType } from '../common/resource-types'
 
 export function extractCharacterString(): ChainableFunction<
   XmlElement,
@@ -650,10 +653,7 @@ export function readKind(rootEl: XmlElement): RecordKind {
   return pipe(
     findNestedElement('gmd:hierarchyLevel', 'gmd:MD_ScopeCode'),
     readAttribute('codeListValue'),
-    map(
-      (scopeCode): RecordKind =>
-        scopeCode === 'service' ? 'service' : 'dataset'
-    )
+    map((scopeCode): RecordKind => getResourceType(scopeCode))
   )(rootEl)
 }
 
@@ -678,6 +678,14 @@ export function readResourcePublished(rootEl: XmlElement): Date {
 
 export function readRecordUpdated(rootEl: XmlElement): Date {
   return pipe(findChildElement('gmd:dateStamp'), extractDateTime())(rootEl)
+}
+
+export function readReuseType(rootEl: XmlElement): ReuseType {
+  return pipe(
+    findNestedElement('gmd:hierarchyLevel', 'gmd:MD_ScopeCode'),
+    readAttribute('codeListValue'),
+    map((scopeCode): ReuseType => getReuseType(scopeCode))
+  )(rootEl)
 }
 
 export function readTitle(
@@ -969,17 +977,64 @@ export function extractServiceOnlineResources(): ChainableFunction<
   )
 }
 
+export function extractReuseOnlineResources(): ChainableFunction<
+  XmlElement,
+  OnlineLinkResource[]
+> {
+  const getUrl = pipe(findChildElement('gmd:linkage'), extractMandatoryUrl())
+  const getName = pipe(
+    findChildElement('gmd:name'),
+    extractLocalizedCharacterString<OnlineResourceTranslations>('name')
+  )
+  const getDescription = pipe(
+    findChildElement('gmd:description'),
+    extractLocalizedCharacterString<OnlineResourceTranslations>(
+      'description',
+      {}
+    )
+  )
+  return pipe(
+    findNestedElements(
+      'gmd:transferOptions',
+      'gmd:MD_DigitalTransferOptions',
+      'gmd:onLine',
+      'gmd:CI_OnlineResource'
+    ),
+    mapArray(combine(getUrl, getName, getDescription)),
+    mapArray(
+      ([
+        url,
+        [name, nameTranslations],
+        [description, descriptionTranslations],
+      ]) => {
+        const translations = {
+          ...nameTranslations,
+          ...descriptionTranslations,
+        }
+        return {
+          type: 'link',
+          url: url,
+          ...(name && { name }),
+          ...(description && { description }),
+          translations,
+        }
+      }
+    )
+  )
+}
+
 export function readOnlineResources(rootEl: XmlElement): OnlineResource[] {
+  let getOnlineResources: ChainableFunction<XmlElement, OnlineResource[]>
   if (readKind(rootEl) === 'dataset') {
-    return pipe(
-      findNestedElements('gmd:distributionInfo', 'gmd:MD_Distribution'),
-      mapArray((el) => extractDatasetOnlineResources(getMimeType)(el)),
-      flattenArray()
-    )(rootEl)
+    getOnlineResources = (el) => extractDatasetOnlineResources(getMimeType)(el)
+  } else if (readKind(rootEl) === 'service') {
+    getOnlineResources = extractServiceOnlineResources()
+  } else {
+    getOnlineResources = extractReuseOnlineResources()
   }
   return pipe(
     findNestedElements('gmd:distributionInfo', 'gmd:MD_Distribution'),
-    mapArray(extractServiceOnlineResources()),
+    mapArray(getOnlineResources),
     flattenArray()
   )(rootEl)
 }

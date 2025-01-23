@@ -10,6 +10,7 @@ import {
   LanguageCode,
   RecordStatus,
   RecordTranslations,
+  ReuseRecord,
   Role,
   ServiceEndpoint,
   ServiceOnlineResource,
@@ -53,6 +54,7 @@ import { readKind } from './read-parts'
 import { writeGeometry } from './utils/geometry'
 import { namePartsToFull } from './utils/individual-name'
 import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
+import { kindToCodeListValue } from '../common/resource-types'
 
 function writeLocalizedElement(
   writeFn: ChainableFunction<XmlElement, XmlElement>,
@@ -840,7 +842,7 @@ export function writeKind(record: CatalogRecord, rootEl: XmlElement) {
       'codeList',
       'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode'
     ),
-    writeAttribute('codeListValue', record.kind)
+    writeAttribute('codeListValue', kindToCodeListValue(record))
   )(rootEl)
 }
 
@@ -1285,7 +1287,7 @@ export function appendDatasetOnlineResources(
 }
 
 export function appendServiceOnlineResources(
-  record: ServiceRecord,
+  record: ServiceRecord | ReuseRecord,
   rootEl: XmlElement
 ) {
   appendChildren(...record.onlineResources.map(createOnlineResource))(rootEl)

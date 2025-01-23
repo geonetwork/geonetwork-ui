@@ -50,6 +50,7 @@ import {
 import { findIdentification } from '../iso19139/read-parts'
 import { namePartsToFull } from '../iso19139/utils/individual-name'
 import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
+import { kindToCodeListValue } from '../common/resource-types'
 
 export function writeUniqueIdentifier(
   record: CatalogRecord,
@@ -66,6 +67,7 @@ export function writeUniqueIdentifier(
 }
 
 export function writeKind(record: CatalogRecord, rootEl: XmlElement) {
+  const kind = kindToCodeListValue(record)
   pipe(
     findNestedChildOrCreate(
       'mdb:metadataScope',
@@ -77,8 +79,8 @@ export function writeKind(record: CatalogRecord, rootEl: XmlElement) {
       'codeList',
       'https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode'
     ),
-    writeAttribute('codeListValue', record.kind),
-    setTextContent(record.kind)
+    writeAttribute('codeListValue', kind),
+    setTextContent(kind)
   )(rootEl)
 }
 
