@@ -335,6 +335,56 @@ describe('MapViewComponent', () => {
       })
     })
 
+    describe('with links compatible with MAP_API and GEODATA usage (excludeWfs input set to true)', () => {
+      beforeEach(() => {
+        component.excludeWfs = true
+        mdViewFacade.mapApiLinks$.next([
+          {
+            url: new URL('http://abcd.com/'),
+            name: 'layer1',
+            type: 'service',
+            accessServiceProtocol: 'wms',
+          },
+        ])
+        mdViewFacade.geoDataLinksWithGeometry$.next([
+          {
+            url: new URL('http://abcd.com/wfs'),
+            name: 'featuretype',
+            type: 'service',
+            accessServiceProtocol: 'wfs',
+          },
+          {
+            url: new URL('http://abcd.com/data.geojson'),
+            name: 'data.geojson',
+            type: 'download',
+          },
+          {
+            url: new URL('http://abcd.com/data/ogcapi'),
+            name: 'ogc api',
+            type: 'service',
+            accessServiceProtocol: 'ogcFeatures',
+          },
+        ])
+        fixture.detectChanges()
+      })
+      it('provides a list of links to the dropdown (without listing the WFS)', () => {
+        expect(dropdownComponent.choices).toEqual([
+          {
+            value: 0,
+            label: 'layer1 (WMS)',
+          },
+          {
+            value: 1,
+            label: 'data.geojson (geojson)',
+          },
+          {
+            value: 2,
+            label: 'ogc api',
+          },
+        ])
+      })
+    })
+
     describe('with a link using WFS protocol', () => {
       beforeEach(fakeAsync(() => {
         mdViewFacade.mapApiLinks$.next([])

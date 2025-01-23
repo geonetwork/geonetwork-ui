@@ -268,6 +268,7 @@ describe('app config utils', () => {
             [map]
             max_zoom = 10
             max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
+            max_feature_count = 5000
             do_not_use_default_basemap = true
             external_viewer_url_template = 'https://example.com/myviewer?'
             external_viewer_open_new_tab = true
@@ -293,6 +294,7 @@ describe('app config utils', () => {
           MAX_EXTENT: [
             -418263.418776, 5251529.591305, 961272.067714, 6706890.609855,
           ],
+          MAX_FEATURE_COUNT: 5000,
           DO_NOT_USE_DEFAULT_BASEMAP: true,
           EXTERNAL_VIEWER_URL_TEMPLATE: 'https://example.com/myviewer?',
           EXTERNAL_VIEWER_OPEN_NEW_TAB: true,

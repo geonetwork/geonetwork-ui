@@ -1,28 +1,26 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { TranslateModule } from '@ngx-translate/core'
-import { BehaviorSubject } from 'rxjs'
-import { RecordDataPreviewComponent } from './record-data-preview.component'
+import { BehaviorSubject, of } from 'rxjs'
+import {
+  MAX_FEATURE_COUNT,
+  RecordDataPreviewComponent,
+} from './record-data-preview.component'
 import {
   DataViewComponent,
   DataViewShareComponent,
   MapViewComponent,
   MdViewFacade,
 } from '@geonetwork-ui/feature/record'
-import { MockBuilder } from 'ng-mocks'
+import { MockBuilder, MockProvider } from 'ng-mocks'
 import { MatTab, MatTabGroup } from '@angular/material/tabs'
-
-class MdViewFacadeMock {
-  mapApiLinks$ = new BehaviorSubject([])
-  dataLinks$ = new BehaviorSubject([])
-  geoDataLinks$ = new BehaviorSubject([])
-  geoDataLinksWithGeometry$ = new BehaviorSubject([])
-}
+import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 describe('RecordDataPreviewComponent', () => {
   let component: RecordDataPreviewComponent
   let fixture: ComponentFixture<RecordDataPreviewComponent>
   let facade
+  let dataService
 
   beforeEach(() => MockBuilder(RecordDataPreviewComponent))
 
@@ -30,13 +28,23 @@ describe('RecordDataPreviewComponent', () => {
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       providers: [
+        MockProvider(MdViewFacade, {
+          mapApiLinks$: new BehaviorSubject([]),
+          dataLinks$: new BehaviorSubject([]),
+          geoDataLinks$: new BehaviorSubject([]),
+          geoDataLinksWithGeometry$: new BehaviorSubject([]),
+        }),
+        MockProvider(DataService, {
+          getWfsFeatureCount: jest.fn(),
+        }),
         {
-          provide: MdViewFacade,
-          useClass: MdViewFacadeMock,
+          provide: MAX_FEATURE_COUNT,
+          useValue: 100,
         },
       ],
     }).compileComponents()
     facade = TestBed.inject(MdViewFacade)
+    dataService = TestBed.inject(DataService)
   })
 
   beforeEach(() => {
@@ -199,6 +207,43 @@ describe('RecordDataPreviewComponent', () => {
         expect(
           fixture.debugElement.queryAll(By.directive(DataViewComponent)).length
         ).toEqual(2)
+      })
+    })
+  })
+  describe('exceedsMaxFeatureCount$', () => {
+    it('should return false when no WFS link is present', (done) => {
+      facade.geoDataLinksWithGeometry$.next([])
+      component.exceedsMaxFeatureCount$.subscribe((result) => {
+        expect(result).toBe(false)
+        done()
+      })
+    })
+
+    it('should return false when WFS link feature count is less than maxFeatureCount', (done) => {
+      const link = {
+        accessServiceProtocol: 'wfs',
+        url: 'http://example.com',
+        name: 'test',
+      }
+      facade.geoDataLinksWithGeometry$.next([link])
+      dataService.getWfsFeatureCount.mockReturnValue(of(50))
+      component.exceedsMaxFeatureCount$.subscribe((result) => {
+        expect(result).toBe(false)
+        done()
+      })
+    })
+
+    it('should return true when WFS link feature count exceeds maxFeatureCount', (done) => {
+      const link = {
+        accessServiceProtocol: 'wfs',
+        url: 'http://example.com',
+        name: 'test',
+      }
+      facade.geoDataLinksWithGeometry$.next([link])
+      dataService.getWfsFeatureCount.mockReturnValue(of(150))
+      component.exceedsMaxFeatureCount$.subscribe((result) => {
+        expect(result).toBe(true)
+        done()
       })
     })
   })
