@@ -11,7 +11,7 @@ marker('datahub.search.filter.all')
 marker('datahub.search.filter.others')
 
 const FILTER_FORMATS = ['all', 'csv', 'excel', 'json', 'shp', 'others'] as const
-type FilterFormat = typeof FILTER_FORMATS[number]
+type FilterFormat = (typeof FILTER_FORMATS)[number]
 
 @Component({
   selector: 'gn-ui-downloads-list',
