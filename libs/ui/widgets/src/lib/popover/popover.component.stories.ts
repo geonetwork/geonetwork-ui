@@ -1,6 +1,5 @@
-import { Meta, Story } from '@storybook/angular'
+import { Meta, moduleMetadata } from '@storybook/angular'
 import { PopoverComponent } from './popover.component'
-import { moduleMetadata } from '@storybook/angular'
 import { CommonModule } from '@angular/common'
 
 export default {
@@ -20,21 +19,7 @@ export default {
   },
 } as Meta
 
-const Template: Story<PopoverComponent> = (args: PopoverComponent) => ({
-  component: PopoverComponent,
-  props: args,
-  template: `<gn-ui-popover [content]="content" [theme]="theme">Hover me to see tooltip</gn-ui-popover>`,
-})
-
-export const Default = Template.bind({})
-Default.args = {
-  content: 'Default tooltip content',
-  theme: '',
-}
-
-export const TemplateContent: Story<PopoverComponent> = (
-  args: PopoverComponent
-) => ({
+export const Primary = (args: PopoverComponent) => ({
   component: PopoverComponent,
   template: `
     <ng-template #popoverTemplate>
@@ -48,3 +33,7 @@ export const TemplateContent: Story<PopoverComponent> = (
     </gn-ui-popover>
   `,
 })
+Primary.args = {
+  content: 'Default tooltip content',
+  theme: '',
+}

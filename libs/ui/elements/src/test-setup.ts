@@ -1,23 +1,12 @@
-import 'jest-preset-angular/setup-jest'
+import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone'
 import '../../../../jest.setup'
-
-import { getTestBed } from '@angular/core/testing'
-import {
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting,
-} from '@angular/platform-browser-dynamic/testing'
 import { ngMocks } from 'ng-mocks'
 import { CommonModule } from '@angular/common'
 import { BrowserModule } from '@angular/platform-browser'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
 
-getTestBed().resetTestEnvironment()
-getTestBed().initTestEnvironment(
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting(),
-  { teardown: { destroyAfterEach: false } }
-)
+setupZoneTestEnv({ teardown: { destroyAfterEach: false } })
 
 class ResizeObserverMock {
   observe = jest.fn()

@@ -14,7 +14,7 @@ export class AuthGuardService {
   async canActivate(): Promise<boolean> {
     const notLoggedIn = await firstValueFrom(this.platformService.isAnonymous())
     if (notLoggedIn) {
-      window.location.href = this.authService.loginUrl
+      window.location.assign(this.authService.loginUrl)
       return false
     }
     return true

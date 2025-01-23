@@ -1,24 +1,4 @@
 {
-  "affected": {
-    "defaultBase": "remotes/origin/main"
-  },
-  "npmScope": "geonetwork-ui",
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx-cloud",
-      "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e",
-          "build-storybook"
-        ],
-        "parallel": 1,
-        "accessToken": "OTliYjUyNDYtYmI2Ny00NGRiLThiMWMtMTM5ZDNiMWE1MTYzfHJlYWQtd3JpdGU="
-      }
-    }
-  },
   "defaultProject": "search",
   "generators": {
     "@nx/angular:application": {
@@ -50,19 +30,33 @@
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
+      "inputs": ["production", "^production"],
+      "cache": true
     },
     "e2e": {
-      "inputs": ["default", "^production"]
-    },
-    "test": {
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+      "inputs": ["default", "^production"],
+      "cache": true
     },
     "lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
+      "cache": true
     },
     "build-storybook": {
-      "inputs": ["default", "^production", "{workspaceRoot}/.storybook/**/*"]
+      "inputs": ["default", "^production", "{workspaceRoot}/.storybook/**/*"],
+      "cache": true
+    },
+    "@nx/jest:jest": {
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+      "cache": true,
+      "options": {
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
     }
   },
   "namedInputs": {
@@ -77,5 +71,9 @@
       "!{projectRoot}/.storybook/**/*",
       "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)"
     ]
-  }
+  },
+  "parallel": 1,
+  "useInferencePlugins": false,
+  "defaultBase": "remotes/origin/main",
+  "useLegacyCache": true
 }

@@ -13,11 +13,12 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { MockBuilder } from 'ng-mocks'
 import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 
-// This is used to work around a very weird bug when comparing URL objects would fail
-// if the `searchParams` of the object wasn't accessed beforehand in some cases...
+// This is used to work around this issue with URL in JSDom:
+// https://github.com/jestjs/jest/issues/14012
 const newUrl = (url: string) => {
   const obj = new URL(url)
-  obj.searchParams // try commenting this out to see the bug
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  obj.searchParams // calling the getter once to fill query params
   return obj
 }
 

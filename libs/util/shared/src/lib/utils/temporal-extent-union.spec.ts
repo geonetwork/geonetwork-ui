@@ -1,5 +1,13 @@
 import { getTemporalRangeUnion } from './temporal-extent-union'
 
+// lock locale to en
+beforeAll(() => {
+  const originalFn = Date.prototype.toLocaleDateString
+  Date.prototype.toLocaleDateString = function () {
+    return originalFn.call(this, 'en')
+  }
+})
+
 describe('getTemporalRangeUnion', () => {
   it('should return the union of temporal ranges', () => {
     const ranges = [

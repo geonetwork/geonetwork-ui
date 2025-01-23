@@ -3,6 +3,8 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/datahub-e2e/src",
   "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["datahub", "database-dump"],
   "targets": {
     "e2e": {
       "executor": "@nx/cypress:cypress",
@@ -25,13 +27,11 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["apps/datahub-e2e/**/*.{js,ts}"]
       }
     }
-  },
-  "tags": [],
-  "implicitDependencies": ["datahub", "database-dump"]
+  }
 }

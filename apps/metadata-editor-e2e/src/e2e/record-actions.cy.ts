@@ -227,6 +227,11 @@ describe('record-actions', () => {
   describe('duplicate', () => {
     it('should duplicate the record', () => {
       cy.get('.table-header-cell').eq(1).click()
+
+      // wait for 500ms because the order might change
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(500)
+
       cy.get('[data-cy="table-row"]')
         .first()
         .find('[data-test="record-menu-button"]')

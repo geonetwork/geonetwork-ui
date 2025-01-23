@@ -1,11 +1,11 @@
 import * as ngPackage from 'ng-packagr'
-import baseTsConfig from '../tsconfig.base.json' assert { type: 'json' }
+import baseTsConfig from '../tsconfig.base.json' with { type: 'json' }
 import fs from 'fs/promises'
-import { existsSync, createReadStream, createWriteStream, mkdirSync } from 'fs'
+import { createReadStream, createWriteStream, existsSync, mkdirSync } from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { Transform } from 'stream'
-import { rewriteFiles, listDirectoryFiles } from '../tools/file-utils.js'
+import { listDirectoryFiles, rewriteFiles } from '../tools/file-utils.js'
 
 const PATH_ALIASES = baseTsConfig.compilerOptions.paths
 

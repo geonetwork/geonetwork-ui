@@ -212,10 +212,10 @@ world</root>
       const xmlDoc = assertValidXml(validXml)
 
       expect(xmlDoc).toBeDefined()
-      expect(xmlDoc.querySelector('mdb\\:MD_Metadata')).toBeTruthy()
-      expect(
-        xmlDoc.querySelector('gco\\:CharacterString')?.textContent
-      ).toContain('my-dataset-001')
+      expect(xmlDoc.querySelector('MD_Metadata')).toBeTruthy()
+      expect(xmlDoc.querySelector('CharacterString')?.textContent).toContain(
+        'my-dataset-001'
+      )
     })
 
     it('should throw an error for invalid XML', () => {

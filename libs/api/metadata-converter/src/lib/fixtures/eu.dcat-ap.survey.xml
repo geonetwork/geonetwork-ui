@@ -465,18 +465,18 @@
                 <dct:language rdf:resource="http://publications.europa.eu/resource/authority/language/ENG"/>
                 <dcat:distribution>
                     <dcat:Distribution rdf:about="http://data.europa.eu/88u/distribution/4bf92658-1ad0-4909-b122-365d8faa1c05">
-                        <dct:description xml:lang="da">Denne rapport beskriver udvalgte resultater fra FRA’s anden store EU-dækkende undersøgelse &#xD;
+                        <dct:description xml:lang="da">Denne rapport beskriver udvalgte resultater fra FRA’s anden store EU-dækkende undersøgelse
                             af migranter og mindretal (EU-MIDIS II). Den undersøger erfaringerne fra næsten 6 000 personer af afrikansk herkomst i 12 EU-medlemsstater. Resultaterne viser, at snart tyve år efter vedtagelsen af EU’s lovgivning om forbud mod forskelsbehandling møder personer af afrikansk herkomst i EU udbredte og rodfæstede fordomme og udstødelse.</dct:description>
                         <dct:title xml:lang="es-t-en-t0-mtec">Ser negro en la UE — Resumen</dct:title>
-                        <dct:description xml:lang="de">Dieser Bericht präsentiert ausgewählte Ergebnisse aus der zweiten groß angelegten EU-weiten &#xD;
-                            Erhebung der FRA zu Migranten und Minderheiten (EU-MIDIS II). Darin werden die Erfahrungen &#xD;
-                            von fast 6 000 Menschen afrikanischer Abstammung in zwölf EU-Mitgliedstaaten untersucht. &#xD;
-                            Die Ergebnisse machen deutlich, dass Menschen afrikanischer Abstammung in der EU auch fast &#xD;
-                            20  Jahre nach dem Erlass von EU-Rechtsvorschriften zum Verbot von Diskriminierung noch auf &#xD;
+                        <dct:description xml:lang="de">Dieser Bericht präsentiert ausgewählte Ergebnisse aus der zweiten groß angelegten EU-weiten
+                            Erhebung der FRA zu Migranten und Minderheiten (EU-MIDIS II). Darin werden die Erfahrungen
+                            von fast 6 000 Menschen afrikanischer Abstammung in zwölf EU-Mitgliedstaaten untersucht.
+                            Die Ergebnisse machen deutlich, dass Menschen afrikanischer Abstammung in der EU auch fast
+                            20  Jahre nach dem Erlass von EU-Rechtsvorschriften zum Verbot von Diskriminierung noch auf
                             ausgeprägte und tief sitzende Vorurteile und Ausgrenzung stoßen.</dct:description>
                         <dct:description xml:lang="es-t-en-t0-mtec">En toda la UE, los afrodescendientes se enfrentan a prejuicios y exclusiones generalizados y arraigados. La discriminación racial y el acoso son comunes. Las experiencias con violencia racista varían, pero alcanzan hasta el 14 %. La elaboración de perfiles discriminatorios por parte de la policía es una realidad común. Los obstáculos a la inclusión son polifacéticos, especialmente cuando se trata de buscar empleo y vivienda.</dct:description>
                         <dct:title xml:lang="et-t-en-t0-mtec">Mustanahaline olemine ELis – kokkuvõte</dct:title>
-                        <dct:description xml:lang="fr">Le présent rapport met en lumière les résultats de la deuxième enquête de grande ampleur &#xD;
+                        <dct:description xml:lang="fr">Le présent rapport met en lumière les résultats de la deuxième enquête de grande ampleur
                             de l’Union européenne sur les minorités et la discrimination (EU-MIDIS II) menée par la FRA sur l’ensemble du territoire de l’UE. Il analyse les expériences de près de 6 000 personnes d’ascendance africaine dans 12 États membres de l’UE. Les résultats montrent que, près de vingt ans après l’adoption de la législation de l’UE interdisant la discrimination, les personnes d’ascendance africaine dans l’UE doivent faire face à des préjugés largement répandus et fermement ancrés ainsi qu’à l’exclusion.</dct:description>
                         <dct:title xml:lang="ro-t-en-t0-mtec">Fiind negru în UE – Rezumat</dct:title>
                         <dct:title xml:lang="lt-t-en-t0-mtec">Būvimas juodaodžiu ES. Santrauka</dct:title>
@@ -710,9 +710,9 @@
                     <foaf:Document rdf:about="http://fra.europa.eu/sites/default/files/fra_uploads/fra-2017-eu-midis-ii-questionnaire_en.pdf">
                         <dct:type rdf:resource="http://publications.europa.eu/resource/authority/documentation-type/DOCUMENTATION_MAIN"/>
                         <dct:title xml:lang="en">Second European Union Minorities and Discrimination Survey - Questionnaire 2016</dct:title>
-                        <dct:description xml:lang="en">The survey questionnaire was implemented&#xD;
-                            by means of face-to-face interviewing&#xD;
-                            using computer-assisted in-person interviewing&#xD;
+                        <dct:description xml:lang="en">The survey questionnaire was implemented
+                            by means of face-to-face interviewing
+                            using computer-assisted in-person interviewing
                             (CAPI) in all the survey countries.</dct:description>
                         <dct:format rdf:resource="http://publications.europa.eu/resource/authority/file-type/PDF"/>
                         <foaf:topic rdf:resource="http://data.europa.eu/88u/dataset/second-european-union-minorities-and-discrimination-survey"/>

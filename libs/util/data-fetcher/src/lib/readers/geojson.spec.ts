@@ -374,7 +374,7 @@ describe('geojson parsing', () => {
     }
   }
 ]`)
-        ).toThrow('Unexpected token')
+        ).toThrow('Expected double-quoted property')
       })
     })
   })

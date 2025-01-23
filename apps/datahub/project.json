@@ -4,6 +4,7 @@
   "projectType": "application",
   "sourceRoot": "apps/datahub/src",
   "prefix": "datahub",
+  "tags": ["type:app", "published"],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
@@ -88,11 +89,11 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "datahub:build:production"
+          "buildTarget": "datahub:build:production"
         },
         "development": {
-          "browserTarget": "datahub:build:development",
-          "proxyConfig": "proxy-config.js"
+          "proxyConfig": "proxy-config.js",
+          "buildTarget": "datahub:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -100,11 +101,11 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "datahub:build"
+        "buildTarget": "datahub:build"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
           "apps/datahub/src/**/*.ts",
@@ -117,8 +118,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/datahub"],
       "options": {
-        "jestConfig": "apps/datahub/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "apps/datahub/jest.config.ts"
       }
     },
     "docker-build": {
@@ -131,6 +131,5 @@
         "parallel": false
       }
     }
-  },
-  "tags": ["type:app", "published"]
+  }
 }

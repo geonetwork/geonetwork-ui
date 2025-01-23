@@ -138,7 +138,9 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
         },
       }
     ),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    !environment.production
+      ? StoreDevtoolsModule.instrument({ connectInZone: true })
+      : [],
     EffectsModule.forRoot(),
     UtilI18nModule,
     TranslateModule.forRoot(TRANSLATE_WITH_OVERRIDES_CONFIG),
@@ -266,7 +268,10 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(router: Router, @Inject(DOCUMENT) private document: Document) {
+  constructor(
+    router: Router,
+    @Inject(DOCUMENT) private document: Document
+  ) {
     ThemeService.applyCssVariables(
       getThemeConfig().PRIMARY_COLOR,
       getThemeConfig().SECONDARY_COLOR,

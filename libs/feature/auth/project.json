@@ -4,17 +4,17 @@
   "projectType": "library",
   "sourceRoot": "libs/feature/auth/src",
   "prefix": "gn-ui",
+  "tags": ["type:feature"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/feature/auth"],
       "options": {
-        "jestConfig": "libs/feature/auth/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/feature/auth/jest.config.ts"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
           "libs/feature/auth/src/**/*.ts",
@@ -23,6 +23,5 @@
       },
       "outputs": ["{options.outputFile}"]
     }
-  },
-  "tags": ["type:feature"]
+  }
 }

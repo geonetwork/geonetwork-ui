@@ -86,7 +86,9 @@ export function apiConfigurationFactory() {
     StoreModule.forRoot({
       [DATAFEEDER_STATE_KEY]: reducer,
     }),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    !environment.production
+      ? StoreDevtoolsModule.instrument({ connectInZone: true })
+      : [],
     ProgressBarComponent,
   ],
   providers: [importProvidersFrom(FeatureAuthModule)],

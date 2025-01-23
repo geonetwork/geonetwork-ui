@@ -2,7 +2,7 @@ name: Checks
 run-name: 🩺 Quality assurance checks on ${{ github.event_name == 'pull_request' && 'PR' || '🌱' }} ${{ github.event_name == 'pull_request' && github.event.number || github.ref_name }}
 
 env:
-  NODE_VERSION: 18.16.1
+  NODE_VERSION: 20.18.1
   TEST_HIDE_CONSOLE: true
 
 # This workflow runs for Pull Requests which are not draft,
@@ -117,12 +117,12 @@ jobs:
 
       - name: Compute affected projects
         run: |
-          echo "AFFECTED_LIBS=$(npx nx print-affected --type=lib --select=projects | awk 'BEGIN {RS = ", "; ORS = ", "} \
+          echo "AFFECTED_LIBS=$(npx nx show projects --affected --type=lib | awk 'BEGIN {RS = ", "; ORS = ", "} \
           { print "`"$1"`" }')" >> $GITHUB_ENV
 
       - name: Compute affected apps
         run: |
-          echo "AFFECTED_APPS=$(npx nx print-affected --type=app --select=projects | awk 'BEGIN {RS = ", "; ORS = ", "} \
+          echo "AFFECTED_APPS=$(npx nx show projects --affected --type=app | awk 'BEGIN {RS = ", "; ORS = ", "} \
           { print "`"$1"`" }')" >> $GITHUB_ENV
 
       - name: add PR comment

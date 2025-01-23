@@ -10,9 +10,16 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { importProvidersFrom } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 
+window.open = jest.fn().mockImplementation(() => window)
+window.focus = jest.fn().mockImplementation(() => window)
+
 describe('ExternalViewerButtonComponent', () => {
   let component: ExternalViewerButtonComponent
   let fixture: ComponentFixture<ExternalViewerButtonComponent>
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
 
   beforeEach(() => MockBuilder(ExternalViewerButtonComponent))
 
@@ -53,9 +60,7 @@ describe('ExternalViewerButtonComponent', () => {
   describe('with mapConfig and valid external links', () => {
     let buttonComponent: ButtonComponent
     let componentSpy
-    let windowSpy
-    const openMock = jest.fn().mockReturnThis()
-    const focusMock = jest.fn().mockReturnThis()
+
     describe('with mapConfig and WMS link', () => {
       beforeEach(() => {
         component.link = {
@@ -77,30 +82,23 @@ describe('ExternalViewerButtonComponent', () => {
             By.directive(ButtonComponent)
           ).componentInstance
           componentSpy = jest.spyOn(component, 'openInExternalViewer')
-          windowSpy = jest
-            .spyOn(global, 'window', 'get')
-            .mockImplementation(() => ({
-              open: openMock,
-              focus: focusMock,
-            }))
           buttonComponent.buttonClick.emit()
         })
 
         afterEach(() => {
           componentSpy.mockRestore()
-          windowSpy.mockRestore()
         })
         it('calls openInExternalViewer', () => {
           expect(component.openInExternalViewer).toHaveBeenCalled()
         })
         it('opens window in new tab with URL including WMS link params', () => {
-          expect(openMock).toHaveBeenCalledWith(
+          expect(window.open).toHaveBeenCalledWith(
             'https://example.com/myviewer/#/?actions=[{"type":"CATALOG:ADD_LAYERS_FROM_CATALOGS","layers":["layername"],"sources":[{"url":"http%3A%2F%2Fexample.com%2Fows%3Fservice%3Dwms%26request%3Dgetcapabilities","type":"wms"}]}]',
             '_blank'
           )
         })
         it('focuses window', () => {
-          expect(focusMock).toHaveBeenCalled()
+          expect(window.focus).toHaveBeenCalled()
         })
       })
     })
@@ -125,30 +123,23 @@ describe('ExternalViewerButtonComponent', () => {
             By.directive(ButtonComponent)
           ).componentInstance
           componentSpy = jest.spyOn(component, 'openInExternalViewer')
-          windowSpy = jest
-            .spyOn(global, 'window', 'get')
-            .mockImplementation(() => ({
-              open: openMock,
-              focus: focusMock,
-            }))
           buttonComponent.buttonClick.emit()
         })
 
         afterEach(() => {
           componentSpy.mockRestore()
-          windowSpy.mockRestore()
         })
         it('calls openInExternalViewer', () => {
           expect(component.openInExternalViewer).toHaveBeenCalled()
         })
         it('opens window in new tab with URL including WFS link params', () => {
-          expect(openMock).toHaveBeenCalledWith(
+          expect(window.open).toHaveBeenCalledWith(
             'https://example.com/myviewer/#/?actions=[{"type":"CATALOG:ADD_LAYERS_FROM_CATALOGS","layers":["layername"],"sources":[{"url":"http%3A%2F%2Fexample.com%2Fows%3Fservice%3Dwfs%26request%3Dgetcapabilities","type":"wfs"}]}]',
             '_blank'
           )
         })
         it('focuses window', () => {
-          expect(focusMock).toHaveBeenCalled()
+          expect(window.focus).toHaveBeenCalled()
         })
       })
     })
@@ -170,30 +161,23 @@ describe('ExternalViewerButtonComponent', () => {
             By.directive(ButtonComponent)
           ).componentInstance
           componentSpy = jest.spyOn(component, 'openInExternalViewer')
-          windowSpy = jest
-            .spyOn(global, 'window', 'get')
-            .mockImplementation(() => ({
-              open: openMock,
-              focus: focusMock,
-            }))
           buttonComponent.buttonClick.emit()
         })
 
         afterEach(() => {
           componentSpy.mockRestore()
-          windowSpy.mockRestore()
         })
         it('calls openInExternalViewer', () => {
           expect(component.openInExternalViewer).toHaveBeenCalled()
         })
         it('opens window in new tab with URL including link params', () => {
-          expect(openMock).toHaveBeenCalledWith(
+          expect(window.open).toHaveBeenCalledWith(
             'https://example.com/myviewer/#/?actions=[{"type":"CATALOG:ADD_LAYERS_FROM_CATALOGS","layers":["externalviewer.dataset.unnamed"],"sources":[{"url":"http%3A%2F%2Fexample.com%2Fsomespatialdata.geojson","type":"geojson"}]}]',
             '_blank'
           )
         })
         it('focuses window', () => {
-          expect(focusMock).toHaveBeenCalled()
+          expect(window.focus).toHaveBeenCalled()
         })
       })
     })

@@ -6,7 +6,7 @@ import {
   UiInputsModule,
 } from '@geonetwork-ui/ui/inputs'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
-import { AsyncPipe, Location, NgIf } from '@angular/common'
+import { Location, NgIf } from '@angular/common'
 import { ErrorType, UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { Router } from '@angular/router'
 import {
@@ -31,7 +31,6 @@ import { matArrowBack } from '@ng-icons/material-icons/baseline'
     UiInputsModule,
     TranslateModule,
     NgIf,
-    AsyncPipe,
     UiElementsModule,
     NgIconComponent,
     LanguageSwitcherComponent,
@@ -53,7 +52,10 @@ export class OrganizationHeaderComponent {
   foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
 
-  constructor(private location: Location, private router: Router) {}
+  constructor(
+    private location: Location,
+    private router: Router
+  ) {}
 
   back() {
     this.organization
