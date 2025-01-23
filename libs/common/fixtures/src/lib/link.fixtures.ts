@@ -37,13 +37,13 @@ export const aSetOfLinksFixture = () => ({
       description: 'Readme page',
       type: 'link',
       url: new URL('http://envlit.ifremer.fr/resultats/quadrige'),
-    } as OnlineLinkResource),
+    }) as OnlineLinkResource,
   doiLink: () =>
     ({
       description: 'DOI for the resource',
       type: 'link',
       url: new URL('http://doi.org/123-456-678'),
-    } as OnlineLinkResource),
+    }) as OnlineLinkResource,
   dataCsv: () =>
     ({
       name: 'abc.csv',
@@ -51,56 +51,56 @@ export const aSetOfLinksFixture = () => ({
       type: 'download',
       sizeBytes: 1234567890,
       url: new URL('http://my.server/files/abc.csv'),
-    } as DatasetDownloadDistribution),
+    }) as DatasetDownloadDistribution,
   dataPdf: () =>
     ({
       name: 'abc.pdf',
       description: 'Data in PDF format',
       type: 'download',
       url: new URL('https://my.server/files/abc.pdf'),
-    } as DatasetDownloadDistribution),
+    }) as DatasetDownloadDistribution,
   dataJpg: () =>
     ({
       name: 'abc.jpg',
       description: 'Data in JPG format',
       type: 'download',
       url: new URL('https://my.server/files/abc.jpg'),
-    } as DatasetDownloadDistribution),
+    }) as DatasetDownloadDistribution,
   dataZip: () =>
     ({
       name: 'abc.zip',
       description: 'Data in ZIP format',
       type: 'download',
       url: new URL('https://my.server/files/abc.zip'),
-    } as DatasetDownloadDistribution),
+    }) as DatasetDownloadDistribution,
   dataXls: () =>
     ({
       name: 'abc.xls',
       description: 'Data in XLS format',
       type: 'download',
       url: new URL('https://my.server/files/abc.xls'),
-    } as DatasetDownloadDistribution),
+    }) as DatasetDownloadDistribution,
   dataXlsx: () =>
     ({
       name: 'abc.XLSX',
       description: 'Data in XLSX format',
       type: 'download',
       url: new URL('https://my.server/files/abc.XLSX'),
-    } as DatasetDownloadDistribution),
+    }) as DatasetDownloadDistribution,
   dataJson: () =>
     ({
       name: 'abc.json',
       description: 'Data in JSON format',
       type: 'download',
       url: new URL('https://my.server/files/abc.json'),
-    } as DatasetDownloadDistribution),
+    }) as DatasetDownloadDistribution,
   geodataJson: () =>
     ({
       name: 'dataset.geojson',
       description: 'Geographic data in GeoJSON format',
       type: 'download',
       url: new URL('http://my.server/files/geographic/dataset.geojson'),
-    } as DatasetDownloadDistribution),
+    }) as DatasetDownloadDistribution,
   geodataJsonWithMimeType: () =>
     ({
       name: 'dataset.geojson',
@@ -108,28 +108,28 @@ export const aSetOfLinksFixture = () => ({
       type: 'download',
       url: new URL('http://my.server/files/geographic/dataset'),
       mimeType: 'application/vnd.geo+json',
-    } as DatasetDownloadDistribution),
+    }) as DatasetDownloadDistribution,
   geodataKml: () =>
     ({
       name: 'dataset.kml',
       description: 'Geographic data in KML format',
       type: 'download',
       url: new URL('http://my.server/files/geographic/dataset.kml'),
-    } as DatasetDownloadDistribution),
+    }) as DatasetDownloadDistribution,
   geodataGpkg: () =>
     ({
       name: 'dataset.gpkg',
       description: 'Geographic data in geopackage format',
       type: 'download',
       url: new URL('http://my.server/files/geographic/dataset.gpkg'),
-    } as DatasetDownloadDistribution),
+    }) as DatasetDownloadDistribution,
   geodataShp: () =>
     ({
       name: 'dataset.shp',
       description: 'Geographic data in shapefile format',
       type: 'download',
       url: new URL('http://my.server/files/geographic/dataset.zip'),
-    } as DatasetDownloadDistribution),
+    }) as DatasetDownloadDistribution,
   geodataShpWithMimeType: () =>
     ({
       name: 'dataset',
@@ -137,7 +137,7 @@ export const aSetOfLinksFixture = () => ({
       type: 'download',
       url: new URL('http://my.server/files/geographic/dataset.zip'),
       mimeType: 'x-gis/x-shapefile',
-    } as DatasetDownloadDistribution),
+    }) as DatasetDownloadDistribution,
   geodataWms: () =>
     ({
       name: 'mylayer',
@@ -145,21 +145,21 @@ export const aSetOfLinksFixture = () => ({
       type: 'service',
       url: new URL('https://my.ogc.server/wms'),
       accessServiceProtocol: 'wms',
-    } as DatasetServiceDistribution),
+    }) as DatasetServiceDistribution,
   geodataWmts: () =>
     ({
       name: 'mylayer',
       type: 'service',
       url: new URL('https://my.ogc.server/wmts'),
       accessServiceProtocol: 'wmts',
-    } as DatasetServiceDistribution),
+    }) as DatasetServiceDistribution,
   geodataWfs: () =>
     ({
       name: 'mylayer',
       type: 'service',
       url: new URL('https://my.ogc.server/wfs'),
       accessServiceProtocol: 'wfs',
-    } as DatasetServiceDistribution),
+    }) as DatasetServiceDistribution,
   geodataWfsDownload: () =>
     ({
       name: 'mylayer',
@@ -168,7 +168,7 @@ export const aSetOfLinksFixture = () => ({
         'https://my.ogc.server/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=csv'
       ),
       accessServiceProtocol: 'wfs',
-    } as DatasetDownloadDistribution),
+    }) as DatasetDownloadDistribution,
   geodataOgcApiDownload: () =>
     ({
       name: 'mylayer',
@@ -177,47 +177,47 @@ export const aSetOfLinksFixture = () => ({
         'https://my.ogc.server/data/ogcapi/collections/comptages_velo/items?'
       ),
       accessServiceProtocol: 'ogcFeatures',
-    } as DatasetDownloadDistribution),
+    }) as DatasetDownloadDistribution,
   geodataWms2: () =>
     ({
       name: 'myotherlayer',
       type: 'service',
       url: new URL('https://my.ogc.server/wms'),
       accessServiceProtocol: 'wms',
-    } as DatasetServiceDistribution),
+    }) as DatasetServiceDistribution,
   geodataWfs2: () =>
     ({
       name: 'myotherlayer',
       type: 'service',
       url: new URL('https://my.ogc.server/wfs'),
       accessServiceProtocol: 'wfs',
-    } as DatasetServiceDistribution),
+    }) as DatasetServiceDistribution,
   geodataRest: () =>
     ({
       name: 'myrestlayer',
       type: 'service',
       url: new URL('https://my.esri.server/FeatureServer'),
       accessServiceProtocol: 'esriRest',
-    } as DatasetServiceDistribution),
+    }) as DatasetServiceDistribution,
   geodataRestWfs: () =>
     ({
       name: 'mywfsrestlayer',
       type: 'service',
       url: new URL('https://my.esri.server/WFSServer'),
       accessServiceProtocol: 'wfs',
-    } as DatasetServiceDistribution),
+    }) as DatasetServiceDistribution,
   maplayerRest: () =>
     ({
       name: 'myotherrestlayer',
       type: 'link',
       url: new URL('https://my.esri.server/MapServer'),
-    } as OnlineLinkResource),
+    }) as OnlineLinkResource,
   landingPage: () =>
     ({
       name: 'landingpage link',
       type: 'link',
       url: new URL('https://landing.page'),
-    } as OnlineLinkResource),
+    }) as OnlineLinkResource,
   unknownFormat: () =>
     ({
       name: 'Vue HTML des métadonnées sur internet',
@@ -225,7 +225,7 @@ export const aSetOfLinksFixture = () => ({
       url: new URL(
         'http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/srv/fre/catalog.search#/metadata/fr-120066022-jdd-199fd14c-2abb-4c14-b0f8-6c8d92e7b480'
       ),
-    } as DatasetDownloadDistribution),
+    }) as DatasetDownloadDistribution,
   ogcApiFormat: () =>
     ({
       name: 'ogc api features layer',
@@ -234,7 +234,7 @@ export const aSetOfLinksFixture = () => ({
         'https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/comptages_velo/items?'
       ),
       accessServiceProtocol: 'ogcFeatures',
-    } as DatasetServiceDistribution),
+    }) as DatasetServiceDistribution,
   wmsEndpoint: () =>
     ({
       description:
@@ -244,5 +244,5 @@ export const aSetOfLinksFixture = () => ({
       ),
       protocol: 'wms',
       type: 'endpoint',
-    } as ServiceEndpoint),
+    }) as ServiceEndpoint,
 })
