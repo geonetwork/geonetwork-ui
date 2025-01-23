@@ -9,7 +9,10 @@ import { LinkClassifierService } from '@geonetwork-ui/util/shared'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 import { TranslateModule } from '@ngx-translate/core'
 import { DownloadsListComponent } from './downloads-list.component'
-import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/record'
+import {
+  DatasetDownloadDistribution,
+  ServiceProtocol,
+} from '@geonetwork-ui/common/domain/model/record'
 import { DownloadItemComponent } from '../download-item/download-item.component'
 
 describe('DownloadsListComponent', () => {
@@ -50,7 +53,7 @@ describe('DownloadsListComponent', () => {
       component.links = [
         aSetOfLinksFixture().dataCsv(),
         aSetOfLinksFixture().dataPdf(),
-        aSetOfLinksFixture().dataPdf(),
+        aSetOfLinksFixture().dataJson(),
       ]
       fixture.detectChanges()
       items = de.queryAll(By.directive(DownloadItemComponent))
@@ -112,7 +115,7 @@ describe('DownloadsListComponent', () => {
       fixture.detectChanges()
       items = de.queryAll(By.directive(DownloadItemComponent))
     })
-    it('contains color, isWfs & format', () => {
+    it('contains color, isAPI & format', () => {
       expect(items.length).toBe(1)
       expect(items[0].componentInstance.link).toEqual(
         aSetOfLinksFixture().geodataShpWithMimeType()
@@ -121,7 +124,7 @@ describe('DownloadsListComponent', () => {
       expect(items[0].componentInstance.color).toEqual(
         expect.stringMatching(/#[0-9a-b]{2,6}/i)
       )
-      expect(items[0].componentInstance.isFromWfs).toEqual(false)
+      expect(items[0].componentInstance.isFromApi).toEqual(false)
     })
   })
   describe('displaying download links from WFS', () => {
@@ -132,8 +135,20 @@ describe('DownloadsListComponent', () => {
       fixture.detectChanges()
       items = de.queryAll(By.directive(DownloadItemComponent))
     })
-    it('sets isFromWfs to true', () => {
-      expect(items[0].componentInstance.isFromWfs).toEqual(true)
+    it('sets isFromApi to true', () => {
+      expect(items[0].componentInstance.isFromApi).toEqual(true)
+    })
+  })
+  describe('displaying download links from OGC Features', () => {
+    let items: DebugElement[]
+
+    beforeEach(() => {
+      component.links = [aSetOfLinksFixture().geodataOgcApiDownload()]
+      fixture.detectChanges()
+      items = de.queryAll(By.directive(DownloadItemComponent))
+    })
+    it('sets isFromApi to true', () => {
+      expect(items[0].componentInstance.isFromApi).toEqual(true)
     })
   })
   describe('filtering links', () => {
@@ -272,6 +287,65 @@ describe('DownloadsListComponent', () => {
         )
         expect(displayedFormats).toEqual(['all', 'others'])
       })
+    })
+  })
+  describe('filtering by protocol', () => {
+    it('removes duplicate formats if the lqyernqme is the same', () => {
+      const links = [
+        aSetOfLinksFixture().dataCsv(),
+        { ...aSetOfLinksFixture().dataCsv(), name: 'hello world' },
+        {
+          ...aSetOfLinksFixture().dataCsv(),
+          name: 'chqnged:' + aSetOfLinksFixture().dataCsv().name,
+        },
+        {
+          ...aSetOfLinksFixture().dataCsv(),
+          url: new URL('http://my.server/files/different.csv'),
+        },
+        aSetOfLinksFixture().dataJson(),
+      ]
+
+      const result = component['removeDuplicateFormats'](links)
+
+      expect(JSON.stringify(result)).toEqual(
+        JSON.stringify([
+          aSetOfLinksFixture().dataCsv(),
+          { ...aSetOfLinksFixture().dataCsv(), name: 'hello world' },
+          aSetOfLinksFixture().dataJson(),
+        ])
+      )
+    })
+    it('prioritizes ogcFeatures protocol', () => {
+      const links: DatasetDownloadDistribution[] = [
+        {
+          ...aSetOfLinksFixture().dataCsv(),
+          accessServiceProtocol: 'wfs' as ServiceProtocol,
+        },
+        {
+          ...aSetOfLinksFixture().dataCsv(),
+          accessServiceProtocol: 'ogcFeatures' as ServiceProtocol,
+        },
+        aSetOfLinksFixture().dataJson(),
+      ]
+
+      const result = component['removeDuplicateFormats'](links)
+
+      expect(
+        result.map((link) => ({
+          ...link,
+          url: link.url.toString(),
+        }))
+      ).toEqual([
+        {
+          ...aSetOfLinksFixture().dataCsv(),
+          accessServiceProtocol: 'ogcFeatures',
+          url: aSetOfLinksFixture().dataCsv().url.toString(),
+        },
+        {
+          ...aSetOfLinksFixture().dataJson(),
+          url: aSetOfLinksFixture().dataJson().url.toString(),
+        },
+      ])
     })
   })
 })

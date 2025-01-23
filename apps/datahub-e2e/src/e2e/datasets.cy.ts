@@ -6,7 +6,7 @@ describe('datasets', () => {
 
     // aliases
     cy.get('gn-ui-results-list-item').find('a').as('results')
-    cy.get('@results').eq(1).as('sampleResult')
+    cy.get('@results').eq(2).as('sampleResult')
     cy.get('@results')
       .then(($results) => $results.length)
       .as('resultsCount')
@@ -106,7 +106,7 @@ describe('datasets', () => {
     describe('not logged in', () => {
       it('should show a popover with login link when hovering the favorite star', () => {
         cy.get('@favoriteStar').trigger('mouseenter')
-        cy.get('[id="tippy-2"]')
+        cy.get('[id^="tippy-"]', { timeout: 10000 })
           .find('a')
           .invoke('attr', 'href')
           .should('include', 'catalog.signin')
@@ -295,7 +295,7 @@ describe('datasets', () => {
           "DREAL HdF (Direction Régionale de l'Environnement de l'Aménagement et du Logement des Hauts de France) (1)",
           'Géo2France (1)',
           "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (2)",
-          'Métropole Européenne de Lille (1)',
+          'Métropole Européenne de Lille (2)',
           'Région Hauts-de-France (1)',
           'Service public de Wallonie (SPW) (2)',
           "Société Publique de Gestion de l'Eau (SPGE) (1)",
@@ -557,7 +557,7 @@ describe('datasets', () => {
       it('should display quality widget', () => {
         cy.get('@sortBy').selectDropdownOption('desc,createDate')
         cy.get('gn-ui-progress-bar')
-          .eq(1)
+          .eq(2)
           .should('have.attr', 'ng-reflect-value', 87)
       })
 

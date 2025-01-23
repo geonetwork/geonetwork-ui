@@ -78,19 +78,19 @@ describe('DownloadsListItemComponent', () => {
       expect(badgeElt.styles['background-color']).toEqual('red')
     })
 
-    describe('when it is not Wfs', () => {
-      it('do not display wfs information', () => {
+    describe('when it is not WFS or OGC API', () => {
+      it('do not display wfs or OGC API information', () => {
         const spans = fixture.debugElement.queryAll(By.css('span'))
 
         expect(spans.length).toBe(1)
       })
     })
-    describe('when it is not Wfs', () => {
+    describe('when it is WFS or OGC API', () => {
       beforeEach(() => {
-        component.isFromWfs = true
+        component.isFromApi = true
         fixture.detectChanges()
       })
-      it('add wfs information', () => {
+      it('add WFS or OGC API information', () => {
         const spans = fixture.debugElement.queryAll(By.css('span'))
 
         expect(spans.length).toBe(2)

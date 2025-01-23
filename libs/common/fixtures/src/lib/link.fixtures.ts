@@ -169,6 +169,15 @@ export const aSetOfLinksFixture = () => ({
       ),
       accessServiceProtocol: 'wfs',
     } as DatasetDownloadDistribution),
+  geodataOgcApiDownload: () =>
+    ({
+      name: 'mylayer',
+      type: 'download',
+      url: new URL(
+        'https://my.ogc.server/data/ogcapi/collections/comptages_velo/items?'
+      ),
+      accessServiceProtocol: 'ogcFeatures',
+    } as DatasetDownloadDistribution),
   geodataWms2: () =>
     ({
       name: 'myotherlayer',

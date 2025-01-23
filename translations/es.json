@@ -138,7 +138,7 @@
   "datahub.record.addToFavorites": "",
   "datahub.search.back": "",
   "datahub.search.filter.all": "",
-  "datahub.search.filter.generatedByWfs": "",
+  "datahub.search.filter.generatedByAPI": "",
   "datahub.search.filter.others": "",
   "dataset.error.http": "",
   "dataset.error.network": "",

@@ -138,7 +138,7 @@
   "datahub.record.addToFavorites": "Aggiungere a miei preferiti",
   "datahub.search.back": "Ritorna",
   "datahub.search.filter.all": "Tutti",
-  "datahub.search.filter.generatedByWfs": "generato da un'API",
+  "datahub.search.filter.generatedByAPI": "generato da un'API",
   "datahub.search.filter.others": "Altri",
   "dataset.error.http": "Il caricamento dei dati non è riuscito a causa di un errore HTTP: \"{info}\"",
   "dataset.error.network": "Il caricamento dei dati non è riuscito a causa di un errore di rete o di limitazioni CORS: \"{info}\"",
