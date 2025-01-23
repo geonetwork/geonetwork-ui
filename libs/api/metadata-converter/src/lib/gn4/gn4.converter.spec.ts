@@ -3,7 +3,7 @@ import {
   elasticFullResponseFixture,
   elasticHitsOnlyFixture,
   elasticServiceMetadataHistsFixture,
-  elasticReuseMetadataHistsFixture,
+  elasticReuseMetadataHitsFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { Gn4Converter } from './gn4.converter'
 import { of } from 'rxjs'
@@ -2588,7 +2588,7 @@ describe('Gn4Converter', () => {
       describe('full record reuse(application) metadata metawal', () => {
         it('builds a complete record object', async () => {
           const record = await service.readRecord(
-            elasticReuseMetadataHistsFixture().hits.hits[0] as Gn4Record
+            elasticReuseMetadataHitsFixture().hits.hits[0] as Gn4Record
           )
 
           expect(record).toEqual({
@@ -3008,7 +3008,7 @@ describe('Gn4Converter', () => {
       describe('full record reuse (interactive map) metadata geo2france', () => {
         it('builds a complete record object', async () => {
           const record = await service.readRecord(
-            elasticReuseMetadataHistsFixture().hits.hits[1] as Gn4Record
+            elasticReuseMetadataHitsFixture().hits.hits[1] as Gn4Record
           )
 
           expect(record).toEqual({
@@ -3269,7 +3269,7 @@ describe('Gn4Converter', () => {
       describe('full record reuse (static map) metadata georhena', () => {
         it('builds a complete record object', async () => {
           const record = await service.readRecord(
-            elasticReuseMetadataHistsFixture().hits.hits[2] as Gn4Record
+            elasticReuseMetadataHitsFixture().hits.hits[2] as Gn4Record
           )
 
           expect(record).toEqual({

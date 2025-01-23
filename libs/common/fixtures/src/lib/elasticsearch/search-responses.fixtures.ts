@@ -1076,33 +1076,33 @@ export const elasticServiceMetadataHistsFixture = () => ({
               ],
             },
             'th_httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope':
-              {
-                id: 'geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope',
-                title: 'Champ géographique',
-                theme: 'theme',
-                link: 'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope',
-                keywords: [
-                  {
-                    default: 'Régional',
-                    langfre: 'Régional',
-                    link: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/regional',
-                  },
-                ],
-              },
+            {
+              id: 'geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope',
+              title: 'Champ géographique',
+              theme: 'theme',
+              link: 'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope',
+              keywords: [
+                {
+                  default: 'Régional',
+                  langfre: 'Régional',
+                  link: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/regional',
+                },
+              ],
+            },
             'th_httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory-SpatialDataServiceCategory':
-              {
-                id: 'geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory-SpatialDataServiceCategory',
-                title: 'Classification of spatial data services',
-                theme: 'theme',
-                link: 'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory-SpatialDataServiceCategory',
-                keywords: [
-                  {
-                    default: 'Service de catalogue',
-                    langfre: 'Service de catalogue',
-                    link: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCatalogueService',
-                  },
-                ],
-              },
+            {
+              id: 'geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory-SpatialDataServiceCategory',
+              title: 'Classification of spatial data services',
+              theme: 'theme',
+              link: 'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory-SpatialDataServiceCategory',
+              keywords: [
+                {
+                  default: 'Service de catalogue',
+                  langfre: 'Service de catalogue',
+                  link: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCatalogueService',
+                },
+              ],
+            },
             'th_gemet-theme': {
               id: 'geonetwork.thesaurus.external.theme.gemet-theme',
               title: 'GEMET themes',
@@ -1159,23 +1159,23 @@ export const elasticServiceMetadataHistsFixture = () => ({
             },
           },
           'th_httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope_tree':
-            {
-              default: ['Régional'],
-              key: [
-                'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/regional',
-              ],
-            },
+          {
+            default: ['Régional'],
+            key: [
+              'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/regional',
+            ],
+          },
           'th_httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory-SpatialDataServiceCategory_tree':
-            {
-              default: [
-                'Services de gestion des modèles/informations géographiques',
-                'Services de gestion des modèles/informations géographiques^Service de catalogue',
-              ],
-              key: [
-                'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoManagementService',
-                'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoManagementService^http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCatalogueService',
-              ],
-            },
+          {
+            default: [
+              'Services de gestion des modèles/informations géographiques',
+              'Services de gestion des modèles/informations géographiques^Service de catalogue',
+            ],
+            key: [
+              'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoManagementService',
+              'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoManagementService^http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCatalogueService',
+            ],
+          },
           'th_gemet-theme_tree': {
             default: ['transport'],
             key: ['http://www.eionet.europa.eu/gemet/theme/37'],
@@ -1268,33 +1268,33 @@ export const elasticServiceMetadataHistsFixture = () => ({
               ],
             },
             'th_httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope':
-              {
-                id: 'geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope',
-                title: 'Champ géographique',
-                theme: 'theme',
-                link: 'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope',
-                keywords: [
-                  {
-                    default: 'Régional',
-                    langfre: 'Régional',
-                    link: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/regional',
-                  },
-                ],
-              },
+            {
+              id: 'geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope',
+              title: 'Champ géographique',
+              theme: 'theme',
+              link: 'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope',
+              keywords: [
+                {
+                  default: 'Régional',
+                  langfre: 'Régional',
+                  link: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/regional',
+                },
+              ],
+            },
             'th_httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory-SpatialDataServiceCategory':
-              {
-                id: 'geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory-SpatialDataServiceCategory',
-                title: 'Classification of spatial data services',
-                theme: 'theme',
-                link: 'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory-SpatialDataServiceCategory',
-                keywords: [
-                  {
-                    default: 'Service de catalogue',
-                    langfre: 'Service de catalogue',
-                    link: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCatalogueService',
-                  },
-                ],
-              },
+            {
+              id: 'geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory-SpatialDataServiceCategory',
+              title: 'Classification of spatial data services',
+              theme: 'theme',
+              link: 'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory-SpatialDataServiceCategory',
+              keywords: [
+                {
+                  default: 'Service de catalogue',
+                  langfre: 'Service de catalogue',
+                  link: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCatalogueService',
+                },
+              ],
+            },
             'th_gemet-theme': {
               id: 'geonetwork.thesaurus.external.theme.gemet-theme',
               title: 'GEMET themes',
@@ -2277,18 +2277,18 @@ export const elasticServiceMetadataHistsFixture = () => ({
               title: 'INSPIRE priority data set',
             },
             th_COMMISSIONREGULATIONECNo12052008of3December2008implementingDirective20072ECoftheEuropeanParliamentandoftheCouncilasregardsmetadataPartD4ClassificationofSpatialDataServices:
-              {
-                keywords: [
-                  {
-                    default: 'Service d’accès aux éléments',
-                    link: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoFeatureAccessService',
-                    langfre: 'Service d’accès aux éléments',
-                  },
-                ],
-                theme: '',
-                title:
-                  'COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata, Part D 4, Classification of Spatial Data Services',
-              },
+            {
+              keywords: [
+                {
+                  default: 'Service d’accès aux éléments',
+                  link: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoFeatureAccessService',
+                  langfre: 'Service d’accès aux éléments',
+                },
+              ],
+              theme: '',
+              title:
+                'COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata, Part D 4, Classification of Spatial Data Services',
+            },
           },
           owner: '2161',
           indexingErrorMsg: [
@@ -2821,7 +2821,7 @@ export const elasticServiceMetadataHistsFixture = () => ({
   },
 })
 
-export const elasticReuseMetadataHistsFixture = () => ({
+export const elasticReuseMetadataHitsFixture = () => ({
   hits: {
     max_score: 1,
     hits: [
