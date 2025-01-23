@@ -3,6 +3,7 @@ import { Iso19139Converter } from './iso19139.converter'
 import { parseXmlString, xmlToString } from '../xml-utils'
 import { GEO2FRANCE_PLU_DATASET_RECORD } from '../fixtures/geo2france.records'
 import { GEO2FRANCE_REUSE_ONGULES_RECORD } from '../fixtures/geo2france.records.reuse+ongules'
+import { GEO2FRANCE_REUSE_ROILAYE_RECORD } from '../fixtures/geo2france.records.reuse+roilaye'
 import {
   GEOCAT_CH_DATASET_RECORD,
   GEOCAT_CH_SERVICE_RECORD,
@@ -16,6 +17,8 @@ import { GEO2FRANCE_SERVICE_EAUXUSEES_RECORD } from '../fixtures/geo2france.reco
 import GEO2FRANCE_SERVICE_EAUXUSEES from '../fixtures/geo2france.iso19139.service+eaux-usees.xml'
 // @ts-ignore
 import GEO2FRANCE_REUSE_ONGULES from '../fixtures/geo2france.iso19139.reuse+ongules.xml'
+// @ts-ignore
+import GEO2FRANCE_REUSE_ROILAYE from '../fixtures/geo2france.iso19139.reuse+roilaye.xml'
 // @ts-ignore
 import GENERIC_DATASET_PLUS_GEO2FRANCE_DATASET from '../fixtures/generic-dataset+geo2france-plu.iso19139.xml'
 // @ts-ignore
@@ -49,6 +52,10 @@ describe('ISO19139 converter', () => {
     it('produces the corresponding record (geo2france reuse ongulets)', async () => {
       const record = await converter.readRecord(GEO2FRANCE_REUSE_ONGULES)
       expect(record).toStrictEqual(GEO2FRANCE_REUSE_ONGULES_RECORD)
+    })
+    it('produces the corresponding record (geo2france reuse roilaye)', async () => {
+      const record = await converter.readRecord(GEO2FRANCE_REUSE_ROILAYE)
+      expect(record).toStrictEqual(GEO2FRANCE_REUSE_ROILAYE_RECORD)
     })
     it('produces the corresponding record (geocat.ch dataset)', async () => {
       const record = await converter.readRecord(GEOCAT_CH_DATASET)
