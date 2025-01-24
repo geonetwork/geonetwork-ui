@@ -5,8 +5,8 @@ export const GEO2FRANCE_REUSE_ROILAYE_RECORD: ReuseRecord = {
   kind: 'reuse',
   otherLanguages: [],
   defaultLanguage: 'fr',
-  recordUpdated: new Date('2022-12-08T15:06:54.000Z'),
-  resourceCreated: new Date('2019-12-30T23:00:00.000Z'),
+  recordUpdated: new Date('2022-12-08T16:06:54.000Z'),
+  resourceCreated: new Date('2019-12-31T00:00:00.000Z'),
   title: 'Photographie aérienne 2021 sur la commune de Saint-Etienne-Roilaye',
   abstract:
     'Orthophotoplan 2021 sur le territoire de la commune de Saint-Etienne-Roilaye.',

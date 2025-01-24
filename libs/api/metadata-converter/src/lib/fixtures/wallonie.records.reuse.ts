@@ -6,7 +6,7 @@ export const WALLONIE_REUSE_SPW_RECORD: ReuseRecord = {
   kind: 'reuse',
   otherLanguages: [],
   defaultLanguage: 'fr',
-  recordCreated: new Date('2019-04-02T10:31:52.000Z'),
+  recordCreated: new Date('2019-04-02T12:31:52.000Z'),
   recordUpdated: new Date('2024-07-22T11:52:39.049Z'),
   resourceCreated: new Date('2017-06-01T00:00:00.000Z'),
   resourcePublished: new Date('2018-04-01T00:00:00.000Z'),
