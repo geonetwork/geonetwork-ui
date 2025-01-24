@@ -335,7 +335,7 @@ describe('MapViewComponent', () => {
       })
     })
 
-    describe('with links compatible with MAP_API and GEODATA usage (excludeWfs input set to true)', () => {
+    describe('excludeWfs = true: with links compatible with MAP_API and GEODATA usage', () => {
       beforeEach(() => {
         component.excludeWfs = true
         mdViewFacade.mapApiLinks$.next([
@@ -367,7 +367,7 @@ describe('MapViewComponent', () => {
         ])
         fixture.detectChanges()
       })
-      it('provides a list of links to the dropdown (without listing the WFS)', () => {
+      it('provides a list of links to the dropdown (including the WFS layer)', () => {
         expect(dropdownComponent.choices).toEqual([
           {
             value: 0,
@@ -375,13 +375,31 @@ describe('MapViewComponent', () => {
           },
           {
             value: 1,
-            label: 'data.geojson (geojson)',
+            label: 'featuretype (WFS)',
           },
           {
             value: 2,
+            label: 'data.geojson (geojson)',
+          },
+          {
+            value: 3,
             label: 'ogc api',
           },
         ])
+      })
+      describe('when selecting the WFS layer (excludeWfs)', () => {
+        beforeEach(() => {
+          dropdownComponent.selectValue.emit(1)
+        })
+        it('shows an error', () => {
+          expect(component.error).toEqual('wfs.feature.limit')
+        })
+        it('emits a map context with no layer', () => {
+          expect(mapComponent.context).toEqual({
+            layers: [],
+            view: expect.any(Object),
+          })
+        })
       })
     })
 
