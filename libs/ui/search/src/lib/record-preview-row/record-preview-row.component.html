@@ -9,7 +9,10 @@
     >
       <gn-ui-thumbnail
         class="relative h-full w-full object-cover object-left-top"
-        [thumbnailUrl]="[record.overviews?.[0]?.url?.toString(), organization?.logoUrl?.toString()]"
+        [thumbnailUrl]="[
+          record.overviews?.[0]?.url?.toString(),
+          organization?.logoUrl?.toString(),
+        ]"
         [fit]="['cover', 'contain']"
       ></gn-ui-thumbnail>
     </div>

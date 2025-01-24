@@ -22,13 +22,7 @@ Web Components are made to be easily included in any context. To do so, you have
 ```html
 <script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-v2.0.0/gn-wc.js"></script>
 ...
-<gn-results-list
-  api-url="https://dev.geo2france.fr/geonetwork/srv/api"
-  catalog-url="https://dev.geo2france.fr/datahub/dataset/{uuid}"
-  size="10"
-  layout="ROW"
-  show-more="button"
-></gn-results-list>
+<gn-results-list api-url="https://dev.geo2france.fr/geonetwork/srv/api" catalog-url="https://dev.geo2france.fr/datahub/dataset/{uuid}" size="10" layout="ROW" show-more="button"></gn-results-list>
 ```
 
 ## Publication and Versioning
@@ -107,9 +101,7 @@ Update Web Component input values from the source page:
 <div>
   <button id="changeSizeBtn">Change size</button>
 </div>
-<gn-results-list
-  api-url="https://dev.geo2france.fr/geonetwork/srv/api"
-></gn-results-list>
+<gn-results-list api-url="https://dev.geo2france.fr/geonetwork/srv/api"></gn-results-list>
 
 <script>
   const wc = document.getElementsByTagName('gn-results-list')[0]

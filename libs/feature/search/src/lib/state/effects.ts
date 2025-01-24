@@ -154,7 +154,7 @@ export class SearchEffects {
             ([state, favorites, geometry]: [
               SearchStateSearch,
               string[],
-              Geometry | undefined
+              Geometry | undefined,
             ]) => {
               const { currentPage, pageSize, sort } = state.params
               const filters = {

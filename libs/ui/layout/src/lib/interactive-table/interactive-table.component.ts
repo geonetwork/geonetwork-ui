@@ -39,8 +39,8 @@ export class InteractiveTableComponent {
           column.width
             ? column.width
             : column.grow
-            ? `minmax(0px,1fr)`
-            : `minmax(0px,max-content)`
+              ? `minmax(0px,1fr)`
+              : `minmax(0px,max-content)`
         )
         .join(' '),
     }

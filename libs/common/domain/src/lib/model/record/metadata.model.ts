@@ -55,7 +55,7 @@ export const RecordStatusValues = [
   'deprecated',
   'removed',
 ]
-export type RecordStatus = typeof RecordStatusValues[number]
+export type RecordStatus = (typeof RecordStatusValues)[number]
 
 export type Constraint = {
   text: string

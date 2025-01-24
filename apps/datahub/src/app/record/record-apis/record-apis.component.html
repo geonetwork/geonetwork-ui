@@ -23,7 +23,7 @@
     class="w-[320px]"
     [ngClass]="{
       'card-shadow': link !== selectedApiLink || !selectedApiLink,
-      'bg-neutral-100': link === selectedApiLink
+      'bg-neutral-100': link === selectedApiLink,
     }"
     (openRecordApiForm)="openRecordApiForm($event)"
   >

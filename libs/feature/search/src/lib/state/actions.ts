@@ -56,7 +56,10 @@ export class AddSearch implements Action {
 export class SetConfigFilters extends AbstractAction implements Action {
   readonly type = SET_CONFIG_FILTERS
 
-  constructor(public payload: FieldFilters, id?: string) {
+  constructor(
+    public payload: FieldFilters,
+    id?: string
+  ) {
     super(id)
   }
 }
@@ -64,7 +67,10 @@ export class SetConfigFilters extends AbstractAction implements Action {
 export class SetFilters extends AbstractAction implements Action {
   readonly type = SET_FILTERS
 
-  constructor(public payload: FieldFilters, id?: string) {
+  constructor(
+    public payload: FieldFilters,
+    id?: string
+  ) {
     super(id)
   }
 }
@@ -72,7 +78,10 @@ export class SetFilters extends AbstractAction implements Action {
 export class UpdateFilters extends AbstractAction implements Action {
   readonly type = UPDATE_FILTERS
 
-  constructor(public payload: FieldFilters, id?: string) {
+  constructor(
+    public payload: FieldFilters,
+    id?: string
+  ) {
     super(id)
   }
 }
@@ -80,27 +89,39 @@ export class UpdateFilters extends AbstractAction implements Action {
 export class SetSearch extends AbstractAction implements Action {
   readonly type = SET_SEARCH
 
-  constructor(public payload: SearchStateParams, id?: string) {
+  constructor(
+    public payload: SearchStateParams,
+    id?: string
+  ) {
     super(id)
   }
 }
 
 export class SetFavoritesOnly extends AbstractAction implements Action {
   readonly type = SET_FAVORITES_ONLY
-  constructor(public favoritesOnly: boolean, id?: string) {
+  constructor(
+    public favoritesOnly: boolean,
+    id?: string
+  ) {
     super(id)
   }
 }
 export class SetSortBy extends AbstractAction implements Action {
   readonly type = SET_SORT_BY
-  constructor(public sortBy: SortByField, id?: string) {
+  constructor(
+    public sortBy: SortByField,
+    id?: string
+  ) {
     super(id)
   }
 }
 
 export class SetPageSize extends AbstractAction implements Action {
   readonly type = SET_PAGE_SIZE
-  constructor(public limit: number, id?: string) {
+  constructor(
+    public limit: number,
+    id?: string
+  ) {
     super(id)
   }
 }
@@ -108,7 +129,10 @@ export class SetPageSize extends AbstractAction implements Action {
 export class Paginate extends AbstractAction implements Action {
   readonly type = PAGINATE
   // Note: page number is one-based!!
-  constructor(public pageNumber: number, id?: string) {
+  constructor(
+    public pageNumber: number,
+    id?: string
+  ) {
     super(id)
   }
 }
@@ -116,7 +140,10 @@ export class Paginate extends AbstractAction implements Action {
 export class SetResultsLayout extends AbstractAction implements Action {
   readonly type = SET_RESULTS_LAYOUT
 
-  constructor(public resultsLayout: string, id?: string) {
+  constructor(
+    public resultsLayout: string,
+    id?: string
+  ) {
     super(id)
   }
 }
@@ -124,7 +151,10 @@ export class SetResultsLayout extends AbstractAction implements Action {
 export class AddResults extends AbstractAction implements Action {
   readonly type = ADD_RESULTS
 
-  constructor(public payload: CatalogRecord[], id?: string) {
+  constructor(
+    public payload: CatalogRecord[],
+    id?: string
+  ) {
     super(id)
   }
 }
@@ -156,35 +186,50 @@ export class RequestNewResults extends AbstractAction implements Action {
 export class SetResultsAggregations extends AbstractAction implements Action {
   readonly type = SET_RESULTS_AGGREGATIONS
 
-  constructor(public payload: Aggregations, id?: string) {
+  constructor(
+    public payload: Aggregations,
+    id?: string
+  ) {
     super(id)
   }
 }
 
 export class SetResultsHits extends AbstractAction implements Action {
   readonly type = SET_RESULTS_HITS
-  constructor(public payload: number, id?: string) {
+  constructor(
+    public payload: number,
+    id?: string
+  ) {
     super(id)
   }
 }
 
 export class SetConfigAggregations extends AbstractAction implements Action {
   readonly type = SET_CONFIG_AGGREGATIONS
-  constructor(public payload: AggregationsParams, id?: string) {
+  constructor(
+    public payload: AggregationsParams,
+    id?: string
+  ) {
     super(id)
   }
 }
 
 export class UpdateConfigAggregations extends AbstractAction implements Action {
   readonly type = UPDATE_CONFIG_AGGREGATIONS
-  constructor(public payload: AggregationsParams, id?: string) {
+  constructor(
+    public payload: AggregationsParams,
+    id?: string
+  ) {
     super(id)
   }
 }
 
 export class SetConfigRequestFields extends AbstractAction implements Action {
   readonly type = SET_CONFIG_REQUEST_FIELDS
-  constructor(public payload: FieldName[], id?: string) {
+  constructor(
+    public payload: FieldName[],
+    id?: string
+  ) {
     super(id)
   }
 }
@@ -226,7 +271,11 @@ export class PatchResultsAggregations extends AbstractAction implements Action {
 export class SetError extends AbstractAction implements Action {
   readonly type = SET_ERROR
 
-  constructor(public code: number, public message: string, id?: string) {
+  constructor(
+    public code: number,
+    public message: string,
+    id?: string
+  ) {
     super(id)
   }
 }
@@ -241,7 +290,10 @@ export class ClearError extends AbstractAction implements Action {
 
 export class SetSpatialFilterEnabled extends AbstractAction implements Action {
   readonly type = SET_SPATIAL_FILTER_ENABLED
-  constructor(public enabled: boolean, id?: string) {
+  constructor(
+    public enabled: boolean,
+    id?: string
+  ) {
     super(id)
   }
 }

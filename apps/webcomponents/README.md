@@ -13,12 +13,7 @@ Web Components are made to be easily included in any context, e.g.:
 ```html
 <script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-main/gn-wc.js"></script>
 ...
-<gn-results-list
-  api-url="https://apps.titellus.net/geonetwork/srv/api"
-  size="10"
-  layout="TITLE"
-  filters="soil"
-></gn-results-list>
+<gn-results-list api-url="https://apps.titellus.net/geonetwork/srv/api" size="10" layout="TITLE" filters="soil"></gn-results-list>
 ```
 
 ## Build
@@ -122,9 +117,7 @@ Update Web Component input values from the source page:
 <div>
   <button id="changeSizeBtn">Change size</button>
 </div>
-<gn-results-list
-  api-url="https://apps.titellus.net/geonetwork/srv/api"
-></gn-results-list>
+<gn-results-list api-url="https://apps.titellus.net/geonetwork/srv/api"></gn-results-list>
 
 <script>
   const wc = document.getElementsByTagName('gn-results-list')[0]

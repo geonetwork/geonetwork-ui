@@ -40,7 +40,10 @@ export class ActionMenuComponent {
 
   sectionDisplayed: ActionMenuPage = 'mainMenu'
 
-  constructor(public dialog: MatDialog, private cdr: ChangeDetectorRef) {}
+  constructor(
+    public dialog: MatDialog,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   openMenu() {
     this.trigger.openMenu()

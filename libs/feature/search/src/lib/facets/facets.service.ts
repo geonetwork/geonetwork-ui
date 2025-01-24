@@ -72,19 +72,19 @@ export class FacetsService {
               for (let p = 0; p < entries.length; p++) {
                 const entry: [string, AggEntry] = entries[p] as [
                   string,
-                  AggEntry
+                  AggEntry,
                 ]
                 const nextEntry: [string, AggEntry] = entries[p + 1] as [
                   string,
-                  AggEntry
+                  AggEntry,
                 ]
                 const lowerBound = entry[1].key
                 const onlyOneBucket = entries.length === 1
                 const upperBound = onlyOneBucket
                   ? lowerBound + Number(requestAgg['histogram'].interval)
                   : nextEntry
-                  ? nextEntry[1].key
-                  : '*'
+                    ? nextEntry[1].key
+                    : '*'
                 const value = lowerBound + '-' + upperBound
                 const itemPath = [...blockModel.path, lowerBound + '']
                 const itemModel = {

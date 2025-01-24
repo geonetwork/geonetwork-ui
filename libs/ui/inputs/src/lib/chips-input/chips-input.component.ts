@@ -54,7 +54,10 @@ export class ChipsInputComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private http: HttpClient, private translate: TranslateService) {
+  constructor(
+    private http: HttpClient,
+    private translate: TranslateService
+  ) {
     this.rawChange = new Subject<Items[]>()
     this.itemsChange = this.rawChange.pipe(distinctUntilChanged())
     this.subscription = new Subscription()

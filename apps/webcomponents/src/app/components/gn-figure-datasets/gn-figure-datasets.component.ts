@@ -23,7 +23,10 @@ export class GnFigureDatasetsComponent extends BaseComponent {
   catalogRecords: RecordsService
   recordsCount$: Observable<string | number>
 
-  constructor(injector: Injector, private changeDetector: ChangeDetectorRef) {
+  constructor(
+    injector: Injector,
+    private changeDetector: ChangeDetectorRef
+  ) {
     super(injector)
     this.catalogRecords = injector.get(RecordsService)
     this.recordsCount$ = this.catalogRecords.recordsCount$.pipe(

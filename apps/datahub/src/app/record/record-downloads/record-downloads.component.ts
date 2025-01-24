@@ -20,7 +20,10 @@ import { DownloadsListComponent } from '@geonetwork-ui/ui/elements'
   imports: [CommonModule, DownloadsListComponent],
 })
 export class RecordDownloadsComponent {
-  constructor(public facade: MdViewFacade, private dataService: DataService) {}
+  constructor(
+    public facade: MdViewFacade,
+    private dataService: DataService
+  ) {}
 
   error: string = null
 

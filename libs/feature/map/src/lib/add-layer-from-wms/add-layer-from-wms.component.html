@@ -22,7 +22,7 @@
     *ngFor="let layer of layers"
     [ngTemplateOutlet]="layerTreeItem"
     [ngTemplateOutletContext]="{
-      layer: layer
+      layer: layer,
     }"
   ></ng-container>
 </div>
@@ -47,7 +47,7 @@
       *ngFor="let child of layer.children"
       [ngTemplateOutlet]="layerTreeItem"
       [ngTemplateOutletContext]="{
-        layer: child
+        layer: child,
       }"
     >
     </ng-container>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <title>geonetwork-ui web component embedder</title>
@@ -38,9 +38,8 @@ ${message}`
       try {
         const params = new URL(window.location).searchParams
         const version = params.get('v')
-        document.getElementById(
-          'gn-wc-script'
-        ).src = `https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${version}/gn-wc.js`
+        document.getElementById('gn-wc-script').src =
+          `https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${version}/gn-wc.js`
         const elementName = params.get('e')
         const attributes = params.getAll('a')
 

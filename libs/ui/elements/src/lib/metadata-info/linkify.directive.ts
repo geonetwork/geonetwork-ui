@@ -6,7 +6,10 @@ import { Directive, ElementRef, OnInit, Renderer2 } from '@angular/core'
   standalone: true,
 })
 export class GnUiLinkifyDirective implements OnInit {
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
+  constructor(
+    private el: ElementRef,
+    private renderer: Renderer2
+  ) {}
 
   ngOnInit() {
     setTimeout(() => {

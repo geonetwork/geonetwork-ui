@@ -45,8 +45,8 @@ export class StepBarComponent {
     return index === this.currentStep
       ? 'bg-black'
       : index < this.currentStep
-      ? 'bg-white'
-      : this.color.innerBar
+        ? 'bg-white'
+        : this.color.innerBar
   }
 
   getChecked(index: number): boolean {

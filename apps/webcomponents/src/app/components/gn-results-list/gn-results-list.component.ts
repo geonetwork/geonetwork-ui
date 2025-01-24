@@ -31,7 +31,10 @@ export class GnResultsListComponent extends BaseComponent {
   @Input() catalogUrl: string
   @Input() showMore: ResultsListShowMoreStrategy = 'none'
 
-  constructor(injector: Injector, private changeDetector: ChangeDetectorRef) {
+  constructor(
+    injector: Injector,
+    private changeDetector: ChangeDetectorRef
+  ) {
     super(injector)
   }
 

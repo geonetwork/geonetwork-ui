@@ -55,7 +55,7 @@
         'border-gray-300': !dragFilesOver,
         'cursor-pointer hover:border-gray-500':
           !isUploadInProgress && !uploadError && !showUrlInput && !disabled,
-        'cursor-not-allowed': disabled
+        'cursor-not-allowed': disabled,
       }"
       [attr.tabindex]="
         isUploadInProgress || uploadError || showUrlInput || disabled ? null : 0

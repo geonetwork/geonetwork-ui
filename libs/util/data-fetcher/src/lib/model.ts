@@ -48,11 +48,11 @@ export const ExcelMimeTypes = [
 export const GmlMimeTypes = ['application/gml+xml'] as const
 
 export type SupportedMimeType =
-  | typeof CsvMimeTypes[number]
-  | typeof JsonMimeTypes[number]
-  | typeof GeoJsonMimeTypes[number]
-  | typeof ExcelMimeTypes[number]
-  | typeof GmlMimeTypes[number]
+  | (typeof CsvMimeTypes)[number]
+  | (typeof JsonMimeTypes)[number]
+  | (typeof GeoJsonMimeTypes)[number]
+  | (typeof ExcelMimeTypes)[number]
+  | (typeof GmlMimeTypes)[number]
 
 export const SupportedTypes = [
   'csv',
@@ -61,7 +61,7 @@ export const SupportedTypes = [
   'excel',
   'gml',
 ] as const
-export type SupportedType = typeof SupportedTypes[number]
+export type SupportedType = (typeof SupportedTypes)[number]
 
 export const AllMimeTypes = {
   csv: CsvMimeTypes,

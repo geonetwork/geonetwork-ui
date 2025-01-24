@@ -153,7 +153,7 @@ export class FormFieldSpatialExtentComponent {
             label,
             type,
             ...(thesaurus && { thesaurus }),
-          } as Keyword)
+          }) as Keyword
       )
 
     const notPlaceKwAndSpatialScopeKw = await firstValueFrom(

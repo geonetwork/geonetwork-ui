@@ -88,7 +88,7 @@ export class ChartComponent implements OnChanges, AfterViewInit {
     const data = this.handlesSecondaryValue()
       ? (this.getDataProxy(this.valueProperty, this.secondaryValueProperty) as [
           number,
-          number
+          number,
         ][])
       : (this.getDataProxy(this.valueProperty) as number[])
     return {

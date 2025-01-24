@@ -28,7 +28,7 @@ export class BaseFileReader extends BaseReader {
       (result) =>
         ({
           itemsCount: result.items.length,
-        } as DatasetInfo)
+        }) as DatasetInfo
     )
   }
 
