@@ -130,7 +130,7 @@ background_color = "#fdfbff"
 # max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
 
 # Optional; Will remove WFS from map layers if its features exceed the indicated number.
-# Dataviz chart will be hidden in this case. Table will be paginated with indicated number.
+# Data preview chart and table will be hidden in this case.
 # max_feature_count = 5000
 
 # Optional; URL template enabling to open map layers in an external viewer; if set, displays a button next to the map's layer drop down
