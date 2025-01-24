@@ -71,7 +71,7 @@ export class TopToolbarComponent {
     // 'draft_saving_failed',
   ] as const
 
-  protected saveStatus$: Observable<typeof this.SaveStatus[number]> =
+  protected saveStatus$: Observable<(typeof this.SaveStatus)[number]> =
     combineLatest([
       this.editorFacade.alreadySavedOnce$,
       this.editorFacade.changedSinceSave$,

@@ -50,5 +50,5 @@ export const ES_RESOURCES_VALUES = [
   'featureCatalog',
 ] as const
 
-export type EsResourceTypeValues = typeof ES_RESOURCES_VALUES[number]
+export type EsResourceTypeValues = (typeof ES_RESOURCES_VALUES)[number]
 export type EsResourceType = EsResourceTypeValues | EsResourceTypeValues[]

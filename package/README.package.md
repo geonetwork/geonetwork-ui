@@ -24,13 +24,7 @@ This is what using this package looks like in an Angular application:
 
 ```ts
 // ...
-import {
-  UiElementsModule,
-  UiInputsModule,
-  UiWidgetsModule,
-  provideRepositoryUrl,
-  ThemeService,
-} from 'geonetwork-ui'
+import { UiElementsModule, UiInputsModule, UiWidgetsModule, provideRepositoryUrl, ThemeService } from 'geonetwork-ui'
 
 @NgModule({
   imports: [

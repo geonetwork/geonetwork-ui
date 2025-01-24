@@ -92,10 +92,7 @@ You'll need manual configuration to make the application running:
 
   ```ts
   // ...
-  import {
-    getGlobalConfig,
-    getThemeConfig,
-  } from '@geonetwork-ui/util/app-config'
+  import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 
   @NgModule({
     // ...
@@ -113,14 +110,7 @@ You'll need manual configuration to make the application running:
     constructor() {
       // ...
       // apply css variables using ThemeService
-      ThemeService.applyCssVariables(
-        getThemeConfig().PRIMARY_COLOR,
-        getThemeConfig().SECONDARY_COLOR,
-        getThemeConfig().MAIN_COLOR,
-        getThemeConfig().BACKGROUND_COLOR,
-        getThemeConfig().MAIN_FONT,
-        getThemeConfig().TITLE_FONT
-      )
+      ThemeService.applyCssVariables(getThemeConfig().PRIMARY_COLOR, getThemeConfig().SECONDARY_COLOR, getThemeConfig().MAIN_COLOR, getThemeConfig().BACKGROUND_COLOR, getThemeConfig().MAIN_FONT, getThemeConfig().TITLE_FONT)
     }
   }
   ```

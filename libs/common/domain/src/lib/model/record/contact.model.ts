@@ -52,7 +52,7 @@ export const RoleLabels = new Map<Role, string>([
   ['user', marker('domain.contact.role.user')],
 ])
 
-export type Role = typeof RoleValues[number]
+export type Role = (typeof RoleValues)[number]
 
 export interface Individual {
   firstName?: string

@@ -73,15 +73,11 @@ In that case you can make use of the `gnUiSearchStateContainer` directive (which
 
 ```html
 <div gnUiSearchStateContainer="latest">
-  <gn-ui-results-list-container
-    [layout]="'CARD'"
-  ></gn-ui-results-list-container>
+  <gn-ui-results-list-container [layout]="'CARD'"></gn-ui-results-list-container>
 </div>
 <div gnUiSearchStateContainer="main">
   <gn-ui-fuzzy-search></gn-ui-fuzzy-search>
-  <gn-ui-results-list-container
-    [layout]="'LIST'"
-  ></gn-ui-results-list-container>
+  <gn-ui-results-list-container [layout]="'LIST'"></gn-ui-results-list-container>
 </div>
 ```
 

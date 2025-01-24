@@ -19,7 +19,10 @@ export class EditableLabelDirective implements OnChanges, AfterViewInit {
 
   appendedInput: HTMLInputElement
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
+  constructor(
+    private el: ElementRef,
+    private renderer: Renderer2
+  ) {}
 
   ngOnChanges() {
     if (this.appendedInput) {

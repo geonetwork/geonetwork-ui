@@ -6,7 +6,7 @@ export function isEqual<
     | Date
     | number
     | URL
-    | unknown
+    | unknown,
 >(a: T, b: T): boolean {
   if (Array.isArray(a) && Array.isArray(b)) {
     return a.length === b.length && a.every((e, i) => isEqual(e, b[i]))

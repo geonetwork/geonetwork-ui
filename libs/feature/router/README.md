@@ -41,17 +41,7 @@ navigateToMetadata$ = createEffect(() =>
 2. On a route change to new search filters, it forwards those filters to the search state
 
 ```ts
-navigateWithFieldSearch$ = createEffect(() =>
-  this.facade.searchParams$.pipe(
-    map(
-      (filters) =>
-        new SetFilters(
-          routeParamsToState(filters),
-          this.routerConfig.searchStateId
-        )
-    )
-  )
-)
+navigateWithFieldSearch$ = createEffect(() => this.facade.searchParams$.pipe(map((filters) => new SetFilters(routeParamsToState(filters), this.routerConfig.searchStateId))))
 ```
 
 ## Search

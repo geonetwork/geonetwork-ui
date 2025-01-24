@@ -37,7 +37,7 @@ export class Gn4PlatformMapper {
 
     return this.avatarService
       .getProfileIcon(hash)
-      .pipe(map((profileIcon) => ({ ...user, profileIcon } as UserModel)))
+      .pipe(map((profileIcon) => ({ ...user, profileIcon }) as UserModel))
   }
 
   userFromApi(apiUser: UserApiModel): UserModel {

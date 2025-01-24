@@ -99,8 +99,8 @@ export class StatusComponent {
       this.currentConverter = currentConverter
         ? currentConverter
         : this.referenceMetadata
-        ? findConverterForDocument(this.referenceMetadata)
-        : new Iso191153Converter()
+          ? findConverterForDocument(this.referenceMetadata)
+          : new Iso191153Converter()
       return this.currentConverter.writeRecord(record, this.referenceMetadata)
     } catch (e) {
       return Promise.reject(e)

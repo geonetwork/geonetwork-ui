@@ -19,10 +19,7 @@ import { MapContainerComponent } from '@geonetwork-ui/ui/map'
 ```
 
 ```html
-<gn-ui-map-container
-  [context]="mapContext"
-  (featuresClick)="handleFeaturesClicked($event)"
-></gn-ui-map-container>
+<gn-ui-map-container [context]="mapContext" (featuresClick)="handleFeaturesClicked($event)"></gn-ui-map-container>
 ```
 
 There are a couple of injection tokens that can be used to specify some map options:
@@ -37,14 +34,9 @@ This component is connected to a map state accessible through the `MapFacade` cl
 The `LayersPanel` component is an example of how another component can interact with the map through the `MapFacade` class.
 
 ```ts
-import {
-  MapStateContainerComponent,
-  MapFacade,
-  LayersPanel,
-} from '@geonetwork-ui/feature/map'
+import { MapStateContainerComponent, MapFacade, LayersPanel } from '@geonetwork-ui/feature/map'
 ```
 
 ```html
-<gn-ui-map-state-container></gn-ui-map-state-container>
-<gn-ui-layers-panel class="absolute inset-y-0 left-0"></gn-ui-layers-panel>
+<gn-ui-map-state-container></gn-ui-map-state-container> <gn-ui-layers-panel class="absolute inset-y-0 left-0"></gn-ui-layers-panel>
 ```

@@ -86,7 +86,10 @@ export class ImageInputComponent {
     return this.uploadProgress !== undefined
   }
 
-  constructor(private http: HttpClient, private cd: ChangeDetectorRef) {}
+  constructor(
+    private http: HttpClient,
+    private cd: ChangeDetectorRef
+  ) {}
 
   getPrimaryText() {
     if (this.uploadError) {

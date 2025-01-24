@@ -26,7 +26,10 @@ export class GnDatasetViewTableComponent
 {
   @Input() datasetId!: string
   link: DatasetOnlineResource
-  constructor(injector: Injector, private changeDetector: ChangeDetectorRef) {
+  constructor(
+    injector: Injector,
+    private changeDetector: ChangeDetectorRef
+  ) {
     super(injector)
   }
   async init() {

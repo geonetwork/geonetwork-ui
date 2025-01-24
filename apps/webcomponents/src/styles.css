@@ -65,7 +65,9 @@
   opacity: 1;
 }
 .cdk-overlay-transparent-backdrop {
-  transition: visibility 1ms linear, opacity 1ms linear;
+  transition:
+    visibility 1ms linear,
+    opacity 1ms linear;
   visibility: hidden;
   opacity: 1;
 }
@@ -89,7 +91,10 @@
 
 .mat-mdc-autocomplete-panel {
   background: #fff;
-  box-shadow: 0 2px 4px -1px #0003, 0 4px 5px #00000024, 0 1px 10px #0000001f;
+  box-shadow:
+    0 2px 4px -1px #0003,
+    0 4px 5px #00000024,
+    0 1px 10px #0000001f;
 }
 .mat-mdc-option.suggestion.mat-mdc-option-active {
   background-color: var(--color-primary-lightest);
@@ -97,7 +102,9 @@
 
 /* TODO(mdc-migration): The following rule targets internal classes of autocomplete that may no longer apply for the MDC version. */
 .mat-mdc-autocomplete-panel
-  .mat-mdc-option.mat-selected:not(.mat-active):not(:hover):not(.mat-option-disabled) {
+  .mat-mdc-option.mat-selected:not(.mat-active):not(:hover):not(
+    .mat-option-disabled
+  ) {
   color: rgba(0, 0, 0, 0.87);
 }
 .mat-mdc-option:hover:not(.mat-option-disabled),
@@ -105,7 +112,9 @@
   background: rgba(0, 0, 0, 0.04);
 }
 /* TODO(mdc-migration): The following rule targets internal classes of option that may no longer apply for the MDC version. */
-.mat-mdc-option.mat-selected:not(.mat-mdc-option-multiple):not(.mat-option-disabled) {
+.mat-mdc-option.mat-selected:not(.mat-mdc-option-multiple):not(
+    .mat-option-disabled
+  ) {
   background: rgba(0, 0, 0, 0.04);
 }
 .mat-mdc-select-panel

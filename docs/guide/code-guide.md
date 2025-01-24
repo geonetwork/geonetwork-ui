@@ -139,9 +139,7 @@ To do this, it is recommended to add a `data-test` attribute to the target node 
 
 ```html
 <div>My component</div>
-<div *ngIf="data$ | async as currentData" data-test="show-data">
-  {{ currentData }}
-</div>
+<div *ngIf="data$ | async as currentData" data-test="show-data">{{ currentData }}</div>
 ```
 
 This makes the HTML template easier to read and avoid confusion with e.g. CSS classes.
@@ -218,9 +216,7 @@ Similarly to unit tests, a `data-cy` attribute can be used to target elements in
 
 ```html
 <div>My component</div>
-<div *ngIf="data$ | async as currentData" data-cy="show-data">
-  {{ currentData }}
-</div>
+<div *ngIf="data$ | async as currentData" data-cy="show-data">{{ currentData }}</div>
 ```
 
 ## Storybook

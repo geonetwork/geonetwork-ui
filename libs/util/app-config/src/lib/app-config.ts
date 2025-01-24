@@ -179,7 +179,7 @@ export function loadAppConfig() {
                     DATA: map_layer.data,
                     STYLE_URL: map_layer.styleUrl,
                     ACCESS_TOKEN: map_layer.accessToken,
-                  } as LayerConfig)
+                  }) as LayerConfig
               ),
             } as MapConfig)
 

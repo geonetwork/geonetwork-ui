@@ -72,7 +72,7 @@ describe('DropdownMultiselectComponent', () => {
           ({
             width: 25,
             height: 20,
-          } as any)
+          }) as any
         component.openOverlay()
       })
       it('sets the width according to the toggle element', () => {

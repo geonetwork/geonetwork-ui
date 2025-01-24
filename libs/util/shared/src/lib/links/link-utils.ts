@@ -138,7 +138,7 @@ export function getLinkPriority(link: DatasetOnlineResource): number {
 export function getFileFormatFromServiceOutput(
   serviceOutput: string
 ): FileFormat | null {
-  function formatMatcher(format: typeof FORMATS[FileFormat]): boolean {
+  function formatMatcher(format: (typeof FORMATS)[FileFormat]): boolean {
     const output = serviceOutput.toLowerCase()
     return (
       format.extensions.some((extension: string) =>

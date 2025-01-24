@@ -22,7 +22,10 @@ export class UploadDataPageComponent implements OnInit {
     return parseSizeAsMb(SETTINGS.maxFileUploadSize)
   }
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {

@@ -30,7 +30,10 @@ export class GnDatasetViewChartComponent
   @Input() yProperty: string
   @Input() chartType: string
   link: DatasetOnlineResource
-  constructor(injector: Injector, private changeDetector: ChangeDetectorRef) {
+  constructor(
+    injector: Injector,
+    private changeDetector: ChangeDetectorRef
+  ) {
     super(injector)
   }
   async init() {

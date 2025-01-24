@@ -10,7 +10,8 @@ body {
 
 @font-face {
   font-family: 'dataFeeder';
-  src: url('./assets/fonts/dataFeeder.woff') format('woff'),
+  src:
+    url('./assets/fonts/dataFeeder.woff') format('woff'),
     url('./assets/fonts/dataFeeder.svg') format('svg'),
     url('./assets/fonts/dataFeeder.ttf') format('ttf');
   /* src: url('./assets/fonts/dataFeeder.eot'); FIXME file looks corrupted */

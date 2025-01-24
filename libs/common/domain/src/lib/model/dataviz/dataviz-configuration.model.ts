@@ -9,7 +9,7 @@ export const CHART_TYPE_VALUES = [
   'pie',
 ] as const
 
-export type InputChartType = typeof CHART_TYPE_VALUES[number]
+export type InputChartType = (typeof CHART_TYPE_VALUES)[number]
 
 export interface DatavizConfigurationModel {
   xProperty: string

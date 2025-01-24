@@ -6,7 +6,7 @@
       'border-primary-lighter bg-primary-white': dragFilesOver,
       'border-gray-300': !dragFilesOver,
       'cursor-pointer hover:border-gray-500': !isUploadInProgress && !disabled,
-      'cursor-not-allowed': disabled
+      'cursor-not-allowed': disabled,
     }"
     [attr.tabindex]="isUploadInProgress || disabled ? null : 0"
     (dragFilesOver)="handleDragFilesOver($event)"
