@@ -7,10 +7,10 @@
   "tags": ["type:app", "published"],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@nx/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/datahub",
+        "outputPath": "dist/apps/datahub/browser/browser",
         "index": "apps/datahub/src/index.html",
         "main": "apps/datahub/src/main.ts",
         "polyfills": "apps/datahub/src/polyfills.ts",
@@ -130,6 +130,68 @@
         ],
         "parallel": false
       }
+    },
+    "server": {
+      "dependsOn": ["build"],
+      "executor": "@nx/angular:webpack-server",
+      "options": {
+        "outputPath": "dist/apps/datahub/browser/server",
+        "main": "apps/datahub/server.ts",
+        "tsConfig": "apps/datahub/tsconfig.server.json",
+        "customWebpackConfig": {
+          "path": "apps/datahub/webpack.server.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "media",
+          "fileReplacements": [
+            {
+              "replace": "apps/datahub/src/environments/environment.ts",
+              "with": "apps/datahub/src/environments/environment.prod.ts"
+            }
+          ]
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "sourceMap": true,
+          "extractLicenses": false,
+          "vendorChunk": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve-ssr": {
+      "executor": "@angular-devkit/build-angular:ssr-dev-server",
+      "configurations": {
+        "development": {
+          "browserTarget": "datahub:build:development",
+          "serverTarget": "datahub:server:development"
+        },
+        "production": {
+          "browserTarget": "datahub:build:production",
+          "serverTarget": "datahub:server:production"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "prerender": {
+      "executor": "@angular-devkit/build-angular:prerender",
+      "options": {
+        "routes": ["/"]
+      },
+      "configurations": {
+        "development": {
+          "browserTarget": "datahub:build:development",
+          "serverTarget": "datahub:server:development"
+        },
+        "production": {
+          "browserTarget": "datahub:build:production",
+          "serverTarget": "datahub:server:production"
+        }
+      },
+      "defaultConfiguration": "production"
     }
   }
 }

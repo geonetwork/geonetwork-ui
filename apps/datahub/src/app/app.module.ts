@@ -1,6 +1,9 @@
 import { DOCUMENT } from '@angular/common'
 import { importProvidersFrom, Inject, NgModule } from '@angular/core'
-import { BrowserModule } from '@angular/platform-browser'
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser'
 import { Router, RouterModule } from '@angular/router'
 import {
   FeatureCatalogModule,
@@ -264,6 +267,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
       provide: EXTERNAL_VIEWER_OPEN_NEW_TAB,
       useFactory: () => getOptionalMapConfig()?.EXTERNAL_VIEWER_OPEN_NEW_TAB,
     },
+    provideClientHydration(),
   ],
   bootstrap: [AppComponent],
 })
