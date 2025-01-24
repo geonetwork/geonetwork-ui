@@ -1652,6 +1652,7 @@ describe('Gn4Converter', () => {
             recordPublished: new Date('2021-04-01T00:00:00.000Z'),
             resourceCreated: new Date('2012-01-01T00:00:00.000Z'),
             resourceUpdated: new Date('2021-12-13T00:00:00.000Z'),
+            resourcePublished: new Date('2021-04-01T00:00:00.000Z'),
             status: 'ongoing',
             topics: ['Installations de suivi environnemental', 'Océans'],
             title: 'Surval - Données par paramètre',
@@ -2350,6 +2351,7 @@ describe('Gn4Converter', () => {
             otherLanguages: [],
             title: 'Service OGC API Records du catalogue NAP-ITS-Wallonia',
             resourceUpdated: new Date('2023-12-17T23:00:00.000Z'),
+            resourcePublished: new Date('2023-12-17T23:00:00.000Z'),
             abstract:
               "Point d'accès OGC API Records du catalogue NAP-ITS-Wallonia contenant la description des données régionales de mobilité telles que demandé par la législation sur les systèmes de transport intelligents.",
             extras: {

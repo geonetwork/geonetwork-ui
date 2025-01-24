@@ -136,12 +136,16 @@ export class Gn4FieldMapper {
       ...output,
       recordUpdated: toDate(selectField<string>(source, 'changeDate')),
     }),
-    publicationDateForResource: (output, source) => ({
-      ...output,
-      recordPublished: toDate(
+    publicationDateForResource: (output, source) => {
+      const datePublished = toDate(
         selectField<string>(source, 'publicationDateForResource')
-      ),
-    }),
+      )
+      return {
+        ...output,
+        recordPublished: datePublished,
+        resourcePublished: datePublished,
+      }
+    },
     resourceLanguage: (output, source) => {
       const langList = getAsArray(
         selectField<string>(source, 'resourceLanguage')
