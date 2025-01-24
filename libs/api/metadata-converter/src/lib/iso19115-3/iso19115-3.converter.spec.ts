@@ -11,6 +11,11 @@ import METAWAL_DATASET from '../fixtures/metawal.iso19115-3.dataset.xml'
 import METAWAL_SERVICE from '../fixtures/metawal.iso19115-3.service.xml'
 // @ts-ignore
 import SEXTANT_CURRENTS_DATASET from '../fixtures/sextant.iso19115-3.dataset.xml'
+// @ts-ignore
+import { WALLONIE_SERVICE_NAPITSWALLONIA_RECORD } from '../fixtures/wallonie.records.service+napitswallonia'
+// @ts-ignore
+import WALLONIE_SERVICE_NAPITSWALLONIA from '../fixtures/wallonie.iso19139.service+napitswallonia.xml'
+
 import {
   METAWAL_DATASET_RECORD,
   METAWAL_SERVICE_RECORD,
@@ -42,6 +47,10 @@ describe('ISO19115-3 converter', () => {
     it('produces the corresponding record (sextant dataset)', async () => {
       const record = await converter.readRecord(SEXTANT_CURRENTS_DATASET)
       expect(record).toStrictEqual(SEXTANT_CURRENTS_DATASET_RECORD)
+    })
+    it('produces the corresponding record (wallonie napitswallonia service)', async () => {
+      const record = await converter.readRecord(WALLONIE_SERVICE_NAPITSWALLONIA)
+      expect(record).toStrictEqual(WALLONIE_SERVICE_NAPITSWALLONIA_RECORD)
     })
     it('produces the corresponding record (generic dataset)', async () => {
       const record = await converter.readRecord(GENERIC_DATASET)
@@ -111,6 +120,15 @@ describe('ISO19115-3 converter', () => {
             METAWAL_SERVICE
           )
           expect(backAndForth).toStrictEqual(formatXml(METAWAL_SERVICE))
+        })
+        it('keeps the record unchanged (wallonie napitswallonia service)', async () => {
+          const backAndForth = await converter.writeRecord(
+            await converter.readRecord(WALLONIE_SERVICE_NAPITSWALLONIA),
+            WALLONIE_SERVICE_NAPITSWALLONIA
+          )
+          expect(backAndForth).toStrictEqual(
+            formatXml(WALLONIE_SERVICE_NAPITSWALLONIA)
+          )
         })
       })
     })

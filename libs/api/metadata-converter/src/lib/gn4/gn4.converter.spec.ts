@@ -2,6 +2,7 @@ import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone'
 import {
   elasticFullResponseFixture,
   elasticHitsOnlyFixture,
+  elasticServiceMetadataHistsFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { Gn4Converter } from './gn4.converter'
 import { of } from 'rxjs'
@@ -2077,6 +2078,509 @@ describe('Gn4Converter', () => {
             uniqueIdentifier: '8698bf0b-fceb-4f0f-989b-111e7c4af0a4',
             updateFrequency: 'asNeeded',
           } as CatalogRecord)
+        })
+      })
+
+      describe('full record service metadata Wallonie', () => {
+        it('builds a complete record object', async () => {
+          const record = await service.readRecord(
+            elasticServiceMetadataHistsFixture().hits.hits[0] as Gn4Record
+          )
+          expect(record).toEqual({
+            kind: 'service',
+            status: null,
+            lineage: null,
+            recordUpdated: new Date('2024-10-15T07:37:39.350Z'),
+            recordPublished: new Date('2023-12-17T23:00:00.000Z'),
+            ownerOrganization: {
+              name: 'My Organization',
+              website: new URL('http://my.org/'),
+            },
+            licenses: [
+              {
+                text: 'No limitations to public access',
+                url: new URL(
+                  'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations'
+                ),
+              },
+              {
+                text: "Aucune contrainte d'utilisation ne s'applique",
+              },
+            ],
+            legalConstraints: [
+              {
+                text: 'No limitations to public access',
+                url: new URL(
+                  'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations'
+                ),
+              },
+              {
+                text: "Aucune contrainte d'utilisation ne s'applique",
+              },
+            ],
+            securityConstraints: [],
+            otherConstraints: [
+              {
+                text: "Aucune condition ne s'applique",
+              },
+            ],
+            contacts: [
+              {
+                lastName: '',
+                organization: {
+                  name: 'Gestion et valorisation de la donnée (SPW - Secrétariat général - SPW Digital - Département Données transversales - Gestion et valorisation de la donnée)',
+                },
+                email: 'helpdesk.carto@spw.wallonie.be',
+                role: 'point_of_contact',
+              },
+            ],
+            contactsForResource: [
+              {
+                lastName: '',
+                organization: {
+                  name: 'Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département Données transversales - Gestion et valorisation de la donnée)',
+                },
+                email: 'helpdesk.carto@spw.wallonie.be',
+                role: 'point_of_contact',
+              },
+              {
+                lastName: '',
+                organization: {
+                  name: 'Gestion et valorisation de la donnée (SPW - Secrétariat général - SPW Digital - Département Données transversales - Gestion et valorisation de la donnée)',
+                },
+                email: 'helpdesk.carto@spw.wallonie.be',
+                role: 'custodian',
+              },
+              {
+                lastName: '',
+                organization: {
+                  name: 'Service public de Wallonie (SPW)',
+                  website: new URL('https://geoportail.wallonie.be/'),
+                },
+                email: '',
+                role: 'owner',
+              },
+            ],
+            keywords: [
+              {
+                label: 'métadonnées',
+                type: 'other',
+              },
+              {
+                label: 'ISO',
+                type: 'other',
+              },
+              {
+                label: 'CSW',
+                type: 'other',
+              },
+              {
+                label: '19115',
+                type: 'other',
+              },
+              {
+                label: '19139',
+                type: 'other',
+              },
+              {
+                label: 'description',
+                type: 'other',
+              },
+              {
+                label: 'MobilityDCAT',
+                type: 'other',
+              },
+              {
+                label: 'DCAT',
+                type: 'other',
+              },
+              {
+                label: 'MMTIS',
+                type: 'other',
+              },
+              {
+                label: 'SRTI',
+                type: 'other',
+              },
+              {
+                label: 'ITS',
+                type: 'other',
+              },
+              {
+                label: 'NAP',
+                type: 'other',
+              },
+              {
+                label: 'transportdata',
+                type: 'other',
+              },
+              {
+                label: 'RTTI',
+                type: 'other',
+              },
+              {
+                label: 'SSTP',
+                type: 'other',
+              },
+              {
+                label: 'Régional',
+                type: 'theme',
+                key: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/regional',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope',
+                  name: 'Champ géographique',
+                  url: new URL(
+                    'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeumetadatacodelistSpatialScope-SpatialScope'
+                  ),
+                },
+              },
+              {
+                label: 'Service de catalogue',
+                type: 'theme',
+                key: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCatalogueService',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory-SpatialDataServiceCategory',
+                  name: 'Classification of spatial data services',
+                  url: new URL(
+                    'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeumetadatacodelistSpatialDataServiceCategory-SpatialDataServiceCategory'
+                  ),
+                },
+              },
+              {
+                label: 'transport',
+                type: 'theme',
+                key: 'http://www.eionet.europa.eu/gemet/theme/37',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.gemet-theme',
+                  name: 'GEMET themes',
+                  url: new URL(
+                    'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.gemet-theme'
+                  ),
+                },
+              },
+              {
+                label: 'Reporting INSPIRENO',
+                type: 'theme',
+                key: 'https://metawal.wallonie.be/thesaurus/infrasig#ReportingINSPIRENO',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.infraSIG',
+                  name: 'Mots-clés InfraSIG',
+                  url: new URL(
+                    'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.infraSIG'
+                  ),
+                },
+              },
+              {
+                label: 'Mobilité (autre)',
+                type: 'theme',
+                key: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/3099',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.Themes_geoportail_wallon_hierarchy',
+                  name: 'Thèmes du géoportail wallon',
+                  url: new URL(
+                    'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.Themes_geoportail_wallon_hierarchy'
+                  ),
+                },
+              },
+              {
+                label: 'Données de base (autre)',
+                type: 'theme',
+                key: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/5099',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.Themes_geoportail_wallon_hierarchy',
+                  name: 'Thèmes du géoportail wallon',
+                  url: new URL(
+                    'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.Themes_geoportail_wallon_hierarchy'
+                  ),
+                },
+              },
+              {
+                label: 'Mobilité',
+                type: 'theme',
+                key: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#ThemesGeoportailWallon/30',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.Themes_geoportail_wallon_hierarchy',
+                  name: 'Thèmes du géoportail wallon',
+                  url: new URL(
+                    'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.Themes_geoportail_wallon_hierarchy'
+                  ),
+                },
+              },
+              {
+                label: 'Données de base',
+                type: 'theme',
+                key: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#ThemesGeoportailWallon/50',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.Themes_geoportail_wallon_hierarchy',
+                  name: 'Thèmes du géoportail wallon',
+                  url: new URL(
+                    'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.Themes_geoportail_wallon_hierarchy'
+                  ),
+                },
+              },
+            ],
+            topics: ['Infrastructures de transport'],
+            spatialExtents: [
+              {
+                description: 'Région wallonne',
+                geometry: {
+                  type: 'Polygon',
+                  coordinates: [
+                    [
+                      [2.75, 49.45],
+                      [6.5, 49.45],
+                      [6.5, 50.85],
+                      [2.75, 50.85],
+                      [2.75, 49.45],
+                    ],
+                  ],
+                },
+              },
+            ],
+            temporalExtents: [],
+            overviews: [
+              {
+                url: new URL(
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/fe1c1a3d-c75b-435c-a1d1-48426818f54d/attachments/echangeur.png'
+                ),
+              },
+            ],
+            defaultLanguage: 'fr',
+            otherLanguages: [],
+            title: 'Service OGC API Records du catalogue NAP-ITS-Wallonia',
+            resourceUpdated: new Date('2023-12-17T23:00:00.000Z'),
+            abstract:
+              "Point d'accès OGC API Records du catalogue NAP-ITS-Wallonia contenant la description des données régionales de mobilité telles que demandé par la législation sur les systèmes de transport intelligents.",
+            extras: {
+              isOpenData: false,
+              ownerInfo: 'vbombaerts_admin|Admin|Vincent|Administrator',
+              isPublishedToAll: true,
+              id: '53583',
+              favoriteCount: 0,
+              catalogUuid: 'metawal.wallonie.be',
+            },
+            onlineResources: [
+              {
+                name: "Point d'accès OGC API Records pour NAP-ITS-Wallonia",
+                description:
+                  "Point d'accès OGC API Records pour NAP-ITS-Wallonia.",
+                type: 'link',
+                url: new URL(
+                  'https://metawal.wallonie.be/geonetwork/api/collections/napits'
+                ),
+              },
+            ],
+            uniqueIdentifier: 'fe1c1a3d-c75b-435c-a1d1-48426818f54d',
+            landingPage: new URL(
+              'http://my.catalog.org/metadata/fe1c1a3d-c75b-435c-a1d1-48426818f54d'
+            ),
+            recordCreated: new Date('2023-12-18T12:25:26.464Z'),
+          })
+        })
+      })
+
+      describe('full record service metadata geo2france', () => {
+        it('builds a complete record object', async () => {
+          const record = await service.readRecord(
+            elasticServiceMetadataHistsFixture().hits.hits[1] as Gn4Record
+          )
+
+          expect(record).toEqual({
+            kind: 'service',
+            status: null,
+            lineage:
+              "Localisation par un ponctuel de l'ouvrage de dépollution a partir d'un fichier csv collecté sur le site du ministère : http://assainissement.developpement-durable.gouv.fr/. \nLa table des ponctuels comprend désormais tous les points de localisation des stations d'épuration calculés à partir des centroïdes de leur emprise. \nFréquence de mise à jour : annuel. \nQualité des données : Variable selon le type de saisie.",
+            recordUpdated: new Date('2024-05-29T11:58:54.326Z'),
+            recordPublished: null,
+            ownerOrganization: {
+              name: 'My Organization',
+              website: new URL('http://my.org/'),
+            },
+            licenses: [
+              {
+                text: 'No limitations on public access',
+                url: new URL(
+                  'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations'
+                ),
+              },
+              {
+                text: 'No conditions apply to access and use',
+                url: new URL(
+                  'http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply'
+                ),
+              },
+            ],
+            legalConstraints: [
+              {
+                text: 'No limitations on public access',
+                url: new URL(
+                  'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations'
+                ),
+              },
+              {
+                text: 'No conditions apply to access and use',
+                url: new URL(
+                  'http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply'
+                ),
+              },
+            ],
+            securityConstraints: [],
+            otherConstraints: [],
+            contacts: [
+              {
+                lastName: '',
+                organization: {
+                  name: 'Sandre',
+                },
+                email: 'sandre@sandre.eaufrance.fr',
+                role: 'point_of_contact',
+                address: 'OIEau, 15 rue Edouard Chamberland, 87000, France',
+              },
+            ],
+            contactsForResource: [
+              {
+                lastName: '',
+                organization: {
+                  name: 'Sandre',
+                },
+                email: 'sandre@sandre.eaufrance.fr',
+                role: 'custodian',
+                address: 'OIEau, 15 Rue Edouad Chamberland, 87000, France',
+              },
+            ],
+            keywords: [
+              {
+                label: 'National',
+                type: 'other',
+                key: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/national',
+              },
+              {
+                label: 'WFS',
+                type: 'theme',
+              },
+              {
+                label: 'Ouvrage de dépollution',
+                type: 'theme',
+              },
+              {
+                label: 'Rapportage',
+                type: 'theme',
+              },
+              {
+                label: 'ODP',
+                type: 'theme',
+              },
+              {
+                label: 'SysTraitementEauxUsees',
+                type: 'theme',
+              },
+              {
+                label: 'Données ouvertes',
+                type: 'theme',
+              },
+              {
+                label: "Services d'utilité publique et services publics",
+                type: 'theme',
+              },
+              {
+                label: 'France métropolitaine',
+                type: 'theme',
+              },
+              {
+                label: 'hvd',
+                type: 'theme',
+              },
+              {
+                label: "Services d'utilité publique et services publics",
+                type: 'theme',
+                key: 'http://inspire.ec.europa.eu/theme/pf',
+                thesaurus: {
+                  id: 'Registre de thème INSPIRE',
+                  name: 'GEMET - INSPIRE themes, version 1.0',
+                  url: new URL('http://inspire.ec.europa.eu/theme'),
+                },
+              },
+              {
+                label: 'Observation de la terre et environnement',
+                type: 'theme',
+                thesaurus: {
+                  id: 'geonetwork.thesaurus.external.theme.high-value-dataset-category-skos-ap-eu',
+                  name: 'High-value dataset categories',
+                  url: new URL(
+                    'https://www.sandre.eaufrance.fr/atlas/srv/api/registries/vocabularies/external.theme.high-value-dataset-category-skos-ap-eu'
+                  ),
+                },
+              },
+              {
+                label: 'Directive 2012/18/EU',
+                type: 'other',
+                key: 'http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset/dir-2012-18',
+              },
+              {
+                label:
+                  'Urban waste-water treatment plants (Urban Waste Water Treatment Directive)',
+                type: 'other',
+                key: 'http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset/EstablishmentsInvolvingDangerousSubstances-dir-2012-18',
+              },
+              {
+                label: 'Service d’accès aux éléments',
+                type: 'other',
+                key: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoFeatureAccessService',
+              },
+            ],
+            topics: ["Services d'utilité publique et services publics"],
+            spatialExtents: [
+              {
+                geometry: {
+                  coordinates: [
+                    [
+                      [-61.798, -21.371],
+                      [55.855, -21.371],
+                      [55.855, 51.088],
+                      [-61.798, 51.088],
+                      [-61.798, -21.371],
+                    ],
+                  ],
+                  type: 'Polygon',
+                },
+              },
+            ],
+            temporalExtents: [],
+            overviews: [],
+            defaultLanguage: 'fr',
+            otherLanguages: [],
+            extras: {
+              isPublishedToAll: true,
+              id: '15415',
+              qualityScore: 62,
+              isOpenData: false,
+              catalogUuid: 'c3f93209-4363-4e30-bec2-3cc43bd7a8a7',
+              ownerInfo: 'vfabry|Fabry|Vincent|Administrator',
+              favoriteCount: 0,
+            },
+            recordCreated: new Date('2021-12-14T15:02:50.000Z'),
+            resourceCreated: new Date('2019-12-02T00:00:00.000Z'),
+            uniqueIdentifier: 'be052079-f1f6-4f6f-a722-cbf11deb40eb',
+            landingPage: new URL(
+              'http://my.catalog.org/metadata/be052079-f1f6-4f6f-a722-cbf11deb40eb'
+            ),
+            abstract:
+              "Le service web (WFS) du référentiel des Stations de traitement des eaux permet de télécharger les ouvrages impliqués dans la dépollution des eaux usées. Les différents concepts définis dans le scénario d'échange du référentiel Stations de traitement des eaux usées du Sandre sont diffusés par ce service.",
+            onlineResources: [
+              {
+                name: 'sa:SysTraitementEauxUsees',
+                description:
+                  'Ouvrages de dépollution - Système de traitement des eaux usées - France entière',
+                type: 'service',
+                url: new URL(
+                  'https://services.sandre.eaufrance.fr/geo/odp?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities'
+                ),
+                accessServiceProtocol: 'wfs',
+              },
+            ],
+            title:
+              'Service web géographique OGC (WFS) du référentiel des Stations de traitement des eaux usées - Ouvrages de dépollution',
+          })
         })
       })
     })

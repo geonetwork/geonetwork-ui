@@ -237,6 +237,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     const otherLanguages = this.readers['otherLanguages'](rootEl, tr)
     const defaultLanguage = this.readers['defaultLanguage'](rootEl, tr)
     const resourceIdentifier = this.readers['resourceIdentifier'](rootEl, tr)
+    const spatialExtents = this.readers['spatialExtents'](rootEl, tr)
 
     if (kind === 'dataset') {
       const status = this.readers['status'](rootEl, tr)
@@ -244,7 +245,6 @@ export class Iso19139Converter extends BaseConverter<string> {
         rootEl,
         tr
       )
-      const spatialExtents = this.readers['spatialExtents'](rootEl, tr)
       const temporalExtents = this.readers['temporalExtents'](rootEl, tr)
       const lineage = this.readers['lineage'](rootEl, tr)
       const updateFrequency = this.readers['updateFrequency'](rootEl, tr)
@@ -306,6 +306,7 @@ export class Iso19139Converter extends BaseConverter<string> {
         licenses,
         legalConstraints,
         securityConstraints,
+        spatialExtents,
         otherConstraints,
         overviews,
         onlineResources,

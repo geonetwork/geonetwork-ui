@@ -286,12 +286,9 @@ export class Gn4FieldMapper {
         },
         output
       ),
-    cl_hierarchyLevel: (output, source) => {
-      const hierarchyLevel = selectField(
-        getFirstValue(selectField(source, 'cl_hierarchyLevel')),
-        'key'
-      )
-      const kind = hierarchyLevel === 'service' ? 'service' : 'dataset'
+    resourceType: (output, source) => {
+      const resourceType = getFirstValue(selectField(source, 'resourceType'))
+      const kind = resourceType === 'service' ? 'service' : 'dataset'
       return {
         ...output,
         kind,

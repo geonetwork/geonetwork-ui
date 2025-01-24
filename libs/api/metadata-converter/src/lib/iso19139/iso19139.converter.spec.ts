@@ -10,6 +10,10 @@ import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
 // @ts-ignore
 import GEO2FRANCE_PLU_DATASET from '../fixtures/geo2france.iso19139.plu.xml'
 // @ts-ignore
+import { GEO2FRANCE_SERVICE_EAUXUSEES_RECORD } from '../fixtures/geo2france.records.service+eaux-usees'
+// @ts-ignore
+import GEO2FRANCE_SERVICE_EAUXUSEES from '../fixtures/geo2france.iso19139.service+eaux-usees.xml'
+// @ts-ignore
 import GENERIC_DATASET_PLUS_GEO2FRANCE_DATASET from '../fixtures/generic-dataset+geo2france-plu.iso19139.xml'
 // @ts-ignore
 import GEOCAT_CH_DATASET from '../fixtures/geocat-ch.iso19139.dataset.xml'
@@ -34,6 +38,10 @@ describe('ISO19139 converter', () => {
     it('produces the corresponding record (geo2france dataset)', async () => {
       const record = await converter.readRecord(GEO2FRANCE_PLU_DATASET)
       expect(record).toStrictEqual(GEO2FRANCE_PLU_DATASET_RECORD)
+    })
+    it('produces the corresponding record (geo2france service  traitement des eaux usées)', async () => {
+      const record = await converter.readRecord(GEO2FRANCE_SERVICE_EAUXUSEES)
+      expect(record).toStrictEqual(GEO2FRANCE_SERVICE_EAUXUSEES_RECORD)
     })
     it('produces the corresponding record (geocat.ch dataset)', async () => {
       const record = await converter.readRecord(GEOCAT_CH_DATASET)
@@ -74,6 +82,15 @@ describe('ISO19139 converter', () => {
             GEO2FRANCE_PLU_DATASET
           )
           expect(backAndForth).toStrictEqual(formatXml(GEO2FRANCE_PLU_DATASET))
+        })
+        it('keeps the record unchanged (geo2france service  traitement des eaux usées)', async () => {
+          const backAndForth = await converter.writeRecord(
+            await converter.readRecord(GEO2FRANCE_SERVICE_EAUXUSEES),
+            GEO2FRANCE_SERVICE_EAUXUSEES
+          )
+          expect(backAndForth).toStrictEqual(
+            formatXml(GEO2FRANCE_SERVICE_EAUXUSEES)
+          )
         })
         it('keeps the record unchanged (service)', async () => {
           const backAndForth = await converter.writeRecord(
