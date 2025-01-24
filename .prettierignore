@@ -1,6 +1,7 @@
 # Add files here to ignore them from prettier formatting
 
 /dist
+/package/dist
 /coverage
 /docs/.vitepress/cache
 /docs/.vitepress/dist
