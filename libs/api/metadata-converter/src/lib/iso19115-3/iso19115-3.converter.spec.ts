@@ -14,7 +14,7 @@ import SEXTANT_CURRENTS_DATASET from '../fixtures/sextant.iso19115-3.dataset.xml
 // @ts-ignore
 import { WALLONIE_SERVICE_NAPITSWALLONIA_RECORD } from '../fixtures/wallonie.records.service+napitswallonia'
 // @ts-ignore
-import WALLONIE_SERVICE_NAPITSWALLONIA from '../fixtures/wallonie.iso19139.service+napitswallonia.xml'
+import WALLONIE_SERVICE_NAPITSWALLONIA from '../fixtures/wallonie.iso19115-3.service+napitswallonia.xml'
 // @ts-ignore
 import WALLONIE_REUSE_SPW from '../fixtures/wallonie.iso19115-3.reuse+spw.xml'
 // @ts-ignore
