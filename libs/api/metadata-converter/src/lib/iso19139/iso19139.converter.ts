@@ -340,6 +340,7 @@ export class Iso19139Converter extends BaseConverter<string> {
 
     fieldChanged('uniqueIdentifier') &&
       this.writers['uniqueIdentifier'](record, rootEl)
+    fieldChanged('reuseType') && this.writers['kind'](record, rootEl)
     fieldChanged('kind') && this.writers['kind'](record, rootEl)
     fieldChanged('defaultLanguage') &&
       this.writers['defaultLanguage'](record, rootEl)
