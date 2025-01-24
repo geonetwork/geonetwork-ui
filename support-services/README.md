@@ -29,6 +29,14 @@ To clear the volumes and let the database repopulate itself from scratch, run:
 $ docker compose down -v
 ```
 
+## Specifying a different GeoNetwork version
+
+By default, the version of GeoNetwork used as a backend is 4.2.2. You can specify another version like so:
+
+```shell
+$ GEONETWORK_VERSION=4.2.5 docker compose up -d
+```
+
 ## Access services
 
 GeoNetwork can be accessed on http://localhost:8080/geonetwork.
@@ -40,7 +48,7 @@ Kibana can be used to inspect the ElasticSearch index and experiment with reques
 Running the following command will extract the current state of the database and store it as the new initial state:
 
 ```shell
-$ docker compose exec database pg_dump -U geonetwork -d geonetwork -Fc > docker-entrypoint-initdb.d/dump
+$ docker compose exec database pg_dump -U geonetwork -d geonetwork -Fp > docker-entrypoint-initdb.d/dump.sql
 ```
 
 Please keep in mind that the initial state of the database should be as lightweight as possible and that changing it might break
