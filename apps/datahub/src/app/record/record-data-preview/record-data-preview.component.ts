@@ -66,6 +66,7 @@ export class RecordDataPreviewComponent {
 
   exceedsMaxFeatureCount$ =
     this.metadataViewFacade.geoDataLinksWithGeometry$.pipe(
+      // FIXME: improve this to potentially not only handle first WFS link
       map(
         (links) =>
           links.filter((link) => link.accessServiceProtocol === 'wfs')[0]
