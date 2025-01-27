@@ -143,11 +143,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         'bucket',
         null,
         JSON.stringify(
-          this.gn4SearchHelper.getRelatedRecordPayload(
-            similarTo.title,
-            similarTo.uniqueIdentifier,
-            3
-          )
+          this.gn4SearchHelper.getRelatedRecordPayload(similarTo, 3)
         )
       )
       .pipe(
