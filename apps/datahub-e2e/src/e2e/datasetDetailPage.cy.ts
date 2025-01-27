@@ -692,7 +692,7 @@ describe('dataset pages', () => {
             .find('h4')
             .should(
               'have.text',
-              ` Concentrations annuelles de polluants dans l'air ambiant issues du réseau permanent de mesures en région Hauts-de-France `
+              ` SCoT (Schéma de cohérence territoriale) en région Hauts-de-France `
             )
         })
         it('goes to dataset on click', () => {
