@@ -214,6 +214,10 @@ The map section lets you customize how maps appear and behave across GeoNetwork-
   max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
   ```
 
+- `max_feature_count` (optional)
+
+  Will remove WFS from map layers if its features exceed the indicated number. Data preview chart and table will be hidden in this case.
+
 - `do_not_tile_wms` (optional)
 
   Will not use tiling when requesting WMS services. Defaults to `false` (WMS are tiled). Not using tiles for WMS might incur performance loss since the client will not benefit from an eventual tile cache anymore. On the other hand, visual quality might improve in case a map tile server does not handle neighbouring tiles correctly, e.g. symbols or text being cropped at tile boundaries. This can be set true to prevent visual conflicts on tile borders, if the WMS server does not add a gutter, for example. gn-ui does not add a gutter on the client side, in order to allow server-side caching.

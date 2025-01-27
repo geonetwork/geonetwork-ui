@@ -129,6 +129,10 @@ background_color = "#fdfbff"
 # Expressed in the map view projection (EPSG:3857)
 # max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
 
+# Optional; Will remove WFS from map layers if its features exceed the indicated number.
+# Data preview chart and table will be hidden in this case.
+# max_feature_count = 5000
+
 # Optional; URL template enabling to open map layers in an external viewer; if set, displays a button next to the map's layer drop down
 # The template must include the following placeholders, which allow the datahub to inject the correct values when adding a layer to a viewer:
 # ${service_url}: URL of the OWS or geojson file

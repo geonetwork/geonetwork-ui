@@ -53,6 +53,13 @@ jest.mock('@camptocamp/ogc-client', () => ({
                 : ['csv', 'xls', 'json', 'gml'],
           }
     }
+    getFeatureTypeFull(name) {
+      return name.indexOf('missing') > -1
+        ? Promise.resolve(null)
+        : Promise.resolve({
+            objectCount: 100,
+          })
+    }
     getFeatureTypes() {
       if (this.url.indexOf('unique-feature-type') > -1) {
         return [
@@ -392,6 +399,65 @@ describe('DataService', () => {
             },
           ])
         })
+      })
+    })
+
+    describe('#getWfsFeatureCount', () => {
+      it('should return the feature count when feature type is found', async () => {
+        const wfsUrl = 'http://local/wfs'
+        const featureTypeName = 'validFeatureType'
+        const count = await lastValueFrom(
+          service.getWfsFeatureCount(wfsUrl, featureTypeName)
+        )
+        expect(count).toBe(100)
+      })
+
+      it('should throw an error when feature type is not found', async () => {
+        const wfsUrl = 'http://local/wfs'
+        const featureTypeName = 'missingFeatureType'
+        try {
+          await lastValueFrom(
+            service.getWfsFeatureCount(wfsUrl, featureTypeName)
+          )
+        } catch (e) {
+          expect(e.message).toBe('wfs.featuretype.notfound')
+        }
+      })
+
+      it('should throw a relevant error when WFS is unreachable (CORS)', async () => {
+        const wfsUrl = 'http://error.cors/wfs'
+        const featureTypeName = 'validFeatureType'
+        try {
+          await lastValueFrom(
+            service.getWfsFeatureCount(wfsUrl, featureTypeName)
+          )
+        } catch (e) {
+          expect(e.message).toBe('wfs.unreachable.cors')
+        }
+      })
+
+      it('should throw a relevant error when WFS is unreachable (HTTP error)', async () => {
+        const wfsUrl = 'http://error.http/wfs'
+        const featureTypeName = 'validFeatureType'
+        try {
+          await lastValueFrom(
+            service.getWfsFeatureCount(wfsUrl, featureTypeName)
+          )
+        } catch (e) {
+          expect(e.message).toBe('wfs.unreachable.http')
+        }
+      })
+
+      it('should throw a relevant error when WFS is unreachable (unknown)', async () => {
+        const wfsUrl = 'http://error/wfs'
+        const featureTypeName = 'validFeatureType'
+        try {
+          await lastValueFrom(
+            service.getWfsFeatureCount(wfsUrl, featureTypeName)
+          )
+        } catch (e) {
+          expect(e.message).toBe('wfs.unreachable.unknown')
+        }
       })
     })
 

@@ -10,19 +10,14 @@ import {
   MetadataInfoComponent,
   MetadataQualityComponent,
 } from '@geonetwork-ui/ui/elements'
-import { BehaviorSubject, combineLatest } from 'rxjs'
-import { filter, map, mergeMap, startWith } from 'rxjs/operators'
+import { combineLatest } from 'rxjs'
+import { filter, map, mergeMap } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
   Keyword,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import {
-  DataViewComponent,
-  DataViewShareComponent,
-  MapViewComponent,
-  MdViewFacade,
-} from '@geonetwork-ui/feature/record'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { CommonModule } from '@angular/common'
 import { MatTabsModule } from '@angular/material/tabs'
 import { RecordUserFeedbacksComponent } from '../record-user-feedbacks/record-user-feedbacks.component'
@@ -31,6 +26,7 @@ import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
 import { RecordRelatedRecordsComponent } from '../record-related-records/record-related-records.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -47,39 +43,17 @@ import { TranslateModule } from '@ngx-translate/core'
     RecordDownloadsComponent,
     RecordApisComponent,
     RecordOtherlinksComponent,
-    DataViewShareComponent,
     MetadataInfoComponent,
     MetadataContactComponent,
     MetadataQualityComponent,
     MetadataCatalogComponent,
     RecordRelatedRecordsComponent,
-    DataViewComponent,
-    MapViewComponent,
     TranslateModule,
+    RecordDataPreviewComponent,
   ],
 })
 export class RecordMetadataComponent {
   @Input() metadataQualityDisplay: boolean
-
-  displayMap$ = combineLatest([
-    this.metadataViewFacade.mapApiLinks$,
-    this.metadataViewFacade.geoDataLinksWithGeometry$,
-  ]).pipe(
-    map(([mapApiLinks, geoDataLinksWithGeometry]) => {
-      return mapApiLinks?.length > 0 || geoDataLinksWithGeometry?.length > 0
-    }),
-    startWith(false)
-  )
-
-  displayData$ = combineLatest([
-    this.metadataViewFacade.dataLinks$,
-    this.metadataViewFacade.geoDataLinks$,
-  ]).pipe(
-    map(
-      ([dataLinks, geoDataLinks]) =>
-        dataLinks?.length > 0 || geoDataLinks?.length > 0
-    )
-  )
 
   displayDownload$ = this.metadataViewFacade.downloadLinks$.pipe(
     map((links) => links?.length > 0)
@@ -128,8 +102,6 @@ export class RecordMetadataComponent {
 
   errorTypes = ErrorType
 
-  selectedView$ = new BehaviorSubject('map')
-
   thumbnailUrl$ = this.metadataViewFacade.metadata$.pipe(
     map((metadata) => {
       // in order to differentiate between metadata not loaded yet
@@ -151,24 +123,6 @@ export class RecordMetadataComponent {
     private sourceService: SourcesService,
     private orgsService: OrganizationsServiceInterface
   ) {}
-
-  onTabIndexChange(index: number): void {
-    let view
-    switch (index) {
-      case 0:
-        view = 'map'
-        break
-      case 1:
-        view = 'table'
-        break
-      default:
-        view = 'chart'
-    }
-    this.selectedView$.next(view)
-    setTimeout(() => {
-      window.dispatchEvent(new Event('resize'))
-    }, 0)
-  }
 
   onInfoKeywordClick(keyword: Keyword) {
     this.searchService.updateFilters({ any: keyword.label })

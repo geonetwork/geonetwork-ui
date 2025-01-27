@@ -53,67 +53,7 @@
       </div>
     </div>
   </div>
-  <div
-    style="height: 612px"
-    *ngIf="(displayMap$ | async) || (displayData$ | async)"
-    id="preview"
-  >
-    <div
-      class="bg-primary-opacity-10 pt-8 overflow-visible sm:pt-5"
-      style="height: 512px"
-    >
-      <div class="container-lg px-4 lg:mx-auto">
-        <div>
-          <div
-            class="text-[28px] text-title font-title transform sm:translate-y-10"
-            translate
-          >
-            record.metadata.preview
-          </div>
-          <mat-tab-group
-            (selectedIndexChange)="onTabIndexChange($event)"
-            [selectedIndex]="(displayMap$ | async) ? 0 : 1"
-            animationDuration="200ms"
-            mat-stretch-tabs="false"
-            mat-align-tabs="start"
-          >
-            <mat-tab [disabled]="(displayMap$ | async) === false">
-              <ng-template mat-tab-label>
-                <span class="tab-header-label" translate>record.tab.map</span>
-              </ng-template>
-              <div
-                class="block"
-                style="height: 500px"
-                *ngIf="displayMap$ | async"
-              >
-                <gn-ui-map-view></gn-ui-map-view>
-              </div>
-            </mat-tab>
-            <mat-tab [disabled]="(displayData$ | async) === false">
-              <ng-template mat-tab-label>
-                <span class="tab-header-label" translate>record.tab.data</span>
-              </ng-template>
-              <div class="block" *ngIf="displayData$ | async">
-                <gn-ui-data-view mode="table"></gn-ui-data-view>
-              </div>
-            </mat-tab>
-            <mat-tab [disabled]="(displayData$ | async) === false">
-              <ng-template mat-tab-label>
-                <span class="tab-header-label" translate>record.tab.chart</span>
-              </ng-template>
-              <div class="block" *ngIf="displayData$ | async">
-                <gn-ui-data-view mode="chart"></gn-ui-data-view>
-              </div>
-            </mat-tab>
-          </mat-tab-group>
-        </div>
-      </div>
-    </div>
-  </div>
-  <gn-ui-data-view-share
-    *ngIf="(displayMap$ | async) || (displayData$ | async)"
-    [viewType]="selectedView$ | async"
-  ></gn-ui-data-view-share>
+  <datahub-record-data-preview></datahub-record-data-preview>
   <div
     id="access"
     class="container-lg px-4 lg:mx-auto"

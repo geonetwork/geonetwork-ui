@@ -15,18 +15,12 @@ import { BehaviorSubject, of } from 'rxjs'
 import { RecordMetadataComponent } from './record-metadata.component'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import {
-  DataViewComponent,
-  DataViewShareComponent,
-  MapViewComponent,
-  MdViewFacade,
-} from '@geonetwork-ui/feature/record'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { MockBuilder } from 'ng-mocks'
 import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component'
 import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordRelatedRecordsComponent } from '../record-related-records/record-related-records.component'
-import { MatTab, MatTabGroup } from '@angular/material/tabs'
 
 const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
@@ -38,10 +32,6 @@ const SAMPLE_RECORD = {
 class MdViewFacadeMock {
   isPresent$ = new BehaviorSubject(false)
   metadata$ = new BehaviorSubject(SAMPLE_RECORD)
-  mapApiLinks$ = new BehaviorSubject([])
-  dataLinks$ = new BehaviorSubject([])
-  geoDataLinks$ = new BehaviorSubject([])
-  geoDataLinksWithGeometry$ = new BehaviorSubject([])
   downloadLinks$ = new BehaviorSubject([])
   apiLinks$ = new BehaviorSubject([])
   otherLinks$ = new BehaviorSubject([])
@@ -213,160 +203,6 @@ describe('RecordMetadataComponent', () => {
             expect(imgOverlayPreview.imageUrl).toBeNull()
           })
         })
-      })
-    })
-  })
-
-  describe('Preview', () => {
-    describe('when no MAPAPI, GEODATA nor DATA link', () => {
-      beforeEach(() => {
-        fixture.detectChanges()
-      })
-      it('does not render preview content', () => {
-        expect(fixture.debugElement.query(By.css('#preview'))).toBeFalsy()
-      })
-    })
-  })
-  describe('Map view', () => {
-    let mapTab
-    let tabGroup
-    describe('when DATA link, but no MAPAPI and no GEODATA link', () => {
-      beforeEach(() => {
-        facade.dataLinks$.next(['link'])
-        fixture.detectChanges()
-        mapTab = fixture.debugElement.queryAll(By.directive(MatTab))[0]
-        tabGroup = fixture.debugElement.queryAll(By.directive(MatTabGroup))[0]
-      })
-      it('renders preview, map tab is disabled', () => {
-        expect(mapTab.componentInstance.disabled).toBe(true)
-      })
-      it('renders preview, table tab is selected', () => {
-        expect(tabGroup.componentInstance.selectedIndex).toBe(1)
-      })
-      it('does not render map component', () => {
-        expect(
-          fixture.debugElement.query(By.directive(MapViewComponent))
-        ).toBeFalsy()
-      })
-    })
-    describe('when a MAPAPI link present', () => {
-      beforeEach(() => {
-        facade.mapApiLinks$.next(['link'])
-        fixture.detectChanges()
-        mapTab = fixture.debugElement.queryAll(By.directive(MatTab))[0]
-      })
-      it('renders preview, map tab is enabled', () => {
-        expect(mapTab.componentInstance.disabled).toBe(false)
-      })
-      it('renders map component', () => {
-        expect(
-          fixture.debugElement.query(By.directive(MapViewComponent))
-        ).toBeTruthy()
-      })
-    })
-    describe('when a GEODATA link present', () => {
-      beforeEach(() => {
-        facade.geoDataLinksWithGeometry$.next(['link'])
-        facade.geoDataLinks$.next(['link'])
-        fixture.detectChanges()
-        mapTab = fixture.debugElement.queryAll(By.directive(MatTab))[0]
-      })
-      it('renders preview, map tab is enabled', () => {
-        expect(mapTab.componentInstance.disabled).toBe(false)
-      })
-      it('renders map component', () => {
-        expect(
-          fixture.debugElement.query(By.directive(MapViewComponent))
-        ).toBeTruthy()
-      })
-    })
-  })
-  describe('Data view - table and chart', () => {
-    let tableTab
-    let chartTab
-    let tabGroup
-    describe('when MAPAPI link, but no DATA and no GEODATA link', () => {
-      beforeEach(() => {
-        facade.mapApiLinks$.next(['link'])
-        facade.dataLinks$.next(null)
-        facade.geoDataLinksWithGeometry$.next(null)
-        fixture.detectChanges()
-        tableTab = fixture.debugElement.queryAll(By.directive(MatTab))[1]
-        chartTab = fixture.debugElement.queryAll(By.directive(MatTab))[2]
-        tabGroup = fixture.debugElement.queryAll(By.directive(MatTabGroup))[0]
-      })
-      it('renders preview, table tab is disabled', () => {
-        expect(tableTab.componentInstance.disabled).toBe(true)
-      })
-      it('renders preview, chart tab is disabled', () => {
-        expect(chartTab.componentInstance.disabled).toBe(true)
-      })
-      it('renders preview, map tab is selected', () => {
-        expect(tabGroup.componentInstance.selectedIndex).toBe(0)
-      })
-      it('does not render any data view component', () => {
-        expect(
-          fixture.debugElement.query(By.directive(DataViewComponent))
-        ).toBeFalsy()
-      })
-      it('does render the permalink component', () => {
-        expect(
-          fixture.debugElement.query(By.directive(DataViewShareComponent))
-        ).toBeTruthy()
-      })
-    })
-    describe('when a DATA link present', () => {
-      beforeEach(() => {
-        facade.dataLinks$.next(['link'])
-        fixture.detectChanges()
-        tableTab = fixture.debugElement.queryAll(By.directive(MatTab))[1]
-        chartTab = fixture.debugElement.queryAll(By.directive(MatTab))[2]
-      })
-      it('renders preview, table tab is enabled', () => {
-        expect(tableTab.componentInstance.disabled).toBe(false)
-      })
-      it('renders preview, chart tab is enabled', () => {
-        expect(chartTab.componentInstance.disabled).toBe(false)
-      })
-      it('renders two data view components (for table and chart tabs)', () => {
-        expect(
-          fixture.debugElement.queryAll(By.directive(DataViewComponent)).length
-        ).toEqual(2)
-      })
-      it('does render the permalink component', () => {
-        expect(
-          fixture.debugElement.query(By.directive(DataViewShareComponent))
-        ).toBeTruthy()
-      })
-      describe('when selectedView$ is chart', () => {
-        beforeEach(() => {
-          component.selectedView$.next('chart')
-          fixture.detectChanges()
-        })
-        it('renders the permalink component', () => {
-          expect(
-            fixture.debugElement.query(By.directive(DataViewShareComponent))
-          ).toBeTruthy()
-        })
-      })
-    })
-    describe('when a GEODATA link present', () => {
-      beforeEach(() => {
-        facade.geoDataLinks$.next(['link'])
-        fixture.detectChanges()
-        tableTab = fixture.debugElement.queryAll(By.directive(MatTab))[1]
-        chartTab = fixture.debugElement.queryAll(By.directive(MatTab))[2]
-      })
-      it('renders preview, table tab is enabled', () => {
-        expect(tableTab.componentInstance.disabled).toBe(false)
-      })
-      it('renders preview, chart tab is enabled', () => {
-        expect(chartTab.componentInstance.disabled).toBe(false)
-      })
-      it('renders two data view components (for table and chart tabs)', () => {
-        expect(
-          fixture.debugElement.queryAll(By.directive(DataViewComponent)).length
-        ).toEqual(2)
       })
     })
   })

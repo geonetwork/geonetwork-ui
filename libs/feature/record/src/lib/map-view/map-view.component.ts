@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Input,
   ViewChild,
 } from '@angular/core'
 import { MapUtilsService } from '@geonetwork-ui/feature/map'
@@ -54,6 +55,10 @@ import {
   LoadingMaskComponent,
   PopupAlertComponent,
 } from '@geonetwork-ui/ui/widgets'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('map.dropdown.placeholder')
+marker('wfs.feature.limit')
 
 @Component({
   selector: 'gn-ui-map-view',
@@ -77,8 +82,12 @@ import {
   viewProviders: [provideIcons({ matClose })],
 })
 export class MapViewComponent implements AfterViewInit {
+  @Input() set excludeWfs(value: boolean) {
+    this.excludeWfs$.next(value)
+  }
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
 
+  excludeWfs$ = new BehaviorSubject(false)
   selection: Feature
   showLegend = true
   legendExists = false
@@ -110,7 +119,7 @@ export class MapViewComponent implements AfterViewInit {
             label: getLinkLabel(link),
             value: index,
           }))
-        : [{ label: 'No preview layer', value: 0 }]
+        : [{ label: 'map.dropdown.placeholder', value: 0 }]
     )
   )
   selectedLinkIndex$ = new BehaviorSubject(0)
@@ -123,9 +132,13 @@ export class MapViewComponent implements AfterViewInit {
     this.selectedLinkIndex$.pipe(distinctUntilChanged()),
   ]).pipe(map(([links, index]) => links[index]))
 
-  currentLayers$ = this.selectedLink$.pipe(
-    switchMap((link) => {
+  currentLayers$ = combineLatest([this.selectedLink$, this.excludeWfs$]).pipe(
+    switchMap(([link, excludeWfs]) => {
       if (!link) {
+        return of([])
+      }
+      if (excludeWfs && link.accessServiceProtocol === 'wfs') {
+        this.error = 'wfs.feature.limit'
         return of([])
       }
       this.loading = true
