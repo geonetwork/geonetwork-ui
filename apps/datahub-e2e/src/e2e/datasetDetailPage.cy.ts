@@ -640,7 +640,7 @@ describe('dataset pages', () => {
             .find('h4')
             .should(
               'have.text',
-              ` Mat éolien construit ou en projet dans les Hauts de France `
+              ` Concentrations annuelles de polluants dans l'air ambiant issues du réseau permanent de mesures en région Hauts-de-France `
             )
         })
         it('goes to dataset on click', () => {
