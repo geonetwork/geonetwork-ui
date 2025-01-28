@@ -2820,3 +2820,10555 @@ export const elasticServiceMetadataHistsFixture = () => ({
     ],
   },
 })
+
+export const elasticReuseMetadataHitsFixture = () => ({
+  hits: {
+    max_score: 1,
+    hits: [
+      {
+        _index: 'gn-records',
+        _id: '83809bcd-1763-4d28-b820-2b9828083ba5',
+        _score: 8.354177,
+        _ignored: ['overview.data.keyword'],
+        _source: {
+          docType: 'metadata',
+          document: '',
+          metadataIdentifier: '83809bcd-1763-4d28-b820-2b9828083ba5',
+          standardNameObject: {
+            default: 'ISO 19115-3',
+            langfre: 'ISO 19115-3',
+          },
+          standardVersionObject: {
+            default: '2005/Amd.1:2008',
+            lang: '2005/Amd.1:2008',
+          },
+          indexingDate: 1737543379271,
+          dateStamp: '2024-07-22T11:52:39.049Z',
+          mainLanguage: 'fre',
+          cl_characterSet: [
+            {
+              key: 'utf8',
+              default: 'Utf8',
+              langfre: 'Utf8',
+              link: 'http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_CharacterSetCode',
+            },
+          ],
+          resourceType: ['application'],
+          resourceTypeNameObject: {
+            default: 'Application généraliste',
+            langfre: 'Application généraliste',
+          },
+          OrgObject: {
+            default:
+              "Direction de la gestion des informations territoriales (SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales)",
+            langfre:
+              "Direction de la gestion des informations territoriales (SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales)",
+          },
+          pointOfContactOrg_tree: [
+            'SPW',
+            'SPW - Territoire, Logement, Patrimoine, Énergie',
+            "SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme",
+            "SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales",
+          ],
+          pointOfContactOrgObject: {
+            default:
+              "Direction de la gestion des informations territoriales (SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales)",
+            langfre:
+              "Direction de la gestion des informations territoriales (SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales)",
+          },
+          contact: [
+            {
+              organisationObject: {
+                default:
+                  "Direction de la gestion des informations territoriales (SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales)",
+                langfre:
+                  "Direction de la gestion des informations territoriales (SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales)",
+              },
+              role: 'pointOfContact',
+              email: 'jeanchristophe.sainte@spw.wallonie.be',
+              website: '',
+              logo: '',
+              individual: '',
+              position: '',
+              phone: '',
+              address: '',
+            },
+          ],
+          cl_resourceScope: [
+            {
+              key: 'application',
+              default: 'Application',
+              langfre: 'Application',
+              link: 'http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode',
+            },
+          ],
+          cl_function: [
+            {
+              key: 'completeMetadata',
+              default: 'Métadonnées intégrales',
+              langfre: 'Métadonnées intégrales',
+              link: 'http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode',
+            },
+            {
+              key: 'information',
+              default: 'Information',
+              langfre: 'Information',
+              link: 'http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode',
+            },
+            {
+              key: 'browsing',
+              default: 'Consultation',
+              langfre: 'Consultation',
+              link: 'http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode',
+            },
+          ],
+          cl_referenceSystemType: [
+            {
+              key: 'projected',
+              default: 'Projeté',
+              langfre: 'Projeté',
+              link: 'http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ReferenceSystemTypeCode',
+            },
+          ],
+          cl_type: [
+            {
+              key: 'theme',
+              default: 'Thème',
+              langfre: 'Thème',
+              link: 'http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode',
+            },
+          ],
+          cl_accessConstraints: [
+            {
+              key: 'otherRestrictions',
+              default: 'Autres restrictions',
+              langfre: 'Autres restrictions',
+              link: 'http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_RestrictionCode',
+            },
+          ],
+          cl_useConstraints: [
+            {
+              key: 'license',
+              default: 'Licence',
+              langfre: 'Licence',
+              link: 'http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_RestrictionCode',
+            },
+          ],
+          resourceTitleObject: {
+            default: 'Cartographie des données du SPW territoire',
+            langfre: 'Cartographie des données du SPW territoire',
+          },
+          resourceAltTitleObject: [
+            {
+              default: 'Geoapps - webgisdgo4',
+              langfre: 'Geoapps - webgisdgo4',
+            },
+          ],
+          resourceLastUpdateDate: '2017-06-01',
+          creationDateForResource: ['2017-05-31T22:00:00.000Z'],
+          creationYearForResource: '2017',
+          creationMonthForResource: '2017-05',
+          publicationDateForResource: ['2018-03-31T22:00:00.000Z'],
+          publicationYearForResource: '2018',
+          publicationMonthForResource: '2018-03',
+          resourceDate: [
+            {
+              type: 'creation',
+              date: '2017-05-31T22:00:00.000Z',
+            },
+            {
+              type: 'publication',
+              date: '2018-03-31T22:00:00.000Z',
+            },
+          ],
+          resourceTemporalDateRange: [
+            {
+              gte: '2017-05-31T22:00:00.000Z',
+              lte: '2017-05-31T22:00:00.000Z',
+            },
+            {
+              gte: '2018-03-31T22:00:00.000Z',
+              lte: '2018-03-31T22:00:00.000Z',
+            },
+          ],
+          resourceIdentifier: [
+            {
+              code: '83809bcd-1763-4d28-b820-2b9828083ba5',
+              codeSpace: 'http://geodata.wallonie.be/id/',
+              link: '',
+            },
+          ],
+          'mw-gp-globalIdentifier':
+            'http://geodata.wallonie.be/id/83809bcd-1763-4d28-b820-2b9828083ba5',
+          resourceAbstractObject: {
+            default:
+              "Application cartographique présentant des données du SPW territoire (Aménagement du territoire, Logement, Patrimoine et Energie).\n\nCette application propose une trentaine de couches de données thématiques regroupées dans cinq grands thèmes : 1) Aménagement du territoire et urbanisme, 2) Application particulière du CoDT, 3) Logement, 4) Patrimoine et 5) Applications spécifiques. Par thème, il est possible de consulter les couches de données individuellement à partir d'une liste prédéfinie, de consulter leurs métadonnées et leur légende.\n\n\nUne identification des données présentes sur le territoire est possible de trois manières différentes : fine, étendue ou par parcelle. Des liens sont prévus pour visualiser aisément les dossiers, et donc toute la partie documentaire. Le résultat peut être sauvé et exporté en pdf ou en xml.\n\nDes recherches (commune, rue, parcelle, coordonnées) sont également possibles, tout comme une impression.\n\nUne aide en ligne est mise à disposition.",
+            langfre:
+              "Application cartographique présentant des données du SPW territoire (Aménagement du territoire, Logement, Patrimoine et Energie).\n\nCette application propose une trentaine de couches de données thématiques regroupées dans cinq grands thèmes : 1) Aménagement du territoire et urbanisme, 2) Application particulière du CoDT, 3) Logement, 4) Patrimoine et 5) Applications spécifiques. Par thème, il est possible de consulter les couches de données individuellement à partir d'une liste prédéfinie, de consulter leurs métadonnées et leur légende.\n\n\nUne identification des données présentes sur le territoire est possible de trois manières différentes : fine, étendue ou par parcelle. Des liens sont prévus pour visualiser aisément les dossiers, et donc toute la partie documentaire. Le résultat peut être sauvé et exporté en pdf ou en xml.\n\nDes recherches (commune, rue, parcelle, coordonnées) sont également possibles, tout comme une impression.\n\nUne aide en ligne est mise à disposition.",
+          },
+          infrasig_ReportingINSPIRE: 'false',
+          resourceHookAbstractObject: {
+            default:
+              'Application cartographique présentant des données du SPW territoire (Aménagement du territoire, Logement, Patrimoine et Energie).',
+            langfre:
+              'Application cartographique présentant des données du SPW territoire (Aménagement du territoire, Logement, Patrimoine et Energie).',
+          },
+          OrgForResourceObject: [
+            {
+              default:
+                "Direction de la gestion des informations territoriales (SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales)",
+              langfre:
+                "Direction de la gestion des informations territoriales (SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales)",
+            },
+            {
+              default: 'Service public de Wallonie (SPW)',
+              langfre: 'Service public de Wallonie (SPW)',
+            },
+          ],
+          pointOfContactOrgForResource_tree: [
+            'SPW',
+            'SPW - Territoire, Logement, Patrimoine, Énergie',
+            "SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme",
+            "SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales",
+          ],
+          pointOfContactOrgForResourceObject: {
+            default:
+              "Direction de la gestion des informations territoriales (SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales)",
+            langfre:
+              "Direction de la gestion des informations territoriales (SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales)",
+          },
+          contactForResource: [
+            {
+              organisationObject: {
+                default:
+                  "Direction de la gestion des informations territoriales (SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales)",
+                langfre:
+                  "Direction de la gestion des informations territoriales (SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales)",
+              },
+              role: 'pointOfContact',
+              email: 'donnees.territoire@spw.wallonie.be',
+              website: '',
+              logo: '',
+              individual: '',
+              position: '',
+              phone: '',
+              address: '',
+            },
+            {
+              organisationObject: {
+                default:
+                  "Direction de la gestion des informations territoriales (SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales)",
+                langfre:
+                  "Direction de la gestion des informations territoriales (SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales)",
+              },
+              role: 'custodian',
+              email: 'jeanchristophe.sainte@spw.wallonie.be',
+              website: '',
+              logo: '',
+              individual: '',
+              position: '',
+              phone: '',
+              address: '',
+            },
+            {
+              organisationObject: {
+                default: 'Service public de Wallonie (SPW)',
+                langfre: 'Service public de Wallonie (SPW)',
+              },
+              role: 'owner',
+              email: '',
+              website: 'https://geoportail.wallonie.be',
+              logo: '',
+              individual: '',
+              position: '',
+              phone: '',
+              address: '',
+            },
+          ],
+          custodianOrgForResource_tree: [
+            'SPW',
+            'SPW - Territoire, Logement, Patrimoine, Énergie',
+            "SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme",
+            "SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales",
+          ],
+          custodianOrgForResourceObject: {
+            default:
+              "Direction de la gestion des informations territoriales (SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales)",
+            langfre:
+              "Direction de la gestion des informations territoriales (SPW - Territoire, Logement, Patrimoine, Énergie - Département de l'Aménagement du territoire et de l'Urbanisme - Direction de la gestion des informations territoriales)",
+          },
+          ownerOrgForResource_tree: 'SPW',
+          ownerOrgForResourceObject: {
+            default: 'Service public de Wallonie (SPW)',
+            langfre: 'Service public de Wallonie (SPW)',
+          },
+          purposeObject: {
+            default:
+              'Consultation thématique et interaction de base avec les données publiques du SPW territoire.',
+            langfre:
+              'Consultation thématique et interaction de base avec les données publiques du SPW territoire.',
+          },
+          hasOverview: 'true',
+          inspireThemeNumber: '0',
+          hasInspireTheme: 'false',
+          tag: [
+            {
+              default: 'Aménagement du Territoire et Urbanisme',
+              langfre: 'Aménagement du Territoire et Urbanisme',
+            },
+            {
+              default: 'Cahiers de Charges Urbanistiques et Environnementaux',
+              langfre: 'Cahiers de Charges Urbanistiques et Environnementaux',
+            },
+            {
+              default: 'Campings',
+              langfre: 'Campings',
+            },
+            {
+              default:
+                "Commissions Consultatives d'Aménagement du Territoire et de Mobilité",
+              langfre:
+                "Commissions Consultatives d'Aménagement du Territoire et de Mobilité",
+            },
+            {
+              default: 'Communes en décentralisation',
+              langfre: 'Communes en décentralisation',
+            },
+            {
+              default: 'Lotissements',
+              langfre: 'Lotissements',
+            },
+            {
+              default: 'Parcs Résidentiels de Week-End',
+              langfre: 'Parcs Résidentiels de Week-End',
+            },
+            {
+              default: 'Périmètres de Reconnaissance Economique',
+              langfre: 'Périmètres de Reconnaissance Economique',
+            },
+            {
+              default: 'Plan de Secteur',
+              langfre: 'Plan de Secteur',
+            },
+            {
+              default: "Plans Communaux d'Aménagement",
+              langfre: "Plans Communaux d'Aménagement",
+            },
+            {
+              default: "Plan d'Habitat Permanent",
+              langfre: "Plan d'Habitat Permanent",
+            },
+            {
+              default: 'Rapports Urbanistiques et Environnementaux',
+              langfre: 'Rapports Urbanistiques et Environnementaux',
+            },
+            {
+              default: 'Règlement Général sur les Bâtisses en Site Rural',
+              langfre: 'Règlement Général sur les Bâtisses en Site Rural',
+            },
+            {
+              default: "Règlements Communaux d'Urbanisme",
+              langfre: "Règlements Communaux d'Urbanisme",
+            },
+            {
+              default: 'Remembrement urbain',
+              langfre: 'Remembrement urbain',
+            },
+            {
+              default: 'Rénovation urbaine',
+              langfre: 'Rénovation urbaine',
+            },
+            {
+              default: 'Revitalisation urbaine',
+              langfre: 'Revitalisation urbaine',
+            },
+            {
+              default: 'Schémas de Structure Communaux',
+              langfre: 'Schémas de Structure Communaux',
+            },
+            {
+              default: 'Sites À Réaménager',
+              langfre: 'Sites À Réaménager',
+            },
+            {
+              default:
+                "Terrils à considérer en matière d'aménagement du territoire",
+              langfre:
+                "Terrils à considérer en matière d'aménagement du territoire",
+            },
+            {
+              default: 'Zones agro-géographiques',
+              langfre: 'Zones agro-géographiques',
+            },
+            {
+              default: 'Zones franches urbaines',
+              langfre: 'Zones franches urbaines',
+            },
+            {
+              default: "Zones Protégées en matière d'Urbanisme",
+              langfre: "Zones Protégées en matière d'Urbanisme",
+            },
+            {
+              default: 'Logement',
+              langfre: 'Logement',
+            },
+            {
+              default: "Zones d'Initiative Privilégiée",
+              langfre: "Zones d'Initiative Privilégiée",
+            },
+            {
+              default: 'Patrimoine',
+              langfre: 'Patrimoine',
+            },
+            {
+              default: 'Biens classés et zones de protection',
+              langfre: 'Biens classés et zones de protection',
+            },
+            {
+              default: 'Biens exceptionnels',
+              langfre: 'Biens exceptionnels',
+            },
+            {
+              default: 'Biens mondiaux',
+              langfre: 'Biens mondiaux',
+            },
+            {
+              default: 'Liste de sauvegarde',
+              langfre: 'Liste de sauvegarde',
+            },
+            {
+              default: 'Inventaire du patrimoine immobilier culturel',
+              langfre: 'Inventaire du patrimoine immobilier culturel',
+            },
+            {
+              default: "Application de l'article 127 du CWATUPE",
+              langfre: "Application de l'article 127 du CWATUPE",
+            },
+            {
+              default: 'Cartes de Vander Maelen 1850',
+              langfre: 'Cartes de Vander Maelen 1850',
+            },
+            {
+              default: 'PCA',
+              langfre: 'PCA',
+            },
+            {
+              default: 'CCUE',
+              langfre: 'CCUE',
+            },
+            {
+              default: 'RGBSR',
+              langfre: 'RGBSR',
+            },
+            {
+              default: 'PDS',
+              langfre: 'PDS',
+            },
+            {
+              default: 'RUE',
+              langfre: 'RUE',
+            },
+            {
+              default: 'RUE',
+              langfre: 'RUE',
+            },
+            {
+              default: 'RCU',
+              langfre: 'RCU',
+            },
+            {
+              default: 'SSC',
+              langfre: 'SSC',
+            },
+            {
+              default: 'SAR',
+              langfre: 'SAR',
+            },
+            {
+              default: 'ZIP',
+              langfre: 'ZIP',
+            },
+            {
+              default: 'cartographie en ligne',
+              langfre: 'cartographie en ligne',
+            },
+            {
+              default: 'application WebGIS',
+              langfre: 'application WebGIS',
+            },
+            {
+              default: 'visualisateur',
+              langfre: 'visualisateur',
+            },
+            {
+              default: 'Reporting INSPIRENO',
+              langfre: 'Reporting INSPIRENO',
+              key: 'https://metawal.wallonie.be/thesaurus/infrasig#ReportingINSPIRENO',
+            },
+            {
+              default: 'Cartes anciennes',
+              langfre: 'Cartes anciennes',
+              link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/5040',
+              key: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/5040',
+            },
+            {
+              default: 'Aménagement du territoire',
+              langfre: 'Aménagement du territoire',
+              link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#ThemesGeoportailWallon/20',
+              key: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#ThemesGeoportailWallon/20',
+            },
+            {
+              default: 'Logement et habitat',
+              langfre: 'Logement et habitat',
+              link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/6030',
+              key: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/6030',
+            },
+            {
+              default: 'Risques et contraintes',
+              langfre: 'Risques et contraintes',
+              link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/2020',
+              key: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/2020',
+            },
+            {
+              default: 'Plans et règlements',
+              langfre: 'Plans et règlements',
+              link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/2010',
+              key: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/2010',
+            },
+            {
+              default: 'Région wallonne',
+              langfre: 'Région wallonne',
+            },
+          ],
+          tagNumber: '53',
+          isOpenData: 'false',
+          'keywordType-theme': [
+            {
+              default: 'Aménagement du Territoire et Urbanisme',
+              langfre: 'Aménagement du Territoire et Urbanisme',
+            },
+            {
+              default: 'Cahiers de Charges Urbanistiques et Environnementaux',
+              langfre: 'Cahiers de Charges Urbanistiques et Environnementaux',
+            },
+            {
+              default: 'Campings',
+              langfre: 'Campings',
+            },
+            {
+              default:
+                "Commissions Consultatives d'Aménagement du Territoire et de Mobilité",
+              langfre:
+                "Commissions Consultatives d'Aménagement du Territoire et de Mobilité",
+            },
+            {
+              default: 'Communes en décentralisation',
+              langfre: 'Communes en décentralisation',
+            },
+            {
+              default: 'Lotissements',
+              langfre: 'Lotissements',
+            },
+            {
+              default: 'Parcs Résidentiels de Week-End',
+              langfre: 'Parcs Résidentiels de Week-End',
+            },
+            {
+              default: 'Périmètres de Reconnaissance Economique',
+              langfre: 'Périmètres de Reconnaissance Economique',
+            },
+            {
+              default: 'Plan de Secteur',
+              langfre: 'Plan de Secteur',
+            },
+            {
+              default: "Plans Communaux d'Aménagement",
+              langfre: "Plans Communaux d'Aménagement",
+            },
+            {
+              default: "Plan d'Habitat Permanent",
+              langfre: "Plan d'Habitat Permanent",
+            },
+            {
+              default: 'Rapports Urbanistiques et Environnementaux',
+              langfre: 'Rapports Urbanistiques et Environnementaux',
+            },
+            {
+              default: 'Règlement Général sur les Bâtisses en Site Rural',
+              langfre: 'Règlement Général sur les Bâtisses en Site Rural',
+            },
+            {
+              default: "Règlements Communaux d'Urbanisme",
+              langfre: "Règlements Communaux d'Urbanisme",
+            },
+            {
+              default: 'Remembrement urbain',
+              langfre: 'Remembrement urbain',
+            },
+            {
+              default: 'Rénovation urbaine',
+              langfre: 'Rénovation urbaine',
+            },
+            {
+              default: 'Revitalisation urbaine',
+              langfre: 'Revitalisation urbaine',
+            },
+            {
+              default: 'Schémas de Structure Communaux',
+              langfre: 'Schémas de Structure Communaux',
+            },
+            {
+              default: 'Sites À Réaménager',
+              langfre: 'Sites À Réaménager',
+            },
+            {
+              default:
+                "Terrils à considérer en matière d'aménagement du territoire",
+              langfre:
+                "Terrils à considérer en matière d'aménagement du territoire",
+            },
+            {
+              default: 'Zones agro-géographiques',
+              langfre: 'Zones agro-géographiques',
+            },
+            {
+              default: 'Zones franches urbaines',
+              langfre: 'Zones franches urbaines',
+            },
+            {
+              default: "Zones Protégées en matière d'Urbanisme",
+              langfre: "Zones Protégées en matière d'Urbanisme",
+            },
+            {
+              default: 'Logement',
+              langfre: 'Logement',
+            },
+            {
+              default: "Zones d'Initiative Privilégiée",
+              langfre: "Zones d'Initiative Privilégiée",
+            },
+            {
+              default: 'Patrimoine',
+              langfre: 'Patrimoine',
+            },
+            {
+              default: 'Biens classés et zones de protection',
+              langfre: 'Biens classés et zones de protection',
+            },
+            {
+              default: 'Biens exceptionnels',
+              langfre: 'Biens exceptionnels',
+            },
+            {
+              default: 'Biens mondiaux',
+              langfre: 'Biens mondiaux',
+            },
+            {
+              default: 'Liste de sauvegarde',
+              langfre: 'Liste de sauvegarde',
+            },
+            {
+              default: 'Inventaire du patrimoine immobilier culturel',
+              langfre: 'Inventaire du patrimoine immobilier culturel',
+            },
+            {
+              default: "Application de l'article 127 du CWATUPE",
+              langfre: "Application de l'article 127 du CWATUPE",
+            },
+            {
+              default: 'Cartes de Vander Maelen 1850',
+              langfre: 'Cartes de Vander Maelen 1850',
+            },
+            {
+              default: 'PCA',
+              langfre: 'PCA',
+            },
+            {
+              default: 'CCUE',
+              langfre: 'CCUE',
+            },
+            {
+              default: 'RGBSR',
+              langfre: 'RGBSR',
+            },
+            {
+              default: 'PDS',
+              langfre: 'PDS',
+            },
+            {
+              default: 'RUE',
+              langfre: 'RUE',
+            },
+            {
+              default: 'RUE',
+              langfre: 'RUE',
+            },
+            {
+              default: 'RCU',
+              langfre: 'RCU',
+            },
+            {
+              default: 'SSC',
+              langfre: 'SSC',
+            },
+            {
+              default: 'SAR',
+              langfre: 'SAR',
+            },
+            {
+              default: 'ZIP',
+              langfre: 'ZIP',
+            },
+            {
+              default: 'cartographie en ligne',
+              langfre: 'cartographie en ligne',
+            },
+            {
+              default: 'application WebGIS',
+              langfre: 'application WebGIS',
+            },
+            {
+              default: 'visualisateur',
+              langfre: 'visualisateur',
+            },
+            {
+              default: 'Reporting INSPIRENO',
+              langfre: 'Reporting INSPIRENO',
+              link: 'https://metawal.wallonie.be/thesaurus/infrasig#ReportingINSPIRENO',
+            },
+            {
+              default: 'Cartes anciennes',
+              langfre: 'Cartes anciennes',
+              link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/5040',
+            },
+            {
+              default: 'Aménagement du territoire',
+              langfre: 'Aménagement du territoire',
+              link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#ThemesGeoportailWallon/20',
+            },
+            {
+              default: 'Logement et habitat',
+              langfre: 'Logement et habitat',
+              link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/6030',
+            },
+            {
+              default: 'Risques et contraintes',
+              langfre: 'Risques et contraintes',
+              link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/2020',
+            },
+            {
+              default: 'Plans et règlements',
+              langfre: 'Plans et règlements',
+              link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/2010',
+            },
+          ],
+          'keywordType-place': [
+            {
+              default: 'Région wallonne',
+              langfre: 'Région wallonne',
+            },
+          ],
+          'th_otherKeywords-themeNumber': '46',
+          'th_otherKeywords-theme': [
+            {
+              default: 'Aménagement du Territoire et Urbanisme',
+              langfre: 'Aménagement du Territoire et Urbanisme',
+            },
+            {
+              default: 'Cahiers de Charges Urbanistiques et Environnementaux',
+              langfre: 'Cahiers de Charges Urbanistiques et Environnementaux',
+            },
+            {
+              default: 'Campings',
+              langfre: 'Campings',
+            },
+            {
+              default:
+                "Commissions Consultatives d'Aménagement du Territoire et de Mobilité",
+              langfre:
+                "Commissions Consultatives d'Aménagement du Territoire et de Mobilité",
+            },
+            {
+              default: 'Communes en décentralisation',
+              langfre: 'Communes en décentralisation',
+            },
+            {
+              default: 'Lotissements',
+              langfre: 'Lotissements',
+            },
+            {
+              default: 'Parcs Résidentiels de Week-End',
+              langfre: 'Parcs Résidentiels de Week-End',
+            },
+            {
+              default: 'Périmètres de Reconnaissance Economique',
+              langfre: 'Périmètres de Reconnaissance Economique',
+            },
+            {
+              default: 'Plan de Secteur',
+              langfre: 'Plan de Secteur',
+            },
+            {
+              default: "Plans Communaux d'Aménagement",
+              langfre: "Plans Communaux d'Aménagement",
+            },
+            {
+              default: "Plan d'Habitat Permanent",
+              langfre: "Plan d'Habitat Permanent",
+            },
+            {
+              default: 'Rapports Urbanistiques et Environnementaux',
+              langfre: 'Rapports Urbanistiques et Environnementaux',
+            },
+            {
+              default: 'Règlement Général sur les Bâtisses en Site Rural',
+              langfre: 'Règlement Général sur les Bâtisses en Site Rural',
+            },
+            {
+              default: "Règlements Communaux d'Urbanisme",
+              langfre: "Règlements Communaux d'Urbanisme",
+            },
+            {
+              default: 'Remembrement urbain',
+              langfre: 'Remembrement urbain',
+            },
+            {
+              default: 'Rénovation urbaine',
+              langfre: 'Rénovation urbaine',
+            },
+            {
+              default: 'Revitalisation urbaine',
+              langfre: 'Revitalisation urbaine',
+            },
+            {
+              default: 'Schémas de Structure Communaux',
+              langfre: 'Schémas de Structure Communaux',
+            },
+            {
+              default: 'Sites À Réaménager',
+              langfre: 'Sites À Réaménager',
+            },
+            {
+              default:
+                "Terrils à considérer en matière d'aménagement du territoire",
+              langfre:
+                "Terrils à considérer en matière d'aménagement du territoire",
+            },
+            {
+              default: 'Zones agro-géographiques',
+              langfre: 'Zones agro-géographiques',
+            },
+            {
+              default: 'Zones franches urbaines',
+              langfre: 'Zones franches urbaines',
+            },
+            {
+              default: "Zones Protégées en matière d'Urbanisme",
+              langfre: "Zones Protégées en matière d'Urbanisme",
+            },
+            {
+              default: 'Logement',
+              langfre: 'Logement',
+            },
+            {
+              default: "Zones d'Initiative Privilégiée",
+              langfre: "Zones d'Initiative Privilégiée",
+            },
+            {
+              default: 'Patrimoine',
+              langfre: 'Patrimoine',
+            },
+            {
+              default: 'Biens classés et zones de protection',
+              langfre: 'Biens classés et zones de protection',
+            },
+            {
+              default: 'Biens exceptionnels',
+              langfre: 'Biens exceptionnels',
+            },
+            {
+              default: 'Biens mondiaux',
+              langfre: 'Biens mondiaux',
+            },
+            {
+              default: 'Liste de sauvegarde',
+              langfre: 'Liste de sauvegarde',
+            },
+            {
+              default: 'Inventaire du patrimoine immobilier culturel',
+              langfre: 'Inventaire du patrimoine immobilier culturel',
+            },
+            {
+              default: "Application de l'article 127 du CWATUPE",
+              langfre: "Application de l'article 127 du CWATUPE",
+            },
+            {
+              default: 'Cartes de Vander Maelen 1850',
+              langfre: 'Cartes de Vander Maelen 1850',
+            },
+            {
+              default: 'PCA',
+              langfre: 'PCA',
+            },
+            {
+              default: 'CCUE',
+              langfre: 'CCUE',
+            },
+            {
+              default: 'RGBSR',
+              langfre: 'RGBSR',
+            },
+            {
+              default: 'PDS',
+              langfre: 'PDS',
+            },
+            {
+              default: 'RUE',
+              langfre: 'RUE',
+            },
+            {
+              default: 'RUE',
+              langfre: 'RUE',
+            },
+            {
+              default: 'RCU',
+              langfre: 'RCU',
+            },
+            {
+              default: 'SSC',
+              langfre: 'SSC',
+            },
+            {
+              default: 'SAR',
+              langfre: 'SAR',
+            },
+            {
+              default: 'ZIP',
+              langfre: 'ZIP',
+            },
+            {
+              default: 'cartographie en ligne',
+              langfre: 'cartographie en ligne',
+            },
+            {
+              default: 'application WebGIS',
+              langfre: 'application WebGIS',
+            },
+            {
+              default: 'visualisateur',
+              langfre: 'visualisateur',
+            },
+          ],
+          th_infraSIGNumber: '1',
+          th_infraSIG: [
+            {
+              default: 'Reporting INSPIRENO',
+              langfre: 'Reporting INSPIRENO',
+              link: 'https://metawal.wallonie.be/thesaurus/infrasig#ReportingINSPIRENO',
+            },
+          ],
+          th_Themes_geoportail_wallon_hierarchyNumber: '5',
+          th_Themes_geoportail_wallon_hierarchy: [
+            {
+              default: 'Cartes anciennes',
+              langfre: 'Cartes anciennes',
+              link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/5040',
+            },
+            {
+              default: 'Aménagement du territoire',
+              langfre: 'Aménagement du territoire',
+              link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#ThemesGeoportailWallon/20',
+            },
+            {
+              default: 'Logement et habitat',
+              langfre: 'Logement et habitat',
+              link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/6030',
+            },
+            {
+              default: 'Risques et contraintes',
+              langfre: 'Risques et contraintes',
+              link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/2020',
+            },
+            {
+              default: 'Plans et règlements',
+              langfre: 'Plans et règlements',
+              link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/2010',
+            },
+          ],
+          allKeywords: {
+            'th_otherKeywords-theme': {
+              title: 'otherKeywords-theme',
+              theme: 'theme',
+              keywords: [
+                {
+                  default: 'Aménagement du Territoire et Urbanisme',
+                  langfre: 'Aménagement du Territoire et Urbanisme',
+                },
+                {
+                  default:
+                    'Cahiers de Charges Urbanistiques et Environnementaux',
+                  langfre:
+                    'Cahiers de Charges Urbanistiques et Environnementaux',
+                },
+                {
+                  default: 'Campings',
+                  langfre: 'Campings',
+                },
+                {
+                  default:
+                    "Commissions Consultatives d'Aménagement du Territoire et de Mobilité",
+                  langfre:
+                    "Commissions Consultatives d'Aménagement du Territoire et de Mobilité",
+                },
+                {
+                  default: 'Communes en décentralisation',
+                  langfre: 'Communes en décentralisation',
+                },
+                {
+                  default: 'Lotissements',
+                  langfre: 'Lotissements',
+                },
+                {
+                  default: 'Parcs Résidentiels de Week-End',
+                  langfre: 'Parcs Résidentiels de Week-End',
+                },
+                {
+                  default: 'Périmètres de Reconnaissance Economique',
+                  langfre: 'Périmètres de Reconnaissance Economique',
+                },
+                {
+                  default: 'Plan de Secteur',
+                  langfre: 'Plan de Secteur',
+                },
+                {
+                  default: "Plans Communaux d'Aménagement",
+                  langfre: "Plans Communaux d'Aménagement",
+                },
+                {
+                  default: "Plan d'Habitat Permanent",
+                  langfre: "Plan d'Habitat Permanent",
+                },
+                {
+                  default: 'Rapports Urbanistiques et Environnementaux',
+                  langfre: 'Rapports Urbanistiques et Environnementaux',
+                },
+                {
+                  default: 'Règlement Général sur les Bâtisses en Site Rural',
+                  langfre: 'Règlement Général sur les Bâtisses en Site Rural',
+                },
+                {
+                  default: "Règlements Communaux d'Urbanisme",
+                  langfre: "Règlements Communaux d'Urbanisme",
+                },
+                {
+                  default: 'Remembrement urbain',
+                  langfre: 'Remembrement urbain',
+                },
+                {
+                  default: 'Rénovation urbaine',
+                  langfre: 'Rénovation urbaine',
+                },
+                {
+                  default: 'Revitalisation urbaine',
+                  langfre: 'Revitalisation urbaine',
+                },
+                {
+                  default: 'Schémas de Structure Communaux',
+                  langfre: 'Schémas de Structure Communaux',
+                },
+                {
+                  default: 'Sites À Réaménager',
+                  langfre: 'Sites À Réaménager',
+                },
+                {
+                  default:
+                    "Terrils à considérer en matière d'aménagement du territoire",
+                  langfre:
+                    "Terrils à considérer en matière d'aménagement du territoire",
+                },
+                {
+                  default: 'Zones agro-géographiques',
+                  langfre: 'Zones agro-géographiques',
+                },
+                {
+                  default: 'Zones franches urbaines',
+                  langfre: 'Zones franches urbaines',
+                },
+                {
+                  default: "Zones Protégées en matière d'Urbanisme",
+                  langfre: "Zones Protégées en matière d'Urbanisme",
+                },
+                {
+                  default: 'Logement',
+                  langfre: 'Logement',
+                },
+                {
+                  default: "Zones d'Initiative Privilégiée",
+                  langfre: "Zones d'Initiative Privilégiée",
+                },
+                {
+                  default: 'Patrimoine',
+                  langfre: 'Patrimoine',
+                },
+                {
+                  default: 'Biens classés et zones de protection',
+                  langfre: 'Biens classés et zones de protection',
+                },
+                {
+                  default: 'Biens exceptionnels',
+                  langfre: 'Biens exceptionnels',
+                },
+                {
+                  default: 'Biens mondiaux',
+                  langfre: 'Biens mondiaux',
+                },
+                {
+                  default: 'Liste de sauvegarde',
+                  langfre: 'Liste de sauvegarde',
+                },
+                {
+                  default: 'Inventaire du patrimoine immobilier culturel',
+                  langfre: 'Inventaire du patrimoine immobilier culturel',
+                },
+                {
+                  default: "Application de l'article 127 du CWATUPE",
+                  langfre: "Application de l'article 127 du CWATUPE",
+                },
+                {
+                  default: 'Cartes de Vander Maelen 1850',
+                  langfre: 'Cartes de Vander Maelen 1850',
+                },
+                {
+                  default: 'PCA',
+                  langfre: 'PCA',
+                },
+                {
+                  default: 'CCUE',
+                  langfre: 'CCUE',
+                },
+                {
+                  default: 'RGBSR',
+                  langfre: 'RGBSR',
+                },
+                {
+                  default: 'PDS',
+                  langfre: 'PDS',
+                },
+                {
+                  default: 'RUE',
+                  langfre: 'RUE',
+                },
+                {
+                  default: 'RUE',
+                  langfre: 'RUE',
+                },
+                {
+                  default: 'RCU',
+                  langfre: 'RCU',
+                },
+                {
+                  default: 'SSC',
+                  langfre: 'SSC',
+                },
+                {
+                  default: 'SAR',
+                  langfre: 'SAR',
+                },
+                {
+                  default: 'ZIP',
+                  langfre: 'ZIP',
+                },
+                {
+                  default: 'cartographie en ligne',
+                  langfre: 'cartographie en ligne',
+                },
+                {
+                  default: 'application WebGIS',
+                  langfre: 'application WebGIS',
+                },
+                {
+                  default: 'visualisateur',
+                  langfre: 'visualisateur',
+                },
+              ],
+            },
+            th_infraSIG: {
+              id: 'geonetwork.thesaurus.external.theme.infraSIG',
+              title: 'Mots-clés InfraSIG',
+              theme: 'theme',
+              link: 'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.infraSIG',
+              keywords: [
+                {
+                  default: 'Reporting INSPIRENO',
+                  langfre: 'Reporting INSPIRENO',
+                  link: 'https://metawal.wallonie.be/thesaurus/infrasig#ReportingINSPIRENO',
+                },
+              ],
+            },
+            th_Themes_geoportail_wallon_hierarchy: {
+              id: 'geonetwork.thesaurus.external.theme.Themes_geoportail_wallon_hierarchy',
+              title: 'Thèmes du géoportail wallon',
+              theme: 'theme',
+              link: 'https://metawal.wallonie.be/geonetwork/srv/api/registries/vocabularies/external.theme.Themes_geoportail_wallon_hierarchy',
+              keywords: [
+                {
+                  default: 'Cartes anciennes',
+                  langfre: 'Cartes anciennes',
+                  link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/5040',
+                },
+                {
+                  default: 'Aménagement du territoire',
+                  langfre: 'Aménagement du territoire',
+                  link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#ThemesGeoportailWallon/20',
+                },
+                {
+                  default: 'Logement et habitat',
+                  langfre: 'Logement et habitat',
+                  link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/6030',
+                },
+                {
+                  default: 'Risques et contraintes',
+                  langfre: 'Risques et contraintes',
+                  link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/2020',
+                },
+                {
+                  default: 'Plans et règlements',
+                  langfre: 'Plans et règlements',
+                  link: 'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/2010',
+                },
+              ],
+            },
+          },
+          th_infraSIG_tree: {
+            default: ['Reporting INSPIRENO'],
+            key: [
+              'https://metawal.wallonie.be/thesaurus/infrasig#ReportingINSPIRENO',
+            ],
+          },
+          th_Themes_geoportail_wallon_hierarchy_tree: {
+            default: [
+              'Aménagement du territoire',
+              'Aménagement du territoire^Plans et règlements',
+              'Aménagement du territoire^Risques et contraintes',
+              'Données de base',
+              'Données de base^Cartes anciennes',
+              'Société et activités',
+              'Société et activités^Logement et habitat',
+            ],
+            key: [
+              'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#ThemesGeoportailWallon/20',
+              'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#ThemesGeoportailWallon/20^https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/2010',
+              'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#ThemesGeoportailWallon/20^https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/2020',
+              'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#ThemesGeoportailWallon/50',
+              'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#ThemesGeoportailWallon/50^https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/5040',
+              'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#ThemesGeoportailWallon/60',
+              'https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#ThemesGeoportailWallon/60^https://metawal.wallonie.be/thesaurus/theme-geoportail-wallon#SubThemesGeoportailWallon/6030',
+            ],
+          },
+          'mw-gp-keywords': {
+            'th_otherKeywords-theme': {
+              title: 'otherKeywords-theme',
+              theme: 'theme',
+              keywords: [
+                {
+                  default: 'Aménagement du Territoire et Urbanisme',
+                  langfre: 'Aménagement du Territoire et Urbanisme',
+                },
+                {
+                  default:
+                    'Cahiers de Charges Urbanistiques et Environnementaux',
+                  langfre:
+                    'Cahiers de Charges Urbanistiques et Environnementaux',
+                },
+                {
+                  default: 'Campings',
+                  langfre: 'Campings',
+                },
+                {
+                  default:
+                    "Commissions Consultatives d'Aménagement du Territoire et de Mobilité",
+                  langfre:
+                    "Commissions Consultatives d'Aménagement du Territoire et de Mobilité",
+                },
+                {
+                  default: 'Communes en décentralisation',
+                  langfre: 'Communes en décentralisation',
+                },
+                {
+                  default: 'Lotissements',
+                  langfre: 'Lotissements',
+                },
+                {
+                  default: 'Parcs Résidentiels de Week-End',
+                  langfre: 'Parcs Résidentiels de Week-End',
+                },
+                {
+                  default: 'Périmètres de Reconnaissance Economique',
+                  langfre: 'Périmètres de Reconnaissance Economique',
+                },
+                {
+                  default: 'Plan de Secteur',
+                  langfre: 'Plan de Secteur',
+                },
+                {
+                  default: "Plans Communaux d'Aménagement",
+                  langfre: "Plans Communaux d'Aménagement",
+                },
+                {
+                  default: "Plan d'Habitat Permanent",
+                  langfre: "Plan d'Habitat Permanent",
+                },
+                {
+                  default: 'Rapports Urbanistiques et Environnementaux',
+                  langfre: 'Rapports Urbanistiques et Environnementaux',
+                },
+                {
+                  default: 'Règlement Général sur les Bâtisses en Site Rural',
+                  langfre: 'Règlement Général sur les Bâtisses en Site Rural',
+                },
+                {
+                  default: "Règlements Communaux d'Urbanisme",
+                  langfre: "Règlements Communaux d'Urbanisme",
+                },
+                {
+                  default: 'Remembrement urbain',
+                  langfre: 'Remembrement urbain',
+                },
+                {
+                  default: 'Rénovation urbaine',
+                  langfre: 'Rénovation urbaine',
+                },
+                {
+                  default: 'Revitalisation urbaine',
+                  langfre: 'Revitalisation urbaine',
+                },
+                {
+                  default: 'Schémas de Structure Communaux',
+                  langfre: 'Schémas de Structure Communaux',
+                },
+                {
+                  default: 'Sites À Réaménager',
+                  langfre: 'Sites À Réaménager',
+                },
+                {
+                  default:
+                    "Terrils à considérer en matière d'aménagement du territoire",
+                  langfre:
+                    "Terrils à considérer en matière d'aménagement du territoire",
+                },
+                {
+                  default: 'Zones agro-géographiques',
+                  langfre: 'Zones agro-géographiques',
+                },
+                {
+                  default: 'Zones franches urbaines',
+                  langfre: 'Zones franches urbaines',
+                },
+                {
+                  default: "Zones Protégées en matière d'Urbanisme",
+                  langfre: "Zones Protégées en matière d'Urbanisme",
+                },
+                {
+                  default: 'Logement',
+                  langfre: 'Logement',
+                },
+                {
+                  default: "Zones d'Initiative Privilégiée",
+                  langfre: "Zones d'Initiative Privilégiée",
+                },
+                {
+                  default: 'Patrimoine',
+                  langfre: 'Patrimoine',
+                },
+                {
+                  default: 'Biens classés et zones de protection',
+                  langfre: 'Biens classés et zones de protection',
+                },
+                {
+                  default: 'Biens exceptionnels',
+                  langfre: 'Biens exceptionnels',
+                },
+                {
+                  default: 'Biens mondiaux',
+                  langfre: 'Biens mondiaux',
+                },
+                {
+                  default: 'Liste de sauvegarde',
+                  langfre: 'Liste de sauvegarde',
+                },
+                {
+                  default: 'Inventaire du patrimoine immobilier culturel',
+                  langfre: 'Inventaire du patrimoine immobilier culturel',
+                },
+                {
+                  default: "Application de l'article 127 du CWATUPE",
+                  langfre: "Application de l'article 127 du CWATUPE",
+                },
+                {
+                  default: 'Cartes de Vander Maelen 1850',
+                  langfre: 'Cartes de Vander Maelen 1850',
+                },
+                {
+                  default: 'PCA',
+                  langfre: 'PCA',
+                },
+                {
+                  default: 'CCUE',
+                  langfre: 'CCUE',
+                },
+                {
+                  default: 'RGBSR',
+                  langfre: 'RGBSR',
+                },
+                {
+                  default: 'PDS',
+                  langfre: 'PDS',
+                },
+                {
+                  default: 'RUE',
+                  langfre: 'RUE',
+                },
+                {
+                  default: 'RUE',
+                  langfre: 'RUE',
+                },
+                {
+                  default: 'RCU',
+                  langfre: 'RCU',
+                },
+                {
+                  default: 'SSC',
+                  langfre: 'SSC',
+                },
+                {
+                  default: 'SAR',
+                  langfre: 'SAR',
+                },
+                {
+                  default: 'ZIP',
+                  langfre: 'ZIP',
+                },
+                {
+                  default: 'cartographie en ligne',
+                  langfre: 'cartographie en ligne',
+                },
+                {
+                  default: 'application WebGIS',
+                  langfre: 'application WebGIS',
+                },
+                {
+                  default: 'visualisateur',
+                  langfre: 'visualisateur',
+                },
+              ],
+            },
+          },
+          MD_LegalConstraintsOtherConstraintsObject: [
+            {
+              default: "Aucune contrainte d'accès à l'application.",
+              langfre: "Aucune contrainte d'accès à l'application.",
+            },
+            {
+              default:
+                "Les mentions légales et contraintes accessibles depuis l'application s'appliquent",
+              langfre:
+                "Les mentions légales et contraintes accessibles depuis l'application s'appliquent",
+            },
+          ],
+          'mw-gp-constraintsObject': [
+            {
+              default: "Aucune contrainte d'accès à l'application.",
+              langfre: "Aucune contrainte d'accès à l'application.",
+            },
+            {
+              default:
+                "L'utilisation des applications nécessite l'installation de trois plugins gratuits (PDF, DjVu et Flashplayer) pour la visualisation des données cartographiques, les informations documentaires alphanumériques qui y sont directement liées et les pièces scannées associées aux dossiers (dans les données documentaires). Téléchargement possible via l'application.",
+              langfre:
+                "L'utilisation des applications nécessite l'installation de trois plugins gratuits (PDF, DjVu et Flashplayer) pour la visualisation des données cartographiques, les informations documentaires alphanumériques qui y sont directement liées et les pièces scannées associées aux dossiers (dans les données documentaires). Téléchargement possible via l'application.",
+            },
+            {
+              default:
+                "Les mentions légales accessibles depuis l'application s'appliquent.",
+              langfre:
+                "Les mentions légales accessibles depuis l'application s'appliquent.",
+            },
+            {
+              default:
+                "Les limites d'utilisation des données et services s'appliquent.",
+              langfre:
+                "Les limites d'utilisation des données et services s'appliquent.",
+            },
+            {
+              default:
+                "L'information peut être utilisée gratuitement pour un usage personnel ou dans un cadre administratif (par exemple afin de compléter un formulaire destiné à l'administration) et à condition de citer clairement la source.",
+              langfre:
+                "L'information peut être utilisée gratuitement pour un usage personnel ou dans un cadre administratif (par exemple afin de compléter un formulaire destiné à l'administration) et à condition de citer clairement la source.",
+            },
+            {
+              default:
+                'Toute reproduction et/ou représentation et/ou rediffusion, en tout ou partie, sur tout support électronique ou non, présent ou futur, ayant un caractère commercial, est interdite sauf autorisation expresse et préalable.',
+              langfre:
+                'Toute reproduction et/ou représentation et/ou rediffusion, en tout ou partie, sur tout support électronique ou non, présent ou futur, ayant un caractère commercial, est interdite sauf autorisation expresse et préalable.',
+            },
+            {
+              default:
+                "Les données géographiques disponibles au départ de l'application n'ont aucune valeur légale et sont mises à disposition de l'utilisateur à titre indicatif.",
+              langfre:
+                "Les données géographiques disponibles au départ de l'application n'ont aucune valeur légale et sont mises à disposition de l'utilisateur à titre indicatif.",
+            },
+            {
+              default:
+                "Les mentions légales et contraintes accessibles depuis l'application s'appliquent",
+              langfre:
+                "Les mentions légales et contraintes accessibles depuis l'application s'appliquent",
+            },
+          ],
+          MD_LegalConstraintsaccessConstraints: 'otherRestrictions',
+          MD_ConstraintsUseLimitationObject: [
+            {
+              default:
+                "L'utilisation des applications nécessite l'installation de trois plugins gratuits (PDF, DjVu et Flashplayer) pour la visualisation des données cartographiques, les informations documentaires alphanumériques qui y sont directement liées et les pièces scannées associées aux dossiers (dans les données documentaires). Téléchargement possible via l'application.",
+              langfre:
+                "L'utilisation des applications nécessite l'installation de trois plugins gratuits (PDF, DjVu et Flashplayer) pour la visualisation des données cartographiques, les informations documentaires alphanumériques qui y sont directement liées et les pièces scannées associées aux dossiers (dans les données documentaires). Téléchargement possible via l'application.",
+            },
+            {
+              default:
+                "Les mentions légales accessibles depuis l'application s'appliquent.",
+              langfre:
+                "Les mentions légales accessibles depuis l'application s'appliquent.",
+            },
+            {
+              default:
+                "Les limites d'utilisation des données et services s'appliquent.",
+              langfre:
+                "Les limites d'utilisation des données et services s'appliquent.",
+            },
+            {
+              default:
+                "L'information peut être utilisée gratuitement pour un usage personnel ou dans un cadre administratif (par exemple afin de compléter un formulaire destiné à l'administration) et à condition de citer clairement la source.",
+              langfre:
+                "L'information peut être utilisée gratuitement pour un usage personnel ou dans un cadre administratif (par exemple afin de compléter un formulaire destiné à l'administration) et à condition de citer clairement la source.",
+            },
+            {
+              default:
+                'Toute reproduction et/ou représentation et/ou rediffusion, en tout ou partie, sur tout support électronique ou non, présent ou futur, ayant un caractère commercial, est interdite sauf autorisation expresse et préalable.',
+              langfre:
+                'Toute reproduction et/ou représentation et/ou rediffusion, en tout ou partie, sur tout support électronique ou non, présent ou futur, ayant un caractère commercial, est interdite sauf autorisation expresse et préalable.',
+            },
+            {
+              default:
+                "Les données géographiques disponibles au départ de l'application n'ont aucune valeur légale et sont mises à disposition de l'utilisateur à titre indicatif.",
+              langfre:
+                "Les données géographiques disponibles au départ de l'application n'ont aucune valeur légale et sont mises à disposition de l'utilisateur à titre indicatif.",
+            },
+          ],
+          MD_LegalConstraintsuseConstraints: 'license',
+          licenseObject: [
+            {
+              default: "Aucune contrainte d'accès à l'application.",
+              langfre: "Aucune contrainte d'accès à l'application.",
+            },
+            {
+              default:
+                "Les mentions légales et contraintes accessibles depuis l'application s'appliquent",
+              langfre:
+                "Les mentions légales et contraintes accessibles depuis l'application s'appliquent",
+            },
+          ],
+          extentDescriptionObject: [
+            {
+              default: 'Région wallonne',
+              langfre: 'Région wallonne',
+            },
+          ],
+          geom: [
+            {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [2.75, 49.45],
+                  [6.5, 49.45],
+                  [6.5, 50.85],
+                  [2.75, 50.85],
+                  [2.75, 49.45],
+                ],
+              ],
+            },
+          ],
+          location: '50.150000000000006,4.625',
+          serviceType: 'Application',
+          coordinateSystem: ['EPSG:31370'],
+          crsDetails: [
+            {
+              code: 'EPSG:31370',
+              codeSpace: '',
+              name: 'Belge 1972 / Belgian Lambert 72 (EPSG:31370)',
+              url: '31370',
+            },
+          ],
+          featureTypes: [],
+          lineageObject: {
+            default:
+              "L'application a été développée sur base de l'API GeoViewer",
+            langfre:
+              "L'application a été développée sur base de l'API GeoViewer",
+          },
+          OrgForDistributionObject: {
+            default: 'Service public de Wallonie (SPW)',
+            langfre: 'Service public de Wallonie (SPW)',
+          },
+          distributorOrgForDistribution_tree: 'SPW',
+          distributorOrgForDistributionObject: {
+            default: 'Service public de Wallonie (SPW)',
+            langfre: 'Service public de Wallonie (SPW)',
+          },
+          contactForDistribution: [
+            {
+              organisationObject: {
+                default: 'Service public de Wallonie (SPW)',
+                langfre: 'Service public de Wallonie (SPW)',
+              },
+              role: 'distributor',
+              email: 'helpdesk.carto@spw.wallonie.be',
+              website: '',
+              logo: '',
+              individual: '',
+              position: '',
+              phone: '',
+              address: '',
+            },
+          ],
+          linkUrl: [
+            'http://geoapps.wallonie.be/webgisdgo4',
+            'http://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+          ],
+          linkProtocol: ['WWW:LINK'],
+          linkUrlProtocolWWWLINK: 'http://geoapps.wallonie.be/webgisdgo4',
+          link: [
+            {
+              protocol: 'WWW:LINK',
+              mimeType: '',
+              urlObject: {
+                default: 'http://geoapps.wallonie.be/webgisdgo4',
+                langfre: 'http://geoapps.wallonie.be/webgisdgo4',
+              },
+              nameObject: {
+                default:
+                  'Application de consultation des couches de données de la DGO4',
+                langfre:
+                  'Application de consultation des couches de données de la DGO4',
+              },
+              descriptionObject: {
+                default:
+                  'Application permettant la visualisation cartographique par thématique des couches de référence de la DGO4 du SPW.',
+                langfre:
+                  'Application permettant la visualisation cartographique par thématique des couches de référence de la DGO4 du SPW.',
+              },
+              function: 'browsing',
+              applicationProfile: '',
+              group: 0,
+            },
+            {
+              protocol: '',
+              mimeType: '',
+              urlObject: {
+                default:
+                  'http://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                langfre:
+                  'http://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+              },
+              nameObject: {
+                default: 'Données documentaires de la DGO4',
+                langfre: 'Données documentaires de la DGO4',
+              },
+              descriptionObject: {
+                default:
+                  'Informations complémentaires sur les couches de données proposées par la DGO4',
+                langfre:
+                  'Informations complémentaires sur les couches de données proposées par la DGO4',
+              },
+              function: 'information',
+              applicationProfile: '',
+              group: 0,
+            },
+          ],
+          linkUrlProtocol:
+            'http://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+          'mw-gp-thematicMap': [
+            {
+              protocol: 'WWW:LINK',
+              urlObject: {
+                default: 'http://geoapps.wallonie.be/webgisdgo4',
+                langfre: 'http://geoapps.wallonie.be/webgisdgo4',
+              },
+              nameObject: {
+                default:
+                  'Application de consultation des couches de données de la DGO4',
+                langfre:
+                  'Application de consultation des couches de données de la DGO4',
+              },
+              descriptionObject: {
+                default:
+                  'Application permettant la visualisation cartographique par thématique des couches de référence de la DGO4 du SPW.',
+                langfre:
+                  'Application permettant la visualisation cartographique par thématique des couches de référence de la DGO4 du SPW.',
+              },
+              function: 'browsing',
+              applicationProfile: '',
+            },
+          ],
+          recordOperateOn: [
+            '7fe2f305-1302-4297-b67e-792f55acd834',
+            '4572f901-7d5e-4fe6-931e-ac19c8fc04fe',
+            '097e8d4e-9bad-4798-af85-9bdd3c76952a',
+            '51c1f85d-ca4d-451c-9146-aadcc420fa30',
+            '6ad564e0-685d-4664-8b03-499b70337d33',
+            '78e0c182-dbf4-4033-9bb0-e0acfd93be7b',
+            '9008e261-2c71-4d40-8513-fb970c4eec2b',
+            'ddbdf8a3-bf0d-4739-98bd-6379c345ea14',
+            'd9d7e76d-3d38-4763-9fa3-5de1b6a0ca92',
+            'c0d28bbb-d396-44ec-86a9-37bd53af2573',
+            'ad86502d-8371-408e-880a-777dcce65e24',
+            '1c28dcd9-5306-4346-8877-a06fc560ba65',
+            '8e2cf269-cedb-4fbe-943b-41a7587490e3',
+            '0c5c2f76-ee9c-40d3-a5d5-08a1f6ee94a5',
+            '3ec1510b-7e87-4f92-ab8a-22675249d84b',
+            'c61605c4-56f3-4371-9f6a-f346cc294b96',
+            '4b8c4576-52dd-4505-896e-3d83d474ff95',
+            'e140607a-cfeb-445f-a551-22816c06c72f',
+            '4ed33135-c29a-4a92-abff-cfc69a24c350',
+            '679a02c9-7c2c-4132-ab49-32147bd01ce9',
+            '01491630-78ce-49f3-b479-4b30dabc4c69',
+            'a25cdf65-d35b-4883-beaf-5f89713726db',
+            '2dac12f1-eb54-405b-a94f-f14df54e2c8a',
+            '6997776d-8b95-4dc7-9b66-a5d9c4050ea8',
+            'fb122cc3-3f83-4d24-be0e-bcd66ace8843',
+          ],
+          recordLink: [
+            {
+              type: 'datasets',
+              to: '7fe2f305-1302-4297-b67e-792f55acd834',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/7fe2f305-1302-4297-b67e-792f55acd834',
+              title:
+                'Plan de secteur en vigueur (version coordonnée vectorielle)',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: '4572f901-7d5e-4fe6-931e-ac19c8fc04fe',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/4572f901-7d5e-4fe6-931e-ac19c8fc04fe',
+              title: 'Permis d’urbanisation et lotissements',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: '097e8d4e-9bad-4798-af85-9bdd3c76952a',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/097e8d4e-9bad-4798-af85-9bdd3c76952a',
+              title: 'Schéma de Développement Communal (SDC)',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: '51c1f85d-ca4d-451c-9146-aadcc420fa30',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/51c1f85d-ca4d-451c-9146-aadcc420fa30',
+              title: 'Parcs résidentiels de week-end (PRWE)',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: '6ad564e0-685d-4664-8b03-499b70337d33',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/6ad564e0-685d-4664-8b03-499b70337d33',
+              title: 'Inventaire des campings',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: '78e0c182-dbf4-4033-9bb0-e0acfd93be7b',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/78e0c182-dbf4-4033-9bb0-e0acfd93be7b',
+              title:
+                "Commissions consultatives communales d'aménagement du territoire et de mobilité (CCATM)",
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: '9008e261-2c71-4d40-8513-fb970c4eec2b',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/9008e261-2c71-4d40-8513-fb970c4eec2b',
+              title:
+                'Communes dont le collège communal statue sans avis préalable du fonctionnaire délégué (en décentralisation)',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: 'ddbdf8a3-bf0d-4739-98bd-6379c345ea14',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/ddbdf8a3-bf0d-4739-98bd-6379c345ea14',
+              title: 'Périmètres de reconnaissance économique (PRE)',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: 'd9d7e76d-3d38-4763-9fa3-5de1b6a0ca92',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/d9d7e76d-3d38-4763-9fa3-5de1b6a0ca92',
+              title: 'Périmètres de remembrement urbain (PRU)',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: 'c0d28bbb-d396-44ec-86a9-37bd53af2573',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/c0d28bbb-d396-44ec-86a9-37bd53af2573',
+              title: 'Plan Habitat Permanent',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: 'ad86502d-8371-408e-880a-777dcce65e24',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/ad86502d-8371-408e-880a-777dcce65e24',
+              title: 'Rénovation urbaine',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: '1c28dcd9-5306-4346-8877-a06fc560ba65',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/1c28dcd9-5306-4346-8877-a06fc560ba65',
+              title: 'Revitalisation urbaine',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: '8e2cf269-cedb-4fbe-943b-41a7587490e3',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/8e2cf269-cedb-4fbe-943b-41a7587490e3',
+              title: 'Sites à réaménager de droit (SAR)',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: '0c5c2f76-ee9c-40d3-a5d5-08a1f6ee94a5',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/0c5c2f76-ee9c-40d3-a5d5-08a1f6ee94a5',
+              title: 'Terrils du point de vue aménagement et urbanisme',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: '3ec1510b-7e87-4f92-ab8a-22675249d84b',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/3ec1510b-7e87-4f92-ab8a-22675249d84b',
+              title: 'Zones agro-géographiques',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: 'c61605c4-56f3-4371-9f6a-f346cc294b96',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/c61605c4-56f3-4371-9f6a-f346cc294b96',
+              title: "Zones d'Initiative Privilégiée (ZIP)",
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: '4b8c4576-52dd-4505-896e-3d83d474ff95',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/4b8c4576-52dd-4505-896e-3d83d474ff95',
+              title:
+                "Programmes Communaux d'Actions en Matière de Logement 2014-2016",
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: 'e140607a-cfeb-445f-a551-22816c06c72f',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/e140607a-cfeb-445f-a551-22816c06c72f',
+              title: "Guide Communal d'Urbanisme (GCU)",
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: '4ed33135-c29a-4a92-abff-cfc69a24c350',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/4ed33135-c29a-4a92-abff-cfc69a24c350',
+              title: "Guide Régional d'Urbanisme (GRU)",
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: '679a02c9-7c2c-4132-ab49-32147bd01ce9',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/679a02c9-7c2c-4132-ab49-32147bd01ce9',
+              title: "Schéma d'Orientation Local (SOL)",
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: '01491630-78ce-49f3-b479-4b30dabc4c69',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/01491630-78ce-49f3-b479-4b30dabc4c69',
+              title:
+                'Patrimoine - Biens classés et zones de protection - Série',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: 'a25cdf65-d35b-4883-beaf-5f89713726db',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/a25cdf65-d35b-4883-beaf-5f89713726db',
+              title:
+                'Patrimoine - Inventaire du Patrimoine Immobilier Culturel (IPIC)',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: '2dac12f1-eb54-405b-a94f-f14df54e2c8a',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/2dac12f1-eb54-405b-a94f-f14df54e2c8a',
+              title: 'Patrimoine - Biens mondiaux - Série - OBSOLETE',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: '6997776d-8b95-4dc7-9b66-a5d9c4050ea8',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/6997776d-8b95-4dc7-9b66-a5d9c4050ea8',
+              title: 'Patrimoine - Biens exceptionnels - Série',
+              origin: 'catalog',
+            },
+            {
+              type: 'datasets',
+              to: 'fb122cc3-3f83-4d24-be0e-bcd66ace8843',
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/fb122cc3-3f83-4d24-be0e-bcd66ace8843',
+              title: 'Patrimoine - Biens en liste de sauvegarde - Série',
+              origin: 'catalog',
+            },
+          ],
+          recordLink_datasets: [
+            'Plan de secteur en vigueur (version coordonn\\u00E9e vectorielle)',
+            'Permis d\\u2019urbanisation et lotissements',
+            'Sch\\u00E9ma de D\\u00E9veloppement Communal (SDC)',
+            'Parcs r\\u00E9sidentiels de week-end (PRWE)',
+            'Inventaire des campings',
+            "Commissions consultatives communales d'am\\u00E9nagement du territoire et de mobilit\\u00E9 (CCATM)",
+            'Communes dont le coll\\u00E8ge communal statue sans avis pr\\u00E9alable du fonctionnaire d\\u00E9l\\u00E9gu\\u00E9 (en d\\u00E9centralisation)',
+            'P\\u00E9rim\\u00E8tres de reconnaissance \\u00E9conomique (PRE)',
+            'P\\u00E9rim\\u00E8tres de remembrement urbain (PRU)',
+            'Plan Habitat Permanent',
+            'R\\u00E9novation urbaine',
+            'Revitalisation urbaine',
+            'Sites \\u00E0 r\\u00E9am\\u00E9nager de droit (SAR)',
+            'Terrils du point de vue am\\u00E9nagement et urbanisme',
+            'Zones agro-g\\u00E9ographiques',
+            "Zones d'Initiative Privil\\u00E9gi\\u00E9e (ZIP)",
+            "Programmes Communaux d'Actions en Mati\\u00E8re de Logement 2014-2016",
+            "Guide Communal d'Urbanisme (GCU)",
+            "Guide R\\u00E9gional d'Urbanisme (GRU)",
+            "Sch\\u00E9ma d'Orientation Local (SOL)",
+            'Patrimoine - Biens class\\u00E9s et zones de protection - S\\u00E9rie',
+            'Patrimoine - Inventaire du Patrimoine Immobilier Culturel (IPIC)',
+            'Patrimoine - Biens mondiaux - S\\u00E9rie - OBSOLETE',
+            'Patrimoine - Biens exceptionnels - S\\u00E9rie',
+            'Patrimoine - Biens en liste de sauvegarde - S\\u00E9rie',
+          ],
+          recordLink_datasets_uuid: [
+            '7fe2f305-1302-4297-b67e-792f55acd834',
+            '4572f901-7d5e-4fe6-931e-ac19c8fc04fe',
+            '097e8d4e-9bad-4798-af85-9bdd3c76952a',
+            '51c1f85d-ca4d-451c-9146-aadcc420fa30',
+            '6ad564e0-685d-4664-8b03-499b70337d33',
+            '78e0c182-dbf4-4033-9bb0-e0acfd93be7b',
+            '9008e261-2c71-4d40-8513-fb970c4eec2b',
+            'ddbdf8a3-bf0d-4739-98bd-6379c345ea14',
+            'd9d7e76d-3d38-4763-9fa3-5de1b6a0ca92',
+            'c0d28bbb-d396-44ec-86a9-37bd53af2573',
+            'ad86502d-8371-408e-880a-777dcce65e24',
+            '1c28dcd9-5306-4346-8877-a06fc560ba65',
+            '8e2cf269-cedb-4fbe-943b-41a7587490e3',
+            '0c5c2f76-ee9c-40d3-a5d5-08a1f6ee94a5',
+            '3ec1510b-7e87-4f92-ab8a-22675249d84b',
+            'c61605c4-56f3-4371-9f6a-f346cc294b96',
+            '4b8c4576-52dd-4505-896e-3d83d474ff95',
+            'e140607a-cfeb-445f-a551-22816c06c72f',
+            '4ed33135-c29a-4a92-abff-cfc69a24c350',
+            '679a02c9-7c2c-4132-ab49-32147bd01ce9',
+            '01491630-78ce-49f3-b479-4b30dabc4c69',
+            'a25cdf65-d35b-4883-beaf-5f89713726db',
+            '2dac12f1-eb54-405b-a94f-f14df54e2c8a',
+            '6997776d-8b95-4dc7-9b66-a5d9c4050ea8',
+            'fb122cc3-3f83-4d24-be0e-bcd66ace8843',
+          ],
+          recordLink_datasets_url: [
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/7fe2f305-1302-4297-b67e-792f55acd834',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/4572f901-7d5e-4fe6-931e-ac19c8fc04fe',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/097e8d4e-9bad-4798-af85-9bdd3c76952a',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/51c1f85d-ca4d-451c-9146-aadcc420fa30',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/6ad564e0-685d-4664-8b03-499b70337d33',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/78e0c182-dbf4-4033-9bb0-e0acfd93be7b',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/9008e261-2c71-4d40-8513-fb970c4eec2b',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/ddbdf8a3-bf0d-4739-98bd-6379c345ea14',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/d9d7e76d-3d38-4763-9fa3-5de1b6a0ca92',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/c0d28bbb-d396-44ec-86a9-37bd53af2573',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/ad86502d-8371-408e-880a-777dcce65e24',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/1c28dcd9-5306-4346-8877-a06fc560ba65',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/8e2cf269-cedb-4fbe-943b-41a7587490e3',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/0c5c2f76-ee9c-40d3-a5d5-08a1f6ee94a5',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/3ec1510b-7e87-4f92-ab8a-22675249d84b',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/c61605c4-56f3-4371-9f6a-f346cc294b96',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/4b8c4576-52dd-4505-896e-3d83d474ff95',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/e140607a-cfeb-445f-a551-22816c06c72f',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/4ed33135-c29a-4a92-abff-cfc69a24c350',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/679a02c9-7c2c-4132-ab49-32147bd01ce9',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/01491630-78ce-49f3-b479-4b30dabc4c69',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/a25cdf65-d35b-4883-beaf-5f89713726db',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/2dac12f1-eb54-405b-a94f-f14df54e2c8a',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/6997776d-8b95-4dc7-9b66-a5d9c4050ea8',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/fb122cc3-3f83-4d24-be0e-bcd66ace8843',
+          ],
+          operatesOn: [
+            '7fe2f305-1302-4297-b67e-792f55acd834',
+            '4572f901-7d5e-4fe6-931e-ac19c8fc04fe',
+            '097e8d4e-9bad-4798-af85-9bdd3c76952a',
+            '51c1f85d-ca4d-451c-9146-aadcc420fa30',
+            '6ad564e0-685d-4664-8b03-499b70337d33',
+            '78e0c182-dbf4-4033-9bb0-e0acfd93be7b',
+            '9008e261-2c71-4d40-8513-fb970c4eec2b',
+            'ddbdf8a3-bf0d-4739-98bd-6379c345ea14',
+            'd9d7e76d-3d38-4763-9fa3-5de1b6a0ca92',
+            'c0d28bbb-d396-44ec-86a9-37bd53af2573',
+            'ad86502d-8371-408e-880a-777dcce65e24',
+            '1c28dcd9-5306-4346-8877-a06fc560ba65',
+            '8e2cf269-cedb-4fbe-943b-41a7587490e3',
+            '0c5c2f76-ee9c-40d3-a5d5-08a1f6ee94a5',
+            '3ec1510b-7e87-4f92-ab8a-22675249d84b',
+            'c61605c4-56f3-4371-9f6a-f346cc294b96',
+            '4b8c4576-52dd-4505-896e-3d83d474ff95',
+            'e140607a-cfeb-445f-a551-22816c06c72f',
+            '4ed33135-c29a-4a92-abff-cfc69a24c350',
+            '679a02c9-7c2c-4132-ab49-32147bd01ce9',
+            '01491630-78ce-49f3-b479-4b30dabc4c69',
+            'a25cdf65-d35b-4883-beaf-5f89713726db',
+            '2dac12f1-eb54-405b-a94f-f14df54e2c8a',
+            '6997776d-8b95-4dc7-9b66-a5d9c4050ea8',
+            'fb122cc3-3f83-4d24-be0e-bcd66ace8843',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/7fe2f305-1302-4297-b67e-792f55acd834',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/4572f901-7d5e-4fe6-931e-ac19c8fc04fe',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/097e8d4e-9bad-4798-af85-9bdd3c76952a',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/51c1f85d-ca4d-451c-9146-aadcc420fa30',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/6ad564e0-685d-4664-8b03-499b70337d33',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/78e0c182-dbf4-4033-9bb0-e0acfd93be7b',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/9008e261-2c71-4d40-8513-fb970c4eec2b',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/ddbdf8a3-bf0d-4739-98bd-6379c345ea14',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/d9d7e76d-3d38-4763-9fa3-5de1b6a0ca92',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/c0d28bbb-d396-44ec-86a9-37bd53af2573',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/ad86502d-8371-408e-880a-777dcce65e24',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/1c28dcd9-5306-4346-8877-a06fc560ba65',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/8e2cf269-cedb-4fbe-943b-41a7587490e3',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/0c5c2f76-ee9c-40d3-a5d5-08a1f6ee94a5',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/3ec1510b-7e87-4f92-ab8a-22675249d84b',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/c61605c4-56f3-4371-9f6a-f346cc294b96',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/4b8c4576-52dd-4505-896e-3d83d474ff95',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/e140607a-cfeb-445f-a551-22816c06c72f',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/4ed33135-c29a-4a92-abff-cfc69a24c350',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/679a02c9-7c2c-4132-ab49-32147bd01ce9',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/01491630-78ce-49f3-b479-4b30dabc4c69',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/a25cdf65-d35b-4883-beaf-5f89713726db',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/2dac12f1-eb54-405b-a94f-f14df54e2c8a',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/6997776d-8b95-4dc7-9b66-a5d9c4050ea8',
+            'https://metawal.wallonie.be/geonetwork/srv/api/records/fb122cc3-3f83-4d24-be0e-bcd66ace8843',
+          ],
+          recordGroup: '83809bcd-1763-4d28-b820-2b9828083ba5',
+          recordOwner: 'Metawal Administrator_user de Stephane Ritz',
+          valid_inspire: '-1',
+          uuid: '83809bcd-1763-4d28-b820-2b9828083ba5',
+          displayOrder: 'null',
+          groupPublishedId: ['14684', '0', '1', '4', '25', '14689', '14690'],
+          popularity: 6766,
+          userinfo:
+            'Admin_Metawal|Administrator_user de Stephane Ritz|Metawal|Administrator',
+          groupPublished: [
+            'Link_checker',
+            'intranet',
+            'all',
+            'SPW - Territoire',
+            'DIG',
+            'mapstore',
+            'mapstore-intranet',
+          ],
+          isPublishedToAll: 'true',
+          record: 'record',
+          draft: 'n',
+          changeDate: '2024-07-22T11:52:39.049Z',
+          'valid_schematron-rules-datacite': '1',
+          id: '1215',
+          valid_xsd: '1',
+          createDate: '2013-07-29T11:33:08Z',
+          isPublishedToIntranet: 'true',
+          owner: '14762',
+          'valid_schematron-rules-iso': '1',
+          groupOwner: '4',
+          logo: '/images/logos/metawal.wallonie.be.png',
+          hasxlinks: 'false',
+          op0: ['14684', '0', '1', '4', '25', '14689', '14690'],
+          featureOfRecord: 'record',
+          op2: ['25', '14690'],
+          op1: ['0', '1', '25', '14689', '14690'],
+          isPublishedToGuest: 'false',
+          extra: 'null',
+          documentStandard: 'iso19115-3.2018',
+          op3: ['4', '25', '14690'],
+          op6: ['1', '4', '25', '14690'],
+          op5: ['0', '1', '25', '14690'],
+          valid: '1',
+          isTemplate: 'n',
+          feedbackCount: '0',
+          rating: '0',
+          isHarvested: 'false',
+          userSavedCount: '0',
+          sourceCatalogue: 'metawal.wallonie.be',
+          overview: [
+            {
+              data: 'data:image/png;base64, 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',
+              nameObject: {
+                default: 'SPWTerritoire.PNG',
+                langfre: 'SPWTerritoire.PNG',
+              },
+              url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/83809bcd-1763-4d28-b820-2b9828083ba5/attachments/SPWTerritoire.PNG',
+            },
+          ],
+        },
+        edit: false,
+        canReview: false,
+        owner: false,
+        isPublishedToAll: true,
+        view: true,
+        notify: false,
+        download: true,
+        dynamic: true,
+        featured: true,
+        selected: false,
+        related: {
+          hasfeaturecats: [],
+          services: [],
+          brothersAndSisters: [],
+          parent: [],
+          children: [],
+          hassources: [],
+          datasets: [
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/2dac12f1-eb54-405b-a94f-f14df54e2c8a/attachments/PAT_BM.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/2dac12f1-eb54-405b-a94f-f14df54e2c8a',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['series'],
+                cl_status: [
+                  {
+                    key: 'obsolete',
+                  },
+                ],
+                resourceTitleObject: {
+                  default: 'Patrimoine - Biens mondiaux - Série - OBSOLETE',
+                  langfre: 'Patrimoine - Biens mondiaux - Série - OBSOLETE',
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Cette série de couches de données est obsolète et a été remplacée par la série \"Biens patrimoine mondial UNESCO - Série\".\n\nVeuillez vous rapporter à sa fiche descriptive. https://geoportail.wallonie.be/catalogue/abe74a37-3c88-452b-94fd-5922d97d2e60.html\n\nCette série de couches de données reprend la localisation des différents biens inscrits sur la liste du patrimoine mondial en Région wallonne.\n\nCette série a été dépubliée le 10/10/2023.\n\nLe patrimoine mondial est défini comme tout bien ou ensemble de biens dont la valeur universelle exceptionnelle est reconnue par l'UNESCO, en application de la Convention concernant la protection du patrimoine mondial culturel et naturel, adoptée à Paris le 16 novembre 1972.\n\nIl s’agit d’une mesure de protection appliquée en surimpression au classement. En effet, les biens inscrits sur la liste du patrimoine mondial sont d’abord des biens classés au sens du CoPat (cf. fiche de métadonnées relative aux biens classés et zones de protection) au titre de monument, ensemble architectural, site ou site archéologique. Les données relatives aux biens inscrits sur la liste du patrimoine mondial sont donc issues d'une sélection sur base des jeux de données relatifs aux biens classés et zones de protection. Les attributs sont conservés.\n\nLa liste des biens mondiaux est alimentée par la liste des biens exceptionnels établie par l’Arrêté du Gouvernement wallon (AGW - 6 octobre 2016) et sont inscrits sur la liste du Patrimoine mondial de l'UNESCO.\n\nEn octobre 2016, six sites wallons étaient inscrits sur la liste du patrimoine mondial de l'humanité. Il s'agit des beffrois de la liste des beffrois de Belgique et de France, de la cathédrale Notre-Dame de Tournai, des sites miniers majeurs de Wallonie (Bois-du-Luc, Bois du Cazier, Grand-Hornu et Blegny-Mine), des minières néolithiques de silex de Spiennes, des quatre ascenseurs du canal du Centre avec leur site, et de la partie située en Wallonie du bien « Forêts primaires et anciennes de hêtres des Carpates et d’autres régions d’Europe » (forêt de Soignes située sur le territoire des communes de La Hulpe et de Waterloo).\n\nEn juillet 2021, Spa a été inscrite au sein de la série « Grandes Villes d’Eaux d’Europe ». La liste des biens mondiaux a été modifiée dans l’Arrêté du Gouvernement wallon (AGW – 12 mai 2022).\n\nAu total, la Belgique compte quinze biens inscrits au Patrimoine mondial de l'UNESCO.\n\nLe SPW travaille actuellement à une mise à jour de la donnée qui aboutira courant 2023. Actuellement, les données diffusées présentent la situation cartographique de l’ensemble des biens (périmètre du bien reconnu et sa zone tampon). Les données concernant ces périmètres doivent encore être adaptées et feront l’objet d’une communication ultérieure plus détaillée.\n\nChaque bien classé mondial est identifié de manière unique, ce qui permet la liaison entre les éléments cartographiés et la base de données documentaire reprenant des informations administratives ainsi que les documents scannés relevés dans les dossiers liés.",
+                  langfre:
+                    "Cette série de couches de données est obsolète et a été remplacée par la série \"Biens patrimoine mondial UNESCO - Série\".\n\nVeuillez vous rapporter à sa fiche descriptive. https://geoportail.wallonie.be/catalogue/abe74a37-3c88-452b-94fd-5922d97d2e60.html\n\nCette série de couches de données reprend la localisation des différents biens inscrits sur la liste du patrimoine mondial en Région wallonne.\n\nCette série a été dépubliée le 10/10/2023.\n\nLe patrimoine mondial est défini comme tout bien ou ensemble de biens dont la valeur universelle exceptionnelle est reconnue par l'UNESCO, en application de la Convention concernant la protection du patrimoine mondial culturel et naturel, adoptée à Paris le 16 novembre 1972.\n\nIl s’agit d’une mesure de protection appliquée en surimpression au classement. En effet, les biens inscrits sur la liste du patrimoine mondial sont d’abord des biens classés au sens du CoPat (cf. fiche de métadonnées relative aux biens classés et zones de protection) au titre de monument, ensemble architectural, site ou site archéologique. Les données relatives aux biens inscrits sur la liste du patrimoine mondial sont donc issues d'une sélection sur base des jeux de données relatifs aux biens classés et zones de protection. Les attributs sont conservés.\n\nLa liste des biens mondiaux est alimentée par la liste des biens exceptionnels établie par l’Arrêté du Gouvernement wallon (AGW - 6 octobre 2016) et sont inscrits sur la liste du Patrimoine mondial de l'UNESCO.\n\nEn octobre 2016, six sites wallons étaient inscrits sur la liste du patrimoine mondial de l'humanité. Il s'agit des beffrois de la liste des beffrois de Belgique et de France, de la cathédrale Notre-Dame de Tournai, des sites miniers majeurs de Wallonie (Bois-du-Luc, Bois du Cazier, Grand-Hornu et Blegny-Mine), des minières néolithiques de silex de Spiennes, des quatre ascenseurs du canal du Centre avec leur site, et de la partie située en Wallonie du bien « Forêts primaires et anciennes de hêtres des Carpates et d’autres régions d’Europe » (forêt de Soignes située sur le territoire des communes de La Hulpe et de Waterloo).\n\nEn juillet 2021, Spa a été inscrite au sein de la série « Grandes Villes d’Eaux d’Europe ». La liste des biens mondiaux a été modifiée dans l’Arrêté du Gouvernement wallon (AGW – 12 mai 2022).\n\nAu total, la Belgique compte quinze biens inscrits au Patrimoine mondial de l'UNESCO.\n\nLe SPW travaille actuellement à une mise à jour de la donnée qui aboutira courant 2023. Actuellement, les données diffusées présentent la situation cartographique de l’ensemble des biens (périmètre du bien reconnu et sa zone tampon). Les données concernant ces périmètres doivent encore être adaptées et feront l’objet d’une communication ultérieure plus détaillée.\n\nChaque bien classé mondial est identifié de manière unique, ce qui permet la liaison entre les éléments cartographiés et la base de données documentaire reprenant des informations administratives ainsi que les documents scannés relevés dans les dossiers liés.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    'Cette série de couches de données est obsolète et a été remplacée par la série "Biens patrimoine mondial UNESCO - Série".',
+                  langfre:
+                    'Cette série de couches de données est obsolète et a été remplacée par la série "Biens patrimoine mondial UNESCO - Série".',
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default: "Les conditions générales d'accès s’appliquent.",
+                    langfre: "Les conditions générales d'accès s’appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGU.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CPU-TypeA.pdf',
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=PAT_MND',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=PAT_MND',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données TLPE - Biens mondiaux',
+                      langfre:
+                        'Application de consultation des données TLPE - Biens mondiaux',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux biens mondiaux. Cette application constitue un thème de l'application de consultation des données TLPE.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux biens mondiaux. Cette application constitue un thème de l'application de consultation des données TLPE.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default: 'http://whc.unesco.org/fr/etatsparties/be',
+                      langfre: 'http://whc.unesco.org/fr/etatsparties/be',
+                    },
+                    nameObject: {
+                      default:
+                        'UNESCO - Biens inscrits sur la Liste du patrimoine mondial en Belgique',
+                      langfre:
+                        'UNESCO - Biens inscrits sur la Liste du patrimoine mondial en Belgique',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application de consultation des biens inscrits sur la Liste du patrimoine mondial en Belgique',
+                      langfre:
+                        'Application de consultation des biens inscrits sur la Liste du patrimoine mondial en Belgique',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/patrimoine/PAT_MND',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/patrimoine/PAT_MND',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement des couches de données',
+                      langfre: 'Téléchargement des couches de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Accès aux couches de données en téléchargement direct',
+                      langfre:
+                        'Accès aux couches de données en téléchargement direct',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=pat_mnd',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=pat_mnd',
+                    },
+                    nameObject: {
+                      default: 'Base de données des biens mondiaux',
+                      langfre: 'Base de données des biens mondiaux',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Site permettant la recherche des biens mondiaux',
+                      langfre:
+                        'Site permettant la recherche des biens mondiaux',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/documents/PAT_MND/PAT_MND.pdf',
+                      langfre:
+                        'https://docum1.wallonie.be/documents/PAT_MND/PAT_MND.pdf',
+                    },
+                    nameObject: {
+                      default: 'Liste du patrimoine immobilier mondial',
+                      langfre: 'Liste du patrimoine immobilier mondial',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Liste du patrimoine immobilier mondial en Région wallonne',
+                      langfre:
+                        'Liste du patrimoine immobilier mondial en Région wallonne',
+                    },
+                    function: 'information',
+                    applicationProfile: 'application/pdf',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://agencewallonnedupatrimoine.be/se-renseigner/',
+                      langfre:
+                        'https://agencewallonnedupatrimoine.be/se-renseigner/',
+                    },
+                    nameObject: {
+                      default:
+                        'Site Internet de l’Agence wallonne du Patrimoine',
+                      langfre:
+                        'Site Internet de l’Agence wallonne du Patrimoine',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Sur ce site, découvrez ce que le Service public de Wallonie accomplit dans le domaine de l'archéologie, de protection du patrimoine mais également en matière d'entretien et de restauration de biens classés.",
+                      langfre:
+                        "Sur ce site, découvrez ce que le Service public de Wallonie accomplit dans le domaine de l'archéologie, de protection du patrimoine mais également en matière d'entretien et de restauration de biens classés.",
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                uuid: '2dac12f1-eb54-405b-a94f-f14df54e2c8a',
+                id: '1271',
+                groupOwner: '4',
+                op0: ['1', '4', '14688', '14691', '14684'],
+                op1: '1',
+                op3: '1',
+                op6: '1',
+                op5: '1',
+                edit: false,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: '2dac12f1-eb54-405b-a94f-f14df54e2c8a',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/6ad564e0-685d-4664-8b03-499b70337d33/attachments/camping.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/6ad564e0-685d-4664-8b03-499b70337d33',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                cl_status: [
+                  {
+                    key: 'onGoing',
+                  },
+                ],
+                resourceTitleObject: {
+                  default: 'Inventaire des campings',
+                  langfre: 'Inventaire des campings',
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Ce jeu de données délimite les terrains de camping touristique, de camping à la ferme et de caravanage en Région wallonne.\n\nUn terrain de camping désigne d'une manière générale les terrains de camping touristiques, les terrains de caravanage et les terrains de camping à la ferme.\n\n- Les terrains de camping touristique sont définis via le Décret du 18 décembre 2003 comme des terrains utilisés d’une manière habituelle ou saisonnière pour la pratique du camping touristique par un ou plusieurs touristes. Ne cesse pas d’être un terrain de camping touristique celui dans les limites duquel le titulaire de l’autorisation installe à titre accessoire des abris fixes, non utilisés en qualité d’habitat permanent;\n\n- Les terrains de camping à la ferme sont des terrains de camping touristique utilisés par un exploitant agricole. Ces terrains dépendent de son exploitation et n’accueillent aucune caravane de type résidentiel;\n\n- Les terrains de caravanage sont des terrains utilisés d’une manière habituelle ou occasionnelle pour la pratique du camping-caravaning, à savoir utilisant comme moyen d’hébergement, par d’autres personnes que des forains ou des nomades agissant comme tels, de l’un des abris mobiles suivants: tente, caravane routière, caravane de type résidentiel sans étage, motorhome ou tout autre abri analogue, non conçus pour servir d’habitation permanente. Les terrains de caravanage doivent être utilisés par plus de 10 personnes en même temps ou occupé par plus de 3 abris.\n\nUn camping nécessite un permis de bâtir pour ses bâtiments d'infrastructure. \n\nLes types de terrains de camping varient en fonction du nombre d'emplacement :\n- Type A : Moins de 50 emplacements;\n- Type B : de 50 à 400 emplacements;\n- Type C : Plus de 400 emplacements.",
+                  langfre:
+                    "Ce jeu de données délimite les terrains de camping touristique, de camping à la ferme et de caravanage en Région wallonne.\n\nUn terrain de camping désigne d'une manière générale les terrains de camping touristiques, les terrains de caravanage et les terrains de camping à la ferme.\n\n- Les terrains de camping touristique sont définis via le Décret du 18 décembre 2003 comme des terrains utilisés d’une manière habituelle ou saisonnière pour la pratique du camping touristique par un ou plusieurs touristes. Ne cesse pas d’être un terrain de camping touristique celui dans les limites duquel le titulaire de l’autorisation installe à titre accessoire des abris fixes, non utilisés en qualité d’habitat permanent;\n\n- Les terrains de camping à la ferme sont des terrains de camping touristique utilisés par un exploitant agricole. Ces terrains dépendent de son exploitation et n’accueillent aucune caravane de type résidentiel;\n\n- Les terrains de caravanage sont des terrains utilisés d’une manière habituelle ou occasionnelle pour la pratique du camping-caravaning, à savoir utilisant comme moyen d’hébergement, par d’autres personnes que des forains ou des nomades agissant comme tels, de l’un des abris mobiles suivants: tente, caravane routière, caravane de type résidentiel sans étage, motorhome ou tout autre abri analogue, non conçus pour servir d’habitation permanente. Les terrains de caravanage doivent être utilisés par plus de 10 personnes en même temps ou occupé par plus de 3 abris.\n\nUn camping nécessite un permis de bâtir pour ses bâtiments d'infrastructure. \n\nLes types de terrains de camping varient en fonction du nombre d'emplacement :\n- Type A : Moins de 50 emplacements;\n- Type B : de 50 à 400 emplacements;\n- Type C : Plus de 400 emplacements.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    'Ce jeu de données délimite les terrains de camping touristique, de camping à la ferme et de caravanage en Région wallonne.',
+                  langfre:
+                    'Ce jeu de données délimite les terrains de camping touristique, de camping à la ferme et de caravanage en Région wallonne.',
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default: 'No limitations to public access',
+                    langfre: 'No limitations to public access',
+                    link: 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGU.pdf',
+                  },
+                  {
+                    default: "Les conditions générales d'accès s’appliquent.",
+                    langfre: "Les conditions générales d'accès s’appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CPU-TypeA.pdf',
+                  },
+                ],
+                MD_LegalConstraintsUseLimitationObject: [
+                  {
+                    default: "Conditions d'accès et d'utilisation spécifiques",
+                    langfre: "Conditions d'accès et d'utilisation spécifiques",
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/CAMPING/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/CAMPING/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende des couches de données',
+                      langfre: 'Légende des couches de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Légende des couches de données relatives aux campings',
+                      langfre:
+                        'Légende des couches de données relatives aux campings',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=CAMPING',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=CAMPING',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - CAMPING',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - CAMPING',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux campings. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux campings. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FCAMPING%2FMapServer%22%2C%22label%22%3A%22Inventaire%20des%20campings%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F6ad564e0-685d-4664-8b03-499b70337d33%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FCAMPING%2FMapServer%22%2C%22label%22%3A%22Inventaire%20des%20campings%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F6ad564e0-685d-4664-8b03-499b70337d33%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/CAMPING/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/CAMPING/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux terrains de camping',
+                      langfre:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux terrains de camping',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/CAMPING/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/CAMPING/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux terrains de camping',
+                      langfre:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux terrains de camping',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/amenagement/CAMPING/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/amenagement/CAMPING/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement de la couche de données',
+                      langfre: 'Téléchargement de la couche de données',
+                    },
+                    descriptionObject: {
+                      default: 'Accès en téléchargement direct',
+                      langfre: 'Accès en téléchargement direct',
+                    },
+                    function: 'download',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=camping',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=camping',
+                    },
+                    nameObject: {
+                      default:
+                        'Base de données des Communes en décentralisation',
+                      langfre:
+                        'Base de données des Communes en décentralisation',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Site permettant la recherche des terrains de camping',
+                      langfre:
+                        'Site permettant la recherche des terrains de camping',
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default: 'http://cgt.tourismewallonie.be/',
+                      langfre: 'http://cgt.tourismewallonie.be/',
+                    },
+                    nameObject: {
+                      default:
+                        'Site Internet du Commisariat général au Tourisme',
+                      langfre:
+                        'Site Internet du Commisariat général au Tourisme',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Site Internet du Commisariat général au Tourisme',
+                      langfre:
+                        'Site Internet du Commisariat général au Tourisme',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: '6ad564e0-685d-4664-8b03-499b70337d33',
+                id: '1268',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '14688', '0', '14683'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '14688', '0', '14683'],
+                op3: ['25', '1', '4', '14688', '0', '14683'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '14688', '0', '14683'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: '6ad564e0-685d-4664-8b03-499b70337d33',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/3ec1510b-7e87-4f92-ab8a-22675249d84b/attachments/agro_geo_pic.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/3ec1510b-7e87-4f92-ab8a-22675249d84b',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                resourceTitleObject: {
+                  default: 'Zones agro-géographiques',
+                  langfre: 'Zones agro-géographiques',
+                },
+                resourceAbstractObject: {
+                  default:
+                    'Le jeu de données reprend la délimitation des zones agro-géographiques - ou régions rurales - en Région wallonne.\n\nNeuf régions agro-géographiques, ou régions rurales, ont été reconnues sur le territoire wallon. Elles se situent en dehors des agglomérations et des axes industriels. Le découpage se base essentiellement sur des critères d’occupation des sols (surtout forêt ou agriculture) et d’aménagement des terroirs (grands champs ouverts, prairies entourées de haies, caractéristiques d’habitat, etc.) qui reflètent les conditions bio-physiques du milieu naturel et qui sont liés aux anciennes pratiques agricoles.\n\nDans ces régions, parfois encore nuancées en sous-régions, le patrimoine rural bâti possède ses propres traits caractéristiques. La morphologie des villages et leur typologie sont des éléments structurels qui ont connu une grande stabilité dans le temps.',
+                  langfre:
+                    'Le jeu de données reprend la délimitation des zones agro-géographiques - ou régions rurales - en Région wallonne.\n\nNeuf régions agro-géographiques, ou régions rurales, ont été reconnues sur le territoire wallon. Elles se situent en dehors des agglomérations et des axes industriels. Le découpage se base essentiellement sur des critères d’occupation des sols (surtout forêt ou agriculture) et d’aménagement des terroirs (grands champs ouverts, prairies entourées de haies, caractéristiques d’habitat, etc.) qui reflètent les conditions bio-physiques du milieu naturel et qui sont liés aux anciennes pratiques agricoles.\n\nDans ces régions, parfois encore nuancées en sous-régions, le patrimoine rural bâti possède ses propres traits caractéristiques. La morphologie des villages et leur typologie sont des éléments structurels qui ont connu une grande stabilité dans le temps.',
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    'Le jeu de données reprend la délimitation des zones agro-géographiques - ou régions rurales - en Région wallonne.',
+                  langfre:
+                    'Le jeu de données reprend la délimitation des zones agro-géographiques - ou régions rurales - en Région wallonne.',
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default: "Les conditions générales d'accès s’appliquent.",
+                    langfre: "Les conditions générales d'accès s’appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGU.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CPU-TypeA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/AGRO_GEO/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/AGRO_GEO/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende des couches de données',
+                      langfre: 'Légende des couches de données',
+                    },
+                    descriptionObject: {
+                      default: 'Légende des couches de données',
+                      langfre: 'Légende des couches de données',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=AGRO_GEO',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=AGRO_GEO',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - Zones agro-géographiques',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - Zones agro-géographiques',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux zones agro-géographiques. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux zones agro-géographiques. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FAGRO_GEO%2FMapServer%22%2C%22label%22%3A%22Zones%20agro-g%C3%A9ographiques%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F3ec1510b-7e87-4f92-ab8a-22675249d84b%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FAGRO_GEO%2FMapServer%22%2C%22label%22%3A%22Zones%20agro-g%C3%A9ographiques%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F3ec1510b-7e87-4f92-ab8a-22675249d84b%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/AGRO_GEO/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/AGRO_GEO/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation ESRI-REST de la couche de données "Zones agro-géographiques"',
+                      langfre:
+                        'Adresse de connexion au service de visualisation ESRI-REST de la couche de données "Zones agro-géographiques"',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/AGRO_GEO/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/AGRO_GEO/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation WMS de la couche de données "Zones agro-géographiques"',
+                      langfre:
+                        'Adresse de connexion au service de visualisation WMS de la couche de données "Zones agro-géographiques"',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/Nature_Paysage/Paysage/AGRO_GEO/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/Nature_Paysage/Paysage/AGRO_GEO/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement de la donnée',
+                      langfre: 'Téléchargement de la donnée',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Lien de téléchargement de la donnée "Zones agro-géographiques" via FTP de la DGO4.',
+                      langfre:
+                        'Lien de téléchargement de la donnée "Zones agro-géographiques" via FTP de la DGO4.',
+                    },
+                    function: 'download',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: '3ec1510b-7e87-4f92-ab8a-22675249d84b',
+                id: '1003',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '0', '14688'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '0', '14688'],
+                op3: ['25', '1', '4', '0', '14688'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '0', '14688'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: '3ec1510b-7e87-4f92-ab8a-22675249d84b',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/51c1f85d-ca4d-451c-9146-aadcc420fa30/attachments/prwe.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/51c1f85d-ca4d-451c-9146-aadcc420fa30',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                resourceTitleObject: {
+                  default: 'Parcs résidentiels de week-end (PRWE)',
+                  langfre: 'Parcs résidentiels de week-end (PRWE)',
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Cette couche de de données localise les équipements touristiques ayant le statut de parcs résidentiels de week-end au sein du territoire wallon.\n\nLe parc résidentiel de week-end est défini par le CWATUP (art.144) comme \"un ensemble de parcelles comprises dans un lotissement destiné à recevoir des résidences de week-end\", lesquelles sont des abris fixes ou mobiles de 60 mètres carrés maximum de superficie brute au sol (caravane, remorque d'habitation, chalet, bungalow, pavillon, etc.). \n\nPar opposition aux équipements purement récréatifs (parcs d'attraction, étangs de pêche, piscines, etc.), les PRWE sont des équipements touristiques comportant une fonction de séjour. Une personne peut y être résident permanent (et y être ou non domiciliée). \n\nles prescriptions relatives au permis d’urbanisme ou de lotir pour un équipement touristique s’appliquent aux parcs résidentiels. Un PRWE peut être implanté dans une zone d'habitat à caractère rural, d'aménagement communal concerté (zones de réserve) ou de loisirs ayant fait l'objet d'un PCA en vigueur ou d'un RUE approuvé par le GW (CWATUPE - Art.140). Dans une zone d'habitat, l'autorisation ne sera accordée que pour autant que la destination principale de la zone ne soit pas mise en péril et que l'équipement soit compatible avec le voisinage. Le parc ne peut en aucun cas être situé dans un site classé, ni dans un lieu insalubre ou inondable (CWATUPE - Art.145).\n\nLes parcs résidentiels de week-end cartographiés correspondent aux dossiers connus, approuvés et non périmés dépouillés à l'Administration Régionale. Ils répondent aux critères successivement définis par la circulaire ministérielle du 14/05/1971 et des arrêtés royaux du 29/10/1973 et du 27/12/1976.\n\nChaque parc résidentiel de week-end est identifié de manière unique. Une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque entité renvoie vers une application permettant de disposer d'informations complémentaires sur le parc en question.",
+                  langfre:
+                    "Cette couche de de données localise les équipements touristiques ayant le statut de parcs résidentiels de week-end au sein du territoire wallon.\n\nLe parc résidentiel de week-end est défini par le CWATUP (art.144) comme \"un ensemble de parcelles comprises dans un lotissement destiné à recevoir des résidences de week-end\", lesquelles sont des abris fixes ou mobiles de 60 mètres carrés maximum de superficie brute au sol (caravane, remorque d'habitation, chalet, bungalow, pavillon, etc.). \n\nPar opposition aux équipements purement récréatifs (parcs d'attraction, étangs de pêche, piscines, etc.), les PRWE sont des équipements touristiques comportant une fonction de séjour. Une personne peut y être résident permanent (et y être ou non domiciliée). \n\nles prescriptions relatives au permis d’urbanisme ou de lotir pour un équipement touristique s’appliquent aux parcs résidentiels. Un PRWE peut être implanté dans une zone d'habitat à caractère rural, d'aménagement communal concerté (zones de réserve) ou de loisirs ayant fait l'objet d'un PCA en vigueur ou d'un RUE approuvé par le GW (CWATUPE - Art.140). Dans une zone d'habitat, l'autorisation ne sera accordée que pour autant que la destination principale de la zone ne soit pas mise en péril et que l'équipement soit compatible avec le voisinage. Le parc ne peut en aucun cas être situé dans un site classé, ni dans un lieu insalubre ou inondable (CWATUPE - Art.145).\n\nLes parcs résidentiels de week-end cartographiés correspondent aux dossiers connus, approuvés et non périmés dépouillés à l'Administration Régionale. Ils répondent aux critères successivement définis par la circulaire ministérielle du 14/05/1971 et des arrêtés royaux du 29/10/1973 et du 27/12/1976.\n\nChaque parc résidentiel de week-end est identifié de manière unique. Une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque entité renvoie vers une application permettant de disposer d'informations complémentaires sur le parc en question.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    'Cette couche de de données localise les équipements touristiques ayant le statut de parcs résidentiels de week-end au sein du territoire wallon.',
+                  langfre:
+                    'Cette couche de de données localise les équipements touristiques ayant le statut de parcs résidentiels de week-end au sein du territoire wallon.',
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default: "Pas de limitation d'accès public à cette donnée.",
+                    langfre: "Pas de limitation d'accès public à cette donnée.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                  {
+                    default:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    langfre:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    link: 'https://creativecommons.org/licenses/by/4.0/',
+                  },
+                  {
+                    default:
+                      'Source : Service public de Wallonie (SPW) - Parcs résidentiels de week-end (PRWE) (2018-06-01) http://geodata.wallonie.be/id/51c1f85d-ca4d-451c-9146-aadcc420fa30',
+                    langfre:
+                      'Source : Service public de Wallonie (SPW) - Parcs résidentiels de week-end (PRWE) (2018-06-01) http://geodata.wallonie.be/id/51c1f85d-ca4d-451c-9146-aadcc420fa30',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PRWE/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PRWE/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    descriptionObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=PRWE',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=PRWE',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - PRWE',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - PRWE',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux PRWE. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux PRWE. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FPRWE%2FMapServer%22%2C%22label%22%3A%22Parcs%20r%C3%A9sidentiels%20de%20week-end%20%28PRWE%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F51c1f85d-ca4d-451c-9146-aadcc420fa30%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FPRWE%2FMapServer%22%2C%22label%22%3A%22Parcs%20r%C3%A9sidentiels%20de%20week-end%20%28PRWE%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F51c1f85d-ca4d-451c-9146-aadcc420fa30%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PRWE/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PRWE/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux parcs résidentiels de week-end',
+                      langfre:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux parcs résidentiels de week-end',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/PRWE/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/PRWE/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux aux parcs résidentiels de week-end',
+                      langfre:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux aux parcs résidentiels de week-end',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/amenagement/PRWE/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/amenagement/PRWE/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement de la couche de données',
+                      langfre: 'Téléchargement de la couche de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Accès en téléchargement direct à la couche de données',
+                      langfre:
+                        'Accès en téléchargement direct à la couche de données',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=prwe',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=prwe',
+                    },
+                    nameObject: {
+                      default:
+                        'Base de données des parcs résidentiels de week-end',
+                      langfre:
+                        'Base de données des parcs résidentiels de week-end',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Site permettant la recherche des parcs résidentiels de week-end',
+                      langfre:
+                        'Site permettant la recherche des parcs résidentiels de week-end',
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: '51c1f85d-ca4d-451c-9146-aadcc420fa30',
+                id: '1270',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '0', '14688'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '0', '14688'],
+                op3: ['25', '1', '4', '0', '14688'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '0', '14688'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: '51c1f85d-ca4d-451c-9146-aadcc420fa30',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/4b8c4576-52dd-4505-896e-3d83d474ff95/attachments/pcaml_pic.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/4b8c4576-52dd-4505-896e-3d83d474ff95',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                cl_status: [
+                  {
+                    key: 'completed',
+                  },
+                ],
+                resourceTitleObject: {
+                  default:
+                    "Programmes Communaux d'Actions en Matière de Logement 2014-2016",
+                  langfre:
+                    "Programmes Communaux d'Actions en Matière de Logement 2014-2016",
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Cette couche de données reprend les parcelles sur lesquels se réalise un projet de logement repris dans le programme communal d'actions en matière de logement de la commune concernée.\n\nLe Code wallon du Logement et de l’Habitat durable impose par son article 187 que les communes élaborent, dans les neufs mois suivant le renouvellement de leurs conseils respectifs, une déclaration de politique du logement qui détermine les objectifs et les principes des actions à mener en vue de mettre en œuvre le droit à un logement décent tel que le prévoit l’article 23 de la Constitution. C’est dans ce cadre, et afin de matérialiser les actions figurant dans la Déclaration précitée, que chaque commune est tenue d'établir un programme communal triennal d'actions en matière de logement (ancrage communal) .\n\nCe programme constitue le recueil des projets proposés par les différents opérateurs en matière de logement, à savoir : les Communes, les CPAS, les Sociétés de Logement de Service Public (SLSP), le Fonds du logement des familles nombreuses de Wallonie (FLW) ainsi que différentes ASBL, en vue de diversifier l'offre en logements disponibles sur leur territoire, à permettre la réalisation de logements sociaux ou assimilés, d'insertion et de transit, ainsi qu'à lutter contre l'inoccupation et l'insalubrité des logements. \n\nLa Direction des subventions aux organismes publics et privés de la DGO4 (SPW - DGO4 - DSOPP) aide les communes dans ces démarches. Elle favorise l'aspect transversal et global dans la recherche de solutions, notamment en développant des méthodes et des pratiques de collaboration entre les acteurs locaux et, si nécessaire, régionaux. \n\nLa cartographie reprend les divers projets pour lesquels des informations cadastrales ont été fournies sous la forme de polygones. Dans le cas où les informations parcellaires ne sont pas disponibles, un polygone représentant le périmètre de la Commune est produit et le(s) numéro(s) du(des) projet(s) lui est(sont) associé(s). La cartographie distingue les zones où un projet est localisé, non-localisé (3 communes) et les zones sans projet (une zone repris dans la présente cartographie).\n\nChaque parcelle ou zone concernée par le programme communal d'action en matière de logement est identifiée de manière unique. Une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque zone renvoie vers une application permettant de disposer d'informations complémentaires sur le site en question.",
+                  langfre:
+                    "Cette couche de données reprend les parcelles sur lesquels se réalise un projet de logement repris dans le programme communal d'actions en matière de logement de la commune concernée.\n\nLe Code wallon du Logement et de l’Habitat durable impose par son article 187 que les communes élaborent, dans les neufs mois suivant le renouvellement de leurs conseils respectifs, une déclaration de politique du logement qui détermine les objectifs et les principes des actions à mener en vue de mettre en œuvre le droit à un logement décent tel que le prévoit l’article 23 de la Constitution. C’est dans ce cadre, et afin de matérialiser les actions figurant dans la Déclaration précitée, que chaque commune est tenue d'établir un programme communal triennal d'actions en matière de logement (ancrage communal) .\n\nCe programme constitue le recueil des projets proposés par les différents opérateurs en matière de logement, à savoir : les Communes, les CPAS, les Sociétés de Logement de Service Public (SLSP), le Fonds du logement des familles nombreuses de Wallonie (FLW) ainsi que différentes ASBL, en vue de diversifier l'offre en logements disponibles sur leur territoire, à permettre la réalisation de logements sociaux ou assimilés, d'insertion et de transit, ainsi qu'à lutter contre l'inoccupation et l'insalubrité des logements. \n\nLa Direction des subventions aux organismes publics et privés de la DGO4 (SPW - DGO4 - DSOPP) aide les communes dans ces démarches. Elle favorise l'aspect transversal et global dans la recherche de solutions, notamment en développant des méthodes et des pratiques de collaboration entre les acteurs locaux et, si nécessaire, régionaux. \n\nLa cartographie reprend les divers projets pour lesquels des informations cadastrales ont été fournies sous la forme de polygones. Dans le cas où les informations parcellaires ne sont pas disponibles, un polygone représentant le périmètre de la Commune est produit et le(s) numéro(s) du(des) projet(s) lui est(sont) associé(s). La cartographie distingue les zones où un projet est localisé, non-localisé (3 communes) et les zones sans projet (une zone repris dans la présente cartographie).\n\nChaque parcelle ou zone concernée par le programme communal d'action en matière de logement est identifiée de manière unique. Une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque zone renvoie vers une application permettant de disposer d'informations complémentaires sur le site en question.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    "Cette couche de données reprend les parcelles sur lesquels se réalise un projet de logement repris dans le programme communal d'actions en matière de logement de la commune concernée.",
+                  langfre:
+                    "Cette couche de données reprend les parcelles sur lesquels se réalise un projet de logement repris dans le programme communal d'actions en matière de logement de la commune concernée.",
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default: "Les conditions générales d'accès s’appliquent.",
+                    langfre: "Les conditions générales d'accès s’appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGU.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CPU-TypeA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PCAML14_16/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PCAML14_16/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende des données',
+                      langfre: 'Légende des données',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Légende des données relatives aux sites concernés par les programmes d'action communaux en matière de logement 14-16.",
+                      langfre:
+                        "Légende des données relatives aux sites concernés par les programmes d'action communaux en matière de logement 14-16.",
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=PCAML14_16',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=PCAML14_16',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - PACML 14-16',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - PACML 14-16',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux PACML 14-16. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux PACML 14-16. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FPCAML14_16%2FMapServer%22%2C%22label%22%3A%22Programmes%20Communaux%20d%27Actions%20en%20Mati%C3%A8re%20de%20Logement%202014-2016%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F4b8c4576-52dd-4505-896e-3d83d474ff95%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FPCAML14_16%2FMapServer%22%2C%22label%22%3A%22Programmes%20Communaux%20d%27Actions%20en%20Mati%C3%A8re%20de%20Logement%202014-2016%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F4b8c4576-52dd-4505-896e-3d83d474ff95%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PCAML14_16/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PCAML14_16/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux sites concernés par les programmes d'action communaux en matière de logement 14-16.",
+                      langfre:
+                        "Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux sites concernés par les programmes d'action communaux en matière de logement 14-16.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/PCAML14_16/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/PCAML14_16/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Adresse de connexion au service de visualisation WMS des couches relatives aux sites concernés par les programmes d'action communaux en matière de logement 14-16.",
+                      langfre:
+                        "Adresse de connexion au service de visualisation WMS des couches relatives aux sites concernés par les programmes d'action communaux en matière de logement 14-16.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/Logement_Habitat/PCAML14_16/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/Logement_Habitat/PCAML14_16/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement de la couche de données',
+                      langfre: 'Téléchargement de la couche de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Accès en téléchargement direct à la couche de données',
+                      langfre:
+                        'Accès en téléchargement direct à la couche de données',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=pcaml14_16',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=pcaml14_16',
+                    },
+                    nameObject: {
+                      default:
+                        'Base de données des sites concernés par les PACML',
+                      langfre:
+                        'Base de données des sites concernés par les PACML',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Site permettant la recherche des sites concernés par les programmes d'action communaux en matière de logement 14-16.",
+                      langfre:
+                        "Site permettant la recherche des sites concernés par les programmes d'action communaux en matière de logement 14-16.",
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_logement/index.php/site/divers?page=ancrage1416',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_logement/index.php/site/divers?page=ancrage1416',
+                    },
+                    nameObject: {
+                      default:
+                        "Page Internet relatif aux programmes communaux d'action en matière de logement 2014-2016",
+                      langfre:
+                        "Page Internet relatif aux programmes communaux d'action en matière de logement 2014-2016",
+                    },
+                    descriptionObject: {
+                      default:
+                        "Page Internet sur le site de la DGO4 relatif aux programmes communaux d'action en matière de logement 2014-2016. Possibilité de télécharger les documents de référence.",
+                      langfre:
+                        "Page Internet sur le site de la DGO4 relatif aux programmes communaux d'action en matière de logement 2014-2016. Possibilité de télécharger les documents de référence.",
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: '4b8c4576-52dd-4505-896e-3d83d474ff95',
+                id: '1302',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '14688', '0'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '14688', '0'],
+                op3: ['25', '1', '4', '14688', '0'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '14688', '0'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: '4b8c4576-52dd-4505-896e-3d83d474ff95',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/6997776d-8b95-4dc7-9b66-a5d9c4050ea8/attachments/pat_exc.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/6997776d-8b95-4dc7-9b66-a5d9c4050ea8',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['series'],
+                cl_status: [
+                  {
+                    key: 'onGoing',
+                  },
+                ],
+                resourceTitleObject: {
+                  default: 'Patrimoine - Biens exceptionnels - Série',
+                  langfre: 'Patrimoine - Biens exceptionnels - Série',
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Cette série de couches de données reprend la localisation des différents biens figurant au patrimoine immobilier classé exceptionnel.\n\nLe patrimoine exceptionnel est défini comme l’ensemble des biens classés présentant un intérêt exceptionnel au niveau de l’ensemble de la Région wallonne, sur base des critères d’authenticité, d’intégrité, de représentativité ou de rareté, et dont la liste est déterminée par un arrêté du Gouvernement (AGW - 12 mai 2022).\n\nIl s’agit d’une mesure de protection appliquée en surimpression au classement. En effet, les biens classés exceptionnels sont d’abord des biens classés au sens du CoPat (cf. fiche de métadonnées relative aux biens classés et zones de protection) au titre de monument, d’ensemble architectural, de site ou de site archéologique. Les données relatives aux biens exceptionnels sont donc issues d'une sélection sur base des jeux de données relatifs aux biens classés et zones de protection. Les attributs sont conservés.\n\nCes biens alimentent aussi la liste du patrimoine mondial (UNESCO). Pour plus de renseignements, consultez la fiche de métadonnées relative aux Biens mondiaux (PAT_MND).\n\nChaque bien classé exceptionnel est identifié de manière unique, ce qui permet la liaison entre les éléments cartographiés et la base de données documentaire reprenant des informations administratives ainsi que les documents scannés relevés dans les dossiers liés.",
+                  langfre:
+                    "Cette série de couches de données reprend la localisation des différents biens figurant au patrimoine immobilier classé exceptionnel.\n\nLe patrimoine exceptionnel est défini comme l’ensemble des biens classés présentant un intérêt exceptionnel au niveau de l’ensemble de la Région wallonne, sur base des critères d’authenticité, d’intégrité, de représentativité ou de rareté, et dont la liste est déterminée par un arrêté du Gouvernement (AGW - 12 mai 2022).\n\nIl s’agit d’une mesure de protection appliquée en surimpression au classement. En effet, les biens classés exceptionnels sont d’abord des biens classés au sens du CoPat (cf. fiche de métadonnées relative aux biens classés et zones de protection) au titre de monument, d’ensemble architectural, de site ou de site archéologique. Les données relatives aux biens exceptionnels sont donc issues d'une sélection sur base des jeux de données relatifs aux biens classés et zones de protection. Les attributs sont conservés.\n\nCes biens alimentent aussi la liste du patrimoine mondial (UNESCO). Pour plus de renseignements, consultez la fiche de métadonnées relative aux Biens mondiaux (PAT_MND).\n\nChaque bien classé exceptionnel est identifié de manière unique, ce qui permet la liaison entre les éléments cartographiés et la base de données documentaire reprenant des informations administratives ainsi que les documents scannés relevés dans les dossiers liés.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    'Cette série de couches de données reprend la localisation des différents biens figurant au patrimoine immobilier classé exceptionnel.',
+                  langfre:
+                    'Cette série de couches de données reprend la localisation des différents biens figurant au patrimoine immobilier classé exceptionnel.',
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    langfre:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    link: 'https://creativecommons.org/licenses/by/4.0/',
+                  },
+                  {
+                    default:
+                      'Source : ervice public de Wallonie (SPW) - Patrimoine - Biens exceptionnels - Série (2023-12-11) http://geodata.wallonie.be/id/6997776d-8b95-4dc7-9b66-a5d9c4050ea8',
+                    langfre:
+                      'Source : ervice public de Wallonie (SPW) - Patrimoine - Biens exceptionnels - Série (2023-12-11) http://geodata.wallonie.be/id/6997776d-8b95-4dc7-9b66-a5d9c4050ea8',
+                  },
+                  {
+                    default: "Pas de limitation d'accès public à cette donnée.",
+                    langfre: "Pas de limitation d'accès public à cette donnée.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PAT_EXC/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PAT_EXC/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende des couches de données',
+                      langfre: 'Légende des couches de données',
+                    },
+                    descriptionObject: {
+                      default: 'Légende des couches de données',
+                      langfre: 'Légende des couches de données',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=PAT_EXC',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=PAT_EXC',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données TLPE - Biens classés exceptionnels',
+                      langfre:
+                        'Application de consultation des données TLPE - Biens classés exceptionnels',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux biens classés exceptionnels. Cette application constitue un thème de l'application de consultation des données TLPE.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux biens classés exceptionnels. Cette application constitue un thème de l'application de consultation des données TLPE.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FPAT_EXC%2FMapServer%22%2C%22label%22%3A%22Patrimoine%20-%20Biens%20exceptionnels%20-%20S%C3%A9rie%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F6997776d-8b95-4dc7-9b66-a5d9c4050ea8%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FPAT_EXC%2FMapServer%22%2C%22label%22%3A%22Patrimoine%20-%20Biens%20exceptionnels%20-%20S%C3%A9rie%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F6997776d-8b95-4dc7-9b66-a5d9c4050ea8%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PAT_EXC/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PAT_EXC/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Ce service ESRI-REST permet de visualiser les couches de données des biens classés exceptionnels',
+                      langfre:
+                        'Ce service ESRI-REST permet de visualiser les couches de données des biens classés exceptionnels',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/PAT_EXC/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/PAT_EXC/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Ce service WMS permet de visualiser les couches de données des biens classés exceptionnels',
+                      langfre:
+                        'Ce service WMS permet de visualiser les couches de données des biens classés exceptionnels',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/patrimoine/PAT_EXC',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/patrimoine/PAT_EXC',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement des couches de données',
+                      langfre: 'Téléchargement des couches de données',
+                    },
+                    descriptionObject: {
+                      default: 'Accès en téléchargement direct',
+                      langfre: 'Accès en téléchargement direct',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=pat_exc',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=pat_exc',
+                    },
+                    nameObject: {
+                      default:
+                        'Base de données des biens exceptionnels et zones de protection',
+                      langfre:
+                        'Base de données des biens exceptionnels et zones de protection',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Site permettant la recherche des biens exceptionnels',
+                      langfre:
+                        'Site permettant la recherche des biens exceptionnels',
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/documents/PAT_EXC/PAT_EXC.pdf',
+                      langfre:
+                        'https://docum1.wallonie.be/documents/PAT_EXC/PAT_EXC.pdf',
+                    },
+                    nameObject: {
+                      default: 'Liste du patrimoine immobilier exceptionnel',
+                      langfre: 'Liste du patrimoine immobilier exceptionnel',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Liste du patrimoine immobilier exceptionnel en Région wallonne',
+                      langfre:
+                        'Liste du patrimoine immobilier exceptionnel en Région wallonne',
+                    },
+                    function: 'information',
+                    applicationProfile: 'application/pdf',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://agencewallonnedupatrimoine.be/se-renseigner/',
+                      langfre:
+                        'https://agencewallonnedupatrimoine.be/se-renseigner/',
+                    },
+                    nameObject: {
+                      default:
+                        'Site Internet de l’Agence wallonne du Patrimoine',
+                      langfre:
+                        'Site Internet de l’Agence wallonne du Patrimoine',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Sur ce site, découvrez ce que le Service public de Wallonie accomplit dans le domaine de l'archéologie, de protection du patrimoine mais également en matière d'entretien et de restauration de biens classés.",
+                      langfre:
+                        "Sur ce site, découvrez ce que le Service public de Wallonie accomplit dans le domaine de l'archéologie, de protection du patrimoine mais également en matière d'entretien et de restauration de biens classés.",
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: '6997776d-8b95-4dc7-9b66-a5d9c4050ea8',
+                id: '668',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '14688', '0', '14683'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '14688', '0', '14683'],
+                op3: ['25', '1', '4', '0', '14688', '14683'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '0', '14688', '14683'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: '6997776d-8b95-4dc7-9b66-a5d9c4050ea8',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/fb122cc3-3f83-4d24-be0e-bcd66ace8843/attachments/bien_lstsav.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/fb122cc3-3f83-4d24-be0e-bcd66ace8843',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['series'],
+                cl_status: [
+                  {
+                    key: 'onGoing',
+                  },
+                ],
+                resourceTitleObject: {
+                  default: 'Patrimoine - Biens en liste de sauvegarde - Série',
+                  langfre: 'Patrimoine - Biens en liste de sauvegarde - Série',
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Cette série de couches de données reprend la localisation de biens qui sont inscrits sur la liste de sauvegarde et qui bénéficient à ce titre d’une protection temporaire dans l’attente d’un éventuel classement.\n\nLa procédure de protection d'un bien patrimonial étant relativement longue, une procédure spécifique est prévue lorsqu’un bien nécessite une protection en urgence : l’inscription sur la liste de sauvegarde.\n\nLa liste de sauvegarde consiste en « une liste des biens immobiliers menacés de destruction ou de modification provisoire ou définitive, protégés à titre temporaire » (CoPat art. 3, 5°).\n\nLorsque l’urgence est avérée, la procédure est réduite et l'inscription ne requiert pas d'enquête publique. L'arrêté d'inscription sur la liste de sauvegarde relève du Gouvernement, lequel sollicitera, sauf extrême urgence dûment motivée, l'avis de la commission royale des Monuments, Sites et Fouilles. \n\nL'inscription sur la liste de sauvegarde est une mesure valable 12 mois, prenant cours à la date de la notification de l'inscription du bien sur la liste. Tous les effets du classement sont applicables durant cette période : le propriétaire du bien ne peut par exemple ni le détruire, ni permettre d’y apporter un changement définitif qui en modifierait l’aspect sans y avoir été autorisé par le ministre responsable (petite nuance en ce qui concerne les aides : seule la subvention pour des actes et travaux d’urgence peut être demandée). \n\nTrès souvent, cette inscription se poursuit par une procédure en vue du classement du bien.\nSans avis rendu par l’Agence wallonne du Patrimoine (AWaP) au bout de la période de 12 mois, le bien n’est plus protégé par la liste de sauvegarde. Il est alors à retirer de la liste. Si la procédure de classement en parallèle aboutit, il est également retiré. Les couches constitutives de la séries sont donc potentiellement vides au moment de la consultation. L’inscription n'est pas renouvelable. \n\nLes biens en liste de sauvegarde sont des biens patrimoniaux au sens du CoPat (cf. fiche de métadonnées relative aux biens classés et zones de protection). On y distingue donc les monuments, les sites, les sites archéologiques et les ensembles architecturaux, ainsi que leurs zones de protection éventuelles.\n\nLa liste de sauvegarde a été créée en juillet 1987.\n\nChaque bien inscrit en liste de sauvegarde est identifié de manière unique, ce qui permet la liaison entre les éléments cartographiés et la base de données documentaire reprenant des informations administratives ainsi que les documents scannés relevés dans les dossiers liés.",
+                  langfre:
+                    "Cette série de couches de données reprend la localisation de biens qui sont inscrits sur la liste de sauvegarde et qui bénéficient à ce titre d’une protection temporaire dans l’attente d’un éventuel classement.\n\nLa procédure de protection d'un bien patrimonial étant relativement longue, une procédure spécifique est prévue lorsqu’un bien nécessite une protection en urgence : l’inscription sur la liste de sauvegarde.\n\nLa liste de sauvegarde consiste en « une liste des biens immobiliers menacés de destruction ou de modification provisoire ou définitive, protégés à titre temporaire » (CoPat art. 3, 5°).\n\nLorsque l’urgence est avérée, la procédure est réduite et l'inscription ne requiert pas d'enquête publique. L'arrêté d'inscription sur la liste de sauvegarde relève du Gouvernement, lequel sollicitera, sauf extrême urgence dûment motivée, l'avis de la commission royale des Monuments, Sites et Fouilles. \n\nL'inscription sur la liste de sauvegarde est une mesure valable 12 mois, prenant cours à la date de la notification de l'inscription du bien sur la liste. Tous les effets du classement sont applicables durant cette période : le propriétaire du bien ne peut par exemple ni le détruire, ni permettre d’y apporter un changement définitif qui en modifierait l’aspect sans y avoir été autorisé par le ministre responsable (petite nuance en ce qui concerne les aides : seule la subvention pour des actes et travaux d’urgence peut être demandée). \n\nTrès souvent, cette inscription se poursuit par une procédure en vue du classement du bien.\nSans avis rendu par l’Agence wallonne du Patrimoine (AWaP) au bout de la période de 12 mois, le bien n’est plus protégé par la liste de sauvegarde. Il est alors à retirer de la liste. Si la procédure de classement en parallèle aboutit, il est également retiré. Les couches constitutives de la séries sont donc potentiellement vides au moment de la consultation. L’inscription n'est pas renouvelable. \n\nLes biens en liste de sauvegarde sont des biens patrimoniaux au sens du CoPat (cf. fiche de métadonnées relative aux biens classés et zones de protection). On y distingue donc les monuments, les sites, les sites archéologiques et les ensembles architecturaux, ainsi que leurs zones de protection éventuelles.\n\nLa liste de sauvegarde a été créée en juillet 1987.\n\nChaque bien inscrit en liste de sauvegarde est identifié de manière unique, ce qui permet la liaison entre les éléments cartographiés et la base de données documentaire reprenant des informations administratives ainsi que les documents scannés relevés dans les dossiers liés.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    'Cette série de couches de données reprend la localisation de biens qui sont inscrits sur la liste de sauvegarde et qui bénéficient à ce titre d’une protection temporaire dans l’attente d’un éventuel classement.',
+                  langfre:
+                    'Cette série de couches de données reprend la localisation de biens qui sont inscrits sur la liste de sauvegarde et qui bénéficient à ce titre d’une protection temporaire dans l’attente d’un éventuel classement.',
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    langfre:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    link: 'https://creativecommons.org/licenses/by/4.0/',
+                  },
+                  {
+                    default:
+                      'Source : Service public de Wallonie (SPW) - Patrimoine - Biens en liste de sauvegarde - Série (2023-07-04) http://geodata.wallonie.be/id/fb122cc3-3f83-4d24-be0e-bcd66ace8843',
+                    langfre:
+                      'Source : Service public de Wallonie (SPW) - Patrimoine - Biens en liste de sauvegarde - Série (2023-07-04) http://geodata.wallonie.be/id/fb122cc3-3f83-4d24-be0e-bcd66ace8843',
+                  },
+                  {
+                    default: "Pas de limitation d'accès public à cette donnée.",
+                    langfre: "Pas de limitation d'accès public à cette donnée.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PAT_LSTSAV/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PAT_LSTSAV/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende des couches de données',
+                      langfre: 'Légende des couches de données',
+                    },
+                    descriptionObject: {
+                      default: 'Légende des couches de données',
+                      langfre: 'Légende des couches de données',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=PAT_LSTSAV',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=PAT_LSTSAV',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données TLPE - Biens en liste de sauvegarde',
+                      langfre:
+                        'Application de consultation des données TLPE - Biens en liste de sauvegarde',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux biens en liste de sauvegarde. Cette application constitue un thème de l'application de consultation des données TLPE.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux biens en liste de sauvegarde. Cette application constitue un thème de l'application de consultation des données TLPE.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FPAT_LSTSAV%2FMapServer%22%2C%22label%22%3A%22Patrimoine%20-%20Biens%20en%20liste%20de%20sauvegarde%20-%20S%C3%A9rie%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2Ffb122cc3-3f83-4d24-be0e-bcd66ace8843%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FPAT_LSTSAV%2FMapServer%22%2C%22label%22%3A%22Patrimoine%20-%20Biens%20en%20liste%20de%20sauvegarde%20-%20S%C3%A9rie%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2Ffb122cc3-3f83-4d24-be0e-bcd66ace8843%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PAT_LSTSAV/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PAT_LSTSAV/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches de données relatives aux "Biens en liste de sauvegarde"',
+                      langfre:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches de données relatives aux "Biens en liste de sauvegarde"',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/PAT_LSTSAV/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/PAT_LSTSAV/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation WMS des couches de données relatives aux "Biens en liste de sauvegarde"',
+                      langfre:
+                        'Adresse de connexion au service de visualisation WMS des couches de données relatives aux "Biens en liste de sauvegarde"',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/patrimoine/PAT_LSTSAV/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/patrimoine/PAT_LSTSAV/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement des couches de données',
+                      langfre: 'Téléchargement des couches de données',
+                    },
+                    descriptionObject: {
+                      default: 'Accès en téléchargement direct',
+                      langfre: 'Accès en téléchargement direct',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=pat_lstsav',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=pat_lstsav',
+                    },
+                    nameObject: {
+                      default:
+                        'Base de données des biens en liste de sauvegarde',
+                      langfre:
+                        'Base de données des biens en liste de sauvegarde',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Site permettant la recherche des biens en liste de sauvegarde',
+                      langfre:
+                        'Site permettant la recherche des biens en liste de sauvegarde',
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/documents/PAT_LSTSAV/PAT_LSTSAV.pdf',
+                      langfre:
+                        'https://docum1.wallonie.be/documents/PAT_LSTSAV/PAT_LSTSAV.pdf',
+                    },
+                    nameObject: {
+                      default: 'Liste de sauvegarde du patrimoine wallon',
+                      langfre: 'Liste de sauvegarde du patrimoine wallon',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Liste des biens placés en liste de sauvegarde en Région wallonne',
+                      langfre:
+                        'Liste des biens placés en liste de sauvegarde en Région wallonne',
+                    },
+                    function: 'information',
+                    applicationProfile: 'application/pdf',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://agencewallonnedupatrimoine.be/se-renseigner/',
+                      langfre:
+                        'https://agencewallonnedupatrimoine.be/se-renseigner/',
+                    },
+                    nameObject: {
+                      default:
+                        'Site Internet de l’Agence wallonne du Patrimoine',
+                      langfre:
+                        'Site Internet de l’Agence wallonne du Patrimoine',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Sur ce site, découvrez ce que le Service public de Wallonie accomplit dans le domaine de l'archéologie, de protection du patrimoine mais également en matière d'entretien et de restauration de biens classés.",
+                      langfre:
+                        "Sur ce site, découvrez ce que le Service public de Wallonie accomplit dans le domaine de l'archéologie, de protection du patrimoine mais également en matière d'entretien et de restauration de biens classés.",
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: 'fb122cc3-3f83-4d24-be0e-bcd66ace8843',
+                id: '1294',
+                groupOwner: '4',
+                op0: ['1', '25', '4', '14684', '14688', '0', '14683'],
+                op2: ['1', '25', '4'],
+                op1: ['1', '25', '4', '14688', '0', '14683'],
+                op3: ['1', '25', '4', '0', '14688', '14683'],
+                op6: ['1', '25', '4'],
+                op5: ['1', '25', '4', '0', '14688', '14683'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: 'fb122cc3-3f83-4d24-be0e-bcd66ace8843',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/9008e261-2c71-4d40-8513-fb970c4eec2b/attachments/comdec_pic.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/9008e261-2c71-4d40-8513-fb970c4eec2b',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                cl_status: [
+                  {
+                    key: 'onGoing',
+                  },
+                ],
+                resourceTitleObject: {
+                  default:
+                    'Communes dont le collège communal statue sans avis préalable du fonctionnaire délégué (en décentralisation)',
+                  langfre:
+                    'Communes dont le collège communal statue sans avis préalable du fonctionnaire délégué (en décentralisation)',
+                },
+                resourceAbstractObject: {
+                  default:
+                    'Les communes en décentralisation sont des communes qui peuvent statuer sur les demandes de permis sans avis préalable du fonctionnaire délégué.\n\nElles doivent toutefois remplir simultanément les conditions suivantes :\n\n- Le projet faisant l’objet de la demande de permis ne peut, d’une part, déroger au plan de secteur ou à la partie réglementaire du guide régional d’urbanisme (GRU) et/ou, d’autre part, s’écarter du schéma de développement communal (SDC), d’un schéma de développement pluricommunal (SDPC), d’un schéma d’orientation local (SOL), de la partie indicative du guide régional d’urbanisme (GRU) ou d’un guide communal d’urbanisme (GCU).\n- La commune doit posséder un schéma de développement communal (SDC) et/ou un schéma de développement pluricommunal (SDPC) couvrant l’entièreté de son territoire.\n- La commune doit avoir institué une commission consultative communale d’aménagement du territoire et de mobilité (CCATM).\n- A partir du 1er juin 2021, la commune doit posséder un guide communal d’urbanisme (GCU) comportant au minimum les éléments visés à l’article D.III.2, §1er, 1° et 2°.',
+                  langfre:
+                    'Les communes en décentralisation sont des communes qui peuvent statuer sur les demandes de permis sans avis préalable du fonctionnaire délégué.\n\nElles doivent toutefois remplir simultanément les conditions suivantes :\n\n- Le projet faisant l’objet de la demande de permis ne peut, d’une part, déroger au plan de secteur ou à la partie réglementaire du guide régional d’urbanisme (GRU) et/ou, d’autre part, s’écarter du schéma de développement communal (SDC), d’un schéma de développement pluricommunal (SDPC), d’un schéma d’orientation local (SOL), de la partie indicative du guide régional d’urbanisme (GRU) ou d’un guide communal d’urbanisme (GCU).\n- La commune doit posséder un schéma de développement communal (SDC) et/ou un schéma de développement pluricommunal (SDPC) couvrant l’entièreté de son territoire.\n- La commune doit avoir institué une commission consultative communale d’aménagement du territoire et de mobilité (CCATM).\n- A partir du 1er juin 2021, la commune doit posséder un guide communal d’urbanisme (GCU) comportant au minimum les éléments visés à l’article D.III.2, §1er, 1° et 2°.',
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    'Les communes en décentralisation sont des communes qui peuvent statuer sur les demandes de permis sans avis préalable du fonctionnaire délégué.',
+                  langfre:
+                    'Les communes en décentralisation sont des communes qui peuvent statuer sur les demandes de permis sans avis préalable du fonctionnaire délégué.',
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default: "Les conditions générales d'accès s’appliquent.",
+                    langfre: "Les conditions générales d'accès s’appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGU.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CPU-TypeA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/COMDEC/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/COMDEC/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende des couches de données',
+                      langfre: 'Légende des couches de données',
+                    },
+                    descriptionObject: {
+                      default: 'Légende des couches de données',
+                      langfre: 'Légende des couches de données',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=COMDEC',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=COMDEC',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - Communes en décentralisation',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - Communes en décentralisation',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux communes en décentralisation. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux communes en décentralisation. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FCOMDEC%2FMapServer%22%2C%22label%22%3A%22Communes%20dont%20le%20coll%C3%A8ge%20communal%20statue%20sans%20avis%20pr%C3%A9alable%20du%20fonctionnaire%20d%C3%A9l%C3%A9gu%C3%A9%20%28en%20d%C3%A9centralisation%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F9008e261-2c71-4d40-8513-fb970c4eec2b%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FCOMDEC%2FMapServer%22%2C%22label%22%3A%22Communes%20dont%20le%20coll%C3%A8ge%20communal%20statue%20sans%20avis%20pr%C3%A9alable%20du%20fonctionnaire%20d%C3%A9l%C3%A9gu%C3%A9%20%28en%20d%C3%A9centralisation%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F9008e261-2c71-4d40-8513-fb970c4eec2b%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/COMDEC/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/COMDEC/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux Communes en décentralisation',
+                      langfre:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux Communes en décentralisation',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/COMDEC/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/COMDEC/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux Communes en décentralisation',
+                      langfre:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux Communes en décentralisation',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/amenagement/COMDEC/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/amenagement/COMDEC/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement de la couche de données',
+                      langfre: 'Téléchargement de la couche de données',
+                    },
+                    descriptionObject: {
+                      default: 'Accès en téléchargement direct',
+                      langfre: 'Accès en téléchargement direct',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=comdec',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=comdec',
+                    },
+                    nameObject: {
+                      default:
+                        'Base de données des Communes en décentralisation',
+                      langfre:
+                        'Base de données des Communes en décentralisation',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Site permettant la recherche des Communes en décentralisation',
+                      langfre:
+                        'Site permettant la recherche des Communes en décentralisation',
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: '9008e261-2c71-4d40-8513-fb970c4eec2b',
+                id: '1160',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '0', '14688'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '0', '14688'],
+                op3: ['25', '1', '4', '0', '14688'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '0', '14688'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: '9008e261-2c71-4d40-8513-fb970c4eec2b',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/097e8d4e-9bad-4798-af85-9bdd3c76952a/attachments/sdc_pic.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/097e8d4e-9bad-4798-af85-9bdd3c76952a',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                cl_status: [
+                  {
+                    key: 'onGoing',
+                  },
+                ],
+                resourceTitleObject: {
+                  default: 'Schéma de Développement Communal (SDC)',
+                  langfre: 'Schéma de Développement Communal (SDC)',
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Cette couche de données compile les informations spatiales constitutives des Schémas de Développement Communaux (SDC) au sens du CoDT.\n\nLe Code du Développement Territorial (CoDT) est entré en vigueur le 1er juin 2017 et a modifié la terminologie et la valeur des outils d'aménagement du territoire en Wallonie. Dans sa logique d'urbanisme de projet, le CoDT met en place les schémas, qui sont des balises dans lesquelles la politique d’aménagement du territoire est menée en Wallonie. Il y a 4 types de schémas qui portent sur des échelles différentes : un au niveau régional (SDT), un au niveau pluricommunal (SDPC) et deux au niveau communal (SDC et SOL), \n\nParmi ces documents, le Schéma de Développement Communal (SDC - Art. D.II.9 et ss du CoDT) est un des deux schémas communaux. Il est établi à l’initiative du conseil communal et approuvé par le Gouvernement. Le SDC définit la stratégie territoriale pour l’ensemble du territoire communal sur la base d’une analyse contextuelle. Le CoDT a voulu concevoir ce schéma comme un outil qui, d’une part, assure la pérennité de l’ancien Schéma de Structure Communal (SSC) et, d’autre part, permet d’envisager une approche plus prospective de la gestion du territoire communal. La stratégie territoriale du SDC définit les objectifs communaux de développement territorial et la manière dont ces objectifs déclinent les objectifs régionaux du Schéma de Développement du Territoire (SDT) ou le cas échéant du ou des Schémas de Développement Pluricommunaux (SDP), les principes de mise en œuvre de ces objectifs, et la structure territoriale.\n\nL’ancien Schéma de Structure Communal (SSC) défini dans le CWATUP est assimilé au SDC. Comme le SSC, le SDC a une valeur indicative. Il s'applique au SOL, au Guide Communal d'Urbanisme (GCU) ainsi qu'à toute décision prise en matière de permis, certificats, déclarations et de politique foncière.\n\nUne commune ne peut se doter que d'un seul SDC.\n\nAu niveau cartographique, la couche de données des SDC intègre les périmètres identifiés dans les anciens SSC au sens du CWATUP.",
+                  langfre:
+                    "Cette couche de données compile les informations spatiales constitutives des Schémas de Développement Communaux (SDC) au sens du CoDT.\n\nLe Code du Développement Territorial (CoDT) est entré en vigueur le 1er juin 2017 et a modifié la terminologie et la valeur des outils d'aménagement du territoire en Wallonie. Dans sa logique d'urbanisme de projet, le CoDT met en place les schémas, qui sont des balises dans lesquelles la politique d’aménagement du territoire est menée en Wallonie. Il y a 4 types de schémas qui portent sur des échelles différentes : un au niveau régional (SDT), un au niveau pluricommunal (SDPC) et deux au niveau communal (SDC et SOL), \n\nParmi ces documents, le Schéma de Développement Communal (SDC - Art. D.II.9 et ss du CoDT) est un des deux schémas communaux. Il est établi à l’initiative du conseil communal et approuvé par le Gouvernement. Le SDC définit la stratégie territoriale pour l’ensemble du territoire communal sur la base d’une analyse contextuelle. Le CoDT a voulu concevoir ce schéma comme un outil qui, d’une part, assure la pérennité de l’ancien Schéma de Structure Communal (SSC) et, d’autre part, permet d’envisager une approche plus prospective de la gestion du territoire communal. La stratégie territoriale du SDC définit les objectifs communaux de développement territorial et la manière dont ces objectifs déclinent les objectifs régionaux du Schéma de Développement du Territoire (SDT) ou le cas échéant du ou des Schémas de Développement Pluricommunaux (SDP), les principes de mise en œuvre de ces objectifs, et la structure territoriale.\n\nL’ancien Schéma de Structure Communal (SSC) défini dans le CWATUP est assimilé au SDC. Comme le SSC, le SDC a une valeur indicative. Il s'applique au SOL, au Guide Communal d'Urbanisme (GCU) ainsi qu'à toute décision prise en matière de permis, certificats, déclarations et de politique foncière.\n\nUne commune ne peut se doter que d'un seul SDC.\n\nAu niveau cartographique, la couche de données des SDC intègre les périmètres identifiés dans les anciens SSC au sens du CWATUP.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    'Cette couche de données compile les informations spatiales constitutives des Schémas de Développement Communaux (SDC) au sens du CoDT.',
+                  langfre:
+                    'Cette couche de données compile les informations spatiales constitutives des Schémas de Développement Communaux (SDC) au sens du CoDT.',
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    langfre:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    link: 'https://creativecommons.org/licenses/by/4.0/',
+                  },
+                  {
+                    default:
+                      'Source : Service public de Wallonie (SPW) - Schéma de Développement Communal (SDC) (2025-01-13) http://geodata.wallonie.be/id/097e8d4e-9bad-4798-af85-9bdd3c76952a',
+                    langfre:
+                      'Source : Service public de Wallonie (SPW) - Schéma de Développement Communal (SDC) (2025-01-13) http://geodata.wallonie.be/id/097e8d4e-9bad-4798-af85-9bdd3c76952a',
+                  },
+                  {
+                    default: "Pas de limitation d'accès public à cette donnée.",
+                    langfre: "Pas de limitation d'accès public à cette donnée.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/SDC/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/SDC/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    descriptionObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=SDC',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=SDC',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - SDC',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - SDC',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux SDC. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux SDC. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FSDC%2FMapServer%22%2C%22label%22%3A%22Sch%C3%A9ma%20de%20D%C3%A9veloppement%20Communal%20%28SDC%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F097e8d4e-9bad-4798-af85-9bdd3c76952a%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FSDC%2FMapServer%22%2C%22label%22%3A%22Sch%C3%A9ma%20de%20D%C3%A9veloppement%20Communal%20%28SDC%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F097e8d4e-9bad-4798-af85-9bdd3c76952a%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/SDC/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/SDC/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation ESRI-REST de la couche de données relative aux Schémas de Développement Communaux',
+                      langfre:
+                        'Adresse de connexion au service de visualisation ESRI-REST de la couche de données relative aux Schémas de Développement Communaux',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/SDC/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/SDC/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation WMS de la couche de données relative aux Schémas de Développement Communaux',
+                      langfre:
+                        'Adresse de connexion au service de visualisation WMS de la couche de données relative aux Schémas de Développement Communaux',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/Amenagement/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/Amenagement/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement des couches de données',
+                      langfre: 'Téléchargement des couches de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Accès en téléchargement direct des couches de données constitutives des Schémas de Développement Communaux',
+                      langfre:
+                        'Accès en téléchargement direct des couches de données constitutives des Schémas de Développement Communaux',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php',
+                    },
+                    nameObject: {
+                      default: 'Base de données des SDC',
+                      langfre: 'Base de données des SDC',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Site permettant la recherche des Schémas d'Orientation Locaux",
+                      langfre:
+                        "Site permettant la recherche des Schémas d'Orientation Locaux",
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/INSPIRE/WMS/LU/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/INSPIRE/WMS/LU/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS - Inspire',
+                      langfre: 'Service de visualisation WMS - Inspire',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Ce service de visualisation WMS-INSPIRE permet de consulter la série de couches de données conforme au thème INSPIRE "Usage des sols" au sein du territoire wallon (Belgique).',
+                      langfre:
+                        'Ce service de visualisation WMS-INSPIRE permet de consulter la série de couches de données conforme au thème INSPIRE "Usage des sols" au sein du territoire wallon (Belgique).',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default: 'https://codt.wallonie.be/',
+                      langfre: 'https://codt.wallonie.be/',
+                    },
+                    nameObject: {
+                      default: "CoDT - Toute l'information",
+                      langfre: "CoDT - Toute l'information",
+                    },
+                    descriptionObject: {
+                      default:
+                        "Toute l'information sur le CoDT sur le site de la DGO4",
+                      langfre:
+                        "Toute l'information sur le CoDT sur le site de la DGO4",
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: '097e8d4e-9bad-4798-af85-9bdd3c76952a',
+                id: '1614',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '14688', '0'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '14688', '0'],
+                op3: ['25', '1', '4', '0', '14688'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '0', '14688'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: '097e8d4e-9bad-4798-af85-9bdd3c76952a',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/0c5c2f76-ee9c-40d3-a5d5-08a1f6ee94a5/attachments/terrils_dgo4.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/0c5c2f76-ee9c-40d3-a5d5-08a1f6ee94a5',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                resourceTitleObject: {
+                  default: 'Terrils du point de vue aménagement et urbanisme',
+                  langfre: 'Terrils du point de vue aménagement et urbanisme',
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Cette couche de données reprend l'emprise des terrils ayant une implication en terme d'aménagement du territoire et d'urbanisme.\n\nL'Aménagement du Territoire participe à l'objectif de protection de l'environnement et d'instauration du développement durable notamment par l'organisation de l'affectation du sol et de l'implantation des infrastructures. Dans ce cadre, la valorisation des terrils constitue un outil d'aménagement actif du territoire.\n\nLa valorisation des terrils est instaurée par le Décret du 9/5/1985, modifié par des décrets successifs. Les terrils sont des cas particuliers de sites d'activité économique désaffectés, car ils contiennent encore souvent des ressources minérales qui pourraient être valorisées. Par ailleurs, les terrils sont parfois devenus des sites semi-naturels intéressants.\n\nIls sont répartis en 3 catégories \n- Catégorie A : les terrils qui, pour des raisons d'aménagement du territoire et d'urbanisme, ou de protection de l'environnement, ou de classement comme site, ne peuvent pas être mis en exploitation;\n- Catégorie B, les terrils exploitables;\n- Catégorie C, les terrils qui semblent intéressants à exploiter, mais qui nécessitent des investigations complémentaires\n\nEn termes d'aménagement du territoire, certains terrils sont classés comme sites et, à ce titre, ne peuvent plus faire l'objet d'une quelconque exploitation (art. 345 et suivant du CWATUPE). Un terril peut être repris au plan de secteur dans le périmètre d'une zone d'habitat, d'une zone industrielle, d'une zone d'espace vert (dans certains cas, à rénover), ou de tout autre type de zone, selon la destination future du sol.\n\nL'inscription d'un terril en zone naturelle d'intérêt scientifique ou réserve naturelle ne permet pas l'exploitation. \n\nEn milieu urbain, la valorisation des terrils intègre les opérations de revitalisation urbaine et constitue un projet global de reconversion pour améliorer cadre de vie et activités économiques.\n\nLe présent jeu de données reprend l'emprise des terrils ayant une implication en terme d'aménagement et urbanisme. Il est issu du jeu de données \"Terrils\" de la DGO3 (SPW - DGO3 - DEE - DRIGM). Il a été retravaillé et les terrils ont été catégorisés en 2 classes :\n- Terrils majeurs : terrils de plus grande taille datant d'après la révolution industrielle;\n- Terrils mineurs : terrils de plus petite taille datant généralement d'avant la révolution industrielle.",
+                  langfre:
+                    "Cette couche de données reprend l'emprise des terrils ayant une implication en terme d'aménagement du territoire et d'urbanisme.\n\nL'Aménagement du Territoire participe à l'objectif de protection de l'environnement et d'instauration du développement durable notamment par l'organisation de l'affectation du sol et de l'implantation des infrastructures. Dans ce cadre, la valorisation des terrils constitue un outil d'aménagement actif du territoire.\n\nLa valorisation des terrils est instaurée par le Décret du 9/5/1985, modifié par des décrets successifs. Les terrils sont des cas particuliers de sites d'activité économique désaffectés, car ils contiennent encore souvent des ressources minérales qui pourraient être valorisées. Par ailleurs, les terrils sont parfois devenus des sites semi-naturels intéressants.\n\nIls sont répartis en 3 catégories \n- Catégorie A : les terrils qui, pour des raisons d'aménagement du territoire et d'urbanisme, ou de protection de l'environnement, ou de classement comme site, ne peuvent pas être mis en exploitation;\n- Catégorie B, les terrils exploitables;\n- Catégorie C, les terrils qui semblent intéressants à exploiter, mais qui nécessitent des investigations complémentaires\n\nEn termes d'aménagement du territoire, certains terrils sont classés comme sites et, à ce titre, ne peuvent plus faire l'objet d'une quelconque exploitation (art. 345 et suivant du CWATUPE). Un terril peut être repris au plan de secteur dans le périmètre d'une zone d'habitat, d'une zone industrielle, d'une zone d'espace vert (dans certains cas, à rénover), ou de tout autre type de zone, selon la destination future du sol.\n\nL'inscription d'un terril en zone naturelle d'intérêt scientifique ou réserve naturelle ne permet pas l'exploitation. \n\nEn milieu urbain, la valorisation des terrils intègre les opérations de revitalisation urbaine et constitue un projet global de reconversion pour améliorer cadre de vie et activités économiques.\n\nLe présent jeu de données reprend l'emprise des terrils ayant une implication en terme d'aménagement et urbanisme. Il est issu du jeu de données \"Terrils\" de la DGO3 (SPW - DGO3 - DEE - DRIGM). Il a été retravaillé et les terrils ont été catégorisés en 2 classes :\n- Terrils majeurs : terrils de plus grande taille datant d'après la révolution industrielle;\n- Terrils mineurs : terrils de plus petite taille datant généralement d'avant la révolution industrielle.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    "Cette couche de données reprend l'emprise des terrils ayant une implication en terme d'aménagement du territoire et d'urbanisme.",
+                  langfre:
+                    "Cette couche de données reprend l'emprise des terrils ayant une implication en terme d'aménagement du territoire et d'urbanisme.",
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default: "Les conditions générales d'accès s’appliquent.",
+                    langfre: "Les conditions générales d'accès s’appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGU.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CPU-TypeA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/TERRILS/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/TERRILS/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    descriptionObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=TERRILS',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=TERRILS',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - Terrils',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - Terrils',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux terrils. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux terrils. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FTERRILS%2FMapServer%22%2C%22label%22%3A%22Terrils%20du%20point%20de%20vue%20am%C3%A9nagement%20et%20urbanisme%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F0c5c2f76-ee9c-40d3-a5d5-08a1f6ee94a5%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FTERRILS%2FMapServer%22%2C%22label%22%3A%22Terrils%20du%20point%20de%20vue%20am%C3%A9nagement%20et%20urbanisme%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F0c5c2f76-ee9c-40d3-a5d5-08a1f6ee94a5%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/TERRILS/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/TERRILS/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Adresse de connexion au service de visualisation ESRI-REST de la couche de données relatives aux terrils à considérer en matière d'aménagement du territoire",
+                      langfre:
+                        "Adresse de connexion au service de visualisation ESRI-REST de la couche de données relatives aux terrils à considérer en matière d'aménagement du territoire",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/TERRILS/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/TERRILS/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Adresse de connexion au service de visualisation WMS de la couche de données relatives aux terrils à considérer en matière d'aménagement du territoire",
+                      langfre:
+                        "Adresse de connexion au service de visualisation WMS de la couche de données relatives aux terrils à considérer en matière d'aménagement du territoire",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/Sol_Sous-sol/TERRILS/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/Sol_Sous-sol/TERRILS/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement de la couche de données',
+                      langfre: 'Téléchargement de la couche de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Accès en téléchargement direct à la couche de données',
+                      langfre:
+                        'Accès en téléchargement direct à la couche de données',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: '0c5c2f76-ee9c-40d3-a5d5-08a1f6ee94a5',
+                id: '1316',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '0', '14688'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '0', '14688'],
+                op3: ['25', '1', '4', '0', '14688'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '0', '14688'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: '0c5c2f76-ee9c-40d3-a5d5-08a1f6ee94a5',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/d9d7e76d-3d38-4763-9fa3-5de1b6a0ca92/attachments/PRU.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/d9d7e76d-3d38-4763-9fa3-5de1b6a0ca92',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                resourceTitleObject: {
+                  default: 'Périmètres de remembrement urbain (PRU)',
+                  langfre: 'Périmètres de remembrement urbain (PRU)',
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Cette couche de données localise les périmètres de remembrement urbain en Région wallonne.\n\nLe périmètre de remembrement urbain (PRU) est une procédure d’urbanisme introduit par le Gouvernement wallon dans la Déclaration de Politique Régionale (décret du 1er juin 2006) et visant la redynamisation des villes. Il a pour objet de déterminer un périmètre, c’est-à-dire le contour d’une zone géographique susceptible de voir se réaliser un projet d'urbanisme. \n\nDans ce cadre, et tel que défini par le CWATUPE (art. 127, par.1er, 8°), le PRU vise \"tout projet d'urbanisme de requalification et de développement de fonctions urbaines [c'est-à-dire toute fonction qui peut s'implanter en zone d'habitat] qui nécessite la création, la modification, l'élargissement, la suppression ou le surplomb de la voirie par terre et d'escapes publics\".\n\nL’intérêt de la procédure de Périmètre de remembrement urbain consiste en une simplification administrative : \n— des modifications de limites entre domaine public et parcelles privées, notamment la création de nouvelles voiries; \n— de l'aspect non-contraignant des prescriptions d’affectation, de zonage et de gabarit d’un PCA, du plan de secteur, d'un RCU, etc. dans les limites du PRU ; \n— de remembrement ou de division de parcelles permettant de requalifier un site désaffecté ou en difficulté au sein d’une structure urbaine.\n\nCe périmètre est adopté par le Gouvernement, d'initiative ou sur proposition de la commune ou du fonctionnaire délégué et après enquête publique obligatoire, avis de la CCAT et du Collège Communal. Le projet d’urbanisme dans un PRU devra, en tous les cas, faire l’objet d’un permis d’urbanisme ou de permis uniques qui nécessitent une évaluation des incidences. Dans un PRU, les permis d’urbanisme ne peuvent plus être délivrés par la commune : ils sont traités par le fonctionnaire délégué de la Région wallonne (procédure du permis dit \"public\").\n\nLe Périmètre de remembrement urbain du site de l’ancienne Caserne Léopold à Namur et la reconversion du quartier de Droixhe à Liège peuvent être cités comme exemple de PRU.\n\nChaque PRU est identifié de manière unique. Une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque entité renvoie vers une application permettant de disposer d'informations complémentaires sur le périmètre en question.",
+                  langfre:
+                    "Cette couche de données localise les périmètres de remembrement urbain en Région wallonne.\n\nLe périmètre de remembrement urbain (PRU) est une procédure d’urbanisme introduit par le Gouvernement wallon dans la Déclaration de Politique Régionale (décret du 1er juin 2006) et visant la redynamisation des villes. Il a pour objet de déterminer un périmètre, c’est-à-dire le contour d’une zone géographique susceptible de voir se réaliser un projet d'urbanisme. \n\nDans ce cadre, et tel que défini par le CWATUPE (art. 127, par.1er, 8°), le PRU vise \"tout projet d'urbanisme de requalification et de développement de fonctions urbaines [c'est-à-dire toute fonction qui peut s'implanter en zone d'habitat] qui nécessite la création, la modification, l'élargissement, la suppression ou le surplomb de la voirie par terre et d'escapes publics\".\n\nL’intérêt de la procédure de Périmètre de remembrement urbain consiste en une simplification administrative : \n— des modifications de limites entre domaine public et parcelles privées, notamment la création de nouvelles voiries; \n— de l'aspect non-contraignant des prescriptions d’affectation, de zonage et de gabarit d’un PCA, du plan de secteur, d'un RCU, etc. dans les limites du PRU ; \n— de remembrement ou de division de parcelles permettant de requalifier un site désaffecté ou en difficulté au sein d’une structure urbaine.\n\nCe périmètre est adopté par le Gouvernement, d'initiative ou sur proposition de la commune ou du fonctionnaire délégué et après enquête publique obligatoire, avis de la CCAT et du Collège Communal. Le projet d’urbanisme dans un PRU devra, en tous les cas, faire l’objet d’un permis d’urbanisme ou de permis uniques qui nécessitent une évaluation des incidences. Dans un PRU, les permis d’urbanisme ne peuvent plus être délivrés par la commune : ils sont traités par le fonctionnaire délégué de la Région wallonne (procédure du permis dit \"public\").\n\nLe Périmètre de remembrement urbain du site de l’ancienne Caserne Léopold à Namur et la reconversion du quartier de Droixhe à Liège peuvent être cités comme exemple de PRU.\n\nChaque PRU est identifié de manière unique. Une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque entité renvoie vers une application permettant de disposer d'informations complémentaires sur le périmètre en question.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    'Cette couche de données localise les périmètres de remembrement urbain en Région wallonne.',
+                  langfre:
+                    'Cette couche de données localise les périmètres de remembrement urbain en Région wallonne.',
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    langfre:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    link: 'https://creativecommons.org/licenses/by/4.0/',
+                  },
+                  {
+                    default:
+                      'Source : Service public de Wallonie (SPW) - Périmètres de remembrement urbain (PRU) (2024-08-15) http://geodata.wallonie.be/id/d9d7e76d-3d38-4763-9fa3-5de1b6a0ca92',
+                    langfre:
+                      'Source : Service public de Wallonie (SPW) - Périmètres de remembrement urbain (PRU) (2024-08-15) http://geodata.wallonie.be/id/d9d7e76d-3d38-4763-9fa3-5de1b6a0ca92',
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                  {
+                    default: "Pas de limitation d'accès public à cette donnée.",
+                    langfre: "Pas de limitation d'accès public à cette donnée.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/RMBMT_URB/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/RMBMT_URB/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    descriptionObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=RMBMT_URB',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=RMBMT_URB',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - Périmètres de remembrement urbain',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - Périmètres de remembrement urbain',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux périmètres de remembrement urbain . Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux périmètres de remembrement urbain . Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FRMBMT_URB%2FMapServer%22%2C%22label%22%3A%22P%C3%A9rim%C3%A8tres%20de%20remembrement%20urbain%20%28PRU%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2Fd9d7e76d-3d38-4763-9fa3-5de1b6a0ca92%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FRMBMT_URB%2FMapServer%22%2C%22label%22%3A%22P%C3%A9rim%C3%A8tres%20de%20remembrement%20urbain%20%28PRU%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2Fd9d7e76d-3d38-4763-9fa3-5de1b6a0ca92%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/RMBMT_URB/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/RMBMT_URB/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux périmètres de remembrement urbain.',
+                      langfre:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux périmètres de remembrement urbain.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/RMBMT_URB/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/RMBMT_URB/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux périmètres de remembrement urbain.',
+                      langfre:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux périmètres de remembrement urbain.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/op_renovation/RMBMT_URB/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/op_renovation/RMBMT_URB/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement de la couche de données',
+                      langfre: 'Téléchargement de la couche de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Accès en téléchargement direct à la couche de données',
+                      langfre:
+                        'Accès en téléchargement direct à la couche de données',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=RMBMT_URB',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=RMBMT_URB',
+                    },
+                    nameObject: {
+                      default:
+                        'Base de données des périmètres de remembrement urbain',
+                      langfre:
+                        'Base de données des périmètres de remembrement urbain',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Site permettant la recherche des périmètres de remembrement urbain.',
+                      langfre:
+                        'Site permettant la recherche des périmètres de remembrement urbain.',
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: 'd9d7e76d-3d38-4763-9fa3-5de1b6a0ca92',
+                id: '1296',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '14688', '0'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '14688', '0'],
+                op3: ['25', '1', '4', '14688', '0'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '14688', '0'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: 'd9d7e76d-3d38-4763-9fa3-5de1b6a0ca92',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/ddbdf8a3-bf0d-4739-98bd-6379c345ea14/attachments/pre_pic.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/ddbdf8a3-bf0d-4739-98bd-6379c345ea14',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                cl_status: [
+                  {
+                    key: 'onGoing',
+                  },
+                ],
+                resourceTitleObject: {
+                  default: 'Périmètres de reconnaissance économique (PRE)',
+                  langfre: 'Périmètres de reconnaissance économique (PRE)',
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Cette couche de données localise les périmètres de reconnaissance économique facilitant l'aménagement de la zone d'activités économiques.\n\nAfin de promouvoir les investissements privés et donc le développement économique et social, le Gouvernement wallon s'est doté, au cours de ces dernières décennies, de mesures liées à l'aménagement de zones spécifiques permettant la création d'infrastructures d’accueil pour les activités économiques. Les moyens de cette politique sont consacrés dans le décret du 11 mars 2004 plus communément appelé \"décret infrastructures\".\n\nL'objectif de ce décret est de permettre à certains opérateurs - principalement les pouvoirs publics (région, communes et intercommunales) - d'exproprier des espaces destinés à accueillir des activités économiques. Le décret prévoit également des aides et des financements permettant la réalisation de ces infrastructures. \n\nLes périmètres de reconnaissance économique (PRE) représentent la clé de voûte du décret \"Infrastructures\" étant donné qu'ils constituent le préalable nécessaire à la mise en œuvre des expropriations et des subsides. Ce n’est en effet qu’à l’intérieur de ces périmètres que ces outils trouveront à s’appliquer. En d'autres termes, Les PRE définissent les limites dans lesquels le décret est d'application. \n\nTels que défini à l'Article 1er bis du décret, \"Le PRE comprend la voirie, les terrains destinés à être incorporés à la voirie ainsi que les biens immobiliers destinés à accueillir des activités économiques, à favoriser leur implantation et leur accessibilité ou à permettre l'extension de l'implantation et de l'accessibilité des activités existantes afin de permettre d'y accueillir des activités économiques ou de favoriser leur implantation, notamment par la mise en commun ou à disposition de services ou activités.\". Anciennement, les PRE étaient connus comme les \"zones d'activités reconnues\" ou ZAR (la loi d'expansion économique de 1970).\n\nL’adoption d'un PRE facilite donc l'aménagement de la zone concernée. Outre les expropriations et l'octroi de certaines aides, l'adoption induit aussi des conséquences notables pour les communes en matière d'octroi des autorisations urbanistiques. L'adoption reste dévolue au Gouvernement wallon.\n\nChaque PRE est identifié de manière unique. Une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque entité renvoie vers une application permettant de disposer d'informations complémentaires sur le périmètre en question.",
+                  langfre:
+                    "Cette couche de données localise les périmètres de reconnaissance économique facilitant l'aménagement de la zone d'activités économiques.\n\nAfin de promouvoir les investissements privés et donc le développement économique et social, le Gouvernement wallon s'est doté, au cours de ces dernières décennies, de mesures liées à l'aménagement de zones spécifiques permettant la création d'infrastructures d’accueil pour les activités économiques. Les moyens de cette politique sont consacrés dans le décret du 11 mars 2004 plus communément appelé \"décret infrastructures\".\n\nL'objectif de ce décret est de permettre à certains opérateurs - principalement les pouvoirs publics (région, communes et intercommunales) - d'exproprier des espaces destinés à accueillir des activités économiques. Le décret prévoit également des aides et des financements permettant la réalisation de ces infrastructures. \n\nLes périmètres de reconnaissance économique (PRE) représentent la clé de voûte du décret \"Infrastructures\" étant donné qu'ils constituent le préalable nécessaire à la mise en œuvre des expropriations et des subsides. Ce n’est en effet qu’à l’intérieur de ces périmètres que ces outils trouveront à s’appliquer. En d'autres termes, Les PRE définissent les limites dans lesquels le décret est d'application. \n\nTels que défini à l'Article 1er bis du décret, \"Le PRE comprend la voirie, les terrains destinés à être incorporés à la voirie ainsi que les biens immobiliers destinés à accueillir des activités économiques, à favoriser leur implantation et leur accessibilité ou à permettre l'extension de l'implantation et de l'accessibilité des activités existantes afin de permettre d'y accueillir des activités économiques ou de favoriser leur implantation, notamment par la mise en commun ou à disposition de services ou activités.\". Anciennement, les PRE étaient connus comme les \"zones d'activités reconnues\" ou ZAR (la loi d'expansion économique de 1970).\n\nL’adoption d'un PRE facilite donc l'aménagement de la zone concernée. Outre les expropriations et l'octroi de certaines aides, l'adoption induit aussi des conséquences notables pour les communes en matière d'octroi des autorisations urbanistiques. L'adoption reste dévolue au Gouvernement wallon.\n\nChaque PRE est identifié de manière unique. Une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque entité renvoie vers une application permettant de disposer d'informations complémentaires sur le périmètre en question.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    "Cette couche de données localise les périmètres de reconnaissance économique facilitant l'aménagement de la zone d'activités économiques.",
+                  langfre:
+                    "Cette couche de données localise les périmètres de reconnaissance économique facilitant l'aménagement de la zone d'activités économiques.",
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default: 'No limitations to public access',
+                    langfre: 'No limitations to public access',
+                    link: 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGU.pdf',
+                  },
+                  {
+                    default: "Les conditions générales d'accès s’appliquent.",
+                    langfre: "Les conditions générales d'accès s’appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CPU-TypeA.pdf',
+                  },
+                ],
+                MD_LegalConstraintsUseLimitationObject: [
+                  {
+                    default: "Conditions d'accès et d'utilisation spécifiques",
+                    langfre: "Conditions d'accès et d'utilisation spécifiques",
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PRE/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PRE/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende de la couche de donnée',
+                      langfre: 'Légende de la couche de donnée',
+                    },
+                    descriptionObject: {
+                      default: 'Légende de la couche de donnée',
+                      langfre: 'Légende de la couche de donnée',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=PRE',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=PRE',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - PRE',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - PRE',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux PRE. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux PRE. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FPRE%2FMapServer%22%2C%22label%22%3A%22P%C3%A9rim%C3%A8tres%20de%20reconnaissance%20%C3%A9conomique%20%28PRE%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2Fddbdf8a3-bf0d-4739-98bd-6379c345ea14%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FPRE%2FMapServer%22%2C%22label%22%3A%22P%C3%A9rim%C3%A8tres%20de%20reconnaissance%20%C3%A9conomique%20%28PRE%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2Fddbdf8a3-bf0d-4739-98bd-6379c345ea14%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PRE/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PRE/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux Périmètres de reconnaissance économique.',
+                      langfre:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux Périmètres de reconnaissance économique.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/PRE/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/PRE/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux Périmètres de reconnaissance économique.',
+                      langfre:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux Périmètres de reconnaissance économique.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/Zones_activites_eco/PRE/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/Zones_activites_eco/PRE/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement de la couche de données',
+                      langfre: 'Téléchargement de la couche de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Accès en téléchargement direct à la couche de données',
+                      langfre:
+                        'Accès en téléchargement direct à la couche de données',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=pre',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=pre',
+                    },
+                    nameObject: {
+                      default:
+                        'Base de données des périmètres de reconnaissance économique',
+                      langfre:
+                        'Base de données des périmètres de reconnaissance économique',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Site permettant la recherche des Périmètres de reconnaissance économique.',
+                      langfre:
+                        'Site permettant la recherche des Périmètres de reconnaissance économique.',
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default: 'https://wallex.wallonie.be/index.php?doc=3775',
+                      langfre: 'https://wallex.wallonie.be/index.php?doc=3775',
+                    },
+                    nameObject: {
+                      default: 'Décret Infrastructures',
+                      langfre: 'Décret Infrastructures',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Décret relatif aux infrastructures d’accueil des activités économiques du 11 mars 2004',
+                      langfre:
+                        'Décret relatif aux infrastructures d’accueil des activités économiques du 11 mars 2004',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: 'ddbdf8a3-bf0d-4739-98bd-6379c345ea14',
+                id: '1295',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '14688', '0', '14683'],
+                op2: ['1', '4'],
+                op1: ['25', '1', '4', '14688', '0', '14683'],
+                op3: ['1', '4', '14688', '0', '14683'],
+                op6: ['25', '1', '4'],
+                op5: ['1', '4', '14688', '0', '14683'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: 'ddbdf8a3-bf0d-4739-98bd-6379c345ea14',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/a25cdf65-d35b-4883-beaf-5f89713726db/attachments/IPIC.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/a25cdf65-d35b-4883-beaf-5f89713726db',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                resourceTitleObject: {
+                  default:
+                    'Patrimoine - Inventaire du Patrimoine Immobilier Culturel (IPIC)',
+                  langfre:
+                    'Patrimoine - Inventaire du Patrimoine Immobilier Culturel (IPIC)',
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Le jeu de données reprend la localisation ainsi que la fiche d’identification des biens repris à l’Inventaire du Patrimoine Immobilier Culturel (IPIC), tel que défini par l’Art. 11 du Code wallon du Patrimoine (CoPat).\n\nL’IPIC est réalisé par une équipe d’historiens de l’art de l’Agence wallonne du Patrimoine (AWaP) et a pour objectifs la connaissance, la protection et la gestion des biens inscrits, ainsi que la sensibilisation du public. L'IPIC reprend des monuments (biens uniques ou multiples) ou des ensembles monumentaux (réunion de biens immobiliers). L'inscription d'un bien à l’IPIC lui reconnaît, lors de cette inscription, une qualité patrimoniale. L’attribution d’une pastille (•) à un bien inscrit lui reconnaît une qualité patrimoniale dont la pérennisation est souhaitée. Un bien inscrit à l’IPIC et pastillé est soumis à l’avis simple de l’AWaP et de la commission royale des Monuments, Sites et Fouilles lorsqu’il y a permis d’urbanisme.\n\nL'IPIC constitue un support de recherches privilégié pour les acteurs de l'urbanisme (à l'échelle communale et régionale), les architectes et les particuliers.\n\nChaque bien est identifié de manière unique (code unique), permettant ainsi la liaison entre les éléments cartographiés et la base de données documentaire reprenant les informations relatives au bien, ainsi qu’une illustration (au minimum) contemporaine de son inscription à l’IPIC.\n\nCette base de données « Patrimoine – Inventaire du Patrimoine Immobilier Culturel » constitue le dernier état des biens inscrits, et remplace les anciennes publications papier. Il est à noter que la version papier reste la version de référence pour les communes non mises à jour. Si le bien consulté bénéficie d’un niveau de protection supérieur en plus d’être inscrit à l’IPIC, un lien permet une redirection vers les bases de données « Patrimoine – Biens classés et Zones de protection », « Patrimoine – Biens exceptionnels » ou « Patrimoine – Biens mondiaux ».\n\nMise en garde à l’intention de l’utilisateur :\nPar le biais de la consultation de la cartographie, seuls les biens des communes mises à jour – c’est-à-dire actualisées après 1998 (cf. généalogie de la donnée) –, ainsi que les biens pastillés (•), actualisés ou non, sont identifiables, car disposant d’une représentation graphique sur les parcelles cadastrales, au contraire des biens des communes non encore actualisées, dont la consultation n’est possible que via la base de données documentaire. Cette dernière fait systématiquement apparaître le dernier état du bien inscrit. L’éventuel historique de son inscription à l’IPIC reste toutefois visualisable par le biais de liens.",
+                  langfre:
+                    "Le jeu de données reprend la localisation ainsi que la fiche d’identification des biens repris à l’Inventaire du Patrimoine Immobilier Culturel (IPIC), tel que défini par l’Art. 11 du Code wallon du Patrimoine (CoPat).\n\nL’IPIC est réalisé par une équipe d’historiens de l’art de l’Agence wallonne du Patrimoine (AWaP) et a pour objectifs la connaissance, la protection et la gestion des biens inscrits, ainsi que la sensibilisation du public. L'IPIC reprend des monuments (biens uniques ou multiples) ou des ensembles monumentaux (réunion de biens immobiliers). L'inscription d'un bien à l’IPIC lui reconnaît, lors de cette inscription, une qualité patrimoniale. L’attribution d’une pastille (•) à un bien inscrit lui reconnaît une qualité patrimoniale dont la pérennisation est souhaitée. Un bien inscrit à l’IPIC et pastillé est soumis à l’avis simple de l’AWaP et de la commission royale des Monuments, Sites et Fouilles lorsqu’il y a permis d’urbanisme.\n\nL'IPIC constitue un support de recherches privilégié pour les acteurs de l'urbanisme (à l'échelle communale et régionale), les architectes et les particuliers.\n\nChaque bien est identifié de manière unique (code unique), permettant ainsi la liaison entre les éléments cartographiés et la base de données documentaire reprenant les informations relatives au bien, ainsi qu’une illustration (au minimum) contemporaine de son inscription à l’IPIC.\n\nCette base de données « Patrimoine – Inventaire du Patrimoine Immobilier Culturel » constitue le dernier état des biens inscrits, et remplace les anciennes publications papier. Il est à noter que la version papier reste la version de référence pour les communes non mises à jour. Si le bien consulté bénéficie d’un niveau de protection supérieur en plus d’être inscrit à l’IPIC, un lien permet une redirection vers les bases de données « Patrimoine – Biens classés et Zones de protection », « Patrimoine – Biens exceptionnels » ou « Patrimoine – Biens mondiaux ».\n\nMise en garde à l’intention de l’utilisateur :\nPar le biais de la consultation de la cartographie, seuls les biens des communes mises à jour – c’est-à-dire actualisées après 1998 (cf. généalogie de la donnée) –, ainsi que les biens pastillés (•), actualisés ou non, sont identifiables, car disposant d’une représentation graphique sur les parcelles cadastrales, au contraire des biens des communes non encore actualisées, dont la consultation n’est possible que via la base de données documentaire. Cette dernière fait systématiquement apparaître le dernier état du bien inscrit. L’éventuel historique de son inscription à l’IPIC reste toutefois visualisable par le biais de liens.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    'Le jeu de données reprend la localisation ainsi que la fiche d’identification des biens repris à l’Inventaire du Patrimoine Immobilier Culturel (IPIC), tel que défini par l’Art.',
+                  langfre:
+                    'Le jeu de données reprend la localisation ainsi que la fiche d’identification des biens repris à l’Inventaire du Patrimoine Immobilier Culturel (IPIC), tel que défini par l’Art.',
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default: "Les conditions générales d'accès s’appliquent.",
+                    langfre: "Les conditions générales d'accès s’appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGU.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CPU-TypeA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/IPIC/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/IPIC/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    descriptionObject: {
+                      default: 'Légende des couches de données',
+                      langfre: 'Légende des couches de données',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=IPIC',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=IPIC',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données TLPE - IPIC',
+                      langfre:
+                        'Application de consultation des données TLPE - IPIC',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives à l'Inventaire du Patrimoine Immobilier Culturel. Cette application constitue un thème de l'application de consultation des données TLPE.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives à l'Inventaire du Patrimoine Immobilier Culturel. Cette application constitue un thème de l'application de consultation des données TLPE.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FIPIC%2FMapServer%22%2C%22label%22%3A%22Patrimoine%20-%20Inventaire%20du%20Patrimoine%20Immobilier%20Culturel%20%28IPIC%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2Fa25cdf65-d35b-4883-beaf-5f89713726db%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FIPIC%2FMapServer%22%2C%22label%22%3A%22Patrimoine%20-%20Inventaire%20du%20Patrimoine%20Immobilier%20Culturel%20%28IPIC%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2Fa25cdf65-d35b-4883-beaf-5f89713726db%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/IPIC/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/IPIC/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux Communes en décentralisation',
+                      langfre:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux Communes en décentralisation',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/IPIC/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/IPIC/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Adresse de connexion au service de visualisation WMS de la DGO4 des couches relatives à l'inventaire du patrimoine culturel immobilier.",
+                      langfre:
+                        "Adresse de connexion au service de visualisation WMS de la DGO4 des couches relatives à l'inventaire du patrimoine culturel immobilier.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/Patrimoine/IPIC/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/Patrimoine/IPIC/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement de la couche de données',
+                      langfre: 'Téléchargement de la couche de données',
+                    },
+                    descriptionObject: {
+                      default: 'Accès en téléchargement direct',
+                      langfre: 'Accès en téléchargement direct',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_ipic/index.php/presentation/index',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_ipic/index.php/presentation/index',
+                    },
+                    nameObject: {
+                      default: 'IPIC - Site Internet',
+                      langfre: 'IPIC - Site Internet',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Site Internet TLPE dédié à l'inventaire du patrimoine culturel immobilier. Une cartographie des communes actualisées est disponible.",
+                      langfre:
+                        "Site Internet TLPE dédié à l'inventaire du patrimoine culturel immobilier. Une cartographie des communes actualisées est disponible.",
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: 'a25cdf65-d35b-4883-beaf-5f89713726db',
+                id: '1269',
+                groupOwner: '4',
+                op0: ['1', '25', '4', '14684', '14688', '0', '14683'],
+                op2: ['1', '25', '4'],
+                op1: ['1', '25', '4', '14688', '0', '14683'],
+                op3: ['1', '25', '4', '0', '14688', '14683'],
+                op6: ['1', '25', '4'],
+                op5: ['1', '25', '4', '0', '14688', '14683'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: 'a25cdf65-d35b-4883-beaf-5f89713726db',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/1c28dcd9-5306-4346-8877-a06fc560ba65/attachments/revit_urbaine.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/1c28dcd9-5306-4346-8877-a06fc560ba65',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                resourceTitleObject: {
+                  default: 'Revitalisation urbaine',
+                  langfre: 'Revitalisation urbaine',
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Ce jeu de données reprend les périmètre où sont menées des opérations de revitalisation urbaine incitant l'investissement privé dans les centres urbains.\n\nLe concept de revitalisation urbaine a été concrétisé au début des années 90. Comme la rénovation urbaine, la revitalisation vise aussi la requalification des centres urbains par des interventions en matière de logement et d’espaces publics. Néanmoins, il s'agit d'opérations plus ciblées et plus ponctuelles. \n\nLa revitalisation urbaine est née du constat que les promoteurs privés préfèrent investir dans le logement en dehors des centres urbains ou qu’ils hésitent à y investir car les rendements financiers des opérations seraient plus faibles ou plus incertains. Les opérations de revitalisation au sein de ces périmètres sont définis par le CWATUPE comme \"visant à l’amélioration et au développement intégré de l’habitat, en ce compris les fonctions de commerce et de service, par la mise en œuvre de conventions associant la commune et le secteur privé\" (CWATUPE - art.172). Il s’agit en fait d’inciter l’investissement privé à opter pour une localisation urbaine plutôt que suburbaine. \n\nL’objectif fondamental de la revitalisation des centres urbains est donc de permettre à des communes de passer des accords avec des investisseurs privés aux termes desquels, si l’investisseur accepte de localiser son investissement en milieu urbain, la commune prend l’engagement de réaliser un certain nombre de travaux visant à l’amélioration générale du cadre environnant l’investissement. La région prend à sa charge les dépenses exposées par la commune.\n\nLes périmètres où se réalisent des opérations de revitalisation urbaine font l'objet de ce jeu de données. Chaque périmètre est identifié de manière unique. Une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque périmètre renvoie vers une application permettant de disposer d'informations complémentaires sur le périmètre en question.",
+                  langfre:
+                    "Ce jeu de données reprend les périmètre où sont menées des opérations de revitalisation urbaine incitant l'investissement privé dans les centres urbains.\n\nLe concept de revitalisation urbaine a été concrétisé au début des années 90. Comme la rénovation urbaine, la revitalisation vise aussi la requalification des centres urbains par des interventions en matière de logement et d’espaces publics. Néanmoins, il s'agit d'opérations plus ciblées et plus ponctuelles. \n\nLa revitalisation urbaine est née du constat que les promoteurs privés préfèrent investir dans le logement en dehors des centres urbains ou qu’ils hésitent à y investir car les rendements financiers des opérations seraient plus faibles ou plus incertains. Les opérations de revitalisation au sein de ces périmètres sont définis par le CWATUPE comme \"visant à l’amélioration et au développement intégré de l’habitat, en ce compris les fonctions de commerce et de service, par la mise en œuvre de conventions associant la commune et le secteur privé\" (CWATUPE - art.172). Il s’agit en fait d’inciter l’investissement privé à opter pour une localisation urbaine plutôt que suburbaine. \n\nL’objectif fondamental de la revitalisation des centres urbains est donc de permettre à des communes de passer des accords avec des investisseurs privés aux termes desquels, si l’investisseur accepte de localiser son investissement en milieu urbain, la commune prend l’engagement de réaliser un certain nombre de travaux visant à l’amélioration générale du cadre environnant l’investissement. La région prend à sa charge les dépenses exposées par la commune.\n\nLes périmètres où se réalisent des opérations de revitalisation urbaine font l'objet de ce jeu de données. Chaque périmètre est identifié de manière unique. Une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque périmètre renvoie vers une application permettant de disposer d'informations complémentaires sur le périmètre en question.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    "Ce jeu de données reprend les périmètre où sont menées des opérations de revitalisation urbaine incitant l'investissement privé dans les centres urbains.",
+                  langfre:
+                    "Ce jeu de données reprend les périmètre où sont menées des opérations de revitalisation urbaine incitant l'investissement privé dans les centres urbains.",
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    langfre:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    link: 'https://creativecommons.org/licenses/by/4.0/',
+                  },
+                  {
+                    default:
+                      'Source : Service public de Wallonie (SPW) - Revitalisation urbaine (2024-08-15) http://geodata.wallonie.be/id/1c28dcd9-5306-4346-8877-a06fc560ba65',
+                    langfre:
+                      'Source : Service public de Wallonie (SPW) - Revitalisation urbaine (2024-08-15) http://geodata.wallonie.be/id/1c28dcd9-5306-4346-8877-a06fc560ba65',
+                  },
+                  {
+                    default: "Pas de limitation d'accès public à cette donnée.",
+                    langfre: "Pas de limitation d'accès public à cette donnée.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/REVIT_URB/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/REVIT_URB/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    descriptionObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=REVIT_URB',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=REVIT_URB',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - Revitalisation urbaine',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - Revitalisation urbaine',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux revitalisations urbaines. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux revitalisations urbaines. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FREVIT_URB%2FMapServer%22%2C%22label%22%3A%22Revitalisation%20urbaine%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F1c28dcd9-5306-4346-8877-a06fc560ba65%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FREVIT_URB%2FMapServer%22%2C%22label%22%3A%22Revitalisation%20urbaine%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F1c28dcd9-5306-4346-8877-a06fc560ba65%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/REVIT_URB/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/REVIT_URB/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux périmètres concernés par la revitalisation urbaine.',
+                      langfre:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux périmètres concernés par la revitalisation urbaine.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/REVIT_URB/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/REVIT_URB/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux périmètres concernés par la revitalisation urbaine.',
+                      langfre:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux périmètres concernés par la revitalisation urbaine.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/op_renovation/REVIT_URB/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/op_renovation/REVIT_URB/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement de la couche de données',
+                      langfre: 'Téléchargement de la couche de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Accès en téléchargement direct à la couche de données',
+                      langfre:
+                        'Accès en téléchargement direct à la couche de données',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=revit_urb',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=revit_urb',
+                    },
+                    nameObject: {
+                      default:
+                        'Base de données des sites concernés par la revitalisation urbaine',
+                      langfre:
+                        'Base de données des sites concernés par la revitalisation urbaine',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Site permettant la recherche des périmètres concernés par la revitalisation urbaine.',
+                      langfre:
+                        'Site permettant la recherche des périmètres concernés par la revitalisation urbaine.',
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/tinymvc/myfiles/views/documents/publications/horscollections/renover_revitaliser.pdf',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/tinymvc/myfiles/views/documents/publications/horscollections/renover_revitaliser.pdf',
+                    },
+                    nameObject: {
+                      default:
+                        'Vade-mecum de la rénovation et de la revitalisation urbaines',
+                      langfre:
+                        'Vade-mecum de la rénovation et de la revitalisation urbaines',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Rénover et revitaliser les centres urbains en Wallonie - CREAT (Centre d’Etudes en Aménagement du Territoire) - UCL. Financement SPW-DGO4 - 2010.',
+                      langfre:
+                        'Rénover et revitaliser les centres urbains en Wallonie - CREAT (Centre d’Etudes en Aménagement du Territoire) - UCL. Financement SPW-DGO4 - 2010.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: '1c28dcd9-5306-4346-8877-a06fc560ba65',
+                id: '1311',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '0', '14688', '14683'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '0', '14688', '14683'],
+                op3: ['25', '1', '4', '0', '14688', '14683'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '0', '14688', '14683'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: '1c28dcd9-5306-4346-8877-a06fc560ba65',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/8e2cf269-cedb-4fbe-943b-41a7587490e3/attachments/sar.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/8e2cf269-cedb-4fbe-943b-41a7587490e3',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                cl_status: [
+                  {
+                    key: 'onGoing',
+                  },
+                ],
+                resourceTitleObject: {
+                  default: 'Sites à réaménager de droit (SAR)',
+                  langfre: 'Sites à réaménager de droit (SAR)',
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Ce jeu de données reprend les périmètres des sites identifiés comme à réaménager, c'est-à-dire devant être assaini, réhabilité, rénové ou reconstruit.\n et bénéficiant d'un arrêté de réaménagement (SAR de droit).\n\nLe régime des \"sites à réaménager\" vise le réaménagement de biens ou ensemble de biens immobiliers qui ont été ou sont destinés à accueillir des activités (autres que le logement) et dont l’état actuel est contraire au bon aménagement des lieux ou qui constituent une déstructuration du tissu urbanisé. De ce fait, il pourra s’agir de sites d’activité économique (SAED) mais également de sites affectés à des activités sociales telles que des écoles, des hôpitaux, des installations sportives ou culturelles telles que des théâtres et des cinémas ou encore des installations à caractère public ou à destination publique telles que des centrales électriques, des infrastructures de transport, des services de pompiers ainsi que des sites ayant accueilli plusieurs fonctions simultanément ou successivement. En l'état, ces sites sont souvent abandonnés le long des voies de chemins de fer ou des cours d’eau comportent un grand intérêt pour les investisseurs économiques, ils sont extrêmement bien situés.\n\nLe régime SAR a pour objet la réalisation d’actes et de travaux de réaménagement comprenant l’assainissement (au sens du décret relatif à la gestion des sols), la réhabilitation, la rénovation, la construction ou la reconstruction, notions définies par l’arrêté du Gouvernement wallon du 14 mars 2008 relatif aux sites à réaménager, remplaçant les articles 453 à 470 du CWATUPE. Dans ce cadre, le périmètre d’un site à réaménager vise à assainir plus facilement des terrains en vue d’améliorer le cadre de vie dans les zones propices. La demande de reconnaissance d’un périmètre SAR peut être initiée par la Commune, par un autre organisme d’utilité publique ou par le/les propriétaire(s).\n\nLa notion de site à réaménager a remplacé l’ancienne notion de site d’activité économique désaffecté (SAED).\n\nChaque périmètre à réaménager est identifié de manière unique et est cartographié selon le type d'arrêté ministériel. Cela peut être un arrêté constatant et précisant la désaffectation, la rénovation, la réhabilitation. Il peut s'agir d'un arrêté provisoire ou définitif (arrêtant définitivement le périmètre du SAR). En outre, une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque périmètre renvoie vers une application permettant de disposer d'informations complémentaires sur le périmètre en question.",
+                  langfre:
+                    "Ce jeu de données reprend les périmètres des sites identifiés comme à réaménager, c'est-à-dire devant être assaini, réhabilité, rénové ou reconstruit.\n et bénéficiant d'un arrêté de réaménagement (SAR de droit).\n\nLe régime des \"sites à réaménager\" vise le réaménagement de biens ou ensemble de biens immobiliers qui ont été ou sont destinés à accueillir des activités (autres que le logement) et dont l’état actuel est contraire au bon aménagement des lieux ou qui constituent une déstructuration du tissu urbanisé. De ce fait, il pourra s’agir de sites d’activité économique (SAED) mais également de sites affectés à des activités sociales telles que des écoles, des hôpitaux, des installations sportives ou culturelles telles que des théâtres et des cinémas ou encore des installations à caractère public ou à destination publique telles que des centrales électriques, des infrastructures de transport, des services de pompiers ainsi que des sites ayant accueilli plusieurs fonctions simultanément ou successivement. En l'état, ces sites sont souvent abandonnés le long des voies de chemins de fer ou des cours d’eau comportent un grand intérêt pour les investisseurs économiques, ils sont extrêmement bien situés.\n\nLe régime SAR a pour objet la réalisation d’actes et de travaux de réaménagement comprenant l’assainissement (au sens du décret relatif à la gestion des sols), la réhabilitation, la rénovation, la construction ou la reconstruction, notions définies par l’arrêté du Gouvernement wallon du 14 mars 2008 relatif aux sites à réaménager, remplaçant les articles 453 à 470 du CWATUPE. Dans ce cadre, le périmètre d’un site à réaménager vise à assainir plus facilement des terrains en vue d’améliorer le cadre de vie dans les zones propices. La demande de reconnaissance d’un périmètre SAR peut être initiée par la Commune, par un autre organisme d’utilité publique ou par le/les propriétaire(s).\n\nLa notion de site à réaménager a remplacé l’ancienne notion de site d’activité économique désaffecté (SAED).\n\nChaque périmètre à réaménager est identifié de manière unique et est cartographié selon le type d'arrêté ministériel. Cela peut être un arrêté constatant et précisant la désaffectation, la rénovation, la réhabilitation. Il peut s'agir d'un arrêté provisoire ou définitif (arrêtant définitivement le périmètre du SAR). En outre, une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque périmètre renvoie vers une application permettant de disposer d'informations complémentaires sur le périmètre en question.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    "Ce jeu de données reprend les périmètres des sites identifiés comme à réaménager, c'est-à-dire devant être assaini, réhabilité, rénové ou reconstruit.",
+                  langfre:
+                    "Ce jeu de données reprend les périmètres des sites identifiés comme à réaménager, c'est-à-dire devant être assaini, réhabilité, rénové ou reconstruit.",
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    langfre:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    link: 'https://creativecommons.org/licenses/by/4.0/',
+                  },
+                  {
+                    default:
+                      'Source : Service public de Wallonie (SPW) - Sites à réaménager de droit (SAR) (2024-11-25) http://geodata.wallonie.be/id/8e2cf269-cedb-4fbe-943b-41a7587490e3',
+                    langfre:
+                      'Source : Service public de Wallonie (SPW) - Sites à réaménager de droit (SAR) (2024-11-25) http://geodata.wallonie.be/id/8e2cf269-cedb-4fbe-943b-41a7587490e3',
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGU.pdf',
+                  },
+                  {
+                    default: "Pas de limitation d'accès public à cette donnée.",
+                    langfre: "Pas de limitation d'accès public à cette donnée.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/SAR/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/SAR/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    descriptionObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=SAR',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=SAR',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - SAR',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - SAR',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux SAR. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux SAR. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FSAR%2FMapServer%22%2C%22label%22%3A%22Sites%20%C3%A0%20r%C3%A9am%C3%A9nager%20de%20droit%20%28SAR%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F8e2cf269-cedb-4fbe-943b-41a7587490e3%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FSAR%2FMapServer%22%2C%22label%22%3A%22Sites%20%C3%A0%20r%C3%A9am%C3%A9nager%20de%20droit%20%28SAR%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F8e2cf269-cedb-4fbe-943b-41a7587490e3%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/SAR/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/SAR/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux sites à réaménager.',
+                      langfre:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux sites à réaménager.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/SAR/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/SAR/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux sites à réaménager.',
+                      langfre:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux sites à réaménager.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/Op_renovation/SAR/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/Op_renovation/SAR/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement de la couche de données',
+                      langfre: 'Téléchargement de la couche de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Accès en téléchargement direct à la couche de données',
+                      langfre:
+                        'Accès en téléchargement direct à la couche de données',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=SAR',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=SAR',
+                    },
+                    nameObject: {
+                      default: 'Base de données des sites à réaménager',
+                      langfre: 'Base de données des sites à réaménager',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Site permettant la recherche des sites à réaménager.',
+                      langfre:
+                        'Site permettant la recherche des sites à réaménager.',
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: '8e2cf269-cedb-4fbe-943b-41a7587490e3',
+                id: '1308',
+                groupOwner: '4',
+                op0: ['1', '25', '4', '14684', '14688', '0', '14683'],
+                op2: ['1', '25', '4'],
+                op1: ['1', '25', '4', '14688', '0', '14683'],
+                op3: ['1', '25', '4', '14688', '0', '14683'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '14688', '0', '14683'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: '8e2cf269-cedb-4fbe-943b-41a7587490e3',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/4ed33135-c29a-4a92-abff-cfc69a24c350/attachments/GRU_update2.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/4ed33135-c29a-4a92-abff-cfc69a24c350',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['series'],
+                cl_status: [
+                  {
+                    key: 'onGoing',
+                  },
+                ],
+                resourceTitleObject: {
+                  default: "Guide Régional d'Urbanisme (GRU)",
+                  langfre: "Guide Régional d'Urbanisme (GRU)",
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Cette série de couches de données compile les informations spatiales des Règlements du CWATUP transposés dans le Guide Régional d'Urbanisme (GRU) du CoDT.\n\nLe Code du développement territorial (CoDT) est entré en vigueur le 1er juin 2017 et a modifié la terminologie et la valeur des outils d'aménagement du territoire en Wallonie.\n\nDans ce cadre, le Guide Régional d'Urbanisme (GRU) devient le seul outil d'orientation en matière d'urbanisme à l'échelle régionale. Il est adopté par le Gouvernement wallon et décline, pour la Wallonie ou pour une partie de son territoire dont il fixe les limites, les objectifs de développement du territoire du schéma de développement du territoire en objectifs d’urbanisme, par des indications et des normes, en tenant compte, le cas échéant, des spécificités du ou des territoires sur lesquels il porte [...] (CoDT - Art. D.III.1).\n\nLe GRU regroupe donc des normes (valeur réglementaire) et des indications (valeur indicative) urbanistiques dans un document unique. Il permet de faciliter la requalification des centres de villes et de villages, de développer des projets architecturaux contemporains et de permettre aux villes et villages wallons de conserver leurs qualités et leurs identités propres.\n\nLe GRU compile les informations qui figuraient dans les documents suivants au sens du CWATUP :\n- Le Règlement général sur les bâtisses en site rural (RGBSR) qui a désormais valeur indicative;\n- Le Règlement général d'urbanisme relatif aux enseignes et aux dispositifs de publicité (RGUEDP) qui a désormais valeur indicative;\n- Le Règlement général sur les bâtisses applicables aux zones protégées de certaines communes en matière d'urbanisme (RGBZPU). Une partie du règlement présente désormais une valeur indicative (correspondant aux articles 395, 396, 397, 399, 400 et 402 du CWATUP). Par contre, l’autre garde une valeur réglementaire (correspondant aux articles 393, 394, 398, 401 et 403 du CWATUP);\n- Le Règlement général sur les bâtisses relatif à l’accessibilité et à l’usage des espaces et bâtiments ou parties de bâtiments ouverts au public ou à usage collectif par les personnes à mobilité réduite (RGBPMR – article 414 et s. du CWATUP), qui conserve une valeur réglementaire;\n- Le Règlement d’urbanisme sur la qualité acoustique de constructions dans les zones B, C et D des plans de développement à long terme des aéroports de Liège-Bierset et de Charleroi-Bruxelles Sud (RUQAC - qualité acoustique-aéroports), dont la valeur réglementaire est maintenue.\n\nPour le dernier, la SOWAER doit être consultée.\n\nAu niveau cartographique, la série de couches de données du GRU regroupe, en plus des anciens règlements déjà cités, une couche reprenant les nouveaux dossiers relatifs au GRU. Elle se compose donc des couche suivantes :\n- GRU - Guide Régional d'Urbanisme\n- GRU - Accès aux personnes à mobilité réduite\n- GRU - Enseignes et dispositifs de publicité\n- GRU - Qualité acoustique des constructions\n- GRU - Règlement Général sur les Bâtisses en Site Rural\n- GRU - Zones Protégées en matière d'Urbanisme",
+                  langfre:
+                    "Cette série de couches de données compile les informations spatiales des Règlements du CWATUP transposés dans le Guide Régional d'Urbanisme (GRU) du CoDT.\n\nLe Code du développement territorial (CoDT) est entré en vigueur le 1er juin 2017 et a modifié la terminologie et la valeur des outils d'aménagement du territoire en Wallonie.\n\nDans ce cadre, le Guide Régional d'Urbanisme (GRU) devient le seul outil d'orientation en matière d'urbanisme à l'échelle régionale. Il est adopté par le Gouvernement wallon et décline, pour la Wallonie ou pour une partie de son territoire dont il fixe les limites, les objectifs de développement du territoire du schéma de développement du territoire en objectifs d’urbanisme, par des indications et des normes, en tenant compte, le cas échéant, des spécificités du ou des territoires sur lesquels il porte [...] (CoDT - Art. D.III.1).\n\nLe GRU regroupe donc des normes (valeur réglementaire) et des indications (valeur indicative) urbanistiques dans un document unique. Il permet de faciliter la requalification des centres de villes et de villages, de développer des projets architecturaux contemporains et de permettre aux villes et villages wallons de conserver leurs qualités et leurs identités propres.\n\nLe GRU compile les informations qui figuraient dans les documents suivants au sens du CWATUP :\n- Le Règlement général sur les bâtisses en site rural (RGBSR) qui a désormais valeur indicative;\n- Le Règlement général d'urbanisme relatif aux enseignes et aux dispositifs de publicité (RGUEDP) qui a désormais valeur indicative;\n- Le Règlement général sur les bâtisses applicables aux zones protégées de certaines communes en matière d'urbanisme (RGBZPU). Une partie du règlement présente désormais une valeur indicative (correspondant aux articles 395, 396, 397, 399, 400 et 402 du CWATUP). Par contre, l’autre garde une valeur réglementaire (correspondant aux articles 393, 394, 398, 401 et 403 du CWATUP);\n- Le Règlement général sur les bâtisses relatif à l’accessibilité et à l’usage des espaces et bâtiments ou parties de bâtiments ouverts au public ou à usage collectif par les personnes à mobilité réduite (RGBPMR – article 414 et s. du CWATUP), qui conserve une valeur réglementaire;\n- Le Règlement d’urbanisme sur la qualité acoustique de constructions dans les zones B, C et D des plans de développement à long terme des aéroports de Liège-Bierset et de Charleroi-Bruxelles Sud (RUQAC - qualité acoustique-aéroports), dont la valeur réglementaire est maintenue.\n\nPour le dernier, la SOWAER doit être consultée.\n\nAu niveau cartographique, la série de couches de données du GRU regroupe, en plus des anciens règlements déjà cités, une couche reprenant les nouveaux dossiers relatifs au GRU. Elle se compose donc des couche suivantes :\n- GRU - Guide Régional d'Urbanisme\n- GRU - Accès aux personnes à mobilité réduite\n- GRU - Enseignes et dispositifs de publicité\n- GRU - Qualité acoustique des constructions\n- GRU - Règlement Général sur les Bâtisses en Site Rural\n- GRU - Zones Protégées en matière d'Urbanisme",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    "Cette série de couches de données compile les informations spatiales des Règlements du CWATUP transposés dans le Guide Régional d'Urbanisme (GRU) du CoDT.",
+                  langfre:
+                    "Cette série de couches de données compile les informations spatiales des Règlements du CWATUP transposés dans le Guide Régional d'Urbanisme (GRU) du CoDT.",
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGU.pdf',
+                  },
+                  {
+                    default: "Les conditions générales d'accès s’appliquent.",
+                    langfre: "Les conditions générales d'accès s’appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CPU-TypeA.pdf',
+                  },
+                ],
+                MD_LegalConstraintsUseLimitationObject: [
+                  {
+                    default: "Conditions d'accès et d'utilisation spécifiques",
+                    langfre: "Conditions d'accès et d'utilisation spécifiques",
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/GRU/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/GRU/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende des couches de données',
+                      langfre: 'Légende des couches de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Légende des données relatives aux Guides régionaux d'Urbanisme",
+                      langfre:
+                        "Légende des données relatives aux Guides régionaux d'Urbanisme",
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=GRU',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=GRU',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - GRU',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - GRU',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux GRU. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux GRU. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FGRU%2FMapServer%22%2C%22label%22%3A%22Guide%20R%C3%A9gional%20d%27Urbanisme%20%28GRU%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F4ed33135-c29a-4a92-abff-cfc69a24c350%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FGRU%2FMapServer%22%2C%22label%22%3A%22Guide%20R%C3%A9gional%20d%27Urbanisme%20%28GRU%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F4ed33135-c29a-4a92-abff-cfc69a24c350%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/GRU/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/GRU/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux Guides généraux d'Urbanisme",
+                      langfre:
+                        "Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux Guides généraux d'Urbanisme",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/GRU/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/GRU/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Adresse de connexion au service de visualisation WMS des couches relatives aux Guides généraux d'Urbanisme",
+                      langfre:
+                        "Adresse de connexion au service de visualisation WMS des couches relatives aux Guides généraux d'Urbanisme",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/Amenagement/Reglements/RRU/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/Amenagement/Reglements/RRU/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement des couches de données',
+                      langfre: 'Téléchargement des couches de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Accès en téléchargement direct des couches de données constitutives des Guides généraux d'Urbanisme",
+                      langfre:
+                        "Accès en téléchargement direct des couches de données constitutives des Guides généraux d'Urbanisme",
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php',
+                    },
+                    nameObject: {
+                      default: 'Base de données des GRU',
+                      langfre: 'Base de données des GRU',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Site permettant la recherche des Guides généraux d'Urbanisme",
+                      langfre:
+                        "Site permettant la recherche des Guides généraux d'Urbanisme",
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default: 'https://codt.wallonie.be/',
+                      langfre: 'https://codt.wallonie.be/',
+                    },
+                    nameObject: {
+                      default: "CoDT - Toute l'information",
+                      langfre: "CoDT - Toute l'information",
+                    },
+                    descriptionObject: {
+                      default:
+                        "Toute l'information sur le CoDT sur le site de la DGO4",
+                      langfre:
+                        "Toute l'information sur le CoDT sur le site de la DGO4",
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: '4ed33135-c29a-4a92-abff-cfc69a24c350',
+                id: '1611',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '14688', '0', '14683'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '14688', '0', '14683'],
+                op3: ['25', '1', '4', '0', '14688', '14683'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '0', '14688', '14683'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: '4ed33135-c29a-4a92-abff-cfc69a24c350',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/ad86502d-8371-408e-880a-777dcce65e24/attachments/Renov_Urb.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/ad86502d-8371-408e-880a-777dcce65e24',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                resourceTitleObject: {
+                  default: 'Rénovation urbaine',
+                  langfre: 'Rénovation urbaine',
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Ce jeu de données reprend les zones urbaines où sont menées des opérations de rénovation urbaine visant à y insuffler une nouvelle dynamique de développement.\n\nLa rénovation urbaine existe en Région wallonne depuis le début des années 70. Il s'agit d'une opération ayant pour ambition de tenter de fournir une réponse aux situations urbaines dégradées, tant d’un point de vue urbanistique que socio-économique. Elle peut intervenir dans des contextes diversifiés et selon le degré de dégradation. Généralement, l’opération vise à redynamiser le quartier en déclin grâce à un projet global d’urbanisme regroupant dans une vision d’ensemble plusieurs interventions concernant tant le bâti que les espaces publics. Le plus souvent, l’opération se déroule sur plusieurs années. Pour les quartiers les plus problématiques, la Région wallonne a défini les zones d’initiatives privilégiées (ZIP), où l’opération comporte parallèlement une approche sociale et où le taux de subvention est majoré. \n\nLa rénovation urbaine est régie par l’article 173 du CWATUPE. Il est complété par des dispositions de l'arrêté du Gouvernement wallon du 28 février 2013 relatif à l'octroi par la Région wallonne de subventions pour l'exécution d'opérations de rénovation urbaine (M.B. 02.04.2013).\n\nLa rénovation urbaine est une opération d'initiative communale qui consiste à :\n- Restructurer, assainir ou réhabiliter un périmètre;\n- Améliorer ou maintenir l'habitat existant (en favorisant le maintien ou le développement de la population locale);\n- Renforcer les dynamiques socio-économiques et culturelles;\n- Respecter des caractéristiques culturelles et architecturales propres au quartier;\n- S'inscrire dans une perspective globale d'aménagement du territoire\n\nChaque quartier concerné par la rénovation urbaine est identifié de manière unique. Une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque zone renvoie vers une application permettant de disposer d'informations complémentaires sur la zone en question.",
+                  langfre:
+                    "Ce jeu de données reprend les zones urbaines où sont menées des opérations de rénovation urbaine visant à y insuffler une nouvelle dynamique de développement.\n\nLa rénovation urbaine existe en Région wallonne depuis le début des années 70. Il s'agit d'une opération ayant pour ambition de tenter de fournir une réponse aux situations urbaines dégradées, tant d’un point de vue urbanistique que socio-économique. Elle peut intervenir dans des contextes diversifiés et selon le degré de dégradation. Généralement, l’opération vise à redynamiser le quartier en déclin grâce à un projet global d’urbanisme regroupant dans une vision d’ensemble plusieurs interventions concernant tant le bâti que les espaces publics. Le plus souvent, l’opération se déroule sur plusieurs années. Pour les quartiers les plus problématiques, la Région wallonne a défini les zones d’initiatives privilégiées (ZIP), où l’opération comporte parallèlement une approche sociale et où le taux de subvention est majoré. \n\nLa rénovation urbaine est régie par l’article 173 du CWATUPE. Il est complété par des dispositions de l'arrêté du Gouvernement wallon du 28 février 2013 relatif à l'octroi par la Région wallonne de subventions pour l'exécution d'opérations de rénovation urbaine (M.B. 02.04.2013).\n\nLa rénovation urbaine est une opération d'initiative communale qui consiste à :\n- Restructurer, assainir ou réhabiliter un périmètre;\n- Améliorer ou maintenir l'habitat existant (en favorisant le maintien ou le développement de la population locale);\n- Renforcer les dynamiques socio-économiques et culturelles;\n- Respecter des caractéristiques culturelles et architecturales propres au quartier;\n- S'inscrire dans une perspective globale d'aménagement du territoire\n\nChaque quartier concerné par la rénovation urbaine est identifié de manière unique. Une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque zone renvoie vers une application permettant de disposer d'informations complémentaires sur la zone en question.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    'Ce jeu de données reprend les zones urbaines où sont menées des opérations de rénovation urbaine visant à y insuffler une nouvelle dynamique de développement.',
+                  langfre:
+                    'Ce jeu de données reprend les zones urbaines où sont menées des opérations de rénovation urbaine visant à y insuffler une nouvelle dynamique de développement.',
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    langfre:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    link: 'https://creativecommons.org/licenses/by/4.0/',
+                  },
+                  {
+                    default:
+                      'Source : Service public de Wallonie (SPW) - Rénovation urbaine (2024-11-12) http://geodata.wallonie.be/id/ad86502d-8371-408e-880a-777dcce65e24',
+                    langfre:
+                      'Source : Service public de Wallonie (SPW) - Rénovation urbaine (2024-11-12) http://geodata.wallonie.be/id/ad86502d-8371-408e-880a-777dcce65e24',
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGU.pdf',
+                  },
+                  {
+                    default: "Pas de limitation d'accès public à cette donnée.",
+                    langfre: "Pas de limitation d'accès public à cette donnée.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/RENOV_URB/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/RENOV_URB/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    descriptionObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=RENOV_URB',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=RENOV_URB',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - Rénovations urbaines',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - Rénovations urbaines',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux rénovations urbaines. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux rénovations urbaines. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7b%22serviceId%22%3a%22%22%2c%22toLoad%22%3atrue%2c%22visible%22%3atrue%2c%22url%22%3a%22https%3a%2f%2fgeoservices.wallonie.be%2farcgis%2frest%2fservices%2fAMENAGEMENT_TERRITOIRE%2fRENOV_URB%2fMapServer%2f%22%2c%22label%22%3a%22Ples%20d%2019Urgence%20Sociale%22%2c%22type%22%3a%22AGS_DYNAMIC%22%2c%22metadataUrl%22%3a%22https%3a%2f%2fgeoportail.wallonie.be%2fcatalogue%2f0466f660-9859-4e5d-934f-437074e0d607.html%22%7d%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7b%22serviceId%22%3a%22%22%2c%22toLoad%22%3atrue%2c%22visible%22%3atrue%2c%22url%22%3a%22https%3a%2f%2fgeoservices.wallonie.be%2farcgis%2frest%2fservices%2fAMENAGEMENT_TERRITOIRE%2fRENOV_URB%2fMapServer%2f%22%2c%22label%22%3a%22Ples%20d%2019Urgence%20Sociale%22%2c%22type%22%3a%22AGS_DYNAMIC%22%2c%22metadataUrl%22%3a%22https%3a%2f%2fgeoportail.wallonie.be%2fcatalogue%2f0466f660-9859-4e5d-934f-437074e0d607.html%22%7d%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/RENOV_URB/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/RENOV_URB/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux zones concernées par des rénovations urbaines.',
+                      langfre:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux zones concernées par des rénovations urbaines.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/RENOV_URB/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/RENOV_URB/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux zones concernées par des rénovations urbaines.',
+                      langfre:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux zones concernées par des rénovations urbaines.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/op_renovation/RENOV_URB/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/op_renovation/RENOV_URB/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement de la couche de données',
+                      langfre: 'Téléchargement de la couche de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Accès en téléchargement direct à la couche de données',
+                      langfre:
+                        'Accès en téléchargement direct à la couche de données',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=renov_urb',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=renov_urb',
+                    },
+                    nameObject: {
+                      default:
+                        'Base de données des sites concernés par les rénovations urbaines',
+                      langfre:
+                        'Base de données des sites concernés par les rénovations urbaines',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Site permettant la recherche des zones concernées par des rénovations urbaines.',
+                      langfre:
+                        'Site permettant la recherche des zones concernées par des rénovations urbaines.',
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/tinymvc/myfiles/views/documents/publications/horscollections/renover_revitaliser.pdf',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/tinymvc/myfiles/views/documents/publications/horscollections/renover_revitaliser.pdf',
+                    },
+                    nameObject: {
+                      default:
+                        'Vade-mecum de la rénovation et de la revitalisation urbaines',
+                      langfre:
+                        'Vade-mecum de la rénovation et de la revitalisation urbaines',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Rénover et revitaliser les centres urbains en Wallonie - CREAT (Centre d’Etudes en Aménagement du Territoire) - UCL. Financement SPW-DGO4 - 2010.',
+                      langfre:
+                        'Rénover et revitaliser les centres urbains en Wallonie - CREAT (Centre d’Etudes en Aménagement du Territoire) - UCL. Financement SPW-DGO4 - 2010.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: 'ad86502d-8371-408e-880a-777dcce65e24',
+                id: '1307',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '14688', '0'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '14688', '0'],
+                op3: ['25', '1', '4', '0', '14688'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '0', '14688'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: 'ad86502d-8371-408e-880a-777dcce65e24',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/c0d28bbb-d396-44ec-86a9-37bd53af2573/attachments/planhp.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/c0d28bbb-d396-44ec-86a9-37bd53af2573',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                resourceTitleObject: {
+                  default: 'Plan Habitat Permanent',
+                  langfre: 'Plan Habitat Permanent',
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Cette couche de données représente la cartographie cadastrale des sites concernés par le plan d'habitat permanent.\n\nL’habitat permanent dans les équipements à vocation touristique est une forme de précarité qui touche environ 10.000 personnes en Wallonie. \nAfin d’apporter une réponse nuancée à la problématique de l’habitat permanent, le Gouvernement wallon a adopté, en novembre 2002, un Plan d’action pluriannuel relatif à l’habitat permanent dans les équipements touristiques (Plan HP).\n\nLes objectifs du plan HP sont de favoriser l’accès aux droits fondamentaux, notamment le droit au logement, pour les personnes résidant en permanence dans un équipement à vocation touristique comme les \"campings\", favoriser la réinsertion dans un logement décent des personnes concernées (relogement sur base volontaire), empêcher toute nouvelle installation de résident permanent (maîtrise des entrées), d’accompagner les résidents dans leurs démarches et de veiller à l’accès à l’eau et à l’électricité dans les sites d’habitat permanent.\n\nCe plan et l’ensemble de mesures reprises dans le tableau de bord ont fait l'objet d'une actualisation adoptée le 28 avril 2011 par le Gouvernement wallon. Parmi les points repris au tableau de bord figurait la réalisation d'une cartographie cadastrale des sites d'habitat permanent. \n\nLa cartographie a été adopté par arrêté du GW le 16 mai 2013. Elle se veut uniquement une localisation exacte et une délimitation des zones concernées par le phénomène d'habitat permanent. Elle constitue la référence pour les communes, les gestionnaires des zones d’habitat permanent et les notaires. Elle répertorie une centaine de sites HP, répartis sur 30 communes. Elle comprend outre un cadastre des parcelles, des informations sur la situation juridique de chaque site.\n\nChaque site concerné par le plan d'habitat permanent est identifié de manière unique. Une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque site renvoie vers une application permettant de disposer d'informations complémentaires sur le site en question.",
+                  langfre:
+                    "Cette couche de données représente la cartographie cadastrale des sites concernés par le plan d'habitat permanent.\n\nL’habitat permanent dans les équipements à vocation touristique est une forme de précarité qui touche environ 10.000 personnes en Wallonie. \nAfin d’apporter une réponse nuancée à la problématique de l’habitat permanent, le Gouvernement wallon a adopté, en novembre 2002, un Plan d’action pluriannuel relatif à l’habitat permanent dans les équipements touristiques (Plan HP).\n\nLes objectifs du plan HP sont de favoriser l’accès aux droits fondamentaux, notamment le droit au logement, pour les personnes résidant en permanence dans un équipement à vocation touristique comme les \"campings\", favoriser la réinsertion dans un logement décent des personnes concernées (relogement sur base volontaire), empêcher toute nouvelle installation de résident permanent (maîtrise des entrées), d’accompagner les résidents dans leurs démarches et de veiller à l’accès à l’eau et à l’électricité dans les sites d’habitat permanent.\n\nCe plan et l’ensemble de mesures reprises dans le tableau de bord ont fait l'objet d'une actualisation adoptée le 28 avril 2011 par le Gouvernement wallon. Parmi les points repris au tableau de bord figurait la réalisation d'une cartographie cadastrale des sites d'habitat permanent. \n\nLa cartographie a été adopté par arrêté du GW le 16 mai 2013. Elle se veut uniquement une localisation exacte et une délimitation des zones concernées par le phénomène d'habitat permanent. Elle constitue la référence pour les communes, les gestionnaires des zones d’habitat permanent et les notaires. Elle répertorie une centaine de sites HP, répartis sur 30 communes. Elle comprend outre un cadastre des parcelles, des informations sur la situation juridique de chaque site.\n\nChaque site concerné par le plan d'habitat permanent est identifié de manière unique. Une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque site renvoie vers une application permettant de disposer d'informations complémentaires sur le site en question.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    "Cette couche de données représente la cartographie cadastrale des sites concernés par le plan d'habitat permanent.",
+                  langfre:
+                    "Cette couche de données représente la cartographie cadastrale des sites concernés par le plan d'habitat permanent.",
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default: "Les conditions générales d'accès s’appliquent.",
+                    langfre: "Les conditions générales d'accès s’appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGU.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CPU-TypeA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PLANHP/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PLANHP/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    descriptionObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=PLANHP',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=PLANHP',
+                    },
+                    nameObject: {
+                      default:
+                        "Application de consultation des données de la DGO4 - Plans d'habitat permanent",
+                      langfre:
+                        "Application de consultation des données de la DGO4 - Plans d'habitat permanent",
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux Plans HP. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux Plans HP. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FPLANHP%2FMapServer%22%2C%22label%22%3A%22Plan%20Habitat%20Permanent%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2Fc0d28bbb-d396-44ec-86a9-37bd53af2573%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FPLANHP%2FMapServer%22%2C%22label%22%3A%22Plan%20Habitat%20Permanent%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2Fc0d28bbb-d396-44ec-86a9-37bd53af2573%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PLANHP/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PLANHP/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux sites concernés par le plan d'habitat permanent.",
+                      langfre:
+                        "Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux sites concernés par le plan d'habitat permanent.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/PLANHP/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/PLANHP/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Adresse de connexion au service de visualisation WMS des couches relatives aux sites concernés par le plan d'habitat permanent.",
+                      langfre:
+                        "Adresse de connexion au service de visualisation WMS des couches relatives aux sites concernés par le plan d'habitat permanent.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/amenagement/PLANHP/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/amenagement/PLANHP/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement de la couche de données',
+                      langfre: 'Téléchargement de la couche de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Accès en téléchargement direct à la couche de données',
+                      langfre:
+                        'Accès en téléchargement direct à la couche de données',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=planhp',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=planhp',
+                    },
+                    nameObject: {
+                      default:
+                        "Base de données des sites concernés par le plan d'habitat permanent",
+                      langfre:
+                        "Base de données des sites concernés par le plan d'habitat permanent",
+                    },
+                    descriptionObject: {
+                      default:
+                        'Site permettant la recherche des sites concernés par le plan habitat permanent',
+                      langfre:
+                        'Site permettant la recherche des sites concernés par le plan habitat permanent',
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://wallex.wallonie.be/index.php?doc=25280&rev=26517-17584',
+                      langfre:
+                        'https://wallex.wallonie.be/index.php?doc=25280&rev=26517-17584',
+                    },
+                    nameObject: {
+                      default: 'AGW - 16 mai 2013',
+                      langfre: 'AGW - 16 mai 2013',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Arrêté du Gouvernement wallon adoptant la cartographie des sites concernés par le plan habitat permanent.',
+                      langfre:
+                        'Arrêté du Gouvernement wallon adoptant la cartographie des sites concernés par le plan habitat permanent.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: 'c0d28bbb-d396-44ec-86a9-37bd53af2573',
+                id: '1301',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '14688', '0'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '14688', '0'],
+                op3: ['25', '1', '4', '14688', '0'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '14688', '0'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: 'c0d28bbb-d396-44ec-86a9-37bd53af2573',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/c61605c4-56f3-4371-9f6a-f346cc294b96/attachments/ZIP.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/c61605c4-56f3-4371-9f6a-f346cc294b96',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                resourceTitleObject: {
+                  default: "Zones d'Initiative Privilégiée (ZIP)",
+                  langfre: "Zones d'Initiative Privilégiée (ZIP)",
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Cette couche de données reprend les périmètres des Zones d'Initiative Privilégiée où est menée une politique de logement et d'aménagement du territoire dédicacée.\n\nLes Zones d'Initiatives privilégiées ont été créées dans le but de mener une politique spécifique afin de répondre à des situations problématiques ciblées en matière d’aménagement du territoire et de logement. En effet, le territoire wallon n'est pas un homogène d'un point de vue logement et aménagement du territoire et y mener une politique indifférenciée dans ces matières provoqueraient des effets pervers. L'objectif dans une ZIP est, entre autres, d'y intensifier la revitalisation et la rénovation urbaine et de lutter contre l'exclusion.\n\nLes zones d'initiatives privilégiées ont fait l'objet de plusieurs textes légaux. Elles ont été définies en 1994 par arrêté du gouvernement wallon (AGW du 7 juillet 1994) et sont définies à l'Art. 174 du CWATUPE.\n\nLes ZIP sont catégorisées en 4 types :\n- ZIP I : zones de forte pression foncière ou immobilière qui correspondent à des communes où cette pression est telle que les couches modestes et moyennes de la population ne peuvent s'y loger;\n- ZIP II : zones de requalification des noyaux d'habitat qui sont des quartiers essentiellement localisés dans des communes pauvres, qui voient se dégrader progressivement tant leurs espaces publics que les logements qui les bordent ;\n- ZIP III ou ZIP/QI (quartier d’initiatives) : zones qui concernent des quartiers cumulant les mêmes désagréments que les ZIP 2 avec une conjonction de graves problèmes sociaux: pauvreté, chômage, délinquance, drogue, concentration de population étrangère, etc.\n- ZIP IV : zones de requalification des cités sociales qui correspondent à des quartiers d'habitation essentiellement, voire exclusivement sociales et qui présentent les mêmes caractéristiques défavorables que les ZIP 3.\n\nLes périmètres des ZIP sont repris dans ce jeu de données. Dans le cas des ZIP de type I, l'emprise de la zone porte sur l'entièreté du territoire communal. Pour les autres types, il s'agit de quartiers urbains bien délimités. Chaque ZIP est identifié de manière unique. En outre, une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque zone renvoie vers une application permettant de disposer d'informations complémentaires sur la zone en question.",
+                  langfre:
+                    "Cette couche de données reprend les périmètres des Zones d'Initiative Privilégiée où est menée une politique de logement et d'aménagement du territoire dédicacée.\n\nLes Zones d'Initiatives privilégiées ont été créées dans le but de mener une politique spécifique afin de répondre à des situations problématiques ciblées en matière d’aménagement du territoire et de logement. En effet, le territoire wallon n'est pas un homogène d'un point de vue logement et aménagement du territoire et y mener une politique indifférenciée dans ces matières provoqueraient des effets pervers. L'objectif dans une ZIP est, entre autres, d'y intensifier la revitalisation et la rénovation urbaine et de lutter contre l'exclusion.\n\nLes zones d'initiatives privilégiées ont fait l'objet de plusieurs textes légaux. Elles ont été définies en 1994 par arrêté du gouvernement wallon (AGW du 7 juillet 1994) et sont définies à l'Art. 174 du CWATUPE.\n\nLes ZIP sont catégorisées en 4 types :\n- ZIP I : zones de forte pression foncière ou immobilière qui correspondent à des communes où cette pression est telle que les couches modestes et moyennes de la population ne peuvent s'y loger;\n- ZIP II : zones de requalification des noyaux d'habitat qui sont des quartiers essentiellement localisés dans des communes pauvres, qui voient se dégrader progressivement tant leurs espaces publics que les logements qui les bordent ;\n- ZIP III ou ZIP/QI (quartier d’initiatives) : zones qui concernent des quartiers cumulant les mêmes désagréments que les ZIP 2 avec une conjonction de graves problèmes sociaux: pauvreté, chômage, délinquance, drogue, concentration de population étrangère, etc.\n- ZIP IV : zones de requalification des cités sociales qui correspondent à des quartiers d'habitation essentiellement, voire exclusivement sociales et qui présentent les mêmes caractéristiques défavorables que les ZIP 3.\n\nLes périmètres des ZIP sont repris dans ce jeu de données. Dans le cas des ZIP de type I, l'emprise de la zone porte sur l'entièreté du territoire communal. Pour les autres types, il s'agit de quartiers urbains bien délimités. Chaque ZIP est identifié de manière unique. En outre, une base de données Access reprend des informations administratives relevées dans les dossiers. Un lien hypertexte repris en attribut de chaque zone renvoie vers une application permettant de disposer d'informations complémentaires sur la zone en question.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    "Cette couche de données reprend les périmètres des Zones d'Initiative Privilégiée où est menée une politique de logement et d'aménagement du territoire dédicacée.",
+                  langfre:
+                    "Cette couche de données reprend les périmètres des Zones d'Initiative Privilégiée où est menée une politique de logement et d'aménagement du territoire dédicacée.",
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default: "Les conditions générales d'accès s’appliquent.",
+                    langfre: "Les conditions générales d'accès s’appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGU.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CPU-TypeA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/ZIP/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/ZIP/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    descriptionObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=ZIP',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=ZIP',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - ZIP',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - ZIP',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux ZIP. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux ZIP. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FZIP%2FMapServer%22%2C%22label%22%3A%22Zones%20d%27Initiative%20Privil%C3%A9gi%C3%A9e%20%28ZIP%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2Fc61605c4-56f3-4371-9f6a-f346cc294b96%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FZIP%2FMapServer%22%2C%22label%22%3A%22Zones%20d%27Initiative%20Privil%C3%A9gi%C3%A9e%20%28ZIP%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2Fc61605c4-56f3-4371-9f6a-f346cc294b96%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/ZIP/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/ZIP/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Adresse de connexion au service de visualisation ESRI-REST de la couche de données relatives aux zones d'Initiative privilégiée.",
+                      langfre:
+                        "Adresse de connexion au service de visualisation ESRI-REST de la couche de données relatives aux zones d'Initiative privilégiée.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/ZIP/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/ZIP/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Adresse de connexion au service de visualisation WMS de la couche de données relatives aux zones d'Initiative privilégiée.",
+                      langfre:
+                        "Adresse de connexion au service de visualisation WMS de la couche de données relatives aux zones d'Initiative privilégiée.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/Logement_Habitat/ZIP/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/Logement_Habitat/ZIP/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement de la couche de données',
+                      langfre: 'Téléchargement de la couche de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Accès en téléchargement direct à la couche de données',
+                      langfre:
+                        'Accès en téléchargement direct à la couche de données',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=ZIP',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=ZIP',
+                    },
+                    nameObject: {
+                      default: 'Base de données des ZIP',
+                      langfre: 'Base de données des ZIP',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Site permettant la recherche des Zones d'Initiative privilégiée.",
+                      langfre:
+                        "Site permettant la recherche des Zones d'Initiative privilégiée.",
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/documents/ZIP/ZIP.pdf',
+                      langfre:
+                        'https://docum1.wallonie.be/documents/ZIP/ZIP.pdf',
+                    },
+                    nameObject: {
+                      default: 'Liste des ZIP',
+                      langfre: 'Liste des ZIP',
+                    },
+                    descriptionObject: {
+                      default: 'Liste des ZIP en Région wallonne.',
+                      langfre: 'Liste des ZIP en Région wallonne.',
+                    },
+                    function: 'information',
+                    applicationProfile: 'application/pdf',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_amenagement/index.php/site/directions/dao/zip',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_amenagement/index.php/site/directions/dao/zip',
+                    },
+                    nameObject: {
+                      default: 'ZIP - Informations complémentaires',
+                      langfre: 'ZIP - Informations complémentaires',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Page Internet sur le site de la DGO4 fournissant les informations relatives aux Zones d'Initiative privilégiée.",
+                      langfre:
+                        "Page Internet sur le site de la DGO4 fournissant les informations relatives aux Zones d'Initiative privilégiée.",
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: 'c61605c4-56f3-4371-9f6a-f346cc294b96',
+                id: '1312',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '0', '14688'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '0', '14688'],
+                op3: ['25', '1', '4', '0', '14688'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '0', '14688'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: 'c61605c4-56f3-4371-9f6a-f346cc294b96',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/e140607a-cfeb-445f-a551-22816c06c72f/attachments/gcu_pic.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/e140607a-cfeb-445f-a551-22816c06c72f',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['series'],
+                cl_status: [
+                  {
+                    key: 'onGoing',
+                  },
+                ],
+                resourceTitleObject: {
+                  default: "Guide Communal d'Urbanisme (GCU)",
+                  langfre: "Guide Communal d'Urbanisme (GCU)",
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Cette série de couches de données compile les informations spatiales des règlements du CWATUP transposés dans le Guide Communal d'Urbanisme (GCU) du CoDT.\n\nLe Code du Développement Territorial (CoDT) est entré en vigueur le 1er juin 2017 et a modifié la terminologie et la valeur des outils d'aménagement du territoire en Wallonie.\n\nDans ce cadre, le Guide Communal d'Urbanisme (GCU) devient un des outils d'orientation en matière d'urbanisme à l'échelle communale. Il concerne tout ou partie du territoire communal et traite d’une ou plusieurs thématiques\n\nIl décline les objectifs de développement territorial du Schéma de Développement du Territoire (SDT), du Schéma de Développement Pluricommunal (SDP) et des schémas communaux en objectifs d’urbanisme, par des indications, en tenant compte des spécificités du ou des territoires sur lesquels il porte (CoDT - Art. D.III.4). Dans le respect de certaines conditions, la Commune devra être en possession d’un GCU pour pouvoir profiter d’un régime dit \"de décentralisation\" qui autorise la commune à exercer, de manière autonome, son pouvoir de décision, notamment en matière d'octroi de permis d'urbanisme et d’urbanisation.\n\nLes Règlements Communaux d'Urbanisme (RCU) et les Règlements Communaux de Bâtisses (RCB) au sens du CWATUP sont assimilés à des GCU. Ceux-ci possédaient auparavant valeur réglementaire. Dans le CoDT, le GCU ne comporte que des indications (valeur indicative) compilées dans un document unique. Le contenu du GCU est défini dans le CoDT (Art. D.III.5) de manière similaire à celui du Guide Régional d'Urbanisme (GRU - Art. D.III.2 §1).\n\nUn permis d'urbanisme peut donc être octroyé en s'écartant du contenu du GCU moyennant motivation démontrant que le projet ne compromet pas les objectifs de développement territorial, d'aménagement du territoire ou d'urbanisme contenus dans le guide et contribue à la protection, à la gestion ou à l'aménagement des paysages bâtis ou non bâtis.\n\nUn GCU peut s’écarter du contenu à valeur indicative du GRU moyennant une motivation et ce sous conditions. \n\nSur un territoire donné, quand le GRU et un GCU prévoient des indications sur un même thème, il est fait application des indications du GCU. En cas de contradiction entre une indication d’un GCU préexistant et une indication ou une norme du GRU entrant en vigueur ultérieurement, il est fait application de l’indication ou de la norme du GRU.\n\nAu niveau cartographique, la série de couches de données des GCU regroupe les périmètres identifiés dans les anciens Règlements Communaux d'Urbanisme (RCU) et les anciens Règlements Communaux de Bâtisses (RCB).",
+                  langfre:
+                    "Cette série de couches de données compile les informations spatiales des règlements du CWATUP transposés dans le Guide Communal d'Urbanisme (GCU) du CoDT.\n\nLe Code du Développement Territorial (CoDT) est entré en vigueur le 1er juin 2017 et a modifié la terminologie et la valeur des outils d'aménagement du territoire en Wallonie.\n\nDans ce cadre, le Guide Communal d'Urbanisme (GCU) devient un des outils d'orientation en matière d'urbanisme à l'échelle communale. Il concerne tout ou partie du territoire communal et traite d’une ou plusieurs thématiques\n\nIl décline les objectifs de développement territorial du Schéma de Développement du Territoire (SDT), du Schéma de Développement Pluricommunal (SDP) et des schémas communaux en objectifs d’urbanisme, par des indications, en tenant compte des spécificités du ou des territoires sur lesquels il porte (CoDT - Art. D.III.4). Dans le respect de certaines conditions, la Commune devra être en possession d’un GCU pour pouvoir profiter d’un régime dit \"de décentralisation\" qui autorise la commune à exercer, de manière autonome, son pouvoir de décision, notamment en matière d'octroi de permis d'urbanisme et d’urbanisation.\n\nLes Règlements Communaux d'Urbanisme (RCU) et les Règlements Communaux de Bâtisses (RCB) au sens du CWATUP sont assimilés à des GCU. Ceux-ci possédaient auparavant valeur réglementaire. Dans le CoDT, le GCU ne comporte que des indications (valeur indicative) compilées dans un document unique. Le contenu du GCU est défini dans le CoDT (Art. D.III.5) de manière similaire à celui du Guide Régional d'Urbanisme (GRU - Art. D.III.2 §1).\n\nUn permis d'urbanisme peut donc être octroyé en s'écartant du contenu du GCU moyennant motivation démontrant que le projet ne compromet pas les objectifs de développement territorial, d'aménagement du territoire ou d'urbanisme contenus dans le guide et contribue à la protection, à la gestion ou à l'aménagement des paysages bâtis ou non bâtis.\n\nUn GCU peut s’écarter du contenu à valeur indicative du GRU moyennant une motivation et ce sous conditions. \n\nSur un territoire donné, quand le GRU et un GCU prévoient des indications sur un même thème, il est fait application des indications du GCU. En cas de contradiction entre une indication d’un GCU préexistant et une indication ou une norme du GRU entrant en vigueur ultérieurement, il est fait application de l’indication ou de la norme du GRU.\n\nAu niveau cartographique, la série de couches de données des GCU regroupe les périmètres identifiés dans les anciens Règlements Communaux d'Urbanisme (RCU) et les anciens Règlements Communaux de Bâtisses (RCB).",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    "Cette série de couches de données compile les informations spatiales des règlements du CWATUP transposés dans le Guide Communal d'Urbanisme (GCU) du CoDT.",
+                  langfre:
+                    "Cette série de couches de données compile les informations spatiales des règlements du CWATUP transposés dans le Guide Communal d'Urbanisme (GCU) du CoDT.",
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default: 'No limitations to public access',
+                    langfre: 'No limitations to public access',
+                    link: 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGU.pdf',
+                  },
+                  {
+                    default: "Les conditions générales d'accès s’appliquent.",
+                    langfre: "Les conditions générales d'accès s’appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CPU-TypeA.pdf',
+                  },
+                ],
+                MD_LegalConstraintsUseLimitationObject: [
+                  {
+                    default: "Conditions d'accès et d'utilisation spécifiques",
+                    langfre: "Conditions d'accès et d'utilisation spécifiques",
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/GCU/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/GCU/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende des couches de données',
+                      langfre: 'Légende des couches de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Légende des données relatives aux Guides communaux d'Urbanisme",
+                      langfre:
+                        "Légende des données relatives aux Guides communaux d'Urbanisme",
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=GCU',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=GCU',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - GCU',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - GCU',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux GCU. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux GCU. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FGCU%2FMapServer%22%2C%22label%22%3A%22Guide%20Communal%20d%27Urbanisme%20%28GCU%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2Fe140607a-cfeb-445f-a551-22816c06c72f%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FGCU%2FMapServer%22%2C%22label%22%3A%22Guide%20Communal%20d%27Urbanisme%20%28GCU%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2Fe140607a-cfeb-445f-a551-22816c06c72f%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/GCU/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/GCU/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux Guides communaux d'Urbanisme",
+                      langfre:
+                        "Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux Guides communaux d'Urbanisme",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/GCU/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/GCU/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Adresse de connexion au service de visualisation WMS des couches relatives aux Guides communaux d'Urbanisme",
+                      langfre:
+                        "Adresse de connexion au service de visualisation WMS des couches relatives aux Guides communaux d'Urbanisme",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/Amenagement/RCU/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/Amenagement/RCU/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement des couches de données',
+                      langfre: 'Téléchargement des couches de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Accès en téléchargement direct des RCU (CWATUP) constitutifs des GCU (CoDT)',
+                      langfre:
+                        'Accès en téléchargement direct des RCU (CWATUP) constitutifs des GCU (CoDT)',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php',
+                    },
+                    nameObject: {
+                      default: 'Base de données des GCU',
+                      langfre: 'Base de données des GCU',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Site permettant la recherche des Guides communaux d'Urbanisme",
+                      langfre:
+                        "Site permettant la recherche des Guides communaux d'Urbanisme",
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default: 'https://codt.wallonie.be/',
+                      langfre: 'https://codt.wallonie.be/',
+                    },
+                    nameObject: {
+                      default: "CoDT - Toute l'information",
+                      langfre: "CoDT - Toute l'information",
+                    },
+                    descriptionObject: {
+                      default:
+                        "Toute l'information sur le CoDT sur le site de la DGO4",
+                      langfre:
+                        "Toute l'information sur le CoDT sur le site de la DGO4",
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: 'e140607a-cfeb-445f-a551-22816c06c72f',
+                id: '1612',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '14688', '0'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '14688', '0'],
+                op3: ['25', '1', '4', '0', '14688'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '0', '14688'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: 'e140607a-cfeb-445f-a551-22816c06c72f',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/78e0c182-dbf4-4033-9bb0-e0acfd93be7b/attachments/ccatm.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/78e0c182-dbf4-4033-9bb0-e0acfd93be7b',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                cl_status: [
+                  {
+                    key: 'onGoing',
+                  },
+                ],
+                resourceTitleObject: {
+                  default:
+                    "Commissions consultatives communales d'aménagement du territoire et de mobilité (CCATM)",
+                  langfre:
+                    "Commissions consultatives communales d'aménagement du territoire et de mobilité (CCATM)",
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Cette couche de données localise les communes disposant d'une Commission consultative communale d'aménagement du territoire et de mobilité (CCATM).\n\nDans le souci d'une plus large participation de la population à la gestion de leur cadre de vie, le CoDT prévoit la possibilité pour les autorités communales de créer des Commissions consultatives communales d'aménagement du territoire et de mobilité (CCATM). \n\nLa CCATM est un organe consultatif permettant une plus large participation de la population à la gestion de leur cadre de vie. Elle peut ou doit être consultée par les autorités locales pour certaines matières. Ainsi, l'avis de la CCATM est requis pour les documents communaux d'aménagement (SCD, SDPC, SOL, GCU), pour l'évaluation des incidences sur l'environnement, la rénovation urbaine, les périmètres de remembrement urbain, les périmètres de sites à réaménager, etc. En d'autres matières, la consultation de la CCATM est facultative (demandes de permis d'urbanisme, révision de plan de secteur, etc.)\n\nLa commission peut aussi, d'initiative, rendre des avis aux autorités communales sur l'évolution des idées et des principes dans ces matières et sur les enjeux et les objectifs du développement territorial local. \n\nSur le plan du fonctionnement, le nombre de membres de la commission est, en plus du président, de huit membres (communes de moins de dix mille habitants) de douze membres (communes de dix à vingt mille habitants) ou seize membres (communes de plus de vingt mille habitants). La commission doit se réunir au moins quatre, six ou huit fois par an (en fonction du nombre de ses membres développé ci-dessus). Elle couvre l’ensemble du territoire de la commune concernée.\n\nChaque CCATM est identifiée de manière unique, ce qui permet la liaison entre les éléments cartographiés et la base de données documentaire reprenant des informations administratives ainsi que les documents scannés relevés dans les dossiers liés.",
+                  langfre:
+                    "Cette couche de données localise les communes disposant d'une Commission consultative communale d'aménagement du territoire et de mobilité (CCATM).\n\nDans le souci d'une plus large participation de la population à la gestion de leur cadre de vie, le CoDT prévoit la possibilité pour les autorités communales de créer des Commissions consultatives communales d'aménagement du territoire et de mobilité (CCATM). \n\nLa CCATM est un organe consultatif permettant une plus large participation de la population à la gestion de leur cadre de vie. Elle peut ou doit être consultée par les autorités locales pour certaines matières. Ainsi, l'avis de la CCATM est requis pour les documents communaux d'aménagement (SCD, SDPC, SOL, GCU), pour l'évaluation des incidences sur l'environnement, la rénovation urbaine, les périmètres de remembrement urbain, les périmètres de sites à réaménager, etc. En d'autres matières, la consultation de la CCATM est facultative (demandes de permis d'urbanisme, révision de plan de secteur, etc.)\n\nLa commission peut aussi, d'initiative, rendre des avis aux autorités communales sur l'évolution des idées et des principes dans ces matières et sur les enjeux et les objectifs du développement territorial local. \n\nSur le plan du fonctionnement, le nombre de membres de la commission est, en plus du président, de huit membres (communes de moins de dix mille habitants) de douze membres (communes de dix à vingt mille habitants) ou seize membres (communes de plus de vingt mille habitants). La commission doit se réunir au moins quatre, six ou huit fois par an (en fonction du nombre de ses membres développé ci-dessus). Elle couvre l’ensemble du territoire de la commune concernée.\n\nChaque CCATM est identifiée de manière unique, ce qui permet la liaison entre les éléments cartographiés et la base de données documentaire reprenant des informations administratives ainsi que les documents scannés relevés dans les dossiers liés.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    "Cette couche de données localise les communes disposant d'une Commission consultative communale d'aménagement du territoire et de mobilité (CCATM).",
+                  langfre:
+                    "Cette couche de données localise les communes disposant d'une Commission consultative communale d'aménagement du territoire et de mobilité (CCATM).",
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default: "Les conditions générales d'accès s’appliquent.",
+                    langfre: "Les conditions générales d'accès s’appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGU.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CPU-TypeA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/CCATM/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/CCATM/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende des données',
+                      langfre: 'Légende des données',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Légende des données relatives aux Commissions communales Consultatives d'Aménagement du Territoire et de Mobilité",
+                      langfre:
+                        "Légende des données relatives aux Commissions communales Consultatives d'Aménagement du Territoire et de Mobilité",
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=CCATM',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=CCATM',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la TLPE - CCATM',
+                      langfre:
+                        'Application de consultation des données de la TLPE - CCATM',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux CCATM. Cette application constitue un thème de l'application de consultation des données de la TLPE.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux CCATM. Cette application constitue un thème de l'application de consultation des données de la TLPE.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FCCATM%2FMapServer%22%2C%22label%22%3A%22Commissions%20consultatives%20communales%20d%27am%C3%A9nagement%20du%20territoire%20et%20de%20mobilit%C3%A9%20%28CCATM%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F78e0c182-dbf4-4033-9bb0-e0acfd93be7b%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FCCATM%2FMapServer%22%2C%22label%22%3A%22Commissions%20consultatives%20communales%20d%27am%C3%A9nagement%20du%20territoire%20et%20de%20mobilit%C3%A9%20%28CCATM%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F78e0c182-dbf4-4033-9bb0-e0acfd93be7b%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/CCATM/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/CCATM/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux Commissions communales Consultatives d'Aménagement du Territoire et de Mobilité",
+                      langfre:
+                        "Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux Commissions communales Consultatives d'Aménagement du Territoire et de Mobilité",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/CCATM/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/CCATM/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Adresse de connexion au service de visualisation WMS des couches relatives aux Commissions communales Consultatives d'Aménagement du Territoire et de Mobilité",
+                      langfre:
+                        "Adresse de connexion au service de visualisation WMS des couches relatives aux Commissions communales Consultatives d'Aménagement du Territoire et de Mobilité",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/amenagement/CCATM/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/amenagement/CCATM/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement de la couche de données',
+                      langfre: 'Téléchargement de la couche de données',
+                    },
+                    descriptionObject: {
+                      default: 'Accès en téléchargement direct',
+                      langfre: 'Accès en téléchargement direct',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=ccatm',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=ccatm',
+                    },
+                    nameObject: {
+                      default: 'Base de données des CCATM',
+                      langfre: 'Base de données des CCATM',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Site permettant la recherche des Commissions communales Consultatives d'Aménagement du Territoire et de Mobilité",
+                      langfre:
+                        "Site permettant la recherche des Commissions communales Consultatives d'Aménagement du Territoire et de Mobilité",
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://territoire.wallonie.be/fr/page/commissions-consultatives-communales-damenagement-du-territoire-et-mobilite',
+                      langfre:
+                        'https://territoire.wallonie.be/fr/page/commissions-consultatives-communales-damenagement-du-territoire-et-mobilite',
+                    },
+                    nameObject: {
+                      default: 'Les CCATM - Informations complémentaires',
+                      langfre: 'Les CCATM - Informations complémentaires',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Site Internet de la TLPE fournissant des informations complémentaires sur les CCATM',
+                      langfre:
+                        'Site Internet de la TLPE fournissant des informations complémentaires sur les CCATM',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: '78e0c182-dbf4-4033-9bb0-e0acfd93be7b',
+                id: '1188',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '14688', '0'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '14688', '0'],
+                op3: ['25', '1', '4', '0', '14688'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '0', '14688'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: '78e0c182-dbf4-4033-9bb0-e0acfd93be7b',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/01491630-78ce-49f3-b479-4b30dabc4c69/attachments/bc_pat.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/01491630-78ce-49f3-b479-4b30dabc4c69',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['series'],
+                cl_status: [
+                  {
+                    key: 'onGoing',
+                  },
+                ],
+                resourceTitleObject: {
+                  default:
+                    'Patrimoine - Biens classés et zones de protection - Série',
+                  langfre:
+                    'Patrimoine - Biens classés et zones de protection - Série',
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Cette série de couches de données reprend la localisation des différents biens classés en Région wallonne.\n\nLe classement constitue une mesure de protection légale d’un bien immobilier dont la valeur patrimoniale supérieure est ainsi reconnue et dont la conservation est jugée d’intérêt régional. Cette exigence de conservation inclut l’entretien du bien et, si nécessaire, sa restauration au moyen de procédés et techniques spécifiques déterminés en fonction de ses qualités propres. Le classement est consacré par un arrêté du gouvernement wallon.\n\nLe classement porte uniquement sur des biens immobiliers situés sur le territoire de la Région wallonne (sauf dans les communes germanophones où ces matières sont gérées par la communauté germanophone) et qui présentent un intérêt architectural, historique, archéologique, scientifique, artistique, social, technique, mémoriel, esthétique, urbanistique ou paysager, dont le degré supérieur est analysé sur base des critères d’authenticité, d’intégrité, de représentativité typologique ou de rareté.\n\nUne distinction est apportée au niveau du classement en fonction de la nature du bien concerné : on le classera comme monument, site, ensemble architectural ou site archéologique (CoPat - art.3, 7°). Ces biens constituent autant de couches géographiques identifiés dans la présente collection. Les monuments constituent des entités ponctuelles et les autres biens des entités zonales.\n\nLe CoPat considère :\n- à titre de monument : toute réalisation architecturale, sculpturale ou végétale isolée et remarquable, en ce compris les éléments immobilisés par incorporation ou destination et les biens culturels qui en font partie intégrante, notamment l’équipement complémentaire et les éléments décoratifs. Pour les monuments, des subsides peuvent être octroyés pour les travaux ou études visant à protéger, restaurer ou mettre en valeur le bien;\n- à titre d’ensemble architectural : tout groupement de constructions, en ce compris les éléments qui les relient, remarquable par sa cohérence ou par son intégration dans le paysage;\n- à titre de site : toute œuvre de la nature ou toute œuvre combinée de l’homme et de la nature constituant un espace remarquable au regard d’un ou plusieurs critères visés à l’article 1er du CoPat, suffisamment caractéristique et cohérent pour faire l’objet d’une délimitation topographique;\n- à titre de site archéologique : tout terrain, formation géologique ou pédologique, bâtiment, ensemble de bâtiment ou site ayant recelé, recelant ou étant présumé receler des biens archéologiques.\n\nAfin de garantir la qualité de l’environnement du bien classé, une zone de protection est établie dans certains cas.\n\nLa procédure de classement d'un bien patrimonial étant relativement longue, une procédure spécifique est prévue lorsqu’un bien nécessite une protection en urgence : l’inscription sur la liste de sauvegarde. Pour plus de renseignements, consultez la fiche de métadonnées relative à la Liste de sauvegarde (PAT_LSTSAV).\n\nParmi les nombreux biens protégés de Wallonie, un certain nombre présente un intérêt majeur. Ils sont repris dans la liste du patrimoine exceptionnel de la Région wallonne. Ces biens alimentent également la liste du patrimoine mondial (UNESCO). Pour plus de renseignements, consultez les fiches de métadonnées relatives aux Biens exceptionnels (PAT_EXC) et aux Biens mondiaux (PAT_MND).\n\nChaque bien classé est identifié de manière unique, ce qui permet la liaison entre les éléments cartographiés et la base de données documentaire reprenant des informations administratives ainsi que les documents scannés relevés dans les dossiers liés.",
+                  langfre:
+                    "Cette série de couches de données reprend la localisation des différents biens classés en Région wallonne.\n\nLe classement constitue une mesure de protection légale d’un bien immobilier dont la valeur patrimoniale supérieure est ainsi reconnue et dont la conservation est jugée d’intérêt régional. Cette exigence de conservation inclut l’entretien du bien et, si nécessaire, sa restauration au moyen de procédés et techniques spécifiques déterminés en fonction de ses qualités propres. Le classement est consacré par un arrêté du gouvernement wallon.\n\nLe classement porte uniquement sur des biens immobiliers situés sur le territoire de la Région wallonne (sauf dans les communes germanophones où ces matières sont gérées par la communauté germanophone) et qui présentent un intérêt architectural, historique, archéologique, scientifique, artistique, social, technique, mémoriel, esthétique, urbanistique ou paysager, dont le degré supérieur est analysé sur base des critères d’authenticité, d’intégrité, de représentativité typologique ou de rareté.\n\nUne distinction est apportée au niveau du classement en fonction de la nature du bien concerné : on le classera comme monument, site, ensemble architectural ou site archéologique (CoPat - art.3, 7°). Ces biens constituent autant de couches géographiques identifiés dans la présente collection. Les monuments constituent des entités ponctuelles et les autres biens des entités zonales.\n\nLe CoPat considère :\n- à titre de monument : toute réalisation architecturale, sculpturale ou végétale isolée et remarquable, en ce compris les éléments immobilisés par incorporation ou destination et les biens culturels qui en font partie intégrante, notamment l’équipement complémentaire et les éléments décoratifs. Pour les monuments, des subsides peuvent être octroyés pour les travaux ou études visant à protéger, restaurer ou mettre en valeur le bien;\n- à titre d’ensemble architectural : tout groupement de constructions, en ce compris les éléments qui les relient, remarquable par sa cohérence ou par son intégration dans le paysage;\n- à titre de site : toute œuvre de la nature ou toute œuvre combinée de l’homme et de la nature constituant un espace remarquable au regard d’un ou plusieurs critères visés à l’article 1er du CoPat, suffisamment caractéristique et cohérent pour faire l’objet d’une délimitation topographique;\n- à titre de site archéologique : tout terrain, formation géologique ou pédologique, bâtiment, ensemble de bâtiment ou site ayant recelé, recelant ou étant présumé receler des biens archéologiques.\n\nAfin de garantir la qualité de l’environnement du bien classé, une zone de protection est établie dans certains cas.\n\nLa procédure de classement d'un bien patrimonial étant relativement longue, une procédure spécifique est prévue lorsqu’un bien nécessite une protection en urgence : l’inscription sur la liste de sauvegarde. Pour plus de renseignements, consultez la fiche de métadonnées relative à la Liste de sauvegarde (PAT_LSTSAV).\n\nParmi les nombreux biens protégés de Wallonie, un certain nombre présente un intérêt majeur. Ils sont repris dans la liste du patrimoine exceptionnel de la Région wallonne. Ces biens alimentent également la liste du patrimoine mondial (UNESCO). Pour plus de renseignements, consultez les fiches de métadonnées relatives aux Biens exceptionnels (PAT_EXC) et aux Biens mondiaux (PAT_MND).\n\nChaque bien classé est identifié de manière unique, ce qui permet la liaison entre les éléments cartographiés et la base de données documentaire reprenant des informations administratives ainsi que les documents scannés relevés dans les dossiers liés.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    'Cette série de couches de données reprend la localisation des différents biens classés en Région wallonne.',
+                  langfre:
+                    'Cette série de couches de données reprend la localisation des différents biens classés en Région wallonne.',
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default:
+                      "Les conditions générales d'accès s’appliquentLicence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.",
+                    langfre:
+                      "Les conditions générales d'accès s’appliquentLicence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.",
+                    link: 'https://creativecommons.org/licenses/by/4.0/',
+                  },
+                  {
+                    default:
+                      'Source : Service public de Wallonie (SPW) - Patrimoine - Biens classés et zones de protection - Série (2024-12-18) http://geodata.wallonie.be/id/01491630-78ce-49f3-b479-4b30dabc4c69',
+                    langfre:
+                      'Source : Service public de Wallonie (SPW) - Patrimoine - Biens classés et zones de protection - Série (2024-12-18) http://geodata.wallonie.be/id/01491630-78ce-49f3-b479-4b30dabc4c69',
+                  },
+                  {
+                    default: "Pas de limitation d'accès public à cette donnée.",
+                    langfre: "Pas de limitation d'accès public à cette donnée.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/BC_PAT/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/BC_PAT/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende des couches de données',
+                      langfre: 'Légende des couches de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Légende des données relatives aux biens classés et zones de protection',
+                      langfre:
+                        'Légende des données relatives aux biens classés et zones de protection',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=BC_PAT',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=BC_PAT',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données TLPE - Biens classés et zones de protection',
+                      langfre:
+                        'Application de consultation des données TLPE - Biens classés et zones de protection',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux biens classés et zones de protection . Cette application constitue un thème de l'application de consultation des données TLPE.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux biens classés et zones de protection . Cette application constitue un thème de l'application de consultation des données TLPE.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FBC_PAT%2FMapServer%22%2C%22label%22%3A%22Patrimoine%20-%20Biens%20class%C3%A9s%20et%20zones%20de%20protection%20-%20S%C3%A9rie%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F01491630-78ce-49f3-b479-4b30dabc4c69%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FBC_PAT%2FMapServer%22%2C%22label%22%3A%22Patrimoine%20-%20Biens%20class%C3%A9s%20et%20zones%20de%20protection%20-%20S%C3%A9rie%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F01491630-78ce-49f3-b479-4b30dabc4c69%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/BC_PAT/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/BC_PAT/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux "Biens classés et zones de protection (BC_PAT)"',
+                      langfre:
+                        'Adresse de connexion au service de visualisation ESRI-REST des couches relatives aux "Biens classés et zones de protection (BC_PAT)"',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/BC_PAT/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/BC_PAT/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux "Biens classés et zones de protection (BC_PAT)"',
+                      langfre:
+                        'Adresse de connexion au service de visualisation WMS des couches relatives aux "Biens classés et zones de protection (BC_PAT)"',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/patrimoine/BC_PAT/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/patrimoine/BC_PAT/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement des couches de données',
+                      langfre: 'Téléchargement des couches de données',
+                    },
+                    descriptionObject: {
+                      default: 'Accès en téléchargement direct',
+                      langfre: 'Accès en téléchargement direct',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=bc_pat',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=bc_pat',
+                    },
+                    nameObject: {
+                      default:
+                        'Base de données des biens classés et zones de protection',
+                      langfre:
+                        'Base de données des biens classés et zones de protection',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Site permettant la recherche des biens classés et zones de protection',
+                      langfre:
+                        'Site permettant la recherche des biens classés et zones de protection',
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/documents/BC_PAT/BC_PAT.pdf',
+                      langfre:
+                        'https://docum1.wallonie.be/documents/BC_PAT/BC_PAT.pdf',
+                    },
+                    nameObject: {
+                      default: 'Liste des biens classés',
+                      langfre: 'Liste des biens classés',
+                    },
+                    descriptionObject: {
+                      default: 'Liste des biens classés en Région wallonne',
+                      langfre: 'Liste des biens classés en Région wallonne',
+                    },
+                    function: 'information',
+                    applicationProfile: 'application/pdf',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://agencewallonnedupatrimoine.be/se-renseigner/',
+                      langfre:
+                        'https://agencewallonnedupatrimoine.be/se-renseigner/',
+                    },
+                    nameObject: {
+                      default:
+                        'Site Internet de l’Agence wallonne du Patrimoine',
+                      langfre:
+                        'Site Internet de l’Agence wallonne du Patrimoine',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Sur ce site, découvrez ce que le Service public de Wallonie accomplit dans le domaine de l'archéologie, de protection du patrimoine mais également en matière d'entretien et de restauration de biens classés.",
+                      langfre:
+                        "Sur ce site, découvrez ce que le Service public de Wallonie accomplit dans le domaine de l'archéologie, de protection du patrimoine mais également en matière d'entretien et de restauration de biens classés.",
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: '01491630-78ce-49f3-b479-4b30dabc4c69',
+                id: '666',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '14688', '0', '14683'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '14688', '0', '14683'],
+                op3: ['25', '1', '4', '14688', '0', '14683'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '14688', '0', '14683'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: '01491630-78ce-49f3-b479-4b30dabc4c69',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/679a02c9-7c2c-4132-ab49-32147bd01ce9/attachments/sol_pic.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/679a02c9-7c2c-4132-ab49-32147bd01ce9',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['series'],
+                cl_status: [
+                  {
+                    key: 'onGoing',
+                  },
+                ],
+                resourceTitleObject: {
+                  default: "Schéma d'Orientation Local (SOL)",
+                  langfre: "Schéma d'Orientation Local (SOL)",
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Cette série de couches de données compile les informations spatiales constitutives des Schémas d'Orientation locaux (SOL) au sens du CoDT.\n\nLe Code du Développement Territorial (CoDT) est entré en vigueur le 1er juin 2017 et a modifié la terminologie et la valeur des outils d'aménagement du territoire en Wallonie. Dans sa logique d'urbanisme de projet, le CoDT met en place les schémas.\n\nParmi ceux-ci, le schéma d’orientation local (SOL - Art. D.II.11 et ss du CoDT) est un des deux schémas communaux. Il est établi à l’initiative du conseil communal sur une partie du territoire de la commune et y détermine les objectifs d’aménagement du territoire et d’urbanisme. Outre ces objectifs, le SOL contient la carte d’orientation, et les indications relatives à l’implantation et à la hauteur des constructions et des ouvrages, aux voiries et aux espaces publics, ainsi qu’à l’intégration des équipements techniques, en cas de dispense de permis d’urbanisation lors de la division d’un bien en lots. \n\nLe CoDT assimile au SOL, d’une part le Plan Directeur (PLD) et le Plan Communal d’Aménagement (PCA) définis dans le CWATUP qui perdent leur valeur réglementaire et, d’autre part, le Schémas Directeur (SCD) et les Rapports Urbanistiques et Environnementaux (RUE) qui conservent leur valeur indicative.\n\nLe SOL a une valeur indicative et s'applique au Guide Communal d'Urbanisme (GCU) ainsi qu'à toute décision prise en matière de permis, certificats, déclarations et de politique foncière.\n\nUne commune peut se doter d'un ou plusieurs SOL (CoDT - Art. D.II.9).\n\nAu niveau cartographique, la série de couches de données des SOL regroupe les périmètres identifiés dans les anciens PLD, PCA, SCD et RUE au sens du CWATUP ainsi que les nouveaux SOL initiés sous le CoDT.",
+                  langfre:
+                    "Cette série de couches de données compile les informations spatiales constitutives des Schémas d'Orientation locaux (SOL) au sens du CoDT.\n\nLe Code du Développement Territorial (CoDT) est entré en vigueur le 1er juin 2017 et a modifié la terminologie et la valeur des outils d'aménagement du territoire en Wallonie. Dans sa logique d'urbanisme de projet, le CoDT met en place les schémas.\n\nParmi ceux-ci, le schéma d’orientation local (SOL - Art. D.II.11 et ss du CoDT) est un des deux schémas communaux. Il est établi à l’initiative du conseil communal sur une partie du territoire de la commune et y détermine les objectifs d’aménagement du territoire et d’urbanisme. Outre ces objectifs, le SOL contient la carte d’orientation, et les indications relatives à l’implantation et à la hauteur des constructions et des ouvrages, aux voiries et aux espaces publics, ainsi qu’à l’intégration des équipements techniques, en cas de dispense de permis d’urbanisation lors de la division d’un bien en lots. \n\nLe CoDT assimile au SOL, d’une part le Plan Directeur (PLD) et le Plan Communal d’Aménagement (PCA) définis dans le CWATUP qui perdent leur valeur réglementaire et, d’autre part, le Schémas Directeur (SCD) et les Rapports Urbanistiques et Environnementaux (RUE) qui conservent leur valeur indicative.\n\nLe SOL a une valeur indicative et s'applique au Guide Communal d'Urbanisme (GCU) ainsi qu'à toute décision prise en matière de permis, certificats, déclarations et de politique foncière.\n\nUne commune peut se doter d'un ou plusieurs SOL (CoDT - Art. D.II.9).\n\nAu niveau cartographique, la série de couches de données des SOL regroupe les périmètres identifiés dans les anciens PLD, PCA, SCD et RUE au sens du CWATUP ainsi que les nouveaux SOL initiés sous le CoDT.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    "Cette série de couches de données compile les informations spatiales constitutives des Schémas d'Orientation locaux (SOL) au sens du CoDT.",
+                  langfre:
+                    "Cette série de couches de données compile les informations spatiales constitutives des Schémas d'Orientation locaux (SOL) au sens du CoDT.",
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    langfre:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    link: 'https://creativecommons.org/licenses/by/4.0/',
+                  },
+                  {
+                    default:
+                      "Source : Service public de Wallonie (SPW) - Schéma d'Orientation Local (SOL) (2024-12-02) http://geodata.wallonie.be/id/679a02c9-7c2c-4132-ab49-32147bd01ce9",
+                    langfre:
+                      "Source : Service public de Wallonie (SPW) - Schéma d'Orientation Local (SOL) (2024-12-02) http://geodata.wallonie.be/id/679a02c9-7c2c-4132-ab49-32147bd01ce9",
+                  },
+                  {
+                    default: "Pas de limitation d'accès public à cette donnée.",
+                    langfre: "Pas de limitation d'accès public à cette donnée.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/SOL/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/SOL/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende des couches de données',
+                      langfre: 'Légende des couches de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Légende des couches de données relatives aux Schémas d'Orientation Locaux",
+                      langfre:
+                        "Légende des couches de données relatives aux Schémas d'Orientation Locaux",
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=SOL',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=SOL',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - SOL',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - SOL',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux SOL. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux SOL. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FSOL%2FMapServer%22%2C%22label%22%3A%22Sch%C3%A9ma%20d%27Orientation%20Local%20%28SOL%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F679a02c9-7c2c-4132-ab49-32147bd01ce9%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FSOL%2FMapServer%22%2C%22label%22%3A%22Sch%C3%A9ma%20d%27Orientation%20Local%20%28SOL%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F679a02c9-7c2c-4132-ab49-32147bd01ce9%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/SOL/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/SOL/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Adresse de connexion au service de visualisation ESRI-REST des couches de données relatives aux Schémas d'Orientation Locaux",
+                      langfre:
+                        "Adresse de connexion au service de visualisation ESRI-REST des couches de données relatives aux Schémas d'Orientation Locaux",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/SOL/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/SOL/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Adresse de connexion au service de visualisation WMS des couches de données relatives aux Schémas d'Orientation Locaux",
+                      langfre:
+                        "Adresse de connexion au service de visualisation WMS des couches de données relatives aux Schémas d'Orientation Locaux",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/Amenagement/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/Amenagement/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement des couches de données',
+                      langfre: 'Téléchargement des couches de données',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Accès en téléchargement direct des couches de données constitutives des Schémas d'Orientation Locaux",
+                      langfre:
+                        "Accès en téléchargement direct des couches de données constitutives des Schémas d'Orientation Locaux",
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php',
+                    },
+                    nameObject: {
+                      default: 'Base de données des SOL',
+                      langfre: 'Base de données des SOL',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Site permettant la recherche des Schémas d'Orientation Locaux",
+                      langfre:
+                        "Site permettant la recherche des Schémas d'Orientation Locaux",
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default: 'https://codt.wallonie.be/',
+                      langfre: 'https://codt.wallonie.be/',
+                    },
+                    nameObject: {
+                      default: "CoDT - Toute l'information",
+                      langfre: "CoDT - Toute l'information",
+                    },
+                    descriptionObject: {
+                      default:
+                        "Toute l'information sur le CoDT sur le site de la DGO4",
+                      langfre:
+                        "Toute l'information sur le CoDT sur le site de la DGO4",
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                  'OGC GeoPackage (.gpkg)',
+                ],
+                uuid: '679a02c9-7c2c-4132-ab49-32147bd01ce9',
+                id: '1613',
+                groupOwner: '4',
+                op0: ['25', '4', '14684', '1', '14688', '0'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '4', '1', '14688', '0'],
+                op3: ['25', '4', '1', '0', '14688'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '4', '1', '0', '14688'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: '679a02c9-7c2c-4132-ab49-32147bd01ce9',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/4572f901-7d5e-4fe6-931e-ac19c8fc04fe/attachments/lotiss_pic.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/4572f901-7d5e-4fe6-931e-ac19c8fc04fe',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                cl_status: [
+                  {
+                    key: 'onGoing',
+                  },
+                ],
+                resourceTitleObject: {
+                  default: 'Permis d’urbanisation et lotissements',
+                  langfre: 'Permis d’urbanisation et lotissements',
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Cette donnée reprend les emprises des lotissements et éléments associés permettant la gestion des permis de lotir en Région wallonne. \n\nUn projet de lotissement consiste à mettre en œuvre une conception urbanistique portant sur un projet d'ensemble relatif à un bien à diviser en au moins trois lots non bâtis destinés à l'habitation.\n\nDans ce cadre, un permis de lotir régit les conditions dans lesquelles le lotissement doit être aménagé et les parcelles peuvent être bâties. L'analyse et la réalisation d'un lotissement est subordonnée à la constitution d'un dossier de demande de permis de lotir. La demande est à adresser à la commune sur laquelle le bien est situé.\n\nLes informations contenues dans les dossiers liés à la gestion des permis de lotir (dont les autorisations antérieures à 1962) sont encodées dans une base de données documentaire. Concernant les permis de lotir, les documents suivants ont été scannés : l’arrêté, le plan du lotissement, les prescriptions urbanistiques et les prescriptions du demandeur.\n\nChaque entité polygonale de la donnée reprend une série d'informations telles que la commune sur laquelle porte le lotissement, le statut du lotissement, le décideur, etc. Un lien hypertexte permet d'accéder à l'ensemble des détails concernant le lotissement interrogé, ce y compris les documents numériques liés, le demandeur, les parcelles concernées, etc.",
+                  langfre:
+                    "Cette donnée reprend les emprises des lotissements et éléments associés permettant la gestion des permis de lotir en Région wallonne. \n\nUn projet de lotissement consiste à mettre en œuvre une conception urbanistique portant sur un projet d'ensemble relatif à un bien à diviser en au moins trois lots non bâtis destinés à l'habitation.\n\nDans ce cadre, un permis de lotir régit les conditions dans lesquelles le lotissement doit être aménagé et les parcelles peuvent être bâties. L'analyse et la réalisation d'un lotissement est subordonnée à la constitution d'un dossier de demande de permis de lotir. La demande est à adresser à la commune sur laquelle le bien est situé.\n\nLes informations contenues dans les dossiers liés à la gestion des permis de lotir (dont les autorisations antérieures à 1962) sont encodées dans une base de données documentaire. Concernant les permis de lotir, les documents suivants ont été scannés : l’arrêté, le plan du lotissement, les prescriptions urbanistiques et les prescriptions du demandeur.\n\nChaque entité polygonale de la donnée reprend une série d'informations telles que la commune sur laquelle porte le lotissement, le statut du lotissement, le décideur, etc. Un lien hypertexte permet d'accéder à l'ensemble des détails concernant le lotissement interrogé, ce y compris les documents numériques liés, le demandeur, les parcelles concernées, etc.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    'Cette donnée reprend les emprises des lotissements et éléments associés permettant la gestion des permis de lotir en Région wallonne.',
+                  langfre:
+                    'Cette donnée reprend les emprises des lotissements et éléments associés permettant la gestion des permis de lotir en Région wallonne.',
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default: "Les conditions générales d'accès s’appliquent.",
+                    langfre: "Les conditions générales d'accès s’appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGU.pdf',
+                  },
+                  {
+                    default:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    langfre:
+                      "Les conditions générales d'utilisation s'appliquent et sont étendues par les conditions particulières de type A.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CPU-TypeA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/LOT/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/LOT/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    descriptionObject: {
+                      default: 'Légende de la couche de données',
+                      langfre: 'Légende de la couche de données',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=LOT',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=LOT',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - Lotissements',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - Lotissements',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives aux lotissements. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives aux lotissements. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FLOT%2FMapServer%22%2C%22label%22%3A%22Permis%20d%E2%80%99urbanisation%20et%20lotissements%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F4572f901-7d5e-4fe6-931e-ac19c8fc04fe%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FLOT%2FMapServer%22%2C%22label%22%3A%22Permis%20d%E2%80%99urbanisation%20et%20lotissements%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F4572f901-7d5e-4fe6-931e-ac19c8fc04fe%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Voir cette donnée sur WalOnMap - Toute la Wallonie à la carte.',
+                      langfre:
+                        'Voir cette donnée sur WalOnMap - Toute la Wallonie à la carte.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/LOT/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/LOT/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Ce service ESRI-REST permet de visualiser la couche de données "Lotissement"',
+                      langfre:
+                        'Ce service ESRI-REST permet de visualiser la couche de données "Lotissement"',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/LOT/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/LOT/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Ce service WMS permet de visualiser la couche de données "Lotissement"',
+                      langfre:
+                        'Ce service WMS permet de visualiser la couche de données "Lotissement"',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://docum1.wallonie.be/donnees/amenagement/LOTIS/',
+                      langfre:
+                        'https://docum1.wallonie.be/donnees/amenagement/LOTIS/',
+                    },
+                    nameObject: {
+                      default: 'Téléchargement de la couche de données',
+                      langfre: 'Téléchargement de la couche de données',
+                    },
+                    descriptionObject: {
+                      default: 'Accès en téléchargement direct',
+                      langfre: 'Accès en téléchargement direct',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI File Geodatabase (.fgdb)',
+                  'ESRI Shapefile (.shp)',
+                ],
+                uuid: '4572f901-7d5e-4fe6-931e-ac19c8fc04fe',
+                id: '667',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '14688', '0', '14683'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '14688', '0', '14683'],
+                op3: ['25', '1', '4', '14688', '0', '14683'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '14688', '0', '14683'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: '4572f901-7d5e-4fe6-931e-ac19c8fc04fe',
+            },
+            {
+              origin: 'catalog',
+              properties: {
+                overview:
+                  'https://metawal.wallonie.be/geonetwork/srv/api/records/7fe2f305-1302-4297-b67e-792f55acd834/attachments/pds_codt.png',
+                associationType: '',
+                resourceTitle: '',
+                url: 'https://metawal.wallonie.be/geonetwork/srv/api/records/7fe2f305-1302-4297-b67e-792f55acd834',
+                initiativeType: '',
+              },
+              _source: {
+                resourceType: ['dataset'],
+                cl_status: [
+                  {
+                    key: 'onGoing',
+                  },
+                ],
+                resourceTitleObject: {
+                  default:
+                    'Plan de secteur en vigueur (version coordonnée vectorielle)',
+                  langfre:
+                    'Plan de secteur en vigueur (version coordonnée vectorielle)',
+                },
+                resourceAbstractObject: {
+                  default:
+                    "Le plan de secteur est un outil réglementaire d'aménagement du territoire et d'urbanisme régional wallon constitué de plusieurs couches de données spatiales.\n\nLe plan de secteur organise l'espace territorial wallon et en définit les différentes affectations afin d'assurer le développement des activités humaines de manière harmonieuse et d'éviter la consommation abusive d'espace. Il dispose d'une pleine valeur réglementaire et constitue ainsi la colonne vertébrale d’un développement territorial efficace, cohérent et concerté. Cet aspect est renforcé par la réforme engendrée par l'entrée en vigueur du Code du Développement Territorial (CoDT).\n\nLa Région wallonne est couverte par 23 plans de secteur, adoptés entre 1977 et 1987.\n\nLe plan de secteur est divisé en zones destinées à l'urbanisation (zone d'habitat, de loisirs, d'activité économique, etc.) et en zones non destinées à l'urbanisation (zones agricoles, forestières, espaces verts, etc.). Plusieurs couches de données spatiales constituent le plan de secteur. Elles sont définies dans le CoDT. Outre la détermination des différentes zones d'affectation du territoire wallon, il contient :\n- les limites communales du PdS;\n- les révisions (infrastructures en révision, périmètres de révisions partielles du PdS, mesures d'aménagement, prescriptions supplémentaires);\n- les infrastructures (réseau routier, ferroviaire, voies navigables, lignes électriques haute tension, canalisations);\n- les périmètres de protection (périmètres de liaison écologique, d'intérêt paysager, d'intérêt culture, historique ou esthétique, les points de vue remarquable et leur périmètre, les réservations d'infrastructure principale, les extension de zone d'extraction);\n- la référence au Plan de Secteur d'origine;\n- les étiquettes des secteurs d'aménagement de 1978.\n\nCes différentes couches de données sont présentées sous format vectoriel (point, ligne ou polygone).\n\nSi le plan de secteur a valeur réglementaire, il n’est pas figé pour autant. Les modalités de révision sont formalisées dans des procédures qui ont été simplifiées et rationalisées dans le CoDT. Cette version constitue la version la plus récente des couches de données et intègre les mises à jour faisant suite à la mise en œuvre du CoDT.\n\nA ce jour, la gestion du plan de secteur relève de la Direction de l’Aménagement régional (DAR) qui est en charge de l'outil \"plan de secteur\" : évolution au regard des objectifs régionaux, notamment du développement économique dans une perspective durable, information, sensibilisation, lien avec la planification stratégique régionale et avec les outils communaux. Les révisions sont instruites par la DAR, à l'exception de celles qui ont été attribuées à la cellule de développement territorial (CDT), également dénommée \"ESPACE\", dont la création a été décidée par le Gouvernement wallon le 19 septembre 2005.",
+                  langfre:
+                    "Le plan de secteur est un outil réglementaire d'aménagement du territoire et d'urbanisme régional wallon constitué de plusieurs couches de données spatiales.\n\nLe plan de secteur organise l'espace territorial wallon et en définit les différentes affectations afin d'assurer le développement des activités humaines de manière harmonieuse et d'éviter la consommation abusive d'espace. Il dispose d'une pleine valeur réglementaire et constitue ainsi la colonne vertébrale d’un développement territorial efficace, cohérent et concerté. Cet aspect est renforcé par la réforme engendrée par l'entrée en vigueur du Code du Développement Territorial (CoDT).\n\nLa Région wallonne est couverte par 23 plans de secteur, adoptés entre 1977 et 1987.\n\nLe plan de secteur est divisé en zones destinées à l'urbanisation (zone d'habitat, de loisirs, d'activité économique, etc.) et en zones non destinées à l'urbanisation (zones agricoles, forestières, espaces verts, etc.). Plusieurs couches de données spatiales constituent le plan de secteur. Elles sont définies dans le CoDT. Outre la détermination des différentes zones d'affectation du territoire wallon, il contient :\n- les limites communales du PdS;\n- les révisions (infrastructures en révision, périmètres de révisions partielles du PdS, mesures d'aménagement, prescriptions supplémentaires);\n- les infrastructures (réseau routier, ferroviaire, voies navigables, lignes électriques haute tension, canalisations);\n- les périmètres de protection (périmètres de liaison écologique, d'intérêt paysager, d'intérêt culture, historique ou esthétique, les points de vue remarquable et leur périmètre, les réservations d'infrastructure principale, les extension de zone d'extraction);\n- la référence au Plan de Secteur d'origine;\n- les étiquettes des secteurs d'aménagement de 1978.\n\nCes différentes couches de données sont présentées sous format vectoriel (point, ligne ou polygone).\n\nSi le plan de secteur a valeur réglementaire, il n’est pas figé pour autant. Les modalités de révision sont formalisées dans des procédures qui ont été simplifiées et rationalisées dans le CoDT. Cette version constitue la version la plus récente des couches de données et intègre les mises à jour faisant suite à la mise en œuvre du CoDT.\n\nA ce jour, la gestion du plan de secteur relève de la Direction de l’Aménagement régional (DAR) qui est en charge de l'outil \"plan de secteur\" : évolution au regard des objectifs régionaux, notamment du développement économique dans une perspective durable, information, sensibilisation, lien avec la planification stratégique régionale et avec les outils communaux. Les révisions sont instruites par la DAR, à l'exception de celles qui ont été attribuées à la cellule de développement territorial (CDT), également dénommée \"ESPACE\", dont la création a été décidée par le Gouvernement wallon le 19 septembre 2005.",
+                },
+                resourceHookAbstractObject: {
+                  default:
+                    "Le plan de secteur est un outil réglementaire d'aménagement du territoire et d'urbanisme régional wallon constitué de plusieurs couches de données spatiales.",
+                  langfre:
+                    "Le plan de secteur est un outil réglementaire d'aménagement du territoire et d'urbanisme régional wallon constitué de plusieurs couches de données spatiales.",
+                },
+                MD_LegalConstraintsOtherConstraintsObject: [
+                  {
+                    default:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    langfre:
+                      'Licence CC-BY 4.0 : L’utilisateur peut utiliser et modifier les données pour en dériver une œuvre. Il peut publier les données et l’œuvre dérivée à condition de citer les sources.',
+                    link: 'https://creativecommons.org/licenses/by/4.0/',
+                  },
+                  {
+                    default:
+                      'Source : Service public de Wallonie (SPW) - Plan de secteur en vigueur (version coordonnée vectorielle) (2024-12-09) http://geodata.wallonie.be/id/7fe2f305-1302-4297-b67e-792f55acd834',
+                    langfre:
+                      'Source : Service public de Wallonie (SPW) - Plan de secteur en vigueur (version coordonnée vectorielle) (2024-12-09) http://geodata.wallonie.be/id/7fe2f305-1302-4297-b67e-792f55acd834',
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                  {
+                    default: "Pas de limitation d'accès public à cette donnée.",
+                    langfre: "Pas de limitation d'accès public à cette donnée.",
+                    link: 'https://geoportail.wallonie.be/files/documents/ConditionsSPW/DataSPW-CGA.pdf',
+                  },
+                ],
+                link: [
+                  {
+                    protocol: 'WWW:LINK',
+                    function: 'legend',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS/MapServer/legend',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS/MapServer/legend',
+                    },
+                    nameObject: {
+                      default: 'Légende du Plan de secteur',
+                      langfre: 'Légende du Plan de secteur',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Légende associée au plan de secteur (sur base du service de visualisation)',
+                      langfre:
+                        'Légende associée au plan de secteur (sur base du service de visualisation)',
+                    },
+                    applicationProfile: '',
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=PDS',
+                      langfre:
+                        'https://geoapps.wallonie.be/webgisdgo4/#VIEWER=PDS',
+                    },
+                    nameObject: {
+                      default:
+                        'Application de consultation des données de la DGO4 - Plan de secteur',
+                      langfre:
+                        'Application de consultation des données de la DGO4 - Plan de secteur',
+                    },
+                    descriptionObject: {
+                      default:
+                        "Application dédiée à la consultation des couches de données relatives au Plan de secteur. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                      langfre:
+                        "Application dédiée à la consultation des couches de données relatives au Plan de secteur. Cette application constitue un thème de l'application de consultation des données de la DGO4.",
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FPDS%2FMapServer%22%2C%22label%22%3A%22Plan%20de%20secteur%20en%20vigueur%20%28version%20coordonn%C3%A9e%20vectorielle%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F7fe2f305-1302-4297-b67e-792f55acd834%22%7D%5D',
+                      langfre:
+                        'https://geoportail.wallonie.be/walonmap#PANIER=%5B%7B%22serviceId%22%3A%221%22%2C%22visible%22%3Atrue%2C%22url%22%3A%22https%3A%2F%2Fgeoservices.wallonie.be%2Farcgis%2Frest%2Fservices%2FAMENAGEMENT_TERRITOIRE%2FPDS%2FMapServer%22%2C%22label%22%3A%22Plan%20de%20secteur%20en%20vigueur%20%28version%20coordonn%C3%A9e%20vectorielle%29%22%2C%22type%22%3A%22AGS_DYNAMIC%22%2C%22metadataUrl%22%3A%22https%3A%2F%2Fgeodata.wallonie.be%2Fdoc%2F7fe2f305-1302-4297-b67e-792f55acd834%22%7D%5D',
+                    },
+                    nameObject: {
+                      default:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                      langfre:
+                        'Application WalOnMap - Toute la Wallonie à la carte',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                      langfre:
+                        'Application cartographique du Geoportail (WalOnMap) qui permet de découvrir les données géographiques de la Wallonie.',
+                    },
+                    function: 'browsing',
+                    applicationProfile: 'WalOnMap',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'ESRI:REST',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS/MapServer',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/rest/services/AMENAGEMENT_TERRITOIRE/PDS/MapServer',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation ESRI-REST',
+                      langfre: 'Service de visualisation ESRI-REST',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Ce service ESRI-REST permet de visualiser la série de couches de données "Plan de secteur"',
+                      langfre:
+                        'Ce service ESRI-REST permet de visualiser la série de couches de données "Plan de secteur"',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'OGC:WMS',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/PDS/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                      langfre:
+                        'https://geoservices.wallonie.be/arcgis/services/AMENAGEMENT_TERRITOIRE/PDS/MapServer/WMSServer?request=GetCapabilities&service=WMS',
+                    },
+                    nameObject: {
+                      default: 'Service de visualisation WMS',
+                      langfre: 'Service de visualisation WMS',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Ce service WMS permet de visualiser la série de couches de données "Plan de secteur"',
+                      langfre:
+                        'Ce service WMS permet de visualiser la série de couches de données "Plan de secteur"',
+                    },
+                    function: 'browsing',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=modif_ps',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_thema/index.php?thema=modif_ps',
+                    },
+                    nameObject: {
+                      default: 'Base de données du Plan de secteur',
+                      langfre: 'Base de données du Plan de secteur',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Site permettant la recherche de Plans de secteur et des modifications dans la base de données',
+                      langfre:
+                        'Site permettant la recherche de Plans de secteur et des modifications dans la base de données',
+                    },
+                    function: 'search',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                      langfre:
+                        'https://lampspw.wallonie.be/dgo4/site_thema/index.php/synthese',
+                    },
+                    nameObject: {
+                      default:
+                        'Inventaire des données géographiques de la DGO4',
+                      langfre:
+                        'Inventaire des données géographiques de la DGO4',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                      langfre:
+                        'Inventaire des données géographiques produites ou exploitées à la DGO4.',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:LINK',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'http://spw.wallonie.be/dgo4/site_amenagement/site/directions/dar',
+                      langfre:
+                        'http://spw.wallonie.be/dgo4/site_amenagement/site/directions/dar',
+                    },
+                    nameObject: {
+                      default: "La Direction de l'Aménagement Régional",
+                      langfre: "La Direction de l'Aménagement Régional",
+                    },
+                    descriptionObject: {
+                      default:
+                        "Site de la Direction de l'Aménagement Régional (DAR)",
+                      langfre:
+                        "Site de la Direction de l'Aménagement Régional (DAR)",
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                  {
+                    protocol: 'WWW:DOWNLOAD-1.0-http--download',
+                    mimeType: '',
+                    urlObject: {
+                      default:
+                        'https://geoservices.wallonie.be/geotraitement/spwdatadownload/get/7fe2f305-1302-4297-b67e-792f55acd834/PDS_SHAPE_31370.zip',
+                      langfre:
+                        'https://geoservices.wallonie.be/geotraitement/spwdatadownload/get/7fe2f305-1302-4297-b67e-792f55acd834/PDS_SHAPE_31370.zip',
+                    },
+                    nameObject: {
+                      default: 'Plan de Secteur au format SHP',
+                      langfre: 'Plan de Secteur au format SHP',
+                    },
+                    descriptionObject: {
+                      default:
+                        'Dossier compressé contenant le jeu de données du Plan de Secteur au format shapefile en coordonnées Lambert 72',
+                      langfre:
+                        'Dossier compressé contenant le jeu de données du Plan de Secteur au format shapefile en coordonnées Lambert 72',
+                    },
+                    function: 'information',
+                    applicationProfile: '',
+                    group: 0,
+                  },
+                ],
+                format: [
+                  'ESRI Shapefile (.shp)',
+                  'ESRI File Geodatabase (.fgdb)',
+                ],
+                uuid: '7fe2f305-1302-4297-b67e-792f55acd834',
+                id: '1504',
+                groupOwner: '4',
+                op0: ['25', '1', '4', '14684', '0', '14688'],
+                op2: ['25', '1', '4'],
+                op1: ['25', '1', '4', '0', '14688'],
+                op3: ['25', '1', '4', '0', '14688'],
+                op6: ['25', '1', '4'],
+                op5: ['25', '1', '4', '0', '14688'],
+                edit: true,
+                canReview: false,
+                owner: false,
+                isPublishedToAll: true,
+                view: true,
+                notify: true,
+                download: true,
+                dynamic: true,
+                featured: true,
+              },
+              _id: '7fe2f305-1302-4297-b67e-792f55acd834',
+            },
+          ],
+          associated: [],
+        },
+      },
+      {
+        _index: 'gn-records',
+        _type: '_doc',
+        _id: '7eb795c2-d612-4b5e-b15e-d985b0f4e697',
+        _score: 1.0,
+        _ignored: [
+          'resourceAbstractObject.default.keyword',
+          'resourceAbstractObject.langfre.keyword',
+          'resourceAbstractObject.default.sort',
+        ],
+        _source: {
+          contactForResource: [
+            {
+              website: '',
+              role: 'author',
+              address: '',
+              individual: '',
+              phone: '',
+              logo: '',
+              position: '',
+              organisationObject: {
+                default: 'Réseau Ongulés sauvages OFB-FNC-FDC',
+                langfre: 'Réseau Ongulés sauvages OFB-FNC-FDC',
+              },
+              email: 'reseau.ongules-sauvages@ofb.gouv.fr',
+            },
+            {
+              website: '',
+              role: 'owner',
+              address: '',
+              individual: '',
+              phone: '',
+              logo: '',
+              position: '',
+              organisationObject: {
+                default: 'Office France de la Biodiversité',
+                langfre: 'Office France de la Biodiversité',
+              },
+              email: 'reseau.ongules-sauvages@ofb.gouv.fr',
+            },
+            {
+              website: '',
+              role: 'owner',
+              address: '',
+              individual: '',
+              phone: '',
+              logo: '',
+              position: '',
+              organisationObject: {
+                default: 'Fédération Nationale de la Chasse',
+                langfre: 'Fédération Nationale de la Chasse',
+              },
+              email: '',
+            },
+            {
+              website: '',
+              role: 'resourceProvider',
+              address: '',
+              individual: '',
+              phone: '',
+              logo: '',
+              position: '',
+              organisationObject: {
+                default: 'Fédération Départementale de la Chasse',
+                langfre: 'Fédération Départementale de la Chasse',
+              },
+              email: '',
+            },
+          ],
+          geom: {
+            coordinates: [
+              [
+                [-7.3131, 40.4671],
+                [11.9303, 40.4671],
+                [11.9303, 51.7141],
+                [-7.3131, 51.7141],
+                [-7.3131, 40.4671],
+              ],
+            ],
+            type: 'Polygon',
+          },
+          resourceProviderOrgForResourceObject: {
+            default: 'Fédération Départementale de la Chasse',
+            langfre: 'Fédération Départementale de la Chasse',
+          },
+          inspireTheme: ['species distribution', 'administrative units'],
+          isPublishedToAll: 'true',
+          'th_excel2skos-case-usage-thematique-2023-06-08Number': '2',
+          record: 'record',
+          draft: 'n',
+          id: '19436',
+          metadataIdentifier: '7eb795c2-d612-4b5e-b15e-d985b0f4e697',
+          recordLink: [
+            {
+              origin: 'remote',
+              to: '67c60362-0461-4574-8975-f4e7cfa64d20',
+              type: 'sources',
+              title:
+                'Répartition des ongulés sauvages en France (données depuis 1980)',
+              url: 'https://data.ofb.fr/catalogue/Donnees-geographiques-OFB/fre/csw?service=CSW&request=GetRecordById&version=2.0.2&outputSchema=http://www.isotc211.org/2005/gmd&elementSetName=full&id=67c60362-0461-4574-8975-f4e7cfa64d20',
+            },
+          ],
+          linkUrlProtocolWWWLINK10httplink: [
+            'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=reseau_cerf_lizmap',
+            'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_MOM',
+            'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_MOC',
+            'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_ISA',
+            'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_CHA',
+            'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_BOQ',
+            'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_BOI',
+          ],
+          hasInspireTheme: 'true',
+          hassource: '67c60362-0461-4574-8975-f4e7cfa64d20',
+          inspireThemeNumber: '2',
+          hasxlinks: 'true',
+          tagNumber: '10',
+          featureOfRecord: 'record',
+          isPublishedToGuest: 'false',
+          dateStamp: '2024-09-26T13:34:25.803Z',
+          creationYearForResource: '2024',
+          th_gemet: [
+            {
+              default: 'espèce animale',
+              link: 'http://www.eionet.europa.eu/gemet/concept/10073',
+              langfre: 'espèce animale',
+            },
+            {
+              default: 'chasse',
+              link: 'http://www.eionet.europa.eu/gemet/concept/4072',
+              langfre: 'chasse',
+            },
+          ],
+          ownerOrgForResourceObject: [
+            {
+              default: 'Office France de la Biodiversité',
+              langfre: 'Office France de la Biodiversité',
+            },
+            {
+              default: 'Fédération Nationale de la Chasse',
+              langfre: 'Fédération Nationale de la Chasse',
+            },
+          ],
+          isTemplate: 'n',
+          creationMonthForResource: '2024-05',
+          'th_httpinspireeceuropaeutheme-themeNumber': '2',
+          OrgForResourceObject: [
+            {
+              default: 'Réseau Ongulés sauvages OFB-FNC-FDC',
+              langfre: 'Réseau Ongulés sauvages OFB-FNC-FDC',
+            },
+            {
+              default: 'Office France de la Biodiversité',
+              langfre: 'Office France de la Biodiversité',
+            },
+            {
+              default: 'Fédération Nationale de la Chasse',
+              langfre: 'Fédération Nationale de la Chasse',
+            },
+            {
+              default: 'Fédération Départementale de la Chasse',
+              langfre: 'Fédération Départementale de la Chasse',
+            },
+          ],
+          recordOwner: 'Vincent Fabry',
+          document: '',
+          resourceTemporalDateRange: [
+            {
+              gte: '2024-05-27T00:00:00.000Z',
+              lte: '2024-05-27T00:00:00.000Z',
+            },
+          ],
+          OrgObject: {
+            default: 'Office français de la biodiversité',
+            langfre: 'Office français de la biodiversité',
+          },
+          mainLanguage: 'fre',
+          'th_excel2skos-case-usage-geographie-2023-11-24': [
+            {
+              default: 'France métropolitaine',
+              langfre: 'France métropolitaine',
+            },
+          ],
+          valid: '-1',
+          groupPublishedId: '1',
+          popularity: 9,
+          qualityScore: 62,
+          'th_httpinspireeceuropaeutheme-theme': [
+            {
+              default: 'Répartition des espèces',
+              link: 'http://inspire.ec.europa.eu/theme/sd',
+              langfre: 'Répartition des espèces',
+            },
+            {
+              default: 'Unités administratives',
+              link: 'http://inspire.ec.europa.eu/theme/au',
+              langfre: 'Unités administratives',
+            },
+          ],
+          createDate: '2024-09-13T10:12:38.614Z',
+          docType: 'metadata',
+          creationDateForResource: ['2024-05-27T00:00:00.000Z'],
+          th_gemetNumber: '2',
+          resourceType: ['interactiveMap'],
+          linkProtocol: [
+            'WWW:LINK-1.0-http--link',
+            'WWW:LINK-1.0-http--link',
+            'WWW:LINK-1.0-http--link',
+            'WWW:LINK-1.0-http--link',
+            'WWW:LINK-1.0-http--link',
+            'WWW:LINK-1.0-http--link',
+            'WWW:LINK-1.0-http--link',
+          ],
+          inspireAnnex: ['iii', 'i'],
+          rating: '0',
+          inspireThemeUri: [
+            'http://inspire.ec.europa.eu/theme/sd',
+            'http://inspire.ec.europa.eu/theme/au',
+          ],
+          uuid: '7eb795c2-d612-4b5e-b15e-d985b0f4e697',
+          resourceLanguage: ['fre'],
+          cl_type: [
+            {
+              default: 'Thème',
+              link: 'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode',
+              key: 'theme',
+              langfre: 'Thème',
+            },
+          ],
+          contact: [
+            {
+              website: '',
+              role: 'pointOfContact',
+              address: '',
+              individual: '',
+              phone: '',
+              logo: '',
+              position: '',
+              organisationObject: {
+                default: 'Office français de la biodiversité',
+                langfre: 'Office français de la biodiversité',
+              },
+              email: 'cartotheque@ofb.gouv.fr',
+            },
+          ],
+          linkUrl: [
+            'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=reseau_cerf_lizmap',
+            'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_MOM',
+            'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_MOC',
+            'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_ISA',
+            'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_CHA',
+            'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_BOQ',
+            'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_BOI',
+          ],
+          changeDate: '2024-09-26T13:34:25.803Z',
+          logo: '/images/logos/c3f93209-4363-4e30-bec2-3cc43bd7a8a7.png',
+          tag: [
+            {
+              default: 'Tableaux de chasse',
+              langfre: 'Tableaux de chasse',
+            },
+            {
+              default: 'Ongulés',
+              langfre: 'Ongulés',
+            },
+            {
+              default: 'Départements',
+              langfre: 'Départements',
+            },
+            {
+              default: 'Répartition des espèces',
+              langfre: 'Répartition des espèces',
+              key: 'http://inspire.ec.europa.eu/theme/sd',
+            },
+            {
+              default: 'Unités administratives',
+              langfre: 'Unités administratives',
+              key: 'http://inspire.ec.europa.eu/theme/au',
+            },
+            {
+              default: 'espèce animale',
+              langfre: 'espèce animale',
+              key: 'http://www.eionet.europa.eu/gemet/concept/10073',
+            },
+            {
+              default: 'chasse',
+              langfre: 'chasse',
+              key: 'http://www.eionet.europa.eu/gemet/concept/4072',
+            },
+            {
+              default: 'France métropolitaine',
+              langfre: 'France métropolitaine',
+            },
+            {
+              default: 'réseaux',
+              langfre: 'réseaux',
+            },
+            {
+              default: 'espèces',
+              langfre: 'espèces',
+            },
+          ],
+          indexingError: 'true',
+          recordGroup: '7eb795c2-d612-4b5e-b15e-d985b0f4e697',
+          isPublishedToIntranet: 'false',
+          inspireTheme_syn: [
+            'Répartition des espèces',
+            'Unités administratives',
+          ],
+          th_gemet_tree: {
+            default: [
+              'aspects sociaux, population',
+              'aspects sociaux, population^loisirs',
+              'aspects sociaux, population^loisirs^chasse',
+              'aspects sociaux, population^récréation',
+              'aspects sociaux, population^récréation^loisirs',
+              'aspects sociaux, population^récréation^loisirs^chasse',
+              'biologie',
+              'biologie^biosphère',
+              'biologie^biosphère^écologie',
+              'biologie^biosphère^écologie^paramètre écologique',
+              'biologie^biosphère^écologie^paramètre écologique^espèce',
+              'biologie^biosphère^écologie^paramètre écologique^espèce^espèce animale',
+              'biologie^espèce',
+              'biologie^espèce animale',
+              'biologie^espèce^espèce animale',
+              'biologie^paramètre écologique',
+              'biologie^paramètre écologique^espèce',
+              'biologie^paramètre écologique^espèce^espèce animale',
+              'biologie^sciences de la vie',
+              'biologie^sciences de la vie^écologie',
+              'biologie^sciences de la vie^écologie^paramètre écologique',
+              'biologie^sciences de la vie^écologie^paramètre écologique^espèce',
+              'biologie^sciences de la vie^écologie^paramètre écologique^espèce^espèce animale',
+              'biologie^écologie',
+              'biologie^écologie^paramètre écologique',
+              'biologie^écologie^paramètre écologique^espèce',
+              'biologie^écologie^paramètre écologique^espèce^espèce animale',
+              'recherche',
+              'recherche^paramètre écologique',
+              'recherche^paramètre écologique^espèce',
+              'recherche^paramètre écologique^espèce^espèce animale',
+              'recherche^science',
+              'recherche^science^sciences naturelles',
+              'recherche^science^sciences naturelles^sciences de la vie',
+              'recherche^science^sciences naturelles^sciences de la vie^écologie',
+              'recherche^science^sciences naturelles^sciences de la vie^écologie^paramètre écologique',
+              'recherche^science^sciences naturelles^sciences de la vie^écologie^paramètre écologique^espèce',
+              'recherche^science^sciences naturelles^sciences de la vie^écologie^paramètre écologique^espèce^espèce animale',
+              'recherche^sciences de la vie',
+              'recherche^sciences de la vie^écologie',
+              'recherche^sciences de la vie^écologie^paramètre écologique',
+              'recherche^sciences de la vie^écologie^paramètre écologique^espèce',
+              'recherche^sciences de la vie^écologie^paramètre écologique^espèce^espèce animale',
+              'recherche^sciences naturelles',
+              'recherche^sciences naturelles^sciences de la vie',
+              'recherche^sciences naturelles^sciences de la vie^écologie',
+              'recherche^sciences naturelles^sciences de la vie^écologie^paramètre écologique',
+              'recherche^sciences naturelles^sciences de la vie^écologie^paramètre écologique^espèce',
+              'recherche^sciences naturelles^sciences de la vie^écologie^paramètre écologique^espèce^espèce animale',
+              'recherche^écologie',
+              'recherche^écologie^paramètre écologique',
+              'recherche^écologie^paramètre écologique^espèce',
+              'recherche^écologie^paramètre écologique^espèce^espèce animale',
+              'santé humaine',
+              'santé humaine^récréation',
+              'santé humaine^récréation^loisirs',
+              'santé humaine^récréation^loisirs^chasse',
+              'sylviculture',
+              'sylviculture^chasse',
+              'tourisme',
+              'tourisme^chasse',
+              'tourisme^loisirs',
+              'tourisme^loisirs^chasse',
+              'tourisme^récréation',
+              'tourisme^récréation^loisirs',
+              'tourisme^récréation^loisirs^chasse',
+              'zones naturelles, paysages, écosystèmes',
+              'zones naturelles, paysages, écosystèmes^paramètre écologique',
+              'zones naturelles, paysages, écosystèmes^paramètre écologique^espèce',
+              'zones naturelles, paysages, écosystèmes^paramètre écologique^espèce^espèce animale',
+            ],
+            key: [
+              'http://www.eionet.europa.eu/gemet/theme/14',
+              'http://www.eionet.europa.eu/gemet/theme/14^http://www.eionet.europa.eu/gemet/concept/4072',
+              'http://www.eionet.europa.eu/gemet/theme/17',
+              'http://www.eionet.europa.eu/gemet/theme/17^http://www.eionet.europa.eu/gemet/concept/7001',
+              'http://www.eionet.europa.eu/gemet/theme/17^http://www.eionet.europa.eu/gemet/concept/7001^http://www.eionet.europa.eu/gemet/concept/4767',
+              'http://www.eionet.europa.eu/gemet/theme/17^http://www.eionet.europa.eu/gemet/concept/7001^http://www.eionet.europa.eu/gemet/concept/4767^http://www.eionet.europa.eu/gemet/concept/4072',
+              'http://www.eionet.europa.eu/gemet/theme/23',
+              'http://www.eionet.europa.eu/gemet/theme/23^http://www.eionet.europa.eu/gemet/concept/2457',
+              'http://www.eionet.europa.eu/gemet/theme/23^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982',
+              'http://www.eionet.europa.eu/gemet/theme/23^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982^http://www.eionet.europa.eu/gemet/concept/10073',
+              'http://www.eionet.europa.eu/gemet/theme/29',
+              'http://www.eionet.europa.eu/gemet/theme/29^http://www.eionet.europa.eu/gemet/concept/4072',
+              'http://www.eionet.europa.eu/gemet/theme/29^http://www.eionet.europa.eu/gemet/concept/4767',
+              'http://www.eionet.europa.eu/gemet/theme/29^http://www.eionet.europa.eu/gemet/concept/4767^http://www.eionet.europa.eu/gemet/concept/4072',
+              'http://www.eionet.europa.eu/gemet/theme/29^http://www.eionet.europa.eu/gemet/concept/7001',
+              'http://www.eionet.europa.eu/gemet/theme/29^http://www.eionet.europa.eu/gemet/concept/7001^http://www.eionet.europa.eu/gemet/concept/4767',
+              'http://www.eionet.europa.eu/gemet/theme/29^http://www.eionet.europa.eu/gemet/concept/7001^http://www.eionet.europa.eu/gemet/concept/4767^http://www.eionet.europa.eu/gemet/concept/4072',
+              'http://www.eionet.europa.eu/gemet/theme/30',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/2457',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982^http://www.eionet.europa.eu/gemet/concept/10073',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/2470',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982^http://www.eionet.europa.eu/gemet/concept/10073',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/4805',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/4805^http://www.eionet.europa.eu/gemet/concept/2470',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/4805^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/4805^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/4805^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982^http://www.eionet.europa.eu/gemet/concept/10073',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/5524',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/5524^http://www.eionet.europa.eu/gemet/concept/4805',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/5524^http://www.eionet.europa.eu/gemet/concept/4805^http://www.eionet.europa.eu/gemet/concept/2470',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/5524^http://www.eionet.europa.eu/gemet/concept/4805^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/5524^http://www.eionet.europa.eu/gemet/concept/4805^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/5524^http://www.eionet.europa.eu/gemet/concept/4805^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982^http://www.eionet.europa.eu/gemet/concept/10073',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/7472',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/7472^http://www.eionet.europa.eu/gemet/concept/5524',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/7472^http://www.eionet.europa.eu/gemet/concept/5524^http://www.eionet.europa.eu/gemet/concept/4805',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/7472^http://www.eionet.europa.eu/gemet/concept/5524^http://www.eionet.europa.eu/gemet/concept/4805^http://www.eionet.europa.eu/gemet/concept/2470',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/7472^http://www.eionet.europa.eu/gemet/concept/5524^http://www.eionet.europa.eu/gemet/concept/4805^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/7472^http://www.eionet.europa.eu/gemet/concept/5524^http://www.eionet.europa.eu/gemet/concept/4805^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982',
+              'http://www.eionet.europa.eu/gemet/theme/30^http://www.eionet.europa.eu/gemet/concept/7472^http://www.eionet.europa.eu/gemet/concept/5524^http://www.eionet.europa.eu/gemet/concept/4805^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982^http://www.eionet.europa.eu/gemet/concept/10073',
+              'http://www.eionet.europa.eu/gemet/theme/34',
+              'http://www.eionet.europa.eu/gemet/theme/34^http://www.eionet.europa.eu/gemet/concept/4767',
+              'http://www.eionet.europa.eu/gemet/theme/34^http://www.eionet.europa.eu/gemet/concept/4767^http://www.eionet.europa.eu/gemet/concept/4072',
+              'http://www.eionet.europa.eu/gemet/theme/34^http://www.eionet.europa.eu/gemet/concept/7001',
+              'http://www.eionet.europa.eu/gemet/theme/34^http://www.eionet.europa.eu/gemet/concept/7001^http://www.eionet.europa.eu/gemet/concept/4767',
+              'http://www.eionet.europa.eu/gemet/theme/34^http://www.eionet.europa.eu/gemet/concept/7001^http://www.eionet.europa.eu/gemet/concept/4767^http://www.eionet.europa.eu/gemet/concept/4072',
+              'http://www.eionet.europa.eu/gemet/theme/4',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/10073',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/2457',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982^http://www.eionet.europa.eu/gemet/concept/10073',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/2470',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982^http://www.eionet.europa.eu/gemet/concept/10073',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/4805',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/4805^http://www.eionet.europa.eu/gemet/concept/2470',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/4805^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/4805^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/4805^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982^http://www.eionet.europa.eu/gemet/concept/10073',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/7982',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/7982^http://www.eionet.europa.eu/gemet/concept/10073',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/892',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/892^http://www.eionet.europa.eu/gemet/concept/2470',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/892^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/892^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982',
+              'http://www.eionet.europa.eu/gemet/theme/4^http://www.eionet.europa.eu/gemet/concept/892^http://www.eionet.europa.eu/gemet/concept/2470^http://www.eionet.europa.eu/gemet/concept/2457^http://www.eionet.europa.eu/gemet/concept/7982^http://www.eionet.europa.eu/gemet/concept/10073',
+            ],
+          },
+          'th_excel2skos-case-usage-geographie-2023-11-24Number': '1',
+          documentStandard: 'iso19139',
+          resourceAbstractObject: {
+            default:
+              "----------------------------\nContexte & objectifs\n----------------------------\n\nDans le cadre de ses missions, l’OFB (anciennement l’ONC puis l’ONCFS) réalise le suivi des populations de grands ongulés sauvages en France métropolitaine. \nPour réaliser cette tâche complexe un réseau de correspondants départementaux, l’actuel réseau « Ongulés sauvages OFB-FNC-FDC » a été créée en 1985, et fonctionne grâce à la collaboration entre l’OFB et les fédérations nationale (FNC) et départementales des chasseurs (FDC). \n\nLes données ont été compilées à partir des données fournies par les Interlocuteurs techniques des FDC du Réseau Ongulés sauvages OFB-FNC-FDC pour toutes les espèces d'ongulés sauvages présentes en France métropolitaine.\n\n----------------------------\nLes espèces concernées\n----------------------------\n\nLes espèces concernées sont les suivantes : \nBouquetin des Alpes (Capra ibex)\nBouquetin ibérique (Capra pyrenaica)\nCerf élaphe (Cervus elaphus)\nCerf sika (Cervus nippon)\nChamois (Rupicapra rupicapra)\nDaim (Dama dama)\nIsard (Rupicapra pyrenaica)\nMouflon de Corse (Ovis gmelinii musimon)\nMouflon méditerranéen (Ovis gmelini musimon x Ovis sp.)\nMuntjac de Chine (Muntiacus reevesi)\net le Mouflon à manchettes (Ammotragus lervia).\n\n----------------------------\nProtocole et limites d'utilisations \n----------------------------\nLa méthode se basant sur des connaissances locales de la présence de populations établies par des professionnels connaissant bien leur territoire, la notion d’échantillonnage qualifiée d’\"exhaustif\" est crédible.\nLe travail est réalisé par unité de population, c’est-à-dire par secteur occupé par au minimum un groupe d’individus adultes susceptibles de se rencontrer et d’établir entre eux des rapports sociaux et génétiques (reproduction). Il peut donc exister des individus isolés présents en dehors des zones délimitées par ce programme.\nPour des raisons administratives l’inventaire est fait par département. Ainsi pour une population à cheval sur plusieurs départements chaque portion départementale constitue une zone. Un département peut abriter plusieurs zones. \nLes données sont vérifiées, harmonisées et validées par l’administrateur(rice) national(e) du réseau tous les 5 ans (avec un rythme différents selon les espèces).\n\n----------------------------\nFréquence de mise à jour\n----------------------------\n\npériodique \n\n----------------------------\nOutils\n----------------------------\n\nLes données de chacune de ces espèces sont consultables sur la carte interactive de l'espèce. créées à partir de l'outil Lizmap.",
+            langfre:
+              "----------------------------\nContexte & objectifs\n----------------------------\n\nDans le cadre de ses missions, l’OFB (anciennement l’ONC puis l’ONCFS) réalise le suivi des populations de grands ongulés sauvages en France métropolitaine. \nPour réaliser cette tâche complexe un réseau de correspondants départementaux, l’actuel réseau « Ongulés sauvages OFB-FNC-FDC » a été créée en 1985, et fonctionne grâce à la collaboration entre l’OFB et les fédérations nationale (FNC) et départementales des chasseurs (FDC). \n\nLes données ont été compilées à partir des données fournies par les Interlocuteurs techniques des FDC du Réseau Ongulés sauvages OFB-FNC-FDC pour toutes les espèces d'ongulés sauvages présentes en France métropolitaine.\n\n----------------------------\nLes espèces concernées\n----------------------------\n\nLes espèces concernées sont les suivantes : \nBouquetin des Alpes (Capra ibex)\nBouquetin ibérique (Capra pyrenaica)\nCerf élaphe (Cervus elaphus)\nCerf sika (Cervus nippon)\nChamois (Rupicapra rupicapra)\nDaim (Dama dama)\nIsard (Rupicapra pyrenaica)\nMouflon de Corse (Ovis gmelinii musimon)\nMouflon méditerranéen (Ovis gmelini musimon x Ovis sp.)\nMuntjac de Chine (Muntiacus reevesi)\net le Mouflon à manchettes (Ammotragus lervia).\n\n----------------------------\nProtocole et limites d'utilisations \n----------------------------\nLa méthode se basant sur des connaissances locales de la présence de populations établies par des professionnels connaissant bien leur territoire, la notion d’échantillonnage qualifiée d’\"exhaustif\" est crédible.\nLe travail est réalisé par unité de population, c’est-à-dire par secteur occupé par au minimum un groupe d’individus adultes susceptibles de se rencontrer et d’établir entre eux des rapports sociaux et génétiques (reproduction). Il peut donc exister des individus isolés présents en dehors des zones délimitées par ce programme.\nPour des raisons administratives l’inventaire est fait par département. Ainsi pour une population à cheval sur plusieurs départements chaque portion départementale constitue une zone. Un département peut abriter plusieurs zones. \nLes données sont vérifiées, harmonisées et validées par l’administrateur(rice) national(e) du réseau tous les 5 ans (avec un rythme différents selon les espèces).\n\n----------------------------\nFréquence de mise à jour\n----------------------------\n\npériodique \n\n----------------------------\nOutils\n----------------------------\n\nLes données de chacune de ces espèces sont consultables sur la carte interactive de l'espèce. créées à partir de l'outil Lizmap.",
+          },
+          feedbackCount: '0',
+          isHarvested: 'true',
+          xlink: [
+            'https://data.ofb.fr/catalogue/srv/api/registries/vocabularies/external.theme.excel2skos-case-usage-thematique-2023-06-08',
+            'https://data.ofb.fr/catalogue/srv/api/registries/vocabularies/external.theme.excel2skos-case-usage-geographie-2023-11-24',
+            'https://data.ofb.fr/catalogue/srv/api/registries/vocabularies/external.theme.gemet',
+            'https://data.ofb.fr/catalogue/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme',
+            'https://data.ofb.fr/catalogue/Donnees-geographiques-OFB/fre/csw?service=CSW&request=GetRecordById&version=2.0.2&outputSchema=http://www.isotc211.org/2005/gmd&elementSetName=full&id=67c60362-0461-4574-8975-f4e7cfa64d20',
+          ],
+          inspireThemeFirst_syn: 'Répartition des espèces',
+          isOpenData: 'false',
+          'th_otherKeywords-theme': [
+            {
+              default: 'Tableaux de chasse',
+              langfre: 'Tableaux de chasse',
+            },
+            {
+              default: 'Ongulés',
+              langfre: 'Ongulés',
+            },
+            {
+              default: 'Départements',
+              langfre: 'Départements',
+            },
+          ],
+          link: [
+            {
+              protocol: 'WWW:LINK-1.0-http--link',
+              function: '',
+              applicationProfile: '',
+              mimeType: '',
+              urlObject: {
+                default:
+                  'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=reseau_cerf_lizmap',
+              },
+              nameObject: {
+                default: 'Carte dynamique de répartition du Cerf élaphe',
+                langfre: 'Carte dynamique de répartition du Cerf élaphe',
+              },
+              group: 0,
+            },
+            {
+              protocol: 'WWW:LINK-1.0-http--link',
+              function: '',
+              applicationProfile: '',
+              mimeType: '',
+              urlObject: {
+                default:
+                  'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_MOM',
+              },
+              nameObject: {
+                default:
+                  'Carte dynamique de répartition du Mouflon méditerranéen',
+                langfre:
+                  'Carte dynamique de répartition du Mouflon méditerranéen',
+              },
+              group: 0,
+            },
+            {
+              protocol: 'WWW:LINK-1.0-http--link',
+              function: '',
+              applicationProfile: '',
+              mimeType: '',
+              urlObject: {
+                default:
+                  'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_MOC',
+              },
+              nameObject: {
+                default: 'Carte dynamique de répartition du Mouflon de Corse',
+                langfre: 'Carte dynamique de répartition du Mouflon de Corse',
+              },
+              group: 0,
+            },
+            {
+              protocol: 'WWW:LINK-1.0-http--link',
+              function: '',
+              applicationProfile: '',
+              mimeType: '',
+              urlObject: {
+                default:
+                  'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_ISA',
+              },
+              nameObject: {
+                default: "Carte dynamique de répartition de l'ISARD",
+                langfre: "Carte dynamique de répartition de l'ISARD",
+              },
+              group: 0,
+            },
+            {
+              protocol: 'WWW:LINK-1.0-http--link',
+              function: '',
+              applicationProfile: '',
+              mimeType: '',
+              urlObject: {
+                default:
+                  'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_CHA',
+              },
+              nameObject: {
+                default: 'Carte dynamique de répartition du Chamois',
+                langfre: 'Carte dynamique de répartition du Chamois',
+              },
+              group: 0,
+            },
+            {
+              protocol: 'WWW:LINK-1.0-http--link',
+              function: '',
+              applicationProfile: '',
+              mimeType: '',
+              urlObject: {
+                default:
+                  'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_BOQ',
+              },
+              nameObject: {
+                default:
+                  'Carte dynamique de répartition du Bouquetin des Alpes',
+                langfre:
+                  'Carte dynamique de répartition du Bouquetin des Alpes',
+              },
+              group: 0,
+            },
+            {
+              protocol: 'WWW:LINK-1.0-http--link',
+              function: '',
+              applicationProfile: '',
+              mimeType: '',
+              urlObject: {
+                default:
+                  'https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_BOI',
+              },
+              nameObject: {
+                default: 'Carte dynamique de répartition du Bouquetin ibérique',
+                langfre: 'Carte dynamique de répartition du Bouquetin ibérique',
+              },
+              group: 0,
+            },
+          ],
+          displayOrder: '0',
+          cl_hierarchyLevel: [
+            {
+              default: 'Carte interactive',
+              link: 'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode',
+              key: 'interactiveMap',
+              langfre: 'Carte interactive',
+            },
+          ],
+          inspireThemeFirst: 'species distribution',
+          harvesterUuid: 'c3f93209-4363-4e30-bec2-3cc43bd7a8a7',
+          indexingDate: '2025-01-22T15:31:09.881Z',
+          resourceDate: [
+            {
+              date: '2024-05-27T00:00:00.000Z',
+              type: 'creation',
+            },
+          ],
+          sourceCatalogue: 'c3f93209-4363-4e30-bec2-3cc43bd7a8a7',
+          groupPublished: 'all',
+          extra: 'null',
+          hasOverview: 'true',
+          userinfo: 'vfabry|Fabry|Vincent|Administrator',
+          'th_excel2skos-case-usage-thematique-2023-06-08': [
+            {
+              default: 'réseaux',
+              langfre: 'réseaux',
+            },
+            {
+              default: 'espèces',
+              langfre: 'espèces',
+            },
+          ],
+          allKeywords: {
+            th_gemet: {
+              keywords: [
+                {
+                  default: 'espèce animale',
+                  link: 'http://www.eionet.europa.eu/gemet/concept/10073',
+                  langfre: 'espèce animale',
+                },
+                {
+                  default: 'chasse',
+                  link: 'http://www.eionet.europa.eu/gemet/concept/4072',
+                  langfre: 'chasse',
+                },
+              ],
+              link: 'https://data.ofb.fr/catalogue/srv/api/registries/vocabularies/external.theme.gemet',
+              theme: 'theme',
+              id: 'geonetwork.thesaurus.external.theme.gemet',
+              title: 'GEMET',
+            },
+            'th_otherKeywords-theme': {
+              keywords: [
+                {
+                  default: 'Tableaux de chasse',
+                  langfre: 'Tableaux de chasse',
+                },
+                {
+                  default: 'Ongulés',
+                  langfre: 'Ongulés',
+                },
+                {
+                  default: 'Départements',
+                  langfre: 'Départements',
+                },
+              ],
+              theme: 'theme',
+              title: 'otherKeywords-theme',
+            },
+            'th_httpinspireeceuropaeutheme-theme': {
+              keywords: [
+                {
+                  default: 'Répartition des espèces',
+                  link: 'http://inspire.ec.europa.eu/theme/sd',
+                  langfre: 'Répartition des espèces',
+                },
+                {
+                  default: 'Unités administratives',
+                  link: 'http://inspire.ec.europa.eu/theme/au',
+                  langfre: 'Unités administratives',
+                },
+              ],
+              link: 'https://data.ofb.fr/catalogue/srv/api/registries/vocabularies/external.theme.httpinspireeceuropaeutheme-theme',
+              theme: 'theme',
+              id: 'geonetwork.thesaurus.external.theme.httpinspireeceuropaeutheme-theme',
+              title: 'GEMET - INSPIRE themes, version 1.0',
+            },
+            'th_excel2skos-case-usage-geographie-2023-11-24': {
+              keywords: [
+                {
+                  default: 'France métropolitaine',
+                  langfre: 'France métropolitaine',
+                },
+              ],
+              link: 'https://data.ofb.fr/catalogue/srv/api/registries/vocabularies/external.theme.excel2skos-case-usage-geographie-2023-11-24',
+              theme: 'theme',
+              id: 'geonetwork.thesaurus.external.theme.excel2skos-case-usage-geographie-2023-11-24',
+              title: 'Thesaurus géographique',
+            },
+            'th_excel2skos-case-usage-thematique-2023-06-08': {
+              keywords: [
+                {
+                  default: 'réseaux',
+                  langfre: 'réseaux',
+                },
+                {
+                  default: 'espèces',
+                  langfre: 'espèces',
+                },
+              ],
+              link: 'https://data.ofb.fr/catalogue/srv/api/registries/vocabularies/external.theme.excel2skos-case-usage-thematique-2023-06-08',
+              theme: 'theme',
+              id: 'geonetwork.thesaurus.external.theme.excel2skos-case-usage-thematique-2023-06-08',
+              title: 'Thématique OFB',
+            },
+          },
+          owner: '2161',
+          overview: [
+            {
+              url: 'https://data.ofb.fr/catalogue/Donnees-geographiques-OFB/api/records/7eb795c2-d612-4b5e-b15e-d985b0f4e697/attachments/OFB.png',
+            },
+          ],
+          indexingErrorMsg: [
+            'Warning / Keyword France métropolitaine not found in geonetwork.thesaurus.external.theme.excel2skos-case-usage-geographie-2023-11-24.',
+            'Warning / Keyword réseaux not found in geonetwork.thesaurus.external.theme.excel2skos-case-usage-thematique-2023-06-08.',
+            'Warning / Keyword espèces not found in geonetwork.thesaurus.external.theme.excel2skos-case-usage-thematique-2023-06-08.',
+          ],
+          groupOwner: '1855168',
+          pointOfContactOrgObject: {
+            default: 'Office français de la biodiversité',
+            langfre: 'Office français de la biodiversité',
+          },
+          resourceTitleObject: {
+            default:
+              'Carte dynamique sur la répartition des ongulés sauvages en France',
+            langfre:
+              'Carte dynamique sur la répartition des ongulés sauvages en France',
+          },
+          'th_otherKeywords-themeNumber': '3',
+          authorOrgForResourceObject: {
+            default: 'Réseau Ongulés sauvages OFB-FNC-FDC',
+            langfre: 'Réseau Ongulés sauvages OFB-FNC-FDC',
+          },
+          'th_httpinspireeceuropaeutheme-theme_tree': {
+            default: ['Répartition des espèces', 'Unités administratives'],
+            key: [
+              'http://inspire.ec.europa.eu/theme/au',
+              'http://inspire.ec.europa.eu/theme/sd',
+            ],
+          },
+          cl_presentationForm: [
+            {
+              default: 'Carte numérique',
+              link: 'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_PresentationFormCode',
+              key: 'mapDigital',
+              langfre: 'Carte numérique',
+            },
+          ],
+          location: '46.0906,2.3086',
+          'keywordType-theme': [
+            {
+              default: 'Tableaux de chasse',
+              langfre: 'Tableaux de chasse',
+            },
+            {
+              default: 'Ongulés',
+              langfre: 'Ongulés',
+            },
+            {
+              default: 'Départements',
+              langfre: 'Départements',
+            },
+            {
+              default: 'Répartition des espèces',
+              link: 'http://inspire.ec.europa.eu/theme/sd',
+              langfre: 'Répartition des espèces',
+            },
+            {
+              default: 'Unités administratives',
+              link: 'http://inspire.ec.europa.eu/theme/au',
+              langfre: 'Unités administratives',
+            },
+            {
+              default: 'espèce animale',
+              link: 'http://www.eionet.europa.eu/gemet/concept/10073',
+              langfre: 'espèce animale',
+            },
+            {
+              default: 'chasse',
+              link: 'http://www.eionet.europa.eu/gemet/concept/4072',
+              langfre: 'chasse',
+            },
+            {
+              default: 'France métropolitaine',
+              langfre: 'France métropolitaine',
+            },
+            {
+              default: 'réseaux',
+              langfre: 'réseaux',
+            },
+            {
+              default: 'espèces',
+              langfre: 'espèces',
+            },
+          ],
+          inspireAnnexForFirstTheme: 'iii',
+          userSavedCount: '0',
+        },
+        edit: false,
+        canReview: false,
+        owner: false,
+        isPublishedToAll: true,
+        view: true,
+        notify: false,
+        download: true,
+        dynamic: true,
+        featured: false,
+        selected: false,
+      },
+      {
+        _index: 'gn-records',
+        _type: '_doc',
+        _id: 'be209d24-586f-48f5-b944-e284079b7823',
+        _score: 6.543295,
+        _ignored: [
+          'resourceAbstractObject.default.keyword',
+          'resourceAbstractObject.langfre.keyword',
+          'resourceAbstractObject.langger.keyword',
+          'resourceAbstractObject.langeng.keyword',
+        ],
+        _source: {
+          docType: 'metadata',
+          document: '',
+          metadataIdentifier: 'be209d24-586f-48f5-b944-e284079b7823',
+          standardNameObject: {
+            default: 'ISO 19115:2003/19139',
+            langfre: 'ISO 19115:2003/19139',
+          },
+          standardVersionObject: {
+            default: '1.0',
+            langfre: '1.0',
+          },
+          resourceTypeNameObject: {
+            default: 'Parent',
+            langfre: 'Parent',
+          },
+          indexingDate: '2025-01-23T10:16:01.721Z',
+          dateStamp: '2024-01-25T07:44:42.137504Z',
+          mainLanguage: 'fre',
+          otherLanguage: ['ger', 'eng', 'fre'],
+          otherLanguageId: ['DE', 'EN', 'FR'],
+          cl_characterSet: [
+            {
+              key: 'utf8',
+              default: 'Utf8',
+              langfre: 'Utf8',
+              langger: 'Utf8',
+              langeng: 'UTF8',
+              link: 'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode',
+            },
+          ],
+          resourceType: ['interactiveMap'],
+          Org: 'TRION-climate / GeoRhena',
+          distributorOrg: 'TRION-climate / GeoRhena',
+          contact: [
+            {
+              organisation: 'TRION-climate / GeoRhena',
+              role: 'distributor',
+              email: '',
+              website: '',
+              logo: '',
+              individual: '',
+              position: '',
+              phone: '',
+              address: '',
+            },
+          ],
+          cl_hierarchyLevel: [
+            {
+              key: 'interactiveMap',
+              default: 'Carte interactive',
+              langfre: 'Carte interactive',
+              langger: 'Interactive map',
+              langeng: 'Interactive map',
+              link: 'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode',
+            },
+          ],
+          cl_presentationForm: [
+            {
+              key: 'mapDigital',
+              default: 'Carte numérique',
+              langfre: 'Carte numérique',
+              langger: 'Digitale Karte',
+              langeng: 'Digital map',
+              link: 'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_PresentationFormCode',
+            },
+          ],
+          cl_status: [
+            {
+              key: 'completed',
+              default: 'Finalisé',
+              langfre: 'Finalisé',
+              langger: 'Abgeschlossen',
+              langeng: 'Completed',
+              link: 'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode',
+            },
+          ],
+          cl_type: [
+            {
+              key: 'theme',
+              default: 'Thème',
+              langfre: 'Thème',
+              langger: 'Thema',
+              langeng: 'Theme',
+              link: 'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode',
+            },
+          ],
+          resourceTitleObject: {
+            default:
+              'Production, usages, recherche et distribution de l’hydrogène dans le Rhin Supérieur',
+            langfre:
+              'Production, usages, recherche et distribution de l’hydrogène dans le Rhin Supérieur',
+            langger:
+              'Herstellung, Verwendung, Forschung und Verteilung von Wasserstoff am Oberrhein',
+            langeng:
+              'Hydrogen production, use, research and distribution in the Upper Rhine region',
+          },
+          publicationDateForResource: ['2023-12-20T14:23:54.000Z'],
+          publicationYearForResource: '2023',
+          publicationMonthForResource: '2023-12',
+          resourceDate: [
+            {
+              type: 'publication',
+              date: '2023-12-20T14:23:54.000Z',
+            },
+          ],
+          resourceTemporalDateRange: [
+            {
+              gte: '2023-12-20T14:23:54.000Z',
+              lte: '2023-12-20T14:23:54.000Z',
+            },
+          ],
+          resourceAbstractObject: {
+            default:
+              'Dans le cadre du projet Interreg CO2-InnO, TRION-climat a recensé et décrit environ 50 projets sur l’hydrogène dans le Rhin supérieur. On retrouve ainsi les différents sites de production d’hydrogène, les principaux projets de recherche, les réseaux de transport et de distribution ainsi que les grands consommateurs d’hydrogène vert de la région. GeoRhena, le système d’information géographique du Rhin supérieur, a présenté ces installations sur une carte interactive des installations et projets de l’hydrogène.',
+            langfre:
+              'Dans le cadre du projet Interreg CO2-InnO, TRION-climat a recensé et décrit environ 50 projets sur l’hydrogène dans le Rhin supérieur. On retrouve ainsi les différents sites de production d’hydrogène, les principaux projets de recherche, les réseaux de transport et de distribution ainsi que les grands consommateurs d’hydrogène vert de la région. GeoRhena, le système d’information géographique du Rhin supérieur, a présenté ces installations sur une carte interactive des installations et projets de l’hydrogène.',
+            langger:
+              'Im Rahmen des Interreg-Projekts CO2-InnO hat TRION-climate rund 50 Wasserstoffprojekte am Oberrhein erfasst und beschrieben. Auf diese Weise findet man die verschiedenen Standorte der Wasserstoffproduktion, die wichtigsten Forschungsprojekte, die Transport- und Verteilungsnetze sowie die großen Abnehmer von grünem Wasserstoff in der Region. GeoRhena, das Geoinformationssystem des Oberrheins, präsentierte diese Anlagen auf einer interaktiven Karte der Wasserstoffanlagen und -projekte.',
+            langeng:
+              "As part of the Interreg CO2-InnO project, TRION-climat has identified and described around 50 hydrogen projects in the Upper Rhine region. These include hydrogen production sites, major research projects, transport and distribution networks, and major consumers of green hydrogen in the region. GeoRhena, the Upper Rhine's geographic information system, presented these facilities on an interactive map of hydrogen facilities and projects.",
+          },
+          OrgForResource: ['GeoRhena'],
+          pointOfContactOrgForResource: 'GeoRhena',
+          contactForResource: [
+            {
+              organisation: 'GeoRhena',
+              role: 'pointOfContact',
+              email: 'contact@georhena.eu',
+              website: '',
+              logo: '',
+              individual: '',
+              position: '',
+              phone: '',
+              address: '',
+            },
+          ],
+          hasOverview: 'true',
+          overview: [
+            {
+              url: 'https://geoportal.georhena.eu/geonetwork/srv/api/records/be209d24-586f-48f5-b944-e284079b7823/attachments/hydrogene_mviewer.jpg',
+            },
+          ],
+          resourceLanguage: ['fre', 'ger'],
+          inspireThemeNumber: '0',
+          hasInspireTheme: 'false',
+          tag: [
+            {
+              default: 'Hydrogène',
+              langfre: 'Hydrogène',
+              langger: 'Wasserstoff',
+              langeng: 'Hydrogen',
+            },
+            {
+              default: 'Innovation',
+              langfre: 'Innovation',
+              langger: 'Innovation',
+              langeng: 'Innovation',
+            },
+            {
+              default: 'Mviewer',
+              langfre: 'Mviewer',
+            },
+          ],
+          tagNumber: '3',
+          isOpenData: 'false',
+          'keywordType-theme': [
+            {
+              default: 'Hydrogène',
+              langfre: 'Hydrogène',
+              langger: 'Wasserstoff',
+              langeng: 'Hydrogen',
+            },
+            {
+              default: 'Innovation',
+              langfre: 'Innovation',
+              langger: 'Innovation',
+              langeng: 'Innovation',
+            },
+            {
+              default: 'Mviewer',
+              langfre: 'Mviewer',
+            },
+          ],
+          'th_otherKeywords-themeNumber': '3',
+          'th_otherKeywords-theme': [
+            {
+              default: 'Hydrogène',
+              langfre: 'Hydrogène',
+              langger: 'Wasserstoff',
+              langeng: 'Hydrogen',
+            },
+            {
+              default: 'Innovation',
+              langfre: 'Innovation',
+              langger: 'Innovation',
+              langeng: 'Innovation',
+            },
+            {
+              default: 'Mviewer',
+              langfre: 'Mviewer',
+            },
+          ],
+          allKeywords: {
+            'th_otherKeywords-theme': {
+              title: 'otherKeywords-theme',
+              theme: 'theme',
+              keywords: [
+                {
+                  default: 'Hydrogène',
+                  langfre: 'Hydrogène',
+                  langger: 'Wasserstoff',
+                  langeng: 'Hydrogen',
+                },
+                {
+                  default: 'Innovation',
+                  langfre: 'Innovation',
+                  langger: 'Innovation',
+                  langeng: 'Innovation',
+                },
+                {
+                  default: 'Mviewer',
+                  langfre: 'Mviewer',
+                },
+              ],
+            },
+          },
+          cl_topic: [
+            {
+              key: 'environment',
+              default: 'Environnement',
+              langfre: 'Environnement',
+              langger: 'Umwelt',
+              langeng: 'Environment',
+            },
+          ],
+          coordinateSystem: ['EPSG:3857'],
+          crsDetails: [
+            {
+              code: 'EPSG:3857',
+              codeSpace: '',
+              name: 'EPSG:3857',
+              url: '',
+            },
+          ],
+          format: ['WMC'],
+          linkUrl: [
+            'https://geoportal.georhena.eu/mviewer/?config=apps/hydrogene.xml',
+            'https://geoportal.georhena.eu/mviewer/?config=apps/wasserstoff.xml',
+          ],
+          linkProtocol: [
+            'WWW:LINK-1.0-http--link',
+            'WWW:LINK-1.0-http--related',
+          ],
+          linkUrlProtocolWWWLINK10httplink:
+            'https://geoportal.georhena.eu/mviewer/?config=apps/hydrogene.xml',
+          link: [
+            {
+              protocol: 'WWW:LINK-1.0-http--link',
+              mimeType: '',
+              url: 'https://geoportal.georhena.eu/mviewer/?config=apps/hydrogene.xml',
+              name: 'Carte interactive "Hydrogène" en français',
+              description: '',
+              function: '',
+              applicationProfile: '',
+              group: 0,
+            },
+            {
+              protocol: 'WWW:LINK-1.0-http--related',
+              mimeType: '',
+              url: 'https://geoportal.georhena.eu/mviewer/?config=apps/wasserstoff.xml',
+              name: 'Carte interactive "Hydrogène" en allemand',
+              description: '',
+              function: '',
+              applicationProfile: '',
+              group: 0,
+            },
+          ],
+          linkUrlProtocolWWWLINK10httprelated:
+            'https://geoportal.georhena.eu/mviewer/?config=apps/wasserstoff.xml',
+          recordGroup: 'be209d24-586f-48f5-b944-e284079b7823',
+          recordOwner: 'Stéphane Ritzenthaler',
+          uuid: 'be209d24-586f-48f5-b944-e284079b7823',
+          displayOrder: '0',
+          groupPublishedId: ['986299', '1', '0'],
+          popularity: 42,
+          userinfo: 'sritzenthaler|Ritzenthaler|Stéphane|Administrator',
+          groupPublished: ['GeoRhena', 'all', 'intranet'],
+          isPublishedToAll: 'true',
+          record: 'record',
+          cat: ['maps'],
+          draft: 'n',
+          changeDate: '2024-01-25T07:45:05.215893Z',
+          id: '8705',
+          createDate: '2024-01-25T07:19:13.493164Z',
+          owner: '107',
+          groupOwner: '986299',
+          logo: '/images/logos/ce008f24-8e0d-45a8-97f8-9f10399f0190.png',
+          hasxlinks: 'false',
+          featureOfRecord: 'record',
+          extra: 'null',
+          documentStandard: 'iso19139',
+          valid: '-1',
+          isTemplate: 'n',
+          feedbackCount: '0',
+          rating: '0',
+          isHarvested: 'false',
+          userSavedCount: '0',
+          sourceCatalogue: 'ce008f24-8e0d-45a8-97f8-9f10399f0190',
+        },
+        edit: false,
+        canReview: false,
+        owner: false,
+        isPublishedToAll: true,
+        view: true,
+        notify: false,
+        download: true,
+        dynamic: true,
+        featured: false,
+        selected: false,
+        related: {
+          brothersAndSisters: [],
+          parent: [],
+          associated: [],
+          services: [],
+          hassources: [],
+          children: [],
+          hasfeaturecats: [],
+        },
+      },
+      {
+        _index: 'gn-records',
+        _type: '_doc',
+        _id: 'foo-foo',
+        _score: 7,
+        _ignored: [],
+        _source: {
+          docType: 'metadata',
+          document: '',
+          metadataIdentifier: 'foo-foo',
+          standardNameObject: {
+            default: 'ISO 19115:2003/19139',
+            langfre: 'ISO 19115:2003/19139',
+          },
+          standardVersionObject: {
+            default: '1.0',
+            langfre: '1.0',
+          },
+          resourceTypeNameObject: {
+            default: 'Parent',
+            langfre: 'Parent',
+          },
+          indexingDate: '2025-01-23T10:16:01.721Z',
+          dateStamp: '2024-01-25T07:44:42.137504Z',
+          mainLanguage: 'fre',
+          otherLanguage: ['ger', 'eng', 'fre'],
+          otherLanguageId: ['DE', 'EN', 'FR'],
+          cl_characterSet: [],
+          resourceType: ['foo'],
+          Org: 'TRION-climate / GeoRhena',
+          distributorOrg: 'TRION-climate / GeoRhena',
+          contact: [
+            {
+              organisation: 'TRION-climate / GeoRhena',
+              role: 'distributor',
+              email: '',
+              website: '',
+              logo: '',
+              individual: '',
+              position: '',
+              phone: '',
+              address: '',
+            },
+          ],
+          cl_hierarchyLevel: [
+            {
+              key: 'interactiveMap',
+              default: 'Carte interactive',
+              langfre: 'Carte interactive',
+              langger: 'Interactive map',
+              langeng: 'Interactive map',
+              link: 'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode',
+            },
+          ],
+          cl_presentationForm: [
+            {
+              key: 'mapDigital',
+              default: 'Carte numérique',
+              langfre: 'Carte numérique',
+              langger: 'Digitale Karte',
+              langeng: 'Digital map',
+              link: 'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_PresentationFormCode',
+            },
+          ],
+          cl_status: [
+            {
+              key: 'completed',
+              default: 'Finalisé',
+              langfre: 'Finalisé',
+              langger: 'Abgeschlossen',
+              langeng: 'Completed',
+              link: 'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode',
+            },
+          ],
+          cl_type: [
+            {
+              key: 'theme',
+              default: 'Thème',
+              langfre: 'Thème',
+              langger: 'Thema',
+              langeng: 'Theme',
+              link: 'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode',
+            },
+          ],
+          resourceTitleObject: {
+            default:
+              'Production, usages, recherche et distribution de l’hydrogène dans le Rhin Supérieur',
+            langfre:
+              'Production, usages, recherche et distribution de l’hydrogène dans le Rhin Supérieur',
+            langger:
+              'Herstellung, Verwendung, Forschung und Verteilung von Wasserstoff am Oberrhein',
+            langeng:
+              'Hydrogen production, use, research and distribution in the Upper Rhine region',
+          },
+          publicationDateForResource: ['2023-12-20T14:23:54.000Z'],
+          publicationYearForResource: '2023',
+          publicationMonthForResource: '2023-12',
+          resourceDate: [
+            {
+              type: 'publication',
+              date: '2023-12-20T14:23:54.000Z',
+            },
+          ],
+          resourceTemporalDateRange: [
+            {
+              gte: '2023-12-20T14:23:54.000Z',
+              lte: '2023-12-20T14:23:54.000Z',
+            },
+          ],
+          resourceAbstractObject: {
+            default:
+              'Dans le cadre du projet Interreg CO2-InnO, TRION-climat a recensé et décrit environ 50 projets sur l’hydrogène dans le Rhin supérieur. On retrouve ainsi les différents sites de production d’hydrogène, les principaux projets de recherche, les réseaux de transport et de distribution ainsi que les grands consommateurs d’hydrogène vert de la région. GeoRhena, le système d’information géographique du Rhin supérieur, a présenté ces installations sur une carte interactive des installations et projets de l’hydrogène.',
+            langfre:
+              'Dans le cadre du projet Interreg CO2-InnO, TRION-climat a recensé et décrit environ 50 projets sur l’hydrogène dans le Rhin supérieur. On retrouve ainsi les différents sites de production d’hydrogène, les principaux projets de recherche, les réseaux de transport et de distribution ainsi que les grands consommateurs d’hydrogène vert de la région. GeoRhena, le système d’information géographique du Rhin supérieur, a présenté ces installations sur une carte interactive des installations et projets de l’hydrogène.',
+            langger:
+              'Im Rahmen des Interreg-Projekts CO2-InnO hat TRION-climate rund 50 Wasserstoffprojekte am Oberrhein erfasst und beschrieben. Auf diese Weise findet man die verschiedenen Standorte der Wasserstoffproduktion, die wichtigsten Forschungsprojekte, die Transport- und Verteilungsnetze sowie die großen Abnehmer von grünem Wasserstoff in der Region. GeoRhena, das Geoinformationssystem des Oberrheins, präsentierte diese Anlagen auf einer interaktiven Karte der Wasserstoffanlagen und -projekte.',
+            langeng:
+              "As part of the Interreg CO2-InnO project, TRION-climat has identified and described around 50 hydrogen projects in the Upper Rhine region. These include hydrogen production sites, major research projects, transport and distribution networks, and major consumers of green hydrogen in the region. GeoRhena, the Upper Rhine's geographic information system, presented these facilities on an interactive map of hydrogen facilities and projects.",
+          },
+          OrgForResource: ['GeoRhena'],
+          pointOfContactOrgForResource: 'GeoRhena',
+          contactForResource: [
+            {
+              organisation: 'GeoRhena',
+              role: 'pointOfContact',
+              email: 'contact@georhena.eu',
+              website: '',
+              logo: '',
+              individual: '',
+              position: '',
+              phone: '',
+              address: '',
+            },
+          ],
+          hasOverview: 'true',
+          overview: [
+            {
+              url: 'https://geoportal.georhena.eu/geonetwork/srv/api/records/be209d24-586f-48f5-b944-e284079b7823/attachments/hydrogene_mviewer.jpg',
+            },
+          ],
+          resourceLanguage: ['fre', 'ger'],
+          inspireThemeNumber: '0',
+          hasInspireTheme: 'false',
+          tag: [
+            {
+              default: 'Hydrogène',
+              langfre: 'Hydrogène',
+              langger: 'Wasserstoff',
+              langeng: 'Hydrogen',
+            },
+            {
+              default: 'Innovation',
+              langfre: 'Innovation',
+              langger: 'Innovation',
+              langeng: 'Innovation',
+            },
+            {
+              default: 'Mviewer',
+              langfre: 'Mviewer',
+            },
+          ],
+          tagNumber: '3',
+          isOpenData: 'false',
+          'keywordType-theme': [
+            {
+              default: 'Hydrogène',
+              langfre: 'Hydrogène',
+              langger: 'Wasserstoff',
+              langeng: 'Hydrogen',
+            },
+            {
+              default: 'Innovation',
+              langfre: 'Innovation',
+              langger: 'Innovation',
+              langeng: 'Innovation',
+            },
+            {
+              default: 'Mviewer',
+              langfre: 'Mviewer',
+            },
+          ],
+          'th_otherKeywords-themeNumber': '3',
+          'th_otherKeywords-theme': [
+            {
+              default: 'Hydrogène',
+              langfre: 'Hydrogène',
+              langger: 'Wasserstoff',
+              langeng: 'Hydrogen',
+            },
+            {
+              default: 'Innovation',
+              langfre: 'Innovation',
+              langger: 'Innovation',
+              langeng: 'Innovation',
+            },
+            {
+              default: 'Mviewer',
+              langfre: 'Mviewer',
+            },
+          ],
+          allKeywords: {
+            'th_otherKeywords-theme': {
+              title: 'otherKeywords-theme',
+              theme: 'theme',
+              keywords: [
+                {
+                  default: 'Hydrogène',
+                  langfre: 'Hydrogène',
+                  langger: 'Wasserstoff',
+                  langeng: 'Hydrogen',
+                },
+                {
+                  default: 'Innovation',
+                  langfre: 'Innovation',
+                  langger: 'Innovation',
+                  langeng: 'Innovation',
+                },
+                {
+                  default: 'Mviewer',
+                  langfre: 'Mviewer',
+                },
+              ],
+            },
+          },
+          cl_topic: [
+            {
+              key: 'environment',
+              default: 'Environnement',
+              langfre: 'Environnement',
+              langger: 'Umwelt',
+              langeng: 'Environment',
+            },
+          ],
+          coordinateSystem: ['EPSG:3857'],
+          crsDetails: [
+            {
+              code: 'EPSG:3857',
+              codeSpace: '',
+              name: 'EPSG:3857',
+              url: '',
+            },
+          ],
+          format: ['WMC'],
+          linkUrl: [
+            'https://geoportal.georhena.eu/mviewer/?config=apps/hydrogene.xml',
+            'https://geoportal.georhena.eu/mviewer/?config=apps/wasserstoff.xml',
+          ],
+          linkProtocol: [
+            'WWW:LINK-1.0-http--link',
+            'WWW:LINK-1.0-http--related',
+          ],
+          linkUrlProtocolWWWLINK10httplink:
+            'https://geoportal.georhena.eu/mviewer/?config=apps/hydrogene.xml',
+          link: [
+            {
+              protocol: 'WWW:LINK-1.0-http--link',
+              mimeType: '',
+              url: 'https://geoportal.georhena.eu/mviewer/?config=apps/hydrogene.xml',
+              name: 'Carte interactive "Hydrogène" en français',
+              description: '',
+              function: '',
+              applicationProfile: '',
+              group: 0,
+            },
+            {
+              protocol: 'WWW:LINK-1.0-http--related',
+              mimeType: '',
+              url: 'https://geoportal.georhena.eu/mviewer/?config=apps/wasserstoff.xml',
+              name: 'Carte interactive "Hydrogène" en allemand',
+              description: '',
+              function: '',
+              applicationProfile: '',
+              group: 0,
+            },
+          ],
+          linkUrlProtocolWWWLINK10httprelated:
+            'https://geoportal.georhena.eu/mviewer/?config=apps/wasserstoff.xml',
+          recordGroup: 'be209d24-586f-48f5-b944-e284079b7823',
+          recordOwner: 'Stéphane Ritzenthaler',
+          uuid: 'be209d24-586f-48f5-b944-e284079b7823',
+          displayOrder: '0',
+          groupPublishedId: ['986299', '1', '0'],
+          popularity: 42,
+          userinfo: 'sritzenthaler|Ritzenthaler|Stéphane|Administrator',
+          groupPublished: ['GeoRhena', 'all', 'intranet'],
+          isPublishedToAll: 'true',
+          record: 'record',
+          cat: ['maps'],
+          draft: 'n',
+          changeDate: '2024-01-25T07:45:05.215893Z',
+          id: '8705',
+          createDate: '2024-01-25T07:19:13.493164Z',
+          owner: '107',
+          groupOwner: '986299',
+          logo: '/images/logos/ce008f24-8e0d-45a8-97f8-9f10399f0190.png',
+          hasxlinks: 'false',
+          featureOfRecord: 'record',
+          extra: 'null',
+          documentStandard: 'iso19139',
+          valid: '-1',
+          isTemplate: 'n',
+          feedbackCount: '0',
+          rating: '0',
+          isHarvested: 'false',
+          userSavedCount: '0',
+          sourceCatalogue: 'ce008f24-8e0d-45a8-97f8-9f10399f0190',
+        },
+        edit: false,
+        canReview: false,
+        owner: false,
+        isPublishedToAll: true,
+        view: true,
+        notify: false,
+        download: true,
+        dynamic: true,
+        featured: false,
+        selected: false,
+        related: {
+          brothersAndSisters: [],
+          parent: [],
+          associated: [],
+          services: [],
+          hassources: [],
+          children: [],
+          hasfeaturecats: [],
+        },
+      },
+    ],
+  },
+})
