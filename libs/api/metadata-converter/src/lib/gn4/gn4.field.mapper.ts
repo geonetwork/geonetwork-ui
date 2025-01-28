@@ -294,7 +294,7 @@ export class Gn4FieldMapper {
       return {
         ...output,
         kind,
-        reuseType,
+        ...(reuseType && { reuseType }),
       } as CatalogRecord
     },
     geom: (output, source) => {

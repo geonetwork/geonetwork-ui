@@ -3369,6 +3369,17 @@ describe('Gn4Converter', () => {
           })
         })
       })
+
+      describe('full record type foo (dummy data)', () => {
+        it('sets the kind as a dataset and does not add reuseType property', async () => {
+          const record = await service.readRecord(
+            elasticReuseMetadataHitsFixture().hits.hits[3] as Gn4Record
+          )
+
+          expect(record.kind).toEqual('dataset')
+          expect(record).not.toHaveProperty('reuseType')
+        })
+      })
     })
   })
 })
