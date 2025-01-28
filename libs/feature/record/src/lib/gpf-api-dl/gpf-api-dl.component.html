@@ -93,9 +93,13 @@
   <!-- Pagination Section -->
   <div class="flex items-center justify-between">
     <button
-      *ngIf="page$.value > 1"
       (click)="lessResult()"
-      class="bg-primary-opacity-50 px-4 py-2 text-white rounded hover:bg-primary transition"
+      [class]="
+        'px-4 py-2 text-white rounded transition ' +
+        ((page$ | async) <= 1
+          ? 'bg-gray-400 cursor-not-allowed  '
+          : 'bg-primary-opacity-50  hover:bg-primary')
+      "
       [attr.title]="'record.metadata.api.form.previousPageTooltip' | translate"
       [attr.aria-label]="
         'record.metadata.api.form.previousPageTooltip' | translate
@@ -104,18 +108,21 @@
       <span translate>record.metadata.api.form.previousPage</span>
     </button>
     <div
-      *ngIf="(pageMax$ | async) !== 1"
-      class="font-semibold"
+      class="font-semibold place-content-center"
       [attr.aria-label]="
         'record.metadata.api.form.paginationDescription' | translate
       "
     >
-      {{ page$.value }}/{{ pageMax$ | async }}
+      {{ page$ | async }}/{{ pageMax$ | async }}
     </div>
     <button
-      *ngIf="page$.value < (pageMax$ | async)"
       (click)="moreResult()"
-      class="bg-primary-opacity-50 px-4 py-2 text-white rounded hover:bg-primary transition"
+      [class]="
+        'bg-primary-opacity-50 px-4 py-2 text-white rounded transition ' +
+        ((page$ | async) >= (pageMax$ | async)
+          ? 'bg-gray-400 cursor-not-allowed  '
+          : 'bg-primary-opacity-50  hover:bg-primary')
+      "
       [attr.title]="'record.metadata.api.form.nextPageTooltip' | translate"
       [attr.aria-label]="'record.metadata.api.form.nextPageTooltip' | translate"
     >

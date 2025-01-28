@@ -8,6 +8,7 @@ import {
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import {
   FeatureRecordModule,
+  GpfApiDlComponent,
   MdViewFacade,
 } from '@geonetwork-ui/feature/record'
 import { CarouselComponent } from '@geonetwork-ui/ui/layout'
@@ -36,6 +37,7 @@ import { TranslateModule } from '@ngx-translate/core'
     NgIcon,
     TranslateModule,
     FeatureRecordModule,
+    GpfApiDlComponent,
   ],
   viewProviders: [
     provideIcons({

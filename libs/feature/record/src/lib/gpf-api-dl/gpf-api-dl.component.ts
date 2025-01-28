@@ -7,8 +7,11 @@ import {
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { BehaviorSubject, Observable, combineLatest, map, mergeMap } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
-import { Choice } from '@geonetwork-ui/ui/inputs'
+import { Choice, DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import axios from 'axios'
+import { CommonModule } from '@angular/common'
+import { TranslateModule } from '@ngx-translate/core'
+import { GpfApiDlListItemComponent } from '../gpf-api-dl-list-item/gpf-api-dl-list-item.component'
 
 export interface Label {
   label: string
@@ -51,6 +54,13 @@ export interface Field {
   templateUrl: './gpf-api-dl.component.html',
   styleUrls: ['./gpf-api-dl.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    TranslateModule,
+    DropdownSelectorComponent,
+    GpfApiDlListItemComponent,
+  ],
 })
 export class GpfApiDlComponent implements OnInit {
   isOpen = false
