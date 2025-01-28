@@ -76,7 +76,7 @@
         *ngFor="let link of listFilteredProduct$ | async"
         class="mb-2 sm:mb-3"
       >
-        <gn-ui-gpf-api-dl-produit
+        <gn-ui-gpf-api-dl-list-item
           [link]="link"
           color="rgb(124 45 18)"
           [format]="getLinkFormat(link)"
@@ -85,7 +85,7 @@
           [attr.aria-label]="
             'record.metadata.api.form.productTooltip' | translate
           "
-        ></gn-ui-gpf-api-dl-produit>
+        ></gn-ui-gpf-api-dl-list-item>
       </div>
     </div>
   </div>

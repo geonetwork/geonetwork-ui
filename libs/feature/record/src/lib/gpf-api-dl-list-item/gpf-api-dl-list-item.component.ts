@@ -3,11 +3,11 @@ import { Component, Input, OnInit } from '@angular/core'
 import { Observable, map, mergeMap } from 'rxjs'
 
 @Component({
-  selector: 'gn-ui-gpf-api-dl-produit',
-  templateUrl: './gpf-api-dl-produit.component.html',
-  styleUrls: ['./gpf-api-dl-produit.component.css'],
+  selector: 'gn-ui-gpf-api-dl-list-item',
+  templateUrl: './gpf-api-dl-list-item.component.html',
+  styleUrls: ['./gpf-api-dl-list-item.component.css'],
 })
-export class GpfApiDlProduitComponent implements OnInit {
+export class GpfApiDlListItemComponent implements OnInit {
   @Input() link
   @Input() color: string
   @Input() format: string

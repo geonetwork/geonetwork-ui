@@ -13,7 +13,7 @@ import {
   reducer,
 } from './state/mdview.reducer'
 import { GpfApiDlComponent } from './gpf-api-dl/gpf-api-dl.component'
-import { GpfApiDlProduitComponent } from './gpf-api-dl-produit/gpf-api-dl-produit.component'
+import { GpfApiDlListItemComponent } from './gpf-api-dl-list-item/gpf-api-dl-list-item.component'
 import { MatTabsModule } from '@angular/material/tabs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { TranslateModule } from '@ngx-translate/core'
@@ -23,7 +23,7 @@ import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 
 @NgModule({
-  declarations: [GpfApiDlComponent, GpfApiDlProduitComponent],
+  declarations: [GpfApiDlComponent, GpfApiDlListItemComponent],
   imports: [
     CommonModule,
     StoreModule.forFeature(METADATA_VIEW_FEATURE_STATE_KEY, reducer),
