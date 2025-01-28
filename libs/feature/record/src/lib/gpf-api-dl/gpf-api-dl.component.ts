@@ -212,8 +212,8 @@ export class GpfApiDlComponent implements OnInit {
     this.choices = await this.getCapabilities()
 
     const tempZone = this.choices.zone.map((bucket) => ({
-      value: bucket.label,
-      label: bucket.term,
+      value: bucket.term,
+      label: bucket.label,
     }))
     tempZone.sort((a, b) => (a.label > b.label ? 1 : -1))
     tempZone.unshift({ value: 'null', label: 'ZONE' })
@@ -221,8 +221,8 @@ export class GpfApiDlComponent implements OnInit {
     this.bucketPromisesZone = tempZone
 
     const tempFormat = this.choices.format.map((bucket) => ({
-      value: bucket.label,
-      label: bucket.term,
+      value: bucket.term,
+      label: bucket.label,
     }))
     tempFormat.sort((a, b) => (a.label > b.label ? 1 : -1))
     tempFormat.unshift({ value: 'null', label: 'FORMAT' })
@@ -230,7 +230,7 @@ export class GpfApiDlComponent implements OnInit {
     this.bucketPromisesFormat = tempFormat
 
     const tempCrs = this.choices.category.map((bucket) => ({
-      value: bucket.label,
+      value: bucket.term,
       label: bucket.label,
     }))
     tempCrs.sort((a, b) => (a.label > b.label ? 1 : -1))
