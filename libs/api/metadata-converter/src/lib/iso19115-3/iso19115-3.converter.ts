@@ -33,6 +33,7 @@ import {
   writeResourceCreated,
   writeResourcePublished,
   writeResourceUpdated,
+  writeReuseType,
   writeSpatialRepresentation,
   writeStatus,
   writeUniqueIdentifier,
@@ -65,6 +66,7 @@ export class Iso191153Converter extends Iso19139Converter {
     this.writers['resourceUpdated'] = writeResourceUpdated
     this.writers['resourceCreated'] = writeResourceCreated
     this.writers['resourcePublished'] = writeResourcePublished
+    this.writers['reuseType'] = writeReuseType
     this.writers['contacts'] = writeContacts
     this.writers['contactsForResource'] = writeContactsForResource
     this.writers['ownerOrganization'] = () => undefined // fixme: find a way to store this value properly

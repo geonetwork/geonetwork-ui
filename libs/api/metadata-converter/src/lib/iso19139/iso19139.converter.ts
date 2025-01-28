@@ -68,6 +68,7 @@ import {
   writeResourceIdentifier,
   writeResourcePublished,
   writeResourceUpdated,
+  writeReuseType,
   writeSecurityConstraints,
   writeSpatialExtents,
   writeSpatialRepresentation,
@@ -122,7 +123,7 @@ export class Iso19139Converter extends BaseConverter<string> {
   }
 
   protected writers: Record<
-    Exclude<CatalogRecordKeys, 'reuseType'>,
+    CatalogRecordKeys,
     (record: CatalogRecord, rootEl: XmlElement) => void
   > = {
     uniqueIdentifier: writeUniqueIdentifier,
@@ -135,6 +136,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     resourceUpdated: writeResourceUpdated,
     resourceCreated: writeResourceCreated,
     resourcePublished: writeResourcePublished,
+    reuseType: writeReuseType,
     title: writeTitle,
     abstract: writeAbstract,
     contacts: writeContacts,
@@ -340,7 +342,7 @@ export class Iso19139Converter extends BaseConverter<string> {
 
     fieldChanged('uniqueIdentifier') &&
       this.writers['uniqueIdentifier'](record, rootEl)
-    fieldChanged('reuseType') && this.writers['kind'](record, rootEl)
+    fieldChanged('reuseType') && this.writers['reuseType'](record, rootEl)
     fieldChanged('kind') && this.writers['kind'](record, rootEl)
     fieldChanged('defaultLanguage') &&
       this.writers['defaultLanguage'](record, rootEl)

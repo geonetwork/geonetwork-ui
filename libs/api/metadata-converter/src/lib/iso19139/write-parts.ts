@@ -1126,6 +1126,10 @@ export function writeResourcePublished(
   appendResourceDate(record.resourcePublished, 'publication')(rootEl)
 }
 
+export function writeReuseType(record: CatalogRecord, rootEl: XmlElement) {
+  writeKind(record, rootEl)
+}
+
 export function writeSpatialRepresentation(
   record: DatasetRecord,
   rootEl: XmlElement
