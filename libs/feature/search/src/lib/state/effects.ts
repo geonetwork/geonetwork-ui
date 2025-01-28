@@ -62,7 +62,7 @@ export class SearchEffects {
     @Optional()
     @Inject(FILTER_GEOMETRY)
     private filterGeometry: Promise<Geometry>
-  ) {}
+  ) { }
 
   resetPagination$ = createEffect(() =>
     this.actions$.pipe(
@@ -157,10 +157,34 @@ export class SearchEffects {
               Geometry | undefined,
             ]) => {
               const { currentPage, pageSize, sort } = state.params
-              const filters = {
-                ...state.config.filters,
-                ...state.params.filters,
-              }
+
+              //On initialise le filter
+              let filters = {}
+              //Boucle sur les clées des 2 objets config et params
+              Object.keys(state.config.filters)
+                .concat(Object.keys(state.params.filters))
+                .forEach(key => {
+                  //On récupère le type des objets pour faire le merge en fonction du type
+                  const typeConfigFilters = typeof state.config.filters[key]
+                  const typeParamsFilters = typeof state.params.filters[key]
+                  if (typeConfigFilters === "object" || typeParamsFilters === "object") {
+                    //Si l'un des 2 est un objet => on fait le merge
+                    //Logiquement on passe toujours la
+                    filters[key] = { ...(state.config.filters[key] as object), ...(state.params.filters[key] as object) }
+                  } else if (typeConfigFilters === "undefined" && typeParamsFilters === "undefined") {
+                    //Sinon, si les 2 sont undefined => undefined
+                    filters[key] = undefined
+                  } else {
+                    //Petit quid, si les 2 types sont différents. Ca ne doit pas arriver mais on remet la valeur qui est renseignée
+                    if (typeConfigFilters !== "undefined") {
+                      filters[key] = state.config.filters[key]
+                    } else {
+                      filters[key] = state.params.filters[key]
+                    }
+
+                  }
+                })
+
               const results$ = this.recordsRepository.search({
                 filters,
                 offset: currentPage * pageSize,
