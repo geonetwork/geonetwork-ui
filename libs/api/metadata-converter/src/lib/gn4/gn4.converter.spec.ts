@@ -1649,7 +1649,7 @@ describe('Gn4Converter', () => {
             ],
             recordCreated: new Date('2021-10-05T12:48:57.678Z'),
             recordUpdated: new Date('2021-10-05T12:48:57.678Z'),
-            recordPublished: new Date('2021-04-01T00:00:00.000Z'),
+            recordPublished: new Date('2021-11-05T12:48:57.678Z'),
             resourceCreated: new Date('2012-01-01T00:00:00.000Z'),
             resourceUpdated: new Date('2021-12-13T00:00:00.000Z'),
             resourcePublished: new Date('2021-04-01T00:00:00.000Z'),
@@ -2093,7 +2093,7 @@ describe('Gn4Converter', () => {
             status: null,
             lineage: null,
             recordUpdated: new Date('2024-10-15T07:37:39.350Z'),
-            recordPublished: new Date('2023-12-17T23:00:00.000Z'),
+            recordPublished: null,
             ownerOrganization: {
               name: 'My Organization',
               website: new URL('http://my.org/'),
@@ -2976,7 +2976,7 @@ describe('Gn4Converter', () => {
               website: new URL('http://my.org/'),
             },
             recordCreated: new Date('2013-07-29T11:33:08.000Z'),
-            recordPublished: new Date('2018-03-31T22:00:00.000Z'),
+            recordPublished: null,
             recordUpdated: new Date('2024-07-22T11:52:39.049Z'),
             resourceCreated: new Date('2017-05-31T22:00:00.000Z'),
             reuseType: 'application',
@@ -3279,7 +3279,9 @@ describe('Gn4Converter', () => {
             status: 'completed',
             lineage: null,
             recordUpdated: new Date('2024-01-25T07:45:05.215Z'),
-            recordPublished: new Date('2023-12-20T14:23:54.000Z'),
+            recordPublished: null,
+            recordCreated: new Date('2024-01-25T07:19:13.493Z'),
+            resourcePublished: new Date('2023-12-20T14:23:54.000Z'),
             ownerOrganization: {
               name: 'My Organization',
               website: new URL('http://my.org/'),
@@ -3367,7 +3369,6 @@ describe('Gn4Converter', () => {
             landingPage: new URL(
               'http://my.catalog.org/metadata/be209d24-586f-48f5-b944-e284079b7823'
             ),
-            recordCreated: new Date('2024-01-25T07:19:13.493Z'),
           })
         })
       })

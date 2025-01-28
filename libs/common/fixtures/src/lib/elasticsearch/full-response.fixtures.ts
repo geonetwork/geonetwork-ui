@@ -1502,6 +1502,7 @@ export const elasticFullResponseFixture = () => ({
           changeDate: '2021-10-05T12:48:57.678Z',
           id: '11700',
           createDate: '2021-10-05T12:48:57.678Z',
+          publicationDate: '2021-11-05T12:48:57.678Z',
           owner: '100',
           groupOwner: '2',
           logo: '/images/logos/81e8a591-7815-4d2f-a7da-5673192e74c9.png',
