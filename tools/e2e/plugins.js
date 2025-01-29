@@ -1,4 +1,4 @@
-import { VIEWPORT_SIZE } from './settings'
+import { VIEWPORT_SIZE } from './settings.js'
 
 export function configureCommonPlugins(on, config) {
   on('before:browser:launch', (browser, launchOptions) => {
