@@ -81,13 +81,49 @@ const stateWithSearches: SearchState = {
       },
     },
   },
-  main: {
-    ...defaultSearchState,
-    config: {
-      ...defaultSearchState.config,
-      aggregations: {},
+}
+const resultFilterStateMerge = {
+  fields: [
+    'uuid',
+    'id',
+    'title',
+    'resource*',
+    'resourceTitleObject',
+    'resourceAbstractObject',
+    'overview',
+    'logo',
+    'codelist_status_text',
+    'linkProtocol',
+    'contactForResource*.organisation*',
+    'contact*.organisation*',
+    'contact*.email',
+    'userSavedCount',
+    'cl_topic',
+    'cl_maintenanceAndUpdateFrequency',
+    'MD_LegalConstraintsUseLimitationObject',
+    'qualityScore',
+    'allKeywords',
+  ],
+  filterGeometry: undefined,
+  filterIds: undefined,
+  filters: {
+    resourceType: {
+      dataset: true,
+      service: false,
+      map: false,
+      'map/static': false,
+      mapDigital: false,
+    },
+    format: {
+      PDF: true,
+    },
+    publicationYearForResource: {
+      '2024': true,
     },
   },
+  limit: 10,
+  offset: 0,
+  sort: undefined,
 }
 const resultFilterStateMerge = {
   fields: [
