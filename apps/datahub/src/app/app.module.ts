@@ -277,7 +277,10 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(router: Router, @Inject(DOCUMENT) private document: Document) {
+  constructor(
+    router: Router,
+    @Inject(DOCUMENT) private document: Document
+  ) {
     ThemeService.applyCssVariables(
       getThemeConfig().PRIMARY_COLOR,
       getThemeConfig().SECONDARY_COLOR,
