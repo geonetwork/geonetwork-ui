@@ -6,13 +6,11 @@ import {
   ViewChild,
 } from '@angular/core'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { GpfApiDlComponent, MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
-  FeatureRecordModule,
-  GpfApiDlComponent,
-  MdViewFacade,
-} from '@geonetwork-ui/feature/record'
-import { CarouselComponent } from '@geonetwork-ui/ui/layout'
-import { PreviousNextButtonsComponent } from '@geonetwork-ui/ui/inputs'
+  CarouselComponent,
+  PreviousNextButtonsComponent,
+} from '@geonetwork-ui/ui/layout'
 import {
   ApiCardComponent,
   RecordApiFormComponent,
@@ -36,7 +34,6 @@ import { TranslateModule } from '@ngx-translate/core'
     RecordApiFormComponent,
     NgIcon,
     TranslateModule,
-    FeatureRecordModule,
     GpfApiDlComponent,
   ],
   viewProviders: [
