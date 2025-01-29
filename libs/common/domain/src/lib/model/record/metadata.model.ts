@@ -21,18 +21,40 @@ marker('domain.record.updateFrequency.irregular')
 marker('domain.record.updateFrequency.continual')
 marker('domain.record.updateFrequency.periodic')
 
-export type UpdateFrequencyCode =
-  | 'unknown'
-  | 'notPlanned'
-  | 'asNeeded'
-  | 'irregular'
-  | 'continual'
-  | 'periodic'
+export const updateFrequencyCodeValues = [
+  'unknown',
+  'notPlanned',
+  'asNeeded',
+  'irregular',
+  'continual',
+  'periodic',
+  'daily',
+  'weekly',
+  'fortnightly',
+  'semimonthly',
+  'monthly',
+  'quarterly',
+  'biannually',
+  'annually',
+  'biennially',
+] as const
+
+export type UpdateFrequencyCode = (typeof updateFrequencyCodeValues)[number]
 
 marker('domain.record.updateFrequency.day')
 marker('domain.record.updateFrequency.week')
 marker('domain.record.updateFrequency.month')
 marker('domain.record.updateFrequency.year')
+
+marker('domain.record.updateFrequency.daily')
+marker('domain.record.updateFrequency.weekly')
+marker('domain.record.updateFrequency.fortnightly')
+marker('domain.record.updateFrequency.monthly')
+marker('domain.record.updateFrequency.quarterly')
+marker('domain.record.updateFrequency.biannually')
+marker('domain.record.updateFrequency.annually')
+marker('domain.record.updateFrequency.semimonthly')
+marker('domain.record.updateFrequency.biennially')
 
 export type UpdateFrequencyCustom = {
   updatedTimes: number // this should be an integer
