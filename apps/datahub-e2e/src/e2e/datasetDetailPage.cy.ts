@@ -245,12 +245,12 @@ describe('dataset pages', () => {
             .eq(0)
             .children('p')
             .eq(1)
-            .should('contain.text', '22/09/2020')
+            .should('contain.text', '9/22/2020')
           cy.get('@aboutContent')
             .eq(1)
             .children('p')
             .eq(1)
-            .should('contain.text', '17/03/2024')
+            .should('contain.text', '3/17/2024')
         })
         it('should not display the same text twice in the constraints', () => {
           // this dataset has the same text for the license and the legal constraints
