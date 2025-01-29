@@ -30,7 +30,7 @@ describe('FormFieldUpdateFrequencyComponent', () => {
     })
 
     it('should offer a set of initial choices', () => {
-      expect(component['choices']).toHaveLength(10)
+      expect(component['choices']).toHaveLength(11)
       expect(component['choices']).toContainEqual({
         label: 'domain.record.updateFrequency.week',
         value: 'week.3',
@@ -77,10 +77,7 @@ describe('FormFieldUpdateFrequencyComponent', () => {
     it('should emit once per day on toggle', () => {
       const spy = jest.spyOn(component.valueChange, 'emit')
       component.onPlannedToggled()
-      expect(spy).toHaveBeenCalledWith({
-        updatedTimes: 1,
-        per: 'day',
-      })
+      expect(spy).toHaveBeenCalledWith('daily')
     })
   })
 })
