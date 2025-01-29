@@ -21,10 +21,11 @@ export class MyOrgService {
     private platformService: PlatformServiceInterface,
     private orgService: OrganizationsServiceInterface
   ) {
+    const organisations$ = this.orgService.getOrganisations()
     this.myOrgData$ = combineLatest([
       this.platformService.getMe(),
       this.platformService.getUsers(),
-      this.orgService.organisations$,
+      organisations$,
     ]).pipe(
       map(([user, allUsers, orgs]) => {
         const orgName = user.organisation
