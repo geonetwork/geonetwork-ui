@@ -24,6 +24,7 @@ import {
   extractLocalizedCharacterString,
   extractRole,
   extractServiceOnlineResources,
+  extractReuseOnlineResources,
   extractUrl,
   findIdentification,
 } from '../iso19139/read-parts'
@@ -35,11 +36,13 @@ import {
   OrganizationTranslations,
   RecordKind,
   RecordTranslations,
+  ReuseType,
   Role,
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchMimeType } from '../common/distribution.mapper'
 import { fullNameToParts } from '../iso19139/utils/individual-name'
 import { LANG_3_TO_2_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
+import { getResourceType, getReuseType } from '../common/resource-types'
 
 export function readKind(rootEl: XmlElement): RecordKind {
   return pipe(
@@ -50,10 +53,7 @@ export function readKind(rootEl: XmlElement): RecordKind {
       'mcc:MD_ScopeCode'
     ),
     readAttribute('codeListValue'),
-    map(
-      (scopeCode): RecordKind =>
-        scopeCode === 'service' ? 'service' : 'dataset'
-    )
+    map((scopeCode): RecordKind => getResourceType(scopeCode))
   )(rootEl)
 }
 
@@ -321,6 +321,19 @@ export function readRecordPublished(rootEl: XmlElement): Date {
   return extractDateInfo('publication')(rootEl)
 }
 
+export function readReuseType(rootEl: XmlElement): ReuseType {
+  return pipe(
+    findNestedElement(
+      'mdb:metadataScope',
+      'mdb:MD_MetadataScope',
+      'mdb:resourceScope',
+      'mcc:MD_ScopeCode'
+    ),
+    readAttribute('codeListValue'),
+    map((scopeCode): ReuseType => getReuseType(scopeCode))
+  )(rootEl)
+}
+
 const getMimeType = pipe(
   findParent('mrd:MD_Distribution'),
   findNestedElement(
@@ -335,16 +348,17 @@ const getMimeType = pipe(
 )
 
 export function readOnlineResources(rootEl: XmlElement): OnlineResource[] {
+  let getOnlineResources: ChainableFunction<XmlElement, OnlineResource[]>
   if (readKind(rootEl) === 'dataset') {
-    return pipe(
-      findNestedElements('mrd:distributionInfo', 'mrd:MD_Distribution'),
-      mapArray(extractDatasetOnlineResources(getMimeType)),
-      flattenArray()
-    )(rootEl)
+    getOnlineResources = extractDatasetOnlineResources(getMimeType)
+  } else if (readKind(rootEl) === 'service') {
+    getOnlineResources = extractServiceOnlineResources()
+  } else {
+    getOnlineResources = extractReuseOnlineResources()
   }
   return pipe(
     findNestedElements('mrd:distributionInfo', 'mrd:MD_Distribution'),
-    mapArray(extractServiceOnlineResources()),
+    mapArray(getOnlineResources),
     flattenArray()
   )(rootEl)
 }
