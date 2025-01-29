@@ -294,6 +294,7 @@ export class ElasticsearchService {
           },
         },
     ].filter(Boolean)
+    console.log('queryParts', queryParts)
     return queryParts.length > 0 ? (queryParts as FilterQuery) : undefined
   }
 
