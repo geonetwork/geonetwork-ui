@@ -1,1 +1,4 @@
-<div class="markdown-body" [innerHTML]="parsedMarkdown"></div>
+<div
+  [class]="whitoutStyled ? '' : 'markdown-body'"
+  [innerHTML]="parsedMarkdown"
+></div>
