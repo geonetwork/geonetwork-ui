@@ -22,6 +22,7 @@ import {
   selectFallback,
   selectField,
   selectTranslatedField,
+  SearchFilters,
   SourceWithUnknownProps,
 } from '@geonetwork-ui/api/metadata-converter'
 import { combineLatest, Observable, of, switchMap, takeLast } from 'rxjs'
