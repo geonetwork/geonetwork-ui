@@ -1657,10 +1657,7 @@ describe('Gn4Converter', () => {
             topics: ['Installations de suivi environnemental', 'Océans'],
             title: 'Surval - Données par paramètre',
             uniqueIdentifier: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
-            updateFrequency: {
-              per: 'day',
-              updatedTimes: 1,
-            },
+            updateFrequency: 'daily',
             spatialExtents: [
               {
                 description: 'Hauts-de-France (Région)',

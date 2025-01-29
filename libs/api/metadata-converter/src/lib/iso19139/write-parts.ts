@@ -269,6 +269,24 @@ export function getMaintenanceFrequencyCode(
       return 'continual'
     case 'periodic':
       return 'periodic'
+    case 'daily':
+      return 'daily'
+    case 'weekly':
+      return 'weekly'
+    case 'fortnightly':
+      return 'fortnightly'
+    case 'monthly':
+      return 'monthly'
+    case 'quarterly':
+      return 'quarterly'
+    case 'biannually':
+      return 'biannually'
+    case 'annually':
+      return 'annually'
+    case 'semimonthly':
+      return 'semimonthly'
+    case 'biennially':
+      return 'biennially'
   }
 }
 
