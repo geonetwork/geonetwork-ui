@@ -2979,6 +2979,7 @@ describe('Gn4Converter', () => {
             recordPublished: null,
             recordUpdated: new Date('2024-07-22T11:52:39.049Z'),
             resourceCreated: new Date('2017-05-31T22:00:00.000Z'),
+            resourcePublished: new Date('2018-03-31T22:00:00.000Z'),
             reuseType: 'application',
             securityConstraints: [],
             spatialExtents: [
