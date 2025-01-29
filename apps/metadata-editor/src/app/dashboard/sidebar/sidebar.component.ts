@@ -55,8 +55,9 @@ export class SidebarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const organisations$ = this.organisationsService.getOrganisations()
     this.organisations$ = combineLatest(
-      this.organisationsService.organisations$,
+      organisations$,
       this.platformService.getMe(),
       (orgs, me) => orgs.filter((org) => org.name === me?.organisation)
     )
