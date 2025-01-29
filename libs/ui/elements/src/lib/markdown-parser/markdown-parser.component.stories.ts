@@ -13,6 +13,7 @@ export default {
 
 export const Primary: StoryObj<MarkdownParserComponent> = {
   args: {
+    whitoutStyles: false,
     textContent: ` 
 # SUPPORTED MARKDOWN CONTENT
 
@@ -141,7 +142,7 @@ export const Primary: StoryObj<MarkdownParserComponent> = {
   },
   render: (args) => ({
     props: args,
-    template: `<gn-ui-markdown-parser [textContent]="
+    template: `<gn-ui-markdown-parser [whitoutStyles]="whitoutStyles" [textContent]="
     textContent
     "></gn-ui-markdown-parser>`,
   }),
