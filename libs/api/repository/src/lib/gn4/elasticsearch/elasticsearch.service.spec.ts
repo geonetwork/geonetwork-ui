@@ -181,14 +181,6 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
-          must_not: [
-            {
-              query_string: {
-                query:
-                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
-              },
-            },
-          ],
         },
       })
     })
@@ -249,14 +241,6 @@ describe('ElasticsearchService', () => {
                   'uuid',
                 ],
                 query: 'hello',
-              },
-            },
-          ],
-          must_not: [
-            {
-              query_string: {
-                query:
-                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
               },
             },
           ],
@@ -321,14 +305,6 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
-          must_not: [
-            {
-              query_string: {
-                query:
-                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
-              },
-            },
-          ],
         },
       })
     })
@@ -383,14 +359,6 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
-          must_not: [
-            {
-              query_string: {
-                query:
-                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
-              },
-            },
-          ],
         },
       })
     })
@@ -427,14 +395,6 @@ describe('ElasticsearchService', () => {
           ],
           should: [],
           must: [],
-          must_not: [
-            {
-              query_string: {
-                query:
-                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
-              },
-            },
-          ],
         },
       })
     })
@@ -483,24 +443,6 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
-          must_not: [
-            {
-              query_string: {
-                query:
-                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
-              },
-            },
-          ],
-        },
-      })
-    })
-    it('handle values expressed as reg exp', () => {
-      const query = service['buildPayloadQuery'](
-        {
-          Org: {
-            '/world.*/': true,
-            '/*country^[fr|en]/': false,
-          },
         },
         {},
         []
@@ -594,14 +536,6 @@ describe('ElasticsearchService', () => {
                     'uuid',
                   ],
                   query: 'hello',
-                },
-              },
-            ],
-            must_not: [
-              {
-                query_string: {
-                  query:
-                    'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
                 },
               },
             ],
@@ -724,14 +658,6 @@ describe('ElasticsearchService', () => {
                     ],
                     query: 'blarg',
                     type: 'bool_prefix',
-                  },
-                },
-              ],
-              must_not: [
-                {
-                  query_string: {
-                    query:
-                      'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
                   },
                 },
               ],
