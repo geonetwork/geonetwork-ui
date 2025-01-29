@@ -11,10 +11,7 @@ import AppServerModule from './src/main.server'
 export function app(): express.Express {
   // @ts-expect-error
   const server = express()
-  const distFolder = join(
-    process.cwd(),
-    'dist/apps/datahub/browser/esModuleInteropbrowser/browser'
-  )
+  const distFolder = join(process.cwd(), 'dist/apps/datahub/browser/')
   const indexHtml = existsSync(join(distFolder, 'index.original.html'))
     ? join(distFolder, 'index.original.html')
     : join(distFolder, 'index.html')

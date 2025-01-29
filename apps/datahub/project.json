@@ -10,7 +10,7 @@
       "executor": "@nx/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/datahub/browser/browser",
+        "outputPath": "dist/apps/datahub/browser",
         "index": "apps/datahub/src/index.html",
         "main": "apps/datahub/src/main.ts",
         "polyfills": "apps/datahub/src/polyfills.ts",
@@ -135,7 +135,7 @@
       "dependsOn": ["build"],
       "executor": "@nx/angular:webpack-server",
       "options": {
-        "outputPath": "dist/apps/datahub/browser/server",
+        "outputPath": "dist/apps/datahub/server",
         "main": "apps/datahub/server.ts",
         "tsConfig": "apps/datahub/tsconfig.server.json",
         "customWebpackConfig": {
