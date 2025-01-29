@@ -58,15 +58,21 @@ export class FilterDropdownComponent implements OnInit {
 
   ngOnInit() {
     this.fieldType = this.fieldsService.getFieldType(this.fieldName)
-    this.choices$ = this.fieldsService.getAvailableValues(this.fieldName).pipe(
-      startWith([] as FieldAvailableValue[]),
-      map((values) =>
-        values.map((v) => ({
-          ...v,
-          value: v.value.toString(), // converting to string for the dropdown
-        }))
-      ),
-      catchError(() => of([]))
+    this.choices$ = this.searchFacade.configFilters$.pipe(
+      switchMap((configFilter) =>
+        this.fieldsService
+          .getAvailableValues(this.fieldName, configFilter)
+          .pipe(
+            startWith([] as FieldAvailableValue[]),
+            map((values) =>
+              values.map((v) => ({
+                ...v,
+                value: v.value.toString(), // converting to string for the dropdown
+              }))
+            ),
+            catchError(() => of([]))
+          )
+      )
     )
   }
 

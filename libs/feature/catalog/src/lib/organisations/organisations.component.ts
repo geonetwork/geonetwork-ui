@@ -54,11 +54,10 @@ export class OrganisationsComponent implements Paginable {
   organisationResults: number
   sortBy$: BehaviorSubject<SortByField> = new BehaviorSubject(['asc', 'name'])
   filterBy$: BehaviorSubject<string> = new BehaviorSubject('')
-  organisationsTotal$ = this.organisationsService.organisationsCount$
   organisationsFilteredAndSorted$: Observable<Organization[]> = combineLatest([
-    this.organisationsService.organisations$.pipe(
-      startWith(Array(this.itemsOnPage).fill({}))
-    ),
+    this.organisationsService
+      .getOrganisations()
+      .pipe(startWith(Array(this.itemsOnPage).fill({}))),
     this.sortBy$,
     this.filterBy$,
   ]).pipe(
@@ -70,6 +69,8 @@ export class OrganisationsComponent implements Paginable {
       return this.sortOrganisations(filteredOrganisations, sortBy)
     })
   )
+  //A tester, je ne sais pas comment. Il peut être chargé par this.organisationsService.getOrganisations()
+  organisationsTotal$ = this.organisationsService.organisationsCount$
 
   organisations$: Observable<Organization[]> = combineLatest([
     this.organisationsFilteredAndSorted$,
