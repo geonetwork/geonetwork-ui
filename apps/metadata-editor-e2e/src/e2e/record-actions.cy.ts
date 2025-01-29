@@ -125,7 +125,7 @@ describe('record-actions', () => {
         .find('[data-test="disabled-message"]')
         .should(
           'contain.text',
-          ' This field will be enabled once the data has been published '
+          ' This field will be enabled once the dataset has been published '
         )
 
       // second page
@@ -145,7 +145,7 @@ describe('record-actions', () => {
         .find('div')
         .should(
           'contain.text',
-          ' This field will be enabled once the data has been published '
+          ' This field will be enabled once the dataset has been published '
         )
 
       cy.get('gn-ui-form-field-online-link-resources')
@@ -156,7 +156,7 @@ describe('record-actions', () => {
         .find('div')
         .should(
           'contain.text',
-          ' This field will be enabled once the data has been published '
+          ' This field will be enabled once the dataset has been published '
         )
     })
 

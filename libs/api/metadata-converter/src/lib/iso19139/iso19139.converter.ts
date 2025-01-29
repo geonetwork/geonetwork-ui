@@ -3,7 +3,9 @@ import {
   CatalogRecordKeys,
   DatasetRecord,
   ModelTranslations,
+  RecordKind,
   RecordTranslations,
+  ReuseRecord,
   ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import { XmlElement } from '@rgrove/parse-xml'
@@ -37,6 +39,7 @@ import {
   readResourceIdentifier,
   readResourcePublished,
   readResourceUpdated,
+  readReuseType,
   readSecurityConstraints,
   readSpatialExtents,
   readSpatialRepresentation,
@@ -65,6 +68,7 @@ import {
   writeResourceIdentifier,
   writeResourcePublished,
   writeResourceUpdated,
+  writeReuseType,
   writeSecurityConstraints,
   writeSpatialExtents,
   writeSpatialRepresentation,
@@ -91,6 +95,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     resourceUpdated: readResourceUpdated,
     resourceCreated: readResourceCreated,
     resourcePublished: readResourcePublished,
+    reuseType: readReuseType,
     title: readTitle,
     abstract: readAbstract,
     contacts: readContacts,
@@ -131,6 +136,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     resourceUpdated: writeResourceUpdated,
     resourceCreated: writeResourceCreated,
     resourcePublished: writeResourcePublished,
+    reuseType: writeReuseType,
     title: writeTitle,
     abstract: writeAbstract,
     contacts: writeContacts,
@@ -207,11 +213,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     return record
   }
 
-  async readRecord(document: string): Promise<CatalogRecord> {
-    const doc = parseXmlString(document)
-    const rootEl = getRootElement(doc)
-
-    const tr: RecordTranslations = {}
+  readBaseRecord(rootEl: XmlElement, tr: RecordTranslations): CatalogRecord {
     const uniqueIdentifier = this.readers['uniqueIdentifier'](rootEl, tr)
     const kind = this.readers['kind'](rootEl, tr)
     const ownerOrganization = this.readers['ownerOrganization'](rootEl, tr)
@@ -239,6 +241,44 @@ export class Iso19139Converter extends BaseConverter<string> {
     const resourceIdentifier = this.readers['resourceIdentifier'](rootEl, tr)
     const spatialExtents = this.readers['spatialExtents'](rootEl, tr)
 
+    return {
+      uniqueIdentifier,
+      ...(resourceIdentifier && { resourceIdentifier }),
+      kind,
+      otherLanguages,
+      defaultLanguage,
+      ...(recordCreated && { recordCreated }),
+      ...(recordPublished && { recordPublished }),
+      recordUpdated,
+      ...(resourceCreated && { resourceCreated }),
+      ...(resourceUpdated && { resourceUpdated }),
+      ...(resourcePublished && { resourcePublished }),
+      title,
+      abstract,
+      ownerOrganization,
+      contacts,
+      contactsForResource,
+      keywords,
+      topics,
+      licenses,
+      legalConstraints,
+      securityConstraints,
+      otherConstraints,
+      overviews,
+      spatialExtents,
+      onlineResources,
+      translations: tr,
+      ...(landingPage && { landingPage }),
+    } as CatalogRecord
+  }
+
+  async readRecord(document: string): Promise<CatalogRecord> {
+    const doc = parseXmlString(document)
+    const rootEl = getRootElement(doc)
+
+    const tr: RecordTranslations = {}
+    const kind = this.readers['kind'](rootEl, tr) as RecordKind
+
     if (kind === 'dataset') {
       const status = this.readers['status'](rootEl, tr)
       const spatialRepresentation = this.readers['spatialRepresentation'](
@@ -250,68 +290,31 @@ export class Iso19139Converter extends BaseConverter<string> {
       const updateFrequency = this.readers['updateFrequency'](rootEl, tr)
 
       return this.afterRecordRead({
-        uniqueIdentifier,
-        ...(resourceIdentifier && { resourceIdentifier }),
+        ...this.readBaseRecord(rootEl, tr),
         kind,
-        otherLanguages,
-        defaultLanguage,
-        ...(recordCreated && { recordCreated }),
-        ...(recordPublished && { recordPublished }),
-        recordUpdated,
-        ...(resourceCreated && { resourceCreated }),
-        ...(resourceUpdated && { resourceUpdated }),
-        ...(resourcePublished && { resourcePublished }),
         status,
-        title,
-        abstract,
-        ownerOrganization,
-        contacts,
-        contactsForResource,
-        keywords,
-        topics,
-        licenses,
-        legalConstraints,
-        securityConstraints,
-        otherConstraints,
         lineage,
         ...(spatialRepresentation && { spatialRepresentation }),
-        overviews,
-        spatialExtents,
         temporalExtents,
-        onlineResources,
         updateFrequency,
         translations: tr,
-        ...(landingPage && { landingPage }),
       } as DatasetRecord)
+    } else if (kind === 'reuse') {
+      const lineage = this.readers['lineage'](rootEl, tr)
+      const temporalExtents = this.readers['temporalExtents'](rootEl, tr)
+      const reuseType = this.readers['reuseType'](rootEl, tr)
+
+      return this.afterRecordRead({
+        ...this.readBaseRecord(rootEl, tr),
+        kind,
+        lineage,
+        temporalExtents,
+        reuseType,
+      } as ReuseRecord)
     } else {
       return this.afterRecordRead({
-        uniqueIdentifier,
-        ...(resourceIdentifier && { resourceIdentifier }),
+        ...this.readBaseRecord(rootEl, tr),
         kind,
-        otherLanguages,
-        defaultLanguage,
-        ...(recordCreated && { recordCreated }),
-        ...(recordPublished && { recordPublished }),
-        recordUpdated,
-        ...(resourceCreated && { resourceCreated }),
-        ...(resourceUpdated && { resourceUpdated }),
-        ...(resourcePublished && { resourcePublished }),
-        title,
-        abstract,
-        ownerOrganization,
-        contacts,
-        contactsForResource,
-        keywords,
-        topics,
-        licenses,
-        legalConstraints,
-        securityConstraints,
-        spatialExtents,
-        otherConstraints,
-        overviews,
-        onlineResources,
-        translations: tr,
-        ...(landingPage && { landingPage }),
       } as ServiceRecord)
     }
   }
@@ -339,6 +342,7 @@ export class Iso19139Converter extends BaseConverter<string> {
 
     fieldChanged('uniqueIdentifier') &&
       this.writers['uniqueIdentifier'](record, rootEl)
+    fieldChanged('reuseType') && this.writers['reuseType'](record, rootEl)
     fieldChanged('kind') && this.writers['kind'](record, rootEl)
     fieldChanged('defaultLanguage') &&
       this.writers['defaultLanguage'](record, rootEl)
