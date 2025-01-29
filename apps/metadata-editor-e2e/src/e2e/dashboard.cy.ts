@@ -398,7 +398,7 @@ describe('dashboard (authenticated)', () => {
           cy.get('gn-ui-search-filters-summary')
             .find('[data-cy="filterSummaryLabel"]')
             .invoke('text')
-            .should('eq', 'Modified by: ')
+            .should('eq', 'Editor: ')
         })
         it('should display the badge for a selected user', () => {
           cy.get('gn-ui-search-filters-summary')
@@ -442,7 +442,7 @@ describe('dashboard (authenticated)', () => {
           cy.get('gn-ui-search-filters-summary')
             .find('[data-cy="filterSummaryLabel"]')
             .invoke('text')
-            .should('eq', 'Modified on: ')
+            .should('eq', 'Updated: ')
         })
         it('should display the badge for the selected date range', () => {
           cy.get('gn-ui-search-filters-summary')
@@ -498,7 +498,7 @@ describe('dashboard (authenticated)', () => {
           cy.get('gn-ui-search-filters-summary')
             .find('[data-cy="filterSummaryLabel"]')
             .invoke('text')
-            .should('eq', 'Modified on: ')
+            .should('eq', 'Updated: ')
         })
         it('should display the badge for the selected date range', () => {
           cy.get('gn-ui-search-filters-summary')
