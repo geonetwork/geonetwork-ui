@@ -10,6 +10,7 @@ import { marked } from 'marked'
 })
 export class MarkdownParserComponent {
   @Input() textContent: string
+  @Input() whitoutStyles?: boolean
 
   get parsedMarkdown() {
     return marked.parse(this.textContent)
