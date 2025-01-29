@@ -12,7 +12,6 @@ import {
   METADATA_VIEW_FEATURE_STATE_KEY,
   reducer,
 } from './state/mdview.reducer'
-import { GpfApiDlComponent } from './gpf-api-dl/gpf-api-dl.component'
 import { MatTabsModule } from '@angular/material/tabs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { TranslateModule } from '@ngx-translate/core'
@@ -37,7 +36,6 @@ import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
     TableComponent,
     NgIconsModule,
     DropdownSelectorComponent,
-    GpfApiDlComponent,
   ],
   providers: [
     MdViewFacade,

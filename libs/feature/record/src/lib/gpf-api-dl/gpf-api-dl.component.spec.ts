@@ -6,7 +6,6 @@ import { Choice, UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { GpfApiDlComponent as GpfApiDlComponent } from './gpf-api-dl.component'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
-import exp from 'constants'
 
 const mockDatasetServiceDistribution: DatasetServiceDistribution = {
   url: new URL('https://api.example.com/data'),
@@ -17,14 +16,13 @@ const mockDatasetServiceDistribution: DatasetServiceDistribution = {
 describe('GpfApiDlComponent', () => {
   let component: GpfApiDlComponent
   let fixture: ComponentFixture<GpfApiDlComponent>
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GpfApiDlComponent],
       imports: [
         UiInputsModule,
         HttpClientTestingModule,
         TranslateModule.forRoot(),
+        GpfApiDlComponent,
       ],
     }).compileComponents()
 
@@ -43,8 +41,7 @@ describe('GpfApiDlComponent', () => {
       expect(component.zone$.getValue()).toBe('')
       expect(component.crs$.getValue()).toBe('')
       const url = await firstValueFrom(component.apiQueryUrl$)
-      expect(url).toBe('https://api.example.com/data?pageSize=200&page=0')
-      //expect(component.apiLink.accessServiceProtocol).toBe('GPFDL')
+      expect(url).toBe('https://api.example.com/data?page=1')
     })
   })
   describe('When URL params are changed', () => {
@@ -136,14 +133,14 @@ describe('GpfApiDlComponent', () => {
         expect(component.zone$.getValue()).toBe('null')
         expect(component.format$.getValue()).toBe('null')
         expect(component.crs$.getValue()).toBe('null')
-        expect(component.page$.getValue()).toBe('0')
+        expect(component.page$.getValue()).toBe(1)
       })
     })
 
     describe('When page is reset', () => {
       it('Should reset page value', () => {
         component.resetPage()
-        expect(component.page$.getValue()).toBe('0')
+        expect(component.page$.getValue()).toBe(1)
       })
     })
   })
