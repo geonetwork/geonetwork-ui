@@ -40,3 +40,12 @@ body {
 .gn-ui-url-input {
   @apply font-medium text-black;
 }
+
+/*dropdown list*/
+.mdc-menu-surface.mat-mdc-autocomplete-panel {
+  --mat-option-label-text-size: 13px;
+}
+.mdc-menu-surface .mat-mdc-option {
+  @apply !font-sans;
+  min-height: 28px;
+}
