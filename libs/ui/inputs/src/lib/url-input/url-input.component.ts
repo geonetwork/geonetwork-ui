@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -6,8 +7,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
-import { ButtonComponent } from '../button/button.component'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import {
   NgIconComponent,
   provideIcons,

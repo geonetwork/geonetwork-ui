@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,22 +10,21 @@ import {
   DatasetRecord,
   Keyword,
 } from '@geonetwork-ui/common/domain/model/record'
-import { getTemporalRangeUnion } from '@geonetwork-ui/util/shared'
-import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component'
-import {
-  ExpandablePanelComponent,
-  MaxLinesComponent,
-} from '@geonetwork-ui/ui/layout'
-import { TranslateModule } from '@ngx-translate/core'
 import {
   BadgeComponent,
   CopyTextButtonComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
+import {
+  ExpandablePanelComponent,
+  MaxLinesComponent,
+} from '@geonetwork-ui/ui/layout'
+import { getTemporalRangeUnion } from '@geonetwork-ui/util/shared'
 import { NgIcon, provideIcons } from '@ng-icons/core'
-import { CommonModule } from '@angular/common'
 import { matOpenInNew } from '@ng-icons/material-icons/baseline'
 import { matMailOutline } from '@ng-icons/material-icons/outline'
+import { TranslateModule } from '@ngx-translate/core'
+import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
+import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component'
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 import { GnUiLinkifyDirective } from './linkify.directive'
 

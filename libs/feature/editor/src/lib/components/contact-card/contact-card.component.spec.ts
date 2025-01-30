@@ -1,15 +1,12 @@
+import { CommonModule } from '@angular/common'
+import { ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { ContactCardComponent } from './contact-card.component'
 import {
   Individual,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import { CommonModule } from '@angular/common'
-import {
-  AutocompleteComponent,
-  ButtonComponent,
-} from '@geonetwork-ui/ui/inputs'
-import { ChangeDetectionStrategy } from '@angular/core'
+import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
+import { ContactCardComponent } from './contact-card.component'
 
 describe('ContactCardComponent', () => {
   let component: ContactCardComponent
@@ -28,7 +25,7 @@ describe('ContactCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommonModule, ButtonComponent, ContactCardComponent],
+      imports: [CommonModule, ContactCardComponent],
     })
       .overrideComponent(AutocompleteComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },

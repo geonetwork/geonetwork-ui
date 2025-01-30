@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { PaginationComponent } from './pagination.component'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { TranslateModule } from '@ngx-translate/core'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { Paginable } from '../paginable.interface'
+import { PaginationComponent } from './pagination.component'
 
 class MockPaginable implements Paginable {
   currentPage = 1

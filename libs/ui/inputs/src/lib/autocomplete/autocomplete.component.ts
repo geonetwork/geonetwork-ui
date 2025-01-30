@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -20,6 +21,15 @@ import {
   MatAutocompleteSelectedEvent,
   MatAutocompleteTrigger,
 } from '@angular/material/autocomplete'
+import { ButtonComponent, PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { iconoirSearch } from '@ng-icons/iconoir'
+import { matClose } from '@ng-icons/material-icons/baseline'
+import { TranslateModule } from '@ngx-translate/core'
 import { first, merge, Observable, of, ReplaySubject, Subscription } from 'rxjs'
 import {
   catchError,
@@ -32,17 +42,6 @@ import {
   take,
   tap,
 } from 'rxjs/operators'
-import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
-import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
-import { ButtonComponent } from '../button/button.component'
-import {
-  NgIconComponent,
-  provideIcons,
-  provideNgIconsConfig,
-} from '@ng-icons/core'
-import { iconoirSearch } from '@ng-icons/iconoir'
-import { matClose } from '@ng-icons/material-icons/baseline'
 
 export type AutocompleteItem = unknown
 

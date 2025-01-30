@@ -4,6 +4,7 @@ import {
   ConnectedPosition,
   OverlayModule,
 } from '@angular/cdk/overlay'
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -16,17 +17,16 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core'
-import { firstValueFrom } from 'rxjs'
-import { DropdownChoice } from './dropdown-selector.model'
-import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
-import { ButtonComponent } from '../button/button.component'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import {
   NgIconComponent,
   provideIcons,
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { matExpandLess, matExpandMore } from '@ng-icons/material-icons/baseline'
+import { TranslateModule } from '@ngx-translate/core'
+import { firstValueFrom } from 'rxjs'
+import { DropdownChoice } from './dropdown-selector.model'
 
 const DEFAULT_ROW_NUMBERS = 6
 

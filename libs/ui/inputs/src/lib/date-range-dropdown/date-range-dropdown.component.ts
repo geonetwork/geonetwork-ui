@@ -1,3 +1,5 @@
+import { OverlayContainer } from '@angular/cdk/overlay'
+import { CommonModule } from '@angular/common'
 import {
   AfterViewChecked,
   ChangeDetectorRef,
@@ -8,11 +10,9 @@ import {
   Output,
   ViewChild,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
 import { MatNativeDateModule } from '@angular/material/core'
 import { MatDatepickerModule } from '@angular/material/datepicker'
-import { ButtonComponent } from '../button/button.component'
-import { OverlayContainer } from '@angular/cdk/overlay'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matExpandLess, matExpandMore } from '@ng-icons/material-icons/baseline'
 

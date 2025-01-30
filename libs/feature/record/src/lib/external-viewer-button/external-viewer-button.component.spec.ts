@@ -1,14 +1,14 @@
+import { importProvidersFrom } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
+import { TranslateModule } from '@ngx-translate/core'
+import { MockBuilder } from 'ng-mocks'
 import {
   EXTERNAL_VIEWER_OPEN_NEW_TAB,
   EXTERNAL_VIEWER_URL_TEMPLATE,
   ExternalViewerButtonComponent,
 } from './external-viewer-button.component'
-import { MockBuilder } from 'ng-mocks'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { importProvidersFrom } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
 
 window.open = jest.fn().mockImplementation(() => window)
 window.focus = jest.fn().mockImplementation(() => window)

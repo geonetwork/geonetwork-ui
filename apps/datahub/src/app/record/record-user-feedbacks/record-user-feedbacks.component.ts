@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -6,32 +7,33 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core'
-import { catchError, filter, switchMap, takeUntil } from 'rxjs/operators'
-import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs'
+import { AuthService, Gn4PlatformMapper } from '@geonetwork-ui/api/repository'
 import {
   UserFeedback,
   UserFeedbackViewModel,
 } from '@geonetwork-ui/common/domain/model/record'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import { UserFeedbackItemComponent } from '@geonetwork-ui/ui/elements'
 import {
-  ButtonComponent,
   DropdownChoice,
   DropdownSelectorComponent,
   TextAreaComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { AuthService, Gn4PlatformMapper } from '@geonetwork-ui/api/repository'
-import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
+import {
+  ButtonComponent,
+  SpinningLoaderComponent,
+} from '@geonetwork-ui/ui/widgets'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import {
   matAccountBoxOutline,
   matEditOutline,
   matSendOutline,
 } from '@ng-icons/material-icons/outline'
-import { CommonModule } from '@angular/common'
-import { UserFeedbackItemComponent } from '@geonetwork-ui/ui/elements'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs'
+import { catchError, filter, switchMap, takeUntil } from 'rxjs/operators'
 
 type UserFeedbackSortingFunction = (
   userFeedbackA: UserFeedback,

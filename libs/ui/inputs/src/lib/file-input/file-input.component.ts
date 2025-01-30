@@ -8,17 +8,16 @@ import {
   Output,
 } from '@angular/core'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
-import { ButtonComponent } from '../button/button.component'
-import { FilesDropDirective } from '../files-drop/files-drop.directive'
-import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { UrlInputComponent } from '../url-input/url-input.component'
 import {
   NgIconComponent,
   provideIcons,
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirCloudUpload, iconoirFramePlusIn } from '@ng-icons/iconoir'
+import { TranslateModule } from '@ngx-translate/core'
+import { FilesDropDirective } from '../files-drop/files-drop.directive'
+import { UrlInputComponent } from '../url-input/url-input.component'
 
 @Component({
   selector: 'gn-ui-file-input',
@@ -28,7 +27,6 @@ import { iconoirCloudUpload, iconoirFramePlusIn } from '@ng-icons/iconoir'
   standalone: true,
   imports: [
     CommonModule,
-    ButtonComponent,
     FilesDropDirective,
     MatProgressSpinnerModule,
     TranslateModule,

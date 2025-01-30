@@ -1,18 +1,18 @@
+import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { OgcApiEndpoint, WfsEndpoint } from '@camptocamp/ogc-client'
 import {
   DatasetServiceDistribution,
   ServiceProtocol,
 } from '@geonetwork-ui/common/domain/model/record'
-import { mimeTypeToFormat } from '@geonetwork-ui/util/shared'
-import { BehaviorSubject, combineLatest, filter, map, switchMap } from 'rxjs'
 import {
   CopyTextButtonComponent,
   DropdownSelectorComponent,
   TextInputComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { CommonModule } from '@angular/common'
+import { mimeTypeToFormat } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
+import { BehaviorSubject, combineLatest, filter, map, switchMap } from 'rxjs'
 
 const DEFAULT_PARAMS = {
   OFFSET: '',

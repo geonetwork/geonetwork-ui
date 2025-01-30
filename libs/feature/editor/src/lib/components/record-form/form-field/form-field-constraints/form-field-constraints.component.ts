@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -6,22 +7,22 @@ import {
   OnInit,
   Output,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
-import { SortableListComponent } from '@geonetwork-ui/ui/layout'
-import { ConstraintCardComponent } from '../../../constraint-card/constraint-card.component'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   CatalogRecordKeys,
   Constraint,
 } from '@geonetwork-ui/common/domain/model/record'
-import { ButtonComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { TranslateModule } from '@ngx-translate/core'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { SortableListComponent } from '@geonetwork-ui/ui/layout'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import {
   NgIconComponent,
   provideIcons,
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirPlus } from '@ng-icons/iconoir'
+import { TranslateModule } from '@ngx-translate/core'
+import { ConstraintCardComponent } from '../../../constraint-card/constraint-card.component'
 
 marker('editor.record.form.constraint.add.legalConstraints')
 marker('editor.record.form.constraint.add.securityConstraints')

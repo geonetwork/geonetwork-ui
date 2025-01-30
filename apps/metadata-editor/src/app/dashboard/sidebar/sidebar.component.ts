@@ -1,21 +1,21 @@
 import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
-import { DashboardMenuComponent } from '../dashboard-menu/dashboard-menu.component'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { RouterLink } from '@angular/router'
 import {
   AuthService,
   AvatarServiceInterface,
 } from '@geonetwork-ui/api/repository'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import { combineLatest, Observable } from 'rxjs'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { RouterLink } from '@angular/router'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { iconoirSystemShut } from '@ng-icons/iconoir'
-import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import { TranslateModule } from '@ngx-translate/core'
+import { combineLatest, Observable } from 'rxjs'
+import { DashboardMenuComponent } from '../dashboard-menu/dashboard-menu.component'
 
 @Component({
   selector: 'md-editor-sidebar',

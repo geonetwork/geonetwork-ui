@@ -14,7 +14,7 @@ import {
   Output,
   TemplateRef,
 } from '@angular/core'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 @Component({
   selector: 'gn-ui-sortable-list',

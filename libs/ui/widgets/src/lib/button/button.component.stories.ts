@@ -1,27 +1,27 @@
-import {
-  Meta,
-  moduleMetadata,
-  StoryObj,
-  applicationConfig,
-} from '@storybook/angular'
-import { ButtonComponent } from './button.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import {
   matDownloading,
-  matPestControl,
-  matWaves,
-  matTravelExplore,
   matFitScreen,
+  matPestControl,
+  matTravelExplore,
+  matWaves,
 } from '@ng-icons/material-icons/baseline'
+import { TranslateModule } from '@ngx-translate/core'
+import {
+  applicationConfig,
+  Meta,
+  moduleMetadata,
+  StoryObj,
+} from '@storybook/angular'
+import { ButtonComponent } from './button.component'
 
 export default {
-  title: 'Inputs/ButtonComponent',
+  title: 'Widgets/ButtonComponent',
   component: ButtonComponent,
   decorators: [
     moduleMetadata({

@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { getBadgeColor, getFileFormat } from '@geonetwork-ui/util/shared'
-import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { CommonModule } from '@angular/common'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
+import { getBadgeColor, getFileFormat } from '@geonetwork-ui/util/shared'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { DownloadItemComponent } from '../download-item/download-item.component'
 
 marker('datahub.search.filter.all')

@@ -1,3 +1,6 @@
+import { Overlay, OverlayRef } from '@angular/cdk/overlay'
+import { TemplatePortal } from '@angular/cdk/portal'
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectorRef,
   Component,
@@ -7,24 +10,17 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
-import { RecordsListComponent } from '../records-list.component'
+import { Router } from '@angular/router'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
 import {
   FeatureSearchModule,
   FieldsService,
   FILTER_SUMMARY_IGNORE_LIST,
   SearchFacade,
 } from '@geonetwork-ui/feature/search'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
-import { Router } from '@angular/router'
-import { Overlay, OverlayRef } from '@angular/cdk/overlay'
-import { TemplatePortal } from '@angular/cdk/portal'
-import { RecordsCountComponent } from '../records-count/records-count.component'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
-import { SearchFiltersComponent } from '../../dashboard/search-filters/search-filters.component'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import {
   NgIconComponent,
   provideIcons,
@@ -35,6 +31,10 @@ import {
   iconoirNavArrowUp,
   iconoirPagePlus,
 } from '@ng-icons/iconoir'
+import { TranslateModule } from '@ngx-translate/core'
+import { SearchFiltersComponent } from '../../dashboard/search-filters/search-filters.component'
+import { RecordsCountComponent } from '../records-count/records-count.component'
+import { RecordsListComponent } from '../records-list.component'
 
 const FILTER_OWNER = 'owner'
 

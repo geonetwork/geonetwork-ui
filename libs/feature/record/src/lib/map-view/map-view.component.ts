@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -6,8 +7,32 @@ import {
   Input,
   ViewChild,
 } from '@angular/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import { DataService } from '@geonetwork-ui/feature/dataviz'
 import { MapUtilsService } from '@geonetwork-ui/feature/map'
+import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  FeatureDetailComponent,
+  MapContainerComponent,
+  MapLegendComponent,
+  prioritizePageScroll,
+} from '@geonetwork-ui/ui/map'
+import {
+  ButtonComponent,
+  LoadingMaskComponent,
+  PopupAlertComponent,
+} from '@geonetwork-ui/ui/widgets'
 import { getLinkLabel } from '@geonetwork-ui/util/shared'
+import {
+  createViewFromLayer,
+  MapContext,
+  MapContextLayer,
+} from '@geospatial-sdk/core'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
+import { matClose } from '@ng-icons/material-icons/baseline'
+import { TranslateModule } from '@ngx-translate/core'
+import { Feature } from 'geojson'
 import {
   BehaviorSubject,
   combineLatest,
@@ -27,35 +52,8 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators'
-import { MdViewFacade } from '../state/mdview.facade'
-import { DataService } from '@geonetwork-ui/feature/dataviz'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
-import {
-  createViewFromLayer,
-  MapContext,
-  MapContextLayer,
-} from '@geospatial-sdk/core'
-import {
-  FeatureDetailComponent,
-  MapContainerComponent,
-  prioritizePageScroll,
-  MapLegendComponent,
-} from '@geonetwork-ui/ui/map'
-import { Feature } from 'geojson'
-import { NgIconComponent, provideIcons } from '@ng-icons/core'
-import { matClose } from '@ng-icons/material-icons/baseline'
-import { CommonModule } from '@angular/common'
-import {
-  ButtonComponent,
-  DropdownSelectorComponent,
-} from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
 import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component'
-import {
-  LoadingMaskComponent,
-  PopupAlertComponent,
-} from '@geonetwork-ui/ui/widgets'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { MdViewFacade } from '../state/mdview.facade'
 
 marker('map.dropdown.placeholder')
 marker('wfs.feature.limit')

@@ -9,8 +9,7 @@ import {
 } from '@angular/core'
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu'
-import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { TranslateModule } from '@ngx-translate/core'
 
 type ActionMenuPage = 'mainMenu' | 'deleteMenu'
@@ -25,7 +24,6 @@ type ActionMenuPage = 'mainMenu' | 'deleteMenu'
     ButtonComponent,
     MatMenuModule,
     MatDialogModule,
-    ConfirmationDialogComponent,
     TranslateModule,
   ],
 })

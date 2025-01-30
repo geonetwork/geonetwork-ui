@@ -1,11 +1,11 @@
+import { CommonModule } from '@angular/common'
 import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { matZoomOutMap } from '@ng-icons/material-icons/baseline'
 import * as basicLightbox from 'basiclightbox'
 import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { NgIcon, provideIcons } from '@ng-icons/core'
-import { matZoomOutMap } from '@ng-icons/material-icons/baseline'
-import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'gn-ui-image-overlay-preview',

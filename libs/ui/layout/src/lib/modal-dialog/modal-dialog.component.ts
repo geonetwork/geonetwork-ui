@@ -1,16 +1,16 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
   Inject,
   TemplateRef,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 export interface ModalDialogData {
   title: string

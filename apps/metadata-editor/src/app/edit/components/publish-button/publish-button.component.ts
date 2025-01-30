@@ -22,7 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { RecordsApiService } from '@geonetwork-ui/data-access/gn4'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import {
   NgIconComponent,
   provideIcons,
@@ -32,17 +32,10 @@ import { iconoirCloudUpload } from '@ng-icons/iconoir'
 import { matCheckCircleOutline } from '@ng-icons/material-icons/outline'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { combineLatest, Observable, of, Subscription } from 'rxjs'
-import {
-  catchError,
-  concatMap,
-  map,
-  skip,
-  switchMap,
-  take,
-  withLatestFrom,
-} from 'rxjs/operators'
+import { catchError, map, skip, switchMap, take } from 'rxjs/operators'
 
 export type RecordSaveStatus = 'saving' | 'upToDate' | 'hasChanges'
+
 @Component({
   selector: 'md-editor-publish-button',
   standalone: true,

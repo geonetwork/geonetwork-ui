@@ -1,20 +1,21 @@
+import { CommonModule } from '@angular/common'
+import { HttpClientModule } from '@angular/common/http'
+import { importProvidersFrom } from '@angular/core'
+import { TextAreaComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
+import {
+  TRANSLATE_DEFAULT_CONFIG,
+  UtilI18nModule,
+} from '@geonetwork-ui/util/i18n'
+import { TranslateModule } from '@ngx-translate/core'
 import {
   applicationConfig,
   componentWrapperDecorator,
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { CommonModule } from '@angular/common'
-import { UserFeedbackItemComponent } from './user-feedback-item.component'
-import { TranslateModule } from '@ngx-translate/core'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
 import { TimeSincePipe } from './time-since.pipe'
-import { HttpClientModule } from '@angular/common/http'
-import { importProvidersFrom } from '@angular/core'
-import { ButtonComponent, TextAreaComponent } from '@geonetwork-ui/ui/inputs'
+import { UserFeedbackItemComponent } from './user-feedback-item.component'
 
 export default {
   title: 'Elements/UserFeedbackItemComponent',

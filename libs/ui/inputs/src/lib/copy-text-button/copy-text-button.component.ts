@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matContentCopy } from '@ng-icons/material-icons/baseline'

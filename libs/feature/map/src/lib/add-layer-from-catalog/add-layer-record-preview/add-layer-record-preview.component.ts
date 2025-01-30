@@ -1,20 +1,20 @@
+import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component, ElementRef } from '@angular/core'
+import {
+  DatasetOnlineResource,
+  DatasetRecord,
+} from '@geonetwork-ui/common/domain/model/record'
+import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { RecordPreviewComponent } from '@geonetwork-ui/ui/search'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import {
   getLinkLabel,
   LinkClassifierService,
   LinkUsage,
 } from '@geonetwork-ui/util/shared'
+import { MapContextLayer } from '@geospatial-sdk/core'
 import { firstValueFrom, Observable, of, throwError } from 'rxjs'
 import { MapFacade } from '../../+state/map.facade'
-import {
-  DatasetOnlineResource,
-  DatasetRecord,
-} from '@geonetwork-ui/common/domain/model/record'
-import { MapContextLayer } from '@geospatial-sdk/core'
-import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'gn-ui-add-layer-record-preview',
