@@ -10,6 +10,6 @@
 :host ::ng-deep gn-ui-autocomplete gn-ui-button:last-of-type button {
   @apply left-0 right-auto;
 }
-::ng-deep  .mdc-menu-surface.mat-mdc-autocomplete-panel {
+::ng-deep .mdc-menu-surface.mat-mdc-autocomplete-panel {
   @apply !mt-[13px];
 }
