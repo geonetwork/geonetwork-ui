@@ -6,14 +6,11 @@
     "
   >
     <ng-container *ngIf="!section.hidden">
-      <div class="flex flex-col gap-8 border p-8 rounded-[8px] shadow">
-        <div
-          class="flex flex-col gap-2"
-          [ngClass]="section.labelKey ? 'mb-4' : 'hidden'"
-        >
+      <div class="flex flex-col gap-6 border p-8 rounded-[8px] shadow">
+        <div class="flex flex-col gap-2">
           <div
             *ngIf="section.labelKey"
-            class="text-2xl font-title text-main"
+            class="text-2xl font-title text-black"
             translate
           >
             {{ section.labelKey }}

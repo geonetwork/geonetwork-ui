@@ -36,3 +36,7 @@ body {
 .input-as-button {
   @apply border-2 border-gray-300 hover:border-main bg-transparent hover:text-main py-[11.5px] pl-[14px] pr-2;
 }
+
+.gn-ui-url-input {
+  @apply font-medium text-black;
+}
