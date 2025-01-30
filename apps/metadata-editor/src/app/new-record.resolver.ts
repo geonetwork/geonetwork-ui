@@ -30,7 +30,7 @@ export class NewRecordResolver {
           ownerOrganization: {
             name: 'Owner organization',
           },
-          contacts: [],
+          contacts: contactsForResource ? [contactsForResource] : [],
           recordUpdated: new Date(),
           updateFrequency: 'unknown',
           otherLanguages: [],

@@ -82,11 +82,12 @@ describe('NewRecordResolver', () => {
           kind: 'dataset',
           recordUpdated: expect.any(Date),
           contactsForResource: expectedContactsForResource,
+          contacts: expectedContactsForResource,
           status: 'ongoing',
           temporalExtents: [],
           title: expect.stringMatching(/^My new record/),
           uniqueIdentifier: null,
-        },
+        } as Partial<CatalogRecord>,
         null,
         false,
       ])
