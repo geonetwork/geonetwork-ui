@@ -9,14 +9,14 @@
     (title | translate: { count: figure })
   "
 >
-  <ng-icon
+  <div
     class="{{ bgClass }} {{
       textClass
-    }} text-[1.875em] rounded-full mr-[0.55em] p-[0.6em] w-[2.2em] h-[2.2em] shrink-0"
+    }} text-[1.875em] rounded-full mr-[0.55em] flex justify-center items-center w-[2.2em] h-[2.2em] shrink-0"
     style="width: 2.2em; height: 2.2em"
-    [name]="icon"
   >
-  </ng-icon>
+    <ng-icon class="text-[0.66em]" [name]="icon"> </ng-icon>
+  </div>
   <div class="shrink overflow-hidden">
     <div class="figure-block text-[1.5em] text-black">
       <span class="figure font-medium mr-[0.3em]" data-test="figure">{{
