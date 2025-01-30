@@ -1,13 +1,13 @@
+import { CommonModule } from '@angular/common'
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core'
 import { WfsEndpoint, WfsFeatureTypeBrief } from '@camptocamp/ogc-client'
-import { firstValueFrom, Subject } from 'rxjs'
-import { MapFacade } from '../+state/map.facade'
-import { debounceTime } from 'rxjs/operators'
-import { MapContextLayer } from '@geospatial-sdk/core'
 import { TextInputComponent } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
-import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
+import { MapContextLayer } from '@geospatial-sdk/core'
+import { TranslateModule } from '@ngx-translate/core'
+import { firstValueFrom, Subject } from 'rxjs'
+import { debounceTime } from 'rxjs/operators'
+import { MapFacade } from '../+state/map.facade'
 
 @Component({
   selector: 'gn-ui-add-layer-from-wfs',

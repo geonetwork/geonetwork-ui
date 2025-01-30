@@ -7,20 +7,20 @@ import {
   Output,
 } from '@angular/core'
 import { DatasetTemporalExtent } from '@geonetwork-ui/common/domain/model/record'
-import { SortableListComponent } from '@geonetwork-ui/ui/layout'
 import {
   DatePickerComponent,
   DateRangePickerComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { combineLatest, map } from 'rxjs'
+import { SortableListComponent } from '@geonetwork-ui/ui/layout'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import {
   NgIconComponent,
   provideIcons,
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirPlus } from '@ng-icons/iconoir'
-import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { combineLatest, map } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-form-field-temporal-extents',

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import {
   NgIconComponent,
   provideIcons,
@@ -9,7 +10,6 @@ import {
   matArrowForward,
 } from '@ng-icons/material-icons/baseline'
 import { Paginable } from '../paginable.interface'
-import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 @Component({
   selector: 'gn-ui-previous-next-buttons',

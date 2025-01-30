@@ -1,3 +1,6 @@
+import { CommonModule } from '@angular/common'
+import { importProvidersFrom } from '@angular/core'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {
   applicationConfig,
   componentWrapperDecorator,
@@ -6,9 +9,6 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { ContactCardComponent } from './contact-card.component'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { importProvidersFrom } from '@angular/core'
-import { CommonModule } from '@angular/common'
 
 export default {
   title: 'Elements/ContactCardComponent',

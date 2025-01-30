@@ -1,11 +1,11 @@
-import { Meta, moduleMetadata, applicationConfig } from '@storybook/angular'
-import { BadgeComponent } from './badge.component'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import {
   matDownloading,
   matPestControl,
   matWaves,
 } from '@ng-icons/material-icons/baseline'
+import { applicationConfig, Meta, moduleMetadata } from '@storybook/angular'
+import { BadgeComponent } from './badge.component'
 
 export default {
   title: 'Widgets/BadgeComponent',

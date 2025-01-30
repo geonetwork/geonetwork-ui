@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -6,14 +7,13 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import {
   NgIconComponent,
   provideIcons,
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirArrowUp, iconoirLink } from '@ng-icons/iconoir'
-import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 @Component({
   selector: 'gn-ui-url-input',

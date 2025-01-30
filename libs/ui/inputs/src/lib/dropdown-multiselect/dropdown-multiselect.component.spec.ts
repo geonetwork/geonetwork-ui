@@ -1,11 +1,11 @@
 import { OverlayModule } from '@angular/cdk/overlay'
-import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { DropdownMultiselectComponent } from './dropdown-multiselect.component'
-import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormsModule } from '@angular/forms'
+import { By } from '@angular/platform-browser'
 import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
+import { TranslateModule } from '@ngx-translate/core'
+import { DropdownMultiselectComponent } from './dropdown-multiselect.component'
 
 describe('DropdownMultiselectComponent', () => {
   let component: DropdownMultiselectComponent

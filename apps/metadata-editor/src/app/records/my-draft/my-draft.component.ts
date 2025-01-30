@@ -7,6 +7,7 @@ import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { ResultsTableComponent } from '@geonetwork-ui/ui/search'
 import { TranslateModule } from '@ngx-translate/core'
 import { startWith, switchMap } from 'rxjs'
+
 @Component({
   selector: 'md-editor-my-draft',
   templateUrl: './my-draft.component.html',

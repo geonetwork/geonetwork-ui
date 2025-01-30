@@ -1,16 +1,16 @@
 import { Component, DebugElement, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import {
   DEFAULT_RESULTS_LAYOUT_CONFIG,
   RESULTS_LAYOUT_CONFIG,
 } from '@geonetwork-ui/ui/search'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { ResultsListContainerComponent } from './results-list.container.component'
-import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
-import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-results-list',

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,20 +6,19 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
-import { FormFieldRichComponent } from '../record-form/form-field/form-field-rich/form-field-rich.component'
-import { UrlInputComponent } from '@geonetwork-ui/ui/inputs'
 import { MatIconModule } from '@angular/material/icon'
-import { TranslateModule } from '@ngx-translate/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { Constraint } from '@geonetwork-ui/common/domain/model/record'
+import { UrlInputComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import {
   NgIconComponent,
   provideIcons,
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirPlus } from '@ng-icons/iconoir'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
+import { TranslateModule } from '@ngx-translate/core'
+import { FormFieldRichComponent } from '../record-form/form-field/form-field-rich/form-field-rich.component'
 
 @Component({
   selector: 'gn-ui-constraint-card',

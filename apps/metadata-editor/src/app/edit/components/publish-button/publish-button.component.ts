@@ -35,6 +35,7 @@ import { combineLatest, Observable, of, Subscription } from 'rxjs'
 import { catchError, map, skip, switchMap, take } from 'rxjs/operators'
 
 export type RecordSaveStatus = 'saving' | 'upToDate' | 'hasChanges'
+
 @Component({
   selector: 'md-editor-publish-button',
   standalone: true,

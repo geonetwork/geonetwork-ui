@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
-import { TranslateModule } from '@ngx-translate/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
-import { map } from 'rxjs/operators'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { LetDirective } from '@ngrx/component'
+import { TranslateModule } from '@ngx-translate/core'
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'md-editor-page-selector',

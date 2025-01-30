@@ -1,12 +1,12 @@
+import { CommonModule } from '@angular/common'
+import { ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { ContactCardComponent } from './contact-card.component'
 import {
   Individual,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import { CommonModule } from '@angular/common'
 import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
-import { ChangeDetectionStrategy } from '@angular/core'
+import { ContactCardComponent } from './contact-card.component'
 
 describe('ContactCardComponent', () => {
   let component: ContactCardComponent

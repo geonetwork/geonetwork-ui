@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -11,16 +12,15 @@ import {
   UserFeedbackViewModel,
 } from '@geonetwork-ui/common/domain/model/record'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
-import { TimeSincePipe } from './time-since.pipe'
-import { CommonModule } from '@angular/common'
 import { TextAreaComponent } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
 import {
   ButtonComponent,
   SpinningLoaderComponent,
 } from '@geonetwork-ui/ui/widgets'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matSendOutline } from '@ng-icons/material-icons/outline'
+import { TranslateModule } from '@ngx-translate/core'
+import { TimeSincePipe } from './time-since.pipe'
 
 @Component({
   selector: 'gn-ui-user-feedback-item',

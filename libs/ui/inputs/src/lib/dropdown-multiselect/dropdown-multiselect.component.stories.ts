@@ -1,3 +1,7 @@
+import { OverlayModule } from '@angular/cdk/overlay'
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
+import { TranslateModule } from '@ngx-translate/core'
 import {
   componentWrapperDecorator,
   Meta,
@@ -5,10 +9,6 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { DropdownMultiselectComponent } from './dropdown-multiselect.component'
-import { OverlayModule } from '@angular/cdk/overlay'
-import { MatCheckboxModule } from '@angular/material/checkbox'
-import { TranslateModule } from '@ngx-translate/core'
-import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 export default {
   title: 'Inputs/DropdownMultiselectComponent',

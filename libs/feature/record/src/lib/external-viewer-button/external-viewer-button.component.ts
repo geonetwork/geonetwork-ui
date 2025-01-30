@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -6,14 +7,13 @@ import {
   Input,
   Optional,
 } from '@angular/core'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { getFileFormat } from '@geonetwork-ui/util/shared'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
+import { getFileFormat } from '@geonetwork-ui/util/shared'
 import { NgIcon, provideIcons } from '@ng-icons/core'
-import { CommonModule } from '@angular/common'
 import { matOpenInNew } from '@ng-icons/material-icons/baseline'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 
 marker('externalviewer.dataset.unnamed')
 

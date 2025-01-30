@@ -1,13 +1,13 @@
+import { CommonModule } from '@angular/common'
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core'
 import { WmsEndpoint, WmsLayerSummary } from '@camptocamp/ogc-client'
-import { MapFacade } from '../+state/map.facade'
+import { TextInputComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
+import { MapContextLayer } from '@geospatial-sdk/core'
+import { TranslateModule } from '@ngx-translate/core'
 import { firstValueFrom, Subject } from 'rxjs'
 import { debounceTime } from 'rxjs/operators'
-import { MapContextLayer } from '@geospatial-sdk/core'
-import { TextInputComponent } from '@geonetwork-ui/ui/inputs'
-import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
-import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
+import { MapFacade } from '../+state/map.facade'
 
 @Component({
   selector: 'gn-ui-add-layer-from-wms',

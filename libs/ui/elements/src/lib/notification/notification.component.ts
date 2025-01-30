@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,15 +6,14 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matCheckCircleOutline } from '@ng-icons/material-icons/baseline'
 import {
-  matErrorOutlineOutline,
-  matWarningAmberOutline,
-  matInfoOutline,
   matCloseOutline,
+  matErrorOutlineOutline,
+  matInfoOutline,
+  matWarningAmberOutline,
 } from '@ng-icons/material-icons/outline'
 
 @Component({

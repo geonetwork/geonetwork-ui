@@ -1,10 +1,10 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
   Inject,
   TemplateRef,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
 import {
   MAT_DIALOG_DATA,
   MatDialogModule,

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,21 +6,20 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
 import {
   DatasetDownloadDistribution,
   OnlineLinkResource,
   OnlineResource,
 } from '@geonetwork-ui/common/domain/model/record'
-import { bytesToMegabytes, getFileFormat } from '@geonetwork-ui/util/shared'
 import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
-import { TranslateModule } from '@ngx-translate/core'
+import { bytesToMegabytes, getFileFormat } from '@geonetwork-ui/util/shared'
 import {
   NgIconComponent,
   provideIcons,
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirAttachment } from '@ng-icons/iconoir'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-online-resource-card',

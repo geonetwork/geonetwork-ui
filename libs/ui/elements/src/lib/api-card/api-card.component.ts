@@ -1,4 +1,4 @@
-import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,12 +9,12 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
-import { CopyTextButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { CopyTextButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matMoreHoriz } from '@ng-icons/material-icons/baseline'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-api-card',

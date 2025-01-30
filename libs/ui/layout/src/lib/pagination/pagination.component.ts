@@ -1,12 +1,12 @@
+import { CommonModule } from '@angular/common'
 import { Component, Input } from '@angular/core'
+import { FormsModule } from '@angular/forms'
 import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { NgIcon, provideIcons } from '@ng-icons/core'
-import { FormsModule } from '@angular/forms'
 import {
   matChevronLeft,
   matChevronRight,
 } from '@ng-icons/material-icons/baseline'
-import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 import { Paginable } from '../paginable.interface'
 
