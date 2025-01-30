@@ -773,7 +773,7 @@ describe('api form', () => {
       cy.get('@secondInput').type('87')
 
       cy.get('@apiForm').find('gn-ui-dropdown-selector').as('dropdown')
-      cy.get('@dropdown').eq(0).selectDropdownOption('geojson')
+      cy.get('@dropdown').eq(0).selectDropdownOption('application/geo+json')
 
       cy.get('@apiForm')
         .find('gn-ui-copy-text-button')
@@ -794,7 +794,7 @@ describe('api form', () => {
         .find('gn-ui-copy-text-button')
         .find('input')
         .invoke('val')
-        .should('include', 'f=json&limit=-1')
+        .should('include', 'f=application%2Fjson&limit=-1')
     })
     it('should close the panel on click', () => {
       cy.get('gn-ui-record-api-form').prev().find('button').click()

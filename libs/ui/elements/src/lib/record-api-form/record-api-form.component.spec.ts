@@ -88,10 +88,10 @@ describe('RecordApiFormComponent', () => {
       expect(component.apiBaseUrl).toBe('https://api.example.com/data')
       expect(component.offset$.getValue()).toBe('')
       expect(component.limit$.getValue()).toBe('-1')
-      expect(component.format$.getValue()).toBe('json')
+      expect(component.format$.getValue()).toBe('application/json')
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        'https://api.example.com/data/collections/feature1/items?limit=-1&f=json'
+        'https://api.example.com/data/collections/feature1/items?limit=-1&f=application%2Fjson'
       )
     })
   })
@@ -99,37 +99,37 @@ describe('RecordApiFormComponent', () => {
     it('should update query URL correctly when setting offset, limit, and format', async () => {
       const mockOffset = '10'
       const mockLimit = '20'
-      const mockFormat = 'json'
+      const mockFormat = 'text/csv'
       component.setOffset(mockOffset)
       component.setLimit(mockLimit)
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data/collections/feature1/items?limit=${mockLimit}&offset=${mockOffset}&f=${mockFormat}`
+        `https://api.example.com/data/collections/feature1/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(mockFormat)}`
       )
     })
     it('should remove the param in url if value is null', async () => {
       const mockOffset = '0'
       const mockLimit = '20'
-      const mockFormat = 'json'
+      const mockFormat = 'application/json'
       component.setOffset(mockOffset)
       component.setLimit(mockLimit)
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data/collections/feature1/items?limit=${mockLimit}&offset=${mockOffset}&f=${mockFormat}`
+        `https://api.example.com/data/collections/feature1/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(mockFormat)}`
       )
     })
     it('should remove the param in url if value is zero', async () => {
       const mockOffset = '10'
       const mockLimit = '0'
-      const mockFormat = 'json'
+      const mockFormat = 'application/json'
       component.setOffset(mockOffset)
       component.setLimit(mockLimit)
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data/collections/feature1/items?limit=${mockLimit}&offset=${mockOffset}&f=${mockFormat}`
+        `https://api.example.com/data/collections/feature1/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(mockFormat)}`
       )
     })
   })
@@ -139,7 +139,7 @@ describe('RecordApiFormComponent', () => {
       component.resetUrl()
       expect(component.offset$.getValue()).toBe('')
       expect(component.limit$.getValue()).toBe('-1')
-      expect(component.format$.getValue()).toBe('json')
+      expect(component.format$.getValue()).toBe('application/json')
     })
   })
 
@@ -151,9 +151,9 @@ describe('RecordApiFormComponent', () => {
     it('should parse the returned formats', () => {
       component.parseOutputFormats()
       expect(component.outputFormats).toEqual([
-        { value: 'csv', label: 'CSV' },
-        { value: 'geojson', label: 'GEOJSON' },
-        { value: 'json', label: 'JSON' },
+        { value: 'text/csv', label: 'CSV' },
+        { value: 'application/geo+json', label: 'GEOJSON' },
+        { value: 'application/json', label: 'JSON' },
       ])
     })
   })
@@ -172,10 +172,10 @@ describe('RecordApiFormComponent', () => {
       expect(component.accessServiceProtocol).toBe('wfs')
       expect(component.offset$.getValue()).toBe('')
       expect(component.limit$.getValue()).toBe('-1')
-      expect(component.format$.getValue()).toBe('json')
+      expect(component.format$.getValue()).toBe('application/json')
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"json","limit":-1}`
+        `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"application/json","limit":-1}`
       )
     })
   })

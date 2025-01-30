@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { OgcApiEndpoint, WfsEndpoint } from '@camptocamp/ogc-client'
+import { MimeType, OgcApiEndpoint, WfsEndpoint } from '@camptocamp/ogc-client'
 import {
   DatasetServiceDistribution,
   ServiceProtocol,
@@ -8,6 +8,7 @@ import { mimeTypeToFormat } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, filter, map, switchMap } from 'rxjs'
 import {
   CopyTextButtonComponent,
+  DropdownChoice,
   DropdownSelectorComponent,
   TextInputComponent,
 } from '@geonetwork-ui/ui/inputs'
@@ -17,12 +18,7 @@ import { TranslateModule } from '@ngx-translate/core'
 const DEFAULT_PARAMS = {
   OFFSET: '',
   LIMIT: '-1',
-  FORMAT: 'json',
-}
-
-interface OutputFormats {
-  itemFormats?: any[]
-  outputFormats?: any[]
+  FORMAT: 'application/json',
 }
 
 @Component({
@@ -41,7 +37,7 @@ interface OutputFormats {
 })
 export class RecordApiFormComponent {
   @Input() set apiLink(value: DatasetServiceDistribution) {
-    this.outputFormats = [{ value: 'json', label: 'JSON' }]
+    this.outputFormats = [{ value: 'application/json', label: 'JSON' }]
     this.accessServiceProtocol = value ? value.accessServiceProtocol : undefined
     this.apiFeatureType = value ? value.name : undefined
     if (value) {
@@ -61,7 +57,9 @@ export class RecordApiFormComponent {
   apiFeatureType: string
   supportOffset = true
   accessServiceProtocol: ServiceProtocol | undefined
-  outputFormats = [{ value: 'json', label: 'JSON' }]
+  outputFormats: DropdownChoice[] = [
+    { value: 'application/json', label: 'JSON' },
+  ]
   endpoint: WfsEndpoint | OgcApiEndpoint | undefined
   firstCollection: string | undefined
 
@@ -104,17 +102,12 @@ export class RecordApiFormComponent {
 
   async parseOutputFormats() {
     if (!this.endpoint) return
-    const apiUrl = this.apiBaseUrl.endsWith('?')
-      ? this.apiBaseUrl.slice(0, -1)
-      : this.apiBaseUrl
-    const outputFormats = await this.getOutputFormats(apiUrl)
-
-    const formatsList = outputFormats.itemFormats
-      ? this.mapFormats(outputFormats.itemFormats)
-      : this.mapFormats(outputFormats.outputFormats || [])
+    const outputFormats = (await this.getOutputFormats()).map(
+      this.mimeTypeToFormatName
+    )
 
     this.outputFormats = this.outputFormats
-      .concat(formatsList.filter(Boolean))
+      .concat(outputFormats.filter(Boolean))
       .filter(
         (format, index, self) =>
           index === self.findIndex((t) => t.value === format.value)
@@ -122,24 +115,21 @@ export class RecordApiFormComponent {
       .sort((a, b) => a.label.localeCompare(b.label))
   }
 
-  mapFormats(formats: any[]) {
-    return formats.map((format) => {
-      const normalizedFormat = mimeTypeToFormat(format)
-      return normalizedFormat
-        ? { label: normalizedFormat.toUpperCase(), value: normalizedFormat }
-        : null
-    })
+  mimeTypeToFormatName(mimeType: MimeType): DropdownChoice | null {
+    const formatName = mimeTypeToFormat(mimeType)
+    return formatName
+      ? { label: formatName.toUpperCase(), value: mimeType }
+      : null
   }
 
-  async getOutputFormats(url: string): Promise<OutputFormats> {
-    if (!this.endpoint) return {}
+  async getOutputFormats(): Promise<MimeType[]> {
+    if (!this.endpoint) return []
     if (this.endpoint instanceof WfsEndpoint) {
       this.supportOffset = this.endpoint.supportsStartIndex()
-      return this.endpoint.getServiceInfo() as OutputFormats
+      return this.endpoint.getServiceInfo().outputFormats
     } else {
-      return (await this.endpoint.getCollectionInfo(
-        this.firstCollection
-      )) as OutputFormats
+      return (await this.endpoint.getCollectionInfo(this.firstCollection))
+        .itemFormats
     }
   }
 
@@ -166,7 +156,7 @@ export class RecordApiFormComponent {
       outputFormat: format,
       startIndex: offset ? Number(offset) : undefined,
       maxFeatures: limit !== '-1' ? Number(limit) : undefined,
-      limit: limit !== '-1' ? Number(limit) : limit === '-1' ? -1 : undefined,
+      limit: limit !== '-1' ? Number(limit) : -1,
       offset: offset !== '' ? Number(offset) : undefined,
     }
 
