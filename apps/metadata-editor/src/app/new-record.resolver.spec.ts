@@ -85,6 +85,11 @@ describe('NewRecordResolver', () => {
           contacts: expectedContactsForResource,
           status: 'ongoing',
           temporalExtents: [],
+          licenses: [
+            {
+              text: 'cc-by',
+            },
+          ],
           title: expect.stringMatching(/^My new record/),
           uniqueIdentifier: null,
         } as Partial<CatalogRecord>,

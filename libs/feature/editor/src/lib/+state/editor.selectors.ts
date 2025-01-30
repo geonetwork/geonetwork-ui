@@ -43,11 +43,11 @@ export const selectCurrentPage = createSelector(
 export const selectRecordSections = createSelector(
   selectEditorState,
   (state: EditorState) => {
-    const currentPage = state.editorConfig.pages[state.currentPage]
-    if (!currentPage) {
+    const currentPageConfig = state.editorConfig.pages[state.currentPage]
+    if (!currentPageConfig) {
       return [] as EditorSectionWithValues[]
     }
-    return currentPage.sections.map((section) => ({
+    return currentPageConfig.sections.map((section) => ({
       ...section,
       fieldsWithValues: section.fields.map((fieldConfig) => ({
         config: fieldConfig,
