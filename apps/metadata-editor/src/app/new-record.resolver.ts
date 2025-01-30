@@ -37,7 +37,11 @@ export class NewRecordResolver {
           defaultLanguage: 'en',
           topics: [],
           keywords: [],
-          licenses: [],
+          licenses: [
+            {
+              text: 'cc-by',
+            },
+          ],
           legalConstraints: [],
           securityConstraints: [],
           otherConstraints: [],
