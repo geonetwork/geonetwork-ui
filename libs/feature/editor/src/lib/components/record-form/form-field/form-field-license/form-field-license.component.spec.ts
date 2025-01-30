@@ -34,4 +34,16 @@ describe('FormFieldLicenseComponent', () => {
       expect(spy).toHaveBeenCalledWith([{ text: 'cc-by-sa' }])
     })
   })
+  describe('#ngOnInit', () => {
+    it('should set selectedLicence based on recordLicences', () => {
+      component.ngOnInit()
+      expect(component.selectedLicence).toBe('cc-by')
+    })
+
+    it('should add recordLicence to choices if not found', () => {
+      component.recordLicences = [{ text: 'new-license' }]
+      component.ngOnInit()
+      expect(component.choices[0].value).toBe('new-license')
+    })
+  })
 })

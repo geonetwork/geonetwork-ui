@@ -30,27 +30,29 @@ export class FormFieldLicenseComponent implements OnInit {
   @Output() recordLicencesChange: EventEmitter<Constraint[]> =
     new EventEmitter()
 
+  choices: Licence[] = AVAILABLE_LICENSES.map((license) => ({
+    label: marker(`editor.record.form.license.${license}`),
+    value: license,
+  }))
+
   selectedLicence: string
 
   ngOnInit(): void {
-    // get the licence from the record constraints if it is one of the open data licence list
     this.selectedLicence = this.recordLicences.find((constraint) => {
-      return this.licenceOptions.find((licence) => {
+      return this.choices.find((licence) => {
         return licence.value === constraint.text
       })
     })?.text
-    // otherwise pre-select the first licence option
-    if (this.selectedLicence === undefined) {
-      this.selectedLicence = this.licenceOptions[0].value // cannot select 'etalab' as default as this would toggle the OpenData Toggle
-      this.recordLicencesChange.emit([{ text: this.selectedLicence }])
-    }
-  }
 
-  get licenceOptions(): Licence[] {
-    return AVAILABLE_LICENSES.map((license) => ({
-      label: marker(`editor.record.form.license.${license}`),
-      value: license,
-    }))
+    if (this.selectedLicence === undefined) {
+      this.choices = [
+        {
+          value: this.recordLicences[0].text,
+          label: this.recordLicences[0].text,
+        },
+        ...this.choices,
+      ]
+    }
   }
 
   handleLicenceSelection(licenceValue: string) {
