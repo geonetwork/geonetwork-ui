@@ -20,13 +20,13 @@ import { firstValueFrom } from 'rxjs'
 import { DropdownChoice } from './dropdown-selector.model'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
-import { ButtonComponent } from '../button/button.component'
 import {
   NgIconComponent,
   provideIcons,
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { matExpandLess, matExpandMore } from '@ng-icons/material-icons/baseline'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 const DEFAULT_ROW_NUMBERS = 6
 

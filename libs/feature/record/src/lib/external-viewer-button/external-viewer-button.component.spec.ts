@@ -6,7 +6,7 @@ import {
   ExternalViewerButtonComponent,
 } from './external-viewer-button.component'
 import { MockBuilder } from 'ng-mocks'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { importProvidersFrom } from '@angular/core'
 import { TranslateModule } from '@ngx-translate/core'
 

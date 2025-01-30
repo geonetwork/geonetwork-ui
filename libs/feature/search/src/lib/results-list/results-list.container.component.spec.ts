@@ -8,7 +8,7 @@ import {
 import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { ResultsListContainerComponent } from './results-list.container.component'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 

@@ -45,13 +45,11 @@ import { Feature } from 'geojson'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matClose } from '@ng-icons/material-icons/baseline'
 import { CommonModule } from '@angular/common'
-import {
-  ButtonComponent,
-  DropdownSelectorComponent,
-} from '@geonetwork-ui/ui/inputs'
+import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component'
 import {
+  ButtonComponent,
   LoadingMaskComponent,
   PopupAlertComponent,
 } from '@geonetwork-ui/ui/widgets'

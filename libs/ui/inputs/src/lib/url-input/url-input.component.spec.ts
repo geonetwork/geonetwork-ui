@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { UrlInputComponent } from './url-input.component'
 import { By } from '@angular/platform-browser'
-import { ButtonComponent } from '../button/button.component'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 describe('UrlInputComponent', () => {
   let component: UrlInputComponent

@@ -13,7 +13,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { MapContextLayer } from '@geospatial-sdk/core'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { CommonModule } from '@angular/common'
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { CommonModule } from '@angular/common'
 import { iconoirNavArrowLeft, iconoirNavArrowRight } from '@ng-icons/iconoir'

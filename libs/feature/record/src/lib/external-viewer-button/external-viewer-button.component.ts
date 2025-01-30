@@ -10,7 +10,7 @@ import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { getFileFormat } from '@geonetwork-ui/util/shared'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { CommonModule } from '@angular/common'
 import { matOpenInNew } from '@ng-icons/material-icons/baseline'

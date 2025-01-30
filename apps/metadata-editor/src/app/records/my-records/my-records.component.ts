@@ -22,7 +22,7 @@ import { Router } from '@angular/router'
 import { Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
 import { RecordsCountComponent } from '../records-count/records-count.component'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
 import { SearchFiltersComponent } from '../../dashboard/search-filters/search-filters.component'
 import {

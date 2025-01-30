@@ -6,8 +6,7 @@ import {
   Output,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { ButtonComponent, UrlInputComponent } from '@geonetwork-ui/ui/inputs'
-import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
+import { UrlInputComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
@@ -19,10 +18,10 @@ import {
 } from '@ng-icons/core'
 import {
   iconoirArrowLeft,
-  iconoirAttachment,
   iconoirImport,
   iconoirLightBulbOn,
 } from '@ng-icons/iconoir'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 interface ImportMenuItems {
   label: string
@@ -43,7 +42,6 @@ type ImportMenuPage = 'mainMenu' | 'importExternalFile'
   imports: [
     CommonModule,
     ButtonComponent,
-    ThumbnailComponent,
     UrlInputComponent,
     TranslateModule,
     NgIconComponent,

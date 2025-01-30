@@ -7,13 +7,13 @@ import {
   Output,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { ButtonComponent } from '../button/button.component'
 import {
   NgIconComponent,
   provideIcons,
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirArrowUp, iconoirLink } from '@ng-icons/iconoir'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 @Component({
   selector: 'gn-ui-url-input',

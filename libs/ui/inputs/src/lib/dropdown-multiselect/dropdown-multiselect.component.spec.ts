@@ -3,9 +3,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { DropdownMultiselectComponent } from './dropdown-multiselect.component'
 import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
-import { ButtonComponent } from '../button/button.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { FormsModule } from '@angular/forms'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 describe('DropdownMultiselectComponent', () => {
   let component: DropdownMultiselectComponent

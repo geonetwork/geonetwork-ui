@@ -18,7 +18,7 @@ import {
   NotificationsContainerComponent,
   NotificationsService,
 } from '@geonetwork-ui/feature/notifications'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { combineLatest, filter, firstValueFrom, Subscription, take } from 'rxjs'
 import { map, skip } from 'rxjs/operators'

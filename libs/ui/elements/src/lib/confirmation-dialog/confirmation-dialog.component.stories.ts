@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { MatDialog } from '@angular/material/dialog'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
 import { ConfirmationDialogComponent } from './confirmation-dialog.component'
 

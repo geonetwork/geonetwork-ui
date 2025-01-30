@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { ButtonComponent } from '../button/button.component'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import {
   NgIconComponent,
   provideIcons,

@@ -11,7 +11,6 @@ import {
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { downgradeImage, megabytesToBytes } from '@geonetwork-ui/util/shared'
 import { firstValueFrom } from 'rxjs'
-import { ButtonComponent } from '../button/button.component'
 import { FilesDropDirective } from '../files-drop/files-drop.directive'
 import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -30,6 +29,7 @@ import {
   iconoirPlus,
   iconoirLink,
 } from '@ng-icons/iconoir'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 @Component({
   selector: 'gn-ui-image-input',

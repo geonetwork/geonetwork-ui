@@ -14,7 +14,8 @@ import {
 import { TimeSincePipe } from './time-since.pipe'
 import { HttpClientModule } from '@angular/common/http'
 import { importProvidersFrom } from '@angular/core'
-import { ButtonComponent, TextAreaComponent } from '@geonetwork-ui/ui/inputs'
+import { TextAreaComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 export default {
   title: 'Elements/UserFeedbackItemComponent',

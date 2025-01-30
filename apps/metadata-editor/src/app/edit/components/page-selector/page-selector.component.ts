@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { TranslateModule } from '@ngx-translate/core'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { map } from 'rxjs/operators'

@@ -15,7 +15,6 @@ import {
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 import {
-  ButtonComponent,
   DropdownChoice,
   DropdownSelectorComponent,
   TextAreaComponent,
@@ -23,7 +22,10 @@ import {
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { AuthService, Gn4PlatformMapper } from '@geonetwork-ui/api/repository'
-import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
+import {
+  ButtonComponent,
+  SpinningLoaderComponent,
+} from '@geonetwork-ui/ui/widgets'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import {
   matAccountBoxOutline,

@@ -4,9 +4,10 @@ import { MapFacade } from '../+state/map.facade'
 import { firstValueFrom, Subject } from 'rxjs'
 import { debounceTime } from 'rxjs/operators'
 import { MapContextLayer } from '@geospatial-sdk/core'
-import { ButtonComponent, TextInputComponent } from '@geonetwork-ui/ui/inputs'
+import { TextInputComponent } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 @Component({
   selector: 'gn-ui-add-layer-from-wms',

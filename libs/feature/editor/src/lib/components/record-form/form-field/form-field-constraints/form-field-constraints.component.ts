@@ -13,7 +13,7 @@ import {
   CatalogRecordKeys,
   Constraint,
 } from '@geonetwork-ui/common/domain/model/record'
-import { ButtonComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { TranslateModule } from '@ngx-translate/core'
 import {
@@ -22,6 +22,7 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirPlus } from '@ng-icons/iconoir'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 marker('editor.record.form.constraint.add.legalConstraints')
 marker('editor.record.form.constraint.add.securityConstraints')

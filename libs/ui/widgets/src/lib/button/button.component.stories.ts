@@ -21,7 +21,7 @@ import {
 } from '@ng-icons/material-icons/baseline'
 
 export default {
-  title: 'Inputs/ButtonComponent',
+  title: 'Widgets/ButtonComponent',
   component: ButtonComponent,
   decorators: [
     moduleMetadata({

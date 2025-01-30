@@ -10,7 +10,7 @@ import {
   MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 export interface ModalDialogData {
   title: string

@@ -9,7 +9,7 @@ import {
   matArrowForward,
 } from '@ng-icons/material-icons/baseline'
 import { Paginable } from '../paginable.interface'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 @Component({
   selector: 'gn-ui-previous-next-buttons',

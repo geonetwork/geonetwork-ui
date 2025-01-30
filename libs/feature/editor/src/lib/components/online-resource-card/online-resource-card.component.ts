@@ -11,9 +11,8 @@ import {
   OnlineLinkResource,
   OnlineResource,
 } from '@geonetwork-ui/common/domain/model/record'
-import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { bytesToMegabytes, getFileFormat } from '@geonetwork-ui/util/shared'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { TranslateModule } from '@ngx-translate/core'
 import {
   NgIconComponent,
@@ -25,13 +24,7 @@ import { iconoirAttachment } from '@ng-icons/iconoir'
 @Component({
   selector: 'gn-ui-online-resource-card',
   standalone: true,
-  imports: [
-    CommonModule,
-    ThumbnailComponent,
-    ButtonComponent,
-    TranslateModule,
-    NgIconComponent,
-  ],
+  imports: [CommonModule, ButtonComponent, TranslateModule, NgIconComponent],
   providers: [
     provideIcons({
       iconoirAttachment,

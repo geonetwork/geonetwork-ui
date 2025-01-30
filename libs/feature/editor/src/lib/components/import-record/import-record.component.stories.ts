@@ -9,12 +9,13 @@ import { ImportRecordComponent } from './import-record.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { ButtonComponent, UrlInputComponent } from '@geonetwork-ui/ui/inputs'
+import { UrlInputComponent } from '@geonetwork-ui/ui/inputs'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { of } from 'rxjs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 class MockRecordsRepository {
   importRecordFromExternalFileUrlAsDraft(url: string) {

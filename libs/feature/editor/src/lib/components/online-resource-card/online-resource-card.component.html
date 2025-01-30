@@ -23,13 +23,13 @@
       >
       <span *ngIf="identifierInService"> • {{ identifierInService }}</span>
     </div>
-    <button
+    <gn-ui-button
       class="gn-ui-link text-[14px]"
       translate
       (click)="modifyClick.emit(onlineResource)"
       data-test="card-modify"
     >
       editor.record.form.field.onlineResource.modify
-    </button>
+    </gn-ui-button>
   </div>
 </div>

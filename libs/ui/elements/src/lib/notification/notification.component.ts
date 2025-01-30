@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matCheckCircleOutline } from '@ng-icons/material-icons/baseline'
 import {

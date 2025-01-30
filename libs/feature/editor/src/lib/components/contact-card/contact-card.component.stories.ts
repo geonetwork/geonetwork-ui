@@ -9,14 +9,13 @@ import { ContactCardComponent } from './contact-card.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
 export default {
   title: 'Elements/ContactCardComponent',
   component: ContactCardComponent,
   decorators: [
     moduleMetadata({
-      imports: [CommonModule, ButtonComponent, ContactCardComponent],
+      imports: [CommonModule, ContactCardComponent],
     }),
     applicationConfig({
       providers: [importProvidersFrom(BrowserAnimationsModule)],

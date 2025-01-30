@@ -32,10 +32,9 @@ import {
   take,
   tap,
 } from 'rxjs/operators'
-import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
+import { ButtonComponent, PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
-import { ButtonComponent } from '../button/button.component'
 import {
   NgIconComponent,
   provideIcons,

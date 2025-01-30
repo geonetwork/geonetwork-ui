@@ -8,7 +8,7 @@ import {
 } from '@angular/core'
 import { ReactiveFormsModule } from '@angular/forms'
 import { MarkdownEditorComponent } from '@geonetwork-ui/ui/elements'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
 
 @Component({

@@ -11,10 +11,10 @@ import {
 import { CommonModule } from '@angular/common'
 import { MatNativeDateModule } from '@angular/material/core'
 import { MatDatepickerModule } from '@angular/material/datepicker'
-import { ButtonComponent } from '../button/button.component'
 import { OverlayContainer } from '@angular/cdk/overlay'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matExpandLess, matExpandMore } from '@ng-icons/material-icons/baseline'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 @Component({
   selector: 'gn-ui-date-range-dropdown',

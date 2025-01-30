@@ -4,7 +4,6 @@ import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 import { TagInputModule } from 'ngx-chips'
 import { NgxDropzoneModule } from 'ngx-dropzone'
-import { ButtonComponent } from './button/button.component'
 import { BadgeComponent } from './badge/badge.component'
 import { ChipsInputComponent } from './chips-input/chips-input.component'
 import { DragAndDropFileInputComponent } from './drag-and-drop-file-input/drag-and-drop-file-input.component'
@@ -65,7 +64,6 @@ import {
     MatNativeDateModule,
     EditableLabelDirective,
     TextAreaComponent,
-    ButtonComponent,
     ImageInputComponent,
     DropdownSelectorComponent,
     DateRangePickerComponent,
@@ -85,7 +83,6 @@ import {
   ],
   exports: [
     DropdownSelectorComponent,
-    ButtonComponent,
     DragAndDropFileInputComponent,
     TextAreaComponent,
     ChipsInputComponent,

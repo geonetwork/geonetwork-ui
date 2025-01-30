@@ -9,7 +9,6 @@ import {
 import { DatasetTemporalExtent } from '@geonetwork-ui/common/domain/model/record'
 import { SortableListComponent } from '@geonetwork-ui/ui/layout'
 import {
-  ButtonComponent,
   DatePickerComponent,
   DateRangePickerComponent,
 } from '@geonetwork-ui/ui/inputs'
@@ -21,6 +20,7 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirPlus } from '@ng-icons/iconoir'
+import { ButtonComponent } from '@geonetwork-ui/ui/widgets'
 
 @Component({
   selector: 'gn-ui-form-field-temporal-extents',
