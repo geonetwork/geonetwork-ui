@@ -15,7 +15,7 @@ describe('FormFieldLicenseComponent', () => {
     fixture = TestBed.createComponent(FormFieldLicenseComponent)
     component = fixture.componentInstance
     component.label = 'License' // TODO: translate
-    component.recordConstraints = [{ text: 'cc-by' }]
+    component.recordLicences = [{ text: 'cc-by' }]
     fixture.detectChanges()
   })
 
@@ -29,7 +29,7 @@ describe('FormFieldLicenseComponent', () => {
   })
   describe('#onSelectValue', () => {
     it('should emit the selected value', () => {
-      const spy = jest.spyOn(component.recordConstraintsChange, 'emit')
+      const spy = jest.spyOn(component.recordLicencesChange, 'emit')
       component.handleLicenceSelection('cc-by-sa')
       expect(spy).toHaveBeenCalledWith([{ text: 'cc-by-sa' }])
     })
