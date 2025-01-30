@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-8">
+<div class="flex flex-col gap-3">
   <gn-ui-generic-keywords
     [placeholder]="'Search for place keywords'"
     [keywords]="shownKeywords$ | async"
@@ -7,9 +7,9 @@
     (addedKeyword)="handleKeywordAdd($event)"
   >
   </gn-ui-generic-keywords>
-</div>
-<div class="w-full h-96 mt-2">
-  <gn-ui-form-field-map-container
-    [spatialExtents]="spatialExtents$ | async"
-  ></gn-ui-form-field-map-container>
+  <div class="w-full h-96 mt-2">
+    <gn-ui-form-field-map-container
+      [spatialExtents]="spatialExtents$ | async"
+    ></gn-ui-form-field-map-container>
+  </div>
 </div>
