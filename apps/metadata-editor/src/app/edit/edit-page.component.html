@@ -2,7 +2,10 @@
   <aside class="w-[370px] shrink-0 border-r">
     <md-editor-sidebar></md-editor-sidebar>
   </aside>
-  <div class="flex flex-col h-full w-full">
+  <div
+    class="flex flex-col h-full w-full"
+    *ngIf="(facade.record$ | async)?.extras?.canEdit === true"
+  >
     <div class="w-full h-auto shrink-0 relative">
       <md-editor-top-toolbar></md-editor-top-toolbar>
       <div class="absolute top-full left-0 w-2/3 z-10 pointer-events-none">
@@ -52,5 +55,13 @@
         </div>
       </div>
     </div>
+  </div>
+  <div
+    class="flex flex-col h-full w-full"
+    *ngIf="(facade.record$ | async)?.extras?.canEdit === false"
+  >
+    <header class="shrink-0 border-b border-gray-300">
+      <md-editor-search-header></md-editor-search-header>
+    </header>
   </div>
 </div>
