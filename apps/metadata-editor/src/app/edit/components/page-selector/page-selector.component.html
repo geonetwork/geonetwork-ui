@@ -14,7 +14,7 @@
       *ngrxLet="isCurrentPage(index) as isCurrentPage"
     >
       <div
-        class="w-[40px] h-[40px] rounded-[8px] grid items-center font-bold transition-colors"
+        class="w-[40px] h-[40px] shrink-0 rounded-[8px] grid items-center font-bold transition-colors"
         data-test="page-number"
         [ngClass]="isCurrentPage ? 'bg-primary text-white' : 'bg-gray-200'"
       >
