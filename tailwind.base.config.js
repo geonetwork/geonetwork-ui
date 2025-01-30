@@ -44,6 +44,8 @@ module.exports = {
           800: '#8a2c0d',
           900: '#73230d',
         },
+        purple: '#9747FF',
+        'purple-light': '#DDC3FF',
       },
       fontFamily: {
         sans: 'var(--font-family-main, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji")',

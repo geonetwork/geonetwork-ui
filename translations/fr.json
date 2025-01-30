@@ -295,6 +295,7 @@
   "editor.record.loadError.body": "Le jeu de données n'a pas pu être chargé :",
   "editor.record.loadError.closeMessage": "Compris",
   "editor.record.loadError.title": "Erreur lors du chargement",
+  "editor.record.lock.reason": "Vous n'êtes pas éditeur d'un des groupes autorisés.",
   "editor.record.onlineResource.protocol.other": "Autre",
   "editor.record.onlineResourceError.body": "Une erreur est survenue lors de l'ajout de la ressource :",
   "editor.record.onlineResourceError.closeMessage": "Compris",

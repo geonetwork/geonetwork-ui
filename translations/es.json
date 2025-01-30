@@ -295,6 +295,7 @@
   "editor.record.loadError.body": "",
   "editor.record.loadError.closeMessage": "",
   "editor.record.loadError.title": "",
+  "editor.record.lock.reason": "",
   "editor.record.onlineResource.protocol.other": "",
   "editor.record.onlineResourceError.body": "",
   "editor.record.onlineResourceError.closeMessage": "",

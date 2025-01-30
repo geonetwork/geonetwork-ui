@@ -30,7 +30,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core'
 import { ActionMenuComponent } from './action-menu/action-menu.component'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
-import { iconoirUser } from '@ng-icons/iconoir'
+import { iconoirUser, iconoirLock } from '@ng-icons/iconoir'
 import {
   CdkConnectedOverlay,
   CdkOverlayOrigin,
@@ -55,9 +55,8 @@ import { matMoreVert } from '@ng-icons/material-icons/baseline'
     ActionMenuComponent,
     NgIconComponent,
     CdkOverlayOrigin,
-    CdkConnectedOverlay,
   ],
-  providers: [provideIcons({ iconoirUser, matMoreVert })],
+  providers: [provideIcons({ iconoirUser, iconoirLock, matMoreVert })],
 })
 export class ResultsTableComponent {
   @Input() records: CatalogRecord[] = []
@@ -169,8 +168,9 @@ export class ResultsTableComponent {
     return getBadgeColor(format)
   }
 
-  handleRecordClick(item: unknown) {
-    this.recordClick.emit(item as CatalogRecord)
+  handleRecordClick(item: CatalogRecord) {
+    console.log(item)
+    if (item?.extras?.canEdit) this.recordClick.emit(item as CatalogRecord)
   }
 
   handleDuplicate(item: unknown) {

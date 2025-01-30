@@ -9,12 +9,9 @@ import {
 } from '@angular/core'
 import { InteractiveTableColumnComponent } from './interactive-table-column/interactive-table-column.component'
 import { CommonModule } from '@angular/common'
-import {
-  NgIconComponent,
-  provideIcons,
-  provideNgIconsConfig,
-} from '@ng-icons/core'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { iconoirNavArrowDown, iconoirNavArrowUp } from '@ng-icons/iconoir'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-interactive-table',
@@ -22,7 +19,7 @@ import { iconoirNavArrowDown, iconoirNavArrowUp } from '@ng-icons/iconoir'
   styleUrls: ['./interactive-table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, InteractiveTableColumnComponent, NgIconComponent],
+  imports: [CommonModule, NgIconComponent, TranslateModule],
   providers: [provideIcons({ iconoirNavArrowDown, iconoirNavArrowUp })],
 })
 export class InteractiveTableComponent {

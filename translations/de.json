@@ -295,6 +295,7 @@
   "editor.record.loadError.body": "Der Datensatz konnte nicht geladen werden:",
   "editor.record.loadError.closeMessage": "Verstanden",
   "editor.record.loadError.title": "Fehler beim Laden des Datensatzes",
+  "editor.record.lock.reason": "",
   "editor.record.onlineResource.protocol.other": "",
   "editor.record.onlineResourceError.body": "",
   "editor.record.onlineResourceError.closeMessage": "",
