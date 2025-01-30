@@ -1,8 +1,8 @@
 :host ::ng-deep gn-ui-autocomplete input {
-  @apply rounded-3xl shadow-none !py-2 !px-8 !pl-14 hover:shadow-none;
+  @apply shadow-none !py-2 !px-8 !pl-14 hover:shadow-none;
 }
 :host ::ng-deep gn-ui-autocomplete gn-ui-button button {
-  @apply border-none shadow-none hover:shadow-none text-gray-500 hover:text-gray-600 rounded-3xl;
+  @apply border-none shadow-none hover:shadow-none text-gray-500 hover:text-gray-600;
 }
 :host ::ng-deep gn-ui-autocomplete gn-ui-button:first-of-type button {
   @apply right-0 left-auto;
@@ -10,12 +10,6 @@
 :host ::ng-deep gn-ui-autocomplete gn-ui-button:last-of-type button {
   @apply left-0 right-auto;
 }
-
-::ng-deep .mdc-menu-surface.mat-mdc-autocomplete-panel {
-  @apply !mt-2.5 !rounded-xl bg-blue-50;
-  --mdc-typography-body1-font-size: 14px;
-}
-
-::ng-deep .mdc-menu-surface .mat-mdc-option {
-  min-height: 36px;
+::ng-deep  .mdc-menu-surface.mat-mdc-autocomplete-panel {
+  @apply !mt-[13px];
 }
