@@ -44,6 +44,7 @@ Thumbs.db
 
 .angular
 .nx
+.nvmrc
 
 docs/.vitepress/dist
 docs/.vitepress/cache
