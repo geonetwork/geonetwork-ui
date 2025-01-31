@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { ActivatedRouteSnapshot } from '@angular/router'
+import { ActivatedRouteSnapshot, Router } from '@angular/router'
 import { catchError, EMPTY, Observable } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
@@ -13,14 +13,17 @@ export class EditRecordResolver {
   constructor(
     private recordsRepository: RecordsRepositoryInterface,
     private notificationsService: NotificationsService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
   ) {}
 
   resolve(
     route: ActivatedRouteSnapshot
-  ): Observable<[CatalogRecord, string, boolean]> {
+  ): Observable<[CatalogRecord, string, boolean, boolean]> {
+    const navigation = this.router.getCurrentNavigation()
+    const published = navigation?.extras.state?.published
     return this.recordsRepository
-      .openRecordForEdition(route.paramMap.get('uuid'))
+      .openRecordForEdition(route.paramMap.get('uuid'), published === false)
       .pipe(
         catchError((error) => {
           this.notificationsService.showNotification(

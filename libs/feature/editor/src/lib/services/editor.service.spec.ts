@@ -54,33 +54,71 @@ describe('EditorService', () => {
   })
 
   describe('saveRecord', () => {
-    let savedRecord: [CatalogRecord, string]
-    beforeEach(async () => {
-      savedRecord = await firstValueFrom(
-        service.saveRecord(
-          SAMPLE_RECORD,
-          '<xml>blabla</xml>',
-          DEFAULT_CONFIGURATION
+    describe('Existing records', () => {
+      let savedRecord: [CatalogRecord, string, boolean]
+      beforeEach(async () => {
+        savedRecord = await firstValueFrom(
+          service.saveRecord(
+            SAMPLE_RECORD,
+            '<xml>blabla</xml>',
+            DEFAULT_CONFIGURATION
+          )
         )
-      )
+      })
+      it('calls with publishToAll true for existing records', () => {
+        const expected = {
+          ...SAMPLE_RECORD,
+          recordUpdated: expect.any(Date),
+        }
+        expect(repository.saveRecord).toHaveBeenCalledWith(
+          expected,
+          '<xml>blabla</xml>',
+          true
+        )
+        expect(repository.clearRecordDraft).toHaveBeenCalledWith(
+          SAMPLE_RECORD.uniqueIdentifier
+        )
+        expect(savedRecord).toEqual([expected, '<xml>blabla</xml>'])
+      })
+      it('applies field processes (update date in record)', () => {
+        const arg = (repository.saveRecord as jest.Mock).mock.calls[0][0]
+        expect(arg.recordUpdated).not.toEqual(SAMPLE_RECORD.recordUpdated)
+      })
     })
-    it('calls repository.saveRecord and repository.clearRecordDraft', () => {
-      const expected = {
+    describe('New records', () => {
+      let savedRecord: [CatalogRecord, string, boolean]
+      let NEW_RECORD = {
         ...SAMPLE_RECORD,
+        uniqueIdentifier: null,
         recordUpdated: expect.any(Date),
       }
-      expect(repository.saveRecord).toHaveBeenCalledWith(
-        expected,
-        '<xml>blabla</xml>'
-      )
-      expect(repository.clearRecordDraft).toHaveBeenCalledWith(
-        SAMPLE_RECORD.uniqueIdentifier
-      )
-      expect(savedRecord).toEqual([expected, '<xml>blabla</xml>'])
-    })
-    it('applies field processes (update date in record)', () => {
-      const arg = (repository.saveRecord as jest.Mock).mock.calls[0][0]
-      expect(arg.recordUpdated).not.toEqual(SAMPLE_RECORD.recordUpdated)
+      beforeEach(async () => {
+        savedRecord = await firstValueFrom(
+          service.saveRecord(
+            NEW_RECORD,
+            '<xml>blabla</xml>',
+            DEFAULT_CONFIGURATION
+          )
+        )
+      })
+      it('calls with publishToAll true for existing records', () => {
+        const expected = {
+          ...NEW_RECORD,
+          recordUpdated: expect.any(Date),
+        }
+        expect(repository.saveRecord).toHaveBeenCalledWith(
+          expected,
+          '<xml>blabla</xml>',
+          false
+        )
+        expect(repository.clearRecordDraft).toHaveBeenCalledWith(
+          NEW_RECORD.uniqueIdentifier
+        )
+        expect(savedRecord).toEqual([
+          { ...SAMPLE_RECORD, recordUpdated: expect.any(Date) },
+          '<xml>blabla</xml>',
+        ])
+      })
     })
     describe('if a new one has to be generated', () => {
       beforeEach(() => {
@@ -101,7 +139,8 @@ describe('EditorService', () => {
         }
         expect(repository.saveRecord).toHaveBeenCalledWith(
           expected,
-          '<xml>blabla</xml>'
+          '<xml>blabla</xml>',
+          true
         )
       })
     })

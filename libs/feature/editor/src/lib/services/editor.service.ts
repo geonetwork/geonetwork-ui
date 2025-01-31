@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core'
-import { Observable, switchMap } from 'rxjs'
+import { forkJoin, Observable, of, switchMap } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { EditorConfig } from '../models/'
 import { evaluate } from '../expressions'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { Router } from '@angular/router'
 
 @Injectable({
   providedIn: 'root',
 })
 export class EditorService {
-  constructor(private recordsRepository: RecordsRepositoryInterface) {}
+  constructor(
+    private recordsRepository: RecordsRepositoryInterface,
+    private router: Router
+  ) {}
 
   // returns the record as it was when saved, alongside its source
   saveRecord(
@@ -18,7 +22,7 @@ export class EditorService {
     recordSource: string,
     fieldsConfig: EditorConfig,
     generateNewUniqueIdentifier = false
-  ): Observable<[CatalogRecord, string]> {
+  ): Observable<[CatalogRecord, string, boolean]> {
     const savedRecord = { ...record }
 
     const fields = fieldsConfig.pages.flatMap((page) =>
@@ -35,22 +39,40 @@ export class EditorService {
         })
       }
     }
+    let publishToAll = true
+    // if the record is new, generate a new unique identifier and pass publishToAll as false
+    if (!record.uniqueIdentifier) {
+      generateNewUniqueIdentifier = true
+      publishToAll = false
+    }
 
     // if we want a new unique identifier, clear the existing one
     if (generateNewUniqueIdentifier) {
       savedRecord.uniqueIdentifier = null
     }
 
-    return this.recordsRepository.saveRecord(savedRecord, recordSource).pipe(
-      switchMap((uniqueIdentifier) =>
-        this.recordsRepository.openRecordForEdition(uniqueIdentifier)
-      ),
-      tap(() => {
-        // if saving was successful, the original draft can be discarded
-        this.recordsRepository.clearRecordDraft(record.uniqueIdentifier)
-      }),
-      map(([record, recordSource]) => [record, recordSource])
-    )
+    const navigation = this.router.getCurrentNavigation()
+    const published = navigation?.extras.state?.published
+
+    return this.recordsRepository
+      .saveRecord(savedRecord, recordSource, publishToAll)
+      .pipe(
+        switchMap(({ uuid, isDraft }) =>
+          forkJoin([
+            this.recordsRepository.openRecordForEdition(
+              uuid,
+              published === false
+            ),
+            of(isDraft),
+          ])
+        ),
+
+        tap(() => {
+          // if saving was successful, the original draft can be discarded
+          this.recordsRepository.clearRecordDraft(record.uniqueIdentifier)
+        }),
+        map(([record, isDraft]) => [record[0], record[1], isDraft])
+      )
   }
 
   // emits and completes once saving is done
@@ -67,7 +89,7 @@ export class EditorService {
 
   undoRecordDraft(
     record: CatalogRecord
-  ): Observable<[CatalogRecord, string, boolean]> {
+  ): Observable<[CatalogRecord, string, boolean, boolean]> {
     this.recordsRepository.clearRecordDraft(record.uniqueIdentifier)
     return this.recordsRepository.openRecordForEdition(record.uniqueIdentifier)
   }

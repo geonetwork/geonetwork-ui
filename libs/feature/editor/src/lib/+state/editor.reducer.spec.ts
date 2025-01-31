@@ -125,6 +125,16 @@ describe('Editor Reducer', () => {
 
       expect(result.hasRecordChanged).toEqual(changes)
     })
+
+    it('savedButNotPublished action', () => {
+      const action = EditorActions.savedButNotPublished({ isDraft: true })
+      const result: EditorState = editorReducer(
+        { ...initialEditorState, savedButNotPublished: false },
+        action
+      )
+
+      expect(result.savedButNotPublished).toBe(true)
+    })
   })
 
   describe('unknown action', () => {

@@ -27,21 +27,23 @@ export abstract class RecordsRepositoryInterface {
    * @returns Observable<[CatalogRecord, string, boolean] | null>
    */
   abstract openRecordForEdition(
-    uniqueIdentifier: string
-  ): Observable<[CatalogRecord, string, boolean] | null>
+    uniqueIdentifier: string,
+    published?: boolean
+  ): Observable<[CatalogRecord, string, boolean, boolean] | null>
 
   /**
    * This emits once:
    * - record object with a new unique identifier and suffixed title
    * - serialized representation of the record as text
-   * - false, as the duplicated record is always a draft
+   * - trues, as the duplicated record is never a draft in localStorage
    * @param uniqueIdentifier
    * @returns Observable<[CatalogRecord, string, false] | null>
    */
   abstract openRecordForDuplication(
     uniqueIdentifier: string
-  ): Observable<[CatalogRecord, string, false] | null>
+  ): Observable<[CatalogRecord, string, true, true] | null>
 
+  abstract duplicateRecord(uniqueIdentifier: string): Observable<string>
   /**
    * @param record
    * @param referenceRecordSource
@@ -49,8 +51,9 @@ export abstract class RecordsRepositoryInterface {
    */
   abstract saveRecord(
     record: CatalogRecord,
-    referenceRecordSource?: string
-  ): Observable<string>
+    referenceRecordSource?: string,
+    publishToAll?: boolean
+  ): Observable<{ uuid: string; isDraft: boolean }>
 
   /**
    * Try to duplicate the external record from given url. If it suceed, then it will save the record as draft and return its temporary id.
@@ -82,7 +85,6 @@ export abstract class RecordsRepositoryInterface {
 
   abstract clearRecordDraft(uniqueIdentifier: string): void
   abstract recordHasDraft(uniqueIdentifier: string): boolean
-  abstract isRecordNotYetSaved(uniqueIdentifier: string): boolean
 
   /** will return all pending drafts, both published and not published */
   abstract getAllDrafts(): Observable<CatalogRecord[]>

@@ -22,6 +22,7 @@ describe('Editor Selectors', () => {
         saving: false,
         changedSinceSave: true,
         hasRecordChanged: ['date', 'user'],
+        savedButNotPublished: true,
       },
     }
   })
@@ -65,6 +66,11 @@ describe('Editor Selectors', () => {
     it('selectHasRecordChanged() should return the current "hasRecordChanged" state', () => {
       const result = EditorSelectors.selectHasRecordChanged(state)
       expect(result).toEqual(['date', 'user'])
+    })
+
+    it('selectSavedButNotPublished() should return the current "savedButNotPublished" state', () => {
+      const result = EditorSelectors.selectSavedButNotPublished(state)
+      expect(result).toEqual(true)
     })
 
     describe('selectRecordFields', () => {

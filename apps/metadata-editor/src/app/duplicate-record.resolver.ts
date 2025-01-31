@@ -18,7 +18,7 @@ export class DuplicateRecordResolver {
 
   resolve(
     route: ActivatedRouteSnapshot
-  ): Observable<[CatalogRecord, string, boolean]> {
+  ): Observable<[CatalogRecord, string, boolean, boolean]> {
     return this.recordsRepository
       .openRecordForDuplication(route.paramMap.get('uuid'))
       .pipe(

@@ -18,7 +18,7 @@ import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/erro
 const getRoute = () => ({
   snapshot: {
     data: {
-      record: [datasetRecordsFixture()[0], '<xml>blabla</xml>', false],
+      record: [datasetRecordsFixture()[0], '<xml>blabla</xml>', false, true],
     },
     routeConfig: {
       path: '/edit/:uuid',
@@ -40,6 +40,7 @@ class EditorFacadeMock {
   currentPage$ = new BehaviorSubject(0)
   pagesCount$ = new BehaviorSubject(2)
   hasRecordChanged$ = new BehaviorSubject(false)
+  alreadySavedOnce$ = new BehaviorSubject(false)
 }
 class NotificationsServiceMock {
   showNotification = jest.fn()
@@ -110,128 +111,118 @@ describe('EditPageComponent', () => {
       expect(facade.openRecord).toHaveBeenCalledWith(
         datasetRecordsFixture()[0],
         '<xml>blabla</xml>',
-        false
+        false,
+        true
       )
     })
   })
+  describe('Existing record', () => {
+    describe('notifications', () => {
+      beforeEach(() => {
+        fixture.detectChanges()
+      })
+      describe('publish version error', () => {
+        it('shows notification', () => {
+          ;(facade.saveError$ as any).next(new PublicationVersionError('1.0.0'))
+          expect(notificationsService.showNotification).toHaveBeenCalledWith(
+            {
+              type: 'error',
+              title: 'editor.record.publishVersionError.title',
+              text: 'editor.record.publishVersionError.body',
+              closeMessage: 'editor.record.publishVersionError.closeMessage',
+            },
+            undefined,
+            expect.any(PublicationVersionError)
+          )
+        })
+      })
 
-  describe('notifications', () => {
-    beforeEach(() => {
-      fixture.detectChanges()
-    })
-    describe('publish version error', () => {
-      it('shows notification', () => {
-        ;(facade.saveError$ as any).next(new PublicationVersionError('1.0.0'))
-        expect(notificationsService.showNotification).toHaveBeenCalledWith(
-          {
-            type: 'error',
-            title: 'editor.record.publishVersionError.title',
-            text: 'editor.record.publishVersionError.body',
-            closeMessage: 'editor.record.publishVersionError.closeMessage',
-          },
-          undefined,
-          expect.any(PublicationVersionError)
-        )
+      describe('publish error', () => {
+        it('shows notification', () => {
+          ;(facade.saveError$ as any).next(new Error('oopsie'))
+          expect(notificationsService.showNotification).toHaveBeenCalledWith(
+            {
+              type: 'error',
+              title: 'editor.record.publishError.title',
+              text: 'editor.record.publishError.body oopsie',
+              closeMessage: 'editor.record.publishError.closeMessage',
+            },
+            undefined,
+            expect.any(Error)
+          )
+        })
+      })
+
+      describe('publish success', () => {
+        it('shows notification', () => {
+          component.newRecord = false
+          ;(facade.saveSuccess$ as any).next()
+          expect(notificationsService.showNotification).toHaveBeenCalledWith(
+            {
+              type: 'success',
+              title: 'editor.record.publishSuccess.title',
+              text: 'editor.record.publishSuccess.body',
+            },
+            2500
+          )
+        })
       })
     })
 
-    describe('publish error', () => {
-      it('shows notification', () => {
-        ;(facade.saveError$ as any).next(new Error('oopsie'))
-        expect(notificationsService.showNotification).toHaveBeenCalledWith(
-          {
-            type: 'error',
-            title: 'editor.record.publishError.title',
-            text: 'editor.record.publishError.body oopsie',
-            closeMessage: 'editor.record.publishError.closeMessage',
-          },
-          undefined,
-          expect.any(Error)
-        )
+    describe('isLastPage$', () => {
+      let editorFacade: EditorFacadeMock
+      beforeEach(() => {
+        editorFacade = TestBed.inject(
+          EditorFacade
+        ) as unknown as EditorFacadeMock
+      })
+      it('returns true if last page', async () => {
+        editorFacade.currentPage$.next(3)
+        editorFacade.pagesCount$.next(4)
+        expect(await firstValueFrom(component.isLastPage$)).toBe(true)
+      })
+      it('returns false if not', async () => {
+        editorFacade.currentPage$.next(1)
+        editorFacade.pagesCount$.next(3)
+        expect(await firstValueFrom(component.isLastPage$)).toBe(false)
       })
     })
 
-    describe('publish success', () => {
-      it('shows notification', () => {
-        ;(facade.saveSuccess$ as any).next()
-        expect(notificationsService.showNotification).toHaveBeenCalledWith(
-          {
-            type: 'success',
-            title: 'editor.record.publishSuccess.title',
-            text: 'editor.record.publishSuccess.body',
-          },
-          2500
-        )
+    describe('subscriptions', () => {
+      it('should add 5 subscriptions to component.subscription', () => {
+        const addSpy = jest.spyOn(component.subscription, 'add')
+        component.ngOnInit()
+        expect(addSpy).toHaveBeenCalledTimes(5)
+      })
+      it('should add 6 subscriptions to component.subscription when on /create route', () => {
+        const activatedRoute = TestBed.inject(ActivatedRoute)
+        activatedRoute.snapshot.routeConfig.path = '/create'
+        fixture.detectChanges()
+        const addSpy = jest.spyOn(component.subscription, 'add')
+        component.ngOnInit()
+        expect(addSpy).toHaveBeenCalledTimes(5)
+      })
+      it('unsubscribes', () => {
+        const unsubscribeSpy = jest.spyOn(component.subscription, 'unsubscribe')
+        component.ngOnDestroy()
+        expect(unsubscribeSpy).toHaveBeenCalled()
       })
     })
   })
-
   describe('new record', () => {
     beforeEach(() => {
-      const activatedRoute = TestBed.inject(ActivatedRoute)
-      activatedRoute.snapshot.routeConfig.path = '/create'
       fixture.detectChanges()
     })
-    it('navigate from /create to /edit/uuid on first change', () => {
-      const router = TestBed.inject(Router)
-      const navigateSpy = jest.spyOn(router, 'navigate')
-      ;(facade.draftSaveSuccess$ as any).next()
-      expect(navigateSpy).toHaveBeenCalledWith(['edit', 'my-dataset-001'], {
-        replaceUrl: true,
-      })
-    })
-  })
-
-  describe('unique identifier of the current record changes', () => {
-    beforeEach(() => {
-      fixture.detectChanges()
-    })
-    it('navigates to /edit/newUuid', () => {
+    it('navigates to /edit/newUuid immediately', () => {
       const router = TestBed.inject(Router)
       const navigateSpy = jest.spyOn(router, 'navigate')
       ;(facade.record$ as any).next({
         ...datasetRecordsFixture()[0],
         uniqueIdentifier: 'new-uuid',
       })
-      expect(navigateSpy).toHaveBeenCalledWith(['edit', 'new-uuid'])
-    })
-  })
-
-  describe('isLastPage$', () => {
-    let editorFacade: EditorFacadeMock
-    beforeEach(() => {
-      editorFacade = TestBed.inject(EditorFacade) as unknown as EditorFacadeMock
-    })
-    it('returns true if last page', async () => {
-      editorFacade.currentPage$.next(3)
-      editorFacade.pagesCount$.next(4)
-      expect(await firstValueFrom(component.isLastPage$)).toBe(true)
-    })
-    it('returns false if not', async () => {
-      editorFacade.currentPage$.next(1)
-      editorFacade.pagesCount$.next(3)
-      expect(await firstValueFrom(component.isLastPage$)).toBe(false)
-    })
-  })
-
-  describe('subscriptions', () => {
-    it('should add 5 subscriptions to component.subscription', () => {
-      const addSpy = jest.spyOn(component.subscription, 'add')
-      component.ngOnInit()
-      expect(addSpy).toHaveBeenCalledTimes(5)
-    })
-    it('should add 6 subscriptions to component.subscription when on /create route', () => {
-      const activatedRoute = TestBed.inject(ActivatedRoute)
-      activatedRoute.snapshot.routeConfig.path = '/create'
-      fixture.detectChanges()
-      const addSpy = jest.spyOn(component.subscription, 'add')
-      component.ngOnInit()
-      expect(addSpy).toHaveBeenCalledTimes(6)
-    })
-    it('unsubscribes', () => {
-      const unsubscribeSpy = jest.spyOn(component.subscription, 'unsubscribe')
-      component.ngOnDestroy()
-      expect(unsubscribeSpy).toHaveBeenCalled()
+      expect(navigateSpy).toHaveBeenCalledWith(['edit', 'new-uuid'], {
+        state: { published: false },
+      })
     })
   })
 })

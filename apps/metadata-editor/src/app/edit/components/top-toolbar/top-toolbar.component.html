@@ -42,9 +42,9 @@
     [attr.data-cy-value]="saveStatus$ | async"
     [ngSwitch]="saveStatus$ | async"
   >
-    <ng-container *ngSwitchCase="'draft_only'">
-      <ng-icon class="text-slate-400" name="iconoirCheckCircle"></ng-icon>
-      <span translate>editor.record.saveStatus.asDraftOnly</span>
+    <ng-container *ngSwitchCase="'record_not_published'">
+      <ng-icon class="text-lime-400" name="iconoirCheckCircle"></ng-icon>
+      <span translate>editor.record.saveStatus.recordNotPublished</span>
     </ng-container>
     <ng-container *ngSwitchCase="'record_up_to_date'">
       <ng-icon class="text-lime-400" name="iconoirCheckCircle"></ng-icon>
