@@ -64,7 +64,9 @@ export class NewRecordResolver {
           return of(null)
         }
 
-        return this.organizationsServiceInterface.organisations$.pipe(
+        const organisations$ =
+          this.organizationsServiceInterface.getOrganisations()
+        return organisations$.pipe(
           map((organizations) => {
             let organization = organizations.find(
               (org) => org.name === user.organisation

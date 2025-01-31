@@ -216,7 +216,8 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
       let organisations
       describe('initially', () => {
         beforeEach(() => {
-          service.organisations$
+          service
+            .getOrganisations({})
             .pipe(take(1))
             .subscribe((orgs) => (organisations = orgs))
         })
@@ -318,7 +319,8 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
       describe('when groups tick', () => {
         beforeEach(() => {
           organisations = null
-          service.organisations$
+          service
+            .getOrganisations({})
             .pipe(take(2))
             .subscribe((orgs) => (organisations = orgs))
         })

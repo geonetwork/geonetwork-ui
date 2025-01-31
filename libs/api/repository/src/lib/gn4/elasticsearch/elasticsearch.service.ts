@@ -192,16 +192,16 @@ export class ElasticsearchService {
         ...query,
         ...(this.isCurrentSearchLang() && isMultilangField
           ? [
-              `${field.replace(multiLangRegExp, queryLang)}^${
-                fieldPriority + 10
-              }`,
-              field.replace(multiLangRegExp, '*') +
-                (fieldPriority > 1 ? `^${fieldPriority}` : ''),
-            ]
+            `${field.replace(multiLangRegExp, queryLang)}^${
+              fieldPriority + 10
+            }`,
+            field.replace(multiLangRegExp, '*') +
+            (fieldPriority > 1 ? `^${fieldPriority}` : ''),
+          ]
           : [
-              field.replace(multiLangRegExp, queryLang) +
-                (fieldPriority > 1 ? `^${fieldPriority}` : ''),
-            ]),
+            field.replace(multiLangRegExp, queryLang) +
+            (fieldPriority > 1 ? `^${fieldPriority}` : ''),
+          ]),
       ]
     }, [])
   }
@@ -237,16 +237,16 @@ export class ElasticsearchService {
       typeof filters === 'string'
         ? filters
         : Object.keys(filters)
-            .filter((fieldname) => !isDateRange(filters[fieldname]))
-            .filter(
-              (fieldname) =>
-                filters[fieldname] &&
-                JSON.stringify(filters[fieldname]) !== '{}'
-            )
-            .map(
-              (fieldname) => `${fieldname}:(${makeQuery(filters[fieldname])})`
-            )
-            .join(' AND ')
+          .filter((fieldname) => !isDateRange(filters[fieldname]))
+          .filter(
+            (fieldname) =>
+              filters[fieldname] &&
+              JSON.stringify(filters[fieldname]) !== '{}'
+          )
+          .map(
+            (fieldname) => `${fieldname}:(${makeQuery(filters[fieldname])})`
+          )
+          .join(' AND ')
     const queryRange = Object.entries(filters)
       .filter(([, value]) => isDateRange(value))
       .map(([searchField, dateRange]) => {
@@ -265,20 +265,21 @@ export class ElasticsearchService {
         },
       },
       queryRange &&
-        queryRange.dateRange && {
-          range: {
-            [queryRange.searchField]: {
-              ...(queryRange.dateRange.start && {
-                gte: formatDate(queryRange.dateRange.start),
-              }),
-              ...(queryRange.dateRange.end && {
-                lte: formatDate(queryRange.dateRange.end),
-              }),
-              format: 'yyyy-MM-dd',
-            },
+      queryRange.dateRange && {
+        range: {
+          [queryRange.searchField]: {
+            ...(queryRange.dateRange.start && {
+              gte: formatDate(queryRange.dateRange.start),
+            }),
+            ...(queryRange.dateRange.end && {
+              lte: formatDate(queryRange.dateRange.end),
+            }),
+            format: 'yyyy-MM-dd',
           },
         },
+      },
     ].filter(Boolean)
+    console.log('queryParts', queryParts)
     return queryParts.length > 0 ? (queryParts as FilterQuery) : undefined
   }
 
@@ -289,14 +290,6 @@ export class ElasticsearchService {
     geometry?: Geometry
   ) {
     const must = [] as Record<string, unknown>[]
-    const must_not = {
-      ...this.queryFilterOnValues('resourceType', [
-        'service',
-        'map',
-        'map/static',
-        'mapDigital',
-      ]),
-    }
     const should = [] as Record<string, unknown>[]
     const filter = [this.queryFilterOnValues('isTemplate', 'n')] as Record<
       string,
@@ -349,7 +342,6 @@ export class ElasticsearchService {
     return {
       bool: {
         must,
-        must_not,
         should,
         filter,
       },
@@ -373,10 +365,10 @@ export class ElasticsearchService {
     return !values || values.length <= 0
       ? {}
       : {
-          terms: {
-            [key]: [...values],
-          },
-        }
+        terms: {
+          [key]: [...values],
+        },
+      }
   }
 
   buildAutocompletePayload(query: string): EsSearchParams {
@@ -398,14 +390,6 @@ export class ElasticsearchService {
               },
             },
           ],
-          must_not: {
-            ...this.queryFilterOnValues('resourceType', [
-              'service',
-              'map',
-              'map/static',
-              'mapDigital',
-            ]),
-          },
         },
       },
       _source: ['resourceTitleObject', 'uuid'],
@@ -583,8 +567,8 @@ export class ElasticsearchService {
         let buckets = Array.isArray(histogramResult.buckets)
           ? histogramResult.buckets
           : Object.keys(histogramResult.buckets).map(
-              (key) => histogramResult.buckets[key]
-            )
+            (key) => histogramResult.buckets[key]
+          )
         buckets = buckets.map((bucket, index) => ({
           lowValue: bucket.key,
           highValue: buckets[index + 1]?.key, // this will return undefined on the last element (which we remove later)
