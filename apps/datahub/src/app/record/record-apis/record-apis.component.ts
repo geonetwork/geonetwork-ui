@@ -47,7 +47,6 @@ export class RecordApisComponent implements OnInit {
 
   maxHeight = '0px'
   opacity = 0
-  displayApiIgnForm: boolean
   selectedApiLink: DatasetServiceDistribution
 
   apiLinks$ = this.facade.apiLinks$
@@ -67,7 +66,6 @@ export class RecordApisComponent implements OnInit {
   }
 
   openRecordApiForm(link: DatasetServiceDistribution) {
-    this.displayApiIgnForm = link.accessServiceProtocol === 'GPFDL'
     this.selectedApiLink = link
     this.setStyle(link)
   }

@@ -69,11 +69,11 @@
       </div>
 
       <gn-ui-gpf-api-dl
-        *ngIf="displayApiIgnForm"
+        *ngIf="selectedApiLink?.accessServiceProtocol === 'GPFDL'"
         [apiLink]="selectedApiLink"
       ></gn-ui-gpf-api-dl>
       <gn-ui-record-api-form
-        *ngIf="!displayApiIgnForm"
+        *ngIf="selectedApiLink?.accessServiceProtocol !== 'GPFDL'"
         [apiLink]="selectedApiLink"
       ></gn-ui-record-api-form>
     </div>
