@@ -1,0 +1,132 @@
+<div class="flex flex-col gap-6 p-8 bg-white shadow-xl rounded-lg">
+  <!-- Header with Filter Title and Reset Button -->
+  <div class="flex items-center justify-between">
+    <h2
+      class="text-xl font-semibold"
+      translate
+      [attr.aria-label]="
+        'record.metadata.api.form.filterDescription' | translate
+      "
+    >
+      record.metadata.api.form.filter
+    </h2>
+    <button
+      (click)="resetUrl()"
+      class="bg-primary-opacity-50 inline-flex items-center justify-center px-4 py-2 text-white rounded hover:bg-primary transition"
+      [attr.title]="'record.metadata.api.form.resetTooltip' | translate"
+      [attr.aria-label]="'record.metadata.api.form.resetTooltip' | translate"
+    >
+      <span translate>record.metadata.api.form.reset</span>
+    </button>
+  </div>
+
+  <!-- Dropdown Selectors -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <gn-ui-dropdown-selector
+      #zone
+      [title]="'record.metadata.api.form.zoneTitle' | translate"
+      [choices]="bucketPromisesZone"
+      (selectValue)="setZone($event)"
+      [selected]="zone$ | async"
+      class="w-full"
+      [attr.title]="'record.metadata.api.form.zoneTooltip' | translate"
+      [attr.aria-label]="'record.metadata.api.form.zoneTooltip' | translate"
+    ></gn-ui-dropdown-selector>
+
+    <gn-ui-dropdown-selector
+      #format
+      [title]="'record.metadata.api.form.formatTitle' | translate"
+      [choices]="bucketPromisesFormat"
+      (selectValue)="setFormat($event)"
+      [selected]="format$ | async"
+      class="w-full"
+      [attr.title]="'record.metadata.api.form.formatTooltip' | translate"
+      [attr.aria-label]="'record.metadata.api.form.formatTooltip' | translate"
+    ></gn-ui-dropdown-selector>
+
+    <gn-ui-dropdown-selector
+      #crs
+      [title]="'record.metadata.api.form.crsTitle' | translate"
+      [choices]="bucketPromisesCrs"
+      (selectValue)="setCrs($event)"
+      [selected]="crs$ | async"
+      class="w-full"
+      [attr.title]="'record.metadata.api.form.crsTooltip' | translate"
+      [attr.aria-label]="'record.metadata.api.form.crsTooltip' | translate"
+    ></gn-ui-dropdown-selector>
+  </div>
+
+  <!-- Filtered Items Section -->
+  <div class="bg-gray-50 p-4 rounded-lg">
+    <h3
+      class="text-lg font-medium"
+      translate
+      [attr.aria-label]="
+        'record.metadata.api.form.itemsDescription' | translate
+      "
+    >
+      record.metadata.api.form.items
+    </h3>
+    <div
+      class="overflow-auto max-h-60"
+      [attr.title]="'record.metadata.api.form.itemsTooltip' | translate"
+      [attr.aria-label]="'record.metadata.api.form.itemsTooltip' | translate"
+    >
+      <div
+        *ngFor="let link of listFilteredProduct$ | async"
+        class="mb-2 sm:mb-3"
+      >
+        <gn-ui-gpf-api-dl-list-item
+          [link]="link"
+          color="rgb(124 45 18)"
+          [format]="getLinkFormat(link)"
+          [isFromWfs]="true"
+          [attr.title]="'record.metadata.api.form.productTooltip' | translate"
+          [attr.aria-label]="
+            'record.metadata.api.form.productTooltip' | translate
+          "
+        ></gn-ui-gpf-api-dl-list-item>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination Section -->
+  <div class="flex items-center justify-between">
+    <button
+      (click)="lessResult()"
+      [class]="
+        'px-4 py-2 text-white rounded transition ' +
+        ((page$ | async) <= 1
+          ? 'bg-gray-400 cursor-not-allowed  '
+          : 'bg-primary-opacity-50  hover:bg-primary')
+      "
+      [attr.title]="'record.metadata.api.form.previousPageTooltip' | translate"
+      [attr.aria-label]="
+        'record.metadata.api.form.previousPageTooltip' | translate
+      "
+    >
+      <span translate>record.metadata.api.form.previousPage</span>
+    </button>
+    <div
+      class="font-semibold place-content-center"
+      [attr.aria-label]="
+        'record.metadata.api.form.paginationDescription' | translate
+      "
+    >
+      {{ page$ | async }}/{{ pageMax$ | async }}
+    </div>
+    <button
+      (click)="moreResult()"
+      [class]="
+        'bg-primary-opacity-50 px-4 py-2 text-white rounded transition ' +
+        ((page$ | async) >= (pageMax$ | async)
+          ? 'bg-gray-400 cursor-not-allowed  '
+          : 'bg-primary-opacity-50  hover:bg-primary')
+      "
+      [attr.title]="'record.metadata.api.form.nextPageTooltip' | translate"
+      [attr.aria-label]="'record.metadata.api.form.nextPageTooltip' | translate"
+    >
+      <span translate>record.metadata.api.form.nextPage</span>
+    </button>
+  </div>
+</div>

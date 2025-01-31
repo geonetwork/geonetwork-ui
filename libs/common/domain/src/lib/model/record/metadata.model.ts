@@ -129,6 +129,7 @@ export type ServiceProtocol =
   | 'wmts'
   | 'esriRest'
   | 'ogcFeatures'
+  | 'GPFDL'
   | 'other'
 
 export type OnlineResourceType = 'service' | 'download' | 'link' | 'endpoint'

@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import { GpfApiDlComponent, MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
   CarouselComponent,
   PreviousNextButtonsComponent,
@@ -34,6 +34,7 @@ import { TranslateModule } from '@ngx-translate/core'
     RecordApiFormComponent,
     NgIcon,
     TranslateModule,
+    GpfApiDlComponent,
   ],
   viewProviders: [
     provideIcons({
@@ -46,6 +47,7 @@ export class RecordApisComponent implements OnInit {
 
   maxHeight = '0px'
   opacity = 0
+  displayApiIgnForm: boolean
   selectedApiLink: DatasetServiceDistribution
 
   apiLinks$ = this.facade.apiLinks$
@@ -65,6 +67,7 @@ export class RecordApisComponent implements OnInit {
   }
 
   openRecordApiForm(link: DatasetServiceDistribution) {
+    this.displayApiIgnForm = link.accessServiceProtocol === 'GPFDL'
     this.selectedApiLink = link
     this.setStyle(link)
   }
@@ -75,7 +78,7 @@ export class RecordApisComponent implements OnInit {
   }
 
   setStyle(link: DatasetServiceDistribution) {
-    this.maxHeight = link === undefined ? '0px' : '500px'
+    this.maxHeight = link === undefined ? '0px' : '700px'
     this.opacity = link === undefined ? 0 : 1
   }
 }

@@ -59,7 +59,6 @@ import { FavoriteStarComponent } from './favorites/favorite-star/favorite-star.c
     SpinningLoaderComponent,
     ErrorComponent,
     FavoriteStarComponent,
-    DateRangeDropdownComponent,
   ],
   exports: [
     SortByComponent,
