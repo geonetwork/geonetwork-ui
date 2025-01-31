@@ -104,12 +104,17 @@ describe('RecordsListComponent', () => {
       const singleRecord = {
         ...datasetRecordsFixture()[0],
         uniqueIdentifier,
+        extras: {
+          isPublishedToAll: true,
+        },
       }
       beforeEach(() => {
         table.recordClick.emit(singleRecord)
       })
       it('routes to record edition', () => {
-        expect(router.navigate).toHaveBeenCalledWith(['/edit', 123])
+        expect(router.navigate).toHaveBeenCalledWith(['/edit', 123], {
+          state: { published: true },
+        })
       })
     })
     describe('when asking for record duplication', () => {

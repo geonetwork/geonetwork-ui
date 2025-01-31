@@ -10,9 +10,9 @@ describe('record-actions', () => {
     const recordId = `TEST_RECORD_${Date.now()}`
     describe('record with draft', () => {
       it('should delete the record, delete its associated draft and refresh the interface', () => {
-        // First create a record and its draft
+        // Edit a record, make it draft
         cy.get('[data-cy="create-record"]').click()
-        cy.url().should('include', '/create')
+        cy.url().should('include', '/edit')
         cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
           .as('abstractField')
           .focus()
@@ -49,10 +49,10 @@ describe('record-actions', () => {
     })
 
     describe('draft without record', () => {
-      it('should delete the draft and refresh the interface', () => {
+      it('should not be allowed to delete from draft page, should delete from search page', () => {
         // First create a draft
         cy.get('[data-cy="create-record"]').click()
-        cy.url().should('include', '/create')
+        cy.url().should('include', '/edit')
         cy.get('[data-test="recordTitleInput"]').click()
         cy.get('[data-test="recordTitleInput"]').type('{selectAll}{backspace}')
         cy.get('[data-test="recordTitleInput"]').type(recordId)
@@ -70,8 +70,21 @@ describe('record-actions', () => {
         cy.get('[data-cy="dashboard-drafts-count"]').should('contain', '1')
         // Delete the draft
         cy.get('[data-test="record-menu-button"]').click()
+        // as new records are always saved, it's not possible to delete them anymore from the draft page
+        cy.get('[data-test="record-menu-delete-button"]')
+          .find('button')
+          .should('be.disabled')
+        // Delete the record from search page
+        cy.visit('/my-space/my-records')
+        cy.get('[data-test="record-menu-button"]').last().click()
         cy.get('[data-test="record-menu-delete-button"]').click()
         cy.get('[data-cy="confirm-button"]').click()
+        cy.get('[data-cy="table-row"]')
+          .contains(recordId)
+          .should('have.length', 0)
+        cy.get('gn-ui-notification').should('contain', 'Delete success')
+        // check that draft was deleted
+        cy.visit('/my-space/my-draft')
         cy.get('[data-cy="table-row"]').should('not.exist')
       })
     })
@@ -81,7 +94,7 @@ describe('record-actions', () => {
     beforeEach(() => {
       // create a record
       cy.get('[data-cy="create-record"]').click()
-      cy.url().should('include', '/create')
+      cy.url().should('include', '/edit')
     })
 
     afterEach(() => {
@@ -114,52 +127,6 @@ describe('record-actions', () => {
         .should('contain.text', 'Next')
     })
 
-    it('the created record should not allow upload of resources and show info message as it was not saved yet', () => {
-      // first page
-      cy.get('gn-ui-form-field-overviews')
-        .find('gn-ui-image-input')
-        .find('input')
-        .should('be.disabled')
-      cy.get('gn-ui-form-field-overviews')
-        .children()
-        .find('[data-test="disabled-message"]')
-        .should(
-          'contain.text',
-          ' This field will be enabled once the dataset has been published '
-        )
-
-      // second page
-      cy.get('[data-test="previousNextPageButtons"]')
-        .children()
-        .eq(1)
-        .should('contain.text', 'Next')
-        .click()
-      cy.get('gn-ui-form-field-online-resources')
-        .find('gn-ui-switch-toggle')
-        .find('mat-button-toggle-group')
-        .find('button')
-        .should('be.disabled')
-      cy.get('gn-ui-file-input').find('input').should('be.disabled')
-      cy.get('gn-ui-form-field-online-resources')
-        .children()
-        .find('div')
-        .should(
-          'contain.text',
-          ' This field will be enabled once the dataset has been published '
-        )
-
-      cy.get('gn-ui-form-field-online-link-resources')
-        .find('input')
-        .should('be.disabled')
-      cy.get('gn-ui-form-field-online-link-resources')
-        .children()
-        .find('div')
-        .should(
-          'contain.text',
-          ' This field will be enabled once the dataset has been published '
-        )
-    })
-
     it('back navigation should go to search after creating a record', () => {
       cy.go('back')
       cy.url().should('include', '/catalog/search')
@@ -184,9 +151,9 @@ describe('record-actions', () => {
 
   describe('undo', () => {
     it('should restore the record and refresh the interface', () => {
-      // First create a record and its draft
-      cy.get('[data-cy="create-record"]').click()
-      cy.url().should('include', '/create')
+      // Edit an existing record and create a draft
+      cy.get('[data-cy="resultItemTitle"]').first().click()
+      cy.url().should('include', '/edit')
       cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
         .as('abstractField')
         .focus()

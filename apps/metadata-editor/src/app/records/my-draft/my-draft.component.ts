@@ -35,8 +35,7 @@ export class MyDraftComponent {
   )
   hasDraft = () => true
   canDuplicate = (): boolean => false
-  isUnsavedDraft = (record: CatalogRecord): boolean =>
-    this.recordsRepository.isRecordNotYetSaved(record.uniqueIdentifier)
+  isUnsavedDraft = (record: CatalogRecord): boolean => !record.uniqueIdentifier
 
   constructor(
     private router: Router,

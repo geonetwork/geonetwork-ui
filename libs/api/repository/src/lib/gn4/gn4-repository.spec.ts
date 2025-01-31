@@ -86,12 +86,18 @@ class RecordsApiServiceMock {
         1234: [
           {
             uuid: '1234-5678-9012',
+            draft: false,
           },
         ],
       },
     })
   )
   deleteRecord = jest.fn(() => of({}))
+  create = jest.fn(() => of({ uniqueIdentifier: 'my-dataset-001' }))
+
+  setInsertReturnValue(returnValue: any) {
+    this.insert.mockReturnValue(of(returnValue))
+  }
 }
 
 class PlatformServiceInterfaceMock {
@@ -401,17 +407,13 @@ describe('Gn4Repository', () => {
     })
     it('parses the XML record into a native object, and updates the id and title', () => {
       expect(record).toMatchObject({
-        uniqueIdentifier: `TEMP-ID-1720656000000`,
+        uniqueIdentifier: `my-dataset-001`,
         title:
           'A very interesting dataset (un jeu de données très intéressant) (Copy)',
       })
     })
-    it('saves the duplicated record as draft', () => {
-      const hasDraft = repository.recordHasDraft(`TEMP-ID-1720656000000`)
-      expect(hasDraft).toBe(true)
-    })
-    it('tells the record it has not been saved yet', () => {
-      expect(savedOnce).toBe(false)
+    it('tells the record it has been saved', () => {
+      expect(savedOnce).toBe(true)
     })
     it('returns the record as serialized', () => {
       expect(recordSource).toMatch(/<mdb:MD_Metadata/)
@@ -419,7 +421,7 @@ describe('Gn4Repository', () => {
   })
   // note: we're using a simple record here otherwise there might be loss of information when converting
   describe('saveRecord', () => {
-    let recordSource: string
+    let recordSource: { uuid: string; isDraft: boolean }
     describe('version error', () => {
       it('throws an error if the publication API version is too low', async () => {
         ;(platformService.getApiVersion as jest.Mock).mockReturnValueOnce(
@@ -435,12 +437,13 @@ describe('Gn4Repository', () => {
         expect(error).toEqual(new PublicationVersionError('4.2.4'))
       })
     })
-    describe('with reference', () => {
+    describe('Existing record - with reference', () => {
       beforeEach(async () => {
         recordSource = await lastValueFrom(
           repository.saveRecord(
             simpleDatasetRecordFixture(),
-            simpleDatasetRecordAsXmlFixture()
+            simpleDatasetRecordAsXmlFixture(),
+            true
           )
         )
       })
@@ -451,13 +454,13 @@ describe('Gn4Repository', () => {
             <mcc:code>
                 <gco:CharacterString>my-dataset-001</gco:CharacterString>`)
       })
-      it('calls the API to insert the record as XML', () => {
+      it('calls the API to insert the record as XML for existing records', () => {
         expect(gn4RecordsApi.insert).toHaveBeenCalledWith(
           expect.anything(),
           undefined,
           undefined,
           undefined,
-          expect.anything(),
+          true,
           undefined,
           expect.anything(),
           undefined,
@@ -473,12 +476,27 @@ describe('Gn4Repository', () => {
                 <gco:CharacterString>my-dataset-001</gco:CharacterString>`)
         )
       })
-      it('returns the unique identifier of the record as it was saved', () => {
-        expect(recordSource).toEqual('1234-5678-9012')
+      it('returns the unique identifier of the record and the draft status as it was saved', () => {
+        expect(recordSource).toEqual({
+          isDraft: false,
+          uuid: '1234-5678-9012',
+        })
       })
     })
-    describe('without reference', () => {
+    describe('Existing record - without reference', () => {
       beforeEach(async () => {
+        ;(gn4RecordsApi.insert as jest.Mock).mockReturnValueOnce(
+          of({
+            metadataInfos: {
+              1234: [
+                {
+                  uuid: '1234-5678-9012',
+                  draft: false,
+                },
+              ],
+            },
+          })
+        )
         await lastValueFrom(repository.saveRecord(datasetRecordsFixture()[0]))
       })
       it('uses the ISO19139 converter by default', () => {
@@ -756,15 +774,6 @@ describe('Gn4Repository', () => {
     })
   })
 
-  describe('isRecordNotYetSaved', () => {
-    it('returns true if the record has a temporary ID', () => {
-      expect(repository.isRecordNotYetSaved('TEMP-ID-12345')).toBe(true)
-    })
-
-    it('returns false if the record does not have a temporary ID', () => {
-      expect(repository.isRecordNotYetSaved('1234-5678')).toBe(false)
-    })
-  })
   describe('hasRecordChangedSinceDraft', () => {
     it('should return an empty array if the record is unsaved', () => {
       // Mock dependencies

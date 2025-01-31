@@ -14,7 +14,9 @@ import { MockProvider } from 'ng-mocks'
 import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
 
 class EditorServiceMock {
-  saveRecord = jest.fn((record) => of([record, '<xml>blabla</xml>']))
+  saveRecord = jest.fn((record) =>
+    of([record, '<xml>blabla</xml>', false, false])
+  )
   saveRecordAsDraft = jest.fn(() => of('<xml>blabla</xml>'))
   hasRecordChangedSinceDraft = jest.fn((record) => of(['change1', 'change2']))
 }
@@ -25,12 +27,14 @@ class RecordsRepositoryMock {
 const initialEditorState = {
   record: datasetRecordsFixture()[0],
   recordSource: '<xml>blabla</xml>',
+  alreadySavedOnce: true,
   saving: false,
   saveError: null,
   changedSinceSave: false,
-  alreadySavedOnce: true,
   editorConfig: [],
   currentPage: 0,
+  hasRecordChanged: null,
+  savedButNotPublished: false,
 }
 
 describe('EditorEffects', () => {
@@ -73,13 +77,15 @@ describe('EditorEffects', () => {
         actions = hot('-a---|', {
           a: EditorActions.saveRecord(),
         })
-        const expected = hot('-(ab)|', {
+        const expected = hot('-(abc)|', {
           a: EditorActions.saveRecordSuccess(),
           b: EditorActions.openRecord({
             record: datasetRecordsFixture()[0],
-            alreadySavedOnce: true,
             recordSource: '<xml>blabla</xml>',
+            alreadySavedOnce: true,
+            savedButNotPublished: false,
           }),
+          c: EditorActions.savedButNotPublished({ isDraft: false }),
         })
         expect(effects.saveRecord$).toBeObservable(expected)
         expect(service.saveRecord).toHaveBeenCalledWith(

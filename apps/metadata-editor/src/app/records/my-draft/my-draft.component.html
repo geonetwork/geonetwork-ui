@@ -12,7 +12,6 @@
       [hasDraft]="hasDraft"
       [records]="records$ | async"
       [canDuplicate]="canDuplicate"
-      [isUnsavedDraft]="isUnsavedDraft"
       [canDelete]="isUnsavedDraft"
       (recordClick)="editRecord($event)"
       (deleteRecord)="deleteDraft($event)"
