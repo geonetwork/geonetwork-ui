@@ -25,6 +25,7 @@ import { map, skip } from 'rxjs/operators'
 import { SidebarComponent } from '../dashboard/sidebar/sidebar.component'
 import { PageSelectorComponent } from './components/page-selector/page-selector.component'
 import { TopToolbarComponent } from './components/top-toolbar/top-toolbar.component'
+import { SearchHeaderComponent } from '../dashboard/search-header/search-header.component'
 
 marker('editor.record.form.bottomButtons.comeBackLater')
 marker('editor.record.form.bottomButtons.previous')
@@ -45,6 +46,7 @@ marker('editor.record.form.bottomButtons.next')
     PageSelectorComponent,
     TranslateModule,
     SidebarComponent,
+    SearchHeaderComponent,
   ],
 })
 export class EditPageComponent implements OnInit, OnDestroy {
@@ -63,7 +65,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private facade: EditorFacade,
+    protected facade: EditorFacade,
     private notificationsService: NotificationsService,
     private translateService: TranslateService,
     private router: Router
@@ -215,4 +217,6 @@ export class EditPageComponent implements OnInit, OnDestroy {
       minute: 'numeric',
     })
   }
+
+  protected readonly console = console
 }
