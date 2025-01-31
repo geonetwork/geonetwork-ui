@@ -13,9 +13,16 @@ const mockDatasetServiceDistribution: DatasetServiceDistribution = {
 
 jest.mock('@camptocamp/ogc-client', () => ({
   OgcApiEndpoint: class {
+    collections_ = [{ name: 'uniqueCollection' }]
     constructor(private url) {}
     get allCollections() {
-      return Promise.resolve([{ name: 'feature1' }])
+      if (this.url.toString().includes('multiple')) {
+        return Promise.resolve([
+          { name: 'firstCollection' },
+          { name: 'otherCollection' },
+        ])
+      }
+      return Promise.resolve(this.collections_)
     }
     getCollectionInfo(collectionId) {
       return Promise.resolve({
@@ -91,7 +98,7 @@ describe('RecordApiFormComponent', () => {
       expect(component.format$.getValue()).toBe('application/json')
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        'https://api.example.com/data/collections/feature1/items?limit=-1&f=application%2Fjson'
+        'https://api.example.com/data/collections/uniqueCollection/items?limit=-1&f=application%2Fjson'
       )
     })
   })
@@ -105,7 +112,7 @@ describe('RecordApiFormComponent', () => {
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data/collections/feature1/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(mockFormat)}`
+        `https://api.example.com/data/collections/uniqueCollection/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(mockFormat)}`
       )
     })
     it('should remove the param in url if value is null', async () => {
@@ -117,7 +124,7 @@ describe('RecordApiFormComponent', () => {
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data/collections/feature1/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(mockFormat)}`
+        `https://api.example.com/data/collections/uniqueCollection/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(mockFormat)}`
       )
     })
     it('should remove the param in url if value is zero', async () => {
@@ -129,8 +136,23 @@ describe('RecordApiFormComponent', () => {
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data/collections/feature1/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(mockFormat)}`
+        `https://api.example.com/data/collections/uniqueCollection/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(mockFormat)}`
       )
+    })
+
+    describe('when multiple collections available', () => {
+      it('uses the link name', async () => {
+        component.apiLink = {
+          ...mockDatasetServiceDistribution,
+          url: new URL('https://api.example.com/multiple'),
+          name: 'myCollection',
+        }
+        fixture.detectChanges()
+        const url = await firstValueFrom(component.apiQueryUrl$)
+        expect(url).toBe(
+          `https://api.example.com/multiple/collections/myCollection/items?limit=-1&f=application%2Fjson`
+        )
+      })
     })
   })
 
@@ -175,7 +197,16 @@ describe('RecordApiFormComponent', () => {
       expect(component.format$.getValue()).toBe('application/json')
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"application/json","limit":-1}`
+        `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"application/json"}`
+      )
+    })
+
+    it('sets maxFeatures if a limit is set', async () => {
+      component.setLimit('12')
+      expect(component.limit$.getValue()).toBe('12')
+      const url = await firstValueFrom(component.apiQueryUrl$)
+      expect(url).toBe(
+        `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"application/json","maxFeatures":12}`
       )
     })
   })

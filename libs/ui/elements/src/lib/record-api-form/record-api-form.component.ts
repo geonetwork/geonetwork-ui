@@ -61,7 +61,6 @@ export class RecordApiFormComponent {
     { value: 'application/json', label: 'JSON' },
   ]
   endpoint: WfsEndpoint | OgcApiEndpoint | undefined
-  firstCollection: string | undefined
 
   apiQueryUrl$ = combineLatest([
     this.offset$,
@@ -128,7 +127,7 @@ export class RecordApiFormComponent {
       this.supportOffset = this.endpoint.supportsStartIndex()
       return this.endpoint.getServiceInfo().outputFormats
     } else {
-      return (await this.endpoint.getCollectionInfo(this.firstCollection))
+      return (await this.endpoint.getCollectionInfo(this.apiFeatureType))
         .itemFormats
     }
   }
@@ -140,7 +139,11 @@ export class RecordApiFormComponent {
       await (this.endpoint as WfsEndpoint).isReady()
     } else {
       this.endpoint = new OgcApiEndpoint(this.apiBaseUrl)
-      this.firstCollection = (await this.endpoint.allCollections)[0].name
+      const collections = await this.endpoint.allCollections
+      // if there's only one collection, use this instead of the name given in the link.
+      if (collections.length === 1) {
+        this.apiFeatureType = collections[0].name
+      }
     }
     this.endpoint$.next(this.endpoint)
   }
@@ -161,11 +164,12 @@ export class RecordApiFormComponent {
     }
 
     if (this.endpoint instanceof WfsEndpoint) {
+      delete options.limit
       options.maxFeatures = limit !== '-1' ? Number(limit) : undefined
       return this.endpoint.getFeatureUrl(this.apiFeatureType, options)
     } else {
       return await this.endpoint.getCollectionItemsUrl(
-        this.firstCollection,
+        this.apiFeatureType,
         options
       )
     }
