@@ -14,9 +14,16 @@ const mockDatasetServiceDistribution: DatasetServiceDistribution = {
 
 jest.mock('@camptocamp/ogc-client', () => ({
   OgcApiEndpoint: class {
+    collections_ = [{ name: 'uniqueCollection' }]
     constructor(private url) {}
     get allCollections() {
-      return Promise.resolve([{ name: 'feature1' }])
+      if (this.url.toString().includes('multiple')) {
+        return Promise.resolve([
+          { name: 'firstCollection' },
+          { name: 'otherCollection' },
+        ])
+      }
+      return Promise.resolve(this.collections_)
     }
     getCollectionInfo(collectionId) {
       return Promise.resolve({
@@ -90,10 +97,10 @@ describe('RecordApiFormComponent', () => {
       expect(component.apiBaseUrl).toBe('https://api.example.com/data')
       expect(component.offset$.getValue()).toBe('')
       expect(component.limit$.getValue()).toBe('-1')
-      expect(component.format$.getValue()).toBe('json')
+      expect(component.format$.getValue()).toBe('application/json')
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        'https://api.example.com/data/collections/feature1/items?limit=-1&f=json'
+        'https://api.example.com/data/collections/uniqueCollection/items?limit=-1&f=application%2Fjson'
       )
     })
   })
@@ -101,38 +108,53 @@ describe('RecordApiFormComponent', () => {
     it('should update query URL correctly when setting offset, limit, and format', async () => {
       const mockOffset = '10'
       const mockLimit = '20'
-      const mockFormat = 'json'
+      const mockFormat = 'text/csv'
       component.setOffset(mockOffset)
       component.setLimit(mockLimit)
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data/collections/feature1/items?limit=${mockLimit}&offset=${mockOffset}&f=${mockFormat}`
+        `https://api.example.com/data/collections/uniqueCollection/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(mockFormat)}`
       )
     })
     it('should remove the param in url if value is null', async () => {
       const mockOffset = '0'
       const mockLimit = '20'
-      const mockFormat = 'json'
+      const mockFormat = 'application/json'
       component.setOffset(mockOffset)
       component.setLimit(mockLimit)
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data/collections/feature1/items?limit=${mockLimit}&offset=${mockOffset}&f=${mockFormat}`
+        `https://api.example.com/data/collections/uniqueCollection/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(mockFormat)}`
       )
     })
     it('should remove the param in url if value is zero', async () => {
       const mockOffset = '10'
       const mockLimit = '0'
-      const mockFormat = 'json'
+      const mockFormat = 'application/json'
       component.setOffset(mockOffset)
       component.setLimit(mockLimit)
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data/collections/feature1/items?limit=${mockLimit}&offset=${mockOffset}&f=${mockFormat}`
+        `https://api.example.com/data/collections/uniqueCollection/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(mockFormat)}`
       )
+    })
+
+    describe('when multiple collections available', () => {
+      it('uses the link name', async () => {
+        component.apiLink = {
+          ...mockDatasetServiceDistribution,
+          url: new URL('https://api.example.com/multiple'),
+          name: 'myCollection',
+        }
+        fixture.detectChanges()
+        const url = await firstValueFrom(component.apiQueryUrl$)
+        expect(url).toBe(
+          `https://api.example.com/multiple/collections/myCollection/items?limit=-1&f=application%2Fjson`
+        )
+      })
     })
   })
 
@@ -141,7 +163,7 @@ describe('RecordApiFormComponent', () => {
       component.resetUrl()
       expect(component.offset$.getValue()).toBe('')
       expect(component.limit$.getValue()).toBe('-1')
-      expect(component.format$.getValue()).toBe('json')
+      expect(component.format$.getValue()).toBe('application/json')
     })
   })
 
@@ -153,9 +175,9 @@ describe('RecordApiFormComponent', () => {
     it('should parse the returned formats', () => {
       component.parseOutputFormats()
       expect(component.outputFormats).toEqual([
-        { value: 'csv', label: 'CSV' },
-        { value: 'geojson', label: 'GEOJSON' },
-        { value: 'json', label: 'JSON' },
+        { value: 'text/csv', label: 'CSV' },
+        { value: 'application/geo+json', label: 'GEOJSON' },
+        { value: 'application/json', label: 'JSON' },
       ])
     })
   })
@@ -174,10 +196,19 @@ describe('RecordApiFormComponent', () => {
       expect(component.accessServiceProtocol).toBe('wfs')
       expect(component.offset$.getValue()).toBe('')
       expect(component.limit$.getValue()).toBe('-1')
-      expect(component.format$.getValue()).toBe('json')
+      expect(component.format$.getValue()).toBe('application/json')
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"json","limit":-1}`
+        `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"application/json"}`
+      )
+    })
+
+    it('sets maxFeatures if a limit is set', async () => {
+      component.setLimit('12')
+      expect(component.limit$.getValue()).toBe('12')
+      const url = await firstValueFrom(component.apiQueryUrl$)
+      expect(url).toBe(
+        `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"application/json","maxFeatures":12}`
       )
     })
   })
