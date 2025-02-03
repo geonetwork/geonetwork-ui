@@ -75,11 +75,12 @@ export class MdViewFacade {
     map((links) =>
       links
         .filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.API))
+        // Put links to IGN Géoplateforme first
         .sort((dd1, dd2) => {
           return (dd2 as DatasetServiceDistribution).accessServiceProtocol ===
             'GPFDL'
             ? 1
-            : -1
+            : undefined // do not change the sorting otherwise
         })
     )
   )
