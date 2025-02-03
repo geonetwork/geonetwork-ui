@@ -18,6 +18,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { TableComponent } from '@geonetwork-ui/ui/dataviz'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
+import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
     TranslateModule,
     TableComponent,
     NgIconsModule,
+    DropdownSelectorComponent,
   ],
   providers: [
     MdViewFacade,
