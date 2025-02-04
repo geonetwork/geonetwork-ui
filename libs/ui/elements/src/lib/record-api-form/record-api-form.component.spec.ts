@@ -114,7 +114,9 @@ describe('RecordApiFormComponent', () => {
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data/collections/uniqueCollection/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(mockFormat)}`
+        `https://api.example.com/data/collections/uniqueCollection/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(
+          mockFormat
+        )}`
       )
     })
     it('should remove the param in url if value is null', async () => {
@@ -126,7 +128,9 @@ describe('RecordApiFormComponent', () => {
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data/collections/uniqueCollection/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(mockFormat)}`
+        `https://api.example.com/data/collections/uniqueCollection/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(
+          mockFormat
+        )}`
       )
     })
     it('should remove the param in url if value is zero', async () => {
@@ -138,7 +142,9 @@ describe('RecordApiFormComponent', () => {
       component.setFormat(mockFormat)
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data/collections/uniqueCollection/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(mockFormat)}`
+        `https://api.example.com/data/collections/uniqueCollection/items?limit=${mockLimit}&offset=${mockOffset}&f=${encodeURIComponent(
+          mockFormat
+        )}`
       )
     })
 
