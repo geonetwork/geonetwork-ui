@@ -283,7 +283,7 @@
   "editor.record.form.temporalExtents.addRange": "Période de temps",
   "editor.record.form.temporalExtents.date": "Date concernée",
   "editor.record.form.temporalExtents.range": "Période concernée",
-  "editor.record.form.updateFrequency.planned": "Ces données doivent être mise à jour régulièrement.",
+  "editor.record.form.updateFrequency.planned": "Ce jeu de données est mis à jour régulièrement.",
   "editor.record.importFromExternalFile.failure.body": "Une erreur est survenue pendant l'import du jeu de données : ",
   "editor.record.importFromExternalFile.failure.title": "Erreur",
   "editor.record.importFromExternalFile.success.body": "L'import du jeu de données à été realisé avec succès.",

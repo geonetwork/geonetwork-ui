@@ -293,7 +293,7 @@
   "editor.record.form.temporalExtents.addRange": "Zeitraum",
   "editor.record.form.temporalExtents.date": "Datum",
   "editor.record.form.temporalExtents.range": "Datumsbereich",
-  "editor.record.form.updateFrequency.planned": "Die Daten sollten regelmäßig aktualisiert werden.",
+  "editor.record.form.updateFrequency.planned": "Dieses Dataset wird regelmäßig aktualisiert.",
   "editor.record.importFromExternalFile.failure.body": "",
   "editor.record.importFromExternalFile.failure.title": "",
   "editor.record.importFromExternalFile.success.body": "",

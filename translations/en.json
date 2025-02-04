@@ -283,7 +283,7 @@
   "editor.record.form.temporalExtents.addRange": "Time period",
   "editor.record.form.temporalExtents.date": "Date",
   "editor.record.form.temporalExtents.range": "Date range",
-  "editor.record.form.updateFrequency.planned": "The data should be updated regularly",
+  "editor.record.form.updateFrequency.planned": "This dataset is updated regularly.",
   "editor.record.importFromExternalFile.failure.body": "Failure",
   "editor.record.importFromExternalFile.failure.title": "The dataset import failed: ",
   "editor.record.importFromExternalFile.success.body": "Import successful",

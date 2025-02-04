@@ -283,7 +283,7 @@
   "editor.record.form.temporalExtents.addRange": "",
   "editor.record.form.temporalExtents.date": "",
   "editor.record.form.temporalExtents.range": "",
-  "editor.record.form.updateFrequency.planned": "",
+  "editor.record.form.updateFrequency.planned": "Este conjunto de dados é atualizado regularmente.",
   "editor.record.importFromExternalFile.failure.body": "",
   "editor.record.importFromExternalFile.failure.title": "",
   "editor.record.importFromExternalFile.success.body": "",

@@ -181,7 +181,6 @@
   "domain.record.updateFrequency.quarterly": "Trimestralmente",
   "domain.record.updateFrequency.semimonthly": "Semimensualmente",
   "domain.record.updateFrequency.weekly": "Semanalmente",
-
   "domain.record.status.under_development": "",
   "domain.record.updateFrequency.annually": "",
   "domain.record.updateFrequency.asNeeded": "",
@@ -295,7 +294,7 @@
   "editor.record.form.temporalExtents.addRange": "",
   "editor.record.form.temporalExtents.date": "",
   "editor.record.form.temporalExtents.range": "",
-  "editor.record.form.updateFrequency.planned": "",
+  "editor.record.form.updateFrequency.planned": "Este conjunto de datos se actualiza regularmente.",
   "editor.record.importFromExternalFile.failure.body": "",
   "editor.record.importFromExternalFile.failure.title": "",
   "editor.record.importFromExternalFile.success.body": "",
