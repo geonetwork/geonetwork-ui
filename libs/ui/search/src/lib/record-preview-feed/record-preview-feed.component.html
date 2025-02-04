@@ -61,7 +61,9 @@
       >
         {{ record.title }}
       </h1>
-      <p class="line-clamp-3">{{ abstract }}</p>
+      <p class="line-clamp-3">
+        <gn-ui-markdown-parser [textContent]="abstract" whitoutStyles="true" />
+      </p>
       <gn-ui-thumbnail
         *ngIf="record.overviews?.[0]"
         class="block mt-3 w-full h-[136px] border border-gray-100 rounded-lg overflow-hidden"
