@@ -242,6 +242,7 @@
   "editor.record.form.field.spatialExtents": "",
   "editor.record.form.field.temporalExtents": "",
   "editor.record.form.field.title": "",
+  "editor.record.form.field.title.placeholder": "Voer een titel in",
   "editor.record.form.field.uniqueIdentifier": "",
   "editor.record.form.field.updateFrequency": "",
   "editor.record.form.license.cc-by": "",

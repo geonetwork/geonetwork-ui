@@ -242,6 +242,7 @@
   "editor.record.form.field.spatialExtents": "Étendue spatiale",
   "editor.record.form.field.temporalExtents": "Étendue temporelle",
   "editor.record.form.field.title": "Titre",
+  "editor.record.form.field.title.placeholder": "Saisir un titre",
   "editor.record.form.field.uniqueIdentifier": "Identifiant unique",
   "editor.record.form.field.updateFrequency": "Fréquence de mise à jour",
   "editor.record.form.license.cc-by": "",

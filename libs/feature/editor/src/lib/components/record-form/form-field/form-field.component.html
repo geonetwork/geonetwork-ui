@@ -11,10 +11,7 @@
     <ng-container *ngTemplateOutlet="fieldContent"></ng-container>
   </ng-container>
   <ng-template #withGenericWrapper>
-    <gn-ui-form-field-wrapper
-      [label]="config.labelKey! | translate"
-      [hint]="config.hintKey! | translate"
-    >
+    <gn-ui-form-field-wrapper [label]="config.labelKey! | translate" [hint]="config.hintKey! | translate">
       <ng-container *ngTemplateOutlet="fieldContent"></ng-container>
     </gn-ui-form-field-wrapper>
   </ng-template>
@@ -24,94 +21,56 @@
   <ng-container [ngSwitch]="model">
     <ng-container *ngSwitchCase="'title'">
       <div class="flex flex-row flex-start items-center gap-3 mb-[12px]">
-        <textarea
-          #titleInput
-          cdkTextareaAutosize
-          #autosize="cdkTextareaAutosize"
-          cdkAutosizeMinRows="1"
-          data-test="recordTitleInput"
-          class="grow font-title text-3xl font-normal overflow-hidden"
+        <textarea #titleInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+          data-test="recordTitleInput" class="grow font-title text-3xl font-normal overflow-hidden"
           (change)="valueChange.emit($event.target.value)"
-          >{{ valueAsString }}</textarea
-        >
+          [placeholder]="'editor.record.form.field.title.placeholder' | translate">{{ valueAsString }}</textarea>
         <div class="flex flex-row justify-between self-start mt-0.5">
-          <span
-            class="material-symbols-outlined gn-ui-icon-small m-2 cursor-pointer"
-            (click)="focusTitleInput()"
-            >edit</span
-          >
-          <span
-            *ngIf="config.hintKey"
-            class="material-symbols-outlined gn-ui-icon-small m-2"
-            [matTooltip]="config.hintKey! | translate"
-            matTooltipPosition="above"
-          >
+          <span class="material-symbols-outlined gn-ui-icon-small m-2 cursor-pointer"
+            (click)="focusTitleInput()">edit</span>
+          <span *ngIf="config.hintKey" class="material-symbols-outlined gn-ui-icon-small m-2"
+            [matTooltip]="config.hintKey! | translate" matTooltipPosition="above">
             help
           </span>
         </div>
       </div>
     </ng-container>
     <ng-container *ngSwitchCase="'abstract'">
-      <gn-ui-form-field-rich
-        [label]="config.labelKey! | translate"
-        [hint]="config.hintKey! | translate"
-        [value]="valueAsString"
-        (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-rich>
+      <gn-ui-form-field-rich [label]="config.labelKey! | translate" [hint]="config.hintKey! | translate"
+        [value]="valueAsString" (valueChange)="valueChange.emit($event)"></gn-ui-form-field-rich>
     </ng-container>
     <ng-container *ngSwitchCase="'overviews'">
-      <gn-ui-form-field-overviews
-        [metadataUuid]="uniqueIdentifier"
-        [value]="valueAsOverviews"
-        (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-overviews>
+      <gn-ui-form-field-overviews [metadataUuid]="uniqueIdentifier" [value]="valueAsOverviews"
+        (valueChange)="valueChange.emit($event)"></gn-ui-form-field-overviews>
     </ng-container>
     <ng-container *ngSwitchCase="'resourceIdentifier'">
-      <gn-ui-form-field-simple
-        [type]="'text'"
-        [value]="valueAsString"
-        (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-simple>
+      <gn-ui-form-field-simple [type]="'text'" [value]="valueAsString"
+        (valueChange)="valueChange.emit($event)"></gn-ui-form-field-simple>
     </ng-container>
     <ng-container *ngSwitchCase="'resourceCreated'">
-      <gn-ui-form-field-date
-        [value]="valueAsDate"
-        (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-date>
+      <gn-ui-form-field-date [value]="valueAsDate" (valueChange)="valueChange.emit($event)"></gn-ui-form-field-date>
     </ng-container>
     <ng-container *ngSwitchCase="'resourceUpdated'">
-      <gn-ui-form-field-date
-        [value]="valueAsDate"
-        (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-date>
+      <gn-ui-form-field-date [value]="valueAsDate" (valueChange)="valueChange.emit($event)"></gn-ui-form-field-date>
     </ng-container>
     <ng-container *ngSwitchCase="'updateFrequency'">
-      <gn-ui-form-field-update-frequency
-        [value]="valueAsUpdateFrequency"
-        (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-update-frequency>
+      <gn-ui-form-field-update-frequency [value]="valueAsUpdateFrequency"
+        (valueChange)="valueChange.emit($event)"></gn-ui-form-field-update-frequency>
     </ng-container>
     <ng-container *ngSwitchCase="'temporalExtents'">
-      <gn-ui-form-field-temporal-extents
-        [value]="valueAsTemporalExtents"
-        (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-temporal-extents>
+      <gn-ui-form-field-temporal-extents [value]="valueAsTemporalExtents"
+        (valueChange)="valueChange.emit($event)"></gn-ui-form-field-temporal-extents>
     </ng-container>
     <ng-container *ngSwitchCase="'spatialExtents'">
       <gn-ui-form-field-spatial-extent></gn-ui-form-field-spatial-extent>
     </ng-container>
     <ng-container *ngSwitchCase="'keywords'">
-      <gn-ui-form-field-keywords
-        [value]="valueAsKeywords"
-        (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-keywords>
+      <gn-ui-form-field-keywords [value]="valueAsKeywords"
+        (valueChange)="valueChange.emit($event)"></gn-ui-form-field-keywords>
     </ng-container>
     <ng-container *ngSwitchCase="'licenses'">
-      <gn-ui-form-field-license
-        [label]="config.labelKey! | translate"
-        [recordConstraints]="valueAsConstraints"
-        (recordConstraintsChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-license>
+      <gn-ui-form-field-license [label]="config.labelKey! | translate" [recordConstraints]="valueAsConstraints"
+        (recordConstraintsChange)="valueChange.emit($event)"></gn-ui-form-field-license>
     </ng-container>
 
     <ng-container *ngSwitchCase="'legalConstraints'">
@@ -121,44 +80,28 @@
       <ng-container *ngTemplateOutlet="formFieldConstraints"></ng-container>
     </ng-container>
     <ng-container *ngSwitchCase="'otherConstraints'">
-      <ng-container *ngTemplateOutlet="formFieldConstraints"></ng-container
-    ></ng-container>
+      <ng-container *ngTemplateOutlet="formFieldConstraints"></ng-container></ng-container>
     <ng-template #formFieldConstraints>
-      <gn-ui-form-field-constraints
-        [label]="config.labelKey"
-        [value]="valueAsConstraints"
-        [constraintType]="model"
-        (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-constraints
-    ></ng-template>
+      <gn-ui-form-field-constraints [label]="config.labelKey" [value]="valueAsConstraints" [constraintType]="model"
+        (valueChange)="valueChange.emit($event)"></gn-ui-form-field-constraints></ng-template>
 
     <ng-container *ngSwitchCase="'contactsForResource'">
-      <gn-ui-form-field-contacts-for-resource
-        [value]="valueAsIndividuals"
-        (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-contacts-for-resource>
+      <gn-ui-form-field-contacts-for-resource [value]="valueAsIndividuals"
+        (valueChange)="valueChange.emit($event)"></gn-ui-form-field-contacts-for-resource>
     </ng-container>
     <ng-container *ngSwitchCase="'contacts'">
-      <gn-ui-form-field-contacts
-        [value]="valueAsIndividuals"
-        (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-contacts>
+      <gn-ui-form-field-contacts [value]="valueAsIndividuals"
+        (valueChange)="valueChange.emit($event)"></gn-ui-form-field-contacts>
     </ng-container>
     <ng-container *ngSwitchCase="'onlineResources'">
-      <gn-ui-form-field-online-resources
-        *ngIf="modelSpecifier === 'onlineResourceType:!link'"
-        [metadataUuid]="uniqueIdentifier"
-        [value]="valueAsOnlineResources"
-        (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-online-resources>
+      <gn-ui-form-field-online-resources *ngIf="modelSpecifier === 'onlineResourceType:!link'"
+        [metadataUuid]="uniqueIdentifier" [value]="valueAsOnlineResources"
+        (valueChange)="valueChange.emit($event)"></gn-ui-form-field-online-resources>
     </ng-container>
     <ng-container *ngSwitchCase="'onlineResources'">
-      <gn-ui-form-field-online-link-resources
-        *ngIf="modelSpecifier === 'onlineResourceType:link'"
-        [metadataUuid]="uniqueIdentifier"
-        [value]="valueAsOnlineResources"
-        (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-online-link-resources>
+      <gn-ui-form-field-online-link-resources *ngIf="modelSpecifier === 'onlineResourceType:link'"
+        [metadataUuid]="uniqueIdentifier" [value]="valueAsOnlineResources"
+        (valueChange)="valueChange.emit($event)"></gn-ui-form-field-online-link-resources>
     </ng-container>
   </ng-container>
 
