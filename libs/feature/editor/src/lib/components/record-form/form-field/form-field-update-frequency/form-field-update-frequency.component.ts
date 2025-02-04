@@ -27,8 +27,6 @@ const initialListValues = updateFrequencyCodeValues.filter(
       'notPlanned',
       'asNeeded',
       'irregular',
-      'continual',
-      'periodic',
     ].includes(code)
 )
 
@@ -50,7 +48,7 @@ export class FormFieldUpdateFrequencyComponent implements OnInit {
     return this.value && this.value !== 'notPlanned' && this.value !== 'unknown'
   }
 
-  constructor(private translateService: TranslateService) {}
+  constructor(private translateService: TranslateService) { }
 
   async ngOnInit() {
     this.choices = await this.getInitialChoices()
