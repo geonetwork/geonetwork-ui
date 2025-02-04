@@ -21,13 +21,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { firstValueFrom } from 'rxjs'
 
 const initialListValues = updateFrequencyCodeValues.filter(
-  (code) =>
-    ![
-      'unknown',
-      'notPlanned',
-      'asNeeded',
-      'irregular',
-    ].includes(code)
+  (code) => !['unknown', 'notPlanned', 'asNeeded', 'irregular'].includes(code)
 )
 
 @Component({
@@ -48,7 +42,7 @@ export class FormFieldUpdateFrequencyComponent implements OnInit {
     return this.value && this.value !== 'notPlanned' && this.value !== 'unknown'
   }
 
-  constructor(private translateService: TranslateService) { }
+  constructor(private translateService: TranslateService) {}
 
   async ngOnInit() {
     this.choices = await this.getInitialChoices()
