@@ -6,16 +6,12 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { mimeTypeToFormat } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest, filter, map, switchMap } from 'rxjs'
+import { DropdownChoice } from '@geonetwork-ui/ui/inputs'
 
 const DEFAULT_PARAMS = {
   OFFSET: '',
   LIMIT: '-1',
-  FORMAT: 'json',
-}
-
-interface OutputFormats {
-  itemFormats?: any[]
-  outputFormats?: any[]
+  FORMAT: 'application/json',
 }
 
 @Component({
@@ -26,7 +22,7 @@ interface OutputFormats {
 })
 export class RecordApiFormComponent {
   @Input() set apiLink(value: DatasetServiceDistribution) {
-    this.outputFormats = [{ value: 'json', label: 'JSON' }]
+    this.outputFormats = [{ value: 'application/json', label: 'JSON' }]
     this.accessServiceProtocol = value ? value.accessServiceProtocol : undefined
     this.apiFeatureType = value ? value.name : undefined
     if (value) {
@@ -46,9 +42,10 @@ export class RecordApiFormComponent {
   apiFeatureType: string
   supportOffset = true
   accessServiceProtocol: ServiceProtocol | undefined
-  outputFormats = [{ value: 'json', label: 'JSON' }]
+  outputFormats: DropdownChoice[] = [
+    { value: 'application/json', label: 'JSON' },
+  ]
   endpoint: WfsEndpoint | OgcApiEndpoint | undefined
-  firstCollection: string | undefined
 
   apiQueryUrl$ = combineLatest([
     this.offset$,
@@ -89,17 +86,12 @@ export class RecordApiFormComponent {
 
   async parseOutputFormats() {
     if (!this.endpoint) return
-    const apiUrl = this.apiBaseUrl.endsWith('?')
-      ? this.apiBaseUrl.slice(0, -1)
-      : this.apiBaseUrl
-    const outputFormats = await this.getOutputFormats(apiUrl)
-
-    const formatsList = outputFormats.itemFormats
-      ? this.mapFormats(outputFormats.itemFormats)
-      : this.mapFormats(outputFormats.outputFormats || [])
+    const outputFormats = (await this.getOutputFormats()).map(
+      this.mimeTypeToFormatName
+    )
 
     this.outputFormats = this.outputFormats
-      .concat(formatsList.filter(Boolean))
+      .concat(outputFormats.filter(Boolean))
       .filter(
         (format, index, self) =>
           index === self.findIndex((t) => t.value === format.value)
@@ -107,24 +99,21 @@ export class RecordApiFormComponent {
       .sort((a, b) => a.label.localeCompare(b.label))
   }
 
-  mapFormats(formats: any[]) {
-    return formats.map((format) => {
-      const normalizedFormat = mimeTypeToFormat(format)
-      return normalizedFormat
-        ? { label: normalizedFormat.toUpperCase(), value: normalizedFormat }
-        : null
-    })
+  mimeTypeToFormatName(mimeType: string): DropdownChoice | null {
+    const formatName = mimeTypeToFormat(mimeType)
+    return formatName
+      ? { label: formatName.toUpperCase(), value: mimeType }
+      : null
   }
 
-  async getOutputFormats(url: string): Promise<OutputFormats> {
-    if (!this.endpoint) return {}
+  async getOutputFormats(): Promise<string[]> {
+    if (!this.endpoint) return []
     if (this.endpoint instanceof WfsEndpoint) {
       this.supportOffset = this.endpoint.supportsStartIndex()
-      return this.endpoint.getServiceInfo() as OutputFormats
+      return this.endpoint.getServiceInfo().outputFormats
     } else {
-      return (await this.endpoint.getCollectionInfo(
-        this.firstCollection
-      )) as OutputFormats
+      return (await this.endpoint.getCollectionInfo(this.apiFeatureType))
+        .itemFormats
     }
   }
 
@@ -135,7 +124,11 @@ export class RecordApiFormComponent {
       await (this.endpoint as WfsEndpoint).isReady()
     } else {
       this.endpoint = new OgcApiEndpoint(this.apiBaseUrl)
-      this.firstCollection = (await this.endpoint.allCollections)[0].name
+      const collections = await this.endpoint.allCollections
+      // if there's only one collection, use this instead of the name given in the link.
+      if (collections.length === 1) {
+        this.apiFeatureType = collections[0].name
+      }
     }
     this.endpoint$.next(this.endpoint)
   }
@@ -151,16 +144,17 @@ export class RecordApiFormComponent {
       outputFormat: format,
       startIndex: offset ? Number(offset) : undefined,
       maxFeatures: limit !== '-1' ? Number(limit) : undefined,
-      limit: limit !== '-1' ? Number(limit) : limit === '-1' ? -1 : undefined,
+      limit: limit !== '-1' ? Number(limit) : -1,
       offset: offset !== '' ? Number(offset) : undefined,
     }
 
     if (this.endpoint instanceof WfsEndpoint) {
+      delete options.limit
       options.maxFeatures = limit !== '-1' ? Number(limit) : undefined
       return this.endpoint.getFeatureUrl(this.apiFeatureType, options)
     } else {
       return await this.endpoint.getCollectionItemsUrl(
-        this.firstCollection,
+        this.apiFeatureType,
         options
       )
     }
