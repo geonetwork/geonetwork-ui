@@ -38,7 +38,7 @@ jobs:
     name: Deploy Storybook to GitHub Pages
     runs-on: ubuntu-latest
     env:
-      BRANCH_NAME: ${{needs.checks.outputs.ref || 'main'}}
+      BRANCH_NAME: ${{needs.checks.outputs.ref || '2.3.x'}}
 
     steps:
       - name: Dump GitHub event

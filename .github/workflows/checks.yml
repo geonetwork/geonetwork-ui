@@ -18,7 +18,7 @@ on:
 # on QA checks
 concurrency:
   group: checks-${{ github.ref }}
-  cancel-in-progress: ${{ github.ref_name != 'main' }}
+  cancel-in-progress: ${{ github.ref_name != '2.3.x' }}
 
 jobs:
   format-lint-test:
@@ -40,7 +40,7 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
         with:
-          main-branch-name: 'main'
+          main-branch-name: '2.3.x'
       - run: npm ci
       - run: npx nx format:check
       - run: npx nx affected -t lint --parallel=3
@@ -91,7 +91,7 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
         with:
-          main-branch-name: 'main'
+          main-branch-name: '2.3.x'
       - run: npm ci
       - run: npx nx affected -t build --parallel=3
 
