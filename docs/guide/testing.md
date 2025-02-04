@@ -2,6 +2,11 @@
 outline: deep
 ---
 
+<script setup>
+import { data } from '../scripts/migrations.data.js';
+const ngMocksDone = Math.ceil(data.ngMocks.completionRatio * 100);
+</script>
+
 # Testing
 
 ## Fixture Guidelines
@@ -71,6 +76,18 @@ Angular provides many tools to clearly split the responsabilities between each c
 See commit `01dfc84d5e127bd426238dd00395faa1697f0eaa` for a few examples.
 
 Unit tests are migrated progressively to use `ng-mocks`.
+
+This is the progression status of the `ng-mocks` migration:
+
+<div style='display: flex; flex-direction: row; gap: 16px'>
+  <div :style='"width: " + ngMocksDone + "%"' class='custom-block tip'>
+    <p class='custom-block-title'>{{ ngMocksDone }}% done</p>
+    <p style='white-space: preserve-breaks'>{{ data.ngMocks.infos }}</p>
+  </div>
+  <div class='custom-block caution' style='flex-grow: 1'>
+    <p class='custom-block-title'>{{ 100 - ngMocksDone }}% not done</p>
+  </div>
+</div>
 
 ### Mocking services (legacy)
 

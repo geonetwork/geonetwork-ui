@@ -2,6 +2,12 @@
 outline: deep
 ---
 
+<script setup>
+import { data } from '../scripts/migrations.data.js';
+const standaloneDone = Math.ceil(data.standaloneComponents.completionRatio * 100);
+const storybookDone = Math.ceil(data.storybookEntries.completionRatio * 100);
+</script>
+
 # Writing components
 
 This guide provides several guidelines when writing Angular components in the project. **Please follow them unless you have a good reason not to do so!**
@@ -17,7 +23,15 @@ Standalone components have the following differences with legacy "non-standalone
 
 This is the progression status of the Standalone Component migration:
 
-// TODO
+<div style='display: flex; flex-direction: row; gap: 16px'>
+  <div :style='"width: " + standaloneDone + "%"' class='custom-block tip'>
+    <p class='custom-block-title'>{{ standaloneDone }}% done</p>
+    <p style='white-space: preserve-breaks'>{{ data.standaloneComponents.infos }}</p>
+  </div>
+  <div class='custom-block caution' style='flex-grow: 1'>
+    <p class='custom-block-title'>{{ 100 - standaloneDone }}% not done</p>
+  </div>
+</div>
 
 ## Storybook entry
 
@@ -44,6 +58,18 @@ A typical Storybook entry should:
     ],
   } as Meta<MyComponent>
   ```
+
+This is the progression status of creating Storybook entries for all presentation (UI) components:
+
+<div style='display: flex; flex-direction: row; gap: 16px'>
+  <div :style='"width: " + storybookDone + "%"' class='custom-block tip'>
+    <p class='custom-block-title'>{{ storybookDone }}% done</p>
+    <p style='white-space: preserve-breaks'>{{ data.storybookEntries.infos }}</p>
+  </div>
+  <div class='custom-block caution' style='flex-grow: 1'>
+    <p class='custom-block-title'>{{ 100 - storybookDone }}% not done</p>
+  </div>
+</div>
 
 ### Storybook entries for standalone components
 
