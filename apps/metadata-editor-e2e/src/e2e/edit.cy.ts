@@ -340,7 +340,7 @@ describe('editor form', () => {
               .find('button')
               .find('div')
               .invoke('text')
-              .should('eq', ' Once per day ')
+              .should('eq', ' Continual ')
           })
         })
       })
