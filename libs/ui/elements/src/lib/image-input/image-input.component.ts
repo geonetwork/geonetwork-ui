@@ -32,6 +32,7 @@ import {
 } from '@ng-icons/iconoir'
 import { TranslateModule } from '@ngx-translate/core'
 import { firstValueFrom } from 'rxjs'
+import { ImageOverlayPreviewComponent } from '../image-overlay-preview/image-overlay-preview.component'
 
 @Component({
   selector: 'gn-ui-image-input',
@@ -48,6 +49,7 @@ import { firstValueFrom } from 'rxjs'
     UrlInputComponent,
     TextInputComponent,
     NgIconComponent,
+    ImageOverlayPreviewComponent,
   ],
   providers: [
     provideIcons({
