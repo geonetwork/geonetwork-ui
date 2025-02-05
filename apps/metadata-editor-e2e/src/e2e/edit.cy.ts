@@ -309,9 +309,6 @@ describe('editor form', () => {
           it('should allow to select a frequency', () => {
             cy.editor_wrapPreviousDraft()
             cy.get('gn-ui-form-field-update-frequency')
-              .find('gn-ui-check-toggle label')
-              .click()
-            cy.get('gn-ui-form-field-update-frequency')
               .find('gn-ui-dropdown-selector')
               .openDropdown()
               .children('button')
@@ -324,7 +321,7 @@ describe('editor form', () => {
               .getActiveDropdownOption()
               .find('span')
               .invoke('text')
-              .should('eq', ' 2 times per week ')
+              .should('eq', ' Data is updated each day ')
           })
         })
         describe('when the regularity switch is off', () => {
@@ -340,7 +337,7 @@ describe('editor form', () => {
               .find('button')
               .find('div')
               .invoke('text')
-              .should('eq', ' Once per day ')
+              .should('eq', ' Data is repeatedly and frequently updated ')
           })
         })
       })
