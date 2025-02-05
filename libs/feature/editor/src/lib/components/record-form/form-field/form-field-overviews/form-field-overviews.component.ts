@@ -8,7 +8,7 @@ import {
   Output,
 } from '@angular/core'
 import { GraphicOverview } from '@geonetwork-ui/common/domain/model/record'
-import { ImageInputComponent } from '@geonetwork-ui/ui/inputs'
+import { ImageInputComponent } from '@geonetwork-ui/ui/elements'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'

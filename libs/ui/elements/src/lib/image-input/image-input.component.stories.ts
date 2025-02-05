@@ -15,7 +15,7 @@ import { ImageInputComponent } from './image-input.component'
 import { action } from '@storybook/addon-actions'
 
 export default {
-  title: 'Inputs/ImageInputComponent',
+  title: 'Elements/ImageInputComponent',
   component: ImageInputComponent,
   decorators: [
     applicationConfig({
