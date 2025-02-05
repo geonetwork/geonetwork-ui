@@ -32,6 +32,9 @@
           data-test="recordTitleInput"
           class="grow font-title text-3xl font-normal overflow-hidden"
           (change)="valueChange.emit($event.target.value)"
+          [placeholder]="
+            'editor.record.form.field.title.placeholder' | translate
+          "
           >{{ valueAsString }}</textarea
         >
         <div class="flex flex-row justify-between self-start mt-0.5">

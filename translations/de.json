@@ -242,6 +242,7 @@
   "editor.record.form.field.spatialExtents": "",
   "editor.record.form.field.temporalExtents": "Zeitlicher Umfang",
   "editor.record.form.field.title": "Metadaten-Titel",
+  "editor.record.form.field.title.placeholder": "Geben Sie einen Titel ein",
   "editor.record.form.field.uniqueIdentifier": "Eindeutige Kennung (ID)",
   "editor.record.form.field.updateFrequency": "Aktualisierungshäufigkeit",
   "editor.record.form.license.cc-by": "",

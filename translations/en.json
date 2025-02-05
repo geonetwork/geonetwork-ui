@@ -242,6 +242,7 @@
   "editor.record.form.field.spatialExtents": "Spatial extents",
   "editor.record.form.field.temporalExtents": "Temporal extents",
   "editor.record.form.field.title": "Metadata title",
+  "editor.record.form.field.title.placeholder": "Enter a title",
   "editor.record.form.field.uniqueIdentifier": "Unique identifier",
   "editor.record.form.field.updateFrequency": "Update frequency",
   "editor.record.form.license.cc-by": "Creative Commons CC-BY",
