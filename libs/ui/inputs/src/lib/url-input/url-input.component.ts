@@ -45,7 +45,7 @@ export class UrlInputComponent {
   @Input() extraClass = ''
   @Input() placeholder = 'https://'
   @Input() disabled: boolean
-  @Input() showUploadButton = true
+  @Input() showValidateButton = true
 
   /**
    * This will emit null if the field is emptied

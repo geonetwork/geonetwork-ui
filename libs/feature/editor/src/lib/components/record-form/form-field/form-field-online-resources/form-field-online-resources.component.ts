@@ -174,6 +174,16 @@ export class FormFieldOnlineResourcesComponent {
     ])
   }
 
+  handleIdentifierSubmit(identifier: string) {
+    this.valueChange.emit([
+      ...this.allResources,
+      {
+        ...this.newService,
+        url: new URL('https://TODO.gov'),
+      },
+    ])
+  }
+
   handleServiceModify(
     oldService: DatasetServiceDistribution,
     newService: DatasetServiceDistribution

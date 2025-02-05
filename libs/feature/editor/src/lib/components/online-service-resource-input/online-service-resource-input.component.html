@@ -26,8 +26,33 @@
     </mat-radio-button>
   </mat-radio-group>
 </div>
-<gn-ui-text-input
-  [(value)]="service.identifierInService"
-  data-cy="identifier-in-service"
-  [disabled]="disabled"
-></gn-ui-text-input>
+
+<div class="flex flex-col gap-[16px]">
+  <gn-ui-url-input
+    class="w-full"
+    (uploadClick)="handleUrlChange($event)"
+    [disabled]="disabled"
+  >
+    <ng-icon name="iconoirCloudUpload"></ng-icon>
+  </gn-ui-url-input>
+
+  <gn-ui-text-input
+    class="grow"
+    [(value)]="service.identifierInService"
+    [placeholder]="getIdentifierPlaceholder() | translate"
+    data-cy="identifier-in-service"
+    [disabled]="disabled"
+  ></gn-ui-text-input>
+
+  <div class="w-full border-b border-gray-300"></div>
+
+  <gn-ui-button
+    (buttonClick)="submitIdentifier(service.identifierInService)"
+    [disabled]="disabled || !service.identifierInService"
+    type="primary"
+  >
+    <span class="text-white font-bold" translate
+      >editor.record.form.field.onlineResource.edit.identifier.submit</span
+    >
+  </gn-ui-button>
+</div>

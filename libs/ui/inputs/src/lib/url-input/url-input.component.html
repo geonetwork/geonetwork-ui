@@ -21,12 +21,14 @@
     <ng-icon name="iconoirLink"></ng-icon>
   </div>
   <gn-ui-button
-    *ngIf="showUploadButton"
+    *ngIf="showValidateButton"
     extraClass="absolute inset-y-[var(--side-padding)] right-[var(--side-padding)]"
     type="primary"
     [disabled]="disabled || input.value === '' || !isValidUrl(input.value)"
     (buttonClick)="handleUpload(input)"
   >
-    <ng-icon name="iconoirArrowUp"> </ng-icon>
+    <ng-content>
+      <ng-icon name="iconoirArrowUp"></ng-icon>
+    </ng-content>
   </gn-ui-button>
 </span>
