@@ -1,10 +1,35 @@
-import { Meta, StoryObj } from '@storybook/angular'
+import {
+  applicationConfig,
+  Meta,
+  moduleMetadata,
+  StoryObj,
+} from '@storybook/angular'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { matStar } from '@ng-icons/material-icons/baseline'
 import { UrlInputComponent } from './url-input.component'
 
 export default {
   title: 'Inputs/UrlInputComponent',
   component: UrlInputComponent,
-  decorators: [],
+  decorators: [
+    moduleMetadata({
+      imports: [NgIconComponent],
+    }),
+    applicationConfig({
+      providers: [
+        provideIcons({
+          matStar,
+        }),
+        provideNgIconsConfig({
+          size: '0.9em',
+        }),
+      ],
+    }),
+  ],
   argTypes: {
     valueChange: {
       action: 'valueChange',
@@ -53,6 +78,23 @@ export const WithoutUploadButton: StoryObj<UrlInputComponent> = {
     template: `
     <gn-ui-url-input [value]='value' [disabled]='disabled' [placeholder]='placeholder' [showValidateButton]='showValidateButton'
       (valueChange)='valueChange($event)' (uploadClick)='uploadClick($event)'>
+    </gn-ui-url-input>`,
+  }),
+}
+
+export const WithCustomValidateButton: StoryObj<UrlInputComponent> = {
+  args: {
+    value: null,
+    disabled: false,
+    placeholder: 'https://mysite.org/file',
+    showValidateButton: true,
+  },
+  render: (args) => ({
+    props: args,
+    template: `
+    <gn-ui-url-input [value]='value' [disabled]='disabled' [placeholder]='placeholder' [showValidateButton]='showValidateButton'
+      (valueChange)='valueChange($event)' (uploadClick)='uploadClick($event)'>
+      <ng-icon name='matStar'></ng-icon>
     </gn-ui-url-input>`,
   }),
 }

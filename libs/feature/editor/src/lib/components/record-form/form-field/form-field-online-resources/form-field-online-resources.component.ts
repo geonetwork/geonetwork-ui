@@ -92,11 +92,12 @@ export class FormFieldOnlineResourcesComponent {
   notLinkResources: OnlineNotLinkResource[] = []
   uploadProgress = undefined
   uploadSubscription: Subscription = null
-  newService = {
+  newService = <DatasetServiceDistribution>{
     type: 'service',
     accessServiceProtocol: 'ogcFeatures',
     identifierInService: '',
-  } as Omit<DatasetServiceDistribution, 'url'>
+    url: undefined,
+  }
 
   protected MAX_UPLOAD_SIZE_MB = MAX_UPLOAD_SIZE_MB
 

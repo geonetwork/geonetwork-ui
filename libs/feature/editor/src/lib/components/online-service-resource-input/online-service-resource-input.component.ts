@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
 } from '@angular/core'
 import { FormsModule } from '@angular/forms'
@@ -17,6 +19,8 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import {
   ButtonComponent,
+  DropdownChoice,
+  DropdownSelectorComponent,
   TextInputComponent,
   UrlInputComponent,
 } from '@geonetwork-ui/ui/inputs'
@@ -27,6 +31,7 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirCloudUpload } from '@ng-icons/iconoir'
+import { getLayers } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-online-service-resource-input',
@@ -35,6 +40,7 @@ import { iconoirCloudUpload } from '@ng-icons/iconoir'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
+    DropdownSelectorComponent,
     ButtonComponent,
     CommonModule,
     FormsModule,
@@ -52,18 +58,21 @@ import { iconoirCloudUpload } from '@ng-icons/iconoir'
     }),
   ],
 })
-export class OnlineServiceResourceInputComponent implements OnChanges {
-  @Input() service: Omit<DatasetServiceDistribution, 'url'>
+export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
+  @Input() service: DatasetServiceDistribution
   @Input() protocolHint?: string
   @Input() disabled? = false
+  @Input() modifyMode? = false
   @Output() urlChange: EventEmitter<string> = new EventEmitter()
   @Output() identifierSubmit: EventEmitter<{
     url: string
     identifier: string
   }> = new EventEmitter()
 
+  errorMessage = false
   selectedProtocol: ServiceProtocol
   url: string
+  layers: DropdownChoice[] | undefined = undefined
 
   protocolOptions: {
     label: string
@@ -99,6 +108,14 @@ export class OnlineServiceResourceInputComponent implements OnChanges {
     },
   ]
 
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  get activeLayerSuggestion() {
+    return !['wps', 'GPFDL', 'esriRest', 'other'].includes(
+      this.service.accessServiceProtocol
+    )
+  }
+
   ngOnChanges() {
     this.selectedProtocol =
       this.protocolOptions.find(
@@ -106,8 +123,50 @@ export class OnlineServiceResourceInputComponent implements OnChanges {
       )?.value ?? 'other'
   }
 
-  handleUrlChange(url: string) {
+  ngOnInit() {
+    if (this.service.url) {
+      this.url = this.service.url.toString()
+    }
+  }
+
+  handleUrlValueChange(url: string) {
     this.url = url
+    this.service.url = new URL(url)
+    this.resetLayersSuggestion()
+    this.urlChange.emit(this.url)
+  }
+
+  async handleUploadClick(url: string) {
+    this.url = url
+
+    try {
+      const layers = await getLayers(url, this.service.accessServiceProtocol)
+      this.layers = layers.map((l) => {
+        return {
+          label: l.title ? `${l.title} ${l.name ? `(${l.name})` : ''}` : l.name,
+          value: l.name || l.title,
+        }
+      })
+
+      if (this.layers.length === 0) {
+        throw new Error('No layers found')
+      }
+    } catch (e) {
+      this.errorMessage = true
+      this.layers = undefined
+    }
+
+    this.cdr.detectChanges()
+  }
+
+  handleSelectValue(val: string) {
+    this.service.identifierInService = val
+  }
+
+  resetLayersSuggestion() {
+    this.errorMessage = false
+    this.layers = undefined
+    this.service.identifierInService = null
   }
 
   submitIdentifier(identifier: string) {
