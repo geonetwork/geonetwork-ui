@@ -22,7 +22,7 @@ export class NewRecordResolver {
 
   resolve(): Observable<[CatalogRecord, string, boolean]> {
     return this.getCurrentUserAsPointOfContact().pipe(
-      map((contactsForResource) => {
+      map((userContact) => {
         const catalogRecord: CatalogRecord = {
           uniqueIdentifier: null,
           title: `My new record`,
@@ -30,23 +30,19 @@ export class NewRecordResolver {
           ownerOrganization: {
             name: 'Owner organization',
           },
-          contacts: contactsForResource ? [contactsForResource] : [],
+          contacts: userContact ? [userContact] : [],
           recordUpdated: new Date(),
           updateFrequency: 'unknown',
           otherLanguages: [],
           defaultLanguage: 'en',
           topics: [],
           keywords: [],
-          licenses: [
-            {
-              text: 'cc-by',
-            },
-          ],
+          licenses: [],
           legalConstraints: [],
           securityConstraints: [],
           otherConstraints: [],
           overviews: [],
-          contactsForResource: contactsForResource ? [contactsForResource] : [],
+          contactsForResource: userContact ? [userContact] : [],
           kind: 'dataset',
           status: 'ongoing',
           lineage: '',

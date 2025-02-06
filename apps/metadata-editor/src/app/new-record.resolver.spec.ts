@@ -66,7 +66,7 @@ describe('NewRecordResolver', () => {
     })
 
     it('creates a new empty record with a pregenerated id and connected user information as contact for ressource with the point_of_contact role.', () => {
-      const expectedContactsForResource = [
+      const expectedContacts = [
         {
           firstName: user.name,
           lastName: user.surname,
@@ -81,15 +81,11 @@ describe('NewRecordResolver', () => {
           abstract: '',
           kind: 'dataset',
           recordUpdated: expect.any(Date),
-          contactsForResource: expectedContactsForResource,
-          contacts: expectedContactsForResource,
+          contactsForResource: expectedContacts,
+          contacts: expectedContacts,
           status: 'ongoing',
           temporalExtents: [],
-          licenses: [
-            {
-              text: 'cc-by',
-            },
-          ],
+          licenses: [],
           title: expect.stringMatching(/^My new record/),
           uniqueIdentifier: null,
         } as Partial<CatalogRecord>,
