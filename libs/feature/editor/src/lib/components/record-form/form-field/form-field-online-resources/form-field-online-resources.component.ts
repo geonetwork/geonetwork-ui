@@ -32,11 +32,10 @@ import {
   SortableListComponent,
 } from '@geonetwork-ui/ui/layout'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { map, Subscription } from 'rxjs'
+import { Subscription } from 'rxjs'
 import { MAX_UPLOAD_SIZE_MB } from '../../../../fields.config'
 import { OnlineResourceCardComponent } from '../../../online-resource-card/online-resource-card.component'
 import { OnlineServiceResourceInputComponent } from '../../../online-service-resource-input/online-service-resource-input.component'
-import { EditorFacade } from '../../../../+state/editor.facade'
 
 type OnlineNotLinkResource =
   | DatasetDownloadDistribution
@@ -101,17 +100,12 @@ export class FormFieldOnlineResourcesComponent {
 
   protected MAX_UPLOAD_SIZE_MB = MAX_UPLOAD_SIZE_MB
 
-  disabled$ = this.editorFacade.alreadySavedOnce$.pipe(
-    map((alreadySavedOnce) => !alreadySavedOnce)
-  )
-
   constructor(
     private notificationsService: NotificationsService,
     private translateService: TranslateService,
     private platformService: PlatformServiceInterface,
     private cd: ChangeDetectorRef,
-    private dialog: MatDialog,
-    private editorFacade: EditorFacade
+    private dialog: MatDialog
   ) {}
 
   onSelectedTypeChange(selectedType: unknown) {

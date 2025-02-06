@@ -9,14 +9,5 @@
     (delete)="handleDelete()"
     [uploadProgress]="uploadProgress"
     (uploadCancel)="handleUploadCancel()"
-    [disabled]="disabled$ | async"
   ></gn-ui-image-input>
-  <div
-    *ngIf="disabled$ | async"
-    class="p-4 text-sm border border-primary bg-primary-lightest rounded-lg"
-    translate
-    data-test="disabled-message"
-  >
-    editor.record.form.field.draft.only.disabled
-  </div>
 </div>

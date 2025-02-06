@@ -13,7 +13,6 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog'
 import { OnlineLinkResource } from '@geonetwork-ui/common/domain/model/record'
 import { ModalDialogComponent } from '@geonetwork-ui/ui/layout'
 import { ChangeDetectorRef } from '@angular/core'
-import { EditorFacade } from '../../../../+state/editor.facade'
 
 let uploadSubject: Subject<any>
 
@@ -37,10 +36,6 @@ export class MatDialogMock {
   open = jest.fn(() => ({
     afterClosed: () => this._subject,
   }))
-}
-
-class EditorFacadeMock {
-  alreadySavedOnce$ = new BehaviorSubject(false)
 }
 
 describe('FormFieldOnlineLinkResourcesComponent', () => {
@@ -70,7 +65,6 @@ describe('FormFieldOnlineLinkResourcesComponent', () => {
           detectChanges: jest.fn(),
         }),
         MockProvider(MatDialog, MatDialogMock, 'useClass'),
-        MockProvider(EditorFacade, EditorFacadeMock, 'useClass'),
       ],
     }).compileComponents()
 
