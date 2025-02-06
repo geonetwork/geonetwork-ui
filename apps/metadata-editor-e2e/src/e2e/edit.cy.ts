@@ -35,9 +35,7 @@ describe('editor form', () => {
       .click()
     cy.get('[data-test="record-menu-duplicate-button"]').click()
     cy.url().should('include', '/duplicate/')
-    cy.editor_findDraftInLocalStorage().then((value) => {
-      expect(value).to.not.equal(null)
-    })
+    // because new records are saved by default, they are not drafts and can be published
     cy.get('md-editor-publish-button').click()
 
     // Open the copy
@@ -126,8 +124,8 @@ describe('editor form', () => {
             .find('textarea')
             .invoke('val')
             .should(
-              'eq',
-              "Stations d'épuration selon la directive Eaux Résiduelles Urbaines (91/271/CEE) en Wallonie (Copy)"
+              'include',
+              "Copy of record Stations d'épuration selon la directive Eaux Résiduelles Urbaines (91/271/CEE) en Wallonie"
             )
         })
         it('shows very long titles entirely', () => {
