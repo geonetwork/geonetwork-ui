@@ -102,9 +102,9 @@
     <ng-template #cell let-item>
       <span class="text-xs">
         {{
-          (isUnsavedDraft(item)
-            ? 'record.metadata.status.notPublished'
-            : 'record.metadata.status.published'
+          (item.extras?.['isPublishedToAll']
+            ? 'record.metadata.status.published'
+            : 'record.metadata.status.notPublished'
           ) | translate
         }}</span
       >
@@ -123,7 +123,11 @@
     </ng-template>
     <ng-template #cell let-item>
       <div class="flex text-left w-full text-xs">
-        {{ isUnsavedDraft(item) ? '-' : dateToString(item.recordUpdated) }}
+        {{
+          item.extras?.['isPublishedToAll']
+            ? dateToString(item.recordUpdated)
+            : '-'
+        }}
       </div>
     </ng-template>
   </gn-ui-interactive-table-column>
