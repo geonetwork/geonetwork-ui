@@ -401,6 +401,54 @@ describe('editor form', () => {
         })
       })
     })
+    describe('classification', () => {
+      describe('keywords', () => {
+        it('should show the current keywords', () => {
+          cy.get('gn-ui-form-field-keywords')
+            .find('gn-ui-badge')
+            .should('have.length', 41)
+        })
+        it('should add a keyword', () => {
+          cy.editor_wrapPreviousDraft()
+          cy.get('gn-ui-form-field-keywords')
+            .find('gn-ui-autocomplete')
+            .type('a')
+          cy.get('mat-option').first().click()
+          cy.editor_publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
+          cy.get('gn-ui-form-field-keywords')
+            .find('gn-ui-badge')
+            .should('have.length', 42)
+            .last()
+            .find('span')
+            .should('have.text', 'Addresses ')
+        })
+        it('should close the autocomplete and clear the input after selecting a keyword', () => {
+          cy.get('gn-ui-form-field-keywords')
+            .find('gn-ui-autocomplete')
+            .type('a')
+          cy.get('mat-option').first().click()
+          cy.get('mat-option').should('not.exist')
+          cy.get('gn-ui-form-field-keywords')
+            .find('gn-ui-autocomplete')
+            .find('input')
+            .should('have.value', '')
+        })
+        it('should delete a keyword', () => {
+          cy.editor_wrapPreviousDraft()
+          cy.get('gn-ui-form-field-keywords')
+            .find('gn-ui-badge')
+            .last()
+            .find('gn-ui-button')
+            .click()
+          cy.editor_publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
+          cy.get('gn-ui-form-field-keywords')
+            .find('gn-ui-badge')
+            .should('have.length', 41)
+        })
+      })
+    })
     describe('geographical coverage', () => {
       it('should show a map', () => {
         cy.get('gn-ui-form-field-spatial-extent')
@@ -593,136 +641,6 @@ describe('editor form', () => {
         ).should('have.length', 1)
       })
     })
-    describe('classification', () => {
-      beforeEach(() => {
-        cy.get('@accessContactPageBtn').click()
-      })
-      describe('keywords', () => {
-        it('should show the current keywords', () => {
-          cy.get('gn-ui-form-field-keywords')
-            .find('gn-ui-badge')
-            .should('have.length', 41)
-        })
-        it('should add a keyword', () => {
-          cy.editor_wrapPreviousDraft()
-          cy.get('gn-ui-form-field-keywords')
-            .find('gn-ui-autocomplete')
-            .type('a')
-          cy.get('mat-option').first().click()
-          cy.editor_publishAndReload()
-          cy.get('@saveStatus').should('eq', 'record_up_to_date')
-          cy.get('@accessContactPageBtn').click()
-          cy.get('gn-ui-form-field-keywords')
-            .find('gn-ui-badge')
-            .should('have.length', 42)
-            .last()
-            .find('span')
-            .should('have.text', 'Addresses ')
-        })
-        it('should close the autocomplete and clear the input after selecting a keyword', () => {
-          cy.get('gn-ui-form-field-keywords')
-            .find('gn-ui-autocomplete')
-            .type('a')
-          cy.get('mat-option').first().click()
-          cy.get('mat-option').should('not.exist')
-          cy.get('gn-ui-form-field-keywords')
-            .find('gn-ui-autocomplete')
-            .find('input')
-            .should('have.value', '')
-        })
-        it('should delete a keyword', () => {
-          cy.editor_wrapPreviousDraft()
-          cy.get('gn-ui-form-field-keywords')
-            .find('gn-ui-badge')
-            .last()
-            .find('gn-ui-button')
-            .click()
-          cy.editor_publishAndReload()
-          cy.get('@saveStatus').should('eq', 'record_up_to_date')
-          cy.get('@accessContactPageBtn').click()
-          cy.get('gn-ui-form-field-keywords')
-            .find('gn-ui-badge')
-            .should('have.length', 41)
-        })
-      })
-
-      describe('data managers', () => {
-        describe('contacts for resources', () => {
-          beforeEach(() => {
-            cy.get('@accessContactPageBtn').click()
-          })
-
-          it('show the contacts for resource of the dataset', () => {
-            cy.get('[data-test=displayedRoles]')
-              .children()
-              .should('have.length', 3)
-          })
-
-          it('delete a contact for resource', () => {
-            cy.get('[data-test=displayedRoles]')
-              .children()
-              .find('gn-ui-contact-card')
-              .should('have.length', 3)
-            cy.editor_wrapPreviousDraft()
-
-            // delete 2 out of 3 contacts
-            cy.get('[data-test=displayedRoles] [data-test=remove-item]')
-              .first()
-              .click()
-            cy.get('[data-test=displayedRoles] [data-test=remove-item]')
-              .first()
-              .click()
-
-            cy.editor_publishAndReload()
-            cy.get('@saveStatus').should('eq', 'record_up_to_date')
-            cy.get('@accessContactPageBtn').click()
-            cy.get('[data-test=displayedRoles]')
-              .children()
-              .find('gn-ui-contact-card')
-              .should('have.length', 1)
-          })
-
-          it('show the roles available to add', () => {
-            cy.get('[data-test=rolesToPick]')
-              .children()
-              .should('have.length', 4)
-          })
-
-          it('click on a role adds it to the list of displayed role', () => {
-            cy.get('[data-test="rolesToPick"]').children().eq(2).click()
-            cy.get('[data-test=rolesToPick]')
-              .children()
-              .should('have.length', 3)
-            cy.get('[data-test=displayedRoles]')
-              .children()
-              .should('have.length', 2)
-          })
-
-          it('add a contact for resource', () => {
-            cy.get('[data-test=displayedRoles]')
-              .children()
-              .find('gn-ui-contact-card')
-              .should('have.length', 1)
-            cy.editor_wrapPreviousDraft()
-
-            cy.get('[data-test=displayedRoles]')
-              .find('gn-ui-autocomplete')
-              .type('bar')
-
-            cy.get('mat-option')
-              .should('have.text', ' Barbara Roberts (Barbie Inc.) ')
-              .click()
-            cy.editor_publishAndReload()
-            cy.get('@accessContactPageBtn').click()
-            cy.get('@saveStatus').should('eq', 'record_up_to_date')
-            cy.get('[data-test=displayedRoles]')
-              .children()
-              .find('gn-ui-contact-card')
-              .should('have.length', 2)
-          })
-        })
-      })
-    })
     describe('Access and constraints', () => {
       beforeEach(() => {
         cy.get('@accessContactPageBtn').click()
@@ -888,6 +806,82 @@ describe('editor form', () => {
           cy.get('[data-cy=otherConstraints]')
             .find('gn-ui-constraint-card')
             .should('have.length', 1)
+        })
+      })
+      describe('data managers', () => {
+        describe('contacts for resources', () => {
+          beforeEach(() => {
+            cy.get('@accessContactPageBtn').click()
+          })
+
+          it('show the contacts for resource of the dataset', () => {
+            cy.get('[data-test=displayedRoles]')
+              .children()
+              .should('have.length', 3)
+          })
+
+          it('delete a contact for resource', () => {
+            cy.get('[data-test=displayedRoles]')
+              .children()
+              .find('gn-ui-contact-card')
+              .should('have.length', 3)
+            cy.editor_wrapPreviousDraft()
+
+            // delete 2 out of 3 contacts
+            cy.get('[data-test=displayedRoles] [data-test=remove-item]')
+              .first()
+              .click()
+            cy.get('[data-test=displayedRoles] [data-test=remove-item]')
+              .first()
+              .click()
+
+            cy.editor_publishAndReload()
+            cy.get('@saveStatus').should('eq', 'record_up_to_date')
+            cy.get('@accessContactPageBtn').click()
+            cy.get('[data-test=displayedRoles]')
+              .children()
+              .find('gn-ui-contact-card')
+              .should('have.length', 1)
+          })
+
+          it('show the roles available to add', () => {
+            cy.get('[data-test=rolesToPick]')
+              .children()
+              .should('have.length', 4)
+          })
+
+          it('click on a role adds it to the list of displayed role', () => {
+            cy.get('[data-test="rolesToPick"]').children().eq(2).click()
+            cy.get('[data-test=rolesToPick]')
+              .children()
+              .should('have.length', 3)
+            cy.get('[data-test=displayedRoles]')
+              .children()
+              .should('have.length', 2)
+          })
+
+          it('add a contact for resource', () => {
+            cy.get('[data-test=displayedRoles]')
+              .children()
+              .find('gn-ui-contact-card')
+              .should('have.length', 1)
+            cy.editor_wrapPreviousDraft()
+
+            cy.get('[data-test=displayedRoles]')
+              .find('gn-ui-autocomplete')
+              .type('bar')
+
+            cy.get('mat-option')
+              .should('have.text', ' Barbara Roberts (Barbie Inc.) ')
+              .click()
+            cy.editor_publishAndReload()
+            cy.get('@accessContactPageBtn').click()
+            cy.get('@saveStatus').should('eq', 'record_up_to_date')
+            cy.get('[data-test=displayedRoles]')
+              .children()
+              .find('gn-ui-contact-card')
+              .should('have.length', 2)
+          })
         })
       })
     })
