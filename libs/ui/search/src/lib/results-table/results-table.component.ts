@@ -170,7 +170,7 @@ export class ResultsTableComponent {
 
   handleRecordClick(item: CatalogRecord) {
     console.log(item)
-    if (item?.extras?.canEdit) this.recordClick.emit(item as CatalogRecord)
+    if (item?.extras?.edit) this.recordClick.emit(item as CatalogRecord)
   }
 
   handleDuplicate(item: unknown) {

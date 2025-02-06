@@ -284,6 +284,13 @@ export class Gn4FieldMapper {
         },
         output
       ),
+    edit: (output, source) =>
+      this.addExtra(
+        {
+          edit: selectField(source, 'edit'),
+        },
+        output
+      ),
     userinfo: (output, source) =>
       this.addExtra(
         {

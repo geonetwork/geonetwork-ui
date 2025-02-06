@@ -66,3 +66,8 @@ export const selectIsPublished = createSelector(
   selectEditorState,
   (state: EditorState) => state.isPublished
 )
+
+export const selectCanEditRecord = createSelector(
+  selectEditorState,
+  (state: EditorState) => state.canEditRecord
+)

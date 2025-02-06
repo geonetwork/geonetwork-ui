@@ -8,7 +8,7 @@
   <div
     *ngIf="!isLoading"
     class="flex flex-col h-full w-full"
-    *ngIf="(facade.record$ | async)?.extras?.canEdit === true"
+    *ngIf="(facade.canEditRecord$ | async) === true"
   >
     <div class="w-full h-auto shrink-0 relative">
       <md-editor-top-toolbar></md-editor-top-toolbar>
@@ -62,7 +62,7 @@
   </div>
   <div
     class="flex flex-col h-full w-full"
-    *ngIf="(facade.record$ | async)?.extras?.canEdit === false"
+    *ngIf="(facade.canEditRecord$ | async) === false"
   >
     <header class="shrink-0 border-b border-gray-300">
       <md-editor-search-header></md-editor-search-header>

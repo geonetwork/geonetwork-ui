@@ -8,10 +8,10 @@
       <ng-icon
         name="iconoirLock"
         class="text-purple"
-        *ngIf="!item.extras?.canEdit"
+        *ngIf="!item.extras?.edit"
       ></ng-icon>
       <gn-ui-checkbox
-        *ngIf="item.extras?.canEdit"
+        *ngIf="item.extras?.edit"
         [checked]="isChecked(item)"
         (changed)="handleRecordSelectedChange($event, item)"
         class="-m-2"
@@ -148,9 +148,12 @@
         (buttonClick)="openActionMenu(item, template)"
         type="light"
         data-test="record-menu-button"
-        [ngClass]="{ hidden: item.extras?.canEdit }"
+        [disabled]="!item.extras?.edit"
       >
-        <ng-icon name="matMoreVert"></ng-icon>
+        <ng-icon
+          [ngClass]="{ 'text-purple-light': !item.extras?.edit }"
+          name="matMoreVert"
+        ></ng-icon>
       </gn-ui-button>
       <ng-template #template>
         <gn-ui-action-menu

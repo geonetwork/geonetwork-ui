@@ -31,7 +31,9 @@
     *ngFor="let item of items"
     (click)="handleRowClick(item)"
     data-cy="table-row"
-    [title]="'editor.record.lock.reason' | translate"
+    [title]="
+      !item.extras?.edit ? ('editor.record.lock.reason' | translate) : ''
+    "
   >
     <div
       class="relative h-0"
@@ -47,8 +49,8 @@
       <div
         class="table-row-cell px-3 py-1.5 flex items-center bg-white transition-colors duration-75 truncate border-b border-gray-200"
         [ngClass]="{
-          'text-purple-light cursor-default': !item.extras?.canEdit,
-          'group-hover:text-main group-hover:bg-gray-50': item.extras?.canEdit,
+          'text-purple-light cursor-default': !item.extras?.edit,
+          'group-hover:text-main group-hover:bg-gray-50': item.extras?.edit,
         }"
       >
         <ng-container

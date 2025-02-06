@@ -209,6 +209,14 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       : of(true)
   }
 
+  canEditRecord(uniqueIdentifier: string): Observable<boolean> {
+    return this.getRecord(uniqueIdentifier).pipe(
+      map((record) => {
+        return record.extras['edit'] as boolean
+      })
+    )
+  }
+
   openRecordForEdition(
     uniqueIdentifier: string
   ): Observable<[CatalogRecord, string, boolean] | null> {

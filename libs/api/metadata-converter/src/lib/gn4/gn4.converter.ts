@@ -18,7 +18,8 @@ export class Gn4Converter extends BaseConverter<Gn4Record> {
   }
 
   readRecord(document: Gn4Record): Promise<CatalogRecord> {
-    const { _source, edit } = document
+    const { _source, ...rootDocument } = document
+    const allKeys = { ..._source, ...rootDocument }
     const emptyRecord: Partial<CatalogRecord> = {
       kind: 'dataset',
       status: null,
@@ -39,13 +40,10 @@ export class Gn4Converter extends BaseConverter<Gn4Record> {
       overviews: [],
       defaultLanguage: null,
       otherLanguages: [],
-      extras: {
-        canEdit: edit,
-      },
     }
-    const record: CatalogRecord = Object.keys(_source).reduce(
+    const record: CatalogRecord = Object.keys(allKeys).reduce(
       (prev, fieldName) =>
-        this.fieldMapper.getMappingFn(fieldName)(prev, _source),
+        this.fieldMapper.getMappingFn(fieldName)(prev, allKeys),
       emptyRecord
     )
     return lastValueFrom(

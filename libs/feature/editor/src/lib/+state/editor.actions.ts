@@ -55,3 +55,8 @@ export const isPublished = createAction(
   '[Editor] Record Saved But Not Published',
   props<{ isPublished: boolean }>()
 )
+
+export const canEditRecord = createAction(
+  '[Editor] User can edit record',
+  props<{ canEditRecord: boolean }>()
+)
