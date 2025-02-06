@@ -9,27 +9,30 @@ import {
   Output,
 } from '@angular/core'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
-import { downgradeImage, megabytesToBytes } from '@geonetwork-ui/util/shared'
-import { firstValueFrom } from 'rxjs'
-import { ButtonComponent } from '../button/button.component'
-import { FilesDropDirective } from '../files-drop/files-drop.directive'
-import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { UrlInputComponent } from '../url-input/url-input.component'
-import { TextInputComponent } from '../text-input/text-input.component'
+import {
+  ButtonComponent,
+  FilesDropDirective,
+  TextInputComponent,
+  UrlInputComponent,
+} from '@geonetwork-ui/ui/inputs'
+import { downgradeImage, megabytesToBytes } from '@geonetwork-ui/util/shared'
 import {
   NgIconComponent,
   provideIcons,
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import {
+  iconoirBin,
   iconoirFramePlusIn,
+  iconoirLink,
   iconoirMediaImage,
   iconoirMediaImageXmark,
-  iconoirBin,
   iconoirPlus,
-  iconoirLink,
 } from '@ng-icons/iconoir'
+import { TranslateModule } from '@ngx-translate/core'
+import { firstValueFrom } from 'rxjs'
+import { ImageOverlayPreviewComponent } from '../image-overlay-preview/image-overlay-preview.component'
 
 @Component({
   selector: 'gn-ui-image-input',
@@ -46,6 +49,7 @@ import {
     UrlInputComponent,
     TextInputComponent,
     NgIconComponent,
+    ImageOverlayPreviewComponent,
   ],
   providers: [
     provideIcons({
