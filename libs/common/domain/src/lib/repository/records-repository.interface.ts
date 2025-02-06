@@ -40,7 +40,7 @@ export abstract class RecordsRepositoryInterface {
    */
   abstract openRecordForDuplication(
     uniqueIdentifier: string
-  ): Observable<[CatalogRecord, string, false] | null>
+  ): Observable<[CatalogRecord, string, true] | null>
 
   /**
    * @param record
@@ -49,7 +49,8 @@ export abstract class RecordsRepositoryInterface {
    */
   abstract saveRecord(
     record: CatalogRecord,
-    referenceRecordSource?: string
+    referenceRecordSource?: string,
+    publishToAll?: boolean
   ): Observable<string>
 
   /**
@@ -82,7 +83,6 @@ export abstract class RecordsRepositoryInterface {
 
   abstract clearRecordDraft(uniqueIdentifier: string): void
   abstract recordHasDraft(uniqueIdentifier: string): boolean
-  abstract isRecordNotYetSaved(uniqueIdentifier: string): boolean
 
   /** will return all pending drafts, both published and not published */
   abstract getAllDrafts(): Observable<CatalogRecord[]>
@@ -91,4 +91,5 @@ export abstract class RecordsRepositoryInterface {
   abstract hasRecordChangedSinceDraft(
     localRecord: CatalogRecord
   ): Observable<{ user: string; date: Date }>
+  abstract getRecordPublicationStatus(uuid: string): Observable<boolean>
 }

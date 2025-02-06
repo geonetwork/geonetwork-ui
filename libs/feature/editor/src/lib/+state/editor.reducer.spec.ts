@@ -14,14 +14,12 @@ describe('Editor Reducer', () => {
       const action = EditorActions.openRecord({
         record: datasetRecordsFixture()[0] as CatalogRecord,
         recordSource: '<xml>blabla</xml>',
-        alreadySavedOnce: false,
       })
       const result: EditorState = editorReducer(
         {
           ...initialEditorState,
           changedSinceSave: true,
           recordSource: 'abcd',
-          alreadySavedOnce: true,
         },
         action
       )
@@ -29,19 +27,16 @@ describe('Editor Reducer', () => {
       expect(result.record).toEqual(datasetRecordsFixture()[0])
       expect(result.changedSinceSave).toBe(false)
       expect(result.recordSource).toBe('<xml>blabla</xml>')
-      expect(result.alreadySavedOnce).toBe(false)
     })
     it('openRecord (without source)', () => {
       const action = EditorActions.openRecord({
         record: datasetRecordsFixture()[0] as CatalogRecord,
-        alreadySavedOnce: true,
       })
       const result: EditorState = editorReducer(
         {
           ...initialEditorState,
           changedSinceSave: true,
           recordSource: '<xml>blabla</xml>',
-          alreadySavedOnce: false,
         },
         action
       )
@@ -49,7 +44,6 @@ describe('Editor Reducer', () => {
       expect(result.record).toEqual(datasetRecordsFixture()[0])
       expect(result.changedSinceSave).toBe(false)
       expect(result.recordSource).toBe(null)
-      expect(result.alreadySavedOnce).toBe(true)
     })
     it('saveRecord action', () => {
       const action = EditorActions.saveRecord()
@@ -124,6 +118,18 @@ describe('Editor Reducer', () => {
       )
 
       expect(result.hasRecordChanged).toEqual(changes)
+    })
+
+    it('savedButNotPublished action', () => {
+      const action = EditorActions.savedButNotPublished({
+        savedButNotPublished: true,
+      })
+      const result: EditorState = editorReducer(
+        { ...initialEditorState, savedButNotPublished: false },
+        action
+      )
+
+      expect(result.savedButNotPublished).toBe(true)
     })
   })
 

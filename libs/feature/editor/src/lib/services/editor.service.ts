@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Observable, switchMap } from 'rxjs'
+import { forkJoin, Observable, of, switchMap } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { EditorConfig } from '../models/'
@@ -16,8 +16,7 @@ export class EditorService {
   saveRecord(
     record: CatalogRecord,
     recordSource: string,
-    fieldsConfig: EditorConfig,
-    generateNewUniqueIdentifier = false
+    fieldsConfig: EditorConfig
   ): Observable<[CatalogRecord, string]> {
     const savedRecord = { ...record }
 
@@ -35,22 +34,25 @@ export class EditorService {
         })
       }
     }
-
-    // if we want a new unique identifier, clear the existing one
-    if (generateNewUniqueIdentifier) {
+    let publishToAll = true
+    // if the record is new, generate a new unique identifier and pass publishToAll as false
+    if (!record.uniqueIdentifier) {
       savedRecord.uniqueIdentifier = null
+      publishToAll = false
     }
 
-    return this.recordsRepository.saveRecord(savedRecord, recordSource).pipe(
-      switchMap((uniqueIdentifier) =>
-        this.recordsRepository.openRecordForEdition(uniqueIdentifier)
-      ),
-      tap(() => {
-        // if saving was successful, the original draft can be discarded
-        this.recordsRepository.clearRecordDraft(record.uniqueIdentifier)
-      }),
-      map(([record, recordSource]) => [record, recordSource])
-    )
+    return this.recordsRepository
+      .saveRecord(savedRecord, recordSource, publishToAll)
+      .pipe(
+        switchMap((uniqueIdentifier) =>
+          this.recordsRepository.openRecordForEdition(uniqueIdentifier)
+        ),
+        tap(() => {
+          // if saving was successful, the original draft can be discarded
+          this.recordsRepository.clearRecordDraft(record.uniqueIdentifier)
+        }),
+        map(([record, recordSource]) => [record, recordSource])
+      )
   }
 
   // emits and completes once saving is done

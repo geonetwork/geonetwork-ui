@@ -22,6 +22,7 @@ describe('Editor Selectors', () => {
         saving: false,
         changedSinceSave: true,
         hasRecordChanged: ['date', 'user'],
+        savedButNotPublished: true,
       },
     }
   })
@@ -51,12 +52,6 @@ describe('Editor Selectors', () => {
       const result = EditorSelectors.selectRecordChangedSinceSave(state)
       expect(result).toBe(true)
     })
-
-    it('selectRecordAlreadySavedOnce() should return the current "alreadySavedOnce" state', () => {
-      const result = EditorSelectors.selectRecordAlreadySavedOnce(state)
-      expect(result).toBe(false)
-    })
-
     it('selectRecordFieldsConfig() should return the current "fieldsConfig" state', () => {
       const result = EditorSelectors.selectEditorConfig(state)
       expect(result).toEqual(DEFAULT_CONFIGURATION)
@@ -65,6 +60,11 @@ describe('Editor Selectors', () => {
     it('selectHasRecordChanged() should return the current "hasRecordChanged" state', () => {
       const result = EditorSelectors.selectHasRecordChanged(state)
       expect(result).toEqual(['date', 'user'])
+    })
+
+    it('selectSavedButNotPublished() should return the current "savedButNotPublished" state', () => {
+      const result = EditorSelectors.selectSavedButNotPublished(state)
+      expect(result).toEqual(true)
     })
 
     describe('selectRecordFields', () => {

@@ -14,9 +14,6 @@ export class EditorFacade {
 
   record$ = this.store.pipe(select(EditorSelectors.selectRecord))
   recordSource$ = this.store.pipe(select(EditorSelectors.selectRecordSource))
-  alreadySavedOnce$ = this.store.pipe(
-    select(EditorSelectors.selectRecordAlreadySavedOnce)
-  )
   saving$ = this.store.pipe(select(EditorSelectors.selectRecordSaving))
   saveError$ = this.store.pipe(
     select(EditorSelectors.selectRecordSaveError),
@@ -35,14 +32,16 @@ export class EditorFacade {
   hasRecordChanged$ = this.store.pipe(
     select(EditorSelectors.selectHasRecordChanged)
   )
+  savedButNotPublished$ = this.store.pipe(
+    select(EditorSelectors.selectSavedButNotPublished)
+  )
 
-  openRecord(
-    record: CatalogRecord,
-    recordSource: string,
-    alreadySavedOnce: boolean
-  ) {
+  openRecord(record: CatalogRecord, recordSource: string) {
     this.store.dispatch(
-      EditorActions.openRecord({ record, recordSource, alreadySavedOnce })
+      EditorActions.openRecord({
+        record,
+        recordSource,
+      })
     )
     this.setCurrentPage(0)
   }
@@ -69,5 +68,11 @@ export class EditorFacade {
 
   checkHasRecordChanged(record: CatalogRecord) {
     this.store.dispatch(EditorActions.hasRecordChangedSinceDraft({ record }))
+  }
+
+  savedButNotPublished(savedButNotPublished: boolean) {
+    this.store.dispatch(
+      EditorActions.savedButNotPublished({ savedButNotPublished })
+    )
   }
 }

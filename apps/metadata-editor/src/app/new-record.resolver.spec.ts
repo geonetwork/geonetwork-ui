@@ -85,7 +85,7 @@ describe('NewRecordResolver', () => {
           status: 'ongoing',
           temporalExtents: [],
           title: expect.stringMatching(/^My new record/),
-          uniqueIdentifier: 'TEMP-ID-123',
+          uniqueIdentifier: null,
         },
         null,
         false,

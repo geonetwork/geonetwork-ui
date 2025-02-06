@@ -59,6 +59,8 @@ export class EditPageComponent implements OnInit, OnDestroy {
   )
   hasRecordChanged$ = this.facade.hasRecordChanged$.pipe(skip(1))
 
+  newRecord = false
+
   @ViewChild('scrollContainer') scrollContainer: ElementRef<HTMLElement>
 
   constructor(
@@ -70,13 +72,18 @@ export class EditPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const [currentRecord, currentRecordSource, currentRecordAlreadySaved] =
+    const [currentRecord, currentRecordSource] =
       this.route.snapshot.data['record']
 
-    this.facade.openRecord(
-      currentRecord,
-      currentRecordSource,
-      currentRecordAlreadySaved
+    this.facade.openRecord(currentRecord, currentRecordSource)
+
+    this.subscription.add(
+      this.facade.record$.pipe(take(1)).subscribe((record) => {
+        if (!record.uniqueIdentifier) {
+          this.newRecord = true
+          this.facade.saveRecord()
+        }
+      })
     )
 
     this.subscription.add(
@@ -122,18 +129,20 @@ export class EditPageComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.facade.saveSuccess$.subscribe(() => {
-        this.notificationsService.showNotification(
-          {
-            type: 'success',
-            title: this.translateService.instant(
-              'editor.record.publishSuccess.title'
-            ),
-            text: `${this.translateService.instant(
-              'editor.record.publishSuccess.body'
-            )}`,
-          },
-          2500
-        )
+        if (!this.newRecord) {
+          this.notificationsService.showNotification(
+            {
+              type: 'success',
+              title: this.translateService.instant(
+                'editor.record.publishSuccess.title'
+              ),
+              text: `${this.translateService.instant(
+                'editor.record.publishSuccess.body'
+              )}`,
+            },
+            2500
+          )
+        }
       })
     )
 
@@ -143,15 +152,11 @@ export class EditPageComponent implements OnInit, OnDestroy {
       })
     )
 
-    // if we're on the /create route, go to /edit/{uuid} on first change
-    if (this.route.snapshot.routeConfig?.path.includes('create')) {
-      this.subscription.add(
-        this.facade.draftSaveSuccess$.pipe(take(1)).subscribe(() => {
-          this.router.navigate(['edit', currentRecord.uniqueIdentifier], {
-            replaceUrl: true,
-          })
-        })
-      )
+    // if we're on the /duplicate route, go to /edit/{uuid} to update the uuid
+    if (this.route.snapshot.routeConfig?.path.includes('duplicate')) {
+      this.router.navigate(['edit', currentRecord.uniqueIdentifier], {
+        replaceUrl: true,
+      })
     }
 
     // if the record unique identifier changes, navigate to /edit/newUuid
@@ -165,14 +170,10 @@ export class EditPageComponent implements OnInit, OnDestroy {
           take(1)
         )
         .subscribe((savedRecord) => {
-          this.router.navigate(['edit', savedRecord.uniqueIdentifier])
+          this.router.navigate(['edit', savedRecord.uniqueIdentifier], {
+            replaceUrl: true,
+          })
         })
-    )
-
-    this.subscription.add(
-      this.facade.record$.subscribe((record) => {
-        this.facade.checkHasRecordChanged(record)
-      })
     )
   }
 
