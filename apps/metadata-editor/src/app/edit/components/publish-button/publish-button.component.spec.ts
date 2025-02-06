@@ -15,7 +15,6 @@ import {
   RecordsApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
-import { OverlayRef } from '@angular/cdk/overlay'
 
 class EditorFacadeMock {
   changedSinceSave$ = new BehaviorSubject(false)
@@ -44,6 +43,7 @@ class EditorFacadeMock {
       extras: { ownerInfo: '1|John|Doe' },
     })
   )
+  savedButNotPublished$ = new BehaviorSubject(false)
 }
 
 const user = barbieUserFixture()
@@ -130,6 +130,16 @@ describe('PublishButtonComponent', () => {
         facade.changedSinceSave$.next(true)
       })
       it('should return "hasChanges" when not saving and changed', async () => {
+        await expect(firstValueFrom(component.status$)).resolves.toBe(
+          'hasChanges'
+        )
+      })
+    })
+    describe('has never been published', () => {
+      beforeEach(() => {
+        facade.savedButNotPublished$.next(true)
+      })
+      it('should return "hasChanges" when has never been published', async () => {
         await expect(firstValueFrom(component.status$)).resolves.toBe(
           'hasChanges'
         )

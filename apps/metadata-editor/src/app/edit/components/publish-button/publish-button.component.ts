@@ -71,12 +71,13 @@ export class PublishButtonComponent implements OnDestroy {
   status$: Observable<RecordSaveStatus> = combineLatest([
     this.facade.changedSinceSave$,
     this.facade.saving$,
+    this.facade.savedButNotPublished$,
   ]).pipe(
-    map(([changedSinceSave, saving]) => {
+    map(([changedSinceSave, saving, savedButNotPublished]) => {
       if (saving) {
         return 'saving'
       }
-      if (changedSinceSave) {
+      if (changedSinceSave || savedButNotPublished) {
         return 'hasChanges'
       }
       return 'upToDate'
