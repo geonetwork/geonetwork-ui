@@ -62,6 +62,22 @@ function sidebarGuide() {
       ],
     },
     {
+      text: 'For developers',
+      items: [
+        { text: 'Architecture overview', link: '/guide/architecture-overview' },
+        { text: 'Writing components', link: '/guide/writing-components' },
+        { text: 'Testing', link: '/guide/testing' },
+      ],
+    },
+    {
+      text: 'Contributing',
+      items: [
+        { text: 'Development environment', link: '/guide/dev-environment' },
+        { text: 'Create a Pull Request', link: '/guide/create-a-pr' },
+        { text: 'Versioning', link: '/guide/versioning' },
+      ],
+    },
+    {
       text: 'About',
       items: [
         { text: 'Vision', link: '/guide/vision' },
@@ -70,15 +86,6 @@ function sidebarGuide() {
         { text: 'Sponsors', link: '/guide/sponsors' },
         { text: 'License', link: '/guide/license' },
         { text: 'Maintenance', link: '/guide/maintenance' },
-      ],
-    },
-    {
-      text: 'Contributing',
-      items: [
-        { text: 'Development environment', link: '/guide/dev-environment' },
-        { text: 'Create a Pull Request', link: '/guide/create-a-pr' },
-        { text: 'Code guide', link: '/guide/code-guide' },
-        { text: 'Versioning', link: '/guide/versioning' },
       ],
     },
   ]
