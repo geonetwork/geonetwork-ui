@@ -110,6 +110,7 @@ export class OnlineServiceResourceInputComponent implements OnChanges {
   submitIdentifier(identifier: string) {
     if (!identifier) return
     this.identifierSubmit.emit(identifier)
+    this.service.identifierInService = null
   }
 
   getIdentifierPlaceholder(): string {
