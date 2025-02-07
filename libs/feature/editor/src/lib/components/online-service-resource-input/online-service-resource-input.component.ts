@@ -57,9 +57,13 @@ export class OnlineServiceResourceInputComponent implements OnChanges {
   @Input() protocolHint?: string
   @Input() disabled? = false
   @Output() urlChange: EventEmitter<string> = new EventEmitter()
-  @Output() identifierSubmit: EventEmitter<string> = new EventEmitter()
+  @Output() identifierSubmit: EventEmitter<{
+    url: string
+    identifier: string
+  }> = new EventEmitter()
 
   selectedProtocol: ServiceProtocol
+  url: string
 
   protocolOptions: {
     label: string
@@ -103,13 +107,12 @@ export class OnlineServiceResourceInputComponent implements OnChanges {
   }
 
   handleUrlChange(url: string) {
-    if (!url) return
-    this.urlChange.emit(url)
+    this.url = url
   }
 
   submitIdentifier(identifier: string) {
     if (!identifier) return
-    this.identifierSubmit.emit(identifier)
+    this.identifierSubmit.emit({ url: this.url, identifier })
     this.service.identifierInService = null
   }
 

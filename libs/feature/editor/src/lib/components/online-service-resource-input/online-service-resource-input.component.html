@@ -30,8 +30,9 @@
 <div class="flex flex-col gap-4">
   <gn-ui-url-input
     class="w-full"
-    (uploadClick)="handleUrlChange($event)"
+    (valueChange)="handleUrlChange($event)"
     [disabled]="disabled"
+    [value]="url"
   >
     <ng-icon name="iconoirCloudUpload"></ng-icon>
   </gn-ui-url-input>

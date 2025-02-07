@@ -174,12 +174,12 @@ export class FormFieldOnlineResourcesComponent {
     ])
   }
 
-  handleIdentifierSubmit(identifier: string) {
+  handleIdentifierSubmit(payload: { url: string; identifier: string }) {
     this.valueChange.emit([
       ...this.allResources,
       {
         ...this.newService,
-        url: new URL('https://TODO.gov'),
+        url: new URL(payload.url),
       },
     ])
   }
