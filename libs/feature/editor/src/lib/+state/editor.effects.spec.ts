@@ -18,12 +18,13 @@ class EditorServiceMock {
     of([record, '<xml>blabla</xml>', false, false])
   )
   saveRecordAsDraft = jest.fn(() => of('<xml>blabla</xml>'))
-  hasRecordChangedSinceDraft = jest.fn((record) => of(['change1', 'change2']))
+  hasRecordChangedSinceDraft = jest.fn(() => of(['change1', 'change2']))
 }
 class RecordsRepositoryMock {
   recordHasDraft = jest.fn(() => true)
   getRecordPublicationStatus = jest.fn(() => of(true))
   saveRecord = jest.fn(() => of('uuid'))
+  canEditRecord = jest.fn(() => of(true))
 }
 
 const initialEditorState = {
@@ -36,6 +37,7 @@ const initialEditorState = {
   currentPage: 0,
   hasRecordChanged: null,
   isPublished: false,
+  canEditRecord: true,
 }
 
 describe('EditorEffects', () => {
@@ -241,6 +243,42 @@ describe('EditorEffects', () => {
       const expected = hot('-#', undefined, new Error('oopsie'))
 
       expect(effects.checkIsRecordPublished$).toBeObservable(expected)
+    })
+  })
+  describe('checkCanEditRecord$', () => {
+    it('should dispatch checkCanEditRecord action with correct payload', () => {
+      const record = datasetRecordsFixture()[0]
+      actions = hot('-a-|', {
+        a: EditorActions.openRecord({
+          record: datasetRecordsFixture()[0],
+          recordSource: '<xml>blabla</xml>',
+        }),
+      })
+
+      const expected = hot('-a-|', {
+        a: EditorActions.canEditRecord({ canEditRecord: true }),
+      })
+
+      expect(effects.checkCanEditRecord$).toBeObservable(expected)
+      expect(recordsRepository.canEditRecord).toHaveBeenCalledWith(
+        record.uniqueIdentifier
+      )
+    })
+    it('should handle error correctly', () => {
+      recordsRepository.canEditRecord = jest.fn(() =>
+        throwError(() => new Error('oopsie'))
+      )
+
+      actions = hot('-a-|', {
+        a: EditorActions.openRecord({
+          record: datasetRecordsFixture()[0],
+          recordSource: '<xml>blabla</xml>',
+        }),
+      })
+
+      const expected = hot('-#', undefined, new Error('oopsie'))
+
+      expect(effects.checkCanEditRecord$).toBeObservable(expected)
     })
   })
 })

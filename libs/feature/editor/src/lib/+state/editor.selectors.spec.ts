@@ -23,6 +23,7 @@ describe('Editor Selectors', () => {
         changedSinceSave: true,
         hasRecordChanged: ['date', 'user'],
         isPublished: true,
+        canEditRecord: true,
       },
     }
   })
@@ -64,6 +65,11 @@ describe('Editor Selectors', () => {
 
     it('selectIsPublished() should return the current "isPublished" state', () => {
       const result = EditorSelectors.selectIsPublished(state)
+      expect(result).toEqual(true)
+    })
+
+    it('selectCanEditRecord() should return the current "canEditRecord" state', () => {
+      const result = EditorSelectors.selectCanEditRecord(state)
       expect(result).toEqual(true)
     })
 

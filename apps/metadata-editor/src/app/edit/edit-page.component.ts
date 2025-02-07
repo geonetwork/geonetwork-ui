@@ -72,7 +72,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private facade: EditorFacade,
+    protected facade: EditorFacade,
     private notificationsService: NotificationsService,
     private translateService: TranslateService,
     private router: Router

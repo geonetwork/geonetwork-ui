@@ -92,5 +92,13 @@ describe('EditorFacade', () => {
       })
       expect(spy).toHaveBeenCalledWith(action)
     })
+    it('canEditRecord() should dispatch canEditRecord action', () => {
+      const spy = jest.spyOn(store, 'dispatch')
+      facade.canEditRecord(true)
+      const action = EditorActions.canEditRecord({
+        canEditRecord: true,
+      })
+      expect(spy).toHaveBeenCalledWith(action)
+    })
   })
 })
