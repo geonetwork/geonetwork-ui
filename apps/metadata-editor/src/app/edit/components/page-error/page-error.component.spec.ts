@@ -1,5 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { PageErrorComponent } from './page-error.component'
+import { ActivatedRoute } from '@angular/router'
+import { MockProviders } from 'ng-mocks'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('PageErrorComponent', () => {
   let component: PageErrorComponent
@@ -7,7 +10,8 @@ describe('PageErrorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PageErrorComponent],
+      imports: [PageErrorComponent, TranslateModule.forRoot()],
+      providers: [MockProviders(ActivatedRoute)],
     }).compileComponents()
 
     fixture = TestBed.createComponent(PageErrorComponent)
