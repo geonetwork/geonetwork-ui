@@ -25,6 +25,7 @@ import { map, skip } from 'rxjs/operators'
 import { SidebarComponent } from '../dashboard/sidebar/sidebar.component'
 import { PageSelectorComponent } from './components/page-selector/page-selector.component'
 import { TopToolbarComponent } from './components/top-toolbar/top-toolbar.component'
+import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 
 marker('editor.record.form.bottomButtons.comeBackLater')
 marker('editor.record.form.bottomButtons.previous')
@@ -45,6 +46,7 @@ marker('editor.record.form.bottomButtons.next')
     PageSelectorComponent,
     TranslateModule,
     SidebarComponent,
+    SpinningLoaderComponent,
   ],
 })
 export class EditPageComponent implements OnInit, OnDestroy {
@@ -60,6 +62,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
   hasRecordChanged$ = this.facade.hasRecordChanged$.pipe(skip(1))
 
   newRecord = false
+  isLoading = true
 
   @ViewChild('scrollContainer') scrollContainer: ElementRef<HTMLElement>
 
@@ -82,6 +85,8 @@ export class EditPageComponent implements OnInit, OnDestroy {
         if (!record.uniqueIdentifier) {
           this.newRecord = true
           this.facade.saveRecord()
+        } else {
+          this.isLoading = false
         }
       })
     )

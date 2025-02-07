@@ -2,7 +2,10 @@
   <aside class="w-[370px] shrink-0 border-r">
     <md-editor-sidebar></md-editor-sidebar>
   </aside>
-  <div class="flex flex-col h-full w-full">
+  <div *ngIf="isLoading" class="flex justify-center w-full p-[145px]">
+    <gn-ui-spinning-loader></gn-ui-spinning-loader>
+  </div>
+  <div *ngIf="!isLoading" class="flex flex-col h-full w-full">
     <div class="w-full h-auto shrink-0 relative">
       <md-editor-top-toolbar></md-editor-top-toolbar>
       <div class="absolute top-full left-0 w-2/3 z-10 pointer-events-none">
