@@ -222,9 +222,8 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   ): Observable<[CatalogRecord, string, boolean] | null> {
     const draft$ = of(this.getRecordFromLocalStorage(uniqueIdentifier))
     const recordAsXml$ = this.getRecordAsXml(uniqueIdentifier)
-    const record$ = this.getRecord(uniqueIdentifier)
 
-    return combineLatest([draft$, recordAsXml$, record$]).pipe(
+    return combineLatest([draft$, recordAsXml$]).pipe(
       switchMap(([draft, recordAsXml]) => {
         const xml = draft ?? recordAsXml
         const isSavedAlready = recordAsXml !== null

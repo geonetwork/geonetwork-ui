@@ -72,7 +72,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    protected facade: EditorFacade,
+    private facade: EditorFacade,
     private notificationsService: NotificationsService,
     private translateService: TranslateService,
     private router: Router
@@ -225,6 +225,4 @@ export class EditPageComponent implements OnInit, OnDestroy {
       minute: 'numeric',
     })
   }
-
-  protected readonly console = console
 }

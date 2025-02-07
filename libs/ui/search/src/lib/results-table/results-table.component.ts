@@ -169,7 +169,6 @@ export class ResultsTableComponent {
   }
 
   handleRecordClick(item: CatalogRecord) {
-    console.log(item)
     if (item?.extras?.edit) this.recordClick.emit(item as CatalogRecord)
   }
 
