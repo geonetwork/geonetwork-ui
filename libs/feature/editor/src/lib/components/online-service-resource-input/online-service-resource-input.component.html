@@ -37,14 +37,12 @@
   </gn-ui-url-input>
 
   <gn-ui-text-input
-    class="grow"
+    class="grow border-b border-gray-300 pb-4"
     [(value)]="service.identifierInService"
     [placeholder]="getIdentifierPlaceholder() | translate"
     data-cy="identifier-in-service"
     [disabled]="disabled"
   ></gn-ui-text-input>
-
-  <div class="w-full border-b border-gray-300"></div>
 
   <gn-ui-button
     (buttonClick)="submitIdentifier(service.identifierInService)"
