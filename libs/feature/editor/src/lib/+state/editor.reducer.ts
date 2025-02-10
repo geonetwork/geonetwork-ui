@@ -18,13 +18,13 @@ export const EDITOR_FEATURE_KEY = 'editor'
 export interface EditorState {
   record: CatalogRecord | null
   recordSource: string | null
-  alreadySavedOnce: boolean
   saving: boolean
   saveError: SaveRecordError | null
   changedSinceSave: boolean
   editorConfig: EditorConfig
   currentPage: number
   hasRecordChanged: { user: string; date: Date }
+  isPublished: boolean
 }
 
 export interface EditorPartialState {
@@ -34,27 +34,23 @@ export interface EditorPartialState {
 export const initialEditorState: EditorState = {
   record: null,
   recordSource: null,
-  alreadySavedOnce: false,
   saving: false,
   saveError: null,
   changedSinceSave: false,
   editorConfig: DEFAULT_CONFIGURATION,
   currentPage: 0,
   hasRecordChanged: null,
+  isPublished: true,
 }
 
 const reducer = createReducer(
   initialEditorState,
-  on(
-    EditorActions.openRecord,
-    (state, { record, recordSource, alreadySavedOnce }) => ({
-      ...state,
-      changedSinceSave: false,
-      recordSource: recordSource ?? null,
-      alreadySavedOnce,
-      record,
-    })
-  ),
+  on(EditorActions.openRecord, (state, { record, recordSource }) => ({
+    ...state,
+    changedSinceSave: false,
+    recordSource: recordSource ?? null,
+    record,
+  })),
   on(EditorActions.saveRecord, (state) => ({
     ...state,
     saving: true,
@@ -110,6 +106,10 @@ const reducer = createReducer(
   on(EditorActions.hasRecordChangedSinceDraftSuccess, (state, { changes }) => ({
     ...state,
     hasRecordChanged: changes,
+  })),
+  on(EditorActions.isPublished, (state, { isPublished }) => ({
+    ...state,
+    isPublished: isPublished,
   }))
 )
 

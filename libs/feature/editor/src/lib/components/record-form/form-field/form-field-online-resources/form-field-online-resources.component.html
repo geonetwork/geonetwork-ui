@@ -4,7 +4,6 @@
     (selectedValue)="onSelectedTypeChange($event.value)"
     extraClasses="grow text-sm"
     data-cy="online-resources-type"
-    [disabled]="disabled$ | async"
   ></gn-ui-switch-toggle>
   <div class="h-[8px]"></div>
   <gn-ui-file-input
@@ -14,7 +13,6 @@
     (uploadCancel)="handleUploadCancel()"
     [uploadProgress]="uploadProgress"
     (urlChange)="handleDownloadUrlChange($event)"
-    [disabled]="disabled$ | async"
   ></gn-ui-file-input>
   <div
     *ngIf="selectedType === 'service'"
@@ -61,7 +59,6 @@
         <span class="w-full border-b border-gray-300"></span>
         <gn-ui-online-service-resource-input
           [service]="onlineResource"
-          [disabled]="disabled$ | async"
         ></gn-ui-online-service-resource-input>
       </ng-container>
       <span class="w-full border-b border-gray-300"></span>
@@ -73,12 +70,4 @@
       ></gn-ui-url-input>
     </div>
   </ng-template>
-  <div
-    *ngIf="disabled$ | async"
-    class="p-4 text-sm border border-primary bg-primary-lightest rounded-lg"
-    translate
-    data-test="disabled-message"
-  >
-    editor.record.form.field.draft.only.disabled
-  </div>
 </div>

@@ -30,11 +30,6 @@ export const selectRecordChangedSinceSave = createSelector(
   (state: EditorState) => state.changedSinceSave
 )
 
-export const selectRecordAlreadySavedOnce = createSelector(
-  selectEditorState,
-  (state: EditorState) => state.alreadySavedOnce
-)
-
 export const selectEditorConfig = createSelector(
   selectEditorState,
   (state: EditorState) => state.editorConfig
@@ -65,4 +60,9 @@ export const selectRecordSections = createSelector(
 export const selectHasRecordChanged = createSelector(
   selectEditorState,
   (state: EditorState) => state.hasRecordChanged
+)
+
+export const selectIsPublished = createSelector(
+  selectEditorState,
+  (state: EditorState) => state.isPublished
 )

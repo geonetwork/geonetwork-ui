@@ -51,11 +51,10 @@ describe('EditorFacade', () => {
 
     it('openRecord() should dispatch openRecord action and set the currentPage to 0', () => {
       const spy = jest.spyOn(store, 'dispatch')
-      facade.openRecord(datasetRecordsFixture()[0], '', true)
+      facade.openRecord(datasetRecordsFixture()[0], '')
       const action = EditorActions.openRecord({
         record: datasetRecordsFixture()[0],
         recordSource: '',
-        alreadySavedOnce: true,
       })
       const setPage = EditorActions.setCurrentPage({ page: 0 })
       expect(spy).toHaveBeenCalledWith(action)
@@ -83,6 +82,14 @@ describe('EditorFacade', () => {
       const record = datasetRecordsFixture()[0]
       facade.checkHasRecordChanged(record)
       const action = EditorActions.hasRecordChangedSinceDraft({ record })
+      expect(spy).toHaveBeenCalledWith(action)
+    })
+    it('isPublished() should dispatch isPublished action', () => {
+      const spy = jest.spyOn(store, 'dispatch')
+      facade.isPublished(false)
+      const action = EditorActions.isPublished({
+        isPublished: false,
+      })
       expect(spy).toHaveBeenCalledWith(action)
     })
   })

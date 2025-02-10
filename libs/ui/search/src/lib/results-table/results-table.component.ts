@@ -65,7 +65,6 @@ export class ResultsTableComponent {
   @Input() sortOrder: SortByField = null
   @Input() hasDraft: (record: CatalogRecord) => boolean = () => false
   @Input() canDuplicate: (record: CatalogRecord) => boolean = () => true
-  @Input() isUnsavedDraft: (record: CatalogRecord) => boolean = () => true
   @Input() canDelete: (record: CatalogRecord) => boolean = () => true
 
   // emits the column (field) as well as the order

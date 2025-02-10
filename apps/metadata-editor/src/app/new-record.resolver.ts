@@ -24,8 +24,8 @@ export class NewRecordResolver {
     return this.getCurrentUserAsPointOfContact().pipe(
       map((contactsForResource) => {
         const catalogRecord: CatalogRecord = {
-          uniqueIdentifier: this.recordsRepository.generateTemporaryId(),
-          title: `My new record (${new Date().toISOString()})`,
+          uniqueIdentifier: null,
+          title: `My new record`,
           abstract: '',
           ownerOrganization: {
             name: 'Owner organization',
@@ -50,7 +50,6 @@ export class NewRecordResolver {
           spatialExtents: [],
           temporalExtents: [],
         }
-
         return [catalogRecord, null, false]
       })
     )

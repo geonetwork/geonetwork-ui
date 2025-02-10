@@ -7,7 +7,6 @@ export const openRecord = createAction(
   '[Editor] Open record',
   props<{
     record: CatalogRecord
-    alreadySavedOnce: boolean
     recordSource?: string | null
   }>()
 )
@@ -50,4 +49,9 @@ export const hasRecordChangedSinceDraft = createAction(
 export const hasRecordChangedSinceDraftSuccess = createAction(
   '[Editor] Has Record Changed Since Draft Success',
   props<{ changes: { user: string; date: Date } }>()
+)
+
+export const isPublished = createAction(
+  '[Editor] Record Saved But Not Published',
+  props<{ isPublished: boolean }>()
 )
