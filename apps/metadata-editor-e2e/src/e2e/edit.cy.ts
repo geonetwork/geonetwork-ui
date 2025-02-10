@@ -503,6 +503,7 @@ describe('editor form', () => {
         cy.get('gn-ui-form-field-online-resources')
           .find('gn-ui-url-input')
           .find('input')
+          .first()
           .type('http://example.com/wms')
         cy.get('gn-ui-online-service-resource-input')
           .find('[data-cy="identifier-in-service"]')
