@@ -174,6 +174,16 @@ export class FormFieldOnlineResourcesComponent {
     ])
   }
 
+  handleIdentifierSubmit(payload: { url: string; identifier: string }) {
+    this.valueChange.emit([
+      ...this.allResources,
+      {
+        ...this.newService,
+        url: new URL(payload.url),
+      },
+    ])
+  }
+
   handleServiceModify(
     oldService: DatasetServiceDistribution,
     newService: DatasetServiceDistribution

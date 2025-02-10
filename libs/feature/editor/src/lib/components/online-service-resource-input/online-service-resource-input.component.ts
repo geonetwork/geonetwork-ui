@@ -2,8 +2,10 @@ import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
   OnChanges,
+  Output,
 } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { MatRadioModule } from '@angular/material/radio'
@@ -13,8 +15,18 @@ import {
   DatasetServiceDistribution,
   ServiceProtocol,
 } from '@geonetwork-ui/common/domain/model/record'
-import { TextInputComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  ButtonComponent,
+  TextInputComponent,
+  UrlInputComponent,
+} from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { iconoirCloudUpload } from '@ng-icons/iconoir'
 
 @Component({
   selector: 'gn-ui-online-service-resource-input',
@@ -23,20 +35,35 @@ import { TranslateModule } from '@ngx-translate/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
+    ButtonComponent,
     CommonModule,
+    FormsModule,
     MatTooltipModule,
     MatRadioModule,
-    FormsModule,
+    NgIconComponent,
     TextInputComponent,
     TranslateModule,
+    UrlInputComponent,
+  ],
+  providers: [
+    provideIcons({ iconoirCloudUpload }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
   ],
 })
 export class OnlineServiceResourceInputComponent implements OnChanges {
   @Input() service: Omit<DatasetServiceDistribution, 'url'>
   @Input() protocolHint?: string
   @Input() disabled? = false
+  @Output() urlChange: EventEmitter<string> = new EventEmitter()
+  @Output() identifierSubmit: EventEmitter<{
+    url: string
+    identifier: string
+  }> = new EventEmitter()
 
   selectedProtocol: ServiceProtocol
+  url: string
 
   protocolOptions: {
     label: string
@@ -77,5 +104,23 @@ export class OnlineServiceResourceInputComponent implements OnChanges {
       this.protocolOptions.find(
         (option) => option.value === this.service.accessServiceProtocol
       )?.value ?? 'other'
+  }
+
+  handleUrlChange(url: string) {
+    this.url = url
+  }
+
+  submitIdentifier(identifier: string) {
+    if (!identifier) return
+    this.identifierSubmit.emit({ url: this.url, identifier })
+    this.service.identifierInService = null
+  }
+
+  getIdentifierPlaceholder(): string {
+    const baseKey =
+      'editor.record.form.field.onlineResource.edit.identifier.placeholder'
+    return this.service.accessServiceProtocol === 'wps'
+      ? `${baseKey}.wps`
+      : baseKey
   }
 }

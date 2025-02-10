@@ -11,7 +11,7 @@
     help
   </span>
 </div>
-<div class="flex flex-row items-center gap-[16px] h-[48px]">
+<div class="flex flex-row items-center gap-4 h-[48px]">
   <mat-radio-group
     aria-labelledby="example-radio-group-label"
     class="flex flex-row gap-[8px]"
@@ -26,8 +26,33 @@
     </mat-radio-button>
   </mat-radio-group>
 </div>
-<gn-ui-text-input
-  [(value)]="service.identifierInService"
-  data-cy="identifier-in-service"
-  [disabled]="disabled"
-></gn-ui-text-input>
+
+<div class="flex flex-col gap-4">
+  <gn-ui-url-input
+    class="w-full"
+    (valueChange)="handleUrlChange($event)"
+    [disabled]="disabled"
+    [value]="url"
+    [showValidateButton]="false"
+  >
+    <ng-icon name="iconoirCloudUpload"></ng-icon>
+  </gn-ui-url-input>
+
+  <gn-ui-text-input
+    class="grow border-b border-gray-300 pb-4"
+    [(value)]="service.identifierInService"
+    [placeholder]="getIdentifierPlaceholder() | translate"
+    data-cy="identifier-in-service"
+    [disabled]="disabled"
+  ></gn-ui-text-input>
+
+  <gn-ui-button
+    (buttonClick)="submitIdentifier(service.identifierInService)"
+    [disabled]="disabled || !service.identifierInService || !url"
+    type="primary"
+  >
+    <span class="text-white font-bold" translate
+      >editor.record.form.field.onlineResource.edit.identifier.submit</span
+    >
+  </gn-ui-button>
+</div>

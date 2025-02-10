@@ -20,7 +20,7 @@ export const Primary: StoryObj<UrlInputComponent> = {
     value: 'http://aaa.org/bbb',
     placeholder: 'write a URL here',
     disabled: false,
-    showUploadButton: true,
+    showValidateButton: true,
   },
 }
 
@@ -46,12 +46,12 @@ export const WithoutUploadButton: StoryObj<UrlInputComponent> = {
     value: null,
     disabled: false,
     placeholder: 'https://mysite.org/file',
-    showUploadButton: false,
+    showValidateButton: false,
   },
   render: (args) => ({
     props: args,
     template: `
-    <gn-ui-url-input [value]='value' [disabled]='disabled' [placeholder]='placeholder' [showUploadButton]='showUploadButton'
+    <gn-ui-url-input [value]='value' [disabled]='disabled' [placeholder]='placeholder' [showValidateButton]='showValidateButton'
       (valueChange)='valueChange($event)' (uploadClick)='uploadClick($event)'>
     </gn-ui-url-input>`,
   }),

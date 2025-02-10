@@ -23,13 +23,9 @@
     <gn-ui-online-service-resource-input
       [service]="newService"
       [disabled]="disabled$ | async"
+      (urlChange)="handleServiceUrlChange($event)"
+      (identifierSubmit)="handleIdentifierSubmit($event)"
     ></gn-ui-online-service-resource-input>
-    <span class="w-full border-b border-gray-300"></span>
-    <gn-ui-url-input
-      class="w-full"
-      (uploadClick)="handleServiceUrlChange($event)"
-      [disabled]="disabled$ | async"
-    ></gn-ui-url-input>
   </div>
   <div class="h-[8px]"></div>
   <gn-ui-sortable-list
@@ -73,7 +69,7 @@
         class="w-full"
         [disabled]="true"
         [value]="onlineResource.url"
-        [showUploadButton]="false"
+        [showValidateButton]="false"
       ></gn-ui-url-input>
     </div>
   </ng-template>
