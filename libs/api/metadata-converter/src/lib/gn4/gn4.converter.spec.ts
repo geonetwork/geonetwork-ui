@@ -85,7 +85,7 @@ describe('Gn4Converter', () => {
             extras: {
               id: '12456',
               catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
-              edit: false,
+              edit: true,
               isPublishedToAll: true,
             },
             landingPage: new URL(
@@ -134,7 +134,7 @@ describe('Gn4Converter', () => {
               id: '12442',
               catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
               favoriteCount: 4,
-              edit: false,
+              edit: true,
               isPublishedToAll: true,
             },
             landingPage: new URL(
@@ -1197,7 +1197,7 @@ describe('Gn4Converter', () => {
               isOpenData: true,
               isPublishedToAll: true,
               ownerInfo: 'testadmin|ADMIN|Test|Administrator',
-              edit: false,
+              edit: true,
             },
             keywords: [
               {
@@ -1732,7 +1732,7 @@ describe('Gn4Converter', () => {
               isOpenData: true,
               isPublishedToAll: true,
               ownerInfo: 'AREadmin|admin|ARE|UserAdmin',
-              edit: false,
+              edit: true,
             },
             keywords: [
               {
@@ -2364,7 +2364,7 @@ describe('Gn4Converter', () => {
               id: '53583',
               favoriteCount: 0,
               catalogUuid: 'metawal.wallonie.be',
-              edit: false,
+              edit: true,
             },
             onlineResources: [
               {
@@ -2564,7 +2564,7 @@ describe('Gn4Converter', () => {
               catalogUuid: 'c3f93209-4363-4e30-bec2-3cc43bd7a8a7',
               ownerInfo: 'vfabry|Fabry|Vincent|Administrator',
               favoriteCount: 0,
-              edit: false,
+              edit: true,
             },
             recordCreated: new Date('2021-12-14T15:02:50.000Z'),
             resourceCreated: new Date('2019-12-02T00:00:00.000Z'),
@@ -2645,7 +2645,7 @@ describe('Gn4Converter', () => {
               id: '1215',
               isOpenData: false,
               isPublishedToAll: true,
-              edit: false,
+              edit: true,
               ownerInfo:
                 'Admin_Metawal|Administrator_user de Stephane Ritz|Metawal|Administrator',
             },
@@ -3208,7 +3208,7 @@ describe('Gn4Converter', () => {
               catalogUuid: 'c3f93209-4363-4e30-bec2-3cc43bd7a8a7',
               ownerInfo: 'vfabry|Fabry|Vincent|Administrator',
               favoriteCount: 0,
-              edit: false,
+              edit: true,
             },
             recordCreated: new Date('2024-09-13T10:12:38.614Z'),
             resourceCreated: new Date('2024-05-27T00:00:00.000Z'),
@@ -3356,7 +3356,7 @@ describe('Gn4Converter', () => {
               id: '8705',
               favoriteCount: 0,
               catalogUuid: 'ce008f24-8e0d-45a8-97f8-9f10399f0190',
-              edit: false,
+              edit: true,
             },
             onlineResources: [
               {
