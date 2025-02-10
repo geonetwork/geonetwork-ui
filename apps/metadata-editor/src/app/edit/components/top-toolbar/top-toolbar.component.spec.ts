@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core'
 
 class EditorFacadeMock {
   changedSinceSave$ = new BehaviorSubject(false)
-  savedButNotPublished$ = new BehaviorSubject(false)
+  isPublished$ = new BehaviorSubject(false)
 }
 
 @Component({
@@ -63,7 +63,7 @@ describe('TopToolbarComponent', () => {
     describe('saved and not published', () => {
       beforeEach(() => {
         editorFacade.changedSinceSave$.next(false)
-        editorFacade.savedButNotPublished$.next(true)
+        editorFacade.isPublished$.next(false)
       })
       it('sets the correct status', () => {
         expect(saveStatus).toBe('record_not_published')
@@ -72,7 +72,7 @@ describe('TopToolbarComponent', () => {
     describe('saved, published and up to date', () => {
       beforeEach(() => {
         editorFacade.changedSinceSave$.next(false)
-        editorFacade.savedButNotPublished$.next(false)
+        editorFacade.isPublished$.next(true)
       })
       it('sets the correct status', () => {
         expect(saveStatus).toBe('record_up_to_date')
@@ -81,7 +81,7 @@ describe('TopToolbarComponent', () => {
     describe('saved, published, pending changes', () => {
       beforeEach(() => {
         editorFacade.changedSinceSave$.next(true)
-        editorFacade.savedButNotPublished$.next(false)
+        editorFacade.isPublished$.next(true)
       })
       it('sets the correct status', () => {
         expect(saveStatus).toBe('draft_changes_pending')

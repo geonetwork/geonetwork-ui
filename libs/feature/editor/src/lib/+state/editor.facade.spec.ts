@@ -84,11 +84,11 @@ describe('EditorFacade', () => {
       const action = EditorActions.hasRecordChangedSinceDraft({ record })
       expect(spy).toHaveBeenCalledWith(action)
     })
-    it('savedButNotPublished() should dispatch savedButNotPublished action', () => {
+    it('isPublished() should dispatch isPublished action', () => {
       const spy = jest.spyOn(store, 'dispatch')
-      facade.savedButNotPublished(true)
-      const action = EditorActions.savedButNotPublished({
-        savedButNotPublished: true,
+      facade.isPublished(false)
+      const action = EditorActions.isPublished({
+        isPublished: false,
       })
       expect(spy).toHaveBeenCalledWith(action)
     })

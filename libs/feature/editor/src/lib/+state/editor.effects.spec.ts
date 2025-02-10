@@ -35,7 +35,7 @@ const initialEditorState = {
   editorConfig: [],
   currentPage: 0,
   hasRecordChanged: null,
-  savedButNotPublished: false,
+  isPublished: false,
 }
 
 describe('EditorEffects', () => {
@@ -208,7 +208,7 @@ describe('EditorEffects', () => {
     })
   })
   describe('checkIsRecordPublished$', () => {
-    it('should dispatch savedButNotPublished action with correct payload', () => {
+    it('should dispatch isPublished action with correct payload', () => {
       const record = datasetRecordsFixture()[0]
       actions = hot('-a-|', {
         a: EditorActions.openRecord({
@@ -218,7 +218,7 @@ describe('EditorEffects', () => {
       })
 
       const expected = hot('-a-|', {
-        a: EditorActions.savedButNotPublished({ savedButNotPublished: false }),
+        a: EditorActions.isPublished({ isPublished: true }),
       })
 
       expect(effects.checkIsRecordPublished$).toBeObservable(expected)

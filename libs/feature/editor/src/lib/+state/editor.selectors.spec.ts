@@ -22,7 +22,7 @@ describe('Editor Selectors', () => {
         saving: false,
         changedSinceSave: true,
         hasRecordChanged: ['date', 'user'],
-        savedButNotPublished: true,
+        isPublished: true,
       },
     }
   })
@@ -62,8 +62,8 @@ describe('Editor Selectors', () => {
       expect(result).toEqual(['date', 'user'])
     })
 
-    it('selectSavedButNotPublished() should return the current "savedButNotPublished" state', () => {
-      const result = EditorSelectors.selectSavedButNotPublished(state)
+    it('selectIsPublished() should return the current "isPublished" state', () => {
+      const result = EditorSelectors.selectIsPublished(state)
       expect(result).toEqual(true)
     })
 

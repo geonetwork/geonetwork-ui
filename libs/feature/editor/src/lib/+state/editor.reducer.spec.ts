@@ -120,16 +120,16 @@ describe('Editor Reducer', () => {
       expect(result.hasRecordChanged).toEqual(changes)
     })
 
-    it('savedButNotPublished action', () => {
-      const action = EditorActions.savedButNotPublished({
-        savedButNotPublished: true,
+    it('isPublished action', () => {
+      const action = EditorActions.isPublished({
+        isPublished: true,
       })
       const result: EditorState = editorReducer(
-        { ...initialEditorState, savedButNotPublished: false },
+        { ...initialEditorState, isPublished: true },
         action
       )
 
-      expect(result.savedButNotPublished).toBe(true)
+      expect(result.isPublished).toBe(true)
     })
   })
 

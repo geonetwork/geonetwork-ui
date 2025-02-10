@@ -51,7 +51,7 @@ export const hasRecordChangedSinceDraftSuccess = createAction(
   props<{ changes: { user: string; date: Date } }>()
 )
 
-export const savedButNotPublished = createAction(
+export const isPublished = createAction(
   '[Editor] Record Saved But Not Published',
-  props<{ savedButNotPublished: boolean }>()
+  props<{ isPublished: boolean }>()
 )

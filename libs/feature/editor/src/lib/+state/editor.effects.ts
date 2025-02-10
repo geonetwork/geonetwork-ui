@@ -146,8 +146,8 @@ export class EditorEffects {
         this.recordsRepository.getRecordPublicationStatus(uniqueIdentifier)
       ),
       map((isPublished) =>
-        EditorActions.savedButNotPublished({
-          savedButNotPublished: !isPublished,
+        EditorActions.isPublished({
+          isPublished: isPublished,
         })
       )
     )

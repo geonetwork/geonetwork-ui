@@ -75,15 +75,13 @@ export class TopToolbarComponent {
   protected saveStatus$: Observable<(typeof this.SaveStatus)[number]> =
     combineLatest([
       this.editorFacade.changedSinceSave$,
-      this.editorFacade.savedButNotPublished$,
+      this.editorFacade.isPublished$,
     ]).pipe(
-      map(([changedSinceSave, savedButNotPublished]) => {
+      map(([changedSinceSave, isPublished]) => {
         if (changedSinceSave) {
           return 'draft_changes_pending'
         }
-        return savedButNotPublished
-          ? 'record_not_published'
-          : 'record_up_to_date'
+        return !isPublished ? 'record_not_published' : 'record_up_to_date'
       })
     )
 

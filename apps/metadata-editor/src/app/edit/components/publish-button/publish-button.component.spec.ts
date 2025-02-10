@@ -43,7 +43,7 @@ class EditorFacadeMock {
       extras: { ownerInfo: '1|John|Doe' },
     })
   )
-  savedButNotPublished$ = new BehaviorSubject(false)
+  isPublished$ = new BehaviorSubject(true)
 }
 
 const user = barbieUserFixture()
@@ -137,7 +137,7 @@ describe('PublishButtonComponent', () => {
     })
     describe('has never been published', () => {
       beforeEach(() => {
-        facade.savedButNotPublished$.next(true)
+        facade.isPublished$.next(false)
       })
       it('should return "hasChanges" when has never been published', async () => {
         await expect(firstValueFrom(component.status$)).resolves.toBe(

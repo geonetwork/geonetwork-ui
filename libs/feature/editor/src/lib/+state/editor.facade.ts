@@ -32,9 +32,7 @@ export class EditorFacade {
   hasRecordChanged$ = this.store.pipe(
     select(EditorSelectors.selectHasRecordChanged)
   )
-  savedButNotPublished$ = this.store.pipe(
-    select(EditorSelectors.selectSavedButNotPublished)
-  )
+  isPublished$ = this.store.pipe(select(EditorSelectors.selectIsPublished))
 
   openRecord(record: CatalogRecord, recordSource: string) {
     this.store.dispatch(
@@ -70,9 +68,7 @@ export class EditorFacade {
     this.store.dispatch(EditorActions.hasRecordChangedSinceDraft({ record }))
   }
 
-  savedButNotPublished(savedButNotPublished: boolean) {
-    this.store.dispatch(
-      EditorActions.savedButNotPublished({ savedButNotPublished })
-    )
+  isPublished(isPublished: boolean) {
+    this.store.dispatch(EditorActions.isPublished({ isPublished }))
   }
 }

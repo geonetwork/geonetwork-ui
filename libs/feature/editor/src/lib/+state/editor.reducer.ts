@@ -24,7 +24,7 @@ export interface EditorState {
   editorConfig: EditorConfig
   currentPage: number
   hasRecordChanged: { user: string; date: Date }
-  savedButNotPublished: boolean
+  isPublished: boolean
 }
 
 export interface EditorPartialState {
@@ -40,7 +40,7 @@ export const initialEditorState: EditorState = {
   editorConfig: DEFAULT_CONFIGURATION,
   currentPage: 0,
   hasRecordChanged: null,
-  savedButNotPublished: false,
+  isPublished: true,
 }
 
 const reducer = createReducer(
@@ -107,9 +107,9 @@ const reducer = createReducer(
     ...state,
     hasRecordChanged: changes,
   })),
-  on(EditorActions.savedButNotPublished, (state, { savedButNotPublished }) => ({
+  on(EditorActions.isPublished, (state, { isPublished }) => ({
     ...state,
-    savedButNotPublished: savedButNotPublished,
+    isPublished: isPublished,
   }))
 )
 
