@@ -51,6 +51,7 @@ export class FileInputComponent {
   @Output() fileChange: EventEmitter<File> = new EventEmitter()
   @Output() urlChange: EventEmitter<string> = new EventEmitter()
   @Output() uploadCancel: EventEmitter<void> = new EventEmitter()
+  @Input() disabled? = false
 
   dragFilesOver = false
 

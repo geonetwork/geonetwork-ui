@@ -34,6 +34,7 @@ export default {
 export const Primary: StoryObj<FileInputComponent> = {
   args: {
     maxSizeMB: 5,
+    disabled: false,
   },
   render: (args) => ({
     props: {
@@ -46,6 +47,7 @@ export const Primary: StoryObj<FileInputComponent> = {
     <div style="width: 600px;height: 400px;">
       <gn-ui-file-input
         [maxSizeMB]="maxSizeMB"
+        [disabled]="disabled"
         (fileChange)='fileChange($event)'
         (urlChange)='urlChange($event)'
         (uploadCancel)='uploadCancel($event)'>

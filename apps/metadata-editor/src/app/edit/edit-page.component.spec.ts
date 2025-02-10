@@ -194,7 +194,7 @@ describe('EditPageComponent', () => {
         component.ngOnInit()
         expect(addSpy).toHaveBeenCalledTimes(5)
       })
-      it('should add 6 subscriptions to component.subscription when on /create route', () => {
+      it('should add 5 subscriptions to component.subscription when on /create route', () => {
         const activatedRoute = TestBed.inject(ActivatedRoute)
         activatedRoute.snapshot.routeConfig.path = '/create'
         fixture.detectChanges()
