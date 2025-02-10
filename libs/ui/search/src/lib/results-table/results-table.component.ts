@@ -30,7 +30,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core'
 import { ActionMenuComponent } from './action-menu/action-menu.component'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
-import { iconoirUser } from '@ng-icons/iconoir'
+import { iconoirUser, iconoirLock } from '@ng-icons/iconoir'
 import {
   CdkConnectedOverlay,
   CdkOverlayOrigin,
@@ -55,9 +55,8 @@ import { matMoreVert } from '@ng-icons/material-icons/baseline'
     ActionMenuComponent,
     NgIconComponent,
     CdkOverlayOrigin,
-    CdkConnectedOverlay,
   ],
-  providers: [provideIcons({ iconoirUser, matMoreVert })],
+  providers: [provideIcons({ iconoirUser, iconoirLock, matMoreVert })],
 })
 export class ResultsTableComponent {
   @Input() records: CatalogRecord[] = []
@@ -66,6 +65,7 @@ export class ResultsTableComponent {
   @Input() hasDraft: (record: CatalogRecord) => boolean = () => false
   @Input() canDuplicate: (record: CatalogRecord) => boolean = () => true
   @Input() canDelete: (record: CatalogRecord) => boolean = () => true
+  @Input() isDraftPage = false
 
   // emits the column (field) as well as the order
   @Output() sortByChange = new EventEmitter<[string, 'asc' | 'desc']>()
@@ -169,8 +169,9 @@ export class ResultsTableComponent {
     return getBadgeColor(format)
   }
 
-  handleRecordClick(item: unknown) {
-    this.recordClick.emit(item as CatalogRecord)
+  handleRecordClick(item: CatalogRecord) {
+    if (item?.extras?.edit || this.isDraftPage)
+      this.recordClick.emit(item as CatalogRecord)
   }
 
   handleDuplicate(item: unknown) {

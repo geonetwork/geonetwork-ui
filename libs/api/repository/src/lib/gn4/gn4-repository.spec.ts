@@ -102,6 +102,7 @@ const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
   extras: {
     ownerInfo: 'Owner|SomeDetails',
+    edit: true,
   },
 }
 
@@ -853,6 +854,13 @@ describe('Gn4Repository', () => {
         .subscribe((publicationStatus) => {
           expect(publicationStatus).toEqual(true)
         })
+    })
+  })
+  describe('canEditRecord', () => {
+    it('should return the editing rights', () => {
+      repository.canEditRecord('my-dataset-001').subscribe((canEdit) => {
+        expect(canEdit).toEqual(true)
+      })
     })
   })
 })

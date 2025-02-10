@@ -209,14 +209,21 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       : of(true)
   }
 
+  canEditRecord(uniqueIdentifier: string): Observable<boolean> {
+    return this.getRecord(uniqueIdentifier).pipe(
+      map((record) => {
+        return record.extras['edit'] as boolean
+      })
+    )
+  }
+
   openRecordForEdition(
     uniqueIdentifier: string
   ): Observable<[CatalogRecord, string, boolean] | null> {
     const draft$ = of(this.getRecordFromLocalStorage(uniqueIdentifier))
     const recordAsXml$ = this.getRecordAsXml(uniqueIdentifier)
-    const record$ = this.getRecord(uniqueIdentifier)
 
-    return combineLatest([draft$, recordAsXml$, record$]).pipe(
+    return combineLatest([draft$, recordAsXml$]).pipe(
       switchMap(([draft, recordAsXml]) => {
         const xml = draft ?? recordAsXml
         const isSavedAlready = recordAsXml !== null

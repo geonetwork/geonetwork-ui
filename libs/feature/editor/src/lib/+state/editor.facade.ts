@@ -33,6 +33,7 @@ export class EditorFacade {
     select(EditorSelectors.selectHasRecordChanged)
   )
   isPublished$ = this.store.pipe(select(EditorSelectors.selectIsPublished))
+  canEditRecord$ = this.store.pipe(select(EditorSelectors.selectCanEditRecord))
 
   openRecord(record: CatalogRecord, recordSource: string) {
     this.store.dispatch(
@@ -70,5 +71,9 @@ export class EditorFacade {
 
   isPublished(isPublished: boolean) {
     this.store.dispatch(EditorActions.isPublished({ isPublished }))
+  }
+
+  canEditRecord(canEditRecord: boolean) {
+    this.store.dispatch(EditorActions.canEditRecord({ canEditRecord }))
   }
 }

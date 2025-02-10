@@ -159,6 +159,7 @@ As such, **it is not very interesting at all.**`,
     defaultLanguage: 'en',
     extras: {
       isPublishedToAll: true,
+      edit: true,
     },
   },
   {

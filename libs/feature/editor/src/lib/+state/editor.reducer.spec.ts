@@ -131,6 +131,18 @@ describe('Editor Reducer', () => {
 
       expect(result.isPublished).toBe(true)
     })
+
+    it('canEditRecord action', () => {
+      const action = EditorActions.canEditRecord({
+        canEditRecord: true,
+      })
+      const result: EditorState = editorReducer(
+        { ...initialEditorState, canEditRecord: true },
+        action
+      )
+
+      expect(result.canEditRecord).toBe(true)
+    })
   })
 
   describe('unknown action', () => {

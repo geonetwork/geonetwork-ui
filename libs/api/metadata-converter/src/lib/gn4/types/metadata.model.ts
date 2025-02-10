@@ -131,6 +131,7 @@ export type MetadataObject = Partial<{
   inspireTheme_syn: string[]
   isHarvested: string
   isOpenData: string
+  edit: boolean
   isPublishedToAll: string
   isTemplate: string
   keywordType: Record<string, MultilingualField[]>

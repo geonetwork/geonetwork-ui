@@ -17,7 +17,7 @@ export abstract class RecordsRepositoryInterface {
     similarTo: CatalogRecord
   ): Observable<CatalogRecord[]>
   abstract fuzzySearch(query: string): Observable<SearchResults>
-
+  abstract canEditRecord(uniqueIdentifier: string): Observable<boolean>
   /**
    * This emits once:
    * - record object; if a draft exists, this will return it

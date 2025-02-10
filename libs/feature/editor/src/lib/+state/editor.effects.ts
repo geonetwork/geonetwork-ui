@@ -152,4 +152,19 @@ export class EditorEffects {
       )
     )
   )
+
+  checkCanEditRecord$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(EditorActions.openRecord),
+      map(({ record }) => record.uniqueIdentifier),
+      switchMap((uniqueIdentifier) =>
+        this.recordsRepository.canEditRecord(uniqueIdentifier)
+      ),
+      map((canEditRecord) =>
+        EditorActions.canEditRecord({
+          canEditRecord: canEditRecord,
+        })
+      )
+    )
+  )
 }

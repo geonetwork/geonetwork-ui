@@ -25,6 +25,7 @@ export interface EditorState {
   currentPage: number
   hasRecordChanged: { user: string; date: Date }
   isPublished: boolean
+  canEditRecord: boolean
 }
 
 export interface EditorPartialState {
@@ -41,6 +42,7 @@ export const initialEditorState: EditorState = {
   currentPage: 0,
   hasRecordChanged: null,
   isPublished: true,
+  canEditRecord: true,
 }
 
 const reducer = createReducer(
@@ -110,6 +112,10 @@ const reducer = createReducer(
   on(EditorActions.isPublished, (state, { isPublished }) => ({
     ...state,
     isPublished: isPublished,
+  })),
+  on(EditorActions.canEditRecord, (state, { canEditRecord }) => ({
+    ...state,
+    canEditRecord: canEditRecord,
   }))
 )
 

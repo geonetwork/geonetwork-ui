@@ -5,7 +5,10 @@
   <div *ngIf="isLoading" class="flex justify-center w-full p-[145px]">
     <gn-ui-spinning-loader></gn-ui-spinning-loader>
   </div>
-  <div *ngIf="!isLoading" class="flex flex-col h-full w-full">
+  <div
+    *ngIf="!isLoading && (facade.canEditRecord$ | async) === true"
+    class="flex flex-col h-full w-full"
+  >
     <div class="w-full h-auto shrink-0 relative">
       <md-editor-top-toolbar></md-editor-top-toolbar>
       <div class="absolute top-full left-0 w-2/3 z-10 pointer-events-none">
@@ -54,6 +57,17 @@
           </gn-ui-button>
         </div>
       </div>
+    </div>
+  </div>
+  <div
+    class="flex flex-col h-full w-full"
+    *ngIf="(facade.canEditRecord$ | async) === false"
+  >
+    <header class="shrink-0 border-b border-gray-300">
+      <md-editor-search-header></md-editor-search-header>
+    </header>
+    <div class="flex justify-center pt-20">
+      <md-editor-page-error></md-editor-page-error>
     </div>
   </div>
 </div>

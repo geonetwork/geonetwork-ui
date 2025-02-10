@@ -26,6 +26,8 @@ import { SidebarComponent } from '../dashboard/sidebar/sidebar.component'
 import { PageSelectorComponent } from './components/page-selector/page-selector.component'
 import { TopToolbarComponent } from './components/top-toolbar/top-toolbar.component'
 import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
+import { SearchHeaderComponent } from '../dashboard/search-header/search-header.component'
+import { PageErrorComponent } from './components/page-error/page-error.component'
 
 marker('editor.record.form.bottomButtons.comeBackLater')
 marker('editor.record.form.bottomButtons.previous')
@@ -47,6 +49,8 @@ marker('editor.record.form.bottomButtons.next')
     TranslateModule,
     SidebarComponent,
     SpinningLoaderComponent,
+    SearchHeaderComponent,
+    PageErrorComponent,
   ],
 })
 export class EditPageComponent implements OnInit, OnDestroy {
@@ -68,7 +72,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private facade: EditorFacade,
+    protected facade: EditorFacade,
     private notificationsService: NotificationsService,
     private translateService: TranslateService,
     private router: Router

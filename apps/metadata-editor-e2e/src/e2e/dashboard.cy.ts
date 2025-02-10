@@ -526,6 +526,53 @@ describe('dashboard (authenticated)', () => {
   })
 })
 
+describe('Editing rights', () => {
+  beforeEach(() => {
+    cy.login('barbie', 'p4ssworD_', false)
+  })
+  it('should not have access to other organization records', () => {
+    cy.visit('/catalog/search')
+    cy.get('gn-ui-results-table')
+      .find('[data-cy="table-row"]')
+      .first()
+      .as('record')
+    cy.get('@record')
+      .children('div')
+      .eq(4)
+      .find('span')
+      .invoke('text')
+      .should('eq', 'admin admin')
+    cy.get('@record').should(
+      'have.attr',
+      'title',
+      'You are not an editor of the allowed groups'
+    )
+    cy.get('@record').children('div').eq(2).click()
+    cy.url().should('include', '/catalog/')
+  })
+  it('should have access to their organization records', () => {
+    cy.visit('/catalog/search')
+    cy.get('gn-ui-results-table')
+      .find('[data-cy="table-row"]')
+      .eq(3)
+      .as('record')
+    cy.get('@record')
+      .children('div')
+      .eq(4)
+      .find('span')
+      .invoke('text')
+      .should('eq', 'Barbara Roberts')
+    cy.get('@record').children('div').eq(2).click()
+    cy.url().should('include', '/edit/')
+  })
+  it('should not allow the user to access other organization records and let them go back to the catalog', () => {
+    cy.visit('/edit/accroche_velos')
+    cy.get('md-editor-page-error').should('be.visible')
+    cy.get('md-editor-page-error').find('a').click()
+    cy.url().should('include', '/catalog/search')
+  })
+})
+
 describe('Logging in and out', () => {
   describe('when the user is not logged in', () => {
     beforeEach(() => {

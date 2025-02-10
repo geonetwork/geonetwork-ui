@@ -9,6 +9,7 @@
     class="shadow-md shadow-gray-300 border-[1px] border-gray-200 overflow-hidden rounded bg-white grow mx-[32px] my-[16px] text-sm"
   >
     <gn-ui-results-table
+      [isDraftPage]="true"
       [hasDraft]="hasDraft"
       [records]="records$ | async"
       [canDuplicate]="canDuplicate"

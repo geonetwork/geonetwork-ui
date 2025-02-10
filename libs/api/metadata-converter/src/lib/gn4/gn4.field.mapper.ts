@@ -280,7 +280,14 @@ export class Gn4FieldMapper {
     isPublishedToAll: (output, source) =>
       this.addExtra(
         {
-          isPublishedToAll: selectField(source, 'isPublishedToAll') !== 'false',
+          isPublishedToAll: selectField(source, 'isPublishedToAll'),
+        },
+        output
+      ),
+    edit: (output, source) =>
+      this.addExtra(
+        {
+          edit: selectField(source, 'edit'),
         },
         output
       ),
