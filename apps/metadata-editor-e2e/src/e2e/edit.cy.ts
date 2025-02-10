@@ -509,7 +509,7 @@ describe('editor form', () => {
         cy.get('gn-ui-online-service-resource-input')
           .find('[data-cy="identifier-in-service"]')
           .type('A layer name as identifier in service')
-        cy.get('gn-ui-form-field-online-resources').find('button').eq(3).click()
+        cy.get('gn-ui-form-field-online-resources').find('button').eq(2).click()
         cy.editor_publishAndReload()
         cy.get('@saveStatus').should('eq', 'record_up_to_date')
         cy.get('@resourcePageBtn').click()

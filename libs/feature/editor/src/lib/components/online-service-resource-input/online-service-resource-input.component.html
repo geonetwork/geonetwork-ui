@@ -33,6 +33,7 @@
     (valueChange)="handleUrlChange($event)"
     [disabled]="disabled"
     [value]="url"
+    [showValidateButton]="false"
   >
     <ng-icon name="iconoirCloudUpload"></ng-icon>
   </gn-ui-url-input>
@@ -47,7 +48,7 @@
 
   <gn-ui-button
     (buttonClick)="submitIdentifier(service.identifierInService)"
-    [disabled]="disabled || !service.identifierInService"
+    [disabled]="disabled || !service.identifierInService || !url"
     type="primary"
   >
     <span class="text-white font-bold" translate
