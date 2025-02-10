@@ -6,9 +6,8 @@
     <gn-ui-spinning-loader></gn-ui-spinning-loader>
   </div>
   <div
-    *ngIf="!isLoading"
+    *ngIf="!isLoading && (facade.canEditRecord$ | async) === true"
     class="flex flex-col h-full w-full"
-    *ngIf="(facade.canEditRecord$ | async) === true"
   >
     <div class="w-full h-auto shrink-0 relative">
       <md-editor-top-toolbar></md-editor-top-toolbar>
