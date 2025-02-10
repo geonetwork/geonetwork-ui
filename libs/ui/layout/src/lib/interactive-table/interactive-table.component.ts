@@ -27,6 +27,7 @@ export class InteractiveTableComponent {
   columns: QueryList<InteractiveTableColumnComponent>
 
   @Input() items: unknown[] = []
+  @Input() isDraftPage = false
   @Output() itemClick = new EventEmitter<unknown>()
 
   get gridStyle() {

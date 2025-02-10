@@ -1,5 +1,6 @@
 <gn-ui-interactive-table
   [items]="records"
+  [isDraftPage]="isDraftPage"
   (itemClick)="handleRecordClick($event)"
 >
   <!-- SELECTED COLUMN -->
@@ -8,10 +9,10 @@
       <ng-icon
         name="iconoirLock"
         class="text-purple"
-        *ngIf="!item.extras?.edit"
+        *ngIf="!item.extras?.edit && !isDraftPage"
       ></ng-icon>
       <gn-ui-checkbox
-        *ngIf="item.extras?.edit"
+        *ngIf="item.extras?.edit || isDraftPage"
         [checked]="isChecked(item)"
         (changed)="handleRecordSelectedChange($event, item)"
         class="-m-2"
@@ -148,10 +149,12 @@
         (buttonClick)="openActionMenu(item, template)"
         type="light"
         data-test="record-menu-button"
-        [disabled]="!item.extras?.edit"
+        [disabled]="!item.extras?.edit && !isDraftPage"
       >
         <ng-icon
-          [ngClass]="{ 'text-purple-light': !item.extras?.edit }"
+          [ngClass]="{
+            'text-purple-light': !item.extras?.edit && !isDraftPage,
+          }"
           name="matMoreVert"
         ></ng-icon>
       </gn-ui-button>

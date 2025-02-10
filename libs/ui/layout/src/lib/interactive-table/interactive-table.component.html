@@ -32,7 +32,9 @@
     (click)="handleRowClick(item)"
     data-cy="table-row"
     [title]="
-      !item.extras?.edit ? ('editor.record.lock.reason' | translate) : ''
+      !item.extras?.edit && !isDraftPage
+        ? ('editor.record.lock.reason' | translate)
+        : ''
     "
   >
     <div
@@ -49,8 +51,10 @@
       <div
         class="table-row-cell px-3 py-1.5 flex items-center bg-white transition-colors duration-75 truncate border-b border-gray-200"
         [ngClass]="{
-          'text-purple-light cursor-default': !item.extras?.edit,
-          'group-hover:text-main group-hover:bg-gray-50': item.extras?.edit,
+          'text-purple-light cursor-default':
+            !item.extras?.edit && !isDraftPage,
+          'group-hover:text-main group-hover:bg-gray-50':
+            item.extras?.edit || isDraftPage,
         }"
       >
         <ng-container

@@ -65,6 +65,7 @@ export class ResultsTableComponent {
   @Input() hasDraft: (record: CatalogRecord) => boolean = () => false
   @Input() canDuplicate: (record: CatalogRecord) => boolean = () => true
   @Input() canDelete: (record: CatalogRecord) => boolean = () => true
+  @Input() isDraftPage = false
 
   // emits the column (field) as well as the order
   @Output() sortByChange = new EventEmitter<[string, 'asc' | 'desc']>()
@@ -169,7 +170,8 @@ export class ResultsTableComponent {
   }
 
   handleRecordClick(item: CatalogRecord) {
-    if (item?.extras?.edit) this.recordClick.emit(item as CatalogRecord)
+    if (item?.extras?.edit || this.isDraftPage)
+      this.recordClick.emit(item as CatalogRecord)
   }
 
   handleDuplicate(item: unknown) {
