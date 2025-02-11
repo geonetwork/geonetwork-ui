@@ -58,19 +58,20 @@
       (modifyMode && layers === undefined)
     "
   ></gn-ui-text-input>
-  <gn-ui-dropdown-selector
+  <gn-ui-autocomplete
     class="border-b border-gray-300 pb-4"
-    [showTitle]="false"
-    [title]="
+    [placeholder]="
       'editor.record.form.field.onlineResource.edit.identifier.select.label'
         | translate
     "
-    [choices]="layers || []"
+    [action]="autoCompleteAction"
+    (itemSelected)="handleSelectValue($event)"
+    [displayWithFn]="displayWithFn"
+    [minCharacterCount]="0"
+    [clearOnSelection]="false"
     *ngIf="activeLayerSuggestion && layers !== undefined"
-    [selected]="service.identifierInService"
-    (selectValue)="handleSelectValue($event)"
   >
-  </gn-ui-dropdown-selector>
+  </gn-ui-autocomplete>
   <gn-ui-button
     (buttonClick)="submitIdentifier(service.identifierInService)"
     [disabled]="disabled || !service.identifierInService"
