@@ -17,7 +17,7 @@
     class="flex flex-row gap-[8px]"
     [(ngModel)]="service.accessServiceProtocol"
     [disabled]="disabled"
-    (change)="resetLayersSuggestion()"
+    (change)="resetAllFormFields()"
   >
     <mat-radio-button
       *ngFor="let protocolOption of protocolOptions"

@@ -71,7 +71,7 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
 
   errorMessage = false
   selectedProtocol: ServiceProtocol
-  url: string
+  url: string = ''
   layers: DropdownChoice[] | undefined = undefined
 
   protocolOptions: {
@@ -131,7 +131,7 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
 
   handleUrlValueChange(url: string) {
     this.url = url
-    this.service.url = new URL(url)
+    this.service.url = url ? new URL(url) : undefined
     this.resetLayersSuggestion()
     this.urlChange.emit(this.url)
   }
@@ -161,6 +161,12 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
 
   handleSelectValue(val: string) {
     this.service.identifierInService = val
+  }
+
+  resetAllFormFields() {
+    this.url = ''
+    this.service.url = null
+    this.resetLayersSuggestion()
   }
 
   resetLayersSuggestion() {
