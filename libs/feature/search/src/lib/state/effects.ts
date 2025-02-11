@@ -2,7 +2,7 @@ import { Inject, Injectable, Optional } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { select, Store } from '@ngrx/store'
 import { buffer, combineLatestWith, debounceTime, from, of, tap } from 'rxjs'
-import _ from "lodash"
+import _ from 'lodash'
 import {
   catchError,
   map,
@@ -63,7 +63,7 @@ export class SearchEffects {
     @Optional()
     @Inject(FILTER_GEOMETRY)
     private filterGeometry: Promise<Geometry>
-  ) { }
+  ) {}
 
   resetPagination$ = createEffect(() =>
     this.actions$.pipe(
@@ -159,7 +159,11 @@ export class SearchEffects {
             ]) => {
               const { currentPage, pageSize, sort } = state.params
 
-              const filters = _.merge({}, state.params.filters, state.config.filters)
+              const filters = _.merge(
+                {},
+                state.params.filters,
+                state.config.filters
+              )
 
               const results$ = this.recordsRepository.search({
                 filters,
