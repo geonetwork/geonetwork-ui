@@ -18,6 +18,7 @@ import {
   ServiceProtocol,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
+  AutocompleteComponent,
   ButtonComponent,
   DropdownChoice,
   DropdownSelectorComponent,
@@ -31,7 +32,15 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirCloudUpload } from '@ng-icons/iconoir'
-import { getLayers } from '@geonetwork-ui/util/shared'
+import { createFuzzyFilter, getLayers } from '@geonetwork-ui/util/shared'
+import {
+  BehaviorSubject,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  Observable,
+  switchMap,
+} from 'rxjs'
 
 @Component({
   selector: 'gn-ui-online-service-resource-input',
@@ -40,6 +49,7 @@ import { getLayers } from '@geonetwork-ui/util/shared'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
+    AutocompleteComponent,
     DropdownSelectorComponent,
     ButtonComponent,
     CommonModule,
@@ -73,6 +83,8 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
   selectedProtocol: ServiceProtocol
   url: string = ''
   layers: DropdownChoice[] | undefined = undefined
+  layersSubject = new BehaviorSubject<DropdownChoice[]>([])
+  layers$: Observable<DropdownChoice[]> = this.layersSubject.asObservable()
 
   protocolOptions: {
     label: string
@@ -151,6 +163,8 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
       if (this.layers.length === 0) {
         throw new Error('No layers found')
       }
+
+      this.layersSubject.next([...this.layers])
     } catch (e) {
       this.errorMessage = true
       this.layers = undefined
@@ -159,8 +173,8 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
     this.cdr.detectChanges()
   }
 
-  handleSelectValue(val: string) {
-    this.service.identifierInService = val
+  handleSelectValue(val: DropdownChoice) {
+    this.service.identifierInService = <string>val.value
   }
 
   resetAllFormFields() {
@@ -187,5 +201,26 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
     return this.service.accessServiceProtocol === 'wps'
       ? `${baseKey}.wps`
       : baseKey
+  }
+
+  /**
+   * gn-ui-autocomplete
+   */
+  displayWithFn(item: DropdownChoice) {
+    return item.label
+  }
+
+  /**
+   * gn-ui-autocomplete
+   */
+  autoCompleteAction = (query: string) => {
+    const fuzzyFilter = createFuzzyFilter(query)
+    return this.layers$.pipe(
+      switchMap((layers) => [
+        layers.filter((layer) => fuzzyFilter(layer.label)),
+      ]),
+      debounceTime(100),
+      distinctUntilChanged()
+    )
   }
 }
