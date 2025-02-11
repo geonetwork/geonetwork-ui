@@ -498,7 +498,7 @@ describe('editor form', () => {
         // add a service distribution
         cy.get('[data-cy="online-resources-type"] button').eq(1).click()
         cy.get('gn-ui-online-service-resource-input mat-radio-button')
-          .contains('WMS')
+          .contains('WPS')
           .click()
         cy.get('gn-ui-form-field-online-resources')
           .find('gn-ui-url-input')
@@ -519,15 +519,15 @@ describe('editor form', () => {
       it('modifies a resource', () => {
         cy.get('gn-ui-form-field-online-resources gn-ui-online-resource-card')
           .eq(0)
-          .as('wmsService')
-        cy.get('@wmsService')
+          .as('resourceService')
+        cy.get('@resourceService')
           .find('[data-test=card-title]')
           .invoke('text')
           .invoke('trim')
           .should('eql', 'A layer name as identifier in service')
         cy.editor_wrapPreviousDraft()
         // open modify dialog
-        cy.get('@wmsService').find('button[data-test=card-modify]').click()
+        cy.get('@resourceService').find('button[data-test=card-modify]').click()
         cy.get(
           'gn-ui-modal-dialog [data-cy="identifier-in-service"] input'
         ).clear()
@@ -537,12 +537,12 @@ describe('editor form', () => {
         cy.get('gn-ui-modal-dialog [data-cy=confirm-button]').click()
         cy.editor_publishAndReload()
         cy.get('@resourcePageBtn').click()
-        cy.get('@wmsService')
+        cy.get('@resourceService')
           .find('[data-test=card-title]')
           .invoke('text')
           .invoke('trim')
           .should('eql', 'new identifier')
-        cy.get('@wmsService').scrollIntoView()
+        cy.get('@resourceService').scrollIntoView()
         cy.screenshot({ capture: 'viewport' })
       })
       it('deletes a resource', () => {
