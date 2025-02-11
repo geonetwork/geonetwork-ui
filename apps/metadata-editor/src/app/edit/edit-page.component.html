@@ -50,8 +50,8 @@
           </gn-ui-button>
           <gn-ui-button
             type="primary"
+            *ngIf="(isLastPage$ | async) === false"
             (buttonClick)="nextPageButtonHandler()"
-            [disabled]="isLastPage$ | async"
           >
             <span translate>editor.record.form.bottomButtons.next</span>
           </gn-ui-button>

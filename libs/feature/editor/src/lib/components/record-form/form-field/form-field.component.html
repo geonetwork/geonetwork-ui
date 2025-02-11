@@ -112,8 +112,8 @@
     <ng-container *ngSwitchCase="'licenses'">
       <gn-ui-form-field-license
         [label]="config.labelKey! | translate"
-        [recordConstraints]="valueAsConstraints"
-        (recordConstraintsChange)="valueChange.emit($event)"
+        [recordLicences]="valueAsConstraints"
+        (recordLicencesChange)="valueChange.emit($event)"
       ></gn-ui-form-field-license>
     </ng-container>
 

@@ -671,7 +671,7 @@ describe('editor form', () => {
             .children('div')
             .first()
             .invoke('text')
-            .should('eq', ' Creative Commons CC-BY ')
+            .should('eq', ' Unknown or absent ')
           cy.editor_wrapPreviousDraft()
           cy.get('gn-ui-form-field-license')
             .find('gn-ui-dropdown-selector')
