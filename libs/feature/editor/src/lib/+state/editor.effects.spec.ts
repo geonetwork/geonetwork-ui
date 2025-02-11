@@ -14,12 +14,17 @@ import { MockProvider } from 'ng-mocks'
 import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
 
 class EditorServiceMock {
-  saveRecord = jest.fn((record) => of([record, '<xml>blabla</xml>']))
+  saveRecord = jest.fn((record) =>
+    of([record, '<xml>blabla</xml>', false, false])
+  )
   saveRecordAsDraft = jest.fn(() => of('<xml>blabla</xml>'))
-  hasRecordChangedSinceDraft = jest.fn((record) => of(['change1', 'change2']))
+  hasRecordChangedSinceDraft = jest.fn(() => of(['change1', 'change2']))
 }
 class RecordsRepositoryMock {
   recordHasDraft = jest.fn(() => true)
+  getRecordPublicationStatus = jest.fn(() => of(true))
+  saveRecord = jest.fn(() => of('uuid'))
+  canEditRecord = jest.fn(() => of(true))
 }
 
 const initialEditorState = {
@@ -28,15 +33,18 @@ const initialEditorState = {
   saving: false,
   saveError: null,
   changedSinceSave: false,
-  alreadySavedOnce: true,
   editorConfig: [],
   currentPage: 0,
+  hasRecordChanged: null,
+  isPublished: false,
+  canEditRecord: true,
 }
 
 describe('EditorEffects', () => {
   let actions: Observable<Action>
   let effects: EditorEffects
   let service: EditorService
+  let recordsRepository: RecordsRepositoryInterface
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -65,6 +73,7 @@ describe('EditorEffects', () => {
 
     service = TestBed.inject(EditorService)
     effects = TestBed.inject(EditorEffects)
+    recordsRepository = TestBed.inject(RecordsRepositoryInterface)
   })
 
   describe('saveRecord$', () => {
@@ -77,7 +86,6 @@ describe('EditorEffects', () => {
           a: EditorActions.saveRecordSuccess(),
           b: EditorActions.openRecord({
             record: datasetRecordsFixture()[0],
-            alreadySavedOnce: true,
             recordSource: '<xml>blabla</xml>',
           }),
         })
@@ -85,25 +93,7 @@ describe('EditorEffects', () => {
         expect(service.saveRecord).toHaveBeenCalledWith(
           datasetRecordsFixture()[0],
           '<xml>blabla</xml>',
-          [],
-          false
-        )
-      })
-      it('asks for a new unique identifier if the record was never saved', async () => {
-        const store = TestBed.inject(MockStore)
-        store.setState({
-          editor: {
-            ...initialEditorState,
-            alreadySavedOnce: false,
-          },
-        })
-        actions = of(EditorActions.saveRecord())
-        await firstValueFrom(effects.saveRecord$)
-        expect(service.saveRecord).toHaveBeenCalledWith(
-          datasetRecordsFixture()[0],
-          '<xml>blabla</xml>',
-          [],
-          true
+          []
         )
       })
     })
@@ -179,7 +169,6 @@ describe('EditorEffects', () => {
         actions = hot('-a-|', {
           a: EditorActions.openRecord({
             record: datasetRecordsFixture()[0],
-            alreadySavedOnce: true,
           }),
         })
         const expected = hot('-a-|', {
@@ -198,7 +187,6 @@ describe('EditorEffects', () => {
         actions = hot('-a-|', {
           a: EditorActions.openRecord({
             record: datasetRecordsFixture()[0],
-            alreadySavedOnce: true,
           }),
         })
         const expected = hot('---|')
@@ -219,6 +207,78 @@ describe('EditorEffects', () => {
       })
       expect(effects.hasRecordChangedSinceDraft$).toBeObservable(expected)
       expect(service.hasRecordChangedSinceDraft).toHaveBeenCalledWith(record)
+    })
+  })
+  describe('checkIsRecordPublished$', () => {
+    it('should dispatch isPublished action with correct payload', () => {
+      const record = datasetRecordsFixture()[0]
+      actions = hot('-a-|', {
+        a: EditorActions.openRecord({
+          record: datasetRecordsFixture()[0],
+          recordSource: '<xml>blabla</xml>',
+        }),
+      })
+
+      const expected = hot('-a-|', {
+        a: EditorActions.isPublished({ isPublished: true }),
+      })
+
+      expect(effects.checkIsRecordPublished$).toBeObservable(expected)
+      expect(recordsRepository.getRecordPublicationStatus).toHaveBeenCalledWith(
+        record.uniqueIdentifier
+      )
+    })
+    it('should handle error correctly', () => {
+      recordsRepository.getRecordPublicationStatus = jest.fn(() =>
+        throwError(() => new Error('oopsie'))
+      )
+
+      actions = hot('-a-|', {
+        a: EditorActions.openRecord({
+          record: datasetRecordsFixture()[0],
+          recordSource: '<xml>blabla</xml>',
+        }),
+      })
+
+      const expected = hot('-#', undefined, new Error('oopsie'))
+
+      expect(effects.checkIsRecordPublished$).toBeObservable(expected)
+    })
+  })
+  describe('checkCanEditRecord$', () => {
+    it('should dispatch checkCanEditRecord action with correct payload', () => {
+      const record = datasetRecordsFixture()[0]
+      actions = hot('-a-|', {
+        a: EditorActions.openRecord({
+          record: datasetRecordsFixture()[0],
+          recordSource: '<xml>blabla</xml>',
+        }),
+      })
+
+      const expected = hot('-a-|', {
+        a: EditorActions.canEditRecord({ canEditRecord: true }),
+      })
+
+      expect(effects.checkCanEditRecord$).toBeObservable(expected)
+      expect(recordsRepository.canEditRecord).toHaveBeenCalledWith(
+        record.uniqueIdentifier
+      )
+    })
+    it('should handle error correctly', () => {
+      recordsRepository.canEditRecord = jest.fn(() =>
+        throwError(() => new Error('oopsie'))
+      )
+
+      actions = hot('-a-|', {
+        a: EditorActions.openRecord({
+          record: datasetRecordsFixture()[0],
+          recordSource: '<xml>blabla</xml>',
+        }),
+      })
+
+      const expected = hot('-#', undefined, new Error('oopsie'))
+
+      expect(effects.checkCanEditRecord$).toBeObservable(expected)
     })
   })
 })

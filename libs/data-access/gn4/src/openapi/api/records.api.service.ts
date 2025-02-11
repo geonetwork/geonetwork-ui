@@ -1371,7 +1371,10 @@ export class RecordsApiService {
     hasAttachmentsOfSource?: boolean,
     observe?: 'body',
     reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
+    options?: {
+      httpHeaderAccept?: 'application/json'
+      httpContentTypeSelected?: 'application/json;charset=UTF-8'
+    }
   ): Observable<string>
   public create(
     sourceUuid: string,
@@ -1389,7 +1392,10 @@ export class RecordsApiService {
     hasAttachmentsOfSource?: boolean,
     observe?: 'response',
     reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
+    options?: {
+      httpHeaderAccept?: 'application/json'
+      httpContentTypeSelected?: 'application/json;charset=UTF-8'
+    }
   ): Observable<HttpResponse<string>>
   public create(
     sourceUuid: string,
@@ -1407,7 +1413,10 @@ export class RecordsApiService {
     hasAttachmentsOfSource?: boolean,
     observe?: 'events',
     reportProgress?: boolean,
-    options?: { httpHeaderAccept?: 'application/json' }
+    options?: {
+      httpHeaderAccept?: 'application/json'
+      httpContentTypeSelected?: 'application/json;charset=UTF-8'
+    }
   ): Observable<HttpEvent<string>>
   public create(
     sourceUuid: string,
@@ -1425,7 +1434,10 @@ export class RecordsApiService {
     hasAttachmentsOfSource?: boolean,
     observe: any = 'body',
     reportProgress: boolean = false,
-    options?: { httpHeaderAccept?: 'application/json' }
+    options?: {
+      httpHeaderAccept?: 'application/json'
+      httpContentTypeSelected?: 'application/json;charset=UTF-8'
+    }
   ): Observable<any> {
     if (sourceUuid === null || sourceUuid === undefined) {
       throw new Error(
@@ -1509,6 +1521,14 @@ export class RecordsApiService {
     }
 
     let headers = this.defaultHeaders
+
+    // to determine the Content-Type header
+    const consumes: string[] = ['application/json;charset=UTF-8']
+    const httpContentTypeSelected: string | undefined =
+      this.configuration.selectHeaderContentType(consumes)
+    if (httpContentTypeSelected !== undefined) {
+      headers = headers.set('Content-Type', httpContentTypeSelected)
+    }
 
     let httpHeaderAcceptSelected: string | undefined =
       options && options.httpHeaderAccept

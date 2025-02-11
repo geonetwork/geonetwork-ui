@@ -97,7 +97,7 @@
 <gn-ui-expandable-panel
   *ngIf="
     metadata.lineage ||
-    metadata.recordUpdated ||
+    metadata.resourceUpdated ||
     metadata.updateFrequency ||
     metadata.status
   "
@@ -160,16 +160,16 @@
   <div
     class="py-6 px-6 rounded bg-gray-100 grid grid-cols-2 gap-y-6 gap-x-[20px] text-gray-700"
   >
-    <div *ngIf="metadata.recordCreated">
+    <div *ngIf="metadata.resourceCreated">
       <p class="text-sm" translate>record.metadata.creation</p>
       <p class="text-primary font-medium mt-1">
-        {{ metadata.recordCreated.toLocaleDateString() }}
+        {{ metadata.resourceCreated.toLocaleDateString() }}
       </p>
     </div>
-    <div *ngIf="metadata.recordPublished">
+    <div *ngIf="metadata.resourcePublished">
       <p class="text-sm" translate>record.metadata.publication</p>
       <p class="text-primary font-medium mt-1">
-        {{ metadata.recordPublished.toLocaleDateString() }}
+        {{ metadata.resourcePublished.toLocaleDateString() }}
       </p>
     </div>
     <div *ngIf="updateFrequency">

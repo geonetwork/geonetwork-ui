@@ -1,11 +1,18 @@
 <gn-ui-interactive-table
   [items]="records"
+  [isDraftPage]="isDraftPage"
   (itemClick)="handleRecordClick($event)"
 >
   <!-- SELECTED COLUMN -->
   <gn-ui-interactive-table-column [width]="'3rem'">
-    <ng-template #cell let-item>
+    <ng-template #cell let-item let-i="index">
+      <ng-icon
+        name="iconoirLock"
+        class="text-purple"
+        *ngIf="!item.extras?.edit && !isDraftPage"
+      ></ng-icon>
       <gn-ui-checkbox
+        *ngIf="item.extras?.edit || isDraftPage"
         [checked]="isChecked(item)"
         (changed)="handleRecordSelectedChange($event, item)"
         class="-m-2"
@@ -84,7 +91,7 @@
     (sortChange)="setSortBy('recordOwner', $event)"
   >
     <ng-template #header>
-      <span translate>record.metadata.author</span>
+      <span translate>search.filters.user</span>
     </ng-template>
     <ng-template #cell let-item>
       <ng-icon name="iconoirUser" size="16px"></ng-icon>
@@ -102,9 +109,9 @@
     <ng-template #cell let-item>
       <span class="text-xs">
         {{
-          (isUnsavedDraft(item)
-            ? 'record.metadata.status.notPublished'
-            : 'record.metadata.status.published'
+          (item.extras?.['isPublishedToAll']
+            ? 'record.metadata.status.published'
+            : 'record.metadata.status.notPublished'
           ) | translate
         }}</span
       >
@@ -119,11 +126,15 @@
     (sortChange)="setSortBy('changeDate', $event)"
   >
     <ng-template #header>
-      <span translate>record.metadata.updatedOn</span>
+      <span translate>search.filters.changeDate</span>
     </ng-template>
     <ng-template #cell let-item>
       <div class="flex text-left w-full text-xs">
-        {{ isUnsavedDraft(item) ? '-' : dateToString(item.recordUpdated) }}
+        {{
+          item.extras?.['isPublishedToAll']
+            ? dateToString(item.recordUpdated)
+            : '-'
+        }}
       </div>
     </ng-template>
   </gn-ui-interactive-table-column>
@@ -138,8 +149,14 @@
         (buttonClick)="openActionMenu(item, template)"
         type="light"
         data-test="record-menu-button"
+        [disabled]="!item.extras?.edit && !isDraftPage"
       >
-        <ng-icon name="matMoreVert"></ng-icon>
+        <ng-icon
+          [ngClass]="{
+            'text-purple-light': !item.extras?.edit && !isDraftPage,
+          }"
+          name="matMoreVert"
+        ></ng-icon>
       </gn-ui-button>
       <ng-template #template>
         <gn-ui-action-menu

@@ -8,13 +8,12 @@ import {
   Output,
 } from '@angular/core'
 import { GraphicOverview } from '@geonetwork-ui/common/domain/model/record'
-import { ImageInputComponent } from '@geonetwork-ui/ui/inputs'
+import { ImageInputComponent } from '@geonetwork-ui/ui/elements'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { map, Subscription } from 'rxjs'
+import { Subscription } from 'rxjs'
 import { MAX_UPLOAD_SIZE_MB } from '../../../../fields.config'
-import { EditorFacade } from '../../../../+state/editor.facade'
 
 @Component({
   selector: 'gn-ui-form-field-overviews',
@@ -29,10 +28,6 @@ export class FormFieldOverviewsComponent {
   @Input() value: Array<GraphicOverview>
   @Output() valueChange: EventEmitter<Array<GraphicOverview>> =
     new EventEmitter()
-
-  disabled$ = this.editorFacade.alreadySavedOnce$.pipe(
-    map((alreadySavedOnce) => !alreadySavedOnce)
-  )
 
   uploadProgress = undefined
   uploadSubscription: Subscription = null
@@ -52,8 +47,7 @@ export class FormFieldOverviewsComponent {
     private platformService: PlatformServiceInterface,
     private notificationsService: NotificationsService,
     private translateService: TranslateService,
-    private cd: ChangeDetectorRef,
-    private editorFacade: EditorFacade
+    private cd: ChangeDetectorRef
   ) {}
 
   handleFileChange(file: File) {

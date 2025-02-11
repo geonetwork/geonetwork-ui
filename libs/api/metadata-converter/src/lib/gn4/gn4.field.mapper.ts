@@ -128,6 +128,12 @@ export class Gn4FieldMapper {
         getFirstValue(selectField<string>(source, 'revisionDateForResource'))
       ),
     }),
+    publicationDateForResource: (output, source) => ({
+      ...output,
+      resourcePublished: toDate(
+        selectField<string>(source, 'publicationDateForResource')
+      ),
+    }),
     createDate: (output, source) => ({
       ...output,
       recordCreated: toDate(selectField<string>(source, 'createDate')),
@@ -136,11 +142,9 @@ export class Gn4FieldMapper {
       ...output,
       recordUpdated: toDate(selectField<string>(source, 'changeDate')),
     }),
-    publicationDateForResource: (output, source) => ({
+    publicationDate: (output, source) => ({
       ...output,
-      recordPublished: toDate(
-        selectField<string>(source, 'publicationDateForResource')
-      ),
+      recordPublished: toDate(selectField<string>(source, 'publicationDate')),
     }),
     resourceLanguage: (output, source) => {
       const langList = getAsArray(
@@ -276,7 +280,14 @@ export class Gn4FieldMapper {
     isPublishedToAll: (output, source) =>
       this.addExtra(
         {
-          isPublishedToAll: selectField(source, 'isPublishedToAll') !== 'false',
+          isPublishedToAll: selectField(source, 'isPublishedToAll'),
+        },
+        output
+      ),
+    edit: (output, source) =>
+      this.addExtra(
+        {
+          edit: selectField(source, 'edit'),
         },
         output
       ),
@@ -394,7 +405,8 @@ export class Gn4FieldMapper {
       /^OGC:WMS/.test(protocol) ||
       /^OGC:WFS/.test(protocol) ||
       /^OGC:WMTS/.test(protocol) ||
-      /ogc\W*api\W*features/i.test(protocol)
+      /ogc\W*api\W*features/i.test(protocol) ||
+      (/^WWW:DOWNLOAD-/.test(protocol) && /data.geopf.fr/.test(url)) // TO DO : change with the good protocol when decided
     ) {
       return 'service'
     }

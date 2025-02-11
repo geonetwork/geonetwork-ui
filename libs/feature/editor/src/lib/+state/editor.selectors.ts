@@ -30,11 +30,6 @@ export const selectRecordChangedSinceSave = createSelector(
   (state: EditorState) => state.changedSinceSave
 )
 
-export const selectRecordAlreadySavedOnce = createSelector(
-  selectEditorState,
-  (state: EditorState) => state.alreadySavedOnce
-)
-
 export const selectEditorConfig = createSelector(
   selectEditorState,
   (state: EditorState) => state.editorConfig
@@ -48,11 +43,11 @@ export const selectCurrentPage = createSelector(
 export const selectRecordSections = createSelector(
   selectEditorState,
   (state: EditorState) => {
-    const currentPage = state.editorConfig.pages[state.currentPage]
-    if (!currentPage) {
+    const currentPageConfig = state.editorConfig.pages[state.currentPage]
+    if (!currentPageConfig) {
       return [] as EditorSectionWithValues[]
     }
-    return currentPage.sections.map((section) => ({
+    return currentPageConfig.sections.map((section) => ({
       ...section,
       fieldsWithValues: section.fields.map((fieldConfig) => ({
         config: fieldConfig,
@@ -65,4 +60,14 @@ export const selectRecordSections = createSelector(
 export const selectHasRecordChanged = createSelector(
   selectEditorState,
   (state: EditorState) => state.hasRecordChanged
+)
+
+export const selectIsPublished = createSelector(
+  selectEditorState,
+  (state: EditorState) => state.isPublished
+)
+
+export const selectCanEditRecord = createSelector(
+  selectEditorState,
+  (state: EditorState) => state.canEditRecord
 )

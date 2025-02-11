@@ -8,6 +8,8 @@ import {
 } from '@angular/core'
 import {
   UpdateFrequency,
+  UpdateFrequencyCode,
+  updateFrequencyCodeValues,
   UpdateFrequencyCustom,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
@@ -17,6 +19,10 @@ import {
 } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { firstValueFrom } from 'rxjs'
+
+const initialListValues = updateFrequencyCodeValues.filter(
+  (code) => !['unknown', 'notPlanned', 'asNeeded', 'irregular'].includes(code)
+)
 
 @Component({
   selector: 'gn-ui-form-field-update-frequency',
@@ -33,20 +39,39 @@ export class FormFieldUpdateFrequencyComponent implements OnInit {
   protected choices: DropdownChoice[] = []
 
   get planned() {
-    return typeof this.value !== 'string'
+    return this.value && this.value !== 'notPlanned' && this.value !== 'unknown'
   }
 
   constructor(private translateService: TranslateService) {}
 
   async ngOnInit() {
     this.choices = await this.getInitialChoices()
+    if (!this.planned) {
+      return
+    }
+    if (
+      typeof this.value === 'string' &&
+      !this.choices.map((choice) => choice.value).includes(this.value)
+    ) {
+      this.choices = [
+        {
+          value: this.value,
+          label: await firstValueFrom(
+            this.translateService.get(
+              `domain.record.updateFrequency.${this.value}`
+            )
+          ),
+        },
+        ...this.choices,
+      ]
+    }
     if (typeof this.value === 'string') {
       return
     }
     const updatedTimes = this.value.updatedTimes
     const per = this.value.per
     // the update frequency is not in the list; make it appear there
-    if (updatedTimes && updatedTimes !== 1 && updatedTimes !== 2) {
+    if (updatedTimes) {
       this.choices = [
         {
           value: `${per}.${updatedTimes}`,
@@ -65,90 +90,37 @@ export class FormFieldUpdateFrequencyComponent implements OnInit {
     if (this.planned) {
       this.valueChange.emit('notPlanned')
     } else {
-      this.valueChange.emit({ updatedTimes: 1, per: 'day' })
+      this.valueChange.emit(this.choices[0].value as UpdateFrequencyCode)
     }
   }
 
   get selectedFrequency(): string {
-    if (!this.value || typeof this.value === 'string') return null
+    if (!this.value) return null
+    if (typeof this.value === 'string') return this.value
     const { updatedTimes, per } = this.value
     return `${per}.${updatedTimes}`
   }
 
-  onSelectFrequencyValue(value: unknown) {
-    const split = (value as string).split('.')
-    this.valueChange.emit({
-      updatedTimes: Number(split[1]),
-      per: split[0] as UpdateFrequencyCustom['per'],
-    })
+  onSelectFrequencyValue(value: string) {
+    if (!value.includes('.')) {
+      this.valueChange.emit(value as UpdateFrequencyCode)
+    } else {
+      const split = (value as string).split('.')
+      this.valueChange.emit({
+        updatedTimes: Number(split[1]),
+        per: split[0] as UpdateFrequencyCustom['per'],
+      })
+    }
   }
 
   private async getInitialChoices() {
-    return [
-      {
-        value: 'day.1',
+    return Promise.all(
+      initialListValues.map(async (value) => ({
+        value,
         label: await firstValueFrom(
-          this.translateService.get('domain.record.updateFrequency.day', {
-            count: 1,
-          })
+          this.translateService.get(`domain.record.updateFrequency.${value}`)
         ),
-      },
-      {
-        value: 'day.2',
-        label: await firstValueFrom(
-          this.translateService.get('domain.record.updateFrequency.day', {
-            count: 2,
-          })
-        ),
-      },
-      {
-        value: 'week.1',
-        label: await firstValueFrom(
-          this.translateService.get('domain.record.updateFrequency.week', {
-            count: 1,
-          })
-        ),
-      },
-      {
-        value: 'week.2',
-        label: await firstValueFrom(
-          this.translateService.get('domain.record.updateFrequency.week', {
-            count: 2,
-          })
-        ),
-      },
-      {
-        value: 'month.1',
-        label: await firstValueFrom(
-          this.translateService.get('domain.record.updateFrequency.month', {
-            count: 1,
-          })
-        ),
-      },
-      {
-        value: 'month.2',
-        label: await firstValueFrom(
-          this.translateService.get('domain.record.updateFrequency.month', {
-            count: 2,
-          })
-        ),
-      },
-      {
-        value: 'year.1',
-        label: await firstValueFrom(
-          this.translateService.get('domain.record.updateFrequency.year', {
-            count: 1,
-          })
-        ),
-      },
-      {
-        value: 'year.2',
-        label: await firstValueFrom(
-          this.translateService.get('domain.record.updateFrequency.year', {
-            count: 2,
-          })
-        ),
-      },
-    ]
+      }))
+    )
   }
 }

@@ -85,6 +85,8 @@ describe('Gn4Converter', () => {
             extras: {
               id: '12456',
               catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
+              edit: true,
+              isPublishedToAll: true,
             },
             landingPage: new URL(
               'http://my.catalog.org/metadata/20e9e1a1-83c1-4f13-89ef-c19767d6ee18f'
@@ -132,6 +134,8 @@ describe('Gn4Converter', () => {
               id: '12442',
               catalogUuid: '6731be1e-6533-44e0-9b8a-580b45e36e80',
               favoriteCount: 4,
+              edit: true,
+              isPublishedToAll: true,
             },
             landingPage: new URL(
               'http://my.catalog.org/metadata/5b35f06e-8c6b-4907-b8f4-39541d170360'
@@ -1193,6 +1197,7 @@ describe('Gn4Converter', () => {
               isOpenData: true,
               isPublishedToAll: true,
               ownerInfo: 'testadmin|ADMIN|Test|Administrator',
+              edit: true,
             },
             keywords: [
               {
@@ -1649,17 +1654,15 @@ describe('Gn4Converter', () => {
             ],
             recordCreated: new Date('2021-10-05T12:48:57.678Z'),
             recordUpdated: new Date('2021-10-05T12:48:57.678Z'),
-            recordPublished: new Date('2021-04-01T00:00:00.000Z'),
+            recordPublished: new Date('2021-11-05T12:48:57.678Z'),
             resourceCreated: new Date('2012-01-01T00:00:00.000Z'),
             resourceUpdated: new Date('2021-12-13T00:00:00.000Z'),
+            resourcePublished: new Date('2021-04-01T00:00:00.000Z'),
             status: 'ongoing',
             topics: ['Installations de suivi environnemental', 'Océans'],
             title: 'Surval - Données par paramètre',
             uniqueIdentifier: 'cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
-            updateFrequency: {
-              per: 'day',
-              updatedTimes: 1,
-            },
+            updateFrequency: 'daily',
             spatialExtents: [
               {
                 description: 'Hauts-de-France (Région)',
@@ -1729,6 +1732,7 @@ describe('Gn4Converter', () => {
               isOpenData: true,
               isPublishedToAll: true,
               ownerInfo: 'AREadmin|admin|ARE|UserAdmin',
+              edit: true,
             },
             keywords: [
               {
@@ -2092,7 +2096,7 @@ describe('Gn4Converter', () => {
             status: null,
             lineage: null,
             recordUpdated: new Date('2024-10-15T07:37:39.350Z'),
-            recordPublished: new Date('2023-12-17T23:00:00.000Z'),
+            recordPublished: null,
             ownerOrganization: {
               name: 'My Organization',
               website: new URL('http://my.org/'),
@@ -2350,6 +2354,7 @@ describe('Gn4Converter', () => {
             otherLanguages: [],
             title: 'Service OGC API Records du catalogue NAP-ITS-Wallonia',
             resourceUpdated: new Date('2023-12-17T23:00:00.000Z'),
+            resourcePublished: new Date('2023-12-17T23:00:00.000Z'),
             abstract:
               "Point d'accès OGC API Records du catalogue NAP-ITS-Wallonia contenant la description des données régionales de mobilité telles que demandé par la législation sur les systèmes de transport intelligents.",
             extras: {
@@ -2359,6 +2364,7 @@ describe('Gn4Converter', () => {
               id: '53583',
               favoriteCount: 0,
               catalogUuid: 'metawal.wallonie.be',
+              edit: true,
             },
             onlineResources: [
               {
@@ -2558,6 +2564,7 @@ describe('Gn4Converter', () => {
               catalogUuid: 'c3f93209-4363-4e30-bec2-3cc43bd7a8a7',
               ownerInfo: 'vfabry|Fabry|Vincent|Administrator',
               favoriteCount: 0,
+              edit: true,
             },
             recordCreated: new Date('2021-12-14T15:02:50.000Z'),
             resourceCreated: new Date('2019-12-02T00:00:00.000Z'),
@@ -2638,6 +2645,7 @@ describe('Gn4Converter', () => {
               id: '1215',
               isOpenData: false,
               isPublishedToAll: true,
+              edit: true,
               ownerInfo:
                 'Admin_Metawal|Administrator_user de Stephane Ritz|Metawal|Administrator',
             },
@@ -2974,9 +2982,10 @@ describe('Gn4Converter', () => {
               website: new URL('http://my.org/'),
             },
             recordCreated: new Date('2013-07-29T11:33:08.000Z'),
-            recordPublished: new Date('2018-03-31T22:00:00.000Z'),
+            recordPublished: null,
             recordUpdated: new Date('2024-07-22T11:52:39.049Z'),
             resourceCreated: new Date('2017-05-31T22:00:00.000Z'),
+            resourcePublished: new Date('2018-03-31T22:00:00.000Z'),
             reuseType: 'application',
             securityConstraints: [],
             spatialExtents: [
@@ -3199,6 +3208,7 @@ describe('Gn4Converter', () => {
               catalogUuid: 'c3f93209-4363-4e30-bec2-3cc43bd7a8a7',
               ownerInfo: 'vfabry|Fabry|Vincent|Administrator',
               favoriteCount: 0,
+              edit: true,
             },
             recordCreated: new Date('2024-09-13T10:12:38.614Z'),
             resourceCreated: new Date('2024-05-27T00:00:00.000Z'),
@@ -3277,7 +3287,9 @@ describe('Gn4Converter', () => {
             status: 'completed',
             lineage: null,
             recordUpdated: new Date('2024-01-25T07:45:05.215Z'),
-            recordPublished: new Date('2023-12-20T14:23:54.000Z'),
+            recordPublished: null,
+            recordCreated: new Date('2024-01-25T07:19:13.493Z'),
+            resourcePublished: new Date('2023-12-20T14:23:54.000Z'),
             ownerOrganization: {
               name: 'My Organization',
               website: new URL('http://my.org/'),
@@ -3344,6 +3356,7 @@ describe('Gn4Converter', () => {
               id: '8705',
               favoriteCount: 0,
               catalogUuid: 'ce008f24-8e0d-45a8-97f8-9f10399f0190',
+              edit: true,
             },
             onlineResources: [
               {
@@ -3365,7 +3378,6 @@ describe('Gn4Converter', () => {
             landingPage: new URL(
               'http://my.catalog.org/metadata/be209d24-586f-48f5-b944-e284079b7823'
             ),
-            recordCreated: new Date('2024-01-25T07:19:13.493Z'),
           })
         })
       })

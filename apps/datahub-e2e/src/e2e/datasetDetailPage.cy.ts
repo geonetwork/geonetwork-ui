@@ -226,7 +226,7 @@ describe('dataset pages', () => {
             .children('div')
             .should('have.length', 4)
         })
-        it('should display the creation date, the publication date, the frequency, the languages and the temporal extent', () => {
+        it('should display the resource creation date (for resource), the publication date (for resource), the frequency, the languages and the temporal extent', () => {
           cy.get('datahub-record-metadata')
             .find('[id="about"]')
             .find('gn-ui-expandable-panel')
@@ -239,7 +239,18 @@ describe('dataset pages', () => {
             .children('div')
             .eq(2)
             .children('div')
-            .should('have.length', 5)
+            .as('aboutContent')
+          cy.get('@aboutContent').should('have.length', 5)
+          cy.get('@aboutContent')
+            .eq(0)
+            .children('p')
+            .eq(1)
+            .should('contain.text', '9/22/2020')
+          cy.get('@aboutContent')
+            .eq(1)
+            .children('p')
+            .eq(1)
+            .should('contain.text', '3/17/2024')
         })
         it('should not display the same text twice in the constraints', () => {
           // this dataset has the same text for the license and the legal constraints
@@ -762,7 +773,7 @@ describe('api form', () => {
       cy.get('@secondInput').type('87')
 
       cy.get('@apiForm').find('gn-ui-dropdown-selector').as('dropdown')
-      cy.get('@dropdown').eq(0).selectDropdownOption('geojson')
+      cy.get('@dropdown').eq(0).selectDropdownOption('application/geo+json')
 
       cy.get('@apiForm')
         .find('gn-ui-copy-text-button')
@@ -783,7 +794,7 @@ describe('api form', () => {
         .find('gn-ui-copy-text-button')
         .find('input')
         .invoke('val')
-        .should('include', 'f=json&limit=-1')
+        .should('include', 'f=application%2Fjson&limit=-1')
     })
     it('should close the panel on click', () => {
       cy.get('gn-ui-record-api-form').prev().find('button').click()

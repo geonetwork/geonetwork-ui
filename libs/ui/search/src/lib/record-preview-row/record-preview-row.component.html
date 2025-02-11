@@ -33,7 +33,10 @@
       class="abstract mt-4 mb-5 h-36 line-clamp-6 col-start-1 col-span-2 row-start-3 sm:mb-2 sm:h-[4.5rem] sm:line-clamp-3 sm:row-start-2 sm:mt-0"
       data-cy="recordAbstract"
     >
-      {{ abstract }}
+      <gn-ui-markdown-parser
+        [textContent]="abstract"
+        whitoutStyles="true"
+      ></gn-ui-markdown-parser>
     </div>
     <div
       class="text-primary opacity-45 uppercase col-start-1 col-span-2 row-start-2 sm:truncate sm:row-start-3 sm:col-span-1"

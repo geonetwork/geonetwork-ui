@@ -15,6 +15,7 @@ import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import {
   CatalogRecord,
+  DatasetServiceDistribution,
   UserFeedback,
 } from '@geonetwork-ui/common/domain/model/record'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
@@ -72,7 +73,15 @@ export class MdViewFacade {
 
   apiLinks$ = this.allLinks$.pipe(
     map((links) =>
-      links.filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.API))
+      links
+        .filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.API))
+        // Put links to IGN Géoplateforme first
+        .sort((dd1, dd2) => {
+          return (dd2 as DatasetServiceDistribution).accessServiceProtocol ===
+            'GPFDL'
+            ? 1
+            : undefined // do not change the sorting otherwise
+        })
     )
   )
 

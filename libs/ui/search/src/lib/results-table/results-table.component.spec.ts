@@ -108,7 +108,7 @@ describe('ResultsTableComponent', () => {
     })
   })
 
-  describe('clicking on a dataset', () => {
+  describe('User can edit - clicking on a dataset', () => {
     let clickedRecord: CatalogRecord
 
     beforeEach(() => {

@@ -2,31 +2,16 @@
 </ng-container>
 
 <ng-template #withImage>
-  <div class="w-full h-full flex flex-col gap-2">
-    <div class="flex-1 group relative">
-      <img
-        class="w-full object-cover border-2 border-gray-300 rounded-lg h-[172px]"
-        [alt]="altText"
-        loading="lazy"
-        [src]="previewUrl"
-      />
-      <gn-ui-button
-        type="outline"
-        style="--gn-ui-button-height: 40px; --gn-ui-button-width: 40px"
-        extraClass="absolute right-2 bottom-2 invisible group-hover:visible bg-background"
-        (buttonClick)="handleDelete()"
-        [disabled]="disabled"
-      >
-        <ng-icon name="iconoirBin"></ng-icon>
-      </gn-ui-button>
-    </div>
+  <div class="w-80 h-full flex flex-col gap-2">
+    <gn-ui-image-overlay-preview class="h-48" [imageUrl]="previewUrl">
+    </gn-ui-image-overlay-preview>
     <gn-ui-text-input
       *ngIf="showAltTextInput"
       [placeholder]="'input.image.altTextPlaceholder' | translate"
       [value]="altText ?? ''"
       (valueChange)="handleAltTextChange($event)"
       extraClass="gn-ui-editor-textarea"
-      [disabled]="disabled"
+      [disabled]="true"
     ></gn-ui-text-input>
     <div class="flex flex-row gap-2 mt-2">
       <gn-ui-button type="gray" (buttonClick)="handleDelete()">
