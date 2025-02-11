@@ -256,10 +256,10 @@ export const DATA_MANAGERS_SECTION: EditorSection = {
   fields: [CONTACTS_FOR_RESOURCE_FIELD],
 }
 
-export const DATA_POINT_OF_CONTACT_SECTION: EditorSection = {
-  labelKey: marker('editor.record.form.section.dataPointOfContact.label'),
+export const METADATA_POINT_OF_CONTACT_SECTION: EditorSection = {
+  labelKey: marker('editor.record.form.section.metadataPointOfContact.label'),
   descriptionKey: marker(
-    'editor.record.form.section.dataPointOfContact.description'
+    'editor.record.form.section.metadataPointOfContact.description'
   ),
   hidden: false,
   fields: [CONTACTS],
@@ -285,7 +285,7 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
         CLASSIFICATION_SECTION,
         USE_AND_ACCESS_CONDITIONS_SECTION,
         DATA_MANAGERS_SECTION,
-        DATA_POINT_OF_CONTACT_SECTION,
+        METADATA_POINT_OF_CONTACT_SECTION,
       ],
     },
   ],

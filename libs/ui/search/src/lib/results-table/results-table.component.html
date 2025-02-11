@@ -84,7 +84,7 @@
     (sortChange)="setSortBy('recordOwner', $event)"
   >
     <ng-template #header>
-      <span translate>record.metadata.author</span>
+      <span translate>search.filters.user</span>
     </ng-template>
     <ng-template #cell let-item>
       <ng-icon name="iconoirUser" size="16px"></ng-icon>
@@ -119,7 +119,7 @@
     (sortChange)="setSortBy('changeDate', $event)"
   >
     <ng-template #header>
-      <span translate>record.metadata.updatedOn</span>
+      <span translate>search.filters.changeDate</span>
     </ng-template>
     <ng-template #cell let-item>
       <div class="flex text-left w-full text-xs">

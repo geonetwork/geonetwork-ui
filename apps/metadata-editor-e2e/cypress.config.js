@@ -1,6 +1,6 @@
 import { defineConfig } from 'cypress'
-import { nxE2EPreset } from '@nx/cypress/plugins/cypress-preset'
-import { configureCommonPlugins } from '../../tools/e2e/plugins'
+import { nxE2EPreset } from '@nx/cypress/plugins/cypress-preset.js'
+import { configureCommonPlugins } from '../../tools/e2e/plugins.js'
 import { cypressBrowserPermissionsPlugin } from 'cypress-browser-permissions'
 import { fileURLToPath } from 'url'
 

@@ -109,7 +109,7 @@ export type MetadataObject = Partial<{
   extra: string
   featureOfRecord: string
   feedbackCount: string
-  geom: Geometry
+  geom: Geometry | Geometry[]
   groupOwner: string
   groupPublished: string | string[]
   groupPublishedId: string | string[]
@@ -118,7 +118,7 @@ export type MetadataObject = Partial<{
   hasOverview: BooleanString
   hasxlinks: BooleanString
   id: string
-  indexingDate: string
+  indexingDate: string | number
   indexingError: string | string[]
   indexingErrorMsg: string[]
   inspireAnnex: string[]
@@ -152,7 +152,7 @@ export type MetadataObject = Partial<{
   pointOfContactOrg: string
   pointOfContactOrgForResource: string
   popularity: number
-  publicationDateForResource: string
+  publicationDateForResource: string | string[]
   rating: string
   record: string
   recordGroup: string
@@ -187,7 +187,7 @@ export type MetadataObject = Partial<{
 
 export interface Gn4Record {
   _index: string
-  _type: string
+  _type?: string
   _id: string
   _score: number
   _source: MetadataObject
