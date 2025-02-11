@@ -20,8 +20,6 @@ import {
 import {
   AutocompleteComponent,
   ButtonComponent,
-  DropdownChoice,
-  DropdownSelectorComponent,
   TextInputComponent,
   UrlInputComponent,
 } from '@geonetwork-ui/ui/inputs'
@@ -50,7 +48,6 @@ import {
   standalone: true,
   imports: [
     AutocompleteComponent,
-    DropdownSelectorComponent,
     ButtonComponent,
     CommonModule,
     FormsModule,
@@ -82,9 +79,9 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
   errorMessage = false
   selectedProtocol: ServiceProtocol
   url: string = ''
-  layers: DropdownChoice[] | undefined = undefined
-  layersSubject = new BehaviorSubject<DropdownChoice[]>([])
-  layers$: Observable<DropdownChoice[]> = this.layersSubject.asObservable()
+  layersSubject = new BehaviorSubject<{ name: string; title: string }[]>([])
+  layers$: Observable<{ name: string; title: string }[]> =
+    this.layersSubject.asObservable()
 
   protocolOptions: {
     label: string
@@ -153,28 +150,18 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
 
     try {
       const layers = await getLayers(url, this.service.accessServiceProtocol)
-      this.layers = layers.map((l) => {
-        return {
-          label: l.title ? `${l.title} ${l.name ? `(${l.name})` : ''}` : l.name,
-          value: l.name || l.title,
-        }
-      })
 
-      if (this.layers.length === 0) {
+      if (layers.length === 0) {
         throw new Error('No layers found')
       }
 
-      this.layersSubject.next([...this.layers])
+      this.layersSubject.next([...layers])
     } catch (e) {
       this.errorMessage = true
-      this.layers = undefined
+      this.layersSubject.next([])
     }
 
     this.cdr.detectChanges()
-  }
-
-  handleSelectValue(val: DropdownChoice) {
-    this.service.identifierInService = <string>val.value
   }
 
   resetAllFormFields() {
@@ -185,7 +172,7 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
 
   resetLayersSuggestion() {
     this.errorMessage = false
-    this.layers = undefined
+    this.layersSubject.next([])
     this.service.identifierInService = null
   }
 
@@ -206,8 +193,10 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
   /**
    * gn-ui-autocomplete
    */
-  displayWithFn(item: DropdownChoice) {
-    return item.label
+  displayWithFn(item: { name: string; title: string }) {
+    return item.title
+      ? `${item.title} ${item.name ? `(${item.name})` : ''}`
+      : item.name
   }
 
   /**
@@ -217,10 +206,17 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
     const fuzzyFilter = createFuzzyFilter(query)
     return this.layers$.pipe(
       switchMap((layers) => [
-        layers.filter((layer) => fuzzyFilter(layer.label)),
+        layers.filter((layer) => fuzzyFilter(layer.name)),
       ]),
       debounceTime(100),
       distinctUntilChanged()
     )
+  }
+
+  /**
+   * gn-ui-autocomplete
+   */
+  handleSelectValue(val: { name: string; title: string }) {
+    this.service.identifierInService = val.name
   }
 }

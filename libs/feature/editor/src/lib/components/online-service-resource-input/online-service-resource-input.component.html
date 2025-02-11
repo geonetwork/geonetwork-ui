@@ -55,7 +55,7 @@
     *ngIf="
       !activeLayerSuggestion ||
       (url && errorMessage) ||
-      (modifyMode && layers === undefined)
+      (modifyMode && (layers$ | async).length === 0)
     "
   ></gn-ui-text-input>
   <gn-ui-autocomplete
@@ -69,7 +69,7 @@
     [displayWithFn]="displayWithFn"
     [minCharacterCount]="0"
     [clearOnSelection]="false"
-    *ngIf="activeLayerSuggestion && layers !== undefined"
+    *ngIf="activeLayerSuggestion && (layers$ | async)?.length > 0"
   >
   </gn-ui-autocomplete>
   <gn-ui-button
@@ -78,7 +78,7 @@
     type="primary"
     *ngIf="
       !modifyMode &&
-      ((activeLayerSuggestion && layers) ||
+      ((activeLayerSuggestion && (layers$ | async)) ||
         !activeLayerSuggestion ||
         (url && errorMessage))
     "
