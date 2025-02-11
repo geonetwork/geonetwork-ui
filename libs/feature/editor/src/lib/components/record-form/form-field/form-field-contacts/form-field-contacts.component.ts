@@ -81,7 +81,7 @@ export class FormFieldContactsComponent implements OnDestroy, OnChanges {
       this.allOrganizations = new Map<string, Organization>(
         (
           await firstValueFrom(
-            this.organizationsServiceInterface.organisations$
+            this.organizationsServiceInterface.getOrganisations()
           )
         ).map((organization) => [organization.name, organization])
       )
