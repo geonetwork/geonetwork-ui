@@ -30,6 +30,11 @@ export const getSearchConfigAggregations = createSelector(
   (state: SearchStateSearch) => state.config.aggregations
 )
 
+export const getSearchConfigFilters = createSelector(
+  getSearchStateSearch,
+  (state: SearchStateSearch) => state.config.filters
+)
+
 export const getSearchResults = createSelector(
   getSearchStateSearch,
   (state: SearchStateSearch) => state.results.records

@@ -13,6 +13,7 @@ import {
   FieldFilters,
   TermBucket,
 } from '@geonetwork-ui/common/domain/model/search'
+import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
 import {
   DateRange,
   ElasticsearchService,
@@ -31,7 +32,9 @@ export interface FieldAvailableValue {
 }
 
 export abstract class AbstractSearchField {
-  abstract getAvailableValues(): Observable<FieldAvailableValue[] | DateRange[]>
+  abstract getAvailableValues(
+    configFilters: SearchFilters
+  ): Observable<FieldAvailableValue[] | DateRange[]>
   abstract getFiltersForValues(
     values: FieldValue[] | DateRange[]
   ): Observable<FieldFilters>
@@ -69,20 +72,24 @@ export class SimpleSearchField implements AbstractSearchField {
     return bucket.term.toString()
   }
 
-  getAvailableValues(): Observable<FieldAvailableValue[]> {
-    return this.repository.aggregate(this.getAggregations()).pipe(
-      map(
-        (response) =>
-          (response[this.esFieldName] as AggregationBuckets).buckets || []
-      ),
-      switchMap((buckets: TermBucket[]) => {
-        const bucketPromises = buckets.map(async (bucket) => ({
-          label: `${await this.getBucketLabel(bucket)} (${bucket.count})`,
-          value: bucket.term.toString(),
-        }))
-        return Promise.all(bucketPromises)
-      })
-    )
+  getAvailableValues(
+    configFilters: SearchFilters
+  ): Observable<FieldAvailableValue[]> {
+    return this.repository
+      .aggregate(this.getAggregations(), configFilters)
+      .pipe(
+        map(
+          (response) =>
+            (response[this.esFieldName] as AggregationBuckets).buckets || []
+        ),
+        switchMap((buckets: TermBucket[]) => {
+          const bucketPromises = buckets.map(async (bucket) => ({
+            label: `${await this.getBucketLabel(bucket)} (${bucket.count})`,
+            value: bucket.term.toString(),
+          }))
+          return Promise.all(bucketPromises)
+        })
+      )
   }
   getFiltersForValues(
     values: FieldValue[] | DateRange[]
@@ -147,11 +154,14 @@ export class TranslatedSearchField extends SimpleSearchField {
     return (await this.getTranslation(bucket.term)) || bucket.term
   }
 
-  getAvailableValues(): Observable<FieldAvailableValue[]> {
-    if (this.orderType === 'count') return super.getAvailableValues()
+  getAvailableValues(
+    configFilters: SearchFilters
+  ): Observable<FieldAvailableValue[]> {
+    if (this.orderType === 'count')
+      return super.getAvailableValues(configFilters)
     // sort values by alphabetical order
     return super
-      .getAvailableValues()
+      .getAvailableValues(configFilters)
       .pipe(
         map((values) =>
           values.sort((a, b) => new Intl.Collator().compare(a.label, b.label))
@@ -187,7 +197,9 @@ export class MultilingualSearchField extends SimpleSearchField {
 }
 
 export class FullTextSearchField implements AbstractSearchField {
-  getAvailableValues(): Observable<FieldAvailableValue[]> {
+  getAvailableValues(
+    configFilters: SearchFilters
+  ): Observable<FieldAvailableValue[]> {
     return of([])
   }
   getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
@@ -342,7 +354,8 @@ export class OrganizationSearchField implements AbstractSearchField {
   constructor(private injector: Injector) {}
 
   getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
-    return this.orgsService.organisations$.pipe(
+    const organisations$ = this.orgsService.getOrganisations()
+    return organisations$.pipe(
       map((orgs) =>
         values
           .map((name) => orgs.find((org) => org.name === name))
@@ -360,9 +373,12 @@ export class OrganizationSearchField implements AbstractSearchField {
       .pipe(map((orgs) => orgs.map((org) => org.name)))
   }
 
-  getAvailableValues(): Observable<FieldAvailableValue[]> {
+  getAvailableValues(
+    configFilters: SearchFilters
+  ): Observable<FieldAvailableValue[]> {
     // sort values by alphabetical order
-    return this.orgsService.organisations$.pipe(
+    const organisations$ = this.orgsService.getOrganisations(configFilters)
+    return organisations$.pipe(
       map((organisations) =>
         organisations.map((org) => ({
           label: `${org.name} (${org.recordCount})`,
@@ -384,7 +400,9 @@ export class OwnerSearchField extends SimpleSearchField {
     super('owner', injector, 'asc')
   }
 
-  getAvailableValues(): Observable<FieldAvailableValue[]> {
+  getAvailableValues(
+    configFilters: SearchFilters
+  ): Observable<FieldAvailableValue[]> {
     return of([])
   }
 }
@@ -394,8 +412,10 @@ export class UserSearchField extends SimpleSearchField {
     super('userinfo.keyword', injector, 'asc')
   }
 
-  getAvailableValues(): Observable<FieldAvailableValue[]> {
-    return super.getAvailableValues().pipe(
+  getAvailableValues(
+    configFilters: SearchFilters
+  ): Observable<FieldAvailableValue[]> {
+    return super.getAvailableValues(configFilters).pipe(
       map((values) =>
         values.map((v) => ({
           ...v,
@@ -416,7 +436,9 @@ export class DateRangeSearchField extends SimpleSearchField {
     super(esFieldName, injector, order, orderType)
   }
 
-  getAvailableValues(): Observable<FieldAvailableValue[]> {
+  getAvailableValues(
+    configFilters: SearchFilters
+  ): Observable<FieldAvailableValue[]> {
     // TODO: return an array of dates to show which one are available in the date picker
     return of([])
   }

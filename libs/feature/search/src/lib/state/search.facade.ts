@@ -39,6 +39,7 @@ import {
   getSearchSortBy,
   getSpatialFilterEnabled,
   totalPages,
+  getSearchConfigFilters,
 } from './selectors'
 import { FILTER_GEOMETRY } from '../filter-geometry.token'
 import { Geometry } from 'geojson'
@@ -68,6 +69,7 @@ export class SearchFacade {
   favoritesOnly$: Observable<boolean>
   error$: Observable<SearchError>
   spatialFilterEnabled$: Observable<boolean>
+  configFilters$: Observable<FieldFilters>
   hasSpatialFilter$ = from(this.filterGeometry ?? of(null)).pipe(
     map((geom) => !!geom),
     catchError(() => of(false)),
@@ -111,6 +113,9 @@ export class SearchFacade {
     this.error$ = this.store.pipe(select(getError, searchId))
     this.spatialFilterEnabled$ = this.store.pipe(
       select(getSpatialFilterEnabled, searchId)
+    )
+    this.configFilters$ = this.store.pipe(
+      select(getSearchConfigFilters, searchId)
     )
   }
 
