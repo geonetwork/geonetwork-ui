@@ -17,6 +17,7 @@
     class="flex flex-row gap-[8px]"
     [(ngModel)]="service.accessServiceProtocol"
     [disabled]="disabled"
+    (change)="resetLayersSuggestion()"
   >
     <mat-radio-button
       *ngFor="let protocolOption of protocolOptions"
@@ -30,13 +31,20 @@
 <div class="flex flex-col gap-4">
   <gn-ui-url-input
     class="w-full"
-    (valueChange)="handleUrlChange($event)"
+    (uploadClick)="handleUploadClick($event)"
+    (valueChange)="handleUrlValueChange($event)"
     [disabled]="disabled"
     [value]="url"
-    [showValidateButton]="false"
+    [showValidateButton]="activeLayerSuggestion"
   >
-    <ng-icon name="iconoirCloudUpload"></ng-icon>
+    <ng-content *ngIf="activeLayerSuggestion">
+      <ng-icon name="iconoirCloudUpload"></ng-icon>
+    </ng-content>
   </gn-ui-url-input>
+
+  <p class="text-sm text-red-500 pl-4" *ngIf="errorMessage" translate>
+    editor.record.form.field.onlineResource.edit.identifier.error
+  </p>
 
   <gn-ui-text-input
     class="grow border-b border-gray-300 pb-4"
@@ -44,15 +52,38 @@
     [placeholder]="getIdentifierPlaceholder() | translate"
     data-cy="identifier-in-service"
     [disabled]="disabled"
+    *ngIf="
+      !activeLayerSuggestion ||
+      (url && errorMessage) ||
+      (modifyMode && layers === undefined)
+    "
   ></gn-ui-text-input>
-
+  <gn-ui-dropdown-selector
+    class="border-b border-gray-300 pb-4"
+    [showTitle]="false"
+    [title]="
+      'editor.record.form.field.onlineResource.edit.identifier.select.label'
+        | translate
+    "
+    [choices]="layers || []"
+    *ngIf="activeLayerSuggestion && layers !== undefined"
+    [selected]="service.identifierInService"
+    (selectValue)="handleSelectValue($event)"
+  >
+  </gn-ui-dropdown-selector>
   <gn-ui-button
     (buttonClick)="submitIdentifier(service.identifierInService)"
-    [disabled]="disabled || !service.identifierInService || !url"
+    [disabled]="disabled || !service.identifierInService"
     type="primary"
+    *ngIf="
+      !modifyMode &&
+      ((activeLayerSuggestion && layers) ||
+        !activeLayerSuggestion ||
+        (url && errorMessage))
+    "
   >
-    <span class="text-white font-bold" translate
-      >editor.record.form.field.onlineResource.edit.identifier.submit</span
+    <span class="text-white font-bold" translate>
+      editor.record.form.field.onlineResource.edit.identifier.submit</span
     >
   </gn-ui-button>
 </div>
