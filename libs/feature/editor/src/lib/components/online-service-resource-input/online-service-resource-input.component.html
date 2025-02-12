@@ -17,7 +17,7 @@
     class="flex flex-row gap-[8px]"
     [(ngModel)]="service.accessServiceProtocol"
     [disabled]="disabled"
-    (change)="resetLayersSuggestion()"
+    (change)="resetAllFormFields()"
   >
     <mat-radio-button
       *ngFor="let protocolOption of protocolOptions"
@@ -55,29 +55,30 @@
     *ngIf="
       !activeLayerSuggestion ||
       (url && errorMessage) ||
-      (modifyMode && layers === undefined)
+      (modifyMode && (layers$ | async).length === 0)
     "
   ></gn-ui-text-input>
-  <gn-ui-dropdown-selector
+  <gn-ui-autocomplete
     class="border-b border-gray-300 pb-4"
-    [showTitle]="false"
-    [title]="
+    [placeholder]="
       'editor.record.form.field.onlineResource.edit.identifier.select.label'
         | translate
     "
-    [choices]="layers || []"
-    *ngIf="activeLayerSuggestion && layers !== undefined"
-    [selected]="service.identifierInService"
-    (selectValue)="handleSelectValue($event)"
+    [action]="autoCompleteAction"
+    (itemSelected)="handleSelectValue($event)"
+    [displayWithFn]="displayWithFn"
+    [minCharacterCount]="0"
+    [clearOnSelection]="false"
+    *ngIf="activeLayerSuggestion && (layers$ | async)?.length > 0"
   >
-  </gn-ui-dropdown-selector>
+  </gn-ui-autocomplete>
   <gn-ui-button
     (buttonClick)="submitIdentifier(service.identifierInService)"
     [disabled]="disabled || !service.identifierInService"
     type="primary"
     *ngIf="
       !modifyMode &&
-      ((activeLayerSuggestion && layers) ||
+      ((activeLayerSuggestion && (layers$ | async)) ||
         !activeLayerSuggestion ||
         (url && errorMessage))
     "

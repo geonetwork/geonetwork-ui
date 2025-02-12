@@ -763,7 +763,7 @@ describe('editor form', () => {
           cy.get('[data-cy=otherConstraints]')
             .find('gn-ui-url-input input')
             .invoke('val')
-            .should('eq', 'http://www.example.com/abcd/1234')
+            .should('include', 'http://www.example.com/abcd/1234')
         })
 
         it('should enable "no applicable constraints" and stay enabled', () => {

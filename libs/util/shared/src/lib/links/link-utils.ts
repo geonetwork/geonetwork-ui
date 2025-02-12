@@ -258,21 +258,18 @@ export async function getLayers(url: string, serviceProtocol: ServiceProtocol) {
       return layers
     }
     case 'wfs': {
-      const endpointWfs = new WfsEndpoint(url)
-      await endpointWfs.isReady()
+      const endpointWfs = await new WfsEndpoint(url).isReady()
       return endpointWfs.getFeatureTypes()
     }
     case 'wms': {
-      const endpointWms = new WmsEndpoint(url)
-      await endpointWms.isReady()
+      const endpointWms = await new WmsEndpoint(url).isReady()
       return endpointWms
         .getLayers()
         .flatMap(wmsLayerFlatten)
         .filter((l) => l.name)
     }
     case 'wmts': {
-      const endpointWmts = new WmtsEndpoint(url)
-      await endpointWmts.isReady()
+      const endpointWmts = await new WmtsEndpoint(url).isReady()
       return endpointWmts.getLayers()
     }
     default:

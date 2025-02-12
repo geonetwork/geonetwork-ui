@@ -18,9 +18,8 @@ import {
   ServiceProtocol,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
+  AutocompleteComponent,
   ButtonComponent,
-  DropdownChoice,
-  DropdownSelectorComponent,
   TextInputComponent,
   UrlInputComponent,
 } from '@geonetwork-ui/ui/inputs'
@@ -31,7 +30,15 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirCloudUpload } from '@ng-icons/iconoir'
-import { getLayers } from '@geonetwork-ui/util/shared'
+import { createFuzzyFilter, getLayers } from '@geonetwork-ui/util/shared'
+import {
+  BehaviorSubject,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  Observable,
+  switchMap,
+} from 'rxjs'
 
 @Component({
   selector: 'gn-ui-online-service-resource-input',
@@ -40,7 +47,7 @@ import { getLayers } from '@geonetwork-ui/util/shared'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    DropdownSelectorComponent,
+    AutocompleteComponent,
     ButtonComponent,
     CommonModule,
     FormsModule,
@@ -71,8 +78,10 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
 
   errorMessage = false
   selectedProtocol: ServiceProtocol
-  url: string
-  layers: DropdownChoice[] | undefined = undefined
+  url = ''
+  layersSubject = new BehaviorSubject<{ name: string; title: string }[]>([])
+  layers$: Observable<{ name: string; title: string }[]> =
+    this.layersSubject.asObservable()
 
   protocolOptions: {
     label: string
@@ -131,7 +140,7 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
 
   handleUrlValueChange(url: string) {
     this.url = url
-    this.service.url = new URL(url)
+    this.service.url = url ? new URL(url) : undefined
     this.resetLayersSuggestion()
     this.urlChange.emit(this.url)
   }
@@ -141,31 +150,29 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
 
     try {
       const layers = await getLayers(url, this.service.accessServiceProtocol)
-      this.layers = layers.map((l) => {
-        return {
-          label: l.title ? `${l.title} ${l.name ? `(${l.name})` : ''}` : l.name,
-          value: l.name || l.title,
-        }
-      })
 
-      if (this.layers.length === 0) {
+      if (layers.length === 0) {
         throw new Error('No layers found')
       }
+
+      this.layersSubject.next([...layers])
     } catch (e) {
       this.errorMessage = true
-      this.layers = undefined
+      this.layersSubject.next([])
     }
 
     this.cdr.detectChanges()
   }
 
-  handleSelectValue(val: string) {
-    this.service.identifierInService = val
+  resetAllFormFields() {
+    this.url = ''
+    this.service.url = null
+    this.resetLayersSuggestion()
   }
 
   resetLayersSuggestion() {
     this.errorMessage = false
-    this.layers = undefined
+    this.layersSubject.next([])
     this.service.identifierInService = null
   }
 
@@ -181,5 +188,35 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
     return this.service.accessServiceProtocol === 'wps'
       ? `${baseKey}.wps`
       : baseKey
+  }
+
+  /**
+   * gn-ui-autocomplete
+   */
+  displayWithFn(item: { name: string; title: string }) {
+    return item.title
+      ? `${item.title} ${item.name ? `(${item.name})` : ''}`
+      : item.name
+  }
+
+  /**
+   * gn-ui-autocomplete
+   */
+  autoCompleteAction = (query: string) => {
+    const fuzzyFilter = createFuzzyFilter(query)
+    return this.layers$.pipe(
+      switchMap((layers) => [
+        layers.filter((layer) => fuzzyFilter(layer.name)),
+      ]),
+      debounceTime(100),
+      distinctUntilChanged()
+    )
+  }
+
+  /**
+   * gn-ui-autocomplete
+   */
+  handleSelectValue(val: { name: string; title: string }) {
+    this.service.identifierInService = val.name
   }
 }
