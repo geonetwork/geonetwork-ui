@@ -4,6 +4,7 @@
   <gn-ui-results-table-container
     (recordClick)="editRecord($event)"
     (duplicateRecord)="duplicateRecord($event)"
+    [isDuplicating]="isDuplicating"
   ></gn-ui-results-table-container>
 
   <div class="px-5 py-5 flex justify-center gap-8 items-baseline">

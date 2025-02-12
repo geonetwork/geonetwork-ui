@@ -419,6 +419,7 @@
   "record.action.delete": "",
   "record.action.download": "",
   "record.action.duplicate": "",
+  "record.action.duplicating": "",
   "record.action.view": "",
   "record.externalViewer.open": "",
   "record.feature.limit": "",

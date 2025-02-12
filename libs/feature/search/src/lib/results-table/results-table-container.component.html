@@ -6,6 +6,7 @@
   [sortOrder]="sortBy$ | async"
   [canDelete]="canDelete"
   [canDuplicate]="canDuplicate"
+  [isDuplicating]="isDuplicating"
   (recordClick)="handleRecordClick($event)"
   (duplicateRecord)="handleDuplicateRecord($event)"
   (deleteRecord)="handleDeleteRecord($event)"
