@@ -419,6 +419,7 @@
   "record.action.delete": "",
   "record.action.download": "Stiahnuť",
   "record.action.duplicate": "",
+  "record.action.duplicating": "",
   "record.action.view": "Zobraziť",
   "record.externalViewer.open": "Otvoriť v externom mapovom prehliadači",
   "record.feature.limit": "",

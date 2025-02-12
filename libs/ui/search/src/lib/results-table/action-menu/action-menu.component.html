@@ -11,7 +11,11 @@
           (buttonClick)="duplicate.emit()"
           [disabled]="!canDuplicate"
           data-test="record-menu-duplicate-button"
-          ><span translate>record.action.duplicate</span></gn-ui-button
+        >
+          <span *ngIf="canDuplicate" translate>record.action.duplicate</span>
+          <span *ngIf="!canDuplicate" translate
+            >record.action.duplicating</span
+          ></gn-ui-button
         >
         <gn-ui-button
           type="light"

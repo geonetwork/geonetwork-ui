@@ -160,7 +160,7 @@
       </gn-ui-button>
       <ng-template #template>
         <gn-ui-action-menu
-          [canDuplicate]="canDuplicate(item)"
+          [canDuplicate]="canDuplicate(item) && !isDuplicating"
           [canDelete]="canDelete(item)"
           (duplicate)="handleDuplicate(item)"
           (delete)="handleDelete(item)"

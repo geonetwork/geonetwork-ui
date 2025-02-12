@@ -66,6 +66,7 @@ export class ResultsTableComponent {
   @Input() canDuplicate: (record: CatalogRecord) => boolean = () => true
   @Input() canDelete: (record: CatalogRecord) => boolean = () => true
   @Input() isDraftPage = false
+  @Input() isDuplicating = false
 
   // emits the column (field) as well as the order
   @Output() sortByChange = new EventEmitter<[string, 'asc' | 'desc']>()
