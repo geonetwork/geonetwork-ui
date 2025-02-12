@@ -78,7 +78,7 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
 
   errorMessage = false
   selectedProtocol: ServiceProtocol
-  url: string = ''
+  url = ''
   layersSubject = new BehaviorSubject<{ name: string; title: string }[]>([])
   layers$: Observable<{ name: string; title: string }[]> =
     this.layersSubject.asObservable()
