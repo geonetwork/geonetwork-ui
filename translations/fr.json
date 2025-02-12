@@ -419,6 +419,7 @@
   "record.action.delete": "Supprimer",
   "record.action.download": "Télécharger",
   "record.action.duplicate": "Dupliquer",
+  "record.action.duplicating": "Duplication...",
   "record.action.view": "Voir",
   "record.externalViewer.open": "Ouvrir dans le visualiseur externe",
   "record.feature.limit": "La ressource contient plus de {count} entités et ne peut pas être affichée ici.",

@@ -421,6 +421,7 @@
   "record.action.delete": "Elimina",
   "record.action.download": "Scarica",
   "record.action.duplicate": "Duplicato",
+  "record.action.duplicating": "",
   "record.action.view": "Visualizza",
   "record.externalViewer.open": "Aprire nel visualizzatore esterno",
   "record.feature.limit": "La risorsa contiene più di {count} funzionalità e non può essere visualizzata qui.",
