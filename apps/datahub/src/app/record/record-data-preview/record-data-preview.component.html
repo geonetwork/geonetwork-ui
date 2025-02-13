@@ -87,7 +87,9 @@
     </div>
   </div>
 </div>
-<gn-ui-data-view-share
-  *ngIf="displayViewShare$ | async"
-  [viewType]="selectedView$ | async"
-></gn-ui-data-view-share>
+<div class="container-lg lg:mx-auto">
+  <gn-ui-data-view-share
+    *ngIf="displayViewShare$ | async"
+    [viewType]="selectedView$ | async"
+  ></gn-ui-data-view-share>
+</div>
