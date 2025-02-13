@@ -30,7 +30,6 @@ import { TranslateModule } from '@ngx-translate/core'
 })
 export class DataViewShareComponent {
   private _viewType: string
-  @Input() extraClass: string
 
   @Input()
   set viewType(value: string) {
