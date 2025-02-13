@@ -1,6 +1,7 @@
 <div class="w-full h-full flex flex-col p-1">
   <div class="w-full flex justify-end">
     <gn-ui-dropdown-selector
+      [ngClass]="{ hidden: !displaySource }"
       class="truncate p-1 -mx-1 mb-1"
       extraBtnClass="!text-primary font-sans font-medium"
       [title]="'map.select.layer' | translate"
