@@ -34,6 +34,7 @@ import { TranslateModule } from '@ngx-translate/core'
 })
 export class DataViewComponent {
   @Input() mode: 'table' | 'chart'
+  @Input() displaySource = true
   @Output() chartConfig$ = new BehaviorSubject<DatavizConfigurationModel>(null)
   compatibleDataLinks$ = combineLatest([
     this.mdViewFacade.dataLinks$,

@@ -85,6 +85,7 @@ export class MapViewComponent implements AfterViewInit {
   @Input() set excludeWfs(value: boolean) {
     this.excludeWfs$.next(value)
   }
+  @Input() displaySource = true
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
 
   excludeWfs$ = new BehaviorSubject(false)
