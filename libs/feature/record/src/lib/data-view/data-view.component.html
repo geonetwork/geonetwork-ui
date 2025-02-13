@@ -1,6 +1,7 @@
 <div class="w-full h-full flex flex-col p-1">
   <gn-ui-dropdown-selector
     *ngIf="dropdownChoices$ | async as choices"
+    [ngClass]="{ hidden: !displaySource }"
     [title]="'table.select.data' | translate"
     class="truncate p-1 -mx-1 self-end mb-1"
     extraBtnClass="!text-primary font-sans font-medium"
