@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -8,28 +9,27 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core'
+import { MatDialog } from '@angular/material/dialog'
 import {
   OnlineLinkResource,
   OnlineResource,
 } from '@geonetwork-ui/common/domain/model/record'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import {
   FileInputComponent,
   TextAreaComponent,
   TextInputComponent,
   UrlInputComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { CommonModule } from '@angular/common'
-import { OnlineResourceCardComponent } from '../../../online-resource-card/online-resource-card.component'
 import {
   ModalDialogComponent,
   SortableListComponent,
 } from '@geonetwork-ui/ui/layout'
-import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { map, Subscription } from 'rxjs'
-import { MatDialog } from '@angular/material/dialog'
+import { Subscription } from 'rxjs'
 import { MAX_UPLOAD_SIZE_MB } from '../../../../fields.config'
+import { OnlineResourceCardComponent } from '../../../online-resource-card/online-resource-card.component'
 
 @Component({
   selector: 'gn-ui-form-field-online-link-resources',

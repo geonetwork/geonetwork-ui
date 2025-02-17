@@ -755,6 +755,7 @@ export function appendOnlineResource(
   let functionCode: string
   let protocol: string
   if (onlineResource.type === 'service') {
+    // should we keep the identifierInService? read-write duplicate with name
     name = onlineResource.identifierInService // this is for GeoNetwork to know the layer name
     functionCode = 'download'
     protocol = getServiceDistributionProtocol(onlineResource)

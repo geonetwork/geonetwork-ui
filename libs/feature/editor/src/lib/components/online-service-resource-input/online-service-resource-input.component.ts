@@ -5,8 +5,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
-  OnInit,
   Output,
 } from '@angular/core'
 import { FormsModule } from '@angular/forms'
@@ -23,19 +21,18 @@ import {
   TextInputComponent,
   UrlInputComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
+import { createFuzzyFilter, getLayers } from '@geonetwork-ui/util/shared'
 import {
   NgIconComponent,
   provideIcons,
   provideNgIconsConfig,
 } from '@ng-icons/core'
-import { iconoirCloudUpload } from '@ng-icons/iconoir'
-import { createFuzzyFilter, getLayers } from '@geonetwork-ui/util/shared'
+import { iconoirRefresh } from '@ng-icons/iconoir'
+import { TranslateModule } from '@ngx-translate/core'
 import {
   BehaviorSubject,
   debounceTime,
   distinctUntilChanged,
-  map,
   Observable,
   switchMap,
 } from 'rxjs'
@@ -59,26 +56,25 @@ import {
     UrlInputComponent,
   ],
   providers: [
-    provideIcons({ iconoirCloudUpload }),
+    provideIcons({ iconoirRefresh }),
     provideNgIconsConfig({
       size: '1.5em',
     }),
   ],
 })
-export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
-  @Input() service: DatasetServiceDistribution
+export class OnlineServiceResourceInputComponent {
+  _service: DatasetServiceDistribution
+  @Input() set service(service: DatasetServiceDistribution) {
+    this._service = { ...service }
+  }
   @Input() protocolHint?: string
   @Input() disabled? = false
   @Input() modifyMode? = false
-  @Output() urlChange: EventEmitter<string> = new EventEmitter()
-  @Output() identifierSubmit: EventEmitter<{
-    url: string
-    identifier: string
-  }> = new EventEmitter()
+  @Output() serviceChange: EventEmitter<DatasetServiceDistribution> =
+    new EventEmitter()
 
   errorMessage = false
-  selectedProtocol: ServiceProtocol
-  url = ''
+
   layersSubject = new BehaviorSubject<{ name: string; title: string }[]>([])
   layers$: Observable<{ name: string; title: string }[]> =
     this.layersSubject.asObservable()
@@ -121,35 +117,18 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
 
   get activeLayerSuggestion() {
     return !['wps', 'GPFDL', 'esriRest', 'other'].includes(
-      this.service.accessServiceProtocol
+      this._service.accessServiceProtocol
     )
   }
 
-  ngOnChanges() {
-    this.selectedProtocol =
-      this.protocolOptions.find(
-        (option) => option.value === this.service.accessServiceProtocol
-      )?.value ?? 'other'
-  }
-
-  ngOnInit() {
-    if (this.service.url) {
-      this.url = this.service.url.toString()
-    }
-  }
-
   handleUrlValueChange(url: string) {
-    this.url = url
-    this.service.url = url ? new URL(url) : undefined
+    this._service.url = url ? new URL(url) : undefined
     this.resetLayersSuggestion()
-    this.urlChange.emit(this.url)
   }
 
   async handleUploadClick(url: string) {
-    this.url = url
-
     try {
-      const layers = await getLayers(url, this.service.accessServiceProtocol)
+      const layers = await getLayers(url, this._service.accessServiceProtocol)
 
       if (layers.length === 0) {
         throw new Error('No layers found')
@@ -165,27 +144,29 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
   }
 
   resetAllFormFields() {
-    this.url = ''
-    this.service.url = null
+    this._service.url = null
     this.resetLayersSuggestion()
   }
 
   resetLayersSuggestion() {
     this.errorMessage = false
     this.layersSubject.next([])
-    this.service.identifierInService = null
+    this._service.identifierInService = null
   }
 
-  submitIdentifier(identifier: string) {
-    if (!identifier) return
-    this.identifierSubmit.emit({ url: this.url, identifier })
-    this.service.identifierInService = null
+  submit() {
+    this.serviceChange.emit({
+      ...this._service,
+      name: this._service.identifierInService, // should we keep the identifierInService? read-write duplicate with name
+    })
+    this._service.accessServiceProtocol = 'ogcFeatures'
+    this.resetAllFormFields()
   }
 
   getIdentifierPlaceholder(): string {
     const baseKey =
       'editor.record.form.field.onlineResource.edit.identifier.placeholder'
-    return this.service.accessServiceProtocol === 'wps'
+    return this._service.accessServiceProtocol === 'wps'
       ? `${baseKey}.wps`
       : baseKey
   }
@@ -217,6 +198,7 @@ export class OnlineServiceResourceInputComponent implements OnChanges, OnInit {
    * gn-ui-autocomplete
    */
   handleSelectValue(val: { name: string; title: string }) {
-    this.service.identifierInService = val.name
+    this._service.identifierInService = val.name // should we keep the identifierInService? read-write duplicate with name
+    this._service.description = val.title
   }
 }

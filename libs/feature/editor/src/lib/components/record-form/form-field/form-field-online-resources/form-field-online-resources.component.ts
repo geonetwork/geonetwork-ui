@@ -159,33 +159,8 @@ export class FormFieldOnlineResourcesComponent {
     }
   }
 
-  handleServiceUrlChange(url: string) {
-    this.valueChange.emit([
-      ...this.allResources,
-      {
-        ...this.newService,
-        url: new URL(url),
-      },
-    ])
-  }
-
-  handleIdentifierSubmit(payload: { url: string; identifier: string }) {
-    this.valueChange.emit([
-      ...this.allResources,
-      {
-        ...this.newService,
-        url: new URL(payload.url),
-      },
-    ])
-  }
-
-  handleServiceModify(
-    oldService: DatasetServiceDistribution,
-    newService: DatasetServiceDistribution
-  ) {
-    oldService.accessServiceProtocol = newService.accessServiceProtocol
-    oldService.identifierInService = newService.identifierInService
-    oldService.url = newService.url
+  handleServiceChange(service: DatasetServiceDistribution) {
+    this.valueChange.emit([...this.allResources, service])
   }
 
   handleResourcesChange(items: unknown[]) {

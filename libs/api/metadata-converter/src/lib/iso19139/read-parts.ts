@@ -478,12 +478,11 @@ export function extractDatasetOnlineResources(
           ...descriptionTranslations,
         }
         if (isService) {
-          const hasIdentifier = protocol === 'wms' || protocol === 'wfs'
           return {
             type: 'service',
             url: url,
             accessServiceProtocol: protocol,
-            ...(name && hasIdentifier && { identifierInService: name }),
+            ...(name && { identifierInService: name }), // should we keep the identifierInService? read-write duplicate with name
             ...(name && { name }),
             ...(description && { description }),
             translations,
