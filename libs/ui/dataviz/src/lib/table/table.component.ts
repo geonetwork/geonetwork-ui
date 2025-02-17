@@ -7,16 +7,15 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core'
 import { MatSort, MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
-import {
-  TableVirtualScrollDataSource,
-  TableVirtualScrollModule,
-} from 'ng-table-virtual-scroll'
 import { TranslateModule } from '@ngx-translate/core'
+import { TableDataSource } from './table.data.source'
+import { BaseReader } from '@geonetwork-ui/data-fetcher'
 
 const rowIdPrefix = 'table-item-'
 
@@ -33,7 +32,6 @@ export interface TableItemModel {
   imports: [
     MatTableModule,
     MatSortModule,
-    TableVirtualScrollModule,
     ScrollingModule,
     NgForOf,
     TranslateModule,
@@ -43,29 +41,49 @@ export interface TableItemModel {
   styleUrls: ['./table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent implements AfterViewInit {
-  @Input() set data(value: TableItemModel[]) {
-    this.dataSource = new TableVirtualScrollDataSource(value)
-    this.dataSource.sort = this.sort
-    this.properties =
-      Array.isArray(value) && value.length ? Object.keys(value[0]) : []
-    this.count = value.length
+export class TableComponent implements OnInit, AfterViewInit {
+  @Input() set dataset(value: BaseReader) {
+    this.dataset_ = value
+    this.dataset_.load()
+    this.dataset_.properties.then(
+      (properties) => (this.properties = properties.map((p) => p.name))
+    )
+    this.dataset_.info.then((info) => (this.count = info.itemsCount))
   }
   @Input() activeId: TableItemId
   @Output() selected = new EventEmitter<any>()
 
   @ViewChild(MatSort, { static: true }) sort: MatSort
+
+  dataset_: BaseReader
   properties: string[]
-  dataSource: TableVirtualScrollDataSource<any>
+  dataSource: TableDataSource
   headerHeight: number
   count: number
 
   constructor(private eltRef: ElementRef) {}
 
+  ngOnInit() {
+    this.dataSource = new TableDataSource()
+    this.dataSource.showData(this.dataset_.read())
+  }
+
   ngAfterViewInit() {
     this.headerHeight =
       this.eltRef.nativeElement.querySelector('thead').offsetHeight
   }
+
+  setSort(sort: MatSort) {
+    if (!this.sort.active) {
+      this.dataset_.orderBy()
+    } else {
+      this.dataset_.orderBy([sort.direction || 'asc', sort.active])
+    }
+    this.dataSource.showData(this.dataset_.read())
+  }
+
+  // TODO
+  setPagination(pageSize: number) {}
 
   scrollToItem(itemId: TableItemId): void {
     const row = this.eltRef.nativeElement.querySelector(
