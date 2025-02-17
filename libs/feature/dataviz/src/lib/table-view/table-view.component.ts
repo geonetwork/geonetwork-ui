@@ -3,14 +3,13 @@ import { BehaviorSubject, Observable, of } from 'rxjs'
 import {
   catchError,
   finalize,
-  map,
   shareReplay,
   startWith,
   switchMap,
 } from 'rxjs/operators'
-import { DataItem, FetchError } from '@geonetwork-ui/data-fetcher'
+import { BaseReader, FetchError } from '@geonetwork-ui/data-fetcher'
 import { DataService } from '../service/data.service'
-import { TableComponent, TableItemModel } from '@geonetwork-ui/ui/dataviz'
+import { TableComponent } from '@geonetwork-ui/ui/dataviz'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import {
@@ -45,25 +44,19 @@ export class TableViewComponent {
   tableData$ = this.currentLink$.pipe(
     switchMap((link) => {
       this.error = null
-      if (!link) return of([] as TableItemModel[])
+      if (!link) return of(undefined)
       this.loading = true
-      return this.fetchData(link).pipe(
-        map((items) =>
-          items.map((item) => ({
-            id: item.id,
-            ...item.properties,
-          }))
-        ),
+      return this.getDatasetReader(link).pipe(
         catchError((error) => {
           this.handleError(error)
-          return of([] as TableItemModel[])
+          return of(undefined)
         }),
         finalize(() => {
           this.loading = false
         })
       )
     }),
-    startWith([] as TableItemModel[]),
+    startWith(undefined),
     shareReplay(1)
   )
 
@@ -72,10 +65,8 @@ export class TableViewComponent {
     private translateService: TranslateService
   ) {}
 
-  fetchData(link: DatasetOnlineResource): Observable<DataItem[]> {
-    return this.dataService
-      .getDataset(link)
-      .pipe(switchMap((dataset) => dataset.read()))
+  getDatasetReader(link: DatasetOnlineResource): Observable<BaseReader> {
+    return this.dataService.getDataset(link)
   }
 
   onTableSelect(event) {
