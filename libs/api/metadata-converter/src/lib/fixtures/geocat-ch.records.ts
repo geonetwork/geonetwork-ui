@@ -506,6 +506,7 @@ export const GEOCAT_CH_DATASET_RECORD: DatasetRecord = {
       ),
       accessServiceProtocol: 'esriRest',
       description: 'RESTful API von geo.admin.ch',
+      identifierInService: 'RESTful API von geo.admin.ch',
       name: 'RESTful API von geo.admin.ch',
       translations: {
         description: {

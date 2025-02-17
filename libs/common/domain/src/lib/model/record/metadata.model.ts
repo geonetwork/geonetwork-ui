@@ -160,7 +160,7 @@ export interface DatasetServiceDistribution {
   type: 'service'
   url: URL
   accessServiceProtocol: ServiceProtocol
-  identifierInService?: string
+  identifierInService?: string // should we keep the identifierInService? read-write duplicate with name
   name?: string
   description?: string
   translations?: OnlineResourceTranslations

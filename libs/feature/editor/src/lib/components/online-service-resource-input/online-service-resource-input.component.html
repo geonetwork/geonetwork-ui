@@ -15,7 +15,7 @@
   <mat-radio-group
     aria-labelledby="example-radio-group-label"
     class="flex flex-row gap-[8px]"
-    [(ngModel)]="service.accessServiceProtocol"
+    [(ngModel)]="_service.accessServiceProtocol"
     [disabled]="disabled"
     (change)="resetAllFormFields()"
   >
@@ -34,11 +34,11 @@
     (uploadClick)="handleUploadClick($event)"
     (valueChange)="handleUrlValueChange($event)"
     [disabled]="disabled"
-    [value]="url"
+    [value]="_service.url?.toString()"
     [showValidateButton]="activeLayerSuggestion"
   >
     <ng-content *ngIf="activeLayerSuggestion">
-      <ng-icon name="iconoirCloudUpload"></ng-icon>
+      <ng-icon name="iconoirRefresh"></ng-icon>
     </ng-content>
   </gn-ui-url-input>
 
@@ -48,13 +48,13 @@
 
   <gn-ui-text-input
     class="grow border-b border-gray-300 pb-4"
-    [(value)]="service.identifierInService"
+    [(value)]="_service.identifierInService"
     [placeholder]="getIdentifierPlaceholder() | translate"
     data-cy="identifier-in-service"
     [disabled]="disabled"
     *ngIf="
       !activeLayerSuggestion ||
-      (url && errorMessage) ||
+      (_service.url && errorMessage) ||
       (modifyMode && (layers$ | async).length === 0)
     "
   ></gn-ui-text-input>
@@ -73,14 +73,14 @@
   >
   </gn-ui-autocomplete>
   <gn-ui-button
-    (buttonClick)="submitIdentifier(service.identifierInService)"
-    [disabled]="disabled || !service.identifierInService"
+    (buttonClick)="submit()"
+    [disabled]="disabled || !_service.identifierInService"
     type="primary"
     *ngIf="
       !modifyMode &&
       ((activeLayerSuggestion && (layers$ | async)) ||
         !activeLayerSuggestion ||
-        (url && errorMessage))
+        (_service.url && errorMessage))
     "
   >
     <span class="text-white font-bold" translate>
