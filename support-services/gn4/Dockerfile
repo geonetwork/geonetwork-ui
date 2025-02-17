@@ -1,6 +1,6 @@
 FROM alpine/git AS clone
 WORKDIR /app
-RUN git clone --recursive --depth=1 --shallow-submodules https://github.com/geonetwork/core-geonetwork.git
+RUN git clone --recursive --depth=1 --shallow-submodules https://github.com/geonetwork/core-geonetwork.git -b 4.4.6
 RUN git clone --recursive --depth=1 --shallow-submodules https://github.com/metadata101/dcat-ap.git
 
 
@@ -17,6 +17,16 @@ RUN sed -i 's#</dependencies>#<dependency><groupId>org.geonetwork-opensource.sch
     /app/web/pom.xml
 RUN sed -i 's#</artifactItems>#<artifactItem><groupId>org.geonetwork-opensource.schemas</groupId><artifactId>gn-schema-dcat-ap</artifactId><type>zip</type><overWrite>false</overWrite><outputDirectory>${schema-plugins.dir}</outputDirectory></artifactItem></artifactItems>#' \
     /app/web/pom.xml
+
+# this will use the same version as the parent in the dcat-ap pom
+RUN PARENT_VERSION=$(awk -F'[><]' '/<version>/{print $3; exit}' /app/pom.xml) && \
+    sed -i "s#<version>4\.4\..*</version>#<version>${PARENT_VERSION}</version>#" \
+    /app/schemas/dcat-ap/pom.xml
+
+# fix error in ESAPI properties (https://github.com/geonetwork/core-geonetwork/pull/8522)
+RUN sed -i "s#ESAPI.Logger=org.owasp.esapi.logging.log4j.Log4JLogFactory#ESAPI.Logger=org.owasp.esapi.logging.slf4j.Slf4JLogFactory#" \
+    /app/web/src/main/webapp/WEB-INF/classes/ESAPI.properties
+
 
 RUN mvn install -DskipTests
 
