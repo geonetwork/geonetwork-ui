@@ -16,6 +16,11 @@ import { MatTableModule } from '@angular/material/table'
 import { TranslateModule } from '@ngx-translate/core'
 import { TableDataSource } from './table.data.source'
 import { BaseReader } from '@geonetwork-ui/data-fetcher'
+import {
+  MatPaginator,
+  MatPaginatorIntl,
+  MatPaginatorModule,
+} from '@angular/material/paginator'
 
 const rowIdPrefix = 'table-item-'
 
@@ -32,10 +37,12 @@ export interface TableItemModel {
   imports: [
     MatTableModule,
     MatSortModule,
+    MatPaginatorModule,
     ScrollingModule,
     NgForOf,
     TranslateModule,
   ],
+  providers: [MatPaginatorIntl],
   selector: 'gn-ui-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
@@ -54,6 +61,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   @Output() selected = new EventEmitter<any>()
 
   @ViewChild(MatSort, { static: true }) sort: MatSort
+  @ViewChild(MatPaginator) paginator: MatPaginator
 
   dataset_: BaseReader
   properties: string[]
@@ -65,12 +73,12 @@ export class TableComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.dataSource = new TableDataSource()
-    this.dataSource.showData(this.dataset_.read())
   }
 
   ngAfterViewInit() {
     this.headerHeight =
       this.eltRef.nativeElement.querySelector('thead').offsetHeight
+    this.setPagination()
   }
 
   setSort(sort: MatSort) {
@@ -82,8 +90,10 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.dataSource.showData(this.dataset_.read())
   }
 
-  // TODO
-  setPagination(pageSize: number) {}
+  setPagination() {
+    this.dataset_.limit(this.paginator.pageIndex, this.paginator.pageSize)
+    this.dataSource.showData(this.dataset_.read())
+  }
 
   scrollToItem(itemId: TableItemId): void {
     const row = this.eltRef.nativeElement.querySelector(
