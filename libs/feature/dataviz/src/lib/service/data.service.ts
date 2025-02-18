@@ -21,12 +21,13 @@ import {
   ProxyService,
 } from '@geonetwork-ui/util/shared'
 import type { FeatureCollection } from 'geojson'
-import { from, Observable, throwError } from 'rxjs'
+import { forkJoin, from, Observable, throwError } from 'rxjs'
 import { catchError, map, switchMap, tap } from 'rxjs/operators'
 import {
   DatasetOnlineResource,
   DatasetServiceDistribution,
 } from '@geonetwork-ui/common/domain/model/record'
+import { computeUrlWfsPagination } from 'libs/util/data-fetcher/src/lib/utils'
 
 marker('wfs.unreachable.cors')
 marker('wfs.unreachable.http')
@@ -244,14 +245,26 @@ export class DataService {
 
   getDataset(link: DatasetOnlineResource): Observable<BaseReader> {
     if (link.type === 'service' && link.accessServiceProtocol === 'wfs') {
-      return this.getDownloadUrlsFromWfs(link.url.toString(), link.name).pipe(
-        switchMap((urls) => {
-          if (urls.geojson) return openDataset(urls.geojson, 'geojson')
-          if (urls.gml)
+      return forkJoin({
+        endpoint: this.getWfsEndpoint(link.url.toString()),
+        urls: this.getDownloadUrlsFromWfs(link.url.toString(), link.name),
+      }).pipe(
+        switchMap(({ urls, endpoint }) => {
+          const computeUrl =
+            endpoint.getVersion() === '2.0.0'
+              ? computeUrlWfsPagination
+              : undefined
+
+          if (urls.geojson) {
+            return openDataset(urls.geojson, 'geojson', { computeUrl })
+          }
+          if (urls.gml) {
             return openDataset(urls.gml.featureUrl, 'gml', {
+              computeUrl,
               namespace: urls.gml.namespace,
               wfsVersion: urls.gml.wfsVersion,
             })
+          }
           return null
         }),
         tap((url) => {

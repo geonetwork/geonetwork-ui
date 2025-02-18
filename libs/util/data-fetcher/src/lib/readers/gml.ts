@@ -1,5 +1,5 @@
 import { BaseFileReader } from './base-file'
-import { DataItem, PropertyInfo } from '../model'
+import { ComputeUrlFonction, DataItem, PropertyInfo } from '../model'
 import { fetchDataAsText, processItemProperties } from '../utils'
 import { GeoJSON, WFS } from 'ol/format'
 import { WfsVersion } from '@camptocamp/ogc-client'
@@ -40,14 +40,14 @@ export class GmlReader extends BaseFileReader {
   namespace: string
   version: WfsVersion
 
-  constructor(url, namespace, version) {
-    super(url)
+  constructor(url, namespace, version, computeUrl?: ComputeUrlFonction) {
+    super(url, computeUrl)
     this.namespace = namespace
     this.version = version
   }
 
   protected getData() {
-    return fetchDataAsText(this.url).then((text) =>
+    return fetchDataAsText(this.getUrl()).then((text) =>
       parseGml(text, this.namespace, this.version)
     )
   }

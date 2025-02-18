@@ -496,4 +496,41 @@ describe('geojson parsing', () => {
       })
     })
   })
+
+  describe('GeojsonReader - computed url', () => {
+    let reader: GeojsonReader
+
+    beforeEach(() => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () =>
+            Promise.resolve({
+              data: {
+                type: 'FeatureCollection',
+                features: [],
+              },
+            }),
+          text: () =>
+            Promise.resolve(
+              JSON.stringify({
+                type: 'FeatureCollection',
+                features: [],
+              })
+            ),
+        })
+      )
+    })
+    afterEach(() => {
+      jest.resetAllMocks()
+    })
+
+    it('calls computed url when loading data', () => {
+      const mockUrlWfs = 'https://mywfs.test'
+      const computeUrlMock = jest.fn().mockReturnValue(mockUrlWfs)
+      reader = new GeojsonReader(mockUrlWfs, computeUrlMock)
+      reader.load()
+      expect(computeUrlMock).toHaveBeenCalledTimes(1)
+    })
+  })
 })

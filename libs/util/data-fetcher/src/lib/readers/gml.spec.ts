@@ -574,4 +574,47 @@ describe('Gml parsing', () => {
       })
     })
   })
+
+  describe('GmlReader - computed url', () => {
+    let reader: GmlReader
+
+    beforeEach(() => {
+      fetchMock.get(
+        (url) => true,
+        async (url) => {
+          const filePath = path.join(
+            __dirname,
+            '../..',
+            new URL('http://localfile/fixtures/wfs-gml.xml').pathname
+          )
+          return {
+            body: await fs.readFile(filePath, 'utf8'),
+            status: 200,
+            headers: {
+              'Content-Type': 'text/csv',
+            },
+          }
+        },
+        {
+          sendAsJson: false,
+        }
+      )
+    })
+    afterEach(() => {
+      fetchMock.reset()
+    })
+
+    it('calls computed url when loading data', () => {
+      const mockUrlWfs = 'https://mywfs.test'
+      const computeUrlMock = jest.fn().mockReturnValue(mockUrlWfs)
+      reader = new GmlReader(
+        mockUrlWfs,
+        'ms:n_mat_eolien_p_r32',
+        '2.0.0',
+        computeUrlMock
+      )
+      reader.load()
+      expect(computeUrlMock).toHaveBeenCalledTimes(1)
+    })
+  })
 })

@@ -1,4 +1,5 @@
 import {
+  computeUrlWfsPagination,
   getJsonDataItemsProxy,
   jsonToGeojsonFeature,
   processItemProperties,
@@ -317,6 +318,75 @@ describe('data-fetcher utils', () => {
       expect(() => {
         proxy[2] = { abc: '1234' }
       }).toThrowError('read-only')
+    })
+  })
+  describe('computeUrlWfsPagination', () => {
+    it('should return the base URL if no options are provided', () => {
+      const url = 'http://example.com/wfs'
+      const result = computeUrlWfsPagination(url)
+      expect(result).toBe(url)
+    })
+
+    it('should add startIndex to the URL if provided', () => {
+      const url = 'http://example.com/wfs'
+      const options = { startIndex: 10 }
+      const result = computeUrlWfsPagination(url, options)
+      expect(result).toBe(`${url}?startIndex=10`)
+    })
+
+    it('should add count to the URL if provided', () => {
+      const url = 'http://example.com/wfs'
+      const options = { count: 5 }
+      const result = computeUrlWfsPagination(url, options)
+      expect(result).toBe(`${url}?count=5`)
+    })
+
+    it('should add sortBy to the URL if sort options are provided', () => {
+      const url = 'http://example.com/wfs'
+      const options = {
+        sort: [
+          ['asc', 'field1'],
+          ['desc', 'field2'],
+        ],
+      }
+      const result = computeUrlWfsPagination(url, options)
+      expect(result).toBe(`${url}?sortBy=field1%2BA%2Cfield2%2BD`)
+    })
+
+    it('should handle multiple options (startIndex, count, and sort)', () => {
+      const url = 'http://example.com/wfs'
+      const options = {
+        startIndex: 10,
+        count: 5,
+        sort: [
+          ['asc', 'field1'],
+          ['desc', 'field2'],
+        ],
+      }
+      const result = computeUrlWfsPagination(url, options)
+      expect(result).toBe(
+        `${url}?startIndex=10&count=5&sortBy=field1%2BA%2Cfield2%2BD`
+      )
+    })
+
+    it('should ignore undefined or invalid options', () => {
+      const url = 'http://example.com/wfs'
+      const options = {
+        startIndex: undefined,
+        count: 5,
+        sort: [],
+      }
+      const result = computeUrlWfsPagination(url, options)
+      expect(result).toBe(`${url}?count=5`)
+    })
+
+    it('should handle an empty sort array', () => {
+      const url = 'http://example.com/wfs'
+      const options = {
+        sort: [],
+      }
+      const result = computeUrlWfsPagination(url, options)
+      expect(result).toBe(url)
     })
   })
 })

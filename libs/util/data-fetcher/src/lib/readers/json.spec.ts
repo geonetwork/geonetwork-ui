@@ -332,4 +332,32 @@ describe('json parsing', () => {
       })
     })
   })
+
+  describe('JsonReader - computed url', () => {
+    let reader: JsonReader
+
+    beforeEach(() => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () =>
+            Promise.resolve({
+              data: [],
+            }),
+          text: () => Promise.resolve(JSON.stringify([])),
+        })
+      )
+    })
+    afterEach(() => {
+      jest.resetAllMocks()
+    })
+
+    it('calls computed url when loading data', () => {
+      const mockUrlWfs = 'https://mywfs.test'
+      const computeUrlMock = jest.fn().mockReturnValue(mockUrlWfs)
+      reader = new JsonReader(mockUrlWfs, computeUrlMock)
+      reader.load()
+      expect(computeUrlMock).toHaveBeenCalledTimes(1)
+    })
+  })
 })

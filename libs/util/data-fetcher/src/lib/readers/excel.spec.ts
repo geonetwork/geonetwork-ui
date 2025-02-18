@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { ExcelReader, parseExcel } from './excel'
 import fetchMock from 'fetch-mock-jest'
+import { arrayBuffer } from 'stream/consumers'
 
 const sampleXlsx = fs.readFileSync(
   path.join(__dirname, '../../fixtures/eaux-baignades.xlsx'),
@@ -4200,6 +4201,32 @@ describe('Excel parsing', () => {
           type: 'Feature',
         })
       })
+    })
+  })
+
+  describe('ExcelReader - computed url', () => {
+    let reader: ExcelReader
+
+    beforeEach(() => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({ data: 'mocked data' }),
+          text: () => Promise.resolve('mocked text'),
+          arrayBuffer: () => Promise.resolve('mocked buffer'),
+        })
+      )
+    })
+    afterEach(() => {
+      jest.resetAllMocks()
+    })
+
+    it('calls computed url when loading data', () => {
+      const mockUrlWfs = 'https://mywfs.test'
+      const computeUrlMock = jest.fn().mockReturnValue(mockUrlWfs)
+      reader = new ExcelReader(mockUrlWfs, computeUrlMock)
+      reader.load()
+      expect(computeUrlMock).toHaveBeenCalledTimes(1)
     })
   })
 })

@@ -930,4 +930,29 @@ describe('CSV parsing', () => {
       })
     })
   })
+
+  describe('CsvReader - computed url', () => {
+    let reader: CsvReader
+
+    beforeEach(() => {
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({ data: 'mocked data' }),
+          text: () => Promise.resolve('mocked text'),
+        })
+      )
+    })
+    afterEach(() => {
+      jest.resetAllMocks()
+    })
+
+    it('calls computed url when loading data', () => {
+      const mockUrlWfs = 'https://mywfs.test'
+      const computeUrlMock = jest.fn().mockReturnValue(mockUrlWfs)
+      reader = new CsvReader(mockUrlWfs, computeUrlMock)
+      reader.load()
+      expect(computeUrlMock).toHaveBeenCalledTimes(1)
+    })
+  })
 })

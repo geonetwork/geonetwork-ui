@@ -12,26 +12,35 @@ import { WfsVersion } from '@camptocamp/ogc-client'
 export async function openDataset(
   url: string,
   typeHint?: SupportedType,
-  options?: { namespace: string; wfsVersion: WfsVersion }
+  options?: {
+    computeUrl?: (url: string) => string
+    namespace?: string
+    wfsVersion?: WfsVersion
+  }
 ): Promise<BaseReader> {
   const fileType = await inferDatasetType(url, typeHint)
   let reader: BaseReader
   try {
     switch (fileType) {
       case 'csv':
-        reader = new CsvReader(url)
+        reader = new CsvReader(url, options.computeUrl)
         break
       case 'json':
-        reader = new JsonReader(url)
+        reader = new JsonReader(url, options.computeUrl)
         break
       case 'geojson':
-        reader = new GeojsonReader(url)
+        reader = new GeojsonReader(url, options.computeUrl)
         break
       case 'excel':
-        reader = new ExcelReader(url)
+        reader = new ExcelReader(url, options.computeUrl)
         break
       case 'gml':
-        reader = new GmlReader(url, options.namespace, options.wfsVersion)
+        reader = new GmlReader(
+          url,
+          options.namespace,
+          options.wfsVersion,
+          options.computeUrl
+        )
         break
     }
     reader.load()

@@ -1,4 +1,5 @@
 import {
+  ComputeUrlFonction,
   DataItem,
   DatasetInfo,
   FieldAggregation,
@@ -18,7 +19,10 @@ export class BaseReader {
   protected startIndex: number = null
   protected count: number = null
 
-  constructor(protected url: string) {}
+  constructor(
+    protected url: string,
+    protected computeUrl: ComputeUrlFonction = () => this.url
+  ) {}
 
   load() {
     throw new Error('not implemented')
@@ -30,6 +34,11 @@ export class BaseReader {
 
   get info(): Promise<DatasetInfo> {
     throw new Error('not implemented')
+  }
+
+  getUrl() {
+    const { url, startIndex, count, sort } = this
+    return this.computeUrl(url, { startIndex, count, sort })
   }
 
   read(): Promise<DataItem[]> {

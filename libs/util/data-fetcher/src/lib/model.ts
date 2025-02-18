@@ -127,3 +127,8 @@ export type FieldFilter =
   | NotOperation
   | InOperation
   | LikeOperation
+
+export type ComputeUrlFonction = (
+  url: string,
+  options?: { startIndex?: number; count?: number; sort?: FieldSort[] }
+) => string

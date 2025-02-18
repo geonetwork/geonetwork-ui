@@ -2,6 +2,7 @@ import {
   DataItem,
   DatasetHeaders,
   FetchError,
+  FieldSort,
   PropertyInfo,
   SupportedType,
   SupportedTypes,
@@ -252,4 +253,31 @@ export function getJsonDataItemsProxy(
       throw new Error('This object is read-only')
     },
   })
+}
+
+export function computeUrlWfsPagination(
+  url: string,
+  options?: { startIndex?: number; count?: number; sort?: FieldSort[] }
+) {
+  const finalUrl = new URL(url)
+
+  if (options?.startIndex !== undefined) {
+    finalUrl.searchParams.append('startIndex', '' + options.startIndex)
+  }
+
+  if (options?.count !== undefined) {
+    finalUrl.searchParams.append('count', '' + options.count)
+  }
+
+  if (Array.isArray(options?.sort) && options.sort.length > 0) {
+    const sorts = options?.sort
+      .map(
+        (fieldSort) => `${fieldSort[1]}+${fieldSort[0] === 'asc' ? 'A' : 'D'}`
+      )
+      .join(',')
+
+    finalUrl.searchParams.append('sortBy', sorts)
+  }
+
+  return finalUrl.toString()
 }

@@ -23,6 +23,6 @@ export function parseJson(text: string): {
 
 export class JsonReader extends BaseFileReader {
   getData() {
-    return fetchDataAsText(this.url).then(parseJson)
+    return fetchDataAsText(this.getUrl()).then(parseJson)
   }
 }
