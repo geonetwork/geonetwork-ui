@@ -20,7 +20,7 @@ These fields are used in the following context:
 
 > Field id: `organization`
 
-This field targets the owner organization of a record. The exact meaning of a record's organization is defined by the "organization strategy" used; see [this documentation page](./organizations.md) for more details.
+This field targets the owner organization of a record. The exact meaning of a record's organization is defined by the "organization strategy" used; see [this documentation page](../developers/organizations.md) for more details.
 
 _Note: The `organization` search field is set by some routing links within the datahub app. It is thus needed to unset such filters._
 
@@ -28,13 +28,13 @@ _Note: The `organization` search field is set by some routing links within the d
 
 > Field id: `publisherOrg`
 
-This field targets the organization publishing the record. The exact meaning of a record's organization publisher is defined by the "organization strategy" used; see [this documentation page](./organizations.md) for more details.
+This field targets the organization publishing the record. The exact meaning of a record's organization publisher is defined by the "organization strategy" used; see [this documentation page](../developers/organizations.md) for more details.
 
 ### Producer
 
 > Field id: `producerOrg`
 
-This field targets the organization producing the record. The exact meaning of a record's organization producer is defined by the "organization strategy" used; see [this documentation page](./organizations.md) for more details.
+This field targets the organization producing the record. The exact meaning of a record's organization producer is defined by the "organization strategy" used; see [this documentation page](../developers/organizations.md) for more details.
 
 ### Format
 
