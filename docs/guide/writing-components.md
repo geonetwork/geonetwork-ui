@@ -29,7 +29,7 @@ This is the progression status of the Standalone Component migration:
     <p style='white-space: preserve-breaks'>{{ data.standaloneComponents.infos }}</p>
   </div>
   <div class='custom-block caution' style='flex-grow: 1'>
-    <p class='custom-block-title'>{{ 100 - standaloneDone }}% not done</p>
+    <p class='custom-block-title'>{{ 100 - standaloneDone }}% remaining</p>
   </div>
 </div>
 
@@ -67,7 +67,7 @@ This is the progression status of creating Storybook entries for all presentatio
     <p style='white-space: preserve-breaks'>{{ data.storybookEntries.infos }}</p>
   </div>
   <div class='custom-block caution' style='flex-grow: 1'>
-    <p class='custom-block-title'>{{ 100 - storybookDone }}% not done</p>
+    <p class='custom-block-title'>{{ 100 - storybookDone }}% remaining</p>
   </div>
 </div>
 
