@@ -85,7 +85,7 @@ This is the progression status of the `ng-mocks` migration:
     <p style='white-space: preserve-breaks'>{{ data.ngMocks.infos }}</p>
   </div>
   <div class='custom-block caution' style='flex-grow: 1'>
-    <p class='custom-block-title'>{{ 100 - ngMocksDone }}% not done</p>
+    <p class='custom-block-title'>{{ 100 - ngMocksDone }}% remaining</p>
   </div>
 </div>
 
