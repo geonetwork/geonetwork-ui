@@ -242,6 +242,8 @@ export function getServiceDistributionProtocol(
   distribution: DatasetServiceDistribution
 ): string {
   switch (distribution.accessServiceProtocol.toLowerCase()) {
+    case 'ogcfeatures':
+      return 'OGC API Features'
     case 'wfs':
       return 'OGC:WFS'
     case 'wms':
