@@ -9,7 +9,7 @@ import {
   DatasetRecord,
   Keyword,
 } from '@geonetwork-ui/common/domain/model/record'
-import { getTemporalRangeUnion } from '@geonetwork-ui/util/shared'
+import { DateService, getTemporalRangeUnion } from '@geonetwork-ui/util/shared'
 import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component'
 import {
   ExpandablePanelComponent,
@@ -59,6 +59,8 @@ export class MetadataInfoComponent {
   @Input() incomplete: boolean
   @Output() keyword = new EventEmitter<Keyword>()
   updatedTimes: number
+
+  constructor(private dateService: DateService) {}
 
   get hasUsage() {
     return (
@@ -138,5 +140,13 @@ export class MetadataInfoComponent {
 
   onKeywordClick(keyword: Keyword) {
     this.keyword.emit(keyword)
+  }
+
+  formatDate(date: Date): string {
+    return this.dateService.formatDate(date)
+  }
+
+  formatDateTime(date: Date): string {
+    return this.dateService.formatDateTime(date)
   }
 }
