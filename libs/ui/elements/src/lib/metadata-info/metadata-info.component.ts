@@ -123,7 +123,7 @@ export class MetadataInfoComponent {
 
   get temporalExtent(): { start: string; end: string } {
     const temporalExtents = this.metadata.temporalExtents
-    return getTemporalRangeUnion(temporalExtents)
+    return getTemporalRangeUnion(temporalExtents, this.dateService)
   }
 
   get shownOrganization() {

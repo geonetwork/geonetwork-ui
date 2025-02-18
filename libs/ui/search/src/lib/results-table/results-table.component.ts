@@ -21,6 +21,7 @@ import {
   InteractiveTableComponent,
 } from '@geonetwork-ui/ui/layout'
 import {
+  DateService,
   FileFormat,
   formatUserInfo,
   getBadgeColor,
@@ -86,7 +87,8 @@ export class ResultsTableComponent {
   constructor(
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private dateService: DateService
   ) {}
 
   openActionMenu(item, template) {
@@ -139,7 +141,7 @@ export class ResultsTableComponent {
   }
 
   dateToString(date: Date): string {
-    return date?.toLocaleDateString(undefined, {
+    return this.dateService.formatDate(date, {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
