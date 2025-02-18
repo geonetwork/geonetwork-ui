@@ -15,7 +15,7 @@ Other directories include:
 - `assets-common`: shared assets across all apps
 - `conf`: configuration-related files
 - `docs`: this website
-- `package`: contains the necessary toolkit for generating the [NPM package](./custom-app.md)
+- `package`: contains the necessary toolkit for generating the [NPM package](../guide/custom-app.md)
 - `support-services`: docker composition used to [set up the development environment](./dev-environment.md)
 - `tools`: various tools & utils for docker, internationalization etc.
 - `translations`: contains the translations of all keys used in the project
@@ -81,7 +81,7 @@ The libraries are as follow:
 
 #### `webcomponents`: Embeddable webcomponents
 
-See [the specific README file](apps/webcomponents).
+See [the specific README file](https://github.com/geonetwork/geonetwork-ui/tree/main/apps/webcomponents).
 
 ## Applications
 

@@ -208,7 +208,7 @@ describe('MyStandaloneComponent', () => {
 ```
 
 ::: tip
-[Click here to read the guide on how internationalization (i18n) is done in the project](../reference/i18n.html).
+[Click here to read the guide on how internationalization (i18n) is done in the project](./i18n.html).
 :::
 
 ## End-to-end tests
