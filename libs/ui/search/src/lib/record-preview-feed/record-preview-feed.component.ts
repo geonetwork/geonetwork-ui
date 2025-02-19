@@ -2,6 +2,9 @@ import { ChangeDetectionStrategy, Component, ElementRef } from '@angular/core'
 import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 import { TranslateService } from '@ngx-translate/core'
 import Duration from 'duration-relativetimeformat'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('record.was.created.time')
 
 @Component({
   selector: 'gn-ui-record-preview-feed',

@@ -19,6 +19,10 @@ import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matCloseOutline } from '@ng-icons/material-icons/outline'
 import { TranslateModule } from '@ngx-translate/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('record.metadata.api.form.title.gpf')
+marker('record.metadata.api.form.title')
 
 @Component({
   selector: 'datahub-record-apis',
