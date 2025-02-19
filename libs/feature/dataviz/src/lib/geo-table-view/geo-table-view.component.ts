@@ -19,6 +19,7 @@ import {
   FeatureDetailComponent,
   MapContainerComponent,
 } from '@geonetwork-ui/ui/map'
+import { BaseReader } from '@geonetwork-ui/data-fetcher'
 
 @Component({
   selector: 'gn-ui-geo-table-view',
@@ -29,16 +30,19 @@ import {
   standalone: true,
 })
 export class GeoTableViewComponent implements OnInit, OnDestroy {
-  @Input() data: FeatureCollection = { type: 'FeatureCollection', features: [] }
+  @Input() set dataset(value: BaseReader) {
+    this.dataset_ = value
+    this.dataset_.load()
+  }
   @ViewChild('table') uiTable: TableComponent
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
 
-  tableData: TableItemModel[]
+  data: FeatureCollection
+  dataset_: BaseReader
   mapContext: MapContext
   selectionId: TableItemId
   selection: Feature
   private subscription = new Subscription()
-
   get features() {
     return this.data.features
   }
@@ -46,8 +50,16 @@ export class GeoTableViewComponent implements OnInit, OnDestroy {
   constructor(private changeRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.tableData = this.geojsonToTableData(this.data)
-    this.mapContext = this.initMapContext()
+    this.dataset_.read().then((features) => {
+      this.data = {
+        type: 'FeatureCollection',
+        features: features.map((feature) => ({
+          ...feature,
+          id: feature.id,
+        })),
+      }
+      this.mapContext = this.initMapContext()
+    })
   }
 
   onTableSelect(tableEntry: TableItemModel) {
@@ -68,13 +80,6 @@ export class GeoTableViewComponent implements OnInit, OnDestroy {
       // this.vectorLayer.changed()
       this.uiTable.scrollToItem(this.selectionId)
     }
-  }
-
-  private geojsonToTableData(geojson: FeatureCollection) {
-    return geojson.features.map((f) => ({
-      id: f.id,
-      ...f.properties,
-    }))
   }
 
   private initMapContext(): MapContext {
