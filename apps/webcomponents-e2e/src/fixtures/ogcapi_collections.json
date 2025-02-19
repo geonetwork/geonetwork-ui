@@ -1,0 +1,129 @@
+{
+  "collections": [
+    {
+      "id": "covoit-mel",
+      "title": "covoit-mel",
+      "links": [
+        {
+          "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/covoit-mel/items?f=geojson",
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "covoit-mel"
+        },
+        {
+          "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/covoit-mel/items?f=json&limit=-1",
+          "rel": "enclosure",
+          "type": "application/json",
+          "title": "Bulk download (JSON)"
+        },
+        {
+          "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/covoit-mel/items?f=geojson&limit=-1",
+          "rel": "enclosure",
+          "type": "application/geo+json",
+          "title": "Bulk download (GeoJSON)"
+        },
+        {
+          "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/covoit-mel/items?f=shapefile&limit=-1",
+          "rel": "enclosure",
+          "type": "application/x-shapefile",
+          "title": "Bulk download (Esri Shapefile)"
+        },
+        {
+          "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/covoit-mel/items?f=csv&limit=-1",
+          "rel": "enclosure",
+          "type": "text/csv;charset=UTF-8",
+          "title": "Bulk download (Comma Separated Values)"
+        },
+        {
+          "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/covoit-mel/items?f=ooxml&limit=-1",
+          "rel": "enclosure",
+          "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "title": "Bulk download (Excel 2007 / OOXML)"
+        }
+      ],
+      "itemType": "feature",
+      "crs": ["http://www.opengis.net/def/crs/OGC/1.3/CRS84"]
+    },
+    {
+      "id": "geopackages_to_delete",
+      "title": "geopackages_to_delete",
+      "links": [
+        {
+          "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/geopackages_to_delete/items?f=geojson",
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "geopackages_to_delete"
+        },
+        {
+          "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/geopackages_to_delete/items?f=json&limit=-1",
+          "rel": "enclosure",
+          "type": "application/json",
+          "title": "Bulk download (JSON)"
+        },
+        {
+          "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/geopackages_to_delete/items?f=geojson&limit=-1",
+          "rel": "enclosure",
+          "type": "application/geo+json",
+          "title": "Bulk download (GeoJSON)"
+        },
+        {
+          "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/geopackages_to_delete/items?f=csv&limit=-1",
+          "rel": "enclosure",
+          "type": "text/csv;charset=UTF-8",
+          "title": "Bulk download (Comma Separated Values)"
+        },
+        {
+          "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/geopackages_to_delete/items?f=ooxml&limit=-1",
+          "rel": "enclosure",
+          "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "title": "Bulk download (Excel 2007 / OOXML)"
+        }
+      ],
+      "itemType": "record"
+    },
+    {
+      "id": "liste-des-jardins-familiaux-et-partages-de-roubaix",
+      "title": "liste-des-jardins-familiaux-et-partages-de-roubaix",
+      "links": [
+        {
+          "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?f=geojson",
+          "rel": "items",
+          "type": "application/geo+json",
+          "title": "liste-des-jardins-familiaux-et-partages-de-roubaix"
+        },
+        {
+          "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?f=json&limit=-1",
+          "rel": "enclosure",
+          "type": "application/json",
+          "title": "Bulk download (JSON)"
+        },
+        {
+          "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?f=geojson&limit=-1",
+          "rel": "enclosure",
+          "type": "application/geo+json",
+          "title": "Bulk download (GeoJSON)"
+        },
+        {
+          "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?f=shapefile&limit=-1",
+          "rel": "enclosure",
+          "type": "application/x-shapefile",
+          "title": "Bulk download (Esri Shapefile)"
+        },
+        {
+          "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?f=csv&limit=-1",
+          "rel": "enclosure",
+          "type": "text/csv;charset=UTF-8",
+          "title": "Bulk download (Comma Separated Values)"
+        },
+        {
+          "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?f=ooxml&limit=-1",
+          "rel": "enclosure",
+          "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "title": "Bulk download (Excel 2007 / OOXML)"
+        }
+      ],
+      "itemType": "feature",
+      "crs": ["http://www.opengis.net/def/crs/OGC/1.3/CRS84"]
+    }
+  ]
+}

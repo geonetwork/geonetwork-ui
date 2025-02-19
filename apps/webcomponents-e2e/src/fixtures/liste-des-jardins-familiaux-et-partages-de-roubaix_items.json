@@ -1,0 +1,136 @@
+{
+  "numberMatched": 41,
+  "numberReturned": 10,
+  "records": [
+    {
+      "@id": "1",
+      "﻿nom": "Luxembourg",
+      "adresse": "Rue du Luxembourg",
+      "OBJECTID": 1,
+      "geo_shape": "{\"coordinates\": [3.1520091516295423, 50.68782872872605], \"type\": \"Point\"}",
+      "geo_point_2d": "50.68782872872605, 3.1520091516295423"
+    },
+    {
+      "@id": "2",
+      "﻿nom": "Brondeloire",
+      "adresse": "38 rue du Brondeloire",
+      "OBJECTID": 2,
+      "geo_shape": "{\"coordinates\": [3.158070964759599, 50.690337919553706], \"type\": \"Point\"}",
+      "geo_point_2d": "50.690337919553706, 3.158070964759599"
+    },
+    {
+      "@id": "3",
+      "﻿nom": "Rome",
+      "adresse": "68 bis Rue de Rome",
+      "OBJECTID": 5,
+      "geo_shape": "{\"coordinates\": [3.158815444373721, 50.695729149252635], \"type\": \"Point\"}",
+      "geo_point_2d": "50.695729149252635, 3.158815444373721"
+    },
+    {
+      "@id": "4",
+      "﻿nom": "Alma",
+      "adresse": "226 Rue de l'Alma",
+      "OBJECTID": 7,
+      "geo_shape": "{\"coordinates\": [3.170914706775103, 50.70016060535821], \"type\": \"Point\"}",
+      "geo_point_2d": "50.70016060535821, 3.170914706775103"
+    },
+    {
+      "@id": "5",
+      "﻿nom": "Bord de canal",
+      "adresse": "Quai de Toulon et Quai de Rouen",
+      "OBJECTID": 10,
+      "geo_shape": "{\"coordinates\": [3.188111428412068, 50.69786556339497], \"type\": \"Point\"}",
+      "geo_point_2d": "50.69786556339497, 3.188111428412068"
+    },
+    {
+      "@id": "6",
+      "﻿nom": "Marceau",
+      "adresse": "1 Rue Marceau",
+      "OBJECTID": 12,
+      "geo_shape": "{\"coordinates\": [3.1938923087141933, 50.690492700879766], \"type\": \"Point\"}",
+      "geo_point_2d": "50.690492700879766, 3.1938923087141933"
+    },
+    {
+      "@id": "7",
+      "﻿nom": "Fontier",
+      "adresse": "60 Rue de Denain",
+      "OBJECTID": 15,
+      "geo_shape": "{\"coordinates\": [3.178030581032674, 50.68327981740213], \"type\": \"Point\"}",
+      "geo_point_2d": "50.68327981740213, 3.178030581032674"
+    },
+    {
+      "@id": "8",
+      "﻿nom": "Artois",
+      "adresse": "8 Rue d'Artois",
+      "OBJECTID": 17,
+      "geo_shape": "{\"coordinates\": [3.1858945557217004, 50.68116568357998], \"type\": \"Point\"}",
+      "geo_point_2d": "50.68116568357998, 3.1858945557217004"
+    },
+    {
+      "@id": "9",
+      "﻿nom": "Hauts Champs",
+      "adresse": "rue Jean Baptiste Chardin",
+      "OBJECTID": 415,
+      "geo_shape": "{\"coordinates\": [3.196147408905368, 50.67386486034824], \"type\": \"Point\"}",
+      "geo_point_2d": "50.67386486034824, 3.196147408905368"
+    },
+    {
+      "@id": "10",
+      "﻿nom": "Vivier",
+      "adresse": "Rue des arts",
+      "OBJECTID": 3,
+      "geo_shape": "{\"coordinates\": [3.1598916392041674, 50.69160592869598], \"type\": \"Point\"}",
+      "geo_point_2d": "50.69160592869598, 3.1598916392041674"
+    }
+  ],
+  "links": [
+    {
+      "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?f=json",
+      "rel": "self",
+      "type": "application/json",
+      "hreflang": null,
+      "title": "This document",
+      "length": null
+    },
+    {
+      "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?f=json&offset=10&limit=10",
+      "rel": "next",
+      "type": "application/json",
+      "hreflang": null,
+      "title": "Next page",
+      "length": null
+    },
+    {
+      "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?f=geojson",
+      "rel": "alternate",
+      "type": "application/geo+json",
+      "hreflang": null,
+      "title": "This document as GeoJSON",
+      "length": null
+    },
+    {
+      "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?f=shapefile",
+      "rel": "alternate",
+      "type": "application/x-shapefile",
+      "hreflang": null,
+      "title": "This document as Esri Shapefile",
+      "length": null
+    },
+    {
+      "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?f=csv",
+      "rel": "alternate",
+      "type": "text/csv;charset=UTF-8",
+      "hreflang": null,
+      "title": "This document as Comma Separated Values",
+      "length": null
+    },
+    {
+      "href": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?f=ooxml",
+      "rel": "alternate",
+      "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "hreflang": null,
+      "title": "This document as Excel 2007 / OOXML",
+      "length": null
+    }
+  ]
+}

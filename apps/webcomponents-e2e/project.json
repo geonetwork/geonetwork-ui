@@ -1,0 +1,24 @@
+{
+  "name": "webcomponents-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/webcomponents-e2e/src",
+  "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["webcomponents"],
+  "targets": {
+    "component": {
+      "devServer": {
+        "framework": "angular",
+        "bundler": "webpack"
+      },
+      "specPattern": "**/*.cy.ts"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/webcomponents-e2e/**/*.{js,ts}"]
+      }
+    }
+  }
+}
