@@ -5,7 +5,7 @@ export function parseHeaders(httpHeaders: Headers): DatasetHeaders {
   if (httpHeaders.has('Content-Type')) {
     result.mimeType = httpHeaders.get('Content-Type').split(';')[0]
     const supported =
-      SupportedTypes.filter(
+      SupportedTypes.filter((type) => type !== 'wfs').filter(
         (type) => AllMimeTypes[type].indexOf(result.mimeType as never) > -1
       )[0] || null
     if (supported !== null) result.supportedType = supported
