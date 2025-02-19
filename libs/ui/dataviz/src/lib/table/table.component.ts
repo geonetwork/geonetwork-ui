@@ -21,6 +21,7 @@ import {
   MatPaginatorIntl,
   MatPaginatorModule,
 } from '@angular/material/paginator'
+import { CustomMatPaginatorIntl } from './custom.mat.paginator.intl'
 
 const rowIdPrefix = 'table-item-'
 
@@ -42,7 +43,7 @@ export interface TableItemModel {
     NgForOf,
     TranslateModule,
   ],
-  providers: [MatPaginatorIntl],
+  providers: [{ provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }],
   selector: 'gn-ui-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
