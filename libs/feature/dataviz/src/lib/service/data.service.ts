@@ -244,15 +244,13 @@ export class DataService {
 
   getDataset(link: DatasetOnlineResource): Observable<BaseReader> {
     if (link.type === 'service' && link.accessServiceProtocol === 'wfs') {
+      const wfsUrlEndpoint = this.proxy.getProxiedUrl(link.url.toString())
       return this.getDownloadUrlsFromWfs(link.url.toString(), link.name).pipe(
         switchMap((urls) => {
-          if (urls.geojson) return openDataset(urls.geojson, 'geojson')
-          if (urls.gml)
-            return openDataset(urls.gml.featureUrl, 'gml', {
-              namespace: urls.gml.namespace,
-              wfsVersion: urls.gml.wfsVersion,
-            })
-          return null
+          return openDataset(link.url.toString(), 'wfs', {
+            wfsUrlEndpoint,
+            namespace: link.name,
+          })
         }),
         tap((url) => {
           if (url === null) {
