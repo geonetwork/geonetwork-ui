@@ -8,11 +8,16 @@ import { inferDatasetType } from './utils'
 import { BaseReader } from './readers/base'
 import { GmlReader } from './readers/gml'
 import { WfsVersion } from '@camptocamp/ogc-client'
+import { WfsReader } from './readers/wfs'
 
 export async function openDataset(
   url: string,
   typeHint?: SupportedType,
-  options?: { namespace: string; wfsVersion: WfsVersion }
+  options?: {
+    namespace?: string
+    wfsVersion?: WfsVersion
+    wfsUrlEndpoint?: string
+  }
 ): Promise<BaseReader> {
   const fileType = await inferDatasetType(url, typeHint)
   let reader: BaseReader
@@ -32,6 +37,13 @@ export async function openDataset(
         break
       case 'gml':
         reader = new GmlReader(url, options.namespace, options.wfsVersion)
+        break
+      case 'wfs':
+        reader = await WfsReader.createReader(
+          url,
+          options.wfsUrlEndpoint,
+          options.namespace
+        )
         break
     }
     reader.load()
