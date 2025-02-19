@@ -263,11 +263,8 @@ describe('Gn4Repository', () => {
       )
     })
     it('uses a related record ES payload', () => {
-      expect(gn4Helper.getRelatedRecordPayload).toHaveBeenCalledWith(
-        'A very interesting dataset (un jeu de données très intéressant)',
-        'my-dataset-001',
-        3
-      )
+      const record = datasetRecordsFixture()[0]
+      expect(gn4Helper.getRelatedRecordPayload).toHaveBeenCalledWith(record, 3)
     })
     it('returns the given results as records', () => {
       expect(results).toStrictEqual(datasetRecordsFixture())
