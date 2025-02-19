@@ -37,6 +37,11 @@ import {
   switchMap,
 } from 'rxjs'
 
+marker('editor.record.form.field.onlineResource.edit.identifier.placeholder')
+marker(
+  'editor.record.form.field.onlineResource.edit.identifier.placeholder.wps'
+)
+
 @Component({
   selector: 'gn-ui-online-service-resource-input',
   templateUrl: './online-service-resource-input.component.html',

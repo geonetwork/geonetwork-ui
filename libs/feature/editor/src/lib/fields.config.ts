@@ -63,6 +63,8 @@ export const RECORD_KEYWORDS_FIELD: EditorField = {
   model: 'keywords',
   formFieldConfig: {},
 }
+// keeping track of the label to not lose existing translation
+marker('editor.record.form.field.keywords')
 
 export const RECORD_RESOURCE_CREATED_FIELD: EditorField = {
   model: 'resourceCreated',
@@ -156,18 +158,24 @@ export const RECORD_SPATIAL_EXTENTS_FIELD: EditorField = {
   model: 'spatialExtents',
   formFieldConfig: {},
 }
+// keeping track of the label to not lose existing translation
+marker('editor.record.form.field.spatialExtents')
 
 export const RECORD_ONLINE_RESOURCES: EditorField = {
   model: 'onlineResources',
   modelSpecifier: 'onlineResourceType:!link',
   formFieldConfig: {},
 }
+// keeping track of the label to not lose existing translation
+marker('editor.record.form.field.onlineResources')
 
 export const RECORD_ONLINE_LINK_RESOURCES: EditorField = {
   model: 'onlineResources',
   modelSpecifier: 'onlineResourceType:link',
   formFieldConfig: {},
 }
+// keeping track of the label to not lose existing translation
+marker('editor.record.form.field.onlineLinkResources')
 
 /************************************************************
  ***************          SECTIONS          *****************
@@ -273,7 +281,7 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
       ],
     },
     {
-      labelKey: marker('editor.record.form.page.ressources'),
+      labelKey: marker('editor.record.form.page.resources'),
       sections: [ASSOCIATED_RESOURCES_SECTION, ANNEXES_SECTION],
     },
     {
