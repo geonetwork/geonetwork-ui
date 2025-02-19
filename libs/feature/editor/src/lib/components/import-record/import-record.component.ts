@@ -84,10 +84,6 @@ export class ImportRecordComponent {
 
   sectionDisplayed: ImportMenuPage = 'mainMenu'
 
-  externalImportBackLabel = this.translateService.instant(
-    'dashboard.importRecord.importExternalLabel'
-  )
-
   constructor(
     private router: Router,
     private translateService: TranslateService,
