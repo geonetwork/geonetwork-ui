@@ -63,10 +63,12 @@ class DataServiceMock {
       : Promise.resolve([
           {
             ...link,
+            title: 'collection1',
             mimeType: 'application/geo+json',
           },
           {
             ...link,
+            title: 'collection2',
             mimeType: 'application/json',
           },
         ])

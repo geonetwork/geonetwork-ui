@@ -168,6 +168,7 @@ export class DataService {
       map((urls) =>
         Object.keys(urls).map((format) => ({
           ...wfsLink,
+          name: wfsLink.name,
           type: 'download',
           url: new URL(urls[format]),
           mimeType: getMimeTypeForFormat(
@@ -187,6 +188,7 @@ export class DataService {
     return Object.keys(collectionInfo.bulkDownloadLinks).map((downloadLink) => {
       return {
         ...ogcApiLink,
+        name: collectionInfo.title,
         type: 'download',
         url: new URL(collectionInfo.bulkDownloadLinks[downloadLink]),
         mimeType: getMimeTypeForFormat(
