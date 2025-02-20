@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core'
 import {
-  TableComponent,
+  TableScrollComponent,
   TableItemId,
   TableItemModel,
 } from '@geonetwork-ui/ui/dataviz'
@@ -19,30 +19,30 @@ import {
   FeatureDetailComponent,
   MapContainerComponent,
 } from '@geonetwork-ui/ui/map'
-import { BaseReader } from '@geonetwork-ui/data-fetcher'
 
 @Component({
   selector: 'gn-ui-geo-table-view',
   templateUrl: './geo-table-view.component.html',
   styleUrls: ['./geo-table-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TableComponent, MapContainerComponent, FeatureDetailComponent],
+  imports: [
+    TableScrollComponent,
+    MapContainerComponent,
+    FeatureDetailComponent,
+  ],
   standalone: true,
 })
 export class GeoTableViewComponent implements OnInit, OnDestroy {
-  @Input() set dataset(value: BaseReader) {
-    this.dataset_ = value
-    this.dataset_.load()
-  }
-  @ViewChild('table') uiTable: TableComponent
+  @Input() data: FeatureCollection = { type: 'FeatureCollection', features: [] }
+  @ViewChild('table') uiTable: TableScrollComponent
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
 
-  data: FeatureCollection
-  dataset_: BaseReader
+  tableData: TableItemModel[]
   mapContext: MapContext
   selectionId: TableItemId
   selection: Feature
   private subscription = new Subscription()
+
   get features() {
     return this.data.features
   }
@@ -50,13 +50,8 @@ export class GeoTableViewComponent implements OnInit, OnDestroy {
   constructor(private changeRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.dataset_.read().then((features) => {
-      this.data = {
-        type: 'FeatureCollection',
-        features,
-      }
-      this.mapContext = this.initMapContext()
-    })
+    this.tableData = this.geojsonToTableData(this.data)
+    this.mapContext = this.initMapContext()
   }
 
   onTableSelect(tableEntry: TableItemModel) {
@@ -77,6 +72,13 @@ export class GeoTableViewComponent implements OnInit, OnDestroy {
       // this.vectorLayer.changed()
       this.uiTable.scrollToItem(this.selectionId)
     }
+  }
+
+  private geojsonToTableData(geojson: FeatureCollection) {
+    return geojson.features.map((f) => ({
+      id: f.id,
+      ...f.properties,
+    }))
   }
 
   private initMapContext(): MapContext {
