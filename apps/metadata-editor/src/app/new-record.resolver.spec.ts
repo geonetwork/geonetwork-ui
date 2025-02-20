@@ -15,6 +15,11 @@ import {
   barbieUserFixture,
   someOrganizationsFixture,
 } from '@geonetwork-ui/common/fixtures'
+import { TranslateService } from '@ngx-translate/core'
+
+class TranslateServiceMock {
+  instant = jest.fn((key: string) => key)
+}
 
 const user = barbieUserFixture()
 
@@ -29,7 +34,6 @@ class OrganizationsServiceInterfaceMock {
 describe('NewRecordResolver', () => {
   let resolver: NewRecordResolver
   let resolvedData: [CatalogRecord, string, boolean]
-  let recordsRepository: RecordsRepositoryInterface
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -43,6 +47,10 @@ describe('NewRecordResolver', () => {
           provide: OrganizationsServiceInterface,
           useClass: OrganizationsServiceInterfaceMock,
         },
+        {
+          provide: TranslateService,
+          useClass: TranslateServiceMock,
+        },
       ],
     })
 
@@ -50,7 +58,6 @@ describe('NewRecordResolver', () => {
       providers: [MockProvider(RecordsRepositoryInterface)],
     })
     resolver = TestBed.inject(NewRecordResolver)
-    recordsRepository = TestBed.inject(RecordsRepositoryInterface)
   })
 
   it('should be created', () => {
@@ -59,13 +66,11 @@ describe('NewRecordResolver', () => {
 
   describe('new record', () => {
     beforeEach(() => {
-      recordsRepository.generateTemporaryId = jest.fn(() => 'TEMP-ID-123')
       resolvedData = undefined
       resolver.resolve().subscribe((r) => (resolvedData = r))
-      recordsRepository.generateTemporaryId = jest.fn(() => 'TEMP-ID-123')
     })
 
-    it('creates a new empty record with a pregenerated id and connected user information as contact for ressource with the point_of_contact role.', () => {
+    it('creates a new empty record with connected user information as contact for ressource with the point_of_contact role.', () => {
       const expectedContacts = [
         {
           firstName: user.name,
@@ -86,7 +91,7 @@ describe('NewRecordResolver', () => {
           status: 'ongoing',
           temporalExtents: [],
           licenses: [],
-          title: expect.stringMatching(/^My new record/),
+          title: 'editor.new.record.title',
           uniqueIdentifier: null,
         } as Partial<CatalogRecord>,
         null,

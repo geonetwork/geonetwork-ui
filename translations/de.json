@@ -197,6 +197,7 @@
   "dropFile": "Datei ablegen",
   "editor.form.keywords.placeholder": "",
   "editor.form.placeKeywordWithoutExtent": "",
+  "editor.new.record.title": "",
   "editor.record.delete.confirmation.cancelText": "Stornieren",
   "editor.record.delete.confirmation.confirmText": "Löschen",
   "editor.record.delete.confirmation.message": "Sind Sie sicher, dass Sie diesen Datensatz löschen möchten?",
