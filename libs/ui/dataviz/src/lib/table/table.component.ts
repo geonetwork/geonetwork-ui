@@ -7,6 +7,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
   ViewChild,
@@ -49,7 +50,7 @@ export interface TableItemModel {
   styleUrls: ['./table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent implements OnInit, AfterViewInit {
+export class TableComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() set dataset(value: BaseReader) {
     this.dataset_ = value
     this.dataset_.load()
@@ -82,6 +83,10 @@ export class TableComponent implements OnInit, AfterViewInit {
     this.setPagination()
   }
 
+  ngOnChanges() {
+    this.setPagination()
+  }
+
   setSort(sort: MatSort) {
     if (!this.sort.active) {
       this.dataset_.orderBy()
@@ -92,6 +97,7 @@ export class TableComponent implements OnInit, AfterViewInit {
   }
 
   setPagination() {
+    if (!this.paginator) return
     this.dataset_.limit(this.paginator.pageIndex, this.paginator.pageSize)
     this.dataSource.showData(this.dataset_.read())
   }
