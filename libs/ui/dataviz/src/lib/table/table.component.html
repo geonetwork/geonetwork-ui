@@ -34,13 +34,19 @@
       ></tr>
     </table>
   </div>
+  <div class="flex justify-between items-center">
+    <div class="text-gray-900 px-4 py-2 text-sm">
+      <span class="count font-extrabold text-primary">{{ count }}</span
+      >&nbsp;<span translate>table.object.count</span>.
+    </div>
 
-  <mat-paginator
-    class="sticky bottom-0 right-0 rounded-lg"
-    (page)="setPagination()"
-    [length]="count"
-    [pageSize]="10"
-    [showFirstLastButtons]="true"
-    [hidePageSize]="true"
-  ></mat-paginator>
+    <mat-paginator
+      class="rounded-lg"
+      (page)="setPagination()"
+      [length]="count"
+      [pageSize]="10"
+      [showFirstLastButtons]="true"
+      [hidePageSize]="true"
+    ></mat-paginator>
+  </div>
 </div>
