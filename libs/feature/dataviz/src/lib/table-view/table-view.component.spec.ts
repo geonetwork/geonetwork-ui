@@ -18,21 +18,31 @@ import { TranslateModule } from '@ngx-translate/core'
 import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
 import { TableComponent } from '@geonetwork-ui/ui/dataviz'
 
-const SAMPLE_DATA_ITEMS = [
+const SAMPLE_DATA_ITEMS_CSV = [
   { type: 'Feature', properties: { id: 1 } },
   { type: 'Feature', properties: { id: 2 } },
 ]
-const SAMPLE_TABLE_DATA = [{ id: 1 }, { id: 2 }]
+const SAMPLE_DATA_ITEMS_GEOJSON = [
+  { type: 'Feature', properties: { id: 3 } },
+  { type: 'Feature', properties: { id: 4 } },
+]
 
-class DatasetReaderMock {
-  read = jest.fn(() => Promise.resolve(SAMPLE_DATA_ITEMS))
+class DatasetCsvReaderMock {
+  read = jest.fn(() => Promise.resolve(SAMPLE_DATA_ITEMS_CSV))
+}
+class DatasetGeoJsonReaderMock {
+  read = jest.fn(() => Promise.resolve(SAMPLE_DATA_ITEMS_GEOJSON))
 }
 class DataServiceMock {
-  getDataset = jest.fn(({ url }) =>
-    url.toString().indexOf('error') > -1
-      ? throwError(() => new FetchError('unknown', 'data loading error'))
-      : of(new DatasetReaderMock())
-  )
+  getDataset = jest.fn(({ url }) => {
+    if (url.toString().indexOf('error') > -1) {
+      return throwError(() => new FetchError('unknown', 'data loading error'))
+    } else if (url.toString().indexOf('csv') > -1) {
+      return of(new DatasetCsvReaderMock())
+    } else {
+      return of(new DatasetGeoJsonReaderMock())
+    }
+  })
 }
 
 describe('TableViewComponent', () => {
@@ -104,8 +114,13 @@ describe('TableViewComponent', () => {
         fixture.detectChanges()
       }))
 
-      it('displays mocked data in the table', () => {
-        expect(tableComponent.data).toEqual(SAMPLE_TABLE_DATA)
+      it('passes dataset reader to table', () => {
+        expect(tableComponent.dataset).toBeInstanceOf(DatasetCsvReaderMock)
+      })
+
+      it('displays data in the table', async () => {
+        const data = await tableComponent.dataset.read()
+        expect(data).toEqual(SAMPLE_DATA_ITEMS_CSV)
       })
 
       describe('when switching data link', () => {
@@ -120,7 +135,13 @@ describe('TableViewComponent', () => {
           )
         })
         it('displays mocked data in the table', () => {
-          expect(tableComponent.data).toEqual(SAMPLE_TABLE_DATA)
+          expect(tableComponent.dataset).toBeInstanceOf(
+            DatasetGeoJsonReaderMock
+          )
+        })
+        it('displays data in the table', async () => {
+          const data = await tableComponent.dataset.read()
+          expect(data).toEqual(SAMPLE_DATA_ITEMS_GEOJSON)
         })
       })
     })
