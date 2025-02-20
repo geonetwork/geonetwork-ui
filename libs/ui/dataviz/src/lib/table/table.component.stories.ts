@@ -19,6 +19,7 @@ import {
   DataItem,
   PropertyInfo,
 } from '@geonetwork-ui/data-fetcher'
+import { tableItemsFixture } from './table.fixtures'
 
 export default {
   title: 'Dataviz/TableComponent',
@@ -44,42 +45,7 @@ export class MockBaseReader extends BaseFileReader {
     items: DataItem[]
     properties: PropertyInfo[]
   }> {
-    return Promise.resolve({
-      items: [
-        {
-          type: 'Feature',
-          geometry: null,
-          properties: {
-            id: '0001',
-            firstName: 'John',
-            lastName: 'Lennon',
-          },
-        },
-        {
-          type: 'Feature',
-          geometry: null,
-          properties: {
-            id: '0002',
-            firstName: 'Ozzy',
-            lastName: 'Osbourne',
-          },
-        },
-        {
-          type: 'Feature',
-          geometry: null,
-          properties: {
-            id: '0003',
-            firstName: 'Claude',
-            lastName: 'François',
-          },
-        },
-      ],
-      properties: [
-        { name: 'id', label: 'id', type: 'string' },
-        { name: 'firstName', label: 'Firstname', type: 'string' },
-        { name: 'lastName', label: 'Lastname', type: 'string' },
-      ],
-    })
+    return Promise.resolve(tableItemsFixture)
   }
   // override read(): Promise<DataItem[]> {
   //   return Promise.resolve([

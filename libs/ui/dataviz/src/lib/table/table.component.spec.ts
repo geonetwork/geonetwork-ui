@@ -3,11 +3,33 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { someHabTableItemFixture, tableItemFixture } from './table.fixtures'
+import { someHabTableItemFixture, tableItemsFixture } from './table.fixtures'
 import { TableComponent } from './table.component'
 import { By } from '@angular/platform-browser'
 import { TableItemSizeDirective } from 'ng-table-virtual-scroll'
 import { TranslateModule } from '@ngx-translate/core'
+import {
+  BaseFileReader,
+  DataItem,
+  PropertyInfo,
+} from '@geonetwork-ui/data-fetcher'
+
+export class MockBaseReader extends BaseFileReader {
+  data: {
+    items: DataItem[]
+    properties: PropertyInfo[]
+  }
+  constructor(data: { items: DataItem[]; properties: PropertyInfo[] }) {
+    super('')
+    this.data = data
+  }
+  override getData(): Promise<{
+    items: DataItem[]
+    properties: PropertyInfo[]
+  }> {
+    return Promise.resolve(this.data)
+  }
+}
 
 describe('TableComponent', () => {
   let component: TableComponent
@@ -32,7 +54,7 @@ describe('TableComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TableComponent)
     component = fixture.componentInstance
-    component.data = tableItemFixture()
+    component.dataset = new MockBaseReader(tableItemsFixture)
   })
 
   it('should create', () => {
@@ -42,7 +64,7 @@ describe('TableComponent', () => {
 
   it('computes data properties', () => {
     fixture.detectChanges()
-    expect(component.properties).toEqual(['name', 'id', 'age'])
+    expect(component.properties).toEqual(['id', 'firstName', 'lastName'])
   })
 
   it('displays the amount of objects in the dataset', () => {
@@ -55,14 +77,14 @@ describe('TableComponent', () => {
     let previousDataSource
     beforeEach(() => {
       previousDataSource = component.dataSource
-      component.data = someHabTableItemFixture()
+      component.dataset = new MockBaseReader(someHabTableItemFixture)
       fixture.detectChanges()
     })
     it('updates the internal data source', () => {
       expect(component.dataSource).not.toBe(previousDataSource)
     })
     it('recomputes the data properties', () => {
-      expect(component.properties).toEqual(['name', 'id', 'pop'])
+      expect(component.properties).toEqual(['id', 'name', 'pop'])
     })
   })
 })
