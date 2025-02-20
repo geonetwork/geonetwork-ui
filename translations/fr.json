@@ -197,6 +197,7 @@
   "dropFile": "Faites glisser votre fichier",
   "editor.form.keywords.placeholder": "Sélectionnez un mot-clé",
   "editor.form.placeKeywordWithoutExtent": "Ce mot-clé n'a pas de localisation géographique associée",
+  "editor.new.record.title": "Mon jeu de données",
   "editor.record.delete.confirmation.cancelText": "Annuler",
   "editor.record.delete.confirmation.confirmText": "Supprimer",
   "editor.record.delete.confirmation.message": "Êtes-vous sûr de vouloir supprimer ce jeu de données ?",

@@ -197,6 +197,7 @@
   "dropFile": "Drop file",
   "editor.form.keywords.placeholder": "Select a keyword",
   "editor.form.placeKeywordWithoutExtent": "This keyword is not associated with any geographical extent",
+  "editor.new.record.title": "My dataset",
   "editor.record.delete.confirmation.cancelText": "Cancel",
   "editor.record.delete.confirmation.confirmText": "Delete",
   "editor.record.delete.confirmation.message": "Are you sure you want to delete this dataset?",

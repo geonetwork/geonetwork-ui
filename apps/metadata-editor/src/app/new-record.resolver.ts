@@ -4,20 +4,20 @@ import {
   Individual,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { Observable, of } from 'rxjs'
 import { map, switchMap } from 'rxjs/operators'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { TranslateService } from '@ngx-translate/core'
 
 @Injectable({
   providedIn: 'root',
 })
 export class NewRecordResolver {
   constructor(
-    private recordsRepository: RecordsRepositoryInterface,
     private platformService: PlatformServiceInterface,
-    private organizationsServiceInterface: OrganizationsServiceInterface
+    private organizationsServiceInterface: OrganizationsServiceInterface,
+    private translateService: TranslateService
   ) {}
 
   resolve(): Observable<[CatalogRecord, string, boolean]> {
@@ -25,7 +25,7 @@ export class NewRecordResolver {
       map((userContact) => {
         const catalogRecord: CatalogRecord = {
           uniqueIdentifier: null,
-          title: `My new record`,
+          title: this.translateService.instant('editor.new.record.title'),
           abstract: '',
           ownerOrganization: {
             name: 'Owner organization',
