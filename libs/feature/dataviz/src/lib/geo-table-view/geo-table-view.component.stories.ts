@@ -12,11 +12,11 @@ import {
   FeatureDetailComponent,
   MapContainerComponent,
 } from '@geonetwork-ui/ui/map'
+import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 import { TableComponent } from '@geonetwork-ui/ui/dataviz'
 import { HttpClientModule } from '@angular/common/http'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { GeojsonReader } from '@geonetwork-ui/data-fetcher'
 
 export default {
   title: 'Map/GeoTable',
@@ -37,17 +37,13 @@ export default {
       ],
     }),
     componentWrapperDecorator(
-      (story) => `<div style="height: 480px">${story}</div>`
+      (story) => `<div style="height: 400px">${story}</div>`
     ),
   ],
 } as Meta<GeoTableViewComponent>
 
-const reader = new GeojsonReader(
-  'https://france-geojson.gregoiredavid.fr/repo/departements.geojson'
-)
-
 export const Primary: StoryObj<GeoTableViewComponent> = {
   args: {
-    dataset: reader,
+    data: pointFeatureCollectionFixture(),
   },
 }
