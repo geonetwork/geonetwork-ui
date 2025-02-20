@@ -273,7 +273,7 @@
   "editor.record.form.license.odbl": "",
   "editor.record.form.license.odc-by": "",
   "editor.record.form.license.pddl": "",
-  "editor.record.form.license.unknown": "",
+  "editor.record.form.license.unknown": "Inconnue ou absente",
   "editor.record.form.page.accessAndContact": "Informations pour l'utilisation",
   "editor.record.form.page.description": "Description du jeu de données",
   "editor.record.form.page.resources": "Ressources",
