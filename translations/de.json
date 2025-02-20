@@ -588,6 +588,7 @@
   "share.tab.permalink": "Teilen",
   "share.tab.webComponent": "Integrieren",
   "table.loading.data": "Daten werden geladen...",
+  "table.object.count": "Objekte in diesem Datensatz",
   "table.paginator.firstPage": "Erste Seite",
   "table.paginator.itemsPerPage": "Elemente pro Seite",
   "table.paginator.lastPage": "Letzte Seite",
