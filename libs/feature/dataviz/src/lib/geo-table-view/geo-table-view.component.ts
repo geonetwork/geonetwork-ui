@@ -53,10 +53,7 @@ export class GeoTableViewComponent implements OnInit, OnDestroy {
     this.dataset_.read().then((features) => {
       this.data = {
         type: 'FeatureCollection',
-        features: features.map((feature) => ({
-          ...feature,
-          id: feature.id,
-        })),
+        features,
       }
       this.mapContext = this.initMapContext()
     })
