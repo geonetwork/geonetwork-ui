@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-3">
   <gn-ui-generic-keywords
-    [placeholder]="'Search for place keywords'"
+    [placeholder]="'editor.record.form.keywords.place.placeholder' | translate"
     [keywords]="shownKeywords$ | async"
     [keywordTypes]="['place']"
     (deletedKeyword)="handleKeywordDelete($event)"
