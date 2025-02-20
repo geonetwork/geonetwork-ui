@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-3">
   <gn-ui-autocomplete
-    [placeholder]="'Choose a contact'"
+    [placeholder]="'editor.record.form.field.contacts.placeholder' | translate"
     [action]="autoCompleteAction"
     (itemSelected)="addContact($event)"
     [displayWithFn]="displayWithFn"
