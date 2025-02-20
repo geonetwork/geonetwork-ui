@@ -117,24 +117,24 @@ jobs:
 
       - name: Compute affected projects
         run: |
-          echo "AFFECTED_LIBS=$(npx nx show projects --affected --type=lib | awk 'BEGIN {RS = ", "; ORS = ", "} \
-          { print "`"$1"`" }')" >> $GITHUB_ENV
+          echo "AFFECTED_LIBS=$(npx nx show projects --affected --type=lib | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_ENV
 
       - name: Compute affected apps
         run: |
-          echo "AFFECTED_APPS=$(npx nx show projects --affected --type=app | awk 'BEGIN {RS = ", "; ORS = ", "} \
-          { print "`"$1"`" }')" >> $GITHUB_ENV
+          echo "AFFECTED_APPS=$(npx nx show projects --affected --type=app | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_ENV
 
       - name: add PR comment
         uses: thollander/actions-comment-pull-request@v2
         with:
-          message: 'Affected libs: ${{ env.AFFECTED_LIBS }}
+          message: |
+            **Affected libs:**
+            ${{ env.AFFECTED_LIBS }}
 
-            Affected apps: ${{ env.AFFECTED_APPS }}
+            **Affected apps:**
+            ${{ env.AFFECTED_APPS }}
 
             - [ ] 🚀 Build and deploy storybook and demo on GitHub Pages
-
-            - [ ] 📦 Build and push affected docker images'
+            - [ ] 📦 Build and push affected docker images
           comment_tag: build-options
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -168,8 +168,11 @@ jobs:
 
       - name: Compute affected apps
         run: |
-          echo "AFFECTED_APPS=$(npx nx show projects --affected --type=app | awk 'BEGIN {RS = ", "; ORS = ", "} \
-          { print "`"$1"`" }')" >> $GITHUB_ENV
+          echo "AFFECTED_APPS=$(npx nx show projects --affected --type=app | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_ENV
+
+      - name: Show affected apps
+        run: |
+          echo "Affected apps: ${{ env.AFFECTED_APPS }}"
 
       - name: Create pipeline docker image
         working-directory: tools
