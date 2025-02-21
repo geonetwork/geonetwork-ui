@@ -14,12 +14,13 @@ import { TableComponent } from './table.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiDatavizModule } from '../ui-dataviz.module'
 import { importProvidersFrom } from '@angular/core'
+import { tableItemsFixture } from './table.fixtures'
 import {
   BaseFileReader,
   DataItem,
+  openDataset,
   PropertyInfo,
 } from '@geonetwork-ui/data-fetcher'
-import { tableItemsFixture } from './table.fixtures'
 
 export default {
   title: 'Dataviz/TableComponent',
@@ -86,3 +87,40 @@ export const Primary: StoryObj<TableComponent> = {
     dataset: reader,
   },
 }
+
+export const WithGeojson: StoryObj<TableComponent> = {
+  loaders: [
+    async () => ({
+      dataset: await openDataset(
+        'https://france-geojson.gregoiredavid.fr/repo/departements.geojson',
+        'geojson'
+      ),
+    }),
+  ],
+  render(args, { loaded }) {
+    return {
+      props: loaded,
+    }
+  },
+}
+
+// TODO: uncomment this once WFS support in data-fetcher is merged
+// export const WithWfs: StoryObj<TableComponent> = {
+//   loaders: [
+//     async () => ({
+//       dataset: await openDataset(
+//         'https://www.geo2france.fr/geoserver/cr_hdf/ows',
+//         'wfs',
+//         {
+//           wfsUrlEndpoint: 'https://www.geo2france.fr/geoserver/cr_hdf/ows',
+//           namespace: 'accidento_hdf_L93',
+//         }
+//       ),
+//     }),
+//   ],
+//   render(args, { loaded }) {
+//     return {
+//       props: loaded,
+//     }
+//   },
+// }
