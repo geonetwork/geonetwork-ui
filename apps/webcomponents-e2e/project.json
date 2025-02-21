@@ -7,11 +7,21 @@
   "implicitDependencies": ["webcomponents"],
   "targets": {
     "component": {
-      "devServer": {
-        "framework": "angular",
-        "bundler": "webpack"
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/webcomponents-e2e/cypress.config.js",
+        "testingType": "component",
+        "devServerTarget": "webcomponents:serve"
       },
-      "specPattern": "**/*.cy.ts"
+      "configurations": {
+        "production": {
+          "devServerTarget": "webcomponents:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "webcomponents:serve:ci"
+        }
+      },
+      "specPattern": "apps/webcomponents-e2e/src/**/*.cy.ts"
     },
     "lint": {
       "executor": "@nx/eslint:lint",
