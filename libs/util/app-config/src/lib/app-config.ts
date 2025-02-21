@@ -94,6 +94,8 @@ export function loadAppConfig() {
         ['geonetwork4_api_url'],
         [
           'datahub_url',
+          'datahub_page_title_app',
+          'datahub_page_title_pattern',
           'proxy_path',
           'metadata_language',
           'login_url',
@@ -119,6 +121,10 @@ export function loadAppConfig() {
           : ({
               GN4_API_URL: parsedGlobalSection.geonetwork4_api_url,
               DATAHUB_URL: parsedGlobalSection.datahub_url,
+              DATAHUB_PAGE_TITLE_APP:
+                parsedGlobalSection.datahub_page_title_app,
+              DATAHUB_PAGE_TITLE_PATTERN:
+                parsedGlobalSection.datahub_page_title_pattern,
               PROXY_PATH: parsedGlobalSection.proxy_path,
               METADATA_LANGUAGE: parsedGlobalSection.metadata_language
                 ? (
