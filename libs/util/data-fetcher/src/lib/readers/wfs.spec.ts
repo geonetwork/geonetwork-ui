@@ -48,8 +48,8 @@ jest.mock('@camptocamp/ogc-client', () => ({
         defaultCrs: 'EPSG:4326',
       }
     }
-    getFeatureUrl() {
-      return this.url
+    getFeatureUrl(featureTypeName: string, options) {
+      return `${this.url}?1=1&STARTINDEX=${options.startIndex}&MAXFEATURES=${options.maxFeatures}`
     }
     getFeatureTypeFull() {
       return Promise.resolve({
@@ -202,6 +202,20 @@ describe('WfsReader', () => {
         })
       })
     })
+    describe('When adding limits and sorting to the reader', () => {
+      it('calls the Wfs api with the right startIndex, maxFeatures and sortby', async () => {
+        const fetchDataAsTextSpy = jest.spyOn(
+          require('../utils'),
+          'fetchDataAsText'
+        )
+        reader.limit(42, 10)
+        reader.orderBy(['asc', 'ville'], ['desc', 'epci'])
+        await reader.read()
+        expect(fetchDataAsTextSpy).toHaveBeenCalledWith(
+          'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson?1=1&STARTINDEX=42&MAXFEATURES=10&SORTBY=ville+A,epci+D'
+        )
+      })
+    })
   })
 
   describe('WfsReader - Wfs is version 2.0.0 gml', () => {
@@ -317,7 +331,7 @@ describe('WfsReader', () => {
     })
     it('returns an instance of WfsReader', async () => {
       await expect(
-        WfsReader.createReader(urlGeojson, urlGeojson, 'epci')
+        WfsReader.createReader(urlGeojson, urlGeojson)
       ).resolves.toBeInstanceOf(WfsReader)
     })
     it('returns an instance of GeojsonReader', async () => {
