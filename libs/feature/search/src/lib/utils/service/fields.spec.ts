@@ -1,13 +1,14 @@
 import { lastValueFrom, of } from 'rxjs'
 import {
   AbstractSearchField,
+  AvailableServicesField,
   FullTextSearchField,
   IsSpatialSearchField,
-  TranslatedSearchField,
   LicenseSearchField,
+  MultilingualSearchField,
   OrganizationSearchField,
   SimpleSearchField,
-  MultilingualSearchField,
+  TranslatedSearchField,
   UserSearchField,
   DateRangeSearchField,
 } from './fields'
@@ -30,7 +31,6 @@ class ElasticsearchServiceMock {
 class RecordsRepositoryMock {
   aggregate = jest.fn((aggregations) => {
     const aggName = Object.keys(aggregations)[0]
-    const sortType = aggregations[aggName].sort[1]
     if (aggName.startsWith('is'))
       return of({
         [aggName]: {
@@ -119,6 +119,21 @@ class RecordsRepositoryMock {
           ],
         },
       })
+    if (aggName === 'availableServices')
+      return of({
+        availableServices: {
+          buckets: [
+            {
+              term: 'view',
+              count: 10,
+            },
+            {
+              term: 'download',
+              count: 5,
+            },
+          ],
+        },
+      })
     const buckets = [
       {
         term: 'First value',
@@ -137,6 +152,7 @@ class RecordsRepositoryMock {
         count: 1,
       },
     ]
+    const sortType = aggregations[aggName].sort?.[1]
     if (sortType === 'count') {
       buckets.sort((a, b) => b.count - a.count)
     }
@@ -775,6 +791,7 @@ describe('search fields implementations', () => {
       })
     })
   })
+
   describe('UserSearchField', () => {
     beforeEach(() => {
       searchField = new UserSearchField(injector)
@@ -809,6 +826,62 @@ describe('search fields implementations', () => {
             value: 'johndoe|Doe|John|Editor',
           },
         ])
+      })
+    })
+  })
+
+  describe('AvailableServicesField', () => {
+    beforeEach(() => {
+      searchField = new AvailableServicesField(injector)
+    })
+    describe('#getAvailableValues', () => {
+      let values
+      beforeEach(async () => {
+        values = await lastValueFrom(searchField.getAvailableValues())
+      })
+      it('returns the available values', () => {
+        expect(values).toEqual([
+          {
+            label: 'search.filters.availableServices.view (10)',
+            value: 'view',
+          },
+          {
+            label: 'search.filters.availableServices.download (5)',
+            value: 'download',
+          },
+        ])
+      })
+    })
+    describe('#getFiltersForValues', () => {
+      let filter
+      beforeEach(async () => {
+        filter = await lastValueFrom(
+          searchField.getFiltersForValues(['view', 'download'])
+        )
+      })
+      it('returns filter for both values', () => {
+        expect(filter).toEqual({
+          linkProtocol: {
+            '/OGC:WFS.*/': true,
+            '/OGC:WMT?S.*/': true,
+          },
+        })
+      })
+    })
+    describe('#getValuesForFilters', () => {
+      let values
+      beforeEach(async () => {
+        values = await lastValueFrom(
+          searchField.getValuesForFilter({
+            linkProtocol: {
+              '/OGC:WFS.*/': false,
+              '/OGC:WMT?S.*/': true,
+            },
+          })
+        )
+      })
+      it('returns value with an enabled filter', () => {
+        expect(values).toEqual(['view'])
       })
     })
   })
