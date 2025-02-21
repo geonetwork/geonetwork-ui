@@ -30,11 +30,7 @@ export class WfsReader extends BaseReader {
     )
   }
 
-  static async createReader(
-    url: string,
-    wfsUrlEndpoint: string,
-    featureTypeName?: string
-  ) {
+  static async createReader(wfsUrlEndpoint: string, featureTypeName?: string) {
     const wfsEndpoint = await new WfsEndpoint(wfsUrlEndpoint).isReady()
     const featureTypes = wfsEndpoint.getFeatureTypes()
     const featureType = wfsEndpoint.getFeatureTypeSummary(
@@ -47,7 +43,7 @@ export class WfsReader extends BaseReader {
     }
 
     if (wfsEndpoint.supportsStartIndex()) {
-      return new WfsReader(url, wfsEndpoint, featureType.name)
+      return new WfsReader(wfsUrlEndpoint, wfsEndpoint, featureType.name)
     } else if (wfsEndpoint.supportsJson(featureType.name)) {
       return new GeojsonReader(
         wfsEndpoint.getFeatureUrl(featureType.name, {
