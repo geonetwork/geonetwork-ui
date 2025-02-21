@@ -7,7 +7,7 @@ import {
   tick,
 } from '@angular/core/testing'
 import { TableViewComponent } from './table-view.component'
-import { of, throwError } from 'rxjs'
+import { delay, of, throwError } from 'rxjs'
 import { ChangeDetectionStrategy, importProvidersFrom } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { DataService } from '../service/data.service'
@@ -38,9 +38,9 @@ class DataServiceMock {
     if (url.toString().indexOf('error') > -1) {
       return throwError(() => new FetchError('unknown', 'data loading error'))
     } else if (url.toString().indexOf('csv') > -1) {
-      return of(new DatasetCsvReaderMock())
+      return of(new DatasetCsvReaderMock()).pipe(delay(100))
     } else {
-      return of(new DatasetGeoJsonReaderMock())
+      return of(new DatasetGeoJsonReaderMock()).pipe(delay(100))
     }
   })
 }
@@ -106,6 +106,7 @@ describe('TableViewComponent', () => {
     describe('when data is loaded', () => {
       beforeEach(fakeAsync(() => {
         component.link = aSetOfLinksFixture().dataCsv()
+        tick(500)
         fixture.detectChanges()
         flushMicrotasks()
         tableComponent = fixture.debugElement.query(
@@ -126,6 +127,7 @@ describe('TableViewComponent', () => {
       describe('when switching data link', () => {
         beforeEach(fakeAsync(() => {
           component.link = aSetOfLinksFixture().geodataJson()
+          tick(500)
           flushMicrotasks()
           fixture.detectChanges()
         }))
