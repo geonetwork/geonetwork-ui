@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
 import { matArrowBack } from '@ng-icons/material-icons/baseline'
+import { DateService } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'datahub-header-record',
@@ -46,7 +47,7 @@ export class HeaderRecordComponent {
   constructor(
     private searchService: SearchService,
     public facade: MdViewFacade,
-    private translateService: TranslateService
+    private dateService: DateService
   ) {}
 
   isGeodata$ = combineLatest([
@@ -60,9 +61,7 @@ export class HeaderRecordComponent {
   )
 
   get lastUpdate() {
-    return this.metadata.recordUpdated.toLocaleDateString(
-      this.translateService.currentLang
-    )
+    return this.dateService.formatDate(this.metadata.recordUpdated)
   }
 
   back() {

@@ -28,6 +28,7 @@ import { TopToolbarComponent } from './components/top-toolbar/top-toolbar.compon
 import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 import { SearchHeaderComponent } from '../dashboard/search-header/search-header.component'
 import { PageErrorComponent } from './components/page-error/page-error.component'
+import { DateService } from '@geonetwork-ui/util/shared'
 
 marker('editor.record.form.bottomButtons.comeBackLater')
 marker('editor.record.form.bottomButtons.previous')
@@ -75,7 +76,8 @@ export class EditPageComponent implements OnInit, OnDestroy {
     protected facade: EditorFacade,
     private notificationsService: NotificationsService,
     private translateService: TranslateService,
-    private router: Router
+    private router: Router,
+    private dateService: DateService
   ) {}
 
   ngOnInit(): void {
@@ -217,7 +219,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
   }
 
   formatDate(date: Date): string {
-    return date.toLocaleDateString(this.translateService.currentLang, {
+    return this.dateService.formatDate(date, {
       year: 'numeric',
       month: 'long',
       day: 'numeric',

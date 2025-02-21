@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { WizardService } from '../../services/wizard.service'
-import { TranslateService } from '@ngx-translate/core'
+import { DateService } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-wizard-summarize',
@@ -28,9 +28,8 @@ export class WizardSummarizeComponent {
 
   get createdDate() {
     const time = this.wizardService.getWizardFieldData('datepicker')
-    const locale = this.translateService.currentLang
 
-    return new Date(Number(time)).toLocaleDateString(locale, {
+    return this.dateService.formatDate(new Date(Number(time)), {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -54,6 +53,6 @@ export class WizardSummarizeComponent {
 
   constructor(
     private wizardService: WizardService,
-    private translateService: TranslateService
+    private dateService: DateService
   ) {}
 }
