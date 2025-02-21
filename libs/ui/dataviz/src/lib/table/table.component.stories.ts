@@ -36,7 +36,8 @@ export default {
       ],
     }),
     componentWrapperDecorator(
-      (story) => `<div style="height: 400px">${story}</div>`
+      (story) =>
+        `<div class="border border-gray-300 h-[500px] w-[800px] p-[10px] overflow-auto resize">${story}</div>`
     ),
   ],
 } as Meta<TableComponent>

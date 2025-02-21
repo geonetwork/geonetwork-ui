@@ -88,6 +88,7 @@ export class TableComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   setSort(sort: MatSort) {
+    if (!this.dataset_) return
     if (!this.sort.active) {
       this.dataset_.orderBy()
     } else {
@@ -98,7 +99,11 @@ export class TableComponent implements OnInit, AfterViewInit, OnChanges {
 
   setPagination() {
     if (!this.paginator) return
-    this.dataset_.limit(this.paginator.pageIndex, this.paginator.pageSize)
+    if (!this.dataset_) return
+    this.dataset_.limit(
+      this.paginator.pageIndex * this.paginator.pageSize,
+      this.paginator.pageSize
+    )
     this.dataSource.showData(this.dataset_.read())
   }
 
