@@ -30,3 +30,7 @@ tr {
 .active .mat-mdc-cell {
   color: var(--color-primary);
 }
+
+.mat-mdc-paginator {
+  background: none;
+}
