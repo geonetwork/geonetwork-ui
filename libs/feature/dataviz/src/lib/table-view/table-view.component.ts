@@ -9,7 +9,7 @@ import {
 } from 'rxjs/operators'
 import { BaseReader, FetchError } from '@geonetwork-ui/data-fetcher'
 import { DataService } from '../service/data.service'
-import { TableComponent } from '@geonetwork-ui/ui/dataviz'
+import { DataTableComponent } from '@geonetwork-ui/ui/dataviz'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import {
@@ -25,7 +25,7 @@ import { CommonModule } from '@angular/common'
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
-    TableComponent,
+    DataTableComponent,
     LoadingMaskComponent,
     PopupAlertComponent,
     TranslateModule,

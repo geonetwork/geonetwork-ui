@@ -3,8 +3,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { someHabTableItemFixture, tableItemsFixture } from './table.fixtures'
-import { TableComponent } from './table.component'
+import {
+  someHabTableItemFixture,
+  tableItemsFixture,
+} from './data-table.fixtures'
+import { DataTableComponent } from './data-table.component'
 import { By } from '@angular/platform-browser'
 import { TableItemSizeDirective } from 'ng-table-virtual-scroll'
 import { TranslateModule } from '@ngx-translate/core'
@@ -31,9 +34,9 @@ export class MockBaseReader extends BaseFileReader {
   }
 }
 
-describe('TableComponent', () => {
-  let component: TableComponent
-  let fixture: ComponentFixture<TableComponent>
+describe('DataTableComponent', () => {
+  let component: DataTableComponent
+  let fixture: ComponentFixture<DataTableComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -45,14 +48,14 @@ describe('TableComponent', () => {
       ],
       declarations: [TableItemSizeDirective],
     })
-      .overrideComponent(TableComponent, {
+      .overrideComponent(DataTableComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
       })
       .compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TableComponent)
+    fixture = TestBed.createComponent(DataTableComponent)
     component = fixture.componentInstance
     component.dataset = new MockBaseReader(tableItemsFixture)
   })

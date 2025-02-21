@@ -1,5 +1,4 @@
 import { ScrollingModule } from '@angular/cdk/scrolling'
-import { NgForOf } from '@angular/common'
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -15,7 +14,7 @@ import {
 import { MatSort, MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
 import { TranslateModule } from '@ngx-translate/core'
-import { TableDataSource } from './table.data.source'
+import { DataTableDataSource } from './data-table.data.source'
 import { BaseReader } from '@geonetwork-ui/data-fetcher'
 import {
   MatPaginator,
@@ -23,6 +22,7 @@ import {
   MatPaginatorModule,
 } from '@angular/material/paginator'
 import { CustomMatPaginatorIntl } from './custom.mat.paginator.intl'
+import { CommonModule } from '@angular/common'
 
 const rowIdPrefix = 'table-item-'
 
@@ -41,16 +41,16 @@ export interface TableItemModel {
     MatSortModule,
     MatPaginatorModule,
     ScrollingModule,
-    NgForOf,
     TranslateModule,
+    CommonModule,
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }],
-  selector: 'gn-ui-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css'],
+  selector: 'gn-ui-data-table',
+  templateUrl: './data-table.component.html',
+  styleUrls: ['./data-table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent implements OnInit, AfterViewInit, OnChanges {
+export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() set dataset(value: BaseReader) {
     this.dataset_ = value
     this.dataset_.load()
@@ -67,14 +67,14 @@ export class TableComponent implements OnInit, AfterViewInit, OnChanges {
 
   dataset_: BaseReader
   properties: string[]
-  dataSource: TableDataSource
+  dataSource: DataTableDataSource
   headerHeight: number
   count: number
 
   constructor(private eltRef: ElementRef) {}
 
   ngOnInit() {
-    this.dataSource = new TableDataSource()
+    this.dataSource = new DataTableDataSource()
   }
 
   ngAfterViewInit() {

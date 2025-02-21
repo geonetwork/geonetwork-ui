@@ -10,11 +10,11 @@ import {
   TRANSLATE_DEFAULT_CONFIG,
   UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
-import { TableComponent } from './table.component'
+import { DataTableComponent } from './data-table.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiDatavizModule } from '../ui-dataviz.module'
 import { importProvidersFrom } from '@angular/core'
-import { tableItemsFixture } from './table.fixtures'
+import { tableItemsFixture } from './data-table.fixtures'
 import {
   BaseFileReader,
   DataItem,
@@ -23,8 +23,8 @@ import {
 } from '@geonetwork-ui/data-fetcher'
 
 export default {
-  title: 'Dataviz/TableComponent',
-  component: TableComponent,
+  title: 'Dataviz/DataTableComponent',
+  component: DataTableComponent,
   decorators: [
     applicationConfig({
       providers: [
@@ -40,7 +40,7 @@ export default {
         `<div class="border border-gray-300 h-[500px] w-[800px] p-[10px] overflow-auto resize">${story}</div>`
     ),
   ],
-} as Meta<TableComponent>
+} as Meta<DataTableComponent>
 
 export class MockBaseReader extends BaseFileReader {
   override getData(): Promise<{
@@ -52,13 +52,13 @@ export class MockBaseReader extends BaseFileReader {
 }
 const reader = new MockBaseReader('')
 
-export const Primary: StoryObj<TableComponent> = {
+export const Primary: StoryObj<DataTableComponent> = {
   args: {
     dataset: reader,
   },
 }
 
-export const WithGeojson: StoryObj<TableComponent> = {
+export const WithGeojson: StoryObj<DataTableComponent> = {
   loaders: [
     async () => ({
       dataset: await openDataset(
@@ -75,7 +75,7 @@ export const WithGeojson: StoryObj<TableComponent> = {
 }
 
 // TODO: uncomment this once WFS support in data-fetcher is merged
-// export const WithWfs: StoryObj<TableComponent> = {
+// export const WithWfs: StoryObj<DataTableComponent> = {
 //   loaders: [
 //     async () => ({
 //       dataset: await openDataset(

@@ -16,7 +16,7 @@ import { FetchError } from '@geonetwork-ui/data-fetcher'
 import { MockBuilder } from 'ng-mocks'
 import { TranslateModule } from '@ngx-translate/core'
 import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
-import { TableComponent } from '@geonetwork-ui/ui/dataviz'
+import { DataTableComponent } from '@geonetwork-ui/ui/dataviz'
 
 const SAMPLE_DATA_ITEMS_CSV = [
   { type: 'Feature', properties: { id: 1 } },
@@ -81,7 +81,7 @@ describe('TableViewComponent', () => {
   })
 
   describe('initial state', () => {
-    let tableComponent: TableComponent
+    let tableComponent: DataTableComponent
 
     it('loads the data from the first available link', () => {
       expect(dataService.getDataset).toHaveBeenCalledWith(
@@ -110,7 +110,7 @@ describe('TableViewComponent', () => {
         fixture.detectChanges()
         flushMicrotasks()
         tableComponent = fixture.debugElement.query(
-          By.directive(TableComponent)
+          By.directive(DataTableComponent)
         ).componentInstance
         fixture.detectChanges()
       }))
