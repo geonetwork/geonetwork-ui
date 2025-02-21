@@ -7,16 +7,22 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnChanges,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core'
 import { MatSort, MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
-import {
-  TableVirtualScrollDataSource,
-  TableVirtualScrollModule,
-} from 'ng-table-virtual-scroll'
 import { TranslateModule } from '@ngx-translate/core'
+import { TableDataSource } from './table.data.source'
+import { BaseReader } from '@geonetwork-ui/data-fetcher'
+import {
+  MatPaginator,
+  MatPaginatorIntl,
+  MatPaginatorModule,
+} from '@angular/material/paginator'
+import { CustomMatPaginatorIntl } from './custom.mat.paginator.intl'
 
 const rowIdPrefix = 'table-item-'
 
@@ -33,38 +39,67 @@ export interface TableItemModel {
   imports: [
     MatTableModule,
     MatSortModule,
-    TableVirtualScrollModule,
+    MatPaginatorModule,
     ScrollingModule,
     NgForOf,
     TranslateModule,
   ],
+  providers: [{ provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }],
   selector: 'gn-ui-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent implements AfterViewInit {
-  @Input() set data(value: TableItemModel[]) {
-    this.dataSource = new TableVirtualScrollDataSource(value)
-    this.dataSource.sort = this.sort
-    this.properties =
-      Array.isArray(value) && value.length ? Object.keys(value[0]) : []
-    this.count = value.length
+export class TableComponent implements OnInit, AfterViewInit, OnChanges {
+  @Input() set dataset(value: BaseReader) {
+    this.dataset_ = value
+    this.dataset_.load()
+    this.dataset_.properties.then(
+      (properties) => (this.properties = properties.map((p) => p.name))
+    )
+    this.dataset_.info.then((info) => (this.count = info.itemsCount))
   }
   @Input() activeId: TableItemId
   @Output() selected = new EventEmitter<any>()
 
   @ViewChild(MatSort, { static: true }) sort: MatSort
+  @ViewChild(MatPaginator) paginator: MatPaginator
+
+  dataset_: BaseReader
   properties: string[]
-  dataSource: TableVirtualScrollDataSource<any>
+  dataSource: TableDataSource
   headerHeight: number
   count: number
 
   constructor(private eltRef: ElementRef) {}
 
+  ngOnInit() {
+    this.dataSource = new TableDataSource()
+  }
+
   ngAfterViewInit() {
     this.headerHeight =
       this.eltRef.nativeElement.querySelector('thead').offsetHeight
+    this.setPagination()
+  }
+
+  ngOnChanges() {
+    this.setPagination()
+  }
+
+  setSort(sort: MatSort) {
+    if (!this.sort.active) {
+      this.dataset_.orderBy()
+    } else {
+      this.dataset_.orderBy([sort.direction || 'asc', sort.active])
+    }
+    this.dataSource.showData(this.dataset_.read())
+  }
+
+  setPagination() {
+    if (!this.paginator) return
+    this.dataset_.limit(this.paginator.pageIndex, this.paginator.pageSize)
+    this.dataSource.showData(this.dataset_.read())
   }
 
   scrollToItem(itemId: TableItemId): void {

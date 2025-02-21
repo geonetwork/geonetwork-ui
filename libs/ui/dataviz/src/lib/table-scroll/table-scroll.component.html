@@ -1,11 +1,10 @@
-<div class="flex flex-col border border-gray-300 rounded-lg bg-white h-full">
-  <div class="flex-1 overflow-y-hidden overflow-x-auto rounded-lg">
-    <table
-      mat-table
-      [dataSource]="dataSource"
-      matSort
-      (matSortChange)="setSort($event)"
-    >
+<div class="border border-gray-300 rounded-lg overflow-hidden bg-white h-full">
+  <cdk-virtual-scroll-viewport
+    tvsItemSize="48"
+    headerHeight="56"
+    style="height: calc(100% - 37px)"
+  >
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
       <ng-container *ngFor="let prop of properties" [matColumnDef]="prop">
         <th
           mat-header-cell
@@ -33,20 +32,9 @@
         [class.active]="row.id === activeId"
       ></tr>
     </table>
-  </div>
-  <div class="flex justify-between items-center">
-    <div class="text-gray-900 px-4 py-2 text-sm">
-      <span class="count font-extrabold text-primary">{{ count }}</span
-      >&nbsp;<span translate>table.object.count</span>.
-    </div>
-
-    <mat-paginator
-      class="rounded-lg"
-      (page)="setPagination()"
-      [length]="count"
-      [pageSize]="10"
-      [showFirstLastButtons]="true"
-      [hidePageSize]="true"
-    ></mat-paginator>
+  </cdk-virtual-scroll-viewport>
+  <div class="text-gray-900 border-t border-gray-300 px-4 py-2 text-sm">
+    <span class="count font-extrabold text-primary">{{ count }}</span
+    >&nbsp;<span translate>table.object.count</span>.
   </div>
 </div>

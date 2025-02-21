@@ -3,37 +3,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { someHabTableItemFixture, tableItemsFixture } from './table.fixtures'
-import { TableComponent } from './table.component'
+import {
+  someHabTableScrollItemFixture,
+  tableScrollItemFixture,
+} from './table-scroll.fixtures'
+import { TableScrollComponent } from './table-scroll.component'
 import { By } from '@angular/platform-browser'
 import { TableItemSizeDirective } from 'ng-table-virtual-scroll'
 import { TranslateModule } from '@ngx-translate/core'
-import {
-  BaseFileReader,
-  DataItem,
-  PropertyInfo,
-} from '@geonetwork-ui/data-fetcher'
 
-export class MockBaseReader extends BaseFileReader {
-  data: {
-    items: DataItem[]
-    properties: PropertyInfo[]
-  }
-  constructor(data: { items: DataItem[]; properties: PropertyInfo[] }) {
-    super('')
-    this.data = data
-  }
-  override getData(): Promise<{
-    items: DataItem[]
-    properties: PropertyInfo[]
-  }> {
-    return Promise.resolve(this.data)
-  }
-}
-
-describe('TableComponent', () => {
-  let component: TableComponent
-  let fixture: ComponentFixture<TableComponent>
+describe('TableScrollComponent', () => {
+  let component: TableScrollComponent
+  let fixture: ComponentFixture<TableScrollComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -45,16 +26,16 @@ describe('TableComponent', () => {
       ],
       declarations: [TableItemSizeDirective],
     })
-      .overrideComponent(TableComponent, {
+      .overrideComponent(TableScrollComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
       })
       .compileComponents()
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TableComponent)
+    fixture = TestBed.createComponent(TableScrollComponent)
     component = fixture.componentInstance
-    component.dataset = new MockBaseReader(tableItemsFixture)
+    component.data = tableScrollItemFixture()
   })
 
   it('should create', () => {
@@ -64,7 +45,7 @@ describe('TableComponent', () => {
 
   it('computes data properties', () => {
     fixture.detectChanges()
-    expect(component.properties).toEqual(['id', 'firstName', 'lastName'])
+    expect(component.properties).toEqual(['name', 'id', 'age'])
   })
 
   it('displays the amount of objects in the dataset', () => {
@@ -77,14 +58,14 @@ describe('TableComponent', () => {
     let previousDataSource
     beforeEach(() => {
       previousDataSource = component.dataSource
-      component.dataset = new MockBaseReader(someHabTableItemFixture)
+      component.data = someHabTableScrollItemFixture()
       fixture.detectChanges()
     })
     it('updates the internal data source', () => {
       expect(component.dataSource).not.toBe(previousDataSource)
     })
     it('recomputes the data properties', () => {
-      expect(component.properties).toEqual(['id', 'name', 'pop'])
+      expect(component.properties).toEqual(['name', 'id', 'pop'])
     })
   })
 })

@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core'
 import {
-  TableComponent,
+  TableScrollComponent,
   TableItemId,
   TableItemModel,
 } from '@geonetwork-ui/ui/dataviz'
@@ -25,12 +25,16 @@ import {
   templateUrl: './geo-table-view.component.html',
   styleUrls: ['./geo-table-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TableComponent, MapContainerComponent, FeatureDetailComponent],
+  imports: [
+    TableScrollComponent,
+    MapContainerComponent,
+    FeatureDetailComponent,
+  ],
   standalone: true,
 })
 export class GeoTableViewComponent implements OnInit, OnDestroy {
   @Input() data: FeatureCollection = { type: 'FeatureCollection', features: [] }
-  @ViewChild('table') uiTable: TableComponent
+  @ViewChild('table') uiTable: TableScrollComponent
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
 
   tableData: TableItemModel[]

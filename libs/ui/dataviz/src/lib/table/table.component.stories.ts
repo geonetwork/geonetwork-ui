@@ -14,6 +14,13 @@ import { TableComponent } from './table.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UiDatavizModule } from '../ui-dataviz.module'
 import { importProvidersFrom } from '@angular/core'
+import { tableItemsFixture } from './table.fixtures'
+import {
+  BaseFileReader,
+  DataItem,
+  openDataset,
+  PropertyInfo,
+} from '@geonetwork-ui/data-fetcher'
 
 export default {
   title: 'Dataviz/TableComponent',
@@ -29,29 +36,91 @@ export default {
       ],
     }),
     componentWrapperDecorator(
-      (story) => `<div style="max-width: 700px; height: 400px">${story}</div>`
+      (story) => `<div style="height: 400px">${story}</div>`
     ),
   ],
 } as Meta<TableComponent>
 
+export class MockBaseReader extends BaseFileReader {
+  override getData(): Promise<{
+    items: DataItem[]
+    properties: PropertyInfo[]
+  }> {
+    return Promise.resolve(tableItemsFixture)
+  }
+  // override read(): Promise<DataItem[]> {
+  //   return Promise.resolve([
+  //     {
+  //       type: 'Feature',
+  //       geometry: null,
+  //       properties: {
+  //         id: '0001',
+  //         firstName: 'John',
+  //         lastName: 'Lennon',
+  //       },
+  //     },
+  //     {
+  //       type: 'Feature',
+  //       geometry: null,
+  //       properties: {
+  //         id: '0002',
+  //         firstName: 'Ozzy',
+  //         lastName: 'Osbourne',
+  //       },
+  //     },
+  //     {
+  //       type: 'Feature',
+  //       geometry: null,
+  //       properties: {
+  //         id: '0003',
+  //         firstName: 'Claude',
+  //         lastName: 'François',
+  //       },
+  //     },
+  //   ])
+  // }
+}
+const reader = new MockBaseReader('')
+
 export const Primary: StoryObj<TableComponent> = {
   args: {
-    data: [
-      {
-        id: '0001',
-        firstName: 'John',
-        lastName: 'Lennon',
-      },
-      {
-        id: '0002',
-        firstName: 'Ozzy',
-        lastName: 'Osbourne',
-      },
-      {
-        id: '0003',
-        firstName: 'Claude',
-        lastName: 'François',
-      },
-    ],
+    dataset: reader,
   },
 }
+
+export const WithGeojson: StoryObj<TableComponent> = {
+  loaders: [
+    async () => ({
+      dataset: await openDataset(
+        'https://france-geojson.gregoiredavid.fr/repo/departements.geojson',
+        'geojson'
+      ),
+    }),
+  ],
+  render(args, { loaded }) {
+    return {
+      props: loaded,
+    }
+  },
+}
+
+// TODO: uncomment this once WFS support in data-fetcher is merged
+// export const WithWfs: StoryObj<TableComponent> = {
+//   loaders: [
+//     async () => ({
+//       dataset: await openDataset(
+//         'https://www.geo2france.fr/geoserver/cr_hdf/ows',
+//         'wfs',
+//         {
+//           wfsUrlEndpoint: 'https://www.geo2france.fr/geoserver/cr_hdf/ows',
+//           namespace: 'accidento_hdf_L93',
+//         }
+//       ),
+//     }),
+//   ],
+//   render(args, { loaded }) {
+//     return {
+//       props: loaded,
+//     }
+//   },
+// }
