@@ -389,7 +389,7 @@ describe('dataset pages', () => {
 
         cy.get('@previewSection').find('gn-ui-map-legend').should('be.visible')
       })
-      it('should display the table', () => {
+      it('should display the table with 10 rows', () => {
         cy.get('@previewSection')
           .find('.mat-mdc-tab-labels')
           .children('div')
@@ -401,7 +401,7 @@ describe('dataset pages', () => {
           .find('table')
           .find('tbody')
           .children('tr')
-          .should('have.length.gt', 0)
+          .should('have.length', 10)
         cy.screenshot({ capture: 'fullPage' })
       })
       it('should display the chart & dropdowns', () => {
@@ -441,16 +441,53 @@ describe('dataset pages', () => {
         })
         cy.get('@previewSection').find('gn-ui-feature-detail')
       })
-      it('TABLE : should scroll', () => {
-        cy.get('@previewSection')
-          .find('.mat-mdc-tab-labels')
-          .children('div')
-          .eq(1)
-          .click()
-        cy.get('@previewSection').find('gn-ui-table').find('table').as('table')
-        cy.get('@table').scrollTo('bottom', { ensureScrollable: false })
+      describe('TABLE', () => {
+        beforeEach(() => {
+          cy.get('@previewSection')
+            .find('.mat-mdc-tab-labels')
+            .children('div')
+            .eq(1)
+            .click()
+          cy.get('@previewSection')
+            .find('gn-ui-table')
+            .find('table')
+            .as('table')
+        })
 
-        cy.get('@table').find('tr:last-child').should('be.visible')
+        it('TABLE sort: should sort the table on column click', () => {
+          cy.get('@table').find('th').eq(1).click()
+          cy.get('@table')
+            .find('td')
+            .eq(1)
+            .invoke('text')
+            .then((firstValue) => {
+              cy.get('@table').find('th').eq(1).click()
+              cy.get('@table')
+                .find('td')
+                .eq(1)
+                .invoke('text')
+                .should('not.eq', firstValue)
+            })
+        })
+        it('TABLE pagination: should display 10 rows with different data when clicking next page', () => {
+          cy.get('@previewSection').find('mat-paginator').as('pagination')
+          cy.get('@table')
+            .find('td')
+            .eq(1)
+            .invoke('text')
+            .then((firstValue) => {
+              cy.get('@pagination').find('button').eq(2).click()
+              cy.get('@table')
+                .find('td')
+                .eq(1)
+                .invoke('text')
+                .should('not.eq', firstValue)
+              cy.get('@table')
+                .find('tbody')
+                .children('tr')
+                .should('have.length', 10)
+            })
+        })
       })
       it('CHART : should change the chart on options change', () => {
         cy.get('@previewSection')
