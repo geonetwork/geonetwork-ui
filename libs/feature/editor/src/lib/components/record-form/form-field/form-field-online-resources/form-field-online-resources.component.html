@@ -20,8 +20,7 @@
   >
     <gn-ui-online-service-resource-input
       [service]="newService"
-      [disabled]="disabled$ | async"
-      (identifierSubmit)="handleIdentifierSubmit($event)"
+      (serviceChange)="handleServiceChange($event)"
     ></gn-ui-online-service-resource-input>
   </div>
   <div class="h-[8px]"></div>
@@ -40,28 +39,36 @@
 
   <ng-template #dialogTemplate let-onlineResource>
     <div class="flex flex-col gap-[16px]">
-      <div>
-        <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
-          editor.record.form.field.onlineResource.edit.title
-        </h3>
-        <gn-ui-text-input [(value)]="onlineResource.name"></gn-ui-text-input>
-      </div>
-      <div>
-        <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
-          editor.record.form.field.onlineResource.edit.description
-        </h3>
-        <gn-ui-text-area
-          [(value)]="onlineResource.description"
-        ></gn-ui-text-area>
-      </div>
       <ng-container *ngIf="onlineResource.type === 'service'; else urlInput">
-        <span class="w-full border-b border-gray-300"></span>
         <gn-ui-online-service-resource-input
           [service]="onlineResource"
           [modifyMode]="true"
+          [disabled]="true"
         ></gn-ui-online-service-resource-input>
+        <div>
+          <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
+            editor.record.form.field.onlineResource.edit.description
+          </h3>
+          <gn-ui-text-area
+            [(value)]="onlineResource.description"
+          ></gn-ui-text-area>
+        </div>
       </ng-container>
       <ng-template #urlInput>
+        <div>
+          <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
+            editor.record.form.field.onlineResource.edit.title
+          </h3>
+          <gn-ui-text-input [(value)]="onlineResource.name"></gn-ui-text-input>
+        </div>
+        <div>
+          <h3 class="text-[16px] font-bold text-main mb-[12px]" translate>
+            editor.record.form.field.onlineResource.edit.description
+          </h3>
+          <gn-ui-text-area
+            [(value)]="onlineResource.description"
+          ></gn-ui-text-area>
+        </div>
         <span class="w-full border-b border-gray-300"></span>
         <gn-ui-url-input
           class="w-full"

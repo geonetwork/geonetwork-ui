@@ -54,8 +54,8 @@ export class OnlineResourceCardComponent {
       case 'service':
       case 'download':
         return (
-          this.onlineResource.name ??
-          this.onlineResource.description ??
+          this.onlineResource.description ||
+          this.onlineResource.name ||
           '(unknown)'
         )
       case 'endpoint':

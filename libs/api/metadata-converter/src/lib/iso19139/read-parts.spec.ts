@@ -19,7 +19,6 @@ import {
   readContacts,
   readOnlineResources,
   readOwnerOrganization,
-  readResourceIdentifier,
   readSpatialExtents,
   readTemporalExtents,
 } from './read-parts'
@@ -324,6 +323,7 @@ describe('read parts', () => {
               'https://api3.geo.admin.ch/rest/services/api/MapServer/ch.are.alpenkonvention'
             ),
             description: 'RESTful API von geo.admin.ch',
+            identifierInService: 'RESTful API von geo.admin.ch',
             name: 'RESTful API von geo.admin.ch',
             translations: {
               description: {

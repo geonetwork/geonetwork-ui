@@ -35,7 +35,10 @@
         >
           <ng-icon name="iconoirArrowLeft"></ng-icon>
         </gn-ui-button>
-        <span class="font-bold"> {{ externalImportBackLabel }}</span>
+        <span class="font-bold" translate
+          >dashboard.importRecord.importExternal.title</span
+        >
+        <span translate>dashboard.importRecord.importExternal.subtitle</span>
       </div>
       <gn-ui-url-input
         (uploadClick)="importRecord($event)"
