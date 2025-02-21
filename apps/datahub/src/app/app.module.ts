@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common'
 import { importProvidersFrom, Inject, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import { Router, RouterModule } from '@angular/router'
+import { Router, RouterModule, TitleStrategy } from '@angular/router'
 import {
   FeatureCatalogModule,
   OrganisationsComponent,
@@ -106,6 +106,7 @@ import {
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
 import { MAX_FEATURE_COUNT } from './record/record-data-preview/record-data-preview.component'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
+import { DatahubTemplatePageTitleStrategy } from './router/datahub-page-title-strategy.service'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -188,6 +189,10 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     importProvidersFrom(FeatureAuthModule),
     provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
     provideGn4(),
+    {
+      provide: TitleStrategy,
+      useClass: DatahubTemplatePageTitleStrategy,
+    },
     { provide: RouterService, useClass: DatahubRouterService },
     { provide: GN_UI_VERSION, useValue: environment.version },
     {
