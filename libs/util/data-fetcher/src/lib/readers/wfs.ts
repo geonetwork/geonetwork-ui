@@ -96,7 +96,7 @@ export class WfsReader extends BaseReader {
         )
         .join(',')
 
-      finalUrl.searchParams.append('sortBy', sorts)
+      finalUrl.searchParams.append('SORTBY', sorts)
       url = finalUrl.toString()
     }
 
