@@ -9,7 +9,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   ViewChild,
 } from '@angular/core'
@@ -51,7 +50,7 @@ export interface TableItemModel {
   styleUrls: ['./table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableComponent implements OnInit, AfterViewInit, OnChanges {
+export class TableComponent implements AfterViewInit, OnChanges {
   @Input() set dataset(value: BaseReader) {
     this.dataset_ = value
     this.dataset_.load()
@@ -68,15 +67,15 @@ export class TableComponent implements OnInit, AfterViewInit, OnChanges {
 
   dataset_: BaseReader
   properties: string[]
-  dataSource: TableDataSource
+  dataSource = new TableDataSource()
   headerHeight: number
   count: number
+  pageSize = 10
 
-  constructor(private cdr: ChangeDetectorRef, private eltRef: ElementRef) { }
-
-  ngOnInit() {
-    this.dataSource = new TableDataSource()
-  }
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private eltRef: ElementRef
+  ) {}
 
   ngAfterViewInit() {
     this.headerHeight =
@@ -99,8 +98,13 @@ export class TableComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   setPagination() {
-    if (!this.paginator) return
-    this.dataset_.limit(this.paginator.pageIndex, this.paginator.pageSize)
+    let pageIndex = 0
+    let pageSize = this.pageSize
+    if (this.paginator) {
+      pageIndex = this.paginator.pageIndex
+      pageSize = this.paginator.pageSize
+    }
+    this.dataset_.limit(pageIndex, pageSize)
     this.dataSource.showData(this.dataset_.read())
     this.cdr.detectChanges()
   }
