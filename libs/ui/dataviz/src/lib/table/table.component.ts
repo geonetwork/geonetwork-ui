@@ -3,6 +3,7 @@ import { NgForOf } from '@angular/common'
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -71,7 +72,7 @@ export class TableComponent implements OnInit, AfterViewInit, OnChanges {
   headerHeight: number
   count: number
 
-  constructor(private eltRef: ElementRef) {}
+  constructor(private cdr: ChangeDetectorRef, private eltRef: ElementRef) { }
 
   ngOnInit() {
     this.dataSource = new TableDataSource()
@@ -94,12 +95,14 @@ export class TableComponent implements OnInit, AfterViewInit, OnChanges {
       this.dataset_.orderBy([sort.direction || 'asc', sort.active])
     }
     this.dataSource.showData(this.dataset_.read())
+    this.cdr.detectChanges()
   }
 
   setPagination() {
     if (!this.paginator) return
     this.dataset_.limit(this.paginator.pageIndex, this.paginator.pageSize)
     this.dataSource.showData(this.dataset_.read())
+    this.cdr.detectChanges()
   }
 
   scrollToItem(itemId: TableItemId): void {

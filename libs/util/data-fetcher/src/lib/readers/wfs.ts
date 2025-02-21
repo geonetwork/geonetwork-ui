@@ -96,10 +96,12 @@ export class WfsReader extends BaseReader {
       url = finalUrl.toString()
     }
 
-    return fetchDataAsText(url).then((text) =>
-      asJson
+    return fetchDataAsText(url).then((text) => {
+      console.log("fetchDataAsText -----------------")
+      return asJson
         ? parseGeojson(text)
         : parseGml(text, this.featureTypeName, this.version)
+    }
     )
   }
 
