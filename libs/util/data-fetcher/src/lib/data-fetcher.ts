@@ -16,7 +16,7 @@ export async function openDataset(
   options?: {
     namespace?: string
     wfsVersion?: WfsVersion
-    wfsUrlEndpoint?: string
+    wfsFeatureType?: string
   }
 ): Promise<BaseReader> {
   const fileType = await inferDatasetType(url, typeHint)
@@ -39,11 +39,7 @@ export async function openDataset(
         reader = new GmlReader(url, options.namespace, options.wfsVersion)
         break
       case 'wfs':
-        reader = await WfsReader.createReader(
-          url,
-          options.wfsUrlEndpoint,
-          options.namespace
-        )
+        reader = await WfsReader.createReader(url, options.wfsFeatureType)
         break
     }
     reader.load()

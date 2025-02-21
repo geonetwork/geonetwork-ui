@@ -449,7 +449,6 @@ describe('data-fetcher', () => {
           {
             namespace: 'ms:n_mat_eolien_p_r32',
             wfsVersion: '2.0.0',
-            wfsUrlEndpoint: 'http://localfile/fixtures/wfs-gml.xml',
           }
         )
         expect(wfs[0]).toEqual({
