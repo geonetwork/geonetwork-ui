@@ -28,6 +28,21 @@ export const loadFullMetadataFailure = createAction(
   props<{ otherError?: string; notFound?: boolean }>()
 )
 
+export const loadCatalogAttributes = createAction(
+  '[Metadata view] Load catalog attributes of the metadata',
+  props<{ metadataUuid: string; approvedVersion?: boolean }>()
+)
+
+export const loadCatalogAttributesSuccess = createAction(
+  '[Metadata view] Load full metadata success',
+  props<{ full: CatalogRecord }>() // TODO A retyper avec le type DatasetFeatureCatalog ?
+)
+
+export const loadCatalogAttributesFailure = createAction(
+  '[Metadata view] Load full metadata failure',
+  props<{ otherError?: string; notFound?: boolean }>()
+)
+
 export const closeMetadata = createAction('[Metadata view] close')
 
 /*
