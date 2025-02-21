@@ -91,9 +91,8 @@ export class WfsReader extends BaseReader {
           (fieldSort) => `${fieldSort[1]}+${fieldSort[0] === 'asc' ? 'A' : 'D'}`
         )
         .join(',')
-
-      finalUrl.searchParams.append('SORTBY', sorts)
-      url = finalUrl.toString()
+      // Direct update on string url to prevent encoding of +A and +D
+      url = `${url}${finalUrl.search ? '&' : ''}SORTBY=${sorts}`
     }
 
     return fetchDataAsText(url).then((text) =>
