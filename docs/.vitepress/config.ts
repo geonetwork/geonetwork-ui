@@ -10,11 +10,15 @@ export default defineConfig({
     nav: [
       { text: 'Guide', link: '/guide/introduction', activeMatch: '/guide/' },
       {
-        text: 'Reference',
-        link: '/reference/principles',
-        activeMatch: '/reference/',
+        text: 'For Developers',
+        link: '/developers/architecture-overview',
+        activeMatch: '/developers/',
       },
       { text: 'Applications', link: '/apps/datahub', activeMatch: '/apps/' },
+      {
+        text: 'Web Components',
+        link: 'https://github.com/geonetwork/geonetwork-ui/tree/main/apps/webcomponents',
+      },
       {
         text: `Version ${packageJson.version}`,
         link: 'https://github.com/geonetwork/geonetwork-ui/releases',
@@ -23,7 +27,7 @@ export default defineConfig({
 
     sidebar: {
       '/guide/': sidebarGuide(),
-      '/reference/': sidebarReference(),
+      '/developers/': sidebarForDevelopers(),
       '/apps/': sidebarApps(),
     },
 
@@ -73,46 +77,51 @@ function sidebarGuide() {
       ],
     },
     {
-      text: 'Contributing',
+      text: 'Reference',
       items: [
-        { text: 'Development environment', link: '/guide/dev-environment' },
-        { text: 'Create a Pull Request', link: '/guide/create-a-pr' },
-        { text: 'Code guide', link: '/guide/code-guide' },
-        { text: 'Versioning', link: '/guide/versioning' },
+        {
+          text: 'Supported search fields',
+          link: '/guide/search-fields',
+        },
       ],
     },
   ]
 }
 
-function sidebarReference() {
+function sidebarForDevelopers() {
   return [
     {
-      text: 'Architecture',
+      text: 'For developers',
       items: [
-        { text: 'Principles', link: '/reference/principles' },
-        { text: 'Internationalization', link: '/reference/i18n' },
-        { text: 'ElasticSearch index', link: '/reference/elasticsearch' },
-        { text: 'Organizations', link: '/reference/organizations' },
-        { text: 'State management', link: '/reference/state-management' },
-        { text: 'Routing', link: '/reference/routing' },
-        { text: 'Application configuration', link: '/reference/app-config' },
+        {
+          text: 'Architecture overview',
+          link: '/developers/architecture-overview',
+        },
+        { text: 'Application configuration', link: '/developers/app-config' },
+        { text: 'ElasticSearch index', link: '/developers/elasticsearch' },
+        { text: 'Internationalization', link: '/developers/i18n' },
+        { text: 'Interactive maps', link: '/developers/maps' },
+        { text: 'Organizations', link: '/developers/organizations' },
         {
           text: 'Pivot Format',
-          link: '/reference/pivot-format',
+          link: '/developers/pivot-format',
         },
-        {
-          text: 'Interactive maps',
-          link: '/reference/maps',
-        },
+        { text: 'Routing', link: '/developers/routing' },
+        { text: 'State management', link: '/developers/state-management' },
+        { text: 'Testing', link: '/developers/testing' },
+        { text: 'Writing components', link: '/developers/writing-components' },
       ],
     },
     {
-      text: 'Web Components',
-      link: '/reference/webcomponents',
-    },
-    {
-      text: 'Supported search fields',
-      link: '/reference/search-fields',
+      text: 'Contributing',
+      items: [
+        {
+          text: 'Development environment',
+          link: '/developers/dev-environment',
+        },
+        { text: 'Create a Pull Request', link: '/developers/create-a-pr' },
+        { text: 'Versioning', link: '/developers/versioning' },
+      ],
     },
   ]
 }
