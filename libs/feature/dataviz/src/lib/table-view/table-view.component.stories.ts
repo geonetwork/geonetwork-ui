@@ -10,7 +10,7 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { TableViewComponent } from './table-view.component'
-import { TableComponent, UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
+import { DataTableComponent, UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { importProvidersFrom } from '@angular/core'
 
 export default {
@@ -19,7 +19,7 @@ export default {
   decorators: [
     moduleMetadata({
       imports: [
-        TableComponent,
+        DataTableComponent,
         TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
       ],
     }),

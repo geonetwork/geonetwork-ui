@@ -1,11 +1,11 @@
 <div class="w-full h-full flex flex-col">
   <div class="relative h-full">
-    <gn-ui-table
+    <gn-ui-data-table
       *ngIf="tableData$ | async as dataset"
       class="overflow-auto grow"
       [dataset]="dataset"
       (selected)="onTableSelect($event)"
-    ></gn-ui-table>
+    ></gn-ui-data-table>
     <gn-ui-loading-mask
       *ngIf="loading"
       class="absolute inset-0"
