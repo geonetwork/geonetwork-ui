@@ -244,20 +244,10 @@ export class DataService {
 
   getDataset(link: DatasetOnlineResource): Observable<BaseReader> {
     if (link.type === 'service' && link.accessServiceProtocol === 'wfs') {
-      return this.getDownloadUrlsFromWfs(link.url.toString(), link.name).pipe(
-        switchMap((urls) => {
-          if (urls.geojson) return openDataset(urls.geojson, 'geojson')
-          if (urls.gml)
-            return openDataset(urls.gml.featureUrl, 'gml', {
-              namespace: urls.gml.namespace,
-              wfsVersion: urls.gml.wfsVersion,
-            })
-          return null
-        }),
-        tap((url) => {
-          if (url === null) {
-            throw new Error('wfs.geojsongml.notsupported')
-          }
+      const wfsUrlEndpoint = this.proxy.getProxiedUrl(link.url.toString())
+      return from(
+        openDataset(wfsUrlEndpoint, 'wfs', {
+          wfsFeatureType: link.name,
         })
       )
     } else if (link.type === 'download') {
