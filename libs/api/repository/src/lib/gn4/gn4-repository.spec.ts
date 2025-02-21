@@ -20,7 +20,10 @@ import {
   simpleDatasetRecordFixture,
   duplicateDatasetRecordAsXmlFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  DatasetFeatureCatalog,
+} from '@geonetwork-ui/common/domain/model/record'
 import { map } from 'rxjs/operators'
 import { HttpErrorResponse } from '@angular/common/http'
 import {
@@ -92,6 +95,7 @@ class RecordsApiServiceMock {
   )
   deleteRecord = jest.fn(() => of({}))
   create = jest.fn(() => of('1234-5678'))
+  getFeatureCatalog = jest.fn(() => of({}))
 }
 
 class PlatformServiceInterfaceMock {
@@ -253,6 +257,73 @@ describe('Gn4Repository', () => {
       })
     })
   })
+
+  describe('getFeatureCatalog', () => {
+    let catalog: DatasetFeatureCatalog
+    const mockFeatureCatalogResponse = {
+      decodeMap: {
+        feature1: ['memberName', 'definition'],
+        feature2: ['name2', 'title2'],
+        feature3: ['name3', 'title3'],
+      },
+    }
+
+    describe('when feature catalog exists', () => {
+      beforeEach(async () => {
+        ;(gn4RecordsApi.getFeatureCatalog as jest.Mock).mockReturnValue(
+          of(mockFeatureCatalogResponse)
+        )
+        catalog = await lastValueFrom(repository.getFeatureCatalog('1234-5678'))
+      })
+
+      it('calls the API with correct parameters', () => {
+        expect(gn4RecordsApi.getFeatureCatalog).toHaveBeenCalledWith(
+          '1234-5678',
+          undefined
+        )
+      })
+
+      it('returns the feature catalog with mapped features', () => {
+        expect(catalog).toEqual({
+          features: [
+            { name: 'memberName', title: 'definition' },
+            { name: 'name2', title: 'title2' },
+            { name: 'name3', title: 'title3' },
+          ],
+        })
+      })
+    })
+
+    describe('when feature catalog does not exist', () => {
+      beforeEach(async () => {
+        ;(gn4RecordsApi.getFeatureCatalog as jest.Mock).mockReturnValue(of({}))
+        catalog = await lastValueFrom(repository.getFeatureCatalog('1234-5678'))
+      })
+
+      it('returns null when no decode map is present', () => {
+        expect(catalog).toBe(null)
+      })
+    })
+
+    describe('with approved version parameter', () => {
+      beforeEach(async () => {
+        ;(gn4RecordsApi.getFeatureCatalog as jest.Mock).mockReturnValue(
+          of(mockFeatureCatalogResponse)
+        )
+        catalog = await lastValueFrom(
+          repository.getFeatureCatalog('1234-5678', true)
+        )
+      })
+
+      it('calls the API with approved parameter', () => {
+        expect(gn4RecordsApi.getFeatureCatalog).toHaveBeenCalledWith(
+          '1234-5678',
+          true
+        )
+      })
+    })
+  })
+
   describe('getSimilarRecords', () => {
     let results: CatalogRecord[]
     beforeEach(async () => {

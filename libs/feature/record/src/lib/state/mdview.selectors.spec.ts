@@ -41,6 +41,7 @@ describe('MdView Selectors', () => {
           error: null,
           allUserFeedbacksLoading: false,
           addUserFeedbackLoading: false,
+          featureCatalogLoading: false,
         })
         expect(results).toBe(null)
       })
@@ -73,6 +74,7 @@ describe('MdView Selectors', () => {
           error: null,
           allUserFeedbacksLoading: false,
           addUserFeedbackLoading: false,
+          featureCatalogLoading: false,
         })
         expect(results).toBe(null)
       })
@@ -108,6 +110,7 @@ describe('MdView Selectors', () => {
           error: null,
           allUserFeedbacksLoading: false,
           addUserFeedbackLoading: false,
+          featureCatalogLoading: false,
         })
         expect(results).toBe(null)
       })

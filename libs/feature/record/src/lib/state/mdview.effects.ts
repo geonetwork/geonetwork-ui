@@ -5,7 +5,6 @@ import { catchError, map, switchMap } from 'rxjs/operators'
 import * as MdViewActions from './mdview.actions'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-
 @Injectable()
 export class MdViewEffects {
   constructor(
@@ -29,6 +28,35 @@ export class MdViewEffects {
       }),
       catchError((error) =>
         of(MdViewActions.loadFullMetadataFailure({ otherError: error.message }))
+      )
+    )
+  )
+  /*
+  Feature Catalog effects
+  */
+  loadCatalogAttributes = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MdViewActions.loadFeatureCatalogAttributes),
+      switchMap(({ metadataUuid, approvedVersion }) =>
+        this.recordsRepository.getFeatureCatalog(metadataUuid, approvedVersion)
+      ),
+      map((record) => {
+        if (record === null) {
+          return MdViewActions.loadFeatureCatalogAttributesFailure({
+            notFound: true,
+          })
+        }
+
+        return MdViewActions.loadFeatureCatalogAttributesSuccess({
+          datasetCatalog: record,
+        })
+      }),
+      catchError((error) =>
+        of(
+          MdViewActions.loadFeatureCatalogAttributesFailure({
+            otherError: error.message,
+          })
+        )
       )
     )
   )
