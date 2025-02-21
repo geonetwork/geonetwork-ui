@@ -31,7 +31,7 @@ This is a general diagram of how libraries are organized:
 
 ### Details
 
-The libraries are as follow:
+The libraries are organized as follows:
 
 1. Presentation libraries are in the `ui` folder and are categorized by their forms:
 
@@ -79,9 +79,22 @@ The libraries are as follow:
    - `api-repository` for providing the Records Repository abstraction as well as all models related to it (metadata records, etc.)
    - `api-metadata-converter` for converting metadata from and to interoperable formats
 
-#### `webcomponents`: Embeddable webcomponents
+### Dependency constraints
 
-See [the specific README file](https://github.com/geonetwork/geonetwork-ui/tree/main/apps/webcomponents).
+To ensure that the project structure stays healthy and avoid circular dependencies, several constraints dictating which kinds of libraries can depend on which were set up. These constraints are enforced by ESLint and configured in the [ESLint configuration file](https://github.com/geonetwork/geonetwork-ui/blob/main/.eslintrc.json).
+
+The constraints are:
+
+1. **No library should depend on `util/app-config`**  
+   This is because only applications should decide whether an app config file should be loaded (see [this page](./app-config.md) for more information).
+2. **Libraries of type `common`, `data-access` and `util` should only depend on libraries of the same type**
+3. **Libraries of type `ui` and `api` should only depend on _shared libraries_ or libraries of the same type**  
+   Shared libraries have the `scope:shared` tag; this is for instance the case for `util-i18n` and `util-shared`
+4. **Libraries of type `feature` can depend on any other kind of library** expect `util/app-config`
+
+## Web Components
+
+See [the specific README file](https://github.com/geonetwork/geonetwork-ui/tree/main/apps/webcomponents/README.md).
 
 ## Applications
 

@@ -6,7 +6,7 @@ outline: deep
 
 ## Principle
 
-GeoNetwork UI provides a standard way of configuring applications using the (default.toml)[default.toml](https://github.com/geonetwork/geonetwork-ui/tree/main/conf/default.toml) file.
+GeoNetwork UI provides a standard way of configuring applications using the [default.toml](https://github.com/geonetwork/geonetwork-ui/tree/main/conf/default.toml) file.
 
 This file can be used to:
 
