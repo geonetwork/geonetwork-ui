@@ -60,6 +60,7 @@ export const SupportedTypes = [
   'geojson',
   'excel',
   'gml',
+  'wfs',
 ] as const
 export type SupportedType = (typeof SupportedTypes)[number]
 

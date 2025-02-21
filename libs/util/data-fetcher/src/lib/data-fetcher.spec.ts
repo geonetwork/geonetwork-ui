@@ -7,13 +7,52 @@ import path from 'path'
 import { readDataset } from './data-fetcher'
 import { CsvReader } from './readers/csv'
 import { GeojsonReader } from './readers/geojson'
-import { sharedFetch, useCache } from '@camptocamp/ogc-client'
+import { sharedFetch, useCache, WfsEndpoint } from '@camptocamp/ogc-client'
 
 jest.mock('@camptocamp/ogc-client', () => ({
   useCache: jest.fn(async (factory) =>
     JSON.parse(JSON.stringify(await factory()))
   ),
   sharedFetch: jest.fn((url) => global.fetch(url)),
+  WfsEndpoint: class {
+    constructor(private url) {}
+    isReady() {
+      return Promise.resolve(this)
+    }
+    getVersion() {
+      return '2.0.0'
+    }
+    getFeatureTypes() {
+      return [
+        {
+          name: 'ms:n_mat_eolien_p_r32',
+          outputFormats: ['gml'],
+          defaultCrs: 'EPSG:4326',
+        },
+      ]
+    }
+    getFeatureTypeSummary() {
+      return {
+        name: 'ms:n_mat_eolien_p_r32',
+        outputFormats: ['gml'],
+        defaultCrs: 'EPSG:4326',
+      }
+    }
+    getFeatureUrl() {
+      return this.url
+    }
+    getFeatureTypeFull() {
+      return Promise.resolve({
+        objectCount: 442,
+      })
+    }
+    supportsJson() {
+      return false
+    }
+    supportsStartIndex() {
+      return true
+    }
+  },
 }))
 
 describe('data-fetcher', () => {
@@ -349,6 +388,70 @@ describe('data-fetcher', () => {
           { namespace: 'ms:n_mat_eolien_p_r32', wfsVersion: '2.0.0' }
         )
         expect(gml[0]).toEqual({
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [1.548145, 50.054755, 0],
+          },
+          properties: {
+            boundedBy: [1.548145, 50.054755, 1.548145, 50.054755],
+            id_map: 1862,
+            id_mat: 1862,
+            nom_parc: 'PARC EOLIEN DE CHASSE MAREE II',
+            id_eolienn: 'L1.1',
+            x_rgf93: 595929,
+            y_rgf93: 6996108,
+            puissanc_2: 2,
+            code_com: 80360,
+            nom_commun: 'FRESSENNEVILLE',
+            code_arron: 801,
+            departemen: 'SO',
+            secteur: 'E - SECTEUR OUEST SOMME',
+            id_sre: 'E-P',
+            ht_max: 127,
+            ht_mat: 0,
+            type_proce: 'PC',
+            etat_proce: 'AB',
+            contentieu: 0,
+            etat_mat: 'NCO',
+            en_service: 'NON',
+            etat_eolie: 'AB',
+            alt_base: null,
+            code_icpe: undefined,
+            date_crea: undefined,
+            date_decis: null,
+            date_depot: undefined,
+            date_maj: null,
+            date_prod: undefined,
+            date_real: undefined,
+            diam_rotor: null,
+            exploitant: undefined,
+            gardesol: null,
+            ht_nacelle: null,
+            id_parc: undefined,
+            id_pc: undefined,
+            n_parcel: undefined,
+            operateur: undefined,
+            precis_pos: undefined,
+            srce_geom: undefined,
+            sys_coord: undefined,
+            x_pc: null,
+            y_pc: null,
+          },
+        })
+      })
+    })
+    describe('Wfs service', () => {
+      it('reads the content from the service', async () => {
+        const wfs = await readDataset(
+          'http://localfile/fixtures/wfs-gml.xml',
+          'wfs',
+          {
+            namespace: 'ms:n_mat_eolien_p_r32',
+            wfsVersion: '2.0.0',
+          }
+        )
+        expect(wfs[0]).toEqual({
           type: 'Feature',
           geometry: {
             type: 'Point',
