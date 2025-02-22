@@ -5,6 +5,7 @@
       [dataSource]="dataSource"
       matSort
       (matSortChange)="setSort($event)"
+      [matSortDisableClear]="true"
     >
       <ng-container *ngFor="let prop of properties" [matColumnDef]="prop">
         <th
