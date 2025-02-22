@@ -602,6 +602,7 @@
   "tooltip.url.open": "Open URL",
   "ui.readLess": "Read less",
   "ui.readMore": "Read more",
+  "wfs.aggregations.notsupported": "Aggregations are currently not supported for WFS services",
   "wfs.feature.limit": "Too many features to display the WFS layer!",
   "wfs.featuretype.notfound": "No matching feature type was found in the service",
   "wfs.geojsongml.notsupported": "This service does not support the GeoJSON or GML format",

@@ -117,7 +117,13 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
   private async readData() {
     this.loading$.next(true)
     // wait for properties to be read
-    await firstValueFrom(this.properties$.pipe(filter((p) => !!p)))
+    const properties = await firstValueFrom(
+      this.properties$.pipe(filter((p) => !!p))
+    )
+    const propsWithoutGeom = properties.filter(
+      (p) => !p.toLowerCase().startsWith('geom')
+    )
+    this.dataset_.select(...propsWithoutGeom)
     await this.dataSource.showData(this.dataset_.read())
     this.loading$.next(false)
   }
