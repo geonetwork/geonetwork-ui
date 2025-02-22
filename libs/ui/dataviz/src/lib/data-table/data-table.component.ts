@@ -23,8 +23,9 @@ import {
 } from '@angular/material/paginator'
 import { CustomMatPaginatorIntl } from './custom.mat.paginator.intl'
 import { CommonModule } from '@angular/common'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, filter, firstValueFrom } from 'rxjs'
 import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
+import { LetDirective } from '@ngrx/component'
 
 const rowIdPrefix = 'table-item-'
 
@@ -46,6 +47,7 @@ export interface TableItemModel {
     TranslateModule,
     CommonModule,
     LoadingMaskComponent,
+    LetDirective,
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }],
   selector: 'gn-ui-data-table',
@@ -55,11 +57,11 @@ export interface TableItemModel {
 })
 export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() set dataset(value: BaseReader) {
-    this.loading$.next(true)
+    this.properties$.next(null)
     this.dataset_ = value
     this.dataset_.load()
-    this.dataset_.properties.then(
-      (properties) => (this.properties = properties.map((p) => p.name))
+    this.dataset_.properties.then((properties) =>
+      this.properties$.next(properties.map((p) => p.name))
     )
     this.dataset_.info.then((info) => (this.count = info.itemsCount))
   }
@@ -70,7 +72,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator
 
   dataset_: BaseReader
-  properties: string[]
+  properties$ = new BehaviorSubject<string[]>(null)
   dataSource: DataTableDataSource
   headerHeight: number
   count: number
@@ -94,28 +96,30 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
 
   setSort(sort: MatSort) {
     if (!this.dataset_) return
-    this.loading$.next(true)
     if (!this.sort.active) {
       this.dataset_.orderBy()
     } else {
       this.dataset_.orderBy([sort.direction || 'asc', sort.active])
     }
-    this.dataSource
-      .showData(this.dataset_.read())
-      .then(() => this.loading$.next(false))
+    this.readData()
   }
 
   setPagination() {
     if (!this.paginator) return
     if (!this.dataset_) return
-    this.loading$.next(true)
     this.dataset_.limit(
       this.paginator.pageIndex * this.paginator.pageSize,
       this.paginator.pageSize
     )
-    this.dataSource
-      .showData(this.dataset_.read())
-      .then(() => this.loading$.next(false))
+    this.readData()
+  }
+
+  private async readData() {
+    this.loading$.next(true)
+    // wait for properties to be read
+    await firstValueFrom(this.properties$.pipe(filter((p) => !!p)))
+    await this.dataSource.showData(this.dataset_.read())
+    this.loading$.next(false)
   }
 
   scrollToItem(itemId: TableItemId): void {

@@ -6,6 +6,7 @@
       matSort
       (matSortChange)="setSort($event)"
       [matSortDisableClear]="true"
+      *ngrxLet="properties$ as properties"
     >
       <ng-container *ngFor="let prop of properties" [matColumnDef]="prop">
         <th
