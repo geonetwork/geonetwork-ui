@@ -100,6 +100,7 @@ describe('WfsReader', () => {
     })
     afterEach(() => {
       fetchMock.reset()
+      jest.clearAllMocks()
     })
     describe('#info', () => {
       it('returns dataset info', async () => {
@@ -199,6 +200,17 @@ describe('WfsReader', () => {
           outputCrs: 'EPSG:4326',
           startIndex: 2,
           maxFeatures: 42,
+        })
+      })
+
+      it('reads data with only certain fields', async () => {
+        const getFeatureUrlSpy = jest.spyOn(wfsEndpoint, 'getFeatureUrl')
+        reader.select('code_dep', 'nom_epci')
+        await reader.read()
+        expect(getFeatureUrlSpy).toHaveBeenCalledWith('epci', {
+          asJson: true,
+          outputCrs: 'EPSG:4326',
+          attributes: ['code_dep', 'nom_epci'],
         })
       })
     })
