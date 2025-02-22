@@ -74,23 +74,21 @@ export const WithGeojson: StoryObj<DataTableComponent> = {
   },
 }
 
-// TODO: uncomment this once WFS support in data-fetcher is merged
-// export const WithWfs: StoryObj<DataTableComponent> = {
-//   loaders: [
-//     async () => ({
-//       dataset: await openDataset(
-//         'https://www.geo2france.fr/geoserver/cr_hdf/ows',
-//         'wfs',
-//         {
-//           wfsUrlEndpoint: 'https://www.geo2france.fr/geoserver/cr_hdf/ows',
-//           namespace: 'accidento_hdf_L93',
-//         }
-//       ),
-//     }),
-//   ],
-//   render(args, { loaded }) {
-//     return {
-//       props: loaded,
-//     }
-//   },
-// }
+export const WithWfs: StoryObj<DataTableComponent> = {
+  loaders: [
+    async () => ({
+      dataset: await openDataset(
+        'https://www.geo2france.fr/geoserver/cr_hdf/ows',
+        'wfs',
+        {
+          wfsFeatureType: 'accidento_hdf_L93',
+        }
+      ),
+    }),
+  ],
+  render(args, { loaded }) {
+    return {
+      props: loaded,
+    }
+  },
+}
