@@ -40,6 +40,14 @@
       class="sticky inset-0"
       [message]="'table.loading.data' | translate"
     ></gn-ui-loading-mask>
+    <gn-ui-popup-alert
+      *ngIf="error"
+      type="warning"
+      icon="matErrorOutlineOutline"
+      class="absolute m-2 inset-0 z-[100]"
+    >
+      <span translate>{{ error }}</span>
+    </gn-ui-popup-alert>
   </div>
   <div class="flex justify-between items-center overflow-hidden">
     <div class="text-gray-900 px-4 py-2 text-sm">

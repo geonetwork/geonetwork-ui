@@ -26,4 +26,8 @@ export class DataTableDataSource implements DataSource<TableItemModel> {
     const items = await itemsPromise
     this.dataItems$.next(items)
   }
+
+  clearData() {
+    this.dataItems$.next([])
+  }
 }
