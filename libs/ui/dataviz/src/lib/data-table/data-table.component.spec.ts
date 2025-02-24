@@ -16,6 +16,7 @@ import {
   DataItem,
   PropertyInfo,
 } from '@geonetwork-ui/data-fetcher'
+import { firstValueFrom } from 'rxjs'
 
 export class MockBaseReader extends BaseFileReader {
   data: {
@@ -65,9 +66,10 @@ describe('DataTableComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('computes data properties', () => {
+  it('computes data properties', async () => {
     fixture.detectChanges()
-    expect(component.properties).toEqual(['id', 'firstName', 'lastName'])
+    const properties = await firstValueFrom(component.properties$)
+    expect(properties).toEqual(['id', 'firstName', 'lastName'])
   })
 
   it('displays the amount of objects in the dataset', () => {
@@ -86,8 +88,9 @@ describe('DataTableComponent', () => {
     it('updates the internal data source', () => {
       expect(component.dataSource).not.toBe(previousDataSource)
     })
-    it('recomputes the data properties', () => {
-      expect(component.properties).toEqual(['id', 'name', 'pop'])
+    it('recomputes the data properties', async () => {
+      const properties = await firstValueFrom(component.properties$)
+      expect(properties).toEqual(['id', 'name', 'pop'])
     })
   })
 })
