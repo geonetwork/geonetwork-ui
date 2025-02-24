@@ -36,7 +36,7 @@ export const loadCatalogAttributes = createAction(
 
 export const loadCatalogAttributesSuccess = createAction(
   '[Metadata view] Load full metadata success',
-  props<{ full: DatasetFeatureCatalog }>() // TODO A retyper avec le type DatasetFeatureCatalog ?
+  props<{ full: DatasetFeatureCatalog }>()
 )
 
 export const loadCatalogAttributesFailure = createAction(

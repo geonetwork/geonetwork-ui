@@ -5,14 +5,12 @@ import { catchError, map, switchMap } from 'rxjs/operators'
 import * as MdViewActions from './mdview.actions'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { RecordsApiService } from '@geonetwork-ui/data-access/gn4'
 @Injectable()
 export class MdViewEffects {
   constructor(
     private actions$: Actions,
     private recordsRepository: RecordsRepositoryInterface,
-    private platformServiceInterface: PlatformServiceInterface,
-    private recordsApiService: RecordsApiService
+    private platformServiceInterface: PlatformServiceInterface
   ) {}
 
   /*
@@ -33,20 +31,21 @@ export class MdViewEffects {
       )
     )
   )
-
+  /*
+  Feature Catalog effects
+  */
   loadCatalogAttributes = createEffect(() =>
     this.actions$.pipe(
       ofType(MdViewActions.loadCatalogAttributes),
       switchMap(({ metadataUuid, approvedVersion }) =>
-        this.recordsApiService.getFeatureCatalog(metadataUuid, approvedVersion)
+        this.recordsRepository.getFeatureCatalog(metadataUuid, approvedVersion)
       ),
       map((record) => {
         if (record === null) {
           return MdViewActions.loadCatalogAttributesFailure({ notFound: true })
         }
-        return MdViewActions.loadCatalogAttributesSuccess({
-          full: undefined /*full: record*/,
-        }) //TODO mapping ici de FeatureResponseApiModel vers DatasetFeatureCatalog ?
+
+        return MdViewActions.loadCatalogAttributesSuccess({ full: record })
       }),
       catchError((error) =>
         of(

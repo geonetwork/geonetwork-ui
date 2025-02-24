@@ -142,53 +142,26 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   }
 
   getFeatureCatalog(
-    metadataUuid: string
+    metadataUuid: string,
+    approvedVersion?: boolean
   ): Observable<DatasetFeatureCatalog | null> {
-    return this.gn4RecordsApi.getFeatureCatalog(metadataUuid).pipe(
-      map((results: FeatureResponseApiModel) => {
-        if (results.decodeMap) {
-          const features = Object.keys(results.decodeMap).map((key) => {
-            const feature = results.decodeMap[key]
-            return { name: feature[0], title: feature[1] }
-          })
-          return { features } as DatasetFeatureCatalog
-        }
-        return null
-      }),
-      switchMap((record) => (record ? of(record) : of(null)))
-    )
+    return this.gn4RecordsApi
+      .getFeatureCatalog(metadataUuid, approvedVersion)
+      .pipe(
+        map((results: FeatureResponseApiModel) => {
+          if (results.decodeMap) {
+            const features = Object.keys(results.decodeMap).map((key) => {
+              const feature = results.decodeMap[key]
+              return { name: feature[0], title: feature[1] }
+            })
+            return { features } as DatasetFeatureCatalog
+          }
+          return null
+        }),
+        switchMap((record) => (record ? of(record) : of(null)))
+      )
   }
-  /*
 
-
-Error: libs/api/repository/src/lib/gn4/gn4-repository.ts:142:17 - error TS2304: Cannot find name 'DatasetFeatureCatalog'.
-
-142   ): Observable<DatasetFeatureCatalog | null> {
-                    ~~~~~~~~~~~~~~~~~~~~~
-
-
-Error: libs/api/repository/src/lib/gn4/gn4-repository.ts:144:21 - error TS2304: Cannot find name 'FeatureResponseApiModel'.
-
-144       map((results: FeatureResponseApiModel) => {
-                        ~~~~~~~~~~~~~~~~~~~~~~~
-
-
-Error: libs/api/repository/src/lib/gn4/gn4-repository.ts:150:34 - error TS2304: Cannot find name 'DatasetFeatureCatalog'.
-
-150           return { features } as DatasetFeatureCatalog
-                                     ~~~~~~~~~~~~~~~~~~~~~
-
-
-Error: libs/common/domain/src/lib/repository/records-repository.interface.ts:17:17 - error TS2304: Cannot find name 'DatasetFeatureCatalog'.
-
-17   ): Observable<DatasetFeatureCatalog | null>
-                   ~~~~~~~~~~~~~~~~~~~~~
-
-
-
-
-
-                   */
   getSimilarRecords(similarTo: CatalogRecord): Observable<CatalogRecord[]> {
     return this.gn4SearchApi
       .search(
