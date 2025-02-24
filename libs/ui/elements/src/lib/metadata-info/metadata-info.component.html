@@ -163,13 +163,13 @@
     <div *ngIf="metadata.resourceCreated">
       <p class="text-sm" translate>record.metadata.creation</p>
       <p class="text-primary font-medium mt-1">
-        {{ metadata.resourceCreated.toLocaleDateString() }}
+        {{ formatDate(metadata.resourceCreated) }}
       </p>
     </div>
     <div *ngIf="metadata.resourcePublished">
       <p class="text-sm" translate>record.metadata.publication</p>
       <p class="text-primary font-medium mt-1">
-        {{ metadata.resourcePublished.toLocaleDateString() }}
+        {{ formatDate(metadata.resourcePublished) }}
       </p>
     </div>
     <div *ngIf="updateFrequency">
@@ -233,7 +233,7 @@
     <div *ngIf="metadata.recordUpdated">
       <p class="text-sm" translate>record.metadata.updatedOn</p>
       <p class="text-primary font-medium">
-        {{ metadata.recordUpdated && metadata.recordUpdated.toLocaleString() }}
+        {{ metadata.recordUpdated && formatDateTime(metadata.recordUpdated) }}
       </p>
     </div>
     <div *ngIf="metadata.landingPage">

@@ -1,7 +1,30 @@
 import { getTemporalRangeUnion } from './temporal-extent-union'
+import { DateService } from '../services'
 
-// lock locale to en
+// Create a minimal DateService mock by casting
+const dateServiceMock = {
+  formatDate: (
+    date: Date | string,
+    options?: Intl.DateTimeFormatOptions
+  ): string => {
+    const dateObj = typeof date === 'string' ? new Date(date) : date
+    return options
+      ? dateObj.toLocaleDateString('en-US', options)
+      : dateObj.toLocaleDateString('en-US')
+  },
+  formatDateTime: (
+    date: Date | string,
+    options?: Intl.DateTimeFormatOptions
+  ): string => {
+    const dateObj = typeof date === 'string' ? new Date(date) : date
+    return options
+      ? dateObj.toLocaleString('en', options)
+      : dateObj.toLocaleString('en')
+  },
+} as unknown as DateService
+
 beforeAll(() => {
+  // Override the native toLocaleDateString to use 'en' locale if called as a fallback.
   const originalFn = Date.prototype.toLocaleDateString
   Date.prototype.toLocaleDateString = function () {
     return originalFn.call(this, 'en')
@@ -21,7 +44,7 @@ describe('getTemporalRangeUnion', () => {
       end: '1/20/2022',
     }
 
-    const union = getTemporalRangeUnion(ranges)
+    const union = getTemporalRangeUnion(ranges, dateServiceMock)
 
     expect(union).toEqual(expectedUnion)
   })
@@ -29,7 +52,7 @@ describe('getTemporalRangeUnion', () => {
   it('should return null if no ranges are provided', () => {
     const ranges = []
 
-    const union = getTemporalRangeUnion(ranges)
+    const union = getTemporalRangeUnion(ranges, dateServiceMock)
 
     expect(union).toBe(undefined)
   })
@@ -46,7 +69,7 @@ describe('getTemporalRangeUnion', () => {
       end: undefined,
     }
 
-    const union = getTemporalRangeUnion(ranges)
+    const union = getTemporalRangeUnion(ranges, dateServiceMock)
 
     expect(union).toEqual(expectedUnion)
   })
@@ -63,7 +86,7 @@ describe('getTemporalRangeUnion', () => {
       end: '1/20/2022',
     }
 
-    const union = getTemporalRangeUnion(ranges)
+    const union = getTemporalRangeUnion(ranges, dateServiceMock)
 
     expect(union).toEqual(expectedUnion)
   })
