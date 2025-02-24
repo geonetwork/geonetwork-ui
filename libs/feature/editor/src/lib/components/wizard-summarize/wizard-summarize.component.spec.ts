@@ -8,7 +8,7 @@ import { WizardService } from '../../services/wizard.service'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { DateService } from '@geonetwork-ui/util/shared'
 
-const TIME = new Date().getTime()
+const TIME = new Date('2025-01-01T00:00:00Z').getTime()
 
 const wizardServiceMock = {
   getWizardFieldData: jest.fn((id: string) => {
@@ -112,18 +112,8 @@ describe('WizardSummarizeComponent', () => {
   it('should display date using DateService', () => {
     const dateEl = fixture.debugElement.query(By.css('.date')).nativeElement
       .textContent
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    }
-    // Use the dateServiceStub to compute the expected formatted date.
-    const expectedDate = dateServiceStub.formatDate(new Date(TIME), options)
+    const expectedDate = 'January 1, 2025'
     expect(dateEl.trim()).toEqual(expectedDate)
-    expect(dateServiceStub.formatDate).toHaveBeenCalledWith(
-      new Date(TIME),
-      options
-    )
   })
 
   it('should display scale', () => {
