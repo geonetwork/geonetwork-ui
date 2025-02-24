@@ -2,6 +2,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling'
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -78,7 +79,10 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
   count: number
   loading$ = new BehaviorSubject<boolean>(false)
 
-  constructor(private eltRef: ElementRef) {}
+  constructor(
+    private eltRef: ElementRef,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.dataSource = new DataTableDataSource()
@@ -88,6 +92,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
     this.headerHeight =
       this.eltRef.nativeElement.querySelector('thead').offsetHeight
     this.setPagination()
+    this.cdr.detectChanges()
   }
 
   ngOnChanges() {
