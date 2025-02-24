@@ -68,7 +68,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() activeId: TableItemId
   @Output() selected = new EventEmitter<any>()
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort
+  @ViewChild(MatSort) sort: MatSort
   @ViewChild(MatPaginator) paginator: MatPaginator
 
   dataset_: BaseReader
