@@ -9,8 +9,8 @@ const dateServiceMock = {
   ): string => {
     const dateObj = typeof date === 'string' ? new Date(date) : date
     return options
-      ? dateObj.toLocaleDateString('en', options)
-      : dateObj.toLocaleDateString('en')
+      ? dateObj.toLocaleDateString('en-US', options)
+      : dateObj.toLocaleDateString('en-US')
   },
   formatDateTime: (
     date: Date | string,
