@@ -15,9 +15,11 @@ import {
   BaseFileReader,
   DataItem,
   PropertyInfo,
+  DatasetInfo,
 } from '@geonetwork-ui/data-fetcher'
 import { firstValueFrom } from 'rxjs'
 
+const ITEMS_COUNT = 153
 export class MockBaseReader extends BaseFileReader {
   data: {
     items: DataItem[]
@@ -32,6 +34,9 @@ export class MockBaseReader extends BaseFileReader {
     properties: PropertyInfo[]
   }> {
     return Promise.resolve(this.data)
+  }
+  override get info(): Promise<DatasetInfo> {
+    return Promise.resolve({ itemsCount: ITEMS_COUNT })
   }
 }
 
@@ -77,7 +82,7 @@ describe('DataTableComponent', () => {
   it('displays the amount of objects in the dataset', () => {
     fixture.detectChanges()
     const countEl = fixture.debugElement.query(By.css('.count')).nativeElement
-    expect(countEl.textContent).toEqual('3')
+    expect(countEl.textContent).toEqual(ITEMS_COUNT.toString())
   })
 
   describe('input data change', () => {
@@ -104,8 +109,18 @@ describe('DataTableComponent', () => {
     it('sets the page size on the reader', () => {
       expect(dataset.limit).toHaveBeenCalledWith(0, 10)
     })
-    it('compute the correct amount of pages', () => {})
-    it('calls reader.limit when pagination changes', () => {})
+    it('calls reader.limit initially', () => {
+      expect(dataset.limit).toHaveBeenCalledWith(0, 10)
+    })
+    it('compute the correct amount of pages', () => {
+      expect(component.count).toEqual(ITEMS_COUNT)
+    })
+    it('calls reader.limit when pagination changes', () => {
+      component.paginator.pageIndex = 3
+      component.paginator.pageSize = 10
+      component.setPagination()
+      expect(dataset.limit).toHaveBeenCalledWith(30, 10)
+    })
   })
 
   describe('sorting', () => {
