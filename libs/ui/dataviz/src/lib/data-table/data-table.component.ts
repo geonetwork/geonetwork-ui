@@ -14,9 +14,9 @@ import {
 } from '@angular/core'
 import { MatSort, MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { DataTableDataSource } from './data-table.data.source'
-import { BaseReader } from '@geonetwork-ui/data-fetcher'
+import { BaseReader, FetchError } from '@geonetwork-ui/data-fetcher'
 import {
   MatPaginator,
   MatPaginatorIntl,
@@ -25,7 +25,10 @@ import {
 import { CustomMatPaginatorIntl } from './custom.mat.paginator.intl'
 import { CommonModule } from '@angular/common'
 import { BehaviorSubject, filter, firstValueFrom } from 'rxjs'
-import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
+import {
+  LoadingMaskComponent,
+  PopupAlertComponent,
+} from '@geonetwork-ui/ui/widgets'
 import { LetDirective } from '@ngrx/component'
 
 const rowIdPrefix = 'table-item-'
@@ -48,6 +51,7 @@ export interface TableItemModel {
     TranslateModule,
     CommonModule,
     LoadingMaskComponent,
+    PopupAlertComponent,
     LetDirective,
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }],
@@ -78,10 +82,12 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
   headerHeight: number
   count: number
   loading$ = new BehaviorSubject<boolean>(false)
+  error = null
 
   constructor(
     private eltRef: ElementRef,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
@@ -119,7 +125,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
     this.readData()
   }
 
-  private async readData() {
+  async readData() {
     this.loading$.next(true)
     // wait for properties to be read
     const properties = await firstValueFrom(
@@ -129,7 +135,12 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
       (p) => !p.toLowerCase().startsWith('geom')
     )
     this.dataset_.select(...propsWithoutGeom)
-    await this.dataSource.showData(this.dataset_.read())
+    try {
+      await this.dataSource.showData(this.dataset_.read())
+      this.error = null
+    } catch (error) {
+      this.handleError(error as FetchError | Error | string)
+    }
     this.loading$.next(false)
   }
 
@@ -142,5 +153,24 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
 
   public getRowEltId(id: TableItemId): string {
     return rowIdPrefix + id
+  }
+
+  handleError(error: FetchError | Error | string) {
+    this.dataSource.clearData()
+    if (error instanceof FetchError) {
+      this.error = this.translateService.instant(
+        `dataset.error.${error.type}`,
+        {
+          info: error.info,
+        }
+      )
+      console.warn(error.message)
+    } else if (error instanceof Error) {
+      this.error = this.translateService.instant(error.message)
+      console.warn(error.stack || error)
+    } else {
+      this.error = this.translateService.instant(error)
+      console.warn(error)
+    }
   }
 }

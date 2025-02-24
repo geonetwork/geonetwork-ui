@@ -181,4 +181,19 @@ describe('DataTableComponent', () => {
       expect(getSpinner()).toBeFalsy()
     })
   })
+  describe('error handling', () => {
+    beforeEach(() => {
+      component.ngOnInit()
+      jest.spyOn(component, 'handleError')
+      jest.spyOn(component.dataSource, 'clearData')
+      jest
+        .spyOn(dataset, 'read')
+        .mockImplementation(() => Promise.reject('Test Error'))
+    })
+    it('should set component.error if reader ancounters an error', async () => {
+      await component.readData()
+      expect(component.handleError).toHaveBeenCalledWith('Test Error')
+      expect(component.error).toEqual('Test Error')
+    })
+  })
 })
