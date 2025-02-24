@@ -1,4 +1,8 @@
-import { WfsEndpoint, WfsVersion } from '@camptocamp/ogc-client'
+import {
+  WfsEndpoint,
+  WfsFeatureTypeFull,
+  WfsVersion,
+} from '@camptocamp/ogc-client'
 import { DataItem, DatasetInfo, PropertyInfo } from '../model'
 import { fetchDataAsText } from '../utils'
 import { BaseReader } from './base'
@@ -19,7 +23,22 @@ export class WfsReader extends BaseReader {
   }
 
   get properties(): Promise<PropertyInfo[]> {
-    return this.getData().then((result) => result.properties)
+    return this.endpoint
+      .getFeatureTypeFull(this.featureTypeName)
+      .then((featureType) =>
+        Object.keys(featureType.properties).map((prop) => {
+          const originalType = featureType.properties[prop]
+          const type =
+            originalType === 'float' || originalType === 'integer'
+              ? 'number'
+              : (originalType as WfsFeatureTypeFull['properties'][string]) // FIXME: ogc-client typing is incorrect, should be a string union
+          return {
+            name: prop,
+            label: prop,
+            type,
+          }
+        })
+      )
   }
 
   get info(): Promise<DatasetInfo> {
