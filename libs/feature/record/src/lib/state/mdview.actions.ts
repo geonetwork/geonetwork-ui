@@ -2,6 +2,7 @@ import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/da
 import { createAction, props } from '@ngrx/store'
 import {
   CatalogRecord,
+  DatasetFeatureCatalog,
   UserFeedback,
 } from '@geonetwork-ui/common/domain/model/record'
 
@@ -35,7 +36,7 @@ export const loadCatalogAttributes = createAction(
 
 export const loadCatalogAttributesSuccess = createAction(
   '[Metadata view] Load full metadata success',
-  props<{ full: CatalogRecord }>() // TODO A retyper avec le type DatasetFeatureCatalog ?
+  props<{ full: DatasetFeatureCatalog }>() // TODO A retyper avec le type DatasetFeatureCatalog ?
 )
 
 export const loadCatalogAttributesFailure = createAction(

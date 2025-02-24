@@ -42,12 +42,18 @@ export class MdViewEffects {
       ),
       map((record) => {
         if (record === null) {
-          return MdViewActions.loadFullMetadataFailure({ notFound: true })
+          return MdViewActions.loadCatalogAttributesFailure({ notFound: true })
         }
-        return MdViewActions.loadFullMetadataSuccess({ full: record }) //mapping ici de FeatureResponseApiModel vers DatasetFeatureCatalog ?
+        return MdViewActions.loadCatalogAttributesSuccess({
+          full: undefined /*full: record*/,
+        }) //TODO mapping ici de FeatureResponseApiModel vers DatasetFeatureCatalog ?
       }),
       catchError((error) =>
-        of(MdViewActions.loadFullMetadataFailure({ otherError: error.message }))
+        of(
+          MdViewActions.loadCatalogAttributesFailure({
+            otherError: error.message,
+          })
+        )
       )
     )
   )
