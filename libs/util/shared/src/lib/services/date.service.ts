@@ -18,25 +18,28 @@ export class DateService {
     return date
   }
 
+  private getLocaleAndDate(date: Date | string): {
+    locale: string
+    dateObj: Date
+  } {
+    const locale = this.translateService.currentLang || 'en-US'
+    const dateObj = this.getDateObject(date)
+    return { locale, dateObj }
+  }
+
   formatDate(
     date: Date | string,
     options?: Intl.DateTimeFormatOptions
   ): string {
-    const currentLocale = this.translateService.currentLang || 'en-US'
-    const dateObj = this.getDateObject(date)
-    return options
-      ? dateObj.toLocaleDateString(currentLocale, options)
-      : dateObj.toLocaleDateString(currentLocale)
+    const { locale, dateObj } = this.getLocaleAndDate(date)
+    return dateObj.toLocaleDateString(locale, options)
   }
 
   formatDateTime(
     date: Date | string,
     options?: Intl.DateTimeFormatOptions
   ): string {
-    const currentLocale = this.translateService.currentLang || 'en-US'
-    const dateObj = this.getDateObject(date)
-    return options
-      ? dateObj.toLocaleString(currentLocale, options)
-      : dateObj.toLocaleString(currentLocale)
+    const { locale, dateObj } = this.getLocaleAndDate(date)
+    return dateObj.toLocaleString(locale, options)
   }
 }
