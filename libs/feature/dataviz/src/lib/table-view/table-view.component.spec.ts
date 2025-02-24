@@ -7,7 +7,7 @@ import {
   tick,
 } from '@angular/core/testing'
 import { TableViewComponent } from './table-view.component'
-import { delay, of, throwError } from 'rxjs'
+import { delay, firstValueFrom, of, throwError } from 'rxjs'
 import { ChangeDetectionStrategy, importProvidersFrom } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { DataService } from '../service/data.service'
@@ -87,6 +87,17 @@ describe('TableViewComponent', () => {
       expect(dataService.getDataset).toHaveBeenCalledWith(
         aSetOfLinksFixture().dataCsv()
       )
+    })
+
+    describe('when link is not defined', () => {
+      beforeEach(() => {
+        component.link = null
+        fixture.detectChanges()
+      })
+      it('sets tableData undefined', async () => {
+        const tableData = await firstValueFrom(component.tableData$)
+        expect(tableData).toBeUndefined()
+      })
     })
 
     describe('during data loading', () => {
