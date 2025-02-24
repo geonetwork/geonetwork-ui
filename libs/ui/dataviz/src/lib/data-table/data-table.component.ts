@@ -101,7 +101,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
 
   setSort(sort: MatSort) {
     if (!this.dataset_) return
-    if (!this.sort.active) {
+    if (!sort.active) {
       this.dataset_.orderBy()
     } else {
       this.dataset_.orderBy([sort.direction || 'asc', sort.active])
