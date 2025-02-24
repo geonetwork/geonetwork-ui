@@ -1,8 +1,4 @@
-import {
-  WfsEndpoint,
-  WfsFeatureTypeFull,
-  WfsVersion,
-} from '@camptocamp/ogc-client'
+import { WfsEndpoint, WfsVersion } from '@camptocamp/ogc-client'
 import { DataItem, DatasetInfo, PropertyInfo } from '../model'
 import { fetchDataAsText } from '../utils'
 import { BaseReader } from './base'
@@ -31,7 +27,7 @@ export class WfsReader extends BaseReader {
           const type =
             originalType === 'float' || originalType === 'integer'
               ? 'number'
-              : (originalType as WfsFeatureTypeFull['properties'][string]) // FIXME: ogc-client typing is incorrect, should be a string union
+              : (originalType as PropertyInfo['type']) // FIXME: ogc-client typing is incorrect, should be a string union
           return {
             name: prop,
             label: prop,
