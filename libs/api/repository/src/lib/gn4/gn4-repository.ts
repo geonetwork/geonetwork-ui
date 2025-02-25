@@ -12,7 +12,10 @@ import {
   Iso19139Converter,
 } from '@geonetwork-ui/api/metadata-converter'
 import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  DatasetFeatureCatalog,
+} from '@geonetwork-ui/common/domain/model/record'
 import {
   Aggregations,
   AggregationsParams,
@@ -27,6 +30,7 @@ import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/reposit
 import {
   RecordsApiService,
   SearchApiService,
+  FeatureResponseApiModel,
 } from '@geonetwork-ui/data-access/gn4'
 import {
   combineLatest,
@@ -134,6 +138,27 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         switchMap((record) =>
           record ? this.gn4Mapper.readRecord(record) : of(null)
         )
+      )
+  }
+
+  getFeatureCatalog(
+    metadataUuid: string,
+    approvedVersion?: boolean
+  ): Observable<DatasetFeatureCatalog | null> {
+    return this.gn4RecordsApi
+      .getFeatureCatalog(metadataUuid, approvedVersion)
+      .pipe(
+        map((results: FeatureResponseApiModel) => {
+          if (results.decodeMap) {
+            const features = Object.keys(results.decodeMap).map((key) => {
+              const feature = results.decodeMap[key]
+              return { name: feature[0], title: feature[1] }
+            })
+            return { features } as DatasetFeatureCatalog
+          }
+          return null
+        }),
+        switchMap((record) => (record ? of(record) : of(null)))
       )
   }
 

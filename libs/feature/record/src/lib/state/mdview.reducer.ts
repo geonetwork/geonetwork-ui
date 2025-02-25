@@ -3,6 +3,7 @@ import * as MetadataViewActions from './mdview.actions'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import {
   CatalogRecord,
+  DatasetFeatureCatalog,
   UserFeedback,
 } from '@geonetwork-ui/common/domain/model/record'
 
@@ -17,6 +18,7 @@ export interface MetadataViewState {
   allUserFeedbacksLoading: boolean
   addUserFeedbackLoading: boolean
   chartConfig?: DatavizConfigurationModel
+  featureCatalog?: DatasetFeatureCatalog
 }
 
 export const initialMetadataViewState: MetadataViewState = {
