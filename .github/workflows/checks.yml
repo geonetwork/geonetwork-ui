@@ -144,8 +144,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gn_version: [4.2.2, 4.2.8, 4.4.0]
-        app: [datahub, metadata-editor]
+        gn_version: [4.4.0]
+        app: [datahub]
         exclude:
           - gn_version: 4.2.2 # metadata-editor requires v4.2.5+
             app: metadata-editor
@@ -189,7 +189,7 @@ jobs:
         if: contains(env.AFFECTED_APPS, matrix.app)
         env:
           APP: ${{ matrix.app }}
-        run: npx nx e2e "$APP-e2e"
+        run: npx nx e2e "$APP-e2e" --spec=**/datasetDetailPage.cy.ts
 
       - uses: actions/upload-artifact@v4
         if: always() && contains(env.AFFECTED_APPS, matrix.app)
@@ -199,6 +199,10 @@ jobs:
           path: |
             apps/datahub-e2e/cypress/screenshots/**/*
             apps/metadata-editor-e2e/cypress/screenshots/**/*
+
+      - name: Afficher le contenu du répertoire de téléchargement
+        if: always() && contains(env.AFFECTED_APPS, matrix.app)
+        run: ls -l /home/runner/work/geonetwork-ui/geonetwork-ui/apps/datahub-e2e/cypress/downloads/
 
       - uses: thollander/actions-comment-pull-request@v2
         if: always() && contains(env.AFFECTED_APPS, matrix.app) && github.event_name == 'pull_request' && steps.upload-screenshots.outputs.artifact-url

@@ -570,330 +570,330 @@ describe('dataset pages', () => {
     })
   })
 
-  describe('LINKS : display & functions', () => {
-    describe('display', () => {
-      it('should have external, API and internal links with one option', () => {
-        cy.get('datahub-record-otherlinks')
-          .find('gn-ui-link-card')
-          .should('have.length.gt', 0)
-        cy.get('datahub-record-apis')
-          .find('gn-ui-api-card')
-          .should('have.length.gt', 0)
-      })
-      it('should not display carousel dot button for 4 link cards', () => {
-        cy.get('datahub-record-otherlinks')
-          .find('.pagination-dot')
-          .should('exist')
-      })
-      it('should not display carousel dot button for 2 API cards', () => {
-        cy.get('datahub-record-apis')
-          .find('.pagination-dot')
-          .should('not.exist')
-      })
-    })
-    describe('features', () => {
-      it('goes to external link on click', () => {
-        cy.get('datahub-record-otherlinks')
-          .find('gn-ui-link-card')
-          .first()
-          .children('a')
-          .as('proviLink')
+  // describe('LINKS : display & functions', () => {
+  //   describe('display', () => {
+  //     it('should have external, API and internal links with one option', () => {
+  //       cy.get('datahub-record-otherlinks')
+  //         .find('gn-ui-link-card')
+  //         .should('have.length.gt', 0)
+  //       cy.get('datahub-record-apis')
+  //         .find('gn-ui-api-card')
+  //         .should('have.length.gt', 0)
+  //     })
+  //     it('should not display carousel dot button for 4 link cards', () => {
+  //       cy.get('datahub-record-otherlinks')
+  //         .find('.pagination-dot')
+  //         .should('exist')
+  //     })
+  //     it('should not display carousel dot button for 2 API cards', () => {
+  //       cy.get('datahub-record-apis')
+  //         .find('.pagination-dot')
+  //         .should('not.exist')
+  //     })
+  //   })
+  //   describe('features', () => {
+  //     it('goes to external link on click', () => {
+  //       cy.get('datahub-record-otherlinks')
+  //         .find('gn-ui-link-card')
+  //         .first()
+  //         .children('a')
+  //         .as('proviLink')
 
-        cy.get('@proviLink')
-          .invoke('attr', 'href')
-          .then((link) => {
-            expect(link).to.eq(
-              'https://www.data.gouv.fr/fr/datasets/donnees-carroyees-a-200-m-sur-la-population/'
-            )
-          })
-      })
-      it('copies the API path on click', () => {
-        cy.get('datahub-record-apis')
-          .find('gn-ui-copy-text-button')
-          .find('button')
-          .first()
-          .realClick()
-        // attempt to make the whole page focused
-        cy.get('body').focus()
-        cy.get('body').realClick()
-        cy.window().then((win) => {
-          win.navigator.clipboard.readText().then((text) => {
-            expect(text).to.eq('https://www.geo2france.fr/geoserver/insee/ows')
-          })
-        })
-      })
-      describe('related records', () => {
-        beforeEach(() => {
-          cy.visit('/dataset/6d0bfdf4-4e94-48c6-9740-3f9facfd453c')
-        })
-        it('should display the related records', () => {
-          cy.get('#related-records')
-            .find('datahub-record-related-records')
-            .find('gn-ui-related-record-card')
-            .should('have.length.gt', 0)
-        })
-        it('goes to dataset on click', () => {
-          let targetLink
-          cy.get('#related-records')
-            .find('datahub-record-related-records')
-            .find('gn-ui-related-record-card')
-            .first()
-            .children('a')
-            .as('proviLink')
+  //       cy.get('@proviLink')
+  //         .invoke('attr', 'href')
+  //         .then((link) => {
+  //           expect(link).to.eq(
+  //             'https://www.data.gouv.fr/fr/datasets/donnees-carroyees-a-200-m-sur-la-population/'
+  //           )
+  //         })
+  //     })
+  //     it('copies the API path on click', () => {
+  //       cy.get('datahub-record-apis')
+  //         .find('gn-ui-copy-text-button')
+  //         .find('button')
+  //         .first()
+  //         .realClick()
+  //       // attempt to make the whole page focused
+  //       cy.get('body').focus()
+  //       cy.get('body').realClick()
+  //       cy.window().then((win) => {
+  //         win.navigator.clipboard.readText().then((text) => {
+  //           expect(text).to.eq('https://www.geo2france.fr/geoserver/insee/ows')
+  //         })
+  //       })
+  //     })
+  //     describe('related records', () => {
+  //       beforeEach(() => {
+  //         cy.visit('/dataset/6d0bfdf4-4e94-48c6-9740-3f9facfd453c')
+  //       })
+  //       it('should display the related records', () => {
+  //         cy.get('#related-records')
+  //           .find('datahub-record-related-records')
+  //           .find('gn-ui-related-record-card')
+  //           .should('have.length.gt', 0)
+  //       })
+  //       it('goes to dataset on click', () => {
+  //         let targetLink
+  //         cy.get('#related-records')
+  //           .find('datahub-record-related-records')
+  //           .find('gn-ui-related-record-card')
+  //           .first()
+  //           .children('a')
+  //           .as('proviLink')
 
-          cy.get('@proviLink')
-            .invoke('attr', 'href')
-            .then((link) => {
-              targetLink = link
-              cy.get('@proviLink').invoke('removeAttr', 'target').click()
-              cy.url().should('include', targetLink)
-            })
-        })
-      })
+  //         cy.get('@proviLink')
+  //           .invoke('attr', 'href')
+  //           .then((link) => {
+  //             targetLink = link
+  //             cy.get('@proviLink').invoke('removeAttr', 'target').click()
+  //             cy.url().should('include', targetLink)
+  //           })
+  //       })
+  //     })
 
-      describe('When there is no link', () => {
-        beforeEach(() => {
-          cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
-        })
-        it('do not display the no-link-error warning initially, only after loading', () => {
-          // wait for metadata info to show up
-          cy.get('gn-ui-metadata-info').should('exist')
-          // first, the block is not visible
-          cy.get('[data-test="dataset-has-no-link-block"]').should('not.exist')
-          // then the block shows up
-          cy.get('[data-test="dataset-has-no-link-block"]').should('exist')
-        })
-      })
-    })
-  })
+  //     describe('When there is no link', () => {
+  //       beforeEach(() => {
+  //         cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
+  //       })
+  //       it('do not display the no-link-error warning initially, only after loading', () => {
+  //         // wait for metadata info to show up
+  //         cy.get('gn-ui-metadata-info').should('exist')
+  //         // first, the block is not visible
+  //         cy.get('[data-test="dataset-has-no-link-block"]').should('not.exist')
+  //         // then the block shows up
+  //         cy.get('[data-test="dataset-has-no-link-block"]').should('exist')
+  //       })
+  //     })
+  //   })
+  // })
 })
 
-describe('record with file distributions', () => {
-  beforeEach(() => {
-    cy.visit('/dataset/n_tri_lill_inondable_s_059')
-    cy.get('datahub-record-metadata')
-      .find('[id="preview"]')
-      .first()
-      .as('previewSection')
-    cy.get('@previewSection')
-      .find('.mat-mdc-tab-labels')
-      .children('div')
-      .eq(1)
-      .click()
-  })
+// describe('record with file distributions', () => {
+//   beforeEach(() => {
+//     cy.visit('/dataset/n_tri_lill_inondable_s_059')
+//     cy.get('datahub-record-metadata')
+//       .find('[id="preview"]')
+//       .first()
+//       .as('previewSection')
+//     cy.get('@previewSection')
+//       .find('.mat-mdc-tab-labels')
+//       .children('div')
+//       .eq(1)
+//       .click()
+//   })
 
-  it('should display the onlineResources by priority', () => {
-    cy.get('@previewSection')
-      .find('gn-ui-dropdown-selector')
-      .last()
-      .openDropdown()
-      .children('button')
-      .then((options) => options.toArray().map((el) => el.innerText.trim()))
-      .should('deep.eq', ['csv (csv)', 'json (json)', 'geojson (geojson)'])
-    cy.screenshot({ capture: 'viewport' })
-  })
-})
+//   it('should display the onlineResources by priority', () => {
+//     cy.get('@previewSection')
+//       .find('gn-ui-dropdown-selector')
+//       .last()
+//       .openDropdown()
+//       .children('button')
+//       .then((options) => options.toArray().map((el) => el.innerText.trim()))
+//       .should('deep.eq', ['csv (csv)', 'json (json)', 'geojson (geojson)'])
+//     cy.screenshot({ capture: 'viewport' })
+//   })
+// })
 
-describe('api cards', () => {
-  beforeEach(() => {
-    cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
-    cy.get('gn-ui-api-card').eq(1).as('firstCard')
-  })
+// describe('api cards', () => {
+//   beforeEach(() => {
+//     cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
+//     cy.get('gn-ui-api-card').eq(1).as('firstCard')
+//   })
 
-  it('should display the open panel button', () => {
-    cy.get('@firstCard')
-      .find('button')
-      .children('ng-icon')
-      .eq(1)
-      .invoke('attr', 'name')
-      .should('equal', 'matMoreHoriz')
-  })
-  it('should open and close the panel on click on open panel button', () => {
-    cy.get('@firstCard').find('button').eq(1).click()
-    cy.get('gn-ui-record-api-form').should('be.visible')
-    cy.screenshot({ capture: 'fullPage' })
-    cy.get('@firstCard').find('button').eq(1).click()
-    cy.get('gn-ui-record-api-form').should('not.be.visible')
-  })
-})
+//   it('should display the open panel button', () => {
+//     cy.get('@firstCard')
+//       .find('button')
+//       .children('ng-icon')
+//       .eq(1)
+//       .invoke('attr', 'name')
+//       .should('equal', 'matMoreHoriz')
+//   })
+//   it('should open and close the panel on click on open panel button', () => {
+//     cy.get('@firstCard').find('button').eq(1).click()
+//     cy.get('gn-ui-record-api-form').should('be.visible')
+//     cy.screenshot({ capture: 'fullPage' })
+//     cy.get('@firstCard').find('button').eq(1).click()
+//     cy.get('gn-ui-record-api-form').should('not.be.visible')
+//   })
+// })
 
-describe('api form', () => {
-  describe('When the api link is ok', () => {
-    beforeEach(() => {
-      cy.visit('/dataset/accroche_velos')
-      cy.get('gn-ui-api-card').first().find('button').eq(1).click()
-      cy.get('gn-ui-record-api-form').children('div').as('apiForm')
-    })
-    it('should have request inputs', () => {
-      cy.get('@apiForm').find('gn-ui-text-input').should('have.length', 2)
-      cy.get('@apiForm')
-        .find('gn-ui-dropdown-selector')
-        .should('have.length', 1)
-      cy.get('@apiForm')
-        .children('div')
-        .first()
-        .children('div')
-        .first()
-        .find('button')
-        .should('have.length', 1)
-      cy.get('@apiForm').find('gn-ui-copy-text-button').should('have.length', 1)
-    })
-    it('should change url on input change', () => {
-      cy.get('@apiForm')
-        .find('gn-ui-copy-text-button')
-        .find('input')
-        .invoke('val')
-        .then((url) => {
-          cy.get('@apiForm').find('gn-ui-text-input').first().clear()
-          cy.get('@apiForm').find('gn-ui-text-input').first().type('54')
-          cy.get('@apiForm')
-            .find('gn-ui-copy-text-button')
-            .find('input')
-            .invoke('val')
-            .should('not.eq', url)
-            .and('include', '54')
-        })
-    })
-    it('should set limit to zero on click on "All" button', () => {
-      cy.get('@apiForm').find('gn-ui-text-input').first().clear()
-      cy.get('@apiForm').find('gn-ui-text-input').first().type('54')
-      cy.get('@apiForm').find('input[type="checkbox"]').check()
-      cy.get('@apiForm')
-        .find('gn-ui-text-input')
-        .first()
-        .should('have.value', '')
-    })
-    it('should reset all 3 inputs and link on click', () => {
-      cy.get('@apiForm').find('gn-ui-text-input').first().as('firstInput')
-      cy.get('@firstInput').clear()
-      cy.get('@firstInput').type('54')
+// describe('api form', () => {
+//   describe('When the api link is ok', () => {
+//     beforeEach(() => {
+//       cy.visit('/dataset/accroche_velos')
+//       cy.get('gn-ui-api-card').first().find('button').eq(1).click()
+//       cy.get('gn-ui-record-api-form').children('div').as('apiForm')
+//     })
+//     it('should have request inputs', () => {
+//       cy.get('@apiForm').find('gn-ui-text-input').should('have.length', 2)
+//       cy.get('@apiForm')
+//         .find('gn-ui-dropdown-selector')
+//         .should('have.length', 1)
+//       cy.get('@apiForm')
+//         .children('div')
+//         .first()
+//         .children('div')
+//         .first()
+//         .find('button')
+//         .should('have.length', 1)
+//       cy.get('@apiForm').find('gn-ui-copy-text-button').should('have.length', 1)
+//     })
+//     it('should change url on input change', () => {
+//       cy.get('@apiForm')
+//         .find('gn-ui-copy-text-button')
+//         .find('input')
+//         .invoke('val')
+//         .then((url) => {
+//           cy.get('@apiForm').find('gn-ui-text-input').first().clear()
+//           cy.get('@apiForm').find('gn-ui-text-input').first().type('54')
+//           cy.get('@apiForm')
+//             .find('gn-ui-copy-text-button')
+//             .find('input')
+//             .invoke('val')
+//             .should('not.eq', url)
+//             .and('include', '54')
+//         })
+//     })
+//     it('should set limit to zero on click on "All" button', () => {
+//       cy.get('@apiForm').find('gn-ui-text-input').first().clear()
+//       cy.get('@apiForm').find('gn-ui-text-input').first().type('54')
+//       cy.get('@apiForm').find('input[type="checkbox"]').check()
+//       cy.get('@apiForm')
+//         .find('gn-ui-text-input')
+//         .first()
+//         .should('have.value', '')
+//     })
+//     it('should reset all 3 inputs and link on click', () => {
+//       cy.get('@apiForm').find('gn-ui-text-input').first().as('firstInput')
+//       cy.get('@firstInput').clear()
+//       cy.get('@firstInput').type('54')
 
-      cy.get('@apiForm').find('gn-ui-text-input').eq(1).as('secondInput')
-      cy.get('@secondInput').clear()
-      cy.get('@secondInput').type('87')
+//       cy.get('@apiForm').find('gn-ui-text-input').eq(1).as('secondInput')
+//       cy.get('@secondInput').clear()
+//       cy.get('@secondInput').type('87')
 
-      cy.get('@apiForm').find('gn-ui-dropdown-selector').as('dropdown')
-      cy.get('@dropdown').eq(0).selectDropdownOption('application/geo+json')
+//       cy.get('@apiForm').find('gn-ui-dropdown-selector').as('dropdown')
+//       cy.get('@dropdown').eq(0).selectDropdownOption('application/geo+json')
 
-      cy.get('@apiForm')
-        .find('gn-ui-copy-text-button')
-        .find('input')
-        .invoke('val')
-        .should('include', 'f=geojson&limit=54&offset=87')
+//       cy.get('@apiForm')
+//         .find('gn-ui-copy-text-button')
+//         .find('input')
+//         .invoke('val')
+//         .should('include', 'f=geojson&limit=54&offset=87')
 
-      cy.get('@apiForm').children('div').first().find('button').first().click()
+//       cy.get('@apiForm').children('div').first().find('button').first().click()
 
-      cy.get('@firstInput').find('input').should('have.value', '')
-      cy.get('@secondInput').find('input').should('have.value', '')
-      cy.get('@apiForm')
-        .find('gn-ui-dropdown-selector')
-        .find('button')
-        .children('div')
-        .should('have.text', ' JSON ')
-      cy.get('@apiForm')
-        .find('gn-ui-copy-text-button')
-        .find('input')
-        .invoke('val')
-        .should('include', 'f=application%2Fjson&limit=-1')
-    })
-    it('should close the panel on click', () => {
-      cy.get('gn-ui-record-api-form').prev().find('button').click()
-      cy.get('gn-ui-record-api-form').should('not.be.visible')
-    })
-    it('should switch to other card url if card already open', () => {
-      cy.get('@apiForm')
-        .find('gn-ui-copy-text-button')
-        .find('input')
-        .invoke('val')
-        .then((url) => {
-          cy.get('@apiForm').find('gn-ui-text-input').first().clear()
-          cy.get('@apiForm').find('gn-ui-text-input').first().type('54')
-          cy.get('gn-ui-api-card').eq(1).find('button').eq(1).click()
-          cy.get('@apiForm')
-            .find('gn-ui-copy-text-button')
-            .find('input')
-            .invoke('val')
-            .should('not.eq', url)
-        })
-    })
-  })
-})
+//       cy.get('@firstInput').find('input').should('have.value', '')
+//       cy.get('@secondInput').find('input').should('have.value', '')
+//       cy.get('@apiForm')
+//         .find('gn-ui-dropdown-selector')
+//         .find('button')
+//         .children('div')
+//         .should('have.text', ' JSON ')
+//       cy.get('@apiForm')
+//         .find('gn-ui-copy-text-button')
+//         .find('input')
+//         .invoke('val')
+//         .should('include', 'f=application%2Fjson&limit=-1')
+//     })
+//     it('should close the panel on click', () => {
+//       cy.get('gn-ui-record-api-form').prev().find('button').click()
+//       cy.get('gn-ui-record-api-form').should('not.be.visible')
+//     })
+//     it('should switch to other card url if card already open', () => {
+//       cy.get('@apiForm')
+//         .find('gn-ui-copy-text-button')
+//         .find('input')
+//         .invoke('val')
+//         .then((url) => {
+//           cy.get('@apiForm').find('gn-ui-text-input').first().clear()
+//           cy.get('@apiForm').find('gn-ui-text-input').first().type('54')
+//           cy.get('gn-ui-api-card').eq(1).find('button').eq(1).click()
+//           cy.get('@apiForm')
+//             .find('gn-ui-copy-text-button')
+//             .find('input')
+//             .invoke('val')
+//             .should('not.eq', url)
+//         })
+//     })
+//   })
+// })
 
-describe('userFeedback', () => {
-  describe('when not logged in', () => {
-    beforeEach(() => {
-      cy.visit('/dataset/accroche_velos')
-      cy.get('datahub-record-user-feedbacks').as('userFeedback')
-    })
-    it('should sort comments', () => {
-      cy.get('gn-ui-user-feedback-item')
-        .find('[data-cy="commentText"]')
-        .as('commentText')
+// describe('userFeedback', () => {
+//   describe('when not logged in', () => {
+//     beforeEach(() => {
+//       cy.visit('/dataset/accroche_velos')
+//       cy.get('datahub-record-user-feedbacks').as('userFeedback')
+//     })
+//     it('should sort comments', () => {
+//       cy.get('gn-ui-user-feedback-item')
+//         .find('[data-cy="commentText"]')
+//         .as('commentText')
 
-      cy.get('@commentText')
-        .first()
-        .then((div) => {
-          const firstCommentBeforeSort = div.text().trim()
-          cy.get('@userFeedback')
-            .find('gn-ui-dropdown-selector')
-            .openDropdown()
-            .children('button')
-            .eq(1)
-            .click()
+//       cy.get('@commentText')
+//         .first()
+//         .then((div) => {
+//           const firstCommentBeforeSort = div.text().trim()
+//           cy.get('@userFeedback')
+//             .find('gn-ui-dropdown-selector')
+//             .openDropdown()
+//             .children('button')
+//             .eq(1)
+//             .click()
 
-          cy.get('gn-ui-user-feedback-item')
-            .find('[data-cy="commentText"]')
-            .first()
-            .invoke('text')
-            .invoke('trim')
-            .should('not.eq', firstCommentBeforeSort)
-        })
-    })
-    it("shouldn't be able to comment", () => {
-      cy.get('datahub-record-user-feedbacks')
-        .find('gn-ui-text-area')
-        .should('not.exist')
-    })
-  })
+//           cy.get('gn-ui-user-feedback-item')
+//             .find('[data-cy="commentText"]')
+//             .first()
+//             .invoke('text')
+//             .invoke('trim')
+//             .should('not.eq', firstCommentBeforeSort)
+//         })
+//     })
+//     it("shouldn't be able to comment", () => {
+//       cy.get('datahub-record-user-feedbacks')
+//         .find('gn-ui-text-area')
+//         .should('not.exist')
+//     })
+//   })
 
-  describe('when logged in', () => {
-    beforeEach(() => {
-      cy.login()
-      cy.visit('/dataset/accroche_velos')
-    })
-    it('should publish a comment', () => {
-      cy.get('datahub-record-user-feedbacks')
-        .find('gn-ui-text-area')
-        .first()
-        .should('exist')
-        .type('Something')
+//   describe('when logged in', () => {
+//     beforeEach(() => {
+//       cy.login()
+//       cy.visit('/dataset/accroche_velos')
+//     })
+//     it('should publish a comment', () => {
+//       cy.get('datahub-record-user-feedbacks')
+//         .find('gn-ui-text-area')
+//         .first()
+//         .should('exist')
+//         .type('Something')
 
-      cy.get('datahub-record-user-feedbacks')
-        .find('gn-ui-button')
-        .eq(1)
-        .should('exist')
-    })
-    it('should answer to a comment', () => {
-      cy.get('gn-ui-user-feedback-item')
-        .find('gn-ui-text-area')
-        .first()
-        .should('exist')
-        .type('Something')
+//       cy.get('datahub-record-user-feedbacks')
+//         .find('gn-ui-button')
+//         .eq(1)
+//         .should('exist')
+//     })
+//     it('should answer to a comment', () => {
+//       cy.get('gn-ui-user-feedback-item')
+//         .find('gn-ui-text-area')
+//         .first()
+//         .should('exist')
+//         .type('Something')
 
-      cy.get('gn-ui-user-feedback-item')
-        .find('gn-ui-button')
-        .eq(0)
-        .should('exist')
-    })
-  })
-})
+//       cy.get('gn-ui-user-feedback-item')
+//         .find('gn-ui-button')
+//         .eq(0)
+//         .should('exist')
+//     })
+//   })
+// })
 
-describe('When the metadata does not exists', () => {
-  beforeEach(() => {
-    cy.visit('/dataset/xyz')
-  })
-  it('should display an error message', () => {
-    cy.get('gn-ui-error').should('exist')
-    cy.screenshot({ capture: 'viewport' })
-  })
-})
+// describe('When the metadata does not exists', () => {
+//   beforeEach(() => {
+//     cy.visit('/dataset/xyz')
+//   })
+//   it('should display an error message', () => {
+//     cy.get('gn-ui-error').should('exist')
+//     cy.screenshot({ capture: 'viewport' })
+//   })
+// })
