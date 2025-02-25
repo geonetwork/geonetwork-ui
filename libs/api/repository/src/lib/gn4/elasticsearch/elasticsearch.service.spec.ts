@@ -1,5 +1,8 @@
 import { ElasticsearchService } from './elasticsearch.service'
-import { elasticAggsResponseFixture } from '@geonetwork-ui/common/fixtures'
+import {
+  datasetRecordsFixture,
+  elasticAggsResponseFixture,
+} from '@geonetwork-ui/common/fixtures'
 import { LangService } from '@geonetwork-ui/util/i18n'
 import { EsSearchParams } from '@geonetwork-ui/api/metadata-converter'
 import { TestBed } from '@angular/core/testing'
@@ -678,9 +681,10 @@ describe('ElasticsearchService', () => {
   })
 
   describe('#getRelatedRecordPayload', () => {
+    const record = datasetRecordsFixture()[0]
     let payload
     beforeEach(() => {
-      payload = service.getRelatedRecordPayload('record title', 'some-uuid', 4)
+      payload = service.getRelatedRecordPayload(record, 4)
     })
     it('returns ES payload', () => {
       expect(payload).toEqual({
@@ -716,9 +720,33 @@ describe('ElasticsearchService', () => {
                   fields: [
                     'resourceTitleObject.default',
                     'resourceAbstractObject.default',
-                    'tag.raw',
+                    'allKeywords',
                   ],
-                  like: 'record title',
+                  like: [
+                    {
+                      doc: {
+                        resourceTitleObject: {
+                          default:
+                            'A very interesting dataset (un jeu de données très intéressant)',
+                        },
+                        resourceAbstractObject: {
+                          default: `# Introduction
+This dataset has been established for testing purposes.
+
+## Details
+This is a section about details. Here is an HTML tag: <img src="http://google.com" />. And [a link](https://google.com).
+
+## Informations intéressantes
+Cette section contient des *caractères internationaux* (ainsi que des "caractères spéciaux"). 'çàü^@/~^&`,
+                        },
+                        allKeywords: [
+                          'international',
+                          'test',
+                          '_another_keyword_',
+                        ],
+                      },
+                    },
+                  ],
                   max_query_terms: 12,
                   min_term_freq: 1,
                 },
@@ -734,7 +762,7 @@ describe('ElasticsearchService', () => {
                 },
               },
             ],
-            must_not: [{ wildcard: { uuid: 'some-uuid' } }],
+            must_not: [{ wildcard: { uuid: 'my-dataset-001' } }],
           },
         },
         size: 4,

@@ -28,6 +28,7 @@ import {
 } from '@geonetwork-ui/api/metadata-converter'
 import { LangService } from '@geonetwork-ui/util/i18n'
 import { formatDate, isDateRange } from './date-range.utils'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export type DateRange = { start?: Date; end?: Date }
 
@@ -134,8 +135,7 @@ export class ElasticsearchService {
   }
 
   getRelatedRecordPayload(
-    title: string,
-    uuid: string,
+    record: CatalogRecord,
     size = 6,
     _source = [...ES_SOURCE_SUMMARY, 'allKeywords', 'createDate']
   ): EsSearchParams {
@@ -148,9 +148,23 @@ export class ElasticsearchService {
                 fields: [
                   'resourceTitleObject.default',
                   'resourceAbstractObject.default',
-                  'tag.raw',
+                  'allKeywords',
                 ],
-                like: title,
+                like: [
+                  {
+                    doc: {
+                      resourceTitleObject: {
+                        default: record.title,
+                      },
+                      resourceAbstractObject: {
+                        default: record.abstract,
+                      },
+                      allKeywords: record.keywords.map(
+                        (keyword) => keyword.label
+                      ),
+                    },
+                  },
+                ],
                 min_term_freq: 1,
                 max_query_terms: 12,
               },
@@ -166,7 +180,7 @@ export class ElasticsearchService {
               },
             },
           ],
-          must_not: [{ wildcard: { uuid: uuid } }],
+          must_not: [{ wildcard: { uuid: record.uniqueIdentifier } }],
         },
       },
       size,

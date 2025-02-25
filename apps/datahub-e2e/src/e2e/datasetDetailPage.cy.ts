@@ -676,13 +676,24 @@ describe('dataset pages', () => {
       })
       describe('related records', () => {
         beforeEach(() => {
-          cy.visit('/dataset/6d0bfdf4-4e94-48c6-9740-3f9facfd453c')
+          cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
         })
         it('should display the related records', () => {
           cy.get('#related-records')
             .find('datahub-record-related-records')
             .find('gn-ui-related-record-card')
             .should('have.length.gt', 0)
+        })
+        it('should display a similar related record', () => {
+          cy.get('#related-records')
+            .find('datahub-record-related-records')
+            .find('gn-ui-related-record-card')
+            .first()
+            .find('h4')
+            .should(
+              'have.text',
+              ` Metadata for E2E testing purpose. (this title is too long and should be cut, this title is too long and should be cut, this title is too long and should be cut, this title is too long and should be cut, this title is too long and should be cut) `
+            )
         })
         it('goes to dataset on click', () => {
           let targetLink
