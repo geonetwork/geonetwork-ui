@@ -60,7 +60,7 @@ export function fetchDataAsText(url: string): Promise<string> {
         })
         .then(async (response) => {
           if (!response.ok) {
-            throw FetchError.http(response.status)
+            throw FetchError.http(response.status, await response.text())
           }
           return response.text()
         }),
@@ -77,7 +77,7 @@ export function fetchDataAsArrayBuffer(url: string): Promise<ArrayBuffer> {
         })
         .then(async (response) => {
           if (!response.ok) {
-            throw FetchError.http(response.status)
+            throw FetchError.http(response.status, await response.text())
           }
           // convert to a numeric array so that we can store the response in cache
           return Array.from(new Uint8Array(await response.arrayBuffer()))
