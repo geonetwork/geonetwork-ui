@@ -2,7 +2,11 @@
 outline: deep
 ---
 
-# Code guide
+# Coding guidelines
+
+## Dates
+
+// TODO
 
 ## Event handling
 
