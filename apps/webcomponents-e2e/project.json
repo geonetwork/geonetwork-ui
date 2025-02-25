@@ -1,0 +1,37 @@
+{
+  "name": "webcomponents-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/webcomponents-e2e/src",
+  "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["webcomponents"],
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/webcomponents-e2e/cypress.config.ts",
+        "devServerTarget": "webcomponents:serve:development",
+        "testingType": "e2e",
+        "browser": "chrome",
+        "port": 8001
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "webcomponents:serve:production"
+        }
+      },
+      "env": {
+        "browserPermissions": {
+          "write": "allow"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/webcomponents-e2e/**/*.{js,ts}"]
+      }
+    }
+  }
+}
