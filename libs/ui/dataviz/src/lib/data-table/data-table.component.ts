@@ -139,7 +139,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
       await this.dataSource.showData(this.dataset_.read())
       this.error = null
     } catch (error) {
-      this.handleError(error as FetchError | Error | string)
+      this.handleError(error as FetchError | Error)
     }
     this.loading$.next(false)
   }
@@ -155,7 +155,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
     return rowIdPrefix + id
   }
 
-  handleError(error: FetchError | Error | string) {
+  handleError(error: FetchError | Error) {
     this.dataSource.clearData()
     if (error instanceof FetchError) {
       this.error = this.translateService.instant(
@@ -165,12 +165,9 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
         }
       )
       console.warn(error.message)
-    } else if (error instanceof Error) {
+    } else {
       this.error = this.translateService.instant(error.message)
       console.warn(error.stack || error)
-    } else {
-      this.error = this.translateService.instant(error)
-      console.warn(error)
     }
   }
 }

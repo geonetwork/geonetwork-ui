@@ -188,11 +188,13 @@ describe('DataTableComponent', () => {
       jest.spyOn(component.dataSource, 'clearData')
       jest
         .spyOn(dataset, 'read')
-        .mockImplementation(() => Promise.reject('Test Error'))
+        .mockImplementation(() => Promise.reject(new Error('Test Error')))
     })
     it('should set component.error if reader ancounters an error', async () => {
       await component.readData()
-      expect(component.handleError).toHaveBeenCalledWith('Test Error')
+      expect(component.handleError).toHaveBeenCalledWith(
+        new Error('Test Error')
+      )
       expect(component.error).toEqual('Test Error')
     })
   })
