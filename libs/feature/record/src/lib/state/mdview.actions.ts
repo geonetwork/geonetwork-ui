@@ -29,17 +29,17 @@ export const loadFullMetadataFailure = createAction(
   props<{ otherError?: string; notFound?: boolean }>()
 )
 
-export const loadCatalogAttributes = createAction(
+export const loadFeatureCatalogAttributes = createAction(
   '[Metadata view] Load catalog attributes of the metadata',
   props<{ metadataUuid: string; approvedVersion?: boolean }>()
 )
 
-export const loadCatalogAttributesSuccess = createAction(
+export const loadFeatureCatalogAttributesSuccess = createAction(
   '[Metadata view] Load full metadata success',
-  props<{ full: DatasetFeatureCatalog }>()
+  props<{ datasetCatalog: DatasetFeatureCatalog }>()
 )
 
-export const loadCatalogAttributesFailure = createAction(
+export const loadFeatureCatalogAttributesFailure = createAction(
   '[Metadata view] Load full metadata failure',
   props<{ otherError?: string; notFound?: boolean }>()
 )

@@ -36,20 +36,24 @@ export class MdViewEffects {
   */
   loadCatalogAttributes = createEffect(() =>
     this.actions$.pipe(
-      ofType(MdViewActions.loadCatalogAttributes),
+      ofType(MdViewActions.loadFeatureCatalogAttributes),
       switchMap(({ metadataUuid, approvedVersion }) =>
         this.recordsRepository.getFeatureCatalog(metadataUuid, approvedVersion)
       ),
       map((record) => {
         if (record === null) {
-          return MdViewActions.loadCatalogAttributesFailure({ notFound: true })
+          return MdViewActions.loadFeatureCatalogAttributesFailure({
+            notFound: true,
+          })
         }
 
-        return MdViewActions.loadCatalogAttributesSuccess({ full: record })
+        return MdViewActions.loadFeatureCatalogAttributesSuccess({
+          datasetCatalog: record,
+        })
       }),
       catchError((error) =>
         of(
-          MdViewActions.loadCatalogAttributesFailure({
+          MdViewActions.loadFeatureCatalogAttributesFailure({
             otherError: error.message,
           })
         )
