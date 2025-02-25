@@ -4,7 +4,7 @@ describe('editor form', () => {
   let recordUuid: any
   before(() => {
     cy.login('admin', 'admin', false)
-    cy.viewport(1920, 2400)
+    cy.viewport(1980, 1500)
 
     cy.clearRecordDrafts()
 
@@ -48,7 +48,6 @@ describe('editor form', () => {
     })
   })
   beforeEach(() => {
-    cy.login('admin', 'admin', false)
     cy.visit('/catalog/search')
     cy.wrap(recordUuid).as('recordUuid')
 
