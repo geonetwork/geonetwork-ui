@@ -98,6 +98,7 @@ function sidebarForDevelopers() {
           link: '/developers/architecture-overview',
         },
         { text: 'Application configuration', link: '/developers/app-config' },
+        { text: 'Coding guidelines', link: '/developers/code-guide' },
         { text: 'ElasticSearch index', link: '/developers/elasticsearch' },
         { text: 'Internationalization', link: '/developers/i18n' },
         { text: 'Interactive maps', link: '/developers/maps' },
