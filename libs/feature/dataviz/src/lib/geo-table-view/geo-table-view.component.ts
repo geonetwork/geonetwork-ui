@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core'
 import {
-  TableComponent,
+  DataTableComponent,
   TableItemId,
   TableItemModel,
 } from '@geonetwork-ui/ui/dataviz'
@@ -19,18 +19,19 @@ import {
   FeatureDetailComponent,
   MapContainerComponent,
 } from '@geonetwork-ui/ui/map'
+import { BaseReader } from '@geonetwork-ui/data-fetcher'
 
 @Component({
   selector: 'gn-ui-geo-table-view',
   templateUrl: './geo-table-view.component.html',
   styleUrls: ['./geo-table-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TableComponent, MapContainerComponent, FeatureDetailComponent],
+  imports: [MapContainerComponent, FeatureDetailComponent, DataTableComponent],
   standalone: true,
 })
 export class GeoTableViewComponent implements OnInit, OnDestroy {
-  @Input() data: FeatureCollection = { type: 'FeatureCollection', features: [] }
-  @ViewChild('table') uiTable: TableComponent
+  @Input() dataset: BaseReader
+  @ViewChild('table') uiTable: DataTableComponent
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
 
   tableData: TableItemModel[]
@@ -39,21 +40,16 @@ export class GeoTableViewComponent implements OnInit, OnDestroy {
   selection: Feature
   private subscription = new Subscription()
 
-  get features() {
-    return this.data.features
-  }
-
   constructor(private changeRef: ChangeDetectorRef) {}
 
-  ngOnInit(): void {
-    this.tableData = this.geojsonToTableData(this.data)
-    this.mapContext = this.initMapContext()
+  async ngOnInit() {
+    this.mapContext = await this.initMapContext()
   }
 
   onTableSelect(tableEntry: TableItemModel) {
     const { id } = tableEntry
     this.selectionId = id
-    this.selection = this.getFeatureFromId(id)
+    // this.selection = this.getFeatureFromId(id)
     if (this.selection) {
       this.animateToFeature(this.selection)
     }
@@ -77,7 +73,8 @@ export class GeoTableViewComponent implements OnInit, OnDestroy {
     }))
   }
 
-  private initMapContext(): MapContext {
+  private async initMapContext(): Promise<MapContext> {
+    this.dataset.selectAll()
     return {
       layers: [
         {
@@ -86,7 +83,11 @@ export class GeoTableViewComponent implements OnInit, OnDestroy {
         },
         {
           type: 'geojson',
-          data: this.data,
+          data: {
+            type: 'FeatureCollection',
+            // FIXME: we're not getting geojson here
+            features: await this.dataset.read(),
+          },
         },
       ],
       view: {
@@ -112,7 +113,8 @@ export class GeoTableViewComponent implements OnInit, OnDestroy {
   }
 
   private getFeatureFromId(id: TableItemId) {
-    return this.features.find((feature) => feature.id === id)
+    // FIXME: restore this once we need it?
+    // return this.features.find((feature) => feature.id === id)
   }
 
   ngOnDestroy(): void {

@@ -8,7 +8,7 @@
     [choices]="choices"
     (selectValue)="selectLink($event)"
   ></gn-ui-dropdown-selector>
-  <div class="relative h-[420px]">
+  <div class="relative h-[460px]">
     <gn-ui-table-view
       *ngIf="mode === 'table'"
       [link]="selectedLink$ | async"

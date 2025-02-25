@@ -4,6 +4,7 @@ import { fetchDataAsText } from '../utils'
 import { BaseReader } from './base'
 import { GmlReader, parseGml } from './gml'
 import { GeojsonReader, parseGeojson } from './geojson'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 export class WfsReader extends BaseReader {
   endpoint: WfsEndpoint
@@ -18,7 +19,22 @@ export class WfsReader extends BaseReader {
   }
 
   get properties(): Promise<PropertyInfo[]> {
-    return this.getData().then((result) => result.properties)
+    return this.endpoint
+      .getFeatureTypeFull(this.featureTypeName)
+      .then((featureType) =>
+        Object.keys(featureType.properties).map((prop) => {
+          const originalType = featureType.properties[prop]
+          const type =
+            originalType === 'float' || originalType === 'integer'
+              ? 'number'
+              : (originalType as PropertyInfo['type']) // FIXME: ogc-client typing is incorrect, should be a string union
+          return {
+            name: prop,
+            label: prop,
+            type,
+          }
+        })
+      )
   }
 
   get info(): Promise<DatasetInfo> {
@@ -75,12 +91,18 @@ export class WfsReader extends BaseReader {
   }
 
   protected getData() {
+    if (this.aggregations || this.groupedBy) {
+      throw new Error(marker('wfs.aggregations.notsupported'))
+    }
+
     const asJson = this.endpoint.supportsJson(this.featureTypeName)
+    const attributes = this.selected ?? undefined
     let url = this.endpoint.getFeatureUrl(this.featureTypeName, {
       ...(this.startIndex !== null && { startIndex: this.startIndex }),
       ...(this.count !== null && { maxFeatures: this.count }),
       asJson,
       outputCrs: 'EPSG:4326',
+      attributes,
       // sortBy: this.sort // TODO: no sort in ogc-client?
     })
 

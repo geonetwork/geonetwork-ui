@@ -1,11 +1,11 @@
 <div class="flex flex-row h-full overflow-auto">
-  <gn-ui-table
+  <gn-ui-data-table
     #table
     class="w-1/2 overflow-auto"
-    [data]="tableData"
+    [dataset]="dataset"
     [activeId]="selectionId"
     (selected)="onTableSelect($event)"
-  ></gn-ui-table>
+  ></gn-ui-data-table>
   <gn-ui-map-container
     #mapContainer
     class="w-1/2 h-full"

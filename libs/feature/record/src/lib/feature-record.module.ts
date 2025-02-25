@@ -4,7 +4,10 @@ import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { FeatureMapModule } from '@geonetwork-ui/feature/map'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import {
+  DropdownSelectorComponent,
+  UiInputsModule,
+} from '@geonetwork-ui/ui/inputs'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { MdViewFacade } from './state'
 import { MdViewEffects } from './state/mdview.effects'
@@ -16,9 +19,8 @@ import { MatTabsModule } from '@angular/material/tabs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { TranslateModule } from '@ngx-translate/core'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
-import { TableComponent } from '@geonetwork-ui/ui/dataviz'
+import { DataTableComponent } from '@geonetwork-ui/ui/dataviz'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
-import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 
 @NgModule({
   imports: [
@@ -33,7 +35,7 @@ import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
     MatTabsModule,
     UiWidgetsModule,
     TranslateModule,
-    TableComponent,
+    DataTableComponent,
     NgIconsModule,
     DropdownSelectorComponent,
   ],

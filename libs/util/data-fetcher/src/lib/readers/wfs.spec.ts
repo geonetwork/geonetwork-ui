@@ -52,8 +52,70 @@ jest.mock('@camptocamp/ogc-client', () => ({
       return `${this.url}?1=1&STARTINDEX=${options.startIndex}&MAXFEATURES=${options.maxFeatures}`
     }
     getFeatureTypeFull() {
+      let properties
+      if (this.url === urlGml) {
+        properties = {
+          boundedBy: 'string',
+          id_map: 'float',
+          id_mat: 'float',
+          code_icpe: 'string',
+          id_parc: 'string',
+          nom_parc: 'string',
+          id_pc: 'string',
+          operateur: 'string',
+          exploitant: 'string',
+          date_crea: 'string',
+          id_eolienn: 'string',
+          x_rgf93: 'float',
+          y_rgf93: 'float',
+          x_pc: 'float',
+          y_pc: 'float',
+          sys_coord: 'string',
+          alt_base: 'integer',
+          n_parcel: 'string',
+          puissanc_2: 'integer',
+          code_com: 'integer',
+          nom_commun: 'string',
+          code_arron: 'integer',
+          departemen: 'string',
+          secteur: 'string',
+          id_sre: 'string',
+          ht_max: 'integer',
+          ht_mat: 'integer',
+          ht_nacelle: 'integer',
+          diam_rotor: 'integer',
+          gardesol: 'number',
+          type_proce: 'string',
+          etat_proce: 'string',
+          date_depot: 'string',
+          date_decis: 'date',
+          contentieu: 'number',
+          etat_mat: 'string',
+          date_real: 'string',
+          date_prod: 'string',
+          en_service: 'string',
+          etat_eolie: 'string',
+          date_maj: 'date',
+          srce_geom: 'string',
+          precis_pos: 'string',
+        }
+      } else {
+        properties = {
+          code_epci: 'integer',
+          code_region: 'string',
+          objectid: 'integer',
+          nom_region: 'string',
+          geo_point_2d: 'string',
+          nom_dep: 'string',
+          st_area_shape: 'float',
+          st_perimeter_shape: 'float',
+          code_dep: 'string',
+          nom_epci: 'string',
+        }
+      }
       return Promise.resolve({
         objectCount: 442,
+        properties,
       })
     }
     supportsJson() {
@@ -100,6 +162,7 @@ describe('WfsReader', () => {
     })
     afterEach(() => {
       fetchMock.reset()
+      jest.clearAllMocks()
     })
     describe('#info', () => {
       it('returns dataset info', async () => {
@@ -199,6 +262,17 @@ describe('WfsReader', () => {
           outputCrs: 'EPSG:4326',
           startIndex: 2,
           maxFeatures: 42,
+        })
+      })
+
+      it('reads data with only certain fields', async () => {
+        const getFeatureUrlSpy = jest.spyOn(wfsEndpoint, 'getFeatureUrl')
+        reader.select('code_dep', 'nom_epci')
+        await reader.read()
+        expect(getFeatureUrlSpy).toHaveBeenCalledWith('epci', {
+          asJson: true,
+          outputCrs: 'EPSG:4326',
+          attributes: ['code_dep', 'nom_epci'],
         })
       })
     })

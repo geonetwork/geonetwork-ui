@@ -91,10 +91,7 @@ export class RecordDataPreviewComponent {
     map(
       ([displayMap, displayData, selectedView, exceedsMaxFeatureCount]) =>
         (displayData || displayMap) &&
-        !(
-          (selectedView === 'chart' || selectedView === 'table') &&
-          exceedsMaxFeatureCount
-        )
+        !(selectedView === 'chart' && exceedsMaxFeatureCount)
     )
   )
 
