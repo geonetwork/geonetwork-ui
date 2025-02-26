@@ -73,6 +73,18 @@ class DataServiceMock {
           },
         ])
   )
+  getDownloadUrlsFromOgcApi = jest.fn((url: string) =>
+    url.indexOf('error') > -1
+      ? Promise.reject(new Error('ogc.unreachable.unknown'))
+      : Promise.resolve({
+          name: 'collection1',
+          title: 'Collection 1',
+          bulkDownloadLinks: {
+            'application/geo+json': 'http://example.com/collection1.geojson',
+            'application/json': 'http://example.com/collection1.json',
+          },
+        })
+  )
 }
 
 describe('RecordDownloadsComponent', () => {
@@ -292,6 +304,7 @@ describe('RecordDownloadsComponent', () => {
             description: 'OGC API service',
             mimeType: 'application/geo+json',
             name: 'Surveillance littorale OGC',
+            title: 'collection1',
             url: newUrl(
               'https://demo.ldproxy.net/zoomstack/collections/airports/items'
             ),
@@ -302,6 +315,7 @@ describe('RecordDownloadsComponent', () => {
             description: 'OGC API service',
             mimeType: 'application/json',
             name: 'Surveillance littorale OGC',
+            title: 'collection2',
             url: newUrl(
               'https://demo.ldproxy.net/zoomstack/collections/airports/items'
             ),

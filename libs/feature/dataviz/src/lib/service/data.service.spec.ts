@@ -87,9 +87,9 @@ jest.mock('@camptocamp/ogc-client', () => ({
   },
   OgcApiEndpoint: class {
     constructor(private url) {
-      newEndpointCall(url) // to track endpoint creation
+      newEndpointCall(url)
     }
-    getCollectionInfo() {
+    getCollectionInfo(collectionName) {
       if (this.url.indexOf('error.http') > -1) {
         return Promise.reject({
           type: 'http',
@@ -97,11 +97,22 @@ jest.mock('@camptocamp/ogc-client', () => ({
           httpStatus: 403,
         })
       }
+      if (this.url === 'https://my.ogc.api/features') {
+        return Promise.resolve({
+          name: collectionName,
+          title:
+            collectionName === 'collection1' ? 'collection1' : 'collection2',
+          bulkDownloadLinks: { json: 'http://json', csv: 'http://csv' },
+        })
+      }
       return Promise.resolve({
         bulkDownloadLinks: { json: 'http://json', csv: 'http://csv' },
       })
     }
-    allCollections = Promise.resolve([{ name: 'collection1' }])
+    allCollections = Promise.resolve([
+      { name: 'collection1' },
+      { name: 'collection2' },
+    ])
     featureCollections =
       this.url.indexOf('error.http') > -1
         ? Promise.reject(new Error())
@@ -575,7 +586,7 @@ describe('DataService', () => {
               accessServiceProtocol: 'ogcFeatures',
             },
             {
-              name: 'collection2',
+              name: 'collection1',
               mimeType: 'text/csv',
               url: new URL('http://csv'),
               type: 'download',
@@ -593,7 +604,7 @@ describe('DataService', () => {
             accessServiceProtocol: 'ogcFeatures',
           })
           expect(links[0].name).toBe('collection1')
-          expect(links[1].name).toBe('collection2')
+          expect(links[1].name).toBe('collection1')
         })
       })
 
