@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { exhaustMap, mergeMap, of } from 'rxjs'
-import { catchError, map, switchMap } from 'rxjs/operators'
+import { catchError, filter, map, switchMap, take } from 'rxjs/operators'
 import * as MdViewActions from './mdview.actions'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
@@ -31,29 +31,25 @@ export class MdViewEffects {
       )
     )
   )
-  /*
-  Feature Catalog effects
-  */
-  loadCatalogAttributes = createEffect(() =>
+
+  loadFeatureCatalog$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(MdViewActions.loadFeatureCatalogAttributes),
-      switchMap(({ metadata, approvedVersion }) =>
-        this.recordsRepository.getFeatureCatalog(metadata, approvedVersion)
-      ),
-      map((record) => {
-        if (record === null) {
-          return MdViewActions.loadFeatureCatalogAttributesFailure({
+      ofType(MdViewActions.loadFullMetadataSuccess),
+      filter(({ full }) => full !== undefined),
+      switchMap(({ full }) => this.recordsRepository.getFeatureCatalog(full)),
+      map((featureCatalog) => {
+        if (featureCatalog === null) {
+          return MdViewActions.loadFeatureCatalogFailure({
             notFound: true,
           })
         }
-
-        return MdViewActions.loadFeatureCatalogAttributesSuccess({
-          datasetCatalog: record,
+        return MdViewActions.loadFeatureCatalogSuccess({
+          datasetCatalog: featureCatalog,
         })
       }),
       catchError((error) =>
         of(
-          MdViewActions.loadFeatureCatalogAttributesFailure({
+          MdViewActions.loadFeatureCatalogFailure({
             otherError: error.message,
           })
         )

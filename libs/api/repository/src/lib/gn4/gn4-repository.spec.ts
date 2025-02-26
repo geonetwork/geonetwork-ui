@@ -310,9 +310,7 @@ describe('Gn4Repository', () => {
         ;(gn4RecordsApi.getFeatureCatalog as jest.Mock).mockReturnValue(
           of(mockFeatureCatalogResponse)
         )
-        catalog = await lastValueFrom(
-          repository.getFeatureCatalog('1234-5678', true)
-        )
+        catalog = await lastValueFrom(repository.getFeatureCatalog('1234-5678'))
       })
 
       it('calls the API with approved parameter', () => {

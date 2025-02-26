@@ -202,4 +202,9 @@ export interface Gn4Record {
   featured?: boolean
   guestdownload?: boolean
   selected?: boolean
+  related?: Gn4RecordRelated
+}
+
+export interface Gn4RecordRelated {
+  fcats?: Gn4Record[]
 }

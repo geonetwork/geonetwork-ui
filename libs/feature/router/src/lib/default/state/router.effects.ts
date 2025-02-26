@@ -121,9 +121,6 @@ export class RouterEffects {
                 title: '',
               },
             }),
-            MdViewActions.loadFeatureCatalogAttributes({
-              metadataUuid: activatedRouteSnapshot.params.metadataUuid,
-            }),
             MdViewActions.loadFullMetadata({
               uuid: activatedRouteSnapshot.params.metadataUuid,
             })

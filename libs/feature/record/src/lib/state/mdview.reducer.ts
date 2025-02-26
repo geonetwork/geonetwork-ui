@@ -20,6 +20,7 @@ export interface MetadataViewState {
   chartConfig?: DatavizConfigurationModel
   featureCatalog?: DatasetFeatureCatalog
   featureCatalogLoading: boolean
+  featureCatalogError: { notFound?: boolean; otherError?: string } | null
 }
 
 export const initialMetadataViewState: MetadataViewState = {
@@ -28,6 +29,7 @@ export const initialMetadataViewState: MetadataViewState = {
   allUserFeedbacksLoading: false,
   addUserFeedbackLoading: false,
   featureCatalogLoading: false,
+  featureCatalogError: null,
 }
 
 const metadataViewReducer = createReducer(
@@ -115,12 +117,13 @@ const metadataViewReducer = createReducer(
    * FeatureCatalog reducers
    */
 
-  on(MetadataViewActions.loadFeatureCatalogAttributes, (state) => ({
+  on(MetadataViewActions.loadFeatureCatalog, (state) => ({
     ...state,
+    featureCatalogError: null,
     featureCatalogLoading: true,
   })),
   on(
-    MetadataViewActions.loadFeatureCatalogAttributesSuccess,
+    MetadataViewActions.loadFeatureCatalogSuccess,
     (state, { datasetCatalog }) => ({
       ...state,
       featureCatalog: datasetCatalog,
@@ -128,10 +131,10 @@ const metadataViewReducer = createReducer(
     })
   ),
   on(
-    MetadataViewActions.loadFeatureCatalogAttributesFailure,
+    MetadataViewActions.loadFeatureCatalogFailure,
     (state, { otherError, notFound }) => ({
       ...state,
-      error: { otherError, notFound },
+      featureCatalogError: { otherError, notFound },
       featureCatalogLoading: false,
     })
   )

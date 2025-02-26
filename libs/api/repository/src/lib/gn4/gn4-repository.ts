@@ -128,7 +128,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return this.gn4SearchApi
       .search(
         'bucket',
-        null,
+        ['fcats'],
         JSON.stringify(
           this.gn4SearchHelper.getMetadataByIdPayload(uniqueIdentifier)
         )
@@ -142,27 +142,10 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   }
 
   getFeatureCatalog(
-    metadata: CatalogRecord,
-    approvedVersion?: boolean
+    record: CatalogRecord
   ): Observable<DatasetFeatureCatalog | null> {
-    const featureTypes = metadata.extras['featureTypes'] as any[]
-    if (!featureTypes || featureTypes.length === 0) {
-      return this.gn4RecordsApi
-        .getFeatureCatalog(metadata.uniqueIdentifier, approvedVersion)
-        .pipe(
-          map((results: FeatureResponseApiModel) => {
-            if (results.decodeMap) {
-              const features = Object.keys(results.decodeMap).map((key) => {
-                const feature = results.decodeMap[key]
-                return { name: feature[0], title: feature[1] }
-              })
-              return { features } as DatasetFeatureCatalog
-            }
-            return null
-          }),
-          switchMap((record) => (record ? of(record) : of(null)))
-        )
-    } else {
+    const featureTypes = record.extras['featureTypes']
+    if (featureTypes[0]) {
       return of({
         features: featureTypes[0]?.attributeTable?.map((attr) => ({
           name: attr.typeName,
@@ -170,6 +153,15 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         })),
       } as DatasetFeatureCatalog)
     }
+
+    if (/*record.linkedFeatureCatalog*/ false) {
+      // TODO:
+      return this.getRecord('uniqueIdentifierTODO').pipe(
+        switchMap((record) => this.getFeatureCatalog(record))
+      )
+    }
+
+    return of(null)
   }
 
   getSimilarRecords(similarTo: CatalogRecord): Observable<CatalogRecord[]> {

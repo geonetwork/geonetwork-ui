@@ -25,6 +25,20 @@ describe('MdView Selectors', () => {
       },
       loadingFull: false,
       error: null,
+      featureCatalog: {
+        features: [
+          {
+            name: 'feature_1',
+            title: 'Feature 1',
+          },
+          {
+            name: 'feature_2',
+            title: 'Feature 2',
+          },
+        ],
+      },
+      featureCatalogLoading: false,
+      featureCatalogError: null,
     }
   })
 
@@ -42,6 +56,7 @@ describe('MdView Selectors', () => {
           allUserFeedbacksLoading: false,
           addUserFeedbackLoading: false,
           featureCatalogLoading: false,
+          featureCatalogError: null,
         })
         expect(results).toBe(null)
       })
@@ -75,6 +90,7 @@ describe('MdView Selectors', () => {
           allUserFeedbacksLoading: false,
           addUserFeedbackLoading: false,
           featureCatalogLoading: false,
+          featureCatalogError: null,
         })
         expect(results).toBe(null)
       })
@@ -111,6 +127,7 @@ describe('MdView Selectors', () => {
           allUserFeedbacksLoading: false,
           addUserFeedbackLoading: false,
           featureCatalogLoading: false,
+          featureCatalogError: null,
         })
         expect(results).toBe(null)
       })
@@ -133,6 +150,41 @@ describe('MdView Selectors', () => {
           chartConfig: [chartConfigMock],
         })
         expect(results).toEqual([chartConfigMock])
+      })
+    })
+
+    describe('getFeatureCatalog', () => {
+      it('returns the feature catalog', () => {
+        const expectedFeatures = {
+          features: [
+            {
+              name: 'feature_1',
+              title: 'Feature 1',
+            },
+            {
+              name: 'feature_2',
+              title: 'Feature 2',
+            },
+          ],
+        }
+        const results = MdViewSelectors.getFeatureCatalog.projector(state)
+        expect(results).toStrictEqual(expectedFeatures)
+      })
+    })
+
+    describe('getFeatureCatalogIsLoading', () => {
+      it('returns false if not loading', () => {
+        const results =
+          MdViewSelectors.getFeatureCatalogIsLoading.projector(state)
+        expect(results).toBe(false)
+      })
+
+      it('returns true if loading', () => {
+        const results = MdViewSelectors.getFeatureCatalogIsLoading.projector({
+          ...state,
+          featureCatalogLoading: true,
+        })
+        expect(results).toBe(true)
       })
     })
   })

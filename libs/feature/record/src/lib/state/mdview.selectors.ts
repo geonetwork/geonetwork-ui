@@ -72,3 +72,7 @@ export const getFeatureCatalog = createSelector(
   getMdViewState,
   (state: MetadataViewState) => state.featureCatalog
 )
+export const getFeatureCatalogIsLoading = createSelector(
+  getMdViewState,
+  (state: MetadataViewState) => state.featureCatalogLoading
+)
