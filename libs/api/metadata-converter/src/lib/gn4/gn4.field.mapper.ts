@@ -277,6 +277,14 @@ export class Gn4FieldMapper {
         },
         output
       ),
+    featureTypes: (output, source) =>
+      this.addExtra(
+        {
+          featureTypes: selectField(source, 'featureTypes'),
+        },
+        output
+      ),
+
     isPublishedToAll: (output, source) =>
       this.addExtra(
         {
