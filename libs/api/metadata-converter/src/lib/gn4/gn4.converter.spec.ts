@@ -2363,6 +2363,7 @@ describe('Gn4Converter', () => {
               isPublishedToAll: true,
               id: '53583',
               favoriteCount: 0,
+              featureTypes: [],
               catalogUuid: 'metawal.wallonie.be',
               edit: true,
             },
@@ -2642,6 +2643,7 @@ describe('Gn4Converter', () => {
             extras: {
               catalogUuid: 'metawal.wallonie.be',
               favoriteCount: 0,
+              featureTypes: [],
               id: '1215',
               isOpenData: false,
               isPublishedToAll: true,
