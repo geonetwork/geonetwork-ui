@@ -188,7 +188,7 @@ export class DataService {
     return Object.keys(collectionInfo.bulkDownloadLinks).map((downloadLink) => {
       return {
         ...ogcApiLink,
-        name: collectionInfo.title,
+        name: collectionInfo.id,
         type: 'download',
         url: new URL(collectionInfo.bulkDownloadLinks[downloadLink]),
         mimeType: getMimeTypeForFormat(
