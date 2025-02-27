@@ -87,9 +87,9 @@ jest.mock('@camptocamp/ogc-client', () => ({
   },
   OgcApiEndpoint: class {
     constructor(private url) {
-      newEndpointCall(url) // to track endpoint creation
+      newEndpointCall(url)
     }
-    getCollectionInfo() {
+    getCollectionInfo(collectionName) {
       if (this.url.indexOf('error.http') > -1) {
         return Promise.reject({
           type: 'http',
@@ -97,11 +97,21 @@ jest.mock('@camptocamp/ogc-client', () => ({
           httpStatus: 403,
         })
       }
+      if (this.url === 'https://my.ogc.api/features') {
+        return Promise.resolve({
+          name: collectionName,
+          id: collectionName === 'collection1' ? 'collection1' : 'collection2',
+          bulkDownloadLinks: { json: 'http://json', csv: 'http://csv' },
+        })
+      }
       return Promise.resolve({
         bulkDownloadLinks: { json: 'http://json', csv: 'http://csv' },
       })
     }
-    allCollections = Promise.resolve([{ name: 'collection1' }])
+    allCollections = Promise.resolve([
+      { name: 'collection1' },
+      { name: 'collection2' },
+    ])
     featureCollections =
       this.url.indexOf('error.http') > -1
         ? Promise.reject(new Error())
@@ -400,6 +410,24 @@ describe('DataService', () => {
           ])
         })
       })
+      describe('WFS with forced collection name', () => {
+        it('should override the name with the provided collection name', async () => {
+          const link = {
+            description: 'Lieu de surveillance (ligne)',
+            name: 'collection_name_forced',
+            url: new URL('http://local/wfs'),
+            type: 'service',
+            accessServiceProtocol: 'wfs',
+          } as const
+
+          const urls = await lastValueFrom(
+            service.getDownloadLinksFromWfs(link)
+          )
+          urls.forEach((url) => {
+            expect(url.name).toBe('collection_name_forced')
+          })
+        })
+      })
     })
 
     describe('#getWfsFeatureCount', () => {
@@ -543,21 +571,21 @@ describe('DataService', () => {
         it('returns links with formats for link', async () => {
           const url = new URL('https://my.ogc.api/features')
           const links = await service.getDownloadLinksFromOgcApiFeatures({
-            name: 'mycollection',
+            name: undefined,
             url,
             type: 'service',
             accessServiceProtocol: 'ogcFeatures',
           })
           expect(links).toEqual([
             {
-              name: 'mycollection',
+              name: 'collection1',
               mimeType: 'application/json',
               url: new URL('http://json'),
               type: 'download',
               accessServiceProtocol: 'ogcFeatures',
             },
             {
-              name: 'mycollection',
+              name: 'collection1',
               mimeType: 'text/csv',
               url: new URL('http://csv'),
               type: 'download',
@@ -565,7 +593,20 @@ describe('DataService', () => {
             },
           ])
         })
+
+        it('should OGC override the collection title when it is wrong', async () => {
+          const url = new URL('https://my.ogc.api/features')
+          const links = await service.getDownloadLinksFromOgcApiFeatures({
+            name: 'myFakecollection',
+            url,
+            type: 'service',
+            accessServiceProtocol: 'ogcFeatures',
+          })
+          expect(links[0].name).toBe('collection1')
+          expect(links[1].name).toBe('collection1')
+        })
       })
+
       describe('calling getDownloadLinksFromOgcApiFeatures() with a erroneous URL', () => {
         it('returns an error', async () => {
           try {

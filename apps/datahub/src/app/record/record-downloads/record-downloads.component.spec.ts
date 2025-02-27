@@ -63,10 +63,12 @@ class DataServiceMock {
       : Promise.resolve([
           {
             ...link,
+            title: 'collection1',
             mimeType: 'application/geo+json',
           },
           {
             ...link,
+            title: 'collection2',
             mimeType: 'application/json',
           },
         ])
@@ -290,6 +292,7 @@ describe('RecordDownloadsComponent', () => {
             description: 'OGC API service',
             mimeType: 'application/geo+json',
             name: 'Surveillance littorale OGC',
+            title: 'collection1',
             url: newUrl(
               'https://demo.ldproxy.net/zoomstack/collections/airports/items'
             ),
@@ -300,6 +303,7 @@ describe('RecordDownloadsComponent', () => {
             description: 'OGC API service',
             mimeType: 'application/json',
             name: 'Surveillance littorale OGC',
+            title: 'collection2',
             url: newUrl(
               'https://demo.ldproxy.net/zoomstack/collections/airports/items'
             ),
