@@ -227,7 +227,7 @@ export interface DatasetRecord extends BaseRecord {
   spatialRepresentation?: SpatialRepresentationType
 }
 export type DatasetFeatureCatalog = {
-  features: Array<{ name: string; title: string }>
+  attributes: Array<{ name: string; title: string }>
 }
 export interface ServiceEndpoint {
   endpointUrl: URL

@@ -65,7 +65,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     private gn4Mapper: Gn4Converter,
     private gn4RecordsApi: RecordsApiService,
     private platformService: PlatformServiceInterface
-  ) { }
+  ) {}
 
   search({
     filters,
@@ -144,14 +144,33 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   getFeatureCatalog(
     record: CatalogRecord
   ): Observable<DatasetFeatureCatalog | null> {
-    const featureTypes = record.extras['featureTypes']
-    if (featureTypes[0]) {
-      return of({
-        features: featureTypes[0]?.attributeTable?.map((attr) => ({
+    const featureTypes = metadata.extras['featureTypes'] as any[]
+    if (!featureTypes || featureTypes.length === 0) {
+      const temp = this.gn4RecordsApi
+        .getFeatureCatalog(metadata.uniqueIdentifier, approvedVersion)
+        .pipe(
+          map((results: FeatureResponseApiModel) => {
+            if (!results.decodeMap) {
+              return null
+            }
+            const attributes = Object.keys(results.decodeMap).map((key) => {
+              const attribute = results.decodeMap[key]
+              return { name: attribute[0], title: attribute[1] }
+            })
+            return { attributes } as DatasetFeatureCatalog
+          })
+        )
+      console.log(temp)
+      return temp
+    } else {
+      const temp = of({
+        attributes: featureTypes[0]?.attributeTable?.map((attr) => ({
           name: attr.typeName,
           title: attr.definition,
         })),
       } as DatasetFeatureCatalog)
+      console.log(temp)
+      return temp
     }
 
     const featureCatalogIdentifier = record.extras['featureCatalogIdentifier']
@@ -227,8 +246,8 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   getRecordPublicationStatus(uniqueIdentifier: string): Observable<boolean> {
     return uniqueIdentifier
       ? this.getRecord(uniqueIdentifier).pipe(
-        map((record) => record.extras['isPublishedToAll'] as boolean)
-      )
+          map((record) => record.extras['isPublishedToAll'] as boolean)
+        )
       : of(true)
   }
 
