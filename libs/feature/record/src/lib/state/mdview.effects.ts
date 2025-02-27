@@ -37,8 +37,8 @@ export class MdViewEffects {
   loadCatalogAttributes = createEffect(() =>
     this.actions$.pipe(
       ofType(MdViewActions.loadFeatureCatalogAttributes),
-      switchMap(({ metadataUuid, approvedVersion }) =>
-        this.recordsRepository.getFeatureCatalog(metadataUuid, approvedVersion)
+      switchMap(({ metadata, approvedVersion }) =>
+        this.recordsRepository.getFeatureCatalog(metadata, approvedVersion)
       ),
       map((record) => {
         if (record === null) {

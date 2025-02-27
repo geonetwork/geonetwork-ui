@@ -142,24 +142,34 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   }
 
   getFeatureCatalog(
-    metadataUuid: string,
+    metadata: CatalogRecord,
     approvedVersion?: boolean
   ): Observable<DatasetFeatureCatalog | null> {
-    return this.gn4RecordsApi
-      .getFeatureCatalog(metadataUuid, approvedVersion)
-      .pipe(
-        map((results: FeatureResponseApiModel) => {
-          if (results.decodeMap) {
-            const features = Object.keys(results.decodeMap).map((key) => {
-              const feature = results.decodeMap[key]
-              return { name: feature[0], title: feature[1] }
-            })
-            return { features } as DatasetFeatureCatalog
-          }
-          return null
-        }),
-        switchMap((record) => (record ? of(record) : of(null)))
-      )
+    const featureTypes = metadata.extras['featureTypes'] as any[]
+    if (!featureTypes || featureTypes.length === 0) {
+      return this.gn4RecordsApi
+        .getFeatureCatalog(metadata.uniqueIdentifier, approvedVersion)
+        .pipe(
+          map((results: FeatureResponseApiModel) => {
+            if (results.decodeMap) {
+              const features = Object.keys(results.decodeMap).map((key) => {
+                const feature = results.decodeMap[key]
+                return { name: feature[0], title: feature[1] }
+              })
+              return { features } as DatasetFeatureCatalog
+            }
+            return null
+          }),
+          switchMap((record) => (record ? of(record) : of(null)))
+        )
+    } else {
+      return of({
+        features: featureTypes[0]?.attributeTable?.map((attr) => ({
+          name: attr.typeName,
+          title: attr.definition,
+        })),
+      } as DatasetFeatureCatalog)
+    }
   }
 
   getSimilarRecords(similarTo: CatalogRecord): Observable<CatalogRecord[]> {
