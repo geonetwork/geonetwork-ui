@@ -65,7 +65,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     private gn4Mapper: Gn4Converter,
     private gn4RecordsApi: RecordsApiService,
     private platformService: PlatformServiceInterface
-  ) {}
+  ) { }
 
   search({
     filters,
@@ -154,9 +154,9 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       } as DatasetFeatureCatalog)
     }
 
-    if (/*record.linkedFeatureCatalog*/ false) {
-      // TODO:
-      return this.getRecord('uniqueIdentifierTODO').pipe(
+    const featureCatalogIdentifier = record.extras['featureCatalogIdentifier']
+    if (featureCatalogIdentifier) {
+      return this.getRecord(<string>featureCatalogIdentifier).pipe(
         switchMap((record) => this.getFeatureCatalog(record))
       )
     }
@@ -227,8 +227,8 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   getRecordPublicationStatus(uniqueIdentifier: string): Observable<boolean> {
     return uniqueIdentifier
       ? this.getRecord(uniqueIdentifier).pipe(
-          map((record) => record.extras['isPublishedToAll'] as boolean)
-        )
+        map((record) => record.extras['isPublishedToAll'] as boolean)
+      )
       : of(true)
   }
 
