@@ -260,6 +260,7 @@ describe('Gn4Repository', () => {
 
   describe('getFeatureCatalog', () => {
     let catalog: DatasetFeatureCatalog
+    let metadata: CatalogRecord
     const mockFeatureCatalogResponse = {
       decodeMap: {
         feature1: ['memberName', 'definition'],
@@ -267,25 +268,54 @@ describe('Gn4Repository', () => {
         feature3: ['name3', 'title3'],
       },
     }
+    //TODO rewrite
 
-    describe('when feature catalog exists', () => {
+    describe('when extras feature catalog is defined ', () => {
       beforeEach(async () => {
         ;(gn4RecordsApi.getFeatureCatalog as jest.Mock).mockReturnValue(
           of(mockFeatureCatalogResponse)
         )
-        catalog = await lastValueFrom(repository.getFeatureCatalog('1234-5678'))
+        metadata = await lastValueFrom(repository.getRecord('1234-5678'))
+        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
       })
 
       it('calls the API with correct parameters', () => {
         expect(gn4RecordsApi.getFeatureCatalog).toHaveBeenCalledWith(
-          '1234-5678',
+          'my-dataset-001', //uniqueid of the record
           undefined
         )
       })
 
       it('returns the feature catalog with mapped features', () => {
         expect(catalog).toEqual({
-          features: [
+          attributes: [
+            { name: 'memberName', title: 'definition' },
+            { name: 'name2', title: 'title2' },
+            { name: 'name3', title: 'title3' },
+          ],
+        })
+      })
+    })
+    //End todo rewrite
+    describe('when feature catalog exists, no extras defined', () => {
+      beforeEach(async () => {
+        ;(gn4RecordsApi.getFeatureCatalog as jest.Mock).mockReturnValue(
+          of(mockFeatureCatalogResponse)
+        )
+        metadata = await lastValueFrom(repository.getRecord('1234-5678'))
+        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+      })
+
+      it('calls the API with correct parameters', () => {
+        expect(gn4RecordsApi.getFeatureCatalog).toHaveBeenCalledWith(
+          'my-dataset-001', //uniqueid of the record
+          undefined
+        )
+      })
+
+      it('returns the feature catalog with mapped features', () => {
+        expect(catalog).toEqual({
+          attributes: [
             { name: 'memberName', title: 'definition' },
             { name: 'name2', title: 'title2' },
             { name: 'name3', title: 'title3' },
@@ -294,10 +324,10 @@ describe('Gn4Repository', () => {
       })
     })
 
-    describe('when feature catalog does not exist', () => {
+    describe('when feature catalog does not exist, nor in extras', () => {
       beforeEach(async () => {
         ;(gn4RecordsApi.getFeatureCatalog as jest.Mock).mockReturnValue(of({}))
-        catalog = await lastValueFrom(repository.getFeatureCatalog('1234-5678'))
+        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
       })
 
       it('returns null when no decode map is present', () => {
@@ -311,13 +341,13 @@ describe('Gn4Repository', () => {
           of(mockFeatureCatalogResponse)
         )
         catalog = await lastValueFrom(
-          repository.getFeatureCatalog('1234-5678', true)
+          repository.getFeatureCatalog(metadata, true)
         )
       })
 
       it('calls the API with approved parameter', () => {
         expect(gn4RecordsApi.getFeatureCatalog).toHaveBeenCalledWith(
-          '1234-5678',
+          'my-dataset-001', //uniqueid of the record
           true
         )
       })

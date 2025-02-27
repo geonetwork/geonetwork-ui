@@ -214,10 +214,10 @@ export class MdViewFacade {
    * FeatureCatalog
    */
 
-  loadFeatureCatalog(metadataUuid: string, approvedVersion = false) {
+  loadFeatureCatalog(metadata: CatalogRecord, approvedVersion = false) {
     this.store.dispatch(
       MdViewActions.loadFeatureCatalogAttributes({
-        metadataUuid,
+        metadata,
         approvedVersion,
       })
     )
