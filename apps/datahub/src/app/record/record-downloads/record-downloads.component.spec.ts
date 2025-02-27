@@ -73,18 +73,6 @@ class DataServiceMock {
           },
         ])
   )
-  getDownloadUrlsFromOgcApi = jest.fn((url: string) =>
-    url.indexOf('error') > -1
-      ? Promise.reject(new Error('ogc.unreachable.unknown'))
-      : Promise.resolve({
-          name: 'collection1',
-          title: 'Collection 1',
-          bulkDownloadLinks: {
-            'application/geo+json': 'http://example.com/collection1.geojson',
-            'application/json': 'http://example.com/collection1.json',
-          },
-        })
-  )
 }
 
 describe('RecordDownloadsComponent', () => {

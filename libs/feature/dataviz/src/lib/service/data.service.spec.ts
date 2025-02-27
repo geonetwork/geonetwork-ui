@@ -100,8 +100,7 @@ jest.mock('@camptocamp/ogc-client', () => ({
       if (this.url === 'https://my.ogc.api/features') {
         return Promise.resolve({
           name: collectionName,
-          title:
-            collectionName === 'collection1' ? 'collection1' : 'collection2',
+          id: collectionName === 'collection1' ? 'collection1' : 'collection2',
           bulkDownloadLinks: { json: 'http://json', csv: 'http://csv' },
         })
       }
