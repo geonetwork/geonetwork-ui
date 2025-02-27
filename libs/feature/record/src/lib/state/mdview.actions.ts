@@ -31,7 +31,7 @@ export const loadFullMetadataFailure = createAction(
 
 export const loadFeatureCatalogAttributes = createAction(
   '[Metadata view] Load catalog attributes of the metadata',
-  props<{ metadataUuid: string; approvedVersion?: boolean }>()
+  props<{ metadata: CatalogRecord; approvedVersion?: boolean }>()
 )
 
 export const loadFeatureCatalogAttributesSuccess = createAction(

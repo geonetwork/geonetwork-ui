@@ -13,7 +13,7 @@ export abstract class RecordsRepositoryInterface {
   abstract getMatchesCount(filters: FieldFilters): Observable<number>
   abstract getRecord(uniqueIdentifier: string): Observable<CatalogRecord | null>
   abstract getFeatureCatalog(
-    metadataUuid: string,
+    metadata: CatalogRecord,
     approvedVersion?: boolean
   ): Observable<DatasetFeatureCatalog | null>
   abstract aggregate(params: AggregationsParams): Observable<Aggregations>
