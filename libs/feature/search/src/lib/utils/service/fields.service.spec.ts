@@ -103,6 +103,7 @@ describe('FieldsService', () => {
           'publisherOrg',
           'user',
           'changeDate',
+          'availableServices',
         ])
       })
     })
@@ -188,6 +189,7 @@ describe('FieldsService', () => {
           publisherOrg: [],
           user: [],
           changeDate: [],
+          availableServices: [],
         })
       })
     })
