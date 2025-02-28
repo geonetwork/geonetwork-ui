@@ -102,6 +102,7 @@ import {
   matMoreHorizOutline,
   matRemoveOutline,
   matStarOutline,
+  matWarningAmberOutline,
 } from '@ng-icons/material-icons/outline'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
 import { MAX_FEATURE_COUNT } from './record/record-data-preview/record-data-preview.component'
@@ -176,6 +177,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
       matAddOutline,
       matExpandMoreOutline,
       matStarOutline,
+      matWarningAmberOutline,
     }),
     OrganisationsComponent,
     LanguageSwitcherComponent,

@@ -49,12 +49,13 @@ export class HomeHeaderComponent {
   searchConfig: SearchConfig = getOptionalSearchConfig()
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
   foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
+  bannerKey = 'application-banner'
 
   constructor(
     public routerFacade: RouterFacade,
     public searchFacade: SearchFacade,
     private searchService: SearchService,
-    private platformService: PlatformServiceInterface,
+    protected platformService: PlatformServiceInterface,
     private fieldsService: FieldsService
   ) {}
 
