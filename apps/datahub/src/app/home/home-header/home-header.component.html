@@ -2,6 +2,22 @@
   <div
     class="container-lg relative h-full mx-auto flex flex-col-reverse justify-between sm:flex-col sm:justify-end"
   >
+    <ng-container
+      *ngIf="platformService.translateKey(bannerKey) | async as bannerMsg"
+    >
+      <div
+        style="top: 0; width: 100%"
+        class="absolute text-white text-wrap bg-primary container-lg mt-6 border-black p-5"
+      >
+        <div
+          class="flex flex-row gap-2 justify-center items-center text-center"
+        >
+          <ng-icon name="matWarningAmberOutline"></ng-icon>
+          <span class="font-bold text-lg">Warning :</span>
+          <span class="font-medium" [innerHTML]="bannerMsg"></span>
+        </div>
+      </div>
+    </ng-container>
     <div
       class="py-8 relative z-40 mb-[184px] sm:mb-0"
       [ngClass]="{ 'pointer-events-none': expandRatio < 0.2 }"
