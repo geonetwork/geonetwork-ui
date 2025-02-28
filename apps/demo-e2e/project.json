@@ -1,0 +1,41 @@
+{
+  "name": "demo-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/demo-e2e/src",
+  "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["demo"],
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/demo-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "browser": "chrome",
+        "port": "cypress-auto",
+        "commands": [
+          {
+            "command": "npm run demo"
+          }
+        ]
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "demo:serve:production"
+        }
+      },
+      "env": {
+        "browserPermissions": {
+          "write": "allow"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/demo-e2e/**/*.{js,ts}"]
+      }
+    }
+  }
+}
