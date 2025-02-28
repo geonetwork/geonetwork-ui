@@ -19,6 +19,7 @@ import { MarkdownParserComponent } from './markdown-parser/markdown-parser.compo
 import { ThumbnailComponent } from './thumbnail/thumbnail.component'
 import { TimeSincePipe } from './user-feedback-item/time-since.pipe'
 import { UserPreviewComponent } from './user-preview/user-preview.component'
+import { ApplicationBannerComponent } from './application-banner/application-banner.component'
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { UserPreviewComponent } from './user-preview/user-preview.component'
     MaxLinesComponent,
     TextInputComponent,
     ImageInputComponent,
+    ApplicationBannerComponent,
   ],
   providers: [
     provideNgIconsConfig({
@@ -53,6 +55,7 @@ import { UserPreviewComponent } from './user-preview/user-preview.component'
     UserPreviewComponent,
     MarkdownParserComponent,
     ImageInputComponent,
+    ApplicationBannerComponent,
   ],
 })
 export class UiElementsModule {}
