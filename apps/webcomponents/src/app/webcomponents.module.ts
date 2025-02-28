@@ -53,7 +53,6 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
 ]
 
 @NgModule({
-  exports: [],
   declarations: [
     AppComponent,
     BaseComponent,
