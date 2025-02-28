@@ -30,6 +30,7 @@
     "build:storybook-wc": "nx run webcomponents:build --output-hashing=none && nx run webcomponents:build-storybook",
     "build:demo": "tools/webcomponent/prepare-wc-pages.sh",
     "demo": "tools/webcomponent/prepare-wc-pages.sh --serve",
+    "demo:e2e": "tools/webcomponent/prepare-wc-pages.sh --serve && npx nx e2e demo-e2e --watch",
     "generate-api": "tools/generate-api.sh",
     "dev:ssr": "ng run formatter:serve-ssr",
     "serve:ssr": "node dist/formatter/server/main.js",
