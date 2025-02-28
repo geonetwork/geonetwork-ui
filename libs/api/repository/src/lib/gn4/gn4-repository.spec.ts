@@ -79,10 +79,10 @@ class SearchApiServiceMock {
 class RecordsApiServiceMock {
   getRecordAs = jest.fn((uuid) =>
     of(`<gmd:MD_Metadata>
-  <gmd:fileIdentifier>
-    <gco:CharacterString>${uuid}</gco:CharacterString>
-  </gmd:fileIdentifier>
-</gmd:MD_Metadata>`).pipe(map((xml) => ({ body: xml })))
+      <gmd:fileIdentifier>
+        <gco:CharacterString>${uuid}</gco:CharacterString>
+      </gmd:fileIdentifier>
+    </gmd:MD_Metadata>`).pipe(map((xml) => ({ body: xml })))
   )
   insert = jest.fn(() =>
     of({
@@ -95,7 +95,15 @@ class RecordsApiServiceMock {
   )
   deleteRecord = jest.fn(() => of({}))
   create = jest.fn(() => of('1234-5678'))
-  getFeatureCatalog = jest.fn(() => of({}))
+  getFeatureCatalog = jest.fn((uuid) =>
+    of({
+      decodeMap: {
+        feature1: ['memberName', 'definition'],
+        feature2: ['name2', 'title2'],
+        feature3: ['name3', 'title3'],
+      },
+    })
+  )
 }
 
 class PlatformServiceInterfaceMock {
@@ -261,48 +269,33 @@ describe('Gn4Repository', () => {
   describe('getFeatureCatalog', () => {
     let catalog: DatasetFeatureCatalog
     let metadata: CatalogRecord
-    const mockFeatureCatalogResponse = {
-      decodeMap: {
-        feature1: ['memberName', 'definition'],
-        feature2: ['name2', 'title2'],
-        feature3: ['name3', 'title3'],
-      },
-    }
-    //TODO rewrite
-
     describe('when extras feature catalog is defined ', () => {
       beforeEach(async () => {
-        ;(gn4RecordsApi.getFeatureCatalog as jest.Mock).mockReturnValue(
-          of(mockFeatureCatalogResponse)
-        )
-        metadata = await lastValueFrom(repository.getRecord('1234-5678'))
+        metadata = datasetRecordsFixture()[0]
         catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
       })
 
-      it('calls the API with correct parameters', () => {
-        expect(gn4RecordsApi.getFeatureCatalog).toHaveBeenCalledWith(
-          'my-dataset-001', //uniqueid of the record
-          undefined
-        )
+      it('should not call the feature catalog API (extras contain the answer) ', () => {
+        expect(gn4RecordsApi.getFeatureCatalog).not.toHaveBeenCalled()
       })
 
       it('returns the feature catalog with mapped features', () => {
         expect(catalog).toEqual({
           attributes: [
-            { name: 'memberName', title: 'definition' },
-            { name: 'name2', title: 'title2' },
-            { name: 'name3', title: 'title3' },
+            { name: 'OBJECTID', title: 'Object identifier' },
+            { name: 'Nom', title: 'Nom de la rue' },
+            { name: 'Rue', title: '' },
           ],
         })
       })
     })
-    //End todo rewrite
+
     describe('when feature catalog exists, no extras defined', () => {
       beforeEach(async () => {
-        ;(gn4RecordsApi.getFeatureCatalog as jest.Mock).mockReturnValue(
-          of(mockFeatureCatalogResponse)
-        )
-        metadata = await lastValueFrom(repository.getRecord('1234-5678'))
+        metadata = {
+          ...simpleDatasetRecordFixture(),
+          extras: {},
+        }
         catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
       })
 
@@ -310,7 +303,7 @@ describe('Gn4Repository', () => {
         expect(gn4RecordsApi.getFeatureCatalog).toHaveBeenCalledWith(
           'my-dataset-001', //uniqueid of the record
           undefined
-        )
+        ) //  TODO a debug code de prod peut etre pas bon
       })
 
       it('returns the feature catalog with mapped features', () => {
@@ -326,30 +319,17 @@ describe('Gn4Repository', () => {
 
     describe('when feature catalog does not exist, nor in extras', () => {
       beforeEach(async () => {
-        ;(gn4RecordsApi.getFeatureCatalog as jest.Mock).mockReturnValue(of({}))
+        metadata = {
+          ...simpleDatasetRecordFixture(),
+          extras: {},
+        }
+        ;(gn4RecordsApi.getFeatureCatalog as jest.Mock).mockReturnValue(
+          of({ decodeMap: {} })
+        )
         catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
       })
-
       it('returns null when no decode map is present', () => {
-        expect(catalog).toBe(null)
-      })
-    })
-
-    describe('with approved version parameter', () => {
-      beforeEach(async () => {
-        ;(gn4RecordsApi.getFeatureCatalog as jest.Mock).mockReturnValue(
-          of(mockFeatureCatalogResponse)
-        )
-        catalog = await lastValueFrom(
-          repository.getFeatureCatalog(metadata, true)
-        )
-      })
-
-      it('calls the API with approved parameter', () => {
-        expect(gn4RecordsApi.getFeatureCatalog).toHaveBeenCalledWith(
-          'my-dataset-001', //uniqueid of the record
-          true
-        )
+        expect(catalog).toEqual({ attributes: [] })
       })
     })
   })

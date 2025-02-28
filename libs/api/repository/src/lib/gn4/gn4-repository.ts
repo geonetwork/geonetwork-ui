@@ -145,8 +145,22 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     metadata: CatalogRecord,
     approvedVersion?: boolean
   ): Observable<DatasetFeatureCatalog | null> {
-    const featureTypes = metadata.extras['featureTypes'] as any[]
-    if (!featureTypes || featureTypes.length === 0) {
+    if (
+      metadata.extras['featureTypes'] &&
+      metadata.extras['featureTypes'][0]?.attributeTable &&
+      Array.isArray(metadata.extras['featureTypes'][0].attributeTable)
+    ) {
+      const temp = of({
+        attributes: metadata.extras['featureTypes'][0]?.attributeTable?.map(
+          (attr) => ({
+            name: attr.name,
+            title: attr.definition,
+          })
+        ),
+      } as DatasetFeatureCatalog)
+      console.log(temp)
+      return temp
+    } else {
       const temp = this.gn4RecordsApi
         .getFeatureCatalog(metadata.uniqueIdentifier, approvedVersion)
         .pipe(
@@ -161,15 +175,6 @@ export class Gn4Repository implements RecordsRepositoryInterface {
             return { attributes } as DatasetFeatureCatalog
           })
         )
-      console.log(temp)
-      return temp
-    } else {
-      const temp = of({
-        attributes: featureTypes[0]?.attributeTable?.map((attr) => ({
-          name: attr.typeName,
-          title: attr.definition,
-        })),
-      } as DatasetFeatureCatalog)
       console.log(temp)
       return temp
     }
