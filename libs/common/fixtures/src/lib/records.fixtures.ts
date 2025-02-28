@@ -160,6 +160,38 @@ As such, **it is not very interesting at all.**`,
     extras: {
       isPublishedToAll: true,
       edit: true,
+      featureTypes: [
+        {
+          attributeTable: [
+            {
+              code: 'OBJECTID',
+              name: 'OBJECTID',
+              link: '',
+              definition: 'Object identifier',
+              type: 'OID',
+            },
+            {
+              code: 'NOM',
+              name: 'Nom',
+              link: '',
+              definition: 'Nom de la rue',
+              type: 'String (48)',
+            },
+            {
+              code: 'RUE',
+              name: 'Rue',
+              link: '',
+              definition: '',
+              type: 'String (50)',
+            },
+          ],
+          code: '',
+          aliases: '',
+          typeName: "Catalogue d'attributs",
+          definition: '',
+          isAbstract: 'false',
+        },
+      ],
     },
   },
   {
