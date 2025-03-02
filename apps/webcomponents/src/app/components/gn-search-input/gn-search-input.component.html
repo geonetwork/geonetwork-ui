@@ -1,1 +1,7 @@
-<gn-ui-fuzzy-search #searchInput class="text-[18px]"></gn-ui-fuzzy-search>
+<gn-ui-fuzzy-search
+  class="text-[18px] pointer-events-auto"
+  style="--gn-ui-text-input-padding: 1.1em; --gn-ui-text-input-border-size: 0px"
+  (itemSelected)="select($event)"
+  (inputSubmitted)="search($event)"
+  [autoFocus]="true"
+></gn-ui-fuzzy-search>

@@ -94,9 +94,32 @@ describe('ElasticsearchService', () => {
   })
 
   describe('#getSearchRequestBody', () => {
-    describe('#track_total_hits', () => {
+    let payload
+    describe('request fields', () => {
+      it('includes the _source property if fields are specified', () => {
+        payload = service.getSearchRequestBody({}, 4, 0, null, ['uuid', 'tag'])
+        expect(payload).toEqual({
+          _source: ['uuid', 'tag'],
+          from: 0,
+          size: 4,
+          query: expect.any(Object),
+          aggregations: expect.any(Object),
+          track_total_hits: true,
+        })
+      })
+      it('does not include the _source property if no field specified', () => {
+        payload = service.getSearchRequestBody({}, 4, 0, null, null)
+        expect(payload).toEqual({
+          from: 0,
+          size: 4,
+          query: expect.any(Object),
+          aggregations: expect.any(Object),
+          track_total_hits: true,
+        })
+      })
+    })
+    describe('track_total_hits', () => {
       let size = 0
-      let payload
       describe('when size is 0', () => {
         beforeEach(() => {
           payload = service.getSearchRequestBody({}, size)
@@ -453,6 +476,37 @@ describe('ElasticsearchService', () => {
         },
       })
     })
+    it('handle values expressed as reg exp', () => {
+      const query = service['buildPayloadQuery'](
+        {
+          Org: {
+            '/world.*/': true,
+            '/*country^[fr|en]/': false,
+          },
+        },
+        {},
+        []
+      )
+      expect(query).toMatchObject({
+        bool: {
+          filter: [
+            {
+              terms: {
+                isTemplate: ['n'],
+              },
+            },
+            {
+              query_string: {
+                query: 'Org:(/world.*/ OR -/*country^[fr|en]/)',
+              },
+            },
+            {
+              ids: { values: [] },
+            },
+          ],
+        },
+      })
+    })
     describe('any has special characters', () => {
       let query
       beforeEach(() => {
@@ -557,7 +611,9 @@ describe('ElasticsearchService', () => {
   })
 
   describe('#injectLangInQueryStringFields - Search language', () => {
-    let queryStringFields = { 'resourceTitleObject.${searchLang}': 1 }
+    let queryStringFields: Record<string, number> = {
+      'resourceTitleObject.${searchLang}': 1,
+    }
     describe('When no lang from config', () => {
       beforeEach(() => {
         service['metadataLang'] = undefined
@@ -923,14 +979,16 @@ Cette section contient des *caractères internationaux* (ainsi que des "caractè
       ).toStrictEqual({
         myFilters: {
           filters: {
-            filter1: {
-              query_string: { query: 'field1:(100)' },
-            },
-            filter2: {
-              query_string: { query: 'field2:("value1" OR "value3")' },
-            },
-            filter3: {
-              query_string: { query: 'my own query' },
+            filters: {
+              filter1: {
+                query_string: { query: 'field1:(100)' },
+              },
+              filter2: {
+                query_string: { query: 'field2:("value1" OR "value3")' },
+              },
+              filter3: {
+                query_string: { query: 'my own query' },
+              },
             },
           },
         },
