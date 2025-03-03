@@ -1,10 +1,20 @@
-<div
-  style="top: 0; width: 100%"
-  class="absolute text-white text-wrap bg-primary container-lg mt-6 border-black p-5"
->
-  <div class="flex flex-row gap-2 justify-center items-center text-center">
-    <ng-icon name="matWarningAmberOutline"></ng-icon>
-    <span class="font-bold text-lg">Warning :</span>
-    <span class="font-medium" [innerHTML]="message"></span>
+<div *ngIf="message" style="top: 0" class="absolute text-wrap bg-white mt-4">
+  <div
+    class="flex flex-row py-2.5 px-5 gap-5 justify-start items-center border"
+    [ngClass]="classList"
+  >
+    <ng-icon [name]="icon"></ng-icon>
+    <div class="flex flex-col justify-start gap-2.5">
+      <span *ngIf="title" class="font-bold">{{ title }}</span>
+      <span class="font-medium" [innerHTML]="message"></span>
+    </div>
+    <button
+      *ngIf="closeEnabled"
+      class="self-start"
+      type="button"
+      (click)="closeMessage()"
+    >
+      <ng-icon name="matCloseOutline"> </ng-icon>
+    </button>
   </div>
 </div>
