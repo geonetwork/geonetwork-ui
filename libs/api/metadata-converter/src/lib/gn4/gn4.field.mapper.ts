@@ -43,7 +43,7 @@ export class Gn4FieldMapper {
   constructor(
     private metadataUrlService: MetadataUrlService,
     private langService: LangService
-  ) { }
+  ) {}
 
   private lang3 = this.langService.gnLang
 
@@ -190,7 +190,7 @@ export class Gn4FieldMapper {
       ...output,
       contactsForResource: [
         ...('contactsForResource' in output &&
-          Array.isArray(output.contactsForResource)
+        Array.isArray(output.contactsForResource)
           ? output.contactsForResource
           : []),
         ...getAsArray(selectField(source, 'contactForResource')).map(
@@ -284,15 +284,6 @@ export class Gn4FieldMapper {
         },
         output
       ),
-    related: (output, source) => {
-      // TODO:
-      return this.addExtra(
-        {
-          featureCatalogIdentifier: selectField(source, 'related'),
-        },
-        output
-      )
-    },
 
     isPublishedToAll: (output, source) =>
       this.addExtra(
