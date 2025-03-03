@@ -18,6 +18,7 @@ import {
   datasetRecordsFixture,
   simpleDatasetRecordAsXmlFixture,
   simpleDatasetRecordFixture,
+  simpleDatasetRecordWithFcatsFixture,
   duplicateDatasetRecordAsXmlFixture,
 } from '@geonetwork-ui/common/fixtures'
 import {
@@ -56,7 +57,7 @@ class ElasticsearchServiceMock {
 }
 
 class SearchApiServiceMock {
-  search = jest.fn((bucket, relatedType, payload) => {
+  search(bucket, relatedType, payload) {
     const body = JSON.parse(payload)
     const count = body.size || 1234
     const result: EsSearchResponse = {
@@ -73,7 +74,7 @@ class SearchApiServiceMock {
       }
     }
     return of(result)
-  })
+  }
 }
 
 class RecordsApiServiceMock {
@@ -95,15 +96,6 @@ class RecordsApiServiceMock {
   )
   deleteRecord = jest.fn(() => of({}))
   create = jest.fn(() => of('1234-5678'))
-  getFeatureCatalog = jest.fn((uuid) =>
-    of({
-      decodeMap: {
-        feature1: ['memberName', 'definition'],
-        feature2: ['name2', 'title2'],
-        feature3: ['name3', 'title3'],
-      },
-    })
-  )
 }
 
 class PlatformServiceInterfaceMock {
@@ -269,14 +261,17 @@ describe('Gn4Repository', () => {
   describe('getFeatureCatalog', () => {
     let catalog: DatasetFeatureCatalog
     let metadata: CatalogRecord
+    const spySearch = jest.spyOn(SearchApiServiceMock.prototype, 'search')
+
     describe('when extras feature catalog is defined ', () => {
       beforeEach(async () => {
+        jest.clearAllMocks()
         metadata = datasetRecordsFixture()[0]
         catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
       })
 
       it('should not call the feature catalog API (extras contain the answer) ', () => {
-        expect(gn4RecordsApi.getFeatureCatalog).not.toHaveBeenCalled()
+        expect(spySearch).not.toHaveBeenCalled()
       })
 
       it('returns the feature catalog with mapped features', () => {
@@ -289,34 +284,55 @@ describe('Gn4Repository', () => {
         })
       })
     })
-    /* TODO cas a refaire avec la fonction refaite par Alita
-    
     describe('when feature catalog exists, no extras defined', () => {
       beforeEach(async () => {
-        metadata = {
-          ...simpleDatasetRecordFixture(),
-          extras: {},
-        }
+        metadata = simpleDatasetRecordWithFcatsFixture()
+        spySearch.mockReturnValue(
+          of({ hits: { hits: datasetRecordsFixture(), total: { value: 0 } } })
+        )
         catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
       })
 
-      it('calls the API with correct parameters', () => {
-        expect(gn4RecordsApi.getFeatureCatalog).toHaveBeenCalledWith(
-          'my-dataset-001', //uniqueid of the record
-          undefined
-        ) 
+      afterEach(() => {
+        spySearch.mockRestore()
       })
 
-      it('returns the feature catalog with mapped features', () => {
+      it('calls the API with correct parameters', () => {
+        expect(spySearch).toHaveBeenCalledWith(
+          'bucket',
+          ['fcats'],
+          '{"uuids":["feature-catalog-identifier"]}'
+        )
+      })
+
+      it('returns the attributes coming from the linked feature catalog', () => {
         expect(catalog).toEqual({
           attributes: [
-            { name: 'memberName', title: 'definition' },
-            { name: 'name2', title: 'title2' },
-            { name: 'name3', title: 'title3' },
+            { name: 'OBJECTID', title: 'Object identifier' },
+            { name: 'Nom', title: 'Nom de la rue' },
+            { name: 'Rue', title: '' },
           ],
         })
       })
-    })*/
+
+      it('prevent looping', async () => {
+        metadata = {
+          ...simpleDatasetRecordWithFcatsFixture(),
+          ...{ featureCatalogIdentifier: 'my-dataset-with-fcats' },
+        }
+        spySearch.mockReturnValue(
+          of({
+            hits: {
+              hits: metadata,
+              total: { value: 0 },
+            },
+          })
+        )
+        repository.getRecord = jest.fn().mockReturnValue(of(metadata))
+        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+        expect(catalog).toEqual(null)
+      })
+    })
 
     describe('when feature catalog does not exist, nor in extras', () => {
       beforeEach(async () => {
@@ -324,12 +340,9 @@ describe('Gn4Repository', () => {
           ...simpleDatasetRecordFixture(),
           extras: {},
         }
-        ;(gn4RecordsApi.getFeatureCatalog as jest.Mock).mockReturnValue(
-          of({ decodeMap: {} })
-        )
         catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
       })
-      it('returns null when no decode map is present', () => {
+      it('returns null', () => {
         expect(catalog).toEqual(null)
       })
     })

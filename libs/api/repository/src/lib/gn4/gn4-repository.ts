@@ -142,9 +142,11 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   }
 
   getFeatureCatalog(
-    record: CatalogRecord
+    record: CatalogRecord,
+    visited: Set<string> = new Set() // prevent looping
   ): Observable<DatasetFeatureCatalog | null> {
     if (
+      record.extras &&
       record.extras['featureTypes'] &&
       record.extras['featureTypes'][0]?.attributeTable &&
       Array.isArray(record.extras['featureTypes'][0].attributeTable)
@@ -157,15 +159,19 @@ export class Gn4Repository implements RecordsRepositoryInterface {
           })
         ),
       } as DatasetFeatureCatalog)
-    } else {
-      const featureCatalogIdentifier = record.extras['featureCatalogIdentifier']
-      if (featureCatalogIdentifier) {
-        return this.getRecord(<string>featureCatalogIdentifier).pipe(
-          switchMap((record) => this.getFeatureCatalog(record))
-        )
-      }
-      return of(null)
     }
+
+    const featureCatalogIdentifier = record.featureCatalogIdentifier
+    if (featureCatalogIdentifier && !visited.has(featureCatalogIdentifier)) {
+      visited.add(featureCatalogIdentifier)
+      return this.getRecord(featureCatalogIdentifier).pipe(
+        switchMap((record) =>
+          record ? this.getFeatureCatalog(record, visited) : of(null)
+        )
+      )
+    }
+
+    return of(null)
   }
 
   getSimilarRecords(similarTo: CatalogRecord): Observable<CatalogRecord[]> {

@@ -344,6 +344,47 @@ export const simpleDatasetRecordFixture = (): DatasetRecord => ({
   translations: {},
 })
 
+export const simpleDatasetRecordWithFcatsFixture = (): DatasetRecord => ({
+  uniqueIdentifier: 'my-dataset-with-fcats',
+  featureCatalogIdentifier: 'feature-catalog-identifier',
+  kind: 'dataset',
+  otherLanguages: [],
+  defaultLanguage: 'en',
+  recordUpdated: new Date('2022-02-01T14:12:00.000Z'),
+  resourceCreated: new Date('2022-09-01T12:18:19.000Z'),
+  resourceUpdated: new Date('2022-12-04T14:12:00.000Z'),
+  status: 'ongoing',
+  title: 'A very interesting dataset with a related feature catalog',
+  abstract: `This dataset has been established for testing purposes.`,
+  ownerOrganization: { name: 'MyOrganization', translations: {} },
+  contacts: [
+    {
+      email: 'bob@org.net',
+      position: 'developer',
+      organization: { name: 'MyOrganization', translations: {} },
+      role: 'point_of_contact',
+      firstName: 'Bob',
+      lastName: 'TheGreat',
+    },
+  ],
+  contactsForResource: [],
+  keywords: [],
+  topics: ['testData'],
+  licenses: [],
+  legalConstraints: [],
+  securityConstraints: [],
+  otherConstraints: [],
+  lineage:
+    'This record was edited manually to test the feature catalog parsing',
+  spatialRepresentation: 'grid',
+  overviews: [],
+  spatialExtents: [],
+  temporalExtents: [],
+  onlineResources: [],
+  updateFrequency: { per: 'month', updatedTimes: 3 },
+  translations: {},
+})
+
 export const simpleDatasetRecordAsXmlFixture =
   (): string => `<?xml version="1.0" encoding="UTF-8"?>
 <mdb:MD_Metadata xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/2.0" xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0" xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0" xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/2.0" xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0" xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0" xmlns:gcx="http://standards.iso.org/iso/19115/-3/gcx/1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mmi="http://standards.iso.org/iso/19115/-3/mmi/1.0" xmlns:mrd="http://standards.iso.org/iso/19115/-3/mrd/1.0" xmlns:mrl="http://standards.iso.org/iso/19115/-3/mrl/2.0">

@@ -158,6 +158,7 @@ export type MetadataObject = Partial<{
   record: string
   recordGroup: string
   recordOwner: string
+  recordLink_fcats_uuid?: string
   resolutionDistance: string[]
   resolutionScaleDenominator: string[]
   resourceAbstractObject: MultilingualField
@@ -202,7 +203,6 @@ export interface Gn4Record {
   featured?: boolean
   guestdownload?: boolean
   selected?: boolean
-  related?: Gn4RecordRelated
 }
 
 export interface Gn4RecordRelated {
