@@ -145,47 +145,27 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     record: CatalogRecord
   ): Observable<DatasetFeatureCatalog | null> {
     if (
-      metadata.extras['featureTypes'] &&
-      metadata.extras['featureTypes'][0]?.attributeTable &&
-      Array.isArray(metadata.extras['featureTypes'][0].attributeTable)
+      record.extras['featureTypes'] &&
+      record.extras['featureTypes'][0]?.attributeTable &&
+      Array.isArray(record.extras['featureTypes'][0].attributeTable)
     ) {
-      const temp = of({
-        attributes: metadata.extras['featureTypes'][0]?.attributeTable?.map(
+      return of({
+        attributes: record.extras['featureTypes'][0]?.attributeTable?.map(
           (attr) => ({
             name: attr.name,
             title: attr.definition,
           })
         ),
       } as DatasetFeatureCatalog)
-      console.log(temp)
-      return temp
     } else {
-      const temp = this.gn4RecordsApi
-        .getFeatureCatalog(metadata.uniqueIdentifier, approvedVersion)
-        .pipe(
-          map((results: FeatureResponseApiModel) => {
-            if (!results.decodeMap) {
-              return null
-            }
-            const attributes = Object.keys(results.decodeMap).map((key) => {
-              const attribute = results.decodeMap[key]
-              return { name: attribute[0], title: attribute[1] }
-            })
-            return { attributes } as DatasetFeatureCatalog
-          })
+      const featureCatalogIdentifier = record.extras['featureCatalogIdentifier']
+      if (featureCatalogIdentifier) {
+        return this.getRecord(<string>featureCatalogIdentifier).pipe(
+          switchMap((record) => this.getFeatureCatalog(record))
         )
-      console.log(temp)
-      return temp
+      }
+      return of(null)
     }
-
-    const featureCatalogIdentifier = record.extras['featureCatalogIdentifier']
-    if (featureCatalogIdentifier) {
-      return this.getRecord(<string>featureCatalogIdentifier).pipe(
-        switchMap((record) => this.getFeatureCatalog(record))
-      )
-    }
-
-    return of(null)
   }
 
   getSimilarRecords(similarTo: CatalogRecord): Observable<CatalogRecord[]> {
