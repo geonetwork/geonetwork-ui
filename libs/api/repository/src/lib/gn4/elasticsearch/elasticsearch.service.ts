@@ -310,6 +310,7 @@ export class ElasticsearchService {
         'map',
         'map/static',
         'mapDigital',
+        'featureCatalog',
       ]),
     }
     const should = [] as Record<string, unknown>[]
@@ -419,6 +420,7 @@ export class ElasticsearchService {
               'map',
               'map/static',
               'mapDigital',
+              'featureCatalog',
             ]),
           },
         },
