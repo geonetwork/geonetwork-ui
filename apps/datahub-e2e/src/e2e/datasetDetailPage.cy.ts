@@ -543,6 +543,7 @@ describe('dataset pages', () => {
               'csv',
               'excel',
               'json',
+              'geojson',
               'shp',
               'gml',
               'kml',

@@ -197,7 +197,7 @@ describe('RecordApiFormComponent', () => {
       expect(component.format$.getValue()).toBe('application/json')
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"application/json"}`
+        `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"application/json","outputCrs":"EPSG:4326"}`
       )
     })
 
@@ -206,7 +206,7 @@ describe('RecordApiFormComponent', () => {
       expect(component.limit$.getValue()).toBe('12')
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
-        `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"application/json","maxFeatures":12}`
+        `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"application/json","maxFeatures":12,"outputCrs":"EPSG:4326"}`
       )
     })
   })
