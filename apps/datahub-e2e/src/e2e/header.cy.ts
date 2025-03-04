@@ -83,6 +83,10 @@ describe('header', () => {
       cy.get('mat-option').click()
       cy.url().should('include', '/dataset/')
     })
+    it('should not display the feature catalog dataset', () => {
+      cy.get('gn-ui-fuzzy-search').type('catalog')
+      cy.get('mat-option').should('not.have.text', 'Feature Catalog')
+    })
   })
 
   describe('reset search actions', () => {

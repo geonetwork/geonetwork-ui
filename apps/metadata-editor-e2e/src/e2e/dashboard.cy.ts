@@ -292,6 +292,10 @@ describe('dashboard (authenticated)', () => {
         cy.url().should('include', '/search?q=mat')
         cy.url().should('not.include', 'owner')
       })
+      it('should not show the feature catalog', () => {
+        cy.get('gn-ui-autocomplete').type('catalog')
+        cy.get('mat-option').should('not.have.text', 'Feature Catalog')
+      })
     })
   })
   describe('search filters', () => {
