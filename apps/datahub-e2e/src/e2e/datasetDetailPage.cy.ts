@@ -593,11 +593,19 @@ describe('dataset pages', () => {
           cy.get('datahub-record-downloads')
             .find('gn-ui-download-item')
             .first()
-            .click()
+            .find('a')
+            .first()
+            .as('downloadLink')
+          cy.get('@downloadLink')
+            .should('have.attr', 'href')
+            .and(
+              'include',
+              'wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=csv'
+            )
+          cy.get('@downloadLink').click()
           cy.readFile(
-            path.join('cypress/downloads', 'rectangles_200m_menage_erbm.csv')
+            path.join('cypress/downloads', 'rectangles_200m_menage_erbm.csv') // by default asserts file exists (no .should('exist') needed)
           ).as('downloadedFile')
-          cy.get('@downloadedFile').should('exist')
           // FIXME: This spec always fails with Cypress v13
           // cy.get('@downloadedFile').its('length').should('equal', 3579)
         })
