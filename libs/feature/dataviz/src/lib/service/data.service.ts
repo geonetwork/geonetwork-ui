@@ -164,18 +164,36 @@ export class DataService {
       wfsLink.url.toString(),
       wfsLink.name
     ).pipe(
-      map((urls) => urls.all),
-      map((urls) =>
-        Object.keys(urls).map((format) => ({
-          ...wfsLink,
-          name: wfsLink.name,
-          type: 'download',
-          url: new URL(urls[format]),
-          mimeType: getMimeTypeForFormat(
-            getFileFormatFromServiceOutput(format)
-          ),
-        }))
-      )
+      map((urls) => {
+        if (urls.geojson) {
+          urls.all['application/json'] = urls.geojson
+        }
+        return urls
+      }),
+      map((urls) => {
+        const resources: DatasetOnlineResource[] = Object.keys(urls.all).map(
+          (format) => ({
+            ...wfsLink,
+            name: wfsLink.name,
+            type: 'download' as const,
+            url: new URL(urls.all[format]),
+            mimeType: getMimeTypeForFormat(
+              getFileFormatFromServiceOutput(format)
+            ),
+          })
+        )
+
+        if (urls.geojson) {
+          resources.push({
+            ...wfsLink,
+            name: wfsLink.name,
+            type: 'download' as const,
+            url: new URL(urls.geojson),
+            mimeType: getMimeTypeForFormat('geojson'),
+          })
+        }
+        return resources
+      })
     )
   }
 
