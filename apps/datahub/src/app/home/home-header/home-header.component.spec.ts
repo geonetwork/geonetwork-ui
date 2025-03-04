@@ -74,6 +74,7 @@ class searchServiceMock {
 class PlatformServiceMock {
   isAnonymous = jest.fn(() => this._isAnonymous$)
   _isAnonymous$ = new BehaviorSubject(true)
+  translateKey = jest.fn()
 }
 
 class FieldsServiceMock {
