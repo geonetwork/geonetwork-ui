@@ -1007,20 +1007,6 @@ describe('Gn4Converter', () => {
       })
 
       describe('feature catalog (fcats)', () => {
-        it('sets the featureCatalogIdentifier from the link uuid', async () => {
-          const record = await service.readRecord({
-            ...hit,
-            _source: {
-              ...hit._source,
-              recordLink_fcats_uuid: 'linked-metadata-with-fcats',
-            },
-          })
-
-          expect(record.featureCatalogIdentifier).toEqual(
-            'linked-metadata-with-fcats'
-          )
-        })
-
         it('sets the featureCatalogIdentifier from the fcats', async () => {
           const record = await service.readRecord({
             ...hit,

@@ -158,7 +158,6 @@ export type MetadataObject = Partial<{
   record: string
   recordGroup: string
   recordOwner: string
-  recordLink_fcats_uuid?: string
   resolutionDistance: string[]
   resolutionScaleDenominator: string[]
   resourceAbstractObject: MultilingualField

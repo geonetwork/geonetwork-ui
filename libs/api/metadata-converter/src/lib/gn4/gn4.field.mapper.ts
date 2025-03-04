@@ -284,16 +284,6 @@ export class Gn4FieldMapper {
         },
         output
       ),
-    recordLink_fcats_uuid: (output, source) => {
-      const featureCatalogIdentifier = selectField(
-        source,
-        'recordLink_fcats_uuid'
-      )
-      return {
-        ...output,
-        ...(featureCatalogIdentifier && { featureCatalogIdentifier }),
-      } as CatalogRecord
-    },
     related: (output, source) => {
       const fcatSource = selectField(
         getFirstValue(
@@ -310,8 +300,7 @@ export class Gn4FieldMapper {
       )
       return {
         ...output,
-        ...(!output.featureCatalogIdentifier && // If not already found by recordLink_fcats_uuid
-          featureCatalogIdentifier && { featureCatalogIdentifier }),
+        ...(featureCatalogIdentifier && { featureCatalogIdentifier }),
       } as CatalogRecord
     },
     isPublishedToAll: (output, source) =>
