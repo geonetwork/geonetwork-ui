@@ -52,6 +52,11 @@ export class MdViewFacade {
     filter((md) => !!md)
   )
 
+  featureCatalog$ = this.store.pipe(
+    select(MdViewSelectors.getFeatureCatalog),
+    filter((fc) => !!fc)
+  )
+
   isIncomplete$ = this.store.pipe(
     select(MdViewSelectors.getMetadataIsIncomplete),
     filter((incomplete) => incomplete !== null)
@@ -203,5 +208,16 @@ export class MdViewFacade {
 
   loadUserFeedbacks(datasetUuid: string) {
     this.store.dispatch(MdViewActions.loadUserFeedbacks({ datasetUuid }))
+  }
+
+  /**
+   * FeatureCatalog
+   */
+  loadFeatureCatalog(metadata: CatalogRecord) {
+    this.store.dispatch(
+      MdViewActions.loadFeatureCatalog({
+        metadata,
+      })
+    )
   }
 }

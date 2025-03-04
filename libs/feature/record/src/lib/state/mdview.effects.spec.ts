@@ -262,4 +262,61 @@ describe('MdViewEffects', () => {
       })
     })
   })
+
+  describe('loadFeatureCatalog$', () => {
+    const featureCatalog = {
+      attributes: [{ name: 'test', title: 'Test' }],
+    }
+
+    describe('when api success and feature catalog found', () => {
+      beforeEach(() => {
+        repository.getFeatureCatalog = jest.fn(() => of(featureCatalog))
+      })
+      it('should dispatch loadFeatureCatalogSuccess', () => {
+        actions = hot('-a-|', {
+          a: MdViewActions.loadFullMetadataSuccess({ full }),
+        })
+        const expected = hot('-a-|', {
+          a: MdViewActions.loadFeatureCatalogSuccess({
+            datasetCatalog: featureCatalog,
+          }),
+        })
+        expect(effects.loadFeatureCatalog$).toBeObservable(expected)
+      })
+    })
+
+    describe('when api success but no feature catalog found', () => {
+      beforeEach(() => {
+        repository.getFeatureCatalog = jest.fn(() => of(null))
+      })
+      it('should dispatch loadFeatureCatalogFailure with notFound', () => {
+        actions = hot('-a-|', {
+          a: MdViewActions.loadFullMetadataSuccess({ full }),
+        })
+        const expected = hot('-a-|', {
+          a: MdViewActions.loadFeatureCatalogFailure({ notFound: true }),
+        })
+        expect(effects.loadFeatureCatalog$).toBeObservable(expected)
+      })
+    })
+
+    describe('when api fails', () => {
+      beforeEach(() => {
+        repository.getFeatureCatalog = jest.fn(() =>
+          throwError(() => new Error('api error'))
+        )
+      })
+      it('should dispatch loadFeatureCatalogFailure with error', () => {
+        actions = hot('-a-|', {
+          a: MdViewActions.loadFullMetadataSuccess({ full }),
+        })
+        const expected = hot('-(a|)', {
+          a: MdViewActions.loadFeatureCatalogFailure({
+            otherError: 'api error',
+          }),
+        })
+        expect(effects.loadFeatureCatalog$).toBeObservable(expected)
+      })
+    })
+  })
 })

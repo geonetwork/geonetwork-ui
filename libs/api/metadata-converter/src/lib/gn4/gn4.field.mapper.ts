@@ -277,6 +277,32 @@ export class Gn4FieldMapper {
         },
         output
       ),
+    featureTypes: (output, source) =>
+      this.addExtra(
+        {
+          featureTypes: selectField(source, 'featureTypes'),
+        },
+        output
+      ),
+    related: (output, source) => {
+      const fcatSource = selectField(
+        getFirstValue(
+          selectField(
+            <SourceWithUnknownProps>selectField(source, 'related'),
+            'fcats'
+          )
+        ),
+        '_source'
+      )
+      const featureCatalogIdentifier = selectField(
+        <SourceWithUnknownProps>fcatSource,
+        'uuid'
+      )
+      return {
+        ...output,
+        ...(featureCatalogIdentifier && { featureCatalogIdentifier }),
+      } as CatalogRecord
+    },
     isPublishedToAll: (output, source) =>
       this.addExtra(
         {

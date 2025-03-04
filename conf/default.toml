@@ -48,7 +48,7 @@ proxy_path = ""
 [theme]
 primary_color = "#c82850"
 secondary_color = "#001638"
-main_color = "#555" # All-purpose text color
+main_color = "#555"          # All-purpose text color
 background_color = "#fdfbff"
 
 # These optional parameters indicate which background should be used for the main header and the text color used
