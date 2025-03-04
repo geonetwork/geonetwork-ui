@@ -310,6 +310,26 @@ describe('DataService', () => {
               type: 'download',
               accessServiceProtocol: 'wfs',
             },
+            {
+              accessServiceProtocol: 'wfs',
+              description: 'Lieu de surveillance (ligne)',
+              mimeType: 'application/json',
+              name: 'surval_parametre_ligne',
+              type: 'download',
+              url: new URL(
+                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=json'
+              ),
+            },
+            {
+              accessServiceProtocol: 'wfs',
+              description: 'Lieu de surveillance (ligne)',
+              mimeType: 'application/geo+json',
+              name: 'surval_parametre_ligne',
+              type: 'download',
+              url: new URL(
+                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=geojson'
+              ),
+            },
           ])
         })
       })
@@ -406,6 +426,26 @@ describe('DataService', () => {
               ),
               type: 'download',
               accessServiceProtocol: 'wfs',
+            },
+            {
+              accessServiceProtocol: 'wfs',
+              description: 'Lieu de surveillance (ligne)',
+              mimeType: 'application/json',
+              name: '',
+              type: 'download',
+              url: new URL(
+                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=json'
+              ),
+            },
+            {
+              accessServiceProtocol: 'wfs',
+              description: 'Lieu de surveillance (ligne)',
+              mimeType: 'application/geo+json',
+              name: '',
+              type: 'download',
+              url: new URL(
+                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=geojson'
+              ),
             },
           ])
         })
