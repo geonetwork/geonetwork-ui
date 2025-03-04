@@ -3,8 +3,6 @@ import { Geometry } from 'geojson'
 export interface GlobalConfig {
   GN4_API_URL: string
   DATAHUB_URL?: string
-  DATAHUB_PAGE_TITLE_APP?: string
-  DATAHUB_PAGE_TITLE_PATTERN?: string
   PROXY_PATH?: string
   METADATA_LANGUAGE?: string
   LOGIN_URL?: string

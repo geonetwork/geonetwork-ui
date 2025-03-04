@@ -33,11 +33,11 @@ export class DatahubRouterService {
         path: ROUTER_ROUTE_HOME,
         redirectTo: ``,
         pathMatch: 'prefix',
-        title: 'seo.page.title.home',
+        title: 'datahub.pageTitle.home',
       },
       {
         path: '',
-        title: 'seo.page.title.home',
+        title: 'datahub.pageTitle.home',
         component: HomePageComponent,
         data: {
           shouldDetach: true,
@@ -54,7 +54,7 @@ export class DatahubRouterService {
             data: {
               shouldDetach: true,
             },
-            title: 'seo.page.title.news',
+            title: 'datahub.pageTitle.home',
           },
           {
             path: ROUTER_ROUTE_SEARCH,
@@ -62,7 +62,7 @@ export class DatahubRouterService {
             data: {
               shouldDetach: true,
             },
-            title: 'seo.page.title.search',
+            title: 'datahub.pageTitle.recordSearch',
           },
           {
             path: ROUTER_ROUTE_ORGANIZATIONS,
@@ -70,14 +70,14 @@ export class DatahubRouterService {
             data: {
               shouldDetach: true,
             },
-            title: 'seo.page.title.organizations',
+            title: 'datahub.pageTitle.organizations',
           },
         ],
       },
       {
         path: `${ROUTER_ROUTE_DATASET}/:metadataUuid`,
         component: RecordPageComponent,
-        title: 'seo.page.title.metadata',
+        title: 'datahub.pageTitle.metadata',
       },
       {
         path: `${ROUTER_ROUTE_ORGANIZATION}/:name`,
@@ -85,7 +85,7 @@ export class DatahubRouterService {
         data: {
           shouldDetach: true,
         },
-        title: 'seo.page.title.organization',
+        title: 'datahub.pageTitle.organization',
       },
       { path: '**', redirectTo: '', pathMatch: 'full' },
     ]
