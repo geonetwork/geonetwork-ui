@@ -7,8 +7,10 @@ import {
 } from '@ng-icons/core'
 import {
   matCloseOutline,
+  matInfoOutline,
   matWarningAmberOutline,
 } from '@ng-icons/material-icons/outline'
+import { matWarning } from '@ng-icons/material-icons/baseline'
 
 @Component({
   selector: 'gn-ui-application-banner',
@@ -20,7 +22,9 @@ import {
   providers: [
     provideIcons({
       matWarningAmberOutline,
+      matInfoOutline,
       matCloseOutline,
+      matWarning,
     }),
     provideNgIconsConfig({ size: '1.5em' }),
   ],
@@ -30,23 +34,25 @@ export class ApplicationBannerComponent {
   @Input() title: string
   @Input() closeEnabled = false
   @Input() extraClass = ''
-  @Input() icon = 'matWarningAmberOutline'
+  @Input() icon = ''
   msgClass = ''
+  bannerOpen = true
 
   @Input() set type(value: 'primary' | 'secondary' | 'light') {
     switch (value) {
       case 'primary':
         this.msgClass = 'bg-primary-darkest border-primary text-white'
-        break
-      case 'secondary':
-        this.msgClass = 'bg-primary-opacity-50 border-primary-darker text-black'
+        this.icon = 'matWarning'
         break
       case 'light':
         this.msgClass =
           'bg-primary-opacity-10 border-primary-lightest text-black'
+        this.icon = 'matInfoOutline'
         break
+      case 'secondary':
       default:
         this.msgClass = 'bg-primary-opacity-50 border-primary-darker text-black'
+        this.icon = 'matWarningAmberOutline'
         break
     }
   }
@@ -56,6 +62,6 @@ export class ApplicationBannerComponent {
   }
 
   closeMessage() {
-    this.message = ''
+    this.bannerOpen = false
   }
 }
