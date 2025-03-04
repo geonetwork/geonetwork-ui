@@ -1,4 +1,7 @@
-<div *ngIf="message" style="top: 0" class="absolute text-wrap bg-white mt-4">
+<div
+  *ngIf="message && bannerOpen"
+  class="absolute top-0 text-wrap bg-white mt-4"
+>
   <div
     class="flex flex-row py-2.5 px-5 gap-5 justify-start items-center border"
     [ngClass]="classList"
