@@ -263,7 +263,7 @@ export type OnlineResource = DatasetOnlineResource | ServiceOnlineResource
 
 export type CatalogRecord = DatasetRecord | ReuseRecord | ServiceRecord
 
-export type CatalogRecordKeys =
-  | keyof DatasetRecord
-  | keyof ReuseRecord
-  | keyof ServiceRecord
+export type CatalogRecordKeys = Exclude<
+  keyof DatasetRecord | keyof ReuseRecord | keyof ServiceRecord,
+  'featureCatalogIdentifier'
+>
