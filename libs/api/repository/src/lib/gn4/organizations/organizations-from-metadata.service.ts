@@ -22,6 +22,7 @@ import {
   selectFallback,
   selectField,
   selectTranslatedField,
+  SearchFilters,
   SourceWithUnknownProps,
 } from '@geonetwork-ui/api/metadata-converter'
 import { combineLatest, Observable, of, switchMap, takeLast } from 'rxjs'
@@ -61,17 +62,33 @@ interface IncompleteOrganization {
 export class OrganizationsFromMetadataService
   implements OrganizationsServiceInterface
 {
-  private groups$: Observable<GroupApiModel[]> = of(true).pipe(
-    switchMap(() => this.groupsApiService.getGroups()),
-    shareReplay()
-  )
-  private organisationsAggs$: Observable<OrganizationAggsBucket[]> =
-    this.platformService.getApiVersion().pipe(
+  private groups$: Observable<GroupApiModel[]>
+  private organisationsAggs$: Observable<OrganizationAggsBucket[]>
+  private organisationsWithoutGroups$: Observable<IncompleteOrganization[]>
+  organisations$: Observable<Organization[]>
+  organisationsCount$: Observable<number>
+
+  constructor(
+    private esService: ElasticsearchService,
+    private searchApiService: SearchApiService,
+    private groupsApiService: GroupsApiService,
+    private platformService: PlatformServiceInterface,
+    private langService: LangService
+  ) {}
+
+  getOrganisations(configFilters: SearchFilters): Observable<Organization[]> {
+    this.groups$ = of(true).pipe(
+      switchMap(() => this.groupsApiService.getGroups()),
+      shareReplay()
+    )
+    this.organisationsAggs$ = this.platformService.getApiVersion().pipe(
       switchMap((version) =>
         this.searchApiService.search(
           'bucket',
           null,
-          JSON.stringify(this.getAggregationSearchRequest(version))
+          JSON.stringify(
+            this.getAggregationSearchRequest(version, configFilters)
+          )
         )
       ),
       filter((response) => !!response.aggregations.contact.org),
@@ -87,8 +104,7 @@ export class OrganizationsFromMetadataService
       map((response) => response.aggregations.contact.org.buckets),
       shareReplay()
     )
-  private organisationsWithoutGroups$: Observable<IncompleteOrganization[]> =
-    this.organisationsAggs$.pipe(
+    this.organisationsWithoutGroups$ = this.organisationsAggs$.pipe(
       map((buckets) =>
         buckets.map((bucket) => {
           const logoUrl = bucket.logoUrl.buckets?.[0]?.key
@@ -103,26 +119,22 @@ export class OrganizationsFromMetadataService
         })
       )
     )
-  organisationsCount$ = this.organisationsAggs$.pipe(
-    map((organisations) => organisations.length)
-  )
-  organisations$ = combineLatest([
-    this.organisationsWithoutGroups$,
-    this.groups$.pipe(startWith(null)),
-  ]).pipe(
-    map(([organisations, groups]) => {
-      return !groups ? organisations : this.mapWithGroups(organisations, groups)
-    }),
-    shareReplay()
-  )
-
-  constructor(
-    private esService: ElasticsearchService,
-    private searchApiService: SearchApiService,
-    private groupsApiService: GroupsApiService,
-    private platformService: PlatformServiceInterface,
-    private langService: LangService
-  ) {}
+    this.organisationsCount$ = this.organisationsAggs$.pipe(
+      map((organisations) => organisations.length)
+    )
+    this.organisations$ = combineLatest([
+      this.organisationsWithoutGroups$,
+      this.groups$.pipe(startWith(null)),
+    ]).pipe(
+      map(([organisations, groups]) => {
+        return !groups
+          ? organisations
+          : this.mapWithGroups(organisations, groups)
+      }),
+      shareReplay()
+    )
+    return this.organisations$
+  }
 
   private lang3 = this.langService.gnLang
 
@@ -152,59 +164,69 @@ export class OrganizationsFromMetadataService
     }
   }
 
-  private getAggregationSearchRequest(gnVersion: string) {
+  private getAggregationSearchRequest(
+    gnVersion: string,
+    configFilters?: SearchFilters
+  ) {
     const semVersion = valid(coerce(gnVersion))
-    return this.esService.getSearchRequestBody({
-      contact: {
-        nested: {
-          path: 'contactForResource',
-        },
-        aggs: {
-          org: {
-            terms: {
-              field:
-                semVersion === '4.2.2'
-                  ? 'contactForResource.organisation'
-                  : 'contactForResource.organisationObject.default.keyword',
-              exclude: '',
-              size: 5000,
-              order: { _key: 'asc' },
-            },
-            aggs: {
-              mail: {
-                terms: {
-                  size: 50,
-                  exclude: '',
-                  field: satisfies(semVersion, '4.2.2 - 4.2.4')
-                    ? 'contactForResource.email.keyword'
-                    : 'contactForResource.email',
-                },
+    return this.esService.getSearchRequestBody(
+      {
+        contact: {
+          nested: {
+            path: 'contactForResource',
+          },
+          aggs: {
+            org: {
+              terms: {
+                field:
+                  semVersion === '4.2.2'
+                    ? 'contactForResource.organisation'
+                    : 'contactForResource.organisationObject.default.keyword',
+                exclude: '',
+                size: 5000,
+                order: { _key: 'asc' },
               },
-              logoUrl: {
-                terms: {
-                  size: 1,
-                  exclude: '',
-                  field: 'contactForResource.logo.keyword',
+              aggs: {
+                mail: {
+                  terms: {
+                    size: 50,
+                    exclude: '',
+                    field: satisfies(semVersion, '4.2.2 - 4.2.4')
+                      ? 'contactForResource.email.keyword'
+                      : 'contactForResource.email',
+                  },
+                },
+                logoUrl: {
+                  terms: {
+                    size: 1,
+                    exclude: '',
+                    field: 'contactForResource.logo.keyword',
+                  },
                 },
               },
             },
           },
         },
-      },
-      orgForResource: {
-        terms: {
-          size: 5000,
-          exclude: '',
-          field:
-            semVersion === '4.2.2'
-              ? 'OrgForResource'
-              : 'OrgForResourceObject.default',
-          order: {
-            _key: 'asc',
+        orgForResource: {
+          terms: {
+            size: 5000,
+            exclude: '',
+            field:
+              semVersion === '4.2.2'
+                ? 'OrgForResource'
+                : 'OrgForResourceObject.default',
+            order: {
+              _key: 'asc',
+            },
           },
         },
       },
-    })
+      0,
+      0,
+      undefined,
+      undefined,
+      configFilters
+    )
   }
 
   private mapWithGroups(
