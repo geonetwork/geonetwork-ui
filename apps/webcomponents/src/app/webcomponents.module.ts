@@ -4,7 +4,10 @@ import { CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
 import { BrowserModule } from '@angular/platform-browser'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
-import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
+import {
+  FeatureRecordModule,
+  MapViewComponent,
+} from '@geonetwork-ui/feature/record'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
@@ -39,6 +42,10 @@ import { provideGn4 } from '@geonetwork-ui/api/repository'
 import { GnFigureDatasetsComponent } from './components/gn-figure-datasets/gn-figure-datasets.component'
 import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { GnDatasetViewMapComponent } from './components/gn-dataset-view-map/gn-dataset-view-map.component'
+import {
+  ChartViewComponent,
+  TableViewComponent,
+} from '@geonetwork-ui/feature/dataviz'
 
 const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],
@@ -91,6 +98,9 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     BrowserAnimationsModule,
     MapStateContainerComponent,
     LayersPanelComponent,
+    TableViewComponent,
+    ChartViewComponent,
+    MapViewComponent,
   ],
   providers: [
     provideGn4(),
