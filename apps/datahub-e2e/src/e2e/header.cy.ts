@@ -1,5 +1,8 @@
 describe('header', () => {
-  beforeEach(() => cy.visit('/'))
+  beforeEach(() => {
+    cy.login()
+    cy.visit('/')
+  })
 
   describe('general display', () => {
     it('should display the title', () => {
@@ -155,18 +158,7 @@ describe('header', () => {
     })
   })
   describe('Warning banner', () => {
-    beforeEach(() => {
-      cy.login()
-      cy.visit('/geonetwork/srv/eng/admin.console#/settings/languages')
-      cy.get('.input-group').find('input').first().type('application-banner')
-      cy.get('.input-group').find('button').click()
-      cy.get('input')
-        .first()
-        .type(
-          'This is a warning message that should be shown when the key is set'
-        )
-      cy.get('.btn-group').eq(1).find('button').first().click()
-    })
+    beforeEach(() => cy.addTranslationKey())
     it('should display a warning banner if the translation key exists and display the message', () => {
       cy.visit('/search')
       cy.get('gn-ui-application-banner').should(
@@ -175,9 +167,7 @@ describe('header', () => {
       )
     })
     it('should not display the banner when the translation is deleted', () => {
-      cy.visit('/geonetwork/srv/eng/admin.console#/settings/languages')
-      cy.get('.btn-group').eq(1).find('button').eq(1).click()
-      cy.get('[data-ng-click="removeAllTranslations()"]').click()
+      cy.removeTranslationKey()
       cy.visit('/search')
       cy.get('gn-ui-application-banner').should('not.exist')
     })
