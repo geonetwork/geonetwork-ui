@@ -66,7 +66,8 @@ export class TableViewComponent {
   ) {}
 
   getDatasetReader(link: DatasetOnlineResource): Observable<BaseReader> {
-    return this.dataService.getDataset(link)
+    const cacheActive = true // TODO implement whether should be true or false
+    return this.dataService.getDataset(link, cacheActive)
   }
 
   onTableSelect(event) {
