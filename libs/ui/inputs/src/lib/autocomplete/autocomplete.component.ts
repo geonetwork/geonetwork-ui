@@ -147,6 +147,12 @@ export class AutocompleteComponent
         this.error = null
       }),
       switchMap((value) => this.action(value)),
+      tap((suggestions) => {
+        // forcing the panel to open if there are suggestions
+        if (suggestions.length > 0) {
+          this.triggerRef?.openPanel()
+        }
+      }),
       catchError((error: Error) => {
         this.error = error.message
         return of([])
