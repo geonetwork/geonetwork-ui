@@ -180,6 +180,7 @@ jest.mock('@geonetwork-ui/data-fetcher', () => ({
 
 describe('DataService', () => {
   let service: DataService
+  const cacheActive = true
 
   beforeEach(() => {
     jest.clearAllMocks()
@@ -649,11 +650,14 @@ describe('DataService', () => {
         it('returns an observable that errors with a relevant error', async () => {
           try {
             await lastValueFrom(
-              service.getDataset({
-                url: new URL('http://error.parse/geojson'),
-                mimeType: 'application/geo+json',
-                type: 'download',
-              })
+              service.getDataset(
+                {
+                  url: new URL('http://error.parse/geojson'),
+                  mimeType: 'application/geo+json',
+                  type: 'download',
+                },
+                cacheActive
+              )
             )
           } catch (e) {
             expect(e).toStrictEqual({
@@ -667,11 +671,14 @@ describe('DataService', () => {
         it('returns an observable that errors with a relevant error', async () => {
           try {
             await lastValueFrom(
-              service.getDataset({
-                url: new URL('http://error.network/xls'),
-                mimeType: 'application/vnd.ms-excel',
-                type: 'download',
-              })
+              service.getDataset(
+                {
+                  url: new URL('http://error.network/xls'),
+                  mimeType: 'application/vnd.ms-excel',
+                  type: 'download',
+                },
+                cacheActive
+              )
             )
           } catch (e) {
             expect(e).toStrictEqual({
@@ -685,11 +692,14 @@ describe('DataService', () => {
         it('returns an observable that errors with a relevant error', async () => {
           try {
             await lastValueFrom(
-              service.getDataset({
-                url: new URL('http://error.http/csv'),
-                mimeType: 'text/csv',
-                type: 'download',
-              })
+              service.getDataset(
+                {
+                  url: new URL('http://error.http/csv'),
+                  mimeType: 'text/csv',
+                  type: 'download',
+                },
+                cacheActive
+              )
             )
           } catch (e) {
             expect(e).toStrictEqual({
@@ -704,11 +714,14 @@ describe('DataService', () => {
         it('returns an observable that errors with a relevant error', async () => {
           try {
             await lastValueFrom(
-              service.getDataset({
-                url: new URL('http://error/xls'),
-                mimeType: 'application/vnd.ms-excel',
-                type: 'download',
-              })
+              service.getDataset(
+                {
+                  url: new URL('http://error/xls'),
+                  mimeType: 'application/vnd.ms-excel',
+                  type: 'download',
+                },
+                cacheActive
+              )
             )
           } catch (e) {
             expect(e).toStrictEqual({
@@ -719,23 +732,31 @@ describe('DataService', () => {
       })
       describe('valid file', () => {
         it('calls DataFetcher.openDataset', () => {
-          service.getDataset({
-            url: new URL('http://sample/geojson'),
-            mimeType: 'text/csv',
-            type: 'download',
-          })
+          service.getDataset(
+            {
+              url: new URL('http://sample/geojson'),
+              mimeType: 'text/csv',
+              type: 'download',
+            },
+            cacheActive
+          )
           expect(openDataset).toHaveBeenCalledWith(
             'http://sample/geojson',
-            'csv'
+            'csv',
+            undefined,
+            true
           )
         })
         it('returns an observable that emits the array of features', async () => {
           const result = await lastValueFrom(
-            service.getDataset({
-              url: new URL('http://sample/csv'),
-              mimeType: 'text/csv',
-              type: 'download',
-            })
+            service.getDataset(
+              {
+                url: new URL('http://sample/csv'),
+                mimeType: 'text/csv',
+                type: 'download',
+              },
+              cacheActive
+            )
           )
           await expect(result.read()).resolves.toEqual(SAMPLE_GEOJSON.features)
         })
@@ -746,11 +767,14 @@ describe('DataService', () => {
       describe('valid file', () => {
         it('returns an observable that emits the feature collection', async () => {
           const result = await lastValueFrom(
-            service.readAsGeoJson({
-              url: new URL('http://sample/geojson'),
-              mimeType: 'application/geo+json',
-              type: 'download',
-            })
+            service.readAsGeoJson(
+              {
+                url: new URL('http://sample/geojson'),
+                mimeType: 'application/geo+json',
+                type: 'download',
+              },
+              cacheActive
+            )
           )
           expect(result).toEqual(SAMPLE_GEOJSON)
         })
@@ -803,39 +827,56 @@ describe('DataService', () => {
         )
       })
       it('calls DataFetcher.openDataset with a proxied url', () => {
-        service.getDataset({
-          url: new URL('http://esri.rest/local'),
-          accessServiceProtocol: 'esriRest',
-          type: 'service',
-        })
+        service.getDataset(
+          {
+            url: new URL('http://esri.rest/local'),
+            accessServiceProtocol: 'esriRest',
+            type: 'service',
+          },
+          cacheActive
+        )
         expect(openDataset).toHaveBeenCalledWith(
           'http://proxy.local/?url=http%3A%2F%2Fesri.rest%2Flocal%2Fquery%3Ff%3Dgeojson%26where%3D1%3D1%26outFields%3D*',
-          'geojson'
+          'geojson',
+          undefined,
+          true
         )
       })
     })
 
     describe('#readGeoJsonDataset', () => {
       it('calls DataFetcher.openDataset with a proxied url', () => {
-        service.getDataset({
-          url: new URL('http://sample/geojson'),
-          mimeType: 'text/csv',
-          type: 'download',
-        })
+        service.getDataset(
+          {
+            url: new URL('http://sample/geojson'),
+            mimeType: 'text/csv',
+            type: 'download',
+          },
+          cacheActive
+        )
         expect(openDataset).toHaveBeenCalledWith(
           'http://proxy.local/?url=http%3A%2F%2Fsample%2Fgeojson',
-          'csv'
+          'csv',
+          undefined,
+          true
         )
       })
       it('does not apply the proxy twice', () => {
-        service.getDataset({
-          url: new URL('http://proxy.local/?url=http%3A%2F%2Fsample%2Fgeojson'),
-          mimeType: 'text/csv',
-          type: 'download',
-        })
+        service.getDataset(
+          {
+            url: new URL(
+              'http://proxy.local/?url=http%3A%2F%2Fsample%2Fgeojson'
+            ),
+            mimeType: 'text/csv',
+            type: 'download',
+          },
+          cacheActive
+        )
         expect(openDataset).toHaveBeenCalledWith(
           'http://proxy.local/?url=http%3A%2F%2Fsample%2Fgeojson',
-          'csv'
+          'csv',
+          undefined,
+          true
         )
       })
     })

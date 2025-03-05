@@ -51,39 +51,43 @@ export function fetchHeaders(url: string): Promise<DatasetHeaders> {
     })
 }
 
-export function fetchDataAsText(url: string): Promise<string> {
-  return useCache(
-    () =>
-      sharedFetch(url)
-        .catch((error) => {
-          throw FetchError.corsOrNetwork(error.message)
-        })
-        .then(async (response) => {
-          if (!response.ok) {
-            throw FetchError.http(response.status, await response.text())
-          }
-          return response.text()
-        }),
-    url,
-    'asText'
-  )
+export function fetchDataAsText(
+  url: string,
+  cacheActive: boolean
+): Promise<string> {
+  const fetchFactory = () =>
+    sharedFetch(url)
+      .catch((error) => {
+        throw FetchError.corsOrNetwork(error.message)
+      })
+      .then(async (response) => {
+        if (!response.ok) {
+          throw FetchError.http(response.status, await response.text())
+        }
+        return response.text()
+      })
+
+  return cacheActive ? useCache(fetchFactory, url, 'asText') : fetchFactory()
 }
-export function fetchDataAsArrayBuffer(url: string): Promise<ArrayBuffer> {
-  return useCache(
-    () =>
-      sharedFetch(url)
-        .catch((error) => {
-          throw FetchError.corsOrNetwork(error.message)
-        })
-        .then(async (response) => {
-          if (!response.ok) {
-            throw FetchError.http(response.status, await response.text())
-          }
-          // convert to a numeric array so that we can store the response in cache
-          return Array.from(new Uint8Array(await response.arrayBuffer()))
-        }),
-    url,
-    'asArrayBuffer'
+export function fetchDataAsArrayBuffer(
+  url: string,
+  cacheActive: boolean
+): Promise<ArrayBuffer> {
+  const fetchFactory = () =>
+    sharedFetch(url)
+      .catch((error) => {
+        throw FetchError.corsOrNetwork(error.message)
+      })
+      .then(async (response) => {
+        if (!response.ok) {
+          throw FetchError.http(response.status, await response.text())
+        }
+        // convert to a numeric array so that we can store the response in cache
+        return Array.from(new Uint8Array(await response.arrayBuffer()))
+      })
+
+  return (
+    cacheActive ? useCache(fetchFactory, url, 'asArrayBuffer') : fetchFactory()
   ).then((array) => {
     return new Uint8Array(array).buffer
   })

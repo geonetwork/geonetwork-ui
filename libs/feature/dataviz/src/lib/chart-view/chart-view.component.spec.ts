@@ -126,7 +126,8 @@ describe('ChartViewComponent', () => {
     it('creates a dataset reader once from the link', () => {
       expect(dataService.getDataset).toHaveBeenCalledTimes(1)
       expect(dataService.getDataset).toHaveBeenCalledWith(
-        aSetOfLinksFixture().dataCsv()
+        aSetOfLinksFixture().dataCsv(),
+        true
       )
     })
     it('choses the first string property for X', () => {
