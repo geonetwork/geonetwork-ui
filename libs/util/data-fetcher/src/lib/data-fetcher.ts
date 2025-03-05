@@ -17,29 +17,39 @@ export async function openDataset(
     namespace?: string
     wfsVersion?: WfsVersion
     wfsFeatureType?: string
-  }
+  },
+  cacheActive?: boolean
 ): Promise<BaseReader> {
   const fileType = await inferDatasetType(url, typeHint)
   let reader: BaseReader
   try {
     switch (fileType) {
       case 'csv':
-        reader = new CsvReader(url)
+        reader = new CsvReader(url, cacheActive)
         break
       case 'json':
-        reader = new JsonReader(url)
+        reader = new JsonReader(url, cacheActive)
         break
       case 'geojson':
-        reader = new GeojsonReader(url)
+        reader = new GeojsonReader(url, cacheActive)
         break
       case 'excel':
-        reader = new ExcelReader(url)
+        reader = new ExcelReader(url, cacheActive)
         break
       case 'gml':
-        reader = new GmlReader(url, options.namespace, options.wfsVersion)
+        reader = new GmlReader(
+          url,
+          options.namespace,
+          options.wfsVersion,
+          cacheActive
+        )
         break
       case 'wfs':
-        reader = await WfsReader.createReader(url, options.wfsFeatureType)
+        reader = await WfsReader.createReader(
+          url,
+          options.wfsFeatureType,
+          cacheActive
+        )
         break
     }
     reader.load()
@@ -61,9 +71,10 @@ export async function openDataset(
 export async function readDataset(
   url: string,
   typeHint?: SupportedType,
-  options?: any
+  options?: any,
+  cacheActive = true
 ): Promise<DataItem[]> {
-  const reader = await openDataset(url, typeHint, options)
+  const reader = await openDataset(url, typeHint, options, cacheActive)
   try {
     return await reader.read()
   } catch (e: any) {

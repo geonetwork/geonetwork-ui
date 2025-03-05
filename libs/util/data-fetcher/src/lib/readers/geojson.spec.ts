@@ -2,6 +2,7 @@ import { GeojsonReader, parseGeojson } from './geojson'
 import fetchMock from 'fetch-mock-jest'
 import path from 'path'
 import fs from 'fs/promises'
+import { useCache } from '@camptocamp/ogc-client'
 
 //todo: fix this test, to run without mocking useCache
 jest.mock('@camptocamp/ogc-client', () => ({
@@ -381,7 +382,9 @@ describe('geojson parsing', () => {
 
   describe('GeojsonReader', () => {
     let reader: GeojsonReader
+    let cacheActive = true
     beforeEach(() => {
+      jest.clearAllMocks()
       fetchMock.get(
         (url) => new URL(url).hostname === 'localfile',
         async (url) => {
@@ -399,7 +402,8 @@ describe('geojson parsing', () => {
         }
       )
       reader = new GeojsonReader(
-        'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson'
+        'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson',
+        cacheActive
       )
       reader.load()
     })
@@ -493,6 +497,23 @@ describe('geojson parsing', () => {
           },
           type: 'Feature',
         })
+      })
+    })
+    describe('When cache should be used', () => {
+      it('uses the cache', async () => {
+        const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
+        await reader.read()
+        expect(useCacheSpy).toHaveBeenCalledTimes(1)
+      })
+    })
+    describe('When cache should not be used', () => {
+      beforeAll(() => {
+        cacheActive = false
+      })
+      it('does not use the cache', async () => {
+        const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
+        await reader.read()
+        expect(useCacheSpy).not.toHaveBeenCalled()
       })
     })
   })
