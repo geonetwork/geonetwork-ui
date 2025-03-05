@@ -2,13 +2,14 @@ import { BaseReader } from './base'
 import { DataItem, DatasetInfo, PropertyInfo } from '../model'
 import { getJsonDataItemsProxy, jsonToGeojsonFeature } from '../utils'
 import { generateSqlQuery } from '../sql-utils'
+import { BaseCacheReader } from './base-cache'
 
 type ParseResult = {
   items: DataItem[]
   properties: PropertyInfo[]
 }
 
-export class BaseFileReader extends BaseReader {
+export class BaseFileReader extends BaseCacheReader {
   private parseResult_: Promise<ParseResult>
 
   protected getData(): Promise<ParseResult> {

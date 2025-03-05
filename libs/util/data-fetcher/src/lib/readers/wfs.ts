@@ -1,18 +1,23 @@
 import { WfsEndpoint, WfsVersion } from '@camptocamp/ogc-client'
 import { DataItem, DatasetInfo, PropertyInfo } from '../model'
 import { fetchDataAsText } from '../utils'
-import { BaseReader } from './base'
 import { GmlReader, parseGml } from './gml'
 import { GeojsonReader, parseGeojson } from './geojson'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { BaseCacheReader } from './base-cache'
 
-export class WfsReader extends BaseReader {
+export class WfsReader extends BaseCacheReader {
   endpoint: WfsEndpoint
   featureTypeName: string
   version: WfsVersion
 
-  constructor(url: string, wfsEndpoint: WfsEndpoint, featureTypeName: string) {
-    super(url)
+  constructor(
+    url: string,
+    wfsEndpoint: WfsEndpoint,
+    featureTypeName: string,
+    cacheActive?: boolean
+  ) {
+    super(url, cacheActive)
     this.endpoint = wfsEndpoint
     this.featureTypeName = featureTypeName
     this.version = this.endpoint.getVersion()
@@ -46,7 +51,11 @@ export class WfsReader extends BaseReader {
     )
   }
 
-  static async createReader(wfsUrlEndpoint: string, featureTypeName?: string) {
+  static async createReader(
+    wfsUrlEndpoint: string,
+    featureTypeName?: string,
+    cacheActive?: boolean
+  ) {
     const wfsEndpoint = await new WfsEndpoint(wfsUrlEndpoint).isReady()
     const featureTypes = wfsEndpoint.getFeatureTypes()
     const featureType = wfsEndpoint.getFeatureTypeSummary(
@@ -65,7 +74,8 @@ export class WfsReader extends BaseReader {
         wfsEndpoint.getFeatureUrl(featureType.name, {
           asJson: true,
           outputCrs: 'EPSG:4326',
-        })
+        }),
+        cacheActive
       )
     } else {
       if (
@@ -83,7 +93,8 @@ export class WfsReader extends BaseReader {
             outputCrs: 'EPSG:4326',
           }),
           featureType.name,
-          wfsEndpoint.getVersion()
+          wfsEndpoint.getVersion(),
+          cacheActive
         )
       }
       throw new Error('wfs.geojsongml.notsupported')
@@ -117,7 +128,7 @@ export class WfsReader extends BaseReader {
       url = `${url}${finalUrl.search ? '&' : ''}SORTBY=${sorts}`
     }
 
-    return fetchDataAsText(url).then((text) =>
+    return fetchDataAsText(url, this.cacheActive).then((text) =>
       asJson
         ? parseGeojson(text)
         : parseGml(text, this.featureTypeName, this.version)
