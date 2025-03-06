@@ -57,6 +57,24 @@ export class MdViewFacade {
     filter((incomplete) => incomplete !== null)
   )
 
+  isHighUpdateFrequency$ = this.metadata$.pipe(
+    map((record) => {
+      if (record.updateFrequency instanceof Object) {
+        return (
+          record.updateFrequency.per === 'day' &&
+          record.updateFrequency.updatedTimes > 1
+        )
+      }
+
+      return (
+        record.updateFrequency === 'unknown' ||
+        record.updateFrequency === 'asNeeded' ||
+        record.updateFrequency === 'irregular' ||
+        record.updateFrequency === 'continual'
+      )
+    })
+  )
+
   error$ = this.store.pipe(select(MdViewSelectors.getMetadataError))
 
   related$ = this.store.pipe(select(MdViewSelectors.getRelated))
