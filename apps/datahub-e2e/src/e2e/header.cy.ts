@@ -1,5 +1,8 @@
 describe('header', () => {
-  beforeEach(() => cy.visit('/'))
+  beforeEach(() => {
+    cy.login()
+    cy.visit('/')
+  })
 
   describe('general display', () => {
     it('should display the title', () => {
@@ -152,6 +155,21 @@ describe('header', () => {
         .getActiveDropdownOption()
         .invoke('attr', 'data-cy-value')
         .should('equal', 'desc,userSavedCount')
+    })
+  })
+  describe('Warning banner', () => {
+    beforeEach(() => cy.addTranslationKey())
+    it('should display a warning banner if the translation key exists and display the message', () => {
+      cy.visit('/search')
+      cy.get('gn-ui-application-banner').should(
+        'have.text',
+        'This is a warning message that should be shown when the key is set'
+      )
+    })
+    it('should not display the banner when the translation is deleted', () => {
+      cy.removeTranslationKey()
+      cy.visit('/search')
+      cy.get('gn-ui-application-banner').should('not.exist')
     })
   })
 })
