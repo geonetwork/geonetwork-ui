@@ -1,15 +1,17 @@
 <div
   *ngIf="message && bannerOpen"
-  class="absolute top-0 text-wrap bg-white mt-4"
+  class="absolute top-0 text-wrap bg-white mt-4 max-h-24"
 >
   <div
-    class="flex flex-row py-2.5 px-5 gap-5 justify-start items-center border"
+    class="flex flex-row py-2.5 px-5 gap-5 justify-start border max-h-20"
     [ngClass]="classList"
   >
-    <ng-icon [name]="icon"></ng-icon>
+    <div [ngClass]="{ 'pt-5': message.length > 200 }">
+      <ng-icon [name]="icon"></ng-icon>
+    </div>
     <div class="flex flex-col justify-start gap-2.5">
       <span *ngIf="title" class="font-bold">{{ title }}</span>
-      <span class="font-medium" [innerHTML]="message"></span>
+      <span class="font-medium max-w-2xl" [innerHTML]="message"></span>
     </div>
     <button
       *ngIf="closeEnabled"
