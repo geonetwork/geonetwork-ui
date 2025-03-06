@@ -65,6 +65,7 @@ marker('chart.aggregation.count')
   standalone: true,
 })
 export class ChartViewComponent {
+  @Input() cacheActive = true
   @Input() set link(value: DatasetOnlineResource) {
     this.currentLink$.next(value)
   }
@@ -134,8 +135,7 @@ export class ChartViewComponent {
     switchMap((link) => {
       this.error = null
       this.loading = true
-      const cacheActive = true // TODO implement whether should be true or false
-      return this.dataService.getDataset(link, cacheActive).pipe(
+      return this.dataService.getDataset(link, this.cacheActive).pipe(
         catchError((error) => {
           this.handleError(error)
           return EMPTY

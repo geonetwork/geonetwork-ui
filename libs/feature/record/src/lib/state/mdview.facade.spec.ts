@@ -149,6 +149,57 @@ describe('MdViewFacade', () => {
     })
   })
 
+  describe('isHighUpdateFrequency$', () => {
+    describe('When frequency is more than once a day', () => {
+      it('emits true', () => {
+        store.setState({
+          [METADATA_VIEW_FEATURE_STATE_KEY]: {
+            ...initialMetadataViewState,
+            metadata: { updateFrequency: { per: 'day', updatedTimes: 2 } },
+          },
+        })
+        const expected = hot('a', { a: true })
+        expect(facade.isHighUpdateFrequency$).toBeObservable(expected)
+      })
+    })
+    describe('When frequency is "continual"', () => {
+      it('emits true', () => {
+        store.setState({
+          [METADATA_VIEW_FEATURE_STATE_KEY]: {
+            ...initialMetadataViewState,
+            metadata: { updateFrequency: 'continual' },
+          },
+        })
+        const expected = hot('a', { a: true })
+        expect(facade.isHighUpdateFrequency$).toBeObservable(expected)
+      })
+    })
+    describe('When frequency is less than once a day', () => {
+      it('emits false', () => {
+        store.setState({
+          [METADATA_VIEW_FEATURE_STATE_KEY]: {
+            ...initialMetadataViewState,
+            metadata: { updateFrequency: { per: 'month', updatedTimes: 2 } },
+          },
+        })
+        const expected = hot('a', { a: false })
+        expect(facade.isHighUpdateFrequency$).toBeObservable(expected)
+      })
+    })
+    describe('When frequency is not continual', () => {
+      it('emits false', () => {
+        store.setState({
+          [METADATA_VIEW_FEATURE_STATE_KEY]: {
+            ...initialMetadataViewState,
+            metadata: { updateFrequency: 'weekly' },
+          },
+        })
+        const expected = hot('a', { a: false })
+        expect(facade.isHighUpdateFrequency$).toBeObservable(expected)
+      })
+    })
+  })
+
   describe('error$', () => {
     let values
 

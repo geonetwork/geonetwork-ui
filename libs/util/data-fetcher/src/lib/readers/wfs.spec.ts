@@ -418,23 +418,17 @@ describe('WfsReader', () => {
       ).resolves.toBeInstanceOf(WfsReader)
     })
     it('returns an instance of GeojsonReader', async () => {
-      await WfsReader.createReader(
-        urlGeojsonLegacy,
-        urlGeojsonLegacy,
-        cacheActive
-      )
+      await WfsReader.createReader(urlGeojsonLegacy, urlGeojsonLegacy)
       expect(GeojsonReader).toHaveBeenCalledWith(
-        'https://mygeojsonreader.edu?1=1&STARTINDEX=undefined&MAXFEATURES=undefined',
-        true
+        'https://mygeojsonreader.edu?1=1&STARTINDEX=undefined&MAXFEATURES=undefined'
       )
     })
     it('returns an instance of GmlReader', async () => {
-      await WfsReader.createReader(urlGmlLegacy, urlGmlLegacy, cacheActive)
+      await WfsReader.createReader(urlGmlLegacy, urlGmlLegacy)
       expect(GmlReader).toHaveBeenCalledWith(
         'https://mygmlreader.edu?1=1&STARTINDEX=undefined&MAXFEATURES=undefined',
         'any',
-        '1.0.0',
-        true
+        '1.0.0'
       )
     })
 
