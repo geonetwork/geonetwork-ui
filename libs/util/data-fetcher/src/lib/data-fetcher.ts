@@ -5,7 +5,6 @@ import { GeojsonReader } from './readers/geojson'
 import { ExcelReader } from './readers/excel'
 import { DataItem, DatasetHeaders, FetchError, SupportedType } from './model'
 import { inferDatasetType } from './utils'
-import { BaseReader } from './readers/base'
 import { GmlReader } from './readers/gml'
 import { WfsVersion } from '@camptocamp/ogc-client'
 import { WfsReader } from './readers/wfs'
@@ -17,10 +16,19 @@ export async function openDataset(
     namespace?: string
     wfsVersion?: WfsVersion
     wfsFeatureType?: string
-  }
-): Promise<BaseReader> {
+  },
+  cacheActive?: boolean
+): Promise<
+  CsvReader | JsonReader | GeojsonReader | ExcelReader | GmlReader | WfsReader
+> {
   const fileType = await inferDatasetType(url, typeHint)
-  let reader: BaseReader
+  let reader:
+    | CsvReader
+    | JsonReader
+    | GeojsonReader
+    | ExcelReader
+    | GmlReader
+    | WfsReader
   try {
     switch (fileType) {
       case 'csv':
@@ -42,7 +50,7 @@ export async function openDataset(
         reader = await WfsReader.createReader(url, options.wfsFeatureType)
         break
     }
-    reader.load()
+    reader.load(cacheActive)
     return reader
   } catch (e: any) {
     throw FetchError.parsingFailed(e.message)
@@ -61,9 +69,10 @@ export async function openDataset(
 export async function readDataset(
   url: string,
   typeHint?: SupportedType,
-  options?: any
+  options?: any,
+  cacheActive = true
 ): Promise<DataItem[]> {
-  const reader = await openDataset(url, typeHint, options)
+  const reader = await openDataset(url, typeHint, options, cacheActive)
   try {
     return await reader.read()
   } catch (e: any) {

@@ -11,12 +11,12 @@ type ParseResult = {
 export class BaseFileReader extends BaseReader {
   private parseResult_: Promise<ParseResult>
 
-  protected getData(): Promise<ParseResult> {
+  protected getData(cacheActive: boolean): Promise<ParseResult> {
     throw new Error('not implemented')
   }
 
-  load() {
-    this.parseResult_ = this.getData()
+  load(cacheActive?: boolean) {
+    this.parseResult_ = this.getData(cacheActive)
   }
 
   get properties(): Promise<PropertyInfo[]> {

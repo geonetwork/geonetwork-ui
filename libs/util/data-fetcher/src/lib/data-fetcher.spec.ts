@@ -542,11 +542,25 @@ describe('data-fetcher', () => {
           'geojson'
         )
       })
-      it('uses cache', () => {
+      it('uses cache by default', () => {
         expect(useCache).toHaveBeenCalledTimes(1)
       })
       it('avoids identical concurrent requests', () => {
         expect(sharedFetch).toHaveBeenCalledTimes(1)
+      })
+    })
+    describe('when no use of ogc-client cache', () => {
+      beforeEach(() => {
+        const cacheActive = false
+        readDataset(
+          'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson',
+          'geojson',
+          undefined,
+          cacheActive
+        )
+      })
+      it('does not use ogc-client cache', () => {
+        expect(useCache).not.toHaveBeenCalled()
       })
     })
   })

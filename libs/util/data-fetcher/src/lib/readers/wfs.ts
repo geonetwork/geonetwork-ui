@@ -1,10 +1,10 @@
 import { WfsEndpoint, WfsVersion } from '@camptocamp/ogc-client'
 import { DataItem, DatasetInfo, PropertyInfo } from '../model'
 import { fetchDataAsText } from '../utils'
-import { BaseReader } from './base'
 import { GmlReader, parseGml } from './gml'
 import { GeojsonReader, parseGeojson } from './geojson'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { BaseReader } from './base'
 
 export class WfsReader extends BaseReader {
   endpoint: WfsEndpoint
@@ -90,7 +90,7 @@ export class WfsReader extends BaseReader {
     }
   }
 
-  protected getData() {
+  protected getData(cacheActive: boolean) {
     if (this.aggregations || this.groupedBy) {
       throw new Error(marker('wfs.aggregations.notsupported'))
     }
@@ -117,7 +117,7 @@ export class WfsReader extends BaseReader {
       url = `${url}${finalUrl.search ? '&' : ''}SORTBY=${sorts}`
     }
 
-    return fetchDataAsText(url).then((text) =>
+    return fetchDataAsText(url, cacheActive).then((text) =>
       asJson
         ? parseGeojson(text)
         : parseGml(text, this.featureTypeName, this.version)
@@ -128,7 +128,7 @@ export class WfsReader extends BaseReader {
     // Nothing to load for Wfs
   }
 
-  async read(): Promise<DataItem[]> {
-    return (await this.getData()).items
+  async read(cacheActive?: boolean): Promise<DataItem[]> {
+    return (await this.getData(cacheActive)).items
   }
 }

@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { ExcelReader, parseExcel } from './excel'
 import fetchMock from 'fetch-mock-jest'
+import { useCache } from '@camptocamp/ogc-client'
 
 const sampleXlsx = fs.readFileSync(
   path.join(__dirname, '../../fixtures/eaux-baignades.xlsx'),
@@ -4114,7 +4115,9 @@ describe('Excel parsing', () => {
   })
   describe('ExcelReader', () => {
     let reader: ExcelReader
+    let cacheActive = true
     beforeEach(() => {
+      jest.clearAllMocks()
       fetchMock.get(
         (url) => new URL(url).hostname === 'localfile',
         async (url) => {
@@ -4132,7 +4135,7 @@ describe('Excel parsing', () => {
         }
       )
       reader = new ExcelReader('http://localfile/fixtures/ENS_CG02.xls')
-      reader.load()
+      reader.load(cacheActive)
     })
     afterEach(() => {
       fetchMock.reset()
@@ -4199,6 +4202,23 @@ describe('Excel parsing', () => {
           },
           type: 'Feature',
         })
+      })
+    })
+    describe('When cache should be used', () => {
+      it('uses the cache', async () => {
+        const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
+        await reader.read()
+        expect(useCacheSpy).toHaveBeenCalledTimes(1)
+      })
+    })
+    describe('When cache should not be used', () => {
+      beforeAll(() => {
+        cacheActive = false
+      })
+      it('does not use the cache', async () => {
+        const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
+        await reader.read()
+        expect(useCacheSpy).not.toHaveBeenCalled()
       })
     })
   })

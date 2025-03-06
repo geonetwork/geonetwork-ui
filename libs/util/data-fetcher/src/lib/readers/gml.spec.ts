@@ -5,6 +5,7 @@ import { GmlReader, parseGml } from './gml'
 import fetchMock from 'fetch-mock-jest'
 import path from 'path'
 import fs from 'fs/promises'
+import { useCache } from '@camptocamp/ogc-client'
 
 //todo: fix this test, to run without mocking useCache
 jest.mock('@camptocamp/ogc-client', () => ({
@@ -270,7 +271,9 @@ describe('Gml parsing', () => {
 
   describe('GmlReader', () => {
     let reader: GmlReader
+    let cacheActive = true
     beforeEach(() => {
+      jest.clearAllMocks()
       fetchMock.get(
         (url) => new URL(url).hostname === 'localfile',
         async (url) => {
@@ -292,7 +295,7 @@ describe('Gml parsing', () => {
         'ms:n_mat_eolien_p_r32',
         '2.0.0'
       )
-      reader.load()
+      reader.load(cacheActive)
     })
     afterEach(() => {
       fetchMock.reset()
@@ -571,6 +574,23 @@ describe('Gml parsing', () => {
             type: 'Feature',
           })
         })
+      })
+    })
+    describe('When cache should be used', () => {
+      it('uses the cache', async () => {
+        const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
+        await reader.read()
+        expect(useCacheSpy).toHaveBeenCalledTimes(1)
+      })
+    })
+    describe('When cache should not be used', () => {
+      beforeAll(() => {
+        cacheActive = false
+      })
+      it('does not use the cache', async () => {
+        const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
+        await reader.read()
+        expect(useCacheSpy).not.toHaveBeenCalled()
       })
     })
   })

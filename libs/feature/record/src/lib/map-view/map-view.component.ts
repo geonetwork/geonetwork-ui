@@ -239,7 +239,8 @@ export class MapViewComponent implements AfterViewInit {
           link.accessServiceProtocol === 'ogcFeatures')) ||
       link.type === 'download'
     ) {
-      return this.dataService.readAsGeoJson(link).pipe(
+      const cacheActive = true // TODO implement whether should be true or false
+      return this.dataService.readAsGeoJson(link, cacheActive).pipe(
         map((data) => ({
           type: 'geojson',
           data,

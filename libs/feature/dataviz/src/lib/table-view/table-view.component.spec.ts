@@ -85,7 +85,8 @@ describe('TableViewComponent', () => {
 
     it('loads the data from the first available link', () => {
       expect(dataService.getDataset).toHaveBeenCalledWith(
-        aSetOfLinksFixture().dataCsv()
+        aSetOfLinksFixture().dataCsv(),
+        true
       )
     })
 
@@ -144,7 +145,8 @@ describe('TableViewComponent', () => {
         }))
         it('loads data from selected link', () => {
           expect(dataService.getDataset).toHaveBeenCalledWith(
-            aSetOfLinksFixture().geodataJson()
+            aSetOfLinksFixture().geodataJson(),
+            true
           )
         })
         it('displays mocked data in the table', () => {

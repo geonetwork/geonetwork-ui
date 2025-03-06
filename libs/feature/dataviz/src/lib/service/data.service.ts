@@ -242,8 +242,11 @@ export class DataService {
     }))
   }
 
-  readAsGeoJson(link: DatasetOnlineResource): Observable<FeatureCollection> {
-    return this.getDataset(link).pipe(
+  readAsGeoJson(
+    link: DatasetOnlineResource,
+    cacheActive: boolean
+  ): Observable<FeatureCollection> {
+    return this.getDataset(link, cacheActive).pipe(
       switchMap((dataset) => dataset.selectAll().read()),
       map((features) => ({
         type: 'FeatureCollection',
@@ -252,13 +255,21 @@ export class DataService {
     )
   }
 
-  getDataset(link: DatasetOnlineResource): Observable<BaseReader> {
+  getDataset(
+    link: DatasetOnlineResource,
+    cacheActive: boolean
+  ): Observable<BaseReader> {
     if (link.type === 'service' && link.accessServiceProtocol === 'wfs') {
       const wfsUrlEndpoint = this.proxy.getProxiedUrl(link.url.toString())
       return from(
-        openDataset(wfsUrlEndpoint, 'wfs', {
-          wfsFeatureType: link.name,
-        })
+        openDataset(
+          wfsUrlEndpoint,
+          'wfs',
+          {
+            wfsFeatureType: link.name,
+          },
+          cacheActive
+        )
       )
     } else if (link.type === 'download') {
       const linkProxifiedUrl = this.proxy.getProxiedUrl(link.url.toString())
@@ -267,7 +278,9 @@ export class DataService {
         SupportedTypes.indexOf(format as any) > -1
           ? (format as SupportedType)
           : undefined
-      return from(openDataset(linkProxifiedUrl, supportedType)).pipe()
+      return from(
+        openDataset(linkProxifiedUrl, supportedType, undefined, cacheActive)
+      ).pipe()
     } else if (
       link.type === 'service' &&
       link.accessServiceProtocol === 'esriRest'
@@ -276,7 +289,7 @@ export class DataService {
         link.url.toString(),
         'geojson'
       )
-      return from(openDataset(url, 'geojson')).pipe()
+      return from(openDataset(url, 'geojson', undefined, cacheActive)).pipe()
     } else if (
       link.type === 'service' &&
       link.accessServiceProtocol === 'ogcFeatures'
@@ -284,7 +297,7 @@ export class DataService {
       return from(this.getDownloadUrlsFromOgcApi(link.url.href)).pipe(
         switchMap((collectionInfo) => {
           const geojsonUrl = collectionInfo.jsonDownloadLink
-          return openDataset(geojsonUrl, 'geojson')
+          return openDataset(geojsonUrl, 'geojson', undefined, cacheActive)
         }),
         tap((url) => {
           if (url === null) {

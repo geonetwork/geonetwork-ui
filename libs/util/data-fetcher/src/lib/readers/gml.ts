@@ -37,17 +37,16 @@ export function parseGml(
 }
 
 export class GmlReader extends BaseFileReader {
-  namespace: string
-  version: WfsVersion
-
-  constructor(url, namespace, version) {
+  constructor(
+    protected url: string,
+    protected namespace: string,
+    protected version: WfsVersion
+  ) {
     super(url)
-    this.namespace = namespace
-    this.version = version
   }
 
-  protected getData() {
-    return fetchDataAsText(this.url).then((text) =>
+  protected getData(cacheActive: boolean) {
+    return fetchDataAsText(this.url, cacheActive).then((text) =>
       parseGml(text, this.namespace, this.version)
     )
   }

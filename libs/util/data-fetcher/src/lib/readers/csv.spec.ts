@@ -2,6 +2,7 @@ import { CsvReader, parseCsv } from './csv'
 import fetchMock from 'fetch-mock-jest'
 import path from 'path'
 import fs from 'fs/promises'
+import { useCache } from '@camptocamp/ogc-client'
 
 afterEach(() => {
   jest.clearAllMocks()
@@ -363,6 +364,7 @@ describe('CSV parsing', () => {
 
   describe('CsvReader', () => {
     let reader: CsvReader
+    let cacheActive = true
     beforeEach(() => {
       fetchMock.get(
         (url) => new URL(url).hostname === 'localfile',
@@ -381,10 +383,11 @@ describe('CSV parsing', () => {
         }
       )
       reader = new CsvReader('http://localfile/fixtures/rephytox.csv')
-      reader.load()
+      reader.load(cacheActive)
     })
     afterEach(() => {
       fetchMock.reset()
+      cacheActive = true
     })
     describe('#info', () => {
       it('returns dataset info', async () => {
@@ -927,6 +930,23 @@ describe('CSV parsing', () => {
             type: 'Feature',
           })
         })
+      })
+    })
+    describe('When cache should be used', () => {
+      it('uses the cache', async () => {
+        const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
+        await reader.read()
+        expect(useCacheSpy).toHaveBeenCalledTimes(1)
+      })
+    })
+    describe('When cache should not be used', () => {
+      beforeAll(() => {
+        cacheActive = false
+      })
+      it('does not use the cache', async () => {
+        const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
+        await reader.read()
+        expect(useCacheSpy).not.toHaveBeenCalled()
       })
     })
   })

@@ -134,7 +134,8 @@ export class ChartViewComponent {
     switchMap((link) => {
       this.error = null
       this.loading = true
-      return this.dataService.getDataset(link).pipe(
+      const cacheActive = true // TODO implement whether should be true or false
+      return this.dataService.getDataset(link, cacheActive).pipe(
         catchError((error) => {
           this.handleError(error)
           return EMPTY
