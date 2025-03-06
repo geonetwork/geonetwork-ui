@@ -51,11 +51,7 @@ export class WfsReader extends BaseCacheReader {
     )
   }
 
-  static async createReader(
-    wfsUrlEndpoint: string,
-    featureTypeName?: string,
-    cacheActive?: boolean
-  ) {
+  static async createReader(wfsUrlEndpoint: string, featureTypeName?: string) {
     const wfsEndpoint = await new WfsEndpoint(wfsUrlEndpoint).isReady()
     const featureTypes = wfsEndpoint.getFeatureTypes()
     const featureType = wfsEndpoint.getFeatureTypeSummary(
@@ -74,8 +70,7 @@ export class WfsReader extends BaseCacheReader {
         wfsEndpoint.getFeatureUrl(featureType.name, {
           asJson: true,
           outputCrs: 'EPSG:4326',
-        }),
-        cacheActive
+        })
       )
     } else {
       if (
@@ -93,8 +88,7 @@ export class WfsReader extends BaseCacheReader {
             outputCrs: 'EPSG:4326',
           }),
           featureType.name,
-          wfsEndpoint.getVersion(),
-          cacheActive
+          wfsEndpoint.getVersion()
         )
       }
       throw new Error('wfs.geojsongml.notsupported')
