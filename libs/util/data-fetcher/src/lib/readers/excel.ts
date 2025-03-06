@@ -27,7 +27,7 @@ export function parseExcel(buffer: ArrayBuffer): Promise<{
 }
 
 export class ExcelReader extends BaseFileReader {
-  getData() {
-    return fetchDataAsArrayBuffer(this.url).then(parseExcel)
+  getData(cache = true) {
+    return fetchDataAsArrayBuffer(this.url, cache).then(parseExcel)
   }
 }

@@ -51,42 +51,75 @@ export function fetchHeaders(url: string): Promise<DatasetHeaders> {
     })
 }
 
-export function fetchDataAsText(url: string): Promise<string> {
-  return useCache(
-    () =>
-      sharedFetch(url)
-        .catch((error) => {
-          throw FetchError.corsOrNetwork(error.message)
-        })
-        .then(async (response) => {
-          if (!response.ok) {
-            throw FetchError.http(response.status, await response.text())
-          }
-          return response.text()
-        }),
-    url,
-    'asText'
-  )
+export function fetchDataAsText(url: string, cache = true): Promise<string> {
+  if (!cache) {
+    return sharedFetch(url)
+      .catch((error) => {
+        throw FetchError.corsOrNetwork(error.message)
+      })
+      .then(async (response) => {
+        if (!response.ok) {
+          throw FetchError.http(response.status, await response.text())
+        }
+        return response.text()
+      })
+  } else {
+    return useCache(
+      () =>
+        sharedFetch(url)
+          .catch((error) => {
+            throw FetchError.corsOrNetwork(error.message)
+          })
+          .then(async (response) => {
+            if (!response.ok) {
+              throw FetchError.http(response.status, await response.text())
+            }
+            return response.text()
+          }),
+      url,
+      'asText'
+    )
+  }
 }
-export function fetchDataAsArrayBuffer(url: string): Promise<ArrayBuffer> {
-  return useCache(
-    () =>
-      sharedFetch(url)
-        .catch((error) => {
-          throw FetchError.corsOrNetwork(error.message)
-        })
-        .then(async (response) => {
-          if (!response.ok) {
-            throw FetchError.http(response.status, await response.text())
-          }
-          // convert to a numeric array so that we can store the response in cache
-          return Array.from(new Uint8Array(await response.arrayBuffer()))
-        }),
-    url,
-    'asArrayBuffer'
-  ).then((array) => {
-    return new Uint8Array(array).buffer
-  })
+export function fetchDataAsArrayBuffer(
+  url: string,
+  cache = true
+): Promise<ArrayBuffer> {
+  if (!cache) {
+    return sharedFetch(url)
+      .catch((error) => {
+        throw FetchError.corsOrNetwork(error.message)
+      })
+      .then(async (response) => {
+        if (!response.ok) {
+          throw FetchError.http(response.status, await response.text())
+        }
+        // convert to a numeric array so that we can store the response in cache
+        return Array.from(new Uint8Array(await response.arrayBuffer()))
+      })
+      .then((array) => {
+        return new Uint8Array(array).buffer
+      })
+  } else {
+    return useCache(
+      () =>
+        sharedFetch(url)
+          .catch((error) => {
+            throw FetchError.corsOrNetwork(error.message)
+          })
+          .then(async (response) => {
+            if (!response.ok) {
+              throw FetchError.http(response.status, await response.text())
+            }
+            // convert to a numeric array so that we can store the response in cache
+            return Array.from(new Uint8Array(await response.arrayBuffer()))
+          }),
+      url,
+      'asArrayBuffer'
+    ).then((array) => {
+      return new Uint8Array(array).buffer
+    })
+  }
 }
 
 export function tryParseDate(input: unknown): Date | null {

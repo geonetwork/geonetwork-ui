@@ -20,7 +20,7 @@ export class BaseReader {
 
   constructor(protected url: string) {}
 
-  load() {
+  load(cache = true) {
     throw new Error('not implemented')
   }
 

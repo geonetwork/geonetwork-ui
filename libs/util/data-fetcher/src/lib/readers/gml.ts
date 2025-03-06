@@ -46,8 +46,8 @@ export class GmlReader extends BaseFileReader {
     this.version = version
   }
 
-  protected getData() {
-    return fetchDataAsText(this.url).then((text) =>
+  protected getData(cache = true) {
+    return fetchDataAsText(this.url, cache).then((text) =>
       parseGml(text, this.namespace, this.version)
     )
   }

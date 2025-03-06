@@ -17,7 +17,8 @@ export async function openDataset(
     namespace?: string
     wfsVersion?: WfsVersion
     wfsFeatureType?: string
-  }
+  },
+  cache = true
 ): Promise<BaseReader> {
   const fileType = await inferDatasetType(url, typeHint)
   let reader: BaseReader
@@ -42,7 +43,7 @@ export async function openDataset(
         reader = await WfsReader.createReader(url, options.wfsFeatureType)
         break
     }
-    reader.load()
+    reader.load(cache)
     return reader
   } catch (e: any) {
     throw FetchError.parsingFailed(e.message)
@@ -61,9 +62,10 @@ export async function openDataset(
 export async function readDataset(
   url: string,
   typeHint?: SupportedType,
-  options?: any
+  options?: any,
+  cache = true
 ): Promise<DataItem[]> {
-  const reader = await openDataset(url, typeHint, options)
+  const reader = await openDataset(url, typeHint, options, cache)
   try {
     return await reader.read()
   } catch (e: any) {

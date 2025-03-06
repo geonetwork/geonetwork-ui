@@ -23,7 +23,7 @@ export function parseGeojson(text: string): {
 }
 
 export class GeojsonReader extends BaseFileReader {
-  getData() {
-    return fetchDataAsText(this.url).then(parseGeojson)
+  getData(cache = true) {
+    return fetchDataAsText(this.url, cache).then(parseGeojson)
   }
 }

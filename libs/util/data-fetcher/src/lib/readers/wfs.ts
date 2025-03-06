@@ -90,7 +90,7 @@ export class WfsReader extends BaseReader {
     }
   }
 
-  protected getData() {
+  protected getData(cache = true) {
     if (this.aggregations || this.groupedBy) {
       throw new Error(marker('wfs.aggregations.notsupported'))
     }
@@ -117,7 +117,7 @@ export class WfsReader extends BaseReader {
       url = `${url}${finalUrl.search ? '&' : ''}SORTBY=${sorts}`
     }
 
-    return fetchDataAsText(url).then((text) =>
+    return fetchDataAsText(url, cache).then((text) =>
       asJson
         ? parseGeojson(text)
         : parseGml(text, this.featureTypeName, this.version)
@@ -128,7 +128,7 @@ export class WfsReader extends BaseReader {
     // Nothing to load for Wfs
   }
 
-  async read(): Promise<DataItem[]> {
-    return (await this.getData()).items
+  async read(cache = true): Promise<DataItem[]> {
+    return (await this.getData(cache)).items
   }
 }
