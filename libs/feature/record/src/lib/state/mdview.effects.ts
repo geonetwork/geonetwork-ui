@@ -37,20 +37,15 @@ export class MdViewEffects {
       ofType(MdViewActions.loadFullMetadataSuccess),
       filter(({ full }) => full !== undefined),
       switchMap(({ full }) => this.recordsRepository.getFeatureCatalog(full)),
-      map((featureCatalog) => {
-        if (featureCatalog === null) {
-          return MdViewActions.loadFeatureCatalogFailure({
-            notFound: true,
-          })
-        }
-        return MdViewActions.loadFeatureCatalogSuccess({
+      map((featureCatalog) =>
+        MdViewActions.loadFeatureCatalogSuccess({
           datasetCatalog: featureCatalog,
         })
-      }),
+      ),
       catchError((error) =>
         of(
           MdViewActions.loadFeatureCatalogFailure({
-            otherError: error.message,
+            error: error.message,
           })
         )
       )

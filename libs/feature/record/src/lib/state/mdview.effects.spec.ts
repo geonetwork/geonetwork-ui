@@ -289,12 +289,14 @@ describe('MdViewEffects', () => {
       beforeEach(() => {
         repository.getFeatureCatalog = jest.fn(() => of(null))
       })
-      it('should dispatch loadFeatureCatalogFailure with notFound', () => {
+      it('should dispatch loadFeatureCatalogSuccess', () => {
         actions = hot('-a-|', {
           a: MdViewActions.loadFullMetadataSuccess({ full }),
         })
         const expected = hot('-a-|', {
-          a: MdViewActions.loadFeatureCatalogFailure({ notFound: true }),
+          a: MdViewActions.loadFeatureCatalogSuccess({
+            datasetCatalog: null,
+          }),
         })
         expect(effects.loadFeatureCatalog$).toBeObservable(expected)
       })
@@ -312,7 +314,7 @@ describe('MdViewEffects', () => {
         })
         const expected = hot('-(a|)', {
           a: MdViewActions.loadFeatureCatalogFailure({
-            otherError: 'api error',
+            error: 'api error',
           }),
         })
         expect(effects.loadFeatureCatalog$).toBeObservable(expected)

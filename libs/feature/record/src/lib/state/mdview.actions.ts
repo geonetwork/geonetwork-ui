@@ -36,12 +36,12 @@ export const loadFeatureCatalog = createAction(
 
 export const loadFeatureCatalogSuccess = createAction(
   '[Metadata view] Load metadata feature catalog success',
-  props<{ datasetCatalog: DatasetFeatureCatalog }>()
+  props<{ datasetCatalog: DatasetFeatureCatalog | null }>()
 )
 
 export const loadFeatureCatalogFailure = createAction(
   '[Metadata view] Load metadata feature catalog failure',
-  props<{ otherError?: string; notFound?: boolean }>()
+  props<{ error?: string }>()
 )
 
 export const closeMetadata = createAction('[Metadata view] close')

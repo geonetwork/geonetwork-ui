@@ -311,8 +311,7 @@ describe('metadataViewReducer', () => {
 
     beforeEach(() => {
       action = MdViewActions.loadFeatureCatalogFailure({
-        otherError: 'Some error',
-        notFound: true,
+        error: 'Some error',
       })
     })
 
@@ -326,7 +325,7 @@ describe('metadataViewReducer', () => {
       )
       expect(state).toEqual({
         ...initialMetadataViewState,
-        featureCatalogError: { otherError: 'Some error', notFound: true },
+        featureCatalogError: 'Some error',
         featureCatalogLoading: false,
       })
     })
