@@ -161,6 +161,8 @@ export class RecordApiFormComponent {
       maxFeatures: limit !== '-1' ? Number(limit) : undefined,
       limit: limit !== '-1' ? Number(limit) : -1,
       offset: offset !== '' ? Number(offset) : undefined,
+      outputCrs:
+        format === ('application/json' || 'geojson') ? 'EPSG:4326' : undefined,
     }
 
     if (this.endpoint instanceof WfsEndpoint) {
