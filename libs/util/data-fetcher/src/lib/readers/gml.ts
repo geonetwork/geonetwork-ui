@@ -40,14 +40,13 @@ export class GmlReader extends BaseFileReader {
   constructor(
     protected url: string,
     protected namespace: string,
-    protected version: WfsVersion,
-    protected cacheActive: boolean
+    protected version: WfsVersion
   ) {
-    super(url, cacheActive)
+    super(url)
   }
 
-  protected getData() {
-    return fetchDataAsText(this.url, this.cacheActive).then((text) =>
+  protected getData(cacheActive: boolean) {
+    return fetchDataAsText(this.url, cacheActive).then((text) =>
       parseGml(text, this.namespace, this.version)
     )
   }

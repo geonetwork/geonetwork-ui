@@ -6,7 +6,7 @@ import path from 'path'
 import fs from 'fs/promises'
 import { WfsReader } from './wfs'
 import { WfsEndpoint, useCache } from '@camptocamp/ogc-client'
-import { GeojsonReader, parseGeojson } from './geojson'
+import { GeojsonReader } from './geojson'
 import { GmlReader } from './gml'
 
 const urlGeojson =
@@ -176,8 +176,7 @@ describe('WfsReader', () => {
           sendAsJson: false,
         }
       )
-      reader = new WfsReader(urlGeojson, wfsEndpoint, 'epci', cacheActive)
-      reader.load()
+      reader = new WfsReader(urlGeojson, wfsEndpoint, 'epci')
     })
     afterEach(() => {
       fetchMock.reset()
@@ -313,7 +312,6 @@ describe('WfsReader', () => {
       )
       const wfsEndpoint = new WfsEndpoint(urlGml)
       reader = new WfsReader(urlGml, wfsEndpoint, 'ms:n_mat_eolien_p_r32')
-      reader.load()
     })
     afterEach(() => {
       fetchMock.reset()
@@ -400,13 +398,7 @@ describe('WfsReader', () => {
         }
       )
       const wfsEndpoint = new WfsEndpoint(urlGml)
-      reader = new WfsReader(
-        urlGml,
-        wfsEndpoint,
-        'ms:n_mat_eolien_p_r32',
-        cacheActive
-      )
-      reader.load()
+      reader = new WfsReader(urlGml, wfsEndpoint, 'ms:n_mat_eolien_p_r32')
     })
     afterEach(() => {
       fetchMock.reset()
@@ -418,41 +410,34 @@ describe('WfsReader', () => {
       ).resolves.toBeInstanceOf(WfsReader)
     })
     it('returns an instance of GeojsonReader', async () => {
-      await WfsReader.createReader(
-        urlGeojsonLegacy,
-        urlGeojsonLegacy,
-        cacheActive
-      )
+      await WfsReader.createReader(urlGeojsonLegacy, urlGeojsonLegacy)
       expect(GeojsonReader).toHaveBeenCalledWith(
-        'https://mygeojsonreader.edu?1=1&STARTINDEX=undefined&MAXFEATURES=undefined',
-        true
+        'https://mygeojsonreader.edu?1=1&STARTINDEX=undefined&MAXFEATURES=undefined'
       )
     })
     it('returns an instance of GmlReader', async () => {
-      await WfsReader.createReader(urlGmlLegacy, urlGmlLegacy, cacheActive)
+      await WfsReader.createReader(urlGmlLegacy, urlGmlLegacy)
       expect(GmlReader).toHaveBeenCalledWith(
         'https://mygmlreader.edu?1=1&STARTINDEX=undefined&MAXFEATURES=undefined',
         'any',
-        '1.0.0',
-        true
+        '1.0.0'
       )
     })
 
     describe('When cache should be used', () => {
       it('uses the cache', async () => {
         const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
-        await reader.read()
+        await reader.read(true)
         expect(useCacheSpy).toHaveBeenCalledTimes(1)
       })
     })
     describe('When cache should not be used', () => {
       beforeAll(() => {
         jest.clearAllMocks()
-        cacheActive = false
       })
       it('does not use the cache', async () => {
         const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
-        await reader.read()
+        await reader.read(false)
         expect(useCacheSpy).not.toHaveBeenCalled()
       })
     })

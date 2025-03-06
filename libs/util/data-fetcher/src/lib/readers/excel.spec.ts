@@ -4134,11 +4134,8 @@ describe('Excel parsing', () => {
           sendAsJson: false,
         }
       )
-      reader = new ExcelReader(
-        'http://localfile/fixtures/ENS_CG02.xls',
-        cacheActive
-      )
-      reader.load()
+      reader = new ExcelReader('http://localfile/fixtures/ENS_CG02.xls')
+      reader.load(cacheActive)
     })
     afterEach(() => {
       fetchMock.reset()

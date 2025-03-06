@@ -1,10 +1,24 @@
+/**
+ * @jest-environment jsdom
+ */
+import fetchMock from 'fetch-mock-jest'
 import {
+  fetchDataAsArrayBuffer,
+  fetchDataAsText,
   getJsonDataItemsProxy,
   jsonToGeojsonFeature,
   processItemProperties,
 } from './utils'
 import { DataItem } from './model'
 import { SAMPLE_DATA } from '../fixtures/sample'
+import { useCache } from '@camptocamp/ogc-client'
+
+jest.mock('@camptocamp/ogc-client', () => ({
+  useCache: jest.fn(async (factory) =>
+    JSON.parse(JSON.stringify(await factory()))
+  ),
+  sharedFetch: jest.fn((url) => global.fetch(url)),
+}))
 
 describe('data-fetcher utils', () => {
   describe('jsonToGeojsonFeature', () => {
@@ -317,6 +331,100 @@ describe('data-fetcher utils', () => {
       expect(() => {
         proxy[2] = { abc: '1234' }
       }).toThrowError('read-only')
+    })
+  })
+
+  describe('fetchDataAsText', () => {
+    let useCacheSpy: jest.SpyInstance
+    beforeAll(() => {
+      fetchMock.mock(
+        () => true,
+        async () => ({
+          body: '',
+          status: 200,
+          headers: {
+            'Content-Type': 'application/text',
+          },
+        }),
+        {
+          sendAsJson: false,
+        }
+      )
+      useCacheSpy = jest.spyOn({ useCache }, 'useCache')
+    })
+
+    afterEach(() => {
+      jest.clearAllMocks()
+    })
+
+    describe('When cache is activated', () => {
+      it('calls the cache', async () => {
+        const cacheActive = true
+        await fetchDataAsText('testingcache', cacheActive)
+        expect(useCacheSpy).toHaveBeenCalled()
+      })
+    })
+
+    describe('When cache is deactivated', () => {
+      it('does not call the cache', async () => {
+        const cacheActive = false
+        await fetchDataAsText('testingcache', cacheActive)
+        expect(useCacheSpy).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('When cache is not provided as param', () => {
+      it('forces to use cache', async () => {
+        await fetchDataAsText('testingcache', undefined)
+        expect(useCacheSpy).toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe('fetchDataAsArrayBuffer', () => {
+    let useCacheSpy: jest.SpyInstance
+    beforeAll(() => {
+      fetchMock.mock(
+        () => true,
+        async () => ({
+          body: '',
+          status: 200,
+          headers: {
+            'Content-Type': 'application/text',
+          },
+        }),
+        {
+          sendAsJson: false,
+        }
+      )
+      useCacheSpy = jest.spyOn({ useCache }, 'useCache')
+    })
+
+    afterEach(() => {
+      jest.clearAllMocks()
+    })
+
+    describe('When cache is activated', () => {
+      it('calls the cache', async () => {
+        const cacheActive = true
+        await fetchDataAsArrayBuffer('testingcache', cacheActive)
+        expect(useCacheSpy).toHaveBeenCalled()
+      })
+    })
+
+    describe('When cache is deactivated', () => {
+      it('does not call the cache', async () => {
+        const cacheActive = false
+        await fetchDataAsArrayBuffer('testingcache', cacheActive)
+        expect(useCacheSpy).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('When cache is not provided as param', () => {
+      it('forces to use cache', async () => {
+        await fetchDataAsArrayBuffer('testingcache', undefined)
+        expect(useCacheSpy).toHaveBeenCalled()
+      })
     })
   })
 })

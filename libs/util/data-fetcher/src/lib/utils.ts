@@ -55,6 +55,7 @@ export function fetchDataAsText(
   url: string,
   cacheActive: boolean
 ): Promise<string> {
+  const activateCache = cacheActive ?? true
   const fetchFactory = () =>
     sharedFetch(url)
       .catch((error) => {
@@ -67,12 +68,13 @@ export function fetchDataAsText(
         return response.text()
       })
 
-  return cacheActive ? useCache(fetchFactory, url, 'asText') : fetchFactory()
+  return activateCache ? useCache(fetchFactory, url, 'asText') : fetchFactory()
 }
 export function fetchDataAsArrayBuffer(
   url: string,
   cacheActive: boolean
 ): Promise<ArrayBuffer> {
+  const activateCache = cacheActive ?? true
   const fetchFactory = () =>
     sharedFetch(url)
       .catch((error) => {
@@ -87,7 +89,9 @@ export function fetchDataAsArrayBuffer(
       })
 
   return (
-    cacheActive ? useCache(fetchFactory, url, 'asArrayBuffer') : fetchFactory()
+    activateCache
+      ? useCache(fetchFactory, url, 'asArrayBuffer')
+      : fetchFactory()
   ).then((array) => {
     return new Uint8Array(array).buffer
   })

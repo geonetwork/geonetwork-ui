@@ -293,10 +293,9 @@ describe('Gml parsing', () => {
       reader = new GmlReader(
         'http://localfile/fixtures/wfs-gml.xml',
         'ms:n_mat_eolien_p_r32',
-        '2.0.0',
-        cacheActive
+        '2.0.0'
       )
-      reader.load()
+      reader.load(cacheActive)
     })
     afterEach(() => {
       fetchMock.reset()

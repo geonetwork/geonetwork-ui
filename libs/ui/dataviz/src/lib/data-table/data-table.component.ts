@@ -64,7 +64,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() set dataset(value: BaseReader) {
     this.properties$.next(null)
     this.dataset_ = value
-    this.dataset_.load()
+    this.dataset_.load() // TODO: add cacheActive
     this.dataset_.properties.then((properties) =>
       this.properties$.next(properties.map((p) => p.name))
     )
@@ -136,7 +136,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
     )
     this.dataset_.select(...propsWithoutGeom)
     try {
-      await this.dataSource.showData(this.dataset_.read())
+      await this.dataSource.showData(this.dataset_.read()) // TODO: add cacheActive
       this.error = null
     } catch (error) {
       this.handleError(error as FetchError | Error)

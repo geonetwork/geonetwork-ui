@@ -402,10 +402,9 @@ describe('geojson parsing', () => {
         }
       )
       reader = new GeojsonReader(
-        'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson',
-        cacheActive
+        'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson'
       )
-      reader.load()
+      reader.load(cacheActive)
     })
     afterEach(() => {
       fetchMock.reset()
