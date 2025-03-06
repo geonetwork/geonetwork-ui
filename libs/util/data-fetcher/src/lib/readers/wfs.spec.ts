@@ -286,7 +286,8 @@ describe('WfsReader', () => {
         reader.orderBy(['asc', 'ville'], ['desc', 'epci'])
         await reader.read()
         expect(fetchDataAsTextSpy).toHaveBeenCalledWith(
-          'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson?1=1&STARTINDEX=42&MAXFEATURES=10&SORTBY=ville+A,epci+D'
+          'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson?1=1&STARTINDEX=42&MAXFEATURES=10&SORTBY=ville+A,epci+D',
+          true
         )
       })
     })

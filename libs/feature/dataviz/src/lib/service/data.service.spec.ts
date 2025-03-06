@@ -726,7 +726,9 @@ describe('DataService', () => {
           })
           expect(openDataset).toHaveBeenCalledWith(
             'http://sample/geojson',
-            'csv'
+            'csv',
+            null,
+            true
           )
         })
         it('returns an observable that emits the array of features', async () => {
@@ -810,7 +812,9 @@ describe('DataService', () => {
         })
         expect(openDataset).toHaveBeenCalledWith(
           'http://proxy.local/?url=http%3A%2F%2Fesri.rest%2Flocal%2Fquery%3Ff%3Dgeojson%26where%3D1%3D1%26outFields%3D*',
-          'geojson'
+          'geojson',
+          null,
+          true
         )
       })
     })
@@ -824,7 +828,9 @@ describe('DataService', () => {
         })
         expect(openDataset).toHaveBeenCalledWith(
           'http://proxy.local/?url=http%3A%2F%2Fsample%2Fgeojson',
-          'csv'
+          'csv',
+          null,
+          true
         )
       })
       it('does not apply the proxy twice', () => {
@@ -835,7 +841,9 @@ describe('DataService', () => {
         })
         expect(openDataset).toHaveBeenCalledWith(
           'http://proxy.local/?url=http%3A%2F%2Fsample%2Fgeojson',
-          'csv'
+          'csv',
+          null,
+          true
         )
       })
     })

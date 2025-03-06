@@ -2,9 +2,16 @@ import {
   getJsonDataItemsProxy,
   jsonToGeojsonFeature,
   processItemProperties,
+  fetchDataAsText,
 } from './utils'
 import { DataItem } from './model'
 import { SAMPLE_DATA } from '../fixtures/sample'
+import { sharedFetch, useCache } from '@camptocamp/ogc-client'
+
+jest.mock('@camptocamp/ogc-client', () => ({
+  useCache: jest.fn(),
+  sharedFetch: jest.fn(),
+}))
 
 describe('data-fetcher utils', () => {
   describe('jsonToGeojsonFeature', () => {
@@ -317,6 +324,32 @@ describe('data-fetcher utils', () => {
       expect(() => {
         proxy[2] = { abc: '1234' }
       }).toThrowError('read-only')
+    })
+  })
+  describe('Optional caching', () => {
+    beforeEach(() => {
+      jest.clearAllMocks()
+    })
+    it('should call useCache when cache is true', async () => {
+      ;(sharedFetch as jest.Mock).mockResolvedValue({
+        ok: true,
+        text: jest.fn().mockResolvedValue('response text'),
+      })
+
+      await fetchDataAsText('http://example.com', true)
+
+      expect(useCache).toHaveBeenCalled()
+    })
+
+    it('should not call useCache when cache is false', async () => {
+      ;(sharedFetch as jest.Mock).mockResolvedValue({
+        ok: true,
+        text: jest.fn().mockResolvedValue('response text'),
+      })
+
+      await fetchDataAsText('http://example.com', false)
+
+      expect(useCache).not.toHaveBeenCalled()
     })
   })
 })
