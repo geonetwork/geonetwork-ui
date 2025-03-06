@@ -124,6 +124,7 @@ export interface BaseRecord {
   extras?: Record<string, unknown>
   landingPage?: URL
   updateFrequency?: UpdateFrequency
+  featureCatalogIdentifier?: string
 
   // information related to the resource (dataset, service)
   resourceIdentifier?: string
@@ -226,7 +227,9 @@ export interface DatasetRecord extends BaseRecord {
   temporalExtents: Array<DatasetTemporalExtent>
   spatialRepresentation?: SpatialRepresentationType
 }
-
+export type DatasetFeatureCatalog = {
+  attributes: Array<{ name: string; title: string }>
+}
 export interface ServiceEndpoint {
   endpointUrl: URL
   protocol: string
@@ -260,7 +263,7 @@ export type OnlineResource = DatasetOnlineResource | ServiceOnlineResource
 
 export type CatalogRecord = DatasetRecord | ReuseRecord | ServiceRecord
 
-export type CatalogRecordKeys =
-  | keyof DatasetRecord
-  | keyof ReuseRecord
-  | keyof ServiceRecord
+export type CatalogRecordKeys = Exclude<
+  keyof DatasetRecord | keyof ReuseRecord | keyof ServiceRecord,
+  'featureCatalogIdentifier'
+>

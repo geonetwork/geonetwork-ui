@@ -52,6 +52,8 @@ export class MdViewFacade {
     filter((md) => !!md)
   )
 
+  featureCatalog$ = this.store.pipe(select(MdViewSelectors.getFeatureCatalog))
+
   isIncomplete$ = this.store.pipe(
     select(MdViewSelectors.getMetadataIsIncomplete),
     filter((incomplete) => incomplete !== null)
