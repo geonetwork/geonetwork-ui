@@ -49,13 +49,14 @@ import {
   ButtonComponent,
   DropdownSelectorComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component'
 import {
   LoadingMaskComponent,
   PopupAlertComponent,
 } from '@geonetwork-ui/ui/widgets'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { FetchError } from '@geonetwork-ui/data-fetcher'
 
 marker('map.dropdown.placeholder')
 marker('wfs.feature.limit')
@@ -149,8 +150,7 @@ export class MapViewComponent implements AfterViewInit {
       return this.getLayerFromLink(link).pipe(
         map((layer) => [layer]),
         catchError((e) => {
-          this.error = e.message
-          console.warn(e.stack || e.message)
+          this.handleError(e)
           return of([])
         }),
         finalize(() => (this.loading = false))
@@ -192,7 +192,8 @@ export class MapViewComponent implements AfterViewInit {
     private mdViewFacade: MdViewFacade,
     private mapUtils: MapUtilsService,
     private dataService: DataService,
-    private changeRef: ChangeDetectorRef
+    private changeRef: ChangeDetectorRef,
+    private translateService: TranslateService
   ) {}
 
   async ngAfterViewInit() {
@@ -254,5 +255,25 @@ export class MapViewComponent implements AfterViewInit {
 
   selectLinkToDisplay(link: number) {
     this.selectedLinkIndex$.next(link)
+  }
+
+  handleError(error: FetchError | Error | string) {
+    if (error instanceof FetchError) {
+      this.error = this.translateService.instant(
+        `dataset.error.${error.type}`,
+        {
+          info: error.info,
+        }
+      )
+      console.warn(error.message)
+    } else if (error instanceof Error) {
+      this.error = this.translateService.instant(error.message)
+      console.warn(error.stack || error)
+    } else {
+      this.error = this.translateService.instant(error)
+      console.warn(error)
+    }
+    this.loading = false
+    this.changeRef.detectChanges()
   }
 }
