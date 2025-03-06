@@ -46,7 +46,7 @@ export function parseCsv(text: string): {
 }
 
 export class CsvReader extends BaseFileReader {
-  getData() {
-    return fetchDataAsText(this.url, this.cacheActive).then(parseCsv)
+  getData(cacheActive: boolean) {
+    return fetchDataAsText(this.url, cacheActive).then(parseCsv)
   }
 }

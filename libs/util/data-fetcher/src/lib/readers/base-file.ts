@@ -2,22 +2,21 @@ import { BaseReader } from './base'
 import { DataItem, DatasetInfo, PropertyInfo } from '../model'
 import { getJsonDataItemsProxy, jsonToGeojsonFeature } from '../utils'
 import { generateSqlQuery } from '../sql-utils'
-import { BaseCacheReader } from './base-cache'
 
 type ParseResult = {
   items: DataItem[]
   properties: PropertyInfo[]
 }
 
-export class BaseFileReader extends BaseCacheReader {
+export class BaseFileReader extends BaseReader {
   private parseResult_: Promise<ParseResult>
 
-  protected getData(): Promise<ParseResult> {
+  protected getData(cacheActive: boolean): Promise<ParseResult> {
     throw new Error('not implemented')
   }
 
-  load() {
-    this.parseResult_ = this.getData()
+  load(cacheActive?: boolean) {
+    this.parseResult_ = this.getData(cacheActive)
   }
 
   get properties(): Promise<PropertyInfo[]> {

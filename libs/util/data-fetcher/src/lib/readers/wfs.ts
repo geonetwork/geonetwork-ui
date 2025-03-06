@@ -4,20 +4,15 @@ import { fetchDataAsText } from '../utils'
 import { GmlReader, parseGml } from './gml'
 import { GeojsonReader, parseGeojson } from './geojson'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { BaseCacheReader } from './base-cache'
+import { BaseReader } from './base'
 
-export class WfsReader extends BaseCacheReader {
+export class WfsReader extends BaseReader {
   endpoint: WfsEndpoint
   featureTypeName: string
   version: WfsVersion
 
-  constructor(
-    url: string,
-    wfsEndpoint: WfsEndpoint,
-    featureTypeName: string,
-    cacheActive?: boolean
-  ) {
-    super(url, cacheActive)
+  constructor(url: string, wfsEndpoint: WfsEndpoint, featureTypeName: string) {
+    super(url)
     this.endpoint = wfsEndpoint
     this.featureTypeName = featureTypeName
     this.version = this.endpoint.getVersion()
@@ -51,11 +46,7 @@ export class WfsReader extends BaseCacheReader {
     )
   }
 
-  static async createReader(
-    wfsUrlEndpoint: string,
-    featureTypeName?: string,
-    cacheActive?: boolean
-  ) {
+  static async createReader(wfsUrlEndpoint: string, featureTypeName?: string) {
     const wfsEndpoint = await new WfsEndpoint(wfsUrlEndpoint).isReady()
     const featureTypes = wfsEndpoint.getFeatureTypes()
     const featureType = wfsEndpoint.getFeatureTypeSummary(
@@ -74,8 +65,7 @@ export class WfsReader extends BaseCacheReader {
         wfsEndpoint.getFeatureUrl(featureType.name, {
           asJson: true,
           outputCrs: 'EPSG:4326',
-        }),
-        cacheActive
+        })
       )
     } else {
       if (
@@ -93,15 +83,14 @@ export class WfsReader extends BaseCacheReader {
             outputCrs: 'EPSG:4326',
           }),
           featureType.name,
-          wfsEndpoint.getVersion(),
-          cacheActive
+          wfsEndpoint.getVersion()
         )
       }
       throw new Error('wfs.geojsongml.notsupported')
     }
   }
 
-  protected getData() {
+  protected getData(cacheActive: boolean) {
     if (this.aggregations || this.groupedBy) {
       throw new Error(marker('wfs.aggregations.notsupported'))
     }
@@ -128,7 +117,7 @@ export class WfsReader extends BaseCacheReader {
       url = `${url}${finalUrl.search ? '&' : ''}SORTBY=${sorts}`
     }
 
-    return fetchDataAsText(url, this.cacheActive).then((text) =>
+    return fetchDataAsText(url, cacheActive).then((text) =>
       asJson
         ? parseGeojson(text)
         : parseGml(text, this.featureTypeName, this.version)
@@ -139,7 +128,7 @@ export class WfsReader extends BaseCacheReader {
     // Nothing to load for Wfs
   }
 
-  async read(): Promise<DataItem[]> {
-    return (await this.getData()).items
+  async read(cacheActive?: boolean): Promise<DataItem[]> {
+    return (await this.getData(cacheActive)).items
   }
 }

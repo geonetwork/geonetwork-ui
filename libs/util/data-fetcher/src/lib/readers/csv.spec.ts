@@ -382,11 +382,8 @@ describe('CSV parsing', () => {
           sendAsJson: false,
         }
       )
-      reader = new CsvReader(
-        'http://localfile/fixtures/rephytox.csv',
-        cacheActive
-      )
-      reader.load()
+      reader = new CsvReader('http://localfile/fixtures/rephytox.csv')
+      reader.load(cacheActive)
     })
     afterEach(() => {
       fetchMock.reset()

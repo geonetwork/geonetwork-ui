@@ -246,10 +246,9 @@ describe('json parsing', () => {
         }
       )
       reader = new JsonReader(
-        'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.json',
-        cacheActive
+        'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.json'
       )
-      reader.load()
+      reader.load(cacheActive)
     })
     afterEach(() => {
       fetchMock.reset()

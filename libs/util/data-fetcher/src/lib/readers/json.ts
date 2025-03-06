@@ -22,7 +22,7 @@ export function parseJson(text: string): {
 }
 
 export class JsonReader extends BaseFileReader {
-  getData() {
-    return fetchDataAsText(this.url, this.cacheActive).then(parseJson)
+  getData(cacheActive: boolean) {
+    return fetchDataAsText(this.url, cacheActive).then(parseJson)
   }
 }
