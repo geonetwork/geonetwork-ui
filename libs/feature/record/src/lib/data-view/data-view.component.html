@@ -11,11 +11,13 @@
   <div class="relative h-[460px]">
     <gn-ui-table-view
       *ngIf="mode === 'table'"
+      [cacheActive]="cacheActive$ | async"
       [link]="selectedLink$ | async"
     ></gn-ui-table-view>
     <gn-ui-chart-view
       *ngIf="mode === 'chart'"
       (chartConfig$)="setChartConfig($event)"
+      [cacheActive]="cacheActive$ | async"
       [link]="selectedLink$ | async"
     ></gn-ui-chart-view>
   </div>
