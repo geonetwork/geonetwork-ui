@@ -53,7 +53,9 @@ export async function openDataset(
     reader.load()
     return reader
   } catch (e: any) {
-    throw FetchError.parsingFailed(e.message)
+    //WfsReader may already raise a FetchError
+    if (e instanceof FetchError) throw e
+    else throw FetchError.parsingFailed(e.message)
   }
 }
 
