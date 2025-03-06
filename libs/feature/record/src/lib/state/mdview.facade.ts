@@ -206,15 +206,4 @@ export class MdViewFacade {
   loadUserFeedbacks(datasetUuid: string) {
     this.store.dispatch(MdViewActions.loadUserFeedbacks({ datasetUuid }))
   }
-
-  /**
-   * FeatureCatalog
-   */
-  loadFeatureCatalog(metadata: CatalogRecord) {
-    this.store.dispatch(
-      MdViewActions.loadFeatureCatalog({
-        metadata,
-      })
-    )
-  }
 }

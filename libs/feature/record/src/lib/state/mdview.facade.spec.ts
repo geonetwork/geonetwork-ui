@@ -380,16 +380,5 @@ describe('MdViewFacade', () => {
         expect(result).toEqual(values.a)
       }))
     })
-    describe('loadFeatureCatalog', () => {
-      it('dispatches a loadFeatureCatalog action', () => {
-        facade.loadFeatureCatalog(datasetRecordsFixture()[0])
-        const expected = hot('a', {
-          a: MdViewActions.loadFeatureCatalog({
-            metadata: datasetRecordsFixture()[0],
-          }),
-        })
-        expect(store.scannedActions$).toBeObservable(expected)
-      })
-    })
   })
 })
