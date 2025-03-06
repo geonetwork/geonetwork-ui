@@ -21,6 +21,7 @@ import {
 } from '@geonetwork-ui/feature/dataviz'
 
 class MdViewFacadeMock {
+  isHighUpdateFrequency$ = new Subject()
   dataLinks$ = new Subject()
   geoDataLinks$ = new Subject()
   setChartConfig = jest.fn()
