@@ -182,16 +182,6 @@ export class DataService {
             ),
           })
         )
-
-        if (urls.geojson) {
-          resources.push({
-            ...wfsLink,
-            name: wfsLink.name,
-            type: 'download' as const,
-            url: new URL(urls.geojson),
-            mimeType: getMimeTypeForFormat('geojson'),
-          })
-        }
         return resources
       })
     )
