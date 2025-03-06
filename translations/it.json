@@ -68,6 +68,7 @@
   "datahub.search.filter.generatedByAPI": "generato da un'API",
   "datahub.search.filter.generatedByWfs": "generato da un WFS",
   "datahub.search.filter.others": "Altri",
+  "dataset.error.forbidden": "",
   "dataset.error.http": "Il caricamento dei dati non è riuscito a causa di un errore HTTP: \"{info}\"",
   "dataset.error.network": "Il caricamento dei dati non è riuscito a causa di un errore di rete o di limitazioni CORS: \"{info}\"",
   "dataset.error.parse": "I dati sono stati caricati ma la decodifica non è riuscita: \"{info}\"",

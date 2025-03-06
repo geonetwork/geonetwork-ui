@@ -68,6 +68,7 @@
   "datahub.search.filter.generatedByAPI": "Generiert durch eine API",
   "datahub.search.filter.generatedByWfs": "",
   "datahub.search.filter.others": "Andere",
+  "dataset.error.forbidden": "",
   "dataset.error.http": "Die Daten konnten aufgrund eines HTTP-Fehlers nicht geladen werden: \"{ info }\"",
   "dataset.error.network": "Die Daten konnten aufgrund eines Netzwerkfehlers oder CORS-Beschränkungen nicht geladen werden: \"{ info }\"",
   "dataset.error.parse": "Die Daten wurden geladen, konnten aber nicht gelesen werden: \"{ info }\"",

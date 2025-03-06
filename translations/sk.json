@@ -68,6 +68,7 @@
   "datahub.search.filter.generatedByAPI": "vygenerované cez API",
   "datahub.search.filter.generatedByWfs": "",
   "datahub.search.filter.others": "Iné",
+  "dataset.error.forbidden": "",
   "dataset.error.http": "Dáta sa nedajú načítať kvôli chybe HTTP: \"{ info }\"",
   "dataset.error.network": "Dáta sa nedajú načítať kvôli chybe v sieti alebo obmedzeniam CORS: \"{ info }\"",
   "dataset.error.parse": "Dáta boli načítané, ale nedajú sa analyzovať: \"{ info }\"",
