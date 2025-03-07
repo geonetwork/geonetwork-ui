@@ -181,17 +181,19 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
-          must_not: {
-            terms: {
-              resourceType: [
-                'service',
-                'map',
-                'map/static',
-                'mapDigital',
-                'featureCatalog',
-              ],
+          must_not: [
+            {
+              terms: {
+                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+              },
             },
-          },
+            {
+              query_string: {
+                query:
+                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+              },
+            },
+          ],
         },
       })
     })
@@ -255,17 +257,19 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
-          must_not: {
-            terms: {
-              resourceType: [
-                'service',
-                'map',
-                'map/static',
-                'mapDigital',
-                'featureCatalog',
-              ],
+          must_not: [
+            {
+              terms: {
+                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+              },
             },
-          },
+            {
+              query_string: {
+                query:
+                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+              },
+            },
+          ],
         },
       })
     })
@@ -327,17 +331,19 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
-          must_not: {
-            terms: {
-              resourceType: [
-                'service',
-                'map',
-                'map/static',
-                'mapDigital',
-                'featureCatalog',
-              ],
+          must_not: [
+            {
+              terms: {
+                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+              },
             },
-          },
+            {
+              query_string: {
+                query:
+                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+              },
+            },
+          ],
         },
       })
     })
@@ -392,17 +398,19 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
-          must_not: {
-            terms: {
-              resourceType: [
-                'service',
-                'map',
-                'map/static',
-                'mapDigital',
-                'featureCatalog',
-              ],
+          must_not: [
+            {
+              terms: {
+                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+              },
             },
-          },
+            {
+              query_string: {
+                query:
+                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+              },
+            },
+          ],
         },
       })
     })
@@ -439,17 +447,19 @@ describe('ElasticsearchService', () => {
           ],
           should: [],
           must: [],
-          must_not: {
-            terms: {
-              resourceType: [
-                'service',
-                'map',
-                'map/static',
-                'mapDigital',
-                'featureCatalog',
-              ],
+          must_not: [
+            {
+              terms: {
+                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+              },
             },
-          },
+            {
+              query_string: {
+                query:
+                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+              },
+            },
+          ],
         },
       })
     })
@@ -498,17 +508,19 @@ describe('ElasticsearchService', () => {
               },
             },
           ],
-          must_not: {
-            terms: {
-              resourceType: [
-                'service',
-                'map',
-                'map/static',
-                'mapDigital',
-                'featureCatalog',
-              ],
+          must_not: [
+            {
+              terms: {
+                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+              },
             },
-          },
+            {
+              query_string: {
+                query:
+                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+              },
+            },
+          ],
         },
       })
     })
@@ -615,17 +627,19 @@ describe('ElasticsearchService', () => {
                 },
               },
             ],
-            must_not: {
-              terms: {
-                resourceType: [
-                  'service',
-                  'map',
-                  'map/static',
-                  'mapDigital',
-                  'featureCatalog',
-                ],
+            must_not: [
+              {
+                terms: {
+                  resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+                },
               },
-            },
+              {
+                query_string: {
+                  query:
+                    'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+                },
+              },
+            ],
             should: [
               {
                 geo_shape: {
@@ -726,6 +740,7 @@ describe('ElasticsearchService', () => {
         const payload = service.buildAutocompletePayload('blarg')
         expect(payload).toEqual({
           _source: ['resourceTitleObject', 'uuid'],
+
           query: {
             bool: {
               must: [
@@ -747,19 +762,27 @@ describe('ElasticsearchService', () => {
                   },
                 },
               ],
-              must_not: {
-                terms: {
-                  resourceType: [
-                    'service',
-                    'map',
-                    'map/static',
-                    'mapDigital',
-                    'featureCatalog',
-                  ],
+              must_not: [
+                {
+                  terms: {
+                    resourceType: [
+                      'service',
+                      'map',
+                      'map/static',
+                      'mapDigital',
+                    ],
+                  },
                 },
-              },
+                {
+                  query_string: {
+                    query:
+                      'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+                  },
+                },
+              ],
             },
           },
+
           from: 0,
           size: 20,
         })

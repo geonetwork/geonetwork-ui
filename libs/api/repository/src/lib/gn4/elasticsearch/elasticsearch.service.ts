@@ -311,7 +311,6 @@ export class ElasticsearchService {
           'map',
           'map/static',
           'mapDigital',
-          // 'featureCatalog',
         ]),
       },
       {
@@ -422,15 +421,23 @@ export class ElasticsearchService {
               },
             },
           ],
-          must_not: {
-            ...this.queryFilterOnValues('resourceType', [
-              'service',
-              'map',
-              'map/static',
-              'mapDigital',
-              'featureCatalog',
-            ]),
-          },
+
+          must_not: [
+            {
+              ...this.queryFilterOnValues('resourceType', [
+                'service',
+                'map',
+                'map/static',
+                'mapDigital',
+              ]),
+            },
+            {
+              query_string: {
+                query:
+                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+              },
+            },
+          ],
         },
       },
       _source: ['resourceTitleObject', 'uuid'],
