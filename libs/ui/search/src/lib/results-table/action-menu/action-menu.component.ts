@@ -13,7 +13,7 @@ import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 
-type ActionMenuPage = 'mainMenu' | 'deleteMenu'
+type ActionMenuPage = 'mainMenu' | 'deleteMenu' | 'rollbackMenu'
 
 @Component({
   selector: 'gn-ui-action-menu',
@@ -32,9 +32,11 @@ type ActionMenuPage = 'mainMenu' | 'deleteMenu'
 export class ActionMenuComponent {
   @Input() canDuplicate: boolean
   @Input() canDelete: boolean
+  @Input() isDraftPage: boolean
   @Output() duplicate = new EventEmitter<void>()
   @Output() delete = new EventEmitter<void>()
   @Output() closeActionMenu = new EventEmitter<void>()
+  @Output() rollback = new EventEmitter<void>()
 
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger
 
@@ -55,7 +57,11 @@ export class ActionMenuComponent {
   }
 
   displayDeleteMenu() {
-    this.sectionDisplayed = 'deleteMenu'
+    if (this.isDraftPage) {
+      this.sectionDisplayed = 'rollbackMenu'
+    } else {
+      this.sectionDisplayed = 'deleteMenu'
+    }
     this.cdr.markForCheck()
   }
 }

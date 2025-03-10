@@ -144,4 +144,21 @@ describe('ResultsTableComponent', () => {
       )
     })
   })
+  describe('rollback a dataset', () => {
+    let draftToBeUndone: CatalogRecord
+
+    beforeEach(() => {
+      draftToBeUndone = null
+      component.rollbackDraft.subscribe((r) => {
+        draftToBeUndone = r
+      })
+    })
+
+    it('emits a rollbackDraft event', () => {
+      component.handleRollback(datasetRecordsFixture()[0])
+      expect(JSON.stringify(draftToBeUndone)).toEqual(
+        JSON.stringify(datasetRecordsFixture()[0])
+      )
+    })
+  })
 })

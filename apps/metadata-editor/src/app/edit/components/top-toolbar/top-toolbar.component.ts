@@ -27,7 +27,6 @@ import {
   matHelpOutlineOutline,
   matPendingOutline,
 } from '@ng-icons/material-icons/outline'
-import { is } from 'date-fns/locale'
 
 @Component({
   selector: 'md-editor-top-toolbar',
