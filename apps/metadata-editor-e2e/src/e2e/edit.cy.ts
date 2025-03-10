@@ -222,7 +222,7 @@ describe('editor form', () => {
           .children('div')
           .first()
           .children('div')
-          .eq(1)
+          .eq(2)
           .as('aboutSection')
       })
       describe('resource identifier', () => {
