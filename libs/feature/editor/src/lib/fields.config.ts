@@ -275,8 +275,8 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
       labelKey: marker('editor.record.form.page.description'),
       sections: [
         TITLE_SECTION,
-        ABOUT_SECTION,
         CLASSIFICATION_SECTION,
+        ABOUT_SECTION,
         GEOGRAPHICAL_COVERAGE_SECTION,
       ],
     },
