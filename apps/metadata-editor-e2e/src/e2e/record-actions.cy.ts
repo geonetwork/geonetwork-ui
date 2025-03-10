@@ -39,14 +39,7 @@ describe('record-actions', () => {
         .contains(recordId)
         .should('have.length', 1)
       cy.get('[data-cy="dashboard-drafts-count"]').should('contain', '1')
-      // Delete the record
-      // as new records are always saved, it's not possible to delete them anymore from the draft page
-      cy.visit('/my-space/my-draft')
-      cy.get('[data-test="record-menu-button"]').click()
-      cy.get('[data-test="record-menu-delete-button"]')
-        .find('button')
-        .should('be.disabled')
-      // delete from my-records page
+      // Delete the record from my-records page
       cy.visit('/my-space/my-records')
       cy.get('[data-test="record-menu-button"]').last().click()
       cy.get('[data-test="record-menu-delete-button"]').click()
@@ -169,6 +162,25 @@ describe('record-actions', () => {
       cy.get('[data-test="record-menu-button"]').first().click()
       cy.get('[data-test="record-menu-delete-button"]').click()
       cy.get('[data-cy="confirm-button"]').click()
+    })
+    it('should restore from the draft dashboard', () => {
+      // Edit an existing record and create a draft
+      cy.get('[data-cy="resultItemTitle"]').first().click()
+      cy.url().should('include', '/edit')
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
+        .as('abstractField')
+        .focus()
+      cy.get('@abstractField').type('record draft')
+      cy.editor_findDraftInLocalStorage().then((value) => {
+        expect(value).to.not.equal('null')
+      })
+      // undo from the action-menu
+      cy.visit('/my-space/my-draft')
+      cy.get('[data-test="record-menu-button"]').click()
+      cy.get('[data-test="record-menu-delete-button"]').find('button').click()
+      cy.get('[data-test="rollbackMenuSection"]').should('be.visible')
+      cy.get('[data-test="rollbackMenuSection"]').find('button').first().click()
+      cy.get('[data-cy="table-row"]').should('have.length', 0)
     })
   })
 
