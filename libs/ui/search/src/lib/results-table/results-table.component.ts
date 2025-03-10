@@ -74,6 +74,7 @@ export class ResultsTableComponent {
   @Output() recordClick = new EventEmitter<CatalogRecord>()
   @Output() duplicateRecord = new EventEmitter<CatalogRecord>()
   @Output() deleteRecord = new EventEmitter<CatalogRecord>()
+  @Output() rollbackDraft = new EventEmitter<CatalogRecord>()
   @Output() recordsSelectedChange = new EventEmitter<
     [CatalogRecord[], boolean]
   >()
@@ -183,6 +184,11 @@ export class ResultsTableComponent {
 
   handleDelete(item: unknown) {
     this.deleteRecord.emit(item as CatalogRecord)
+    this.closeActionMenu()
+  }
+
+  handleRollback(item: unknown) {
+    this.rollbackDraft.emit(item as CatalogRecord)
     this.closeActionMenu()
   }
 

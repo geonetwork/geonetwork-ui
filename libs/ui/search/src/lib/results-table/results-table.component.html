@@ -162,9 +162,11 @@
         <gn-ui-action-menu
           [canDuplicate]="canDuplicate(item) && !isDuplicating"
           [canDelete]="canDelete(item)"
+          [isDraftPage]="isDraftPage"
           (duplicate)="handleDuplicate(item)"
           (delete)="handleDelete(item)"
           (closeActionMenu)="closeActionMenu()"
+          (rollback)="handleRollback(item)"
         >
         </gn-ui-action-menu>
       </ng-template>

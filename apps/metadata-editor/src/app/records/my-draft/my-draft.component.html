@@ -12,10 +12,8 @@
       [isDraftPage]="true"
       [hasDraft]="hasDraft"
       [records]="records$ | async"
-      [canDuplicate]="canDuplicate"
-      [canDelete]="isUnsavedDraft"
       (recordClick)="editRecord($event)"
-      (deleteRecord)="deleteDraft($event)"
+      (rollbackDraft)="rollbackDraft($event)"
     ></gn-ui-results-table>
   </div>
 </main>
