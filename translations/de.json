@@ -422,6 +422,7 @@
   "record.action.download": "Herunterladen",
   "record.action.duplicate": "",
   "record.action.duplicating": "",
+  "record.action.rollback": "",
   "record.action.view": "Anzeigen",
   "record.externalViewer.open": "In externem Kartenviewer öffnen",
   "record.feature.limit": "Die Ressource enthält mehr als {count} Features und kann hier nicht angezeigt werden.",
