@@ -203,3 +203,7 @@ export interface Gn4Record {
   guestdownload?: boolean
   selected?: boolean
 }
+
+export interface Gn4RecordRelated {
+  fcats?: Gn4Record[]
+}

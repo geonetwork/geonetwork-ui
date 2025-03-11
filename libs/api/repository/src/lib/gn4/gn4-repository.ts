@@ -12,7 +12,10 @@ import {
   Iso19139Converter,
 } from '@geonetwork-ui/api/metadata-converter'
 import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  DatasetFeatureCatalog,
+} from '@geonetwork-ui/common/domain/model/record'
 import {
   Aggregations,
   AggregationsParams,
@@ -27,6 +30,7 @@ import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/reposit
 import {
   RecordsApiService,
   SearchApiService,
+  FeatureResponseApiModel,
 } from '@geonetwork-ui/data-access/gn4'
 import {
   combineLatest,
@@ -124,7 +128,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return this.gn4SearchApi
       .search(
         'bucket',
-        null,
+        ['fcats'],
         JSON.stringify(
           this.gn4SearchHelper.getMetadataByIdPayload(uniqueIdentifier)
         )
@@ -135,6 +139,41 @@ export class Gn4Repository implements RecordsRepositoryInterface {
           record ? this.gn4Mapper.readRecord(record) : of(null)
         )
       )
+  }
+
+  getFeatureCatalog(
+    record: CatalogRecord,
+    visited: Set<string> = new Set() // prevent looping
+  ): Observable<DatasetFeatureCatalog | null> {
+    if (
+      record.extras &&
+      record.extras['featureTypes'] &&
+      record.extras['featureTypes'][0]?.attributeTable &&
+      Array.isArray(record.extras['featureTypes'][0].attributeTable)
+    ) {
+      return of({
+        attributes: record.extras['featureTypes'][0]?.attributeTable?.map(
+          (attr) => ({
+            name: attr.name,
+            title: attr.definition,
+          })
+        ),
+      } as DatasetFeatureCatalog)
+    }
+
+    const featureCatalogIdentifier = record.extras[
+      'featureCatalogIdentifier'
+    ] as string
+    if (featureCatalogIdentifier && !visited.has(featureCatalogIdentifier)) {
+      visited.add(featureCatalogIdentifier)
+      return this.getRecord(featureCatalogIdentifier).pipe(
+        switchMap((record) =>
+          record ? this.getFeatureCatalog(record, visited) : of(null)
+        )
+      )
+    }
+
+    return of(null)
   }
 
   getSimilarRecords(similarTo: CatalogRecord): Observable<CatalogRecord[]> {

@@ -18,9 +18,13 @@ import {
   datasetRecordsFixture,
   simpleDatasetRecordAsXmlFixture,
   simpleDatasetRecordFixture,
+  simpleDatasetRecordWithFcatsFixture,
   duplicateDatasetRecordAsXmlFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  DatasetFeatureCatalog,
+} from '@geonetwork-ui/common/domain/model/record'
 import { map } from 'rxjs/operators'
 import { HttpErrorResponse } from '@angular/common/http'
 import {
@@ -53,7 +57,7 @@ class ElasticsearchServiceMock {
 }
 
 class SearchApiServiceMock {
-  search = jest.fn((bucket, relatedType, payload) => {
+  search(bucket, relatedType, payload) {
     const body = JSON.parse(payload)
     const count = body.size || 1234
     const result: EsSearchResponse = {
@@ -70,16 +74,16 @@ class SearchApiServiceMock {
       }
     }
     return of(result)
-  })
+  }
 }
 
 class RecordsApiServiceMock {
   getRecordAs = jest.fn((uuid) =>
     of(`<gmd:MD_Metadata>
-  <gmd:fileIdentifier>
-    <gco:CharacterString>${uuid}</gco:CharacterString>
-  </gmd:fileIdentifier>
-</gmd:MD_Metadata>`).pipe(map((xml) => ({ body: xml })))
+      <gmd:fileIdentifier>
+        <gco:CharacterString>${uuid}</gco:CharacterString>
+      </gmd:fileIdentifier>
+    </gmd:MD_Metadata>`).pipe(map((xml) => ({ body: xml })))
   )
   insert = jest.fn(() =>
     of({
@@ -253,6 +257,100 @@ describe('Gn4Repository', () => {
       })
     })
   })
+
+  describe('getFeatureCatalog', () => {
+    let catalog: DatasetFeatureCatalog
+    let metadata: CatalogRecord
+    const spySearch = jest.spyOn(SearchApiServiceMock.prototype, 'search')
+
+    describe('when extras feature catalog is defined ', () => {
+      beforeEach(async () => {
+        jest.clearAllMocks()
+        metadata = datasetRecordsFixture()[0]
+        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+      })
+
+      it('should not call the feature catalog API (extras contain the answer) ', () => {
+        expect(spySearch).not.toHaveBeenCalled()
+      })
+
+      it('returns the feature catalog with mapped features', () => {
+        expect(catalog).toEqual({
+          attributes: [
+            { name: 'OBJECTID', title: 'Object identifier' },
+            { name: 'Nom', title: 'Nom de la rue' },
+            { name: 'Rue', title: '' },
+          ],
+        })
+      })
+    })
+    describe('when feature catalog exists, no extras defined', () => {
+      beforeEach(async () => {
+        metadata = simpleDatasetRecordWithFcatsFixture()
+        spySearch.mockReturnValue(
+          of({ hits: { hits: datasetRecordsFixture(), total: { value: 0 } } })
+        )
+        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+      })
+
+      afterEach(() => {
+        spySearch.mockRestore()
+      })
+
+      it('calls the API with correct parameters', () => {
+        expect(spySearch).toHaveBeenCalledWith(
+          'bucket',
+          ['fcats'],
+          '{"uuids":["feature-catalog-identifier"]}'
+        )
+      })
+
+      it('returns the attributes coming from the linked feature catalog', () => {
+        expect(catalog).toEqual({
+          attributes: [
+            { name: 'OBJECTID', title: 'Object identifier' },
+            { name: 'Nom', title: 'Nom de la rue' },
+            { name: 'Rue', title: '' },
+          ],
+        })
+      })
+
+      it('prevent looping', async () => {
+        metadata = {
+          ...simpleDatasetRecordWithFcatsFixture(),
+          extras: {
+            ...simpleDatasetRecordWithFcatsFixture().extras,
+            featureCatalogIdentifier: 'my-dataset-with-fcats',
+          },
+        }
+        spySearch.mockReturnValue(
+          of({
+            hits: {
+              hits: metadata,
+              total: { value: 0 },
+            },
+          })
+        )
+        repository.getRecord = jest.fn().mockReturnValue(of(metadata))
+        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+        expect(catalog).toEqual(null)
+      })
+    })
+
+    describe('when feature catalog does not exist, nor in extras', () => {
+      beforeEach(async () => {
+        metadata = {
+          ...simpleDatasetRecordFixture(),
+          extras: {},
+        }
+        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+      })
+      it('returns null', () => {
+        expect(catalog).toEqual(null)
+      })
+    })
+  })
+
   describe('getSimilarRecords', () => {
     let results: CatalogRecord[]
     beforeEach(async () => {
