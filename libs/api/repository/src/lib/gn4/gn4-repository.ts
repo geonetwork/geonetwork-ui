@@ -161,7 +161,9 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       } as DatasetFeatureCatalog)
     }
 
-    const featureCatalogIdentifier = record.featureCatalogIdentifier
+    const featureCatalogIdentifier = record.extras[
+      'featureCatalogIdentifier'
+    ] as string
     if (featureCatalogIdentifier && !visited.has(featureCatalogIdentifier)) {
       visited.add(featureCatalogIdentifier)
       return this.getRecord(featureCatalogIdentifier).pipe(

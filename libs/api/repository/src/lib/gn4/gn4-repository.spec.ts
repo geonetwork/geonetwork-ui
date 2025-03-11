@@ -318,7 +318,10 @@ describe('Gn4Repository', () => {
       it('prevent looping', async () => {
         metadata = {
           ...simpleDatasetRecordWithFcatsFixture(),
-          ...{ featureCatalogIdentifier: 'my-dataset-with-fcats' },
+          extras: {
+            ...simpleDatasetRecordWithFcatsFixture().extras,
+            featureCatalogIdentifier: 'my-dataset-with-fcats',
+          },
         }
         spySearch.mockReturnValue(
           of({

@@ -346,7 +346,9 @@ export const simpleDatasetRecordFixture = (): DatasetRecord => ({
 
 export const simpleDatasetRecordWithFcatsFixture = (): DatasetRecord => ({
   uniqueIdentifier: 'my-dataset-with-fcats',
-  featureCatalogIdentifier: 'feature-catalog-identifier',
+  extras: {
+    featureCatalogIdentifier: 'feature-catalog-identifier',
+  },
   kind: 'dataset',
   otherLanguages: [],
   defaultLanguage: 'en',

@@ -1024,7 +1024,7 @@ describe('Gn4Converter', () => {
             },
           })
 
-          expect(record.featureCatalogIdentifier).toEqual(
+          expect(record.extras['featureCatalogIdentifier']).toEqual(
             'related-metadata-with-fcats'
           )
         })

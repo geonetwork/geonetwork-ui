@@ -298,10 +298,9 @@ export class Gn4FieldMapper {
         <SourceWithUnknownProps>fcatSource,
         'uuid'
       )
-      return {
-        ...output,
-        ...(featureCatalogIdentifier && { featureCatalogIdentifier }),
-      } as CatalogRecord
+      return featureCatalogIdentifier
+        ? this.addExtra({ featureCatalogIdentifier }, output)
+        : output
     },
     isPublishedToAll: (output, source) =>
       this.addExtra(
