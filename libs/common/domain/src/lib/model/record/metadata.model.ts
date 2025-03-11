@@ -124,7 +124,6 @@ export interface BaseRecord {
   extras?: Record<string, unknown>
   landingPage?: URL
   updateFrequency?: UpdateFrequency
-  featureCatalogIdentifier?: string
 
   // information related to the resource (dataset, service)
   resourceIdentifier?: string
