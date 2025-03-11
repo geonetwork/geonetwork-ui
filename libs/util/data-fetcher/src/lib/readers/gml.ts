@@ -41,9 +41,9 @@ export class GmlReader extends BaseFileReader {
     protected url: string,
     protected namespace: string,
     protected version: WfsVersion,
-    protected cacheActive: boolean
+    protected cacheActive = true
   ) {
-    super(url, cacheActive)
+    super(url)
   }
 
   protected getData() {
