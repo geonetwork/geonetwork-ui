@@ -297,6 +297,25 @@ export class ElasticsearchService {
     return queryParts.length > 0 ? (queryParts as FilterQuery) : undefined
   }
 
+  private mustNotFilters(): Record<string, unknown>[] {
+    return [
+      {
+        ...this.queryFilterOnValues('resourceType', [
+          'service',
+          'map',
+          'map/static',
+          'mapDigital',
+        ]),
+      },
+      {
+        query_string: {
+          query:
+            'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+        },
+      },
+    ]
+  }
+
   private buildPayloadQuery(
     { any, ...fieldSearchFilters }: SearchFilters,
     configFilters: SearchFilters,
@@ -304,14 +323,7 @@ export class ElasticsearchService {
     geometry?: Geometry
   ) {
     const must = [] as Record<string, unknown>[]
-    const must_not = {
-      ...this.queryFilterOnValues('resourceType', [
-        'service',
-        'map',
-        'map/static',
-        'mapDigital',
-      ]),
-    }
+    const must_not = this.mustNotFilters()
     const should = [] as Record<string, unknown>[]
     const filter = [this.queryFilterOnValues('isTemplate', 'n')] as Record<
       string,
@@ -413,14 +425,8 @@ export class ElasticsearchService {
               },
             },
           ],
-          must_not: {
-            ...this.queryFilterOnValues('resourceType', [
-              'service',
-              'map',
-              'map/static',
-              'mapDigital',
-            ]),
-          },
+
+          must_not: this.mustNotFilters(),
         },
       },
       _source: ['resourceTitleObject', 'uuid'],
