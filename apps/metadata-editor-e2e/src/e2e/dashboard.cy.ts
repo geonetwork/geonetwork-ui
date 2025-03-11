@@ -159,7 +159,7 @@ describe('dashboard (authenticated)', () => {
     })
     describe('my records', () => {
       it('should only display records I own', () => {
-        cy.get('md-editor-dashboard-menu').find('a').eq(3).click()
+        cy.get('md-editor-dashboard-menu').find('a').eq(1).click()
         cy.get('gn-ui-results-table')
           .find('[data-cy="table-row"]')
           .find('ng-icon')
@@ -167,13 +167,13 @@ describe('dashboard (authenticated)', () => {
           .should('contain', 'admin admin')
       })
       it('should display the correct amount of records', () => {
-        cy.get('md-editor-dashboard-menu').find('a').eq(3).click()
+        cy.get('md-editor-dashboard-menu').find('a').eq(1).click()
         cy.get('gn-ui-results-table')
           .find('[data-cy="table-row"]')
           .should('have.length', '11')
       })
       it('should sort the records by title', () => {
-        cy.get('md-editor-dashboard-menu').find('a').eq(3).click()
+        cy.get('md-editor-dashboard-menu').find('a').eq(1).click()
         cy.get('gn-ui-results-table')
           .find('[data-cy="table-row"]')
           .first()
@@ -219,7 +219,7 @@ describe('dashboard (authenticated)', () => {
     })
     it('should display the right info for published records', () => {
       cy.visit('/catalog/search')
-      cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
+      cy.get('md-editor-dashboard-menu').find('a').eq(1).click()
       cy.get('gn-ui-results-table')
         .find('[data-cy="table-row"]')
         .eq(1)
@@ -264,7 +264,7 @@ describe('dashboard (authenticated)', () => {
       })
       it('should clear the search input when navigating to my records', () => {
         cy.get('gn-ui-autocomplete').type('velo')
-        cy.get('md-editor-dashboard-menu').find('a').eq(5).click()
+        cy.get('md-editor-dashboard-menu').find('a').eq(2).click()
         cy.get('gn-ui-autocomplete').should('have.value', '')
       })
     })
