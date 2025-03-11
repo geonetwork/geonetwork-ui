@@ -160,6 +160,38 @@ As such, **it is not very interesting at all.**`,
     extras: {
       isPublishedToAll: true,
       edit: true,
+      featureTypes: [
+        {
+          attributeTable: [
+            {
+              code: 'OBJECTID',
+              name: 'OBJECTID',
+              link: '',
+              definition: 'Object identifier',
+              type: 'OID',
+            },
+            {
+              code: 'NOM',
+              name: 'Nom',
+              link: '',
+              definition: 'Nom de la rue',
+              type: 'String (48)',
+            },
+            {
+              code: 'RUE',
+              name: 'Rue',
+              link: '',
+              definition: '',
+              type: 'String (50)',
+            },
+          ],
+          code: '',
+          aliases: '',
+          typeName: "Catalogue d'attributs",
+          definition: '',
+          isAbstract: 'false',
+        },
+      ],
     },
   },
   {
@@ -308,6 +340,49 @@ export const simpleDatasetRecordFixture = (): DatasetRecord => ({
       translations: {},
     },
   ],
+  updateFrequency: { per: 'month', updatedTimes: 3 },
+  translations: {},
+})
+
+export const simpleDatasetRecordWithFcatsFixture = (): DatasetRecord => ({
+  uniqueIdentifier: 'my-dataset-with-fcats',
+  extras: {
+    featureCatalogIdentifier: 'feature-catalog-identifier',
+  },
+  kind: 'dataset',
+  otherLanguages: [],
+  defaultLanguage: 'en',
+  recordUpdated: new Date('2022-02-01T14:12:00.000Z'),
+  resourceCreated: new Date('2022-09-01T12:18:19.000Z'),
+  resourceUpdated: new Date('2022-12-04T14:12:00.000Z'),
+  status: 'ongoing',
+  title: 'A very interesting dataset with a related feature catalog',
+  abstract: `This dataset has been established for testing purposes.`,
+  ownerOrganization: { name: 'MyOrganization', translations: {} },
+  contacts: [
+    {
+      email: 'bob@org.net',
+      position: 'developer',
+      organization: { name: 'MyOrganization', translations: {} },
+      role: 'point_of_contact',
+      firstName: 'Bob',
+      lastName: 'TheGreat',
+    },
+  ],
+  contactsForResource: [],
+  keywords: [],
+  topics: ['testData'],
+  licenses: [],
+  legalConstraints: [],
+  securityConstraints: [],
+  otherConstraints: [],
+  lineage:
+    'This record was edited manually to test the feature catalog parsing',
+  spatialRepresentation: 'grid',
+  overviews: [],
+  spatialExtents: [],
+  temporalExtents: [],
+  onlineResources: [],
   updateFrequency: { per: 'month', updatedTimes: 3 },
   translations: {},
 })

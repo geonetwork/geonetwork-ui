@@ -226,7 +226,9 @@ export interface DatasetRecord extends BaseRecord {
   temporalExtents: Array<DatasetTemporalExtent>
   spatialRepresentation?: SpatialRepresentationType
 }
-
+export type DatasetFeatureCatalog = {
+  attributes: Array<{ name: string; title: string }>
+}
 export interface ServiceEndpoint {
   endpointUrl: URL
   protocol: string

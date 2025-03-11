@@ -1006,6 +1006,30 @@ describe('Gn4Converter', () => {
         })
       })
 
+      describe('feature catalog (fcats)', () => {
+        it('sets the featureCatalogIdentifier from the fcats', async () => {
+          const record = await service.readRecord({
+            ...hit,
+            _source: {
+              ...hit._source,
+              related: {
+                fcats: [
+                  {
+                    _source: {
+                      uuid: 'related-metadata-with-fcats',
+                    },
+                  },
+                ],
+              },
+            },
+          })
+
+          expect(record.extras['featureCatalogIdentifier']).toEqual(
+            'related-metadata-with-fcats'
+          )
+        })
+      })
+
       describe('full record', () => {
         it('builds a complete record object', async () => {
           const record = await service.readRecord(
@@ -2363,6 +2387,7 @@ describe('Gn4Converter', () => {
               isPublishedToAll: true,
               id: '53583',
               favoriteCount: 0,
+              featureTypes: [],
               catalogUuid: 'metawal.wallonie.be',
               edit: true,
             },
@@ -2642,6 +2667,7 @@ describe('Gn4Converter', () => {
             extras: {
               catalogUuid: 'metawal.wallonie.be',
               favoriteCount: 0,
+              featureTypes: [],
               id: '1215',
               isOpenData: false,
               isPublishedToAll: true,

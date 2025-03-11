@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { exhaustMap, mergeMap, of } from 'rxjs'
-import { catchError, map, switchMap } from 'rxjs/operators'
+import { catchError, filter, map, switchMap, take } from 'rxjs/operators'
 import * as MdViewActions from './mdview.actions'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-
 @Injectable()
 export class MdViewEffects {
   constructor(
@@ -29,6 +28,26 @@ export class MdViewEffects {
       }),
       catchError((error) =>
         of(MdViewActions.loadFullMetadataFailure({ otherError: error.message }))
+      )
+    )
+  )
+
+  loadFeatureCatalog$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MdViewActions.loadFullMetadataSuccess),
+      filter(({ full }) => full !== undefined),
+      switchMap(({ full }) => this.recordsRepository.getFeatureCatalog(full)),
+      map((featureCatalog) =>
+        MdViewActions.loadFeatureCatalogSuccess({
+          datasetCatalog: featureCatalog,
+        })
+      ),
+      catchError((error) =>
+        of(
+          MdViewActions.loadFeatureCatalogFailure({
+            error: error.message,
+          })
+        )
       )
     )
   )
