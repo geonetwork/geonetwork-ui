@@ -79,6 +79,7 @@ export class FormFieldContactsForResourceComponent
     'owner',
     'point_of_contact',
     'author',
+    'publisher',
   ]
 
   roleSectionsToDisplay: Role[] = []
