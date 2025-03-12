@@ -90,6 +90,14 @@ describe('NewRecordResolver', () => {
           contacts: expectedContacts,
           status: 'ongoing',
           temporalExtents: [],
+          legalConstraints: [
+            {
+              text: 'Conditions unknown',
+              url: new URL(
+                'http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown'
+              ),
+            },
+          ],
           licenses: [],
           title: 'editor.new.record.title',
           uniqueIdentifier: null,
