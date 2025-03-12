@@ -226,7 +226,16 @@ export interface DatasetRecord extends BaseRecord {
   temporalExtents: Array<DatasetTemporalExtent>
   spatialRepresentation?: SpatialRepresentationType
 }
+
 export type DatasetFeatureCatalog = {
+  featureTypes: Array<{
+    name: string
+    definition: string
+    featureAttributes: DatasetFeatureAttributes
+  }>
+}
+
+export type DatasetFeatureAttributes = {
   attributes: Array<{ name: string; title: string }>
 }
 export interface ServiceEndpoint {

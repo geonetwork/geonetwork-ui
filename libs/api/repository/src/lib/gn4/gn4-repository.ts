@@ -141,24 +141,33 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       )
   }
 
+  private mapEmbeddedFeatureCatalog(
+    featureTypes: Array<any>
+  ): DatasetFeatureCatalog {
+    return {
+      featureTypes: featureTypes.map((featureType) => ({
+        name: featureType.typeName || '',
+        definition: featureType.definition || '',
+        featureAttributes: {
+          attributes: Array.isArray(featureType.attributeTable)
+            ? featureType.attributeTable.map((attr) => ({
+                name: attr.name,
+                title: attr.definition,
+              }))
+            : [],
+        },
+      })),
+    }
+  }
   getFeatureCatalog(
     record: CatalogRecord,
     visited: Set<string> = new Set() // prevent looping
   ): Observable<DatasetFeatureCatalog | null> {
     if (
-      record.extras &&
-      record.extras['featureTypes'] &&
-      record.extras['featureTypes'][0]?.attributeTable &&
-      Array.isArray(record.extras['featureTypes'][0].attributeTable)
+      record.extras?.['featureTypes'] &&
+      Array.isArray(record.extras['featureTypes'])
     ) {
-      return of({
-        attributes: record.extras['featureTypes'][0]?.attributeTable?.map(
-          (attr) => ({
-            name: attr.name,
-            title: attr.definition,
-          })
-        ),
-      } as DatasetFeatureCatalog)
+      return of(this.mapEmbeddedFeatureCatalog(record.extras['featureTypes']))
     }
 
     const featureCatalogIdentifier = record.extras[
