@@ -128,6 +128,16 @@ describe('record-actions', () => {
         .find('gn-ui-button')
         .should('have.attr', 'ng-reflect-message', 'Publish this dataset')
     })
+    it('the created record should have unknown constraints', () => {
+      cy.get('[data-test=pageSelectorButtons]')
+        .find('gn-ui-button')
+        .eq(2)
+        .click()
+      cy.get('gn-ui-form-field-constraints-shortcuts')
+        .find('gn-ui-check-toggle')
+        .eq(1)
+        .should('have.attr', 'ng-reflect-value', 'true')
+    })
   })
 
   describe('undo', () => {
