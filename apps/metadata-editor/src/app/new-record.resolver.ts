@@ -9,7 +9,6 @@ import { map, switchMap } from 'rxjs/operators'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { TranslateService } from '@ngx-translate/core'
-import { NOT_KNOWN_CONSTRAINT } from 'libs/feature/editor/src/lib/components/record-form/form-field/form-field-constraints-shortcuts/constraints.utils'
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +38,14 @@ export class NewRecordResolver {
           topics: [],
           keywords: [],
           licenses: [],
-          legalConstraints: [NOT_KNOWN_CONSTRAINT],
+          legalConstraints: [
+            {
+              text: 'Conditions unknown',
+              url: new URL(
+                'http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown'
+              ),
+            },
+          ],
           securityConstraints: [],
           otherConstraints: [],
           overviews: [],
