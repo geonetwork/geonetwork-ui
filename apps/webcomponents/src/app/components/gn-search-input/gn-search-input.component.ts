@@ -20,6 +20,7 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
   providers: [SearchFacade, SearchService],
 })
 export class GnSearchInputComponent extends BaseComponent {
+  @Input() forceTrackPosition = ''
   @Input() openOnSearch: string
   @Input() openOnSelect: string
   @ViewChild('searchInput') searchInput: FuzzySearchComponent
