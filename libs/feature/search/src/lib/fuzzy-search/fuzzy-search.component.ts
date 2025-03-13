@@ -28,6 +28,7 @@ import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
 export class FuzzySearchComponent implements OnInit {
   @ViewChild(AutocompleteComponent) autocomplete: AutocompleteComponent
   @Input() autoFocus = false
+  @Input() forceTrackPosition = false
   @Output() itemSelected = new EventEmitter<CatalogRecord>()
   @Output() inputSubmitted = new EventEmitter<string>()
   searchInputValue$: Observable<{ title: string }>
