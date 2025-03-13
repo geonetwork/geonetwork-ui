@@ -1,10 +1,36 @@
-import { WfsEndpoint, WfsVersion } from '@camptocamp/ogc-client'
-import { DataItem, DatasetInfo, PropertyInfo } from '../model'
+import { EndpointError, WfsEndpoint, WfsVersion } from '@camptocamp/ogc-client'
+import { DataItem, DatasetInfo, FetchError, PropertyInfo } from '../model'
 import { fetchDataAsText } from '../utils'
 import { BaseReader } from './base'
 import { GmlReader, parseGml } from './gml'
 import { GeojsonReader, parseGeojson } from './geojson'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+async function getWfsEndpoint(wfsUrl: string): Promise<WfsEndpoint> {
+  try {
+    return await new WfsEndpoint(wfsUrl).isReady()
+  } catch (e: any) {
+    if (
+      e instanceof Error &&
+      'isCrossOriginRelated' in e &&
+      'httpStatus' in e
+    ) {
+      const error = e as EndpointError
+      if (error.isCrossOriginRelated === true) {
+        throw new Error(`wfs.unreachable.cors`)
+      }
+      if (error.httpStatus === 401 || error.httpStatus === 403) {
+        throw FetchError.forbidden(error.httpStatus)
+      } else if (error.httpStatus === 400 || error.httpStatus > 403) {
+        throw FetchError.http(error.httpStatus)
+      } else {
+        throw FetchError.unknownType()
+      }
+    } else {
+      throw FetchError.unknownType()
+    }
+  }
+}
 
 export class WfsReader extends BaseReader {
   endpoint: WfsEndpoint
@@ -47,7 +73,7 @@ export class WfsReader extends BaseReader {
   }
 
   static async createReader(wfsUrlEndpoint: string, featureTypeName?: string) {
-    const wfsEndpoint = await new WfsEndpoint(wfsUrlEndpoint).isReady()
+    const wfsEndpoint = await getWfsEndpoint(wfsUrlEndpoint)
     const featureTypes = wfsEndpoint.getFeatureTypes()
     const featureType = wfsEndpoint.getFeatureTypeSummary(
       featureTypes.length === 1 && !featureTypeName
