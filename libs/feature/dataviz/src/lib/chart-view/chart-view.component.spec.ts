@@ -380,4 +380,21 @@ describe('ChartViewComponent', () => {
       ])
     })
   })
+  describe('when cache is deactivated', () => {
+    beforeEach(fakeAsync(() => {
+      jest.clearAllMocks()
+      component.cacheActive = false
+      component.link = aSetOfLinksFixture().dataCsv()
+      fixture.detectChanges()
+      tick(500)
+      flushMicrotasks()
+    }))
+
+    it('loads the data without the cache', () => {
+      expect(dataService.getDataset).toHaveBeenCalledWith(
+        aSetOfLinksFixture().dataCsv(),
+        false
+      )
+    })
+  })
 })
