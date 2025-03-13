@@ -280,25 +280,21 @@ describe('Gn4Repository', () => {
             {
               name: "Catalogue d'attributs N°1",
               definition: 'Définition du catalogue d attributs N°1',
-              featureAttributes: {
-                attributes: [
-                  { name: 'OBJECTID', title: 'Object identifier' },
-                  { name: 'Nom', title: 'Nom de la rue' },
-                  { name: 'Rue', title: '' },
-                ],
-              },
+              attributes: [
+                { name: 'OBJECTID', title: 'Object identifier' },
+                { name: 'Nom', title: 'Nom de la rue' },
+                { name: 'Rue', title: '' },
+              ],
             },
             {
               name: "Catalogue d'attributs N°2",
               definition: 'Définition du catalogue d attributs N°2',
-              featureAttributes: {
-                attributes: [
-                  {
-                    name: 'unique object ',
-                    title: 'this is the only object of this catalog',
-                  },
-                ],
-              },
+              attributes: [
+                {
+                  name: 'unique object ',
+                  title: 'this is the only object of this catalog',
+                },
+              ],
             },
           ],
         })
@@ -331,25 +327,21 @@ describe('Gn4Repository', () => {
             {
               name: "Catalogue d'attributs N°1",
               definition: 'Définition du catalogue d attributs N°1',
-              featureAttributes: {
-                attributes: [
-                  { name: 'OBJECTID', title: 'Object identifier' },
-                  { name: 'Nom', title: 'Nom de la rue' },
-                  { name: 'Rue', title: '' },
-                ],
-              },
+              attributes: [
+                { name: 'OBJECTID', title: 'Object identifier' },
+                { name: 'Nom', title: 'Nom de la rue' },
+                { name: 'Rue', title: '' },
+              ],
             },
             {
               name: "Catalogue d'attributs N°2",
               definition: 'Définition du catalogue d attributs N°2',
-              featureAttributes: {
-                attributes: [
-                  {
-                    name: 'unique object ',
-                    title: 'this is the only object of this catalog',
-                  },
-                ],
-              },
+              attributes: [
+                {
+                  name: 'unique object ',
+                  title: 'this is the only object of this catalog',
+                },
+              ],
             },
           ],
         })

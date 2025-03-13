@@ -231,13 +231,10 @@ export type DatasetFeatureCatalog = {
   featureTypes: Array<{
     name: string
     definition: string
-    featureAttributes: DatasetFeatureAttributes
+    attributes: Array<{ name: string; title: string }>
   }>
 }
 
-export type DatasetFeatureAttributes = {
-  attributes: Array<{ name: string; title: string }>
-}
 export interface ServiceEndpoint {
   endpointUrl: URL
   protocol: string
@@ -263,6 +260,12 @@ export interface ReuseRecord extends BaseRecord {
   reuseType: ReuseType
   spatialExtents: Array<DatasetSpatialExtent>
   temporalExtents: Array<DatasetTemporalExtent>
+}
+
+export interface DatasetFeatureType {
+  typeName: string
+  definition: string
+  attributeTable: Array<{ name: string; definition: string }>
 }
 
 export type ReuseType = 'application' | 'map' | 'other'

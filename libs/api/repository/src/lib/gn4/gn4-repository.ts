@@ -14,6 +14,7 @@ import {
 import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
 import {
   CatalogRecord,
+  DatasetFeatureType,
   DatasetFeatureCatalog,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
@@ -142,20 +143,18 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   }
 
   private mapEmbeddedFeatureCatalog(
-    featureTypes: Array<any>
+    featureTypes: Array<DatasetFeatureType>
   ): DatasetFeatureCatalog {
     return {
       featureTypes: featureTypes.map((featureType) => ({
         name: featureType.typeName || '',
         definition: featureType.definition || '',
-        featureAttributes: {
-          attributes: Array.isArray(featureType.attributeTable)
-            ? featureType.attributeTable.map((attr) => ({
-                name: attr.name,
-                title: attr.definition,
-              }))
-            : [],
-        },
+        attributes: Array.isArray(featureType.attributeTable)
+          ? featureType.attributeTable.map((attr) => ({
+              name: attr.name,
+              title: attr.definition,
+            }))
+          : [],
       })),
     }
   }
