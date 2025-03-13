@@ -263,6 +263,9 @@ export interface ReuseRecord extends BaseRecord {
 }
 
 export interface DatasetFeatureType {
+  aliases: string
+  code: string
+  isAbstract: string
   typeName: string
   definition: string
   attributeTable: Array<{ name: string; definition: string }>
