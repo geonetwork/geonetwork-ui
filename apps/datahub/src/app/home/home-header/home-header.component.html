@@ -2,11 +2,16 @@
   <div
     class="container-lg relative h-full mx-auto flex flex-col-reverse justify-between sm:flex-col sm:justify-end"
   >
-    <gn-ui-application-banner
-      [message]="platformService.translateKey(bannerKey) | async"
-      class="container-sm"
-      type="secondary"
-    ></gn-ui-application-banner>
+    <div
+      class="mb-8 top-0"
+      *ngIf="translatedBannerMessage$ | async as bannerMessage"
+    >
+      <gn-ui-application-banner
+        [message]="bannerMessage"
+        class="container-sm absolute top-0 left-0 right-0"
+        type="secondary"
+      ></gn-ui-application-banner>
+    </div>
     <div
       class="py-8 relative z-40 mb-[184px] sm:mb-0"
       [ngClass]="{ 'pointer-events-none': expandRatio < 0.2 }"
