@@ -390,9 +390,10 @@ describe('MapViewComponent', () => {
       describe('when selecting the WFS layer (excludeWfs)', () => {
         beforeEach(() => {
           dropdownComponent.selectValue.emit(1)
+          component.excludeWfs$.next(true)
         })
-        it('shows an error', () => {
-          expect(component.error).toEqual('wfs.feature.limit')
+        it('set hidePreview to true', () => {
+          expect(component.hidePreview).toEqual(true)
         })
         it('emits a map context with no layer', () => {
           expect(mapComponent.context).toEqual({

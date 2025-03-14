@@ -424,7 +424,7 @@
   "record.action.duplicating": "",
   "record.action.view": "Visualizza",
   "record.externalViewer.open": "Aprire nel visualizzatore esterno",
-  "record.feature.limit": "La risorsa contiene più di {count} funzionalità e non può essere visualizzata qui.",
+  "record.feature.limit": "La visualizzazione è stata disabilitata a causa di troppi elementi ",
   "record.metadata.about": "Descrizione",
   "record.metadata.api": "API",
   "record.metadata.api.form.closeButton": "Chiude",

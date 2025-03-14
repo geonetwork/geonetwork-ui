@@ -424,7 +424,7 @@
   "record.action.duplicating": "Duplication...",
   "record.action.view": "Voir",
   "record.externalViewer.open": "Ouvrir dans le visualiseur externe",
-  "record.feature.limit": "La ressource contient plus de {count} entités et ne peut pas être affichée ici.",
+  "record.feature.limit": "L’aperçu a été désactivé en raison d’un trop grand nombre d'éléments",
   "record.metadata.about": "Description",
   "record.metadata.api": "API",
   "record.metadata.api.form.closeButton": "Fermer",
