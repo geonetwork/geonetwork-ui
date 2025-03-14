@@ -422,6 +422,7 @@
   "record.action.download": "",
   "record.action.duplicate": "",
   "record.action.duplicating": "",
+  "record.action.rollback": "",
   "record.action.view": "",
   "record.externalViewer.open": "",
   "record.feature.limit": "",
