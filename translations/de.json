@@ -602,7 +602,6 @@
   "tooltip.url.open": "URL öffnen",
   "ui.readLess": "Weniger lesen",
   "ui.readMore": "Weiterlesen",
-  "wfs.aggregations.notsupported": "",
   "wfs.feature.limit": "Zu viele Features, um den WFS-Layer anzuzeigen!",
   "wfs.featuretype.notfound": "Kein passender Feature-Typ wurde im Dienst gefunden",
   "wfs.geojsongml.notsupported": "Dieser Dienst unterstützt das GeoJSON- oder GML-Format nicht",
