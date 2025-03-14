@@ -38,7 +38,14 @@ export class NewRecordResolver {
           topics: [],
           keywords: [],
           licenses: [],
-          legalConstraints: [],
+          legalConstraints: [
+            {
+              text: 'Conditions unknown',
+              url: new URL(
+                'http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown'
+              ),
+            },
+          ],
           securityConstraints: [],
           otherConstraints: [],
           overviews: [],
