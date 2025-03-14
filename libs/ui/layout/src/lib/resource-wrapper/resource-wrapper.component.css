@@ -1,0 +1,8 @@
+:host .resource-wrapper-container ::ng-deep > * {
+  flex-shrink: 0;
+}
+
+:host {
+  position: relative;
+  display: block;
+}

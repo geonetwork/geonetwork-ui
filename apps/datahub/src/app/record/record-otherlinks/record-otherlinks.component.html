@@ -23,7 +23,7 @@
     ></gn-ui-link-card>
   </gn-ui-block-list>
   <ng-template #carouselTemplate>
-    <gn-ui-carousel
+    <gn-ui-resource-wrapper
       containerClass="gap-4 pt-[26px] pb-[38px]"
       (currentStepChange)="updateView()"
     >
@@ -32,6 +32,6 @@
         [link]="otherLink"
         class="w-80"
       ></gn-ui-link-card>
-    </gn-ui-carousel>
+    </gn-ui-resource-wrapper>
   </ng-template>
 </ng-container>

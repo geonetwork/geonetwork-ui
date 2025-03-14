@@ -1,0 +1,9 @@
+<div #resourceWrapperOverflowContainer class="w-full">
+  <div class="resource-wrapper-container flex" [ngClass]="containerClass">
+    <ng-content></ng-content>
+  </div>
+</div>
+<gn-ui-pagination-dots
+  [containerClass]="'absolute ' + stepsContainerClass"
+  [listComponent]="this"
+></gn-ui-pagination-dots>

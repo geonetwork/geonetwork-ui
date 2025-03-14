@@ -8,7 +8,7 @@ import {
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
   BlockListComponent,
-  CarouselComponent,
+  ResourceWrapperComponent,
   Paginable,
   PreviousNextButtonsComponent,
 } from '@geonetwork-ui/ui/layout'
@@ -28,7 +28,7 @@ import { TranslateModule } from '@ngx-translate/core'
     PreviousNextButtonsComponent,
     BlockListComponent,
     LinkCardComponent,
-    CarouselComponent,
+    ResourceWrapperComponent,
     LetDirective,
     TranslateModule,
   ],
@@ -36,10 +36,10 @@ import { TranslateModule } from '@ngx-translate/core'
 export class RecordOtherlinksComponent implements AfterViewInit {
   otherLinks$ = this.facade.otherLinks$
 
-  @ViewChild(CarouselComponent) carousel: CarouselComponent
+  @ViewChild(ResourceWrapperComponent) resourceWrapper: ResourceWrapperComponent
   @ViewChild(BlockListComponent) list: BlockListComponent
   get paginableElement(): Paginable {
-    return this.carousel || this.list
+    return this.resourceWrapper || this.list
   }
 
   constructor(
