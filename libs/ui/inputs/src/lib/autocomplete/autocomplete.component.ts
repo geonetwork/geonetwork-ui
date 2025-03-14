@@ -83,6 +83,7 @@ export class AutocompleteComponent
   @Input() minCharacterCount? = 3
   // this will show a submit button next to the input; if false, a search icon will appear on the left
   @Input() allowSubmit = false
+  @Input() forceTrackPosition = false
   @Output() itemSelected = new EventEmitter<AutocompleteItem>()
   @Output() inputSubmitted = new EventEmitter<string>()
   @Output() inputCleared = new EventEmitter<void>()
@@ -98,6 +99,8 @@ export class AutocompleteComponent
   error: string | null = null
   suggestions$: Observable<AutocompleteItem[]>
   subscription = new Subscription()
+  private lastPosition: DOMRect | null = null
+  private intervalIdPosition: number | undefined
 
   @Input() displayWithFn: (item: AutocompleteItem) => string = (item) =>
     item.toString()
@@ -197,10 +200,49 @@ export class AutocompleteComponent
       this.inputRef.nativeElement.focus()
       this.cdRef.detectChanges()
     }
+
+    this.startTrackingPosition()
+  }
+
+  /**
+   * !!! This function is used only for web component mode,
+   * the autocomplete dropdown may not update its position
+   * if the page or container is disabling wind scroll.
+   */
+  private trackPosition = () => {
+    const dropdownOpened = this.triggerRef && this.triggerRef.panelOpen
+    const rect = this.inputRef.nativeElement.getBoundingClientRect()
+
+    if (
+      dropdownOpened &&
+      (!this.lastPosition ||
+        rect.top !== this.lastPosition.top ||
+        rect.left !== this.lastPosition.left)
+    ) {
+      this.triggerRef.updatePosition()
+    }
+
+    this.lastPosition = rect
+    requestAnimationFrame(this.trackPosition)
+  }
+
+  /**
+   * !!! This function is used only for web component mode,
+   * the autocomplete dropdown may not update its position
+   * if the page or container is disabling wind scroll.
+   */
+  startTrackingPosition() {
+    if (this.forceTrackPosition) {
+      requestAnimationFrame(this.trackPosition)
+    }
   }
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe()
+
+    if (this.intervalIdPosition) {
+      clearInterval(this.intervalIdPosition)
+    }
   }
 
   updateInputValue(value: AutocompleteItem) {
