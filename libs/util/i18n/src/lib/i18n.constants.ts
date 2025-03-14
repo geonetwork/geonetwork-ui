@@ -28,7 +28,7 @@ export const LANGUAGE_STORAGE_KEY = 'geonetwork-ui-language'
 export function HttpLoaderFactory(http: HttpClient) {
   return new FileTranslateLoader(http, './assets/i18n/')
 }
-//Deprecated, but currently still used in metadata-editor
+//Deprecated, but currently still used in datafeeder
 export function getLangFromBrowser() {
   return navigator.language.substr(0, 2)
 }
