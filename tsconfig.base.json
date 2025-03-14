@@ -30,9 +30,6 @@
       ],
       "@geonetwork-ui/common/domain/*": ["libs/common/domain/src/lib/*"],
       "@geonetwork-ui/common/fixtures": ["libs/common/fixtures/src/index.ts"],
-      "@geonetwork-ui/data-access/datafeeder": [
-        "libs/data-access/datafeeder/src/index.ts"
-      ],
       "@geonetwork-ui/data-access/gn4": ["libs/data-access/gn4/src/index.ts"],
       "@geonetwork-ui/data-fetcher": ["libs/util/data-fetcher/src/index.ts"],
       "@geonetwork-ui/feature/auth": ["libs/feature/auth/src/index.ts"],

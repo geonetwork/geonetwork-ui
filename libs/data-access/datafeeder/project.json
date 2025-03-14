@@ -1,9 +1,0 @@
-{
-  "name": "data-access-datafeeder",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "library",
-  "sourceRoot": "libs/data-access/datafeeder/src",
-  "prefix": "gn-ui",
-  "targets": {},
-  "tags": ["type:data-access", "type:api"]
-}

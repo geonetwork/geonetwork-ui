@@ -66,7 +66,7 @@ When working on a GeoNetwork-UI application, you can start it in development mod
 
 ```shell
 $ npx nx serve <app-name>
-# <app-name> is e.g. datahub or datafeeder
+# <app-name> is e.g. datahub or metadata-editor
 ```
 
 The application is then available at http://localhost:4200.

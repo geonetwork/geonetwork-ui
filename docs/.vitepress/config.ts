@@ -134,7 +134,6 @@ function sidebarApps() {
       items: [
         { text: 'Datahub', link: '/apps/datahub' },
         { text: 'Metadata Editor', link: '/apps/editor' },
-        { text: 'Datafeeder', link: '/apps/datafeeder' },
       ],
     },
   ]
