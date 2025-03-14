@@ -354,7 +354,7 @@
   "record.action.rollback": "",
   "record.action.view": "Anzeigen",
   "record.externalViewer.open": "In externem Kartenviewer öffnen",
-  "record.feature.limit": "Die Ressource enthält mehr als {count} Features und kann hier nicht angezeigt werden.",
+  "record.feature.limit": "Die Vorschau wurde aufgrund zu vieler Elemente deaktiviert",
   "record.metadata.about": "Beschreibung",
   "record.metadata.api": "API",
   "record.metadata.api.form.closeButton": "Schließen",
