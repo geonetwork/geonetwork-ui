@@ -1,0 +1,67 @@
+<div class="flex flex-col border border-gray-300 rounded-lg bg-white h-full">
+  <div class="flex-1 overflow-y-hidden overflow-x-auto rounded-lg relative">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      (matSortChange)="setSort($event)"
+      [matSortDisableClear]="true"
+      *ngrxLet="properties$ as properties"
+    >
+      <ng-container *ngFor="let prop of properties" [matColumnDef]="prop">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          class="text-sm text-black bg-white"
+        >
+          {{ prop }}
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          class="whitespace-nowrap pr-1 truncate"
+        >
+          {{ element[prop] }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="properties; sticky: true"></tr>
+      <tr
+        [id]="getRowEltId(row.id)"
+        mat-row
+        *matRowDef="let row; columns: properties"
+        (click)="selected.emit(row)"
+        [class.active]="row.id === activeId"
+      ></tr>
+    </table>
+    <gn-ui-loading-mask
+      *ngIf="loading$ | async"
+      class="sticky inset-0"
+      [message]="'table.loading.data' | translate"
+    ></gn-ui-loading-mask>
+    <gn-ui-popup-alert
+      *ngIf="error"
+      type="warning"
+      icon="matErrorOutlineOutline"
+      class="absolute m-2 inset-0 z-[100]"
+    >
+      <span translate>{{ error }}</span>
+    </gn-ui-popup-alert>
+  </div>
+  <div class="flex justify-between items-center overflow-hidden">
+    <div class="text-gray-900 px-4 py-2 text-sm">
+      <span class="count font-extrabold text-primary">{{ count }}</span
+      >&nbsp;<span translate>table.object.count</span>.
+    </div>
+
+    <mat-paginator
+      class="my-[-16px]"
+      (page)="setPagination()"
+      [length]="count"
+      [pageSize]="10"
+      [showFirstLastButtons]="true"
+      [hidePageSize]="true"
+    ></mat-paginator>
+  </div>
+</div>

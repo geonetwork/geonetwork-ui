@@ -5,11 +5,101 @@ import {
   getBadgeColor,
   getFileFormat,
   getFileFormatFromServiceOutput,
+  getLayers,
   getLinkLabel,
   getLinkPriority,
   mimeTypeToFormat,
 } from './link-utils'
 import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/record'
+
+jest.mock('@camptocamp/ogc-client', () => ({
+  WfsEndpoint: class {
+    constructor(private url) {}
+    isReady() {
+      return Promise.resolve(this)
+    }
+    getFeatureTypes() {
+      return [
+        {
+          name: 'ft1',
+          title: 'Feature Type 1',
+        },
+        {
+          name: 'ft2',
+          title: 'Feature Type 2',
+        },
+        {
+          name: 'ft3',
+          title: 'Feature Type 3',
+        },
+      ]
+    }
+  },
+  OgcApiEndpoint: class {
+    constructor(private url) {}
+    get allCollections() {
+      return [
+        {
+          name: 'ogc-collection-1',
+          title: 'Ogc Collection 1',
+        },
+        {
+          name: 'ogc-collection-2',
+          title: 'Ogc Collection 2',
+        },
+      ]
+    }
+  },
+  WmsEndpoint: class {
+    constructor(private url) {}
+    isReady() {
+      return Promise.resolve(this)
+    }
+    getLayers() {
+      return [
+        {
+          name: 'wms-layer-1',
+          title: 'WMS layer 1',
+          abstract: 'WMS layer 1',
+          children: [
+            {
+              name: 'wms-layer-1-1',
+              title: 'WMS layer 1 - 1',
+              abstract: 'WMS layer 1 - 1',
+            },
+          ],
+        },
+        {
+          name: 'wms-layer-2',
+          title: 'WMS layer 2',
+          abstract: 'WMS layer 2',
+        },
+      ]
+    }
+  },
+  WmtsEndpoint: class {
+    constructor(private url) {}
+    isReady() {
+      return Promise.resolve(this)
+    }
+    getLayers() {
+      return [
+        {
+          name: 'wmts-layer-1',
+          title: 'WMTS layer 1',
+        },
+        {
+          name: 'wmts-layer-2',
+          title: 'WMTS layer 2',
+        },
+        {
+          name: 'wmts-layer-3',
+          title: 'WMTS layer 3',
+        },
+      ]
+    }
+  },
+}))
 
 describe('link utils', () => {
   describe('#getFileFormat', () => {
@@ -333,6 +423,88 @@ describe('link utils', () => {
           type: 'download',
         })
       ).toEqual('Cities (geojson)')
+    })
+  })
+
+  describe('#getLayers', () => {
+    beforeEach(() => {
+      jest.clearAllMocks()
+    })
+
+    it('should return OGC Features layers', async () => {
+      const layers = await getLayers('https://example.com', 'ogcFeatures')
+      expect(layers).toEqual([
+        {
+          name: 'ogc-collection-1',
+          title: 'Ogc Collection 1',
+        },
+        {
+          name: 'ogc-collection-2',
+          title: 'Ogc Collection 2',
+        },
+      ])
+    })
+
+    it('should return WFS feature types', async () => {
+      const layers = await getLayers('https://example.com', 'wfs')
+      expect(layers).toEqual([
+        {
+          name: 'ft1',
+          title: 'Feature Type 1',
+        },
+        {
+          name: 'ft2',
+          title: 'Feature Type 2',
+        },
+        {
+          name: 'ft3',
+          title: 'Feature Type 3',
+        },
+      ])
+    })
+
+    it('should return flattened WMS layers (filtered)', async () => {
+      const layers = await getLayers('https://example.com', 'wms')
+      expect(layers).toEqual([
+        {
+          name: 'wms-layer-1',
+          title: 'WMS layer 1',
+          abstract: 'WMS layer 1',
+        },
+        {
+          name: 'wms-layer-1-1',
+          title: 'WMS layer 1 - 1',
+          abstract: 'WMS layer 1 - 1',
+        },
+        {
+          name: 'wms-layer-2',
+          title: 'WMS layer 2',
+          abstract: 'WMS layer 2',
+        },
+      ])
+    })
+
+    it('should return WMTS layers', async () => {
+      const layers = await getLayers('https://example.com', 'wmts')
+      expect(layers).toEqual([
+        {
+          name: 'wmts-layer-1',
+          title: 'WMTS layer 1',
+        },
+        {
+          name: 'wmts-layer-2',
+          title: 'WMTS layer 2',
+        },
+        {
+          name: 'wmts-layer-3',
+          title: 'WMTS layer 3',
+        },
+      ])
+    })
+
+    it('should return undefined for an unknown serviceProtocol', async () => {
+      const layers = await getLayers('https://example.com', 'unknown' as any)
+      expect(layers).toBeUndefined()
     })
   })
 })

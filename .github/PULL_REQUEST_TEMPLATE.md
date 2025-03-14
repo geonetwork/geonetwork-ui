@@ -36,6 +36,14 @@ If the changes incur visual changes, please include screenshots or an animated s
 Please only check items relevant to your contribution. Thank you very much for your time and efforts!
 -->
 
+### How to test
+
+Follow these instructions to confirm [...]
+
+<!--
+Describe here the steps to confirm that the changes work as they should.
+-->
+
 ---
 
 <!--

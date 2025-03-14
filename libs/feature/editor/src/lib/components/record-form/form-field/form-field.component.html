@@ -30,8 +30,11 @@
           #autosize="cdkTextareaAutosize"
           cdkAutosizeMinRows="1"
           data-test="recordTitleInput"
-          class="grow font-title text-3xl font-normal overflow-hidden"
+          class="grow font-title text-3xl font-normal overflow-hidden text-black/80"
           (change)="valueChange.emit($event.target.value)"
+          [placeholder]="
+            'editor.record.form.field.title.placeholder' | translate
+          "
           >{{ valueAsString }}</textarea
         >
         <div class="flex flex-row justify-between self-start mt-0.5">
@@ -109,8 +112,8 @@
     <ng-container *ngSwitchCase="'licenses'">
       <gn-ui-form-field-license
         [label]="config.labelKey! | translate"
-        [recordConstraints]="valueAsConstraints"
-        (recordConstraintsChange)="valueChange.emit($event)"
+        [recordLicences]="valueAsConstraints"
+        (recordLicencesChange)="valueChange.emit($event)"
       ></gn-ui-form-field-license>
     </ng-container>
 

@@ -34,7 +34,11 @@ import { TranslateModule } from '@ngx-translate/core'
 })
 export class DataViewComponent {
   @Input() mode: 'table' | 'chart'
+  @Input() displaySource = true
   @Output() chartConfig$ = new BehaviorSubject<DatavizConfigurationModel>(null)
+  cacheActive$ = this.mdViewFacade.isHighUpdateFrequency$.pipe(
+    map((highF) => !highF)
+  )
   compatibleDataLinks$ = combineLatest([
     this.mdViewFacade.dataLinks$,
     this.mdViewFacade.geoDataLinks$,

@@ -131,6 +131,7 @@ export type MetadataObject = Partial<{
   inspireTheme_syn: string[]
   isHarvested: string
   isOpenData: string
+  edit: boolean
   isPublishedToAll: string
   isTemplate: string
   keywordType: Record<string, MultilingualField[]>
@@ -201,4 +202,8 @@ export interface Gn4Record {
   featured?: boolean
   guestdownload?: boolean
   selected?: boolean
+}
+
+export interface Gn4RecordRelated {
+  fcats?: Gn4Record[]
 }

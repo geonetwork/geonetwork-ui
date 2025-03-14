@@ -4,7 +4,9 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   Output,
+  SimpleChanges,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '../button/button.component'
@@ -29,7 +31,7 @@ import { iconoirArrowUp, iconoirLink } from '@ng-icons/iconoir'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UrlInputComponent {
+export class UrlInputComponent implements OnChanges {
   @Input() set value(v: string) {
     // we're making sure to only update the input if the URL representation of it has changed; otherwise we keep it identical
     // to avoid glitches when starting to write a URL and having some characters added/replaced automatically
@@ -45,7 +47,7 @@ export class UrlInputComponent {
   @Input() extraClass = ''
   @Input() placeholder = 'https://'
   @Input() disabled: boolean
-  @Input() showUploadButton = true
+  @Input() showValidateButton = true
 
   /**
    * This will emit null if the field is emptied
@@ -56,6 +58,12 @@ export class UrlInputComponent {
   inputValue = ''
 
   constructor(private cd: ChangeDetectorRef) {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['value']) {
+      this.inputValue = changes['value'].currentValue
+    }
+  }
 
   handleInput(event: Event) {
     const value = (event.target as HTMLInputElement).value

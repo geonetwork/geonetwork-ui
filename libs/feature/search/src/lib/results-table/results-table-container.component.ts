@@ -26,6 +26,7 @@ import { TranslateService } from '@ngx-translate/core'
 export class ResultsTableContainerComponent implements OnDestroy {
   @Input() canDuplicate: (record: CatalogRecord) => boolean = () => true
   @Input() canDelete: (record: CatalogRecord) => boolean = () => true
+  @Input() isDuplicating: false
 
   @Output() recordClick = new EventEmitter<CatalogRecord>()
   @Output() duplicateRecord = new EventEmitter<CatalogRecord>()
@@ -37,9 +38,6 @@ export class ResultsTableContainerComponent implements OnDestroy {
 
   hasDraft = (record: CatalogRecord): boolean =>
     this.recordsRepository.recordHasDraft(record.uniqueIdentifier)
-
-  isUnsavedDraft = (record: CatalogRecord): boolean =>
-    this.recordsRepository.isRecordNotYetSaved(record.uniqueIdentifier)
 
   constructor(
     protected searchFacade: SearchFacade,

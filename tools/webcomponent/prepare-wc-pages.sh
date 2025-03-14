@@ -3,6 +3,10 @@
 DIST_DEMO_PATH=dist/demo/
 DIST_WC_PATH=${DIST_DEMO_PATH}webcomponents/
 
+echo '-- Clear previous build and cache'
+rm -rf ${DIST_DEMO_PATH}
+rm -rf node_modules/.cache
+
 echo '-- Build Geonetwork Web Components'
 nx run webcomponents:build --output-hashing=none --skip-nx-cache --output-path=${DIST_WC_PATH}
 

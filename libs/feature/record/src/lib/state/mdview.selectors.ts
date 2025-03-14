@@ -64,3 +64,15 @@ export const getAddUserFeedbacksLoading = createSelector(
   getMdViewState,
   (state: MetadataViewState) => state.addUserFeedbackLoading
 )
+
+/*
+  Feature Catalog Selectors
+*/
+export const getFeatureCatalog = createSelector(
+  getMdViewState,
+  (state: MetadataViewState) => state.featureCatalog
+)
+export const getFeatureCatalogIsLoading = createSelector(
+  getMdViewState,
+  (state: MetadataViewState) => state.featureCatalogLoading
+)

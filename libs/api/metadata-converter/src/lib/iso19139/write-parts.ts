@@ -242,6 +242,8 @@ export function getServiceDistributionProtocol(
   distribution: DatasetServiceDistribution
 ): string {
   switch (distribution.accessServiceProtocol.toLowerCase()) {
+    case 'ogcfeatures':
+      return 'OGC API Features'
     case 'wfs':
       return 'OGC:WFS'
     case 'wms':
@@ -269,6 +271,24 @@ export function getMaintenanceFrequencyCode(
       return 'continual'
     case 'periodic':
       return 'periodic'
+    case 'daily':
+      return 'daily'
+    case 'weekly':
+      return 'weekly'
+    case 'fortnightly':
+      return 'fortnightly'
+    case 'monthly':
+      return 'monthly'
+    case 'quarterly':
+      return 'quarterly'
+    case 'biannually':
+      return 'biannually'
+    case 'annually':
+      return 'annually'
+    case 'semimonthly':
+      return 'semimonthly'
+    case 'biennially':
+      return 'biennially'
   }
 }
 
@@ -737,6 +757,7 @@ export function appendOnlineResource(
   let functionCode: string
   let protocol: string
   if (onlineResource.type === 'service') {
+    // should we keep the identifierInService? read-write duplicate with name
     name = onlineResource.identifierInService // this is for GeoNetwork to know the layer name
     functionCode = 'download'
     protocol = getServiceDistributionProtocol(onlineResource)

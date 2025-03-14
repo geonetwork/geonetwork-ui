@@ -28,6 +28,7 @@ import {
 } from '@geonetwork-ui/api/metadata-converter'
 import { LangService } from '@geonetwork-ui/util/i18n'
 import { formatDate, isDateRange } from './date-range.utils'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export type DateRange = { start?: Date; end?: Date }
 
@@ -50,7 +51,7 @@ export class ElasticsearchService {
     size = 0,
     from = 0,
     sortBy: SortByField = null,
-    requestFields: RequestFields = [],
+    requestFields: RequestFields = null,
     searchFilters: SearchFilters = {},
     configFilters: SearchFilters = {},
     uuids?: string[],
@@ -68,7 +69,7 @@ export class ElasticsearchService {
         geometry
       ),
       ...(size > 0 ? { track_total_hits: true } : {}),
-      _source: requestFields,
+      ...(requestFields && { _source: requestFields }),
     }
     this.processRuntimeFields(payload)
     return payload
@@ -134,8 +135,7 @@ export class ElasticsearchService {
   }
 
   getRelatedRecordPayload(
-    title: string,
-    uuid: string,
+    record: CatalogRecord,
     size = 6,
     _source = [...ES_SOURCE_SUMMARY, 'allKeywords', 'createDate']
   ): EsSearchParams {
@@ -148,9 +148,23 @@ export class ElasticsearchService {
                 fields: [
                   'resourceTitleObject.default',
                   'resourceAbstractObject.default',
-                  'tag.raw',
+                  'allKeywords',
                 ],
-                like: title,
+                like: [
+                  {
+                    doc: {
+                      resourceTitleObject: {
+                        default: record.title,
+                      },
+                      resourceAbstractObject: {
+                        default: record.abstract,
+                      },
+                      allKeywords: record.keywords.map(
+                        (keyword) => keyword.label
+                      ),
+                    },
+                  },
+                ],
                 min_term_freq: 1,
                 max_query_terms: 12,
               },
@@ -166,7 +180,7 @@ export class ElasticsearchService {
               },
             },
           ],
-          must_not: [{ wildcard: { uuid: uuid } }],
+          must_not: [{ wildcard: { uuid: record.uniqueIdentifier } }],
         },
       },
       size,
@@ -220,6 +234,7 @@ export class ElasticsearchService {
   private filtersToQuery(
     filters: FieldFilters | FiltersAggregationParams | string
   ): FilterQuery {
+    const addQuote = (key: string) => (/^\/.+\/$/.test(key) ? key : `"${key}"`)
     const makeQuery = (filter: FieldFilter): string => {
       if (typeof filter === 'string') {
         return filter
@@ -227,9 +242,9 @@ export class ElasticsearchService {
       return Object.keys(filter)
         .map((key) => {
           if (filter[key] === true) {
-            return `"${key}"`
+            return addQuote(key)
           }
-          return `-"${key}"`
+          return `-${addQuote(key)}`
         })
         .join(' OR ')
     }
@@ -282,6 +297,17 @@ export class ElasticsearchService {
     return queryParts.length > 0 ? (queryParts as FilterQuery) : undefined
   }
 
+  private mustNotFilters(): Record<string, unknown>[] {
+    return [
+      {
+        query_string: {
+          query:
+            'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+        },
+      },
+    ]
+  }
+
   private buildPayloadQuery(
     { any, ...fieldSearchFilters }: SearchFilters,
     configFilters: SearchFilters,
@@ -289,6 +315,7 @@ export class ElasticsearchService {
     geometry?: Geometry
   ) {
     const must = [] as Record<string, unknown>[]
+    const must_not = this.mustNotFilters()
     const should = [] as Record<string, unknown>[]
     const filter = [this.queryFilterOnValues('isTemplate', 'n')] as Record<
       string,
@@ -341,6 +368,7 @@ export class ElasticsearchService {
     return {
       bool: {
         must,
+        must_not,
         should,
         filter,
       },
@@ -389,6 +417,8 @@ export class ElasticsearchService {
               },
             },
           ],
+
+          must_not: this.mustNotFilters(),
         },
       },
       _source: ['resourceTitleObject', 'uuid'],
@@ -501,13 +531,15 @@ export class ElasticsearchService {
       switch (aggregation.type) {
         case 'filters':
           return {
-            filters: Object.keys(aggregation.filters).reduce((prev, curr) => {
-              const filter = aggregation.filters[curr]
-              return {
-                ...prev,
-                [curr]: this.filtersToQuery(filter)[0],
-              }
-            }, {}),
+            filters: {
+              filters: Object.keys(aggregation.filters).reduce((prev, curr) => {
+                const filter = aggregation.filters[curr]
+                return {
+                  ...prev,
+                  [curr]: this.filtersToQuery(filter)[0],
+                }
+              }, {}),
+            },
           }
         case 'terms':
           return {

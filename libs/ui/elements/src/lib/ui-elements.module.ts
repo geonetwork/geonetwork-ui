@@ -1,23 +1,25 @@
-import { NgModule } from '@angular/core'
 import { CommonModule, NgOptimizedImage } from '@angular/common'
-import { RouterModule } from '@angular/router'
+import { NgModule } from '@angular/core'
+import { FormsModule } from '@angular/forms'
 import { MatTooltipModule } from '@angular/material/tooltip'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
-import { PopoverComponent, UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
-import { MaxLinesComponent, UiLayoutModule } from '@geonetwork-ui/ui/layout'
-import { TranslateModule } from '@ngx-translate/core'
-import { ThumbnailComponent } from './thumbnail/thumbnail.component'
+import { RouterModule } from '@angular/router'
 import {
   BadgeComponent,
   TextInputComponent,
   UiInputsModule,
 } from '@geonetwork-ui/ui/inputs'
-import { FormsModule } from '@angular/forms'
-import { AvatarComponent } from './avatar/avatar.component'
-import { UserPreviewComponent } from './user-preview/user-preview.component'
-import { MarkdownParserComponent } from './markdown-parser/markdown-parser.component'
-import { TimeSincePipe } from './user-feedback-item/time-since.pipe'
+import { MaxLinesComponent, UiLayoutModule } from '@geonetwork-ui/ui/layout'
+import { PopoverComponent, UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { provideNgIconsConfig } from '@ng-icons/core'
+import { TranslateModule } from '@ngx-translate/core'
+import { AvatarComponent } from './avatar/avatar.component'
+import { ImageInputComponent } from './image-input/image-input.component'
+import { MarkdownParserComponent } from './markdown-parser/markdown-parser.component'
+import { ThumbnailComponent } from './thumbnail/thumbnail.component'
+import { TimeSincePipe } from './user-feedback-item/time-since.pipe'
+import { UserPreviewComponent } from './user-preview/user-preview.component'
+import { ApplicationBannerComponent } from './application-banner/application-banner.component'
 
 @NgModule({
   imports: [
@@ -38,6 +40,8 @@ import { provideNgIconsConfig } from '@ng-icons/core'
     BadgeComponent,
     MaxLinesComponent,
     TextInputComponent,
+    ImageInputComponent,
+    ApplicationBannerComponent,
   ],
   providers: [
     provideNgIconsConfig({
@@ -50,6 +54,8 @@ import { provideNgIconsConfig } from '@ng-icons/core'
     AvatarComponent,
     UserPreviewComponent,
     MarkdownParserComponent,
+    ImageInputComponent,
+    ApplicationBannerComponent,
   ],
 })
 export class UiElementsModule {}

@@ -36,6 +36,7 @@ import {
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
+import { GpfApiDlComponent } from '@geonetwork-ui/feature/record'
 import {
   getGlobalConfig,
   getMapContextLayerFromConfig,
@@ -88,6 +89,7 @@ import { MatTabsModule } from '@angular/material/tabs'
 import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { LetDirective } from '@ngrx/component'
 import { OrganizationPageComponent } from './organization/organization-page/organization-page.component'
+
 import {
   BASEMAP_LAYERS,
   DO_NOT_USE_DEFAULT_BASEMAP,
@@ -100,9 +102,11 @@ import {
   matMoreHorizOutline,
   matRemoveOutline,
   matStarOutline,
+  matWarningAmberOutline,
 } from '@ng-icons/material-icons/outline'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
 import { MAX_FEATURE_COUNT } from './record/record-data-preview/record-data-preview.component'
+import { MatButtonToggleModule } from '@angular/material/button-toggle'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -173,9 +177,11 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
       matAddOutline,
       matExpandMoreOutline,
       matStarOutline,
+      matWarningAmberOutline,
     }),
     OrganisationsComponent,
     LanguageSwitcherComponent,
+    MatButtonToggleModule,
   ],
   providers: [
     provideNgIconsConfig({

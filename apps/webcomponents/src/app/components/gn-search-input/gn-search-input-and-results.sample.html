@@ -16,6 +16,7 @@
       body {
         margin: 0;
         overflow-y: scroll;
+        font-family: var(--font-family-main);
       }
       header {
         height: 200px;
@@ -50,9 +51,9 @@
         main-color="#555"
         background-color="#fdfbff"
         main-font="'Inter', sans-serif"
-        filter='{"OrgForResource": { "Géo2France": true } }'
         title-font="'DM Serif Display', serif"
         show-more="auto"
+        filter='{"OrgForResourceObject.default": { "Géo2France": true } }'
       ></gn-results-list>
     </main>
   </body>

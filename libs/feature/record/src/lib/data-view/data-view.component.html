@@ -1,20 +1,23 @@
 <div class="w-full h-full flex flex-col p-1">
   <gn-ui-dropdown-selector
     *ngIf="dropdownChoices$ | async as choices"
+    [ngClass]="{ hidden: !displaySource }"
     [title]="'table.select.data' | translate"
     class="truncate p-1 -mx-1 self-end mb-1"
     extraBtnClass="!text-primary font-sans font-medium"
     [choices]="choices"
     (selectValue)="selectLink($event)"
   ></gn-ui-dropdown-selector>
-  <div class="relative h-[420px]">
+  <div class="relative h-[460px]">
     <gn-ui-table-view
       *ngIf="mode === 'table'"
+      [cacheActive]="cacheActive$ | async"
       [link]="selectedLink$ | async"
     ></gn-ui-table-view>
     <gn-ui-chart-view
       *ngIf="mode === 'chart'"
       (chartConfig$)="setChartConfig($event)"
+      [cacheActive]="cacheActive$ | async"
       [link]="selectedLink$ | async"
     ></gn-ui-chart-view>
   </div>

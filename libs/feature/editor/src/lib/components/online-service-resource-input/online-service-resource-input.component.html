@@ -11,12 +11,13 @@
     help
   </span>
 </div>
-<div class="flex flex-row items-center gap-[16px] h-[48px]">
+<div class="flex flex-row items-center gap-4 h-[48px]">
   <mat-radio-group
     aria-labelledby="example-radio-group-label"
     class="flex flex-row gap-[8px]"
-    [(ngModel)]="service.accessServiceProtocol"
+    [(ngModel)]="_service.accessServiceProtocol"
     [disabled]="disabled"
+    (change)="resetAllFormFields()"
   >
     <mat-radio-button
       *ngFor="let protocolOption of protocolOptions"
@@ -26,8 +27,64 @@
     </mat-radio-button>
   </mat-radio-group>
 </div>
-<gn-ui-text-input
-  [(value)]="service.identifierInService"
-  data-cy="identifier-in-service"
-  [disabled]="disabled"
-></gn-ui-text-input>
+
+<div class="flex flex-col gap-4">
+  <gn-ui-url-input
+    class="w-full"
+    (uploadClick)="handleUploadClick($event)"
+    (valueChange)="handleUrlValueChange($event)"
+    [disabled]="disabled"
+    [value]="_service.url?.toString()"
+    [showValidateButton]="activeLayerSuggestion"
+  >
+    <ng-content *ngIf="activeLayerSuggestion">
+      <ng-icon name="iconoirRefresh"></ng-icon>
+    </ng-content>
+  </gn-ui-url-input>
+
+  <p class="text-sm text-red-500 pl-4" *ngIf="errorMessage" translate>
+    editor.record.form.field.onlineResource.edit.identifier.error
+  </p>
+
+  <gn-ui-text-input
+    class="grow border-b border-gray-300 pb-4"
+    [(value)]="_service.identifierInService"
+    [placeholder]="getIdentifierPlaceholder() | translate"
+    data-cy="identifier-in-service"
+    [disabled]="disabled"
+    *ngIf="
+      !activeLayerSuggestion ||
+      (_service.url && errorMessage) ||
+      (modifyMode && (layers$ | async).length === 0)
+    "
+  ></gn-ui-text-input>
+  <gn-ui-autocomplete
+    class="border-b border-gray-300 pb-4"
+    [placeholder]="
+      'editor.record.form.field.onlineResource.edit.identifier.select.label'
+        | translate
+    "
+    [action]="autoCompleteAction"
+    (itemSelected)="handleSelectValue($event)"
+    [displayWithFn]="displayWithFn"
+    [minCharacterCount]="0"
+    [clearOnSelection]="false"
+    *ngIf="activeLayerSuggestion && (layers$ | async)?.length > 0"
+  >
+  </gn-ui-autocomplete>
+  <gn-ui-button
+    (buttonClick)="submit()"
+    [disabled]="disabled || !_service.identifierInService"
+    type="primary"
+    *ngIf="
+      !modifyMode &&
+      ((activeLayerSuggestion && (layers$ | async)) ||
+        !activeLayerSuggestion ||
+        (_service.url && errorMessage))
+    "
+  >
+    <span class="text-white font-bold" translate>
+      editor.record.form.field.onlineResource.edit.identifier.submit</span
+    >
+  </gn-ui-button>
+</div>

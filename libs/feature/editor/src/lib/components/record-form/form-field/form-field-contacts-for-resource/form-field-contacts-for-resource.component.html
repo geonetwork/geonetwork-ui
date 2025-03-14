@@ -31,7 +31,9 @@
       </div>
 
       <gn-ui-autocomplete
-        [placeholder]="'Choose a contact'"
+        [placeholder]="
+          'editor.record.form.field.contactsForResource.placeholder' | translate
+        "
         [action]="autoCompleteAction"
         (itemSelected)="addContact($event, role)"
         [displayWithFn]="displayWithFn"

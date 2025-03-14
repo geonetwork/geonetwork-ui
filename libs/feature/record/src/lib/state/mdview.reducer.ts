@@ -3,6 +3,7 @@ import * as MetadataViewActions from './mdview.actions'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import {
   CatalogRecord,
+  DatasetFeatureCatalog,
   UserFeedback,
 } from '@geonetwork-ui/common/domain/model/record'
 
@@ -17,6 +18,9 @@ export interface MetadataViewState {
   allUserFeedbacksLoading: boolean
   addUserFeedbackLoading: boolean
   chartConfig?: DatavizConfigurationModel
+  featureCatalog?: DatasetFeatureCatalog
+  featureCatalogLoading: boolean
+  featureCatalogError: string | null
 }
 
 export const initialMetadataViewState: MetadataViewState = {
@@ -24,6 +28,8 @@ export const initialMetadataViewState: MetadataViewState = {
   loadingFull: false,
   allUserFeedbacksLoading: false,
   addUserFeedbackLoading: false,
+  featureCatalogLoading: false,
+  featureCatalogError: null,
 }
 
 const metadataViewReducer = createReducer(
@@ -105,7 +111,30 @@ const metadataViewReducer = createReducer(
       addUserFeedbackLoading: false,
       allUserFeedbacksLoading: false,
     })
-  )
+  ),
+
+  /**
+   * FeatureCatalog reducers
+   */
+
+  on(MetadataViewActions.loadFeatureCatalog, (state) => ({
+    ...state,
+    featureCatalogError: null,
+    featureCatalogLoading: true,
+  })),
+  on(
+    MetadataViewActions.loadFeatureCatalogSuccess,
+    (state, { datasetCatalog }) => ({
+      ...state,
+      featureCatalog: datasetCatalog,
+      featureCatalogLoading: false,
+    })
+  ),
+  on(MetadataViewActions.loadFeatureCatalogFailure, (state, { error }) => ({
+    ...state,
+    featureCatalogError: error,
+    featureCatalogLoading: false,
+  }))
 )
 
 export function reducer(

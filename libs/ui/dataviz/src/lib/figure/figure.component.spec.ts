@@ -54,12 +54,14 @@ describe('FigureComponent', () => {
     expect(icon['name']).toContain('group')
   })
   it('icon is primary color', () => {
-    expect(compiled.querySelector('ng-icon')?.className).toContain(
-      'text-primary'
-    )
+    expect(
+      compiled.querySelector('[data-test=icon-container]')?.className
+    ).toContain('text-primary')
   })
   it('icon background is primary color', () => {
-    expect(compiled.querySelector('ng-icon')?.className).toContain('bg-primary')
+    expect(
+      compiled.querySelector('[data-test=icon-container]')?.className
+    ).toContain('bg-primary')
   })
   it('label is black text color', () => {
     expect(compiled.querySelector('.figure-block')?.className).toContain(
@@ -95,14 +97,14 @@ describe('FigureComponent', () => {
       fixture.detectChanges()
     })
     it('icon is secondary color', () => {
-      expect(compiled.querySelector('ng-icon')?.className).toContain(
-        'text-secondary'
-      )
+      expect(
+        compiled.querySelector('[data-test=icon-container]')?.className
+      ).toContain('text-secondary')
     })
     it('icon background is secondary color', () => {
-      expect(compiled.querySelector('ng-icon')?.className).toContain(
-        'bg-secondary'
-      )
+      expect(
+        compiled.querySelector('[data-test=icon-container]')?.className
+      ).toContain('bg-secondary')
     })
   })
 })

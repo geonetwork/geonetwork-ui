@@ -157,6 +157,42 @@ As such, **it is not very interesting at all.**`,
     },
     otherLanguages: ['de'],
     defaultLanguage: 'en',
+    extras: {
+      isPublishedToAll: true,
+      edit: true,
+      featureTypes: [
+        {
+          attributeTable: [
+            {
+              code: 'OBJECTID',
+              name: 'OBJECTID',
+              link: '',
+              definition: 'Object identifier',
+              type: 'OID',
+            },
+            {
+              code: 'NOM',
+              name: 'Nom',
+              link: '',
+              definition: 'Nom de la rue',
+              type: 'String (48)',
+            },
+            {
+              code: 'RUE',
+              name: 'Rue',
+              link: '',
+              definition: '',
+              type: 'String (50)',
+            },
+          ],
+          code: '',
+          aliases: '',
+          typeName: "Catalogue d'attributs",
+          definition: '',
+          isAbstract: 'false',
+        },
+      ],
+    },
   },
   {
     uniqueIdentifier: '7d002c4c-92ef-4b9f-a568-d732f740b99e',
@@ -308,6 +344,49 @@ export const simpleDatasetRecordFixture = (): DatasetRecord => ({
   translations: {},
 })
 
+export const simpleDatasetRecordWithFcatsFixture = (): DatasetRecord => ({
+  uniqueIdentifier: 'my-dataset-with-fcats',
+  extras: {
+    featureCatalogIdentifier: 'feature-catalog-identifier',
+  },
+  kind: 'dataset',
+  otherLanguages: [],
+  defaultLanguage: 'en',
+  recordUpdated: new Date('2022-02-01T14:12:00.000Z'),
+  resourceCreated: new Date('2022-09-01T12:18:19.000Z'),
+  resourceUpdated: new Date('2022-12-04T14:12:00.000Z'),
+  status: 'ongoing',
+  title: 'A very interesting dataset with a related feature catalog',
+  abstract: `This dataset has been established for testing purposes.`,
+  ownerOrganization: { name: 'MyOrganization', translations: {} },
+  contacts: [
+    {
+      email: 'bob@org.net',
+      position: 'developer',
+      organization: { name: 'MyOrganization', translations: {} },
+      role: 'point_of_contact',
+      firstName: 'Bob',
+      lastName: 'TheGreat',
+    },
+  ],
+  contactsForResource: [],
+  keywords: [],
+  topics: ['testData'],
+  licenses: [],
+  legalConstraints: [],
+  securityConstraints: [],
+  otherConstraints: [],
+  lineage:
+    'This record was edited manually to test the feature catalog parsing',
+  spatialRepresentation: 'grid',
+  overviews: [],
+  spatialExtents: [],
+  temporalExtents: [],
+  onlineResources: [],
+  updateFrequency: { per: 'month', updatedTimes: 3 },
+  translations: {},
+})
+
 export const simpleDatasetRecordAsXmlFixture =
   (): string => `<?xml version="1.0" encoding="UTF-8"?>
 <mdb:MD_Metadata xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/2.0" xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0" xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0" xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/2.0" xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0" xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0" xmlns:gcx="http://standards.iso.org/iso/19115/-3/gcx/1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mmi="http://standards.iso.org/iso/19115/-3/mmi/1.0" xmlns:mrd="http://standards.iso.org/iso/19115/-3/mrd/1.0" xmlns:mrl="http://standards.iso.org/iso/19115/-3/mrl/2.0">
@@ -376,6 +455,165 @@ export const simpleDatasetRecordAsXmlFixture =
                 <cit:CI_Citation>
                     <cit:title>
                         <gco:CharacterString>A very interesting dataset (un jeu de données très intéressant)</gco:CharacterString>
+                    </cit:title>
+                    <cit:date>
+                        <cit:CI_Date>
+                            <cit:date>
+                                <gco:DateTime>2022-09-01T14:18:19</gco:DateTime>
+                            </cit:date>
+                            <cit:dateType>
+                                <cit:CI_DateTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="creation">creation</cit:CI_DateTypeCode>
+                            </cit:dateType>
+                        </cit:CI_Date>
+                    </cit:date>
+                    <cit:date>
+                        <cit:CI_Date>
+                            <cit:date>
+                                <gco:DateTime>2022-12-04T15:12:00</gco:DateTime>
+                            </cit:date>
+                            <cit:dateType>
+                                <cit:CI_DateTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="revision">revision</cit:CI_DateTypeCode>
+                            </cit:dateType>
+                        </cit:CI_Date>
+                    </cit:date>
+                </cit:CI_Citation>
+            </mri:citation>
+            <mri:abstract>
+                <gco:CharacterString>This dataset has been established for testing purposes.</gco:CharacterString>
+            </mri:abstract>
+            <mri:topicCategory>
+                <mri:MD_TopicCategoryCode>testData</mri:MD_TopicCategoryCode>
+            </mri:topicCategory>
+            <mri:status>
+                <mcc:MD_ProgressCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode" codeListValue="onGoing">onGoing</mcc:MD_ProgressCode>
+            </mri:status>
+            <mri:resourceMaintenance>
+                <mmi:MD_MaintenanceInformation>
+                    <mmi:userDefinedMaintenanceFrequency>
+                        <gco:TM_PeriodDuration>P0Y0M10D</gco:TM_PeriodDuration>
+                    </mmi:userDefinedMaintenanceFrequency>
+                </mmi:MD_MaintenanceInformation>
+            </mri:resourceMaintenance>
+            <mri:spatialRepresentationType>
+                <mcc:MD_SpatialRepresentationTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_SpatialRepresentationTypeCode" codeListValue="grid">grid</mcc:MD_SpatialRepresentationTypeCode>
+            </mri:spatialRepresentationType>
+        </mri:MD_DataIdentification>
+    </mdb:identificationInfo>
+    <mdb:distributionInfo>
+        <mrd:MD_Distribution>
+            <mrd:distributionFormat>
+                <mrd:MD_Format>
+                    <mrd:formatSpecificationCitation>
+                        <cit:CI_Citation>
+                            <cit:title>
+                                <gco:CharacterString>x-gis/x-shapefile</gco:CharacterString>
+                            </cit:title>
+                        </cit:CI_Citation>
+                    </mrd:formatSpecificationCitation>
+                </mrd:MD_Format>
+            </mrd:distributionFormat>
+            <mrd:transferOptions>
+                <mrd:MD_DigitalTransferOptions>
+                    <mrd:onLine>
+                        <cit:CI_OnlineResource>
+                            <cit:linkage>
+                                <gco:CharacterString>http://my-org.net/download/1.zip</gco:CharacterString>
+                            </cit:linkage>
+                            <cit:description>
+                                <gco:CharacterString>Dataset downloaded as a shapefile</gco:CharacterString>
+                            </cit:description>
+                            <cit:name>
+                                <gco:CharacterString>Direct download</gco:CharacterString>
+                            </cit:name>
+                            <cit:protocol>
+                                <gco:CharacterString>WWW:DOWNLOAD</gco:CharacterString>
+                            </cit:protocol>
+                            <cit:function>
+                                <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download"/>
+                            </cit:function>
+                        </cit:CI_OnlineResource>
+                    </mrd:onLine>
+                </mrd:MD_DigitalTransferOptions>
+            </mrd:transferOptions>
+        </mrd:MD_Distribution>
+    </mdb:distributionInfo>
+    <mdb:resourceLineage>
+        <mrl:LI_Lineage>
+            <mrl:statement>
+                <gco:CharacterString>This record was edited manually to test the conversion processes</gco:CharacterString>
+            </mrl:statement>
+        </mrl:LI_Lineage>
+    </mdb:resourceLineage>
+</mdb:MD_Metadata>`
+
+export const duplicateDatasetRecordAsXmlFixture =
+  (): string => `<?xml version="1.0" encoding="UTF-8"?>
+<mdb:MD_Metadata xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/2.0" xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0" xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0" xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/2.0" xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0" xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0" xmlns:gcx="http://standards.iso.org/iso/19115/-3/gcx/1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mmi="http://standards.iso.org/iso/19115/-3/mmi/1.0" xmlns:mrd="http://standards.iso.org/iso/19115/-3/mrd/1.0" xmlns:mrl="http://standards.iso.org/iso/19115/-3/mrl/2.0">
+    <mdb:metadataIdentifier>
+        <mcc:MD_Identifier>
+            <mcc:code>
+                <gco:CharacterString>my-dataset-001</gco:CharacterString>
+            </mcc:code>
+        </mcc:MD_Identifier>
+    </mdb:metadataIdentifier>
+    <mdb:metadataScope>
+        <mdb:MD_MetadataScope>
+            <mdb:resourceScope>
+                <mcc:MD_ScopeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="dataset">dataset</mcc:MD_ScopeCode>
+            </mdb:resourceScope>
+        </mdb:MD_MetadataScope>
+    </mdb:metadataScope>
+    <mdb:contact>
+        <cit:CI_Responsibility>
+            <cit:role>
+                <cit:CI_RoleCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</cit:CI_RoleCode>
+            </cit:role>
+            <cit:party>
+                <cit:CI_Organisation>
+                    <cit:name>
+                        <gco:CharacterString>MyOrganization</gco:CharacterString>
+                    </cit:name>
+                    <cit:contactInfo>
+                        <cit:CI_Contact>
+                            <cit:address>
+                                <cit:CI_Address>
+                                    <cit:electronicMailAddress>
+                                        <gco:CharacterString>bob@org.net</gco:CharacterString>
+                                    </cit:electronicMailAddress>
+                                </cit:CI_Address>
+                            </cit:address>
+                        </cit:CI_Contact>
+                    </cit:contactInfo>
+                    <cit:individual>
+                        <cit:CI_Individual>
+                            <cit:name>
+                                <gco:CharacterString>Bob TheGreat</gco:CharacterString>
+                            </cit:name>
+                            <cit:positionName>
+                                <gco:CharacterString>developer</gco:CharacterString>
+                            </cit:positionName>
+                        </cit:CI_Individual>
+                    </cit:individual>
+                </cit:CI_Organisation>
+            </cit:party>
+        </cit:CI_Responsibility>
+    </mdb:contact>
+    <mdb:dateInfo>
+        <cit:CI_Date>
+            <cit:date>
+                <gco:DateTime>2022-02-01T15:12:00</gco:DateTime>
+            </cit:date>
+            <cit:dateType>
+                <cit:CI_DateTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="revision">revision</cit:CI_DateTypeCode>
+            </cit:dateType>
+        </cit:CI_Date>
+    </mdb:dateInfo>
+    <mdb:identificationInfo>
+        <mri:MD_DataIdentification>
+            <mri:citation>
+                <cit:CI_Citation>
+                    <cit:title>
+                        <gco:CharacterString>Copy of record A very interesting dataset (un jeu de données très intéressant)</gco:CharacterString>
                     </cit:title>
                     <cit:date>
                         <cit:CI_Date>

@@ -1,0 +1,36 @@
+table {
+  width: 100%;
+  background: white;
+}
+th.mat-mdc-header-cell,
+td.mat-mdc-cell,
+td.mat-mdc-footer-cell {
+  padding-right: 20px;
+}
+tr.mat-mdc-row,
+tr.mat-mdc-footer-row {
+  height: 36px;
+}
+tr:hover {
+  background: whitesmoke;
+}
+tr.mat-mdc-header-row {
+  height: 48px;
+}
+
+[mat-header-cell] {
+  color: #0000008a;
+  font-size: 12px;
+  font-weight: 500;
+}
+tr {
+  cursor: pointer;
+}
+
+.active .mat-mdc-cell {
+  color: var(--color-primary);
+}
+
+.mat-mdc-paginator {
+  background: none;
+}

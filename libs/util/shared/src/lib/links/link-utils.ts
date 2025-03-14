@@ -1,5 +1,14 @@
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import {
+  DatasetOnlineResource,
+  ServiceProtocol,
+} from '@geonetwork-ui/common/domain/model/record'
+import {
+  OgcApiEndpoint,
+  WfsEndpoint,
+  WmsEndpoint,
+  WmtsEndpoint,
+} from '@camptocamp/ogc-client'
 
 marker('downloads.wfs.featuretype.not.found')
 
@@ -240,6 +249,44 @@ export function getLinkLabel(link: DatasetOnlineResource): string {
   }
   const label = link.description || link.name
   return format ? `${label} (${format})` : label
+}
+
+export async function getLayers(url: string, serviceProtocol: ServiceProtocol) {
+  switch (serviceProtocol) {
+    case 'ogcFeatures': {
+      const layers = await new OgcApiEndpoint(url).allCollections
+      return layers
+    }
+    case 'wfs': {
+      const endpointWfs = await new WfsEndpoint(url).isReady()
+      return endpointWfs.getFeatureTypes()
+    }
+    case 'wms': {
+      const endpointWms = await new WmsEndpoint(url).isReady()
+      return endpointWms
+        .getLayers()
+        .flatMap(wmsLayerFlatten)
+        .filter((l) => l.name)
+    }
+    case 'wmts': {
+      const endpointWmts = await new WmtsEndpoint(url).isReady()
+      return endpointWmts.getLayers()
+    }
+    default:
+      return undefined
+  }
+}
+
+function wmsLayerFlatten(layerFull) {
+  const layer = {
+    title: layerFull.title,
+    name: layerFull.name,
+    abstract: layerFull.abstract,
+  }
+
+  return 'children' in layerFull && Array.isArray(layerFull.children)
+    ? [layer, ...layerFull.children.flatMap(wmsLayerFlatten)]
+    : [layer]
 }
 
 export function getMimeTypeForFormat(format: FileFormat): string | null {

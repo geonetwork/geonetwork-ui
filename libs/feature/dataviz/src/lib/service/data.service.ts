@@ -164,17 +164,26 @@ export class DataService {
       wfsLink.url.toString(),
       wfsLink.name
     ).pipe(
-      map((urls) => urls.all),
-      map((urls) =>
-        Object.keys(urls).map((format) => ({
-          ...wfsLink,
-          type: 'download',
-          url: new URL(urls[format]),
-          mimeType: getMimeTypeForFormat(
-            getFileFormatFromServiceOutput(format)
-          ),
-        }))
-      )
+      map((urls) => {
+        if (urls.geojson) {
+          urls.all['application/json'] = urls.geojson
+        }
+        return urls
+      }),
+      map((urls) => {
+        const resources: DatasetOnlineResource[] = Object.keys(urls.all).map(
+          (format) => ({
+            ...wfsLink,
+            name: wfsLink.name,
+            type: 'download' as const,
+            url: new URL(urls.all[format]),
+            mimeType: getMimeTypeForFormat(
+              getFileFormatFromServiceOutput(format)
+            ),
+          })
+        )
+        return resources
+      })
     )
   }
 
@@ -187,6 +196,7 @@ export class DataService {
     return Object.keys(collectionInfo.bulkDownloadLinks).map((downloadLink) => {
       return {
         ...ogcApiLink,
+        name: collectionInfo.id,
         type: 'download',
         url: new URL(collectionInfo.bulkDownloadLinks[downloadLink]),
         mimeType: getMimeTypeForFormat(
@@ -232,8 +242,11 @@ export class DataService {
     }))
   }
 
-  readAsGeoJson(link: DatasetOnlineResource): Observable<FeatureCollection> {
-    return this.getDataset(link).pipe(
+  readAsGeoJson(
+    link: DatasetOnlineResource,
+    cacheActive: boolean
+  ): Observable<FeatureCollection> {
+    return this.getDataset(link, cacheActive).pipe(
       switchMap((dataset) => dataset.selectAll().read()),
       map((features) => ({
         type: 'FeatureCollection',
@@ -242,23 +255,21 @@ export class DataService {
     )
   }
 
-  getDataset(link: DatasetOnlineResource): Observable<BaseReader> {
+  getDataset(
+    link: DatasetOnlineResource,
+    cacheActive: boolean
+  ): Observable<BaseReader> {
     if (link.type === 'service' && link.accessServiceProtocol === 'wfs') {
-      return this.getDownloadUrlsFromWfs(link.url.toString(), link.name).pipe(
-        switchMap((urls) => {
-          if (urls.geojson) return openDataset(urls.geojson, 'geojson')
-          if (urls.gml)
-            return openDataset(urls.gml.featureUrl, 'gml', {
-              namespace: urls.gml.namespace,
-              wfsVersion: urls.gml.wfsVersion,
-            })
-          return null
-        }),
-        tap((url) => {
-          if (url === null) {
-            throw new Error('wfs.geojsongml.notsupported')
-          }
-        })
+      const wfsUrlEndpoint = this.proxy.getProxiedUrl(link.url.toString())
+      return from(
+        openDataset(
+          wfsUrlEndpoint,
+          'wfs',
+          {
+            wfsFeatureType: link.name,
+          },
+          cacheActive
+        )
       )
     } else if (link.type === 'download') {
       const linkProxifiedUrl = this.proxy.getProxiedUrl(link.url.toString())
@@ -267,7 +278,9 @@ export class DataService {
         SupportedTypes.indexOf(format as any) > -1
           ? (format as SupportedType)
           : undefined
-      return from(openDataset(linkProxifiedUrl, supportedType)).pipe()
+      return from(
+        openDataset(linkProxifiedUrl, supportedType, undefined, cacheActive)
+      ).pipe()
     } else if (
       link.type === 'service' &&
       link.accessServiceProtocol === 'esriRest'
@@ -276,7 +289,7 @@ export class DataService {
         link.url.toString(),
         'geojson'
       )
-      return from(openDataset(url, 'geojson')).pipe()
+      return from(openDataset(url, 'geojson', undefined, cacheActive)).pipe()
     } else if (
       link.type === 'service' &&
       link.accessServiceProtocol === 'ogcFeatures'
@@ -284,7 +297,7 @@ export class DataService {
       return from(this.getDownloadUrlsFromOgcApi(link.url.href)).pipe(
         switchMap((collectionInfo) => {
           const geojsonUrl = collectionInfo.jsonDownloadLink
-          return openDataset(geojsonUrl, 'geojson')
+          return openDataset(geojsonUrl, 'geojson', undefined, cacheActive)
         }),
         tap((url) => {
           if (url === null) {

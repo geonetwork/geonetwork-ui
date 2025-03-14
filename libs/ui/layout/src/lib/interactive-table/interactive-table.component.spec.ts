@@ -3,6 +3,7 @@ import { InteractiveTableComponent } from './interactive-table.component'
 import { Component, DebugElement, EventEmitter, Output } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { InteractiveTableColumnComponent } from './interactive-table-column/interactive-table-column.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   template: `
@@ -42,7 +43,7 @@ describe('InteractiveTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TestHostComponent],
+      imports: [TestHostComponent, TranslateModule.forRoot()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(TestHostComponent)

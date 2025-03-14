@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import { GpfApiDlComponent, MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
   CarouselComponent,
   PreviousNextButtonsComponent,
@@ -19,6 +19,10 @@ import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matCloseOutline } from '@ng-icons/material-icons/outline'
 import { TranslateModule } from '@ngx-translate/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('record.metadata.api.form.title.gpf')
+marker('record.metadata.api.form.title')
 
 @Component({
   selector: 'datahub-record-apis',
@@ -34,6 +38,7 @@ import { TranslateModule } from '@ngx-translate/core'
     RecordApiFormComponent,
     NgIcon,
     TranslateModule,
+    GpfApiDlComponent,
   ],
   viewProviders: [
     provideIcons({
@@ -75,7 +80,7 @@ export class RecordApisComponent implements OnInit {
   }
 
   setStyle(link: DatasetServiceDistribution) {
-    this.maxHeight = link === undefined ? '0px' : '500px'
+    this.maxHeight = link === undefined ? '0px' : '700px'
     this.opacity = link === undefined ? 0 : 1
   }
 }

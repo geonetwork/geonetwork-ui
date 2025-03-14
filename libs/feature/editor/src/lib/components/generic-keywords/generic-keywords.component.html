@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-3">
+<div class="flex flex-col gap-4">
   <gn-ui-autocomplete
     [placeholder]="placeholder"
     [displayWithFn]="displayWithFn"
@@ -18,7 +18,7 @@
 
       <ng-icon
         *ngIf="isPlaceWithoutExtent(keyword)"
-        [title]="'editor.form.placeKeywordWithoutExtent' | translate"
+        [title]="'editor.record.form.keywords.place.withoutExtent' | translate"
         class="badge-warning"
         name="matWarningAmberOutline"
       ></ng-icon>

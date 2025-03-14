@@ -1,8 +1,11 @@
+import { DateService } from '../services'
+
 export function getTemporalRangeUnion(
   ranges: {
     start?: Date
     end?: Date
-  }[]
+  }[],
+  dateService: DateService
 ) {
   let earliestStartDate = Infinity
   let latestEndDate = -Infinity
@@ -24,11 +27,11 @@ export function getTemporalRangeUnion(
     return {
       start:
         earliestStartDate !== -Infinity
-          ? new Date(earliestStartDate).toLocaleDateString()
+          ? dateService.formatDate(new Date(earliestStartDate))
           : undefined,
       end:
         latestEndDate !== Infinity
-          ? new Date(latestEndDate).toLocaleDateString()
+          ? dateService.formatDate(new Date(latestEndDate))
           : undefined,
     }
   } else {

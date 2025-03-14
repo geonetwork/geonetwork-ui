@@ -1,0 +1,20 @@
+<div class="container-lg border p-8 rounded-lg gap-2 p-8 shadow">
+  <div class="flex flex-row justify-between border-b border-gray-300 gap-56">
+    <div class="flex gap-2.5 items-center">
+      <ng-icon name="iconoirEmojiPuzzled"></ng-icon>
+      <span class="font-title text-2xl" translate
+        >editor.record.error.message</span
+      >
+    </div>
+    <a class="menu-item font-bold !pr-0" routerLink="/catalog/search">
+      <span class="text-sm" translate>editor.record.error.back</span>
+      <ng-icon name="iconoirJournal"></ng-icon>
+    </a>
+  </div>
+  <div class="flex items-center gap-2 h-32">
+    <p
+      class="font-medium"
+      [innerHTML]="'editor.record.error.explanation' | translate"
+    ></p>
+  </div>
+</div>

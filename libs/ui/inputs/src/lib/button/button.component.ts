@@ -62,9 +62,10 @@ export class ButtonComponent {
     return `${this.btnClass} ${this.extraClass}`
   }
 
-  handleClick(event: Event) {
+  handleClick(event: MouseEvent) {
     this.buttonClick.emit()
     event.preventDefault()
+    ;(event.currentTarget as HTMLElement).blur()
     propagateToDocumentOnly(event)
   }
 }

@@ -18,8 +18,13 @@ import {
   datasetRecordsFixture,
   simpleDatasetRecordAsXmlFixture,
   simpleDatasetRecordFixture,
+  simpleDatasetRecordWithFcatsFixture,
+  duplicateDatasetRecordAsXmlFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  DatasetFeatureCatalog,
+} from '@geonetwork-ui/common/domain/model/record'
 import { map } from 'rxjs/operators'
 import { HttpErrorResponse } from '@angular/common/http'
 import {
@@ -52,7 +57,7 @@ class ElasticsearchServiceMock {
 }
 
 class SearchApiServiceMock {
-  search = jest.fn((bucket, relatedType, payload) => {
+  search(bucket, relatedType, payload) {
     const body = JSON.parse(payload)
     const count = body.size || 1234
     const result: EsSearchResponse = {
@@ -69,29 +74,28 @@ class SearchApiServiceMock {
       }
     }
     return of(result)
-  })
+  }
 }
 
 class RecordsApiServiceMock {
   getRecordAs = jest.fn((uuid) =>
     of(`<gmd:MD_Metadata>
-  <gmd:fileIdentifier>
-    <gco:CharacterString>${uuid}</gco:CharacterString>
-  </gmd:fileIdentifier>
-</gmd:MD_Metadata>`).pipe(map((xml) => ({ body: xml })))
+      <gmd:fileIdentifier>
+        <gco:CharacterString>${uuid}</gco:CharacterString>
+      </gmd:fileIdentifier>
+    </gmd:MD_Metadata>`).pipe(map((xml) => ({ body: xml })))
   )
   insert = jest.fn(() =>
     of({
       metadataInfos: {
-        1234: [
-          {
-            uuid: '1234-5678-9012',
-          },
-        ],
+        1234: {
+          uuid: '1234-5678-9012',
+        },
       },
     })
   )
   deleteRecord = jest.fn(() => of({}))
+  create = jest.fn(() => of('1234-5678'))
 }
 
 class PlatformServiceInterfaceMock {
@@ -102,6 +106,7 @@ const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
   extras: {
     ownerInfo: 'Owner|SomeDetails',
+    edit: true,
   },
 }
 
@@ -252,6 +257,100 @@ describe('Gn4Repository', () => {
       })
     })
   })
+
+  describe('getFeatureCatalog', () => {
+    let catalog: DatasetFeatureCatalog
+    let metadata: CatalogRecord
+    const spySearch = jest.spyOn(SearchApiServiceMock.prototype, 'search')
+
+    describe('when extras feature catalog is defined ', () => {
+      beforeEach(async () => {
+        jest.clearAllMocks()
+        metadata = datasetRecordsFixture()[0]
+        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+      })
+
+      it('should not call the feature catalog API (extras contain the answer) ', () => {
+        expect(spySearch).not.toHaveBeenCalled()
+      })
+
+      it('returns the feature catalog with mapped features', () => {
+        expect(catalog).toEqual({
+          attributes: [
+            { name: 'OBJECTID', title: 'Object identifier' },
+            { name: 'Nom', title: 'Nom de la rue' },
+            { name: 'Rue', title: '' },
+          ],
+        })
+      })
+    })
+    describe('when feature catalog exists, no extras defined', () => {
+      beforeEach(async () => {
+        metadata = simpleDatasetRecordWithFcatsFixture()
+        spySearch.mockReturnValue(
+          of({ hits: { hits: datasetRecordsFixture(), total: { value: 0 } } })
+        )
+        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+      })
+
+      afterEach(() => {
+        spySearch.mockRestore()
+      })
+
+      it('calls the API with correct parameters', () => {
+        expect(spySearch).toHaveBeenCalledWith(
+          'bucket',
+          ['fcats'],
+          '{"uuids":["feature-catalog-identifier"]}'
+        )
+      })
+
+      it('returns the attributes coming from the linked feature catalog', () => {
+        expect(catalog).toEqual({
+          attributes: [
+            { name: 'OBJECTID', title: 'Object identifier' },
+            { name: 'Nom', title: 'Nom de la rue' },
+            { name: 'Rue', title: '' },
+          ],
+        })
+      })
+
+      it('prevent looping', async () => {
+        metadata = {
+          ...simpleDatasetRecordWithFcatsFixture(),
+          extras: {
+            ...simpleDatasetRecordWithFcatsFixture().extras,
+            featureCatalogIdentifier: 'my-dataset-with-fcats',
+          },
+        }
+        spySearch.mockReturnValue(
+          of({
+            hits: {
+              hits: metadata,
+              total: { value: 0 },
+            },
+          })
+        )
+        repository.getRecord = jest.fn().mockReturnValue(of(metadata))
+        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+        expect(catalog).toEqual(null)
+      })
+    })
+
+    describe('when feature catalog does not exist, nor in extras', () => {
+      beforeEach(async () => {
+        metadata = {
+          ...simpleDatasetRecordFixture(),
+          extras: {},
+        }
+        catalog = await lastValueFrom(repository.getFeatureCatalog(metadata))
+      })
+      it('returns null', () => {
+        expect(catalog).toEqual(null)
+      })
+    })
+  })
+
   describe('getSimilarRecords', () => {
     let results: CatalogRecord[]
     beforeEach(async () => {
@@ -262,11 +361,8 @@ describe('Gn4Repository', () => {
       )
     })
     it('uses a related record ES payload', () => {
-      expect(gn4Helper.getRelatedRecordPayload).toHaveBeenCalledWith(
-        'A very interesting dataset (un jeu de données très intéressant)',
-        'my-dataset-001',
-        3
-      )
+      const record = datasetRecordsFixture()[0]
+      expect(gn4Helper.getRelatedRecordPayload).toHaveBeenCalledWith(record, 3)
     })
     it('returns the given results as records', () => {
       expect(results).toStrictEqual(datasetRecordsFixture())
@@ -377,7 +473,7 @@ describe('Gn4Repository', () => {
 
     beforeEach(async () => {
       ;(gn4RecordsApi.getRecordAs as jest.Mock).mockReturnValueOnce(
-        of(simpleDatasetRecordAsXmlFixture()).pipe(
+        of(duplicateDatasetRecordAsXmlFixture()).pipe(
           map((xml) => ({ body: xml }))
         )
       )
@@ -401,17 +497,13 @@ describe('Gn4Repository', () => {
     })
     it('parses the XML record into a native object, and updates the id and title', () => {
       expect(record).toMatchObject({
-        uniqueIdentifier: `TEMP-ID-1720656000000`,
+        uniqueIdentifier: `my-dataset-001`,
         title:
-          'A very interesting dataset (un jeu de données très intéressant) (Copy)',
+          'Copy of record A very interesting dataset (un jeu de données très intéressant)',
       })
     })
-    it('saves the duplicated record as draft', () => {
-      const hasDraft = repository.recordHasDraft(`TEMP-ID-1720656000000`)
-      expect(hasDraft).toBe(true)
-    })
-    it('tells the record it has not been saved yet', () => {
-      expect(savedOnce).toBe(false)
+    it('tells the record it has been saved', () => {
+      expect(savedOnce).toBe(true)
     })
     it('returns the record as serialized', () => {
       expect(recordSource).toMatch(/<mdb:MD_Metadata/)
@@ -435,12 +527,20 @@ describe('Gn4Repository', () => {
         expect(error).toEqual(new PublicationVersionError('4.2.4'))
       })
     })
-    describe('with reference', () => {
+    describe('Existing record - with reference', () => {
       beforeEach(async () => {
+        ;(gn4RecordsApi.insert as jest.Mock).mockReturnValueOnce(
+          of({
+            metadataInfos: {
+              1234: [{ uuid: '1234-5678-9012' }],
+            },
+          })
+        )
         recordSource = await lastValueFrom(
           repository.saveRecord(
             simpleDatasetRecordFixture(),
-            simpleDatasetRecordAsXmlFixture()
+            simpleDatasetRecordAsXmlFixture(),
+            true
           )
         )
       })
@@ -451,13 +551,13 @@ describe('Gn4Repository', () => {
             <mcc:code>
                 <gco:CharacterString>my-dataset-001</gco:CharacterString>`)
       })
-      it('calls the API to insert the record as XML', () => {
+      it('calls the API to insert the record as XML for existing records', () => {
         expect(gn4RecordsApi.insert).toHaveBeenCalledWith(
           expect.anything(),
           undefined,
           undefined,
           undefined,
-          expect.anything(),
+          true,
           undefined,
           expect.anything(),
           undefined,
@@ -473,12 +573,19 @@ describe('Gn4Repository', () => {
                 <gco:CharacterString>my-dataset-001</gco:CharacterString>`)
         )
       })
-      it('returns the unique identifier of the record as it was saved', () => {
+      it('returns the unique identifier of the record and the draft status as it was saved', () => {
         expect(recordSource).toEqual('1234-5678-9012')
       })
     })
-    describe('without reference', () => {
+    describe('Existing record - without reference', () => {
       beforeEach(async () => {
+        ;(gn4RecordsApi.insert as jest.Mock).mockReturnValueOnce(
+          of({
+            metadataInfos: {
+              1234: [{ uuid: '1234-5678-9012' }],
+            },
+          })
+        )
         await lastValueFrom(repository.saveRecord(datasetRecordsFixture()[0]))
       })
       it('uses the ISO19139 converter by default', () => {
@@ -494,6 +601,13 @@ describe('Gn4Repository', () => {
   })
   describe('record draft', () => {
     beforeEach(async () => {
+      ;(gn4RecordsApi.insert as jest.Mock).mockReturnValueOnce(
+        of({
+          metadataInfos: {
+            1234: [{ uuid: '1234-5678-9012' }],
+          },
+        })
+      )
       // save a record, then a draft, then open the record again
       await lastValueFrom(
         repository.saveRecord(
@@ -756,19 +870,9 @@ describe('Gn4Repository', () => {
     })
   })
 
-  describe('isRecordNotYetSaved', () => {
-    it('returns true if the record has a temporary ID', () => {
-      expect(repository.isRecordNotYetSaved('TEMP-ID-12345')).toBe(true)
-    })
-
-    it('returns false if the record does not have a temporary ID', () => {
-      expect(repository.isRecordNotYetSaved('1234-5678')).toBe(false)
-    })
-  })
   describe('hasRecordChangedSinceDraft', () => {
     it('should return an empty array if the record is unsaved', () => {
       // Mock dependencies
-      repository.isRecordNotYetSaved = jest.fn().mockReturnValue(true)
       repository.recordHasDraft = jest.fn().mockReturnValue(true)
 
       repository
@@ -780,7 +884,6 @@ describe('Gn4Repository', () => {
 
     it('should return an empty array if there is no draft', () => {
       // Mock dependencies
-      repository.isRecordNotYetSaved = jest.fn().mockReturnValue(false)
       repository.recordHasDraft = jest.fn().mockReturnValue(false)
 
       repository
@@ -804,7 +907,6 @@ describe('Gn4Repository', () => {
       }
 
       // Mock dependencies
-      repository.isRecordNotYetSaved = jest.fn().mockReturnValue(false)
       repository.recordHasDraft = jest.fn().mockReturnValue(true)
       repository.getAllDrafts = jest.fn().mockReturnValue(of(mockDrafts))
       repository.getRecord = jest.fn().mockReturnValue(of(mockRecentRecord))
@@ -829,7 +931,6 @@ describe('Gn4Repository', () => {
       }
 
       // Mock dependencies
-      repository.isRecordNotYetSaved = jest.fn().mockReturnValue(false)
       repository.recordHasDraft = jest.fn().mockReturnValue(true)
       repository.getAllDrafts = jest.fn().mockReturnValue(of(mockDrafts))
       repository.getRecord = jest.fn().mockReturnValue(of(mockRecentRecord))
@@ -839,6 +940,22 @@ describe('Gn4Repository', () => {
         .subscribe((result) => {
           expect(result).toEqual([])
         })
+    })
+  })
+  describe('getRecordPublicationStatus', () => {
+    it('should return the publication status of a record', () => {
+      repository
+        .getRecordPublicationStatus('my-dataset-001')
+        .subscribe((publicationStatus) => {
+          expect(publicationStatus).toEqual(true)
+        })
+    })
+  })
+  describe('canEditRecord', () => {
+    it('should return the editing rights', () => {
+      repository.canEditRecord('my-dataset-001').subscribe((canEdit) => {
+        expect(canEdit).toEqual(true)
+      })
     })
   })
 })
