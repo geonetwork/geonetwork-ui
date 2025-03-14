@@ -1,8 +1,33 @@
 :host .resource-wrapper-container ::ng-deep > * {
   flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 0; /* Empêche le dépassement */
+  min-height: 0; /* Empêche le dépassement */
 }
 
 :host {
   position: relative;
-  display: block;
+}
+
+.resource-wrapper-container {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+}
+
+.size-M {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
+.size-S {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+}
+
+.size-XS {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
 }

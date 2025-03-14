@@ -1,41 +1,42 @@
 import type { Meta, StoryObj } from '@storybook/angular'
-import { ResourceWrapperComponent } from './resource-wrapper.component'
 import { componentWrapperDecorator } from '@storybook/angular'
+import { BlockListComponent } from './resource-wrapper.component'
 
-const meta: Meta<ResourceWrapperComponent> = {
-  component: ResourceWrapperComponent,
-  title: 'Layout/ResourceWrapperComponent',
+const meta: Meta<BlockListComponent> = {
+  component: BlockListComponent,
+  title: 'Layout/BlockListComponent',
   decorators: [
     componentWrapperDecorator(
       (story) =>
-        `<p>Please note that the resource-wrapper will overflow by default; to hide its items, make its container overflow-hidden!</p>
-<div class="border border-gray-300 h-[150px] w-[800px] overflow-x-hidden overflow-y-auto resize">${story}</div>`
+        `<div class="border border-gray-300 h-[500px] w-[300px] overflow-auto resize">${story}</div>`
     ),
   ],
 }
 export default meta
-type Story = StoryObj<ResourceWrapperComponent>
+type Story = StoryObj<
+  BlockListComponent & {
+    blockCount: number
+  }
+>
 
 export const Primary: Story = {
-  args: {},
+  args: {
+    pageSize: 5,
+    blockCount: 17,
+  },
   render: (args) => ({
-    props: args,
+    props: {
+      ...args,
+      blockList: new Array(args.blockCount).fill(0).map((_, i) => i + 1),
+    },
     template: `
-    <gn-ui-resource-wrapper containerClass='py-4 gap-4'>
-      <div class='border border-black w-[160px] ml-[calc(50%-80px)]'>
-        First box
-      </div>
-      <div class='border border-black w-[240px]'>
-        Second box
-      </div>
-      <div class='border border-blue-700 w-[180px] h-[50px] resize overflow-auto'>
-        Third box (resize me!)
-      </div>
-      <div class='border border-black w-[120px]'>
-        Fourth box
-      </div>
-      <div class='border border-black w-[280px] mr-[calc(50%-140px)]'>
-        Fifth box
+    <gn-ui-resource-wrapper [pageSize]='pageSize' containerClass='gap-4 p-4'>
+      <div
+        *ngFor='let block of blockList'
+        class='border border-black'
+        #block
+      >
+        Box {{ block }}
       </div>
     </gn-ui-resource-wrapper>
 `,

@@ -36,12 +36,6 @@ import { TranslateModule } from '@ngx-translate/core'
 export class RecordOtherlinksComponent implements AfterViewInit {
   otherLinks$ = this.facade.otherLinks$
 
-  @ViewChild(ResourceWrapperComponent) resourceWrapper: ResourceWrapperComponent
-  @ViewChild(BlockListComponent) list: BlockListComponent
-  get paginableElement(): Paginable {
-    return this.resourceWrapper || this.list
-  }
-
   constructor(
     public facade: MdViewFacade,
     private changeDetector: ChangeDetectorRef
