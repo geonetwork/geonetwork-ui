@@ -82,13 +82,14 @@ marker('wfs.feature.limit')
   viewProviders: [provideIcons({ matClose })],
 })
 export class MapViewComponent implements AfterViewInit {
-  @Input() set excludeWfs(value: boolean) {
+  @Input() set exceedsLimit(value: boolean) {
     this.excludeWfs$.next(value)
   }
   @Input() displaySource = true
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
 
   excludeWfs$ = new BehaviorSubject(false)
+  hidePreview = false
   selection: Feature
   showLegend = true
   legendExists = false
@@ -139,9 +140,10 @@ export class MapViewComponent implements AfterViewInit {
         return of([])
       }
       if (excludeWfs && link.accessServiceProtocol === 'wfs') {
-        this.error = 'wfs.feature.limit'
+        this.hidePreview = true
         return of([])
       }
+      this.hidePreview = false
       this.loading = true
       this.error = null
       return this.getLayerFromLink(link).pipe(
