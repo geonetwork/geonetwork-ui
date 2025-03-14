@@ -126,7 +126,8 @@ describe('ChartViewComponent', () => {
     it('creates a dataset reader once from the link', () => {
       expect(dataService.getDataset).toHaveBeenCalledTimes(1)
       expect(dataService.getDataset).toHaveBeenCalledWith(
-        aSetOfLinksFixture().dataCsv()
+        aSetOfLinksFixture().dataCsv(),
+        true
       )
     })
     it('choses the first string property for X', () => {
@@ -377,6 +378,23 @@ describe('ChartViewComponent', () => {
           id: 2,
         },
       ])
+    })
+  })
+  describe('when cache is deactivated', () => {
+    beforeEach(fakeAsync(() => {
+      jest.clearAllMocks()
+      component.cacheActive = false
+      component.link = aSetOfLinksFixture().dataCsv()
+      fixture.detectChanges()
+      tick(500)
+      flushMicrotasks()
+    }))
+
+    it('loads the data without the cache', () => {
+      expect(dataService.getDataset).toHaveBeenCalledWith(
+        aSetOfLinksFixture().dataCsv(),
+        false
+      )
     })
   })
 })

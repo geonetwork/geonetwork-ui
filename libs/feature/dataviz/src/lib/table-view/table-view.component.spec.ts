@@ -85,7 +85,8 @@ describe('TableViewComponent', () => {
 
     it('loads the data from the first available link', () => {
       expect(dataService.getDataset).toHaveBeenCalledWith(
-        aSetOfLinksFixture().dataCsv()
+        aSetOfLinksFixture().dataCsv(),
+        true
       )
     })
 
@@ -144,7 +145,8 @@ describe('TableViewComponent', () => {
         }))
         it('loads data from selected link', () => {
           expect(dataService.getDataset).toHaveBeenCalledWith(
-            aSetOfLinksFixture().geodataJson()
+            aSetOfLinksFixture().geodataJson(),
+            true
           )
         })
         it('displays mocked data in the table', () => {
@@ -185,6 +187,23 @@ describe('TableViewComponent', () => {
     }))
     it('shows an error warning', () => {
       expect(component.error).toEqual('dataset.error.unknown')
+    })
+  })
+  describe('when cache is deactivated', () => {
+    beforeEach(fakeAsync(() => {
+      jest.clearAllMocks()
+      component.cacheActive = false
+      component.link = aSetOfLinksFixture().dataCsv()
+      fixture.detectChanges()
+      tick(500)
+      flushMicrotasks()
+    }))
+
+    it('loads the data without the cache', () => {
+      expect(dataService.getDataset).toHaveBeenCalledWith(
+        aSetOfLinksFixture().dataCsv(),
+        false
+      )
     })
   })
 })

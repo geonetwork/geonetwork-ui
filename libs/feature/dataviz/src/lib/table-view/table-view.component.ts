@@ -33,6 +33,7 @@ import { CommonModule } from '@angular/common'
   standalone: true,
 })
 export class TableViewComponent {
+  @Input() cacheActive = true
   @Input() set link(value: DatasetOnlineResource) {
     this.currentLink$.next(value)
   }
@@ -66,7 +67,7 @@ export class TableViewComponent {
   ) {}
 
   getDatasetReader(link: DatasetOnlineResource): Observable<BaseReader> {
-    return this.dataService.getDataset(link)
+    return this.dataService.getDataset(link, this.cacheActive)
   }
 
   onTableSelect(event) {
