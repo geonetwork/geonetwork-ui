@@ -8,7 +8,6 @@ The following GeoNetwork-UI applications are available as docker images or ZIP a
 
 - [Datahub](../apps/datahub)
 - [Metadata Editor](../apps/editor)
-- [Datafeeder](../apps/datafeeder)
 
 ## With docker
 
