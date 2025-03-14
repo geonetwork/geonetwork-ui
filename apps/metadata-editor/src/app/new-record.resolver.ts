@@ -4,33 +4,33 @@ import {
   Individual,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { Observable, of } from 'rxjs'
 import { map, switchMap } from 'rxjs/operators'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { TranslateService } from '@ngx-translate/core'
 
 @Injectable({
   providedIn: 'root',
 })
 export class NewRecordResolver {
   constructor(
-    private recordsRepository: RecordsRepositoryInterface,
     private platformService: PlatformServiceInterface,
-    private organizationsServiceInterface: OrganizationsServiceInterface
+    private organizationsServiceInterface: OrganizationsServiceInterface,
+    private translateService: TranslateService
   ) {}
 
   resolve(): Observable<[CatalogRecord, string, boolean]> {
     return this.getCurrentUserAsPointOfContact().pipe(
-      map((contactsForResource) => {
+      map((userContact) => {
         const catalogRecord: CatalogRecord = {
-          uniqueIdentifier: this.recordsRepository.generateTemporaryId(),
-          title: `My new record (${new Date().toISOString()})`,
+          uniqueIdentifier: null,
+          title: this.translateService.instant('editor.new.record.title'),
           abstract: '',
           ownerOrganization: {
             name: 'Owner organization',
           },
-          contacts: [],
+          contacts: userContact ? [userContact] : [],
           recordUpdated: new Date(),
           updateFrequency: 'unknown',
           otherLanguages: [],
@@ -42,7 +42,7 @@ export class NewRecordResolver {
           securityConstraints: [],
           otherConstraints: [],
           overviews: [],
-          contactsForResource: contactsForResource ? [contactsForResource] : [],
+          contactsForResource: userContact ? [userContact] : [],
           kind: 'dataset',
           status: 'ongoing',
           lineage: '',
@@ -50,7 +50,6 @@ export class NewRecordResolver {
           spatialExtents: [],
           temporalExtents: [],
         }
-
         return [catalogRecord, null, false]
       })
     )

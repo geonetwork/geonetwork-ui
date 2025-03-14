@@ -65,6 +65,7 @@ marker('chart.aggregation.count')
   standalone: true,
 })
 export class ChartViewComponent {
+  @Input() cacheActive = true
   @Input() set link(value: DatasetOnlineResource) {
     this.currentLink$.next(value)
   }
@@ -134,7 +135,7 @@ export class ChartViewComponent {
     switchMap((link) => {
       this.error = null
       this.loading = true
-      return this.dataService.getDataset(link).pipe(
+      return this.dataService.getDataset(link, this.cacheActive).pipe(
         catchError((error) => {
           this.handleError(error)
           return EMPTY

@@ -32,11 +32,10 @@ import {
   SortableListComponent,
 } from '@geonetwork-ui/ui/layout'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { map, Subscription } from 'rxjs'
+import { Subscription } from 'rxjs'
 import { MAX_UPLOAD_SIZE_MB } from '../../../../fields.config'
 import { OnlineResourceCardComponent } from '../../../online-resource-card/online-resource-card.component'
 import { OnlineServiceResourceInputComponent } from '../../../online-service-resource-input/online-service-resource-input.component'
-import { EditorFacade } from '../../../../+state/editor.facade'
 
 type OnlineNotLinkResource =
   | DatasetDownloadDistribution
@@ -93,25 +92,21 @@ export class FormFieldOnlineResourcesComponent {
   notLinkResources: OnlineNotLinkResource[] = []
   uploadProgress = undefined
   uploadSubscription: Subscription = null
-  newService = {
+  newService = <DatasetServiceDistribution>{
     type: 'service',
     accessServiceProtocol: 'ogcFeatures',
     identifierInService: '',
-  } as Omit<DatasetServiceDistribution, 'url'>
+    url: undefined,
+  }
 
   protected MAX_UPLOAD_SIZE_MB = MAX_UPLOAD_SIZE_MB
-
-  disabled$ = this.editorFacade.alreadySavedOnce$.pipe(
-    map((alreadySavedOnce) => !alreadySavedOnce)
-  )
 
   constructor(
     private notificationsService: NotificationsService,
     private translateService: TranslateService,
     private platformService: PlatformServiceInterface,
     private cd: ChangeDetectorRef,
-    private dialog: MatDialog,
-    private editorFacade: EditorFacade
+    private dialog: MatDialog
   ) {}
 
   onSelectedTypeChange(selectedType: unknown) {
@@ -164,23 +159,8 @@ export class FormFieldOnlineResourcesComponent {
     }
   }
 
-  handleServiceUrlChange(url: string) {
-    this.valueChange.emit([
-      ...this.allResources,
-      {
-        ...this.newService,
-        url: new URL(url),
-      },
-    ])
-  }
-
-  handleServiceModify(
-    oldService: DatasetServiceDistribution,
-    newService: DatasetServiceDistribution
-  ) {
-    oldService.accessServiceProtocol = newService.accessServiceProtocol
-    oldService.identifierInService = newService.identifierInService
-    oldService.url = newService.url
+  handleServiceChange(service: DatasetServiceDistribution) {
+    this.valueChange.emit([...this.allResources, service])
   }
 
   handleResourcesChange(items: unknown[]) {

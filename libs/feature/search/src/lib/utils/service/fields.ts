@@ -9,6 +9,7 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import {
   AggregationBuckets,
   AggregationsParams,
+  FieldFilter,
   FieldFilterByExpression,
   FieldFilters,
   TermBucket,
@@ -445,5 +446,59 @@ export class DateRangeSearchField extends SimpleSearchField {
 
   getType(): FieldType {
     return 'dateRange'
+  }
+}
+
+marker('search.filters.availableServices.view')
+marker('search.filters.availableServices.download')
+
+export class AvailableServicesField extends SimpleSearchField {
+  private translateService = this.injector.get(TranslateService)
+
+  constructor(injector: Injector) {
+    super('availableServices', injector, 'asc')
+  }
+
+  linkProtocolViewFilter = '/OGC:WMT?S.*/'
+  linkProtocolDownloadFilter = '/OGC:WFS.*/'
+
+  protected async getBucketLabel(bucket: TermBucket) {
+    return firstValueFrom(
+      this.translateService.get(
+        `search.filters.availableServices.${bucket.term}`
+      )
+    )
+  }
+
+  protected getAggregations(): AggregationsParams {
+    return {
+      availableServices: {
+        type: 'filters',
+        filters: {
+          view: `+linkProtocol:${this.linkProtocolViewFilter}`,
+          download: `+linkProtocol:${this.linkProtocolDownloadFilter}`,
+        },
+      },
+    }
+  }
+
+  getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
+    const filters: FieldFilter = {}
+    if (values.includes('view')) filters[this.linkProtocolViewFilter] = true
+    if (values.includes('download'))
+      filters[this.linkProtocolDownloadFilter] = true
+
+    return of({
+      linkProtocol: filters,
+    })
+  }
+
+  getValuesForFilter(filters: FieldFilters): Observable<FieldValue[]> {
+    const linkFilter = filters.linkProtocol
+    if (!linkFilter) return of([])
+    const values = []
+    if (linkFilter[this.linkProtocolViewFilter]) values.push('view')
+    if (linkFilter[this.linkProtocolDownloadFilter]) values.push('download')
+    return of(values)
   }
 }

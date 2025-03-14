@@ -21,6 +21,8 @@ declare namespace Cypress {
     editor_wrapFirstDraft(): void
     editor_publishAndReload(): void
     editor_findDraftInLocalStorage(): Chainable<string | number | string[]>
+    addTranslationKey(): void
+    removeTranslationKey(): void
 
     // interaction with gn-ui-dropdown-selector
     openDropdown(): Chainable<JQuery<HTMLElement>>
@@ -244,6 +246,43 @@ Cypress.Commands.add('editor_publishAndReload', () => {
   cy.get('@recordUuid').then((recordUuid) => {
     cy.visit(`/edit/${recordUuid}`)
   })
+})
+
+Cypress.Commands.add('addTranslationKey', () => {
+  cy.getCookie('XSRF-TOKEN')
+    .its('value')
+    .then(function (token) {
+      cy.request({
+        url: `/geonetwork/srv/api/i18n/db/translations?replace=true`,
+        method: 'PUT',
+        body: JSON.stringify([
+          {
+            fieldName: 'application-banner',
+            langId: 'eng',
+            id: 0,
+            value:
+              'This is a warning message that should be shown when the key is set',
+          },
+        ]),
+        headers: {
+          accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-XSRF-TOKEN': token,
+        },
+      })
+    })
+})
+
+Cypress.Commands.add('removeTranslationKey', () => {
+  cy.getCookie('XSRF-TOKEN')
+    .its('value')
+    .then(function (token) {
+      cy.request({
+        url: `/geonetwork/srv/api/i18n/db/translations/application-banner`,
+        method: 'DELETE',
+        headers: { accept: 'application/json', 'X-XSRF-TOKEN': token },
+      })
+    })
 })
 
 // -- This is a parent command --

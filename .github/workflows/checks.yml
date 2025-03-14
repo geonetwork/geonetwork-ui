@@ -117,24 +117,24 @@ jobs:
 
       - name: Compute affected projects
         run: |
-          echo "AFFECTED_LIBS=$(npx nx show projects --affected --type=lib | awk 'BEGIN {RS = ", "; ORS = ", "} \
-          { print "`"$1"`" }')" >> $GITHUB_ENV
+          echo "AFFECTED_LIBS=$(npx nx show projects --affected --type=lib | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_ENV
 
       - name: Compute affected apps
         run: |
-          echo "AFFECTED_APPS=$(npx nx show projects --affected --type=app | awk 'BEGIN {RS = ", "; ORS = ", "} \
-          { print "`"$1"`" }')" >> $GITHUB_ENV
+          echo "AFFECTED_APPS=$(npx nx show projects --affected --type=app | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_ENV
 
       - name: add PR comment
         uses: thollander/actions-comment-pull-request@v2
         with:
-          message: 'Affected libs: ${{ env.AFFECTED_LIBS }}
+          message: |
+            **Affected libs:**
+            ${{ env.AFFECTED_LIBS }}
 
-            Affected apps: ${{ env.AFFECTED_APPS }}
+            **Affected apps:**
+            ${{ env.AFFECTED_APPS }}
 
             - [ ] 🚀 Build and deploy storybook and demo on GitHub Pages
-
-            - [ ] 📦 Build and push affected docker images'
+            - [ ] 📦 Build and push affected docker images
           comment_tag: build-options
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -164,25 +164,31 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
 
+      - run: npm ci
+
+      - name: Compute affected apps
+        run: |
+          echo "AFFECTED_APPS=$(npx nx show projects --affected --type=app | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_ENV
+
       - name: Create pipeline docker image
         working-directory: tools
         run: docker build . -f pipelines/Dockerfile -t geonetwork/geonetwork-ui-tools-pipelines:latest
 
       - name: Start up backend support services
+        if: contains(env.AFFECTED_APPS, matrix.app)
         env:
           GEONETWORK_VERSION: ${{ matrix.gn_version }}
         working-directory: support-services
         run: docker compose up --quiet-pull init
 
-      - run: npm ci
-
-      - name: Run e2e tests for ${{ matrix.app }}
+      - name: Run e2e tests for ${{ matrix.app }} (if affected)
+        if: contains(env.AFFECTED_APPS, matrix.app)
         env:
           APP: ${{ matrix.app }}
         run: npx nx e2e "$APP-e2e"
 
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && contains(env.AFFECTED_APPS, matrix.app)
         id: upload-screenshots
         with:
           name: cypress-screenshots-app-${{ matrix.app }}-gn-${{ matrix.gn_version }}
@@ -191,7 +197,7 @@ jobs:
             apps/metadata-editor-e2e/cypress/screenshots/**/*
 
       - uses: thollander/actions-comment-pull-request@v2
-        if: always() && github.event_name == 'pull_request' && steps.upload-screenshots.outputs.artifact-url
+        if: always() && contains(env.AFFECTED_APPS, matrix.app) && github.event_name == 'pull_request' && steps.upload-screenshots.outputs.artifact-url
         with:
           message: '📷 Screenshots are [here](${{ steps.upload-screenshots.outputs.artifact-url }})!'
           comment_tag: screenshots-url

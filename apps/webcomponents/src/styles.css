@@ -1,3 +1,5 @@
+@import '../../../tailwind.base.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -89,13 +91,6 @@
   display: none;
 }
 
-.mat-mdc-autocomplete-panel {
-  background: #fff;
-  box-shadow:
-    0 2px 4px -1px #0003,
-    0 4px 5px #00000024,
-    0 1px 10px #0000001f;
-}
 .mat-mdc-option.suggestion.mat-mdc-option-active {
   background-color: var(--color-primary-lightest);
 }
@@ -120,4 +115,13 @@
 .mat-mdc-select-panel
   .mat-mdc-option.mat-selected:not(.mat-mdc-option-multiple) {
   background: rgba(0, 0, 0, 0.12);
+}
+.mdc-menu-surface.mat-mdc-autocomplete-panel {
+  margin-top: 10px !important;
+  border-radius: 8px;
+  background: white;
+  box-shadow:
+    0 2px 4px -1px #0003,
+    0 4px 5px #00000024,
+    0 1px 10px #0000001f;
 }

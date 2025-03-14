@@ -4,7 +4,7 @@
   <div
     class="flex flex-row py-3 px-4 gap-4 overflow-hidden grow border-[1px] border-gray-200"
   >
-    <ng-icon class="mt-0.5" name="iconoirFilterList"></ng-icon>
+    <ng-icon class="mt-0.5" name="iconoirFilterAlt"></ng-icon>
     <gn-ui-filter-dropdown
       *ngFor="let filter of searchConfig; let i = index"
       [fieldName]="filter.fieldName"
@@ -12,6 +12,7 @@
       [style.--gn-ui-button-height]="'32px'"
       [style.--gn-ui-multiselect-counter-text-color]="'var(--color-primary)'"
       [style.--gn-ui-multiselect-counter-background-color]="'white'"
+      [style.width.rem]="filter.fieldName === 'user' ? 15 : undefined"
     ></gn-ui-filter-dropdown>
   </div>
   <gn-ui-search-filters-summary

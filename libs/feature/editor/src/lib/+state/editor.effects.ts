@@ -8,7 +8,6 @@ import { Store } from '@ngrx/store'
 import {
   selectEditorConfig,
   selectRecord,
-  selectRecordAlreadySavedOnce,
   selectRecordSource,
 } from './editor.selectors'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
@@ -28,31 +27,27 @@ export class EditorEffects {
       withLatestFrom(
         this.store.select(selectRecord),
         this.store.select(selectRecordSource),
-        this.store.select(selectEditorConfig),
-        this.store.select(selectRecordAlreadySavedOnce)
+        this.store.select(selectEditorConfig)
       ),
-      switchMap(([, record, recordSource, fieldsConfig, alreadySavedOnce]) =>
-        this.editorService
-          .saveRecord(record, recordSource, fieldsConfig, !alreadySavedOnce)
-          .pipe(
-            switchMap(([record, recordSource]) =>
-              of(
-                EditorActions.saveRecordSuccess(),
-                EditorActions.openRecord({
-                  record,
-                  alreadySavedOnce: true,
-                  recordSource,
-                })
-              )
-            ),
-            catchError((error) =>
-              of(
-                EditorActions.saveRecordFailure({
-                  error,
-                })
-              )
+      switchMap(([, record, recordSource, fieldsConfig]) =>
+        this.editorService.saveRecord(record, recordSource, fieldsConfig).pipe(
+          switchMap(([record, recordSource]) =>
+            of(
+              EditorActions.saveRecordSuccess(),
+              EditorActions.openRecord({
+                record,
+                recordSource,
+              })
+            )
+          ),
+          catchError((error) =>
+            of(
+              EditorActions.saveRecordFailure({
+                error,
+              })
             )
           )
+        )
       )
     )
   )
@@ -63,12 +58,14 @@ export class EditorEffects {
         ofType(EditorActions.saveRecordSuccess),
         withLatestFrom(this.store.select(selectRecord)),
         switchMap(([_, record]) => {
-          this.gn4PlateformService.cleanRecordAttachments(record).subscribe({
-            next: (_) => undefined,
-            error: (err) => {
-              console.error(err)
-            },
-          })
+          if (record.uniqueIdentifier !== null) {
+            this.gn4PlateformService.cleanRecordAttachments(record).subscribe({
+              next: (_) => undefined,
+              error: (err) => {
+                console.error(err)
+              },
+            })
+          }
           return EMPTY
         }),
         catchError((error) => {
@@ -106,10 +103,9 @@ export class EditorEffects {
       ofType(EditorActions.undoRecordDraft),
       withLatestFrom(this.store.select(selectRecord)),
       switchMap(([, record]) => this.editorService.undoRecordDraft(record)),
-      map(([record, recordSource, alreadySavedOnce]) =>
+      map(([record, recordSource]) =>
         EditorActions.openRecord({
           record,
-          alreadySavedOnce,
           recordSource,
         })
       )
@@ -138,6 +134,36 @@ export class EditorEffects {
               EditorActions.hasRecordChangedSinceDraftSuccess({ changes })
             )
           )
+      )
+    )
+  )
+
+  checkIsRecordPublished$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(EditorActions.openRecord),
+      map(({ record }) => record.uniqueIdentifier),
+      switchMap((uniqueIdentifier) =>
+        this.recordsRepository.getRecordPublicationStatus(uniqueIdentifier)
+      ),
+      map((isPublished) =>
+        EditorActions.isPublished({
+          isPublished: isPublished,
+        })
+      )
+    )
+  )
+
+  checkCanEditRecord$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(EditorActions.openRecord),
+      map(({ record }) => record.uniqueIdentifier),
+      switchMap((uniqueIdentifier) =>
+        this.recordsRepository.canEditRecord(uniqueIdentifier)
+      ),
+      map((canEditRecord) =>
+        EditorActions.canEditRecord({
+          canEditRecord: canEditRecord,
+        })
       )
     )
   )

@@ -5,7 +5,6 @@
     (uploadCancel)="handleUploadCancel()"
     [uploadProgress]="uploadProgress"
     (urlChange)="handleUrlChange($event)"
-    [disabled]="disabled$ | async"
   ></gn-ui-file-input>
   <div class="h-[8px]"></div>
   <gn-ui-sortable-list
@@ -42,17 +41,8 @@
         class="w-full"
         [disabled]="true"
         [value]="onlineResource.url"
-        [showUploadButton]="false"
-        [disabled]="disabled$ | async"
+        [showValidateButton]="false"
       ></gn-ui-url-input>
     </div>
   </ng-template>
-  <div
-    *ngIf="disabled$ | async"
-    class="p-4 text-sm border border-primary bg-primary-lightest rounded-lg"
-    translate
-    data-test="disabled-message"
-  >
-    editor.record.form.field.draft.only.disabled
-  </div>
 </div>

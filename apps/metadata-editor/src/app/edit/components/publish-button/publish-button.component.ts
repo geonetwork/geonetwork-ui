@@ -41,6 +41,7 @@ import {
   take,
   withLatestFrom,
 } from 'rxjs/operators'
+import { DateService } from '@geonetwork-ui/util/shared'
 
 export type RecordSaveStatus = 'saving' | 'upToDate' | 'hasChanges'
 @Component({
@@ -71,12 +72,13 @@ export class PublishButtonComponent implements OnDestroy {
   status$: Observable<RecordSaveStatus> = combineLatest([
     this.facade.changedSinceSave$,
     this.facade.saving$,
+    this.facade.isPublished$,
   ]).pipe(
-    map(([changedSinceSave, saving]) => {
+    map(([changedSinceSave, saving, isPublished]) => {
       if (saving) {
         return 'saving'
       }
-      if (changedSinceSave) {
+      if (changedSinceSave || !isPublished) {
         return 'hasChanges'
       }
       return 'upToDate'
@@ -102,7 +104,7 @@ export class PublishButtonComponent implements OnDestroy {
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef,
     private cdr: ChangeDetectorRef,
-    private translateService: TranslateService
+    private dateService: DateService
   ) {}
 
   ngOnDestroy() {
@@ -204,7 +206,7 @@ export class PublishButtonComponent implements OnDestroy {
   }
 
   formatDate(date: Date): string {
-    return date.toLocaleDateString(this.translateService.currentLang, {
+    return this.dateService.formatDate(date, {
       year: 'numeric',
       month: 'long',
       day: 'numeric',

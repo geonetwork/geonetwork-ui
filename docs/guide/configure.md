@@ -43,7 +43,7 @@ Some additional notes:
   languages = ['en', 'fr', 'de']
   ```
 
-  More information about the translation can be found in the [relevant documentation](../reference/i18n.md)
+  More information about the translation can be found in the [relevant documentation](../developers/i18n.md)
 
 - `metadata_language` (optional)
 
@@ -52,6 +52,10 @@ Some additional notes:
   Use [ISO three-letter codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) to indicate the language used in the search (e.g. "fre" or "ger"). Alternatively, setting to "current" will use the current language of the User Interface.
 
   If not indicated, the search will be done across all localized values for each record, potentially showing more results that expected or unrelated results.
+
+  ::: tip
+  Indicating a language in `metadata_language` according to the queried catalog will make the search more efficient.
+  :::
 
 - `login_url` (optional)
 
@@ -146,7 +150,7 @@ Note: if the GeoJSON object contains multiple features, only the geometry of the
 - `advanced_filters` (optional)
 
 The advanced search filters available to the user can be customized with this setting.
-For a list of supported search fields, see [this documentation page](../reference/search-fields.md). Any unknown field will be ignored.
+For a list of supported search fields, see [this documentation page](../guide/search-fields.md). Any unknown field will be ignored.
 
 The filters should be provided as an array, for instance:
 
@@ -162,7 +166,7 @@ advanced_filters = ['organization', 'inspireKeyword', 'keyword', 'topic']
 
   - a name for the preset, which can be a translation key (mandatory)
   - a sort criteria: either `createDate`, `userSavedCount` or `_score` (prepend with `-` for descending sort) (optional)
-  - a set of filters, each of them being a key-value pair where the key is a [known search field](../reference/search-fields.md) and the value is an array of strings (optional)
+  - a set of filters, each of them being a key-value pair where the key is a [known search field](../guide/search-fields.md) and the value is an array of strings (optional)
   - additionally, `filters.q` can be used to specify a full text search query
 
   Multiple search presets can be defined like so:

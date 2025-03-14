@@ -38,8 +38,16 @@
   <div class="bg-primary-opacity-10 py-8">
     <div class="flex flex-col px-4 gap-8 container-lg lg:mx-auto">
       <div class="flex flex-wrap justify-between sm:mb-2 ng-star-inserted">
-        <p class="text-[21px] text-title font-title" translate>
-          record.metadata.api.form.title
+        <p
+          class="text-[21px] text-title font-title"
+          *ngIf="selectedApiLink?.accessServiceProtocol"
+          translate
+        >
+          {{
+            selectedApiLink?.accessServiceProtocol === 'GPFDL'
+              ? 'record.metadata.api.form.title.gpf'
+              : 'record.metadata.api.form.title'
+          }}
         </p>
         <button
           type="button"
@@ -59,7 +67,13 @@
           </ng-icon>
         </button>
       </div>
+
+      <gn-ui-gpf-api-dl
+        *ngIf="selectedApiLink?.accessServiceProtocol === 'GPFDL'"
+        [apiLink]="selectedApiLink"
+      ></gn-ui-gpf-api-dl>
       <gn-ui-record-api-form
+        *ngIf="selectedApiLink?.accessServiceProtocol !== 'GPFDL'"
         [apiLink]="selectedApiLink"
       ></gn-ui-record-api-form>
     </div>

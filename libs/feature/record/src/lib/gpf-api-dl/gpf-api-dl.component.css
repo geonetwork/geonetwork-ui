@@ -1,0 +1,22 @@
+:host ::ng-deep input {
+  color: black;
+  opacity: 1;
+}
+
+:host ::ng-deep gn-ui-copy-text-button input[type='text'] {
+  color: black;
+  background-color: white;
+}
+
+:host ::ng-deep gn-ui-copy-text-button button,
+host ::ng-deep gn-ui-copy-text-button button:hover {
+  background-color: var(--color-secondary) !important;
+}
+
+:host ::ng-deep gn-ui-copy-text-button button ng-icon {
+  color: white !important;
+  opacity: 1 !important;
+}
+:host ::ng-deep gn-ui-copy-text-button button:hover ng-icon {
+  color: lightgrey !important;
+}

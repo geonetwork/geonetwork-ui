@@ -5,7 +5,7 @@
     (toggled)="onPlannedToggled()"
   ></gn-ui-check-toggle>
   <gn-ui-dropdown-selector
-    title="updateFrequency"
+    [title]="'editor.record.form.field.updateFrequency' | translate"
     [showTitle]="false"
     [choices]="choices"
     [selected]="selectedFrequency"

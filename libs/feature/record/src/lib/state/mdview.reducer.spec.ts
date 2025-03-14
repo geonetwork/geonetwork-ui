@@ -255,4 +255,79 @@ describe('metadataViewReducer', () => {
       })
     })
   })
+
+  describe('loadFeatureCatalog', () => {
+    let action
+
+    beforeEach(() => {
+      action = MdViewActions.loadFeatureCatalog({
+        metadata: datasetRecordsFixture()[0],
+      })
+    })
+
+    it('should set loading state and clear errors', () => {
+      const state = reducer(initialMetadataViewState, action)
+      expect(state).toEqual({
+        ...initialMetadataViewState,
+        featureCatalogError: null,
+        featureCatalogLoading: true,
+      })
+    })
+  })
+
+  describe('loadFeatureCatalogSuccess', () => {
+    let action
+    const mockDatasetCatalog = {
+      attributes: [
+        { name: 'feature1', title: 'Feature 1' },
+        { name: 'feature2', title: 'Feature 2' },
+      ],
+    }
+
+    beforeEach(() => {
+      action = MdViewActions.loadFeatureCatalogSuccess({
+        datasetCatalog: mockDatasetCatalog,
+      })
+    })
+
+    it('should store the feature catalog and set loading to false', () => {
+      const state = reducer(
+        {
+          ...initialMetadataViewState,
+          featureCatalogLoading: true,
+        },
+        action
+      )
+      expect(state).toEqual({
+        ...initialMetadataViewState,
+        featureCatalog: mockDatasetCatalog,
+        featureCatalogLoading: false,
+      })
+    })
+  })
+
+  describe('loadFeatureCatalogFailure', () => {
+    let action
+
+    beforeEach(() => {
+      action = MdViewActions.loadFeatureCatalogFailure({
+        error: 'Some error',
+      })
+    })
+
+    it('should set error and set loading to false', () => {
+      const state = reducer(
+        {
+          ...initialMetadataViewState,
+          featureCatalogLoading: true,
+        },
+        action
+      )
+      expect(state).toEqual({
+        ...initialMetadataViewState,
+        featureCatalogError: 'Some error',
+        featureCatalogLoading: false,
+      })
+    })
+  })
 })

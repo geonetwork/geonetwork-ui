@@ -8,72 +8,49 @@ describe('record-actions', () => {
   })
   describe('delete', () => {
     const recordId = `TEST_RECORD_${Date.now()}`
-    describe('record with draft', () => {
-      it('should delete the record, delete its associated draft and refresh the interface', () => {
-        // First create a record and its draft
-        cy.get('[data-cy="create-record"]').click()
-        cy.url().should('include', '/create')
-        cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
-          .as('abstractField')
-          .focus()
-        cy.get('@abstractField').type('record abstract')
-        cy.get('[data-test="recordTitleInput"]').click()
-        cy.get('[data-test="recordTitleInput"]').type('{selectAll}{backspace}')
-        cy.get('[data-test="recordTitleInput"]').type(recordId)
-        cy.intercept({
-          method: 'PUT',
-          pathname: '**/records',
-        }).as('insertRecord')
-        cy.get('md-editor-publish-button').click()
-        cy.wait('@insertRecord')
-        // Assert that the draft exists in the local storage
-        cy.editor_findDraftInLocalStorage().then((value) =>
-          expect(value).to.not.equal('null')
-        )
-        cy.get('@abstractField').focus()
-        cy.get('@abstractField').type('draft abstract')
-        cy.visit('/my-space/my-records')
-        cy.get('[data-cy="table-row"]')
-          .contains(recordId)
-          .should('have.length', 1)
-        cy.get('[data-cy="dashboard-drafts-count"]').should('contain', '1')
-        // Delete the record
-        cy.get('[data-test="record-menu-button"]').last().click()
-        cy.get('[data-test="record-menu-delete-button"]').click()
-        cy.get('[data-cy="confirm-button"]').click()
-        cy.get('[data-cy="table-row"]')
-          .contains(recordId)
-          .should('have.length', 0)
-        cy.get('gn-ui-notification').should('contain', 'Delete success')
-      })
-    })
-
-    describe('draft without record', () => {
-      it('should delete the draft and refresh the interface', () => {
-        // First create a draft
-        cy.get('[data-cy="create-record"]').click()
-        cy.url().should('include', '/create')
-        cy.get('[data-test="recordTitleInput"]').click()
-        cy.get('[data-test="recordTitleInput"]').type('{selectAll}{backspace}')
-        cy.get('[data-test="recordTitleInput"]').type(recordId)
-        cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
-          .as('abstractField')
-          .focus()
-        cy.get('@abstractField').type('draft abstract')
-        cy.editor_findDraftInLocalStorage().then((value) => {
-          expect(value).to.contain('draft abstract')
-        })
-        cy.visit('/my-space/my-draft')
-        cy.get('[data-cy="table-row"]')
-          .contains(recordId)
-          .should('have.length', 1)
-        cy.get('[data-cy="dashboard-drafts-count"]').should('contain', '1')
-        // Delete the draft
-        cy.get('[data-test="record-menu-button"]').click()
-        cy.get('[data-test="record-menu-delete-button"]').click()
-        cy.get('[data-cy="confirm-button"]').click()
-        cy.get('[data-cy="table-row"]').should('not.exist')
-      })
+    it('should delete the record, delete its associated draft and refresh the interface', () => {
+      // Create a record, make it draft
+      cy.get('[data-cy="create-record"]').click()
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
+        .as('abstractField')
+        .focus()
+      cy.get('@abstractField').type('record abstract')
+      cy.get('[data-test="recordTitleInput"]').click()
+      cy.get('[data-test="recordTitleInput"]').type('{selectAll}{backspace}')
+      cy.get('[data-test="recordTitleInput"]').type(recordId)
+      cy.intercept({
+        method: 'PUT',
+        pathname: '**/records',
+      }).as('insertRecord')
+      cy.get('md-editor-publish-button').click()
+      cy.wait('@insertRecord')
+      // Assert that the draft exists in the local storage
+      cy.editor_findDraftInLocalStorage().then((value) =>
+        expect(value).to.not.equal('null')
+      )
+      cy.get('@abstractField').focus()
+      cy.get('@abstractField').type('draft abstract')
+      // Assert that the draft exists in the local storage
+      cy.editor_findDraftInLocalStorage().then((value) =>
+        expect(value).to.not.equal('null')
+      )
+      cy.visit('/my-space/my-records')
+      cy.get('[data-cy="table-row"]')
+        .contains(recordId)
+        .should('have.length', 1)
+      cy.get('[data-cy="dashboard-drafts-count"]').should('contain', '1')
+      // Delete the record from my-records page
+      cy.visit('/my-space/my-records')
+      cy.get('[data-test="record-menu-button"]').last().click()
+      cy.get('[data-test="record-menu-delete-button"]').click()
+      cy.get('[data-cy="confirm-button"]').click()
+      cy.get('[data-cy="table-row"]')
+        .contains(recordId)
+        .should('have.length', 0)
+      cy.get('gn-ui-notification').should('contain', 'Delete success')
+      // check that draft was deleted
+      cy.visit('/my-space/my-draft')
+      cy.get('[data-cy="table-row"]').should('not.exist')
     })
   })
 
@@ -81,7 +58,7 @@ describe('record-actions', () => {
     beforeEach(() => {
       // create a record
       cy.get('[data-cy="create-record"]').click()
-      cy.url().should('include', '/create')
+      cy.url().should('include', '/edit')
     })
 
     afterEach(() => {
@@ -102,7 +79,7 @@ describe('record-actions', () => {
         .children()
         .eq(0)
         .children()
-        .should('have.length', 3)
+        .should('have.length', 4)
 
       cy.get('[data-test="previousNextPageButtons"]')
         .children()
@@ -112,52 +89,6 @@ describe('record-actions', () => {
         .children()
         .eq(1)
         .should('contain.text', 'Next')
-    })
-
-    it('the created record should not allow upload of resources and show info message as it was not saved yet', () => {
-      // first page
-      cy.get('gn-ui-form-field-overviews')
-        .find('gn-ui-image-input')
-        .find('input')
-        .should('be.disabled')
-      cy.get('gn-ui-form-field-overviews')
-        .children()
-        .find('[data-test="disabled-message"]')
-        .should(
-          'contain.text',
-          ' This field will be enabled once the dataset has been published '
-        )
-
-      // second page
-      cy.get('[data-test="previousNextPageButtons"]')
-        .children()
-        .eq(1)
-        .should('contain.text', 'Next')
-        .click()
-      cy.get('gn-ui-form-field-online-resources')
-        .find('gn-ui-switch-toggle')
-        .find('mat-button-toggle-group')
-        .find('button')
-        .should('be.disabled')
-      cy.get('gn-ui-file-input').find('input').should('be.disabled')
-      cy.get('gn-ui-form-field-online-resources')
-        .children()
-        .find('div')
-        .should(
-          'contain.text',
-          ' This field will be enabled once the dataset has been published '
-        )
-
-      cy.get('gn-ui-form-field-online-link-resources')
-        .find('input')
-        .should('be.disabled')
-      cy.get('gn-ui-form-field-online-link-resources')
-        .children()
-        .find('div')
-        .should(
-          'contain.text',
-          ' This field will be enabled once the dataset has been published '
-        )
     })
 
     it('back navigation should go to search after creating a record', () => {
@@ -180,13 +111,23 @@ describe('record-actions', () => {
         .invoke('text')
         .should('contain', 'admin admin')
     })
+    it('the created record should display the uuid in the url, not create a draft and be saved but not published', () => {
+      cy.url().should('match', /\/edit\/.+/)
+      cy.get('[data-cy="dashboard-drafts-count"]').should('not.exist')
+      cy.get('[data-cy="save-status"]')
+        .find('span')
+        .should('have.text', 'Saved - not published')
+      cy.get('md-editor-publish-button')
+        .find('gn-ui-button')
+        .should('have.attr', 'ng-reflect-message', 'Publish this dataset')
+    })
   })
 
   describe('undo', () => {
     it('should restore the record and refresh the interface', () => {
-      // First create a record and its draft
-      cy.get('[data-cy="create-record"]').click()
-      cy.url().should('include', '/create')
+      // Edit an existing record and create a draft
+      cy.get('[data-cy="resultItemTitle"]').first().click()
+      cy.url().should('include', '/edit')
       cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
         .as('abstractField')
         .focus()
@@ -222,6 +163,25 @@ describe('record-actions', () => {
       cy.get('[data-test="record-menu-delete-button"]').click()
       cy.get('[data-cy="confirm-button"]').click()
     })
+    it('should restore from the draft dashboard', () => {
+      // Edit an existing record and create a draft
+      cy.get('[data-cy="resultItemTitle"]').first().click()
+      cy.url().should('include', '/edit')
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
+        .as('abstractField')
+        .focus()
+      cy.get('@abstractField').type('record draft')
+      cy.editor_findDraftInLocalStorage().then((value) => {
+        expect(value).to.not.equal('null')
+      })
+      // undo from the action-menu
+      cy.visit('/my-space/my-draft')
+      cy.get('[data-test="record-menu-button"]').click()
+      cy.get('[data-test="record-menu-delete-button"]').find('button').click()
+      cy.get('[data-test="rollbackMenuSection"]').should('be.visible')
+      cy.get('[data-test="rollbackMenuSection"]').find('button').first().click()
+      cy.get('[data-cy="table-row"]').should('have.length', 0)
+    })
   })
 
   describe('duplicate', () => {
@@ -242,7 +202,7 @@ describe('record-actions', () => {
         .first()
         .find('textarea')
         .invoke('val')
-        .should('eq', 'Accroches vélos MEL (Copy)')
+        .should('include', 'Copy of record Accroches vélos MEL')
 
       // delete the new record
       cy.visit('/catalog/search')

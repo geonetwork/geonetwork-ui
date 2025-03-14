@@ -8,14 +8,26 @@ import { inferDatasetType } from './utils'
 import { BaseReader } from './readers/base'
 import { GmlReader } from './readers/gml'
 import { WfsVersion } from '@camptocamp/ogc-client'
+import { WfsReader } from './readers/wfs'
 
 export async function openDataset(
   url: string,
   typeHint?: SupportedType,
-  options?: { namespace: string; wfsVersion: WfsVersion }
+  options?: {
+    namespace?: string
+    wfsVersion?: WfsVersion
+    wfsFeatureType?: string
+  },
+  cacheActive?: boolean
 ): Promise<BaseReader> {
   const fileType = await inferDatasetType(url, typeHint)
-  let reader: BaseReader
+  let reader:
+    | CsvReader
+    | JsonReader
+    | GeojsonReader
+    | ExcelReader
+    | GmlReader
+    | WfsReader
   try {
     switch (fileType) {
       case 'csv':
@@ -33,7 +45,11 @@ export async function openDataset(
       case 'gml':
         reader = new GmlReader(url, options.namespace, options.wfsVersion)
         break
+      case 'wfs':
+        reader = await WfsReader.createReader(url, options.wfsFeatureType)
+        break
     }
+    reader.setCacheActive(cacheActive)
     reader.load()
     return reader
   } catch (e: any) {
@@ -53,9 +69,10 @@ export async function openDataset(
 export async function readDataset(
   url: string,
   typeHint?: SupportedType,
-  options?: any
+  options?: any,
+  cacheActive = true
 ): Promise<DataItem[]> {
-  const reader = await openDataset(url, typeHint, options)
+  const reader = await openDataset(url, typeHint, options, cacheActive)
   try {
     return await reader.read()
   } catch (e: any) {

@@ -24,6 +24,6 @@ export function parseGeojson(text: string): {
 
 export class GeojsonReader extends BaseFileReader {
   getData() {
-    return fetchDataAsText(this.url).then(parseGeojson)
+    return fetchDataAsText(this.url, this.cacheActive).then(parseGeojson)
   }
 }

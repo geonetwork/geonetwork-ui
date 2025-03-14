@@ -28,7 +28,7 @@ import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
 export class FormFieldRichComponent {
   @Input() label: string
   @Input() hint: string
-  @Input() placeholder = 'Votre texte ici' //TODO: translate
+  @Input() placeholder = ''
   @Input() value: string
 
   @Output() valueChange: EventEmitter<string> = new EventEmitter()

@@ -7,12 +7,15 @@ import {
   SearchResults,
 } from '../model/search'
 import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
-import { CatalogRecord } from '../model/record'
+import { CatalogRecord, DatasetFeatureCatalog } from '../model/record'
 
 export abstract class RecordsRepositoryInterface {
   abstract search(params: SearchParams): Observable<SearchResults>
   abstract getMatchesCount(filters: FieldFilters): Observable<number>
   abstract getRecord(uniqueIdentifier: string): Observable<CatalogRecord | null>
+  abstract getFeatureCatalog(
+    record: CatalogRecord
+  ): Observable<DatasetFeatureCatalog | null>
   abstract aggregate(
     params: AggregationsParams,
     configFilters?: SearchFilters
@@ -21,7 +24,7 @@ export abstract class RecordsRepositoryInterface {
     similarTo: CatalogRecord
   ): Observable<CatalogRecord[]>
   abstract fuzzySearch(query: string): Observable<SearchResults>
-
+  abstract canEditRecord(uniqueIdentifier: string): Observable<boolean>
   /**
    * This emits once:
    * - record object; if a draft exists, this will return it
@@ -44,7 +47,7 @@ export abstract class RecordsRepositoryInterface {
    */
   abstract openRecordForDuplication(
     uniqueIdentifier: string
-  ): Observable<[CatalogRecord, string, false] | null>
+  ): Observable<[CatalogRecord, string, true] | null>
 
   /**
    * @param record
@@ -53,7 +56,8 @@ export abstract class RecordsRepositoryInterface {
    */
   abstract saveRecord(
     record: CatalogRecord,
-    referenceRecordSource?: string
+    referenceRecordSource?: string,
+    publishToAll?: boolean
   ): Observable<string>
 
   /**
@@ -86,7 +90,6 @@ export abstract class RecordsRepositoryInterface {
 
   abstract clearRecordDraft(uniqueIdentifier: string): void
   abstract recordHasDraft(uniqueIdentifier: string): boolean
-  abstract isRecordNotYetSaved(uniqueIdentifier: string): boolean
 
   /** will return all pending drafts, both published and not published */
   abstract getAllDrafts(): Observable<CatalogRecord[]>
@@ -95,4 +98,5 @@ export abstract class RecordsRepositoryInterface {
   abstract hasRecordChangedSinceDraft(
     localRecord: CatalogRecord
   ): Observable<{ user: string; date: Date }>
+  abstract getRecordPublicationStatus(uuid: string): Observable<boolean>
 }

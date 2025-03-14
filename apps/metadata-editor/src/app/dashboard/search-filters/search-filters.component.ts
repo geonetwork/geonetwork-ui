@@ -6,7 +6,7 @@ import {
   provideIcons,
   provideNgIconsConfig,
 } from '@ng-icons/core'
-import { iconoirFilterList } from '@ng-icons/iconoir'
+import { iconoirFilterAlt } from '@ng-icons/iconoir'
 import {
   FeatureSearchModule,
   SearchFiltersSummaryComponent,
@@ -24,7 +24,7 @@ import {
   ],
   providers: [
     provideIcons({
-      iconoirFilterList,
+      iconoirFilterAlt,
     }),
     provideNgIconsConfig({
       size: '1.5rem',

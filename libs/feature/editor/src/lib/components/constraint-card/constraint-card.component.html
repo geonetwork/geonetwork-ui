@@ -2,7 +2,7 @@
   <gn-ui-form-field-rich
     class="mt-[-8px]"
     [label]="label"
-    [hint]="hint | translate"
+    [placeholder]="hint | translate"
     [value]="constraint_.text ?? ''"
     (valueChange)="handleConstraintTextChange($event)"
   ></gn-ui-form-field-rich>
@@ -22,7 +22,7 @@
     class="mt-3.5"
     [value]="constraint_.url?.toString()"
     (valueChange)="handleURLChange($event)"
-    [showUploadButton]="false"
+    [showValidateButton]="false"
   >
   </gn-ui-url-input>
 </div>

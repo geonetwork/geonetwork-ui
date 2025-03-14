@@ -13,8 +13,12 @@ export class FetchError {
   ) {
     this.message = `An error happened in the data fetcher, type: ${type}, info: ${info}`
   }
-  static http(code: number) {
-    return new FetchError('http', '', code)
+  static http(code: number, body?: string) {
+    const info = body
+      ? `Error ${code}
+${body}`
+      : `${code}`
+    return new FetchError('http', info, code)
   }
   static corsOrNetwork(message: string) {
     return new FetchError('network', message, 0)
@@ -60,6 +64,7 @@ export const SupportedTypes = [
   'geojson',
   'excel',
   'gml',
+  'wfs',
 ] as const
 export type SupportedType = (typeof SupportedTypes)[number]
 

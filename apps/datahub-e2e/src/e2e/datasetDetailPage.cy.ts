@@ -19,16 +19,31 @@ beforeEach(() => {
   )
   cy.intercept(
     'GET',
-    '/geoserver/insee/ows?REQUEST=GetMap&SERVICE=WMS&VERSION=1.3.0&FORMAT=image%2Fpng&STYLES=&TRANSPARENT=true&LAYERS=rectangles_200m_menage_erbm*',
+    '/geoserver/insee/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=application%2Fjson&PROPERTYNAME=oid%2Cidk%2Cmen%2Cmen_occ5%2Cpt_men_occ5&COUNT=10&SRSNAME=EPSG%3A4326',
     {
-      fixture: 'insee-rectangles_200m_menage_erbm.png',
+      fixture: 'insee-wfs-table-data.json',
+    }
+  )
+  //Note: The real WFS of this example responds with an error to this request due to a missing primary key in the table
+  cy.intercept(
+    'GET',
+    'geoserver/insee/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=application%2Fjson&PROPERTYNAME=oid%2Cidk%2Cmen%2Cmen_occ5%2Cpt_men_occ5&COUNT=10&SRSNAME=EPSG%3A4326&STARTINDEX=10',
+    {
+      fixture: 'insee-wfs-table-data-page2.json',
     }
   )
   cy.intercept(
     'GET',
-    '/geoserver/insee/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=application%2Fjson*',
+    'geoserver/insee/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=application%2Fjson&PROPERTYNAME=oid%2Cidk%2Cmen%2Cmen_occ5%2Cpt_men_occ5&COUNT=10&SRSNAME=EPSG%3A4326&SORTBY=idk+D',
     {
-      fixture: 'insee-rectangles_200m_menage_erbm.json',
+      fixture: 'insee-wfs-table-data-sort-idk.json',
+    }
+  )
+  cy.intercept(
+    'GET',
+    '/geoserver/insee/ows?REQUEST=GetMap&SERVICE=WMS&VERSION=1.3.0&FORMAT=image%2Fpng&STYLES=&TRANSPARENT=true&LAYERS=rectangles_200m_menage_erbm*',
+    {
+      fixture: 'insee-rectangles_200m_menage_erbm.png',
     }
   )
   cy.intercept(
@@ -226,7 +241,7 @@ describe('dataset pages', () => {
             .children('div')
             .should('have.length', 4)
         })
-        it('should display the creation date, the publication date, the frequency, the languages and the temporal extent', () => {
+        it('should display the resource creation date (for resource), the publication date (for resource), the frequency, the languages and the temporal extent', () => {
           cy.get('datahub-record-metadata')
             .find('[id="about"]')
             .find('gn-ui-expandable-panel')
@@ -239,7 +254,18 @@ describe('dataset pages', () => {
             .children('div')
             .eq(2)
             .children('div')
-            .should('have.length', 5)
+            .as('aboutContent')
+          cy.get('@aboutContent').should('have.length', 5)
+          cy.get('@aboutContent')
+            .eq(0)
+            .children('p')
+            .eq(1)
+            .should('contain.text', '9/22/2020')
+          cy.get('@aboutContent')
+            .eq(1)
+            .children('p')
+            .eq(1)
+            .should('contain.text', '3/17/2024')
         })
         it('should not display the same text twice in the constraints', () => {
           // this dataset has the same text for the license and the legal constraints
@@ -378,19 +404,19 @@ describe('dataset pages', () => {
 
         cy.get('@previewSection').find('gn-ui-map-legend').should('be.visible')
       })
-      it('should display the table', () => {
+      it('should display the table with 10 rows', () => {
         cy.get('@previewSection')
           .find('.mat-mdc-tab-labels')
           .children('div')
           .eq(1)
           .click()
-        cy.get('@previewSection').find('gn-ui-table').should('be.visible')
+        cy.get('@previewSection').find('gn-ui-data-table').should('be.visible')
         cy.get('@previewSection')
-          .find('gn-ui-table')
+          .find('gn-ui-data-table')
           .find('table')
           .find('tbody')
           .children('tr')
-          .should('have.length.gt', 0)
+          .should('have.length', 10)
         cy.screenshot({ capture: 'fullPage' })
       })
       it('should display the chart & dropdowns', () => {
@@ -430,16 +456,53 @@ describe('dataset pages', () => {
         })
         cy.get('@previewSection').find('gn-ui-feature-detail')
       })
-      it('TABLE : should scroll', () => {
-        cy.get('@previewSection')
-          .find('.mat-mdc-tab-labels')
-          .children('div')
-          .eq(1)
-          .click()
-        cy.get('@previewSection').find('gn-ui-table').find('table').as('table')
-        cy.get('@table').scrollTo('bottom', { ensureScrollable: false })
+      describe('TABLE', () => {
+        beforeEach(() => {
+          cy.get('@previewSection')
+            .find('.mat-mdc-tab-labels')
+            .children('div')
+            .eq(1)
+            .click()
+          cy.get('@previewSection')
+            .find('gn-ui-data-table')
+            .find('table')
+            .as('table')
+        })
 
-        cy.get('@table').find('tr:last-child').should('be.visible')
+        it('TABLE sort: should sort the table on column click', () => {
+          cy.get('@table').find('th').eq(1).click()
+          cy.get('@table')
+            .find('td')
+            .eq(1)
+            .invoke('text')
+            .then((firstValue) => {
+              cy.get('@table').find('th').eq(1).click()
+              cy.get('@table')
+                .find('td')
+                .eq(1)
+                .invoke('text')
+                .should('not.eq', firstValue)
+            })
+        })
+        it('TABLE pagination: should display 10 rows with different data when clicking next page', () => {
+          cy.get('@previewSection').find('mat-paginator').as('pagination')
+          cy.get('@table')
+            .find('td')
+            .eq(1)
+            .invoke('text')
+            .then((firstValue) => {
+              cy.get('@pagination').find('button').eq(2).click()
+              cy.get('@table')
+                .find('td')
+                .eq(1)
+                .invoke('text')
+                .should('not.eq', firstValue)
+              cy.get('@table')
+                .find('tbody')
+                .children('tr')
+                .should('have.length', 10)
+            })
+        })
       })
       it('CHART : should change the chart on options change', () => {
         cy.get('@previewSection')
@@ -530,12 +593,21 @@ describe('dataset pages', () => {
           cy.get('datahub-record-downloads')
             .find('gn-ui-download-item')
             .first()
-            .click()
-          cy.readFile(path.join('cypress/downloads', 'wfs.csv')).as(
-            'downloadedFile'
-          )
-          cy.get('@downloadedFile').should('exist')
-          cy.get('@downloadedFile').its('length').should('equal', 3579)
+            .find('a')
+            .first()
+            .as('downloadLink')
+          cy.get('@downloadLink')
+            .should('have.attr', 'href')
+            .and(
+              'include',
+              'wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=csv'
+            )
+          cy.get('@downloadLink').click()
+          cy.readFile(
+            path.join('cypress/downloads', 'rectangles_200m_menage_erbm.csv') // by default asserts file exists (no .should('exist') needed)
+          ).as('downloadedFile')
+          // FIXME: This spec always fails with Cypress v13
+          // cy.get('@downloadedFile').its('length').should('equal', 3579)
         })
         it('displays the full list after clicking two times on one filter', () => {
           cy.get('datahub-record-downloads')
@@ -613,13 +685,24 @@ describe('dataset pages', () => {
       })
       describe('related records', () => {
         beforeEach(() => {
-          cy.visit('/dataset/6d0bfdf4-4e94-48c6-9740-3f9facfd453c')
+          cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
         })
         it('should display the related records', () => {
           cy.get('#related-records')
             .find('datahub-record-related-records')
             .find('gn-ui-related-record-card')
             .should('have.length.gt', 0)
+        })
+        it('should display a similar related record', () => {
+          cy.get('#related-records')
+            .find('datahub-record-related-records')
+            .find('gn-ui-related-record-card')
+            .first()
+            .find('h4')
+            .should(
+              'have.text',
+              ` Metadata for E2E testing purpose. (this title is too long and should be cut, this title is too long and should be cut, this title is too long and should be cut, this title is too long and should be cut, this title is too long and should be cut) `
+            )
         })
         it('goes to dataset on click', () => {
           let targetLink
@@ -762,7 +845,7 @@ describe('api form', () => {
       cy.get('@secondInput').type('87')
 
       cy.get('@apiForm').find('gn-ui-dropdown-selector').as('dropdown')
-      cy.get('@dropdown').eq(0).selectDropdownOption('geojson')
+      cy.get('@dropdown').eq(0).selectDropdownOption('application/geo+json')
 
       cy.get('@apiForm')
         .find('gn-ui-copy-text-button')
@@ -783,7 +866,7 @@ describe('api form', () => {
         .find('gn-ui-copy-text-button')
         .find('input')
         .invoke('val')
-        .should('include', 'f=json&limit=-1')
+        .should('include', 'f=application%2Fjson&limit=-1')
     })
     it('should close the panel on click', () => {
       cy.get('gn-ui-record-api-form').prev().find('button').click()

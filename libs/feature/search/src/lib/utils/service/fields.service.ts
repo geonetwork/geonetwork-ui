@@ -1,6 +1,7 @@
 import { Injectable, Injector } from '@angular/core'
 import {
   AbstractSearchField,
+  AvailableServicesField,
   DateRangeSearchField,
   FieldValue,
   FullTextSearchField,
@@ -92,6 +93,7 @@ export class FieldsService {
     ),
     user: new UserSearchField(this.injector),
     changeDate: new DateRangeSearchField('changeDate', this.injector, 'desc'),
+    availableServices: new AvailableServicesField(this.injector),
   } as Record<string, AbstractSearchField>
 
   get supportedFields() {

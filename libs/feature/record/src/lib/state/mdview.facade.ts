@@ -15,6 +15,7 @@ import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import {
   CatalogRecord,
+  DatasetServiceDistribution,
   UserFeedback,
 } from '@geonetwork-ui/common/domain/model/record'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
@@ -51,9 +52,24 @@ export class MdViewFacade {
     filter((md) => !!md)
   )
 
+  featureCatalog$ = this.store.pipe(select(MdViewSelectors.getFeatureCatalog))
+
   isIncomplete$ = this.store.pipe(
     select(MdViewSelectors.getMetadataIsIncomplete),
     filter((incomplete) => incomplete !== null)
+  )
+
+  isHighUpdateFrequency$ = this.metadata$.pipe(
+    map((record) => {
+      if (record.updateFrequency instanceof Object) {
+        return (
+          record.updateFrequency.per === 'day' &&
+          record.updateFrequency.updatedTimes > 1
+        )
+      }
+
+      return record.updateFrequency === 'continual'
+    })
   )
 
   error$ = this.store.pipe(select(MdViewSelectors.getMetadataError))
@@ -72,7 +88,15 @@ export class MdViewFacade {
 
   apiLinks$ = this.allLinks$.pipe(
     map((links) =>
-      links.filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.API))
+      links
+        .filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.API))
+        // Put links to IGN Géoplateforme first
+        .sort((dd1, dd2) => {
+          return (dd2 as DatasetServiceDistribution).accessServiceProtocol ===
+            'GPFDL'
+            ? 1
+            : undefined // do not change the sorting otherwise
+        })
     )
   )
 

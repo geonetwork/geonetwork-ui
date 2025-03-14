@@ -11,6 +11,9 @@ import { TranslateModule } from '@ngx-translate/core'
 import { startWith, switchMap } from 'rxjs'
 import { RecordsCountComponent } from '../records-count/records-count.component'
 import { RecordsListComponent } from '../records-list.component'
+import { MatDialog } from '@angular/material/dialog'
+import { EditorService } from '@geonetwork-ui/feature/editor'
+
 @Component({
   selector: 'md-editor-my-draft',
   templateUrl: './my-draft.component.html',
@@ -34,20 +37,18 @@ export class MyDraftComponent {
     startWith([])
   )
   hasDraft = () => true
-  canDuplicate = (): boolean => false
-  isUnsavedDraft = (record: CatalogRecord): boolean =>
-    this.recordsRepository.isRecordNotYetSaved(record.uniqueIdentifier)
 
   constructor(
     private router: Router,
-    public recordsRepository: RecordsRepositoryInterface
+    public recordsRepository: RecordsRepositoryInterface,
+    public editorService: EditorService
   ) {}
 
   editRecord(record: CatalogRecord) {
     this.router.navigate(['/edit', record.uniqueIdentifier])
   }
 
-  deleteDraft(record: CatalogRecord) {
-    this.recordsRepository.clearRecordDraft(record.uniqueIdentifier)
+  rollbackDraft(record: CatalogRecord) {
+    this.editorService.undoRecordDraft(record)
   }
 }

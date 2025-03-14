@@ -1,15 +1,15 @@
-<div class="flex flex-col gap-8">
+<div class="flex flex-col gap-3">
   <gn-ui-generic-keywords
-    [placeholder]="'Search for place keywords'"
+    [placeholder]="'editor.record.form.keywords.place.placeholder' | translate"
     [keywords]="shownKeywords$ | async"
     [keywordTypes]="['place']"
     (deletedKeyword)="handleKeywordDelete($event)"
     (addedKeyword)="handleKeywordAdd($event)"
   >
   </gn-ui-generic-keywords>
-</div>
-<div class="w-full h-96 mt-2">
-  <gn-ui-form-field-map-container
-    [spatialExtents]="spatialExtents$ | async"
-  ></gn-ui-form-field-map-container>
+  <div class="w-full h-96 mt-2">
+    <gn-ui-form-field-map-container
+      [spatialExtents]="spatialExtents$ | async"
+    ></gn-ui-form-field-map-container>
+  </div>
 </div>
