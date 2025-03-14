@@ -14,6 +14,7 @@ import {
   TranslatedSearchField,
   UserSearchField,
 } from './fields'
+import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
 import { forkJoin, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
@@ -101,10 +102,10 @@ export class FieldsService {
 
   constructor(protected injector: Injector) {}
 
-  getAvailableValues(fieldName: string) {
+  getAvailableValues(fieldName: string, configFilters: SearchFilters) {
     if (this.supportedFields.indexOf(fieldName) === -1)
       throw new Error(`Unsupported search field: ${fieldName}`)
-    return this.fields[fieldName].getAvailableValues()
+    return this.fields[fieldName].getAvailableValues(configFilters)
   }
 
   private getFiltersForValues(

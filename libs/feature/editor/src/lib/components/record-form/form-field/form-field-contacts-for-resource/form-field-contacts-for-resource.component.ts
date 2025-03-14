@@ -100,7 +100,9 @@ export class FormFieldContactsForResourceComponent
   async ngOnInit(): Promise<void> {
     this.allOrganizations = new Map<string, Organization>(
       (
-        await firstValueFrom(this.organizationsServiceInterface.organisations$)
+        await firstValueFrom(
+          this.organizationsServiceInterface.getOrganisations()
+        )
       ).map((organization) => [organization.name, organization])
     )
     this.updateContactsForRessource()

@@ -50,6 +50,15 @@ export class SearchFiltersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.searchFacade.setConfigFilters({
+      resourceType: {
+        service: false,
+        map: false,
+        'map/static': false,
+        mapDigital: false,
+      },
+    })
+
     this.platformService.getMe().subscribe((user) => (this.userId = user?.id))
     this.searchConfig = (
       getOptionalSearchConfig().ADVANCED_FILTERS || [
@@ -59,6 +68,7 @@ export class SearchFiltersComponent implements OnInit {
         'topic',
         'isSpatial',
         'license',
+        'resourceType',
       ]
     )
       .filter((adv_filter) => {

@@ -114,7 +114,7 @@ describe('OrganizationsFromGroupsService', () => {
     let organisations
     beforeEach(() => {
       organisations = null
-      service.organisations$.subscribe((orgs) => (organisations = orgs))
+      service.getOrganisations({}).subscribe((orgs) => (organisations = orgs))
     })
     it('get organisations with record count', () => {
       expect(organisations).toEqual([sampleOrgA, sampleOrgB, sampleOrgC])

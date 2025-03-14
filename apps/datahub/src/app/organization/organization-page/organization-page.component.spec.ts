@@ -64,6 +64,7 @@ describe('OrganizationPageComponent', () => {
     expect(component).toBeTruthy()
   })
 
+  //Passe pas
   describe('#ngOnInit', () => {
     beforeEach(() => {
       component.ngOnInit()

@@ -21,12 +21,15 @@ export class KeyFiguresComponent {
     startWith('-'),
     catchError(() => of('-'))
   )
-  orgsCount$ = this.catalogOrgs.organisationsCount$.pipe(startWith('-'))
+  orgsCount$
   ROUTE_SEARCH = `/${ROUTER_ROUTE_SEARCH}`
   ROUTE_ORGANISATIONS = `/${ROUTER_ROUTE_ORGANIZATIONS}`
 
   constructor(
     private catalogRecords: RecordsService,
     private catalogOrgs: OrganizationsServiceInterface
-  ) {}
+  ) {
+    const organisations = this.catalogOrgs.getOrganisations()
+    this.orgsCount$ = this.catalogOrgs.organisationsCount$.pipe(startWith('-'))
+  }
 }

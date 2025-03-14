@@ -216,7 +216,8 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
       let organisations
       describe('initially', () => {
         beforeEach(() => {
-          service.organisations$
+          service
+            .getOrganisations({})
             .pipe(take(1))
             .subscribe((orgs) => (organisations = orgs))
         })
@@ -273,16 +274,6 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
                   must: [],
                   must_not: [
                     {
-                      terms: {
-                        resourceType: [
-                          'service',
-                          'map',
-                          'map/static',
-                          'mapDigital',
-                        ],
-                      },
-                    },
-                    {
                       query_string: {
                         query:
                           'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
@@ -325,7 +316,8 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
       describe('when groups tick', () => {
         beforeEach(() => {
           organisations = null
-          service.organisations$
+          service
+            .getOrganisations({})
             .pipe(take(2))
             .subscribe((orgs) => (organisations = orgs))
         })
