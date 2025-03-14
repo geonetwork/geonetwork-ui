@@ -50,12 +50,13 @@ export class HomeHeaderComponent {
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
   foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
   bannerKey = 'application-banner'
+  translatedBannerMessage$ = this.platformService.translateKey(this.bannerKey)
 
   constructor(
     public routerFacade: RouterFacade,
     public searchFacade: SearchFacade,
     private searchService: SearchService,
-    protected platformService: PlatformServiceInterface,
+    private platformService: PlatformServiceInterface,
     private fieldsService: FieldsService
   ) {}
 
