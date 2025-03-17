@@ -7,10 +7,10 @@ import { BaseCacheReader } from './base-cache'
 import { getJsonDataItemsProxy, jsonToGeojsonFeature } from '../utils'
 import { generateSqlQuery } from '../sql-utils'
 
-async function getWfsEndpoint(wfsUrl: string): Promise<WfsEndpoint> {
+export async function getWfsEndpoint(wfsUrl: string): Promise<WfsEndpoint> {
   try {
     return await new WfsEndpoint(wfsUrl).isReady()
-  } catch (e: any) {
+  } catch (e) {
     if (
       e instanceof Error &&
       'isCrossOriginRelated' in e &&
