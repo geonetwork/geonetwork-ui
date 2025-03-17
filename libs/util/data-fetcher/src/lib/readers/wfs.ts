@@ -3,8 +3,9 @@ import { DataItem, DatasetInfo, PropertyInfo } from '../model'
 import { fetchDataAsText } from '../utils'
 import { GmlReader, parseGml } from './gml'
 import { GeojsonReader, parseGeojson } from './geojson'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { BaseCacheReader } from './base-cache'
+import { getJsonDataItemsProxy, jsonToGeojsonFeature } from '../utils'
+import { generateSqlQuery } from '../sql-utils'
 
 export class WfsReader extends BaseCacheReader {
   endpoint: WfsEndpoint
@@ -95,11 +96,10 @@ export class WfsReader extends BaseCacheReader {
     }
   }
 
-  protected getData() {
-    if (this.aggregations || this.groupedBy) {
-      throw new Error(marker('wfs.aggregations.notsupported'))
+  public async getData(aggregation?, groupedBy?) {
+    if (aggregation || groupedBy) {
+      return { items: await this.getQueryData() }
     }
-
     const asJson = this.endpoint.supportsJson(this.featureTypeName)
     const attributes = this.selected ?? undefined
     let url = this.endpoint.getFeatureUrl(this.featureTypeName, {
@@ -129,11 +129,29 @@ export class WfsReader extends BaseCacheReader {
     )
   }
 
+  public async getQueryData() {
+    const items = (await this.getData()).items
+    const jsonItems = getJsonDataItemsProxy(items)
+    const query = generateSqlQuery(
+      this.selected,
+      this.filter,
+      this.sort,
+      this.startIndex,
+      this.count,
+      this.groupedBy,
+      this.aggregations
+    )
+    const result = await import('alasql').then((module) =>
+      module.default(query, [jsonItems])
+    )
+    return result.map(jsonToGeojsonFeature)
+  }
+
   load() {
     // Nothing to load for Wfs
   }
 
   async read(): Promise<DataItem[]> {
-    return (await this.getData()).items
+    return (await this.getData(this.aggregations, this.groupedBy)).items
   }
 }

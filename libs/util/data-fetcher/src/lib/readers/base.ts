@@ -11,8 +11,8 @@ import {
 
 export class BaseReader {
   protected selected: FieldName[] = null
-  protected groupedBy: FieldGroupBy[] = null
-  protected aggregations: FieldAggregation[] = null
+  public groupedBy: FieldGroupBy[] = null
+  public aggregations: FieldAggregation[] = null
   protected filter: FieldFilter = null
   protected sort: FieldSort[] = null
   protected startIndex: number = null
