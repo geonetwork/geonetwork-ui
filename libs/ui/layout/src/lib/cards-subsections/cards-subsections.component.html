@@ -1,25 +1,22 @@
-<div class="flex flex-row gap-x-4 items-center justify-between">
-  <p
-    class="font-title text-[28px] font-medium text-title text-center sm:text-left"
-    [translate]="title"
-  ></p>
-  <div class="flex items-center gap-x-4">
-    <ng-content select="[slot=filters]"></ng-content>
+<div class="flex flex-row items-center justify-between">
+  <div class="flex flex-row items-center gap-x-4">
+    <p
+      class="font-title text-[28px] font-medium text-title text-center sm:text-left"
+      [translate]="title"
+    ></p>
     <gn-ui-previous-next-buttons
       *ngIf="paginableElement?.pagesCount > 1"
       [listComponent]="paginableElement"
     ></gn-ui-previous-next-buttons>
   </div>
+  <div class="flex items-center gap-x-4">
+    <ng-content select="[slot=filters]"></ng-content>
+  </div>
 </div>
-
 <div
-  class="cards-subsections-container"
-  [ngClass]="['size-' + subComponentSize, containerClass]"
-  #CardsSubsectionsContainer
+  class="cards-subsections-container gap-4 py-10"
+  [class]="'size-' + subComponentSize"
 >
   <ng-content></ng-content>
 </div>
-<gn-ui-pagination-dots
-  [containerClass]="'absolute ' + paginationContainerClass"
-  [listComponent]="this"
-></gn-ui-pagination-dots>
+<gn-ui-pagination-dots [listComponent]="this"></gn-ui-pagination-dots>

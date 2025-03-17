@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/angular'
 import { componentWrapperDecorator } from '@storybook/angular'
-import { BlockListComponent } from './cards-subsections.component'
+import { subComponentListComponent } from './cards-subsections.component'
 
-const meta: Meta<BlockListComponent> = {
-  component: BlockListComponent,
-  title: 'Layout/BlockListComponent',
+const meta: Meta<subComponentListComponent> = {
+  component: subComponentListComponent,
+  title: 'Layout/subComponentListComponent',
   decorators: [
     componentWrapperDecorator(
       (story) =>
@@ -14,29 +14,31 @@ const meta: Meta<BlockListComponent> = {
 }
 export default meta
 type Story = StoryObj<
-  BlockListComponent & {
-    blockCount: number
+  subComponentListComponent & {
+    subComponentCount: number
   }
 >
 
 export const Primary: Story = {
   args: {
     pageSize: 5,
-    blockCount: 17,
+    subComponentCount: 17,
   },
   render: (args) => ({
     props: {
       ...args,
-      blockList: new Array(args.blockCount).fill(0).map((_, i) => i + 1),
+      subComponentList: new Array(args.subComponentCount)
+        .fill(0)
+        .map((_, i) => i + 1),
     },
     template: `
     <gn-ui-cards-subsections [pageSize]='pageSize' containerClass='gap-4 p-4'>
       <div
-        *ngFor='let block of blockList'
+        *ngFor='let subComponent of subComponentList'
         class='border border-black'
-        #block
+        #subComponent
       >
-        Box {{ block }}
+        Box {{ subComponent }}
       </div>
     </gn-ui-cards-subsections>
 `,

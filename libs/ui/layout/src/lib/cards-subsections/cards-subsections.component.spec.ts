@@ -7,8 +7,8 @@ import { By } from '@angular/platform-browser'
   template: `<gn-ui-cards-subsections>
     <div
       class="block"
-      *ngFor="let block of blocks"
-      #block
+      *ngFor="let subComponent of subComponents"
+      #subComponent
       style="width: 50px; height: 20px"
     ></div>
   </gn-ui-cards-subsections>`,

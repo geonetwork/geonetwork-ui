@@ -1,8 +1,5 @@
 <ng-container *ngIf="links && links.length > 0">
-  <gn-ui-cards-subsections
-    title="record.metadata.download"
-    containerClass="gap-4 py-10"
-  >
+  <gn-ui-cards-subsections title="record.metadata.download">
     <div
       slot="filters"
       class="flex flex-wrap justify-start"
@@ -22,7 +19,7 @@
       </gn-ui-button>
     </div>
 
-    <div #block *ngFor="let link of filteredLinks">
+    <div #subComponent *ngFor="let link of filteredLinks">
       <gn-ui-download-item
         [link]="link"
         [color]="getLinkColor(link)"

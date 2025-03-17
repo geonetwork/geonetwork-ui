@@ -7,12 +7,10 @@ import {
   ElementRef,
   Input,
   QueryList,
-  ViewChild,
 } from '@angular/core'
 
 import { CommonModule } from '@angular/common'
 import { Paginable } from '../paginable.interface'
-import { BlockListComponent } from '../block-list/block-list.component'
 import { PaginationDotsComponent } from '../pagination-dots/pagination-dots.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { PreviousNextButtonsComponent } from '../previous-next-buttons/previous-next-buttons.component'
@@ -33,23 +31,15 @@ enum ComponentSize {
   imports: [
     CommonModule,
     PaginationDotsComponent,
-    BlockListComponent,
     TranslateModule,
     PreviousNextButtonsComponent,
   ],
 })
 export class CardsSubsectionsComponent implements AfterViewInit, Paginable {
-  @Input() containerClass = ''
-  @Input() paginationContainerClass = 'w-full bottom-0 top-auto'
-  @ContentChildren('block', { read: ElementRef }) blocks: QueryList<
-    ElementRef<HTMLElement>
-  >
-
+  @ContentChildren('subComponent', { read: ElementRef })
+  subComponents: QueryList<ElementRef<HTMLElement>>
   @Input() title: string
-  @ViewChild(BlockListComponent) list: BlockListComponent
 
-  @ViewChild('CardsSubsectionsContainer')
-  CardsSubsectionsContainer: ElementRef<HTMLElement>
   get paginableElement(): Paginable {
     return this
   }
@@ -69,30 +59,30 @@ export class CardsSubsectionsComponent implements AfterViewInit, Paginable {
     return this.currentPage_ === this.pagesCount - 1
   }
   get pagesCount() {
-    return this.blocks ? Math.ceil(this.blocks.length / this.pageSize) : 1
+    return this.subComponents
+      ? Math.ceil(this.subComponents.length / this.pageSize)
+      : 1
   }
   get currentPage() {
     return this.currentPage_ + 1 // this is 1-based
   }
 
-  constructor(private changeDetector: ChangeDetectorRef) {}
+  constructor(private readonly changeDetector: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
-    this.blocks.changes.subscribe(() => {
+    this.subComponents.changes.subscribe(() => {
       this.updateSizes()
-      this.refreshBlocksVisibility()
+      this.refreshSubComponentsVisibility()
       this.goToPage(0)
     })
     this.updateSizes()
-    this.refreshBlocksVisibility()
-    // we store the first height as the min-height of the list container
-    this.minHeight = this.CardsSubsectionsContainer.nativeElement.clientHeight
+    this.refreshSubComponentsVisibility()
     this.changeDetector.detectChanges()
   }
 
-  protected refreshBlocksVisibility = () => {
-    this.blocks.forEach((block, index) => {
-      const element = block.nativeElement
+  protected refreshSubComponentsVisibility = () => {
+    this.subComponents.forEach((subComponent, index) => {
+      const element = subComponent.nativeElement
       element.style.display =
         index >= this.currentPage_ * this.pageSize &&
         index < (this.currentPage_ + 1) * this.pageSize
@@ -107,10 +97,10 @@ export class CardsSubsectionsComponent implements AfterViewInit, Paginable {
   }
 
   protected computeSubComponentSize(): ComponentSize {
-    if (!this.blocks) return ComponentSize.MEDIUM
-    const blocksCount = this.blocks.length
-    if (blocksCount <= 12) return ComponentSize.MEDIUM
-    if (blocksCount <= 18) return ComponentSize.SMALL
+    if (!this.subComponents) return ComponentSize.MEDIUM
+    const subComponentsCount = this.subComponents.length
+    if (subComponentsCount <= 12) return ComponentSize.MEDIUM
+    if (subComponentsCount <= 18) return ComponentSize.SMALL
     return ComponentSize.EXTRA_SMALL
   }
 
@@ -127,14 +117,13 @@ export class CardsSubsectionsComponent implements AfterViewInit, Paginable {
     }
   }
 
-  // pageIndex is 1-based
   public goToPage(pageIndex: number) {
     this.currentPage_ = Math.max(
       Math.min(pageIndex - 1, this.pagesCount - 1),
       0
     )
     this.changeDetector.detectChanges()
-    this.refreshBlocksVisibility()
+    this.refreshSubComponentsVisibility()
   }
 
   public goToPrevPage() {
