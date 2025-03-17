@@ -1,6 +1,7 @@
 <ng-container *ngrxLet="otherLinks$ as otherLinks">
   <gn-ui-cards-subsections title="record.metadata.links">
     <gn-ui-link-card
+      slot="content"
       #subComponent
       *ngFor="let otherLink of otherLinks"
       [link]="otherLink"
