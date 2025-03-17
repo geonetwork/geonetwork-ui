@@ -1,12 +1,15 @@
-<div class="flex flex-row gap-x-4 items-center justify-center md:justify-start">
+<div class="flex flex-row gap-x-4 items-center justify-between">
   <p
     class="font-title text-[28px] font-medium text-title text-center sm:text-left"
     [translate]="title"
   ></p>
-  <gn-ui-previous-next-buttons
-    *ngIf="paginableElement?.pagesCount > 1"
-    [listComponent]="paginableElement"
-  ></gn-ui-previous-next-buttons>
+  <div class="flex items-center gap-x-4">
+    <ng-content select="[slot=filters]"></ng-content>
+    <gn-ui-previous-next-buttons
+      *ngIf="paginableElement?.pagesCount > 1"
+      [listComponent]="paginableElement"
+    ></gn-ui-previous-next-buttons>
+  </div>
 </div>
 
 <div

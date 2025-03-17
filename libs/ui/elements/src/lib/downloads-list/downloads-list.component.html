@@ -1,36 +1,28 @@
-<div
-  class="flex flex-wrap justify-between mt-8 mb-6 sm:mt-12 sm:mb-2"
-  *ngIf="links && links.length > 0"
->
-  <p
-    class="font-title text-[28px] text-title font-medium mr-4 pb-4 text-center sm:text-left"
-    translate
-  ></p>
-  <div
-    class="flex flex-wrap justify-start sm:justify-end sm:pb-4"
-    data-cy="download-format-filters"
-  >
-    <gn-ui-button
-      class="m-1 format-filter"
-      [extraClass]="
-        '!px-[12px] !py-[8px] !text-[15px]' +
-        (isFilterActive(format) ? ' opacity-100' : ' opacity-50')
-      "
-      (buttonClick)="toggleFilterFormat(format)"
-      [attr.data-format]="format"
-      *ngFor="let format of visibleFormats"
-    >
-      {{ getFilterFormatTitle(format) }}
-    </gn-ui-button>
-  </div>
-</div>
-<ng-container>
+<ng-container *ngIf="links && links.length > 0">
   <gn-ui-cards-subsections
     title="record.metadata.download"
     containerClass="gap-4 py-10"
   >
+    <div
+      slot="filters"
+      class="flex flex-wrap justify-start"
+      data-cy="download-format-filters"
+    >
+      <gn-ui-button
+        class="m-1 format-filter"
+        [extraClass]="
+          '!px-[12px] !py-[8px] !text-[15px]' +
+          (isFilterActive(format) ? ' opacity-100' : ' opacity-50')
+        "
+        (buttonClick)="toggleFilterFormat(format)"
+        [attr.data-format]="format"
+        *ngFor="let format of visibleFormats"
+      >
+        {{ getFilterFormatTitle(format) }}
+      </gn-ui-button>
+    </div>
+
     <div #block *ngFor="let link of filteredLinks">
-      {{ filteredLink | json }}
       <gn-ui-download-item
         [link]="link"
         [color]="getLinkColor(link)"
