@@ -18,9 +18,9 @@ import { TranslateModule } from '@ngx-translate/core'
 import { PreviousNextButtonsComponent } from '../previous-next-buttons/previous-next-buttons.component'
 
 @Component({
-  selector: 'gn-ui-resource-wrapper',
-  templateUrl: './resource-wrapper.component.html',
-  styleUrls: ['./resource-wrapper.component.css'],
+  selector: 'gn-ui-cards-subsections',
+  templateUrl: './cards-subsections.component.html',
+  styleUrls: ['./cards-subsections.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -31,7 +31,7 @@ import { PreviousNextButtonsComponent } from '../previous-next-buttons/previous-
     PreviousNextButtonsComponent,
   ],
 })
-export class ResourceWrapperComponent implements AfterViewInit, Paginable {
+export class CardsSubsectionsComponent implements AfterViewInit, Paginable {
   @Input() containerClass = ''
   @Input() paginationContainerClass = 'w-full bottom-0 top-auto'
   @ContentChildren('block', { read: ElementRef }) blocks: QueryList<
@@ -41,8 +41,8 @@ export class ResourceWrapperComponent implements AfterViewInit, Paginable {
   @Input() title: string
   @ViewChild(BlockListComponent) list: BlockListComponent
 
-  @ViewChild('resourceWrapperContainer')
-  resourceWrapperContainer: ElementRef<HTMLElement>
+  @ViewChild('CardsSubsectionsContainer')
+  CardsSubsectionsContainer: ElementRef<HTMLElement>
   get paginableElement(): Paginable {
     return this
   }
@@ -74,11 +74,12 @@ export class ResourceWrapperComponent implements AfterViewInit, Paginable {
     this.blocks.changes.subscribe(() => {
       this.updateSizes()
       this.refreshBlocksVisibility()
+      this.goToPage(0)
     })
     this.updateSizes()
     this.refreshBlocksVisibility()
     // we store the first height as the min-height of the list container
-    this.minHeight = this.resourceWrapperContainer.nativeElement.clientHeight
+    this.minHeight = this.CardsSubsectionsContainer.nativeElement.clientHeight
     this.changeDetector.detectChanges()
   }
 
@@ -100,6 +101,7 @@ export class ResourceWrapperComponent implements AfterViewInit, Paginable {
   }
 
   protected computeSubComponentSize(): 'M' | 'S' | 'XS' {
+    //TODO a faire dans une Enum, avec Large, Medium, Small, ExtraSmall
     // size M for max 12 elts; S for max 18 elts; XS for more
     if (!this.blocks) return 'M'
     const blocksCount = this.blocks.length

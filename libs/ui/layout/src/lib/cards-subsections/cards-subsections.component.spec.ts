@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { BlockListComponent } from './resource-wrapper.component'
+import { BlockListComponent } from './cards-subsections.component'
 import { Component, Input } from '@angular/core'
 import { By } from '@angular/platform-browser'
 
 @Component({
-  template: `<gn-ui-resource-wrapper>
+  template: `<gn-ui-cards-subsections>
     <div
       class="block"
       *ngFor="let block of blocks"
       #block
       style="width: 50px; height: 20px"
     ></div>
-  </gn-ui-resource-wrapper>`,
+  </gn-ui-cards-subsections>`,
 })
 class BlockListWrapperComponent {
   @Input() blocks = [1, 2, 3, 4, 5, 6, 7]
@@ -151,7 +151,7 @@ describe('BlockListComponent', () => {
   describe('set initial height as min height, keeps value when height changes', () => {
     beforeEach(() => {
       Object.defineProperties(
-        component.resourceWrapperContainer.nativeElement,
+        component.CardsSubsectionsContainer.nativeElement,
         {
           clientHeight: {
             configurable: true,
@@ -162,7 +162,7 @@ describe('BlockListComponent', () => {
       fixture.detectChanges()
       component.ngAfterViewInit()
       Object.defineProperties(
-        component.resourceWrapperContainer.nativeElement,
+        component.CardsSubsectionsContainer.nativeElement,
         {
           clientHeight: {
             value: 50,
@@ -173,7 +173,7 @@ describe('BlockListComponent', () => {
     })
     it('sets the min height of the container according to its initial content', () => {
       expect(
-        component.resourceWrapperContainer.nativeElement.style.minHeight
+        component.CardsSubsectionsContainer.nativeElement.style.minHeight
       ).toBe('150px')
     })
   })

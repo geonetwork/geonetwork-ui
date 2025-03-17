@@ -8,7 +8,7 @@ import {
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
   BlockListComponent,
-  ResourceWrapperComponent,
+  CardsSubsectionsComponent,
   Paginable,
   PreviousNextButtonsComponent,
 } from '@geonetwork-ui/ui/layout'
@@ -28,7 +28,7 @@ import { TranslateModule } from '@ngx-translate/core'
     PreviousNextButtonsComponent,
     BlockListComponent,
     LinkCardComponent,
-    ResourceWrapperComponent,
+    CardsSubsectionsComponent,
     LetDirective,
     TranslateModule,
   ],

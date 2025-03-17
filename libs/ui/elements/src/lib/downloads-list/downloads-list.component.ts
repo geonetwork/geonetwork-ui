@@ -6,7 +6,7 @@ import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { DownloadItemComponent } from '../download-item/download-item.component'
-
+import { CardsSubsectionsComponent } from '@geonetwork-ui/ui/layout'
 marker('datahub.search.filter.all')
 marker('datahub.search.filter.others')
 
@@ -23,6 +23,7 @@ type FilterFormat = (typeof FILTER_FORMATS)[number]
     CommonModule,
     ButtonComponent,
     DownloadItemComponent,
+    CardsSubsectionsComponent,
     TranslateModule,
   ],
 })

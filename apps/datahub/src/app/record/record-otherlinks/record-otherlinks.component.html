@@ -1,7 +1,6 @@
 <ng-container *ngrxLet="otherLinks$ as otherLinks">
-  <gn-ui-resource-wrapper
+  <gn-ui-cards-subsections
     title="record.metadata.links"
-
     containerClass="gap-4 py-10"
   >
     <gn-ui-link-card
@@ -10,5 +9,5 @@
       [link]="otherLink"
       [compact]="true"
     ></gn-ui-link-card>
-  </gn-ui-resource-wrapper>
+  </gn-ui-cards-subsections>
 </ng-container>

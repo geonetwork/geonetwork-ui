@@ -2,8 +2,7 @@
   <p
     class="font-title text-[28px] font-medium text-title text-center sm:text-left"
     [translate]="title"
-  >
-  </p>
+  ></p>
   <gn-ui-previous-next-buttons
     *ngIf="paginableElement?.pagesCount > 1"
     [listComponent]="paginableElement"
@@ -11,9 +10,9 @@
 </div>
 
 <div
-  class="resource-wrapper-container"
+  class="cards-subsections-container"
   [ngClass]="['size-' + subComponentSize, containerClass]"
-  #resourceWrapperContainer
+  #CardsSubsectionsContainer
 >
   <ng-content></ng-content>
 </div>

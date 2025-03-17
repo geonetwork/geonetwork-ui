@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular'
 import { componentWrapperDecorator } from '@storybook/angular'
-import { BlockListComponent } from './resource-wrapper.component'
+import { BlockListComponent } from './cards-subsections.component'
 
 const meta: Meta<BlockListComponent> = {
   component: BlockListComponent,
@@ -30,7 +30,7 @@ export const Primary: Story = {
       blockList: new Array(args.blockCount).fill(0).map((_, i) => i + 1),
     },
     template: `
-    <gn-ui-resource-wrapper [pageSize]='pageSize' containerClass='gap-4 p-4'>
+    <gn-ui-cards-subsections [pageSize]='pageSize' containerClass='gap-4 p-4'>
       <div
         *ngFor='let block of blockList'
         class='border border-black'
@@ -38,7 +38,7 @@ export const Primary: Story = {
       >
         Box {{ block }}
       </div>
-    </gn-ui-resource-wrapper>
+    </gn-ui-cards-subsections>
 `,
   }),
 }

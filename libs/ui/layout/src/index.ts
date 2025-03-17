@@ -1,6 +1,6 @@
 export * from './lib/anchor-link/anchor-link.directive'
 export * from './lib/carousel/carousel.component'
-export * from './lib/resource-wrapper/resource-wrapper.component'
+export * from './lib/cards-subsections/cards-subsections.component'
 export * from './lib/expandable-panel-button/expandable-panel-button.component'
 export * from './lib/expandable-panel/expandable-panel.component'
 export * from './lib/form-field-wrapper/form-field-wrapper.component'
