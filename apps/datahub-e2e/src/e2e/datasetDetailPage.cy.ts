@@ -526,7 +526,7 @@ describe('dataset pages', () => {
           })
           cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
         })
-        it('should not show any preview and display an error message', () => {
+        it('should not show the map and chart previews and display an error message', () => {
           cy.get('@previewSection')
             .find('gn-ui-dropdown-selector')
             .openDropdown()
@@ -535,12 +535,14 @@ describe('dataset pages', () => {
             .click()
           cy.get('gn-ui-map-container').should('not.exist')
           cy.get('gn-ui-popup-alert').should('be.visible')
-          cy.get('@tableTab').click()
-          cy.get('gn-ui-data-table').should('not.exist')
-          cy.get('gn-ui-popup-alert').should('be.visible')
           cy.get('@chartTab').click()
           cy.get('gn-ui-chart').should('not.exist')
           cy.get('gn-ui-popup-alert').should('be.visible')
+        })
+        it('should still show the table preview', () => {
+          cy.get('@tableTab').click()
+          cy.get('gn-ui-data-table').should('be.visible')
+          cy.get('gn-ui-popup-alert').should('not.exist')
         })
       })
       it('should display the sharing options', () => {
