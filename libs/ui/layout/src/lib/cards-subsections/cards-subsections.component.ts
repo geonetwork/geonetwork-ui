@@ -17,6 +17,13 @@ import { PaginationDotsComponent } from '../pagination-dots/pagination-dots.comp
 import { TranslateModule } from '@ngx-translate/core'
 import { PreviousNextButtonsComponent } from '../previous-next-buttons/previous-next-buttons.component'
 
+enum ComponentSize {
+  LARGE = 'L',
+  MEDIUM = 'M',
+  SMALL = 'S',
+  EXTRA_SMALL = 'XS',
+}
+
 @Component({
   selector: 'gn-ui-cards-subsections',
   templateUrl: './cards-subsections.component.html',
@@ -48,7 +55,7 @@ export class CardsSubsectionsComponent implements AfterViewInit, Paginable {
   }
 
   protected minHeight = 0
-  protected subComponentSize: 'M' | 'S' | 'XS' = 'M'
+  protected subComponentSize: ComponentSize = ComponentSize.MEDIUM
   protected pageSize = 4
   protected currentPage_ = 0
 
@@ -91,7 +98,6 @@ export class CardsSubsectionsComponent implements AfterViewInit, Paginable {
         index < (this.currentPage_ + 1) * this.pageSize
           ? null
           : 'none'
-      //element.setAttribute('data-size', this.subComponentSize)//TODO after my ticket i think
     })
   }
 
@@ -100,23 +106,21 @@ export class CardsSubsectionsComponent implements AfterViewInit, Paginable {
     this.pageSize = this.computePageSize()
   }
 
-  protected computeSubComponentSize(): 'M' | 'S' | 'XS' {
-    //TODO a faire dans une Enum, avec Large, Medium, Small, ExtraSmall
-    // size M for max 12 elts; S for max 18 elts; XS for more
-    if (!this.blocks) return 'M'
+  protected computeSubComponentSize(): ComponentSize {
+    if (!this.blocks) return ComponentSize.MEDIUM
     const blocksCount = this.blocks.length
-    if (blocksCount <= 12) return 'M'
-    if (blocksCount <= 18) return 'S'
-    return 'XS'
+    if (blocksCount <= 12) return ComponentSize.MEDIUM
+    if (blocksCount <= 18) return ComponentSize.SMALL
+    return ComponentSize.EXTRA_SMALL
   }
 
   protected computePageSize(): number {
     switch (this.subComponentSize) {
-      case 'M':
+      case ComponentSize.MEDIUM:
         return 4
-      case 'S':
+      case ComponentSize.SMALL:
         return 6
-      case 'XS':
+      case ComponentSize.EXTRA_SMALL:
         return 8
       default:
         return 4
