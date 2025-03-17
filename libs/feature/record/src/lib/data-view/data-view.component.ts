@@ -84,7 +84,11 @@ export class DataViewComponent {
       .pipe(
         tap((excludeWfs) => {
           this.hidePreview =
-            link['accessServiceProtocol'] === 'wfs' && excludeWfs ? true : false
+            link['accessServiceProtocol'] === 'wfs' &&
+            excludeWfs &&
+            this.mode === 'chart'
+              ? true
+              : false
           this.selectedLink$.next(link)
         })
       )

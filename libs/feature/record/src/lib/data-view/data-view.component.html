@@ -8,7 +8,7 @@
     [choices]="choices"
     (selectValue)="selectLink($event)"
   ></gn-ui-dropdown-selector>
-  <ng-container *ngIf="hidePreview && mode === 'chart'; else dataView">
+  <ng-container *ngIf="hidePreview; else dataView">
     <gn-ui-popup-alert
       type="warning"
       icon="matErrorOutlineOutline"
