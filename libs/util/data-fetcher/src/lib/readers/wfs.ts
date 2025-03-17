@@ -96,7 +96,7 @@ export class WfsReader extends BaseCacheReader {
     }
   }
 
-  protected async getData(aggregation?, groupedBy?) {
+  public async getData(aggregation?, groupedBy?) {
     if (aggregation || groupedBy) {
       return { items: await this.getQueryData() }
     }
@@ -129,7 +129,7 @@ export class WfsReader extends BaseCacheReader {
     )
   }
 
-  private async getQueryData() {
+  public async getQueryData() {
     const items = (await this.getData()).items
     const jsonItems = getJsonDataItemsProxy(items)
     const query = generateSqlQuery(
