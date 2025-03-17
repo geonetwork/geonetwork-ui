@@ -34,6 +34,7 @@ import {
   createViewFromLayer,
   MapContext,
   MapContextLayer,
+  SourceLoadErrorEvent,
 } from '@geospatial-sdk/core'
 import {
   FeatureDetailComponent,
@@ -209,6 +210,16 @@ export class MapViewComponent implements AfterViewInit {
       // this.selection.setStyle(this.selectionStyle)
     }
     this.changeRef.detectChanges()
+  }
+
+  onSourceLoadError(error: SourceLoadErrorEvent) {
+    if (error.httpStatus === 403 || error.httpStatus === 401) {
+      this.error = this.translateService.instant(`dataset.error.forbidden`)
+    } else {
+      this.error = this.translateService.instant(`dataset.error.http`, {
+        info: error.httpStatus,
+      })
+    }
   }
 
   resetSelection(): void {
