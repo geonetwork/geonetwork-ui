@@ -432,22 +432,53 @@ describe('WfsReader', () => {
       )
     })
 
-    describe('When cache should be used', () => {
-      it('uses the cache', async () => {
-        const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
-        await reader.read()
-        expect(useCacheSpy).toHaveBeenCalledTimes(1)
+    describe('Cache', () => {
+      describe('When cache should be used', () => {
+        it('uses the cache', async () => {
+          const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
+          await reader.read()
+          expect(useCacheSpy).toHaveBeenCalledTimes(1)
+        })
+      })
+      describe('When cache should not be used', () => {
+        beforeAll(() => {
+          jest.clearAllMocks()
+          cacheActive = false
+        })
+        it('does not use the cache', async () => {
+          const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
+          await reader.read()
+          expect(useCacheSpy).not.toHaveBeenCalled()
+        })
       })
     })
-    describe('When cache should not be used', () => {
-      beforeAll(() => {
-        jest.clearAllMocks()
-        cacheActive = false
+    describe('Aggregations', () => {
+      describe('When aggregations are requested', () => {
+        it('calls getQueryData and returns the proper data', async () => {
+          const getQueryDataSpy = jest.spyOn(reader, 'getQueryData')
+          reader.aggregations = ['sum', 'code_dep'] as any
+          const items = await reader.getData(reader.aggregations)
+          expect(getQueryDataSpy).toHaveBeenCalledTimes(1)
+          expect(items).toEqual({
+            items: [
+              {
+                id: 1,
+                properties: {
+                  name: 'Mocked ParsedGml Item 1',
+                },
+                type: 'Feature',
+                geometry: null,
+              },
+            ],
+          })
+        })
       })
-      it('does not use the cache', async () => {
-        const useCacheSpy = jest.spyOn({ useCache }, 'useCache')
-        await reader.read()
-        expect(useCacheSpy).not.toHaveBeenCalled()
+      describe('When aggregations are NOT requested', () => {
+        it('should not call getQueryData', async () => {
+          const getQueryDataSpy = jest.spyOn(reader, 'getQueryData')
+          reader.aggregations = null
+          expect(getQueryDataSpy).toHaveBeenCalledTimes(0)
+        })
       })
     })
   })
