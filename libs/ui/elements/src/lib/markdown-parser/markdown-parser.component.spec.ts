@@ -38,4 +38,17 @@ describe('MarkdownParserComponent', () => {
     const text = fixture.nativeElement.innerHTML
     expect(text).toContain('<p>simple text</p>')
   })
+
+  it('should not fail when content is nullish', () => {
+    component.textContent = null
+    fixture.detectChanges()
+    expect(fixture.nativeElement.innerHTML).toBe(
+      '<div class="markdown-body"></div>'
+    )
+    component.textContent = undefined
+    fixture.detectChanges()
+    expect(fixture.nativeElement.innerHTML).toBe(
+      '<div class="markdown-body"></div>'
+    )
+  })
 })
