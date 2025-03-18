@@ -61,7 +61,6 @@ The libraries are organized as follows:
 3. Libraries used for interacting with backend services are in the `data-access` folder:
 
    - `data-access-gn4` contains an auto-generated API client for the GeoNetwork 4 backend
-   - `data-access-datafeeder` contains an auto-generated API client for the Datafeeder backend
 
 4. Libraries providing various utilities in the `util` folder:
 

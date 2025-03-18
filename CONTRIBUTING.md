@@ -224,10 +224,10 @@ If you want Prettier to run on all the code and make sure everything is formatte
 
 ### OpenAPI client generation
 
-GeoNetwork-UI contains auto-generated API clients for two backends: [GeoNetwork](https://github.com/geonetwork/core-geonetwork) 4 and [Datafeeder](https://github.com/georchestra/georchestra/tree/master/datafeeder).
+GeoNetwork-UI contains auto-generated API clients for [GeoNetwork](https://github.com/geonetwork/core-geonetwork) 4.
 This relies on the [OpenAPI standard](https://www.openapis.org/) (formerly Swagger).
 
-To regenerate the clients, update the `spec.yaml` files in the `libs/data-access/<backend>/src` folder and use either `npm run generate-api -- gn4` or `npm run generate-api -- datafeeder`.
+To regenerate the client, update the `spec.yaml` files in the `libs/data-access/gn4/src` folder and use `npm run generate-api -- gn4`.
 
 ### i18n
 
@@ -304,7 +304,7 @@ another.
 To run it:
 
 ```bash
-node tools/i18n/cli.js merge ./apps/datafeeder/src/assets/i18n/fr.json ./translations/fr.json
+node tools/i18n/cli.js merge ./apps/datahub/src/assets/i18n/fr.json ./translations/fr.json
 ```
 
 ## Documentation

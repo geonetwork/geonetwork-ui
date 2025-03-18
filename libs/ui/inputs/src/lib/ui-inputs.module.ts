@@ -28,7 +28,6 @@ import { BadgeComponent } from './badge/badge.component'
 import { ButtonComponent } from './button/button.component'
 import { CheckToggleComponent } from './check-toggle/check-toggle.component'
 import { CheckboxComponent } from './checkbox/checkbox.component'
-import { ChipsInputComponent } from './chips-input/chips-input.component'
 import { DateRangePickerComponent } from './date-range-picker/date-range-picker.component'
 import { DragAndDropFileInputComponent } from './drag-and-drop-file-input/drag-and-drop-file-input.component'
 import { DropdownMultiselectComponent } from './dropdown-multiselect/dropdown-multiselect.component'
@@ -40,7 +39,6 @@ import { ViewportIntersectorComponent } from './viewport-intersector/viewport-in
 @NgModule({
   declarations: [
     DragAndDropFileInputComponent,
-    ChipsInputComponent,
     DropdownMultiselectComponent,
     ViewportIntersectorComponent,
     CheckboxComponent,
@@ -86,7 +84,6 @@ import { ViewportIntersectorComponent } from './viewport-intersector/viewport-in
     ButtonComponent,
     DragAndDropFileInputComponent,
     TextAreaComponent,
-    ChipsInputComponent,
     DropdownMultiselectComponent,
     ViewportIntersectorComponent,
     CheckToggleComponent,

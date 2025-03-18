@@ -4,7 +4,7 @@
 # and appends it with a tag or branch name
 
 # input should be a unique app name or a list of names separated by a comma
-# e.g. tools/make-archive.sh datahub,datafeeder
+# e.g. tools/make-archive.sh datahub,metadata-editor
 appNames=$1
 gitTag=$(git describe --exact-match --tags 2>/dev/null | sed "s/^v//") # remove "v" in front of version if any
 gitBranch=$(git symbolic-ref --short HEAD)

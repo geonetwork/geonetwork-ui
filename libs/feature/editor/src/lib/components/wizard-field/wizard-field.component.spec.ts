@@ -10,9 +10,6 @@ import { WizardService } from '../../services/wizard.service'
 import { TextInputComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
-const DEFAULT_CHIPS_ITEMS_URL = (keys) =>
-  `https://apps.titellus.net/geonetwork/srv/api/registries/vocabularies/search?type=CONTAINS&thesaurus=external.place.regions&rows=200&q=${keys}&uri=*QUERY*&lang=eng`
-
 describe('WizardFieldsComponent', () => {
   let component: WizardFieldComponent
   let fixture: ComponentFixture<WizardFieldComponent>
@@ -100,31 +97,6 @@ describe('WizardFieldsComponent', () => {
 
     it('should display', () => {
       const el = fixture.debugElement.query(By.css('#abstract'))
-
-      expect(el).not.toBeNull()
-    })
-  })
-
-  describe('Chips', () => {
-    beforeEach(() => {
-      fixture = TestBed.createComponent(WizardFieldComponent)
-      component = fixture.componentInstance
-
-      component.wizardFieldConfig = {
-        id: 'tags',
-        label: 'datafeeder.form.tags',
-        icon: 'icon-tag',
-        type: WizardFieldType.CHIPS,
-        options: {
-          url: DEFAULT_CHIPS_ITEMS_URL,
-        },
-      }
-
-      fixture.detectChanges()
-    })
-
-    it('should display', () => {
-      const el = fixture.debugElement.query(By.css('#tags'))
 
       expect(el).not.toBeNull()
     })
