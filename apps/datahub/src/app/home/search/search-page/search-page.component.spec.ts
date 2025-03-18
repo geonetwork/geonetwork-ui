@@ -14,6 +14,7 @@ const RouterFacadeMock = {
 const SearchFacadeMock = {
   setFilters: jest.fn(() => this),
   setResultsLayout: jest.fn(() => this),
+  setConfigFilters: jest.fn(() => this),
 }
 
 describe('MainSearchComponent', () => {

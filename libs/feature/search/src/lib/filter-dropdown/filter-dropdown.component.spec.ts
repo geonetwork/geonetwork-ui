@@ -18,9 +18,11 @@ import { SearchFacade } from '../state/search.facade'
 import { FieldsService } from '../utils/service/fields.service'
 import { SearchService } from '../utils/service/search.service'
 import { FilterDropdownComponent } from './filter-dropdown.component'
+import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
 
 class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject<any>({})
+  configFilters$ = new BehaviorSubject<any>(configFilters)
 }
 class SearchServiceMock {
   updateFilters = jest.fn()
@@ -47,6 +49,14 @@ class FieldsServiceMock {
   getFieldType = jest.fn(() => 'values')
 }
 
+const configFilters: SearchFilters = {
+  resourceType: {
+    service: false,
+    map: false,
+    'map/static': false,
+    mapDigital: false,
+  },
+}
 @Component({
   selector: 'gn-ui-dropdown-multiselect',
   template: '<div></div>',
@@ -180,7 +190,10 @@ describe('FilterDropdownComponent', () => {
           component.ngOnInit()
         })
         it('reads available values', () => {
-          expect(fieldsService.getAvailableValues).toHaveBeenCalledWith('Org')
+          expect(fieldsService.getAvailableValues).toHaveBeenCalledWith(
+            'Org',
+            configFilters
+          )
         })
       })
       describe('when there are available values', () => {

@@ -7,6 +7,7 @@ import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/orga
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { ElasticsearchService } from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
 
 class RecordsRepositoryMock {
   aggregate = jest.fn(() => EMPTY)
@@ -26,6 +27,7 @@ class OrganisationsServiceMock {
       orgFilter: true,
     })
   )
+  getOrganisations = jest.fn(() => of([{ name: 'orgA', recordCount: 10 }]))
 }
 
 class PlatformServiceInterfaceMock {
@@ -43,6 +45,14 @@ class PlatformServiceInterfaceMock {
   })
 }
 
+const configFilters: SearchFilters = {
+  resourceType: {
+    service: false,
+    map: false,
+    'map/static': false,
+    mapDigital: false,
+  },
+}
 describe('FieldsService', () => {
   let service: FieldsService
 
@@ -110,15 +120,18 @@ describe('FieldsService', () => {
     describe('#getAvailableValues', () => {
       let values
       beforeEach(async () => {
-        values = await lastValueFrom(service.getAvailableValues('organization'))
+        values = await lastValueFrom(
+          service.getAvailableValues('organization', configFilters)
+        )
       })
       it('gets the values from the orgs service', () => {
+        console.log('values', values)
         expect(values).toEqual([{ label: 'orgA (10)', value: 'orgA' }])
       })
       it('throws for an unsupported field', () => {
-        expect(() => service.getAvailableValues('blarg')).toThrowError(
-          'Unsupported search field: blarg'
-        )
+        expect(() =>
+          service.getAvailableValues('blarg', configFilters)
+        ).toThrowError('Unsupported search field: blarg')
       })
     })
     describe('#buildFiltersFromFieldValues', () => {

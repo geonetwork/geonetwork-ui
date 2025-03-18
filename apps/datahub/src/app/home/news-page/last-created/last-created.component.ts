@@ -13,7 +13,7 @@ export class LastCreatedComponent implements OnInit {
   constructor(
     private searchFacade: SearchFacade,
     private routerFacade: RouterFacade
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.searchFacade
@@ -22,12 +22,12 @@ export class LastCreatedComponent implements OnInit {
       .setSortBy(['desc', 'createDate'])
       .setResultsLayout('FEED')
       .setConfigFilters({
-        'resourceType': {
-          'service': false,
-          'map': false,
+        resourceType: {
+          service: false,
+          map: false,
           'map/static': false,
-          'mapDigital': false,
-        }
+          mapDigital: false,
+        },
       })
   }
 
