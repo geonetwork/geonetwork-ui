@@ -13,6 +13,7 @@ import {
   DateRangeSearchField,
   RecordKindField,
 } from './fields'
+import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
 import { TestBed } from '@angular/core/testing'
 import { Injector } from '@angular/core'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
