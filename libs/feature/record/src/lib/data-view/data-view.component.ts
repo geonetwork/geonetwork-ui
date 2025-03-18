@@ -5,8 +5,8 @@ import {
   Output,
 } from '@angular/core'
 import { getLinkLabel, getLinkPriority } from '@geonetwork-ui/util/shared'
-import { BehaviorSubject, combineLatest } from 'rxjs'
-import { map, tap } from 'rxjs/operators'
+import { BehaviorSubject, combineLatest, of } from 'rxjs'
+import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
@@ -17,6 +17,7 @@ import {
 } from '@geonetwork-ui/feature/dataviz'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
+import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 
 @Component({
   selector: 'gn-ui-data-view',
@@ -30,15 +31,21 @@ import { TranslateModule } from '@ngx-translate/core'
     TableViewComponent,
     TranslateModule,
     ChartViewComponent,
+    PopupAlertComponent,
   ],
 })
 export class DataViewComponent {
   @Input() mode: 'table' | 'chart'
   @Input() displaySource = true
+  @Input() set exceedsLimit(value: boolean) {
+    this.excludeWfs$.next(value)
+  }
   @Output() chartConfig$ = new BehaviorSubject<DatavizConfigurationModel>(null)
   cacheActive$ = this.mdViewFacade.isHighUpdateFrequency$.pipe(
     map((highF) => !highF)
   )
+  hidePreview = false
+  excludeWfs$ = new BehaviorSubject(false)
   compatibleDataLinks$ = combineLatest([
     this.mdViewFacade.dataLinks$,
     this.mdViewFacade.geoDataLinks$,
@@ -52,7 +59,7 @@ export class DataViewComponent {
   dropdownChoices$ = this.compatibleDataLinks$.pipe(
     tap((links) => {
       if (links.indexOf(this.selectedLink$.value) === -1) {
-        this.selectedLink$.next(links[0])
+        this.selectLink(JSON.stringify(links[0]))
       }
     }),
     map((links) =>
@@ -73,6 +80,18 @@ export class DataViewComponent {
   selectLink(linkAsString: string) {
     const link: DatasetOnlineResource = JSON.parse(linkAsString)
     link.url = new URL(link.url)
-    this.selectedLink$.next(link)
+    this.excludeWfs$
+      .pipe(
+        tap((excludeWfs) => {
+          this.hidePreview =
+            link['accessServiceProtocol'] === 'wfs' &&
+            excludeWfs &&
+            this.mode === 'chart'
+              ? true
+              : false
+          this.selectedLink$.next(link)
+        })
+      )
+      .subscribe()
   }
 }

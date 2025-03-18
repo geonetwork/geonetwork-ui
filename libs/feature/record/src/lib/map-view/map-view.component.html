@@ -14,80 +14,91 @@
     >
     </gn-ui-external-viewer-button>
   </div>
-  <div
-    class="relative w-full h-full bg-white border border-gray-300 rounded-lg overflow-hidden"
-  >
-    <gn-ui-map-container
-      #mapContainer
-      [context]="mapContext$ | async"
-      (featuresClick)="onMapFeatureSelect($event)"
-    ></gn-ui-map-container>
-    <div
-      class="top-[1em] right-[1em] p-3 bg-white absolute overflow-y-auto overflow-x-hidden max-h-72 w-56"
-      [class.hidden]="!selection"
+  <ng-container *ngIf="hidePreview; else mapView">
+    <gn-ui-popup-alert
+      type="warning"
+      icon="matErrorOutlineOutline"
+      class="block h-12 p-1"
     >
-      <gn-ui-button
-        type="light"
-        (buttonClick)="resetSelection()"
-        style="
-          --gn-ui-button-padding: 0px;
-          --gn-ui-button-width: 24px;
-          --gn-ui-button-height: 24px;
-        "
-        extraClass="absolute right-[0.5em] ml-[8px] mr-[10px]"
+      <span translate>record.feature.limit</span>
+    </gn-ui-popup-alert>
+  </ng-container>
+  <ng-template #mapView>
+    <div
+      class="relative w-full h-full bg-white border border-gray-300 rounded-lg overflow-hidden"
+    >
+      <gn-ui-map-container
+        #mapContainer
+        [context]="mapContext$ | async"
+        (featuresClick)="onMapFeatureSelect($event)"
+      ></gn-ui-map-container>
+      <div
+        class="top-[1em] right-[1em] p-3 bg-white absolute overflow-y-auto overflow-x-hidden max-h-72 w-56"
+        [class.hidden]="!selection"
       >
-        <ng-icon name="matClose" class="align-middle text-sm"></ng-icon>
-      </gn-ui-button>
-      <gn-ui-feature-detail [feature]="selection"></gn-ui-feature-detail>
-    </div>
-
-    <div
-      class="top-[1em] p-3 bg-white absolute overflow-y-auto overflow-x-hidden max-h-72 w-56"
-      [ngClass]="{ 'right-[1em]': !selection, 'right-[16em]': selection }"
-      [hidden]="!showLegend || !legendExists"
-    >
-      <div class="flex justify-between items-center mb-2">
-        <div class="text-primary font-bold">Legend</div>
         <gn-ui-button
           type="light"
-          (buttonClick)="toggleLegend()"
+          (buttonClick)="resetSelection()"
           style="
             --gn-ui-button-padding: 0px;
             --gn-ui-button-width: 24px;
             --gn-ui-button-height: 24px;
           "
-          extraClass="ml-[8px] mr-[10px]"
+          extraClass="absolute right-[0.5em] ml-[8px] mr-[10px]"
         >
           <ng-icon name="matClose" class="align-middle text-sm"></ng-icon>
         </gn-ui-button>
+        <gn-ui-feature-detail [feature]="selection"></gn-ui-feature-detail>
       </div>
-      <gn-ui-map-legend
-        [context]="mapContext$ | async"
-        (legendStatusChange)="onLegendStatusChange($event)"
-      ></gn-ui-map-legend>
+
+      <div
+        class="top-[1em] p-3 bg-white absolute overflow-y-auto overflow-x-hidden max-h-72 w-56"
+        [ngClass]="{ 'right-[1em]': !selection, 'right-[16em]': selection }"
+        [hidden]="!showLegend || !legendExists"
+      >
+        <div class="flex justify-between items-center mb-2">
+          <div class="text-primary font-bold">Legend</div>
+          <gn-ui-button
+            type="light"
+            (buttonClick)="toggleLegend()"
+            style="
+              --gn-ui-button-padding: 0px;
+              --gn-ui-button-width: 24px;
+              --gn-ui-button-height: 24px;
+            "
+            extraClass="ml-[8px] mr-[10px]"
+          >
+            <ng-icon name="matClose" class="align-middle text-sm"></ng-icon>
+          </gn-ui-button>
+        </div>
+        <gn-ui-map-legend
+          [context]="mapContext$ | async"
+          (legendStatusChange)="onLegendStatusChange($event)"
+        ></gn-ui-map-legend>
+      </div>
+
+      <gn-ui-button
+        *ngIf="!showLegend && legendExists && !selection"
+        type="outline"
+        (buttonClick)="toggleLegend()"
+        extraClass="absolute top-[1em] right-[1em] rounded p-1 text-xs bg-white"
+      >
+        Legend
+      </gn-ui-button>
+
+      <gn-ui-loading-mask
+        *ngIf="loading"
+        class="absolute inset-0"
+        [message]="'map.loading.data' | translate"
+      ></gn-ui-loading-mask>
+      <gn-ui-popup-alert
+        *ngIf="error"
+        type="warning"
+        icon="matErrorOutlineOutline"
+        class="absolute m-2 inset-0"
+      >
+        <span translate>{{ error }}</span>
+      </gn-ui-popup-alert>
     </div>
-
-    <gn-ui-button
-      *ngIf="!showLegend && legendExists && !selection"
-      type="outline"
-      (buttonClick)="toggleLegend()"
-      extraClass="absolute top-[1em] right-[1em] rounded p-1 text-xs bg-white"
-    >
-      Legend
-    </gn-ui-button>
-
-    <gn-ui-loading-mask
-      *ngIf="loading"
-      class="absolute inset-0"
-      [message]="'map.loading.data' | translate"
-    ></gn-ui-loading-mask>
-    <gn-ui-popup-alert
-      *ngIf="error"
-      type="warning"
-      icon="matErrorOutlineOutline"
-      class="absolute m-2 inset-0"
-    >
-      <span translate>{{ error }}</span>
-    </gn-ui-popup-alert>
-  </div>
+  </ng-template>
 </div>
