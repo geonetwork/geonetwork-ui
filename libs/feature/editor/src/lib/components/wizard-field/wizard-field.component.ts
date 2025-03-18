@@ -23,7 +23,6 @@ import { WizardFieldModel } from '../../models/wizard-field.model'
 import { WizardFieldType } from '../../models/wizard-field.type'
 import { WizardService } from '../../services/wizard.service'
 import {
-  ChipsInputComponent,
   DropdownSelectorComponent,
   TextAreaComponent,
   TextInputComponent,
@@ -74,7 +73,6 @@ export class WizardFieldComponent implements AfterViewInit, OnDestroy {
   @Input() wizardFieldConfig: WizardFieldModel
 
   @ViewChild('searchText') searchText: TextInputComponent
-  @ViewChild('chips') chips: ChipsInputComponent
   @ViewChild('textArea') textArea: TextAreaComponent
   @ViewChild('dropdown') dropdown: DropdownSelectorComponent
 
@@ -95,9 +93,6 @@ export class WizardFieldComponent implements AfterViewInit, OnDestroy {
     switch (this.wizardFieldConfig.type) {
       case WizardFieldType.TEXT: {
         return data || ''
-      }
-      case WizardFieldType.CHIPS: {
-        return data ? JSON.parse(data) : []
       }
       case WizardFieldType.TEXT_AREA: {
         return data || ''
@@ -131,10 +126,6 @@ export class WizardFieldComponent implements AfterViewInit, OnDestroy {
         this.initializeTextInputListener()
         break
       }
-      case WizardFieldType.CHIPS: {
-        this.initializeChipsListener()
-        break
-      }
       case WizardFieldType.TEXT_AREA: {
         this.initializeTextAreaListener()
         return
@@ -156,17 +147,6 @@ export class WizardFieldComponent implements AfterViewInit, OnDestroy {
         this.wizardService.onWizardWizardFieldDataChanged(
           this.wizardFieldConfig.id,
           value
-        )
-      })
-    )
-  }
-
-  private initializeChipsListener() {
-    this.subs.add(
-      this.chips.itemsChange.subscribe((items) => {
-        this.wizardService.onWizardWizardFieldDataChanged(
-          this.wizardFieldConfig.id,
-          JSON.stringify(items)
         )
       })
     )

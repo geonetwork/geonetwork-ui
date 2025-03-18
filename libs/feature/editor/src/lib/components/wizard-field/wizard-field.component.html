@@ -17,19 +17,6 @@
       ></gn-ui-text-input>
     </div>
     <div
-      class="flex-1 w-11/12"
-      *ngIf="wizardFieldType.CHIPS === wizardFieldConfig.type"
-    >
-      <gn-ui-chips-input
-        #chips
-        [selectedItems]="wizardFieldData"
-        placeholder=""
-        [id]="wizardFieldConfig.id"
-        [url]="wizardFieldConfig.options.url"
-        [loadOnce]="wizardFieldConfig.options.loadOnce"
-      ></gn-ui-chips-input>
-    </div>
-    <div
       class="h-32 w-11/12"
       *ngIf="wizardFieldType.TEXT_AREA === wizardFieldConfig.type"
     >

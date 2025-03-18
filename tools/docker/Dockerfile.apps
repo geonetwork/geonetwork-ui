@@ -1,7 +1,7 @@
 # This dockerfile should work for all traditional apps,
 # i.e. it only sets up a nginx server with the app dist folder
 
-FROM nginx:1.24-alpine
+FROM mirror.gcr.io/nginx:1.24-alpine
 
 ARG APP_NAME="search"
 ENV APP_NAME=${APP_NAME}
