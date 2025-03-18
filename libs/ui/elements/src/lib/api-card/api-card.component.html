@@ -1,13 +1,17 @@
 <div
-  class="group flex flex-col justify-between h-40 pt-5 pb-6 px-7 rounded filter overflow-hidden cursor-default"
+  class="group flex flex-row justify-between py-2 px-5 rounded filter overflow-hidden"
+  [ngClass]="cardClass"
 >
-  <div
-    class="font-title font-medium text-21 text-black text-ellipsis overflow-hidden break-words pb-5 h-[4.5rem]"
-  >
-    {{ link.name || link.description }}
-  </div>
-  <div class="">
-    <div class="flex flex-row justify-between">
+  <div class="flex flex-col justify-between gap-1">
+    <div
+      class="font-title font-medium text-black text-ellipsis overflow-hidden break-words line-clamp-3"
+    >
+      {{ link.description }}
+    </div>
+    <div class="font-medium text-gray-500 text-ellipsis break-words">
+      {{ link.name }}
+    </div>
+    <div class="flex flex-row gap-2.5 items-center">
       <span
         *ngIf="link.accessServiceProtocol !== 'GPFDL'"
         class="bg-primary-opacity-50 uppercase inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded text-primary-lightest group-hover:bg-primary transition-colors"
@@ -26,36 +30,41 @@
       >
         record.metadata.api.gpfdl</span
       >
-      <div class="flex flex-row gap-2 items-center">
-        <gn-ui-copy-text-button
-          [text]="link.url"
-          [tooltipText]="'tooltip.url.copy' | translate"
-          [displayText]="false"
-        ></gn-ui-copy-text-button>
-        <button
-          *ngIf="displayApiFormButton"
-          type="button"
-          [ngClass]="{
-            'py-2 px-4 rounded-r-md bg-gray-400 hover:bg-gray-600 focus:bg-gray-800 text-white':
-              displayText,
-          }"
-          [matTooltip]="
-            !currentlyActive
-              ? ('record.metadata.api.form.openForm' | translate)
-              : ('record.metadata.api.form.closeForm' | translate)
-          "
-          matTooltipPosition="above"
-          (click)="openRecordApiFormPanel()"
-        >
-          <ng-icon
-            class="pointer-events-none align-middle card-icon"
-            name="matMoreHoriz"
-            [ngClass]="{
-              'text-secondary opacity-100': currentlyActive,
-            }"
-          ></ng-icon>
-        </button>
-      </div>
+      <span class="text-gray-800 text-sm pt-0.5" translate="">
+        {{ generatedText }}
+      </span>
     </div>
+  </div>
+  <div class="flex flex-row gap-2 items-center">
+    <gn-ui-copy-text-button
+      [text]="link.url"
+      [tooltipText]="'tooltip.url.copy' | translate"
+      [displayText]="false"
+      class="border border-gray-300 rounded-lg pt-1 px-2 h-[34px]"
+    ></gn-ui-copy-text-button>
+    <button
+      *ngIf="displayApiFormButton"
+      type="button"
+      class="flex border border-gray-300 rounded-lg py-1 px-2 align-center"
+      [ngClass]="{
+        'py-2 px-4 rounded-r-md bg-gray-400 hover:bg-gray-600 focus:bg-gray-800 text-white':
+          displayText,
+      }"
+      [matTooltip]="
+        !currentlyActive
+          ? ('record.metadata.api.form.openForm' | translate)
+          : ('record.metadata.api.form.closeForm' | translate)
+      "
+      matTooltipPosition="above"
+      (click)="openRecordApiFormPanel()"
+    >
+      <ng-icon
+        class="pointer-events-none align-middle card-icon"
+        name="iconoirSettings"
+        [ngClass]="{
+          'text-secondary opacity-100': currentlyActive,
+        }"
+      ></ng-icon>
+    </button>
   </div>
 </div>

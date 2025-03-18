@@ -14,7 +14,7 @@ import { CopyTextButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { NgIcon, provideIcons } from '@ng-icons/core'
-import { matMoreHoriz } from '@ng-icons/material-icons/baseline'
+import { iconoirSettings } from '@ng-icons/iconoir'
 
 @Component({
   selector: 'gn-ui-api-card',
@@ -31,17 +31,40 @@ import { matMoreHoriz } from '@ng-icons/material-icons/baseline'
   ],
   viewProviders: [
     provideIcons({
-      matMoreHoriz,
+      iconoirSettings,
     }),
   ],
 })
 export class ApiCardComponent implements OnInit, OnChanges {
   @Input() link: DatasetServiceDistribution
   @Input() currentLink: DatasetServiceDistribution
+  @Input() set size(value: 'L' | 'M' | 'S' | 'XS') {
+    switch (value) {
+      case 'L':
+        this.cardClass = 'gn-ui-card-l'
+        break
+      case 'M':
+        this.cardClass = 'gn-ui-card-m'
+        break
+      case 'S':
+        this.cardClass = 'gn-ui-card-s'
+        break
+      case 'XS':
+        this.cardClass = 'gn-ui-card-xs'
+        break
+    }
+  }
+  cardClass = ''
   displayApiFormButton: boolean
   currentlyActive = false
   @Output() openRecordApiForm: EventEmitter<DatasetServiceDistribution> =
     new EventEmitter<DatasetServiceDistribution>()
+
+  get generatedText() {
+    return this.link.accessServiceProtocol === 'wfs'
+      ? 'datahub.search.filter.generatedByWfs'
+      : 'datahub.search.filter.generatedByAPI'
+  }
 
   ngOnInit() {
     this.displayApiFormButton =
