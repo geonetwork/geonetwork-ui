@@ -37,7 +37,11 @@ describe('FormFieldContactsComponent', () => {
     TestBed.configureTestingModule({
       imports: [FormFieldContactsComponent, TranslateModule.forRoot()],
       providers: [
-        MockProvider(OrganizationsServiceInterface),
+        MockProvider(OrganizationsServiceInterface, {
+          getOrganisations: jest
+            .fn()
+            .mockReturnValue(of(someOrganizationsFixture())),
+        }),
         MockProvider(PlatformServiceInterface, {
           getUsers: jest.fn().mockReturnValue(of(mockUsers)),
         }),
@@ -59,7 +63,8 @@ describe('FormFieldContactsComponent', () => {
     organizationsServiceInterface = TestBed.inject(
       OrganizationsServiceInterface
     )
-
+    organizationsServiceInterface.getOrganisations = () =>
+      new BehaviorSubject(someOrganizationsFixture())
     organizationsServiceInterface.organisations$ = new BehaviorSubject(
       someOrganizationsFixture()
     )
@@ -77,6 +82,7 @@ describe('FormFieldContactsComponent', () => {
     it('should initialize allOrganizations on first change', async () => {
       const orgs: Organization[] = [{ name: 'Org1' }, { name: 'Org2' }]
       organizationsServiceInterface.organisations$ = of(orgs)
+      organizationsServiceInterface.getOrganisations = () => of(orgs)
 
       component.value = []
       await component.ngOnChanges({
@@ -88,6 +94,7 @@ describe('FormFieldContactsComponent', () => {
         },
       })
 
+      console.log(component.allOrganizations)
       expect(component.allOrganizations.size).toBe(2)
       expect(component.allOrganizations.get('Org1')).toEqual({ name: 'Org1' })
       expect(component.allOrganizations.get('Org2')).toEqual({ name: 'Org2' })

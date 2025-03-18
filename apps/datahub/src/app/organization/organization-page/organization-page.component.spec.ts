@@ -19,6 +19,7 @@ class RouterFacadeMock {
 
 class OrganizationsServiceInterfaceMock {
   organisations$ = of(someOrganizationsFixture())
+  getOrganisations = jest.fn(() => of(someOrganizationsFixture()))
 }
 
 describe('OrganizationPageComponent', () => {

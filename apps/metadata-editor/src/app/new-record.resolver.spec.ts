@@ -30,6 +30,7 @@ class PlatformServiceInterfaceMock {
 
 class OrganizationsServiceInterfaceMock {
   organisations$ = of(someOrganizationsFixture())
+  getOrganisations = jest.fn(() => of(someOrganizationsFixture()))
 }
 
 describe('NewRecordResolver', () => {
@@ -68,7 +69,13 @@ describe('NewRecordResolver', () => {
   describe('new record', () => {
     beforeEach(() => {
       resolvedData = undefined
-      resolver.resolve().subscribe((r) => (resolvedData = r))
+      resolver.resolve().subscribe(
+        (r) => {
+          //console.log('Résultat reçu par resolve:', r)
+          resolvedData = r
+        },
+        (err) => console.error('Erreur dans resolve:', err)
+      )
     })
 
     it('creates a new empty record with connected user information as contact for ressource with the point_of_contact role.', () => {
