@@ -5,3 +5,25 @@
 :host {
   position: relative;
 }
+
+
+.content-container {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+}
+
+.size-M {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, min-content);
+}
+
+.size-S {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, min-content);
+}
+
+.size-XS {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, min-content);
+}

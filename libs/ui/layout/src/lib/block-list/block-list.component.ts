@@ -12,7 +12,12 @@ import {
 import { CommonModule } from '@angular/common'
 import { Paginable } from '../paginable.interface'
 import { PaginationDotsComponent } from '../pagination-dots/pagination-dots.component'
-
+enum ComponentSize {
+  LARGE = 'L',
+  MEDIUM = 'M',
+  SMALL = 'S',
+  EXTRA_SMALL = 'XS',
+}
 @Component({
   selector: 'gn-ui-block-list',
   templateUrl: './block-list.component.html',
@@ -22,14 +27,14 @@ import { PaginationDotsComponent } from '../pagination-dots/pagination-dots.comp
   imports: [CommonModule, PaginationDotsComponent],
 })
 export class BlockListComponent implements AfterViewInit, Paginable {
-  @Input() pageSize = 5
+  @Input() pageSize = 10
   @Input() containerClass = ''
   @Input() paginationContainerClass = 'w-full bottom-0 top-auto'
   @ContentChildren('block', { read: ElementRef }) blocks: QueryList<
     ElementRef<HTMLElement>
   >
   @ViewChild('blockContainer') blockContainer: ElementRef<HTMLElement>
-
+  protected subComponentSize: ComponentSize = ComponentSize.MEDIUM
   protected minHeight = 0
 
   protected currentPage_ = 0
@@ -53,7 +58,11 @@ export class BlockListComponent implements AfterViewInit, Paginable {
   constructor(private changeDetector: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
-    this.blocks.changes.subscribe(this.refreshBlocksVisibility)
+    this.blocks.changes.subscribe(() => {
+      this.updateSizes()
+      this.refreshBlocksVisibility()
+    })
+    this.updateSizes()
     this.refreshBlocksVisibility()
 
     // we store the first height as the min-height of the list container
@@ -71,14 +80,50 @@ export class BlockListComponent implements AfterViewInit, Paginable {
     })
   }
 
-  // pageIndex is 1-based
+  protected refreshSubComponentsVisibility = () => {
+    this.blocks.forEach((subComponent, index) => {
+      const element = subComponent.nativeElement
+      element.style.display =
+        index >= this.currentPage_ * this.pageSize &&
+        index < (this.currentPage_ + 1) * this.pageSize
+          ? null
+          : 'none'
+    })
+  }
+
+  protected updateSizes() {
+    this.subComponentSize = this.computeSubComponentSize()
+    this.pageSize = this.computePageSize()
+  }
+
+  protected computeSubComponentSize(): ComponentSize {
+    if (!this.blocks) return ComponentSize.MEDIUM
+    const subComponentsCount = this.blocks.length
+    if (subComponentsCount <= 12) return ComponentSize.MEDIUM
+    if (subComponentsCount <= 18) return ComponentSize.SMALL
+    return ComponentSize.EXTRA_SMALL
+  }
+
+  protected computePageSize(): number {
+    switch (this.subComponentSize) {
+      case ComponentSize.MEDIUM:
+        return 4
+      case ComponentSize.SMALL:
+        return 6
+      case ComponentSize.EXTRA_SMALL:
+        return 8
+      default:
+        return 4
+    }
+  }
+
   public goToPage(pageIndex: number) {
     this.currentPage_ = Math.max(
       Math.min(pageIndex - 1, this.pagesCount - 1),
       0
     )
     this.changeDetector.detectChanges()
-    this.refreshBlocksVisibility()
+    this.refreshSubComponentsVisibility()
   }
 
   public goToPrevPage() {
