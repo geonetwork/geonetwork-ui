@@ -19,18 +19,18 @@ export class SearchPageComponent implements OnInit {
   constructor(
     private searchRouter: RouterFacade,
     public searchFacade: SearchFacade
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.searchFacade.setResultsLayout('ROW')
 
     this.searchFacade.setConfigFilters({
-      'resourceType': {
-        'service': false,
-        'map': false,
+      resourceType: {
+        service: false,
+        map: false,
         'map/static': false,
-        'mapDigital': false,
-      }
+        mapDigital: false,
+      },
     })
 
     const cfg: MetadataQualityConfig =

@@ -25,6 +25,7 @@ const orgs$ = of(orgs)
 
 class orgServiceMock {
   organisations$ = orgs$
+  getOrganisations = jest.fn(() => orgs$)
 }
 
 const userSubject = new BehaviorSubject<UserModel | null>(null)
