@@ -148,7 +148,7 @@ describe('DataViewComponent', () => {
   })
   describe('When the WFS link has too many features', () => {
     beforeEach(fakeAsync(() => {
-      component.mode = 'table'
+      component.mode = 'chart'
       fixture.detectChanges()
       facade.dataLinks$.next(someDataLinksFixture())
       facade.geoDataLinks$.next(someGeoDatalinksFixture())
