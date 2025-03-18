@@ -1,9 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import {
-  DatasetDownloadDistribution,
-  DatasetOnlineResource,
-  DatasetServiceDistribution,
-} from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { CommonModule } from '@angular/common'
 import {
   NgIconComponent,
@@ -30,7 +26,7 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
   ],
 })
 export class LinkCardComponent {
-  private _size: 'L' | 'M' | 'S' | 'XS'
+  private _size: CardSize
   @Input() link: DatasetOnlineResource
   private readonly sizeClassMap: Record<CardSize, string> = {
     L: 'gn-ui-card-l py-2 px-5',
@@ -43,7 +39,7 @@ export class LinkCardComponent {
     this._size = value
     this.cardClass = this.sizeClassMap[value]
   }
-  get size(): 'L' | 'M' | 'S' | 'XS' {
+  get size(): CardSize {
     return this._size
   }
   cardClass = ''

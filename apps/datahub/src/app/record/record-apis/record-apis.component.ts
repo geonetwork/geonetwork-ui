@@ -10,6 +10,7 @@ import { GpfApiDlComponent, MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
   CarouselComponent,
   PreviousNextButtonsComponent,
+  BlockListComponent,
 } from '@geonetwork-ui/ui/layout'
 import {
   ApiCardComponent,
@@ -31,6 +32,7 @@ marker('record.metadata.api.form.title')
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
+    BlockListComponent,
     CommonModule,
     CarouselComponent,
     PreviousNextButtonsComponent,
