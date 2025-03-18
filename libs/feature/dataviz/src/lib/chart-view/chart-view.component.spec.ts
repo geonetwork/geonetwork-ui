@@ -303,6 +303,10 @@ describe('ChartViewComponent', () => {
     it('shows error', () => {
       expect(component.error).toBe('could not open dataset')
     })
+    it('does not display chart', () => {
+      const chart = fixture.debugElement.query(By.directive(ChartComponent))
+      expect(chart).toBeFalsy()
+    })
   })
 
   describe('dataset fails on properties info', () => {
@@ -319,6 +323,11 @@ describe('ChartViewComponent', () => {
     })
     it('shows error', () => {
       expect(component.error).toBe('dataset.error.unknown')
+    })
+
+    it('does not display chart', () => {
+      const chart = fixture.debugElement.query(By.directive(ChartComponent))
+      expect(chart).toBeFalsy()
     })
   })
 
