@@ -1,5 +1,22 @@
-:host .block-list-container ::ng-deep > * {
-  flex-shrink: 0;
+:host .block-list-container {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+}
+
+:host .block-list-container.size-M {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, min-content);
+}
+
+:host .block-list-container.size-S {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, min-content);
+}
+
+:host .block-list-container.size-XS {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, min-content);
 }
 
 :host {

@@ -12,6 +12,13 @@ import {
 import { CommonModule } from '@angular/common'
 import { Paginable } from '../paginable.interface'
 import { PaginationDotsComponent } from '../pagination-dots/pagination-dots.component'
+import { Subscription } from 'rxjs'
+export enum ComponentSize {
+  LARGE = 'L',
+  MEDIUM = 'M',
+  SMALL = 'S',
+  EXTRA_SMALL = 'XS',
+}
 
 @Component({
   selector: 'gn-ui-block-list',
@@ -22,7 +29,8 @@ import { PaginationDotsComponent } from '../pagination-dots/pagination-dots.comp
   imports: [CommonModule, PaginationDotsComponent],
 })
 export class BlockListComponent implements AfterViewInit, Paginable {
-  @Input() pageSize = 5
+  @Input() pageSize = 4
+  @Input() size: ComponentSize = ComponentSize.MEDIUM
   @Input() containerClass = ''
   @Input() paginationContainerClass = 'w-full bottom-0 top-auto'
   @ContentChildren('block', { read: ElementRef }) blocks: QueryList<
@@ -52,13 +60,28 @@ export class BlockListComponent implements AfterViewInit, Paginable {
 
   constructor(private changeDetector: ChangeDetectorRef) {}
 
-  ngAfterViewInit() {
-    this.blocks.changes.subscribe(this.refreshBlocksVisibility)
-    this.refreshBlocksVisibility()
+  protected updatePageSize() {
+    switch (this.size) {
+      case ComponentSize.MEDIUM:
+        this.pageSize = 4
+        break
+      case ComponentSize.SMALL:
+        this.pageSize = 6
+        break
+      case ComponentSize.EXTRA_SMALL:
+        this.pageSize = 8
+        break
+      default:
+        this.pageSize = 4
+    }
+  }
 
-    // we store the first height as the min-height of the list container
-    this.minHeight = this.blockContainer.nativeElement.clientHeight
-    this.changeDetector.detectChanges()
+  protected computeSize(): ComponentSize {
+    if (!this.blocks) return ComponentSize.MEDIUM
+    const blocksCount = this.blocks.length
+    if (blocksCount <= 12) return ComponentSize.MEDIUM
+    if (blocksCount <= 18) return ComponentSize.SMALL
+    return ComponentSize.EXTRA_SMALL
   }
 
   protected refreshBlocksVisibility = () => {
@@ -89,5 +112,44 @@ export class BlockListComponent implements AfterViewInit, Paginable {
   public goToNextPage() {
     if (this.isLastPage) return
     this.goToPage(this.currentPage + 1)
+  }
+
+  private blocksChangeSubscription: Subscription
+
+  ngAfterViewInit() {
+    // Handle direct content children
+    this.blocksChangeSubscription = this.blocks?.changes.subscribe(() => {
+      this.handleBlocksChange()
+    })
+
+    // Initial calculation
+    this.handleBlocksChange()
+    this.minHeight = this.blockContainer?.nativeElement.clientHeight || 0
+    this.changeDetector.detectChanges()
+  }
+
+  ngOnDestroy() {
+    this.blocksChangeSubscription?.unsubscribe()
+  }
+
+  setBlocks(blocks: QueryList<ElementRef<HTMLElement>>) {
+    // Unsubscribe from previous subscription if any
+    this.blocksChangeSubscription?.unsubscribe()
+
+    this.blocks = blocks
+    // Subscribe to new blocks changes
+    this.blocksChangeSubscription = blocks?.changes.subscribe(() => {
+      this.handleBlocksChange()
+    })
+
+    // Initial calculation
+    this.handleBlocksChange()
+  }
+
+  private handleBlocksChange() {
+    this.size = this.computeSize()
+    this.updatePageSize()
+    this.refreshBlocksVisibility()
+    this.changeDetector.markForCheck()
   }
 }

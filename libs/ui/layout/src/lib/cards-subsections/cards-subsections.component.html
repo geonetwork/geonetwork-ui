@@ -14,8 +14,6 @@
   </div>
 </div>
 
-<div class="content-container gap-4 py-10" [class]="'size-' + subComponentSize">
+<gn-ui-block-list class="py-10">
   <ng-content select="[slot=content]"></ng-content>
-</div>
-
-<gn-ui-pagination-dots [listComponent]="this"></gn-ui-pagination-dots>
+</gn-ui-block-list>

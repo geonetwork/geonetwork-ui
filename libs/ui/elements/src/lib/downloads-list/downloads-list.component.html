@@ -19,7 +19,7 @@
       </gn-ui-button>
     </div>
 
-    <div slot="content" #subComponent *ngFor="let link of filteredLinks">
+    <div slot="content" #block *ngFor="let link of filteredLinks">
       <gn-ui-download-item
         [link]="link"
         [color]="getLinkColor(link)"
