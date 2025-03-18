@@ -5,8 +5,8 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import {
-  matArrowBack,
-  matArrowForward,
+  matArrowBackIos,
+  matArrowForwardIos,
 } from '@ng-icons/material-icons/baseline'
 import { Paginable } from '../paginable.interface'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
@@ -18,7 +18,7 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
   standalone: true,
   imports: [ButtonComponent, NgIconComponent],
   providers: [
-    provideIcons({ matArrowForward, matArrowBack }),
+    provideIcons({ matArrowBackIos, matArrowForwardIos }),
     provideNgIconsConfig({
       size: '0.875em',
     }),

@@ -567,7 +567,7 @@ describe('dataset pages', () => {
 
     // it should have a list of downloads based on the WFS capabilities
     cy.get('datahub-record-downloads')
-      .find('gn-ui-download-item [data-cy="download-format"]')
+      .find('gn-ui-block-list gn-ui-download-item [data-cy="download-format"]')
       .then((formatBadges) => {
         const formats = formatBadges
           .toArray()
@@ -599,7 +599,7 @@ describe('dataset pages', () => {
       })
 
     // it filters the download list on format filter click
-    cy.get('datahub-record-downloads')
+    cy.get('[data-cy="download-format-filters"]')
       .find('gn-ui-button')
       .children('button')
       .eq(1)
@@ -640,15 +640,17 @@ describe('dataset pages', () => {
     cy.get('datahub-record-downloads')
       .find('gn-ui-button')
       .children('button')
-      .eq(1)
+      .eq(3)
       .as('filterFormat')
     cy.get('@filterFormat').click()
-    cy.get('[data-cy="download-format"]')
+    cy.get('datahub-record-downloads')
+      .find('[data-cy="download-format"]')
       .filter(':visible')
       .its('length')
       .then((l1) => {
         cy.get('@filterFormat').click()
-        cy.get('[data-cy="download-format"]')
+        cy.get('datahub-record-downloads')
+          .find('[data-cy="download-format"]')
           .filter(':visible')
           .its('length')
           .then((l2) => expect(l2).to.not.equal(l1))
@@ -657,6 +659,48 @@ describe('dataset pages', () => {
 
   it('LINKS & APIs : display & functions', () => {
     cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
+    cy.get('datahub-record-otherlinks').as('otherLinks')
+
+    // display on desktop
+    //it should display links in a grid layout
+    cy.viewport(1200, 800)
+    cy.get('@otherLinks').find('gn-ui-block-list').should('be.visible')
+    cy.get('@otherLinks').find('gn-ui-carousel').should('not.be.visible')
+
+    //it should not show pagination when 4 links or less
+    cy.viewport(1200, 800)
+    cy.get('@otherLinks').find('gn-ui-pagination-dots').should('not.be.visible')
+    cy.get('@otherLinks')
+      .find('gn-ui-previous-next-buttons')
+      .should('not.exist')
+
+    //it should display links in a carousel
+    cy.viewport(375, 667)
+    cy.get('@otherLinks').find('gn-ui-carousel').should('be.visible')
+    cy.get('@otherLinks').find('gn-ui-block-list').should('not.be.visible')
+    //it should show pagination dots in carousel
+    cy.get('@otherLinks')
+      .find('gn-ui-carousel gn-ui-pagination-dots')
+      .should('be.visible')
+
+    //it should maintain link functionality in both layoutss
+    // Test on mobile
+    cy.viewport(375, 667)
+    cy.get('@otherLinks')
+      .find('gn-ui-link-card')
+      .first()
+      .find('a')
+      .should('have.attr', 'href')
+      .and('not.be.empty')
+
+    //Test on desktop
+    cy.viewport(1200, 800)
+    cy.get('@otherLinks')
+      .find('gn-ui-link-card')
+      .first()
+      .find('a')
+      .should('have.attr', 'href')
+      .and('not.be.empty')
 
     // it should have external, API and internal links with one option
     cy.get('datahub-record-otherlinks')
@@ -667,7 +711,9 @@ describe('dataset pages', () => {
       .should('have.length.gt', 0)
 
     // it should not display carousel dot button for 4 link cards
-    cy.get('datahub-record-otherlinks').find('.pagination-dot').should('exist')
+    cy.get('datahub-record-otherlinks')
+      .find('.pagination-dot')
+      .should('not.exist')
 
     // it should not display carousel dot button for 2 API cards
     cy.get('datahub-record-apis').find('.pagination-dot').should('not.exist')
@@ -702,7 +748,7 @@ describe('dataset pages', () => {
     })
 
     // API cards
-    cy.get('gn-ui-api-card').eq(1).as('firstCard')
+    cy.get('gn-ui-block-list gn-ui-api-card').eq(1).as('firstCard')
 
     // it should display the open panel button
     cy.get('@firstCard')
@@ -797,7 +843,7 @@ it('record with file distributions', () => {
 
 it('API query form', () => {
   cy.visit('/dataset/accroche_velos')
-  cy.get('gn-ui-api-card').first().find('button').eq(1).click()
+  cy.get('gn-ui-block-list gn-ui-api-card').first().find('button').eq(1).click()
   cy.get('gn-ui-record-api-form').children('div').as('apiForm')
   cy.get('@apiForm').find('gn-ui-text-input').first().as('firstInput')
   cy.get('@apiForm').find('gn-ui-text-input').eq(1).as('secondInput')
@@ -871,7 +917,11 @@ it('API query form', () => {
     .invoke('val')
     .then((url) => {
       cy.get('@firstInput').type('{selectAll}{backspace}54')
-      cy.get('gn-ui-api-card').eq(1).find('button').eq(1).click()
+      cy.get('gn-ui-block-list gn-ui-api-card')
+        .eq(1)
+        .find('button')
+        .eq(1)
+        .click()
       cy.get('@apiForm')
         .find('gn-ui-copy-text-button')
         .find('input')
