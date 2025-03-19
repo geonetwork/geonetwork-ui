@@ -58,7 +58,7 @@
     "@angular/router": "18.2.13",
     "@bartholomej/ngx-translate-extract": "^8.0.2",
     "@biesbjerg/ngx-translate-extract-marker": "^1.0.0",
-    "@camptocamp/ogc-client": "1.1.1-dev.3e2d3cc",
+    "@camptocamp/ogc-client": "^1.2.1-dev.d666aef",
     "@geospatial-sdk/core": "0.0.5-dev.33",
     "@geospatial-sdk/geocoding": "0.0.5-dev.33",
     "@geospatial-sdk/legend": "0.0.5-dev.33",
