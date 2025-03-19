@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
 import { extend, Extent } from 'ol/extent'
 import GeoJSON from 'ol/format/GeoJSON'
-import { transformExtent } from 'ol/proj'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 const GEOJSON = new GeoJSON()
@@ -15,7 +14,7 @@ export class MapUtilsService {
       return null
     }
     // extend all the spatial extents into an including bbox
-    const totalExtent = record.spatialExtents.reduce(
+    return record.spatialExtents.reduce(
       (prev, curr) => {
         if ('bbox' in curr) return extend(prev, curr.bbox)
         else if ('geometry' in curr) {
@@ -26,6 +25,5 @@ export class MapUtilsService {
       },
       [Infinity, Infinity, -Infinity, -Infinity]
     )
-    return transformExtent(totalExtent, 'EPSG:4326', 'EPSG:3857')
   }
 }
