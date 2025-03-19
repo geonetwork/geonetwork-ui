@@ -556,7 +556,7 @@ describe('dataset pages', () => {
     })
     describe('restricted access', () => {
       beforeEach(() => {
-        cy.visit('dataset/a8b5e6c0-c21d-4c32-b8f9-10830215890a')
+        cy.visit('dataset/e27e7006-fdf9-4004-b6c5-af2a5a5c025c')
       })
       it('MAP: should display the access restriction message for WMS and WFS', () => {
         cy.get('@mapTab').click()
