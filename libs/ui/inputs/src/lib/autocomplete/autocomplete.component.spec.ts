@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy } from '@angular/core'
+import { ChangeDetectionStrategy, ElementRef } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { of, Subscription, throwError } from 'rxjs'
@@ -8,6 +8,7 @@ import {
 } from './autocomplete.component'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { TranslateModule } from '@ngx-translate/core'
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
 
 describe('AutocompleteComponent', () => {
   let component: AutocompleteComponent
@@ -367,6 +368,56 @@ describe('AutocompleteComponent', () => {
     })
     it('emits an empty suggestions list', () => {
       expect(suggestions).toEqual([])
+    })
+  })
+
+  describe('when tracking is activated', () => {
+    beforeEach(() => {
+      component.inputRef = new ElementRef(document.createElement('input'))
+      component.triggerRef = {
+        panelOpen: true,
+        updatePosition: jest.fn(),
+      } as unknown as MatAutocompleteTrigger
+      fixture.detectChanges()
+    })
+
+    it('starts the tracking position and redraw', () => {
+      jest
+        .spyOn(window, 'requestAnimationFrame')
+        .mockImplementation(() => 1519211809934)
+      jest.spyOn(component.triggerRef, 'updatePosition')
+
+      component.forceTrackPosition = true
+      component.startTrackingPosition()
+
+      expect(window.requestAnimationFrame).toHaveBeenCalledWith(
+        expect.any(Function)
+      )
+      expect(component.triggerRef.updatePosition).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('when tracking is disabled', () => {
+    beforeEach(() => {
+      component.inputRef = new ElementRef(document.createElement('input'))
+      component.triggerRef = {
+        panelOpen: true,
+        updatePosition: jest.fn(),
+      } as unknown as MatAutocompleteTrigger
+      fixture.detectChanges()
+    })
+
+    it('tracking is not called', () => {
+      jest
+        .spyOn(window, 'requestAnimationFrame')
+        .mockImplementation(() => 1519211809934)
+      jest.spyOn(component.triggerRef, 'updatePosition')
+
+      component.forceTrackPosition = false
+      component.startTrackingPosition()
+
+      expect(window.requestAnimationFrame).not.toHaveBeenCalledWith()
+      expect(component.triggerRef.updatePosition).not.toHaveBeenCalled()
     })
   })
 
