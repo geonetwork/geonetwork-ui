@@ -7,7 +7,6 @@ import {
   SearchResults,
 } from '../model/search'
 import { CatalogRecord, DatasetFeatureCatalog } from '../model/record'
-import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
 
 export abstract class RecordsRepositoryInterface {
   abstract search(params: SearchParams): Observable<SearchResults>
@@ -18,7 +17,7 @@ export abstract class RecordsRepositoryInterface {
   ): Observable<DatasetFeatureCatalog | null>
   abstract aggregate(
     params: AggregationsParams,
-    configFilters?: SearchFilters
+    configFilters?: FieldFilters
   ): Observable<Aggregations>
   abstract getSimilarRecords(
     similarTo: CatalogRecord

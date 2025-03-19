@@ -7,7 +7,7 @@ import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/orga
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { ElasticsearchService } from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 
 class RecordsRepositoryMock {
   aggregate = jest.fn(() => EMPTY)
@@ -45,7 +45,7 @@ class PlatformServiceInterfaceMock {
   })
 }
 
-const configFilters: SearchFilters = {
+const configFilters: FieldFilters = {
   resourceType: {
     service: false,
     map: false,

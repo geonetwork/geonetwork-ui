@@ -18,7 +18,7 @@ import { SearchFacade } from '../state/search.facade'
 import { FieldsService } from '../utils/service/fields.service'
 import { SearchService } from '../utils/service/search.service'
 import { FilterDropdownComponent } from './filter-dropdown.component'
-import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 
 class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject<any>({})
@@ -49,7 +49,7 @@ class FieldsServiceMock {
   getFieldType = jest.fn(() => 'values')
 }
 
-const configFilters: SearchFilters = {
+const configFilters: FieldFilters = {
   resourceType: {
     service: false,
     map: false,
