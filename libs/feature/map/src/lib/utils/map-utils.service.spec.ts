@@ -1,6 +1,5 @@
 import { MapUtilsService } from './map-utils.service'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { fromLonLat } from 'ol/proj'
 
 describe('MapUtilsService', () => {
   let service: MapUtilsService
@@ -18,7 +17,7 @@ describe('MapUtilsService', () => {
       expect(service.getRecordExtent(record2)).toBeNull()
     })
 
-    it('should return the projected extent of included extents', () => {
+    it('should return the extent of included extents', () => {
       const record: Partial<CatalogRecord> = {
         spatialExtents: [
           {
@@ -46,10 +45,7 @@ describe('MapUtilsService', () => {
           },
         ],
       }
-      expect(service.getRecordExtent(record)).toEqual([
-        ...fromLonLat([1, 3]),
-        ...fromLonLat([8, 8]),
-      ])
+      expect(service.getRecordExtent(record)).toEqual([...[1, 3], ...[8, 8]])
     })
   })
 })
