@@ -27,7 +27,7 @@ enum ComponentSize {
   imports: [CommonModule, PaginationDotsComponent],
 })
 export class BlockListComponent implements AfterViewInit, Paginable {
-  @Input() pageSize = 10
+  protected pageSize = 10
   @Input() containerClass = ''
   @Input() paginationContainerClass = 'w-full bottom-0 top-auto'
   @ContentChildren('block', { read: ElementRef }) blocks: QueryList<
@@ -61,6 +61,8 @@ export class BlockListComponent implements AfterViewInit, Paginable {
     this.blocks.changes.subscribe(() => {
       this.updateSizes()
       this.refreshBlocksVisibility()
+      this.goToPage(1)
+      this.changeDetector.detectChanges()
     })
     this.updateSizes()
     this.refreshBlocksVisibility()

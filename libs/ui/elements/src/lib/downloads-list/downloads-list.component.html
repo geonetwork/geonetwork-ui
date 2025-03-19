@@ -8,6 +8,10 @@
   >
     record.metadata.download
   </p>
+  <gn-ui-previous-next-buttons
+    *ngIf="paginableElement?.pagesCount > 1"
+    [listComponent]="paginableElement"
+  ></gn-ui-previous-next-buttons>
   <div
     class="flex flex-wrap justify-start sm:justify-end sm:pb-4"
     data-cy="download-format-filters"
@@ -27,7 +31,7 @@
   </div>
 </div>
 
-<ng-container *ngrxLet="link$ as filteredLinks">
+<ng-container>
   <gn-ui-block-list containerClass="gap-4 py-10">
     <gn-ui-download-item
       #block

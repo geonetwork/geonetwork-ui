@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  ViewChild,
+} from '@angular/core'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { getBadgeColor, getFileFormat } from '@geonetwork-ui/util/shared'
@@ -6,6 +13,11 @@ import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { DownloadItemComponent } from '../download-item/download-item.component'
+import {
+  BlockListComponent,
+  Paginable,
+  PreviousNextButtonsComponent,
+} from '@geonetwork-ui/ui/layout'
 
 marker('datahub.search.filter.all')
 marker('datahub.search.filter.others')
@@ -22,14 +34,23 @@ type FilterFormat = (typeof FILTER_FORMATS)[number]
   imports: [
     CommonModule,
     ButtonComponent,
+    BlockListComponent,
     DownloadItemComponent,
     TranslateModule,
+    PreviousNextButtonsComponent,
   ],
 })
 export class DownloadsListComponent {
-  constructor(private translateService: TranslateService) {}
+  constructor(
+    private translateService: TranslateService,
+    private changeDetector: ChangeDetectorRef
+  ) {}
 
   @Input() links: DatasetDownloadDistribution[]
+  @ViewChild(BlockListComponent) list: BlockListComponent
+  get paginableElement(): Paginable {
+    return this.list
+  }
 
   activeFilterFormats: FilterFormat[] = ['all']
 
@@ -75,10 +96,16 @@ export class DownloadsListComponent {
       this.links.some((link) => this.isLinkOfFormat(link, format))
     )
   }
-
+  forceRefreshPagination() {
+    setTimeout(() => {
+      //let a delay to make the changeDetector work
+      this.changeDetector.detectChanges()
+    })
+  }
   toggleFilterFormat(format: FilterFormat): void {
     if (format === 'all') {
       this.activeFilterFormats = ['all']
+      this.forceRefreshPagination()
       return
     }
     if (this.isFilterActive(format)) {
@@ -94,6 +121,7 @@ export class DownloadsListComponent {
     if (this.activeFilterFormats.length === 0) {
       this.activeFilterFormats = ['all']
     }
+    this.forceRefreshPagination()
   }
 
   isFilterActive(filter: FilterFormat): boolean {
