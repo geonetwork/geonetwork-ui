@@ -62,9 +62,11 @@ export function fetchDataAsText(
       })
       .then(async (response) => {
         if (!response.ok) {
-          throw FetchError.http(response.status, await response.text())
+          const clonedResponse = response.clone()
+          throw FetchError.http(response.status, await clonedResponse.text())
         }
-        return response.text()
+        const clonedResponse = response.clone()
+        return clonedResponse.text()
       })
 
   return cacheActive ? useCache(fetchFactory, url, 'asText') : fetchFactory()
