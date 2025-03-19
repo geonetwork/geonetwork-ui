@@ -8,8 +8,6 @@ export const getSearchState =
 export const getSearchStateSearch = createSelector(
   getSearchState,
   (state: SearchState, id: string = DEFAULT_SEARCH_KEY) => {
-    console.log('Sélecteur getSearchStateSearch - state:', state)
-    console.log('Sélecteur getSearchStateSearch - id:', id)
     return state[id]
   }
 )
