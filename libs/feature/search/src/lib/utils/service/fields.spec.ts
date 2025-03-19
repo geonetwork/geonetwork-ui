@@ -13,7 +13,6 @@ import {
   DateRangeSearchField,
   RecordKindField,
 } from './fields'
-import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
 import { TestBed } from '@angular/core/testing'
 import { Injector } from '@angular/core'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
@@ -25,6 +24,7 @@ import {
 } from '@geonetwork-ui/api/repository'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 
 class ElasticsearchServiceMock {
   registerRuntimeField = jest.fn()
@@ -198,7 +198,7 @@ const sampleOrgs: Organization[] = [
   },
 ]
 
-const configFilters: SearchFilters = {
+const configFilters: FieldFilters = {
   resourceType: {
     service: false,
     map: false,

@@ -432,12 +432,20 @@ describe('Gn4Repository', () => {
         limit: 30,
         filter: 'field1 < 100',
       },
+      undefined,
     }
     beforeEach(async () => {
       results = await lastValueFrom(repository.aggregate(aggParams))
     })
     it('builds an aggregation payload', () => {
-      expect(gn4Helper.getSearchRequestBody).toHaveBeenCalledWith(aggParams)
+      expect(gn4Helper.getSearchRequestBody).toHaveBeenCalledWith(
+        aggParams,
+        expect.any(Number),
+        expect.any(Number),
+        undefined,
+        undefined,
+        undefined
+      )
     })
     it('returns the aggregation results', () => {
       expect(results).toStrictEqual({
