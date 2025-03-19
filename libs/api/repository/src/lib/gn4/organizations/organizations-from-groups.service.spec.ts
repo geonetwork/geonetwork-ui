@@ -107,6 +107,9 @@ describe('OrganizationsFromGroupsService', () => {
     service = TestBed.inject(OrganizationsFromGroupsService)
   })
 
+  beforeEach(() => {
+    service.getOrganisations({})
+  })
   it('should be created', () => {
     expect(service).toBeTruthy()
   })

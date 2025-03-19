@@ -70,7 +70,6 @@ describe('NewRecordResolver', () => {
       resolvedData = undefined
       resolver.resolve().subscribe(
         (r) => {
-          //console.log('Résultat reçu par resolve:', r)
           resolvedData = r
         },
         (err) => console.error('Erreur dans resolve:', err)

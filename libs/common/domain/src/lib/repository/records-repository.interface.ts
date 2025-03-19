@@ -18,8 +18,7 @@ export abstract class RecordsRepositoryInterface {
   ): Observable<DatasetFeatureCatalog | null>
   abstract aggregate(
     params: AggregationsParams,
-    //configFilters?: SearchFilters
-    configFilters?: any
+    configFilters?: FieldFilters
   ): Observable<Aggregations>
   abstract getSimilarRecords(
     similarTo: CatalogRecord

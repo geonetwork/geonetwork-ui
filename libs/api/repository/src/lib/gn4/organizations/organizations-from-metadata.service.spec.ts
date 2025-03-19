@@ -212,6 +212,9 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
         : 'email.keyword'
     })
 
+    beforeEach(() => {
+      service.getOrganisations({})
+    })
     describe('organisations$', () => {
       let organisations
       describe('initially', () => {
