@@ -16,12 +16,6 @@ describe('SidebarComponent', () => {
   let fixture: ComponentFixture<SidebarComponent>
   let service: AuthService
 
-  class OrganizationsServiceInterfaceMock {
-    organisations$ = of(someOrganizationsFixture())
-    getOrganisations() {
-      return this.organisations$
-    }
-  }
   beforeEach(() => {
     return MockBuilder(SidebarComponent)
   })
@@ -35,10 +29,11 @@ describe('SidebarComponent', () => {
       imports: [SidebarComponent, TranslateModule.forRoot()],
       providers: [
         MockProviders(PlatformServiceInterface, AvatarServiceInterface),
-        {
-          provide: OrganizationsServiceInterface,
-          useClass: OrganizationsServiceInterfaceMock,
-        },
+        MockProvider(OrganizationsServiceInterface, {
+          getOrganisations: jest
+            .fn()
+            .mockImplementation(() => of(someOrganizationsFixture())),
+        }),
         MockProvider(AuthService, {
           logoutUrl: 'http://logout.com/bla?',
         }),
