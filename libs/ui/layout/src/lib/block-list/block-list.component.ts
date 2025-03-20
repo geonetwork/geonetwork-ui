@@ -12,12 +12,8 @@ import {
 import { CommonModule } from '@angular/common'
 import { Paginable } from '../paginable.interface'
 import { PaginationDotsComponent } from '../pagination-dots/pagination-dots.component'
-enum ComponentSize {
-  LARGE = 'L',
-  MEDIUM = 'M',
-  SMALL = 'S',
-  EXTRA_SMALL = 'XS',
-}
+
+type ComponentSize = 'L' | 'M' | 'S' | 'XS'
 @Component({
   selector: 'gn-ui-block-list',
   templateUrl: './block-list.component.html',
