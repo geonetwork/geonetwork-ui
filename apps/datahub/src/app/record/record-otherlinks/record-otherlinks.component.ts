@@ -58,7 +58,7 @@ export class RecordOtherlinksComponent implements AfterViewInit {
     this.changeDetector.detectChanges()
   }
 
-  isMobile$ = this.breakpointObserver.observe([Breakpoints.XSmall]).pipe(
+  isMobile$ = this.breakpointObserver.observe([Breakpoints.XSmall])?.pipe(
     map((result) => {
       const matches = result.matches
       this.changeDetector.detectChanges() //repaginate
