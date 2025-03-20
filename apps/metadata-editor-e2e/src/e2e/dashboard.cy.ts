@@ -558,7 +558,7 @@ describe('Editing rights', () => {
     cy.visit('/catalog/search')
     cy.get('gn-ui-results-table')
       .find('[data-cy="table-row"]')
-      .eq(4)
+      .eq(3)
       .as('record')
     cy.get('@record')
       .children('div')
