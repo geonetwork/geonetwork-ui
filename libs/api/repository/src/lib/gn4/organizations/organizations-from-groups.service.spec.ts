@@ -107,9 +107,6 @@ describe('OrganizationsFromGroupsService', () => {
     service = TestBed.inject(OrganizationsFromGroupsService)
   })
 
-  beforeEach(() => {
-    service.getOrganisations({})
-  })
   it('should be created', () => {
     expect(service).toBeTruthy()
   })
@@ -126,6 +123,7 @@ describe('OrganizationsFromGroupsService', () => {
   describe('#getFiltersForOrgs', () => {
     let filters
     beforeEach(async () => {
+      service.getOrganisations({})
       filters = await firstValueFrom(
         service.getFiltersForOrgs([sampleOrgA, sampleOrgB])
       )
@@ -139,6 +137,7 @@ describe('OrganizationsFromGroupsService', () => {
   describe('#getOrgsFromFilters', () => {
     let orgs
     beforeEach(async () => {
+      service.getOrganisations({})
       orgs = await firstValueFrom(
         service.getOrgsFromFilters({
           groupOwner: {
@@ -155,6 +154,7 @@ describe('OrganizationsFromGroupsService', () => {
   describe('#addOrganizationToRecordFromSource', () => {
     let record
     beforeEach(async () => {
+      service.getOrganisations({})
       const source = {
         ...elasticFullResponseFixture().hits.hits[0]._source,
         groupOwner: '34838580',
