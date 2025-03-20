@@ -11,7 +11,21 @@
   ></gn-ui-previous-next-buttons>
 </div>
 <ng-container *ngrxLet="otherLinks$ as otherLinks">
-  <gn-ui-block-list containerClass="gap-4 py-10">
+  <gn-ui-carousel
+    *ngIf="isMobile$ | async"
+    containerClass="gap-4 pt-[26px] pb-[38px]"
+    (currentStepChange)="updateView()"
+  >
+    <gn-ui-link-card
+      *ngFor="let otherLink of otherLinks; let first = first; let last = last"
+      [link]="otherLink"
+      class="w-80"
+    ></gn-ui-link-card>
+  </gn-ui-carousel>
+  <gn-ui-block-list
+    containerClass="gap-4 py-10"
+    *ngIf="(isMobile$ | async) === false"
+  >
     <gn-ui-link-card
       #block
       *ngFor="let otherLink of otherLinks"

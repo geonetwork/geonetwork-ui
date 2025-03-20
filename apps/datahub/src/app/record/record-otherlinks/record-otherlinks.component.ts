@@ -13,9 +13,11 @@ import {
   PreviousNextButtonsComponent,
 } from '@geonetwork-ui/ui/layout'
 import { CommonModule } from '@angular/common'
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
 import { LinkCardComponent } from '@geonetwork-ui/ui/elements'
 import { LetDirective } from '@ngrx/component'
 import { TranslateModule } from '@ngx-translate/core'
+import { map } from 'rxjs'
 
 @Component({
   selector: 'datahub-record-otherlinks',
@@ -44,7 +46,8 @@ export class RecordOtherlinksComponent implements AfterViewInit {
 
   constructor(
     public facade: MdViewFacade,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   updateView() {
@@ -52,7 +55,14 @@ export class RecordOtherlinksComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this is required to show the pagination correctly
     this.changeDetector.detectChanges()
   }
+
+  isMobile$ = this.breakpointObserver.observe([Breakpoints.XSmall]).pipe(
+    map((result) => {
+      const matches = result.matches
+      this.changeDetector.detectChanges() //repaginate
+      return matches
+    })
+  )
 }

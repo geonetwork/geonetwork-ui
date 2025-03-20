@@ -593,7 +593,7 @@ describe('dataset pages', () => {
       })
       describe('features', () => {
         it('filters the download list on format filter click', () => {
-          cy.get('datahub-record-downloads')
+          cy.get('[data-cy="download-format-filters"]')
             .find('gn-ui-button')
             .children('button')
             .eq(1)
@@ -665,7 +665,7 @@ describe('dataset pages', () => {
       it('should not display carousel dot button for 4 link cards', () => {
         cy.get('datahub-record-otherlinks')
           .find('.pagination-dot')
-          .should('exist')
+          .should('not.exist')
       })
       it('should not display carousel dot button for 2 API cards', () => {
         cy.get('datahub-record-apis')
