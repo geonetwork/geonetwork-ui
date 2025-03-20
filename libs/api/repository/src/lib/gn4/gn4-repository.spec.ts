@@ -276,10 +276,26 @@ describe('Gn4Repository', () => {
 
       it('returns the feature catalog with mapped features', () => {
         expect(catalog).toEqual({
-          attributes: [
-            { name: 'OBJECTID', title: 'Object identifier' },
-            { name: 'Nom', title: 'Nom de la rue' },
-            { name: 'Rue', title: '' },
+          featureTypes: [
+            {
+              name: "Catalogue d'attributs N°1",
+              definition: 'Définition du catalogue d attributs N°1',
+              attributes: [
+                { name: 'OBJECTID', title: 'Object identifier' },
+                { name: 'Nom', title: 'Nom de la rue' },
+                { name: 'Rue', title: '' },
+              ],
+            },
+            {
+              name: "Catalogue d'attributs N°2",
+              definition: 'Définition du catalogue d attributs N°2',
+              attributes: [
+                {
+                  name: 'unique object ',
+                  title: 'this is the only object of this catalog',
+                },
+              ],
+            },
           ],
         })
       })
@@ -307,10 +323,26 @@ describe('Gn4Repository', () => {
 
       it('returns the attributes coming from the linked feature catalog', () => {
         expect(catalog).toEqual({
-          attributes: [
-            { name: 'OBJECTID', title: 'Object identifier' },
-            { name: 'Nom', title: 'Nom de la rue' },
-            { name: 'Rue', title: '' },
+          featureTypes: [
+            {
+              name: "Catalogue d'attributs N°1",
+              definition: 'Définition du catalogue d attributs N°1',
+              attributes: [
+                { name: 'OBJECTID', title: 'Object identifier' },
+                { name: 'Nom', title: 'Nom de la rue' },
+                { name: 'Rue', title: '' },
+              ],
+            },
+            {
+              name: "Catalogue d'attributs N°2",
+              definition: 'Définition du catalogue d attributs N°2',
+              attributes: [
+                {
+                  name: 'unique object ',
+                  title: 'this is the only object of this catalog',
+                },
+              ],
+            },
           ],
         })
       })
@@ -355,9 +387,7 @@ describe('Gn4Repository', () => {
     let results: CatalogRecord[]
     beforeEach(async () => {
       results = await lastValueFrom(
-        repository.getSimilarRecords(
-          datasetRecordsFixture()[0] as CatalogRecord
-        )
+        repository.getSimilarRecords(datasetRecordsFixture()[0])
       )
     })
     it('uses a related record ES payload', () => {
