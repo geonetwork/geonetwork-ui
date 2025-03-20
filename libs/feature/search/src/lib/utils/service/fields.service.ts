@@ -16,7 +16,6 @@ import {
   RecordKindField,
   UserSearchField,
 } from './fields'
-import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
 import { forkJoin, Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'

@@ -15,11 +15,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { ElasticsearchService } from '../elasticsearch'
-import {
-  getAsUrl,
-  MetadataObject,
-  SearchFilters,
-} from '@geonetwork-ui/api/metadata-converter'
+import { getAsUrl, MetadataObject } from '@geonetwork-ui/api/metadata-converter'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
 

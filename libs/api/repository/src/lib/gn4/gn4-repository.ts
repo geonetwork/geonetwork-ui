@@ -10,7 +10,6 @@ import {
   Gn4Converter,
   Gn4SearchResults,
   Iso19139Converter,
-  SearchFilters,
 } from '@geonetwork-ui/api/metadata-converter'
 import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
 import {

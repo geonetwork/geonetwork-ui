@@ -441,7 +441,6 @@ describe('Gn4Repository', () => {
         limit: 30,
         filter: 'field1 < 100',
       },
-      undefined,
     }
     beforeEach(async () => {
       results = await lastValueFrom(

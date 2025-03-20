@@ -14,7 +14,6 @@ import {
   FieldFilters,
   TermBucket,
 } from '@geonetwork-ui/common/domain/model/search'
-import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
 import {
   DateRange,
   ElasticsearchService,
