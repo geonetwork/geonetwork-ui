@@ -36,23 +36,28 @@ import { iconoirSettings } from '@ng-icons/iconoir'
   ],
 })
 export class ApiCardComponent implements OnInit, OnChanges {
+  private _size: 'L' | 'M' | 'S' | 'XS'
   @Input() link: DatasetServiceDistribution
   @Input() currentLink: DatasetServiceDistribution
   @Input() set size(value: 'L' | 'M' | 'S' | 'XS') {
+    this._size = value
     switch (value) {
       case 'L':
-        this.cardClass = 'gn-ui-card-l'
+        this.cardClass = 'gn-ui-card-l py-2 px-5 flex-row'
         break
       case 'M':
-        this.cardClass = 'gn-ui-card-m'
+        this.cardClass = 'gn-ui-card-m py-2 px-5 flex-row'
         break
       case 'S':
-        this.cardClass = 'gn-ui-card-s'
+        this.cardClass = 'gn-ui-card-s p-4 flex-col'
         break
       case 'XS':
-        this.cardClass = 'gn-ui-card-xs'
+        this.cardClass = 'gn-ui-card-xs py-2 px-5 flex-row'
         break
     }
+  }
+  get size(): 'L' | 'M' | 'S' | 'XS' {
+    return this._size
   }
   cardClass = ''
   displayApiFormButton: boolean

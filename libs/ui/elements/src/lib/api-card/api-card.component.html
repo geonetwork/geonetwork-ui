@@ -1,41 +1,22 @@
 <div
-  class="group flex flex-row justify-between py-2 px-5 rounded filter overflow-hidden"
+  class="group flex justify-between rounded filter overflow-hidden"
   [ngClass]="cardClass"
 >
-  <div class="flex flex-col justify-between gap-1">
-    <div
-      class="font-title font-medium text-black text-ellipsis overflow-hidden break-words line-clamp-3"
-    >
-      {{ link.description }}
+  <ng-container *ngIf="size !== 'S'">
+    <div>
+      <ng-container *ngTemplateOutlet="content"></ng-container>
     </div>
-    <div class="font-medium text-gray-500 text-ellipsis break-words">
-      {{ link.name }}
+    <div class="flex items-center">
+      <ng-container *ngTemplateOutlet="buttons"></ng-container>
     </div>
-    <div class="flex flex-row gap-2.5 items-center">
-      <span
-        *ngIf="link.accessServiceProtocol !== 'GPFDL'"
-        class="bg-primary-opacity-50 uppercase inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded text-primary-lightest group-hover:bg-primary transition-colors"
-        [ngClass]="{
-          '!bg-primary': currentlyActive,
-        }"
-        >{{ link.accessServiceProtocol }}</span
-      >
-      <span
-        *ngIf="link.accessServiceProtocol === 'GPFDL'"
-        class="bg-primary-opacity-50 uppercase inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded text-primary-lightest group-hover:bg-primary transition-colors"
-        [ngClass]="{
-          '!bg-primary': currentlyActive,
-        }"
-        translate
-      >
-        record.metadata.api.gpfdl</span
-      >
-      <span class="text-gray-800 text-sm pt-0.5" translate="">
-        {{ generatedText }}
-      </span>
-    </div>
-  </div>
-  <div class="flex flex-row gap-2 items-center">
+  </ng-container>
+  <ng-container *ngIf="size === 'S'">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </ng-container>
+</div>
+
+<ng-template #buttons>
+  <div class="flex flex-row gap-2">
     <gn-ui-copy-text-button
       [text]="link.url"
       [tooltipText]="'tooltip.url.copy' | translate"
@@ -45,7 +26,7 @@
     <button
       *ngIf="displayApiFormButton"
       type="button"
-      class="flex border border-gray-300 rounded-lg py-1 px-2 align-center"
+      class="gn-ui-card-icon"
       [ngClass]="{
         'py-2 px-4 rounded-r-md bg-gray-400 hover:bg-gray-600 focus:bg-gray-800 text-white':
           displayText,
@@ -67,4 +48,40 @@
       ></ng-icon>
     </button>
   </div>
-</div>
+</ng-template>
+
+<ng-template #content>
+  <div>
+    <div class="gn-ui-card-title">
+      {{ link.description || link.name }}
+    </div>
+    <div class="gn-ui-card-detail">
+      {{ link.name }}
+    </div>
+  </div>
+  <div class="flex flex-row justify-between">
+    <div class="flex flex-row gap-2.5 items-center pt-1">
+      <span
+        *ngIf="link.accessServiceProtocol !== 'GPFDL'"
+        class="bg-primary-opacity-50 uppercase inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded text-primary-lightest group-hover:bg-primary transition-colors"
+        [ngClass]="{
+          '!bg-primary': currentlyActive,
+        }"
+        >{{ link.accessServiceProtocol }}</span
+      >
+      <span
+        *ngIf="link.accessServiceProtocol === 'GPFDL'"
+        class="bg-primary-opacity-50 uppercase inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded text-primary-lightest group-hover:bg-primary transition-colors"
+        [ngClass]="{
+          '!bg-primary': currentlyActive,
+        }"
+        translate
+      >
+        record.metadata.api.gpfdl</span
+      >
+    </div>
+    <div *ngIf="size === 'S'">
+      <ng-container *ngTemplateOutlet="buttons"></ng-container>
+    </div>
+  </div>
+</ng-template>
