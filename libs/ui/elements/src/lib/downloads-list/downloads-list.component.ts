@@ -40,11 +40,14 @@ type FilterFormat = (typeof FILTER_FORMATS)[number]
     PreviousNextButtonsComponent,
   ],
 })
-export class DownloadsListComponent {
+export class DownloadsListComponent implements AfterViewInit {
   constructor(
     private translateService: TranslateService,
     private changeDetector: ChangeDetectorRef
   ) {}
+  ngAfterViewInit(): void {
+    this.forceRefreshPagination()
+  }
 
   @Input() links: DatasetDownloadDistribution[]
   @ViewChild(BlockListComponent) list: BlockListComponent

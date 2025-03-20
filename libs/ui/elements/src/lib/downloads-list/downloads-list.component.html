@@ -1,19 +1,22 @@
 <div
-  class="flex flex-wrap justify-between mt-8 mb-6 sm:mt-12 sm:mb-2"
+  class="flex flex-wrap justify-between mt-8 mb-6 sm:mt-12 sm:mb-2 items-center pb4"
   *ngIf="links && links.length > 0"
 >
-  <p
-    class="font-title text-[28px] text-title font-medium mr-4 pb-4 text-center sm:text-left"
-    translate
-  >
-    record.metadata.download
-  </p>
-  <gn-ui-previous-next-buttons
-    *ngIf="paginableElement?.pagesCount > 1"
-    [listComponent]="paginableElement"
-  ></gn-ui-previous-next-buttons>
+  <div class="flex flex-row items-center gap-x-4">
+    <p
+      class="font-title text-[28px] text-title font-medium mr-4 text-center sm:text-left"
+      translate
+    >
+      record.metadata.download
+    </p>
+    <gn-ui-previous-next-buttons
+      *ngIf="paginableElement?.pagesCount > 1"
+      [listComponent]="paginableElement"
+    ></gn-ui-previous-next-buttons>
+  </div>
+
   <div
-    class="flex flex-wrap justify-start sm:justify-end sm:pb-4"
+    class="flex flex-wrap justify-start sm:justify-end"
     data-cy="download-format-filters"
   >
     <gn-ui-button
