@@ -14,7 +14,6 @@ import {
   FieldFilters,
   TermBucket,
 } from '@geonetwork-ui/common/domain/model/search'
-import { SearchFilters } from '@geonetwork-ui/api/metadata-converter'
 import {
   DateRange,
   ElasticsearchService,
@@ -36,7 +35,7 @@ export interface FieldAvailableValue {
 
 export abstract class AbstractSearchField {
   abstract getAvailableValues(
-    configFilters: SearchFilters
+    configFilters: FieldFilters
   ): Observable<FieldAvailableValue[] | DateRange[]>
   abstract getFiltersForValues(
     values: FieldValue[] | DateRange[]
@@ -76,7 +75,7 @@ export class SimpleSearchField implements AbstractSearchField {
   }
 
   getAvailableValues(
-    configFilters: SearchFilters
+    configFilters: FieldFilters
   ): Observable<FieldAvailableValue[]> {
     return this.repository
       .aggregate(this.getAggregations(), configFilters)
@@ -159,7 +158,7 @@ export class TranslatedSearchField extends SimpleSearchField {
   }
 
   getAvailableValues(
-    configFilters: SearchFilters
+    configFilters: FieldFilters
   ): Observable<FieldAvailableValue[]> {
     if (this.orderType === 'count')
       return super.getAvailableValues(configFilters)
@@ -202,7 +201,7 @@ export class MultilingualSearchField extends SimpleSearchField {
 
 export class FullTextSearchField implements AbstractSearchField {
   getAvailableValues(
-    configFilters: SearchFilters
+    configFilters: FieldFilters
   ): Observable<FieldAvailableValue[]> {
     return of([])
   }
@@ -378,7 +377,7 @@ export class OrganizationSearchField implements AbstractSearchField {
   }
 
   getAvailableValues(
-    configFilters: SearchFilters
+    configFilters: FieldFilters
   ): Observable<FieldAvailableValue[]> {
     // sort values by alphabetical order
     const organisations$ = this.orgsService.getOrganisations(configFilters)
@@ -405,7 +404,7 @@ export class OwnerSearchField extends SimpleSearchField {
   }
 
   getAvailableValues(
-    configFilters: SearchFilters
+    configFilters: FieldFilters
   ): Observable<FieldAvailableValue[]> {
     return of([])
   }
@@ -417,7 +416,7 @@ export class UserSearchField extends SimpleSearchField {
   }
 
   getAvailableValues(
-    configFilters: SearchFilters
+    configFilters: FieldFilters
   ): Observable<FieldAvailableValue[]> {
     return super.getAvailableValues(configFilters).pipe(
       map((values) =>
@@ -441,7 +440,7 @@ export class DateRangeSearchField extends SimpleSearchField {
   }
 
   getAvailableValues(
-    configFilters: SearchFilters
+    configFilters: FieldFilters
   ): Observable<FieldAvailableValue[]> {
     // TODO: return an array of dates to show which one are available in the date picker
     return of([])

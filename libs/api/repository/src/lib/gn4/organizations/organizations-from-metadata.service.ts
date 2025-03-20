@@ -22,7 +22,6 @@ import {
   selectFallback,
   selectField,
   selectTranslatedField,
-  SearchFilters,
   SourceWithUnknownProps,
 } from '@geonetwork-ui/api/metadata-converter'
 import { combineLatest, Observable, of, switchMap, takeLast } from 'rxjs'
@@ -76,7 +75,7 @@ export class OrganizationsFromMetadataService
     private langService: LangService
   ) {}
 
-  getOrganisations(configFilters: SearchFilters): Observable<Organization[]> {
+  getOrganisations(configFilters: FieldFilters): Observable<Organization[]> {
     this.groups$ = of(true).pipe(
       switchMap(() => this.groupsApiService.getGroups()),
       shareReplay()
@@ -166,7 +165,7 @@ export class OrganizationsFromMetadataService
 
   private getAggregationSearchRequest(
     gnVersion: string,
-    configFilters?: SearchFilters
+    configFilters?: FieldFilters
   ) {
     const semVersion = valid(coerce(gnVersion))
     return this.esService.getSearchRequestBody(

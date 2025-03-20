@@ -34,10 +34,10 @@ export class OrganizationPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const organisation = this.orgService.getOrganisations()
+    const organisation$ = this.orgService.getOrganisations()
     this.organization$ = combineLatest([
       this.router.pathParams$,
-      organisation,
+      organisation$,
     ]).pipe(
       filter(([pathParams, _]) => Object.keys(pathParams).length > 0),
       switchMap(([pathParams, organizations]) => {

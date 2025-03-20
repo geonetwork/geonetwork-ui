@@ -10,7 +10,6 @@ import {
   Gn4Converter,
   Gn4SearchResults,
   Iso19139Converter,
-  SearchFilters,
 } from '@geonetwork-ui/api/metadata-converter'
 import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
 import {
@@ -206,7 +205,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
 
   aggregate(
     params: AggregationsParams,
-    configFilters: SearchFilters
+    configFilters: FieldFilters
   ): Observable<Aggregations> {
     // if aggregations are empty, return an empty object right away
     if (Object.keys(params).length === 0) return of({})
