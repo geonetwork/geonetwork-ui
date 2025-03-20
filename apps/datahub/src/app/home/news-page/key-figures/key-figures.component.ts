@@ -29,7 +29,7 @@ export class KeyFiguresComponent {
     private catalogRecords: RecordsService,
     private catalogOrgs: OrganizationsServiceInterface
   ) {
-    const organisations = this.catalogOrgs.getOrganisations()
+    this.catalogOrgs.getOrganisations()
     this.orgsCount$ = this.catalogOrgs.organisationsCount$.pipe(startWith('-'))
   }
 }

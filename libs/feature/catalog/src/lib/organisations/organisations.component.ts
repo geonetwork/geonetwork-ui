@@ -69,7 +69,7 @@ export class OrganisationsComponent implements Paginable {
       return this.sortOrganisations(filteredOrganisations, sortBy)
     })
   )
-  //A tester, je ne sais pas comment. Il peut être chargé par this.organisationsService.getOrganisations()
+
   organisationsTotal$ = this.organisationsService.organisationsCount$
 
   organisations$: Observable<Organization[]> = combineLatest([
