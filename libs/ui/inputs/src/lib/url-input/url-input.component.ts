@@ -31,7 +31,7 @@ import { iconoirArrowUp, iconoirLink } from '@ng-icons/iconoir'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UrlInputComponent implements OnChanges {
+export class UrlInputComponent {
   @Input() set value(v: string) {
     // we're making sure to only update the input if the URL representation of it has changed; otherwise we keep it identical
     // to avoid glitches when starting to write a URL and having some characters added/replaced automatically
@@ -58,12 +58,6 @@ export class UrlInputComponent implements OnChanges {
   inputValue = ''
 
   constructor(private cd: ChangeDetectorRef) {}
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['value']) {
-      this.inputValue = changes['value'].currentValue
-    }
-  }
 
   handleInput(event: Event) {
     const value = (event.target as HTMLInputElement).value
