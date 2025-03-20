@@ -30,7 +30,7 @@ export class BlockListComponent implements AfterViewInit, Paginable {
     ElementRef<HTMLElement>
   >
   @ViewChild('blockContainer') blockContainer: ElementRef<HTMLElement>
-  protected subComponentSize: ComponentSize = ComponentSize.MEDIUM
+  protected subComponentSize: ComponentSize = 'M'
   protected minHeight = 0
 
   protected currentPage_ = 0
@@ -95,20 +95,20 @@ export class BlockListComponent implements AfterViewInit, Paginable {
   }
 
   protected computeSubComponentSize(): ComponentSize {
-    if (!this.blocks) return ComponentSize.MEDIUM
+    if (!this.blocks) return 'M'
     const subComponentsCount = this.blocks.length
-    if (subComponentsCount <= 12) return ComponentSize.MEDIUM
-    if (subComponentsCount <= 18) return ComponentSize.SMALL
-    return ComponentSize.EXTRA_SMALL
+    if (subComponentsCount <= 12) return 'M'
+    if (subComponentsCount <= 18) return 'S'
+    return 'XS'
   }
 
   protected computePageSize(): number {
     switch (this.subComponentSize) {
-      case ComponentSize.MEDIUM:
+      case 'M':
         return 4
-      case ComponentSize.SMALL:
+      case 'S':
         return 6
-      case ComponentSize.EXTRA_SMALL:
+      case 'XS':
         return 8
       default:
         return 4
