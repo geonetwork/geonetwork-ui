@@ -40,6 +40,7 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirPlus } from '@ng-icons/iconoir'
+import { RoleValues } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-form-field-contacts-for-resource',
@@ -72,15 +73,11 @@ export class FormFieldContactsForResourceComponent
   @Output() valueChange: EventEmitter<Individual[]> = new EventEmitter()
 
   contactsForRessourceByRole: Map<Role, Individual[]> = new Map()
+  roleValues = RoleValues
 
-  rolesToPick: Role[] = [
-    'resource_provider',
-    'custodian',
-    'owner',
-    'point_of_contact',
-    'author',
-    'publisher',
-  ]
+  rolesToPick: Role[] = this.roleValues.filter(
+    (role) => role !== 'other' && role !== 'unspecified'
+  )
 
   roleSectionsToDisplay: Role[] = []
 

@@ -817,14 +817,14 @@ describe('editor form', () => {
           it('show the roles available to add', () => {
             cy.get('[data-test=rolesToPick]')
               .children()
-              .should('have.length', 5)
+              .should('have.length', 18)
           })
 
           it('click on a role adds it to the list of displayed role', () => {
             cy.get('[data-test="rolesToPick"]').children().eq(2).click()
             cy.get('[data-test=rolesToPick]')
               .children()
-              .should('have.length', 4)
+              .should('have.length', 17)
             cy.get('[data-test=displayedRoles]')
               .children()
               .should('have.length', 2)
