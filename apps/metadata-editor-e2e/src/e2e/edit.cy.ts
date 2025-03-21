@@ -177,6 +177,48 @@ describe('editor form', () => {
         it('shows the graphic overview', () => {
           cy.get('gn-ui-image-input').should('be.visible')
         })
+        it('allows switching between URL input and file upload', () => {
+          // First add by URL
+          cy.get('gn-ui-image-input')
+            .find('gn-ui-button')
+            .find('button')
+            .click()
+          cy.get('gn-ui-url-input').should('be.visible')
+          cy.get('gn-ui-url-input input').type('http://example.com/image.jpg')
+
+          // Then try to upload a file - URL input should disappear
+          cy.get('gn-ui-form-field-overviews label').selectFile(
+            'src/fixtures/sample.png',
+            { force: true }
+          )
+          cy.get('gn-ui-url-input').should('not.exist')
+
+          // Try URL input again - should clear previous file
+          cy.get('gn-ui-image-input')
+            .find('gn-ui-button')
+            .find('button')
+            .click()
+          cy.get('gn-ui-url-input').should('be.visible')
+        })
+
+        it('handles drag and drop file upload', () => {
+          // First add by URL
+          cy.get('gn-ui-image-input')
+            .find('gn-ui-button')
+            .find('button')
+            .click()
+          cy.get('gn-ui-url-input input').type('http://example.com/image.jpg')
+
+          // Then drag and drop a file
+          cy.get('gn-ui-form-field-overviews label').selectFile(
+            'src/fixtures/sample.png',
+            { action: 'drag-drop' }
+          )
+
+          // URL input should be hidden
+          cy.get('gn-ui-url-input').should('not.exist')
+        })
+
         it('allows to delete images from the graphic overview', () => {
           cy.get('gn-ui-image-input').find('img').should('have.length', 1)
           cy.editor_wrapPreviousDraft()
