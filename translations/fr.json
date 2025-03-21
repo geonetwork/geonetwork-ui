@@ -68,6 +68,7 @@
   "datahub.search.filter.generatedByAPI": "généré par une API",
   "datahub.search.filter.generatedByWfs": "généré par un WFS",
   "datahub.search.filter.others": "Autres",
+  "dataset.error.forbidden": "L’accès à cette ressource est restreint",
   "dataset.error.http": "Le chargement des données a échoué en raison d'une erreur HTTP: \"{ info }\"",
   "dataset.error.network": "Le chargement des données a échoué en raison d'une erreur réseau ou de limitations CORS: \"{ info }\"",
   "dataset.error.parse": "Les données ont été chargées mais leur décodage a échoué: \"{ info }\"",

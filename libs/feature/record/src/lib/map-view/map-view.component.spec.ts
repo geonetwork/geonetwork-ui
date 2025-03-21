@@ -12,7 +12,7 @@ import { MdViewFacade } from '../state/mdview.facade'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { of, Subject, throwError } from 'rxjs'
 import { MapViewComponent } from './map-view.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { delay } from 'rxjs/operators'
 import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 import { Collection } from 'ol'
@@ -25,9 +25,10 @@ import {
   MapLegendComponent,
   prioritizePageScroll,
 } from '@geonetwork-ui/ui/map'
-import { MockBuilder } from 'ng-mocks'
+import { MockBuilder, MockProvider } from 'ng-mocks'
 import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component'
 import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
+import { FetchError } from '@geonetwork-ui/data-fetcher'
 
 jest.mock('@geonetwork-ui/ui/map', () => ({
   ...jest.requireActual('@geonetwork-ui/ui/map'),
@@ -161,6 +162,9 @@ describe('MapViewComponent', () => {
           provide: DataService,
           useClass: DataServiceMock,
         },
+        MockProvider(TranslateService, {
+          instant: jest.fn((key: string) => key),
+        }),
       ],
       imports: [TranslateModule.forRoot(), MapLegendComponent],
     }).compileComponents()
@@ -517,6 +521,7 @@ describe('MapViewComponent', () => {
 
     describe('with a link using WFS which returns an error', () => {
       beforeEach(() => {
+        jest.spyOn(component, 'handleError')
         mdViewFacade.mapApiLinks$.next([])
         mdViewFacade.geoDataLinksWithGeometry$.next([
           {
@@ -529,6 +534,12 @@ describe('MapViewComponent', () => {
       })
       it('shows an error', () => {
         expect(component.error).toEqual('data loading error')
+      })
+      it('sets loading to false', () => {
+        expect(component.loading).toEqual(false)
+      })
+      it('calls handleError', () => {
+        expect(component.handleError).toHaveBeenCalled()
       })
     })
 
@@ -880,6 +891,46 @@ describe('MapViewComponent', () => {
           view: null,
         })
       })
+    })
+  })
+
+  describe('#onSourceLoadError', () => {
+    it('should set error message for 403 status', () => {
+      const error = { httpStatus: 403 } as geoSdkCore.SourceLoadErrorEvent
+      component.onSourceLoadError(error)
+      expect(component.error).toBe('dataset.error.forbidden')
+    })
+
+    it('should set error message for 401 status', () => {
+      const error = { httpStatus: 401 } as geoSdkCore.SourceLoadErrorEvent
+      component.onSourceLoadError(error)
+      expect(component.error).toBe('dataset.error.forbidden')
+    })
+
+    it('should set error message for other statuses', () => {
+      const error = { httpStatus: 500 } as geoSdkCore.SourceLoadErrorEvent
+      component.onSourceLoadError(error)
+      expect(component.error).toBe('dataset.error.http')
+    })
+  })
+
+  describe('#handleError', () => {
+    it('should set error message for FetchError', () => {
+      const error = new FetchError('forbidden', 'info')
+      component.handleError(error)
+      expect(component.error).toBe('dataset.error.forbidden')
+    })
+
+    it('should set error message for Error instance', () => {
+      const error = new Error('error.message')
+      component.handleError(error)
+      expect(component.error).toBe('error.message')
+    })
+
+    it('should set error message for string error', () => {
+      const error = 'string error'
+      component.handleError(error)
+      expect(component.error).toBe('string error')
     })
   })
 })
