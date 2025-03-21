@@ -102,9 +102,6 @@ export class MapViewComponent implements AfterViewInit {
 
   onLegendStatusChange(status: boolean) {
     this.legendExists = status
-    if (!status) {
-      this.showLegend = false
-    }
   }
 
   compatibleMapLinks$ = combineLatest([
