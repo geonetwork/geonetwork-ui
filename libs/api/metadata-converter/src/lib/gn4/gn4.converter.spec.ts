@@ -1028,6 +1028,20 @@ describe('Gn4Converter', () => {
             'related-metadata-with-fcats'
           )
         })
+
+        it('supports empty fcats array', async () => {
+          const record = await service.readRecord({
+            ...hit,
+            _source: {
+              ...hit._source,
+              related: {
+                fcats: [],
+              },
+            },
+          })
+
+          expect(record.extras['featureCatalogIdentifier']).toBeUndefined()
+        })
       })
 
       describe('full record', () => {

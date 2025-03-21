@@ -291,7 +291,7 @@ export class Gn4FieldMapper {
             <SourceWithUnknownProps>selectField(source, 'related'),
             'fcats'
           )
-        ),
+        ) ?? {},
         '_source'
       )
       const featureCatalogIdentifier = selectField(
