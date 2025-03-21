@@ -106,8 +106,8 @@ export class ImportRecordComponent {
     this.isRecordImportInProgress = true
 
     this.recordsRepository.duplicateExternalRecord(url).subscribe({
-      next: (recordTempId) => {
-        if (recordTempId) {
+      next: (uuid) => {
+        if (uuid) {
           this.notificationsService.showNotification(
             {
               type: 'success',
@@ -122,7 +122,7 @@ export class ImportRecordComponent {
           )
 
           this.router
-            .navigate(['/edit', recordTempId])
+            .navigate(['/edit', uuid])
             .catch((err) => console.error(err))
         }
         this.closeImportMenu.next()
