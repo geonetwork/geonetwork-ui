@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { iconoirDownload } from '@ng-icons/iconoir'
 
+type CardSize = 'L' | 'M' | 'S' | 'XS'
+
 @Component({
   selector: 'gn-ui-download-item',
   templateUrl: './download-item.component.html',
@@ -30,22 +32,16 @@ export class DownloadItemComponent {
   @Input() color: string
   @Input() format: string
   @Input() isFromApi: boolean
-  @Input() set size(value: 'L' | 'M' | 'S' | 'XS') {
+  private readonly sizeClassMap: Record<CardSize, string> = {
+    L: 'gn-ui-card-l py-2 px-5',
+    M: 'gn-ui-card-m py-2 px-5',
+    S: 'gn-ui-card-s p-4',
+    XS: 'gn-ui-card-xs py-2 px-5',
+  }
+
+  @Input() set size(value: CardSize) {
     this._size = value
-    switch (value) {
-      case 'L':
-        this.cardClass = 'gn-ui-card-l py-2 px-5'
-        break
-      case 'M':
-        this.cardClass = 'gn-ui-card-m py-2 px-5'
-        break
-      case 'S':
-        this.cardClass = 'gn-ui-card-s p-4'
-        break
-      case 'XS':
-        this.cardClass = 'gn-ui-card-xs py-2 px-5'
-        break
-    }
+    this.cardClass = this.sizeClassMap[value]
   }
   get size(): 'L' | 'M' | 'S' | 'XS' {
     return this._size
