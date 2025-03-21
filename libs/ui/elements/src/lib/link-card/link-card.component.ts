@@ -14,6 +14,7 @@ import { matOpenInNew } from '@ng-icons/material-icons/baseline'
 import { getBadgeColor, getFileFormat } from '@geonetwork-ui/util/shared'
 import { TranslateModule } from '@ngx-translate/core'
 
+type CardSize = 'L' | 'M' | 'S' | 'XS'
 @Component({
   selector: 'gn-ui-link-card',
   templateUrl: './link-card.component.html',
@@ -31,22 +32,16 @@ import { TranslateModule } from '@ngx-translate/core'
 export class LinkCardComponent {
   private _size: 'L' | 'M' | 'S' | 'XS'
   @Input() link: DatasetOnlineResource
-  @Input() set size(value: 'L' | 'M' | 'S' | 'XS') {
+  private readonly sizeClassMap: Record<CardSize, string> = {
+    L: 'gn-ui-card-l py-2 px-5',
+    M: 'gn-ui-card-m py-2 px-5',
+    S: 'gn-ui-card-s p-4',
+    XS: 'gn-ui-card-xs py-2 px-5',
+  }
+
+  @Input() set size(value: CardSize) {
     this._size = value
-    switch (value) {
-      case 'L':
-        this.cardClass = 'gn-ui-card-l py-2 px-5'
-        break
-      case 'M':
-        this.cardClass = 'gn-ui-card-m py-2 px-5'
-        break
-      case 'S':
-        this.cardClass = 'gn-ui-card-s p-4'
-        break
-      case 'XS':
-        this.cardClass = 'gn-ui-card-xs py-2 px-5'
-        break
-    }
+    this.cardClass = this.sizeClassMap[value]
   }
   get size(): 'L' | 'M' | 'S' | 'XS' {
     return this._size

@@ -154,7 +154,7 @@
   }
 
   .gn-ui-card-detail {
-    @apply font-medium text-gray-500 text-ellipsis break-words;
+    @apply font-medium text-gray-500 text-ellipsis break-words text-sm;
   }
 
   /* DROPDOWN MULTISELECT CLASS */

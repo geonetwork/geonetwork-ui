@@ -16,6 +16,8 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { iconoirSettings } from '@ng-icons/iconoir'
 
+type CardSize = 'L' | 'M' | 'S' | 'XS'
+
 @Component({
   selector: 'gn-ui-api-card',
   templateUrl: './api-card.component.html',
@@ -39,22 +41,16 @@ export class ApiCardComponent implements OnInit, OnChanges {
   private _size: 'L' | 'M' | 'S' | 'XS'
   @Input() link: DatasetServiceDistribution
   @Input() currentLink: DatasetServiceDistribution
-  @Input() set size(value: 'L' | 'M' | 'S' | 'XS') {
+  private readonly sizeClassMap: Record<CardSize, string> = {
+    L: 'gn-ui-card-l py-2 px-5 flex-row',
+    M: 'gn-ui-card-m py-2 px-5 flex-row',
+    S: 'gn-ui-card-s p-4 flex-col',
+    XS: 'gn-ui-card-xs py-2 px-5 flex-row',
+  }
+
+  @Input() set size(value: CardSize) {
     this._size = value
-    switch (value) {
-      case 'L':
-        this.cardClass = 'gn-ui-card-l py-2 px-5 flex-row'
-        break
-      case 'M':
-        this.cardClass = 'gn-ui-card-m py-2 px-5 flex-row'
-        break
-      case 'S':
-        this.cardClass = 'gn-ui-card-s p-4 flex-col'
-        break
-      case 'XS':
-        this.cardClass = 'gn-ui-card-xs py-2 px-5 flex-row'
-        break
-    }
+    this.cardClass = this.sizeClassMap[value]
   }
   get size(): 'L' | 'M' | 'S' | 'XS' {
     return this._size
