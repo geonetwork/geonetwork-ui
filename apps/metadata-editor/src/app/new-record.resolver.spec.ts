@@ -16,6 +16,7 @@ import {
   someOrganizationsFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { TranslateService } from '@ngx-translate/core'
+import { NOT_KNOWN_CONSTRAINT } from '@geonetwork-ui/feature/editor'
 
 class TranslateServiceMock {
   instant = jest.fn((key: string) => key)
@@ -90,6 +91,7 @@ describe('NewRecordResolver', () => {
           contacts: expectedContacts,
           status: 'ongoing',
           temporalExtents: [],
+          legalConstraints: [NOT_KNOWN_CONSTRAINT],
           licenses: [],
           title: 'editor.new.record.title',
           uniqueIdentifier: null,

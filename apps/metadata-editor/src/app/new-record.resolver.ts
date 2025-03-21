@@ -9,6 +9,7 @@ import { map, switchMap } from 'rxjs/operators'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { TranslateService } from '@ngx-translate/core'
+import { NOT_KNOWN_CONSTRAINT } from '@geonetwork-ui/feature/editor'
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +39,7 @@ export class NewRecordResolver {
           topics: [],
           keywords: [],
           licenses: [],
-          legalConstraints: [],
+          legalConstraints: [NOT_KNOWN_CONSTRAINT],
           securityConstraints: [],
           otherConstraints: [],
           overviews: [],
