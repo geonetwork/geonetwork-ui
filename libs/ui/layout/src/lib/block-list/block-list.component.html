@@ -1,7 +1,7 @@
 <div
-  class="block-list-container flex flex-col"
+  class="content-container flex flex-col"
   #blockContainer
-  [ngClass]="containerClass"
+  [ngClass]="[containerClass, 'size-' + subComponentSize]"
   [ngStyle]="{ minHeight: minHeight + 'px' }"
 >
   <ng-content></ng-content>
