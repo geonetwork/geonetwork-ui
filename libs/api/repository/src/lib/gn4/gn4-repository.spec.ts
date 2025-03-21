@@ -738,13 +738,11 @@ describe('Gn4Repository', () => {
   describe('importRecordFromExternalFileUrlAsDraft', () => {
     const recordDownloadUrl = 'https://example.com/record/xml'
     const mockXml = simpleDatasetRecordAsXmlFixture()
-    let tempId: string
 
-    it('should fetch the external record and save it as a draft', fakeAsync(() => {
+    it('should fetch the external record and save it immediately', fakeAsync(() => {
       repository.duplicateExternalRecord(recordDownloadUrl).subscribe((id) => {
-        tempId = id
-
-        expect(tempId).toMatch(/^TEMP-ID-\d+$/)
+        expect(id).toMatch('my-dataset-001')
+        expect(repository.saveRecord).toHaveBeenCalled()
       })
 
       const req = httpTestingController.expectOne(recordDownloadUrl)
