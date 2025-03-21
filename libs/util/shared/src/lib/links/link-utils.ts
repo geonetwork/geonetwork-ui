@@ -207,9 +207,11 @@ export function checkFileFormat(
   format: FileFormat
 ): boolean {
   return (
-    ('name' in link && new RegExp(`[./]${format}`, 'i').test(link.name)) ||
+    ('name' in link &&
+      new RegExp(`[./]${format}`, 'i').test(link.name.toLowerCase())) ||
     ('url' in link &&
-      new RegExp(`[./]${format}`, 'i').test(link.url.toString()))
+      new RegExp(`[./]${format}`, 'i').test(link.url.toString())) ||
+    ('name' in link && link.name.toLowerCase().includes(format))
   )
 }
 

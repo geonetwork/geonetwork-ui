@@ -39,7 +39,7 @@ describe('DownloadsListItemComponent', () => {
   describe('download description', () => {
     describe('when has a description', () => {
       it('displays the description', () => {
-        const descElmt = fixture.debugElement.query(By.css('.text-21'))
+        const descElmt = fixture.debugElement.query(By.css('.gn-ui-card-title'))
 
         expect(descElmt.attributes.title).toEqual(
           'A file that contains all roads'
@@ -55,7 +55,7 @@ describe('DownloadsListItemComponent', () => {
         fixture.detectChanges()
       })
       it('displays name', () => {
-        const descElmt = fixture.debugElement.query(By.css('.text-21'))
+        const descElmt = fixture.debugElement.query(By.css('.gn-ui-card-title'))
 
         expect(descElmt.attributes.title).toEqual('allroads.geojson')
         expect(descElmt.nativeElement.textContent.trim()).toEqual(

@@ -28,6 +28,7 @@
 </div>
 <div class="mb-2 sm:mb-3" *ngFor="let link of filteredLinks">
   <gn-ui-download-item
+    size="L"
     [link]="link"
     [color]="getLinkColor(link)"
     [format]="getLinkFormat(link)"
