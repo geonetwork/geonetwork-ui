@@ -7,7 +7,9 @@ export const getSearchState =
 
 export const getSearchStateSearch = createSelector(
   getSearchState,
-  (state: SearchState, id: string = DEFAULT_SEARCH_KEY) => state[id]
+  (state: SearchState, id: string = DEFAULT_SEARCH_KEY) => {
+    return state[id]
+  }
 )
 
 export const getSearchFilters = createSelector(
@@ -28,6 +30,11 @@ export const getSearchResultsLayout = createSelector(
 export const getSearchConfigAggregations = createSelector(
   getSearchStateSearch,
   (state: SearchStateSearch) => state.config.aggregations
+)
+
+export const getSearchConfigFilters = createSelector(
+  getSearchStateSearch,
+  (state: SearchStateSearch) => state.config.filters
 )
 
 export const getSearchResults = createSelector(

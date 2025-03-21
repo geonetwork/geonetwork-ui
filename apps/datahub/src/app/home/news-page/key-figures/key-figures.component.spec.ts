@@ -14,6 +14,7 @@ class RecordsServiceMock {
 }
 
 class OrganisationsServiceMock {
+  getOrganisations = jest.fn(() => of([]))
   organisationsCount$ = of(456)
 }
 

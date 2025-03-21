@@ -19,6 +19,7 @@ class RouterFacadeMock {
 
 class OrganizationsServiceInterfaceMock {
   organisations$ = of(someOrganizationsFixture())
+  getOrganisations = jest.fn(() => of(someOrganizationsFixture()))
 }
 
 describe('OrganizationPageComponent', () => {
@@ -64,6 +65,7 @@ describe('OrganizationPageComponent', () => {
     expect(component).toBeTruthy()
   })
 
+  //Passe pas
   describe('#ngOnInit', () => {
     beforeEach(() => {
       component.ngOnInit()

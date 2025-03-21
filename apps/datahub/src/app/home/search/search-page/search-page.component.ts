@@ -24,6 +24,15 @@ export class SearchPageComponent implements OnInit {
   ngOnInit() {
     this.searchFacade.setResultsLayout('ROW')
 
+    this.searchFacade.setConfigFilters({
+      resourceType: {
+        service: false,
+        map: false,
+        'map/static': false,
+        mapDigital: false,
+      },
+    })
+
     const cfg: MetadataQualityConfig =
       getMetadataQualityConfig() || ({} as MetadataQualityConfig)
     this.metadataQualityDisplay = cfg.ENABLED

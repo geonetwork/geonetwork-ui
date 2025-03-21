@@ -25,6 +25,7 @@ const orgs$ = of(orgs)
 
 class orgServiceMock {
   organisations$ = orgs$
+  getOrganisations = jest.fn(() => orgs$)
 }
 
 const userSubject = new BehaviorSubject<UserModel | null>(null)
@@ -86,6 +87,7 @@ describe('MyOrgService', () => {
     })
   })
 
+  //passe pas
   it('should update myOrgDataSubject when orgService organisations$ emits organizations', () => {
     const orgsSubject = new BehaviorSubject<any[]>([])
     const orgs = [
