@@ -41,6 +41,7 @@ describe('editor form', () => {
     // Open the copy
     cy.visit('/catalog/search')
     cy.get('gn-ui-fuzzy-search input').type('station épuration copy{enter}')
+
     cy.get('[data-cy="table-row"]').first().children('div').eq(2).click()
     cy.url().should('include', '/edit/')
     cy.editor_readFormUniqueIdentifier().then((uuid) => {
@@ -180,8 +181,7 @@ describe('editor form', () => {
         it('allows switching between URL input and file upload', () => {
           // First add by URL
           cy.get('gn-ui-image-input')
-            .find('gn-ui-button')
-            .find('button')
+            .find('gn-ui-button button:contains("URL")') // Refined selector
             .click()
           cy.get('gn-ui-url-input').should('be.visible')
           cy.get('gn-ui-url-input input').type('http://example.com/image.jpg')
@@ -195,8 +195,7 @@ describe('editor form', () => {
 
           // Try URL input again - should clear previous file
           cy.get('gn-ui-image-input')
-            .find('gn-ui-button')
-            .find('button')
+            .find('gn-ui-button button:contains("URL")') // Refined selector
             .click()
           cy.get('gn-ui-url-input').should('be.visible')
         })
@@ -204,8 +203,7 @@ describe('editor form', () => {
         it('handles drag and drop file upload', () => {
           // First add by URL
           cy.get('gn-ui-image-input')
-            .find('gn-ui-button')
-            .find('button')
+            .find('gn-ui-button button:contains("URL")') // Refined selector
             .click()
           cy.get('gn-ui-url-input input').type('http://example.com/image.jpg')
 
