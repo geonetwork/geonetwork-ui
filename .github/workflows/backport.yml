@@ -1,18 +1,29 @@
-name: Backport
+name: Automatic backport action
 
 on:
-  pull_request:
-    types:
-      - closed
-      - labeled
+  pull_request_target:
+    types: ['closed', 'labeled']
+
+permissions:
+  contents: write # so it can comment
+  pull-requests: write # so it can create pull requests
 
 jobs:
   backport:
-    runs-on: ubuntu-22.04
-    name: Backport
-    timeout-minutes: 5
-
+    name: Backport PR
+    if: github.event.pull_request.merged == true && !(contains(github.event.pull_request.labels.*.name, 'backport'))
+    runs-on: ubuntu-latest
     steps:
-      - uses: camptocamp/backport-action@master
+      - name: Backport Action
+        uses: sqren/backport-github-action@v9.3.0
         with:
-          token: ${{ secrets.BACKPORT_BOT_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          auto_backport_label_prefix: backport-to-
+
+      - name: Info log
+        if: ${{ success() }}
+        run: cat ~/.backport/backport.info.log
+
+      - name: Debug log
+        if: ${{ failure() }}
+        run: cat ~/.backport/backport.debug.log
