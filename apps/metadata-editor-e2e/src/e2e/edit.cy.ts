@@ -182,7 +182,7 @@ describe('editor form', () => {
           // First add by URL
           cy.get('gn-ui-image-input')
             .find('gn-ui-button')
-            .find('button:contains("URL")')
+            .find('button')
             .click()
           cy.get('gn-ui-url-input').should('be.visible')
           cy.get('gn-ui-url-input input').type('http://example.com/image.jpg')
@@ -197,7 +197,7 @@ describe('editor form', () => {
           // Try URL input again - should clear previous file
           cy.get('gn-ui-image-input')
             .find('gn-ui-button')
-            .find('button:contains("URL")')
+            .find('button')
             .click()
           cy.get('gn-ui-url-input').should('be.visible')
         })
@@ -206,7 +206,7 @@ describe('editor form', () => {
           // First add by URL
           cy.get('gn-ui-image-input')
             .find('gn-ui-button')
-            .find('button:contains("URL")')
+            .find('button')
             .click()
           cy.get('gn-ui-url-input input').type('http://example.com/image.jpg')
 
