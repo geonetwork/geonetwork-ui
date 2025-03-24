@@ -2,7 +2,7 @@
 </ng-container>
 
 <ng-template #withImage>
-  <div class="w-80 h-full flex flex-col gap-2">
+  <div class="w-80 h-full flex flex-col gap-2" data-test="withImage">
     <gn-ui-image-overlay-preview class="h-48" [imageUrl]="previewUrl">
     </gn-ui-image-overlay-preview>
     <gn-ui-text-input
@@ -31,7 +31,7 @@
 </ng-template>
 
 <ng-template #withoutImage>
-  <div class="w-full h-full flex flex-col gap-2">
+  <div class="w-full h-full flex flex-col gap-2" data-test="withoutImage">
     <label
       gnUiFilesDrop
       class="flex-1 border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center gap-4 transition-colors duration-100"
