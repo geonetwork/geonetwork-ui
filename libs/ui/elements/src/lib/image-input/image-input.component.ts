@@ -125,7 +125,7 @@ export class ImageInputComponent {
   handleDropFiles(files: File[]) {
     const validFiles = this.filterTypeImage(files)
     if (validFiles.length > 0) {
-      this.showUrlInput = false // Reset URL input when file is dropped
+      this.showUrlInput = false
       this.resizeAndEmit(validFiles[0])
     }
   }
