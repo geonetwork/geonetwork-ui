@@ -179,9 +179,12 @@ describe('editor form', () => {
           cy.get('gn-ui-image-input').should('be.visible')
         })
         it('allows switching between URL input and file upload', () => {
-          // First add by URL
-          cy.get('[data-test="display-url-input"]', { timeout: 10000 })
-            .should('be.visible')
+          // Wait for full page load and ensure image input is ready
+          cy.get('gn-ui-image-input').should('exist').and('be.visible')
+
+          // First add by URL - try multiple selectors
+          cy.get('gn-ui-button button:visible')
+            .contains('displayUrlInput')
             .click()
           cy.get('gn-ui-url-input').should('be.visible')
           cy.get('gn-ui-url-input input').type('http://example.com/image.jpg')
@@ -201,9 +204,12 @@ describe('editor form', () => {
         })
 
         it('handles drag and drop file upload', () => {
-          // First add by URL
-          cy.get('[data-test="display-url-input"]', { timeout: 10000 })
-            .should('be.visible')
+          // Wait for full page load and ensure image input is ready
+          cy.get('gn-ui-image-input').should('exist').and('be.visible')
+
+          // First add by URL - try multiple selectors
+          cy.get('gn-ui-button button:visible')
+            .contains('displayUrlInput')
             .click()
           cy.get('gn-ui-url-input input').type('http://example.com/image.jpg')
 
