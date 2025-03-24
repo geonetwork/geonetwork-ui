@@ -312,33 +312,31 @@ export class Gn4PlatformService implements PlatformServiceInterface {
       this.recordsApiService.getAssociatedResources(record.uniqueIdentifier),
       this.recordsApiService.getAllResources(record.uniqueIdentifier),
     ]).pipe(
-      map(([associatedResources, recordResources]) => {
-        // Received object from API is not a RelatedResponseApiModel, so we need
-        // to cast it as any and do the bellow mappings to get the wanted values.
-        const resourceIdsToKeep = [
-          ...((associatedResources as any).onlines ?? []).map(
-            (o) => Object.values(o.title)[0]
-          ),
-          ...((associatedResources as any).thumbnails ?? []).map(
-            (o) => Object.values(o.title)[0]
-          ),
-        ]
+      map(([associated, attachments]) => {
+        const { onlines = [], thumbnails = [] } = associated
 
-        const resourceIdsToRemove = recordResources
-          .map((r) => r.filename)
-          .filter((resourceId) => !resourceIdsToKeep.includes(resourceId))
+        const urlsToKeep = [
+          ...(Array.isArray(onlines) ? onlines : []),
+          ...(Array.isArray(thumbnails) ? thumbnails : []),
+        ].map((resource) => Object.values(resource.url)[0])
 
-        return resourceIdsToRemove
+        const fileToDelete = attachments
+          .filter((attachment) => !urlsToKeep.includes(attachment.url))
+          .map((attachment) => attachment.filename)
+
+        return fileToDelete
       }),
-      mergeMap((resourceIdsToRemove) =>
-        forkJoin(
-          resourceIdsToRemove.map((attachementId) =>
-            this.recordsApiService.delResource(
-              record.uniqueIdentifier,
-              attachementId
-            )
-          )
-        ).pipe(map(() => undefined))
+      mergeMap((filesToDelete) =>
+        filesToDelete.length
+          ? forkJoin(
+              filesToDelete.map((filename) =>
+                this.recordsApiService.delResource(
+                  record.uniqueIdentifier,
+                  filename
+                )
+              )
+            ).pipe(map(() => undefined))
+          : of(undefined)
       ),
       catchError((error) => {
         console.error('Error while cleaning attachments:', error)
