@@ -146,29 +146,32 @@ export class ImageInputComponent {
   async downloadUrl(url: string) {
     this.downloadError = false
     const name = url.split('/').pop()
-    this.previewUrl = null
-
     try {
-      this.http.get(url, { responseType: 'blob' }).subscribe({
-        next: (blob) => {
-          if (!blob.type.startsWith('image/')) {
+      const response = await firstValueFrom(
+        this.http.head(url, { observe: 'response' })
+      )
+      if (
+        response.headers.get('content-type')?.startsWith('image/') &&
+        parseInt(response.headers.get('content-length')) <
+          megabytesToBytes(this.maxSizeMB)
+      ) {
+        this.http.get(url, { responseType: 'blob' }).subscribe({
+          next: (blob) => {
+            this.cd.markForCheck()
+            const file = new File([blob], name)
+            this.fileChange.emit(file)
+          },
+          error: () => {
             this.downloadError = true
             this.cd.markForCheck()
-            return
-          }
-          const file = new File([blob], name)
-          this.resizeAndEmit(file)
-          this.cd.markForCheck()
-        },
-        error: () => {
-          this.downloadError = true
-          this.cd.markForCheck()
-          this.urlChange.emit(url)
-        },
-      })
+            this.urlChange.emit(url)
+          },
+        })
+      }
     } catch {
       this.downloadError = true
       this.cd.markForCheck()
+      return
     }
   }
 
