@@ -1,8 +1,5 @@
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import {
-  duplicateDatasetRecordAsXmlFixture,
-  simpleDatasetRecordAsXmlFixture,
-} from '@geonetwork-ui/common/fixtures'
+import { importDatasetRecordAsXmlFixture } from '@geonetwork-ui/common/fixtures'
 
 describe('record-actions', () => {
   beforeEach(() => {
@@ -256,7 +253,7 @@ describe('record-actions', () => {
           },
           {
             statusCode: 200,
-            body: simpleDatasetRecordAsXmlFixture(),
+            body: importDatasetRecordAsXmlFixture(),
           }
         ).as('importUrlRequest')
 
