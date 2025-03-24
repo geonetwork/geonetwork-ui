@@ -705,6 +705,96 @@ export const duplicateDatasetRecordAsXmlFixture =
     </mdb:resourceLineage>
 </mdb:MD_Metadata>`
 
+export const importDatasetRecordAsXmlFixture = (): string => `
+  <gmd:MD_Metadata
+	xmlns:gmd="http://www.isotc211.org/2005/gmd"
+	xmlns:gco="http://www.isotc211.org/2005/gco"
+	xmlns:srv="http://www.isotc211.org/2005/srv"
+	xmlns:gmx="http://www.isotc211.org/2005/gmx"
+	xmlns:gts="http://www.isotc211.org/2005/gts"
+	xmlns:gsr="http://www.isotc211.org/2005/gsr"
+	xmlns:gmi="http://www.isotc211.org/2005/gmi"
+	xmlns:gml="http://www.opengis.net/gml/3.2"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+	<gmd:language>
+		<gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng"/>
+	</gmd:language>
+	<gmd:characterSet>
+		<gmd:MD_CharacterSetCode codeListValue="utf8" codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode"/>
+	</gmd:characterSet>
+	<gmd:contact>
+		<gmd:CI_ResponsibleParty>
+			<gmd:individualName gco:nilReason="missing">
+				<gco:CharacterString/>
+			</gmd:individualName>
+			<gmd:organisationName gco:nilReason="missing">
+				<gco:CharacterString/>
+			</gmd:organisationName>
+			<gmd:positionName gco:nilReason="missing">
+				<gco:CharacterString/>
+			</gmd:positionName>
+			<gmd:role>
+				<gmd:CI_RoleCode codeListValue="pointOfContact" codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"/>
+			</gmd:role>
+		</gmd:CI_ResponsibleParty>
+	</gmd:contact>
+	<gmd:dateStamp>
+		<gco:DateTime>2024-05-31T10:18:45.429Z</gco:DateTime>
+	</gmd:dateStamp>
+	<gmd:metadataStandardName>
+		<gco:CharacterString>ISO 19115:2003/19139</gco:CharacterString>
+	</gmd:metadataStandardName>
+	<gmd:metadataStandardVersion>
+		<gco:CharacterString>1.0</gco:CharacterString>
+	</gmd:metadataStandardVersion>
+	<gmd:identificationInfo>
+		<gmd:MD_DataIdentification>
+			<gmd:citation>
+				<gmd:CI_Citation>
+					<gmd:title>
+						<gco:CharacterString>Record with no link</gco:CharacterString>
+					</gmd:title>
+					<gmd:date>
+						<gmd:CI_Date>
+							<gmd:date>
+								<gco:DateTime>2024-05-31T11:00:00+00:00</gco:DateTime>
+							</gmd:date>
+							<gmd:dateType>
+								<gmd:CI_DateTypeCode codeListValue="publication" codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"/>
+							</gmd:dateType>
+						</gmd:CI_Date>
+					</gmd:date>
+					<gmd:edition gco:nilReason="missing">
+						<gco:CharacterString/>
+					</gmd:edition>
+				</gmd:CI_Citation>
+			</gmd:citation>
+			<gmd:abstract>
+				<gco:CharacterString>Read the abstract and supplemental information provided in the Vector template for more details.</gco:CharacterString>
+			</gmd:abstract>
+			<gmd:purpose gco:nilReason="missing">
+				<gco:CharacterString/>
+			</gmd:purpose>
+			<gmd:status>
+				<gmd:MD_ProgressCode codeListValue="onGoing" codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"/>
+			</gmd:status>
+			<gmd:language>
+				<gco:CharacterString>eng</gco:CharacterString>
+			</gmd:language>
+			<gmd:characterSet>
+				<gmd:MD_CharacterSetCode codeListValue="utf8" codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode"/>
+			</gmd:characterSet>
+			<gmd:topicCategory>
+				<gmd:MD_TopicCategoryCode>boundaries</gmd:MD_TopicCategoryCode>
+			</gmd:topicCategory>
+			<gmd:supplementalInformation gco:nilReason="missing">
+				<gco:CharacterString/>
+			</gmd:supplementalInformation>
+		</gmd:MD_DataIdentification>
+	</gmd:identificationInfo>
+</gmd:MD_Metadata>`
+
 export const NATIONAL_KEYWORD = {
   key: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/national',
   label: 'National',
