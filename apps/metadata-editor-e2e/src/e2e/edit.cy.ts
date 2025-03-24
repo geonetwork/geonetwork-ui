@@ -179,9 +179,10 @@ describe('editor form', () => {
           // Delete existing image if it exists
           cy.get('gn-ui-image-input').then(($input) => {
             if ($input.find('img').length > 0) {
-              cy.wrap($input).find('gn-ui-button').eq(1).click()
+              cy.wrap($input).find('[data-cy="delete-image"]').click()
               cy.editor_wrapPreviousDraft()
               cy.editor_publishAndReload()
+              cy.get('gn-ui-image-input img').should('not.exist')
             }
           })
         })
