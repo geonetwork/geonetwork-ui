@@ -12,19 +12,28 @@
   </ng-container>
 
   <ng-template #lightTheme>
-    <div class="flex items-center" [class]="smaller ? 'leading-[8px] min-w-[120px]' : 'min-w-[200px]'">
+    <div
+      class="flex items-center"
+      [class]="smaller ? 'leading-[8px] min-w-[120px]' : 'min-w-[200px]'"
+    >
       <gn-ui-progress-bar
         tabindex="0"
         [value]="qualityScore"
         [type]="theme"
         class="flex-grow"
       ></gn-ui-progress-bar>
-      <gn-ui-popover [content]="popoverItems" theme="light-border" [class]="smaller ? 'ml-2' : 'ml-2 mt-1'">
-        <ng-icon name="matInfoOutline" class="flex-shrink-0 text-gray-600"></ng-icon>
+      <gn-ui-popover
+        [content]="popoverItems"
+        theme="light-border"
+        [class]="smaller ? 'ml-2' : 'ml-2 mt-1'"
+      >
+        <ng-icon
+          name="matInfoOutline"
+          class="flex-shrink-0 text-gray-600"
+        ></ng-icon>
       </gn-ui-popover>
     </div>
   </ng-template>
-
 </div>
 <ng-template #popoverItems>
   <div class="p-2 py-4">
