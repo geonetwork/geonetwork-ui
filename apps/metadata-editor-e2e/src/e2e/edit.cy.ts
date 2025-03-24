@@ -180,7 +180,9 @@ describe('editor form', () => {
         })
         it('allows switching between URL input and file upload', () => {
           // First add by URL
-          cy.get('[data-test="display-url-input"]').click()
+          cy.get('[data-test="display-url-input"]', { timeout: 10000 })
+            .should('be.visible')
+            .click()
           cy.get('gn-ui-url-input').should('be.visible')
           cy.get('gn-ui-url-input input').type('http://example.com/image.jpg')
 
@@ -192,13 +194,17 @@ describe('editor form', () => {
           cy.get('gn-ui-url-input').should('not.exist')
 
           // Try URL input again - should clear previous file
-          cy.get('[data-test="display-url-input"]').click()
+          cy.get('[data-test="display-url-input"]', { timeout: 10000 })
+            .should('be.visible')
+            .click()
           cy.get('gn-ui-url-input').should('be.visible')
         })
 
         it('handles drag and drop file upload', () => {
           // First add by URL
-          cy.get('[data-test="display-url-input"]').click()
+          cy.get('[data-test="display-url-input"]', { timeout: 10000 })
+            .should('be.visible')
+            .click()
           cy.get('gn-ui-url-input input').type('http://example.com/image.jpg')
 
           // Then drag and drop a file
