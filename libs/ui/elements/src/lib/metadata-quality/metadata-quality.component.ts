@@ -16,6 +16,9 @@ import {
 } from '@geonetwork-ui/ui/widgets'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
+import { NgIcon } from '@ng-icons/core'
+import { matInfoOutline } from '@ng-icons/material-icons/outline'
+import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 
 @Component({
   selector: 'gn-ui-metadata-quality',
@@ -29,12 +32,23 @@ import { TranslateModule } from '@ngx-translate/core'
     ProgressBarComponent,
     MetadataQualityItemComponent,
     TranslateModule,
+    NgIcon,
+  ],
+  providers: [
+    provideIcons({
+      matInfoOutline,
+    }),
+    provideNgIconsConfig({
+      size: '1.2em',
+      strokeWidth: '1.5px',
+    }),
   ],
 })
 export class MetadataQualityComponent implements OnChanges {
   @Input() metadata: Partial<CatalogRecord>
   @Input() smaller = false
   @Input() metadataQualityDisplay: boolean
+  @Input() theme: 'primary' | 'light' = 'primary'
 
   items: MetadataQualityItem[] = []
 
