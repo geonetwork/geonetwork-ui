@@ -472,7 +472,7 @@
   "search.error.receivedError": "An error was received",
   "search.error.recordHasnolink": "This dataset currently has no link yet, please come back later.",
   "search.error.recordNotFound": "The dataset with identifier \"{ id }\" could not be found.",
-  "search.field.any.placeholder": "Search datasets ...",
+  "search.field.any.placeholder": "Search in the catalog ...",
   "search.field.sortBy": "Sort by:",
   "search.filters.availableServices.download": "",
   "search.filters.availableServices.view": "",

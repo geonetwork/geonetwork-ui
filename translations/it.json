@@ -472,7 +472,7 @@
   "search.error.receivedError": "Errore restituito",
   "search.error.recordHasnolink": "Questo dataset non ha ancora alcun collegamento, riprova più tardi.",
   "search.error.recordNotFound": "Impossibile trovare questi dati.",
-  "search.field.any.placeholder": "Cerca un dataset...",
+  "search.field.any.placeholder": "Cerca del catalogo...",
   "search.field.sortBy": "Ordina per:",
   "search.filters.availableServices.download": "",
   "search.filters.availableServices.view": "",
