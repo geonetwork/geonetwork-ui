@@ -16,7 +16,7 @@
       [matAutocomplete]="auto"
       (keyup.enter)="handleEnter(searchInput.value)"
       [ngClass]="{
-        'text-primary': searchActive,
+        'text-primary': searchActive && enterButton,
         'text-gray-900': !searchActive,
         'px-[--icon-width]': !allowSubmit,
       }"
@@ -40,11 +40,7 @@
   </div>
   <gn-ui-button
     type="primary"
-    extraClass="border rounded-lg absolute w-8 h-8 {{
-      allowSubmit
-        ? 'right-[calc(var(--icon-width)+var(--icon-padding))] inset-y-[--icon-padding]'
-        : 'right-2 inset-y-2'
-    }}"
+    [extraClass]="getExtraClass()"
     data-test="clear-btn"
     *ngIf="searchInput.value"
     aria-label="Clear"

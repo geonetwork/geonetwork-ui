@@ -119,6 +119,21 @@ export class AutocompleteComponent
     return this.displayWithFn(item)
   }
 
+  getExtraClass(): string {
+    if (this.allowSubmit) {
+      if (this.enterButton) {
+        return 'border rounded-lg absolute w-8 h-8 right-[calc(var(--icon-width)+var(--icon-padding))] inset-y-[--icon-padding]'
+      } else {
+        return 'border rounded-lg absolute w-8 h-8 right-[calc(var(--icon-width)+0.25*var(--icon-width))] inset-y-[calc(0.25*var(--icon-width))]'
+      }
+    } else {
+      if (!this.enterButton) {
+        return 'border rounded-lg absolute w-8 h-8 right-2 inset-y-2'
+      }
+    }
+    return 'border rounded-lg absolute w-8 h-8'
+  }
+
   constructor(private cdRef: ChangeDetectorRef) {}
   ngOnChanges(changes: SimpleChanges): void {
     const { value } = changes
