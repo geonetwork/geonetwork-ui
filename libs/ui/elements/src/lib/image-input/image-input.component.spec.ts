@@ -84,8 +84,8 @@ describe('ImageInputComponent', () => {
       }, 0)
     }))
 
-    it('should not download the file when content-type is not image', waitForAsync(() => {
-      component.downloadUrl('http://test.com/image.png')
+    it('should not download the file when content-type is not image', waitForAsync(async () => {
+      await component.downloadUrl('http://test.com/image.png')
 
       const reqHead = httpTestingController.expectOne(testUrl)
       expect(reqHead.request.method).toEqual('HEAD')
@@ -100,10 +100,11 @@ describe('ImageInputComponent', () => {
       })
 
       httpTestingController.verify()
+      expect(component.imageFileError).toEqual(true)
     }))
 
-    it('should not download the file when content-length is above limit', waitForAsync(() => {
-      component.downloadUrl('http://test.com/image.png')
+    it('should not download the file when content-length is above limit', waitForAsync(async () => {
+      await component.downloadUrl('http://test.com/image.png')
 
       const reqHead = httpTestingController.expectOne(testUrl)
       expect(reqHead.request.method).toEqual('HEAD')
@@ -118,6 +119,7 @@ describe('ImageInputComponent', () => {
       })
 
       httpTestingController.verify()
+      expect(component.imageFileError).toEqual(true)
     }))
 
     it('should emit the file URL when encountering a download error', waitForAsync(() => {
@@ -149,7 +151,7 @@ describe('ImageInputComponent', () => {
         reqGet.error(testError)
 
         expect(component.urlChange.emit).toHaveBeenCalled()
-
+        expect(component.imageFileError).toEqual(true)
         httpTestingController.verify()
       }, 0)
     }))
