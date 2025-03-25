@@ -292,11 +292,11 @@ describe('link utils', () => {
   })
 
   describe('#getBadgeColor for format', () => {
-    it('returns #b3cde8', () => {
-      expect(getBadgeColor('json')).toEqual('#b3cde8')
+    it('returns #84D0F0', () => {
+      expect(getBadgeColor('json')).toEqual('#84D0F0')
     })
-    it('returns #a6d6c0', () => {
-      expect(getBadgeColor('csv')).toEqual('#a6d6c0')
+    it('returns #F6A924', () => {
+      expect(getBadgeColor('csv')).toEqual('#F6A924')
     })
   })
   describe('#sortPriority from formats object', () => {
