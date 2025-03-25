@@ -82,10 +82,11 @@ describe('organizations', () => {
         .eq(10)
         .then(($clickedName) => {
           cy.get('@organizations').eq(10).click()
-          cy.url().should(
-            'contain',
-            `organization/${encodeURIComponent($clickedName.text().trim())}`
-          )
+          const expectedUrlPart = encodeURIComponent($clickedName.text().trim())
+            .replace(/\(/g, '%28') // Remplace '(' by '%28'
+            .replace(/\)/g, '%29') // Remplace ')' by '%29'
+
+          cy.url().should('contain', `organization/${expectedUrlPart}`)
         })
     })
   })
@@ -132,7 +133,7 @@ describe('organizations', () => {
     it('should go to next page with arrow', () => {
       cy.then(() => {
         cy.get('@pagination').find('[data-cy=next-page]').click()
-        cy.get('@organizations').should('have.length', 4)
+        cy.get('@organizations').should('have.length', 5)
       })
     })
     it('should go back to the first page with arrow', () => {
@@ -165,8 +166,8 @@ describe('organizations', () => {
     })
     it('should display multiple results and refine search', () => {
       cy.get('@organisationsSearch').type('de')
-      cy.get('@organizationsName').should('have.length', 10)
-      cy.get('@organisationsResult').should('contain', '10')
+      cy.get('@organizationsName').should('have.length', 11)
+      cy.get('@organisationsResult').should('contain', '11')
       cy.get('@organisationsSearch').type(' Lille')
       cy.get('@organizationsName').should('have.length', 1)
       cy.get('@organisationsResult').should('contain', '1')

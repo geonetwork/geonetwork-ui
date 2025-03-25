@@ -24,6 +24,7 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import {
   MetadataQualityComponent,
   UiElementsModule,
+  KindBadgeComponent,
 } from '@geonetwork-ui/ui/elements'
 import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview-feed.component'
 import { CommonModule } from '@angular/common'
@@ -74,6 +75,7 @@ import { matFace } from '@ng-icons/material-icons/baseline'
       matFace,
       matHomeWorkOutline,
     }),
+    KindBadgeComponent,
     MetadataQualityComponent,
   ],
   exports: [
