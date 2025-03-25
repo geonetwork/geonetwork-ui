@@ -31,6 +31,7 @@
       </div>
 
       <gn-ui-autocomplete
+        *ngIf="role !== 'unspecified' && role !== 'other'"
         [placeholder]="
           'editor.record.form.field.contactsForResource.placeholder' | translate
         "
