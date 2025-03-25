@@ -141,13 +141,13 @@ jobs:
       - name: Publish NPM package with @dev tag
         if: github.event_name != 'release'
         working-directory: package/dist
-        run: npm publish --tag dev
+        run: npm publish --tag 2.4.x
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish NPM package
         if: github.event_name == 'release'
         working-directory: package/dist
-        run: npm publish --tag 2.4.x
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
