@@ -1,0 +1,35 @@
+<div
+  class="flex flex-col gap-3 sm:flex-row justify-between"
+  [ngClass]="{
+    'sm:items-center': (searchFacade.resultsHits$ | async) !== 0,
+  }"
+>
+  <gn-ui-results-hits-number
+    [loading]="searchFacade.isLoading$ | async"
+    [hits]="searchFacade.resultsHits$ | async"
+  ></gn-ui-results-hits-number>
+  <gn-ui-inline-filter
+    [choices]="(filterChoices$ | async) || []"
+    [selected]="selected$ | async"
+    (selectValues)="onSelectedValues($event)"
+  >
+    <ng-template let-choice>
+      <gn-ui-kind-badge
+        [kind]="choice.value"
+        [extraClass]="
+          'gn-ui-btn-outline rounded-md py-2 px-2 border-gray-400 cursor-pointer focus-within:text-primary-darkest focus-within:bg-gray-50 transition-colors bg-transparent hover:text-primary-darker focus:text-primary-darker active:text-primary-black'
+        "
+        [contentTemplate]="customTemplate"
+      >
+        <ng-template #customTemplate>
+          {{ 'search.filters.recordKind.' + choice.value | translate
+          }}<span
+            class="ml-1"
+            *ngIf="(selected$ | async).includes(choice.value)"
+            >({{ choice.count }})</span
+          >
+        </ng-template>
+      </gn-ui-kind-badge>
+    </ng-template>
+  </gn-ui-inline-filter>
+</div>

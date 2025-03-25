@@ -82,10 +82,11 @@ describe('organizations', () => {
         .eq(11)
         .then(($clickedName) => {
           cy.get('@organizations').eq(11).click()
-          cy.url().should(
-            'contain',
-            `organization/${encodeURIComponent($clickedName.text().trim())}`
-          )
+          const expectedUrlPart = encodeURIComponent($clickedName.text().trim())
+            .replace(/\(/g, '%28') // Remplace '(' by '%28'
+            .replace(/\)/g, '%29') // Remplace ')' by '%29'
+
+          cy.url().should('contain', `organization/${expectedUrlPart}`)
         })
     })
   })

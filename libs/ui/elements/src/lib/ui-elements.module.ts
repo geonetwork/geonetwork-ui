@@ -16,6 +16,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { AvatarComponent } from './avatar/avatar.component'
 import { ImageInputComponent } from './image-input/image-input.component'
 import { MarkdownParserComponent } from './markdown-parser/markdown-parser.component'
+import { KindBadgeComponent } from './kind-badge/kind-badge.component'
 import { ThumbnailComponent } from './thumbnail/thumbnail.component'
 import { TimeSincePipe } from './user-feedback-item/time-since.pipe'
 import { UserPreviewComponent } from './user-preview/user-preview.component'
@@ -46,6 +47,7 @@ import { ServiceCapabilitiesComponent } from './service-capabilities/service-cap
     ApplicationBannerComponent,
     InternalLinkCardComponent,
     ServiceCapabilitiesComponent,
+    KindBadgeComponent,
   ],
   providers: [
     provideNgIconsConfig({
@@ -64,4 +66,4 @@ import { ServiceCapabilitiesComponent } from './service-capabilities/service-cap
     ServiceCapabilitiesComponent,
   ],
 })
-export class UiElementsModule {}
+export class UiElementsModule { }

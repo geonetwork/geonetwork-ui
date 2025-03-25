@@ -33,6 +33,7 @@ import { DragAndDropFileInputComponent } from './drag-and-drop-file-input/drag-a
 import { DropdownMultiselectComponent } from './dropdown-multiselect/dropdown-multiselect.component'
 import { DropdownSelectorComponent } from './dropdown-selector/dropdown-selector.component'
 import { EditableLabelDirective } from './editable-label/editable-label.directive'
+import { InlineFilterComponent } from './inline-filter/inline-filter.component'
 import { TextAreaComponent } from './text-area/text-area.component'
 import { ViewportIntersectorComponent } from './viewport-intersector/viewport-intersector.component'
 
@@ -42,6 +43,7 @@ import { ViewportIntersectorComponent } from './viewport-intersector/viewport-in
     DropdownMultiselectComponent,
     ViewportIntersectorComponent,
     CheckboxComponent,
+    InlineFilterComponent,
   ],
   imports: [
     CommonModule,
@@ -90,6 +92,7 @@ import { ViewportIntersectorComponent } from './viewport-intersector/viewport-in
     CheckboxComponent,
     DateRangePickerComponent,
     EditableLabelDirective,
+    InlineFilterComponent,
     BadgeComponent,
   ],
 })
