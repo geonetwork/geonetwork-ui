@@ -11,6 +11,7 @@ import {
   TranslatedSearchField,
   UserSearchField,
   DateRangeSearchField,
+  RecordKindField,
 } from './fields'
 import { TestBed } from '@angular/core/testing'
 import { Injector } from '@angular/core'
@@ -277,10 +278,11 @@ describe('search fields implementations', () => {
       })
       it('returns a list of values from the buckets', () => {
         expect(values).toEqual([
-          { label: 'First value (5)', value: 'First value' },
-          { label: 'Second value (3)', value: 'Second value' },
-          { label: 'Third value (12)', value: 'Third value' },
+          { count: 5, label: 'First value (5)', value: 'First value' },
+          { count: 3, label: 'Second value (3)', value: 'Second value' },
+          { count: 12, label: 'Third value (12)', value: 'Third value' },
           {
+            count: 1,
             label: 'Fourth value (1)',
             value: 'Fourth value',
           },
@@ -457,10 +459,14 @@ describe('search fields implementations', () => {
         })
         it('returns a list of values sorted by translated labels', () => {
           expect(values).toEqual([
-            { label: 'Bla (12)', value: 'Third value' },
-            { label: 'Fourth value (1)', value: 'Fourth value' },
-            { label: 'Hello (3)', value: 'Second value' },
-            { label: 'Translated first value (5)', value: 'First value' },
+            { count: 12, label: 'Bla (12)', value: 'Third value' },
+            { count: 1, label: 'Fourth value (1)', value: 'Fourth value' },
+            { count: 3, label: 'Hello (3)', value: 'Second value' },
+            {
+              count: 5,
+              label: 'Translated first value (5)',
+              value: 'First value',
+            },
           ])
         })
         it('calls translations 4 times', () => {
@@ -494,10 +500,14 @@ describe('search fields implementations', () => {
         })
         it('returns a list of values sorted by count', () => {
           expect(values).toEqual([
-            { label: 'Bla (12)', value: 'Third value' },
-            { label: 'Translated first value (5)', value: 'First value' },
-            { label: 'Hello (3)', value: 'Second value' },
-            { label: 'Fourth value (1)', value: 'Fourth value' },
+            { count: 12, label: 'Bla (12)', value: 'Third value' },
+            {
+              count: 5,
+              label: 'Translated first value (5)',
+              value: 'First value',
+            },
+            { count: 3, label: 'Hello (3)', value: 'Second value' },
+            { count: 1, label: 'Fourth value (1)', value: 'Fourth value' },
           ])
         })
       })
@@ -632,10 +642,12 @@ describe('search fields implementations', () => {
       it('returns the available values', () => {
         expect(values).toEqual([
           {
+            count: 5,
             label: 'search.filters.isSpatial.yes (5)',
             value: 'yes',
           },
           {
+            count: 3,
             label: 'search.filters.isSpatial.no (3)',
             value: 'no',
           },
@@ -698,30 +710,37 @@ describe('search fields implementations', () => {
       it('returns the available licenses, order by descending count', () => {
         expect(values).toEqual([
           {
+            count: 2359,
             label: 'search.filters.license.etalab (2359)',
             value: 'etalab',
           },
           {
+            count: 2278,
             label: 'search.filters.license.unknown (2278)',
             value: 'unknown',
           },
           {
+            count: 1489,
             label: 'search.filters.license.etalab-v2 (1489)',
             value: 'etalab-v2',
           },
           {
+            count: 446,
             label: 'search.filters.license.odbl (446)',
             value: 'odbl',
           },
           {
+            count: 300,
             label: 'search.filters.license.pddl (300)',
             value: 'pddl',
           },
           {
+            count: 32,
             label: 'search.filters.license.cc-by (32)',
             value: 'cc-by',
           },
           {
+            count: 4,
             label: 'search.filters.license.odc-by (4)',
             value: 'odc-by',
           },
@@ -814,14 +833,17 @@ describe('search fields implementations', () => {
       it('returns the available users, in expected format', () => {
         expect(values).toEqual([
           {
+            count: 10,
             label: 'admin admin (10)',
             value: 'admin|admin|admin|Administrator',
           },
           {
+            count: 5,
             label: 'Barbara Roberts (5)',
             value: 'barbie|Roberts|Barbara|UserAdmin',
           },
           {
+            count: 1,
             label: 'John Doe (1)',
             value: 'johndoe|Doe|John|Editor',
           },
@@ -842,10 +864,12 @@ describe('search fields implementations', () => {
       it('returns the available values', () => {
         expect(values).toEqual([
           {
+            count: 10,
             label: 'search.filters.availableServices.view (10)',
             value: 'view',
           },
           {
+            count: 5,
             label: 'search.filters.availableServices.download (5)',
             value: 'download',
           },
@@ -882,6 +906,93 @@ describe('search fields implementations', () => {
       })
       it('returns value with an enabled filter', () => {
         expect(values).toEqual(['view'])
+      })
+    })
+  })
+
+  describe('RecordKindField', () => {
+    let searchField: RecordKindField
+
+    beforeEach(() => {
+      searchField = new RecordKindField(injector)
+    })
+
+    describe('#getAvailableValues', () => {
+      let values: any[]
+
+      beforeEach(async () => {
+        jest.spyOn(searchField.repository, 'aggregate').mockReturnValue(
+          of({
+            resourceType: {
+              buckets: [
+                { term: 'dataset', count: 10 },
+                { term: 'series', count: 5 },
+                { term: 'service', count: 7 },
+                { term: 'map', count: 3 },
+              ],
+            },
+          })
+        )
+
+        values = await lastValueFrom(searchField.getAvailableValues())
+      })
+
+      it('returns the available values mapped by type', () => {
+        expect(values).toEqual([
+          { label: 'dataset', value: 'dataset', count: 15 },
+          { label: 'service', value: 'service', count: 7 },
+          { label: 'reuse', value: 'reuse', count: 3 },
+        ])
+      })
+    })
+
+    describe('#getFiltersForValues', () => {
+      let filter: any
+
+      beforeEach(async () => {
+        filter = await lastValueFrom(
+          searchField.getFiltersForValues(['dataset', 'reuse'])
+        )
+      })
+
+      it('returns filters with real elastic search values', () => {
+        expect(filter).toEqual({
+          resourceType: {
+            dataset: true,
+            series: true,
+            featureCatalog: true,
+            application: true,
+            map: true,
+            'map-interactive': true,
+            'map-static': true,
+            'map/interactive': true,
+            'map/static': true,
+            mapDigital: true,
+            staticMap: true,
+            interactiveMap: true,
+          },
+        })
+      })
+    })
+
+    describe('#getValuesForFilter', () => {
+      let values: any[]
+
+      beforeEach(async () => {
+        values = await lastValueFrom(
+          searchField.getValuesForFilter({
+            resourceType: {
+              dataset: true,
+              series: true,
+              featureCatalog: true,
+              service: false,
+            },
+          })
+        )
+      })
+
+      it('returns mapped values for active filters', () => {
+        expect(values).toEqual(['dataset'])
       })
     })
   })

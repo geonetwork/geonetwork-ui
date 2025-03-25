@@ -158,6 +158,10 @@ The filters should be provided as an array, for instance:
 advanced_filters = ['organization', 'inspireKeyword', 'keyword', 'topic']
 ```
 
+⚠️ **WARNING**: `'resourceType'` filter has been deprecated, please use `'recordKind'` instead. Using both filters is not recommended as it may imply some inconsistencies in the page results. `'resourceType'` filter will fetch records of all type (instead of `featureCatalog`), whereas `'recordKind'` filter will fetch `datasets` (wich are `datasets`, `featureCatalog` that are `datasets`, and `series`), `services` and `reuse` (`application` and all kind of `map`).
+
+⚠️ **Breaking change**: Record of type featureCatalog are not retrieve anymore.
+
 - `[[search_preset]]` (multiple, optional)
 
   Search presets are shown in a prominent way to the user and can be used to showcase certain records in the catalog or offer shortcuts to frequent search criteria.

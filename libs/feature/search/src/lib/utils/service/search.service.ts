@@ -4,7 +4,7 @@ import {
   FieldFilters,
   SortByField,
 } from '@geonetwork-ui/common/domain/model/search'
-import { first, map } from 'rxjs/operators'
+import { first, map, tap } from 'rxjs/operators'
 
 export interface SearchServiceI {
   updateFilters: (params: FieldFilters) => void

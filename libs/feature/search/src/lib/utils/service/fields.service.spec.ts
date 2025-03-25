@@ -104,6 +104,7 @@ describe('FieldsService', () => {
           'user',
           'changeDate',
           'availableServices',
+          'recordKind',
         ])
       })
     })
@@ -190,6 +191,7 @@ describe('FieldsService', () => {
           user: [],
           changeDate: [],
           availableServices: [],
+          recordKind: [],
         })
       })
     })

@@ -15,6 +15,7 @@ This file can be used to:
 - indicate a metadata language to be used when searching
 - customize the theme used in the application (colors, fonts...)
 - define custom translations for the different languages
+- customize filters for the search page
 
 Please refer to [the configuration guide](../guide/configure.md) as well as embedded comments in the file for more information.
 
