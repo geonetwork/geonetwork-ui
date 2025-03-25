@@ -16,6 +16,7 @@ declare namespace Cypress {
     signOut(): void
     clearFavorites(): void
     clearRecordDrafts(): void
+    editor_createRecordCopy(): Chainable<string | number | string[]>
     editor_readFormUniqueIdentifier(): Chainable<string | number | string[]>
     editor_wrapPreviousDraft(): void
     editor_wrapFirstDraft(): void
@@ -157,6 +158,50 @@ Cypress.Commands.add('clearRecordDrafts', () => {
     cy.log(`Cleared ${draftKeys.length} draft(s).`)
   })
   cy.reload()
+})
+
+Cypress.Commands.add('editor_createRecordCopy', () => {
+  cy.login('admin', 'admin', false)
+  cy.viewport(1920, 2400)
+
+  cy.clearRecordDrafts()
+
+  // Clear any existing copy of the test record
+  cy.visit('/catalog/search')
+  cy.get('gn-ui-fuzzy-search input').type('station épuration{enter}')
+  cy.get('[data-cy="table-row"]')
+    .should('have.length.lt', 10) // making sure the records were updated
+    .then((rows$) => {
+      if (rows$.length === 1) {
+        return
+      }
+      // there is a copy: delete it
+      cy.get('[data-test="record-menu-button"]').eq(0).click()
+      cy.get('[data-test="record-menu-delete-button"]').click()
+      cy.get('[data-cy="confirm-button"]').click()
+      cy.log('An existing copy of the test record was found and deleted.')
+    })
+
+  // Duplicate & publish the Stations d'épuration record
+  cy.get('gn-ui-fuzzy-search input').type(
+    '{selectAll}{del}station épuration{enter}'
+  )
+  cy.get('[data-cy="table-row"]')
+    .first()
+    .should('contain.text', "Stations d'épuration")
+    .find('[data-test="record-menu-button"]')
+    .click()
+  cy.get('[data-test="record-menu-duplicate-button"]').click()
+  cy.url().should('include', '/duplicate/')
+  // because new records are saved by default, they are not drafts and can be published
+  cy.get('md-editor-publish-button').click()
+
+  // Open the copy
+  cy.visit('/catalog/search')
+  cy.get('gn-ui-fuzzy-search input').type('station épuration copy{enter}')
+  cy.get('[data-cy="table-row"]').first().children('div').eq(2).click()
+  cy.url().should('include', '/edit/')
+  return cy.editor_readFormUniqueIdentifier()
 })
 
 Cypress.Commands.add('editor_readFormUniqueIdentifier', () => {
