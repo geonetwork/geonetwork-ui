@@ -46,6 +46,7 @@ export const SubmitAllowed: StoryObj<AutocompleteComponentWithActionResult> = {
     actionThrowsError: false,
     clearOnSelection: false,
     allowSubmit: true,
+    enterButton: false,
   },
   argTypes: {
     itemSelected: {
@@ -76,6 +77,7 @@ export const NoSubmit: StoryObj<AutocompleteComponentWithActionResult> = {
     actionThrowsError: false,
     clearOnSelection: false,
     allowSubmit: false,
+    enterButton: false,
   },
   argTypes: {
     itemSelected: {
@@ -117,6 +119,7 @@ export const NoMinimumCharacterCount: StoryObj<AutocompleteComponentWithActionRe
         'Click to show suggestions! selecting one should clear this field',
       minCharacterCount: 0,
       clearOnSelection: true,
+      enterButton: false,
     },
     argTypes: {
       itemSelected: {
@@ -124,6 +127,35 @@ export const NoMinimumCharacterCount: StoryObj<AutocompleteComponentWithActionRe
       },
       inputSubmitted: {
         action: 'inputSubmitted',
+      },
+    },
+    render: (args) => ({
+      props: {
+        ...args,
+        action: (value: string) => of(filterResults(value)),
+      },
+    }),
+  }
+
+export const WithEnterButtonAndSubmit: StoryObj<AutocompleteComponentWithActionResult> =
+  {
+    args: {
+      placeholder: 'Full text search',
+      minCharacterCount: 3,
+      actionThrowsError: false,
+      clearOnSelection: false,
+      allowSubmit: true,
+      enterButton: true,
+    },
+    argTypes: {
+      itemSelected: {
+        action: 'itemSelected',
+      },
+      inputSubmitted: {
+        action: 'inputSubmitted',
+      },
+      actionThrowsError: {
+        type: 'boolean',
       },
     },
     render: (args) => ({
