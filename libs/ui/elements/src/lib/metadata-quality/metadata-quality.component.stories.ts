@@ -28,7 +28,6 @@ export default {
 export const Primary: StoryObj<MetadataQualityComponent> = {
   args: {
     smaller: false,
-    theme: 'primary',
     metadata: datasetRecordsFixture()[0] as Partial<CatalogRecord>,
     metadataQualityDisplay: true,
   },

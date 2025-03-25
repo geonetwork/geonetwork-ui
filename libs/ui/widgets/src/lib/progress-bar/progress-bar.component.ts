@@ -44,7 +44,7 @@ export class ProgressBarComponent {
         }
       case 'light':
         return {
-          outerBar: 'bg-primary-lighter',
+          outerBar: 'bg-primary-white',
           innerBar: 'bg-primary',
           text: 'text-main',
         }
