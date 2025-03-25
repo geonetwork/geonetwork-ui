@@ -1,5 +1,5 @@
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { simpleDatasetRecordAsXmlFixture } from '@geonetwork-ui/common/fixtures'
+import { importDatasetRecordAsXmlFixture } from '@geonetwork-ui/common/fixtures'
 
 describe('record-actions', () => {
   beforeEach(() => {
@@ -263,7 +263,7 @@ describe('record-actions', () => {
           },
           {
             statusCode: 200,
-            body: simpleDatasetRecordAsXmlFixture(),
+            body: importDatasetRecordAsXmlFixture(),
           }
         ).as('importUrlRequest')
 
@@ -278,6 +278,15 @@ describe('record-actions', () => {
           .find('textarea')
           .invoke('val')
           .should('contain', 'Copy')
+        // imported record should be saved right away but not published
+        cy.url().should('not.include', 'TEMP')
+        cy.get('[data-cy="dashboard-drafts-count"]').should('not.exist')
+        cy.get('[data-cy="save-status"]')
+          .find('span')
+          .should('have.text', 'Saved - not published')
+        cy.get('md-editor-publish-button')
+          .find('gn-ui-button')
+          .should('have.attr', 'ng-reflect-message', 'Publish this dataset')
       })
 
       it('should be able to navigate back to the main section', () => {
