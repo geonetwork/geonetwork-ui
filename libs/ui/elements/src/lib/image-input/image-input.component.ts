@@ -188,7 +188,7 @@ export class ImageInputComponent {
     } else if (this.uploadProgress) {
       this.handleCancelUpload()
       event.preventDefault()
-    } else if (this.imageFileError) {
+    } else if (this.imageFileError && this.lastUrl) {
       this.handleRetrySendImgUrl()
     }
   }

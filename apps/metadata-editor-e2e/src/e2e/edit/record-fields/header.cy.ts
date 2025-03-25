@@ -126,6 +126,39 @@ describe('editor form', () => {
             .find('gn-ui-text-input')
             .should('be.visible')
         })
+        it('shows icon and error messages when uploading non image file', () => {
+          cy.get('[data-cy="imgDeleteBtn"]').click()
+          cy.get('input[type="file"]').selectFile(
+            {
+              contents: Cypress.Buffer.from('test file content'),
+              fileName: 'test.txt',
+              mimeType: 'text/plain',
+            },
+            { action: 'drag-drop', force: true }
+          )
+
+          cy.get('[data-cy="imgErrorIcon"]').should('be.visible')
+          cy.get('[data-cy="imgErrorMsgPrimary"]').should(
+            'contain',
+            'The image could not be uploaded'
+          )
+          cy.get('[data-cy="imgErrorMsgSecondary"]').should('contain', 'Retry')
+        })
+        it('shows icon and error messages when invalid image url', () => {
+          cy.get('[data-cy="imgDeleteBtn"]').click()
+          cy.get('[data-cy="imgUrlBtn"]').find('button').click()
+          cy.get('[data-cy="imgUrlInput"]')
+            .find('input')
+            .type('https://overview.img/42x42.png')
+          cy.get('[data-cy="imgUrlInput"]').find('button').click()
+
+          cy.get('[data-cy="imgErrorIcon"]').should('be.visible')
+          cy.get('[data-cy="imgErrorMsgPrimary"]').should(
+            'contain',
+            'The image could not be uploaded'
+          )
+          cy.get('[data-cy="imgErrorMsgSecondary"]').should('contain', 'Retry')
+        })
       })
     })
   })
