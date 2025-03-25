@@ -21,6 +21,7 @@ import { RecordDownloadsComponent } from '../record-downloads/record-downloads.c
 import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordRelatedRecordsComponent } from '../record-related-records/record-related-records.component'
+import { RecordSectionComponent } from '../record-section/record-section.component'
 
 const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
@@ -67,7 +68,7 @@ describe('RecordMetadataComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
+      imports: [TranslateModule.forRoot(), RecordSectionComponent],
       providers: [
         {
           provide: MdViewFacade,
@@ -415,6 +416,34 @@ describe('RecordMetadataComponent', () => {
           )
         })
       })
+    })
+  })
+
+  describe('sections', () => {
+    beforeEach(() => {
+      facade.isPresent$.next(true)
+      fixture.detectChanges()
+    })
+
+    it('has all required sections', () => {
+      const sections = fixture.debugElement.queryAll(
+        By.directive(RecordSectionComponent)
+      )
+      expect(sections.length).toBe(5)
+    })
+
+    it('sections have correct ids', () => {
+      const sections = fixture.debugElement.queryAll(
+        By.directive(RecordSectionComponent)
+      )
+      const sectionIds = sections.map((section) => section.componentInstance.id)
+      expect(sectionIds).toEqual([
+        'about',
+        'preview',
+        'resources',
+        'related',
+        'feedbacks',
+      ])
     })
   })
 })

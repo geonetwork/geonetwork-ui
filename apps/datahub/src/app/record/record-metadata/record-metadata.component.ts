@@ -27,6 +27,7 @@ import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlink
 import { RecordRelatedRecordsComponent } from '../record-related-records/record-related-records.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
+import { RecordSectionComponent } from '../record-section/record-section.component'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -50,6 +51,7 @@ import { RecordDataPreviewComponent } from '../record-data-preview/record-data-p
     RecordRelatedRecordsComponent,
     TranslateModule,
     RecordDataPreviewComponent,
+    RecordSectionComponent,
   ],
 })
 export class RecordMetadataComponent {
@@ -116,6 +118,14 @@ export class RecordMetadataComponent {
   )
 
   showOverlay = true
+
+  sections = [
+    { id: 'about', label: 'À propos' },
+    { id: 'preview', label: 'Aperçu' },
+    { id: 'resources', label: 'Ressources et liens' },
+    { id: 'related', label: 'Contenus associés' },
+    { id: 'feedbacks', label: 'Questions & Réponses' },
+  ]
 
   constructor(
     public metadataViewFacade: MdViewFacade,

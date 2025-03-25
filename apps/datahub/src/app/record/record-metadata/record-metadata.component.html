@@ -1,112 +1,141 @@
 <div *ngIf="(metadataViewFacade.error$ | async) === null">
-  <div
-    id="about"
-    class="container-lg px-4 mb-9 mt-8 sm:mb-16 sm:mt-[51px] lg:mx-auto"
-  >
-    <gn-ui-metadata-info
-      class="sm:block"
-      *ngIf="(metadataViewFacade.isPresent$ | async) === false"
-      [metadata]="{}"
-      [incomplete]="true"
-    >
-    </gn-ui-metadata-info>
+  <datahub-record-section id="about" title="À propos">
     <div
-      *ngIf="(metadataViewFacade.isPresent$ | async) === true"
-      class="grid gap-8 grid-cols-1 sm:gap-6 sm:grid-cols-3"
+      id="about"
+      class="container-lg px-4 mb-9 mt-8 sm:mb-16 sm:mt-[51px] lg:mx-auto"
     >
-      <div class="sm:col-span-2">
-        <gn-ui-metadata-info
-          class="sm:block"
-          [metadata]="metadataViewFacade.metadata$ | async"
-          [incomplete]="metadataViewFacade.isIncomplete$ | async"
-          (keyword)="onInfoKeywordClick($event)"
-        >
-        </gn-ui-metadata-info>
-      </div>
-      <div class="sm:mt-[-185px]">
-        <gn-ui-image-overlay-preview
-          class="block h-[185px] mb-5"
-          [imageUrl]="thumbnailUrl$ | async"
-          (isPlaceholderShown)="showOverlay = !$event"
-          *ngIf="showOverlay"
-        >
-        </gn-ui-image-overlay-preview>
-        <gn-ui-metadata-contact
-          (organizationClick)="onOrganizationClick($event)"
-          [metadata]="metadataViewFacade.metadata$ | async"
-        >
-        </gn-ui-metadata-contact>
-        <div *ngIf="metadataQualityDisplay">
-          <p class="text text-gray-700 text-xs mb-3 uppercase" translate>
-            record.metadata.quality
-          </p>
-          <gn-ui-metadata-quality
+      <gn-ui-metadata-info
+        class="sm:block"
+        *ngIf="(metadataViewFacade.isPresent$ | async) === false"
+        [metadata]="{}"
+        [incomplete]="true"
+      >
+      </gn-ui-metadata-info>
+      <div
+        *ngIf="(metadataViewFacade.isPresent$ | async) === true"
+        class="grid gap-8 grid-cols-1 sm:gap-6 sm:grid-cols-3"
+      >
+        <div class="sm:col-span-2">
+          <gn-ui-metadata-info
+            class="sm:block"
             [metadata]="metadataViewFacade.metadata$ | async"
-            [metadataQualityDisplay]="metadataQualityDisplay"
-          ></gn-ui-metadata-quality>
+            [incomplete]="metadataViewFacade.isIncomplete$ | async"
+            (keyword)="onInfoKeywordClick($event)"
+          >
+          </gn-ui-metadata-info>
         </div>
-        <gn-ui-metadata-catalog
-          *ngIf="sourceLabel$ | async as sourceLabel"
-          [sourceLabel]="sourceLabel"
-        >
-        </gn-ui-metadata-catalog>
+        <div class="sm:mt-[-185px]">
+          <gn-ui-image-overlay-preview
+            class="block h-[185px] mb-5"
+            [imageUrl]="thumbnailUrl$ | async"
+            (isPlaceholderShown)="showOverlay = !$event"
+            *ngIf="showOverlay"
+          >
+          </gn-ui-image-overlay-preview>
+          <gn-ui-metadata-contact
+            (organizationClick)="onOrganizationClick($event)"
+            [metadata]="metadataViewFacade.metadata$ | async"
+          >
+          </gn-ui-metadata-contact>
+          <div *ngIf="metadataQualityDisplay">
+            <p class="text text-gray-700 text-xs mb-3 uppercase" translate>
+              record.metadata.quality
+            </p>
+            <gn-ui-metadata-quality
+              [metadata]="metadataViewFacade.metadata$ | async"
+              [metadataQualityDisplay]="metadataQualityDisplay"
+            ></gn-ui-metadata-quality>
+          </div>
+          <gn-ui-metadata-catalog
+            *ngIf="sourceLabel$ | async as sourceLabel"
+            [sourceLabel]="sourceLabel"
+          >
+          </gn-ui-metadata-catalog>
+        </div>
       </div>
     </div>
-  </div>
-  <datahub-record-data-preview></datahub-record-data-preview>
-  <div
-    id="access"
-    class="container-lg px-4 lg:mx-auto"
+  </datahub-record-section>
+
+  <datahub-record-section id="preview" title="Aperçu">
+    <datahub-record-data-preview></datahub-record-data-preview>
+  </datahub-record-section>
+
+  <datahub-record-section
+    id="resources"
+    title="Ressources et liens"
     *ngIf="displayDownload$ | async"
   >
-    <datahub-record-downloads
-      class="block mt-[72px]"
-    ></datahub-record-downloads>
-  </div>
+    <div
+      id="access"
+      class="container-lg px-4 lg:mx-auto"
+      *ngIf="displayDownload$ | async"
+    >
+      <div>
+        <datahub-record-downloads
+          class="block mt-[72px]"
+        ></datahub-record-downloads>
+      </div>
 
-  <div id="links" class="lg:mx-auto">
-    <div class="container-lg px-4 lg:mx-auto" *ngIf="displayOtherLinks | async">
-      <datahub-record-otherlinks
-        class="block mt-[72px]"
-      ></datahub-record-otherlinks>
-    </div>
+      <div
+        class="container-lg px-4 lg:mx-auto"
+        *ngIf="displayOtherLinks | async"
+      >
+        <datahub-record-otherlinks
+          class="block mt-[72px]"
+        ></datahub-record-otherlinks>
+      </div>
 
-    <div class="container-lg px-4 lg:mx-auto" *ngIf="displayApi$ | async">
-      <datahub-record-apis class="block mt-[32px]"></datahub-record-apis>
-    </div>
-  </div>
-  <ng-container *ngIf="displayDatasetHasNoLinkBlock$ | async">
-    <gn-ui-error
-      data-test="dataset-has-no-link-block"
-      [type]="errorTypes.DATASET_HAS_NO_LINK"
-    ></gn-ui-error>
-  </ng-container>
-  <div id="related-records" *ngIf="displayRelated$ | async">
-    <div>
-      <div class="h-48 overflow-visible">
-        <div class="container-lg px-4 lg:mx-auto">
-          <datahub-record-related-records
-            [records]="metadataViewFacade.related$ | async"
-          ></datahub-record-related-records>
-        </div>
+      <div class="container-lg px-4 lg:mx-auto" *ngIf="displayApi$ | async">
+        <datahub-record-apis class="block mt-[32px]"></datahub-record-apis>
       </div>
     </div>
-    <div class="bg-primary">
-      <div class="container-lg mx-auto h-[1096px] sm:h-96"></div>
-    </div>
-  </div>
-  <div
-    *ngIf="(metadataViewFacade.isPresent$ | async) === true"
-    id="userFeedbacks"
-    class="bg-primary-opacity-10 py-16 mt-[32px]"
+    <ng-container *ngIf="displayDatasetHasNoLinkBlock$ | async">
+      <gn-ui-error
+        data-test="dataset-has-no-link-block"
+        [type]="errorTypes.DATASET_HAS_NO_LINK"
+      ></gn-ui-error>
+    </ng-container>
+  </datahub-record-section>
+
+  <datahub-record-section
+    id="related"
+    title="Contenus associés"
+    *ngIf="displayRelated$ | async"
   >
-    <div class="container-lg px-4 lg:mx-auto">
-      <datahub-record-user-feedbacks
-        [organisationName$]="organisationName$"
-        [metadataUuid]="metadataUuid$ | async"
-      ></datahub-record-user-feedbacks>
+    <div id="related-records" *ngIf="displayRelated$ | async">
+      <div>
+        <div class="h-48 overflow-visible">
+          <div class="container-lg px-4 lg:mx-auto">
+            <datahub-record-related-records
+              [records]="metadataViewFacade.related$ | async"
+            ></datahub-record-related-records>
+          </div>
+        </div>
+      </div>
+      <div class="bg-primary">
+        <div class="container-lg mx-auto h-[1096px] sm:h-96"></div>
+      </div>
     </div>
-  </div>
+  </datahub-record-section>
+
+  <datahub-record-section
+    id="feedbacks"
+    title="Questions & Réponses"
+    *ngIf="(metadataViewFacade.isPresent$ | async) === true"
+  >
+    <div
+      *ngIf="(metadataViewFacade.isPresent$ | async) === true"
+      id="userFeedbacks"
+      class="bg-primary-opacity-10 py-16 mt-[32px]"
+    >
+      <div class="container-lg px-4 lg:mx-auto">
+        <datahub-record-user-feedbacks
+          [organisationName$]="organisationName$"
+          [metadataUuid]="metadataUuid$ | async"
+        ></datahub-record-user-feedbacks>
+      </div>
+    </div>
+  </datahub-record-section>
 </div>
 <div
   class="mt-12 p-4 max-w-[600px] m-auto text-[13px]"
