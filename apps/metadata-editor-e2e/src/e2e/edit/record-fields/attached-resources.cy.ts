@@ -3,7 +3,7 @@
 describe('editor form', () => {
   let recordUuid: any
 
-  beforeEach(() => {
+  before(() => {
     cy.editor_createRecordCopy().then((uuid) => {
       recordUuid = uuid
     })
