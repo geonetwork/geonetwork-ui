@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router'
 import { SidebarComponent } from './sidebar/sidebar.component'
 import { SearchHeaderComponent } from './search-header/search-header.component'
 import { NotificationsContainerComponent } from '@geonetwork-ui/feature/notifications'
+import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'md-editor-dashboard',
@@ -14,7 +15,14 @@ import { NotificationsContainerComponent } from '@geonetwork-ui/feature/notifica
     SidebarComponent,
     SearchHeaderComponent,
     NotificationsContainerComponent,
+    CommonModule,
   ],
   standalone: true,
 })
-export class DashboardPageComponent {}
+export class DashboardPageComponent {
+  searchActive = false
+
+  handleSearchActive(event: boolean) {
+    this.searchActive = event
+  }
+}

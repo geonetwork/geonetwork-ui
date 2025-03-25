@@ -472,7 +472,7 @@
   "search.error.receivedError": "Erreur retournée",
   "search.error.recordHasnolink": "Ce jeu de données n'a pas encore de lien, réessayez plus tard s'il vous plaît.",
   "search.error.recordNotFound": "Cette donnée n'a pu être trouvée.",
-  "search.field.any.placeholder": "Rechercher un jeu de données...",
+  "search.field.any.placeholder": "Rechercher dans le catalogue...",
   "search.field.sortBy": "Trier par :",
   "search.filters.availableServices.download": "",
   "search.filters.availableServices.view": "",
