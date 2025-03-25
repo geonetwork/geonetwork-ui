@@ -81,6 +81,13 @@ const stateWithSearches: SearchState = {
       },
     },
   },
+  main: {
+    ...defaultSearchState,
+    config: {
+      ...defaultSearchState.config,
+      aggregations: {},
+    },
+  },
 }
 const resultFilterStateMerge = {
   fields: [
