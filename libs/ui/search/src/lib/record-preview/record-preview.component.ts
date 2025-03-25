@@ -50,6 +50,9 @@ export class RecordPreviewComponent implements OnInit, OnDestroy {
   get organization(): Organization {
     return this.record.ownerOrganization
   }
+  get resourceType() {
+    return this.record.kind
+  }
 
   constructor(protected elementRef: ElementRef) {}
 

@@ -1,0 +1,7 @@
+:host ::ng-deep .gn-ui-badge {
+  @apply border-gray-400 cursor-pointer focus-within:text-primary-darkest focus-within:bg-gray-50 transition-colors text-black bg-transparent gn-ui-btn-outline !py-2 px-2;
+}
+
+:host ::ng-deep .selected .gn-ui-badge {
+  @apply bg-primary-lightest hover:bg-primary-lightest;
+}

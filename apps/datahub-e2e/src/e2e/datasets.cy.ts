@@ -291,13 +291,14 @@ describe('datasets', () => {
           'Cellule informatique et géomatique (SPW - Intérieur et Action sociale - Direction fonctionnelle et d’appui) (1)',
           'Coordination, Services et Informations Géographiques (COSIG), swisstopo (1)',
           "Direction de l'Action sociale (SPW - Intérieur et Action sociale - Département de l'Action sociale - Direction de l'Action sociale) (1)",
+          "Direction de l'Intégration des géodonnées (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (9)",
           'DREAL (1)',
           "DREAL HdF (Direction Régionale de l'Environnement de l'Aménagement et du Logement des Hauts de France) (1)",
           'Géo2France (1)',
-          "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (2)",
+          "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (11)",
           'Métropole Européenne de Lille (2)',
           'Région Hauts-de-France (1)',
-          'Service public de Wallonie (SPW) (2)',
+          'Service public de Wallonie (SPW) (11)',
           "Société Publique de Gestion de l'Eau (SPGE) (1)",
         ])
         cy.screenshot({ capture: 'viewport' })
@@ -397,11 +398,16 @@ describe('datasets', () => {
       it('should have options', () => {
         cy.get('@options').should('have.length.above', 0)
         cy.get('@optionsLabel')
-          .invoke('slice', 0, 3)
+          .invoke('slice', 0, 8)
           .should('eql', [
+            'Région wallonne (11)',
+            'Reporting INSPIRENO (7)',
+            'Nature et environnement (6)',
+            'Sol et sous-sol (5)',
+            'Agriculture (3)',
+            'Aménagement du territoire (3)',
             'DONNEE OUVERTE (3)',
             'HAUTS-DE-FRANCE (3)',
-            'Open Data (3)',
           ])
       })
       it('should not have duplicates', () => {

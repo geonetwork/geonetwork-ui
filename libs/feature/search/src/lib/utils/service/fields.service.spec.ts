@@ -88,7 +88,6 @@ describe('FieldsService', () => {
         expect(service.supportedFields).toEqual([
           'organization',
           'format',
-          'resourceType',
           'representationType',
           'publicationYear',
           'topic',
@@ -104,6 +103,7 @@ describe('FieldsService', () => {
           'user',
           'changeDate',
           'availableServices',
+          'type',
         ])
       })
     })
@@ -182,7 +182,6 @@ describe('FieldsService', () => {
           organization: ['orgB'],
           q: [],
           representationType: [],
-          resourceType: [],
           topic: [],
           owner: [],
           producerOrg: [],
@@ -190,6 +189,7 @@ describe('FieldsService', () => {
           user: [],
           changeDate: [],
           availableServices: [],
+          type: [],
         })
       })
     })
