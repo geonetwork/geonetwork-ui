@@ -21,7 +21,7 @@ export const Primary: StoryObj<ProgressBarComponent> = {
   argTypes: {
     type: {
       control: 'select',
-      options: ['primary', 'secondary', 'default'],
+      options: ['primary', 'secondary', 'light', 'default'],
     },
   },
 }

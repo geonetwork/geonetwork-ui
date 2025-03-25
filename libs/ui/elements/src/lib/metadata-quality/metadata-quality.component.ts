@@ -48,7 +48,6 @@ export class MetadataQualityComponent implements OnChanges {
   @Input() metadata: Partial<CatalogRecord>
   @Input() smaller = false
   @Input() metadataQualityDisplay: boolean
-  @Input() theme: 'primary' | 'light' = 'primary'
 
   items: MetadataQualityItem[] = []
 
