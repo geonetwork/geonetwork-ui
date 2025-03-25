@@ -342,7 +342,7 @@ describe('dataset pages', () => {
           cy.screenshot({ capture: 'fullPage' })
         })
         it('should not check all the criteria', () => {
-          cy.get('gn-ui-metadata-quality').realHover()
+          cy.get('gn-ui-metadata-quality').find('ng-icon').realHover()
           cy.get('gn-ui-metadata-quality-item')
             .find('ng-icon')
             .eq(4)
@@ -359,7 +359,7 @@ describe('dataset pages', () => {
             .should('have.attr', 'ng-reflect-value', 100)
         })
         it('should check all the criteria if score is 100%', () => {
-          cy.get('gn-ui-metadata-quality').realHover()
+          cy.get('gn-ui-metadata-quality').find('ng-icon').realHover()
           cy.get('gn-ui-metadata-quality-item')
             .find('ng-icon')
             .eq(4)
