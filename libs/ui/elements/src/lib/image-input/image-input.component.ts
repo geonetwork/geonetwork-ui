@@ -80,11 +80,12 @@ export class ImageInputComponent {
 
   dragFilesOver = false
   showUrlInput = false
-  downloadError = false
+  imageFileError = this.uploadError
   showAltTextInput = false
 
   lastUploadType?: 'file' | 'url'
   lastUploadContent?: string | File
+  lastUrl?: string
 
   get isUploadInProgress() {
     return this.uploadProgress !== undefined
@@ -96,7 +97,7 @@ export class ImageInputComponent {
   ) {}
 
   getPrimaryText() {
-    if (this.uploadError) {
+    if (this.imageFileError) {
       return marker('input.image.uploadErrorLabel')
     }
     if (this.uploadProgress) {
@@ -106,7 +107,7 @@ export class ImageInputComponent {
   }
 
   getSecondaryText() {
-    if (this.uploadError) {
+    if (this.imageFileError) {
       return marker('input.image.uploadErrorRetry')
     }
     if (this.uploadProgress) {
@@ -127,6 +128,8 @@ export class ImageInputComponent {
     if (validFiles.length > 0) {
       this.showUrlInput = false
       this.resizeAndEmit(validFiles[0])
+    } else {
+      this.imageFileError = true
     }
   }
 
@@ -143,8 +146,12 @@ export class ImageInputComponent {
     this.showUrlInput = true
   }
 
+  onUrlValueChange(url: string) {
+    this.lastUrl = url
+  }
+
   async downloadUrl(url: string) {
-    this.downloadError = false
+    this.imageFileError = false
     const name = url.split('/').pop()
     try {
       const response = await firstValueFrom(
@@ -162,14 +169,14 @@ export class ImageInputComponent {
             this.fileChange.emit(file)
           },
           error: () => {
-            this.downloadError = true
+            this.imageFileError = true
             this.cd.markForCheck()
             this.urlChange.emit(url)
           },
         })
       }
     } catch {
-      this.downloadError = true
+      this.imageFileError = true
       this.cd.markForCheck()
       return
     }
@@ -177,18 +184,24 @@ export class ImageInputComponent {
 
   handleSecondaryTextClick(event: Event) {
     if (this.uploadError) {
-      this.handleRetry()
+      this.handleRetryUpload()
     } else if (this.uploadProgress) {
-      this.handleCancel()
+      this.handleCancelUpload()
       event.preventDefault()
+    } else if (this.imageFileError) {
+      this.handleRetrySendImgUrl()
     }
   }
 
-  handleCancel() {
+  handleRetrySendImgUrl() {
+    this.downloadUrl(this.lastUrl)
+  }
+
+  handleCancelUpload() {
     this.uploadCancel.emit()
   }
 
-  handleRetry() {
+  handleRetryUpload() {
     switch (this.lastUploadType) {
       case 'file':
         this.fileChange.emit(this.lastUploadContent as File)
