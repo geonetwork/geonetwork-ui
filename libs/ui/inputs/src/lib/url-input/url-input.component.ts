@@ -31,7 +31,7 @@ import { iconoirArrowUp, iconoirLink } from '@ng-icons/iconoir'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UrlInputComponent {
+export class UrlInputComponent implements OnChanges {
   @Input() set value(v: string) {
     // we're making sure to only update the input if the URL representation of it has changed; otherwise we keep it identical
     // to avoid glitches when starting to write a URL and having some characters added/replaced automatically
@@ -48,6 +48,7 @@ export class UrlInputComponent {
   @Input() placeholder = 'https://'
   @Input() disabled: boolean
   @Input() showValidateButton = true
+  @Input() resetUrl = false
 
   /**
    * This will emit null if the field is emptied
@@ -58,6 +59,12 @@ export class UrlInputComponent {
   inputValue = ''
 
   constructor(private cd: ChangeDetectorRef) {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['resetUrl']) {
+      this.inputValue = ''
+    }
+  }
 
   handleInput(event: Event) {
     const value = (event.target as HTMLInputElement).value
