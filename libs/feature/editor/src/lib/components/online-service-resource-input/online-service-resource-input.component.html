@@ -36,6 +36,7 @@
     [disabled]="disabled"
     [value]="_service.url?.toString()"
     [showValidateButton]="activeLayerSuggestion"
+    [resetUrl]="resetUrl"
   >
     <ng-content *ngIf="activeLayerSuggestion">
       <ng-icon name="iconoirRefresh"></ng-icon>
