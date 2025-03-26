@@ -1,6 +1,7 @@
 {
   "": "",
   "Add Layer As": "",
+  "Enter to search": "",
   "button.login": "",
   "catalog.figures.datasets": "conjuntos de dados",
   "catalog.figures.organizations": "organizações",
@@ -457,6 +458,10 @@
   "results.layout.selectOne": "",
   "results.records.hits.displayedOn": "",
   "results.records.hits.empty.help.html": "",
+  "results.records.hits.filters.all": "Todos",
+  "results.records.hits.filters.dataset": "Conjuntos de dados",
+  "results.records.hits.filters.reuse": "Reutilizações",
+  "results.records.hits.filters.service": "Serviços",
   "results.records.hits.found": "",
   "results.records.hits.selected": "",
   "results.showMore": "",

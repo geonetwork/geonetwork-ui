@@ -1,6 +1,7 @@
 {
   "": "",
   "Add Layer As": "",
+  "Enter to search": "",
   "button.login": "",
   "catalog.figures.datasets": "datasets",
   "catalog.figures.organizations": "organisaties",
@@ -457,6 +458,10 @@
   "results.layout.selectOne": "",
   "results.records.hits.displayedOn": "",
   "results.records.hits.empty.help.html": "",
+  "results.records.hits.filters.all": "Alles",
+  "results.records.hits.filters.dataset": "Datasets",
+  "results.records.hits.filters.reuse": "Hergebruik",
+  "results.records.hits.filters.service": "Diensten",
   "results.records.hits.found": "",
   "results.records.hits.selected": "",
   "results.showMore": "",

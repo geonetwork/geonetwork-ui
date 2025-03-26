@@ -1,0 +1,16 @@
+<div
+  class="flex flex-col gap-3 sm:flex-row justify-between"
+  [ngClass]="{
+    'sm:items-center': (searchFacade.resultsHits$ | async) !== 0,
+  }"
+>
+  <gn-ui-results-hits-number
+    [loading]="searchFacade.isLoading$ | async"
+    [hits]="searchFacade.resultsHits$ | async"
+  ></gn-ui-results-hits-number>
+  <gn-ui-results-hits-filters
+    [choices]="(filterChoices$ | async) || []"
+    [selected]="selected$ | async"
+    (selectValues)="onSelectedValues($event)"
+  ></gn-ui-results-hits-filters>
+</div>

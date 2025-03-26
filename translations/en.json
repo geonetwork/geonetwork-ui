@@ -1,6 +1,7 @@
 {
   "": "",
   "Add Layer As": "",
+  "Enter to search": "",
   "button.login": "Log in",
   "catalog.figures.datasets": "{count, plural, =0{datasets} one{dataset} other{datasets}}",
   "catalog.figures.organizations": "{count, plural, =0{organizations} one{organization} other{organizations}}",
@@ -457,6 +458,10 @@
   "results.layout.selectOne": "Results layout",
   "results.records.hits.displayedOn": "{displayed, plural, =0{No dataset.} one{1 } other{{displayed} }} {hits, plural, other{displayed on {hits} total.}}",
   "results.records.hits.empty.help.html": "Suggestions: <ul class='list-disc list-inside'><li>Try other words</li><li>Specify fewer words</li></ul>",
+  "results.records.hits.filters.all": "All",
+  "results.records.hits.filters.dataset": "Datasets",
+  "results.records.hits.filters.reuse": "Reuses",
+  "results.records.hits.filters.service": "Services",
   "results.records.hits.found": "{hits, plural, =0{No datasets match the specified search.} one{1 dataset found.} other{{hits} datasets found.}}",
   "results.records.hits.selected": "{ amount } selected",
   "results.showMore": "Show more results...",

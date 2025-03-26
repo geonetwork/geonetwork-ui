@@ -1,6 +1,7 @@
 {
   "": "",
   "Add Layer As": "",
+  "Enter to search": "",
   "button.login": "",
   "catalog.figures.datasets": "{count, plural, =0{datasety} one{dataset} other{datasety}}",
   "catalog.figures.organizations": "{count, plural, =0{organizácie} one{organizácia} other{organizácie}}",
@@ -457,6 +458,10 @@
   "results.layout.selectOne": "Rozmiestnenie výsledkov",
   "results.records.hits.displayedOn": "{displayed, plural, =0{Žiadny záznam.} one{1 záznam} other{{displayed} záznamov }} {hits, plural, other{zobrazených z {hits} celkovo.}}",
   "results.records.hits.empty.help.html": "Návrhy: <ul class='list-disc list-inside'><li>Vyskúšajte iné slová</li><li>Uveďte menej slov</li></ul>",
+  "results.records.hits.filters.all": "Všetky",
+  "results.records.hits.filters.dataset": "Datové sady",
+  "results.records.hits.filters.reuse": "Opakované použitia",
+  "results.records.hits.filters.service": "Služby",
   "results.records.hits.found": "{hits, plural, =0{Žiadne dokumenty nezodpovedajú zadanému vyhľadávaniu.} one{1 záznam nájdený.} other{{hits} záznamov nájdených.}}",
   "results.records.hits.selected": "{ amount } označených",
   "results.showMore": "Zobraziť viac výsledkov...",
