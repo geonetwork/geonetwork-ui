@@ -1,9 +1,6 @@
 <div *ngIf="(metadataViewFacade.error$ | async) === null">
-  <datahub-record-section id="about" title="À propos">
-    <div
-      id="about"
-      class="container-lg px-4 mb-9 mt-8 sm:mb-16 sm:mt-[51px] lg:mx-auto"
-    >
+  <datahub-record-section id="about">
+    <div class="container-lg px-4 mb-9 mt-8 sm:mb-16 sm:mt-[51px] lg:mx-auto">
       <gn-ui-metadata-info
         class="sm:block"
         *ngIf="(metadataViewFacade.isPresent$ | async) === false"
@@ -66,29 +63,25 @@
     *ngIf="displayDownload$ | async"
   >
     <div
-      id="access"
-      class="container-lg px-4 lg:mx-auto"
       *ngIf="displayDownload$ | async"
+      id="downloads"
+      class="subsection mb-6"
     >
-      <div>
-        <datahub-record-downloads
-          class="block mt-[72px]"
-        ></datahub-record-downloads>
-      </div>
-
-      <div
-        class="container-lg px-4 lg:mx-auto"
-        *ngIf="displayOtherLinks | async"
-      >
-        <datahub-record-otherlinks
-          class="block mt-[72px]"
-        ></datahub-record-otherlinks>
-      </div>
-
-      <div class="container-lg px-4 lg:mx-auto" *ngIf="displayApi$ | async">
-        <datahub-record-apis class="block mt-[32px]"></datahub-record-apis>
-      </div>
+      <datahub-record-downloads class="block"></datahub-record-downloads>
     </div>
+
+    <div
+      *ngIf="displayOtherLinks | async"
+      id="otherlinks"
+      class="subsection mb-6"
+    >
+      <datahub-record-otherlinks class="block"></datahub-record-otherlinks>
+    </div>
+
+    <div *ngIf="displayApi$ | async" id="apis" class="subsection mb-6">
+      <datahub-record-apis class="block"></datahub-record-apis>
+    </div>
+
     <ng-container *ngIf="displayDatasetHasNoLinkBlock$ | async">
       <gn-ui-error
         data-test="dataset-has-no-link-block"

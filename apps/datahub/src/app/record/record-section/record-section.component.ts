@@ -7,8 +7,10 @@ import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
   standalone: true,
   imports: [CommonModule, UiLayoutModule],
   template: `
-    <section [id]="id" gnUiAnchorLink class="container-lg px-4 lg:mx-auto">
-      <h1 class="title-font font-medium mb-3 text-[28px]">{{ title }}</h1>
+    <section [id]="id" class="container-lg px-4 lg:mx-auto">
+      <h1 *ngIf="title" class="title-font font-medium mb-3 text-[28px]">
+        {{ title }}
+      </h1>
       <div class="section-content">
         <ng-content></ng-content>
       </div>
