@@ -126,8 +126,52 @@ describe('editor form', () => {
             .find('gn-ui-text-input')
             .should('be.visible')
         })
+      })
+
+      describe('image field', () => {
+        beforeEach(() => {
+          cy.get('[data-cy="delete-image"]').click()
+        })
+        it('allows switching between URL input and file upload', () => {
+          // First add by URL
+          cy.get('gn-ui-image-input')
+            .find('gn-ui-button')
+            .find('button')
+            .click()
+          cy.get('gn-ui-url-input').should('be.visible')
+          cy.get('gn-ui-url-input input').type('http://example.com/image.jpg')
+
+          // Then try to upload a file - URL input should disappear
+          cy.get('gn-ui-form-field-overviews label').selectFile(
+            'src/fixtures/sample.png'
+          )
+          cy.get('gn-ui-url-input').should('not.exist')
+
+          // Try URL input again - should clear previous file
+          cy.get('gn-ui-image-input').find('[data-cy="delete-image"]').click()
+          cy.get('gn-ui-url-input').should('be.visible')
+        })
+
+        it('handles drag and drop file upload', () => {
+          // First add by URL
+          cy.get('gn-ui-image-input')
+            .find('gn-ui-button')
+            .find('button')
+            .click()
+          cy.get('gn-ui-url-input input').type('http://example.com/image.jpg')
+
+          // Then drag and drop a file
+          cy.get('gn-ui-form-field-overviews label').selectFile(
+            'src/fixtures/sample.png',
+            { action: 'drag-drop' }
+          )
+
+          // URL input should be hidden
+          cy.get('gn-ui-url-input').should('not.exist')
+        })
+
         it('shows icon and error messages when uploading non image file', () => {
-          cy.get('[data-cy="imgDeleteBtn"]').click()
+          // Drag and drop non file image
           cy.get('input[type="file"]').selectFile(
             {
               contents: Cypress.Buffer.from('test file content'),
@@ -137,6 +181,7 @@ describe('editor form', () => {
             { action: 'drag-drop', force: true }
           )
 
+          // Error display should show
           cy.get('[data-cy="imgErrorIcon"]').should('be.visible')
           cy.get('[data-cy="imgErrorMsgPrimary"]').should(
             'contain',
@@ -144,14 +189,16 @@ describe('editor form', () => {
           )
           cy.get('[data-cy="imgErrorMsgSecondary"]').should('contain', 'Retry')
         })
+
         it('shows icon and error messages when invalid image url', () => {
-          cy.get('[data-cy="imgDeleteBtn"]').click()
+          // Emulate error with an invalid image url
           cy.get('[data-cy="imgUrlBtn"]').find('button').click()
           cy.get('[data-cy="imgUrlInput"]')
             .find('input')
             .type('https://overview.img/42x42.png')
           cy.get('[data-cy="imgUrlInput"]').find('button').click()
 
+          // Error display should show
           cy.get('[data-cy="imgErrorIcon"]').should('be.visible')
           cy.get('[data-cy="imgErrorMsgPrimary"]').should(
             'contain',
