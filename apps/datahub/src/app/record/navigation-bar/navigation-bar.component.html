@@ -5,7 +5,7 @@
     type="button"
     *ngFor="let l of anchorLinks"
     gnUiAnchorLink="{{ l.anchor }}"
-    gnUiAnchorLinkDisabledClass="cursor-default !opacity-30 !hover:opacity-30"
+    gnUiAnchorLinkDisabledClass="sm:hidden"
     class="uppercase font-medium tracking-wider hidden sm:block opacity-80 hover:opacity-100"
     translate
   >
@@ -23,7 +23,7 @@
         <button
           (click)="setActiveLabel($event.target)"
           gnUiAnchorLink="{{ l.anchor }}"
-          gnUiAnchorLinkDisabledClass="cursor-default opacity-60"
+          gnUiAnchorLinkDisabledClass="hidden"
           class="block px-3 py-3 rounded-md font-medium uppercase tracking-wider w-full text-left truncate"
           translate
         >
