@@ -1,12 +1,37 @@
-<div class="flex h-full {{ color.outerBar }} rounded-t-lg rounded-b-lg">
-  <div
-    [style.width.%]="progress"
-    class="flex {{
-      color.innerBar
-    }} my-1 mx-1 transition-width duration-500 ease-in-out rounded-t-md rounded-b-md shadow-xl"
-  >
-    <div class="flex items-center pl-2 py-1 {{ color.text }} font-bold text-4">
-      {{ progress }}%
+<ng-container [ngSwitch]="type">
+  <!-- Light Theme -->
+  <ng-container *ngSwitchCase="'light'">
+    <div class="flex items-center relative">
+      <div
+        class="flex-shrink-0 {{ color.text }} text-xs font-medium mr-2
+             text-opacity-100 !text-slate-800"
+      >
+        {{ progress }}%
+      </div>
+      <div class="flex-grow h-[6px] w-full {{ color.outerBar }} rounded-full">
+        <div
+          [style.width.%]="progress"
+          class="{{ color.innerBar }} transition-width duration-500
+               ease-in-out rounded-full shadow-sm h-full"
+        ></div>
+      </div>
     </div>
-  </div>
-</div>
+  </ng-container>
+
+  <!-- Default / Primary / Secondary Themes -->
+  <ng-container *ngSwitchDefault>
+    <div class="flex h-full {{ color.outerBar }} rounded-t-lg rounded-b-lg">
+      <div
+        [style.width.%]="progress"
+        class="flex {{ color.innerBar }} my-1 mx-1 transition-width
+               duration-500 ease-in-out rounded-t-md rounded-b-md shadow-xl"
+      >
+        <div
+          class="flex items-center pl-2 py-1 {{ color.text }} font-bold text-4"
+        >
+          {{ progress }}%
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

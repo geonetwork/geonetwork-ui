@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core'
+import { NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common'
 
 interface ColorScheme {
   outerBar: string
@@ -11,10 +12,11 @@ interface ColorScheme {
   templateUrl: './progress-bar.component.html',
   styleUrls: ['./progress-bar.component.css'],
   standalone: true,
+  imports: [NgSwitch, NgSwitchCase, NgSwitchDefault],
 })
 export class ProgressBarComponent {
   @Input() value = 0
-  @Input() type: 'primary' | 'secondary' | 'default' = 'default'
+  @Input() type: 'primary' | 'secondary' | 'default' | 'light' = 'default'
 
   get progress() {
     return this.value > 0 ? (this.value < 100 ? this.value : 100) : 0
@@ -39,6 +41,12 @@ export class ProgressBarComponent {
           outerBar: 'bg-secondary',
           innerBar: 'bg-secondary-lighter',
           text: 'text-white',
+        }
+      case 'light':
+        return {
+          outerBar: 'bg-primary-white',
+          innerBar: 'bg-primary',
+          text: 'text-main',
         }
     }
   }
