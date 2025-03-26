@@ -7,9 +7,11 @@ import { matExpandMoreOutline } from '@ng-icons/material-icons/outline'
 import { TranslateModule } from '@ngx-translate/core'
 
 marker('record.metadata.about')
+marker('record.metadata.capabilities')
 marker('record.metadata.preview')
-marker('record.metadata.download')
 marker('record.metadata.links')
+marker('record.metadata.relatedContent')
+marker('record.metadata.userFeedbacks')
 
 @Component({
   selector: 'datahub-navigation-bar',
@@ -28,16 +30,24 @@ export class NavigationBarComponent {
       label: 'record.metadata.about',
     },
     {
+      anchor: 'capabilities',
+      label: 'record.metadata.capabilities',
+    },
+    {
       anchor: 'preview',
       label: 'record.metadata.preview',
     },
     {
-      anchor: 'access',
-      label: 'record.metadata.download',
-    },
-    {
       anchor: 'links',
       label: 'record.metadata.links',
+    },
+    {
+      anchor: 'related-records',
+      label: 'record.metadata.relatedContent',
+    },
+    {
+      anchor: 'userFeedbacks',
+      label: 'record.metadata.userFeedbacks',
     },
   ]
   activeLabel = this.anchorLinks[0].label
