@@ -79,7 +79,7 @@ export class OnlineServiceResourceInputComponent {
     new EventEmitter()
 
   errorMessage = false
-  resetUrl = false
+  resetUrlOnChange = Math.random()
 
   layersSubject = new BehaviorSubject<{ name: string; title: string }[]>([])
   layers$: Observable<{ name: string; title: string }[]> =
@@ -150,7 +150,7 @@ export class OnlineServiceResourceInputComponent {
   }
 
   resetAllFormFields() {
-    this.resetUrl = !this.resetUrl
+    this.resetUrlOnChange = Math.random()
     this._service.url = null
     this.resetLayersSuggestion()
   }

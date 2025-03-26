@@ -48,7 +48,7 @@ export class UrlInputComponent implements OnChanges {
   @Input() placeholder = 'https://'
   @Input() disabled: boolean
   @Input() showValidateButton = true
-  @Input() resetUrl = false
+  @Input() resetUrlOnChange: number
 
   /**
    * This will emit null if the field is emptied
@@ -61,7 +61,7 @@ export class UrlInputComponent implements OnChanges {
   constructor(private cd: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['resetUrl']) {
+    if (changes['resetUrlOnChange']) {
       this.inputValue = ''
     }
   }
