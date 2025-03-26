@@ -109,13 +109,13 @@ git push upstream 2.5.x # replace "upstream" with your remote repo name
 
 ### How to backport a bug fix
 
-#### with the backport bot
+#### With the backport bot
 
 On a PR that needs to be backported, (create and) add the ``backport-to-2.5.x` label (replace `2.5.x` with the wanted patch branch name).
 
 A new PR should automatically be created on the `2.5.x` branch, with the commits cherry-picked, or an indication of commits that couldn't be cherry-picked.
 
-#### manually
+#### Manually
 
 If the automatic backport is not successfull, you can either resolve the conflicts, or try to cherry-pick the needed correctly.
 
