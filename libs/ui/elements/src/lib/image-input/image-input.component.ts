@@ -83,10 +83,6 @@ export class ImageInputComponent {
   imageFileError = this.uploadError
   showAltTextInput = false
 
-  lastUploadType?: 'file' | 'url'
-  lastUploadContent?: string | File
-  lastUrl?: string
-
   get isUploadInProgress() {
     return this.uploadProgress !== undefined
   }
@@ -95,6 +91,10 @@ export class ImageInputComponent {
     private http: HttpClient,
     private cd: ChangeDetectorRef
   ) {}
+
+  getIsActionBlocked() {
+    return this.isUploadInProgress || this.imageFileError || this.disabled
+  }
 
   getPrimaryText() {
     if (this.imageFileError) {
@@ -124,6 +124,7 @@ export class ImageInputComponent {
   }
 
   handleDropFiles(files: File[]) {
+    this.resetErrors()
     const validFiles = this.filterTypeImage(files)
     if (validFiles.length > 0) {
       this.showUrlInput = false
@@ -134,10 +135,13 @@ export class ImageInputComponent {
   }
 
   handleFileInput(event: Event) {
+    this.resetErrors()
     const inputFiles = Array.from((event.target as HTMLInputElement).files)
     const validFiles = this.filterTypeImage(inputFiles)
     if (validFiles.length > 0) {
       this.resizeAndEmit(validFiles[0])
+    } else {
+      this.imageFileError = true
     }
   }
 
@@ -146,12 +150,8 @@ export class ImageInputComponent {
     this.showUrlInput = true
   }
 
-  onUrlValueChange(url: string) {
-    this.lastUrl = url
-  }
-
   async downloadUrl(url: string) {
-    this.imageFileError = false
+    this.resetErrors()
     const name = url.split('/').pop()
     try {
       const response = await firstValueFrom(
@@ -183,18 +183,12 @@ export class ImageInputComponent {
   }
 
   handleSecondaryTextClick(event: Event) {
-    if (this.uploadError) {
+    if (this.imageFileError) {
       this.handleRetryUpload()
     } else if (this.uploadProgress) {
       this.handleCancelUpload()
       event.preventDefault()
-    } else if (this.imageFileError && this.lastUrl) {
-      this.handleRetrySendImgUrl()
     }
-  }
-
-  handleRetrySendImgUrl() {
-    this.downloadUrl(this.lastUrl)
   }
 
   handleCancelUpload() {
@@ -202,18 +196,17 @@ export class ImageInputComponent {
   }
 
   handleRetryUpload() {
-    switch (this.lastUploadType) {
-      case 'file':
-        this.fileChange.emit(this.lastUploadContent as File)
-        break
-      case 'url':
-        this.urlChange.emit(this.lastUploadContent as string)
-        break
-    }
+    this.resetErrors()
+    this.cd.markForCheck()
   }
 
   handleDelete() {
     this.delete.emit()
+  }
+
+  resetErrors() {
+    this.imageFileError = false
+    this.uploadError = false
   }
 
   toggleAltTextInput() {

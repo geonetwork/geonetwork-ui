@@ -79,6 +79,7 @@ describe('ImageInputComponent', () => {
         reqGet.flush(new Blob())
 
         expect(component.fileChange.emit).toHaveBeenCalled()
+        expect(component.imageFileError).toEqual(false)
 
         httpTestingController.verify()
       }, 0)
