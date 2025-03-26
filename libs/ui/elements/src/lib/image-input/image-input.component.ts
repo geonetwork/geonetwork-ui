@@ -123,11 +123,10 @@ export class ImageInputComponent {
   }
 
   handleDropFiles(files: File[]) {
-    if (!this.showUrlInput) {
-      const validFiles = this.filterTypeImage(files)
-      if (validFiles.length > 0) {
-        this.resizeAndEmit(validFiles[0])
-      }
+    const validFiles = this.filterTypeImage(files)
+    if (validFiles.length > 0) {
+      this.showUrlInput = false
+      this.resizeAndEmit(validFiles[0])
     }
   }
 
@@ -147,7 +146,6 @@ export class ImageInputComponent {
   async downloadUrl(url: string) {
     this.downloadError = false
     const name = url.split('/').pop()
-
     try {
       const response = await firstValueFrom(
         this.http.head(url, { observe: 'response' })

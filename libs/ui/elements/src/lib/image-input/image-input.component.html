@@ -14,7 +14,11 @@
       [disabled]="true"
     ></gn-ui-text-input>
     <div class="flex flex-row gap-2 mt-2">
-      <gn-ui-button type="gray" (buttonClick)="handleDelete()">
+      <gn-ui-button
+        type="gray"
+        (buttonClick)="handleDelete()"
+        data-cy="delete-image"
+      >
         <ng-icon class="me-1 text-primary" name="iconoirBin"></ng-icon>
         {{ 'input.image.delete' | translate }}
       </gn-ui-button>
@@ -39,12 +43,10 @@
         'border-primary-lighter bg-primary-white': dragFilesOver,
         'border-gray-300': !dragFilesOver,
         'cursor-pointer hover:border-gray-500':
-          !isUploadInProgress && !uploadError && !showUrlInput && !disabled,
+          !isUploadInProgress && !uploadError && !disabled,
         'cursor-not-allowed': disabled,
       }"
-      [attr.tabindex]="
-        isUploadInProgress || uploadError || showUrlInput || disabled ? null : 0
-      "
+      [attr.tabindex]="isUploadInProgress || uploadError || disabled ? null : 0"
       (keydown.enter)="fileInput.click()"
       (dragFilesOver)="handleDragFilesOver($event)"
       (dropFiles)="handleDropFiles($event)"
@@ -114,9 +116,7 @@
         type="file"
         class="hidden"
         (change)="handleFileInput($event)"
-        [disabled]="
-          showUrlInput || isUploadInProgress || uploadError || disabled
-        "
+        [disabled]="isUploadInProgress || uploadError || disabled"
       />
     </label>
 
