@@ -41,7 +41,7 @@ import {
   provideIcons,
   provideNgIconsConfig,
 } from '@ng-icons/core'
-import { iconoirSearch } from '@ng-icons/iconoir'
+import { iconoirLongArrowDownLeft, iconoirSearch } from '@ng-icons/iconoir'
 import { matClose } from '@ng-icons/material-icons/baseline'
 
 export type AutocompleteItem = unknown
@@ -65,9 +65,10 @@ export type AutocompleteItem = unknown
     provideIcons({
       iconoirSearch,
       matClose,
+      iconoirLongArrowDownLeft,
     }),
     provideNgIconsConfig({
-      size: '1.5rem',
+      size: '1.75rem',
     }),
   ],
 })
@@ -75,6 +76,7 @@ export class AutocompleteComponent
   implements OnInit, AfterViewInit, OnDestroy, OnChanges
 {
   @Input() placeholder: string
+  @Input() enterButton = false
   @Input() action: (value: string) => Observable<AutocompleteItem[]>
   @Input() value?: AutocompleteItem
   @Input() clearOnSelection = false
@@ -87,6 +89,7 @@ export class AutocompleteComponent
   @Output() itemSelected = new EventEmitter<AutocompleteItem>()
   @Output() inputSubmitted = new EventEmitter<string>()
   @Output() inputCleared = new EventEmitter<void>()
+  @Output() isSearchActive = new EventEmitter<boolean>()
   @ViewChild(MatAutocompleteTrigger) triggerRef: MatAutocompleteTrigger
   @ViewChild(MatAutocomplete) autocomplete: MatAutocomplete
   @ViewChild('searchInput') inputRef: ElementRef<HTMLInputElement>
@@ -101,13 +104,34 @@ export class AutocompleteComponent
   subscription = new Subscription()
   private lastPosition: DOMRect | null = null
   private intervalIdPosition: number | undefined
+  enterBtnPosition = 0
+  searchActive = false
 
   @Input() displayWithFn: (item: AutocompleteItem) => string = (item) =>
     item.toString()
 
+  get displayEnterBtn() {
+    return this.enterButton && this.allowSubmit && !this.searchActive
+  }
+
   displayWithFnInternal = (item?: AutocompleteItem) => {
     if (item === null || item === undefined) return null
     return this.displayWithFn(item)
+  }
+
+  getExtraClass(): string {
+    if (this.allowSubmit) {
+      if (this.enterButton) {
+        return 'border rounded-lg absolute w-8 h-8 right-[calc(var(--icon-width)+var(--icon-padding))] inset-y-[--icon-padding]'
+      } else {
+        return 'border rounded-lg absolute w-8 h-8 right-[calc(var(--icon-width)+0.25*var(--icon-width))] inset-y-[calc(0.25*var(--icon-width))]'
+      }
+    } else {
+      if (!this.enterButton) {
+        return 'border rounded-lg absolute w-8 h-8 right-2 inset-y-2'
+      }
+    }
+    return 'border rounded-lg absolute w-8 h-8'
   }
 
   constructor(private cdRef: ChangeDetectorRef) {}
@@ -117,6 +141,13 @@ export class AutocompleteComponent
       const previousTextValue = this.displayWithFnInternal(value.previousValue)
       const currentTextValue = this.displayWithFnInternal(value.currentValue)
       if (previousTextValue !== currentTextValue) {
+        if (currentTextValue) {
+          this.searchActive = true
+          this.isSearchActive.emit(true)
+        } else {
+          this.searchActive = false
+          this.isSearchActive.emit(false)
+        }
         this.updateInputValue(value.currentValue)
       }
     }
@@ -256,6 +287,8 @@ export class AutocompleteComponent
 
   clear(): void {
     this.inputRef.nativeElement.value = ''
+    this.searchActive = false
+    this.isSearchActive.emit(false)
     this.inputCleared.emit()
     this.selectionSubject
       .pipe(take(1))
@@ -265,6 +298,8 @@ export class AutocompleteComponent
 
   handleEnter(any: string) {
     if (!this.cancelEnter && this.allowSubmit) {
+      this.isSearchActive.emit(true)
+      this.searchActive = true
       this.inputSubmitted.emit(any)
     }
   }
@@ -293,5 +328,11 @@ export class AutocompleteComponent
       this.inputRef.nativeElement.value = ''
       this.control.setValue('')
     }
+  }
+
+  handleInput(event: InputEvent) {
+    this.searchActive = false
+    this.isSearchActive.emit(false)
+    this.enterBtnPosition = event.target['value'].length * 8 + 80
   }
 }

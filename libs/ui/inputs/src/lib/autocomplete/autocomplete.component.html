@@ -5,31 +5,48 @@
   >
     <ng-icon name="iconoirSearch" class="text-primary search"></ng-icon>
   </div>
-  <input
-    #searchInput
-    type="text"
-    class="gn-ui-text-input"
-    [ngClass]="{
-      'px-[--icon-width]': !allowSubmit,
-    }"
-    [placeholder]="placeholder"
-    [formControl]="control"
-    [matAutocomplete]="auto"
-    (keyup.enter)="handleEnter(searchInput.value)"
-  />
+  <div class="flex flex-row">
+    <input
+      #searchInput
+      type="text"
+      class="gn-ui-text-input"
+      (input)="handleInput($event)"
+      [placeholder]="placeholder"
+      [formControl]="control"
+      [matAutocomplete]="auto"
+      (keyup.enter)="handleEnter(searchInput.value)"
+      [ngClass]="{
+        'text-primary': searchActive && enterButton,
+        'text-gray-900': !searchActive,
+        'px-[--icon-width]': !allowSubmit,
+      }"
+    />
+    <gn-ui-button
+      type="gray"
+      *ngIf="searchInput.value && displayEnterBtn"
+      extraClass="w-32 h-8 !opacity-100"
+      [ngStyle]="{ left: enterBtnPosition + 'px' }"
+      class="absolute"
+      disabled="true"
+    >
+      <ng-icon
+        name="iconoirLongArrowDownLeft"
+        class="!w-4 text-gray-900 font-bold"
+      ></ng-icon>
+      <span translate class="text-bold text-gray-900 font-bold">
+        Enter to search
+      </span>
+    </gn-ui-button>
+  </div>
   <gn-ui-button
-    type="light"
-    extraClass="border-0 text-primary-lightest hover:text-primary focus:text-primary absolute inset-y-[--icon-padding] {{
-      allowSubmit
-        ? 'right-[calc(var(--icon-width)+var(--icon-padding))]'
-        : 'right-[--icon-padding]'
-    }}"
+    type="primary"
+    [extraClass]="getExtraClass()"
     data-test="clear-btn"
     *ngIf="searchInput.value"
     aria-label="Clear"
     (buttonClick)="clear()"
   >
-    <ng-icon name="matClose"></ng-icon>
+    <ng-icon class="text-white" name="matClose"></ng-icon>
   </gn-ui-button>
   <gn-ui-button
     type="light"

@@ -5,9 +5,11 @@
   (itemSelected)="handleItemSelection($event)"
   (inputSubmitted)="handleInputSubmission($event)"
   (inputCleared)="handleInputCleared()"
+  (isSearchActive)="handleSearchActive($event)"
   [value]="searchInputValue$ | async"
   [preventCompleteOnSelection]="true"
   [autoFocus]="autoFocus"
   [allowSubmit]="true"
   [forceTrackPosition]="forceTrackPosition"
+  [enterButton]="enterButton"
 ></gn-ui-autocomplete>

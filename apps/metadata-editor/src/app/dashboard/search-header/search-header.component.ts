@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+  ViewChild,
+} from '@angular/core'
 import { LetDirective } from '@ngrx/component'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
@@ -25,6 +31,7 @@ import { Router } from '@angular/router'
 export class SearchHeaderComponent {
   public placeholder$ = this.avatarService.getPlaceholder()
   activeBtn = false
+  @Output() isSearchActive = new EventEmitter<boolean>()
 
   constructor(
     private avatarService: AvatarServiceInterface,
@@ -33,5 +40,9 @@ export class SearchHeaderComponent {
 
   handleItemSelection(item: CatalogRecord) {
     this.router.navigate(['edit', item.uniqueIdentifier])
+  }
+
+  handleSearchActive(event: boolean) {
+    this.isSearchActive.emit(event)
   }
 }
