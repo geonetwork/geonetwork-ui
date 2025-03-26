@@ -7,7 +7,7 @@ import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { combineLatest, map } from 'rxjs'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateModule } from '@ngx-translate/core'
 import {
   BadgeComponent,
   NavigationButtonComponent,
@@ -18,6 +18,7 @@ import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
 import { matArrowBack } from '@ng-icons/material-icons/baseline'
 import { DateService } from '@geonetwork-ui/util/shared'
+import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component'
 
 @Component({
   selector: 'datahub-header-record',
@@ -33,6 +34,7 @@ import { DateService } from '@geonetwork-ui/util/shared'
     FavoriteStarComponent,
     BadgeComponent,
     NgIcon,
+    NavigationBarComponent,
   ],
   viewProviders: [provideIcons({ matLocationSearchingOutline, matArrowBack })],
 })
