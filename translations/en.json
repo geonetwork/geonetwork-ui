@@ -395,6 +395,7 @@
   "record.metadata.api.form.zoneTitle": "Zone",
   "record.metadata.api.form.zoneTooltip": "Dropdown for selecting a geographic zone",
   "record.metadata.api.gpfdl": "Data download",
+  "record.metadata.capabilities": "",
   "record.metadata.catalog": "Catalog",
   "record.metadata.contact": "Contact",
   "record.metadata.creation": "Date of creation",

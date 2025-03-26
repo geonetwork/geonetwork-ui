@@ -395,6 +395,7 @@
   "record.metadata.api.form.zoneTitle": "Zona",
   "record.metadata.api.form.zoneTooltip": "Menu a discesa per selezionare una zona geografica",
   "record.metadata.api.gpfdl": "Scarica",
+  "record.metadata.capabilities": "",
   "record.metadata.catalog": "Catalogo",
   "record.metadata.contact": "Contatto",
   "record.metadata.creation": "Data di creazione",
