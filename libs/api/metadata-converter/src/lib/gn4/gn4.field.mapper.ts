@@ -460,6 +460,10 @@ export class Gn4FieldMapper {
       ),
       selectField<string>(sourceLink, 'description')
     )
+    const applicationProfile = selectField<string>(
+      sourceLink,
+      'applicationProfile'
+    )
     // no url: fail early
     if (url === null) {
       // TODO: collect errors at the record level?
@@ -485,6 +489,7 @@ export class Gn4FieldMapper {
           type,
           url: url,
           accessServiceProtocol,
+          applicationProfile: applicationProfile,
         }
       case 'link':
         return {
