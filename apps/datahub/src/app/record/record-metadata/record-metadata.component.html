@@ -1,57 +1,59 @@
 <div *ngIf="(metadataViewFacade.error$ | async) === null">
   <datahub-record-section id="about">
-    <gn-ui-metadata-info
-      class="sm:block"
-      *ngIf="(metadataViewFacade.isPresent$ | async) === false"
-      [metadata]="{}"
-      [incomplete]="true"
-    >
-    </gn-ui-metadata-info>
-    <div
-      *ngIf="(metadataViewFacade.isPresent$ | async) === true"
-      class="grid gap-8 grid-cols-1 sm:gap-6 sm:grid-cols-3"
-    >
-      <div class="sm:col-span-2">
-        <gn-ui-metadata-info
-          class="sm:block"
-          [metadata]="metadataViewFacade.metadata$ | async"
-          [incomplete]="metadataViewFacade.isIncomplete$ | async"
-          (keyword)="onInfoKeywordClick($event)"
-        >
-        </gn-ui-metadata-info>
-      </div>
-      <div class="sm:mt-[-185px]">
-        <gn-ui-image-overlay-preview
-          class="block h-[185px] mb-5"
-          [imageUrl]="thumbnailUrl$ | async"
-          (isPlaceholderShown)="showOverlay = !$event"
-          *ngIf="showOverlay"
-        >
-        </gn-ui-image-overlay-preview>
-        <gn-ui-metadata-contact
-          (organizationClick)="onOrganizationClick($event)"
-          [metadata]="metadataViewFacade.metadata$ | async"
-        >
-        </gn-ui-metadata-contact>
-        <div *ngIf="metadataQualityDisplay">
-          <p class="text text-gray-700 text-xs mb-3 uppercase" translate>
-            record.metadata.quality
-          </p>
-          <gn-ui-metadata-quality
+    <div class="container-lg px-4 mb-9 mt-8 sm:mb-16 sm:mt-[51px] lg:mx-auto">
+      <gn-ui-metadata-info
+        class="sm:block"
+        *ngIf="(metadataViewFacade.isPresent$ | async) === false"
+        [metadata]="{}"
+        [incomplete]="true"
+      >
+      </gn-ui-metadata-info>
+      <div
+        *ngIf="(metadataViewFacade.isPresent$ | async) === true"
+        class="grid gap-8 grid-cols-1 sm:gap-6 sm:grid-cols-3"
+      >
+        <div class="sm:col-span-2">
+          <gn-ui-metadata-info
+            class="sm:block"
             [metadata]="metadataViewFacade.metadata$ | async"
-            [metadataQualityDisplay]="metadataQualityDisplay"
-          ></gn-ui-metadata-quality>
+            [incomplete]="metadataViewFacade.isIncomplete$ | async"
+            (keyword)="onInfoKeywordClick($event)"
+          >
+          </gn-ui-metadata-info>
         </div>
-        <gn-ui-metadata-catalog
-          *ngIf="sourceLabel$ | async as sourceLabel"
-          [sourceLabel]="sourceLabel"
-        >
-        </gn-ui-metadata-catalog>
+        <div class="sm:mt-[-185px]">
+          <gn-ui-image-overlay-preview
+            class="block h-[185px] mb-5"
+            [imageUrl]="thumbnailUrl$ | async"
+            (isPlaceholderShown)="showOverlay = !$event"
+            *ngIf="showOverlay"
+          >
+          </gn-ui-image-overlay-preview>
+          <gn-ui-metadata-contact
+            (organizationClick)="onOrganizationClick($event)"
+            [metadata]="metadataViewFacade.metadata$ | async"
+          >
+          </gn-ui-metadata-contact>
+          <div *ngIf="metadataQualityDisplay">
+            <p class="text text-gray-700 text-xs mb-3 uppercase" translate>
+              record.metadata.quality
+            </p>
+            <gn-ui-metadata-quality
+              [metadata]="metadataViewFacade.metadata$ | async"
+              [metadataQualityDisplay]="metadataQualityDisplay"
+            ></gn-ui-metadata-quality>
+          </div>
+          <gn-ui-metadata-catalog
+            *ngIf="sourceLabel$ | async as sourceLabel"
+            [sourceLabel]="sourceLabel"
+          >
+          </gn-ui-metadata-catalog>
+        </div>
       </div>
     </div>
   </datahub-record-section>
 
-  <datahub-record-section id="data-preview">
+  <datahub-record-section id="preview" title="Aperçu">
     <datahub-record-data-preview></datahub-record-data-preview>
   </datahub-record-section>
 
@@ -60,15 +62,23 @@
     title="Ressources et liens"
     *ngIf="displayDownload$ | async"
   >
-    <div *ngIf="displayDownload$ | async" id="downloads" class="mb-06">
+    <div
+      *ngIf="displayDownload$ | async"
+      id="downloads"
+      class="subsection mb-6"
+    >
       <datahub-record-downloads class="block"></datahub-record-downloads>
     </div>
 
-    <div *ngIf="displayOtherLinks | async" id="otherlinks" class="mb-6">
+    <div
+      *ngIf="displayOtherLinks | async"
+      id="otherlinks"
+      class="subsection mb-6"
+    >
       <datahub-record-otherlinks class="block"></datahub-record-otherlinks>
     </div>
 
-    <div *ngIf="displayApi$ | async" id="apis">
+    <div *ngIf="displayApi$ | async" id="apis" class="subsection mb-6">
       <datahub-record-apis class="block"></datahub-record-apis>
     </div>
 
@@ -88,9 +98,11 @@
     <div id="related-records" *ngIf="displayRelated$ | async">
       <div>
         <div class="h-48 overflow-visible">
-          <datahub-record-related-records
-            [records]="metadataViewFacade.related$ | async"
-          ></datahub-record-related-records>
+          <div class="container-lg px-4 lg:mx-auto">
+            <datahub-record-related-records
+              [records]="metadataViewFacade.related$ | async"
+            ></datahub-record-related-records>
+          </div>
         </div>
       </div>
       <div class="bg-primary">
@@ -100,14 +112,21 @@
   </datahub-record-section>
 
   <datahub-record-section
-    id="userFeedbacks"
+    id="feedbacks"
+    title="Questions & Réponses"
     *ngIf="(metadataViewFacade.isPresent$ | async) === true"
   >
-    <div class="bg-primary-opacity-10 py-16 mt-[32px]">
-      <datahub-record-user-feedbacks
-        [organisationName$]="organisationName$"
-        [metadataUuid]="metadataUuid$ | async"
-      ></datahub-record-user-feedbacks>
+    <div
+      *ngIf="(metadataViewFacade.isPresent$ | async) === true"
+      id="userFeedbacks"
+      class="bg-primary-opacity-10 py-16 mt-[32px]"
+    >
+      <div class="container-lg px-4 lg:mx-auto">
+        <datahub-record-user-feedbacks
+          [organisationName$]="organisationName$"
+          [metadataUuid]="metadataUuid$ | async"
+        ></datahub-record-user-feedbacks>
+      </div>
     </div>
   </datahub-record-section>
 </div>
