@@ -73,6 +73,7 @@
   "dataset.error.http": "Il caricamento dei dati non è riuscito a causa di un errore HTTP: \"{info}\"",
   "dataset.error.network": "Il caricamento dei dati non è riuscito a causa di un errore di rete o di limitazioni CORS: \"{info}\"",
   "dataset.error.parse": "I dati sono stati caricati ma la decodifica non è riuscita: \"{info}\"",
+  "dataset.error.restrictedAccess": "",
   "dataset.error.unknown": "Impossibile visualizzare i dati: \"{info}\"",
   "dataset.error.unsupportedType": "Il seguente tipo di contenuto non è supportato: \"{info}\"",
   "domain.contact.role.author": "Autore",

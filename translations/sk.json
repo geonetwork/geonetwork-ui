@@ -73,6 +73,7 @@
   "dataset.error.http": "Dáta sa nedajú načítať kvôli chybe HTTP: \"{ info }\"",
   "dataset.error.network": "Dáta sa nedajú načítať kvôli chybe v sieti alebo obmedzeniam CORS: \"{ info }\"",
   "dataset.error.parse": "Dáta boli načítané, ale nedajú sa analyzovať: \"{ info }\"",
+  "dataset.error.restrictedAccess": "",
   "dataset.error.unknown": "Dáta nie je možné zobraziť: \"{ info }\"",
   "dataset.error.unsupportedType": "Nepodporovaný typ obsahu: \"{ info }\"",
   "domain.contact.role.author": "",

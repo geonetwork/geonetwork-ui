@@ -73,6 +73,7 @@
   "dataset.error.http": "",
   "dataset.error.network": "",
   "dataset.error.parse": "",
+  "dataset.error.restrictedAccess": "",
   "dataset.error.unknown": "",
   "dataset.error.unsupportedType": "",
   "domain.contact.role.author": "",
