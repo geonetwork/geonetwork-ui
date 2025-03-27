@@ -1,37 +1,60 @@
-<a
-  class="group flex justify-between card-shadow px-6 py-5 cursor-pointer"
-  rel="noopener"
->
-  <div class="grow-1 w-full overflow-hidden">
-    <div
-      class="text-16 text-black truncate font-title w-11/12"
-      [title]="link['title'] || link.name"
+<div class="accordion">
+  <a
+    id="accordion"
+    class="group flex justify-between card-shadow px-6 py-5 cursor-pointer"
+    rel="noopener"
+    (click)="isOpen = !isOpen"
+  >
+    <div class="grow-1 w-full overflow-hidden">
+      <div
+        class="text-16 text-black truncate font-title w-11/12"
+        [title]="link['title'] || link.name"
+      >
+        {{ link['title'] || link.name }}
+      </div>
+      <div class="pt-1">
+        <span
+          class="inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded transition-opacity opacity-70 group-hover:opacity-100"
+          [style.background-color]="color"
+          data-cy="download-format"
+          >{{ format || ('downloads.format.unknown' | translate) }}</span
+        >
+      </div>
+    </div>
+    <ng-icon
+      class="text-primary opacity-70 transform transition-transform duration-200"
+      name="matExpandMore"
+      [ngClass]="{ 'rotate-180': isOpen }"
     >
-      {{ link['title'] || link.name }}
-    </div>
-    <div class="pt-1">
-      <span
-        class="inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded transition-opacity opacity-70 group-hover:opacity-100"
-        [style.background-color]="color"
-        data-cy="download-format"
-        >{{ format || ('downloads.format.unknown' | translate) }}</span
+    </ng-icon>
+  </a>
+  <div *ngIf="isOpen" class="p-4 border-t bg-white">
+    <div class="flex justify-end mb-3">
+      <button
+        class="flex items-center gap-2 px-4 py-2 bg-primary-opacity-50 text-white rounded-md shadow hover:bg-primary' transition"
+        (click)="downloadMultipleFiles()"
       >
-      <span
-        class="pl-2 inline-flex items-center text-gray-800 text-sm"
-        *ngIf="isFromWfs"
-        translate=""
-        >datahub.search.filter.generatedByWfs</span
-      >
+        <ng-icon name="matCloudDownloadOutline"></ng-icon>
+        {{ 'record.metadata.api.form.downloadAll' | translate }}
+      </button>
     </div>
-    <div *ngFor="let entry of liste$ | async">
-      <a [href]="entry['link'][0]['href']"
-        >{{ entry['link'][0]['href'].split('/').slice(-1) }}
+    <div class="space-y-2">
+      <div
+        *ngFor="let entry of liste$ | async"
+        class="flex items-center justify-between px-3 py-2 bg-gray-50 rounded-md shadow-sm hover:bg-gray-100 transition"
+      >
+        <a
+          [href]="entry['link'][0]['href']"
+          download
+          class="text-primary hover:underline truncate w-full"
+        >
+          {{ entry['link'][0]['href'].split('/').slice(-1) }}
+        </a>
         <ng-icon
           class="text-primary opacity-45 mr-3"
           name="matCloudDownloadOutline"
-        >
-        </ng-icon>
-      </a>
+        ></ng-icon>
+      </div>
     </div>
   </div>
-</a>
+</div>
