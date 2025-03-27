@@ -72,6 +72,7 @@
   "dataset.error.http": "Die Daten konnten aufgrund eines HTTP-Fehlers nicht geladen werden: \"{ info }\"",
   "dataset.error.network": "Die Daten konnten aufgrund eines Netzwerkfehlers oder CORS-Beschränkungen nicht geladen werden: \"{ info }\"",
   "dataset.error.parse": "Die Daten wurden geladen, konnten aber nicht gelesen werden: \"{ info }\"",
+  "dataset.error.restrictedAccess": "",
   "dataset.error.unknown": "Die Daten können nicht angezeigt werden: \"{ info }\"",
   "dataset.error.unsupportedType": "Der folgende Inhaltstyp wird nicht unterstützt: \"{ info }\"",
   "domain.contact.role.author": "",
