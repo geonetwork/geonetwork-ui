@@ -72,12 +72,17 @@ export class GpfApiDlComponent implements OnInit {
   format$ = new BehaviorSubject('')
   crs$ = new BehaviorSubject('')
   page$ = new BehaviorSubject(1)
+
+  editionDateFrom$ = new BehaviorSubject<string | null>(null)
+  editionDateTo$ = new BehaviorSubject<string | null>(null)
+
   url =
     'https://data.geopf.fr/telechargement/capabilities?outputFormat=application/json'
   choices: any
   bucketPromisesZone: Choice[]
   bucketPromisesFormat: Choice[]
   bucketPromisesCrs: Choice[]
+  defaultEditionDate: [any, any]
 
   constructor(protected http: HttpClient) {}
 
@@ -89,24 +94,27 @@ export class GpfApiDlComponent implements OnInit {
     this.bucketPromisesZone = [{ value: '', label: 'ZONE' }]
     this.bucketPromisesFormat = [{ value: '', label: 'FORMAT' }]
     this.bucketPromisesCrs = [{ value: '', label: 'CRS' }]
+    this.defaultEditionDate = ['', '']
     this.getFields()
   }
 
   apiQueryUrl$ = combineLatest([
     this.zone$,
     this.format$,
-    this.editionDate$,
+    this.editionDateFrom$,
+    this.editionDateTo$,
     this.crs$,
     this.page$,
   ]).pipe(
-    map(([zone, format, editionDate, crs, page]) => {
+    map(([zone, format, editionDateFrom, editionDateTo, crs, page]) => {
       let outputUrl
       if (this.apiBaseUrl) {
         const url = new URL(this.apiBaseUrl) // initialisation de l'url avec l'url de base
         const params = {
           zone: zone,
           format: format,
-          editionDate: editionDate,
+          editionDateFrom: editionDateFrom,
+          editionDateTo: editionDateTo,
           crs: crs,
           page: page,
         } // initialisation des paramètres de filtres
@@ -136,9 +144,7 @@ export class GpfApiDlComponent implements OnInit {
   pageMax$ = this.apiQueryUrl$.pipe(
     mergeMap((url) => {
       return this.getFilteredProduct$(url).pipe(
-        map((response) =>
-          Math.ceil(response['totalentries'] / Number(this.initialLimit))
-        )
+        map((response) => response['pagecount'])
       )
     })
   )
@@ -151,9 +157,17 @@ export class GpfApiDlComponent implements OnInit {
     return produit['format'][0]['label']
   }
 
-  setEditionDate(value: string) {
-    if (value.match(/[0-9]{4}-[0-1][0-9]-[0-3][0-9]/)) {
-      this.editionDate$.next(value)
+  setEditionDateFrom(value: string) {
+    if (value.match(/^\d{4}-\d{2}-\d{2}$/)) {
+      this.editionDateFrom$.next(value)
+      this.resetPage()
+    }
+  }
+
+  setEditionDateTo(value: string) {
+    if (value.match(/^\d{4}-\d{2}-\d{2}$/)) {
+      this.editionDateTo$.next(value)
+
       this.resetPage()
     }
   }
@@ -186,6 +200,8 @@ export class GpfApiDlComponent implements OnInit {
     this.format$.next('null')
     this.crs$.next('null')
     this.page$.next(1)
+    this.editionDateFrom$.next(this.defaultEditionDate[0])
+    this.editionDateTo$.next(this.defaultEditionDate[1])
   }
   moreResult(): void {
     this.page$.next(this.page$.value + 1)
@@ -213,7 +229,7 @@ export class GpfApiDlComponent implements OnInit {
         (element) => element['id'] == this.apiBaseUrl
       )[0]
       page += 1
-      pageCount = response.data.pagecount
+      pageCount = response.data.pagecount + 1
     }
 
     return choicesTest
@@ -248,6 +264,15 @@ export class GpfApiDlComponent implements OnInit {
 
     this.bucketPromisesCrs = tempCrs
 
+    console.log('choices', this.choices.editionDateStart)
+
+    this.defaultEditionDate = [
+      this.choices.editionDateStart,
+      this.choices.editionDateEnd,
+    ]
+
+    this.editionDateFrom$.next(this.defaultEditionDate[0])
+    this.editionDateTo$.next(this.defaultEditionDate[1])
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   }
 }
