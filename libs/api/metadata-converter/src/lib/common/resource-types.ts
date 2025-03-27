@@ -4,23 +4,23 @@ import {
   ReuseType,
 } from '@geonetwork-ui/common/domain/model/record'
 
-export function getResourceType(type: string): RecordKind {
-  const possibleResourceTypes = {
-    application: 'reuse',
-    dataset: 'dataset',
-    map: 'reuse',
-    'map/static': 'reuse', // old index field
-    'map/interactive': 'reuse', // old index field
-    'map-interactive': 'reuse', // new index field since Oct 10, 2024
-    'map-static': 'reuse', // new index field
-    mapDigital: 'reuse',
-    interactiveMap: 'reuse',
-    staticMap: 'reuse',
-    service: 'service',
-  } as const
+export const PossibleResourceTypes = {
+  application: 'reuse',
+  dataset: 'dataset',
+  map: 'reuse',
+  'map/static': 'reuse', // old index field
+  'map/interactive': 'reuse', // old index field
+  'map-interactive': 'reuse', // new index field since Oct 10, 2024
+  'map-static': 'reuse', // new index field
+  mapDigital: 'reuse',
+  interactiveMap: 'reuse',
+  staticMap: 'reuse',
+  service: 'service',
+} as const
 
+export function getResourceType(type: string): RecordKind {
   return (
-    possibleResourceTypes[type as keyof typeof possibleResourceTypes] ||
+    PossibleResourceTypes[type as keyof typeof PossibleResourceTypes] ||
     'dataset'
   )
 }

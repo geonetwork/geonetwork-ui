@@ -12,7 +12,7 @@ import { ResultsListContainerComponent } from './results-list/results-list.conta
 import { SortByComponent } from './sort-by/sort-by.component'
 import { SearchEffects } from './state/effects'
 import { initialState, reducer, SEARCH_FEATURE_KEY } from './state/reducer'
-import { ResultsHitsContainerComponent } from './results-hits-number/results-hits.container.component'
+import { ResultsHitsContainerComponent } from './results-hits/results-hits.container.component'
 import { SearchStateContainerDirective } from './state/container/search-state.container.directive'
 import {
   AutocompleteComponent,

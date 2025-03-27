@@ -1,0 +1,20 @@
+<ul class="flex flex-wrap list-none gap-2">
+  <li *ngFor="let choice of choices" [title]="choice.label">
+    <label
+      class="flex items-center gap-2 gn-ui-btn-outline !py-2 px-2 text-black rounded-md border border-gray-400 cursor-pointer focus-within:text-primary-darkest focus-within:bg-gray-50 transition-colors"
+      [ngClass]="{
+        'bg-primary-lightest hover:bg-primary-lightest': isSelected(choice),
+      }"
+    >
+      <input
+        class="hidden"
+        type="checkbox"
+        #checkBox
+        [checked]="isSelected(choice)"
+        (change)="select(choice, checkBox.checked)"
+      />
+      <ng-icon *ngIf="choice.icon" [name]="choice.icon"></ng-icon>
+      {{ choice.label }}
+    </label>
+  </li>
+</ul>

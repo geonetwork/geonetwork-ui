@@ -10,6 +10,7 @@ import { RecordPreviewListComponent } from './record-preview-list/record-preview
 import { RecordPreviewRowComponent } from './record-preview-row/record-preview-row.component'
 import { RecordPreviewTextComponent } from './record-preview-text/record-preview-text.component'
 import { RecordPreviewTitleComponent } from './record-preview-title/record-preview-title.component'
+import { ResultsHitsFiltersComponent } from './results-hits-filters/results-hits-filters.component'
 import { ResultsHitsNumberComponent } from './results-hits-number/results-hits-number.component'
 import {
   DEFAULT_RESULTS_LAYOUT_CONFIG,
@@ -47,6 +48,7 @@ import { matFace } from '@ng-icons/material-icons/baseline'
     RecordPreviewTitleComponent,
     RecordMetricComponent,
     ResultsListComponent,
+    ResultsHitsFiltersComponent,
     ResultsHitsNumberComponent,
     ResultsListItemComponent,
     RecordPreviewFeedComponent,
@@ -85,6 +87,7 @@ import { matFace } from '@ng-icons/material-icons/baseline'
     ResultsListComponent,
     FacetsModule,
     RecordPreviewComponent,
+    ResultsHitsFiltersComponent,
     ResultsHitsNumberComponent,
     RecordPreviewFeedComponent,
     RecordPreviewRowComponent,

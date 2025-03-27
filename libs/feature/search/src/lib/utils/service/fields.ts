@@ -29,6 +29,7 @@ export type FieldValue = string | number
 export interface FieldAvailableValue {
   value: FieldValue
   label: string
+  count?: number
 }
 
 export abstract class AbstractSearchField {
@@ -80,6 +81,7 @@ export class SimpleSearchField implements AbstractSearchField {
         const bucketPromises = buckets.map(async (bucket) => ({
           label: `${await this.getBucketLabel(bucket)} (${bucket.count})`,
           value: bucket.term.toString(),
+          count: bucket.count,
         }))
         return Promise.all(bucketPromises)
       })
