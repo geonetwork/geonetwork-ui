@@ -53,7 +53,7 @@
     </div>
   </datahub-record-section>
 
-  <datahub-record-section id="preview" title="Aperçu">
+  <datahub-record-section id="preview">
     <datahub-record-data-preview></datahub-record-data-preview>
   </datahub-record-section>
 
@@ -62,24 +62,18 @@
     title="Ressources et liens"
     *ngIf="displayDownload$ | async"
   >
-    <div
-      *ngIf="displayDownload$ | async"
-      id="downloads"
-      class="subsection mb-6"
-    >
-      <datahub-record-downloads class="block"></datahub-record-downloads>
-    </div>
+    <div class="container-lg px-4 lg:mx-auto">
+      <div id="downloads" class="mb-6">
+        <datahub-record-downloads class="block"></datahub-record-downloads>
+      </div>
 
-    <div
-      *ngIf="displayOtherLinks | async"
-      id="otherlinks"
-      class="subsection mb-6"
-    >
-      <datahub-record-otherlinks class="block"></datahub-record-otherlinks>
-    </div>
+      <div *ngIf="displayOtherLinks | async" id="otherlinks" class="mb-6">
+        <datahub-record-otherlinks class="block"></datahub-record-otherlinks>
+      </div>
 
-    <div *ngIf="displayApi$ | async" id="apis" class="subsection mb-6">
-      <datahub-record-apis class="block"></datahub-record-apis>
+      <div *ngIf="displayApi$ | async" id="apis" class="mb-6">
+        <datahub-record-apis class="block"></datahub-record-apis>
+      </div>
     </div>
 
     <ng-container *ngIf="displayDatasetHasNoLinkBlock$ | async">
@@ -95,7 +89,7 @@
     title="Contenus associés"
     *ngIf="displayRelated$ | async"
   >
-    <div id="related-records" *ngIf="displayRelated$ | async">
+    <div>
       <div>
         <div class="h-48 overflow-visible">
           <div class="container-lg px-4 lg:mx-auto">
@@ -112,13 +106,11 @@
   </datahub-record-section>
 
   <datahub-record-section
-    id="feedbacks"
-    title="Questions & Réponses"
+    id="userFeedbacks"
     *ngIf="(metadataViewFacade.isPresent$ | async) === true"
   >
     <div
       *ngIf="(metadataViewFacade.isPresent$ | async) === true"
-      id="userFeedbacks"
       class="bg-primary-opacity-10 py-16 mt-[32px]"
     >
       <div class="container-lg px-4 lg:mx-auto">
