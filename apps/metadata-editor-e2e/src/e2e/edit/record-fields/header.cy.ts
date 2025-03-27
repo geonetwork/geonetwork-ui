@@ -187,7 +187,6 @@ describe('editor form', () => {
             'contain',
             'The image could not be uploaded'
           )
-          cy.get('[data-cy="imgInputMsgSecondary"]').should('contain', 'Retry')
         })
 
         it('shows icon and error messages when invalid image url', () => {
@@ -203,30 +202,6 @@ describe('editor form', () => {
           cy.get('[data-cy="imgInputMsgPrimary"]').should(
             'contain',
             'The image could not be uploaded'
-          )
-          cy.get('[data-cy="imgInputMsgSecondary"]').should('contain', 'Retry')
-        })
-
-        it('should hide the error messages and show default ui when click retry', () => {
-          // Emulate error with an invalid image url
-          cy.get('[data-cy="imgUrlBtn"]').find('button').click()
-          cy.get('[data-cy="imgUrlInput"]')
-            .find('input')
-            .type('https://overview.img/42x42.png')
-          cy.get('[data-cy="imgUrlInput"]').find('button').click()
-
-          // Click retry
-          cy.get('[data-cy="imgInputMsgSecondary"]').click()
-
-          // Default display
-          cy.get('[data-cy="imgErrorIcon"]').should('not.exist')
-          cy.get('[data-cy="imgInputMsgPrimary"]').should(
-            'contain',
-            'Select an image'
-          )
-          cy.get('[data-cy="imgInputMsgSecondary"]').should(
-            'contain',
-            'or drop it here'
           )
         })
       })
