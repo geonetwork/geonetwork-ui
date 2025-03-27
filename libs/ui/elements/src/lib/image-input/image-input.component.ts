@@ -93,7 +93,7 @@ export class ImageInputComponent {
   ) {}
 
   getIsActionBlocked() {
-    return this.isUploadInProgress || this.imageFileError || this.disabled
+    return this.isUploadInProgress || this.disabled
   }
 
   getPrimaryText() {
@@ -108,7 +108,7 @@ export class ImageInputComponent {
 
   getSecondaryText() {
     if (this.imageFileError) {
-      return marker('input.image.uploadErrorRetry')
+      return '\u00A0' // (only to keep same spacing, next step is to handle "Retry")
     }
     if (this.uploadProgress) {
       return marker('input.image.uploadProgressCancel')
@@ -183,9 +183,7 @@ export class ImageInputComponent {
   }
 
   handleSecondaryTextClick(event: Event) {
-    if (this.imageFileError) {
-      this.handleRetryUpload()
-    } else if (this.uploadProgress) {
+    if (this.uploadProgress) {
       this.handleCancelUpload()
       event.preventDefault()
     }
@@ -193,11 +191,6 @@ export class ImageInputComponent {
 
   handleCancelUpload() {
     this.uploadCancel.emit()
-  }
-
-  handleRetryUpload() {
-    this.resetErrors()
-    this.cd.markForCheck()
   }
 
   handleDelete() {
