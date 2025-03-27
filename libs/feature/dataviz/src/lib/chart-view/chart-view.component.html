@@ -40,6 +40,7 @@
     class="relative h-full mt-2 bg-white border border-gray-300 rounded-lg overflow-hidden"
   >
     <gn-ui-chart
+      *ngIf="!error"
       [data]="chartData$ | async"
       [type]="chartType$.value"
       [labelProperty]="labelProperty"

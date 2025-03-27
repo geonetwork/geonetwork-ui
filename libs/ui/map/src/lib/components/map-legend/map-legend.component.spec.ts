@@ -120,6 +120,31 @@ describe('MapLegendComponent', () => {
       expect(legendStatusChangeSpy).not.toHaveBeenCalled()
     })
 
+    it('should emit false when no layer is present in context', async () => {
+      const mockContext: MapContext = {
+        layers: [],
+      } as MapContext
+
+      ;(createLegendFromLayer as jest.Mock).mockResolvedValue(false)
+
+      const legendStatusChangeSpy = jest.spyOn(
+        component.legendStatusChange,
+        'emit'
+      )
+
+      await component.ngOnChanges({
+        context: {
+          currentValue: mockContext,
+          previousValue: {},
+          firstChange: false,
+          isFirstChange: () => false,
+        },
+      })
+
+      expect(component.legendHTML).toBe(false)
+      expect(legendStatusChangeSpy).toHaveBeenCalledWith(false)
+    })
+
     it('should handle multiple layers', async () => {
       const mockContext: MapContext = {
         layers: [{ id: 'layer-1' }, { id: 'layer-2' }],

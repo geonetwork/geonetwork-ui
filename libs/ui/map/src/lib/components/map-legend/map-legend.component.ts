@@ -33,6 +33,9 @@ export class MapLegendComponent implements OnChanges {
         if (this.legendHTML) {
           this.legendStatusChange.emit(true)
         }
+      } else {
+        this.legendHTML = false
+        this.legendStatusChange.emit(false)
       }
     }
   }
