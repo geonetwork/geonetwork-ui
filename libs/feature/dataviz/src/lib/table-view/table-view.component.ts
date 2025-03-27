@@ -46,6 +46,10 @@ export class TableViewComponent {
     switchMap((link) => {
       this.error = null
       if (!link) return of(undefined)
+      if (link.applicationProfile) {
+        this.handleError('dataset.error.restrictedAccess')
+        return of([])
+      }
       this.loading = true
       return this.getDatasetReader(link).pipe(
         catchError((error) => {
