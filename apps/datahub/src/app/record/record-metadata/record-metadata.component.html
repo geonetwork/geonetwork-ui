@@ -53,7 +53,7 @@
     </div>
   </datahub-record-section>
 
-  <datahub-record-section id="preview">
+  <datahub-record-section id="data-preview">
     <datahub-record-data-preview></datahub-record-data-preview>
   </datahub-record-section>
 
@@ -63,15 +63,15 @@
     *ngIf="displayDownload$ | async"
   >
     <div class="container-lg px-4 lg:mx-auto">
-      <div id="downloads" class="mb-6">
+      <div id="downloads" class="mb-14">
         <datahub-record-downloads class="block"></datahub-record-downloads>
       </div>
 
-      <div *ngIf="displayOtherLinks | async" id="otherlinks" class="mb-6">
+      <div *ngIf="displayOtherLinks | async" id="otherlinks" class="mb-14">
         <datahub-record-otherlinks class="block"></datahub-record-otherlinks>
       </div>
 
-      <div *ngIf="displayApi$ | async" id="apis" class="mb-6">
+      <div *ngIf="displayApi$ | async" id="apis" class="mb-14">
         <datahub-record-apis class="block"></datahub-record-apis>
       </div>
     </div>

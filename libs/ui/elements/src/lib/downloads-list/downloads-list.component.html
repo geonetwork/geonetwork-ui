@@ -16,7 +16,7 @@
       class="m-1 format-filter"
       [extraClass]="
         '!px-[12px] !py-[8px] !text-[15px]' +
-        (isFilterActive(format) ? ' opacity-100' : ' opacity-50')
+        (isFilterActive(format) ? ' opacity-100' : ' opacity-60')
       "
       (buttonClick)="toggleFilterFormat(format)"
       [attr.data-format]="format"
