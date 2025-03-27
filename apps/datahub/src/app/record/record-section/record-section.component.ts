@@ -8,7 +8,10 @@ import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
   imports: [CommonModule, UiLayoutModule],
   template: `
     <section [id]="id">
-      <h1 *ngIf="title" class="title-font font-medium mb-3 text-[28px]">
+      <h1
+        *ngIf="title"
+        class="title-font text-title font-medium pt-6 text-[28px] container-lg px-4 lg:mx-auto"
+      >
         {{ title }}
       </h1>
       <div>

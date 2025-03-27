@@ -119,14 +119,6 @@ export class RecordMetadataComponent {
 
   showOverlay = true
 
-  sections = [
-    { id: 'about', label: 'À propos' },
-    { id: 'preview', label: 'Aperçu' },
-    { id: 'resources', label: 'Ressources et liens' },
-    { id: 'related', label: 'Contenus associés' },
-    { id: 'feedbacks', label: 'Questions & Réponses' },
-  ]
-
   constructor(
     public metadataViewFacade: MdViewFacade,
     private searchService: SearchService,
