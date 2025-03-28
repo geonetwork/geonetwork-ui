@@ -25,7 +25,7 @@ export class OrganizationsFromGroupsService
 {
   private groups$: Observable<GroupApiModel[]>
   private groupsAggregation$: Observable<any[]>
-  organisations$: Observable<Organization[]>
+  private organisations$: Observable<Organization[]>
   organisationsCount$: Observable<number>
 
   constructor(

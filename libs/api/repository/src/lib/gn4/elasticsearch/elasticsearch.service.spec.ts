@@ -563,6 +563,53 @@ describe('ElasticsearchService', () => {
         })
       })
     })
+    it('add configFilter - query string', () => {
+      const query = service['buildPayloadQuery'](
+        {
+          resourceType: {
+            service: false,
+            map: false,
+            'map/static': false,
+            mapDigital: false,
+          },
+        },
+        {},
+        ['record-1', 'record-2', 'record-3']
+      )
+
+      expect(query).toEqual({
+        bool: {
+          filter: [
+            {
+              terms: {
+                isTemplate: ['n'],
+              },
+            },
+            {
+              query_string: {
+                query:
+                  'resourceType:(-"service" OR -"map" OR -"map/static" OR -"mapDigital")',
+              },
+            },
+            {
+              ids: {
+                values: ['record-1', 'record-2', 'record-3'],
+              },
+            },
+          ],
+          should: [],
+          must: [],
+          must_not: [
+            {
+              query_string: {
+                query:
+                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+              },
+            },
+          ],
+        },
+      })
+    })
   })
 
   describe('#injectLangInQueryStringFields - Search language', () => {

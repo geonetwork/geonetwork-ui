@@ -14,6 +14,8 @@ import {
   elasticFullResponseFixture,
   groupsFixture,
 } from '@geonetwork-ui/common/fixtures'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
+import { ElasticsearchService } from '../elasticsearch'
 
 const groupsAggregationMock = {
   aggregations: {
@@ -70,6 +72,15 @@ const sampleOrgC: Organization = {
   email: 'rolf.giezendanner@are.admin.ch',
 }
 
+const configFilters: FieldFilters = {
+  resourceType: {
+    service: false,
+    map: false,
+    'map/static': false,
+    mapDigital: false,
+  },
+}
+
 class SearchApiServiceMock {
   search = jest.fn(() => of(groupsAggregationMock))
 }
@@ -82,11 +93,18 @@ class TranslateServiceMock {
   currentLang = 'fr'
   get = jest.fn((key) => of(key))
 }
+class ElasticsearchServiceMock {
+  getSearchRequestBody = jest.fn((...args) => args)
+}
 
 describe('OrganizationsFromGroupsService', () => {
   let service: OrganizationsFromGroupsService
+  let searchApiService: SearchApiServiceMock
+  let esService: ElasticsearchServiceMock
 
   beforeEach(() => {
+    searchApiService = new SearchApiServiceMock()
+    esService = new ElasticsearchServiceMock()
     TestBed.configureTestingModule({
       providers: [
         OrganizationsFromGroupsService,
@@ -96,11 +114,15 @@ describe('OrganizationsFromGroupsService', () => {
         },
         {
           provide: SearchApiService,
-          useClass: SearchApiServiceMock,
+          useValue: searchApiService,
         },
         {
           provide: TranslateService,
           useClass: TranslateServiceMock,
+        },
+        {
+          provide: ElasticsearchService,
+          useValue: esService,
         },
       ],
     })
@@ -111,13 +133,36 @@ describe('OrganizationsFromGroupsService', () => {
     expect(service).toBeTruthy()
   })
   describe('organisations$', () => {
-    let organisations
-    beforeEach(() => {
-      organisations = null
-      service.getOrganisations({}).subscribe((orgs) => (organisations = orgs))
-    })
     it('get organisations with record count', () => {
+      let organisations = null
+      service.getOrganisations({}).subscribe((orgs) => (organisations = orgs))
       expect(organisations).toEqual([sampleOrgA, sampleOrgB, sampleOrgC])
+    })
+    it('get organisations with configFilter', (done) => {
+      service.getOrganisations(configFilters).subscribe(() => {
+        expect(searchApiService.search).toHaveBeenCalledWith(
+          'bucket',
+          null,
+          JSON.stringify(
+            esService.getSearchRequestBody(
+              {
+                groups: {
+                  terms: {
+                    field: 'groupOwner',
+                    size: 5000,
+                  },
+                },
+              },
+              0,
+              0,
+              undefined,
+              undefined,
+              configFilters
+            )
+          )
+        )
+        done()
+      })
     })
   })
   describe('#getFiltersForOrgs', () => {
