@@ -32,7 +32,9 @@
         mat-row
         *matRowDef="let row; columns: properties"
         (click)="selected.emit(row)"
-        [class.active]="row.id === activeId"
+        [class.active]="
+          activeId !== undefined && activeId !== null && row.id === activeId
+        "
       ></tr>
     </table>
     <gn-ui-loading-mask
