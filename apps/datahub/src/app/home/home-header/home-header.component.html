@@ -26,6 +26,7 @@
           --gn-ui-text-input-border-size: 0px;
         "
         (itemSelected)="onFuzzySearchSelection($event)"
+        [autoCompleteActionCustom]="autoCompleteActionCustom"
         [autoFocus]="true"
       ></gn-ui-fuzzy-search>
       <div

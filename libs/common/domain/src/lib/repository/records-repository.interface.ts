@@ -22,7 +22,10 @@ export abstract class RecordsRepositoryInterface {
   abstract getSimilarRecords(
     similarTo: CatalogRecord
   ): Observable<CatalogRecord[]>
-  abstract fuzzySearch(query: string): Observable<SearchResults>
+  abstract fuzzySearch(
+    query: string,
+    configFilters?: FieldFilters
+  ): Observable<SearchResults>
   abstract canEditRecord(uniqueIdentifier: string): Observable<boolean>
   /**
    * This emits once:
