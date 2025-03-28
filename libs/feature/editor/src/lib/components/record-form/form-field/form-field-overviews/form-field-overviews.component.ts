@@ -64,7 +64,7 @@ export class FormFieldOverviewsComponent {
             this.cd.detectChanges()
             this.emitOverview({
               url: event.attachment.url,
-              description: event.attachment.fileName,
+              description: event.attachment.fileName.replace(/\.[^/.]+$/, ''),
             })
           }
         },

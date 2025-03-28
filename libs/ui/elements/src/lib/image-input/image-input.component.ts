@@ -82,6 +82,7 @@ export class ImageInputComponent {
   showUrlInput = false
   imageFileError = this.uploadError
   showAltTextInput = false
+  pendingAltText: string
 
   get isUploadInProgress() {
     return this.uploadProgress !== undefined
@@ -209,7 +210,6 @@ export class ImageInputComponent {
   handleAltTextChange(altText: string) {
     this.altTextChange.emit(altText)
   }
-
   private filterTypeImage(files: File[]) {
     return files.filter((file) => {
       return file.type.startsWith('image/')
