@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common'
 import { Component, ChangeDetectionStrategy } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { SearchService } from '@geonetwork-ui/feature/search'
+import { NavigationButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matExpandMoreOutline } from '@ng-icons/material-icons/outline'
@@ -19,7 +21,13 @@ marker('record.metadata.userFeedbacks')
   styleUrls: ['./navigation-bar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [NgIcon, CommonModule, TranslateModule, UiLayoutModule],
+  imports: [
+    NgIcon,
+    CommonModule,
+    TranslateModule,
+    UiLayoutModule,
+    NavigationButtonComponent,
+  ],
   viewProviders: [provideIcons({ matExpandMoreOutline })],
 })
 export class NavigationBarComponent {
@@ -51,6 +59,9 @@ export class NavigationBarComponent {
     },
   ]
   activeLabel = this.anchorLinks[0].label
+
+  constructor(private searchService: SearchService) {}
+
   setActiveLabel(el: HTMLElement) {
     const disabledClass = el.getAttribute('gnUiAnchorLinkDisabledClass')
     const disabled = new RegExp(disabledClass).test(el.className)
@@ -58,5 +69,8 @@ export class NavigationBarComponent {
   }
   toggleMobileMenu() {
     this.displayMobileMenu = !this.displayMobileMenu
+  }
+  back() {
+    this.searchService.updateFilters({})
   }
 }
