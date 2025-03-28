@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { globalConfigFilters } from '../../../app.config'
 import {
   MetadataQualityConfig,
   getMetadataQualityConfig,
