@@ -354,8 +354,7 @@ export class OrganizationSearchField implements AbstractSearchField {
   constructor(private injector: Injector) {}
 
   getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
-    const organisations$ = this.orgsService.getOrganisations()
-    return organisations$.pipe(
+    return this.orgsService.getOrganisations().pipe(
       map((orgs) =>
         values
           .map((name) => orgs.find((org) => org.name === name))
@@ -377,8 +376,7 @@ export class OrganizationSearchField implements AbstractSearchField {
     configFilters: FieldFilters
   ): Observable<FieldAvailableValue[]> {
     // sort values by alphabetical order
-    const organisations$ = this.orgsService.getOrganisations(configFilters)
-    return organisations$.pipe(
+    return this.orgsService.getOrganisations(configFilters).pipe(
       map((organisations) =>
         organisations.map((org) => ({
           label: `${org.name} (${org.recordCount})`,

@@ -24,7 +24,6 @@ const orgs = [
 const orgs$ = of(orgs)
 
 class orgServiceMock {
-  organisations$ = orgs$
   getOrganisations = jest.fn(() => orgs$)
 }
 
@@ -87,13 +86,12 @@ describe('MyOrgService', () => {
     })
   })
 
-  //passe pas
   it('should update myOrgDataSubject when orgService organisations$ emits organizations', () => {
     const orgsSubject = new BehaviorSubject<any[]>([])
     const orgs = [
       { name: 'Géo2France', logoUrl: { href: 'logo-url' }, recordCount: 10 },
     ]
-    orgService.organisations$ = orgsSubject.asObservable()
+    orgService.getOrganisations = jest.fn(() => orgsSubject.asObservable())
 
     orgsSubject.next(orgs)
 

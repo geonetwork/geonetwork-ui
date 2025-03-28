@@ -207,7 +207,6 @@ const configFilters: FieldFilters = {
 }
 
 class OrganisationsServiceMock {
-  organisations$ = of(sampleOrgs)
   getOrgsFromFilters = jest.fn(() => of(sampleOrgs.slice(0, 2)))
   getFiltersForOrgs = jest.fn((orgs) =>
     of({
