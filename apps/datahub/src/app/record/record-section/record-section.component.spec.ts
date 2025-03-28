@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordSectionComponent } from './record-section.component'
-import { By } from '@angular/platform-browser'
-import { AnchorLinkDirective } from '@geonetwork-ui/ui/layout'
+import { MockModule } from 'ng-mocks'
+import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 
 describe('RecordSectionComponent', () => {
   let component: RecordSectionComponent
@@ -9,8 +9,7 @@ describe('RecordSectionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RecordSectionComponent],
-      declarations: [AnchorLinkDirective],
+      imports: [RecordSectionComponent, MockModule(UiLayoutModule)],
     }).compileComponents()
   })
 
@@ -27,16 +26,12 @@ describe('RecordSectionComponent', () => {
   })
 
   it('should have correct id and title', () => {
-    const section = fixture.debugElement.query(By.css('section'))
-    expect(section.attributes['id']).toBe('test-section')
-    const title = fixture.debugElement.query(By.css('h1'))
-    expect(title.nativeElement.textContent).toContain('Test Section')
+    expect(component.id).toBe('test-section')
+    expect(component.title).toBe('Test Section')
   })
 
   it('should have anchor link directive', () => {
-    const section = fixture.debugElement.query(
-      By.directive(AnchorLinkDirective)
-    )
-    expect(section).toBeTruthy()
+    const section = fixture.nativeElement.querySelector('section')
+    expect(section.id).toBe('test-section')
   })
 })

@@ -422,6 +422,10 @@ describe('RecordMetadataComponent', () => {
   describe('sections', () => {
     beforeEach(() => {
       facade.isPresent$.next(true)
+      facade.downloadLinks$.next(['link'])
+      facade.apiLinks$.next(['link'])
+      facade.otherLinks$.next(['link'])
+      facade.related$.next([{ title: 'title' }])
       fixture.detectChanges()
     })
 
@@ -442,7 +446,7 @@ describe('RecordMetadataComponent', () => {
         'data-preview',
         'resources',
         'related',
-        'userfeedbacks',
+        'userFeedbacks',
       ])
     })
   })

@@ -75,14 +75,14 @@
         <datahub-record-apis class="block"></datahub-record-apis>
       </div>
     </div>
-
-    <ng-container *ngIf="displayDatasetHasNoLinkBlock$ | async">
-      <gn-ui-error
-        data-test="dataset-has-no-link-block"
-        [type]="errorTypes.DATASET_HAS_NO_LINK"
-      ></gn-ui-error>
-    </ng-container>
   </datahub-record-section>
+
+  <ng-container *ngIf="displayDatasetHasNoLinkBlock$ | async">
+    <gn-ui-error
+      data-test="dataset-has-no-link-block"
+      [type]="errorTypes.DATASET_HAS_NO_LINK"
+    ></gn-ui-error>
+  </ng-container>
 
   <datahub-record-section
     id="related"
