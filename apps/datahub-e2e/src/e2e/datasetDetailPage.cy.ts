@@ -709,13 +709,13 @@ describe('dataset pages', () => {
           cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
         })
         it('should display the related records', () => {
-          cy.get('#related-records')
+          cy.get('#related')
             .find('datahub-record-related-records')
             .find('gn-ui-related-record-card')
             .should('have.length.gt', 0)
         })
         it('should display a similar related record', () => {
-          cy.get('#related-records')
+          cy.get('#related')
             .find('datahub-record-related-records')
             .find('gn-ui-related-record-card')
             .first()
@@ -727,7 +727,7 @@ describe('dataset pages', () => {
         })
         it('goes to dataset on click', () => {
           let targetLink
-          cy.get('#related-records')
+          cy.get('#related')
             .find('datahub-record-related-records')
             .find('gn-ui-related-record-card')
             .first()

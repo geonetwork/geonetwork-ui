@@ -27,6 +27,7 @@ import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlink
 import { RecordRelatedRecordsComponent } from '../record-related-records/record-related-records.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
+import { RecordSectionComponent } from '../record-section/record-section.component'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -50,6 +51,7 @@ import { RecordDataPreviewComponent } from '../record-data-preview/record-data-p
     RecordRelatedRecordsComponent,
     TranslateModule,
     RecordDataPreviewComponent,
+    RecordSectionComponent,
   ],
 })
 export class RecordMetadataComponent {
