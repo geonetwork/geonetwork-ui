@@ -1,12 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { FavoriteStarComponent } from '@geonetwork-ui/feature/search'
-import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
+import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { combineLatest, map } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
 import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
-import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
@@ -22,9 +20,7 @@ import { NavigationBarComponent } from '../navigation-bar/navigation-bar.compone
   standalone: true,
   imports: [
     CommonModule,
-    LanguageSwitcherComponent,
     TranslateModule,
-    FavoriteStarComponent,
     BadgeComponent,
     NgIcon,
     NavigationBarComponent,
@@ -37,7 +33,6 @@ export class HeaderRecordComponent {
     getThemeConfig().HEADER_BACKGROUND ||
     `center /cover url('assets/img/header_bg.webp')`
   foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
-  showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
 
   constructor(
     public facade: MdViewFacade,
