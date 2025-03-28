@@ -120,11 +120,24 @@ describe('editor form', () => {
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('gn-ui-image-input').find('img').should('have.length', 1)
         })
-        it('allows to add an alternate text', () => {
+        it('allows to add an alternative text', () => {
           cy.get('gn-ui-image-input').find('gn-ui-button').eq(2).click()
           cy.get('gn-ui-image-input')
             .find('gn-ui-text-input')
             .should('be.visible')
+        })
+        it('shows and modifies alternative text for an image', () => {
+          cy.editor_wrapPreviousDraft()
+          cy.get('gn-ui-image-input').find('gn-ui-button').eq(2).click()
+          cy.get('gn-ui-text-input input').type(
+            '{selectall}{backspace}This is an alternative text for the test image'
+          )
+          cy.editor_publishAndReload()
+          cy.get('@saveStatus').should('eq', 'record_up_to_date')
+          cy.get('gn-ui-image-input').find('gn-ui-button').eq(2).click()
+          cy.get('gn-ui-text-input input')
+            .invoke('val')
+            .should('eq', 'This is an alternative text for the test image')
         })
       })
 
