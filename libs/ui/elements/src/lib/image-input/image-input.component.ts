@@ -66,9 +66,22 @@ import { ImageOverlayPreviewComponent } from '../image-overlay-preview/image-ove
   ],
 })
 export class ImageInputComponent {
-  @Input() maxSizeMB: number
+  private _altText?: string
+
   @Input() previewUrl?: string
-  @Input() altText?: string
+  @Input()
+  get altText(): string | undefined {
+    return this._altText
+  }
+  set altText(value: string | undefined) {
+    if (value != 'KO' && this._altText === 'KO') {
+      //This is a dataset rollback after upload error
+      this.resetErrors()
+    }
+    this._altText = value
+  }
+
+  @Input() maxSizeMB: number
   @Input() uploadProgress?: number
   @Input() uploadError?: boolean
   @Input() disabled?: boolean = false
@@ -132,6 +145,7 @@ export class ImageInputComponent {
       this.resizeAndEmit(validFiles[0])
     } else {
       this.imageFileError = true
+      this.handleAltTextChange('KO')
     }
   }
 
@@ -143,6 +157,7 @@ export class ImageInputComponent {
       this.resizeAndEmit(validFiles[0])
     } else {
       this.imageFileError = true
+      this.handleAltTextChange('KO')
     }
   }
 
@@ -171,6 +186,7 @@ export class ImageInputComponent {
           },
           error: () => {
             this.imageFileError = true
+            this.handleAltTextChange('KO')
             this.cd.markForCheck()
             this.urlChange.emit(url)
           },
@@ -178,6 +194,7 @@ export class ImageInputComponent {
       }
     } catch {
       this.imageFileError = true
+      this.handleAltTextChange('KO')
       this.cd.markForCheck()
       return
     }
