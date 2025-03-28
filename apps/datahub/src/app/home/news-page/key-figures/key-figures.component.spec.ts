@@ -10,7 +10,7 @@ import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/orga
 
 const recordsCount$ = new BehaviorSubject(1234)
 class RecordsServiceMock {
-  recordsCount$ = recordsCount$
+  getRecordsCount = jest.fn(() => recordsCount$)
 }
 
 class OrganisationsServiceMock {

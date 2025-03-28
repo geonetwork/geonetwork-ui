@@ -20,7 +20,6 @@ class ToolsApiServiceMock {
   getTranslationsPackage1 = jest.fn(() => EMPTY)
 }
 class OrganisationsServiceMock {
-  organisations$ = of([{ name: 'orgA', recordCount: 10 }])
   getOrgsFromFilters = jest.fn(() => of([{ name: 'orgB' }]))
   getFiltersForOrgs = jest.fn(() =>
     of({
@@ -126,7 +125,6 @@ describe('FieldsService', () => {
         )
       })
       it('gets the values from the orgs service', () => {
-        console.log('values', values)
         expect(values).toEqual([{ label: 'orgA (10)', value: 'orgA' }])
       })
       it('throws for an unsupported field', () => {

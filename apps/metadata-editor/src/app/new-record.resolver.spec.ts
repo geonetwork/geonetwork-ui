@@ -29,7 +29,6 @@ class PlatformServiceInterfaceMock {
 }
 
 class OrganizationsServiceInterfaceMock {
-  organisations$ = of(someOrganizationsFixture())
   getOrganisations = jest.fn(() => of(someOrganizationsFixture()))
 }
 

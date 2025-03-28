@@ -64,7 +64,7 @@ export class OrganizationsFromMetadataService
   private groups$: Observable<GroupApiModel[]>
   private organisationsAggs$: Observable<OrganizationAggsBucket[]>
   private organisationsWithoutGroups$: Observable<IncompleteOrganization[]>
-  organisations$: Observable<Organization[]>
+  private organisations$: Observable<Organization[]>
   organisationsCount$: Observable<number>
 
   constructor(
