@@ -1,6 +1,12 @@
 <nav
   class="bg-primary flex justify-between py-2 px-4 text-sm text-white sm:space-x-8 sm:px-20 sm:py-5"
 >
+  <gn-ui-navigation-button
+    (click)="back()"
+    [label]="'datahub.search.back' | translate"
+    [icon]="'matArrowBack'"
+  >
+  </gn-ui-navigation-button>
   <button
     type="button"
     *ngFor="let l of anchorLinks"
