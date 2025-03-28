@@ -9,7 +9,7 @@ import {
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { NavigationButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
-import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
+import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matExpandMoreOutline } from '@ng-icons/material-icons/outline'
 import { TranslateModule } from '@ngx-translate/core'
@@ -69,7 +69,7 @@ export class NavigationBarComponent {
   ]
   activeLabel = this.anchorLinks[0].label
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
-  foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
+  black = '#000000'
 
   constructor(private searchService: SearchService) {}
 
