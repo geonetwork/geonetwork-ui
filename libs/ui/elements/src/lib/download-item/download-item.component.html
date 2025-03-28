@@ -1,36 +1,36 @@
 <a
   href="{{ link.url }}"
   target="_blank"
-  class="group flex justify-between card-shadow px-6 py-5 cursor-pointer"
+  class="group flex flex-row justify-between card-shadow cursor-pointer rounded overflow-hidden"
   rel="noopener"
+  [ngClass]="cardClass"
 >
-  <div class="grow-1 w-full overflow-hidden">
-    <div
-      class="text-21 text-black truncate font-title w-11/12"
-      [title]="link.description || link.name"
-    >
+  <div class="flex flex-col justify-between">
+    <div class="gn-ui-card-title" [title]="link.description || link.name">
       {{ link.description || link.name }}
     </div>
-    <div class="pt-1">
+    <div class="gn-ui-card-detail">
+      {{ link.name }}
+    </div>
+    <div class="flex flex-row gap-2 items-center pt-1">
       <span
         class="inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded transition-opacity opacity-70 group-hover:opacity-100"
         [style.background-color]="color"
         data-cy="download-format"
         >{{ format || ('downloads.format.unknown' | translate) }}</span
       >
-      <span
-        class="pl-2 inline-flex items-center text-gray-800 text-sm"
-        *ngIf="isFromApi"
-        translate=""
+      <span class="text-gray-800 text-xs" *ngIf="isFromApi" translate=""
         >datahub.search.filter.generatedByAPI</span
       >
     </div>
   </div>
-  <div class="shrink-1 w-14 flex flex-col justify-center items-center">
-    <ng-icon
-      class="!w-8 !h-8 card-icon text-3xl"
-      name="matCloudDownloadOutline"
-    >
-    </ng-icon>
+  <div class="flex" [ngClass]="size === 'S' ? 'items-end' : 'items-center'">
+    <div class="gn-ui-card-icon">
+      <ng-icon
+        class="inline-block card-icon align-middle"
+        name="iconoirDownload"
+      >
+      </ng-icon>
+    </div>
   </div>
 </a>

@@ -601,7 +601,8 @@ describe('dataset pages', () => {
           cy.get('@filterFormat').click()
           cy.get('@filterFormat').then((btn) => {
             const filterFormat = btn.text().trim()
-            cy.get('[data-cy="download-format"]')
+            cy.get('gn-ui-download-item')
+              .find('[data-cy="download-format"]')
               .filter(':visible')
               .then((format) => {
                 const formatOutput = format.text().trim()
@@ -799,7 +800,7 @@ describe('api cards', () => {
       .children('ng-icon')
       .eq(1)
       .invoke('attr', 'name')
-      .should('equal', 'matMoreHoriz')
+      .should('equal', 'iconoirSettings')
   })
   it('should open and close the panel on click on open panel button', () => {
     cy.get('@firstCard').find('button').eq(1).click()

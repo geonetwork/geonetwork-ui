@@ -186,6 +186,7 @@ export interface OnlineLinkResource {
   name?: string
   description?: string
   translations?: OnlineResourceTranslations
+  mimeType?: string
 }
 
 export type DatasetOnlineResource = (

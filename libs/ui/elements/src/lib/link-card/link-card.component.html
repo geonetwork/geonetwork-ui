@@ -1,39 +1,37 @@
 <a
   [href]="link.url"
   target="_blank"
-  class="flex flex-col justify-between group grow py-5 px-5 bg-white rounded border-gray-300 filter card-shadow overflow-hidden"
-  [ngClass]="{ 'h-40': !compact }"
+  class="group flex flex-row justify-between card-shadow cursor-pointer rounded overflow-hidden"
+  [ngClass]="cardClass"
   [title]="title"
 >
-  <ng-container *ngIf="!compact; else compactTpl">
-    <div class="max-h-24 overflow-hidden text-ellipsis">
-      <p
-        class="font-title font-medium text-21 text-black break-words mb-1 line-clamp-2"
-      >
-        {{ link.name }}
-      </p>
-      <p class="font-medium text-sm break-words">
-        {{ link.description }}
-      </p>
-      <p
-        *ngIf="!link.name && !link.description"
-        class="font-medium text-sm break-words truncate"
-      >
-        {{ link.url }}
-      </p>
+  <div class="flex flex-col justify-between">
+    <div class="gn-ui-card-title">
+      {{ link.description || link.name }}
     </div>
-    <div>
-      <ng-icon class="card-icon" name="matOpenInNew"></ng-icon>
+    <div class="gn-ui-card-detail">
+      {{ link.name }}
     </div>
-  </ng-container>
-  <ng-template #compactTpl>
-    <div class="flex items-center justify-between gap-4">
-      <p
-        class="overflow-hidden font-title font-medium text-21 text-black text-ellipsis whitespace-nowrap"
+    <p *ngIf="!link.name && !link.description" class="gn-ui-card-title">
+      {{ link.url }}
+    </p>
+    <div class="pt-1">
+      <span
+        class="inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded transition-opacity opacity-70 group-hover:opacity-100"
+        [style.background-color]="getLinkColor(link)"
+        data-cy="download-format"
+        >{{
+          getLinkFormat(link) || ('downloads.format.unknown' | translate)
+        }}</span
       >
-        {{ link.name || link.description }}
-      </p>
-      <ng-icon class="card-icon flex-shrink-0" name="matOpenInNew"></ng-icon>
     </div>
-  </ng-template>
+  </div>
+  <div class="flex" [ngClass]="size === 'S' ? 'items-end' : 'items-center'">
+    <div class="gn-ui-card-icon">
+      <ng-icon
+        class="inline-block card-icon align-middle"
+        name="matOpenInNew"
+      ></ng-icon>
+    </div>
+  </div>
 </a>
