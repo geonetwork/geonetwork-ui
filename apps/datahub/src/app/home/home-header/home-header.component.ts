@@ -22,10 +22,12 @@ import {
 } from '@geonetwork-ui/common/domain/model/search'
 import { map } from 'rxjs/operators'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
-import { lastValueFrom } from 'rxjs'
+import { lastValueFrom, Observable } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { sortByFromString } from '@geonetwork-ui/util/shared'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { globalConfigFilters } from '../../app.config'
 
 marker('datahub.header.myfavorites')
 marker('datahub.header.lastRecords')
@@ -56,9 +58,16 @@ export class HomeHeaderComponent {
     public routerFacade: RouterFacade,
     public searchFacade: SearchFacade,
     private searchService: SearchService,
-    private platformService: PlatformServiceInterface,
-    private fieldsService: FieldsService
+    protected platformService: PlatformServiceInterface,
+    private fieldsService: FieldsService,
+    private recordsRepository: RecordsRepositoryInterface
   ) {}
+
+  autoCompleteActionCustom(query: string): Observable<any[]> {
+    return this.recordsRepository
+      .fuzzySearch(query, globalConfigFilters)
+      .pipe(map((result) => result.records))
+  }
 
   displaySortBadges$ = this.routerFacade.currentRoute$.pipe(
     map(

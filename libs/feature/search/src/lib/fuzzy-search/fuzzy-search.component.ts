@@ -33,14 +33,23 @@ export class FuzzySearchComponent implements OnInit {
   @Output() itemSelected = new EventEmitter<CatalogRecord>()
   @Output() inputSubmitted = new EventEmitter<string>()
   @Output() isSearchActive = new EventEmitter<boolean>()
+  @Input() autoCompleteActionCustom: (query: string) => Observable<any[]>
   searchInputValue$: Observable<{ title: string }>
 
   displayWithFn: (record: CatalogRecord) => string = (record) => record.title
 
-  autoCompleteAction = (query: string) =>
-    this.recordsRepository
-      .fuzzySearch(query)
-      .pipe(map((result) => result.records))
+  autoCompleteAction = (query: string) => {
+    if (
+      this.autoCompleteActionCustom &&
+      typeof this.autoCompleteActionCustom === 'function'
+    ) {
+      return this.autoCompleteActionCustom(query)
+    } else {
+      return this.recordsRepository
+        .fuzzySearch(query)
+        .pipe(map((result) => result.records))
+    }
+  }
 
   constructor(
     private searchFacade: SearchFacade,
