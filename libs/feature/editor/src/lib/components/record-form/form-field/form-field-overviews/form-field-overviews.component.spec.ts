@@ -108,7 +108,7 @@ describe('FormFieldOverviewsComponent', () => {
       expect(component.uploadProgress).toBeUndefined()
       expect(valueChange).toEqual([
         {
-          description: 'test.png',
+          description: 'test',
           url: new URL('http://example.com/test.png'),
         },
       ])

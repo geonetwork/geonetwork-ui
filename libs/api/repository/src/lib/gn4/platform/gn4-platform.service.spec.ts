@@ -22,6 +22,7 @@ import {
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { HttpClient, HttpEventType } from '@angular/common/http'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { url } from 'inspector'
 
 let geonetworkVersion: string
 
@@ -794,17 +795,22 @@ describe('Gn4PlatformService', () => {
     it('should clean record attachments no longer used', (done) => {
       const record = { uniqueIdentifier: '123' } as CatalogRecord
       const associatedResources = {
-        onlines: [{ title: { en: 'doge.jpg' } }],
-        thumbnails: [{ title: { en: 'flower.jpg' } }],
+        onlines: [{ title: { en: 'doge.jpg' }, url: 'http://doge.jpg' }],
+        thumbnails: [
+          {
+            title: { en: 'my-beautiful-flower.jpg' },
+            url: 'http://flower.jpg',
+          },
+        ],
       }
       ;(recordsApiService.getAssociatedResources as jest.Mock).mockReturnValue(
         of(associatedResources)
       )
       ;(recordsApiService.getAllResources as jest.Mock).mockReturnValue(
         of([
-          { filename: 'doge.jpg' },
-          { filename: 'flower.jpg' },
-          { filename: 'remove1.jpg' },
+          { filename: 'doge.jpg', url: 'http://doge.jpg' },
+          { filename: 'flower.jpg', url: 'http://flower.jpg' },
+          { filename: 'remove1.jpg', url: 'http://remove1.jpg' },
         ])
       )
       ;(recordsApiService.delResource as jest.Mock).mockReturnValue(
