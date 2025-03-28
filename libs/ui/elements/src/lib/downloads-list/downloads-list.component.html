@@ -1,15 +1,15 @@
 <div
-  class="flex flex-wrap justify-between mt-5 mb-6 sm:mt-2 sm:mb-2"
+  class="flex flex-wrap justify-between items-center pb-4"
   *ngIf="links && links.length > 0"
 >
-  <p
-    class="font-title text-xl text-title font-medium mr-4 pb-4 text-center sm:text-left"
+  <div
+    class="font-title text-xl text-title font-medium mr-4 text-center sm:text-left"
     translate
   >
     record.metadata.download
-  </p>
+  </div>
   <div
-    class="flex flex-wrap justify-start sm:justify-end sm:pb-4"
+    class="flex flex-wrap justify-start sm:justify-end"
     data-cy="download-format-filters"
   >
     <gn-ui-button

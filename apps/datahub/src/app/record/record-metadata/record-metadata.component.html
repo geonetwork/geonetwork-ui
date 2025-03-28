@@ -1,6 +1,6 @@
 <div *ngIf="(metadataViewFacade.error$ | async) === null">
   <datahub-record-section id="about">
-    <div class="container-lg px-4 mb-9 mt-8 sm:mb-16 sm:mt-[51px] lg:mx-auto">
+    <div class="container-lg px-4 mb-9 mt-10 mb-16 pb-2 lg:mx-auto">
       <gn-ui-metadata-info
         class="sm:block"
         *ngIf="(metadataViewFacade.isPresent$ | async) === false"
@@ -62,16 +62,16 @@
     title="Ressources et liens"
     *ngIf="displayDownload$ | async"
   >
-    <div class="container-lg px-4 lg:mx-auto">
-      <div id="downloads" class="mb-14">
+    <div class="container-lg px-4 pb-12 lg:mx-auto">
+      <div id="downloads" class="mt-5">
         <datahub-record-downloads class="block"></datahub-record-downloads>
       </div>
 
-      <div *ngIf="displayOtherLinks | async" id="otherlinks" class="mb-14">
+      <div *ngIf="displayOtherLinks | async" id="otherlinks" class="mt-5">
         <datahub-record-otherlinks class="block"></datahub-record-otherlinks>
       </div>
 
-      <div *ngIf="displayApi$ | async" id="apis" class="mb-14">
+      <div *ngIf="displayApi$ | async" id="apis" class="mt-5">
         <datahub-record-apis class="block"></datahub-record-apis>
       </div>
     </div>
@@ -100,7 +100,7 @@
         </div>
       </div>
       <div class="bg-primary">
-        <div class="container-lg mx-auto h-[1096px] sm:h-96"></div>
+        <div class="container-lg mx-auto h-[254px] sm:h-64"></div>
       </div>
     </div>
   </datahub-record-section>

@@ -439,10 +439,10 @@ describe('RecordMetadataComponent', () => {
       const sectionIds = sections.map((section) => section.componentInstance.id)
       expect(sectionIds).toEqual([
         'about',
-        'preview',
+        'data-preview',
         'resources',
         'related',
-        'feedbacks',
+        'userfeedbacks',
       ])
     })
   })
