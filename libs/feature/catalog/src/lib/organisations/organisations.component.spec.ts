@@ -19,6 +19,7 @@ import {
 class OrganisationsServiceMock {
   organisations$ = of(someOrganizationsFixture())
   organisationsCount$ = of(someOrganizationsFixture().length)
+  getOrganisations = jest.fn(() => of(someOrganizationsFixture()))
 }
 
 const organisationMock = {

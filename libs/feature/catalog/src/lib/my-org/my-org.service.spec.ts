@@ -24,7 +24,7 @@ const orgs = [
 const orgs$ = of(orgs)
 
 class orgServiceMock {
-  organisations$ = orgs$
+  getOrganisations = jest.fn(() => orgs$)
 }
 
 const userSubject = new BehaviorSubject<UserModel | null>(null)
@@ -91,7 +91,7 @@ describe('MyOrgService', () => {
     const orgs = [
       { name: 'Géo2France', logoUrl: { href: 'logo-url' }, recordCount: 10 },
     ]
-    orgService.organisations$ = orgsSubject.asObservable()
+    orgService.getOrganisations = jest.fn(() => orgsSubject.asObservable())
 
     orgsSubject.next(orgs)
 

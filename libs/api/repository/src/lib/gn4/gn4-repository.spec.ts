@@ -13,6 +13,7 @@ import {
 import {
   Aggregations,
   SearchResults,
+  FieldFilters,
 } from '@geonetwork-ui/common/domain/model/search'
 import {
   datasetRecordsFixture,
@@ -42,6 +43,14 @@ class Gn4MetadataMapperMock {
   readRecord = jest.fn((record) => Promise.resolve(record))
 }
 
+const configFilters: FieldFilters = {
+  resourceType: {
+    service: false,
+    map: false,
+    'map/static': false,
+    mapDigital: false,
+  },
+}
 class ElasticsearchServiceMock {
   getSearchRequestBody = jest.fn((aggregations = {}, size = 0) => ({
     aggregations,
@@ -380,10 +389,19 @@ describe('Gn4Repository', () => {
       },
     }
     beforeEach(async () => {
-      results = await lastValueFrom(repository.aggregate(aggParams))
+      results = await lastValueFrom(
+        repository.aggregate(aggParams, configFilters)
+      )
     })
     it('builds an aggregation payload', () => {
-      expect(gn4Helper.getSearchRequestBody).toHaveBeenCalledWith(aggParams)
+      expect(gn4Helper.getSearchRequestBody).toHaveBeenCalledWith(
+        aggParams,
+        expect.any(Number),
+        expect.any(Number),
+        undefined,
+        undefined,
+        configFilters
+      )
     })
     it('returns the aggregation results', () => {
       expect(results).toStrictEqual({

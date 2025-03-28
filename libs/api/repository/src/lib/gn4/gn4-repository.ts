@@ -192,7 +192,10 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       )
   }
 
-  aggregate(params: AggregationsParams): Observable<Aggregations> {
+  aggregate(
+    params: AggregationsParams,
+    configFilters: FieldFilters
+  ): Observable<Aggregations> {
     // if aggregations are empty, return an empty object right away
     if (Object.keys(params).length === 0) return of({})
 
@@ -201,7 +204,16 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       .search(
         'bucket',
         null,
-        JSON.stringify(this.gn4SearchHelper.getSearchRequestBody(aggregations))
+        JSON.stringify(
+          this.gn4SearchHelper.getSearchRequestBody(
+            aggregations,
+            0,
+            0,
+            undefined,
+            undefined,
+            configFilters
+          )
+        )
       )
       .pipe(
         map((response: Gn4SearchResults) =>
