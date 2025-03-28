@@ -242,12 +242,17 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       )
   }
 
-  fuzzySearch(query: string): Observable<SearchResults> {
+  fuzzySearch(
+    query: string,
+    configFilters: FieldFilters = {}
+  ): Observable<SearchResults> {
     return this.gn4SearchApi
       .search(
         'bucket',
         null,
-        JSON.stringify(this.gn4SearchHelper.buildAutocompletePayload(query))
+        JSON.stringify(
+          this.gn4SearchHelper.buildAutocompletePayload(query, configFilters)
+        )
       )
       .pipe(
         switchMap((results: Gn4SearchResults) =>
