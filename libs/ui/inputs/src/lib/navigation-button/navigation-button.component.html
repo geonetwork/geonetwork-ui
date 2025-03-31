@@ -3,6 +3,7 @@
 >
   <ng-icon [name]="icon" class="align-middle w-[18px]"></ng-icon>
   <span
+    *ngIf="label"
     class="mx-2 mt-0.5 text-[16px] tracking-widest content-center opacity-75"
     >{{ label.toUpperCase() }}</span
   >

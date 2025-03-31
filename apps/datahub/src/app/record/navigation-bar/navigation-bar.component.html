@@ -1,25 +1,26 @@
 <nav
-  class="bg-primary-lightest flex justify-between py-2 px-4 text-sm text-black sm:space-x-8 sm:px-20 sm:py-5"
+  class="h-full bg-primary-lightest flex justify-between items-center text-sm text-black text-center overflow-hidden"
+  [class]="displayMobileMenu ? '' : 'divide-x-2 divide-gray-400'"
 >
-  <gn-ui-navigation-button
-    (click)="back()"
-    [label]="'datahub.search.back' | translate"
-    [icon]="'matArrowBack'"
+  <div
+    class="flex min-w-[60px] justify-center lg:min-w-40 lg:justify-end lg:pr-4"
   >
-  </gn-ui-navigation-button>
+    <gn-ui-navigation-button (click)="back()" [icon]="'matArrowBack'">
+    </gn-ui-navigation-button>
+  </div>
   <button
     type="button"
     *ngFor="let l of anchorLinks"
     gnUiAnchorLink="{{ l.anchor }}"
     gnUiAnchorLinkDisabledClass="sm:hidden"
-    class="uppercase font-medium tracking-wider hidden sm:block opacity-80 hover:opacity-100"
+    class="font-medium hidden sm:block opacity-80 hover:opacity-100 h-[60px] w-full px-2 items-center"
     translate
   >
     {{ l.label }}
   </button>
   <div
     (click)="toggleMobileMenu()"
-    class="w-full flex justify-between cursor-pointer sm:hidden"
+    class="w-full flex justify-between items-center cursor-pointer sm:hidden"
   >
     <div
       class="shrink truncate"
@@ -30,7 +31,7 @@
           (click)="setActiveLabel($event.target)"
           gnUiAnchorLink="{{ l.anchor }}"
           gnUiAnchorLinkDisabledClass="hidden"
-          class="block px-3 py-3 rounded-md font-medium uppercase tracking-wider w-full text-left truncate"
+          class="h-[60px] block px-3 py-3 rounded-md font-medium w-full text-left text-wrap"
           translate
         >
           {{ l.label }}
@@ -38,7 +39,7 @@
       </div>
     </div>
     <button
-      class="block px-3 py-3 rounded-md font-medium uppercase tracking-wider shrink truncate sm:hidden"
+      class="h-[60px] block px-3 py-3 rounded-md font-medium shrink text-wrap sm:hidden"
       [class]="displayMobileMenu ? 'hidden' : 'block'"
       translate
     >
@@ -51,7 +52,9 @@
       <ng-icon class="align-middle" name="matExpandMoreOutline"></ng-icon>
     </button>
   </div>
-  <div class="flex flex-row mr-2 content-center gap-3">
+  <div
+    class="h-[60px] flex flex-row gap-3 min-w-40 justify-center items-center lg:min-w-60 lg:pl-4 lg:justify-start"
+  >
     <gn-ui-favorite-star
       *ngIf="metadata?.uniqueIdentifier"
       [record]="metadata"
