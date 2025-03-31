@@ -1,15 +1,22 @@
 <div
-  class="flex flex-wrap justify-between mt-8 mb-6 sm:mt-12 sm:mb-2"
+  class="flex flex-wrap justify-between mt-8 mb-6 sm:mt-12 sm:mb-2 items-center pb4"
   *ngIf="links && links.length > 0"
 >
-  <p
-    class="font-title text-[28px] text-title font-medium mr-4 pb-4 text-center sm:text-left"
-    translate
-  >
-    record.metadata.download
-  </p>
+  <div class="flex flex-row items-center gap-x-4">
+    <p
+      class="font-title text-[28px] text-title font-medium mr-4 text-center sm:text-left"
+      translate
+    >
+      record.metadata.download
+    </p>
+    <gn-ui-previous-next-buttons
+      *ngIf="paginableElement?.pagesCount > 1"
+      [listComponent]="paginableElement"
+    ></gn-ui-previous-next-buttons>
+  </div>
+
   <div
-    class="flex flex-wrap justify-start sm:justify-end sm:pb-4"
+    class="flex flex-wrap justify-start sm:justify-end"
     data-cy="download-format-filters"
   >
     <gn-ui-button
@@ -26,11 +33,16 @@
     </gn-ui-button>
   </div>
 </div>
-<div class="mb-2 sm:mb-3" *ngFor="let link of filteredLinks">
-  <gn-ui-download-item
-    [link]="link"
-    [color]="getLinkColor(link)"
-    [format]="getLinkFormat(link)"
-    [isFromApi]="isFromApi(link)"
-  ></gn-ui-download-item>
-</div>
+
+<ng-container>
+  <gn-ui-block-list containerClass="gap-4 py-10">
+    <gn-ui-download-item
+      #block
+      *ngFor="let link of filteredLinks"
+      [link]="link"
+      [color]="getLinkColor(link)"
+      [format]="getLinkFormat(link)"
+      [isFromApi]="isFromApi(link)"
+    ></gn-ui-download-item>
+  </gn-ui-block-list>
+</ng-container>
