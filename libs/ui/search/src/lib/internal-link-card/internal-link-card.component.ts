@@ -1,4 +1,12 @@
-import { Component, Input, TemplateRef, OnInit } from '@angular/core'
+import {
+  Component,
+  Input,
+  TemplateRef,
+  OnInit,
+  Output,
+  EventEmitter,
+  ElementRef,
+} from '@angular/core'
 import {
   CatalogRecord,
   Organization,
@@ -9,17 +17,27 @@ import {
   MetadataQualityComponent,
   ThumbnailComponent,
 } from '@geonetwork-ui/ui/elements'
-import { removeWhitespace, stripHtml } from '@geonetwork-ui/util/shared'
+import {
+  propagateToDocumentOnly,
+  removeWhitespace,
+  stripHtml,
+} from '@geonetwork-ui/util/shared'
 import {
   NgIconComponent,
   provideIcons,
   provideNgIconsConfig,
 } from '@ng-icons/core'
-import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
+import {
+  matLocationSearchingOutline,
+  matEmailOutline,
+  matPhoneOutline,
+  matLocationOnOutline,
+} from '@ng-icons/material-icons/outline'
 import { matCode } from '@ng-icons/material-icons/baseline'
-import { iconoirDatabase, iconoirMap } from '@ng-icons/iconoir'
+import { iconoirDatabase, iconoirMap, iconoirInternet } from '@ng-icons/iconoir'
 import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { fromEvent, Subscription } from 'rxjs'
 
 marker('record.kind.dataset')
 marker('record.kind.reuse')
@@ -46,6 +64,10 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
       matCode,
       iconoirDatabase,
       iconoirMap,
+      iconoirInternet,
+      matEmailOutline,
+      matPhoneOutline,
+      matLocationOnOutline,
     }),
     provideNgIconsConfig({
       size: '1.2em',
@@ -58,12 +80,16 @@ export class InternalLinkCardComponent implements OnInit {
   @Input() record: CatalogRecord
   @Input() metadataQualityDisplay: boolean
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
+  @Input() linkHref: string = null
   @Input() isGeodata: boolean
   @Input() set size(value: CardSize) {
     this._size = value
     this.cardClass = this.sizeClassMap[value] || ''
     this.thumbnailContainerClass = this.thumbnailSizeClassMap[value] || 'hidden'
   }
+  @Output() mdSelect = new EventEmitter<CatalogRecord>()
+  subscription = new Subscription()
+
   abstract: string
 
   get size(): CardSize {
@@ -75,27 +101,63 @@ export class InternalLinkCardComponent implements OnInit {
 
   private _size: CardSize = 'M'
 
-  // Updated size classes with consistent margins and paddings
   private readonly sizeClassMap: Record<CardSize, string> = {
-    L: 'min-h-[205px] md:w-[992px] py-4 px-6 flex items-start gap-5',
-    M: 'min-h-[140px] md:w-[570px] py-2 px-6 flex items-start gap-4',
-    S: 'min-h-[135px] md:w-80 p-4 block',
-    XS: 'min-h-[68px] md:w-[487px] py-2 px-6 block',
+    L: 'min-h-[190px] md:w-[992px] py-3 px-3 flex items-start gap-5',
+    M: 'min-h-[140px] md:w-[570px] py-3 px-3 flex items-start gap-4',
+    S: 'min-h-[220px] md:w-[370px] py-3 px-3 flex item-center gap-4',
+    XS: 'min-h-[108px] md:w-[570px] py-3 px-3 flex item-center gap-4',
   }
 
   private readonly thumbnailSizeClassMap: Record<CardSize, string> = {
-    L: 'w-[190px] h-[169px] rounded-lg overflow-hidden shrink-0',
+    L: 'w-[190px] h-[180px] rounded-lg overflow-hidden shrink-0',
     M: 'w-[110px] h-[140px] rounded-lg overflow-hidden shrink-0',
     S: 'hidden',
     XS: 'hidden',
   }
 
-  ngOnInit() {
+  constructor(protected elementRef: ElementRef) {}
+
+  ngOnInit(): void {
     this.abstract = removeWhitespace(stripHtml(this.record?.abstract))
+    this.subscription.add(
+      fromEvent(this.elementRef.nativeElement, 'click').subscribe(
+        (event: Event) => {
+          event.preventDefault()
+          propagateToDocumentOnly(event)
+          this.mdSelect.emit(this.record)
+        }
+      )
+    )
   }
 
   get organization(): Organization {
     return this.record.ownerOrganization
+  }
+
+  get contacts() {
+    return (
+      (this.record.kind === 'dataset'
+        ? this.record.contactsForResource
+        : this.record.contacts) || []
+    )
+  }
+
+  openExternalUrl(event: Event, url: URL): void {
+    event.stopPropagation()
+    window.open(url, '_blank')
+  }
+
+  openMailto(event: Event, email: string): void {
+    event.stopPropagation()
+    window.open(`mailto:${email}`, '_blank')
+  }
+
+  // implement copy to clipboard
+  copyToClipboard(event: Event, text: string): void {
+    event.stopPropagation()
+    navigator.clipboard.writeText(text).then(() => {
+      console.log('Text copied to clipboard')
+    })
   }
 
   get shouldShowThumbnail(): boolean {
