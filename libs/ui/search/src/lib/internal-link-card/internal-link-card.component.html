@@ -54,7 +54,6 @@
             ></gn-ui-metadata-quality>
           </div>
         </div>
-        <!-- Favorite star icon -->
         <div class="absolute top-0 right-0">
           <ng-container
             *ngIf="size !== 'XS'"
@@ -62,14 +61,12 @@
             [ngTemplateOutletContext]="{ $implicit: record }"
           ></ng-container>
         </div>
-        <!-- Title section: line-clamped to two lines -->
         <div
           class="mt-2 font-medium text-title group-hover:text-primary overflow-hidden break-words"
           [ngClass]="size === 'S' ? 'line-clamp-3' : 'line-clamp-2'"
         >
           {{ record.title }}
         </div>
-        <!-- Abstract: shown only for large cards -->
         <div
           *ngIf="size === 'L'"
           class="mt-1 mb-2 font-normal text-xs text-gray-900 line-clamp-2 overflow-hidden"
@@ -80,7 +77,6 @@
           ></gn-ui-markdown-parser>
         </div>
       </div>
-      <!-- Organization / Contact section -->
       <div
         *ngIf="size !== 'XS'"
         class="flex items-center justify-between bg-gray-50 rounded-lg h-[50px] px-2"
@@ -109,8 +105,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Action buttons -->
         <div *ngIf="size === 'L'" class="ml-2 flex space-x-2">
           <div *ngIf="organization?.website" class="flex">
             <button
@@ -131,7 +125,7 @@
               <ng-icon name="matEmailOutline"></ng-icon>
             </button>
           </div>
-          <div *ngIf="contacts[0]?.email" class="flex">
+          <div *ngIf="contacts[0]?.phone" class="flex">
             <button
               [title]="'Copy to clipboard'"
               class="w-[40px] h-[32px] flex items-center justify-center rounded-lg border border-[#D4D3D7] px-[8px] py-[4px] hover:bg-primary-lightest relative group"
@@ -141,25 +135,17 @@
               <ng-icon name="matPhoneOutline"></ng-icon>
             </button>
           </div>
-          <div *ngIf="contacts[0]?.email" class="flex">
+          <div *ngIf="contacts[0]?.address" class="flex">
             <button
               [title]="'Copy to clipboard'"
               class="w-[40px] h-[32px] flex items-center justify-center rounded-lg border border-[#D4D3D7] px-[8px] py-[4px] hover:bg-primary-lightest relative group"
               data-cy="contact-phone"
-              (click)="copyToClipboard($event, contacts[0].email)"
+              (click)="copyToClipboard($event, contacts[0].address)"
             >
               <ng-icon name="matLocationOnOutline"></ng-icon>
             </button>
           </div>
         </div>
-      </div>
-    </div>
-    <div
-      class="flex ml-auto self-center"
-      [ngClass]="size === 'S' ? 'items-end' : 'items-center'"
-    >
-      <div class="gn-ui-card-icon">
-        <!-- Optionally include other icons here -->
       </div>
     </div>
   </div>
