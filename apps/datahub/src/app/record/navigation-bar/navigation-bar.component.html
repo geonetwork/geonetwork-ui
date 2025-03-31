@@ -1,9 +1,14 @@
 <nav
-  class="h-full bg-primary-lightest flex justify-between items-center text-sm text-black text-center overflow-hidden"
-  [class]="displayMobileMenu ? '' : 'divide-x-2 divide-gray-400'"
+  class="h-full bg-primary-lightest flex justify-between text-sm text-black text-center overflow-hidden"
+  [class]="
+    displayMobileMenu
+      ? 'items-start'
+      : 'items-center divide-x-2 divide-gray-400'
+  "
 >
   <div
-    class="flex min-w-[60px] justify-center lg:min-w-40 lg:justify-end lg:pr-4"
+    class="h-[60px] flex min-w-[60px] items-center justify-center lg:min-w-40 lg:justify-end lg:pr-4"
+    [class]="displayMobileMenu ? 'border-r-2 border-gray-400' : ''"
   >
     <gn-ui-navigation-button (click)="back()" [icon]="'matArrowBack'">
     </gn-ui-navigation-button>
@@ -20,7 +25,7 @@
   </button>
   <div
     (click)="toggleMobileMenu()"
-    class="w-full flex justify-between items-center cursor-pointer sm:hidden"
+    class="w-full flex justify-between items-start cursor-pointer sm:hidden"
   >
     <div
       class="shrink truncate"
@@ -47,13 +52,14 @@
     </button>
     <button
       type="button"
-      class="h-10 inline-flex items-center justify-center p-2 rounded-md shrink-0 sm:hidden"
+      class="h-[60px] inline-flex items-center justify-center p-2 rounded-md shrink-0 sm:hidden"
     >
       <ng-icon class="align-middle" name="matExpandMoreOutline"></ng-icon>
     </button>
   </div>
   <div
     class="h-[60px] flex flex-row gap-3 min-w-40 justify-center items-center lg:min-w-60 lg:pl-4 lg:justify-start"
+    [class]="displayMobileMenu ? 'border-l-2 border-gray-400' : ''"
   >
     <gn-ui-favorite-star
       *ngIf="metadata?.uniqueIdentifier"
