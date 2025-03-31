@@ -87,14 +87,13 @@ export class InternalLinkCardComponent implements OnInit {
     this.cardClass = this.sizeClassMap[value] || ''
     this.thumbnailContainerClass = this.thumbnailSizeClassMap[value] || 'hidden'
   }
+  get size(): CardSize {
+    return this._size
+  }
   @Output() mdSelect = new EventEmitter<CatalogRecord>()
   subscription = new Subscription()
 
   abstract: string
-
-  get size(): CardSize {
-    return this._size
-  }
 
   cardClass = ''
   thumbnailContainerClass = ''
@@ -152,12 +151,9 @@ export class InternalLinkCardComponent implements OnInit {
     window.open(`mailto:${email}`, '_blank')
   }
 
-  // implement copy to clipboard
   copyToClipboard(event: Event, text: string): void {
     event.stopPropagation()
-    navigator.clipboard.writeText(text).then(() => {
-      console.log('Text copied to clipboard')
-    })
+    navigator.clipboard.writeText(text)
   }
 
   get shouldShowThumbnail(): boolean {
