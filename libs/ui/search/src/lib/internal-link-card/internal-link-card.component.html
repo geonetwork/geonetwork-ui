@@ -1,81 +1,89 @@
 <div
-  class="rounded-lg group card-shadow cursor-pointer overflow-hidden"
+  class="rounded-lg group card-shadow cursor-pointer overflow-hidden hover:bg-gray-50"
   [ngClass]="cardClass"
 >
   <div class="flex flex-row justify-between w-full">
-    <div *ngIf="shouldShowThumbnail" [ngClass]="thumbnailContainerClass">
+    <div
+      *ngIf="shouldShowThumbnail"
+      [ngClass]="thumbnailContainerClass"
+      class="mr-4 flex flex-col"
+    >
       <gn-ui-thumbnail
         class="w-full h-full object-cover"
         [thumbnailUrl]="record.overviews?.[0]?.url?.toString() || ''"
         [fit]="'cover'"
       ></gn-ui-thumbnail>
     </div>
-    <div class="flex flex-col ml-4 flex-1 relative">
-      <div class="flex items-center space-x-2">
-        <span
-          *ngIf="getKindInfo().text"
-          class="badge-btn text-white text-xs px-2 py-0.5 font-bold shrink-0 bg-primary leading-tight flex items-center justify-center h-5 min-h-5"
-        >
-          <ng-icon
-            class="text-[0.9em] text-white mr-1"
-            [name]="getKindInfo().icon"
-          ></ng-icon>
-          <span class="font-medium text-white text-xs" translate>
-            {{ getKindInfo().text }}
-          </span>
-        </span>
-        <span
-          *ngIf="isGeodata"
-          class="badge-btn text-black text-xs px-2 py-0.5 font-bold shrink-0 bg-primary-white leading-tight flex items-center justify-center h-5 min-h-5"
-        >
-          <ng-icon
-            class="text-[0.9em] text-primary-darkest mr-1"
-            name="matLocationSearchingOutline"
-          ></ng-icon>
-          <ng-container *ngIf="size === 'L'">
-            <span
-              class="font-medium text-primary-darkest text-xs ml-1"
-              translate
-            >
-              record.metadata.type
+    <div class="flex flex-col flex-1 relative justify-between">
+      <div>
+        <div class="flex items-center space-x-2">
+          <span
+            *ngIf="getKindInfo().text"
+            class="badge-btn text-white text-xs px-2 py-0.5 font-bold shrink-0 bg-primary leading-tight flex items-center justify-center h-5 min-h-5"
+          >
+            <ng-icon
+              class="text-[0.9em] text-white mr-1"
+              [name]="getKindInfo().icon"
+            ></ng-icon>
+            <span class="font-medium text-white text-xs" translate>
+              {{ getKindInfo().text }}
             </span>
-          </ng-container>
-        </span>
-        <div class="flex items-center">
-          <gn-ui-metadata-quality
-            [smaller]="true"
-            [metadata]="record"
-            [metadataQualityDisplay]="metadataQualityDisplay"
-          ></gn-ui-metadata-quality>
+          </span>
+          <span
+            *ngIf="isGeodata"
+            class="badge-btn text-black text-xs px-2 py-0.5 font-bold shrink-0 bg-primary-white leading-tight flex items-center justify-center h-5 min-h-5"
+          >
+            <ng-icon
+              class="text-[0.9em] text-primary-darkest"
+              name="matLocationSearchingOutline"
+            ></ng-icon>
+            <ng-container *ngIf="size === 'L'">
+              <span
+                class="font-medium text-primary-darkest text-xs ml-1"
+                translate
+              >
+                record.metadata.type
+              </span>
+            </ng-container>
+          </span>
+          <div class="flex items-center">
+            <gn-ui-metadata-quality
+              [smaller]="true"
+              [metadata]="record"
+              [metadataQualityDisplay]="metadataQualityDisplay"
+            ></gn-ui-metadata-quality>
+          </div>
         </div>
-      </div>
-      <!-- Favorite star icon -->
-      <div class="absolute top-0 right-0">
-        <ng-container
-          *ngIf="size !== 'S'"
-          [ngTemplateOutlet]="favoriteTemplate"
-          [ngTemplateOutletContext]="{ $implicit: record }"
-        ></ng-container>
-      </div>
-      <!-- Title section: line-clamped to two lines -->
-      <div
-        class="mt-2 font-medium text-title group-hover:text-primary line-clamp-2 overflow-hidden break-words"
-      >
-        {{ record.title }}
-      </div>
-      <!-- Abstract: shown only for large cards -->
-      <div
-        *ngIf="size === 'L'"
-        class="mt-2 mb-2 font-normal text-xs text-gray-900 line-clamp-2 overflow-hidden"
-      >
-        <gn-ui-markdown-parser
-          [textContent]="abstract"
-          [whitoutStyles]="true"
-        ></gn-ui-markdown-parser>
+        <!-- Favorite star icon -->
+        <div class="absolute top-0 right-0">
+          <ng-container
+            *ngIf="size !== 'XS'"
+            [ngTemplateOutlet]="favoriteTemplate"
+            [ngTemplateOutletContext]="{ $implicit: record }"
+          ></ng-container>
+        </div>
+        <!-- Title section: line-clamped to two lines -->
+        <div
+          class="mt-2 font-medium text-title group-hover:text-primary overflow-hidden break-words"
+          [ngClass]="size === 'S' ? 'line-clamp-3' : 'line-clamp-2'"
+        >
+          {{ record.title }}
+        </div>
+        <!-- Abstract: shown only for large cards -->
+        <div
+          *ngIf="size === 'L'"
+          class="mt-1 mb-2 font-normal text-xs text-gray-900 line-clamp-2 overflow-hidden"
+        >
+          <gn-ui-markdown-parser
+            [textContent]="abstract"
+            [whitoutStyles]="true"
+          ></gn-ui-markdown-parser>
+        </div>
       </div>
       <!-- Organization / Contact section -->
       <div
-        class="mt-auto flex items-center justify-between bg-gray-50 rounded-lg h-[50px] px-2"
+        *ngIf="size !== 'XS'"
+        class="flex items-center justify-between bg-gray-50 rounded-lg h-[50px] px-2"
       >
         <div class="flex items-center flex-1 min-w-0">
           <div
@@ -89,19 +97,65 @@
               class="w-full h-full rounded-lg"
             ></gn-ui-thumbnail>
           </div>
-          <div class="flex-1 w-0 overflow-hidden">
-            <div class="text-xs text-black font-normal leading-tight truncate">
-              Contact de la métadonnée
+          <div *ngIf="organization?.name" class="flex-1 w-0 overflow-hidden">
+            <div
+              class="text-xs text-black font-normal leading-tight truncate"
+              translate
+            >
+              record.card.metadata.contact
             </div>
             <div class="text-xl text-primary-black font-medium truncate">
-              {{ organization?.name }}
+              {{ organization.name }}
             </div>
+          </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div *ngIf="size === 'L'" class="ml-2 flex space-x-2">
+          <div *ngIf="organization?.website" class="flex">
+            <button
+              [title]="organization.website"
+              class="w-[40px] h-[32px] flex items-center justify-center rounded-lg border border-[#D4D3D7] px-[8px] py-[4px] hover:bg-primary-lightest"
+              (click)="openExternalUrl($event, organization.website)"
+            >
+              <ng-icon name="iconoirInternet"></ng-icon>
+            </button>
+          </div>
+          <div *ngIf="contacts[0]?.email" class="flex">
+            <button
+              [title]="contacts[0].email"
+              class="w-[40px] h-[32px] flex items-center justify-center rounded-lg border border-[#D4D3D7] px-[8px] py-[4px] hover:bg-primary-lightest"
+              data-cy="contact-email"
+              (click)="openMailto($event, contacts[0].email)"
+            >
+              <ng-icon name="matEmailOutline"></ng-icon>
+            </button>
+          </div>
+          <div *ngIf="contacts[0]?.email" class="flex">
+            <button
+              [title]="'Copy to clipboard'"
+              class="w-[40px] h-[32px] flex items-center justify-center rounded-lg border border-[#D4D3D7] px-[8px] py-[4px] hover:bg-primary-lightest relative group"
+              data-cy="contact-phone"
+              (click)="copyToClipboard($event, contacts[0].phone)"
+            >
+              <ng-icon name="matPhoneOutline"></ng-icon>
+            </button>
+          </div>
+          <div *ngIf="contacts[0]?.email" class="flex">
+            <button
+              [title]="'Copy to clipboard'"
+              class="w-[40px] h-[32px] flex items-center justify-center rounded-lg border border-[#D4D3D7] px-[8px] py-[4px] hover:bg-primary-lightest relative group"
+              data-cy="contact-phone"
+              (click)="copyToClipboard($event, contacts[0].email)"
+            >
+              <ng-icon name="matLocationOnOutline"></ng-icon>
+            </button>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="flex ml-auto"
+      class="flex ml-auto self-center"
       [ngClass]="size === 'S' ? 'items-end' : 'items-center'"
     >
       <div class="gn-ui-card-icon">
