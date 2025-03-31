@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { NgIcon } from '@ng-icons/core'
 
@@ -6,7 +7,7 @@ import { NgIcon } from '@ng-icons/core'
   templateUrl: './navigation-button.component.html',
   styleUrls: ['./navigation-button.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgIcon],
+  imports: [CommonModule, NgIcon],
   standalone: true,
 })
 export class NavigationButtonComponent {
