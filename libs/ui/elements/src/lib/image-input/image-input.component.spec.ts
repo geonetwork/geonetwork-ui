@@ -158,7 +158,7 @@ describe('ImageInputComponent', () => {
     }))
   })
 
-  describe('reinitialise errors at dataset rollback', () => {
+  describe('reinitialize errors at dataset rollback', () => {
     beforeEach(() => {
       component.maxSizeMB = 1
     })
@@ -199,7 +199,7 @@ describe('ImageInputComponent', () => {
         statusText: 'OK',
       })
 
-      await downloadPromise // Attend que la promesse soit résolue
+      await downloadPromise //Await download promise to be resolve and finish emits
 
       expect(component.altTextChange.emit).toHaveBeenCalledWith('KO')
       component.altText = 'KO' // Simulate setting altText to KO by the parent component
