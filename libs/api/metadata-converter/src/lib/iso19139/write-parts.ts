@@ -1184,25 +1184,27 @@ export function writeGraphicOverviews(
     findOrCreateIdentification(),
     removeChildrenByName('gmd:graphicOverview'),
     appendChildren(
-      ...record.overviews.map((overview) =>
-        pipe(
-          createNestedElement('gmd:graphicOverview', 'gmd:MD_BrowseGraphic'),
-          appendChildren(
-            pipe(
-              createElement('gmd:fileName'),
-              writeCharacterString(overview.url.toString())
-            )
-          ),
-          'description' in overview
-            ? appendChildren(
-                pipe(
-                  createElement('gmd:fileDescription'),
-                  writeCharacterString(overview.description)
-                )
+      ...record.overviews
+        .filter((overview) => overview.url)
+        .map((overview) =>
+          pipe(
+            createNestedElement('gmd:graphicOverview', 'gmd:MD_BrowseGraphic'),
+            appendChildren(
+              pipe(
+                createElement('gmd:fileName'),
+                writeCharacterString(overview.url.toString())
               )
-            : noop
+            ),
+            'description' in overview
+              ? appendChildren(
+                  pipe(
+                    createElement('gmd:fileDescription'),
+                    writeCharacterString(overview.description)
+                  )
+                )
+              : noop
+          )
         )
-      )
     )
   )(rootEl)
 }
