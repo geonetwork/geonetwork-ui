@@ -74,7 +74,7 @@ export class ImageInputComponent {
     return this._altText
   }
   set altText(value: string | undefined) {
-    if (value != 'KO' && this._altText === 'KO') {
+    if (value !== 'KO' && this._altText === 'KO') {
       //This is a dataset rollback after upload error
       this.resetErrors()
     }
