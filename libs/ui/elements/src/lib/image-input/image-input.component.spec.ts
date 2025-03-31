@@ -157,4 +157,61 @@ describe('ImageInputComponent', () => {
       }, 0)
     }))
   })
+
+  describe('reinitialize errors at dataset rollback', () => {
+    beforeEach(() => {
+      component.maxSizeMB = 1
+    })
+
+    it('should emit KO as altText when downloading invalid url and reset errors when dataset is rollback', waitForAsync(() => {
+      jest.spyOn(component.altTextChange, 'emit')
+      const nonImageFile = new File([], 'test.txt', { type: 'text/plain' })
+      component.handleDropFiles([nonImageFile])
+      expect(component.altTextChange.emit).toHaveBeenCalledWith('KO')
+      component.altText = 'KO' // Simulate setting altText to KO by the parent component
+      expect(component.imageFileError).toBe(true)
+
+      // Simulate component reset ( dataset rollback )
+      component.altText = null
+
+      expect(component.uploadError).toBe(false)
+      expect(component.imageFileError).toBe(false)
+    }))
+
+    it('should emit KO as altText when downloading 404 url and reset errors when dataset is rollback', waitForAsync(async () => {
+      jest.spyOn(component.altTextChange, 'emit')
+
+      const downloadPromise = component.downloadUrl(
+        'http://test.com/invalid.png'
+      )
+
+      const reqHead = httpTestingController.expectOne(
+        'http://test.com/invalid.png'
+      )
+      expect(reqHead.request.method).toEqual('HEAD')
+
+      const responseHeaders = new HttpHeaders()
+        .set('content-type', 'image/png')
+        .set('content-length', '1048575')
+      reqHead.flush(null, {
+        headers: responseHeaders,
+        status: 404,
+        statusText: 'OK',
+      })
+
+      await downloadPromise //Await download promise to be resolve and finish emits
+
+      expect(component.altTextChange.emit).toHaveBeenCalledWith('KO')
+      component.altText = 'KO' // Simulate setting altText to KO by the parent component
+      expect(component.imageFileError).toBe(true)
+
+      // Simulate component reset ( dataset rollback )
+      component.altText = null
+
+      expect(component.uploadError).toBe(false)
+      expect(component.imageFileError).toBe(false)
+
+      httpTestingController.verify()
+    }))
+  })
 })
