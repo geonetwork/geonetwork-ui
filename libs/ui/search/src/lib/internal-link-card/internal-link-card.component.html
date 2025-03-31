@@ -1,0 +1,112 @@
+<div
+  class="rounded-lg group card-shadow cursor-pointer overflow-hidden"
+  [ngClass]="cardClass"
+>
+  <div class="flex flex-row justify-between w-full">
+    <div *ngIf="shouldShowThumbnail" [ngClass]="thumbnailContainerClass">
+      <gn-ui-thumbnail
+        class="w-full h-full object-cover"
+        [thumbnailUrl]="record.overviews?.[0]?.url?.toString() || ''"
+        [fit]="'cover'"
+      ></gn-ui-thumbnail>
+    </div>
+    <div class="flex flex-col ml-4 flex-1 relative">
+      <div class="flex items-center space-x-2">
+        <span
+          *ngIf="getKindInfo().text"
+          class="badge-btn text-white text-xs px-2 py-0.5 font-bold shrink-0 bg-primary leading-tight flex items-center justify-center h-5 min-h-5"
+        >
+          <ng-icon
+            class="text-[0.9em] text-white mr-1"
+            [name]="getKindInfo().icon"
+          ></ng-icon>
+          <span class="font-medium text-white text-xs" translate>
+            {{ getKindInfo().text }}
+          </span>
+        </span>
+        <span
+          *ngIf="isGeodata"
+          class="badge-btn text-black text-xs px-2 py-0.5 font-bold shrink-0 bg-primary-white leading-tight flex items-center justify-center h-5 min-h-5"
+        >
+          <ng-icon
+            class="text-[0.9em] text-primary-darkest mr-1"
+            name="matLocationSearchingOutline"
+          ></ng-icon>
+          <ng-container *ngIf="size === 'L'">
+            <span
+              class="font-medium text-primary-darkest text-xs ml-1"
+              translate
+            >
+              record.metadata.type
+            </span>
+          </ng-container>
+        </span>
+        <div class="flex items-center">
+          <gn-ui-metadata-quality
+            [smaller]="true"
+            [metadata]="record"
+            [metadataQualityDisplay]="metadataQualityDisplay"
+          ></gn-ui-metadata-quality>
+        </div>
+      </div>
+      <!-- Favorite star icon -->
+      <div class="absolute top-0 right-0">
+        <ng-container
+          *ngIf="size !== 'S'"
+          [ngTemplateOutlet]="favoriteTemplate"
+          [ngTemplateOutletContext]="{ $implicit: record }"
+        ></ng-container>
+      </div>
+      <!-- Title section: line-clamped to two lines -->
+      <div
+        class="mt-2 font-medium text-title group-hover:text-primary line-clamp-2 overflow-hidden break-words"
+      >
+        {{ record.title }}
+      </div>
+      <!-- Abstract: shown only for large cards -->
+      <div
+        *ngIf="size === 'L'"
+        class="mt-2 mb-2 font-normal text-xs text-gray-900 line-clamp-2 overflow-hidden"
+      >
+        <gn-ui-markdown-parser
+          [textContent]="abstract"
+          [whitoutStyles]="true"
+        ></gn-ui-markdown-parser>
+      </div>
+      <!-- Organization / Contact section -->
+      <div
+        class="mt-auto flex items-center justify-between bg-gray-50 rounded-lg h-[50px] px-2"
+      >
+        <div class="flex items-center flex-1 min-w-0">
+          <div
+            class="w-[45px] h-[45px] rounded-lg overflow-hidden shrink-0 mr-3"
+          >
+            <gn-ui-thumbnail
+              [thumbnailUrl]="
+                record.ownerOrganization?.logoUrl?.toString() || ''
+              "
+              [fit]="'contain'"
+              class="w-full h-full rounded-lg"
+            ></gn-ui-thumbnail>
+          </div>
+          <div class="flex-1 w-0 overflow-hidden">
+            <div class="text-xs text-black font-normal leading-tight truncate">
+              Contact de la métadonnée
+            </div>
+            <div class="text-xl text-primary-black font-medium truncate">
+              {{ organization?.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex ml-auto"
+      [ngClass]="size === 'S' ? 'items-end' : 'items-center'"
+    >
+      <div class="gn-ui-card-icon">
+        <!-- Optionally include other icons here -->
+      </div>
+    </div>
+  </div>
+</div>
