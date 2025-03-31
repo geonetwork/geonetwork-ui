@@ -60,10 +60,14 @@
   <datahub-record-section
     id="resources"
     title="Ressources et liens"
-    *ngIf="displayDownload$ | async"
+    *ngIf="
+      (displayDownload$ | async) ||
+      (displayOtherLinks | async) ||
+      (displayApi$ | async)
+    "
   >
     <div class="container-lg px-4 pb-12 lg:mx-auto">
-      <div id="downloads" class="mt-5">
+      <div id="downloads" class="mt-5" *ngIf="displayDownload$ | async">
         <datahub-record-downloads class="block"></datahub-record-downloads>
       </div>
 
