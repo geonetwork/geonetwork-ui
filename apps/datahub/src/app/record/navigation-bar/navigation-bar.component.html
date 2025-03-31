@@ -18,7 +18,7 @@
     *ngFor="let l of anchorLinks"
     gnUiAnchorLink="{{ l.anchor }}"
     gnUiAnchorLinkDisabledClass="sm:hidden"
-    class="font-medium hidden sm:block opacity-80 hover:opacity-100 h-[60px] w-full px-2 items-center"
+    class="font-medium hidden sm:block hover:bg-primary hover:bg-opacity-10 h-[60px] w-full px-2 items-center"
     translate
   >
     {{ l.label }}
@@ -36,7 +36,7 @@
           (click)="setActiveLabel($event.target)"
           gnUiAnchorLink="{{ l.anchor }}"
           gnUiAnchorLinkDisabledClass="hidden"
-          class="h-[60px] block px-3 py-3 rounded-md font-medium w-full text-left text-wrap"
+          class="h-[60px] block px-3 py-3 hover:bg-primary hover:bg-opacity-10 font-medium w-full text-left text-wrap"
           translate
         >
           {{ l.label }}
