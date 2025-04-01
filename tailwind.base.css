@@ -70,11 +70,13 @@
     --width: var(--gn-ui-button-width, auto);
     --height: var(--gn-ui-button-height, auto);
     --background: var(--gn-ui-button-background, --color-background);
+    --bg-hover: var(--gn-ui-button-bg-hover, --color-background);
     --font-size: var(--gn-ui-button-font-size, 1em);
     @apply flex flex-row items-center justify-center
       text-[length:--font-size] leading-none
       p-[--padding] rounded-[--rounded] w-[--width] h-[--height] overflow-hidden
       bg-[--background] transition-all duration-100
+      hover:bg-[--bg-hover] focus:bg-[--bg-hover] active:bg-[--background]
       outline-none
       relative
       disabled:opacity-50 disabled:pointer-events-none
@@ -210,6 +212,10 @@
   /* GENERIC CARD */
   .gn-ui-card {
     @apply flex flex-row border border-gray-200 rounded-xl p-4 gap-2 w-full;
+  }
+
+  .gn-ui-nav-bar-icon {
+    @apply flex border border-gray-400 rounded-lg py-1 px-2 align-middle justify-center items-center h-8 min-w-10 hover:bg-primary;
   }
 
   /* TODO: add prefix */

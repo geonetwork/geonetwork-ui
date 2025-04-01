@@ -66,7 +66,7 @@
       *ngIf="metadata?.uniqueIdentifier"
       [record]="metadata"
       [displayCount]="false"
-      class="flex text-background content-center"
+      class="flex text-background content-center gn-ui-nav-bar-icon"
       [style.color]="black"
       [style.--star-toggle-enabled-color]="black"
       [style.--star-toggle-disabled-color]="black"
@@ -74,10 +74,9 @@
     <gn-ui-language-switcher
       *ngIf="showLanguageSwitcher"
       class="language-switcher text-[13px] mt-0.5"
-      [style.--color-main]="black"
-      [style.--color-gray-300]="black"
-      [style.--color-primary-darker]="black"
-      [style.--color-primary-black]="black"
+      [style.--gn-ui-button-rounded]="'0.5rem'"
+      [style.--gn-ui-button-height]="'32px'"
+      [style.--gn-ui-button-bg-hover]="'var(--color-primary)'"
     ></gn-ui-language-switcher>
   </div>
 </nav>
