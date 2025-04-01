@@ -137,7 +137,7 @@ export class ChartViewComponent {
     switchMap((link) => {
       this.error = null
       this.loading = true
-      if (link.applicationProfile) {
+      if (link.accessRestricted) {
         this.handleError('dataset.error.restrictedAccess')
         return EMPTY
       }
