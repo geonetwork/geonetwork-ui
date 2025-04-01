@@ -378,6 +378,11 @@ describe('dataset pages', () => {
       cy.get('@previewSection')
         .find('.mat-mdc-tab-labels')
         .children('div')
+        .eq(0)
+        .as('mapTab')
+      cy.get('@previewSection')
+        .find('.mat-mdc-tab-labels')
+        .children('div')
         .eq(1)
         .as('tableTab')
       cy.get('@previewSection')
@@ -547,6 +552,41 @@ describe('dataset pages', () => {
       })
       it('should display the sharing options', () => {
         cy.get('gn-ui-data-view-share').should('be.visible')
+      })
+    })
+    // skip for now as modifying dump on my side breaks all tests on GN 4.2.2
+    describe.skip('restricted access', () => {
+      beforeEach(() => {
+        cy.visit('dataset/e27e7006-fdf9-4004-b6c5-af2a5a5c025c')
+      })
+      it('MAP: should display the access restriction message for WMS and WFS', () => {
+        cy.get('@mapTab').click()
+        // WMS
+        cy.get('gn-ui-popup-alert')
+          .should('be.visible')
+          .should('have.text', 'Access to this resource is restricted')
+        // WFS
+        cy.get('gn-ui-dropdown-selector')
+          .eq(0)
+          .openDropdown()
+          .children('button')
+          .eq(1)
+          .click()
+        cy.get('gn-ui-popup-alert')
+          .should('be.visible')
+          .should('have.text', 'Access to this resource is restricted')
+      })
+      it('TABLE: should display the access restriction message for WFS', () => {
+        cy.get('@tableTab').click()
+        cy.get('gn-ui-popup-alert')
+          .should('be.visible')
+          .should('have.text', 'Access to this resource is restricted')
+      })
+      it('CHART: should display the access restriction message for WFS', () => {
+        cy.get('@chartTab').click()
+        cy.get('gn-ui-popup-alert')
+          .should('be.visible')
+          .should('have.text', 'Access to this resource is restricted')
       })
     })
   })

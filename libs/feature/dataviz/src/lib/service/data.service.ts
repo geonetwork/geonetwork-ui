@@ -30,6 +30,7 @@ import {
 
 marker('wfs.unreachable.cors')
 marker('wfs.unreachable.http')
+marker('dataset.error.forbidden')
 marker('wfs.unreachable.unknown')
 marker('wfs.featuretype.notfound')
 marker('wfs.geojsongml.notsupported')

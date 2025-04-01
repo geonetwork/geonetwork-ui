@@ -7,7 +7,14 @@ export class FetchError {
   stack = null
 
   constructor(
-    public type: 'http' | 'network' | 'parse' | 'unsupportedType' | 'unknown',
+    public type:
+      | 'http'
+      | 'forbidden'
+      | 'network'
+      | 'parse'
+      | 'unsupportedType'
+      | 'unknown',
+
     public info: string,
     public httpStatus = 0
   ) {
@@ -19,6 +26,9 @@ export class FetchError {
 ${body}`
       : `${code}`
     return new FetchError('http', info, code)
+  }
+  static forbidden(code: number) {
+    return new FetchError('forbidden', '', code)
   }
   static corsOrNetwork(message: string) {
     return new FetchError('network', message, 0)

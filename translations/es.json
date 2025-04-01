@@ -68,6 +68,7 @@
   "datahub.search.filter.generatedByAPI": "",
   "datahub.search.filter.generatedByWfs": "",
   "datahub.search.filter.others": "",
+  "dataset.error.forbidden": "El acceso a este recurso está restringido",
   "dataset.error.http": "",
   "dataset.error.network": "",
   "dataset.error.parse": "",

@@ -31,6 +31,7 @@
         #mapContainer
         [context]="mapContext$ | async"
         (featuresClick)="onMapFeatureSelect($event)"
+        (sourceLoadError)="onSourceLoadError($event)"
       ></gn-ui-map-container>
       <div
         class="top-[1em] right-[1em] p-3 bg-white absolute overflow-y-auto overflow-x-hidden max-h-72 w-56"

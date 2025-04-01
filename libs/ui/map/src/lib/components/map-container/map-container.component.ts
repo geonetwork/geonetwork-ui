@@ -28,6 +28,8 @@ import {
   MapContextLayer,
   MapContextLayerXyz,
   MapContextView,
+  SourceLoadErrorEvent,
+  SourceLoadErrorType,
 } from '@geospatial-sdk/core'
 import {
   applyContextDiffToMap,
@@ -118,6 +120,18 @@ export class MapContainerComponent implements AfterViewInit, OnChanges {
       this._mapClick = new EventEmitter<[number, number]>()
     }
     return this._mapClick
+  }
+  _sourceLoadError: EventEmitter<SourceLoadErrorEvent>
+  @Output() get sourceLoadError() {
+    if (!this._sourceLoadError) {
+      this.openlayersMap.then((olMap) => {
+        listen(olMap, SourceLoadErrorType, (error: SourceLoadErrorEvent) =>
+          this._sourceLoadError.emit(error)
+        )
+      })
+      this._sourceLoadError = new EventEmitter<SourceLoadErrorEvent>()
+    }
+    return this._sourceLoadError
   }
 
   @ViewChild('map') container: ElementRef
