@@ -282,12 +282,18 @@ describe('Gn4Repository', () => {
               definition: 'Définition du catalogue d attributs N°1',
               attributes: [
                 {
+                  code: 'OBJECTID',
                   name: 'OBJECTID',
                   title: 'Object identifier',
-                  code: 'OBJECTID',
+                  type: 'OID',
                 },
-                { name: 'Nom', title: 'Nom de la rue', code: 'NOM' },
-                { name: 'Rue', title: '', code: 'RUE' },
+                {
+                  code: 'NOM',
+                  name: 'Nom',
+                  title: 'Nom de la rue',
+                  type: 'String (48)',
+                },
+                { code: 'RUE', name: 'Rue', title: '', type: 'String (50)' },
               ],
             },
             {
@@ -298,6 +304,7 @@ describe('Gn4Repository', () => {
                   code: 'UniqueObject',
                   name: 'unique object ',
                   title: 'this is the only object of this catalog',
+                  type: 'String (50)',
                 },
               ],
             },
@@ -334,12 +341,18 @@ describe('Gn4Repository', () => {
               definition: 'Définition du catalogue d attributs N°1',
               attributes: [
                 {
+                  code: 'OBJECTID',
                   name: 'OBJECTID',
                   title: 'Object identifier',
-                  code: 'OBJECTID',
+                  type: 'OID',
                 },
-                { name: 'Nom', title: 'Nom de la rue', code: 'NOM' },
-                { name: 'Rue', title: '', code: 'RUE' },
+                {
+                  code: 'NOM',
+                  name: 'Nom',
+                  title: 'Nom de la rue',
+                  type: 'String (48)',
+                },
+                { code: 'RUE', name: 'Rue', title: '', type: 'String (50)' },
               ],
             },
             {
@@ -350,6 +363,7 @@ describe('Gn4Repository', () => {
                   code: 'UniqueObject',
                   name: 'unique object ',
                   title: 'this is the only object of this catalog',
+                  type: 'String (50)',
                 },
               ],
             },

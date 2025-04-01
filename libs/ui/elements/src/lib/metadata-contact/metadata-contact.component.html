@@ -1,5 +1,8 @@
-<div class="py-5 px-5 rounded-lg bg-gray-100 text-black">
-  <div class="grid grid-cols-1 gap-3 overflow-hidden">
+<div
+  class="py-5 px-5 rounded bg-gray-100 text-black"
+  data-cy="metadata-organization"
+>
+  <div class="grid gap-3 overflow-hidden">
     <div>
       <p class="text-base font-medium" translate>record.metadata.contact</p>
     </div>
@@ -18,7 +21,7 @@
         <div
           class="font-title text-21 mr-2 cursor-pointer hover:underline"
           (click)="onOrganizationClick()"
-          data-cy="organization-name"
+          data-cy="organization-name-link"
         >
           {{ shownOrganization?.name }}
         </div>

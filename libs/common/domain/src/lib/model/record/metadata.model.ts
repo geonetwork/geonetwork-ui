@@ -272,7 +272,12 @@ export interface DatasetFeatureType {
   isAbstract: string
   typeName: string
   definition: string
-  attributeTable: Array<{ name: string; definition: string; code: string }>
+  attributeTable: Array<{
+    name: string
+    definition: string
+    type: string
+    code: string
+  }>
 }
 
 export type ReuseType = 'application' | 'map' | 'other'
