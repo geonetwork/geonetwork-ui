@@ -6,10 +6,22 @@ import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { TranslateTestingModule } from 'ngx-translate-testing'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
+import { By } from '@angular/platform-browser'
 
 describe('MetadataInfoComponent', () => {
   let component: MetadataInfoComponent
   let fixture: ComponentFixture<MetadataInfoComponent>
+
+  const expandAllPanels = (fixture: ComponentFixture<any>) => {
+    const panels = fixture.debugElement.queryAll(
+      By.css('gn-ui-expandable-panel')
+    )
+    panels.forEach((panel) => {
+      const titleEl = panel.query(By.css('.title'))
+      titleEl.nativeElement.click()
+      fixture.detectChanges()
+    })
+  }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -46,6 +58,7 @@ describe('MetadataInfoComponent', () => {
         keywords: null,
       } as DatasetRecord
       fixture.detectChanges()
+      expandAllPanels(fixture)
     })
     it('should display a message for no usage or constraints', () => {
       const displayedElement = fixture.nativeElement.querySelector('.noUsage')
@@ -72,6 +85,7 @@ describe('MetadataInfoComponent', () => {
         lineage: null,
       } as DatasetRecord
       fixture.detectChanges()
+      expandAllPanels(fixture)
     })
     it('should not display a message for no usage or constraints', () => {
       const displayedElement = fixture.nativeElement.querySelector('.noUsage')
@@ -110,6 +124,7 @@ describe('MetadataInfoComponent', () => {
           updateFrequency: 'notPlanned',
         } as DatasetRecord
         fixture.detectChanges()
+        expandAllPanels(fixture)
       })
       it('should display the updateFrequency code correctly', () => {
         const displayedElement =
@@ -123,6 +138,7 @@ describe('MetadataInfoComponent', () => {
         component = fixture.componentInstance
         component.metadata = datasetRecordsFixture()[0] as DatasetRecord
         fixture.detectChanges()
+        expandAllPanels(fixture)
       })
       it('should display the updateFrequency object correctly', () => {
         const displayedElement =
