@@ -146,7 +146,7 @@ export class MapViewComponent implements AfterViewInit {
       this.hidePreview = false
       this.loading = true
       this.error = null
-      if (link.applicationProfile) {
+      if (link.accessRestricted) {
         this.handleError('dataset.error.restrictedAccess')
         return of([])
       }

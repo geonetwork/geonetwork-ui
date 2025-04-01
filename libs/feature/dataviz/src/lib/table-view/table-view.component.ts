@@ -46,7 +46,7 @@ export class TableViewComponent {
     switchMap((link) => {
       this.error = null
       if (!link) return of(undefined)
-      if (link.applicationProfile) {
+      if (link.accessRestricted) {
         this.handleError('dataset.error.restrictedAccess')
         return of([])
       }
