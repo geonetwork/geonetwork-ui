@@ -1,5 +1,4 @@
 import { OverlayContainer } from '@angular/cdk/overlay'
-import { CommonModule } from '@angular/common'
 import { CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
 import { BrowserModule } from '@angular/platform-browser'
@@ -76,7 +75,6 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     GnDatasetViewMapComponent,
   ],
   imports: [
-    CommonModule,
     BrowserModule,
     UiInputsModule,
     UiSearchModule,

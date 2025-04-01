@@ -1,9 +1,9 @@
 import { StandaloneSearchModule } from './app/standalone-search.module'
-import { platformServer } from '@angular/platform-server'
 import { enableProdMode } from '@angular/core'
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
 
 enableProdMode()
 
-platformServer()
+platformBrowserDynamic()
   .bootstrapModule(StandaloneSearchModule)
   .catch((err) => console.error(err))

@@ -10,9 +10,14 @@ import { provideGn4 } from '@geonetwork-ui/api/repository'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { GEONETWORK_UI_VERSION } from '@geonetwork-ui/util/shared'
+import { BrowserModule } from '@angular/platform-browser'
+import { provideHttpClient } from '@angular/common/http'
+import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
+import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 
 @NgModule({
   providers: [
+    provideHttpClient(),
     provideGn4(),
     {
       provide: Configuration,
@@ -25,17 +30,25 @@ import { GEONETWORK_UI_VERSION } from '@geonetwork-ui/util/shared'
           provide: TranslateLoader,
           useClass: EmbeddedTranslateLoader,
         },
-      })
+      }),
+      BrowserModule,
+      // theses shouldn't be needed; we rely on them for the Org service and Avatar service which should both be provided by `providedGn4`
+      FeatureCatalogModule,
+      FeatureAuthModule
     ),
   ],
 })
 export class StandaloneSearchModule {
   constructor() {
+    function init(url) {
+      apiConfiguration.basePath = url
+    }
     const recordsRepository = inject(RecordsRepositoryInterface)
     const platformService = inject(PlatformServiceInterface)
     window['GNUI'] = {
       recordsRepository,
       platformService,
+      init,
     }
   }
 
