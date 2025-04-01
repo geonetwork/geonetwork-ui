@@ -1,0 +1,21 @@
+.table-grid {
+  display: grid;
+  gap: 0;
+  border-width: 1px;
+}
+
+.header,
+.cell {
+  padding: 12px;
+  border-width: 1px;
+  text-align: left;
+}
+
+.header {
+  font-weight: medium;
+}
+
+.cell {
+  background-color: #fff;
+  font-weight: normal;
+}

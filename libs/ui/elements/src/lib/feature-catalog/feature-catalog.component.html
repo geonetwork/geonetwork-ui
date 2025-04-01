@@ -1,0 +1,8 @@
+<div class="container-lg px-4 lg:mx-auto">
+  <div class="table-grid" [style.gridTemplateColumns]="gridTemplateComlumns">
+    <div class="header" *ngFor="let col of columns">{{ col.label }}</div>
+    <ng-container *ngFor="let row of data">
+      <div class="cell" *ngFor="let col of columns">{{ row[col.key] }}</div>
+    </ng-container>
+  </div>
+</div>
