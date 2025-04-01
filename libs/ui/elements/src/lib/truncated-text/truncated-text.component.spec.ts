@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TruncatedTextComponent } from './truncated-text.component'
-import { TranslateModule } from '@ngx-translate/core'
 
 describe('TruncatedTextComponent', () => {
   let component: TruncatedTextComponent
@@ -8,7 +7,7 @@ describe('TruncatedTextComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TruncatedTextComponent, TranslateModule.forRoot()],
+      imports: [TruncatedTextComponent],
     }).compileComponents()
 
     fixture = TestBed.createComponent(TruncatedTextComponent)
