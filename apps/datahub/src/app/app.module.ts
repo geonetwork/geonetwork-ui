@@ -12,9 +12,8 @@ import {
   EXTERNAL_VIEWER_OPEN_NEW_TAB,
   EXTERNAL_VIEWER_URL_TEMPLATE,
   FeatureRecordModule,
-  GN_UI_VERSION,
-  WEB_COMPONENT_EMBEDDER_URL,
   RecordMetaComponent,
+  WEB_COMPONENT_EMBEDDER_URL,
 } from '@geonetwork-ui/feature/record'
 import {
   DefaultRouterModule,
@@ -36,7 +35,6 @@ import {
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
-import { GpfApiDlComponent } from '@geonetwork-ui/feature/record'
 import {
   getGlobalConfig,
   getMapContextLayerFromConfig,
@@ -191,7 +189,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
     provideGn4(),
     { provide: RouterService, useClass: DatahubRouterService },
-    { provide: GN_UI_VERSION, useValue: environment.version },
     {
       provide: PROXY_PATH,
       useFactory: () => getGlobalConfig().PROXY_PATH,

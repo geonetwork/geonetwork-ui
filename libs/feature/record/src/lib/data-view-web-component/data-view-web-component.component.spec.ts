@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { DataViewWebComponentComponent } from './data-view-web-component.component'
 import { BehaviorSubject, firstValueFrom } from 'rxjs'
 import { MdViewFacade } from '../state'
-import { GN_UI_VERSION } from '../gn-ui-version.token'
 import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 import { MockBuilder } from 'ng-mocks'
 
@@ -24,7 +23,13 @@ const metadata = {
   uniqueIdentifier: 'md_record_1234',
 }
 
-const gnUiVersion = 'v1.2.3'
+jest.mock('@geonetwork-ui/util/shared', () => {
+  const originalModule = jest.requireActual('@geonetwork-ui/util/shared')
+  return {
+    ...originalModule,
+    GEONETWORK_UI_TAG_NAME: 'v1.2.3',
+  }
+})
 
 class MdViewFacadeMock {
   chartConfig$ = new BehaviorSubject(chartConfig1)
@@ -46,10 +51,6 @@ describe('DataViewWebComponentComponent', () => {
           provide: MdViewFacade,
           useClass: MdViewFacadeMock,
         },
-        {
-          provide: GN_UI_VERSION,
-          useValue: gnUiVersion,
-        },
       ],
     }).compileComponents()
     facade = TestBed.inject(MdViewFacade)
@@ -68,7 +69,7 @@ describe('DataViewWebComponentComponent', () => {
       it('should generate HTML based on configs', async () => {
         const html = await firstValueFrom(component.webComponentHtml$)
         expect(html).toBe(
-          `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${gnUiVersion}/gn-wc.js"></script>
+          `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-v1.2.3/gn-wc.js"></script>
   <gn-dataset-view-chart
           api-url="http://gn-api.url/"
           dataset-id="${metadata.uniqueIdentifier}"
@@ -93,7 +94,7 @@ describe('DataViewWebComponentComponent', () => {
       it('should update HTML based on configs', async () => {
         const html = await firstValueFrom(component.webComponentHtml$)
         expect(html).toBe(
-          `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${gnUiVersion}/gn-wc.js"></script>
+          `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-v1.2.3/gn-wc.js"></script>
   <gn-dataset-view-chart
           api-url="http://gn-api.url/"
           dataset-id="${metadata.uniqueIdentifier}"
@@ -120,7 +121,7 @@ describe('DataViewWebComponentComponent', () => {
       it('should generate HTML based on configs', async () => {
         const html = await firstValueFrom(component.webComponentHtml$)
         expect(html).toBe(
-          `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${gnUiVersion}/gn-wc.js"></script>
+          `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-v1.2.3/gn-wc.js"></script>
 <gn-dataset-view-map
         api-url="http://gn-api.url/"
         dataset-id="${metadata.uniqueIdentifier}"
@@ -143,7 +144,7 @@ describe('DataViewWebComponentComponent', () => {
       it('should generate HTML based on configs', async () => {
         const html = await firstValueFrom(component.webComponentHtml$)
         expect(html).toBe(
-          `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${gnUiVersion}/gn-wc.js"></script>
+          `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-v1.2.3/gn-wc.js"></script>
   <gn-dataset-view-table
           api-url="http://gn-api.url/"
           dataset-id="${metadata.uniqueIdentifier}"

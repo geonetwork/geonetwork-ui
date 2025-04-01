@@ -7,10 +7,10 @@ import {
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import { MdViewFacade } from '../state'
 import { BehaviorSubject, combineLatest, map } from 'rxjs'
-import { GN_UI_VERSION } from '../gn-ui-version.token'
 import { CopyTextButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
+import { GEONETWORK_UI_TAG_NAME } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-data-view-web-component',
@@ -36,7 +36,7 @@ export class DataViewWebComponentComponent {
         if (config) {
           const { aggregation, xProperty, yProperty, chartType } = config
           return `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${
-            this.version
+            GEONETWORK_UI_TAG_NAME
           }/gn-wc.js"></script>
   <gn-dataset-view-chart
           api-url="${new URL(
@@ -59,7 +59,7 @@ export class DataViewWebComponentComponent {
         return ''
       } else if (viewType === 'table') {
         return `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${
-          this.version
+          GEONETWORK_UI_TAG_NAME
         }/gn-wc.js"></script>
   <gn-dataset-view-table
           api-url="${new URL(
@@ -76,7 +76,7 @@ export class DataViewWebComponentComponent {
   ></gn-dataset-view-table>`
       } else {
         return `<script src="https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-${
-          this.version
+          GEONETWORK_UI_TAG_NAME
         }/gn-wc.js"></script>
 <gn-dataset-view-map
         api-url="${new URL(
@@ -97,7 +97,6 @@ export class DataViewWebComponentComponent {
 
   constructor(
     @Inject(Configuration) private config: Configuration,
-    @Inject(GN_UI_VERSION) private version: string,
     private facade: MdViewFacade
   ) {}
 }

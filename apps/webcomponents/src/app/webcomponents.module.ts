@@ -47,6 +47,7 @@ import {
   TableViewComponent,
 } from '@geonetwork-ui/feature/dataviz'
 import { StandaloneSearchModule } from './standalone-search.module'
+import { GEONETWORK_UI_VERSION } from '@geonetwork-ui/util/shared'
 
 const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],
@@ -134,6 +135,8 @@ export class WebcomponentsModule {
   }
 
   ngDoBootstrap() {
-    console.log(`[geonetwork-ui] GeoNetwork-UI Web Components v${} loaded`)
+    console.log(
+      `[geonetwork-ui] GeoNetwork-UI Web Components v${GEONETWORK_UI_VERSION} loaded`
+    )
   }
 }

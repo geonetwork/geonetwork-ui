@@ -9,6 +9,7 @@ import { apiConfiguration } from './components/base.component'
 import { provideGn4 } from '@geonetwork-ui/api/repository'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { GEONETWORK_UI_VERSION } from '@geonetwork-ui/util/shared'
 
 @NgModule({
   providers: [
@@ -39,6 +40,8 @@ export class StandaloneSearchModule {
   }
 
   ngDoBootstrap() {
-      console.log(`[geonetwork-ui] GeoNetwork-UI Standalone Search v${} loaded`)
+    console.log(
+      `[geonetwork-ui] GeoNetwork-UI Standalone Search v${GEONETWORK_UI_VERSION} loaded`
+    )
   }
 }
