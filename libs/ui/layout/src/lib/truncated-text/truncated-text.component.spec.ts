@@ -7,7 +7,18 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 describe('TruncatedTextComponent', () => {
   let component: TruncatedTextComponent
   let fixture: ComponentFixture<TruncatedTextComponent>
-
+  beforeAll(() => {
+    global.ResizeObserver = class ResizeObserver {
+      observe = jest.fn()
+      unobserve = jest.fn()
+      disconnect = jest.fn()
+    }
+    global.MutationObserver = class MutationObserver {
+      observe = jest.fn()
+      disconnect = jest.fn()
+      takeRecords = jest.fn().mockReturnValue([])
+    }
+  })
   const mockTextElement = (scrollWidth: number, clientWidth: number) => {
     component.textElement = {
       nativeElement: { scrollWidth, clientWidth },

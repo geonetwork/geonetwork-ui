@@ -52,7 +52,7 @@ describe('MetadataContactComponent', () => {
     })
     it('emit contact click with contact name', () => {
       const el = fixture.debugElement.query(
-        By.css('[data-cy="organization-name"]')
+        By.css('[data-cy="organization-name-link"]')
       ).nativeElement
       el.click()
       expect(component.organizationClick.emit).toHaveBeenCalledWith({
@@ -68,7 +68,7 @@ describe('MetadataContactComponent', () => {
     })
     it('displays the contact name', () => {
       const el = fixture.debugElement.query(
-        By.css('[data-cy="organization-name"]')
+        By.css('[data-cy="organization-name-link"]')
       ).nativeElement
       expect(el.innerHTML).toBe(' Worldcorp ')
     })
