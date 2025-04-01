@@ -14,7 +14,9 @@ import { CopyTextButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { NgIcon, provideIcons } from '@ng-icons/core'
-import { matMoreHoriz } from '@ng-icons/material-icons/baseline'
+import { iconoirSettings } from '@ng-icons/iconoir'
+
+type CardSize = 'L' | 'M' | 'S' | 'XS'
 
 @Component({
   selector: 'gn-ui-api-card',
@@ -31,17 +33,39 @@ import { matMoreHoriz } from '@ng-icons/material-icons/baseline'
   ],
   viewProviders: [
     provideIcons({
-      matMoreHoriz,
+      iconoirSettings,
     }),
   ],
 })
 export class ApiCardComponent implements OnInit, OnChanges {
+  private _size: 'L' | 'M' | 'S' | 'XS'
   @Input() link: DatasetServiceDistribution
   @Input() currentLink: DatasetServiceDistribution
+  private readonly sizeClassMap: Record<CardSize, string> = {
+    L: 'gn-ui-card-l py-2 px-5 flex-row',
+    M: 'gn-ui-card-m py-2 px-5 flex-row',
+    S: 'gn-ui-card-s p-4 flex-col',
+    XS: 'gn-ui-card-xs py-2 px-5 flex-row',
+  }
+
+  @Input() set size(value: CardSize) {
+    this._size = value
+    this.cardClass = this.sizeClassMap[value]
+  }
+  get size(): 'L' | 'M' | 'S' | 'XS' {
+    return this._size
+  }
+  cardClass = ''
   displayApiFormButton: boolean
   currentlyActive = false
   @Output() openRecordApiForm: EventEmitter<DatasetServiceDistribution> =
     new EventEmitter<DatasetServiceDistribution>()
+
+  get generatedText() {
+    return this.link.accessServiceProtocol === 'wfs'
+      ? 'datahub.search.filter.generatedByWfs'
+      : 'datahub.search.filter.generatedByAPI'
+  }
 
   ngOnInit() {
     this.displayApiFormButton =

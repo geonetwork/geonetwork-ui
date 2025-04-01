@@ -19,7 +19,7 @@
       #block
       *ngFor="let otherLink of otherLinks"
       [link]="otherLink"
-      [compact]="true"
+      size="S"
     ></gn-ui-link-card>
   </gn-ui-block-list>
   <ng-template #carouselTemplate>
@@ -30,7 +30,7 @@
       <gn-ui-link-card
         *ngFor="let otherLink of otherLinks; let first = first; let last = last"
         [link]="otherLink"
-        class="w-80"
+        size="S"
       ></gn-ui-link-card>
     </gn-ui-carousel>
   </ng-template>

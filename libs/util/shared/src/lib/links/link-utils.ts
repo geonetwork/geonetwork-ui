@@ -16,7 +16,7 @@ export const FORMATS = {
   csv: {
     extensions: ['csv'],
     priority: 1,
-    color: '#a6d6c0',
+    color: '#F6A924',
     mimeTypes: ['text/csv', 'application/csv'],
   },
   excel: {
@@ -28,7 +28,7 @@ export const FORMATS = {
       'openxmlformats-officedocument',
     ],
     priority: 2,
-    color: '#acc5e4',
+    color: '#FFDE10',
     mimeTypes: [
       'application/vnd.ms-excel',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -37,31 +37,31 @@ export const FORMATS = {
   geojson: {
     extensions: ['geojson'],
     priority: 3,
-    color: '#b3cde8',
+    color: '#293C6F',
     mimeTypes: ['application/geo+json', 'application/vnd.geo+json'],
   },
   json: {
     extensions: ['json'],
     priority: 3,
-    color: '#b3cde8',
+    color: '#84D0F0',
     mimeTypes: ['application/json'],
   },
   shp: {
     extensions: ['shp', 'shape', 'zipped-shapefile'],
     priority: 4,
-    color: '#b2d8ba',
+    color: '#009036',
     mimeTypes: ['x-gis/x-shapefile'],
   },
   gml: {
     extensions: ['gml'],
     priority: 5,
-    color: '#e3b3e5',
+    color: '#E75113',
     mimeTypes: ['application/gml+xml', 'text/xml; subtype=gml'],
   },
   kml: {
     extensions: ['kml', 'kmz'],
     priority: 6,
-    color: '#c1e6a0',
+    color: '#F4B5D0',
     mimeTypes: [
       'application/vnd.google-earth.kml+xml',
       'application/vnd.google-earth.kmz',
@@ -70,55 +70,55 @@ export const FORMATS = {
   gpkg: {
     extensions: ['gpkg', 'geopackage'],
     priority: 7,
-    color: '#f7cce6',
+    color: '#7D5D9F',
     mimeTypes: ['application/geopackage+sqlite3'],
   },
   zip: {
     extensions: ['zip', 'tar.gz'],
     priority: 8,
-    color: '#ffe7a3',
+    color: '#B0CB52',
     mimeTypes: ['application/zip', 'application/x-zip'],
   },
   pdf: {
     extensions: ['pdf'],
     priority: 9,
-    color: '#f5b2a3',
+    color: '#49579E',
     mimeTypes: ['application/pdf'],
   },
   jpg: {
     extensions: ['jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp'],
     priority: 9,
-    color: '#d1c1e9',
+    color: '#C4A98F',
     mimeTypes: ['image/jpg'],
   },
   svg: {
     extensions: ['svg'],
     priority: 10,
-    color: '#f3c1c9',
+    color: '#EB6D82',
     mimeTypes: ['image/svg+xml'],
   },
   dxf: {
     extensions: ['dxf'],
     priority: 11,
-    color: '#f6ceac',
+    color: '#DCCD00',
     mimeTypes: ['application/x-dxf', 'image/x-dxf'],
   },
   html: {
     extensions: ['html', 'htm'],
     priority: 12,
-    color: '#FFF2CC',
+    color: '#C0C9B6',
     mimeTypes: ['text/html'],
   },
   fgb: {
     extensions: ['fgb', 'flatgeobuf'],
     priority: 13,
-    color: '#ffe7a3',
+    color: '#A8111C',
     mimeTypes: ['application/flatgeobuf'],
   },
   jsonfg: {
     extensions: ['jsonfg', 'jsonfgc'],
     priority: 14,
-    color: '#ffe7a3',
+    color: '#009EE0',
     mimeTypes: [
       'application/vnd.ogc.fg+json',
       'application/vnd.ogc.fg+json;compatibility=geojson',
@@ -207,9 +207,11 @@ export function checkFileFormat(
   format: FileFormat
 ): boolean {
   return (
-    ('name' in link && new RegExp(`[./]${format}`, 'i').test(link.name)) ||
+    ('name' in link &&
+      new RegExp(`[./]${format}`, 'i').test(link.name.toLowerCase())) ||
     ('url' in link &&
-      new RegExp(`[./]${format}`, 'i').test(link.url.toString()))
+      new RegExp(`[./]${format}`, 'i').test(link.url.toString())) ||
+    ('name' in link && link.name.toLowerCase().includes(format))
   )
 }
 

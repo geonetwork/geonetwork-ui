@@ -129,6 +129,34 @@
       border border-white focus:ring-4 focus:ring-gray-300;
   }
 
+  .gn-ui-card-xs {
+    @apply min-h-[68px] md:w-[487px];
+  }
+
+  .gn-ui-card-s {
+    @apply min-h-[135px] md:w-80;
+  }
+
+  .gn-ui-card-m {
+    @apply min-h-[68px] md:w-[487px];
+  }
+
+  .gn-ui-card-l {
+    @apply min-h-[68px] md:w-[992px];
+  }
+
+  .gn-ui-card-title {
+    @apply font-title font-medium text-black text-ellipsis overflow-hidden break-words line-clamp-3;
+  }
+
+  .gn-ui-card-icon {
+    @apply flex border border-gray-300 rounded-lg py-1 px-2 align-middle;
+  }
+
+  .gn-ui-card-detail {
+    @apply font-medium text-gray-500 text-ellipsis break-words text-sm;
+  }
+
   /* DROPDOWN MULTISELECT CLASS */
   .gn-ui-multiselect-counter {
     --text-color: var(--gn-ui-multiselect-counter-text-color, white);
@@ -186,7 +214,7 @@
 
   /* TODO: add prefix */
   .card-icon {
-    @apply text-primary opacity-50 group-hover:text-secondary group-hover:opacity-100 transition-colors transition-opacity;
+    @apply text-black group-hover:text-primary-darkest transition-colors;
   }
 
   /* makes spinners appear in the right color */
