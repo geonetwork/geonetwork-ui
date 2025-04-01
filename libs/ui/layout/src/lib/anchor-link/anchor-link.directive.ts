@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   ChangeDetectorRef,
   Directive,
   HostBinding,
@@ -11,13 +12,19 @@ import {
 @Directive({
   selector: '[gnUiAnchorLink]',
 })
-export class AnchorLinkDirective implements OnInit, OnDestroy {
+export class AnchorLinkDirective
+  implements OnInit, AfterViewChecked, OnDestroy
+{
   @Input('gnUiAnchorLink') targetId: string
   @Input('gnUiAnchorLinkDisabledClass') disabledClass: string
   @Input('gnUiAnchorLinkEnabledClass') enabledClass: string
+  @Input('gnUiAnchorLinkInViewClass') inViewClass: string
 
   @HostBinding('class')
   get elementClass(): string {
+    if (this.inView) {
+      return this.inViewClass
+    }
     return this.disabled ? this.disabledClass : this.enabledClass
   }
 
@@ -25,6 +32,9 @@ export class AnchorLinkDirective implements OnInit, OnDestroy {
   observer = new MutationObserver(() => {
     this.refreshDisabledState()
   })
+  inView = false
+  intersectionObserver: IntersectionObserver
+  initialized = false
 
   constructor(private changeDetector: ChangeDetectorRef) {}
 
@@ -36,8 +46,37 @@ export class AnchorLinkDirective implements OnInit, OnDestroy {
     this.refreshDisabledState()
   }
 
+  ngAfterViewChecked() {
+    if (!this.initialized && !this.disabled) {
+      const target = document.getElementById(this.targetId)
+      if (target) {
+        this.initializeIntersectionObserver(target)
+        this.initialized = true
+      }
+    }
+  }
+
+  initializeIntersectionObserver(target: HTMLElement) {
+    this.intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          this.inView = entry.isIntersecting
+          this.changeDetector.detectChanges()
+        })
+      },
+      {
+        root: null,
+        rootMargin: '-43% 0% -43% 0%',
+      }
+    )
+    this.intersectionObserver.observe(target)
+  }
+
   ngOnDestroy() {
     this.observer.disconnect()
+    if (this.intersectionObserver) {
+      this.intersectionObserver.disconnect()
+    }
   }
 
   refreshDisabledState() {
