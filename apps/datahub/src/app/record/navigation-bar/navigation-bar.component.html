@@ -26,8 +26,14 @@
   </button>
   <div
     (click)="toggleMobileMenu()"
-    class="w-full flex justify-between items-start cursor-pointer sm:hidden"
+    class="w-full flex justify-start items-start cursor-pointer sm:hidden"
   >
+    <button
+      type="button"
+      class="h-[60px] inline-flex items-center justify-center p-2 rounded-md shrink-0 sm:hidden"
+    >
+      <ng-icon name="iconoirMenu" size="24px"></ng-icon>
+    </button>
     <div
       class="shrink truncate"
       [class]="displayMobileMenu ? 'block' : 'hidden'"
@@ -50,12 +56,6 @@
       translate
     >
       {{ activeLabel }}
-    </button>
-    <button
-      type="button"
-      class="h-[60px] inline-flex items-center justify-center p-2 rounded-md shrink-0 sm:hidden"
-    >
-      <ng-icon class="align-middle" name="matExpandMoreOutline"></ng-icon>
     </button>
   </div>
   <div

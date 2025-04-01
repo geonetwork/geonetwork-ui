@@ -11,7 +11,7 @@ import { NavigationButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 import { NgIcon, provideIcons } from '@ng-icons/core'
-import { matExpandMoreOutline } from '@ng-icons/material-icons/outline'
+import { iconoirMenu } from '@ng-icons/iconoir'
 import { TranslateModule } from '@ngx-translate/core'
 
 marker('record.metadata.about')
@@ -36,7 +36,7 @@ marker('record.metadata.userFeedbacks')
     LanguageSwitcherComponent,
     FavoriteStarComponent,
   ],
-  viewProviders: [provideIcons({ matExpandMoreOutline })],
+  viewProviders: [provideIcons({ iconoirMenu })],
 })
 export class NavigationBarComponent {
   @Input() metadata: DatasetRecord
