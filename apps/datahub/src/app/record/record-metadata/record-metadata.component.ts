@@ -9,6 +9,7 @@ import {
   MetadataContactComponent,
   MetadataInfoComponent,
   MetadataQualityComponent,
+  UiElementsModule,
 } from '@geonetwork-ui/ui/elements'
 import { combineLatest } from 'rxjs'
 import { filter, map, mergeMap } from 'rxjs/operators'
@@ -50,6 +51,7 @@ import { RecordDataPreviewComponent } from '../record-data-preview/record-data-p
     RecordRelatedRecordsComponent,
     TranslateModule,
     RecordDataPreviewComponent,
+    UiElementsModule,
   ],
 })
 export class RecordMetadataComponent {
