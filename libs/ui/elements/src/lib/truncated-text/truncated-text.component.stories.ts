@@ -38,6 +38,13 @@ export const VeryNarrow: Story = {
   },
 }
 
+export const TextFitPerfectly: Story = {
+  args: {
+    text: 'This text will not be truncated',
+    width: '230px',
+  },
+}
+
 export const URL: Story = {
   args: {
     text: 'https://www.very-long-domain-name-example.com/with/very/long/path/that/should/be/truncated',
