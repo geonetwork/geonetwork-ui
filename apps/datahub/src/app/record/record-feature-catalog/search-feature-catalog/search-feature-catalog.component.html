@@ -1,0 +1,34 @@
+<div class="flex items-center justify-between p-3 mt-8 bg-white rounded-lg">
+  <div
+    class="relative shrink-0"
+    *ngIf="featureCatalog?.featureTypes?.length > 1"
+  >
+    <input
+      type="text"
+      [attr.aria-label]="'search.filter.into.feature.catalog' | translate"
+      [placeholder]="'search.filter.into.feature.catalog' | translate"
+      class="w-[220px] h-[32px] pl-3 pr-10 py-2 border rounded-md"
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchChange($event)"
+    />
+    <ng-icon
+      class="absolute right-2.5 top-1 w-4 h-4 text-black"
+      name="matSearchOutline"
+    ></ng-icon>
+  </div>
+  <div class="text-right text-sm ui-med ml-auto">
+    <ng-container *ngIf="featureCatalog?.featureTypes?.length > 1">
+      <span class="text-sm font-medium text-gray-900" translate
+        >record.feature.catalog.number.total.object</span
+      ><span class="text-sm font-bold px-1 text-gray-900">{{
+        totalObjects
+      }}</span>
+      |
+    </ng-container>
+    <span class="text-sm font-medium text-gray-900" translate
+      >record.feature.catalog.number.total.attribute</span
+    ><span class="text-sm font-bold px-1 text-gray-900">{{
+      totalAttributes
+    }}</span>
+  </div>
+</div>

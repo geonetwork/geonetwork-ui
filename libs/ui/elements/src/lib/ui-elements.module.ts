@@ -22,6 +22,7 @@ import { UserPreviewComponent } from './user-preview/user-preview.component'
 import { ApplicationBannerComponent } from './application-banner/application-banner.component'
 import { InternalLinkCardComponent } from './internal-link-card/internal-link-card.component'
 import { ServiceCapabilitiesComponent } from './service-capabilities/service-capabilities.component'
+import { FeatureCatalogComponent } from './feature-catalog/feature-catalog.component'
 
 @NgModule({
   imports: [
@@ -46,6 +47,7 @@ import { ServiceCapabilitiesComponent } from './service-capabilities/service-cap
     ApplicationBannerComponent,
     InternalLinkCardComponent,
     ServiceCapabilitiesComponent,
+    FeatureCatalogComponent,
   ],
   providers: [
     provideNgIconsConfig({
@@ -62,6 +64,7 @@ import { ServiceCapabilitiesComponent } from './service-capabilities/service-cap
     ApplicationBannerComponent,
     InternalLinkCardComponent,
     ServiceCapabilitiesComponent,
+    FeatureCatalogComponent,
   ],
 })
 export class UiElementsModule {}

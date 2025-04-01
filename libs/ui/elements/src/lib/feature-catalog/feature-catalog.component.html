@@ -1,0 +1,16 @@
+<div class="grid gap-0" [style.gridTemplateColumns]="gridTemplateColumns">
+  <div
+    class="py-1 px-2 text-sm font-bold text-left border-t border-l border-gray-300"
+    *ngFor="let col of columns; let isFirst = first; let isLast = last"
+  >
+    {{ col.label | translate }}
+  </div>
+  <ng-container *ngFor="let row of data">
+    <div
+      class="py-3 px-2 bg-white text-sm font-normal text-left border-t border-l border-gray-300"
+      *ngFor="let col of columns; let isFirst = first; let isLast = last"
+    >
+      {{ row[col.key] }}
+    </div>
+  </ng-container>
+</div>

@@ -153,6 +153,8 @@ export class Gn4Repository implements RecordsRepositoryInterface {
           ? featureType.attributeTable.map((attr) => ({
               name: attr.name,
               title: attr.definition,
+              code: attr.code,
+              type: attr.type,
             }))
           : [],
       })),
@@ -164,7 +166,8 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   ): Observable<DatasetFeatureCatalog | null> {
     if (
       record.extras?.['featureTypes'] &&
-      Array.isArray(record.extras['featureTypes'])
+      Array.isArray(record.extras['featureTypes']) &&
+      record.extras['featureTypes'].length > 0
     ) {
       return of(this.mapEmbeddedFeatureCatalog(record.extras['featureTypes']))
     }
