@@ -1,0 +1,10 @@
+<div class="relative">
+  <div class="flex items-center justify-between w-full gap-2">
+    <span #textElement class="truncate">
+      {{ text }}
+    </span>
+    <gn-ui-overlay *ngIf="isTextTruncated">
+      <p class="m-2">{{ text }}</p>
+    </gn-ui-overlay>
+  </div>
+</div>
