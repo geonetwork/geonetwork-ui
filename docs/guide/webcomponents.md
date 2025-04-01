@@ -25,6 +25,10 @@ Web Components are made to be easily included in any context. To do so, you have
 <gn-results-list api-url="https://dev.geo2france.fr/geonetwork/srv/api" catalog-url="https://dev.geo2france.fr/datahub/dataset/{uuid}" size="10" layout="ROW" show-more="button"></gn-results-list>
 ```
 
+::: tip
+The Web Components script also includes the [Standalone Search](./standalone-search.md).
+:::
+
 ## Publication and Versioning
 
 The Web Component script is automatically built upon merges on main and for releases. These builds are made available via a jsdelivr CDN, which points at `wc-dist` branches in the github repository. There is a `wc-dist` branch for every release tag > `v2.0.0` as well as `wc-dist-main`.

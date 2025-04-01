@@ -56,6 +56,13 @@
           "extractLicenses": false,
           "sourceMap": true,
           "namedChunks": true
+        },
+        "webcomponents": {
+          "outputHashing": "none"
+        },
+        "standaloneSearch": {
+          "outputHashing": "none",
+          "main": "apps/webcomponents/src/standalone-search.ts"
         }
       },
       "defaultConfiguration": "production"
