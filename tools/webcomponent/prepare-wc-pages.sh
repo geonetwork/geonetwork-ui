@@ -2,13 +2,17 @@
 
 DIST_DEMO_PATH=dist/demo/
 DIST_WC_PATH=${DIST_DEMO_PATH}webcomponents/
+DIST_STANDALONE_PATH=${DIST_DEMO_PATH}standalone-search/
 
 echo '-- Clear previous build and cache'
 rm -rf ${DIST_DEMO_PATH}
 rm -rf node_modules/.cache
 
-echo '-- Build Geonetwork Web Components'
+echo '-- Build GeoNetwork-UI Web Components'
 nx run webcomponents:build --output-hashing=none --skip-nx-cache --output-path=${DIST_WC_PATH}
+
+echo '-- Build GeoNetwork-UI Standalone Search'
+nx run webcomponents:build --main=apps/webcomponents/src/standalone-search.ts --output-hashing=none --skip-nx-cache --output-path=${DIST_STANDALONE_PATH}
 
 echo '-- Publish html page for Web Component'
 mkdir -p $DIST_WC_PATH
@@ -25,6 +29,8 @@ echo "-- Copy demo pages"
 mkdir -p ${DIST_DEMO_PATH}
 cp -R demo/* ${DIST_DEMO_PATH}
 
+echo '-- Copy standalone search script'
+cat ${DIST_STANDALONE_PATH}/*.js > $DIST_STANDALONE_PATH'gn-standalone-search.js'
 
 if [ ${1} ] && [ ${1} = "--serve" ]
 then
