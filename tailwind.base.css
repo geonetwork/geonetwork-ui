@@ -69,11 +69,13 @@
     --padding: var(--gn-ui-button-padding, 1em);
     --width: var(--gn-ui-button-width, auto);
     --height: var(--gn-ui-button-height, auto);
-    --background: var(--gn-ui-button-background, --color-background);
-    --bg-hover: var(--gn-ui-button-bg-hover, --color-background);
+    --background: var(--gn-ui-button-background, var(--color-background));
+    --bg-hover: var(--gn-ui-button-bg-hover, var(--color-background));
     --font-size: var(--gn-ui-button-font-size, 1em);
+    --color: var(--gn-ui-button-color, var(--color-main));
     @apply flex flex-row items-center justify-center
       text-[length:--font-size] leading-none
+      text-[color:--color]
       p-[--padding] rounded-[--rounded] w-[--width] h-[--height] overflow-hidden
       bg-[--background] transition-all duration-100
       hover:bg-[--bg-hover] focus:bg-[--bg-hover] active:bg-[--background]
@@ -120,13 +122,13 @@
   }
 
   .gn-ui-btn-outline {
-    @apply gn-ui-btn text-main
+    @apply gn-ui-btn
     hover:text-primary-darker focus:text-primary-darker active:text-primary-black
     border border-gray-300 hover:border-primary-lighter focus:border-primary-lighter focus:ring-4 focus:ring-primary-lightest active:border-primary-darker;
   }
 
   .gn-ui-btn-light {
-    @apply gn-ui-btn text-main
+    @apply gn-ui-btn
       hover:bg-gray-50 focus:bg-gray-50 active:bg-gray-100
       border border-white focus:ring-4 focus:ring-gray-300;
   }
@@ -157,6 +159,11 @@
 
   .gn-ui-card-detail {
     @apply font-medium text-gray-500 text-ellipsis break-words text-sm;
+  }
+
+  /* TODO: rework centering in gn-ui-card-icon and maybe merge both classes into one */
+  .gn-ui-nav-bar-icon {
+    @apply gn-ui-card-icon justify-center items-center h-8 min-w-10 hover:bg-primary;
   }
 
   /* DROPDOWN MULTISELECT CLASS */
@@ -212,10 +219,6 @@
   /* GENERIC CARD */
   .gn-ui-card {
     @apply flex flex-row border border-gray-200 rounded-xl p-4 gap-2 w-full;
-  }
-
-  .gn-ui-nav-bar-icon {
-    @apply flex border border-gray-400 rounded-lg py-1 px-2 align-middle justify-center items-center h-8 min-w-10 hover:bg-primary;
   }
 
   /* TODO: add prefix */

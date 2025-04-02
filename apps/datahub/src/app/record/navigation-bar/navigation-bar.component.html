@@ -3,12 +3,12 @@
   [class]="
     displayMobileMenu
       ? 'items-start'
-      : 'items-center divide-x-2 divide-gray-400'
+      : 'items-center divide-x-2 divide-gray-300'
   "
 >
   <div
     class="h-[60px] flex min-w-[60px] items-center justify-center lg:min-w-40 lg:justify-end lg:pr-4"
-    [class]="displayMobileMenu ? 'border-r-2 border-gray-400' : ''"
+    [class]="displayMobileMenu ? 'border-r-2 border-gray-300' : ''"
   >
     <gn-ui-navigation-button (click)="back()" [icon]="'matArrowBack'">
     </gn-ui-navigation-button>
@@ -60,7 +60,7 @@
   </div>
   <div
     class="h-[60px] flex flex-row gap-3 min-w-40 justify-center items-center lg:min-w-60 lg:pl-4 lg:justify-start"
-    [class]="displayMobileMenu ? 'border-l-2 border-gray-400' : ''"
+    [class]="displayMobileMenu ? 'border-l-2 border-gray-300' : ''"
   >
     <gn-ui-favorite-star
       *ngIf="metadata?.uniqueIdentifier"
@@ -74,6 +74,7 @@
     <gn-ui-language-switcher
       *ngIf="showLanguageSwitcher"
       class="language-switcher text-[13px] mt-0.5"
+      [style.--gn-ui-button-color]="black"
       [style.--gn-ui-button-rounded]="'0.5rem'"
       [style.--gn-ui-button-height]="'32px'"
       [style.--gn-ui-button-bg-hover]="'var(--color-primary)'"
