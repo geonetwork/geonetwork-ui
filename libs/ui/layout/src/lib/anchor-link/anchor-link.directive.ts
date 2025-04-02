@@ -23,7 +23,7 @@ export class AnchorLinkDirective
   @HostBinding('class')
   get elementClass(): string {
     if (this.inView) {
-      return this.inViewClass
+      return `${this.inViewClass} ${this.enabledClass}`
     }
     return this.disabled ? this.disabledClass : this.enabledClass
   }
