@@ -3,6 +3,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { Component } from '@angular/core'
 import { By } from '@angular/platform-browser'
 
+Object.defineProperty(window, 'IntersectionObserver', {
+  writable: true,
+  configurable: true,
+  value: jest.fn().mockImplementation(() => ({
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+  })),
+})
 @Component({
   template: ` <div>
     <a

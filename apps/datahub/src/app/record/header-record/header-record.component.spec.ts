@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { SearchService } from '@geonetwork-ui/feature/search'
 import { TranslateModule } from '@ngx-translate/core'
 
 import { HeaderRecordComponent } from './header-record.component'
@@ -13,11 +12,6 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
     HEADER_BACKGROUND: 'red',
     HEADER_FOREGROUND_COLOR: 'white',
   }),
-  getGlobalConfig() {
-    return {
-      LANGUAGES: ['en', 'es'],
-    }
-  },
 }))
 
 describe('HeaderRecordComponent', () => {
@@ -29,12 +23,7 @@ describe('HeaderRecordComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      providers: [
-        MockProvider(MdViewFacade),
-        MockProvider(SearchService, {
-          updateFilters: jest.fn(),
-        }),
-      ],
+      providers: [MockProvider(MdViewFacade)],
     }).compileComponents()
   })
 
@@ -49,13 +38,5 @@ describe('HeaderRecordComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
-  })
-
-  describe('#back', () => {
-    it('searchFilter updateSearch', () => {
-      const searchService = TestBed.inject(SearchService)
-      component.back()
-      expect(searchService.updateFilters).toHaveBeenCalledWith({})
-    })
   })
 })
