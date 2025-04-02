@@ -1,6 +1,7 @@
-import { Component } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
+import { DatasetFeatureCatalog } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'datahub-feature-catalog-list',
@@ -9,4 +10,6 @@ import { TranslateModule } from '@ngx-translate/core'
   standalone: true,
   imports: [CommonModule, TranslateModule],
 })
-export class FeatureCatalogListComponent {}
+export class FeatureCatalogListComponent {
+  @Input() featureCatalog: DatasetFeatureCatalog
+}

@@ -70,6 +70,16 @@ export class RecordMetadataComponent {
     map((records) => records?.length > 0)
   )
 
+  displayFeatureCatalog$ = combineLatest([
+    this.metadataViewFacade.metadata$,
+    this.metadataViewFacade.featureCatalog$,
+  ]).pipe(
+    map(
+      ([usedForRefresh, featureCatalog]) =>
+        featureCatalog?.featureTypes?.length > 0
+    )
+  )
+
   displayDatasetHasNoLinkBlock$ = combineLatest([
     this.metadataViewFacade.isMetadataLoading$,
     this.displayDownload$,
