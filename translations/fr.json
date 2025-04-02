@@ -454,6 +454,8 @@
   "record.tab.map": "Carte",
   "record.was.created.time": "a créé ce jeu de données {time}",
   "records": "Enregistrements",
+  "related.contents": "Contenus associés",
+  "ressources.and.links": "Ressources et liens",
   "results.layout.selectOne": "Affichage des résultats",
   "results.records.hits.displayedOn": "{displayed, plural, =0{Aucun jeu de données} one{1 affiché} other{{displayed} affichés}} {hits, plural, other{sur {hits} au total.}}",
   "results.records.hits.empty.help.html": "Suggestions : <ul class='list-disc list-inside'><li>Essayez d'autres mots-clés</li><li>Cherchez moins de mots</li></ul>",

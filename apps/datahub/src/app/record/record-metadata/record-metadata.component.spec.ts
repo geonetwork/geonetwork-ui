@@ -446,7 +446,7 @@ describe('RecordMetadataComponent', () => {
         'data-preview',
         'resources',
         'related',
-        'userFeedbacks',
+        'user-feedbacks',
       ])
     })
   })
