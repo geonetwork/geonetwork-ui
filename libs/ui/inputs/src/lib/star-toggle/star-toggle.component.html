@@ -5,7 +5,7 @@
     (click)="toggle($event)"
     [ngClass]="{
       enabled: toggled,
-      'disabled opacity-45': !toggled,
+      disabled: !toggled,
       'transition hover:scale-125 will-change-transform': !disabled,
       'cursor-default': disabled,
     }"
