@@ -5,6 +5,8 @@
       [attr.aria-label]="'search.filter.into.feature.catalog' | translate"
       [placeholder]="'search.filter.into.feature.catalog' | translate"
       class="w-[220px] h-[32px] pl-3 pr-10 py-2 border rounded-md"
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchChange($event)"
     />
     <ng-icon
       class="absolute right-2.5 top-1 w-4 h-4 text-black"

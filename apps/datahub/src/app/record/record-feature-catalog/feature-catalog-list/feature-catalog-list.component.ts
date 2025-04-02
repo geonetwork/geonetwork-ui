@@ -11,5 +11,5 @@ import { DatasetFeatureCatalog } from '@geonetwork-ui/common/domain/model/record
   imports: [CommonModule, TranslateModule],
 })
 export class FeatureCatalogListComponent {
-  @Input() featureCatalog: DatasetFeatureCatalog
+  @Input() filteredFeatureCatalog: DatasetFeatureCatalog
 }

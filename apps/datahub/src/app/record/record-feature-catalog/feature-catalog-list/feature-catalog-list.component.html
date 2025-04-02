@@ -1,7 +1,7 @@
 <!-- Votre liste de features ici -->
 <div class="grid gap-2 py-2 px-5 max-h-[550px] overflow-y-auto">
   <div
-    *ngFor="let featureType of featureCatalog?.featureTypes"
+    *ngFor="let featureType of filteredFeatureCatalog?.featureTypes"
     class="rounded shadow bg-white p-4"
   >
     <pre>{{ featureType | json }}</pre>
