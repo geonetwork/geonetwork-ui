@@ -72,6 +72,7 @@
   "dataset.error.http": "Le chargement des données a échoué en raison d'une erreur HTTP: \"{ info }\"",
   "dataset.error.network": "Le chargement des données a échoué en raison d'une erreur réseau ou de limitations CORS: \"{ info }\"",
   "dataset.error.parse": "Les données ont été chargées mais leur décodage a échoué: \"{ info }\"",
+  "dataset.error.restrictedAccess": "L’accès à cette ressource est restreint",
   "dataset.error.unknown": "Les données ne peuvent être affichées: \"{ info }\"",
   "dataset.error.unsupportedType": "Le type de contenu suivant n'est pas pris en charge: \"{ info }\"",
   "domain.contact.role.author": "Auteur",

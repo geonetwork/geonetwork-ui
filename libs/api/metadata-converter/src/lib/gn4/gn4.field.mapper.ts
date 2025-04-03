@@ -460,6 +460,11 @@ export class Gn4FieldMapper {
       ),
       selectField<string>(sourceLink, 'description')
     )
+    const descriptionLink = selectField<object>(sourceLink, 'descriptionObject')
+    const accessRestricted =
+      descriptionLink &&
+      'link' in descriptionLink &&
+      descriptionLink.link.toString().includes('#MD_RestrictionCode_restricted')
     // no url: fail early
     if (url === null) {
       // TODO: collect errors at the record level?
@@ -485,6 +490,7 @@ export class Gn4FieldMapper {
           type,
           url: url,
           accessServiceProtocol,
+          accessRestricted: accessRestricted,
         }
       case 'link':
         return {
