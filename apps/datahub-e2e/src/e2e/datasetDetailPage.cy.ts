@@ -108,6 +108,42 @@ describe('dataset pages', () => {
       })
     })
 
+    describe('navigation bar', () => {
+      it('should display the navigation bar', () => {
+        cy.get('datahub-header-record')
+          .children('header')
+          .find('datahub-navigation-bar')
+          .should('exist')
+        cy.get('datahub-header-record')
+          .children('header')
+          .find('gn-ui-navigation-button')
+          .should('exist')
+        cy.get('datahub-header-record')
+          .children('header')
+          .find('gn-ui-favorite-star')
+          .should('exist')
+      })
+      it('should scroll down when clicking on anchor title', () => {
+        //wait for page content to load (download section needing most time)
+        cy.get('#access').should('be.visible')
+        cy.get('[data-cy="links"]').as('anchorLink')
+        cy.get('@anchorLink').click({ force: true })
+        cy.window().then((win) => {
+          const scrollPosition = win.scrollY
+          expect(scrollPosition).to.be.greaterThan(0)
+        })
+      })
+      it('should display the gnUiAnchorLinkInViewClass when scrolling to the anchor', () => {
+        //wait for page content to load (download section needing most time)
+        cy.get('#access').should('be.visible')
+        cy.get('#links').should('be.visible').scrollIntoView()
+        cy.get('[data-cy="links"]').should(
+          'have.class',
+          '!border-b-primary border-b-4'
+        )
+      })
+    })
+
     describe('header', () => {
       it('should display the title, favorite star group and arrow back', () => {
         cy.get('datahub-header-record')

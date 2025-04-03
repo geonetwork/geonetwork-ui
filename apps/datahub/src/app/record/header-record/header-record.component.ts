@@ -1,23 +1,16 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import {
-  FavoriteStarComponent,
-  SearchService,
-} from '@geonetwork-ui/feature/search'
-import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
+import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { combineLatest, map } from 'rxjs'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import {
-  BadgeComponent,
-  NavigationButtonComponent,
-} from '@geonetwork-ui/ui/inputs'
-import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
+import { TranslateModule } from '@ngx-translate/core'
+import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
 import { matArrowBack } from '@ng-icons/material-icons/baseline'
 import { DateService } from '@geonetwork-ui/util/shared'
+import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component'
 
 @Component({
   selector: 'datahub-header-record',
@@ -27,12 +20,10 @@ import { DateService } from '@geonetwork-ui/util/shared'
   standalone: true,
   imports: [
     CommonModule,
-    NavigationButtonComponent,
-    LanguageSwitcherComponent,
     TranslateModule,
-    FavoriteStarComponent,
     BadgeComponent,
     NgIcon,
+    NavigationBarComponent,
   ],
   viewProviders: [provideIcons({ matLocationSearchingOutline, matArrowBack })],
 })
@@ -42,10 +33,8 @@ export class HeaderRecordComponent {
     getThemeConfig().HEADER_BACKGROUND ||
     `center /cover url('assets/img/header_bg.webp')`
   foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
-  showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
 
   constructor(
-    private searchService: SearchService,
     public facade: MdViewFacade,
     private dateService: DateService
   ) {}
@@ -62,9 +51,5 @@ export class HeaderRecordComponent {
 
   get lastUpdate() {
     return this.dateService.formatDate(this.metadata.recordUpdated)
-  }
-
-  back() {
-    this.searchService.updateFilters({})
   }
 }

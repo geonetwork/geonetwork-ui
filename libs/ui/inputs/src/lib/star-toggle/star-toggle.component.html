@@ -5,12 +5,15 @@
     (click)="toggle($event)"
     [ngClass]="{
       enabled: toggled,
-      'disabled opacity-45': !toggled,
+      disabled: !toggled,
       'transition hover:scale-125 will-change-transform': !disabled,
       'cursor-default': disabled,
     }"
   >
-    <ng-icon [name]="toggled ? 'matStar' : 'matStarBorder'"></ng-icon>
+    <ng-icon
+      [name]="toggled ? 'matStar' : 'matStarBorder'"
+      size="24px"
+    ></ng-icon>
   </button>
   <svg
     #starOverlay
