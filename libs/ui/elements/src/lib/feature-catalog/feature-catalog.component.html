@@ -1,8 +1,16 @@
-<div class="container-lg px-4 lg:mx-auto">
-  <div class="table-grid" [style.gridTemplateColumns]="gridTemplateComlumns">
-    <div class="header" *ngFor="let col of columns">{{ col.label }}</div>
-    <ng-container *ngFor="let row of data">
-      <div class="cell" *ngFor="let col of columns">{{ row[col.key] }}</div>
-    </ng-container>
+<div class="grid gap-0" [style.gridTemplateColumns]="gridTemplateColumns">
+  <div
+    class="py-1 px-2 border text-sm font-bold text-left"
+    *ngFor="let col of columns"
+  >
+    {{ col.label | translate }}
   </div>
+  <ng-container *ngFor="let row of data">
+    <div
+      class="py-3 px-2 border bg-white text-sm font-normal text-left"
+      *ngFor="let col of columns"
+    >
+      {{ row[col.key] }}
+    </div>
+  </ng-container>
 </div>

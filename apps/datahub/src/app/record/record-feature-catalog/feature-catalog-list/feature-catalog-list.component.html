@@ -2,10 +2,25 @@
 <div class="grid gap-2 py-2 px-5 max-h-[550px] overflow-y-auto">
   <div
     *ngFor="let featureType of filteredFeatureCatalog?.featureTypes"
-    class="rounded shadow bg-white p-4"
+    class="rounded shadow bg-white"
   >
-    <gn-ui-expandable-panel [title]="'Panel Title'">
-      <div>{{ featureType | json }}</div>
+    <gn-ui-expandable-panel>
+      <ng-template #titleTemplate>
+        <div class="p-4">
+          <div class="text-xl font-bold">{{ featureType.name }}</div>
+          <div class="text-medium">{{ featureType.definition }}</div>
+        </div>
+      </ng-template>
+      <gn-ui-feature-catalog
+        [data]="featureType.attributes"
+        [columns]="[
+          { key: 'type', label: 'Type', width: '19%' },
+          { key: 'name', label: 'Nom', width: '32%' },
+          { key: 'code', label: 'Code', width: '24%' },
+          { key: 'title', label: 'Description', width: '25%' },
+        ]"
+      >
+      </gn-ui-feature-catalog>
     </gn-ui-expandable-panel>
   </div>
 </div>
