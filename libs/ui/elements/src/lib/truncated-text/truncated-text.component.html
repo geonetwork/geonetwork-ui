@@ -1,0 +1,23 @@
+<div class="flex items-center justify-between w-full gap-2">
+  <span
+    #textElement
+    class="truncate"
+    [class.cursor-pointer]="isTextTruncated"
+    [matTooltip]="isTextTruncated ? text : ''"
+  >
+    {{ text }}
+  </span>
+  <button
+    *ngIf="isTextTruncated"
+    [matTooltip]="text"
+    matTooltipPosition="above"
+    class="flex-shrink-0 border border-gray-300 px-2 py-1 rounded-lg w-11 h-9"
+  >
+    <ng-icon
+      class="align-middle text-secondary block"
+      name="iconoirExpand"
+      size="24"
+    >
+    </ng-icon>
+  </button>
+</div>
