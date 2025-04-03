@@ -16,6 +16,7 @@
   <button
     type="button"
     *ngFor="let l of anchorLinks"
+    [attr.data-cy]="l.anchor"
     gnUiAnchorLink="{{ l.anchor }}"
     gnUiAnchorLinkDisabledClass="sm:hidden"
     gnUiAnchorLinkInViewClass="!border-b-primary border-b-4"
