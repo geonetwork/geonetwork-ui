@@ -47,12 +47,6 @@
               "maximumError": "1mb"
             }
           ],
-          "fileReplacements": [
-            {
-              "replace": "apps/webcomponents/src/environments/environment.ts",
-              "with": "apps/webcomponents/src/environments/environment.prod.ts"
-            }
-          ],
           "outputHashing": "all"
         },
         "development": {
@@ -62,6 +56,13 @@
           "extractLicenses": false,
           "sourceMap": true,
           "namedChunks": true
+        },
+        "webcomponents": {
+          "outputHashing": "none"
+        },
+        "standaloneSearch": {
+          "outputHashing": "none",
+          "main": "apps/webcomponents/src/standalone-search.ts"
         }
       },
       "defaultConfiguration": "production"
