@@ -4,6 +4,8 @@
     *ngFor="let featureType of filteredFeatureCatalog?.featureTypes"
     class="rounded shadow bg-white p-4"
   >
-    <pre>{{ featureType | json }}</pre>
+    <gn-ui-expandable-panel [title]="'Panel Title'">
+      <div>{{ featureType | json }}</div>
+    </gn-ui-expandable-panel>
   </div>
 </div>

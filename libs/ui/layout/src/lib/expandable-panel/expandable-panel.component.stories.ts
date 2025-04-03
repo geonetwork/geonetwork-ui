@@ -38,3 +38,22 @@ export const Primary: StoryObj<ExpandablePanelComponent> = {
     </gn-ui-expandable-panel>`,
   }),
 }
+
+export const WithCustomTitle: StoryObj<ExpandablePanelComponent> = {
+  render: (args) => ({
+    props: args,
+    template: `
+    <gn-ui-expandable-panel>
+      <ng-template #titleTemplate>
+        <div>
+          <div class="text-xl font-bold">Custom Title</div>
+          <div class="text-medium">Subtitle with more details</div>
+        </div>
+      </ng-template>
+      Illud tamen clausos vehementer angebat quod captis navigiis,
+      quae frumenta vehebant per flumen, Isauri quidem alimentorum
+      copiis adfluebant, ipsi vero solitarum rerum cibos iam consumendo
+      inediae propinquantis aerumnas exitialis horrebant.
+    </gn-ui-expandable-panel>`,
+  }),
+}

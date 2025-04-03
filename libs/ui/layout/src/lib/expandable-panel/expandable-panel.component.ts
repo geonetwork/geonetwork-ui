@@ -1,8 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ContentChild,
   ElementRef,
   Input,
+  TemplateRef,
   ViewChild,
 } from '@angular/core'
 import { NgIcon, provideIcons } from '@ng-icons/core'
@@ -19,7 +21,8 @@ import { matAdd, matRemove } from '@ng-icons/material-icons/baseline'
   viewProviders: [provideIcons({ matAdd, matRemove })],
 })
 export class ExpandablePanelComponent {
-  @Input() title: string
+  @Input() title?: string
+  @ContentChild('titleTemplate') titleTemplate?: TemplateRef<any>
   @Input() collapsed = true
   @ViewChild('contentDiv') contentDiv: ElementRef
   maxHeight = this.setMaxHeight()
@@ -31,7 +34,7 @@ export class ExpandablePanelComponent {
 
   setMaxHeight() {
     return `${
-      this.collapsed ? '0' : this.contentDiv.nativeElement.scrollHeight
+      this.collapsed ? '0' : this.contentDiv?.nativeElement?.scrollHeight
     }px`
   }
 }
