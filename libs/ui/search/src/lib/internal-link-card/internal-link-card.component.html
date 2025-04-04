@@ -19,7 +19,7 @@
         <div class="flex items-center space-x-2">
           <span
             *ngIf="getKindInfo().text"
-            class="badge-btn text-white text-xs px-2 py-0.5 font-bold shrink-0 bg-primary leading-tight flex items-center justify-center h-6 min-h-6"
+            class="badge-btn text-white text-xs px-2 py-0.5 font-bold shrink-0 bg-primary leading-tight flex items-center justify-evenly h-6 min-h-6"
           >
             <ng-icon
               class="text-[0.9em] text-white mr-1"
@@ -31,7 +31,7 @@
           </span>
           <span
             *ngIf="isGeodata"
-            class="badge-btn text-black text-xs px-2 py-0.5 font-bold shrink-0 bg-primary-white leading-tight flex items-center justify-center h-6 min-h-6"
+            class="badge-btn text-black text-xs px-2 py-0.5 font-bold shrink-0 bg-primary-white leading-tight flex items-center justify-evenly h-6 min-h-6"
             [ngClass]="size === 'L' ? 'w-[164px]' : 'w-8'"
           >
             <ng-icon
@@ -63,14 +63,14 @@
           ></ng-container>
         </div>
         <div
-          class="mt-2 font-medium text-title group-hover:text-primary overflow-hidden break-words text-xl"
+          class="mt-2 font-medium text-title group-hover:text-primary overflow-hidden break-words text-xl justify-evenly"
           [ngClass]="size === 'S' ? 'line-clamp-3' : 'line-clamp-2'"
         >
           {{ record.title }}
         </div>
         <div
           *ngIf="size === 'L'"
-          class="mt-1 mb-2 font-normal text-xs text-gray-900 line-clamp-2 overflow-hidden"
+          class="mt-1 mb-2 font-normal text-xs text-gray-900 line-clamp-2 overflow-hidden justify-evenly"
         >
           <gn-ui-markdown-parser
             [textContent]="abstract"
@@ -80,7 +80,7 @@
       </div>
       <div
         *ngIf="size !== 'XS'"
-        class="flex items-center justify-between bg-gray-50 rounded-lg h-[53px] px-2"
+        class="flex items-center justify-evenly bg-gray-50 rounded-lg h-[53px] px-2"
       >
         <div class="flex items-center flex-1 min-w-0">
           <div
