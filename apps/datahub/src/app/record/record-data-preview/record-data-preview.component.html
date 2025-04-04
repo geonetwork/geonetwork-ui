@@ -4,13 +4,13 @@
   id="preview"
 >
   <div
-    class="bg-primary-opacity-10 pt-8 overflow-visible sm:pt-5"
+    class="bg-primary-opacity-10 overflow-visible pt-8"
     style="height: 512px"
   >
     <div class="container-lg px-4 lg:mx-auto">
       <div>
         <div
-          class="text-[28px] text-title font-title transform sm:translate-y-10"
+          class="text-[28px] text-title font-title transform translate-y-10"
           translate
         >
           record.metadata.preview
@@ -63,7 +63,7 @@
     </div>
   </div>
 </div>
-<div class="container-lg lg:mx-auto">
+<div class="container-lg lg:mx-auto pb-2 mb-16">
   <gn-ui-data-view-share
     *ngIf="displayViewShare$ | async"
     [viewType]="selectedView$ | async"
