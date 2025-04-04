@@ -7,11 +7,12 @@ import {
   SearchService,
 } from '@geonetwork-ui/feature/search'
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
-import { NavigationButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { iconoirMenu } from '@ng-icons/iconoir'
+import { matArrowBack } from '@ng-icons/material-icons/baseline'
 import { TranslateModule } from '@ngx-translate/core'
 
 marker('record.metadata.about')
@@ -32,11 +33,11 @@ marker('record.metadata.userFeedbacks')
     CommonModule,
     TranslateModule,
     UiLayoutModule,
-    NavigationButtonComponent,
+    ButtonComponent,
     LanguageSwitcherComponent,
     FavoriteStarComponent,
   ],
-  viewProviders: [provideIcons({ iconoirMenu })],
+  viewProviders: [provideIcons({ iconoirMenu, matArrowBack })],
 })
 export class NavigationBarComponent {
   @Input() metadata: DatasetRecord

@@ -4,13 +4,24 @@
   >
     <div class="flex flex-row justify-between content-center mt-3">
       <div class="ml-4">
-        <gn-ui-navigation-button
-          (click)="back()"
-          [label]="'datahub.search.back' | translate"
-          [icon]="'matArrowBack'"
-          [style.--navigation-button-color]="foregroundColor"
+        <gn-ui-button
+          (buttonClick)="back()"
+          type="outline"
+          extraClass="bg-transparent"
+          [style.--gn-ui-button-color]="foregroundColor"
+          [style.--gn-ui-button-height]="'32px'"
         >
-        </gn-ui-navigation-button>
+          <ng-icon
+            name="matArrowBack"
+            size="20px"
+            class="align-middle"
+          ></ng-icon>
+          <span
+            class="mx-2 mt-0.5 text-[16px] tracking-widest content-center opacity-75 uppercase"
+            translate
+            >datahub.search.back</span
+          >
+        </gn-ui-button>
       </div>
       <div class="flex flex-row mr-6 content-center gap-3">
         <gn-ui-language-switcher
