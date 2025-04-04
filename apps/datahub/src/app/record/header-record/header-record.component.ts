@@ -8,7 +8,6 @@ import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
-import { matArrowBack } from '@ng-icons/material-icons/baseline'
 import { DateService } from '@geonetwork-ui/util/shared'
 import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component'
 
@@ -25,7 +24,7 @@ import { NavigationBarComponent } from '../navigation-bar/navigation-bar.compone
     NgIcon,
     NavigationBarComponent,
   ],
-  viewProviders: [provideIcons({ matLocationSearchingOutline, matArrowBack })],
+  viewProviders: [provideIcons({ matLocationSearchingOutline })],
 })
 export class HeaderRecordComponent {
   @Input() metadata: DatasetRecord

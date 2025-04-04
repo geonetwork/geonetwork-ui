@@ -10,8 +10,20 @@
     class="h-[60px] flex min-w-[60px] items-center justify-center lg:min-w-40 lg:justify-end lg:pr-4"
     [class]="displayMobileMenu ? 'border-r-2 border-gray-300' : ''"
   >
-    <gn-ui-navigation-button (click)="back()" [icon]="'matArrowBack'">
-    </gn-ui-navigation-button>
+    <gn-ui-button
+      (buttonClick)="back()"
+      type="outline"
+      [style.--gn-ui-button-rounded]="'8px'"
+      [style.--gn-ui-button-height]="'32px'"
+      [style.--gn-ui-button-width]="'40px'"
+      [style.--gn-ui-button-color]="black"
+      [style.--gn-ui-button-background]="'var(--color-primary-lightest)'"
+      [style.--gn-ui-button-bg-hover]="'var(--color-primary)'"
+      [style.--gn-ui-button-font-size]="'24px'"
+      [style.--gn-ui-button-padding]="'4px'"
+    >
+      <ng-icon name="matArrowBack"></ng-icon>
+    </gn-ui-button>
   </div>
   <button
     type="button"

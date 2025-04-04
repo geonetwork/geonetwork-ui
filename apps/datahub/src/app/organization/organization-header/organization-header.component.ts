@@ -1,10 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { TranslateModule } from '@ngx-translate/core'
-import {
-  NavigationButtonComponent,
-  UiInputsModule,
-} from '@geonetwork-ui/ui/inputs'
+import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { Location, NgIf } from '@angular/common'
 import { ErrorType, UiElementsModule } from '@geonetwork-ui/ui/elements'
@@ -34,7 +31,6 @@ import { matArrowBack } from '@ng-icons/material-icons/baseline'
     UiElementsModule,
     NgIconComponent,
     LanguageSwitcherComponent,
-    NavigationButtonComponent,
   ],
   providers: [
     provideIcons({ matFolderOutline, matOpenInNewOutline, matArrowBack }),
