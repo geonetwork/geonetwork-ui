@@ -1,5 +1,5 @@
 <div *ngIf="(metadataViewFacade.error$ | async) === null">
-  <datahub-record-section id="about">
+  <section id="about">
     <div class="container-lg px-4 mt-10 mb-16 pb-2 lg:mx-auto">
       <gn-ui-metadata-info
         class="sm:block"
@@ -51,21 +51,21 @@
         </div>
       </div>
     </div>
-  </datahub-record-section>
+  </section>
 
-  <datahub-record-section id="data-preview">
+  <section id="data-preview">
     <datahub-record-data-preview></datahub-record-data-preview>
-  </datahub-record-section>
+  </section>
 
-  <datahub-record-section
+  <section
     id="resources"
-    title="ressources.and.links"
     *ngIf="
       (displayDownload$ | async) ||
       (displayOtherLinks | async) ||
       (displayApi$ | async)
     "
   >
+    <div class="gn-ui-section-title" translate>ressources.and.links</div>
     <div class="container-lg px-4 pb-12 lg:mx-auto">
       <div id="downloads" class="mt-5" *ngIf="displayDownload$ | async">
         <datahub-record-downloads class="block"></datahub-record-downloads>
@@ -79,7 +79,7 @@
         <datahub-record-apis class="block"></datahub-record-apis>
       </div>
     </div>
-  </datahub-record-section>
+  </section>
 
   <ng-container *ngIf="displayDatasetHasNoLinkBlock$ | async">
     <gn-ui-error
@@ -88,11 +88,9 @@
     ></gn-ui-error>
   </ng-container>
 
-  <datahub-record-section
-    id="related"
-    title="related.contents"
-    *ngIf="displayRelated$ | async"
-  >
+  <section id="related" *ngIf="displayRelated$ | async">
+    <div class="gn-ui-section-title" translate>related.contents</div>
+
     <div>
       <div>
         <div class="h-48 overflow-visible">
@@ -107,9 +105,9 @@
         <div class="container-lg mx-auto h-[254px] sm:h-64"></div>
       </div>
     </div>
-  </datahub-record-section>
+  </section>
 
-  <datahub-record-section
+  <section
     id="user-feedbacks"
     *ngIf="(metadataViewFacade.isPresent$ | async) === true"
   >
@@ -124,7 +122,7 @@
         ></datahub-record-user-feedbacks>
       </div>
     </div>
-  </datahub-record-section>
+  </section>
 </div>
 <div
   class="mt-12 p-4 max-w-[600px] m-auto text-[13px]"

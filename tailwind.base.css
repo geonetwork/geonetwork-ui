@@ -194,6 +194,11 @@
   mat-progress-spinner circle {
     stroke: currentColor !important;
   }
+
+  /* Section title */
+  .gn-ui-section-title {
+    @apply text-title font-medium pt-9 text-section-title container-lg px-4 lg:mx-auto;
+  }
 }
 
 html {
