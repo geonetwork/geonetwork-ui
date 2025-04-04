@@ -37,9 +37,9 @@ export class ExpandablePanelComponent implements AfterViewChecked {
   @Input() set collapsed(value: boolean) {
     if (value !== this._collapsed) {
       if (value) {
-        // Closing: wait for animation before hiding content
         this._collapsed = value
         setTimeout(() => {
+          // Closing: wait for animation before hiding content
           this.showContent = false
           this.changeDetector.detectChanges()
         }, this.ANIMATION_DURATION)
