@@ -24,8 +24,8 @@ import { CommonModule } from '@angular/common'
 const mockRecord = datasetRecordsFixture()[0] as CatalogRecord
 
 const interactiveFavoriteTemplate = `<div class="flex flex-row items-center">
-  <span class="mr-0.5 text-gray-700 font-medium">{{record.extras?.favoriteCount || 42}}</span>
-  <button type="button" class="-m-[8px] p-[8px] text-secondary hover:scale-125 transition will-change-transform"
+  <span class="inline-flex items-center text-gray-700 font-medium" style="line-height: 1; margin-top: 1px;">{{record.extras?.favoriteCount || 42}}</span>
+  <button type="button" class="ml-1 flex items-center justify-center text-secondary hover:scale-125 transition will-change-transform"
           title="Add to favorites"
           (click)="$event.preventDefault(); $event.stopPropagation();">
     <ng-icon name="matStar"></ng-icon>
