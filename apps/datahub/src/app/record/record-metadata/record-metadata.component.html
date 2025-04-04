@@ -65,7 +65,9 @@
       (displayApi$ | async)
     "
   >
-    <div class="gn-ui-section-title" translate>ressources.and.links</div>
+    <div class="gn-ui-section-title" translate>
+      record.metadata.ressources.and.links
+    </div>
     <div class="container-lg px-4 pb-12 lg:mx-auto">
       <div id="downloads" class="mt-5" *ngIf="displayDownload$ | async">
         <datahub-record-downloads class="block"></datahub-record-downloads>
@@ -89,7 +91,9 @@
   </ng-container>
 
   <section id="related" *ngIf="displayRelated$ | async">
-    <div class="gn-ui-section-title" translate>related.contents</div>
+    <div class="gn-ui-section-title" translate>
+      record.metadata.related.contents
+    </div>
 
     <div>
       <div>
