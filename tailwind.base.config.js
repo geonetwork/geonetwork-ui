@@ -56,7 +56,6 @@ module.exports = {
         mono: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
       },
       fontSize: {
-        'section-title': '28px',
         13: '13px',
         21: [
           '21px',
