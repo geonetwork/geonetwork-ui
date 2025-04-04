@@ -1,3 +1,7 @@
 .limit-organisation-with-quality {
   max-width: calc(100% - 170px);
 }
+
+:host ::ng-deep .gn-ui-badge {
+  @apply bg-primary-lighter;
+}

@@ -22,6 +22,7 @@ import {
 } from '@geonetwork-ui/api/repository'
 import { LangService } from '@geonetwork-ui/util/i18n'
 import { formatUserInfo } from '@geonetwork-ui/util/shared'
+import { PossibleResourceTypes } from '@geonetwork-ui/api/metadata-converter'
 
 export type FieldType = 'values' | 'dateRange'
 
@@ -29,6 +30,7 @@ export type FieldValue = string | number
 export interface FieldAvailableValue {
   value: FieldValue
   label: string
+  count?: number
 }
 
 export abstract class AbstractSearchField {
@@ -80,6 +82,7 @@ export class SimpleSearchField implements AbstractSearchField {
         const bucketPromises = buckets.map(async (bucket) => ({
           label: `${await this.getBucketLabel(bucket)} (${bucket.count})`,
           value: bucket.term.toString(),
+          count: bucket.count,
         }))
         return Promise.all(bucketPromises)
       })
@@ -478,5 +481,85 @@ export class AvailableServicesField extends SimpleSearchField {
     if (linkFilter[this.linkProtocolViewFilter]) values.push('view')
     if (linkFilter[this.linkProtocolDownloadFilter]) values.push('download')
     return of(values)
+  }
+}
+
+export class TypeField extends SimpleSearchField {
+  TYPE_MAPPING = {
+    dataset: ['dataset', 'series', 'featureCatalog'],
+    service: ['service'],
+    reuse: Object.entries(PossibleResourceTypes)
+      .filter(([_, v]) => v === 'reuse')
+      .map(([k]) => k), // ['application', 'map', 'staticMap', 'interactiveMap', ...]
+  }
+
+  constructor(injector: Injector) {
+    super('resourceType', injector, 'asc')
+  }
+
+  getAvailableValues() {
+    return this.repository.aggregate(this.getAggregations()).pipe(
+      map(
+        (response) =>
+          (response[this.esFieldName] as AggregationBuckets).buckets || []
+      ),
+      switchMap((buckets: TermBucket[]) => {
+        const counts = buckets.reduce(
+          (acc, { term, count }) => {
+            const value = term.toString()
+            const key = this.TYPE_MAPPING.reuse.includes(value)
+              ? 'reuse'
+              : this.TYPE_MAPPING.dataset.includes(value)
+                ? 'dataset'
+                : value
+
+            acc[key] = (acc[key] || 0) + count
+            return acc
+          },
+          {} as Record<string, number>
+        )
+
+        return Promise.all(
+          Object.keys(this.TYPE_MAPPING).map(
+            // ['dataset', 'service', 'reuse']
+            (type) => ({
+              label: type,
+              value: type,
+              count: counts[type] ?? 0,
+            })
+          )
+        )
+      })
+    )
+  }
+
+  getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
+    return of({
+      [this.esFieldName]: values.reduce((acc, value) => {
+        if (value === '') return acc
+
+        const keysToAdd = this.TYPE_MAPPING[value] || [value]
+        keysToAdd.forEach((key: string) => (acc[key] = true))
+
+        return acc
+      }, {}),
+    })
+  }
+  getValuesForFilter(filters: FieldFilters): Observable<FieldValue[]> {
+    const filter = filters[this.esFieldName]
+    if (!filter) return of([])
+
+    const activeValues = Object.keys(filter).filter((v) => filter[v])
+    const activeTypes = Object.keys(this.TYPE_MAPPING).filter((type) =>
+      this.TYPE_MAPPING[type].some((t: string) => activeValues.includes(t))
+    )
+
+    // Allow unknown values eg. 'type=somethingnotexist' (for UI to select none)
+    const allTypes = [].concat(...Object.values(this.TYPE_MAPPING))
+    const unknownValues = activeValues.filter(
+      (value) => !allTypes.includes(value)
+    )
+
+    return of([...activeTypes, ...unknownValues])
   }
 }
