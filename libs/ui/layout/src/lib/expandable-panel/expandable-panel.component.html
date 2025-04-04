@@ -23,5 +23,7 @@
   [style.maxHeight]="maxHeight"
   #contentDiv
 >
-  <ng-content></ng-content>
+  <div *ngIf="showContent">
+    <ng-content></ng-content>
+  </div>
 </div>

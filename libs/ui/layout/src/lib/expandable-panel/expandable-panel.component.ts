@@ -27,17 +27,32 @@ export class ExpandablePanelComponent implements AfterViewChecked {
   @ContentChild('titleTemplate') titleTemplate?: TemplateRef<HTMLElement>
   @ViewChild('contentDiv') contentDiv: ElementRef
   maxHeight = '0px'
+  showContent = false
+  private readonly ANIMATION_DURATION = 300
 
   private _collapsed = true
 
   constructor(private changeDetector: ChangeDetectorRef) {}
 
   @Input() set collapsed(value: boolean) {
-    this._collapsed = value
-    setTimeout(() => {
-      this.updateMaxHeight()
-      this.changeDetector.detectChanges()
-    })
+    if (value !== this._collapsed) {
+      if (value) {
+        // Closing: wait for animation before hiding content
+        this._collapsed = value
+        setTimeout(() => {
+          this.showContent = false
+          this.changeDetector.detectChanges()
+        }, this.ANIMATION_DURATION)
+      } else {
+        // Opening: show content immediately then animate
+        this.showContent = true
+        this._collapsed = value
+      }
+      setTimeout(() => {
+        this.updateMaxHeight()
+        this.changeDetector.detectChanges()
+      })
+    }
   }
   get collapsed(): boolean {
     return this._collapsed
