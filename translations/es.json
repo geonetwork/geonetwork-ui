@@ -424,6 +424,8 @@
   "record.metadata.quality.updateFrequency.failed": "",
   "record.metadata.quality.updateFrequency.success": "",
   "record.metadata.related": "",
+  "record.metadata.related.contents": "Contenidos relacionados",
+  "record.metadata.ressources.and.links": "Recursos y enlaces",
   "record.metadata.sheet": "",
   "record.metadata.status": "",
   "record.metadata.status.notPublished": "",
