@@ -1,5 +1,8 @@
 <div class="flex items-center justify-between p-3 mt-8 bg-white rounded-lg">
-  <div class="relative">
+  <div
+    class="relative shrink-0"
+    *ngIf="featureCatalog?.featureTypes?.length > 1"
+  >
     <input
       type="text"
       [attr.aria-label]="'search.filter.into.feature.catalog' | translate"
@@ -13,13 +16,15 @@
       name="matSearchOutline"
     ></ng-icon>
   </div>
-  <div class="text-right text-sm ui-med">
-    <span class="text-sm font-medium text-gray-900" translate
-      >record.feature.catalog.number.total.object</span
-    ><span class="text-sm font-bold px-1 text-gray-900">{{
-      totalObjects
-    }}</span>
-    |
+  <div class="text-right text-sm ui-med ml-auto">
+    <ng-container *ngIf="featureCatalog?.featureTypes?.length > 1">
+      <span class="text-sm font-medium text-gray-900" translate
+        >record.feature.catalog.number.total.object</span
+      ><span class="text-sm font-bold px-1 text-gray-900">{{
+        totalObjects
+      }}</span>
+      |
+    </ng-container>
     <span class="text-sm font-medium text-gray-900" translate
       >record.feature.catalog.number.total.attribute</span
     ><span class="text-sm font-bold px-1 text-gray-900">{{

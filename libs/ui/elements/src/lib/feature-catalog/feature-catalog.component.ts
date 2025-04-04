@@ -55,8 +55,6 @@ export class FeatureCatalogComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.updateGridTemplate()
-    console.log('data', this.data)
-    console.log('columns', this.columns)
   }
 
   ngOnChanges(changes: SimpleChanges): void {

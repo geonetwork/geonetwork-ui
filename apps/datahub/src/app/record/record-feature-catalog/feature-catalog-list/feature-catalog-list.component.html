@@ -4,7 +4,9 @@
     *ngFor="let featureType of filteredFeatureCatalog?.featureTypes"
     class="rounded shadow bg-white"
   >
-    <gn-ui-expandable-panel>
+    <gn-ui-expandable-panel
+      [collapsed]="filteredFeatureCatalog?.featureTypes?.length !== 1"
+    >
       <ng-template #titleTemplate>
         <div class="pb-2 px-2">
           <div class="text-xl font-bold">{{ featureType.name }}</div>

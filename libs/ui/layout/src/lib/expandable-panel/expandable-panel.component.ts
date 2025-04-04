@@ -6,6 +6,8 @@ import {
   Input,
   TemplateRef,
   ViewChild,
+  AfterViewChecked,
+  ChangeDetectorRef,
 } from '@angular/core'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { CommonModule } from '@angular/common'
@@ -20,21 +22,42 @@ import { matAdd, matRemove } from '@ng-icons/material-icons/baseline'
   imports: [CommonModule, NgIcon],
   viewProviders: [provideIcons({ matAdd, matRemove })],
 })
-export class ExpandablePanelComponent {
+export class ExpandablePanelComponent implements AfterViewChecked {
   @Input() title?: string
-  @ContentChild('titleTemplate') titleTemplate?: TemplateRef<any>
-  @Input() collapsed = true
+  @ContentChild('titleTemplate') titleTemplate?: TemplateRef<HTMLElement>
   @ViewChild('contentDiv') contentDiv: ElementRef
-  maxHeight = this.setMaxHeight()
+  maxHeight = '0px'
+
+  private _collapsed = true
+
+  constructor(private changeDetector: ChangeDetectorRef) {}
+
+  @Input() set collapsed(value: boolean) {
+    this._collapsed = value
+    setTimeout(() => {
+      this.updateMaxHeight()
+      this.changeDetector.detectChanges()
+    })
+  }
+  get collapsed(): boolean {
+    return this._collapsed
+  }
 
   toggle(): void {
     this.collapsed = !this.collapsed
-    this.maxHeight = this.setMaxHeight()
   }
 
-  setMaxHeight() {
-    return `${
-      this.collapsed ? '0' : this.contentDiv?.nativeElement?.scrollHeight
-    }px`
+  ngAfterViewChecked() {
+    if (!this.collapsed && this.contentDiv) {
+      this.updateMaxHeight()
+      this.changeDetector.detectChanges()
+    }
+  }
+
+  private updateMaxHeight() {
+    if (!this.contentDiv) return
+    this.maxHeight = this.collapsed
+      ? '0px'
+      : `${this.contentDiv.nativeElement.scrollHeight}px`
   }
 }
