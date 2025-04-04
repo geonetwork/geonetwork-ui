@@ -1,12 +1,17 @@
 <div
-  class="group flex align-middle title border-b border-gray-100 cursor-pointer pt-2.5"
+  class="group flex items-center justify-between title border-b border-gray-100 cursor-pointer pt-2.5"
   (click)="toggle()"
 >
-  <div class="grow font-medium text-black text-sm">
-    {{ title }}
+  <div class="grow">
+    <ng-container *ngIf="titleTemplate; else simpleTitle">
+      <ng-container [ngTemplateOutlet]="titleTemplate"></ng-container>
+    </ng-container>
+    <ng-template #simpleTitle>
+      <div class="font-medium text-black text-sm">{{ title }}</div>
+    </ng-template>
   </div>
   <div
-    class="w-8 opacity-25 text-primary group-hover:opacity-100 transition-opacity"
+    class="w-8 opacity-25 text-primary group-hover:opacity-100 transition-opacity flex items-center"
   >
     <ng-icon name="matAdd" *ngIf="collapsed"></ng-icon>
     <ng-icon name="matRemove" *ngIf="!collapsed"></ng-icon>
@@ -18,5 +23,7 @@
   [style.maxHeight]="maxHeight"
   #contentDiv
 >
-  <ng-content></ng-content>
+  <div *ngIf="showContent">
+    <ng-content></ng-content>
+  </div>
 </div>

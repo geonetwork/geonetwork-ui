@@ -1,0 +1,22 @@
+<div class="h-[652px]" id="feature-catalog">
+  <div class="bg-primary-opacity-10 pt-10 overflow-visible h-[450px]">
+    <div class="container-lg px-4 lg:mx-auto">
+      <div>
+        <div class="text-[28px] text-title font-title transform" translate>
+          record.feature.catalog
+        </div>
+        <div class="bg-gray-100 rounded-lg">
+          <datahub-search-feature-catalog
+            [featureCatalog]="featureCatalog$ | async"
+            (filteredFeatureCatalogChange)="
+              onFilteredFeatureCatalogChange($event)
+            "
+          ></datahub-search-feature-catalog>
+          <datahub-feature-catalog-list
+            [filteredFeatureCatalog]="filteredFeatureCatalog"
+          ></datahub-feature-catalog-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

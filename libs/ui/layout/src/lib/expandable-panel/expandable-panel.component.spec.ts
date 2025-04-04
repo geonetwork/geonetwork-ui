@@ -28,6 +28,7 @@ describe('ExpandablePanelComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy()
   })
+
   describe('click on title', () => {
     it('updates the collapsed property', () => {
       const el = fixture.debugElement.query(By.css('.title')).nativeElement
@@ -36,6 +37,27 @@ describe('ExpandablePanelComponent', () => {
       expect(component.collapsed).toBe(false)
       el.click()
       expect(component.collapsed).toBe(true)
+    })
+  })
+
+  describe('complex title rendering', () => {
+    it('shows simple title when no template is provided', () => {
+      component.title = 'Simple Title'
+      fixture.detectChanges()
+      const titleElement = fixture.debugElement.query(
+        By.css('.font-medium.text-sm')
+      )
+      expect(titleElement.nativeElement.textContent).toContain('Simple Title')
+    })
+
+    it('uses template when provided', () => {
+      const customTemplate = `<div>Custom Template</div>`
+      component.titleTemplate = customTemplate as any
+      fixture.detectChanges()
+      const simpleTitle = fixture.debugElement.query(
+        By.css('.font-medium.text-sm')
+      )
+      expect(simpleTitle).toBeFalsy()
     })
   })
 
