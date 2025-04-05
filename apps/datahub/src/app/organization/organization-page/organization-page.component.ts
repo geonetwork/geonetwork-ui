@@ -4,11 +4,12 @@ import { AsyncPipe, NgIf } from '@angular/common'
 import { OrganizationHeaderComponent } from '../organization-header/organization-header.component'
 import { OrganizationDetailsComponent } from '../organization-details/organization-details.component'
 import { combineLatest, Observable, of, switchMap } from 'rxjs'
-import { filter } from 'rxjs/operators'
+import { filter, tap } from 'rxjs/operators'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { LetDirective } from '@ngrx/component'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import { TitleService } from '../../router/datahub-title.service'
 
 @Component({
   selector: 'datahub-organization-page',
@@ -30,8 +31,9 @@ export class OrganizationPageComponent implements OnInit {
 
   constructor(
     private router: RouterFacade,
-    private orgService: OrganizationsServiceInterface
-  ) {}
+    private orgService: OrganizationsServiceInterface,
+    private titleService: TitleService
+  ) { }
 
   ngOnInit(): void {
     this.organization$ = combineLatest([
@@ -44,6 +46,11 @@ export class OrganizationPageComponent implements OnInit {
           (organization) => organization.name === pathParams['name']
         )
         return of(organization)
+      }),
+      tap((organization) => {
+        if (organization) {
+          this.titleService.setTitle(organization.name)
+        }
       })
     )
   }
