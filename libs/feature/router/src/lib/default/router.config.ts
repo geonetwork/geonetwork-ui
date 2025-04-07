@@ -4,6 +4,7 @@ export interface RouterConfigModel {
   searchStateId: string
   searchRouteComponent: Type<any>
   recordRouteComponent: Type<any>
+  serviceRouteComponent: Type<any>
   organizationRouteComponent: Type<any>
 }
 
