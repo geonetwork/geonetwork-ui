@@ -163,7 +163,7 @@ describe('dataset pages', () => {
           .find('.font-title')
           .next()
           .as('infoBar')
-        cy.get('@infoBar').children().should('have.length', 3)
+        cy.get('@infoBar').children().should('have.length', 4)
       })
     })
   })
@@ -229,7 +229,6 @@ describe('dataset pages', () => {
           })
       })
       it('should display the keywords', () => {
-        cy.get('gn-ui-expandable-panel').eq(2).click()
         cy.get('gn-ui-badge').should('have.length.gt', 0)
       })
       it('should display three expandable panels', () => {
@@ -324,9 +323,7 @@ describe('dataset pages', () => {
         cy.url().should('include', '/search?organization=')
       })
       it('should go to dataset search page when clicking on keyword and filter by keyword', () => {
-        cy.get('gn-ui-expandable-panel').eq(2).click()
-
-        cy.get('gn-ui-badge').should('have.length.gt', 0).eq(1).as('keyword')
+        cy.get('gn-ui-badge').should('have.length.gt', 0).eq(2).as('keyword')
 
         cy.get('@keyword').then((key) => {
           keyword = key.text().toUpperCase()
