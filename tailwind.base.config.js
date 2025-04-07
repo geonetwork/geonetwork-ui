@@ -69,7 +69,6 @@ module.exports = {
       },
       boxShadow: {
         'xl-hover': '0 20px 25px -5px rgb(0 0 0 / 0.2)',
-        navbar: '0px 0px 5.1px 0px var(--color-primary-darkest)',
       },
     },
   },
