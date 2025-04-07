@@ -9,6 +9,7 @@ import {
   MetadataContactComponent,
   MetadataInfoComponent,
   MetadataQualityComponent,
+  ServiceCapabilitiesComponent,
 } from '@geonetwork-ui/ui/elements'
 import { combineLatest } from 'rxjs'
 import { filter, map, mergeMap } from 'rxjs/operators'
@@ -27,6 +28,9 @@ import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlink
 import { RecordRelatedRecordsComponent } from '../record-related-records/record-related-records.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { matChatOutline } from '@ng-icons/material-icons/outline'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -50,10 +54,15 @@ import { RecordDataPreviewComponent } from '../record-data-preview/record-data-p
     RecordRelatedRecordsComponent,
     TranslateModule,
     RecordDataPreviewComponent,
+    ButtonComponent,
+    NgIcon,
+    ServiceCapabilitiesComponent,
   ],
+  viewProviders: [provideIcons({ matChatOutline })],
 })
 export class RecordMetadataComponent {
   @Input() metadataQualityDisplay: boolean
+  @Input() kind: 'dataset' | 'service' | 'reuse'
 
   displayDownload$ = this.metadataViewFacade.downloadLinks$.pipe(
     map((links) => links?.length > 0)
@@ -132,5 +141,9 @@ export class RecordMetadataComponent {
     this.orgsService
       .getFiltersForOrgs([org])
       .subscribe((filters) => this.searchService.updateFilters(filters))
+  }
+
+  scrollTo(id: string) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' })
   }
 }
