@@ -129,7 +129,7 @@
 
   .gn-ui-btn-no-outline {
     @apply gn-ui-btn
-    hover:text-primary-darker focus:text-primary-darker active:text-primary-black;
+    hover:text-secondary-darker focus:text-secondary-darker active:text-secondary-black;
   }
 
   .gn-ui-btn-light {
