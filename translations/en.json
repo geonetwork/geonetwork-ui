@@ -425,6 +425,8 @@
   "record.metadata.quality.updateFrequency.failed": "Update frequency is not specified",
   "record.metadata.quality.updateFrequency.success": "Update frequency is specified",
   "record.metadata.related": "Related datasets",
+  "record.metadata.related.contents": "Related contents",
+  "record.metadata.ressources.and.links": "Resources and links",
   "record.metadata.sheet": "Original metadata",
   "record.metadata.status": "Status",
   "record.metadata.status.notPublished": "Not published",
