@@ -37,7 +37,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { fromEvent, Subscription } from 'rxjs'
 
-marker('record.kind.dataset')
+marker('record.kind.data')
 marker('record.kind.reuse')
 marker('record.kind.service')
 
@@ -178,7 +178,7 @@ export class InternalLinkCardComponent implements OnInit {
 
     switch (this.record.kind.toLowerCase()) {
       case 'dataset':
-        return { text: 'record.kind.dataset', icon: 'iconoirDatabase' }
+        return { text: 'record.kind.data', icon: 'iconoirDatabase' }
       case 'reuse':
         return { text: 'record.kind.reuse', icon: 'iconoirMap' }
       case 'service':
