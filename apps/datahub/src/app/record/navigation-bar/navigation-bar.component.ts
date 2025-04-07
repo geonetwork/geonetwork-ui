@@ -18,8 +18,8 @@ import { TranslateModule } from '@ngx-translate/core'
 marker('record.metadata.about')
 marker('record.metadata.capabilities')
 marker('record.metadata.preview')
-marker('record.metadata.links')
-marker('record.metadata.relatedContent')
+marker('record.metadata.ressources.and.links')
+marker('record.metadata.related.contents')
 marker('record.metadata.userFeedbacks')
 
 @Component({
@@ -52,19 +52,19 @@ export class NavigationBarComponent {
       label: 'record.metadata.capabilities',
     },
     {
-      anchor: 'preview',
+      anchor: 'data-preview',
       label: 'record.metadata.preview',
     },
     {
-      anchor: 'links',
-      label: 'record.metadata.links',
+      anchor: 'resources',
+      label: 'record.metadata.ressources.and.links',
     },
     {
-      anchor: 'related-records',
-      label: 'record.metadata.relatedContent',
+      anchor: 'related',
+      label: 'record.metadata.related.contents',
     },
     {
-      anchor: 'userFeedbacks',
+      anchor: 'user-feedbacks',
       label: 'record.metadata.userFeedbacks',
     },
   ]

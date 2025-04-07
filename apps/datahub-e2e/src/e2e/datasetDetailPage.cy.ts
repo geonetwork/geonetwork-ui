@@ -116,7 +116,9 @@ describe('dataset pages', () => {
           .should('exist')
         cy.get('datahub-header-record')
           .children('header')
-          .find('gn-ui-navigation-button')
+          .find('gn-ui-button')
+          .find('ng-icon')
+          .should('have.attr', 'name', 'matArrowBack')
           .should('exist')
         cy.get('datahub-header-record')
           .children('header')
@@ -125,8 +127,8 @@ describe('dataset pages', () => {
       })
       it('should scroll down when clicking on anchor title', () => {
         //wait for page content to load (download section needing most time)
-        cy.get('#access').should('be.visible')
-        cy.get('[data-cy="links"]').as('anchorLink')
+        cy.get('#downloads').should('be.visible')
+        cy.get('[data-cy="resources"]').as('anchorLink')
         cy.get('@anchorLink').click({ force: true })
         cy.window().then((win) => {
           const scrollPosition = win.scrollY
@@ -135,9 +137,9 @@ describe('dataset pages', () => {
       })
       it('should display the gnUiAnchorLinkInViewClass when scrolling to the anchor', () => {
         //wait for page content to load (download section needing most time)
-        cy.get('#access').should('be.visible')
-        cy.get('#links').should('be.visible').scrollIntoView()
-        cy.get('[data-cy="links"]').should(
+        cy.get('#downloads').should('be.visible')
+        cy.get('#resources').should('be.visible').scrollIntoView()
+        cy.get('[data-cy="resources"]').should(
           'have.class',
           '!border-b-primary border-b-4'
         )
