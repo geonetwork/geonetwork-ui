@@ -66,7 +66,7 @@ export class AnchorLinkDirective
       },
       {
         root: null,
-        rootMargin: '-43% 0% -43% 0%',
+        rootMargin: '-30% 0% -60% 0%',
       }
     )
     this.intersectionObserver.observe(target)
