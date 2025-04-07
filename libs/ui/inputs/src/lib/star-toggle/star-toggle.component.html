@@ -1,8 +1,8 @@
 <div class="inline-block relative align-middle" style="line-height: 0.7em">
-  <button
-    type="button"
+  <gn-ui-button
+    [type]="buttonType"
     class="-m-[8px] p-[8px]"
-    (click)="toggle($event)"
+    (buttonClick)="toggle($event)"
     [ngClass]="{
       enabled: toggled,
       disabled: !toggled,
@@ -10,11 +10,8 @@
       'cursor-default': disabled,
     }"
   >
-    <ng-icon
-      [name]="toggled ? 'matStar' : 'matStarBorder'"
-      size="24px"
-    ></ng-icon>
-  </button>
+    <ng-icon [name]="toggled ? 'matStar' : 'matStarBorder'"></ng-icon>
+  </gn-ui-button>
   <svg
     #starOverlay
     class="star-toggle-overlay"
