@@ -428,7 +428,7 @@ export class ElasticsearchService {
           must_not: this.mustNotFilters(),
         },
       },
-      _source: ['resourceTitleObject', 'uuid'],
+      _source: ['resourceTitleObject', 'uuid', 'resourceType'],
       from: 0,
       size: 20,
     }
