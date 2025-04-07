@@ -6,6 +6,7 @@
     >{{ favoriteCount }}</span
   >
   <gn-ui-star-toggle
+    [buttonType]="buttonType"
     [toggled]="isFavorite$ | async"
     (newValue)="toggleFavorite($event)"
     [disabled]="loading || (isAnonymous$ | async)"

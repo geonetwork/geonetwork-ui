@@ -50,5 +50,9 @@
 </div>
 
 <ng-template #favoriteToggle let-record>
-  <gn-ui-favorite-star [record]="record"></gn-ui-favorite-star>
+  <gn-ui-favorite-star
+    [record]="record"
+    [style.--gn-ui-button-height]="'24px'"
+    [style.--gn-ui-button-width]="'24px'"
+  ></gn-ui-favorite-star>
 </ng-template>

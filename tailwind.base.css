@@ -127,6 +127,11 @@
     border border-gray-300 hover:border-primary-lighter focus:border-primary-lighter focus:ring-4 focus:ring-primary-lightest active:border-primary-darker;
   }
 
+  .gn-ui-btn-no-outline {
+    @apply gn-ui-btn
+    hover:text-primary-darker focus:text-primary-darker active:text-primary-black;
+  }
+
   .gn-ui-btn-light {
     @apply gn-ui-btn
       hover:bg-gray-50 focus:bg-gray-50 active:bg-gray-100
@@ -159,11 +164,6 @@
 
   .gn-ui-card-detail {
     @apply font-medium text-gray-500 text-ellipsis break-words text-sm;
-  }
-
-  /* TODO: rework centering in gn-ui-card-icon and maybe merge both classes into one */
-  .gn-ui-nav-bar-icon {
-    @apply gn-ui-card-icon justify-center items-center h-8 min-w-10 hover:bg-primary;
   }
 
   /* DROPDOWN MULTISELECT CLASS */
