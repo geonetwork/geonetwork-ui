@@ -301,7 +301,6 @@ export class ElasticsearchService {
     return [
       {
         ...this.queryFilterOnValues('resourceType', [
-          'service',
           'map',
           'map/static',
           'mapDigital',

@@ -274,12 +274,7 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
                   must_not: [
                     {
                       terms: {
-                        resourceType: [
-                          'service',
-                          'map',
-                          'map/static',
-                          'mapDigital',
-                        ],
+                        resourceType: ['map', 'map/static', 'mapDigital'],
                       },
                     },
                     {
