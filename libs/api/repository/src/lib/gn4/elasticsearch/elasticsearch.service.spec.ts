@@ -184,7 +184,7 @@ describe('ElasticsearchService', () => {
           must_not: [
             {
               terms: {
-                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+                resourceType: ['map', 'map/static', 'mapDigital'],
               },
             },
             {
@@ -260,7 +260,7 @@ describe('ElasticsearchService', () => {
           must_not: [
             {
               terms: {
-                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+                resourceType: ['map', 'map/static', 'mapDigital'],
               },
             },
             {
@@ -334,7 +334,7 @@ describe('ElasticsearchService', () => {
           must_not: [
             {
               terms: {
-                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+                resourceType: ['map', 'map/static', 'mapDigital'],
               },
             },
             {
@@ -401,7 +401,7 @@ describe('ElasticsearchService', () => {
           must_not: [
             {
               terms: {
-                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+                resourceType: ['map', 'map/static', 'mapDigital'],
               },
             },
             {
@@ -450,7 +450,7 @@ describe('ElasticsearchService', () => {
           must_not: [
             {
               terms: {
-                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+                resourceType: ['map', 'map/static', 'mapDigital'],
               },
             },
             {
@@ -511,7 +511,7 @@ describe('ElasticsearchService', () => {
           must_not: [
             {
               terms: {
-                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+                resourceType: ['map', 'map/static', 'mapDigital'],
               },
             },
             {
@@ -630,7 +630,7 @@ describe('ElasticsearchService', () => {
             must_not: [
               {
                 terms: {
-                  resourceType: ['service', 'map', 'map/static', 'mapDigital'],
+                  resourceType: ['map', 'map/static', 'mapDigital'],
                 },
               },
               {
@@ -765,12 +765,7 @@ describe('ElasticsearchService', () => {
               must_not: [
                 {
                   terms: {
-                    resourceType: [
-                      'service',
-                      'map',
-                      'map/static',
-                      'mapDigital',
-                    ],
+                    resourceType: ['map', 'map/static', 'mapDigital'],
                   },
                 },
                 {
