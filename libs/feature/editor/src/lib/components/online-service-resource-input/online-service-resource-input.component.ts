@@ -81,8 +81,8 @@ export class OnlineServiceResourceInputComponent {
   errorMessage = false
   resetUrlOnChange = Math.random()
 
-  layersSubject = new BehaviorSubject<{ name: string; title: string }[]>([])
-  layers$: Observable<{ name: string; title: string }[]> =
+  layersSubject = new BehaviorSubject<{ name?: string; title?: string }[]>([])
+  layers$: Observable<{ name?: string; title?: string }[]> =
     this.layersSubject.asObservable()
 
   protocolOptions: {
