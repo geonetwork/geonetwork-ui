@@ -3,7 +3,11 @@ import { FavoriteStarComponent } from './favorite-star.component'
 import { BehaviorSubject, of, throwError } from 'rxjs'
 import { StarToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { By } from '@angular/platform-browser'
-import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  EventEmitter,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import tippy from 'tippy.js'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
@@ -22,11 +26,6 @@ class FavoritesServiceMock {
   myFavoritesUuid$ = new BehaviorSubject<string[]>([])
   removeFromFavorites = jest.fn(() => of(true))
   addToFavorites = jest.fn(() => of(true))
-}
-
-class TranslateServiceMock {
-  currentLang = 'fr'
-  get = jest.fn(() => of('You can log in here'))
 }
 
 describe('FavoriteStarComponent', () => {
@@ -53,10 +52,14 @@ describe('FavoriteStarComponent', () => {
           provide: FavoritesService,
           useClass: FavoritesServiceMock,
         },
-        {
-          provide: TranslateService,
-          useClass: TranslateServiceMock,
-        },
+        MockProvider(TranslateService, {
+          currentLang: 'fr',
+          get: jest.fn(() => of('You can log in here')),
+          onLangChange: new EventEmitter<{
+            lang: string
+            translations: object
+          }>(),
+        }),
         MockProvider(Location, {
           path: () => '/',
         }),
