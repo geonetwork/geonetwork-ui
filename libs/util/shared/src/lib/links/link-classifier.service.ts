@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import {
+  DatasetOnlineResource,
+  ServiceOnlineResource,
+} from '@geonetwork-ui/common/domain/model/record'
 import { getFileFormat } from './link-utils'
 
 export enum LinkUsage {
@@ -16,8 +19,11 @@ export enum LinkUsage {
   providedIn: 'root',
 })
 export class LinkClassifierService {
-  getUsagesForLink(link: DatasetOnlineResource): LinkUsage[] {
+  getUsagesForLink(
+    link: DatasetOnlineResource | ServiceOnlineResource
+  ): LinkUsage[] {
     switch (link.type) {
+      case 'endpoint':
       case 'service': {
         switch (link.accessServiceProtocol) {
           case 'esriRest':
@@ -54,7 +60,10 @@ export class LinkClassifierService {
     }
   }
 
-  hasUsage(link: DatasetOnlineResource, usage: LinkUsage) {
+  hasUsage(
+    link: DatasetOnlineResource | ServiceOnlineResource,
+    usage: LinkUsage
+  ) {
     return this.getUsagesForLink(link).indexOf(usage) > -1
   }
 }

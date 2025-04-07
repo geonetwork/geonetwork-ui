@@ -6,7 +6,7 @@ import {
   OnDestroy,
 } from '@angular/core'
 import { Meta } from '@angular/platform-browser'
-import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-record-meta',
@@ -15,7 +15,7 @@ import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
   standalone: true,
 })
 export class RecordMetaComponent implements OnDestroy, OnChanges {
-  @Input() metadata: DatasetRecord
+  @Input() metadata: CatalogRecord
 
   constructor(private meta: Meta) {}
 
