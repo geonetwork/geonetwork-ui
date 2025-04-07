@@ -425,6 +425,8 @@
   "record.metadata.quality.updateFrequency.failed": "Frekvencia aktualizácie nie je určená",
   "record.metadata.quality.updateFrequency.success": "Frekvencia aktualizácie je určená",
   "record.metadata.related": "Súvisiace záznamy",
+  "record.metadata.related.contents": "Související obsah",
+  "record.metadata.ressources.and.links": "Prostředky a odkazy",
   "record.metadata.sheet": "Ďalšie metadáta sú k dispozícii na:",
   "record.metadata.status": "Stav",
   "record.metadata.status.notPublished": "",
