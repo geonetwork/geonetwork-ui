@@ -69,7 +69,8 @@ export class HeaderRecordComponent {
   ]).pipe(
     map(
       ([mapLinks, geoDataLinks]) =>
-        mapLinks?.length > 0 || geoDataLinks?.length > 0
+        (mapLinks?.length > 0 || geoDataLinks?.length > 0) &&
+        this.metadata.kind === 'dataset'
     )
   )
 
