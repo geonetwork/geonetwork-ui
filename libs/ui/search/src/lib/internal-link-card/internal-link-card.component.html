@@ -14,46 +14,50 @@
         [fit]="'cover'"
       ></gn-ui-thumbnail>
     </div>
-    <div class="flex flex-col flex-1 relative justify-between">
-      <div>
-        <div class="flex items-center space-x-2">
-          <span
-            *ngIf="getKindInfo().text"
-            class="badge-btn text-white text-xs px-2 py-0.5 font-bold shrink-0 bg-primary leading-tight flex items-center justify-evenly h-6 min-h-6"
-          >
-            <ng-icon
-              class="text-[0.9em] text-white mr-1"
-              [name]="getKindInfo().icon"
-            ></ng-icon>
-            <span class="font-medium text-white text-xs" translate>
-              {{ getKindInfo().text }}
+    <div
+      class="flex flex-col flex-1 relative"
+      [ngClass]="{
+        'justify-between': record.ownerOrganization?.name && size !== 'XS',
+        'justify-evenly': size === 'XS',
+      }"
+    >
+      <div class="flex items-center space-x-2">
+        <span
+          *ngIf="getKindInfo().text"
+          class="badge-btn text-white text-xs px-2 py-0.5 font-bold shrink-0 bg-primary leading-tight flex items-center justify-evenly h-6 min-h-6"
+        >
+          <ng-icon
+            class="text-[0.9em] text-white mr-1"
+            [name]="getKindInfo().icon"
+          ></ng-icon>
+          <span class="font-medium text-white text-xs" translate>
+            {{ getKindInfo().text }}
+          </span>
+        </span>
+        <span
+          *ngIf="isGeodata"
+          class="badge-btn text-black text-xs px-2 py-0.5 font-bold shrink-0 bg-primary-white leading-tight flex items-center justify-evenly h-6 min-h-6"
+          [ngClass]="size === 'L' ? 'w-[164px]' : 'w-8'"
+        >
+          <ng-icon
+            class="text-[0.9em] text-primary-darkest"
+            name="matLocationSearchingOutline"
+          ></ng-icon>
+          <ng-container *ngIf="size === 'L'">
+            <span
+              class="font-medium text-primary-darkest text-xs ml-1"
+              translate
+            >
+              record.metadata.type
             </span>
-          </span>
-          <span
-            *ngIf="isGeodata"
-            class="badge-btn text-black text-xs px-2 py-0.5 font-bold shrink-0 bg-primary-white leading-tight flex items-center justify-evenly h-6 min-h-6"
-            [ngClass]="size === 'L' ? 'w-[164px]' : 'w-8'"
-          >
-            <ng-icon
-              class="text-[0.9em] text-primary-darkest"
-              name="matLocationSearchingOutline"
-            ></ng-icon>
-            <ng-container *ngIf="size === 'L'">
-              <span
-                class="font-medium text-primary-darkest text-xs ml-1"
-                translate
-              >
-                record.metadata.type
-              </span>
-            </ng-container>
-          </span>
-          <div class="flex items-center">
-            <gn-ui-metadata-quality
-              [smaller]="true"
-              [metadata]="record"
-              [metadataQualityDisplay]="metadataQualityDisplay"
-            ></gn-ui-metadata-quality>
-          </div>
+          </ng-container>
+        </span>
+        <div class="flex items-center">
+          <gn-ui-metadata-quality
+            [smaller]="true"
+            [metadata]="record"
+            [metadataQualityDisplay]="metadataQualityDisplay"
+          ></gn-ui-metadata-quality>
         </div>
         <div class="absolute top-0 right-0 items-center">
           <ng-container
@@ -62,24 +66,29 @@
             [ngTemplateOutletContext]="{ $implicit: record }"
           ></ng-container>
         </div>
-        <div
-          class="mt-2 font-medium text-title group-hover:text-primary overflow-hidden break-words text-xl justify-evenly"
-          [ngClass]="size === 'S' ? 'line-clamp-3' : 'line-clamp-2'"
-        >
-          {{ record.title }}
-        </div>
-        <div
-          *ngIf="size === 'L'"
-          class="mt-1 mb-2 font-normal text-xs text-gray-900 line-clamp-2 overflow-hidden justify-evenly"
-        >
-          <gn-ui-markdown-parser
-            [textContent]="abstract"
-            [whitoutStyles]="true"
-          ></gn-ui-markdown-parser>
-        </div>
       </div>
       <div
-        *ngIf="size !== 'XS'"
+        class="font-medium text-title group-hover:text-primary overflow-hidden break-words text-xl"
+        [ngClass]="{
+          'line-clamp-3': size === 'S',
+          'line-clamp-2': size !== 'S',
+          'mt-2 ': record.ownerOrganization?.name,
+          'mt-4': !record.ownerOrganization?.name,
+        }"
+      >
+        {{ record.title }}
+      </div>
+      <div
+        *ngIf="size === 'L'"
+        class="mt-1 mb-2 font-normal text-xs text-gray-900 line-clamp-2 overflow-hidden"
+      >
+        <gn-ui-markdown-parser
+          [textContent]="abstract"
+          [whitoutStyles]="true"
+        ></gn-ui-markdown-parser>
+      </div>
+      <div
+        *ngIf="size !== 'XS' && record.ownerOrganization?.name"
         class="flex items-center justify-evenly bg-gray-50 rounded-lg h-[53px] px-2"
       >
         <div class="flex items-center flex-1 min-w-0">
