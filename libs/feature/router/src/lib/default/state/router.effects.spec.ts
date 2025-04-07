@@ -25,11 +25,13 @@ import { ROUTE_PARAMS } from '../constants'
 
 class SearchRouteComponent extends Component {}
 class MetadataRouteComponent extends Component {}
+class ServiceRouteComponent extends Component {}
 
 const routerConfigMock = {
   searchStateId: 'main',
   searchRouteComponent: SearchRouteComponent,
   recordRouteComponent: MetadataRouteComponent,
+  ServiceRouteComponent: ServiceRouteComponent,
 }
 
 class RouterFacadeMock {

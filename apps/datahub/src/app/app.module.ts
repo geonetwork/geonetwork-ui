@@ -22,6 +22,7 @@ import {
   ROUTER_ROUTE_DATASET,
   ROUTER_ROUTE_ORGANIZATION,
   ROUTER_ROUTE_SEARCH,
+  ROUTER_ROUTE_SERVICE,
   RouterService,
 } from '@geonetwork-ui/feature/router'
 import {
@@ -153,6 +154,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
       searchStateId: 'mainSearch',
       searchRouteComponent: SearchPageComponent,
       recordRouteComponent: RecordPageComponent,
+      serviceRouteComponent: RecordPageComponent,
       organizationRouteComponent: OrganizationPageComponent,
     }),
     FeatureRecordModule,
@@ -237,6 +239,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
       },
     },
     { provide: RECORD_URL_TOKEN, useValue: `${ROUTER_ROUTE_DATASET}/\${uuid}` },
+    { provide: RECORD_URL_TOKEN, useValue: `${ROUTER_ROUTE_SERVICE}/\${uuid}` },
     {
       provide: ORGANIZATION_PAGE_URL_TOKEN,
       useValue: `${ROUTER_ROUTE_ORGANIZATION}/\${name}`,

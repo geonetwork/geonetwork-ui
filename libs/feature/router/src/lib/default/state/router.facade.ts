@@ -7,6 +7,7 @@ import { distinctUntilChanged, filter, map, take } from 'rxjs/operators'
 import {
   ROUTER_ROUTE_DATASET,
   ROUTER_ROUTE_SEARCH,
+  ROUTER_ROUTE_SERVICE,
   SearchRouteParams,
 } from '../constants'
 import {
@@ -32,12 +33,18 @@ export class RouterFacade {
     map(expandQueryParams)
   )
 
+  routeMap = {
+    dataset: ROUTER_ROUTE_DATASET,
+    service: ROUTER_ROUTE_SERVICE,
+  }
+
   constructor(
     private store: Store<RouterReducerState>,
     private routerService: RouterService
   ) {}
 
   goToMetadata(metadata: CatalogRecord) {
+    const selectedRoute = this.routeMap[metadata.kind] || ROUTER_ROUTE_DATASET
     this.pathParams$
       .pipe(
         take(1),
@@ -45,7 +52,7 @@ export class RouterFacade {
       )
       .subscribe(() => {
         this.go({
-          path: `${ROUTER_ROUTE_DATASET}/${metadata.uniqueIdentifier}`,
+          path: `${selectedRoute}/${metadata.uniqueIdentifier}`,
         })
         this.store.dispatch(
           MdViewActions.setIncompleteMetadata({ incomplete: metadata })

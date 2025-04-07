@@ -4,6 +4,7 @@ import {
   ROUTER_ROUTE_DATASET,
   ROUTER_ROUTE_ORGANIZATION,
   ROUTER_ROUTE_SEARCH,
+  ROUTER_ROUTE_SERVICE,
 } from '@geonetwork-ui/feature/router'
 import { HomePageComponent } from '../home/home-page/home-page.component'
 import { NewsPageComponent } from '../home/news-page/news-page.component'
@@ -71,6 +72,10 @@ export class DatahubRouterService {
       },
       {
         path: `${ROUTER_ROUTE_DATASET}/:metadataUuid`,
+        component: RecordPageComponent,
+      },
+      {
+        path: `${ROUTER_ROUTE_SERVICE}/:metadataUuid`,
         component: RecordPageComponent,
       },
       {
