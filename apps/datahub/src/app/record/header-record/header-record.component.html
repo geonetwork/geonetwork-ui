@@ -14,6 +14,18 @@
       [style.color]="foregroundColor"
     >
       <gn-ui-badge
+        [style.--gn-ui-badge-padding]="'2px 8px'"
+        [style.--gn-ui-badge-background-color]="'transparent'"
+        [style.--gn-ui-badge-opacity]="'1'"
+        class="leading-[1.4em] border border-white rounded-md"
+        *ngIf="metadata?.kind"
+      >
+        <ng-icon class="mr-[5px] text-[1em]" [name]="getBadge().icon"></ng-icon>
+        <span class="font-semibold text-[12px]">{{
+          getBadge().text | translate
+        }}</span>
+      </gn-ui-badge>
+      <gn-ui-badge
         *ngIf="(isGeodata$ | async) === true"
         [style.--gn-ui-badge-padding]="'2px 8px'"
         [style.--gn-ui-badge-background-color]="'var(--color-primary-darker)'"
@@ -33,7 +45,10 @@
           record.metadata.lastUpdate
         </p>
       </div>
-      <div *ngIf="metadata.status" class="flex flex-row gap-2">
+      <div
+        *ngIf="metadata.kind === 'dataset' && metadata.status"
+        class="flex flex-row gap-2"
+      >
         <p>•</p>
         <p
           [innerHTML]="'domain.record.status.' + metadata.status | translate"
