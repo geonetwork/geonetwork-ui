@@ -11,6 +11,7 @@
     [class]="displayMobileMenu ? 'border-r-2 border-gray-300' : ''"
   >
     <gn-ui-button
+      data-cy="backButton"
       (buttonClick)="back()"
       type="outline"
       [style.--gn-ui-button-rounded]="'8px'"

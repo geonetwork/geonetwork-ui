@@ -116,9 +116,7 @@ describe('dataset pages', () => {
           .should('exist')
         cy.get('datahub-header-record')
           .children('header')
-          .find('gn-ui-button')
-          .find('ng-icon')
-          .should('have.attr', 'name', 'matArrowBack')
+          .find('[data-cy="backButton"]')
           .should('exist')
         cy.get('datahub-header-record')
           .children('header')
@@ -160,7 +158,7 @@ describe('dataset pages', () => {
           .find('gn-ui-favorite-star')
         cy.get('datahub-header-record')
           .children('header')
-          .find('gn-ui-navigation-button')
+          .find('[data-cy="backButton"]')
         cy.screenshot({ capture: 'fullPage' })
       })
       it('should display the data type, last update and status', () => {
@@ -175,7 +173,7 @@ describe('dataset pages', () => {
       it('should return to the dataset list', () => {
         cy.get('datahub-header-record')
           .children('header')
-          .find('gn-ui-navigation-button')
+          .find('[data-cy="backButton"]')
           .click()
         cy.url().should('include', '/search')
       })
