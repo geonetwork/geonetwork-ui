@@ -240,8 +240,8 @@ export type DatasetFeatureCatalog = {
 }
 
 export interface ServiceEndpoint {
-  endpointUrl: URL
-  protocol: string
+  url: URL
+  accessServiceProtocol: ServiceProtocol
   type: 'endpoint'
   description?: string
   translations?: OnlineResourceTranslations

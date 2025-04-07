@@ -509,8 +509,8 @@ export class Gn4FieldMapper {
         return {
           ...distribution,
           type,
-          endpointUrl: url,
-          protocol: accessServiceProtocol,
+          url: url,
+          accessServiceProtocol: accessServiceProtocol,
         }
     }
   }

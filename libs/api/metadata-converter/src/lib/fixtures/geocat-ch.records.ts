@@ -772,10 +772,10 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
     },
     {
       type: 'endpoint',
-      endpointUrl: new URL(
+      url: new URL(
         'https://services.geo.sg.ch/wss/service/SG00170_WMS/guest?request=GetCapabilities&service=WMS'
       ),
-      protocol: 'wms',
+      accessServiceProtocol: 'wms',
       description:
         'https://services.geo.sg.ch/wss/service/SG00170_WMS/guest?request=GetCapabilities&service=WMS',
       translations: {

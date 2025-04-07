@@ -1227,7 +1227,7 @@ export function writeLineage(record: DatasetRecord, rootEl: XmlElement) {
 }
 
 export function getServiceEndpointProtocol(endpoint: ServiceEndpoint): string {
-  switch (endpoint.protocol.toLowerCase()) {
+  switch (endpoint.accessServiceProtocol.toLowerCase()) {
     case 'wfs':
       return 'OGC:WFS'
     case 'wms':
@@ -1235,14 +1235,14 @@ export function getServiceEndpointProtocol(endpoint: ServiceEndpoint): string {
     case 'wps':
       return 'OGC:WPS'
     default:
-      return endpoint.protocol
+      return endpoint.accessServiceProtocol
   }
 }
 
 export function createOnlineResource(onlineResource: ServiceOnlineResource) {
   let linkageUrl, functionCode, protocol
   if (onlineResource.type === 'endpoint') {
-    linkageUrl = onlineResource.endpointUrl.toString()
+    linkageUrl = onlineResource.url.toString()
     protocol = getServiceEndpointProtocol(onlineResource)
     functionCode = 'download'
   } else {

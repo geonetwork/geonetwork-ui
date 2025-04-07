@@ -629,10 +629,10 @@ export const METAWAL_SERVICE_RECORD: ServiceRecord = {
     {
       description:
         'Ce service ESRI-REST permet de visualiser la couche de données "Plan parcellaire cadastral - situation 01/01/2016" (uniquement les données du bâti et le parcellaire)',
-      endpointUrl: new URL(
+      url: new URL(
         'https://geoservices.wallonie.be/arcgis/rest/services/PLAN_REGLEMENT/CADMAP_2016_PARCELLES/MapServer'
       ),
-      protocol: 'esriRest',
+      accessServiceProtocol: 'esriRest',
       type: 'endpoint',
       translations: {},
     },

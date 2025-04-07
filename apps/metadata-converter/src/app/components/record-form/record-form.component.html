@@ -465,7 +465,7 @@
       [(fieldValue)]="record.onlineResources"
       [itemTemplate]="endpointTpl"
       (confirm)="emitChangedRecord()"
-      [defaultItem]="{ endpointUrl: '', protocol: 'OGC:WMS' }"
+      [defaultItem]="{ url: '', accessServiceProtocol: 'OGC:WMS' }"
     >
       <ng-template #endpointTpl let-get="getValue" let-set="setValue">
         <gn-ui-record-field-group label="Online Resource">
@@ -480,14 +480,14 @@
             *ngIf="get().type === 'endpoint'"
             label="Endpoint URL"
             [type]="'url'"
-            [fieldValue]="get().endpointUrl"
-            (fieldValueChange)="set($event, 'endpointUrl')"
+            [fieldValue]="get().url"
+            (fieldValueChange)="set($event, 'url')"
             (confirm)="emitChangedRecord()"
           ></gn-ui-record-field-simple>
           <gn-ui-record-field-simple
             *ngIf="get().type === 'endpoint'"
             label="Protocol"
-            [fieldValue]="get().protocol"
+            [fieldValue]="get().accessServiceProtocol"
             (fieldValueChange)="set($event, 'protocol')"
             (confirm)="emitChangedRecord()"
           ></gn-ui-record-field-simple>

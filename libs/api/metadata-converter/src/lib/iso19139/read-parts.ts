@@ -965,8 +965,8 @@ export function extractServiceOnlineResources(): ChainableFunction<
         } else {
           return {
             type: 'endpoint',
-            endpointUrl: url,
-            protocol,
+            url: url,
+            accessServiceProtocol: protocol,
             ...(description && { description }),
             translations,
           }
