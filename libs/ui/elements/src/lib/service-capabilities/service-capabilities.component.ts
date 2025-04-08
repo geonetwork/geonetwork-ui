@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { getLayers } from '@geonetwork-ui/util/shared'
 import { ButtonComponent, TextInputComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIcon, provideIcons } from '@ng-icons/core'
@@ -18,22 +18,19 @@ import {
 } from '@camptocamp/ogc-client'
 
 marker(`service.metadata.search`)
-
-const capabilitiesKeys = [
-  { key: 'title', displayName: 'Title' },
-  { key: 'abstract', displayName: 'Abstract' },
-  { key: 'name', displayName: 'Name' },
-  { key: 'defaultCrs', displayName: 'Default CRS' },
-  { key: 'availableCrs', displayName: 'Available CRS' },
-  { key: 'otherCrs', displayName: 'Other CRS' },
-  { key: 'objectCount', displayName: 'Object Count' },
-  { key: 'geometryName', displayName: 'Geometry Name' },
-  { key: 'geometryType', displayName: 'Geometry Type' },
-  { key: 'keywords', displayName: 'Keywords' },
-  { key: 'outputFormats', displayName: 'Output Formats' },
-  { key: 'resourceLinks', displayName: 'Resource Links' },
-  { key: 'attribution', displayName: 'Attribution' },
-] as const
+marker(`service.metadata.capabilities.title`)
+marker(`service.metadata.capabilities.abstract`)
+marker(`service.metadata.capabilities.name`)
+marker(`service.metadata.capabilities.defaultCrs`)
+marker(`service.metadata.capabilities.availableCrs`)
+marker(`service.metadata.capabilities.otherCrs`)
+marker(`service.metadata.capabilities.objectCount`)
+marker(`service.metadata.capabilities.geometryName`)
+marker(`service.metadata.capabilities.geometryType`)
+marker(`service.metadata.capabilities.keywords`)
+marker(`service.metadata.capabilities.outputFormats`)
+marker(`service.metadata.capabilities.resourceLinks`)
+marker(`service.metadata.capabilities.attribution`)
 
 @Component({
   selector: 'gn-ui-service-capabilities',
@@ -65,7 +62,26 @@ export class ServiceCapabilitiesComponent implements OnInit {
   searchQuery = ''
   loading = false
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  capabilitiesKeys = [
+    'title',
+    'abstract',
+    'name',
+    'defaultCrs',
+    'availableCrs',
+    'otherCrs',
+    'objectCount',
+    'geometryName',
+    'geometryType',
+    'keywords',
+    'outputFormats',
+    'resourceLinks',
+    'attribution',
+  ]
+
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit() {
     this.loadLayers()
@@ -112,12 +128,16 @@ export class ServiceCapabilitiesComponent implements OnInit {
 
     this.selectedLayer = layer
     const filteredInfo = []
-
-    for (const { key, displayName } of capabilitiesKeys) {
-      if (key in layer && layer[key]?.length) {
-        filteredInfo.push({ displayName, value: layer[key] })
+    Object.keys(layer).map((key) => {
+      if (this.capabilitiesKeys.includes(key)) {
+        const displayName = this.translateService.instant(
+          `service.metadata.capabilities.${key}`
+        )
+        if (key in layer && layer[key]?.length) {
+          filteredInfo.push({ displayName, value: layer[key] })
+        }
       }
-    }
+    })
 
     this.layerInformation = filteredInfo
   }
@@ -138,6 +158,10 @@ export class ServiceCapabilitiesComponent implements OnInit {
         return layer.name.toLowerCase().includes(query)
       }
     })
+    if (!this.filteredLayers.includes(this.selectedLayer)) {
+      this.selectedLayer = null
+      this.layerInformation = []
+    }
   }
 
   getExtraClass(layerItem) {
