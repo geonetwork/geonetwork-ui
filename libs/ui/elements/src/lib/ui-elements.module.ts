@@ -20,6 +20,7 @@ import { ThumbnailComponent } from './thumbnail/thumbnail.component'
 import { TimeSincePipe } from './user-feedback-item/time-since.pipe'
 import { UserPreviewComponent } from './user-preview/user-preview.component'
 import { ApplicationBannerComponent } from './application-banner/application-banner.component'
+import { InternalLinkCardComponent } from './internal-link-card/internal-link-card.component'
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { ApplicationBannerComponent } from './application-banner/application-ban
     TextInputComponent,
     ImageInputComponent,
     ApplicationBannerComponent,
+    InternalLinkCardComponent,
   ],
   providers: [
     provideNgIconsConfig({
@@ -56,6 +58,7 @@ import { ApplicationBannerComponent } from './application-banner/application-ban
     MarkdownParserComponent,
     ImageInputComponent,
     ApplicationBannerComponent,
+    InternalLinkCardComponent,
   ],
 })
 export class UiElementsModule {}
