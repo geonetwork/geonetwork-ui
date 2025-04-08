@@ -112,6 +112,13 @@ export class InternalLinkCardComponent implements OnInit {
     XS: 'hidden',
   }
 
+  private readonly titleClassMap: Record<CardSize, string> = {
+    L: 'text-xl line-clamp-2',
+    M: 'text-base line-clamp-2',
+    S: 'text-base line-clamp-3',
+    XS: 'text-base mt-3 line-clamp-2',
+  }
+
   constructor(protected elementRef: ElementRef) {}
 
   ngOnInit(): void {
@@ -136,6 +143,14 @@ export class InternalLinkCardComponent implements OnInit {
       (this.record.kind === 'dataset'
         ? this.record.contactsForResource
         : this.record.contacts) || []
+    )
+  }
+
+  getTitleClass() {
+    return (
+      this.titleClassMap[this._size] +
+        ' ' +
+        (this.record.ownerOrganization?.name ? '' : 'mt-3') || ''
     )
   }
 

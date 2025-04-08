@@ -18,7 +18,6 @@
       class="flex flex-col flex-1 relative"
       [ngClass]="{
         'justify-between': record.ownerOrganization?.name && size !== 'XS',
-        'justify-evenly': size === 'XS',
       }"
     >
       <div class="flex items-center space-x-2">
@@ -69,14 +68,7 @@
       </div>
       <div
         class="font-medium text-title group-hover:text-primary overflow-hidden break-words"
-        [ngClass]="{
-          'line-clamp-3': size === 'S',
-          'line-clamp-2': size !== 'S',
-          'mt-2 ': record.ownerOrganization?.name,
-          'mt-4': !record.ownerOrganization?.name,
-          'text-xl': size === 'L',
-          'text-base': size === 'XS' || size === 'S' || size === 'M',
-        }"
+        [ngClass]="getTitleClass()"
       >
         {{ record.title }}
       </div>
