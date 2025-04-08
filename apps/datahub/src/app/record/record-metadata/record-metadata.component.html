@@ -81,7 +81,7 @@
     *ngIf="
       (displayDownload$ | async) ||
       (displayOtherLinks | async) ||
-      (displayApi$ | async)
+      ((displayApi$ | async) && kind === 'dataset')
     "
     class="overflow-x-hidden"
   >
