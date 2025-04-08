@@ -32,14 +32,30 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
+
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
+
+      - id: npm-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+            .nx
+          key: ${{ runner.os }}-npm-nx-cypress-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-nx-cypress-${{ hashFiles('**/package-lock.json') }}
+            ${{ runner.os }}-npm-nx-cypress-
+
       - run: npm ci
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+
       - run: npx nx format:check
       - run: npx nx affected -t lint --parallel=3
       - run: npx nx affected -t test --parallel=3 --configuration=ci --ci --codeCoverage --coverageReporters=lcov
@@ -81,20 +97,41 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
+
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
+
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
+
+      - id: npm-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+            .nx
+          key: ${{ runner.os }}-npm-nx-cypress-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-nx-cypress-${{ hashFiles('**/package-lock.json') }}
+            ${{ runner.os }}-npm-nx-cypress-
+
       - run: npm ci
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+
       - run: npx nx affected -t build --parallel=3
 
-  affected-recap:
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
-    name: Print affected libs and apps
+  compute-affected:
+    name: Compute affected apps and libs
     runs-on: ubuntu-latest
+    outputs:
+      affected_apps: ${{ steps.compute-affected-result.outputs.affected_apps }}
+      affected_libs: ${{ steps.compute-affected-result.outputs.affected_libs }}
+      skip_datahub: ${{ steps.compute-affected-result.outputs.skip_datahub }}
+      skip_editor: ${{ steps.compute-affected-result.outputs.skip_editor }}
+      skip_all_e2e: ${{ steps.compute-affected-result.outputs.skip_all_e2e }}
 
     steps:
       - name: Checkout branch
@@ -104,34 +141,56 @@ jobs:
           fetch-depth: 0
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
 
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
 
-      - name: Install dependencies
-        run: npm ci
+      - id: npm-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+            .nx
+          key: ${{ runner.os }}-npm-nx-cypress-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-nx-cypress-${{ hashFiles('**/package-lock.json') }}
+            ${{ runner.os }}-npm-nx-cypress-
 
-      - name: Compute affected projects
+      - run: npm ci
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+
+      - name: Compute affected libs & apps
+        id: compute-affected-result
         run: |
-          echo "AFFECTED_LIBS=$(npx nx show projects --affected --type=lib | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_ENV
+          AFFECTED_APPS=$(npx nx show projects --affected --type=app | tr '\n' ',' | sed 's/,$//')
+          AFFECTED_LIBS=$(npx nx show projects --affected --type=lib | tr '\n' ',' | sed 's/,$//')
+          echo "affected_apps=${AFFECTED_APPS}" >> "$GITHUB_OUTPUT"
+          echo "affected_libs=${AFFECTED_LIBS}" >> "$GITHUB_OUTPUT"
+          echo "skip_datahub=[\"$([[ $AFFECTED_APPS =~ "datahub" ]] && echo "false" || echo "true")\"]" >> "$GITHUB_OUTPUT"
+          echo "skip_editor=[\"$([[ $AFFECTED_APPS =~ "metadata-editor" ]] && echo "false" || echo "true")\"]" >> "$GITHUB_OUTPUT"
+          echo "skip_all_e2e=$( [[ -z $AFFECTED_APPS ]] && echo "true" || echo "false" )" >> "$GITHUB_OUTPUT"
 
-      - name: Compute affected apps
-        run: |
-          echo "AFFECTED_APPS=$(npx nx show projects --affected --type=app | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_ENV
+  affected-recap:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
+    name: Print affected libs and apps
+    runs-on: ubuntu-latest
+    needs:
+      - compute-affected
 
+    steps:
       - name: add PR comment
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
             **Affected libs:**
-            ${{ env.AFFECTED_LIBS }}
+            ${{ needs.compute-affected.outputs.AFFECTED_LIBS }}
 
             **Affected apps:**
-            ${{ env.AFFECTED_APPS }}
+            ${{ needs.compute-affected.outputs.AFFECTED_APPS }}
 
             - [ ] 🚀 Build and deploy storybook and demo on GitHub Pages
             - [ ] 📦 Build and push affected docker images
@@ -141,14 +200,24 @@ jobs:
   e2e-run:
     name: E2E tests / ${{ matrix.app }} / GN v${{ matrix.gn_version }}
     runs-on: ubuntu-latest
+    needs:
+      - compute-affected
+    if: ${{ needs.compute-affected.outputs.skip_all_e2e == 'false' }}
     strategy:
       fail-fast: false
       matrix:
         gn_version: [4.2.2, 4.2.8, 4.4.0]
         app: [datahub, metadata-editor]
+        skip_datahub: ${{ fromJSON(needs.compute-affected.outputs.skip_datahub) }}
+        skip_editor: ${{ fromJSON(needs.compute-affected.outputs.skip_editor) }}
         exclude:
           - gn_version: 4.2.2 # metadata-editor requires v4.2.5+
             app: metadata-editor
+          - skip_datahub: 'true' # skip datahub if not affected
+            app: datahub
+          - skip_editor: 'true' # skip metadata-editor if not affected
+            app: metadata-editor
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -156,39 +225,42 @@ jobs:
           fetch-depth: 0
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
 
-      - name: Derive appropriate SHAs for base and head for `nx affected` commands
-        uses: nrwl/nx-set-shas@v3
+      - id: npm-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+            .nx
+          key: ${{ runner.os }}-npm-nx-cypress-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-nx-cypress-${{ hashFiles('**/package-lock.json') }}
+            ${{ runner.os }}-npm-nx-cypress-
 
       - run: npm ci
-
-      - name: Compute affected apps
-        run: |
-          echo "AFFECTED_APPS=$(npx nx show projects --affected --type=app | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_ENV
+        if: steps.npm-cache.outputs.cache-hit != 'true'
 
       - name: Create pipeline docker image
         working-directory: tools
         run: docker build . -f pipelines/Dockerfile -t geonetwork/geonetwork-ui-tools-pipelines:latest
 
       - name: Start up backend support services
-        if: contains(env.AFFECTED_APPS, matrix.app)
         env:
           GEONETWORK_VERSION: ${{ matrix.gn_version }}
         working-directory: support-services
         run: docker compose up --quiet-pull init
 
       - name: Run e2e tests for ${{ matrix.app }} (if affected)
-        if: contains(env.AFFECTED_APPS, matrix.app)
         env:
           APP: ${{ matrix.app }}
         run: npx nx e2e "$APP-e2e"
 
       - uses: actions/upload-artifact@v4
-        if: always() && contains(env.AFFECTED_APPS, matrix.app)
+        if: always()
         id: upload-screenshots
         with:
           name: cypress-screenshots-app-${{ matrix.app }}-gn-${{ matrix.gn_version }}
@@ -197,7 +269,7 @@ jobs:
             apps/metadata-editor-e2e/cypress/screenshots/**/*
 
       - uses: thollander/actions-comment-pull-request@v2
-        if: always() && contains(env.AFFECTED_APPS, matrix.app) && github.event_name == 'pull_request' && steps.upload-screenshots.outputs.artifact-url
+        if: always() && github.event_name == 'pull_request' && steps.upload-screenshots.outputs.artifact-url
         with:
           message: '📷 Screenshots are [here](${{ steps.upload-screenshots.outputs.artifact-url }})!'
           comment_tag: screenshots-url
@@ -217,13 +289,24 @@ jobs:
           fetch-depth: 0
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      - id: npm-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+            .nx
+          key: ${{ runner.os }}-npm-nx-cypress-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-nx-cypress-${{ hashFiles('**/package-lock.json') }}
+            ${{ runner.os }}-npm-nx-cypress-
+
+      - run: npm ci
+        if: steps.npm-cache.outputs.cache-hit != 'true'
 
       - name: Build NPM package
         working-directory: package
