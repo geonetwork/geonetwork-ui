@@ -74,6 +74,8 @@
           'line-clamp-2': size !== 'S',
           'mt-2 ': record.ownerOrganization?.name,
           'mt-4': !record.ownerOrganization?.name,
+          'text-xl': size === 'L',
+          'text-base': size === 'XS' || size === 'S' || size === 'M',
         }"
       >
         {{ record.title }}
