@@ -79,9 +79,9 @@ describe('organizations', () => {
   describe('list features', () => {
     it('should open the organization page', () => {
       cy.get('@organizationsName')
-        .eq(10)
+        .eq(11)
         .then(($clickedName) => {
-          cy.get('@organizations').eq(10).click()
+          cy.get('@organizations').eq(11).click()
           cy.url().should(
             'contain',
             `organization/${encodeURIComponent($clickedName.text().trim())}`
