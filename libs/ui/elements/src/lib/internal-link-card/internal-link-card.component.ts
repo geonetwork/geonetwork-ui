@@ -12,11 +12,9 @@ import {
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common'
-import {
-  MarkdownParserComponent,
-  MetadataQualityComponent,
-  ThumbnailComponent,
-} from '@geonetwork-ui/ui/elements'
+import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component';
+import { MetadataQualityComponent } from '../metadata-quality/metadata-quality.component';
+import { ThumbnailComponent } from '../thumbnail/thumbnail.component';
 import {
   propagateToDocumentOnly,
   removeWhitespace,

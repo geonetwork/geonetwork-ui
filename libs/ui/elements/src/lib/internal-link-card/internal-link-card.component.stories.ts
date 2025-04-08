@@ -33,7 +33,7 @@ const interactiveFavoriteTemplate = `<div class="flex flex-row items-center">
 </div>`
 
 export default {
-  title: 'Search/InternalLinkCardComponent',
+  title: 'Elements/InternalLinkCardComponent',
   component: InternalLinkCardComponent,
   decorators: [
     moduleMetadata({
