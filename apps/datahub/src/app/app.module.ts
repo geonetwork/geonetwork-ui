@@ -28,7 +28,8 @@ import {
 import {
   FeatureSearchModule,
   FILTER_GEOMETRY,
-  RECORD_URL_TOKEN,
+  RECORD_DATASET_URL_TOKEN,
+  RECORD_SERVICE_URL_TOKEN,
 } from '@geonetwork-ui/feature/search'
 import {
   THUMBNAIL_PLACEHOLDER,
@@ -238,8 +239,14 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
         return null
       },
     },
-    { provide: RECORD_URL_TOKEN, useValue: `${ROUTER_ROUTE_DATASET}/\${uuid}` },
-    { provide: RECORD_URL_TOKEN, useValue: `${ROUTER_ROUTE_SERVICE}/\${uuid}` },
+    {
+      provide: RECORD_DATASET_URL_TOKEN,
+      useValue: `${ROUTER_ROUTE_DATASET}/\${uuid}`,
+    },
+    {
+      provide: RECORD_SERVICE_URL_TOKEN,
+      useValue: `${ROUTER_ROUTE_SERVICE}/\${uuid}`,
+    },
     {
       provide: ORGANIZATION_PAGE_URL_TOKEN,
       useValue: `${ROUTER_ROUTE_ORGANIZATION}/\${name}`,
