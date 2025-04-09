@@ -18,7 +18,7 @@ describe('service pages', () => {
       cy.get('gn-ui-service-capabilities').find('gn-ui-button').eq(1).click()
       cy.get('[data-test="layer-information"]')
         .find('span')
-        .first()
+        .eq(1)
         .should('contain', 'Title')
     })
     it('should filter the layer list', () => {
