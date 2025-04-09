@@ -59,13 +59,27 @@
           </button>
         </div>
       </div>
-      <button
-        class="h-[60px] block px-3 py-3 rounded-md font-medium shrink text-wrap text-left sm:hidden"
-        [class]="displayMobileMenu ? 'hidden' : 'block'"
-        translate
-      >
-        navbar.mobile.menuTitle
-      </button>
+      <div class="h-[60px]" [class]="displayMobileMenu ? 'hidden' : 'block'">
+        <div *ngFor="let l of anchorLinks">
+          <button
+            gnUiAnchorLink="{{ l.anchor }}"
+            gnUiAnchorLinkDisabledClass="hidden"
+            gnUiAnchorLinkInViewClass="block"
+            gnUiAnchorLinkOutOfViewClass="hidden"
+            class="h-[60px] px-3 py-3 rounded-md font-medium shrink text-wrap text-left"
+            translate
+          >
+            {{ l.label }}
+          </button>
+        </div>
+        <button
+          class="h-[60px] block px-3 py-3 rounded-md font-medium shrink text-wrap text-left sm:hidden"
+          [class]="displayMobileMenu ? 'hidden' : 'block'"
+          translate
+        >
+          navbar.mobile.menuTitle
+        </button>
+      </div>
     </div>
     <div
       class="h-[60px] flex flex-row gap-3 justify-center items-center px-4 lg:pl-4 lg:justify-end"
