@@ -110,16 +110,13 @@ describe('dataset pages', () => {
 
     describe('navigation bar', () => {
       it('should display the navigation bar', () => {
-        cy.get('datahub-header-record')
-          .children('header')
+        cy.get('datahub-record-page')
           .find('datahub-navigation-bar')
           .should('exist')
-        cy.get('datahub-header-record')
-          .children('header')
+        cy.get('datahub-record-page')
           .find('[data-cy="backButton"]')
           .should('exist')
-        cy.get('datahub-header-record')
-          .children('header')
+        cy.get('datahub-record-page')
           .find('gn-ui-favorite-star')
           .should('exist')
       })
