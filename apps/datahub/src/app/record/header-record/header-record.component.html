@@ -1,13 +1,7 @@
-<header class="w-full h-[336px]" [style.background]="backgroundCss">
+<header class="w-full h-[285px]" [style.background]="backgroundCss">
   <div
-    class="h-full container-lg mx-auto flex flex-col justify-between relative"
+    class="h-full container-lg mx-auto flex flex-col justify-center gap-7 relative"
   >
-    <datahub-navigation-bar
-      class="z-20 fixed"
-      style="left: 0; right: 0; top: 0"
-      [metadata]="metadata"
-    ></datahub-navigation-bar>
-    <div class="h-[60px]"></div>
     <div
       *ngIf="metadata"
       class="font-title text-[28px] max-w-screen-sm line-clamp-3 ml-4"

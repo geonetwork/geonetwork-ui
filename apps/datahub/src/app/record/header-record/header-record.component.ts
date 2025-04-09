@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
 import { DateService } from '@geonetwork-ui/util/shared'
-import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component'
 
 @Component({
   selector: 'datahub-header-record',
@@ -17,13 +16,7 @@ import { NavigationBarComponent } from '../navigation-bar/navigation-bar.compone
   styleUrls: ['./header-record.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    TranslateModule,
-    BadgeComponent,
-    NgIcon,
-    NavigationBarComponent,
-  ],
+  imports: [CommonModule, TranslateModule, BadgeComponent, NgIcon],
   viewProviders: [provideIcons({ matLocationSearchingOutline })],
 })
 export class HeaderRecordComponent {
