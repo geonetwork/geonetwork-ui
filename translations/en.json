@@ -538,6 +538,7 @@
   "service.metadata.capabilities.resourceLinks": "Resource links",
   "service.metadata.capabilities.title": "Title",
   "service.metadata.filter": "Layers will be filtered by title and abstract",
+  "service.metadata.filter.noLayers": "No layer matches your search",
   "service.metadata.other": "Other information",
   "service.metadata.question": "Ask a question",
   "service.metadata.search": "Search through the layer list",

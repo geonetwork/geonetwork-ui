@@ -61,6 +61,7 @@ export class ServiceCapabilitiesComponent implements OnInit {
   layerInformation = []
   searchQuery = ''
   loading = false
+  searchActive
 
   capabilitiesKeys = [
     'title',
@@ -91,12 +92,14 @@ export class ServiceCapabilitiesComponent implements OnInit {
     const input = event.target as HTMLInputElement
     this.searchQuery = input.value
     if (!input.value) {
+      this.searchActive = false
       this.filteredLayers = this.availableLayers
     }
   }
 
   onSearchEnter(event: KeyboardEvent) {
     if (event.key === 'Enter') {
+      this.searchActive = true
       this.searchLayers()
     }
   }
@@ -146,7 +149,15 @@ export class ServiceCapabilitiesComponent implements OnInit {
     return Array.isArray(value)
   }
 
+  getExtraInputClass() {
+    if (this.searchActive) {
+      return 'h-14 border rounded-lg border-primary text-primary focus:border-primary hover:border-primary'
+    }
+    return 'h-14 border rounded-lg'
+  }
+
   searchLayers() {
+    this.searchActive = true
     this.filteredLayers = this.availableLayers.filter((layer) => {
       const query = this.searchQuery.toLowerCase()
       if (layer.title) {

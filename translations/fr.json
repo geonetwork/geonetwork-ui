@@ -538,6 +538,7 @@
   "service.metadata.capabilities.resourceLinks": "Liens vers les ressources",
   "service.metadata.capabilities.title": "Titre",
   "service.metadata.filter": "Les couches seront filtrées par titre et description",
+  "service.metadata.filter.noLayers": "Aucune couche ne correspond à votre recherche",
   "service.metadata.other": "Autres informations",
   "service.metadata.question": "Poser une question",
   "service.metadata.search": "Rechercher dans la liste des couches",
