@@ -28,8 +28,10 @@ import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 import { GnUiLinkifyDirective } from './linkify.directive'
 
 import { CommonModule } from '@angular/common'
-import { MapContainerComponent } from '@geonetwork-ui/ui/map'
-import { MetadataSpatialExtentComponent } from '../metadata-spatial-extent/metadata-spatial-extent.component'
+import {
+  MapContainerComponent,
+  SpatialExtentComponent,
+} from '@geonetwork-ui/ui/map'
 
 @Component({
   selector: 'gn-ui-metadata-info',
@@ -50,7 +52,7 @@ import { MetadataSpatialExtentComponent } from '../metadata-spatial-extent/metad
     NgIcon,
     GnUiLinkifyDirective,
     MapContainerComponent,
-    MetadataSpatialExtentComponent,
+    SpatialExtentComponent,
   ],
   viewProviders: [
     provideIcons({
