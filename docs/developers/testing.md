@@ -213,6 +213,19 @@ describe('MyStandaloneComponent', () => {
 
 ## End-to-end tests
 
+### Fast and reliable E2E tests
+
+End-to-end tests tend to be _slow_, because they require a full browser running and a full application build. They also need to be run as a whole every time an application is impacted by a change. Lastly, they sometimes (often) fail, which causes longer and longer iteration times for developers.
+
+This is why special care needs to be taken when writing end-to-end tests.
+
+Follow these simple rules when writing end-to-end tests:
+
+1. Do _not_ write them like unit tests: each `it()` block takes several seconds to bootstrap so do as many things as you can in one
+2. Do _not_ include fixed waiting times unless there's no other choice; instead, wait for elements to show up using Cypress commands
+3. Do _not_ navigate the legacy GeoNetwork interface as it is really slow and unreliable; if you need to interact with GeoNetwork (e.g. create or modify a user), use the REST API
+4. If your end-to-end test modifies something in the database (e.g. a record), it should _always_ do a clean-up, either right after the modification or (even better) on a `before()` step; this is because a test might not run its full course in case of failure/crash, which means that a clean-up phase at the end might not always happen; this is especially important when iterating over tests locally
+
 ### Targeting nodes in the DOM
 
 Similarly to unit tests, a `data-cy` attribute can be used to target elements in the DOM:
