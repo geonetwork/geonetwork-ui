@@ -6,6 +6,7 @@ import {
   OgcApiRecord,
   WfsEndpoint,
   WfsVersion,
+  TmsEndpoint,
 } from '@camptocamp/ogc-client'
 import {
   BaseReader,
@@ -229,6 +230,28 @@ export class DataService {
       .catch((error) => {
         throw new Error(`ogc.unreachable.unknown`)
       })
+  }
+
+  async getStylesFromTms(
+    url: string
+  ): Promise<{ href: string; name: string }[]> {
+    try {
+      const endpoint = new TmsEndpoint(url)
+      const tileMaps = await endpoint.allTileMaps
+      if (!tileMaps?.length) return null
+
+      const tileMapInfo = await endpoint.getTileMapInfo(tileMaps[0].href)
+      if (!tileMapInfo?.metadata?.length) return null
+
+      return tileMapInfo.metadata
+        .filter(meta => meta.href)
+        .map(meta => ({
+          href: meta.href,
+          name: meta.href.split('/').pop()
+        }))
+    } catch {
+      return null
+    }
   }
 
   getDownloadLinksFromEsriRest(

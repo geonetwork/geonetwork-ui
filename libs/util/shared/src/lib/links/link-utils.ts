@@ -247,6 +247,9 @@ export function getLinkLabel(
           case 'wmts':
             format = 'WMTS'
             break
+          case 'tms':
+            format = 'TMS'
+            break
           case 'esriRest':
             format = 'REST'
             break

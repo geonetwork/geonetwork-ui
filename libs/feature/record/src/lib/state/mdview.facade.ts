@@ -98,9 +98,43 @@ export class MdViewFacade {
   )
 
   mapApiLinks$ = this.allLinks$.pipe(
-    map((links) =>
-      links.filter((link) =>
-        this.linkClassifier.hasUsage(link, LinkUsage.MAP_API)
+    switchMap((links) =>
+      from(links).pipe(
+        mergeMap((link) => {
+          if (this.linkClassifier.hasUsage(link, LinkUsage.MAP_API)) {
+            if (
+              link.type === 'service' &&
+              link.accessServiceProtocol === 'tms'
+            ) {
+              return from(
+                this.dataService.getStylesFromTms(link.url.href)
+              ).pipe(
+                map((styles) => {
+                  return styles ? { ...link, styles } : null
+                }),
+                defaultIfEmpty(null),
+                catchError((e) => {
+                  console.error(e)
+                  return of(null)
+                })
+              )
+            } else {
+              return of(link)
+            }
+          } else {
+            return of(null)
+          }
+        }),
+        toArray(),
+        map((links) => {
+          const filtered = links.filter((link) => link !== null);
+          // Sort so that TMS services with styles come after WMS services
+          return filtered.sort((a, b) => {
+            if (a.accessServiceProtocol === 'tms' && b.accessServiceProtocol === 'wms') return 1;
+            if (a.accessServiceProtocol === 'wms' && b.accessServiceProtocol === 'tms') return -1;
+            return 0;
+          });
+        })
       )
     )
   )
