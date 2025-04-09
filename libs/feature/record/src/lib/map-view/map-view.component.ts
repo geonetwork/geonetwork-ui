@@ -61,6 +61,7 @@ import { FetchError } from '@geonetwork-ui/data-fetcher'
 
 marker('map.dropdown.placeholder')
 marker('wfs.feature.limit')
+marker('dataset.error.restrictedAccess')
 
 @Component({
   selector: 'gn-ui-map-view',
@@ -145,6 +146,10 @@ export class MapViewComponent implements AfterViewInit {
       this.hidePreview = false
       this.loading = true
       this.error = null
+      if (link.accessRestricted) {
+        this.handleError('dataset.error.restrictedAccess')
+        return of([])
+      }
       return this.getLayerFromLink(link).pipe(
         map((layer) => [layer]),
         catchError((e) => {

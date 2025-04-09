@@ -164,6 +164,7 @@ export interface DatasetServiceDistribution {
   name?: string
   description?: string
   translations?: OnlineResourceTranslations
+  accessRestricted?: boolean
 }
 
 export interface DatasetDownloadDistribution {
@@ -178,6 +179,7 @@ export interface DatasetDownloadDistribution {
   description?: string
   accessServiceProtocol?: ServiceProtocol
   translations?: OnlineResourceTranslations
+  accessRestricted?: boolean
 }
 
 export interface OnlineLinkResource {
@@ -187,6 +189,7 @@ export interface OnlineLinkResource {
   description?: string
   translations?: OnlineResourceTranslations
   mimeType?: string
+  accessRestricted?: boolean
 }
 
 export type DatasetOnlineResource = (

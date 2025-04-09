@@ -1155,6 +1155,7 @@ describe('Gn4Converter', () => {
                 description: 'Lieu de surveillance (point)',
                 name: 'surval_parametre_point',
                 type: 'service',
+                accessRestricted: null,
               },
               {
                 accessServiceProtocol: 'wfs',
@@ -1164,6 +1165,7 @@ describe('Gn4Converter', () => {
                 description: 'Lieu de surveillance (point)',
                 name: 'surval_parametre_point',
                 type: 'service',
+                accessRestricted: null,
               },
               {
                 description: "Extraction des données d'observation",
@@ -1179,6 +1181,7 @@ describe('Gn4Converter', () => {
                 description: 'Lieu de surveillance (ligne)',
                 name: 'surval_parametre_ligne',
                 type: 'service',
+                accessRestricted: null,
               },
               {
                 accessServiceProtocol: 'wfs',
@@ -1188,6 +1191,7 @@ describe('Gn4Converter', () => {
                 description: 'Lieu de surveillance (ligne)',
                 name: 'surval_parametre_ligne',
                 type: 'service',
+                accessRestricted: null,
               },
               {
                 description: "Extraction des données d'observation",
@@ -1203,6 +1207,7 @@ describe('Gn4Converter', () => {
                 description: 'Lieu de surveillance (polygone)',
                 name: 'surval_parametre_polygone',
                 type: 'service',
+                accessRestricted: null,
               },
               {
                 accessServiceProtocol: 'wfs',
@@ -1212,6 +1217,7 @@ describe('Gn4Converter', () => {
                 description: 'Lieu de surveillance (polygone)',
                 name: 'surval_parametre_polygone',
                 type: 'service',
+                accessRestricted: null,
               },
               {
                 description: "Extraction des données d'observation",
@@ -2007,6 +2013,7 @@ describe('Gn4Converter', () => {
                 url: new URL(
                   'https://wms.geo.admin.ch/?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities&lang=de'
                 ),
+                accessRestricted: false,
               },
               {
                 accessServiceProtocol: 'wmts',
@@ -2016,6 +2023,7 @@ describe('Gn4Converter', () => {
                 url: new URL(
                   'https://wmts.geo.admin.ch/EPSG/3857/1.0.0/WMTSCapabilities.xml?lang=de'
                 ),
+                accessRestricted: false,
               },
               {
                 description: 'Webseite des ARE über die Alpenkonvention',
@@ -2623,6 +2631,7 @@ describe('Gn4Converter', () => {
                   'https://services.sandre.eaufrance.fr/geo/odp?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities'
                 ),
                 accessServiceProtocol: 'wfs',
+                accessRestricted: false,
               },
             ],
             title:
