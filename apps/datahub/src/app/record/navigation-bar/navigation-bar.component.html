@@ -57,7 +57,6 @@
       >
         <div *ngFor="let l of anchorLinks">
           <button
-            (click)="setActiveLabel($event.target)"
             gnUiAnchorLink="{{ l.anchor }}"
             gnUiAnchorLinkDisabledClass="hidden"
             class="h-[60px] block px-3 py-3 hover:bg-primary hover:bg-opacity-10 font-medium w-full text-left text-wrap"
@@ -68,11 +67,11 @@
         </div>
       </div>
       <button
-        class="h-[60px] block px-3 py-3 rounded-md font-medium shrink text-wrap sm:hidden"
+        class="h-[60px] block px-3 py-3 rounded-md font-medium shrink text-wrap text-left sm:hidden"
         [class]="displayMobileMenu ? 'hidden' : 'block'"
         translate
       >
-        {{ activeLabel }}
+        navbar.mobile.menuTitle
       </button>
     </div>
     <div

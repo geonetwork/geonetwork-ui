@@ -68,17 +68,11 @@ export class NavigationBarComponent {
       label: 'record.metadata.userFeedbacks',
     },
   ]
-  activeLabel = this.anchorLinks[0].label
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
   black = '#000000'
 
   constructor(private searchService: SearchService) {}
 
-  setActiveLabel(el: HTMLElement) {
-    const disabledClass = el.getAttribute('gnUiAnchorLinkDisabledClass')
-    const disabled = new RegExp(disabledClass).test(el.className)
-    if (!disabled) this.activeLabel = el.textContent
-  }
   toggleMobileMenu() {
     this.displayMobileMenu = !this.displayMobileMenu
   }
