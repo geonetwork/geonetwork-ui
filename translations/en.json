@@ -539,6 +539,7 @@
   "service.metadata.capabilities.title": "Title",
   "service.metadata.filter": "Layers will be filtered by title and abstract",
   "service.metadata.other": "Other information",
+  "service.metadata.question": "Ask a question",
   "service.metadata.search": "Search through the layer list",
   "service.metadata.spatialExtent": "Spatial extent",
   "share.tab.permalink": "Share",

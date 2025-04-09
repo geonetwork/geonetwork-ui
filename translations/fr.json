@@ -539,6 +539,7 @@
   "service.metadata.capabilities.title": "Titre",
   "service.metadata.filter": "Les couches seront filtrées par titre et description",
   "service.metadata.other": "Autres informations",
+  "service.metadata.question": "Poser une question",
   "service.metadata.search": "Rechercher dans la liste des couches",
   "service.metadata.spatialExtent": "Etendue spatiale",
   "share.tab.permalink": "Partager",

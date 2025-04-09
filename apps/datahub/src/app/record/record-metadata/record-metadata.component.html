@@ -53,7 +53,7 @@
             type="outline"
             extraClass="w-full flex flex-row justify-between"
             [style.--gn-ui-button-rounded]="'10px'"
-            (buttonClick)="scrollTo('userFeedbacks')"
+            (buttonClick)="scrollToQuestions()"
           >
             <span translate>service.metadata.question</span>
             <ng-icon
@@ -66,7 +66,7 @@
     </div>
   </section>
 
-  <section id="data-preview" [ngClass]="kind === 'dataset' ? 'pb-6' : 'pb-16'">
+  <section id="data-preview" [ngClass]="kind === 'dataset' ? 'mb-6' : 'mb-16'">
     <datahub-record-data-preview
       *ngIf="kind === 'dataset'"
     ></datahub-record-data-preview>
@@ -81,43 +81,42 @@
     *ngIf="
       (displayDownload$ | async) ||
       (displayOtherLinks | async) ||
-      ((displayApi$ | async) && kind === 'dataset')
+      (displayApi$ | async)
     "
     class="overflow-x-hidden"
   >
     <div class="gn-ui-section-title container-lg px-4 lg:mx-auto" translate>
       record.metadata.ressources.and.links
     </div>
-    <div class="container-lg px-4 pb-12 lg:mx-auto">
-      <div id="downloads" class="mt-5" *ngIf="displayDownload$ | async">
+    <div class="container-lg px-4 pb-10 lg:mx-auto mt-5">
+      <div id="downloads" class="pb-7" *ngIf="displayDownload$ | async">
         <datahub-record-downloads class="block"></datahub-record-downloads>
       </div>
 
-      <div *ngIf="displayOtherLinks | async" id="otherlinks" class="mt-5">
+      <div *ngIf="displayOtherLinks | async" id="otherlinks">
         <datahub-record-otherlinks class="block"></datahub-record-otherlinks>
       </div>
 
-      <div
-        *ngIf="kind === 'dataset' && displayApi$ | async"
-        id="apis"
-        class="mt-5"
-      >
+      <div *ngIf="displayApi$ | async" id="apis">
         <datahub-record-apis class="block"></datahub-record-apis>
       </div>
     </div>
   </section>
 
   <ng-container *ngIf="displayDatasetHasNoLinkBlock$ | async">
-    <gn-ui-error
-      data-test="dataset-has-no-link-block"
-      [type]="errorTypes.DATASET_HAS_NO_LINK"
-    ></gn-ui-error>
+    <div class="py-10">
+      <gn-ui-error
+        data-test="dataset-has-no-link-block"
+        [type]="errorTypes.DATASET_HAS_NO_LINK"
+      ></gn-ui-error>
+    </div>
   </ng-container>
 
   <section
     id="user-feedbacks"
+    #userFeedbacks
     *ngIf="(metadataViewFacade.isPresent$ | async) === true"
-    class="pt-6"
+    class="pb-10"
   >
     <div *ngIf="(metadataViewFacade.isPresent$ | async) === true">
       <div class="container-lg px-4 lg:mx-auto">
@@ -139,7 +138,7 @@
   </section>
 </div>
 <div
-  class="mt-12 p-4 max-w-[600px] m-auto text-[13px]"
+  class="mt-10 p-4 max-w-[600px] m-auto text-[13px]"
   *ngIf="metadataViewFacade.error$ | async as error"
 >
   <gn-ui-error

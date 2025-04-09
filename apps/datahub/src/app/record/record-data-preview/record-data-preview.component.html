@@ -3,10 +3,7 @@
   *ngIf="(displayMap$ | async) || (displayData$ | async)"
   id="preview"
 >
-  <div
-    class="bg-primary-opacity-10 overflow-visible pt-8"
-    style="height: 512px"
-  >
+  <div class="bg-primary-opacity-10 overflow-visible" style="height: 512px">
     <div class="container-lg px-4 lg:mx-auto">
       <div>
         <div
@@ -63,9 +60,8 @@
     </div>
   </div>
 </div>
-<div class="container-lg lg:mx-auto pb-2 mb-16">
+<div class="container-lg lg:mx-auto mb-10" *ngIf="displayViewShare$ | async">
   <gn-ui-data-view-share
-    *ngIf="displayViewShare$ | async"
     [viewType]="selectedView$ | async"
   ></gn-ui-data-view-share>
 </div>
