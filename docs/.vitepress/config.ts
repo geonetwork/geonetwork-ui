@@ -60,6 +60,7 @@ function sidebarGuide() {
         { text: 'Configure', link: '/guide/configure' },
         { text: 'Theming', link: '/guide/theming' },
         { text: 'Web components', link: '/guide/webcomponents' },
+        { text: 'Standalone Search', link: '/guide/standalone-search' },
         { text: 'Custom Applications', link: '/guide/custom-app' },
         { text: 'Troubleshooting', link: '/guide/troubleshooting' },
         { text: 'FAQ', link: '/guide/faq' },

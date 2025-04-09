@@ -26,8 +26,6 @@ import {
   SpinningLoaderComponent,
   UiWidgetsModule,
 } from '@geonetwork-ui/ui/widgets'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { Gn4Repository } from '@geonetwork-ui/api/repository'
 import { FavoriteStarComponent } from './favorites/favorite-star/favorite-star.component'
 
 @NgModule({
@@ -71,12 +69,6 @@ import { FavoriteStarComponent } from './favorites/favorite-star/favorite-star.c
     FacetsModule,
     SearchStateContainerDirective,
     FilterDropdownComponent,
-  ],
-  providers: [
-    {
-      provide: RecordsRepositoryInterface,
-      useClass: Gn4Repository,
-    },
   ],
 })
 export class FeatureSearchModule {}
