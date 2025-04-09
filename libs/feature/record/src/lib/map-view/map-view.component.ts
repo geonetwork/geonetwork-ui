@@ -110,6 +110,8 @@ export class MapViewComponent implements AfterViewInit {
     this.mdViewFacade.geoDataLinksWithGeometry$,
   ]).pipe(
     map(([mapApiLinks, geoDataLinksWithGeometry]) => {
+      console.log('Map API Links:', mapApiLinks)
+      console.log('Geodata Links:', geoDataLinksWithGeometry)
       return [...mapApiLinks, ...geoDataLinksWithGeometry]
     })
   )
@@ -117,14 +119,28 @@ export class MapViewComponent implements AfterViewInit {
   dropdownChoices$ = this.compatibleMapLinks$.pipe(
     map((links) =>
       links.length
-        ? links.map((link, index) => ({
-            label: getLinkLabel(link),
-            value: index,
-          }))
-        : [{ label: 'map.dropdown.placeholder', value: 0 }]
+        ? links.flatMap((link, index) => {
+            if (link.accessServiceProtocol === 'tms' && link.styles?.length) {
+              return link.styles.map((style, styleIndex) => ({
+                label: `${getLinkLabel(link)} - ${style.name}`,
+                value: { linkIndex: index, styleIndex },
+                style: style,
+              }))
+            }
+            return [
+              {
+                label: getLinkLabel(link),
+                value: { linkIndex: index },
+              },
+            ]
+          })
+        : [{ label: 'map.dropdown.placeholder', value: { linkIndex: 0 } }]
     )
   )
-  selectedLinkIndex$ = new BehaviorSubject(0)
+  selectedLinkIndex$ = new BehaviorSubject<{
+    linkIndex: number
+    styleIndex?: number
+  }>({ linkIndex: 0 })
 
   loading = false
   error = null
@@ -132,10 +148,15 @@ export class MapViewComponent implements AfterViewInit {
   selectedLink$ = combineLatest([
     this.compatibleMapLinks$,
     this.selectedLinkIndex$.pipe(distinctUntilChanged()),
-  ]).pipe(map(([links, index]) => links[index]))
+  ]).pipe(
+    map(([links, selection]) => ({
+      link: links[selection.linkIndex],
+      style: links[selection.linkIndex]?.styles?.[selection.styleIndex],
+    }))
+  )
 
   currentLayers$ = combineLatest([this.selectedLink$, this.excludeWfs$]).pipe(
-    switchMap(([link, excludeWfs]) => {
+    switchMap(([{ link, style }, excludeWfs]) => {
       if (!link) {
         return of([])
       }
@@ -150,7 +171,7 @@ export class MapViewComponent implements AfterViewInit {
         this.handleError('dataset.error.restrictedAccess')
         return of([])
       }
-      return this.getLayerFromLink(link).pipe(
+      return this.getLayerFromLink(link, style).pipe(
         map((layer) => [layer]),
         catchError((e) => {
           this.handleError(e)
@@ -232,12 +253,24 @@ export class MapViewComponent implements AfterViewInit {
     this.selection = null
   }
 
-  getLayerFromLink(link: DatasetOnlineResource): Observable<MapContextLayer> {
+  getLayerFromLink(
+    link: DatasetOnlineResource,
+    style?: { href: string; name: string }
+  ): Observable<MapContextLayer> {
     if (link.type === 'service' && link.accessServiceProtocol === 'wms') {
       return of({
         url: link.url.toString(),
         type: 'wms',
         name: link.name,
+      })
+    } else if (
+      link.type === 'service' &&
+      link.accessServiceProtocol === 'tms'
+    ) {
+      return of({
+        type: 'maplibre-style',
+        name: link.name,
+        styleUrl: style?.href || null,
       })
     } else if (
       link.type === 'service' &&
@@ -266,8 +299,8 @@ export class MapViewComponent implements AfterViewInit {
     return throwError(() => 'protocol not supported')
   }
 
-  selectLinkToDisplay(link: number) {
-    this.selectedLinkIndex$.next(link)
+  selectLinkToDisplay(selection: { linkIndex: number; styleIndex?: number }) {
+    this.selectedLinkIndex$.next(selection)
   }
 
   handleError(error: FetchError | Error | string) {
