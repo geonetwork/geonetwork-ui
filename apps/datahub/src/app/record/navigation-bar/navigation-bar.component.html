@@ -1,5 +1,5 @@
 <nav
-  class="text-xs text-black bg-primary-lightest shadow-[0px_0px_5.1px_0px] shadow-primary-darkest"
+  class="text-xs text-black bg-primary-white shadow-[0px_0px_5.1px_0px] shadow-primary-darkest relative"
 >
   <div
     class="h-full container-lg mx-auto flex justify-between overflow-hidden"
@@ -21,8 +21,8 @@
         [style.--gn-ui-button-height]="'32px'"
         [style.--gn-ui-button-width]="'40px'"
         [style.--gn-ui-button-color]="black"
-        [style.--gn-ui-button-background]="'var(--color-primary-lightest)'"
-        [style.--gn-ui-button-bg-hover]="'var(--color-primary)'"
+        [style.--gn-ui-button-background]="'var(--color-primary-white)'"
+        [style.--gn-ui-button-bg-hover]="'var(--color-primary-lightest)'"
         [style.--gn-ui-button-font-size]="'24px'"
         [style.--gn-ui-button-padding]="'4px'"
       >
@@ -36,7 +36,7 @@
       gnUiAnchorLink="{{ l.anchor }}"
       gnUiAnchorLinkDisabledClass="sm:hidden"
       gnUiAnchorLinkInViewClass="!border-b-primary border-b-4"
-      class="font-medium hidden sm:block hover:bg-primary hover:bg-opacity-10 h-[60px] w-full px-2 items-center text-left"
+      class="font-medium hidden sm:block hover:bg-primary-lightest h-[60px] w-full px-2 items-center text-left"
       translate
     >
       {{ l.label }}
@@ -59,7 +59,7 @@
           <button
             gnUiAnchorLink="{{ l.anchor }}"
             gnUiAnchorLinkDisabledClass="hidden"
-            class="h-[60px] block px-3 py-3 hover:bg-primary hover:bg-opacity-10 font-medium w-full text-left text-wrap"
+            class="h-[60px] block px-3 py-3 hover:bg-primary-lightest font-medium w-full text-left text-wrap"
             translate
           >
             {{ l.label }}
@@ -91,8 +91,8 @@
         [style.--gn-ui-button-height]="'32px'"
         [style.--gn-ui-button-width]="'40px'"
         [style.--gn-ui-button-color]="black"
-        [style.--gn-ui-button-background]="'var(--color-primary-lightest)'"
-        [style.--gn-ui-button-bg-hover]="'var(--color-primary)'"
+        [style.--gn-ui-button-background]="'var(--color-primary-white)'"
+        [style.--gn-ui-button-bg-hover]="'var(--color-primary-lightest)'"
         [style.--gn-ui-button-border]="'var(--color-gray-300)'"
         [style.--gn-ui-button-font-size]="'24px'"
         [style.--gn-ui-button-padding]="'4px'"
@@ -103,7 +103,7 @@
         [style.--gn-ui-button-color]="black"
         [style.--gn-ui-button-rounded]="'0.5rem'"
         [style.--gn-ui-button-height]="'32px'"
-        [style.--gn-ui-button-bg-hover]="'var(--color-primary)'"
+        [style.--gn-ui-button-bg-hover]="'var(--color-primary-lightest)'"
       ></gn-ui-language-switcher>
     </div>
   </div>
