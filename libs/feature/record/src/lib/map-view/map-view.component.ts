@@ -110,8 +110,6 @@ export class MapViewComponent implements AfterViewInit {
     this.mdViewFacade.geoDataLinksWithGeometry$,
   ]).pipe(
     map(([mapApiLinks, geoDataLinksWithGeometry]) => {
-      console.log('Map API Links:', mapApiLinks)
-      console.log('Geodata Links:', geoDataLinksWithGeometry)
       return [...mapApiLinks, ...geoDataLinksWithGeometry]
     })
   )
