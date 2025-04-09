@@ -245,14 +245,16 @@ export class DataService {
 
       return tileMapInfo.metadata
         .filter(meta => meta.href)
-        .map(meta => ({
-          href: meta.href,
-          name: meta.href.split('/').pop()
-        }))
+        .map(meta => {
+          const fileName = meta.href.split('/').pop() || ''
+          const name = fileName.split('.')[0]
+          return { href: meta.href, name }
+        })
     } catch {
       return null
     }
   }
+
 
   getDownloadLinksFromEsriRest(
     esriRestLink: DatasetServiceDistribution
