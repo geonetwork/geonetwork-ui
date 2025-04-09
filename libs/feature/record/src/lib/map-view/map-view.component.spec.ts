@@ -341,7 +341,7 @@ describe('MapViewComponent', () => {
 
     describe('excludeWfs = true: with links compatible with MAP_API and GEODATA usage', () => {
       beforeEach(() => {
-        component.excludeWfs = true
+        component.excludeWfs$.next(true)
         mdViewFacade.mapApiLinks$.next([
           {
             url: new URL('http://abcd.com/'),
@@ -669,6 +669,12 @@ describe('MapViewComponent', () => {
             type: 'service',
             accessServiceProtocol: 'wms',
           },
+          {
+            url: new URL('http://abcd.com/'),
+            name: 'layer3',
+            type: 'service',
+            accessRestricted: true,
+          },
         ])
         mdViewFacade.geoDataLinksWithGeometry$.next([])
         dropdownComponent.selectValue.emit(1)
@@ -781,6 +787,16 @@ describe('MapViewComponent', () => {
               type: 'wms',
             },
           ])
+        })
+      })
+      describe('When link is restricted', () => {
+        beforeEach(fakeAsync(() => {
+          dropdownComponent.selectValue.emit(2)
+          tick()
+          fixture.detectChanges()
+        }))
+        it('shows an error message', () => {
+          expect(component.error).toEqual('dataset.error.restrictedAccess')
         })
       })
     })

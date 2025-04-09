@@ -206,4 +206,14 @@ describe('TableViewComponent', () => {
       )
     })
   })
+  describe('When link is restricted', () => {
+    it('shows an error message', () => {
+      component.link = {
+        ...aSetOfLinksFixture().dataCsv(),
+        accessRestricted: true,
+      }
+      fixture.detectChanges()
+      expect(component.error).toEqual('dataset.error.restrictedAccess')
+    })
+  })
 })
