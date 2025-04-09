@@ -80,7 +80,8 @@ export class MdViewFacade {
 
   allLinks$ = this.metadata$.pipe(
     map((record) =>
-      record.kind === 'dataset' && 'onlineResources' in record
+      (record.kind === 'dataset' || record.kind === 'reuse') &&
+      'onlineResources' in record
         ? record.onlineResources
         : []
     )
