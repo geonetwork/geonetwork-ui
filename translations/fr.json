@@ -332,6 +332,7 @@
   "map.wms.urlInput.hint": "Entrez l'URL du service WMS",
   "multiselect.filter.placeholder": "Rechercher",
   "nav.back": "Retour",
+  "navbar.mobile.menuTitle": "Navigation rapide",
   "next": "Suivant",
   "ogc.unreachable.unknown": "Le service n'est pas accessible",
   "organisation.filter.placeholder": "Filtrer les résultats",
