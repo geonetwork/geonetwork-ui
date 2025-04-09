@@ -538,6 +538,7 @@
   "service.metadata.capabilities.resourceLinks": "",
   "service.metadata.capabilities.title": "",
   "service.metadata.filter": "",
+  "service.metadata.filter.noLayers": "",
   "service.metadata.other": "",
   "service.metadata.question": "",
   "service.metadata.search": "",
