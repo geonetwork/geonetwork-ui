@@ -87,18 +87,65 @@ export class MdViewFacade {
   )
 
   apiLinks$ = this.allLinks$.pipe(
-    map((links) =>
-      links
-        .filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.API))
-        // Put links to IGN Géoplateforme first
-        .sort((dd1, dd2) => {
-          return (dd2 as DatasetServiceDistribution).accessServiceProtocol ===
+    switchMap((links) => {
+      const apiLinks = links.filter((link) =>
+        this.linkClassifier.hasUsage(link, LinkUsage.API)
+      );
+      return from(apiLinks).pipe(
+        mergeMap((link) => {
+          if (link.type === 'service' && link.accessServiceProtocol === 'tms') {
+            return from(this.dataService.getStylesFromTms(link.url.href)).pipe(
+              map((styles) => (styles ? { ...link, styles } : link)),
+              catchError((e) => {
+                console.error('Error fetching TMS styles:', e);
+                return of(link);
+              })
+            );
+          } else {
+            return of(link);
+          }
+        }),
+        toArray(),
+        map((linksWithStyles) => {
+          const processedLinks = linksWithStyles.flatMap((link) => {
+            const linkWithStyles = link as DatasetServiceDistribution & {
+              styles?: Array<{ name: string; href: string }>;
+            };
+            if (
+              link.type === 'service' &&
+              link.accessServiceProtocol === 'tms' &&
+              linkWithStyles.styles?.length
+            ) {
+              const result = [link];
+              linkWithStyles.styles.forEach((style) => {
+                const styleLink = {
+                  ...link,
+                  name: `${link.name} - ${style.name}`,
+                  url: new URL(style.href),
+                  styleInfo: {
+                    name: style.name,
+                    href: style.href,
+                  },
+                } as DatasetServiceDistribution;
+                result.push(styleLink);
+              });
+              return result;
+            }
+            return [link];
+          });
+
+          // Sort links (GPFDL first)
+          return processedLinks.sort((dd1, dd2) => {
+            return (dd2 as DatasetServiceDistribution).accessServiceProtocol ===
             'GPFDL'
-            ? 1
-            : undefined // do not change the sorting otherwise
+              ? 1
+              : undefined; // do not change the sorting otherwise
+          });
         })
-    )
-  )
+      );
+    })
+  );
+
 
   mapApiLinks$ = this.allLinks$.pipe(
     switchMap((links) =>
