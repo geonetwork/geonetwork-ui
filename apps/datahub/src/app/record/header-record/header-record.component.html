@@ -26,7 +26,7 @@
         }}</span>
       </gn-ui-badge>
       <gn-ui-badge
-        *ngIf="(isGeodata$ | async) === true"
+        *ngIf="metadata.kind === 'dataset' && (isGeodata$ | async) === true"
         [style.--gn-ui-badge-padding]="'2px 8px'"
         [style.--gn-ui-badge-background-color]="'var(--color-primary-darker)'"
         [style.--gn-ui-badge-opacity]="'1'"

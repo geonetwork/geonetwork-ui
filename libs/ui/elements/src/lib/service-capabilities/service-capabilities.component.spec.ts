@@ -68,10 +68,22 @@ describe('ServiceCapabilitiesComponent', () => {
 
       // Define the expected layerInformation based on the mock layer
       const expectedLayerInformation = [
-        { displayName: 'Title', value: 'Sample Layer' },
-        { displayName: 'Abstract', value: 'This is a sample layer.' },
-        { displayName: 'Default CRS', value: 'EPSG:4326' },
-        { displayName: 'Available CRS', value: ['EPSG:4326', 'EPSG:3857'] },
+        {
+          displayName: 'service.metadata.capabilities.title',
+          value: 'Sample Layer',
+        },
+        {
+          displayName: 'service.metadata.capabilities.abstract',
+          value: 'This is a sample layer.',
+        },
+        {
+          displayName: 'service.metadata.capabilities.defaultCrs',
+          value: 'EPSG:4326',
+        },
+        {
+          displayName: 'service.metadata.capabilities.availableCrs',
+          value: ['EPSG:4326', 'EPSG:3857'],
+        },
       ]
 
       // Assert that the layerInformation is updated correctly
