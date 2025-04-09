@@ -240,6 +240,9 @@ export function getLinkLabel(link: DatasetOnlineResource): string {
           case 'wmts':
             format = 'WMTS'
             break
+          case 'tms':
+            format = 'TMS'
+            break
           case 'esriRest':
             format = 'REST'
             break
