@@ -1,27 +1,26 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { Geometry } from 'geojson'
 import GeoJSON, { GeoJSONFeatureCollection } from 'ol/format/GeoJSON'
-import { DatasetSpatialExtent } from '@geonetwork-ui/common/domain/model/record'
 import { Polygon } from 'ol/geom'
 import {
   createViewFromLayer,
   MapContext,
   MapContextLayer,
 } from '@geospatial-sdk/core'
-import { MapContainerComponent } from '@geonetwork-ui/ui/map'
+import { MapContainerComponent } from '../map-container/map-container.component'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
+import { DatasetSpatialExtent } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
-  selector: 'gn-ui-form-field-map-container',
+  selector: 'gn-ui-spatial-extent',
   standalone: true,
   imports: [CommonModule, MapContainerComponent],
-  templateUrl: './form-field-map-container.component.html',
-  styleUrls: ['./form-field-map-container.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './spatial-extent.component.html',
+  styleUrl: './spatial-extent.component.css',
 })
-export class FormFieldMapContainerComponent {
+export class SpatialExtentComponent {
   @Input() set spatialExtents(value: DatasetSpatialExtent[]) {
     this.spatialExtents$.next(value)
   }
