@@ -287,8 +287,8 @@ describe('RecordMetadataComponent', () => {
     })
     describe('when API link and kind is dataset', () => {
       beforeEach(() => {
-        facade.apiLinks$.next(['link'])
         component.kind = 'dataset'
+        facade.apiLinks$.next(['link'])
         fixture.detectChanges()
         apiComponent = fixture.debugElement.query(
           By.directive(RecordApisComponent)
