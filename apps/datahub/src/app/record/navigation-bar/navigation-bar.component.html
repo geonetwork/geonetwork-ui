@@ -17,14 +17,7 @@
         data-cy="backButton"
         (buttonClick)="back()"
         type="outline"
-        [style.--gn-ui-button-rounded]="'8px'"
-        [style.--gn-ui-button-height]="'32px'"
-        [style.--gn-ui-button-width]="'40px'"
-        [style.--gn-ui-button-color]="black"
-        [style.--gn-ui-button-background]="'var(--color-primary-white)'"
-        [style.--gn-ui-button-bg-hover]="'var(--color-primary-lightest)'"
         [style.--gn-ui-button-font-size]="'24px'"
-        [style.--gn-ui-button-padding]="'4px'"
       >
         <ng-icon name="matArrowBack"></ng-icon>
       </gn-ui-button>
@@ -84,26 +77,11 @@
         [buttonType]="'outline'"
         [displayCount]="false"
         class="flex text-background content-center"
-        [style.color]="black"
-        [style.--star-toggle-enabled-color]="black"
-        [style.--star-toggle-disabled-color]="black"
-        [style.--gn-ui-button-rounded]="'8px'"
-        [style.--gn-ui-button-height]="'32px'"
-        [style.--gn-ui-button-width]="'40px'"
-        [style.--gn-ui-button-color]="black"
-        [style.--gn-ui-button-background]="'var(--color-primary-white)'"
-        [style.--gn-ui-button-bg-hover]="'var(--color-primary-lightest)'"
-        [style.--gn-ui-button-border]="'var(--color-gray-300)'"
         [style.--gn-ui-button-font-size]="'24px'"
-        [style.--gn-ui-button-padding]="'4px'"
       ></gn-ui-favorite-star>
       <gn-ui-language-switcher
         *ngIf="showLanguageSwitcher"
         class="language-switcher text-[13px] mt-0.5"
-        [style.--gn-ui-button-color]="black"
-        [style.--gn-ui-button-rounded]="'0.5rem'"
-        [style.--gn-ui-button-height]="'32px'"
-        [style.--gn-ui-button-bg-hover]="'var(--color-primary-lightest)'"
       ></gn-ui-language-switcher>
     </div>
   </div>

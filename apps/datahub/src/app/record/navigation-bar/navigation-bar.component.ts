@@ -69,7 +69,6 @@ export class NavigationBarComponent {
     },
   ]
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
-  black = '#000000'
 
   constructor(private searchService: SearchService) {}
 

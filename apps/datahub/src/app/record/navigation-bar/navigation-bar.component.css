@@ -1,0 +1,14 @@
+:host {
+  --gn-ui-button-rounded: 8px;
+  --gn-ui-button-height: 32px;
+  --gn-ui-button-width: 40px;
+  --gn-ui-button-color: black;
+  --gn-ui-button-background: var(--color-primary-white);
+  --gn-ui-button-bg-hover: var(--color-primary-lightest);
+  --gn-ui-button-padding: 4px;
+  --gn-ui-button-background: var(--color-primary-white);
+  --gn-ui-button-bg-hover: var(--color-primary-lightest);
+  --gn-ui-button-border: var(--color-gray-300);
+  --star-toggle-enabled-color: black;
+  --star-toggle-disabled-color: black;
+}
