@@ -69,7 +69,8 @@ export const Primary: StoryObj<AnchorLinkDirective> = {
          gnUiAnchorLink="${args.targetId}"
          gnUiAnchorLinkDisabledClass="opacity-50 cursor-default"
          gnUiAnchorLinkEnabledClass="hover:underline"
-         gnUiAnchorLinkInViewClass="text-blue-500">
+         gnUiAnchorLinkInViewClass="text-blue-500"
+         gnUiAnchorLinkOutOfViewClass="bg-gray-500">
       A link to ${args.targetId}
     </div>`,
   }),

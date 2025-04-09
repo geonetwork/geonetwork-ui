@@ -19,13 +19,18 @@ export class AnchorLinkDirective
   @Input('gnUiAnchorLinkDisabledClass') disabledClass: string
   @Input('gnUiAnchorLinkEnabledClass') enabledClass: string
   @Input('gnUiAnchorLinkInViewClass') inViewClass: string
+  @Input('gnUiAnchorLinkOutOfViewClass') outOfViewClass: string
 
   @HostBinding('class')
   get elementClass(): string {
+    if (this.disabled) {
+      return this.disabledClass
+    }
     if (this.inView) {
       return `${this.inViewClass} ${this.enabledClass}`
+    } else {
+      return `${this.outOfViewClass} ${this.enabledClass}`
     }
-    return this.disabled ? this.disabledClass : this.enabledClass
   }
 
   disabled = false

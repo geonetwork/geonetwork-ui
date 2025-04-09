@@ -21,6 +21,7 @@ Object.defineProperty(window, 'IntersectionObserver', {
       gnUiAnchorLinkDisabledClass="is-disabled"
       gnUiAnchorLinkEnabledClass="is-enabled"
       gnUiAnchorLinkInViewClass="is-in-view"
+      gnUiAnchorLinkOutOfViewClass="is-out-of-view"
     >
       My Link
     </a>
@@ -63,8 +64,8 @@ describe('AnchorLinkDirective', () => {
       hostEl.appendChild(targetEl)
       fixture.detectChanges()
     })
-    it('adds the specified enabledClass', () => {
-      expect(anchorLinkEl.className).toBe('my-class is-enabled')
+    it('adds the specified enabledClass and outOfViewClass', () => {
+      expect(anchorLinkEl.className).toBe('my-class is-enabled is-out-of-view')
     })
   })
 
@@ -132,7 +133,7 @@ describe('AnchorLinkDirective', () => {
       observerCallback([{ isIntersecting: true }])
       fixture.detectChanges()
     })
-    it('adds the specified inViewClass', () => {
+    it('adds the specified inViewClass and removes outOfViewClass', () => {
       expect(anchorLinkEl.className).toBe('my-class is-enabled is-in-view')
     })
     afterEach(() => {
@@ -148,8 +149,8 @@ describe('AnchorLinkDirective', () => {
       observerCallback([{ isIntersecting: false }])
       fixture.detectChanges()
     })
-    it('removes the specified inViewClass', () => {
-      expect(anchorLinkEl.className).toBe('my-class is-enabled')
+    it('removes the specified inViewClass and adds outOfViewClass', () => {
+      expect(anchorLinkEl.className).toBe('my-class is-enabled is-out-of-view')
     })
     afterEach(() => {
       jest.clearAllMocks()
