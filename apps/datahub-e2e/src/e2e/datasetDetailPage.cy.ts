@@ -109,7 +109,7 @@ describe('dataset pages', () => {
     })
 
     describe('navigation bar', () => {
-      it('should display the navigation bar', () => {
+      it('should display the navigation bar, with favorite star and arrow back', () => {
         cy.get('datahub-record-page')
           .find('datahub-navigation-bar')
           .should('exist')
@@ -139,10 +139,14 @@ describe('dataset pages', () => {
           '!border-b-primary border-b-4'
         )
       })
+      it('should return to the dataset list', () => {
+        cy.get('datahub-record-page').find('[data-cy="backButton"]').click()
+        cy.url().should('include', '/search')
+      })
     })
 
     describe('header', () => {
-      it('should display the title, favorite star group and arrow back', () => {
+      it('should display the title', () => {
         cy.get('datahub-header-record')
           .children('header')
           .find('.font-title')
@@ -150,12 +154,6 @@ describe('dataset pages', () => {
             const text = $element.text().trim()
             expect(text).not.to.equal('')
           })
-        cy.get('datahub-header-record')
-          .children('header')
-          .find('gn-ui-favorite-star')
-        cy.get('datahub-header-record')
-          .children('header')
-          .find('[data-cy="backButton"]')
         cy.screenshot({ capture: 'fullPage' })
       })
       it('should display the data type, last update and status', () => {
@@ -166,13 +164,6 @@ describe('dataset pages', () => {
           .next()
           .as('infoBar')
         cy.get('@infoBar').children().should('have.length', 3)
-      })
-      it('should return to the dataset list', () => {
-        cy.get('datahub-header-record')
-          .children('header')
-          .find('[data-cy="backButton"]')
-          .click()
-        cy.url().should('include', '/search')
       })
     })
   })
