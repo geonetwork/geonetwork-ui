@@ -233,6 +233,7 @@
   "editor.record.loadError.body": "Impossibile caricare il dataset:",
   "editor.record.loadError.closeMessage": "Capito",
   "editor.record.loadError.title": "Errore durante il caricamento",
+  "editor.record.lock.format": "",
   "editor.record.lock.reason": "Non è un editore di uno dei gruppi autorizzati",
   "editor.record.onlineResource.protocol.other": "Altro",
   "editor.record.onlineResourceError.body": "Ha successo un'errore durante l'aggiunta della risorsa:",

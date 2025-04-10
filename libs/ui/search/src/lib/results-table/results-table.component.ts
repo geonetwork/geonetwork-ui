@@ -174,8 +174,9 @@ export class ResultsTableComponent {
   }
 
   handleRecordClick(item: CatalogRecord) {
-    if (item?.extras?.edit || this.isDraftPage)
+    if ((item?.extras?.edit || this.isDraftPage) && item.kind === 'dataset') {
       this.recordClick.emit(item as CatalogRecord)
+    }
   }
 
   handleDuplicate(item: unknown) {

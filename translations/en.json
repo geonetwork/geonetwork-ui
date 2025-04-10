@@ -233,6 +233,7 @@
   "editor.record.loadError.body": "The dataset could not be loaded:",
   "editor.record.loadError.closeMessage": "Understood",
   "editor.record.loadError.title": "Error loading dataset",
+  "editor.record.lock.format": "Record with the format 'service' or 'reuse' are not editable",
   "editor.record.lock.reason": "You are not an editor of the allowed groups",
   "editor.record.onlineResource.protocol.other": "Other",
   "editor.record.onlineResourceError.body": "An error happened while adding the resource:",

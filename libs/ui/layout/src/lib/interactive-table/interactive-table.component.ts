@@ -12,7 +12,11 @@ import { CommonModule } from '@angular/common'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { iconoirNavArrowDown, iconoirNavArrowUp } from '@ng-icons/iconoir'
 import { TranslateModule } from '@ngx-translate/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
+marker('editor.record.lock.reason')
+marker('editor.record.lock.format')
 @Component({
   selector: 'gn-ui-interactive-table',
   templateUrl: './interactive-table.component.html',
@@ -42,6 +46,15 @@ export class InteractiveTableComponent {
         )
         .join(' '),
     }
+  }
+
+  getItemTitle(item: CatalogRecord) {
+    if (!item.extras?.edit && !this.isDraftPage && item.kind === 'dataset') {
+      return 'editor.record.lock.reason'
+    } else if (item.kind !== 'dataset') {
+      return 'editor.record.lock.format'
+    }
+    return ''
   }
 
   handleRowClick(item: unknown) {
