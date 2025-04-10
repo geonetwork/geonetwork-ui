@@ -10,13 +10,4 @@
     (newValue)="toggleFavorite($event)"
     [disabled]="loading || (isAnonymous$ | async)"
   ></gn-ui-star-toggle>
-  <button
-    class="align-text-top ml-1.5"
-    data-test="favorite-count"
-    (click)="toggleFavorite(true)"
-    *ngIf="!displayCount && (isFavorite$ | async) === false"
-    translate
-  >
-    datahub.record.addToFavorites
-  </button>
 </div>

@@ -433,6 +433,7 @@
   "record.metadata.quality.updateFrequency.failed": "",
   "record.metadata.quality.updateFrequency.success": "",
   "record.metadata.related": "",
+  "record.metadata.related.contents": "",
   "record.metadata.ressources.and.links": "Recursos e links",
   "record.metadata.sheet": "",
   "record.metadata.status": "",

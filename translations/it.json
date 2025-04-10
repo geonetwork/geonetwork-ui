@@ -433,6 +433,7 @@
   "record.metadata.quality.updateFrequency.failed": "La frequenza di aggiornamento non è specificata",
   "record.metadata.quality.updateFrequency.success": "La frequenza di aggiornamento è specificata",
   "record.metadata.related": "Vedi anche",
+  "record.metadata.related.contents": "",
   "record.metadata.ressources.and.links": "Risorse e collegamenti",
   "record.metadata.sheet": "Origine del metadata",
   "record.metadata.status": "Stato",
