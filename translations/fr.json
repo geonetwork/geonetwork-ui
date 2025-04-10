@@ -433,6 +433,7 @@
   "record.metadata.quality.updateFrequency.failed": "La fréquence de mise à jour n'est pas renseignée",
   "record.metadata.quality.updateFrequency.success": "La fréquence de mise à jour est renseignée",
   "record.metadata.related": "Voir aussi",
+  "record.metadata.related.contents": "Contenu associé",
   "record.metadata.ressources.and.links": "Ressources et liens",
   "record.metadata.sheet": "Fiche de métadonnées d'origine",
   "record.metadata.status": "Statut",

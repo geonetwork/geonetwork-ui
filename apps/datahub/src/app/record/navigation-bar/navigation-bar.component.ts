@@ -60,12 +60,12 @@ export class NavigationBarComponent {
       label: 'record.metadata.ressources.and.links',
     },
     {
-      anchor: 'related',
-      label: 'record.metadata.related.contents',
-    },
-    {
       anchor: 'user-feedbacks',
       label: 'record.metadata.userFeedbacks',
+    },
+    {
+      anchor: 'related',
+      label: 'record.metadata.related.contents',
     },
   ]
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0

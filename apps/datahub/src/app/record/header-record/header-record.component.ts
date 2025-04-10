@@ -59,8 +59,7 @@ export class HeaderRecordComponent {
 
   constructor(
     public facade: MdViewFacade,
-    private dateService: DateService,
-    private searchService: SearchService
+    private dateService: DateService
   ) {}
 
   isGeodata$ = combineLatest([
@@ -75,10 +74,6 @@ export class HeaderRecordComponent {
 
   get lastUpdate() {
     return this.dateService.formatDate(this.metadata.recordUpdated)
-  }
-
-  back() {
-    this.searchService.updateFilters({})
   }
 
   getBadge() {

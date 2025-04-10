@@ -177,7 +177,7 @@ export class ServiceCapabilitiesComponent implements OnInit {
 
   getExtraClass(layerItem) {
     return layerItem.title === this.selectedLayer?.title
-      ? `h-8 rounded-lg bg-primary-darker text-white hover:text-white`
+      ? `h-8 rounded-lg bg-primary-darker text-white hover:text-primary-darker hover:bg-white`
       : `h-8 rounded-lg`
   }
 }
