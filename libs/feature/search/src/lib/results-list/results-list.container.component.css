@@ -1,0 +1,6 @@
+:host {
+  --gn-ui-button-height: 24px;
+  --gn-ui-button-width: 24px;
+  --gn-ui-button-color: var(--color-secondary);
+  --gn-ui-button-border-width: 0px;
+}

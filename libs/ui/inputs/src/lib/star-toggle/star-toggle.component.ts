@@ -23,7 +23,6 @@ import { ButtonComponent } from '../button/button.component'
   viewProviders: [provideIcons({ matStar, matStarBorder })],
 })
 export class StarToggleComponent {
-  @Input() buttonType: 'outline' | 'no-outline' = 'no-outline'
   @Input() toggled!: boolean
   @Input() disabled = false
   @Output() newValue = new EventEmitter<boolean>()
