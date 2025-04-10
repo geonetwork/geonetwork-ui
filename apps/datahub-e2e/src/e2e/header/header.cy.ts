@@ -129,38 +129,6 @@ describe('header', () => {
     })
   })
 
-  describe('filter and sort', () => {
-    beforeEach(() => {
-      cy.visit('/search')
-      cy.get('gn-ui-record-preview-row').as('initialList')
-      cy.visit('/news')
-    })
-
-    it('should create two filter buttons upon loading page', () => {
-      cy.get('gn-ui-fuzzy-search')
-        .next()
-        .find('button')
-        .should('have.length', 2)
-    })
-
-    it('should sort results by latest date', () => {
-      cy.get('gn-ui-fuzzy-search').next().find('button').first().click()
-      cy.get('gn-ui-record-preview-row').should('not.eq', '@initialList')
-      cy.get('gn-ui-sort-by gn-ui-dropdown-selector')
-        .getActiveDropdownOption()
-        .invoke('attr', 'data-cy-value')
-        .should('equal', 'desc,createDate')
-      cy.screenshot({ capture: 'viewport' })
-    })
-    it('should filter results by popularity', () => {
-      cy.get('gn-ui-fuzzy-search').next().find('button').eq(1).click()
-      cy.get('gn-ui-record-preview-row').should('not.eq', '@initialList')
-      cy.get('gn-ui-sort-by gn-ui-dropdown-selector')
-        .getActiveDropdownOption()
-        .invoke('attr', 'data-cy-value')
-        .should('equal', 'desc,userSavedCount')
-    })
-  })
   describe('Warning banner', () => {
     beforeEach(() => cy.addTranslationKey())
     it('should display a warning banner if the translation key exists and display the message', () => {

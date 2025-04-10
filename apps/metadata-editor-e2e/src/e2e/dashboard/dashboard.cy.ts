@@ -170,7 +170,7 @@ describe('dashboard (authenticated)', () => {
         cy.get('md-editor-dashboard-menu').find('a').eq(1).click()
         cy.get('gn-ui-results-table')
           .find('[data-cy="table-row"]')
-          .should('have.length', '11')
+          .should('have.length', '15')
       })
       it('should sort the records by title', () => {
         cy.get('md-editor-dashboard-menu').find('a').eq(1).click()

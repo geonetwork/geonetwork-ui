@@ -62,7 +62,15 @@ export class SearchFiltersComponent implements OnInit {
       ]
     )
       .filter((adv_filter) => {
-        if (this.fieldsService.supportedFields?.includes(adv_filter)) {
+        if (adv_filter === 'resourceType') {
+          console.warn(
+            `WARNING: The resourceType filter is now deprecated, please use recordKind instead.`
+          )
+          console.warn(
+            `WARNING: The resourceType filter does not return featureCatalog records anymore.`
+          )
+          return true
+        } else if (this.fieldsService.supportedFields?.includes(adv_filter)) {
           return true
         } else {
           console.warn(
