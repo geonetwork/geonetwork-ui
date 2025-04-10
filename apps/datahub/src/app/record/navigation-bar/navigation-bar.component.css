@@ -8,7 +8,6 @@
   --gn-ui-button-padding: 4px;
   --gn-ui-button-background: var(--color-primary-white);
   --gn-ui-button-bg-hover: var(--color-primary-lightest);
-  --gn-ui-button-border: var(--color-gray-300);
   --star-toggle-enabled-color: black;
   --star-toggle-disabled-color: black;
 }

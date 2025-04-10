@@ -33,7 +33,6 @@ import { CommonModule } from '@angular/common'
   imports: [CommonModule, StarToggleComponent],
 })
 export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
-  @Input() buttonType: 'outline' | 'no-outline' = 'no-outline'
   @Input() displayCount? = true
   @Input() set record(value) {
     this.record_ = value
