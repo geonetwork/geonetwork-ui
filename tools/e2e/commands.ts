@@ -276,6 +276,8 @@ Cypress.Commands.add('editor_createRecordCopy', () => {
 })
 
 Cypress.Commands.add('editor_readFormUniqueIdentifier', () => {
+  // wait for the url to contain edit
+  cy.url().should('contain', '/edit/')
   cy.url().then((url) => {
     if (url.includes('/edit/')) {
       return url.split('edit/').pop()
