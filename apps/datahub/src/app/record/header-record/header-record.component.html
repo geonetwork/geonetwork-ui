@@ -1,37 +1,7 @@
-<header class="w-full h-[255px]" [style.background]="backgroundCss">
+<header class="w-full h-[285px]" [style.background]="backgroundCss">
   <div
-    class="h-full container-lg mx-auto flex flex-col justify-between relative"
+    class="h-full container-lg mx-auto flex flex-col justify-center gap-7 relative"
   >
-    <div class="flex flex-row justify-between content-center mt-3">
-      <div class="ml-4">
-        <gn-ui-navigation-button
-          (click)="back()"
-          [label]="'datahub.search.back' | translate"
-          [icon]="'matArrowBack'"
-          [style.--navigation-button-color]="foregroundColor"
-        >
-        </gn-ui-navigation-button>
-      </div>
-      <div class="flex flex-row mr-6 content-center gap-3">
-        <gn-ui-favorite-star
-          *ngIf="metadata?.uniqueIdentifier"
-          [record]="metadata"
-          [displayCount]="false"
-          class="flex text-background content-center"
-          [style.color]="foregroundColor"
-          [style.--star-toggle-enabled-color]="foregroundColor"
-          [style.--star-toggle-disabled-color]="foregroundColor"
-        ></gn-ui-favorite-star>
-        <gn-ui-language-switcher
-          *ngIf="showLanguageSwitcher"
-          class="language-switcher text-[13px] mt-0.5"
-          [style.--color-main]="foregroundColor"
-          [style.--color-gray-300]="foregroundColor"
-          [style.--color-primary-darker]="foregroundColor"
-          [style.--color-primary-black]="foregroundColor"
-        ></gn-ui-language-switcher>
-      </div>
-    </div>
     <div
       *ngIf="metadata"
       class="font-title text-[28px] max-w-screen-sm line-clamp-3 ml-4"

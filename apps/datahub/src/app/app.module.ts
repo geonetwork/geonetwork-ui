@@ -118,7 +118,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     HomeHeaderComponent,
     HeaderBadgeButtonComponent,
     SearchFiltersComponent,
-    NavigationBarComponent,
     NewsPageComponent,
     OrganisationsPageComponent,
     SearchPageComponent,

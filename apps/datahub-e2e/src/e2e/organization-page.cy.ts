@@ -5,7 +5,7 @@ describe('organizations', () => {
     cy.visit('organization/Barbie%20Inc.')
 
     // aliases
-    cy.get('gn-ui-navigation-button').as('backButton')
+    cy.get('[data-cy="backButton"]').as('backButton')
     cy.get('[data-test="organizationHeaderName"]').as('organizationHeaderName')
     cy.get('[data-test="organizationHeaderWebsiteLink"]').as(
       'organizationHeaderWebsiteLink'

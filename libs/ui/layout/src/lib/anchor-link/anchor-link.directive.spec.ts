@@ -3,6 +3,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { Component } from '@angular/core'
 import { By } from '@angular/platform-browser'
 
+Object.defineProperty(window, 'IntersectionObserver', {
+  writable: true,
+  configurable: true,
+  value: jest.fn().mockImplementation(() => ({
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+  })),
+})
 @Component({
   template: ` <div>
     <a
@@ -11,6 +20,8 @@ import { By } from '@angular/platform-browser'
       gnUiAnchorLink="my-target"
       gnUiAnchorLinkDisabledClass="is-disabled"
       gnUiAnchorLinkEnabledClass="is-enabled"
+      gnUiAnchorLinkInViewClass="is-in-view"
+      gnUiAnchorLinkOutOfViewClass="is-out-of-view"
     >
       My Link
     </a>
@@ -53,8 +64,8 @@ describe('AnchorLinkDirective', () => {
       hostEl.appendChild(targetEl)
       fixture.detectChanges()
     })
-    it('adds the specified enabledClass', () => {
-      expect(anchorLinkEl.className).toBe('my-class is-enabled')
+    it('adds the specified enabledClass and outOfViewClass', () => {
+      expect(anchorLinkEl.className).toBe('my-class is-enabled is-out-of-view')
     })
   })
 
@@ -77,6 +88,72 @@ describe('AnchorLinkDirective', () => {
     })
     it('scrolls the target into view', () => {
       expect(targetEl.scrollIntoView).toHaveBeenCalled()
+    })
+  })
+
+  describe('IntersectionObserver', () => {
+    describe('if targetId is found', () => {
+      beforeEach(() => {
+        hostEl.appendChild(targetEl)
+        fixture.detectChanges()
+      })
+      it('initializes IntersectionObserver with correct values', () => {
+        expect(window.IntersectionObserver).toHaveBeenCalledWith(
+          expect.any(Function),
+          {
+            root: null,
+            rootMargin: '-30% 0% -60% 0%',
+          }
+        )
+      })
+      afterEach(() => {
+        jest.clearAllMocks()
+      })
+    })
+    describe('if targetId is NOT found', () => {
+      beforeEach(() => {
+        const targetElWithoutId = document.createElement('div')
+        hostEl.appendChild(targetElWithoutId)
+        fixture.detectChanges()
+      })
+      it('does not initialize IntersectionObserver', () => {
+        expect(window.IntersectionObserver).not.toHaveBeenCalled()
+      })
+      afterEach(() => {
+        jest.clearAllMocks()
+      })
+    })
+  })
+  describe('when target element is in view', () => {
+    beforeEach(() => {
+      hostEl.appendChild(targetEl)
+      fixture.detectChanges()
+      const observerCallback = (window.IntersectionObserver as jest.Mock).mock
+        .calls[0][0]
+      observerCallback([{ isIntersecting: true }])
+      fixture.detectChanges()
+    })
+    it('adds the specified inViewClass and removes outOfViewClass', () => {
+      expect(anchorLinkEl.className).toBe('my-class is-enabled is-in-view')
+    })
+    afterEach(() => {
+      jest.clearAllMocks()
+    })
+  })
+  describe('when target element is NOT in view', () => {
+    beforeEach(() => {
+      hostEl.appendChild(targetEl)
+      fixture.detectChanges()
+      const observerCallback = (window.IntersectionObserver as jest.Mock).mock
+        .calls[0][0]
+      observerCallback([{ isIntersecting: false }])
+      fixture.detectChanges()
+    })
+    it('removes the specified inViewClass and adds outOfViewClass', () => {
+      expect(anchorLinkEl.className).toBe('my-class is-enabled is-out-of-view')
+    })
+    afterEach(() => {
+      jest.clearAllMocks()
     })
   })
 })
