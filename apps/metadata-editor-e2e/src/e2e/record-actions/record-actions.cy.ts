@@ -35,12 +35,14 @@ describe('record-actions', () => {
         expect(value).to.not.equal('null')
       )
       cy.visit('/my-space/my-records')
+      cy.get('gn-ui-pagination-buttons').find('button').eq(2).click()
       cy.get('[data-cy="table-row"]')
         .contains(recordId)
         .should('have.length', 1)
       cy.get('[data-cy="dashboard-drafts-count"]').should('contain', '1')
       // Delete the record from my-records page
       cy.visit('/my-space/my-records')
+      cy.get('gn-ui-pagination-buttons').find('button').eq(2).click()
       cy.get('[data-test="record-menu-button"]').last().click()
       cy.get('[data-test="record-menu-delete-button"]').click()
       cy.get('[data-cy="confirm-button"]').click()
@@ -64,8 +66,7 @@ describe('record-actions', () => {
     afterEach(() => {
       // delete the new record
       cy.visit('/catalog/search')
-      cy.get('.table-header-cell').eq(1).click()
-      cy.get('.table-header-cell').eq(1).click()
+      cy.get('gn-ui-pagination-buttons').find('button').eq(2).click()
       cy.get('[data-test="record-menu-button"]').first().click()
       cy.get('[data-test="record-menu-delete-button"]').click()
       cy.get('[data-cy="confirm-button"]').click()
@@ -163,6 +164,9 @@ describe('record-actions', () => {
 
       cy.get('[data-cy="undo-button"]').click()
       cy.get('[data-cy="confirm-button"]').click()
+      cy.editor_findDraftInLocalStorage().then((value) => {
+        expect(value).to.not.equal('null')
+      })
       cy.get('@abstractField').should('have.value', 'record abstract')
 
       // delete the new record
@@ -216,8 +220,7 @@ describe('record-actions', () => {
 
       // delete the new record
       cy.visit('/catalog/search')
-      cy.get('.table-header-cell').eq(1).click()
-      cy.get('.table-header-cell').eq(1).click()
+      cy.get('gn-ui-pagination-buttons').find('button').eq(2).click()
       cy.get('[data-test="record-menu-button"]').first().click()
       cy.get('[data-test="record-menu-delete-button"]').click()
       cy.get('[data-cy="confirm-button"]').click()

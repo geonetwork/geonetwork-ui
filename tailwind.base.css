@@ -94,8 +94,8 @@
 
   .gn-ui-btn-default {
     @apply gn-ui-btn text-white
-      bg-gray-700 hover:bg-gray-800 active:bg-gray-900
-      border-gray-700 focus:ring-4 focus:ring-gray-200;
+      bg-gray-700 hover:bg-gray-800 hover:!text-white active:bg-gray-900
+      border-gray-700 focus:ring-4 focus:ring-gray-200 focus:text-gray-900;
   }
 
   .gn-ui-btn-primary {
