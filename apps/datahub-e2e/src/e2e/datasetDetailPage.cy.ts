@@ -120,24 +120,21 @@ describe('dataset pages', () => {
           .find('gn-ui-favorite-star')
           .should('exist')
       })
+      it('should display the gnUiAnchorLinkInViewClass when scrolling to the anchor', () => {
+        cy.get('#user-feedbacks').should('be.visible')
+        cy.get('#user-feedbacks').should('be.visible').scrollIntoView()
+        cy.get('[data-cy="user-feedbacks"]').should(
+          'have.class',
+          '!border-b-primary border-b-4'
+        )
+      })
       it('should scroll down when clicking on anchor title', () => {
-        //wait for page content to load (download section needing most time)
-        cy.get('#downloads').should('be.visible')
-        cy.get('[data-cy="resources"]').as('anchorLink')
-        cy.get('@anchorLink').click({ force: true })
+        cy.get('datahub-record-downloads').should('be.visible')
+        cy.get('[data-cy="resources"]').click({ force: true })
         cy.window().then((win) => {
           const scrollPosition = win.scrollY
           expect(scrollPosition).to.be.greaterThan(0)
         })
-      })
-      it('should display the gnUiAnchorLinkInViewClass when scrolling to the anchor', () => {
-        //wait for page content to load (download section needing most time)
-        cy.get('#downloads').should('be.visible')
-        cy.get('#resources').should('be.visible').scrollIntoView()
-        cy.get('[data-cy="resources"]').should(
-          'have.class',
-          '!border-b-primary border-b-4'
-        )
       })
       it('should return to the dataset list', () => {
         cy.get('datahub-record-page').find('[data-cy="backButton"]').click()
