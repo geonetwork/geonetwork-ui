@@ -45,7 +45,6 @@ enum KindConfig {
 })
 export class KindBadgeComponent {
   @Input() contentTemplate: TemplateRef<unknown>
-  @Input() extraClass = ''
   @Input() kind: string
   @Input() mapper = (value: string) => value
 
