@@ -8,6 +8,7 @@ import {
   ROUTER_ROUTE_DATASET,
   ROUTER_ROUTE_SEARCH,
   ROUTER_ROUTE_SERVICE,
+  ROUTER_ROUTE_REUSE,
   SearchRouteParams,
 } from '../constants'
 import {
@@ -36,6 +37,7 @@ export class RouterFacade {
   routeMap = {
     dataset: ROUTER_ROUTE_DATASET,
     service: ROUTER_ROUTE_SERVICE,
+    reuse: ROUTER_ROUTE_REUSE,
   }
 
   constructor(

@@ -20,6 +20,7 @@ import {
 import {
   RECORD_DATASET_URL_TOKEN,
   RECORD_SERVICE_URL_TOKEN,
+  RECORD_REUSE_URL_TOKEN,
 } from '../record-url.token'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
@@ -55,7 +56,9 @@ export class ResultsListContainerComponent implements OnInit {
     @Inject(RECORD_DATASET_URL_TOKEN)
     private recordDatasetUrlTemplate: string,
     @Inject(RECORD_SERVICE_URL_TOKEN)
-    private recordServiceUrlTemplate: string
+    private recordServiceUrlTemplate: string,
+    @Inject(RECORD_REUSE_URL_TOKEN)
+    private recordReuseUrlTemplate: string
   ) {}
 
   ngOnInit(): void {
@@ -108,12 +111,18 @@ export class ResultsListContainerComponent implements OnInit {
   }
 
   getRecordUrl(metadata: CatalogRecord) {
-    if (!this.recordDatasetUrlTemplate && !this.recordServiceUrlTemplate)
+    const tokenMap = {
+      dataset: this.recordDatasetUrlTemplate,
+      service: this.recordServiceUrlTemplate,
+      reuse: this.recordReuseUrlTemplate,
+    }
+    if (
+      !this.recordDatasetUrlTemplate &&
+      !this.recordServiceUrlTemplate &&
+      !this.recordReuseUrlTemplate
+    )
       return null
-    const urlKind =
-      metadata.kind === 'dataset'
-        ? this.recordDatasetUrlTemplate
-        : this.recordServiceUrlTemplate
+    const urlKind = tokenMap[metadata.kind]
     return urlKind.replace('${uuid}', metadata.uniqueIdentifier)
   }
 }
