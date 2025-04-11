@@ -244,8 +244,8 @@ export class DataService {
       if (!tileMapInfo?.metadata?.length) return null
 
       return tileMapInfo.metadata
-        .filter(meta => meta.href)
-        .map(meta => {
+        .filter((meta) => meta.href)
+        .map((meta) => {
           const fileName = meta.href.split('/').pop() || ''
           const name = fileName.split('.')[0]
           return { href: meta.href, name }
@@ -254,7 +254,6 @@ export class DataService {
       return null
     }
   }
-
 
   getDownloadLinksFromEsriRest(
     esriRestLink: DatasetServiceDistribution
