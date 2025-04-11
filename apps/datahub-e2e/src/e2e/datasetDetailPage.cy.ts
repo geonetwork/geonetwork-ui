@@ -1037,7 +1037,11 @@ describe('api form', () => {
         .then((url) => {
           cy.get('@apiForm').find('gn-ui-text-input').first().clear()
           cy.get('@apiForm').find('gn-ui-text-input').first().type('54')
-          cy.get('gn-ui-api-card').eq(1).find('button').eq(1).click()
+          cy.get('gn-ui-block-list gn-ui-api-card')
+            .eq(1)
+            .find('button')
+            .eq(1)
+            .click()
           cy.get('@apiForm')
             .find('gn-ui-copy-text-button')
             .find('input')
