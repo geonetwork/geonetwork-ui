@@ -57,7 +57,7 @@ export class NavigationBarComponent {
     },
     {
       anchor: 'feature-catalog',
-      label: 'record.metadata.feature-catalog',
+      label: 'record.metadata.feature.catalog',
     },
     {
       anchor: 'resources',

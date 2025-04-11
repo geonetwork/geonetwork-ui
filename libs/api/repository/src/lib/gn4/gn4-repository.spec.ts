@@ -360,8 +360,10 @@ describe('Gn4Repository', () => {
               definition: 'Définition du catalogue d attributs N°2',
               attributes: [
                 {
+                  code: 'UniqueObject',
                   name: 'unique object ',
                   title: 'this is the only object of this catalog',
+                  type: 'String (50)',
                 },
               ],
             },
