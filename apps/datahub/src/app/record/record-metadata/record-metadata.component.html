@@ -69,11 +69,7 @@
   <section id="data-preview" class="mb-6" *ngIf="kind === 'dataset'">
     <datahub-record-data-preview></datahub-record-data-preview>
   </section>
-  <section
-    id="capabilities"
-    class="mb-16"
-    *ngIf="kind === 'service' && (displayApi$ | async)"
-  >
+  <section id="capabilities" class="mb-16" *ngIf="kind === 'service'">
     <gn-ui-service-capabilities
       [apiLinks]="metadataViewFacade.apiLinks$ | async"
     ></gn-ui-service-capabilities>
