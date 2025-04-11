@@ -52,7 +52,6 @@ export class RecordOtherlinksComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this is required to show the pagination correctly
     this.changeDetector.detectChanges()
   }
 }
