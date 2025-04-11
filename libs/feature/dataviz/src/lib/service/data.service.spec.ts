@@ -14,21 +14,22 @@ jest.mock('@camptocamp/ogc-client', () => ({
     constructor(private url) {
       newEndpointCall(url)
     }
-    allTileMaps = this.url.indexOf('error.http') > -1
-      ? Promise.reject(new Error())
-      : Promise.resolve([{ href: 'tilemap1' }])
+    allTileMaps =
+      this.url.indexOf('error.http') > -1
+        ? Promise.reject(new Error())
+        : Promise.resolve([{ href: 'tilemap1' }])
 
     async getTileMapInfo(_href: string) {
       if (this.url.indexOf('no-styles') > -1) {
         return {
-          metadata: []
+          metadata: [],
         }
       }
       return {
         metadata: [
           { href: 'style1', name: 'Style 1' },
-          { href: 'style2', name: 'Style 2' }
-        ]
+          { href: 'style2', name: 'Style 2' },
+        ],
       }
     }
   },
@@ -485,13 +486,14 @@ describe('DataService', () => {
 
       it('should throw an error when feature type is not found', async () => {
         const wfsUrl = 'http://local/wfs'
-        const featureTypeName = 'missingFeatureType'          try {
-            await lastValueFrom(
-              service.getWfsFeatureCount(wfsUrl, featureTypeName)
-            )
-          } catch (e) {
-            expect((e as Error).message).toBe('wfs.featuretype.notfound')
-          }
+        const featureTypeName = 'missingFeatureType'
+        try {
+          await lastValueFrom(
+            service.getWfsFeatureCount(wfsUrl, featureTypeName)
+          )
+        } catch (e) {
+          expect((e as Error).message).toBe('wfs.featuretype.notfound')
+        }
       })
 
       it('should throw a relevant error when WFS is unreachable (CORS)', async () => {
@@ -805,17 +807,21 @@ describe('DataService', () => {
     describe('#getStylesFromTms', () => {
       describe('calling getStylesFromTms() with a valid URL', () => {
         it('returns styles with href and name', async () => {
-          const styles = await service.getStylesFromTms('https://my.tms.server/tms')
+          const styles = await service.getStylesFromTms(
+            'https://my.tms.server/tms'
+          )
           expect(styles).toEqual([
             { href: 'style1', name: 'style1' },
-            { href: 'style2', name: 'style2' }
+            { href: 'style2', name: 'style2' },
           ])
         })
       })
 
       describe('calling getStylesFromTms() with a URL having no styles', () => {
         it('returns null', async () => {
-          const styles = await service.getStylesFromTms('https://my.tms.server/no-styles')
+          const styles = await service.getStylesFromTms(
+            'https://my.tms.server/no-styles'
+          )
           expect(styles).toBeNull()
         })
       })

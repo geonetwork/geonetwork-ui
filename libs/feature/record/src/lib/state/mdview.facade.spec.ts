@@ -446,7 +446,7 @@ describe('MdViewFacade', () => {
         url: new URL('https://my-org.net/wms'),
         accessServiceProtocol: 'wms',
         name: 'WMS Service',
-      }
+      },
     ]
 
     beforeEach(() => {
@@ -455,7 +455,7 @@ describe('MdViewFacade', () => {
           ...initialMetadataViewState,
           metadata: {
             ...datasetRecordsFixture()[0],
-            onlineResources: links
+            onlineResources: links,
           },
         },
       })
@@ -463,7 +463,9 @@ describe('MdViewFacade', () => {
 
     it('should fetch and include styles for TMS services', fakeAsync(() => {
       const styles = [{ href: 'style1', name: 'Style 1' }]
-      jest.spyOn(facade.dataService, 'getStylesFromTms').mockResolvedValue(styles)
+      jest
+        .spyOn(facade.dataService, 'getStylesFromTms')
+        .mockResolvedValue(styles)
 
       let result
       facade.mapApiLinks$.subscribe((v) => (result = v))
@@ -473,10 +475,12 @@ describe('MdViewFacade', () => {
         links[1],
         {
           ...links[0],
-          styles
+          styles,
         },
       ])
-      expect(facade.dataService.getStylesFromTms).toHaveBeenCalledWith('https://my-org.net/tms')
+      expect(facade.dataService.getStylesFromTms).toHaveBeenCalledWith(
+        'https://my-org.net/tms'
+      )
     }))
 
     it('should handle TMS services without styles', fakeAsync(() => {
@@ -490,7 +494,9 @@ describe('MdViewFacade', () => {
     }))
 
     it('should handle TMS service errors gracefully', fakeAsync(() => {
-      jest.spyOn(facade.dataService, 'getStylesFromTms').mockRejectedValue(new Error('Failed to fetch styles'))
+      jest
+        .spyOn(facade.dataService, 'getStylesFromTms')
+        .mockRejectedValue(new Error('Failed to fetch styles'))
 
       let result
       facade.mapApiLinks$.subscribe((v) => (result = v))
@@ -503,14 +509,14 @@ describe('MdViewFacade', () => {
       const nonMapLink = {
         type: 'download',
         url: new URL('http://my-org.net/download/data.csv'),
-        name: 'Download CSV'
+        name: 'Download CSV',
       }
       store.setState({
         [METADATA_VIEW_FEATURE_STATE_KEY]: {
           ...initialMetadataViewState,
           metadata: {
             ...datasetRecordsFixture()[0],
-            onlineResources: [...links, nonMapLink]
+            onlineResources: [...links, nonMapLink],
           },
         },
       })
