@@ -21,14 +21,7 @@
           >
           </gn-ui-metadata-info>
         </div>
-        <div class="flex flex-col gap-5 sm:mt-[-185px]">
-          <gn-ui-image-overlay-preview
-            class="block h-[185px]"
-            [imageUrl]="thumbnailUrl$ | async"
-            (isPlaceholderShown)="showOverlay = !$event"
-            *ngIf="showOverlay"
-          >
-          </gn-ui-image-overlay-preview>
+        <div class="flex flex-col gap-5">
           <gn-ui-metadata-contact
             (organizationClick)="onOrganizationClick($event)"
             [metadata]="metadataViewFacade.metadata$ | async"
@@ -44,11 +37,13 @@
               [metadataQualityDisplay]="metadataQualityDisplay"
             ></gn-ui-metadata-quality>
           </div>
-          <gn-ui-metadata-catalog
+          <div
             *ngIf="kind === 'dataset' && sourceLabel$ | async as sourceLabel"
-            [sourceLabel]="sourceLabel"
+            class="border border-gray-300 rounded-lg py-4 px-5"
           >
-          </gn-ui-metadata-catalog>
+            <gn-ui-metadata-catalog [sourceLabel]="sourceLabel">
+            </gn-ui-metadata-catalog>
+          </div>
           <gn-ui-button
             type="outline"
             extraClass="w-full flex flex-row justify-between bg-white"
