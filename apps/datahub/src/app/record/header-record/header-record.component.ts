@@ -20,6 +20,7 @@ import {
   iconoirOpenNewWindow,
 } from '@ng-icons/iconoir'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { ImageOverlayPreviewComponent } from '@geonetwork-ui/ui/elements'
 
 marker('record.kind.dataset')
 marker('record.kind.reuse')
@@ -31,7 +32,13 @@ marker('record.kind.service')
   styleUrls: ['./header-record.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, TranslateModule, BadgeComponent, NgIcon],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    BadgeComponent,
+    NgIcon,
+    ImageOverlayPreviewComponent,
+  ],
   viewProviders: [
     provideIcons({
       matLocationSearchingOutline,
@@ -50,10 +57,20 @@ export class HeaderRecordComponent {
     `center /cover url('assets/img/header_bg.webp')`
   foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
 
+  showOverlay = true
+
   constructor(
     public facade: MdViewFacade,
     private dateService: DateService
   ) {}
+
+  get thumbnailUrl() {
+    if (this.metadata?.overviews === undefined) {
+      return undefined
+    } else {
+      return this.metadata?.overviews?.[0]?.url ?? null
+    }
+  }
 
   reuseLinkUrl$ = this.facade.otherLinks$.pipe(
     map((links) => {
