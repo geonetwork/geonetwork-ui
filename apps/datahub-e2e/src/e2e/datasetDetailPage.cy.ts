@@ -155,11 +155,7 @@ describe('dataset pages', () => {
       })
       it('should display the data type, last update and status', () => {
         cy.visit('/dataset/01491630-78ce-49f3-b479-4b30dabc4c69')
-        cy.get('datahub-header-record')
-          .children('header')
-          .find('.font-title')
-          .next()
-          .as('infoBar')
+        cy.get('[data-test="metadataBadges"]').as('infoBar')
         cy.get('@infoBar').children().should('have.length', 4)
       })
     })

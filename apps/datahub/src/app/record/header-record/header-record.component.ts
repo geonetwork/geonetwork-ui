@@ -1,9 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import {
-  FavoriteStarComponent,
-  SearchService,
-} from '@geonetwork-ui/feature/search'
-import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
+import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 import {
   DatasetRecord,
   ReuseRecord,
@@ -13,13 +9,16 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { combineLatest, map } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
 import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
-import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
 import { matArrowBack, matCreditCard } from '@ng-icons/material-icons/baseline'
 import { DateService } from '@geonetwork-ui/util/shared'
-import { iconoirAppleShortcuts, iconoirCode } from '@ng-icons/iconoir'
+import {
+  iconoirAppleShortcuts,
+  iconoirCode,
+  iconoirOpenNewWindow,
+} from '@ng-icons/iconoir'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 marker('record.kind.dataset')
@@ -32,14 +31,7 @@ marker('record.kind.service')
   styleUrls: ['./header-record.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    LanguageSwitcherComponent,
-    TranslateModule,
-    FavoriteStarComponent,
-    BadgeComponent,
-    NgIcon,
-  ],
+  imports: [CommonModule, TranslateModule, BadgeComponent, NgIcon],
   viewProviders: [
     provideIcons({
       matLocationSearchingOutline,
@@ -47,6 +39,7 @@ marker('record.kind.service')
       iconoirCode,
       matCreditCard,
       iconoirAppleShortcuts,
+      iconoirOpenNewWindow,
     }),
   ],
 })
@@ -61,6 +54,12 @@ export class HeaderRecordComponent {
     public facade: MdViewFacade,
     private dateService: DateService
   ) {}
+
+  reuseLinkUrl$ = this.facade.otherLinks$.pipe(
+    map((links) => {
+      return links.length ? links[0].url : null
+    })
+  )
 
   isGeodata$ = combineLatest([
     this.facade.mapApiLinks$,

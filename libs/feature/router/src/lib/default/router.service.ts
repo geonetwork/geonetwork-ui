@@ -4,6 +4,7 @@ import {
   ROUTER_ROUTE_ORGANIZATION,
   ROUTER_ROUTE_SEARCH,
   ROUTER_ROUTE_SERVICE,
+  ROUTER_ROUTE_REUSE,
 } from '.'
 import { Router, Routes } from '@angular/router'
 import { ROUTER_CONFIG, RouterConfigModel } from './router.config'
@@ -37,6 +38,10 @@ export class RouterService {
       },
       {
         path: `${ROUTER_ROUTE_SERVICE}/:metadataUuid`,
+        component: this.routerConfig.recordRouteComponent,
+      },
+      {
+        path: `${ROUTER_ROUTE_REUSE}/:metadataUuid`,
         component: this.routerConfig.recordRouteComponent,
       },
       {

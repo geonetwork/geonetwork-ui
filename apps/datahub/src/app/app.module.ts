@@ -23,6 +23,7 @@ import {
   ROUTER_ROUTE_ORGANIZATION,
   ROUTER_ROUTE_SEARCH,
   ROUTER_ROUTE_SERVICE,
+  ROUTER_ROUTE_REUSE,
   RouterService,
 } from '@geonetwork-ui/feature/router'
 import {
@@ -30,6 +31,7 @@ import {
   FILTER_GEOMETRY,
   RECORD_DATASET_URL_TOKEN,
   RECORD_SERVICE_URL_TOKEN,
+  RECORD_REUSE_URL_TOKEN,
 } from '@geonetwork-ui/feature/search'
 import {
   THUMBNAIL_PLACEHOLDER,
@@ -38,7 +40,6 @@ import {
 import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
-import { GpfApiDlComponent } from '@geonetwork-ui/feature/record'
 import {
   getGlobalConfig,
   getMapContextLayerFromConfig,
@@ -70,7 +71,6 @@ import { NewsPageComponent } from './home/news-page/news-page.component'
 import { OrganisationsPageComponent } from './home/organisations-page/organisations-page.component'
 import { SearchPageComponent } from './home/search/search-page/search-page.component'
 import { SearchFiltersComponent } from './home/search/search-filters/search-filters.component'
-import { NavigationBarComponent } from './record/navigation-bar/navigation-bar.component'
 import { RecordPageComponent } from './record/record-page/record-page.component'
 import { DatahubRouterService } from './router/datahub-router.service'
 import { NavigationMenuComponent } from './home/navigation-menu/navigation-menu.component'
@@ -156,6 +156,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
       searchRouteComponent: SearchPageComponent,
       recordRouteComponent: RecordPageComponent,
       serviceRouteComponent: RecordPageComponent,
+      reuseRouteComponent: RecordPageComponent,
       organizationRouteComponent: OrganizationPageComponent,
     }),
     FeatureRecordModule,
@@ -246,6 +247,10 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     {
       provide: RECORD_SERVICE_URL_TOKEN,
       useValue: `${ROUTER_ROUTE_SERVICE}/\${uuid}`,
+    },
+    {
+      provide: RECORD_REUSE_URL_TOKEN,
+      useValue: `${ROUTER_ROUTE_REUSE}/\${uuid}`,
     },
     {
       provide: ORGANIZATION_PAGE_URL_TOKEN,

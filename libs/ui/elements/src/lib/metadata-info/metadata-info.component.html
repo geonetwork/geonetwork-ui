@@ -13,7 +13,7 @@
   </gn-ui-content-ghost>
 
   <p
-    class="mt-6 mb-3 font-medium text-primary text-sm"
+    class="mt-6 mb-3 font-medium text-black text-sm"
     translate
     *ngIf="!fieldReady('keywords') || metadata.keywords?.length"
   >
@@ -226,7 +226,7 @@
   </div>
 </gn-ui-expandable-panel>
 <gn-ui-expandable-panel
-  *ngIf="metadata.kind === 'service' && metadata.spatialExtents"
+  *ngIf="metadata.kind !== 'dataset' && metadata.spatialExtents"
   [title]="'service.metadata.spatialExtent' | translate"
 >
   <gn-ui-spatial-extent
@@ -236,11 +236,7 @@
 </gn-ui-expandable-panel>
 <gn-ui-expandable-panel
   *ngIf="metadata.landingPage"
-  [title]="
-    metadata.kind === 'dataset'
-      ? ('record.metadata.technical' | translate)
-      : ('service.metadata.other' | translate)
-  "
+  [title]="'service.metadata.other' | translate"
 >
   <div class="flex flex-col gap-4 mr-4 py-5 rounded text-gray-700">
     <div *ngIf="metadata.recordUpdated">

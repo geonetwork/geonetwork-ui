@@ -21,9 +21,9 @@
           >
           </gn-ui-metadata-info>
         </div>
-        <div class="sm:mt-[-185px]">
+        <div class="flex flex-col gap-5 sm:mt-[-185px]">
           <gn-ui-image-overlay-preview
-            class="block h-[185px] mb-5"
+            class="block h-[185px]"
             [imageUrl]="thumbnailUrl$ | async"
             (isPlaceholderShown)="showOverlay = !$event"
             *ngIf="showOverlay"
@@ -36,7 +36,7 @@
           </gn-ui-metadata-contact>
           <div
             *ngIf="metadataQualityDisplay"
-            class="border border-gray-300 rounded-lg py-4 px-5 mb-5"
+            class="border border-gray-300 rounded-lg py-4 px-5"
           >
             <p class="mb-3" translate>record.metadata.quality</p>
             <gn-ui-metadata-quality
@@ -51,7 +51,7 @@
           </gn-ui-metadata-catalog>
           <gn-ui-button
             type="outline"
-            extraClass="w-full flex flex-row justify-between"
+            extraClass="w-full flex flex-row justify-between bg-white"
             [style.--gn-ui-button-rounded]="'10px'"
             (buttonClick)="scrollToQuestions()"
           >
@@ -96,7 +96,7 @@
         <datahub-record-otherlinks class="block"></datahub-record-otherlinks>
       </div>
 
-      <div *ngIf="displayApi$ | async" id="apis">
+      <div *ngIf="displayApi$ | async" id="apis" class="mt-5">
         <datahub-record-apis class="block"></datahub-record-apis>
       </div>
     </div>
