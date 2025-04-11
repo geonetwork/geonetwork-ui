@@ -37,6 +37,7 @@ declare namespace Cypress {
     openDropdown(): Chainable<JQuery<HTMLElement>>
     selectDropdownOption(value: string): void
     getActiveDropdownOption(): Chainable<JQuery<HTMLButtonElement>>
+    closeDropdown(): void
   }
 }
 
@@ -196,6 +197,10 @@ Cypress.Commands.add(
     return cy.wrap(dropdownElement).openDropdown().find(`[data-cy-active]`)
   }
 )
+
+Cypress.Commands.add('closeDropdown', () => {
+  cy.get('body').click(0, 0)
+})
 
 Cypress.Commands.add('clearRecordDrafts', () => {
   cy.window().then((window) => {
