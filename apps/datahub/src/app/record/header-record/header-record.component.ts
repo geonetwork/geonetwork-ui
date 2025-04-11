@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { FavoriteStarComponent } from '@geonetwork-ui/feature/search'
 import { getThemeConfig } from '@geonetwork-ui/util/app-config'
 import {
   DatasetRecord,
@@ -9,8 +8,7 @@ import {
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { combineLatest, map } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
-import { BadgeComponent, ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
+import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
@@ -33,15 +31,7 @@ marker('record.kind.service')
   styleUrls: ['./header-record.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    LanguageSwitcherComponent,
-    TranslateModule,
-    FavoriteStarComponent,
-    BadgeComponent,
-    NgIcon,
-    ButtonComponent,
-  ],
+  imports: [CommonModule, TranslateModule, BadgeComponent, NgIcon],
   viewProviders: [
     provideIcons({
       matLocationSearchingOutline,
@@ -65,7 +55,11 @@ export class HeaderRecordComponent {
     private dateService: DateService
   ) {}
 
-  reuseLink$ = this.facade.otherLinks$
+  reuseLinkUrl$ = this.facade.otherLinks$.pipe(
+    map((links) => {
+      return links.length ? links[0].url : null
+    })
+  )
 
   isGeodata$ = combineLatest([
     this.facade.mapApiLinks$,

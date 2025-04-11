@@ -12,12 +12,14 @@
           {{ metadata.title }}
         </div>
         <a
-          *ngIf="metadata.kind === 'reuse' && (reuseLink$ | async) as reuseLink"
-          [href]="reuseLink[0].url"
+          *ngIf="
+            metadata.kind === 'reuse' && (reuseLinkUrl$ | async) as reuseLink
+          "
+          [href]="reuseLink"
           class="h-8 max-w-60 w-fit py-1 px-2 gn-ui-btn-primary"
           target="_blank"
         >
-          <span class="mt-1.5">{{ 'reuse.metadata.access' | translate }}</span>
+          <span class="mt-1">{{ 'reuse.metadata.access' | translate }}</span>
           <ng-icon
             class="ml-2 text-[1.5em]"
             name="iconoirOpenNewWindow"
@@ -30,7 +32,6 @@
         data-test="metadataBadges"
       >
         <gn-ui-badge
-          [style.--gn-ui-badge-padding]="'2px 8px'"
           [style.--gn-ui-badge-background-color]="'transparent'"
           [style.--gn-ui-badge-opacity]="'1'"
           class="leading-[1.4em] border border-white rounded-md"
@@ -46,10 +47,9 @@
         </gn-ui-badge>
         <gn-ui-badge
           *ngIf="metadata.kind !== 'service' && (isGeodata$ | async) === true"
-          [style.--gn-ui-badge-padding]="'2px 8px'"
           [style.--gn-ui-badge-background-color]="'var(--color-primary-darker)'"
           [style.--gn-ui-badge-opacity]="'1'"
-          class="leading-[1.4em]"
+          [style.--gn-ui-badge-text-size]="'12px'"
         >
           <ng-icon
             class="mr-[5px] text-[1em]"
@@ -60,13 +60,13 @@
           >
         </gn-ui-badge>
         <div *ngIf="metadata.recordUpdated">
-          <p translate [translateParams]="{ date: lastUpdate }">
+          <p translate [translateParams]="{ date: lastUpdate }" class="text-sm">
             record.metadata.lastUpdate
           </p>
         </div>
         <div
           *ngIf="metadata.kind === 'dataset' && metadata.status"
-          class="flex flex-row gap-2"
+          class="flex flex-row gap-4 text-sm"
         >
           <p>•</p>
           <p
