@@ -22,8 +22,7 @@ import { UserPreviewComponent } from './user-preview/user-preview.component'
 import { ApplicationBannerComponent } from './application-banner/application-banner.component'
 import { InternalLinkCardComponent } from './internal-link-card/internal-link-card.component'
 import { ServiceCapabilitiesComponent } from './service-capabilities/service-capabilities.component'
-import { FeatureCatalogComponent } from './feature-catalog/feature-catalog.component'
-
+import { SimpleTableComponent } from './simple-table/simple-table.component'
 @NgModule({
   imports: [
     CommonModule,
@@ -47,7 +46,7 @@ import { FeatureCatalogComponent } from './feature-catalog/feature-catalog.compo
     ApplicationBannerComponent,
     InternalLinkCardComponent,
     ServiceCapabilitiesComponent,
-    FeatureCatalogComponent,
+    SimpleTableComponent,
   ],
   providers: [
     provideNgIconsConfig({
@@ -64,7 +63,7 @@ import { FeatureCatalogComponent } from './feature-catalog/feature-catalog.compo
     ApplicationBannerComponent,
     InternalLinkCardComponent,
     ServiceCapabilitiesComponent,
-    FeatureCatalogComponent,
+    SimpleTableComponent,
   ],
 })
 export class UiElementsModule {}

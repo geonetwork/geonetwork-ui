@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 import { DatasetFeatureCatalog } from '@geonetwork-ui/common/domain/model/record'
 import { ExpandablePanelComponent } from '@geonetwork-ui/ui/layout'
-import { FeatureCatalogComponent } from '@geonetwork-ui/ui/elements'
+import { SimpleTableComponent } from '@geonetwork-ui/ui/elements'
 
 @Component({
   selector: 'datahub-feature-catalog-list',
@@ -14,7 +14,7 @@ import { FeatureCatalogComponent } from '@geonetwork-ui/ui/elements'
     CommonModule,
     TranslateModule,
     ExpandablePanelComponent,
-    FeatureCatalogComponent,
+    SimpleTableComponent,
   ],
 })
 export class FeatureCatalogListComponent {

@@ -13,7 +13,7 @@
           <div class="text-medium">{{ featureType.definition }}</div>
         </div>
       </ng-template>
-      <gn-ui-feature-catalog
+      <gn-ui-simple-table
         [data]="featureType.attributes"
         [columns]="[
           {
@@ -38,7 +38,7 @@
           },
         ]"
       >
-      </gn-ui-feature-catalog>
+      </gn-ui-simple-table>
     </gn-ui-expandable-panel>
   </div>
 </div>

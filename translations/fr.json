@@ -409,6 +409,7 @@
   "record.metadata.creation": "Date de création",
   "record.metadata.details": "À propos de la donnée",
   "record.metadata.download": "Téléchargements",
+  "record.metadata.feature.catalog": "Catalogue d'attributs",
   "record.metadata.formats": "Formats",
   "record.metadata.keywords": "Mots-clés",
   "record.metadata.languages": "Langues",

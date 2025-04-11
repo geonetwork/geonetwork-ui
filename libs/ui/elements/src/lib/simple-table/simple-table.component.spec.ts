@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FeatureCatalogComponent } from './feature-catalog.component'
+import { SimpleTableComponent } from './simple-table.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 
-describe('FeatureCatalogComponent', () => {
-  let component: FeatureCatalogComponent
-  let fixture: ComponentFixture<FeatureCatalogComponent>
+describe('SimpleTableComponent', () => {
+  let component: SimpleTableComponent
+  let fixture: ComponentFixture<SimpleTableComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FeatureCatalogComponent, TranslateModule.forRoot()],
+      imports: [SimpleTableComponent, TranslateModule.forRoot()],
     }).compileComponents()
 
-    fixture = TestBed.createComponent(FeatureCatalogComponent)
+    fixture = TestBed.createComponent(SimpleTableComponent)
     component = fixture.componentInstance
     component.data = [
       {
