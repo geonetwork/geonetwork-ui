@@ -66,4 +66,4 @@ import { ServiceCapabilitiesComponent } from './service-capabilities/service-cap
     ServiceCapabilitiesComponent,
   ],
 })
-export class UiElementsModule { }
+export class UiElementsModule {}
