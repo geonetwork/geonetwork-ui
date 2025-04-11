@@ -183,11 +183,6 @@ describe('ElasticsearchService', () => {
           ],
           must_not: [
             {
-              terms: {
-                resourceType: ['map', 'map/static', 'mapDigital'],
-              },
-            },
-            {
               query_string: {
                 query:
                   'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
@@ -259,11 +254,6 @@ describe('ElasticsearchService', () => {
           ],
           must_not: [
             {
-              terms: {
-                resourceType: ['map', 'map/static', 'mapDigital'],
-              },
-            },
-            {
               query_string: {
                 query:
                   'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
@@ -333,11 +323,6 @@ describe('ElasticsearchService', () => {
           ],
           must_not: [
             {
-              terms: {
-                resourceType: ['map', 'map/static', 'mapDigital'],
-              },
-            },
-            {
               query_string: {
                 query:
                   'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
@@ -400,11 +385,6 @@ describe('ElasticsearchService', () => {
           ],
           must_not: [
             {
-              terms: {
-                resourceType: ['map', 'map/static', 'mapDigital'],
-              },
-            },
-            {
               query_string: {
                 query:
                   'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
@@ -448,11 +428,6 @@ describe('ElasticsearchService', () => {
           should: [],
           must: [],
           must_not: [
-            {
-              terms: {
-                resourceType: ['map', 'map/static', 'mapDigital'],
-              },
-            },
             {
               query_string: {
                 query:
@@ -509,11 +484,6 @@ describe('ElasticsearchService', () => {
             },
           ],
           must_not: [
-            {
-              terms: {
-                resourceType: ['map', 'map/static', 'mapDigital'],
-              },
-            },
             {
               query_string: {
                 query:
@@ -628,11 +598,6 @@ describe('ElasticsearchService', () => {
               },
             ],
             must_not: [
-              {
-                terms: {
-                  resourceType: ['map', 'map/static', 'mapDigital'],
-                },
-              },
               {
                 query_string: {
                   query:
@@ -763,11 +728,6 @@ describe('ElasticsearchService', () => {
                 },
               ],
               must_not: [
-                {
-                  terms: {
-                    resourceType: ['map', 'map/static', 'mapDigital'],
-                  },
-                },
                 {
                   query_string: {
                     query:

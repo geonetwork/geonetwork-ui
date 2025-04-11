@@ -273,11 +273,6 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
                   must: [],
                   must_not: [
                     {
-                      terms: {
-                        resourceType: ['map', 'map/static', 'mapDigital'],
-                      },
-                    },
-                    {
                       query_string: {
                         query:
                           'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',

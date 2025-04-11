@@ -300,13 +300,6 @@ export class ElasticsearchService {
   private mustNotFilters(): Record<string, unknown>[] {
     return [
       {
-        ...this.queryFilterOnValues('resourceType', [
-          'map',
-          'map/static',
-          'mapDigital',
-        ]),
-      },
-      {
         query_string: {
           query:
             'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
