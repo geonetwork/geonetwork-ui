@@ -1,13 +1,13 @@
 <div
-  style="height: 652px"
+  style="height: 786px"
   *ngIf="(displayMap$ | async) || (displayData$ | async)"
   id="preview"
 >
-  <div class="bg-primary-opacity-10 overflow-visible" style="height: 512px">
-    <div class="container-lg px-4 lg:mx-auto">
+  <div class="bg-primary-opacity-10 overflow-visible" style="height: 420px">
+    <div class="container-lg pb-4 lg:mx-auto">
       <div>
         <div
-          class="gn-ui-section-title transform translate-y-10 pt-0"
+          class="gn-ui-section-title transform translate-y-11 pt-0"
           translate
         >
           record.metadata.preview
@@ -25,7 +25,7 @@
             </ng-template>
             <div
               class="block"
-              style="height: 500px"
+              style="height: 639px"
               *ngIf="displayMap$ | async"
             >
               <gn-ui-map-view
