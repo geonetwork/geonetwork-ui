@@ -21,6 +21,7 @@ const routerConfigMock = {
   searchRouteComponent: SearchRouteComponent,
   recordRouteComponent: RecordRouteComponent,
   serviceRouteComponent: RecordRouteComponent,
+  reuseRouteComponent: RecordRouteComponent,
   organizationRouteComponent: OrganizationRouteComponent,
 }
 const RouterMock = {
@@ -53,6 +54,12 @@ const expectedRoutes = [
       name: 'recordRoute',
     },
     path: 'service/:metadataUuid',
+  },
+  {
+    component: {
+      name: 'recordRoute',
+    },
+    path: 'reuse/:metadataUuid',
   },
   {
     path: `${ROUTER_ROUTE_ORGANIZATION}/:name`,

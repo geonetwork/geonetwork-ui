@@ -7,3 +7,7 @@ export const RECORD_DATASET_URL_TOKEN = new InjectionToken<string>(
 export const RECORD_SERVICE_URL_TOKEN = new InjectionToken<string>(
   'record-service-url-token'
 )
+
+export const RECORD_REUSE_URL_TOKEN = new InjectionToken<string>(
+  'record-reuse-url-token'
+)

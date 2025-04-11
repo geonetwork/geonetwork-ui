@@ -14,6 +14,7 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
   RECORD_DATASET_URL_TOKEN,
   RECORD_SERVICE_URL_TOKEN,
+  RECORD_REUSE_URL_TOKEN,
 } from '../record-url.token'
 
 @Component({
@@ -72,6 +73,10 @@ describe('ResultsListContainerComponent', () => {
         {
           provide: RECORD_SERVICE_URL_TOKEN,
           useValue: '/my/service/${uuid}/open',
+        },
+        {
+          provide: RECORD_REUSE_URL_TOKEN,
+          useValue: '/my/reuse/${uuid}/open',
         },
       ],
     }).compileComponents()
@@ -173,6 +178,7 @@ describe('ResultsListContainerComponent', () => {
       beforeEach(() => {
         component['recordDatasetUrlTemplate'] = undefined
         component['recordServiceUrlTemplate'] = undefined
+        component['recordReuseUrlTemplate'] = undefined
       })
       it('returns null', () => {
         expect(component.getRecordUrl(datasetRecordsFixture()[0])).toBe(null)
