@@ -1,8 +1,10 @@
 <header class="w-full h-[285px]" [style.background]="backgroundCss">
   <div
-    class="h-full container-lg mx-auto flex flex-col gap-2.5 justify-between relative"
+    class="h-full container-lg mx-auto flex flex-row justify-between relative"
   >
-    <div class="flex flex-col gap-7 my-3 flex-grow justify-center mx-4">
+    <div
+      class="flex flex-col gap-7 my-3 flex-grow justify-center ml-4 w-[800px]"
+    >
       <div class="flex flex-col gap-3">
         <div
           *ngIf="metadata"
@@ -27,7 +29,7 @@
         ></a>
       </div>
       <div
-        class="flex flex-row flex-wrap items-center gap-4 mb-4 sm:mr-[332px]"
+        class="flex flex-row flex-wrap items-center gap-4 mb-4 md:mr-4 mr-[332px]"
         [style.color]="foregroundColor"
         data-test="metadataBadges"
       >
@@ -72,5 +74,12 @@
         </div>
       </div>
     </div>
+    <gn-ui-image-overlay-preview
+      class="block h-[228px] w-[370px] self-center mr-4"
+      [imageUrl]="thumbnailUrl"
+      (isPlaceholderShown)="showOverlay = !$event"
+      *ngIf="showOverlay"
+    >
+    </gn-ui-image-overlay-preview>
   </div>
 </header>
