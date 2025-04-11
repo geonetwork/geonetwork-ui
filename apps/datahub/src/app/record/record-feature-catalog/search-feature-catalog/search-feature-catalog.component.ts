@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
-import { NgIcon, provideIcons } from '@ng-icons/core'
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { matSearchOutline } from '@ng-icons/material-icons/outline'
 import { DatasetFeatureCatalog } from '@geonetwork-ui/common/domain/model/record'
 import { FormsModule } from '@angular/forms'
@@ -12,7 +12,12 @@ import { FormsModule } from '@angular/forms'
   styleUrls: ['./search-feature-catalog.component.css'],
   standalone: true,
   imports: [CommonModule, NgIcon, TranslateModule, FormsModule],
-  viewProviders: [provideIcons({ matSearchOutline })],
+  viewProviders: [
+    provideIcons({ matSearchOutline }),
+    provideNgIconsConfig({
+      size: '1.5rem',
+    }),
+  ],
 })
 export class SearchFeatureCatalogComponent {
   private _featureCatalog: DatasetFeatureCatalog
