@@ -6,6 +6,7 @@ import { HeaderRecordComponent } from './header-record.component'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import { BehaviorSubject } from 'rxjs'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
@@ -23,7 +24,11 @@ describe('HeaderRecordComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      providers: [MockProvider(MdViewFacade)],
+      providers: [
+        MockProvider(MdViewFacade, {
+          otherLinks$: new BehaviorSubject([]),
+        }),
+      ],
     }).compileComponents()
   })
 
