@@ -14,7 +14,7 @@
 
 :host {
   --gn-ui-badge-background-color: var(--color-primary-white);
-  --gn-ui-badge-text-color: var(--color-primary);
+  --gn-ui-badge-text-color: var(--color-primary-darkest);
 }
 
 :host ::ng-deep gn-ui-badge:hover {

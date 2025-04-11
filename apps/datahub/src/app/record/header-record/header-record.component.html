@@ -33,7 +33,6 @@
       >
         <gn-ui-badge
           [style.--gn-ui-badge-background-color]="'transparent'"
-          [style.--gn-ui-badge-opacity]="'1'"
           class="leading-[1.4em] border border-white rounded-md"
           *ngIf="metadata?.kind"
         >
@@ -48,8 +47,6 @@
         <gn-ui-badge
           *ngIf="metadata.kind !== 'service' && (isGeodata$ | async) === true"
           [style.--gn-ui-badge-background-color]="'var(--color-primary-darker)'"
-          [style.--gn-ui-badge-opacity]="'1'"
-          [style.--gn-ui-badge-text-size]="'12px'"
         >
           <ng-icon
             class="mr-[5px] text-[1em]"
