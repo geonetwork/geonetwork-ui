@@ -174,10 +174,10 @@ export const GEO2FRANCE_SERVICE_EAUXUSEES_RECORD: ServiceRecord = {
   onlineResources: [
     {
       type: 'endpoint',
-      endpointUrl: new URL(
+      url: new URL(
         'https://services.sandre.eaufrance.fr/geo/odp?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities'
       ),
-      protocol: 'wfs',
+      accessServiceProtocol: 'wfs',
       description:
         'Ouvrages de dépollution - Système de traitement des eaux usées - France entière',
       translations: {},

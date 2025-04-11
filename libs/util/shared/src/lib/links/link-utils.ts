@@ -1,6 +1,7 @@
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   DatasetOnlineResource,
+  ServiceOnlineResource,
   ServiceProtocol,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
@@ -140,7 +141,9 @@ export function getFormatPriority(linkFormat: FileFormat): number {
   return 0
 }
 
-export function getLinkPriority(link: DatasetOnlineResource): number {
+export function getLinkPriority(
+  link: DatasetOnlineResource | ServiceOnlineResource
+): number {
   return getFormatPriority(getFileFormat(link))
 }
 
@@ -164,7 +167,9 @@ export function getFileFormatFromServiceOutput(
   return null
 }
 
-export function getFileFormat(link: DatasetOnlineResource): FileFormat {
+export function getFileFormat(
+  link: DatasetOnlineResource | ServiceOnlineResource
+): FileFormat {
   if ('mimeType' in link) {
     const mimeTypeFormat = mimeTypeToFormat(link.mimeType)
     if (mimeTypeFormat !== null) {
@@ -181,7 +186,7 @@ export function getFileFormat(link: DatasetOnlineResource): FileFormat {
 }
 
 export function isFormatInQueryParam(
-  link: DatasetOnlineResource,
+  link: DatasetOnlineResource | ServiceOnlineResource,
   alias: string
 ): boolean {
   const queryParams = link.url.searchParams
@@ -203,7 +208,7 @@ export function mimeTypeToFormat(mimeType: string): FileFormat {
 }
 
 export function checkFileFormat(
-  link: DatasetOnlineResource,
+  link: DatasetOnlineResource | ServiceOnlineResource,
   format: FileFormat
 ): boolean {
   return (
@@ -225,7 +230,9 @@ export function getBadgeColor(linkFormat: FileFormat): string {
   return 'var(--color-gray-700)' // Default color ?
 }
 
-export function getLinkLabel(link: DatasetOnlineResource): string {
+export function getLinkLabel(
+  link: DatasetOnlineResource | ServiceOnlineResource
+): string {
   let format = ''
   switch (link.type) {
     case 'service':
@@ -249,7 +256,7 @@ export function getLinkLabel(link: DatasetOnlineResource): string {
     default:
       format = getFileFormat(link)
   }
-  const label = link.description || link.name
+  const label = link.description || ('name' in link ? link.name : '')
   return format ? `${label} (${format})` : label
 }
 
@@ -261,14 +268,25 @@ export async function getLayers(url: string, serviceProtocol: ServiceProtocol) {
     }
     case 'wfs': {
       const endpointWfs = await new WfsEndpoint(url).isReady()
-      return endpointWfs.getFeatureTypes()
+      const featureTypes = await endpointWfs.getFeatureTypes()
+      const layers = await Promise.all(
+        featureTypes.map(async (collection) => {
+          return await endpointWfs.getFeatureTypeFull(collection.name)
+        })
+      )
+      return layers
     }
     case 'wms': {
       const endpointWms = await new WmsEndpoint(url).isReady()
-      return endpointWms
-        .getLayers()
-        .flatMap(wmsLayerFlatten)
-        .filter((l) => l.name)
+      const layers = (
+        await endpointWms
+          .getLayers()
+          .flatMap(wmsLayerFlatten)
+          .filter((l) => l.name)
+      ).map((collection) => {
+        return endpointWms.getLayerByName(collection.name)
+      })
+      return layers
     }
     case 'wmts': {
       const endpointWmts = await new WmtsEndpoint(url).isReady()
@@ -279,7 +297,7 @@ export async function getLayers(url: string, serviceProtocol: ServiceProtocol) {
   }
 }
 
-function wmsLayerFlatten(layerFull) {
+export function wmsLayerFlatten(layerFull) {
   const layer = {
     title: layerFull.title,
     name: layerFull.name,

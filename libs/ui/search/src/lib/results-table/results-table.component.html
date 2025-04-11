@@ -9,10 +9,10 @@
       <ng-icon
         name="iconoirLock"
         class="text-purple"
-        *ngIf="!item.extras?.edit && !isDraftPage"
+        *ngIf="(!item.extras?.edit && !isDraftPage) || item.kind !== 'dataset'"
       ></ng-icon>
       <gn-ui-checkbox
-        *ngIf="item.extras?.edit || isDraftPage"
+        *ngIf="(item.extras?.edit || isDraftPage) && item.kind === 'dataset'"
         [checked]="isChecked(item)"
         (changed)="handleRecordSelectedChange($event, item)"
         class="-m-2"
@@ -149,11 +149,14 @@
         (buttonClick)="openActionMenu(item, template)"
         type="light"
         data-test="record-menu-button"
-        [disabled]="!item.extras?.edit && !isDraftPage"
+        [disabled]="
+          (!item.extras?.edit && !isDraftPage) || item.kind !== 'dataset'
+        "
       >
         <ng-icon
           [ngClass]="{
-            'text-purple-light': !item.extras?.edit && !isDraftPage,
+            'text-purple-light':
+              (!item.extras?.edit && !isDraftPage) || item.kind !== 'dataset',
           }"
           name="matMoreVert"
         ></ng-icon>

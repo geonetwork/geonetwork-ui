@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { FormFieldMapContainerComponent } from './form-field-map-container.component'
+import { SpatialExtentComponent } from './spatial-extent.component'
 import { MockBuilder } from 'ng-mocks'
 import { firstValueFrom } from 'rxjs'
 import { createViewFromLayer } from '@geospatial-sdk/core'
@@ -14,21 +14,21 @@ jest.mock('@geospatial-sdk/core', () => ({
 }))
 
 describe('FormFieldMapContainerComponent', () => {
-  let component: FormFieldMapContainerComponent
-  let fixture: ComponentFixture<FormFieldMapContainerComponent>
+  let component: SpatialExtentComponent
+  let fixture: ComponentFixture<SpatialExtentComponent>
 
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
   beforeEach(() => {
-    return MockBuilder(FormFieldMapContainerComponent)
+    return MockBuilder(SpatialExtentComponent)
   })
 
   beforeEach(() => {
     TestBed.configureTestingModule({}).compileComponents()
 
-    fixture = TestBed.createComponent(FormFieldMapContainerComponent)
+    fixture = TestBed.createComponent(SpatialExtentComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

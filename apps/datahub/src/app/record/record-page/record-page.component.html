@@ -12,5 +12,6 @@
   ></datahub-header-record>
   <datahub-record-metadata
     [metadataQualityDisplay]="metadataQualityDisplay"
+    [kind]="(mdViewFacade.metadata$ | async).kind"
   ></datahub-record-metadata>
 </div>

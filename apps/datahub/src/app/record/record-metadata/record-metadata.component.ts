@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+} from '@angular/core'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import {
@@ -9,6 +15,7 @@ import {
   MetadataContactComponent,
   MetadataInfoComponent,
   MetadataQualityComponent,
+  ServiceCapabilitiesComponent,
 } from '@geonetwork-ui/ui/elements'
 import { combineLatest } from 'rxjs'
 import { filter, map, mergeMap } from 'rxjs/operators'
@@ -27,6 +34,9 @@ import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlink
 import { RecordRelatedRecordsComponent } from '../record-related-records/record-related-records.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { matChatOutline } from '@ng-icons/material-icons/outline'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -50,16 +60,22 @@ import { RecordDataPreviewComponent } from '../record-data-preview/record-data-p
     RecordRelatedRecordsComponent,
     TranslateModule,
     RecordDataPreviewComponent,
+    ButtonComponent,
+    NgIcon,
+    ServiceCapabilitiesComponent,
   ],
+  viewProviders: [provideIcons({ matChatOutline })],
 })
 export class RecordMetadataComponent {
   @Input() metadataQualityDisplay: boolean
+  @Input() kind: 'dataset' | 'service' | 'reuse'
+  @ViewChild('userFeedbacks') userFeedbacks: ElementRef<HTMLElement>
 
   displayDownload$ = this.metadataViewFacade.downloadLinks$.pipe(
     map((links) => links?.length > 0)
   )
   displayApi$ = this.metadataViewFacade.apiLinks$.pipe(
-    map((links) => links?.length > 0)
+    map((links) => links?.length > 0 && this.kind === 'dataset')
   )
 
   displayOtherLinks = this.metadataViewFacade.otherLinks$.pipe(
@@ -132,5 +148,13 @@ export class RecordMetadataComponent {
     this.orgsService
       .getFiltersForOrgs([org])
       .subscribe((filters) => this.searchService.updateFilters(filters))
+  }
+
+  scrollToQuestions() {
+    if (this.userFeedbacks) {
+      this.userFeedbacks.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
   }
 }

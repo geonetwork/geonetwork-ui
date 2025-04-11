@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core'
 import {
-  DatasetRecord,
+  CatalogRecord,
   Keyword,
 } from '@geonetwork-ui/common/domain/model/record'
 import { DateService, getTemporalRangeUnion } from '@geonetwork-ui/util/shared'
@@ -22,11 +22,16 @@ import {
 } from '@geonetwork-ui/ui/inputs'
 import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
 import { NgIcon, provideIcons } from '@ng-icons/core'
-import { CommonModule } from '@angular/common'
 import { matOpenInNew } from '@ng-icons/material-icons/baseline'
 import { matMailOutline } from '@ng-icons/material-icons/outline'
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 import { GnUiLinkifyDirective } from './linkify.directive'
+
+import { CommonModule } from '@angular/common'
+import {
+  MapContainerComponent,
+  SpatialExtentComponent,
+} from '@geonetwork-ui/ui/map'
 
 @Component({
   selector: 'gn-ui-metadata-info',
@@ -46,6 +51,8 @@ import { GnUiLinkifyDirective } from './linkify.directive'
     CopyTextButtonComponent,
     NgIcon,
     GnUiLinkifyDirective,
+    MapContainerComponent,
+    SpatialExtentComponent,
   ],
   viewProviders: [
     provideIcons({
@@ -55,7 +62,7 @@ import { GnUiLinkifyDirective } from './linkify.directive'
   ],
 })
 export class MetadataInfoComponent {
-  @Input() metadata: Partial<DatasetRecord>
+  @Input() metadata: Partial<CatalogRecord>
   @Input() incomplete: boolean
   @Output() keyword = new EventEmitter<Keyword>()
   updatedTimes: number
@@ -122,7 +129,8 @@ export class MetadataInfoComponent {
   }
 
   get temporalExtent(): { start: string; end: string } {
-    const temporalExtents = this.metadata.temporalExtents
+    const temporalExtents =
+      this.metadata.kind === 'dataset' ? this.metadata.temporalExtents : []
     return getTemporalRangeUnion(temporalExtents, this.dateService)
   }
 

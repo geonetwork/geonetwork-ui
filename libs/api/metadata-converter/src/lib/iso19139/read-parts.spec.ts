@@ -738,10 +738,10 @@ describe('read parts', () => {
           {
             description:
               'https://services.geo.sg.ch/wss/service/SG00170_WMS/guest?request=GetCapabilities&service=WMS',
-            endpointUrl: new URL(
+            url: new URL(
               'https://services.geo.sg.ch/wss/service/SG00170_WMS/guest?request=GetCapabilities&service=WMS'
             ),
-            protocol: 'wms',
+            accessServiceProtocol: 'wms',
             type: 'endpoint',
             translations: {
               description: {

@@ -17,7 +17,10 @@ import {
   ResultsLayoutConfigItem,
   ResultsLayoutConfigModel,
 } from '@geonetwork-ui/ui/search'
-import { RECORD_URL_TOKEN } from '../record-url.token'
+import {
+  RECORD_DATASET_URL_TOKEN,
+  RECORD_SERVICE_URL_TOKEN,
+} from '../record-url.token'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export type ResultsListShowMoreStrategy = 'auto' | 'button' | 'none'
@@ -49,8 +52,10 @@ export class ResultsListContainerComponent implements OnInit {
     @Inject(RESULTS_LAYOUT_CONFIG)
     private resultsLayoutConfig: ResultsLayoutConfigModel,
     @Optional()
-    @Inject(RECORD_URL_TOKEN)
-    private recordUrlTemplate: string
+    @Inject(RECORD_DATASET_URL_TOKEN)
+    private recordDatasetUrlTemplate: string,
+    @Inject(RECORD_SERVICE_URL_TOKEN)
+    private recordServiceUrlTemplate: string
   ) {}
 
   ngOnInit(): void {
@@ -103,7 +108,12 @@ export class ResultsListContainerComponent implements OnInit {
   }
 
   getRecordUrl(metadata: CatalogRecord) {
-    if (!this.recordUrlTemplate) return null
-    return this.recordUrlTemplate.replace('${uuid}', metadata.uniqueIdentifier)
+    if (!this.recordDatasetUrlTemplate && !this.recordServiceUrlTemplate)
+      return null
+    const urlKind =
+      metadata.kind === 'dataset'
+        ? this.recordDatasetUrlTemplate
+        : this.recordServiceUrlTemplate
+    return urlKind.replace('${uuid}', metadata.uniqueIdentifier)
   }
 }

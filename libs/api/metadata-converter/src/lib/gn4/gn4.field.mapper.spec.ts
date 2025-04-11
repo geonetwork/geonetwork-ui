@@ -46,7 +46,7 @@ describe('Gn4FieldMapper', () => {
           (key) => elasticLinkFixture()[key]
         )
         const linkTypes = allLinks.map((fixture) =>
-          service.getLinkType(fixture.url, fixture.protocol)
+          service.getLinkType(fixture.url, fixture.accessServiceProtocol)
         )
         expect(linkTypes).toStrictEqual([
           'link',

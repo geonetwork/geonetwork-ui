@@ -23,6 +23,7 @@ export const allSearchFields = [
   'isPublishedToAll',
   'link',
   'owner',
+  'resourceType',
 ]
 @Component({
   selector: 'md-editor-records-list',

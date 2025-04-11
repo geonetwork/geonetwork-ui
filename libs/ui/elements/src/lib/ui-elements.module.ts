@@ -21,6 +21,7 @@ import { TimeSincePipe } from './user-feedback-item/time-since.pipe'
 import { UserPreviewComponent } from './user-preview/user-preview.component'
 import { ApplicationBannerComponent } from './application-banner/application-banner.component'
 import { InternalLinkCardComponent } from './internal-link-card/internal-link-card.component'
+import { ServiceCapabilitiesComponent } from './service-capabilities/service-capabilities.component'
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { InternalLinkCardComponent } from './internal-link-card/internal-link-ca
     ImageInputComponent,
     ApplicationBannerComponent,
     InternalLinkCardComponent,
+    ServiceCapabilitiesComponent,
   ],
   providers: [
     provideNgIconsConfig({
@@ -59,6 +61,7 @@ import { InternalLinkCardComponent } from './internal-link-card/internal-link-ca
     ImageInputComponent,
     ApplicationBannerComponent,
     InternalLinkCardComponent,
+    ServiceCapabilitiesComponent,
   ],
 })
 export class UiElementsModule {}

@@ -109,6 +109,7 @@ describe('RecordMetadataComponent', () => {
 
     beforeEach(() => {
       facade.isPresent$.next(true)
+      component.kind = 'dataset'
       fixture.detectChanges()
       metadataInfo = fixture.debugElement.query(
         By.directive(MetadataInfoComponent)
@@ -120,7 +121,7 @@ describe('RecordMetadataComponent', () => {
         By.directive(MetadataCatalogComponent)
       ).componentInstance
     })
-    describe('if metadata present', () => {
+    describe('if metadata present and kind is dataset', () => {
       it('shows the full metadata', () => {
         expect(metadataInfo.metadata).toHaveProperty('abstract')
       })
@@ -134,6 +135,19 @@ describe('RecordMetadataComponent', () => {
         expect(catalogComponent.sourceLabel).toEqual('catalog label')
       })
     })
+    describe('if metadata present and kind is service', () => {
+      beforeEach(() => {
+        facade.isPresent$.next(true)
+        component.kind = 'service'
+        fixture.detectChanges()
+      })
+      it('does not display the metadata catalog component', () => {
+        expect(
+          fixture.debugElement.query(By.directive(MetadataCatalogComponent))
+        ).toBeFalsy()
+      })
+    })
+
     describe('if metadata not present', () => {
       beforeEach(() => {
         facade.isPresent$.next(false)
@@ -271,8 +285,9 @@ describe('RecordMetadataComponent', () => {
         expect(apiComponent).toBeFalsy()
       })
     })
-    describe('when API link', () => {
+    describe('when API link and kind is dataset', () => {
       beforeEach(() => {
+        component.kind = 'dataset'
         facade.apiLinks$.next(['link'])
         fixture.detectChanges()
         apiComponent = fixture.debugElement.query(

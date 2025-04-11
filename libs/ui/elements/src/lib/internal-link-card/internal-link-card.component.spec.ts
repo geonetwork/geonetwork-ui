@@ -253,7 +253,7 @@ describe('InternalLinkCardComponent', () => {
     it('returns correct info for dataset', () => {
       component.record.kind = 'dataset'
       const result = component.getKindInfo()
-      expect(result.text).toBe('record.kind.dataset')
+      expect(result.text).toBe('record.kind.data')
       expect(result.icon).toBe('iconoirDatabase')
     })
 

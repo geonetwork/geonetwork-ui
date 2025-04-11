@@ -96,10 +96,10 @@
 </gn-ui-expandable-panel>
 <gn-ui-expandable-panel
   *ngIf="
-    metadata.lineage ||
+    (metadata.kind === 'dataset' && metadata.lineage) ||
     metadata.resourceUpdated ||
     metadata.updateFrequency ||
-    metadata.status
+    (metadata.kind === 'dataset' && metadata.status)
   "
   [title]="'record.metadata.details' | translate"
 >
@@ -226,8 +226,21 @@
   </div>
 </gn-ui-expandable-panel>
 <gn-ui-expandable-panel
+  *ngIf="metadata.kind === 'service' && metadata.spatialExtents"
+  [title]="'service.metadata.spatialExtent' | translate"
+>
+  <gn-ui-spatial-extent
+    class="flex h-[271px] w-full rounded-lg border border-gray-100 mt-3 mb-6"
+    [spatialExtents]="metadata.spatialExtents"
+  ></gn-ui-spatial-extent>
+</gn-ui-expandable-panel>
+<gn-ui-expandable-panel
   *ngIf="metadata.landingPage"
-  [title]="'record.metadata.technical' | translate"
+  [title]="
+    metadata.kind === 'dataset'
+      ? ('record.metadata.technical' | translate)
+      : ('service.metadata.other' | translate)
+  "
 >
   <div class="flex flex-col gap-4 mr-4 py-5 rounded text-gray-700">
     <div *ngIf="metadata.recordUpdated">
