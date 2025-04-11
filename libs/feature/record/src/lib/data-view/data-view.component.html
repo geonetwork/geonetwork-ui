@@ -1,13 +1,17 @@
-<div class="w-full h-full flex flex-col p-1">
-  <gn-ui-dropdown-selector
-    *ngIf="dropdownChoices$ | async as choices"
-    [ngClass]="{ hidden: !displaySource }"
-    [title]="'table.select.data' | translate"
-    class="truncate p-1 -mx-1 self-end mb-1"
-    extraBtnClass="!text-primary font-sans font-medium"
-    [choices]="choices"
-    (selectValue)="selectLink($event)"
-  ></gn-ui-dropdown-selector>
+<div class="w-full h-full flex flex-col p-1 gap-[13px]">
+  <div
+    class="w-full flex h-[76px] py-4 pl-5 pr-10 bg-white border border-color-border rounded-lg mt-6"
+  >
+    <gn-ui-dropdown-selector
+      *ngIf="dropdownChoices$ | async as choices"
+      [ngClass]="{ hidden: !displaySource }"
+      [title]="'table.select.data' | translate"
+      class="h-[44px] w-full"
+      extraBtnClass="ml-5 font-sans font-medium"
+      [choices]="choices"
+      (selectValue)="selectLink($event)"
+    ></gn-ui-dropdown-selector>
+  </div>
   <ng-container *ngIf="hidePreview; else dataView">
     <gn-ui-popup-alert
       type="warning"
