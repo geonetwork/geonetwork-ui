@@ -922,7 +922,7 @@ describe('record with file distributions', () => {
 describe('api cards', () => {
   beforeEach(() => {
     cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
-    cy.get('gn-ui-api-card').eq(1).as('firstCard')
+    cy.get('gn-ui-block-list gn-ui-api-card').eq(1).as('firstCard')
   })
 
   it('should display the open panel button', () => {
@@ -946,7 +946,11 @@ describe('api form', () => {
   describe('When the api link is ok', () => {
     beforeEach(() => {
       cy.visit('/dataset/accroche_velos')
-      cy.get('gn-ui-api-card').first().find('button').eq(1).click()
+      cy.get('gn-ui-block-list gn-ui-api-card')
+        .first()
+        .find('button')
+        .eq(1)
+        .click()
       cy.get('gn-ui-record-api-form').children('div').as('apiForm')
     })
     it('should have request inputs', () => {
