@@ -72,7 +72,7 @@ export class RecordMetadataComponent {
   @ViewChild('userFeedbacks') userFeedbacks: ElementRef<HTMLElement>
 
   displayDownload$ = this.metadataViewFacade.downloadLinks$.pipe(
-    map((links) => links?.length > 0)
+    map((links) => links?.length > 0 && this.kind === 'dataset')
   )
   displayApi$ = this.metadataViewFacade.apiLinks$.pipe(
     map((links) => links?.length > 0 && this.kind === 'dataset')

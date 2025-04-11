@@ -233,8 +233,9 @@ describe('RecordMetadataComponent', () => {
         expect(downloadsComponent).toBeFalsy()
       })
     })
-    describe('when DOWNLOAD link', () => {
+    describe('when DOWNLOAD link and kind is dataset', () => {
       beforeEach(() => {
+        component.kind = 'dataset'
         facade.downloadLinks$.next(['link'])
         fixture.detectChanges()
         downloadsComponent = fixture.debugElement.query(
@@ -243,6 +244,19 @@ describe('RecordMetadataComponent', () => {
       })
       it('download component renders', () => {
         expect(downloadsComponent).toBeTruthy()
+      })
+    })
+    describe('when DOWNLOAD link and kind is other than dataset', () => {
+      beforeEach(() => {
+        component.kind = 'service'
+        facade.downloadLinks$.next(['link'])
+        fixture.detectChanges()
+        downloadsComponent = fixture.debugElement.query(
+          By.directive(RecordDownloadsComponent)
+        )
+      })
+      it('download component does not render', () => {
+        expect(downloadsComponent).toBeFalsy()
       })
     })
   })
@@ -296,6 +310,19 @@ describe('RecordMetadataComponent', () => {
       })
       it('API component renders', () => {
         expect(apiComponent).toBeTruthy()
+      })
+    })
+    describe('when API link and kind is other than dataset', () => {
+      beforeEach(() => {
+        component.kind = 'reuse'
+        facade.apiLinks$.next(['link'])
+        fixture.detectChanges()
+        apiComponent = fixture.debugElement.query(
+          By.directive(RecordApisComponent)
+        )
+      })
+      it('API component does not render', () => {
+        expect(apiComponent).toBeFalsy()
       })
     })
   })
