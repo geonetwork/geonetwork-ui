@@ -1,13 +1,11 @@
 /* TODO(mdc-migration): The following rule targets internal classes of tabs that may no longer apply for the MDC version. */
 ::ng-deep .mat-mdc-tab-labels {
   /* move tabs on the right to let the title show */
-  margin-left: 140px;
+  flex-direction: row;
+  justify-content: end;
 }
 ::ng-deep .mat-mdc-tab.mdc-tab {
   letter-spacing: 0.88px;
-}
-::ng-deep .mat-mdc-tab.mdc-tab:hover .tab-header-label {
-  color: var(--color-primary-darkest);
 }
 ::ng-deep .mat-mdc-tab.mdc-tab.mdc-tab--active .tab-header-label {
   opacity: 100%;
@@ -35,5 +33,5 @@
   }
 }
 .tab-header-label {
-  @apply uppercase text-sm text-primary opacity-75 hover:text-primary-darker;
+  @apply uppercase text-sm text-black opacity-75 hover:text-primary;
 }
