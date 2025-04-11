@@ -134,6 +134,7 @@ describe('app config utils', () => {
           METADATA_LANGUAGE: 'fre',
           LOGIN_URL: '/cas/login?service=',
           LOGOUT_URL: '/geonetwork/signout',
+          SETTINGS_URL: '/geonetwork/settings',
           WEB_COMPONENT_EMBEDDER_URL: '/datahub/wc-embedder.html',
         })
       })

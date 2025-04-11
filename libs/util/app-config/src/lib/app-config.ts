@@ -99,6 +99,7 @@ export function loadAppConfig() {
           'metadata_language',
           'login_url',
           'logout_url',
+          'settings_url',
           'web_component_embedder_url',
           'languages',
           'contact_email',
