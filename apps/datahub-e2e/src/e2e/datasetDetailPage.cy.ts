@@ -613,7 +613,9 @@ describe('dataset pages', () => {
     describe('display', () => {
       it('should have a list of downloads based on the WFS capabilities', () => {
         cy.get('datahub-record-downloads')
-          .find('gn-ui-download-item [data-cy="download-format"]')
+          .find(
+            'gn-ui-block-list gn-ui-download-item [data-cy="download-format"]'
+          )
           .then((formatBadges) => {
             const formats = formatBadges
               .toArray()
@@ -720,7 +722,7 @@ describe('dataset pages', () => {
       it('should display links in a grid layout', () => {
         cy.viewport(1200, 800)
         cy.get('@otherLinks').find('gn-ui-block-list').should('be.visible')
-        cy.get('@otherLinks').find('gn-ui-carousel').should('not.exist')
+        cy.get('@otherLinks').find('gn-ui-carousel').should('not.be.visible')
       })
 
       it('should not show pagination when 4 links or less', () => {
@@ -741,7 +743,7 @@ describe('dataset pages', () => {
 
       it('should display links in a carousel', () => {
         cy.get('@otherLinks').find('gn-ui-carousel').should('be.visible')
-        cy.get('@otherLinks').find('gn-ui-block-list').should('not.exist')
+        cy.get('@otherLinks').find('gn-ui-block-list').should('not.be.visible')
       })
 
       it('should show pagination dots in carousel', () => {
@@ -755,11 +757,11 @@ describe('dataset pages', () => {
       it('should switch from grid to carousel when resizing to mobile', () => {
         cy.viewport(1200, 800)
         cy.get('@otherLinks').find('gn-ui-block-list').should('be.visible')
-        cy.get('@otherLinks').find('gn-ui-carousel').should('not.exist')
+        cy.get('@otherLinks').find('gn-ui-carousel').should('not.be.visible')
 
         cy.viewport(375, 667)
         cy.get('@otherLinks').find('gn-ui-carousel').should('be.visible')
-        cy.get('@otherLinks').find('gn-ui-block-list').should('not.exist')
+        cy.get('@otherLinks').find('gn-ui-block-list').should('not.be.visible')
       })
     })
 
