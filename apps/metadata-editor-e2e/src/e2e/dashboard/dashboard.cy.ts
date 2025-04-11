@@ -300,9 +300,6 @@ describe('dashboard (landing page)', () => {
       cy.get('mat-month-view').contains('button', '1').click()
       cy.get('mat-month-view').contains('button', '30').click()
     }
-    function closeDropDown() {
-      cy.get('body').click(0, 0)
-    }
     function checkFilterByChangeDate() {
       cy.get('gn-ui-interactive-table')
         .find('[data-cy="table-row"]')
@@ -334,7 +331,7 @@ describe('dashboard (landing page)', () => {
 
       // it should filter the record list by last update (changeDate)
       deselectUsers(false)
-      closeDropDown()
+      cy.closeDropdown()
       cy.get('md-editor-search-filters').find('gn-ui-button').eq(1).click()
       selectDateRange()
       checkFilterByChangeDate()
@@ -387,7 +384,7 @@ describe('dashboard (landing page)', () => {
 
       // it should display a second badge for a second selected user
       selectUser(0, false)
-      closeDropDown()
+      cy.closeDropdown()
       cy.get('gn-ui-search-filters-summary')
         .find('gn-ui-badge')
         .should('have.length', 2)
@@ -409,7 +406,7 @@ describe('dashboard (landing page)', () => {
 
       // SELECTING DATE RANGE
       deselectUsers()
-      closeDropDown()
+      cy.closeDropdown()
       cy.get('md-editor-search-filters').find('gn-ui-button').eq(1).click()
       selectDateRange()
 
@@ -426,7 +423,7 @@ describe('dashboard (landing page)', () => {
         .should('eq', '01.08.2024 - 30.08.2024')
 
       // it should remove the badge when the badge cross is clicked
-      closeDropDown()
+      cy.closeDropdown()
       cy.get('gn-ui-search-filters-summary')
         .find('gn-ui-badge')
         .find('ng-icon')
@@ -437,7 +434,7 @@ describe('dashboard (landing page)', () => {
 
       // SELECTING MULTIPLE FILTERS (users and date range)', () => {
       selectUser(0)
-      closeDropDown()
+      cy.closeDropdown()
       cy.get('md-editor-search-filters').find('gn-ui-button').eq(1).click()
       selectDateRange()
 
@@ -477,7 +474,7 @@ describe('dashboard (landing page)', () => {
         .should('eq', '01.08.2024 - 30.08.2024')
 
       // it should remove the badge when the badge cross is clicked
-      closeDropDown()
+      cy.closeDropdown()
       cy.get('gn-ui-search-filters-summary')
         .find('gn-ui-badge')
         .find('ng-icon')
