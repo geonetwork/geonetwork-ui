@@ -1,0 +1,44 @@
+<div class="grid gap-2 py-2 px-5 max-h-[550px] overflow-y-auto">
+  <div
+    *ngFor="let featureType of filteredFeatureCatalog?.featureTypes"
+    class="rounded shadow bg-white"
+  >
+    <gn-ui-expandable-panel
+      [collapsed]="filteredFeatureCatalog?.featureTypes?.length !== 1"
+      iconColor="var(--color-main)"
+    >
+      <ng-template #titleTemplate>
+        <div class="pb-2 px-2">
+          <div class="text-xl font-bold">{{ featureType.name }}</div>
+          <div class="text-medium">{{ featureType.definition }}</div>
+        </div>
+      </ng-template>
+      <gn-ui-simple-table
+        [data]="featureType.attributes"
+        [columns]="[
+          {
+            key: 'type',
+            label: 'feature.catalog.attribute.type',
+            width: '19%',
+          },
+          {
+            key: 'name',
+            label: 'feature.catalog.attribute.name',
+            width: '32%',
+          },
+          {
+            key: 'code',
+            label: 'feature.catalog.attribute.code',
+            width: '24%',
+          },
+          {
+            key: 'title',
+            label: 'feature.catalog.attribute.description',
+            width: '25%',
+          },
+        ]"
+      >
+      </gn-ui-simple-table>
+    </gn-ui-expandable-panel>
+  </div>
+</div>
