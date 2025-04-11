@@ -67,5 +67,6 @@ export class ButtonComponent {
     event.preventDefault()
     ;(event.currentTarget as HTMLElement).blur()
     propagateToDocumentOnly(event)
+    console.log('bla')
   }
 }

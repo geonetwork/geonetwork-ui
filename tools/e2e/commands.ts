@@ -14,8 +14,16 @@ declare namespace Cypress {
   interface Chainable<Subject> {
     login(username?: string, password?: string, redirect?: boolean): void
     signOut(): void
+    addUser(
+      username: string,
+      password: string,
+      email: string,
+      name: string,
+      surname: string
+    ): void
     clearFavorites(): void
     clearRecordDrafts(): void
+    deleteRecord(uuid: string): void
     editor_createRecordCopy(): Chainable<string | number | string[]>
     editor_readFormUniqueIdentifier(): Chainable<string | number | string[]>
     editor_wrapPreviousDraft(): void
@@ -29,6 +37,7 @@ declare namespace Cypress {
     openDropdown(): Chainable<JQuery<HTMLElement>>
     selectDropdownOption(value: string): void
     getActiveDropdownOption(): Chainable<JQuery<HTMLButtonElement>>
+    closeDropdown(): void
   }
 }
 
@@ -78,6 +87,47 @@ Cypress.Commands.add('signOut', () => {
   cy.visit('/geonetwork/srv/eng/catalog.search#/home')
   cy.get('a[title="User details"]').click()
   cy.get('a[title="Sign out"]').click()
+})
+
+Cypress.Commands.add('addUser', (username, password, email, name, surname) => {
+  cy.getCookie('XSRF-TOKEN')
+    .its('value')
+    .then(function (token) {
+      cy.request({
+        url: `/geonetwork/srv/api/users`,
+        method: 'PUT',
+        body: JSON.stringify({
+          id: '',
+          username: username,
+          password: password,
+          name: name,
+          surname: surname,
+          profile: 'RegisteredUser',
+          addresses: [
+            { address: '', city: '', state: '', zip: '', country: '' },
+          ],
+          emailAddresses: [email],
+          organisation: '',
+          enabled: true,
+          groupsRegisteredUser: [],
+          groupsEditor: [],
+          groupsReviewer: [],
+          groupsUserAdmin: [],
+        }),
+        failOnStatusCode: false, // it will fail if the user is already there
+        headers: {
+          accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-XSRF-TOKEN': token,
+        },
+      }).then((response) => {
+        if (!response.isOkStatusCode) {
+          cy.log(`User ${username} was not created (probably already there)`)
+          return
+        }
+        cy.log(`User ${username} created successfully!`)
+      })
+    })
 })
 
 /**
@@ -148,6 +198,10 @@ Cypress.Commands.add(
   }
 )
 
+Cypress.Commands.add('closeDropdown', () => {
+  cy.get('body').click(0, 0)
+})
+
 Cypress.Commands.add('clearRecordDrafts', () => {
   cy.window().then((window) => {
     const items = { ...window.localStorage }
@@ -158,6 +212,28 @@ Cypress.Commands.add('clearRecordDrafts', () => {
     cy.log(`Cleared ${draftKeys.length} draft(s).`)
   })
   cy.reload()
+})
+
+Cypress.Commands.add('deleteRecord', (uuid: string) => {
+  cy.getCookie('XSRF-TOKEN')
+    .its('value')
+    .then(function (token) {
+      cy.request({
+        url: `/geonetwork/srv/api/records/${uuid}`,
+        method: 'DELETE',
+        failOnStatusCode: false, // it will fail if the user is already there
+        headers: {
+          accept: 'application/json',
+          'X-XSRF-TOKEN': token,
+        },
+      }).then((response) => {
+        if (!response.isOkStatusCode) {
+          cy.log(`Record ${uuid} could not be deleted (probably already gone?)`)
+          return
+        }
+        cy.log(`Record ${uuid} deleted successfully!`)
+      })
+    })
 })
 
 Cypress.Commands.add('editor_createRecordCopy', () => {
@@ -205,6 +281,8 @@ Cypress.Commands.add('editor_createRecordCopy', () => {
 })
 
 Cypress.Commands.add('editor_readFormUniqueIdentifier', () => {
+  // wait for the url to contain edit
+  cy.url().should('contain', '/edit/')
   cy.url().then((url) => {
     if (url.includes('/edit/')) {
       return url.split('edit/').pop()
