@@ -13,9 +13,11 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-// Import commands.js using ES2015 syntax:
+import installLogsCollector from 'cypress-terminal-report/src/installLogsCollector.js'
 import './commands'
 import { VIEWPORT_SIZE } from '../../../../tools/e2e/settings'
+
+installLogsCollector()
 
 before(() => {
   // this is for the first run
