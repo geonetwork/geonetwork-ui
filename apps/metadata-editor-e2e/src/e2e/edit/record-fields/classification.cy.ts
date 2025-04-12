@@ -11,12 +11,8 @@ describe('editor form', () => {
 
   beforeEach(() => {
     cy.login('admin', 'admin', false)
-    cy.visit('/catalog/search')
-    cy.wrap(recordUuid).as('recordUuid')
+    cy.visit(`/edit/${recordUuid}`)
 
-    cy.get('@recordUuid').then((recordUuid) => {
-      cy.visit(`/edit/${recordUuid}`)
-    })
     // aliases
     cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
       'abstractField'
@@ -40,12 +36,12 @@ describe('editor form', () => {
             .should('have.length', 41)
         })
         it('should add a keyword', () => {
-          cy.editor_wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft(recordUuid)
           cy.get('gn-ui-form-field-keywords')
             .find('gn-ui-autocomplete')
             .type('a')
           cy.get('mat-option').first().click()
-          cy.editor_publishAndReload()
+          cy.editor_publishAndReload(recordUuid)
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('gn-ui-form-field-keywords')
             .find('gn-ui-badge')
@@ -66,13 +62,13 @@ describe('editor form', () => {
             .should('have.value', '')
         })
         it('should delete a keyword', () => {
-          cy.editor_wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft(recordUuid)
           cy.get('gn-ui-form-field-keywords')
             .find('gn-ui-badge')
             .last()
             .find('gn-ui-button')
             .click()
-          cy.editor_publishAndReload()
+          cy.editor_publishAndReload(recordUuid)
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('gn-ui-form-field-keywords')
             .find('gn-ui-badge')

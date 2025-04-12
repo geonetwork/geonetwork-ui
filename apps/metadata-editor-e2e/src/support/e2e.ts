@@ -17,6 +17,11 @@
 import './commands'
 import { VIEWPORT_SIZE } from '../../../../tools/e2e/settings'
 
+before(() => {
+  // this is for the first run
+  window.localStorage.setItem('geonetwork-ui-language', 'en')
+})
+
 beforeEach(() => {
   cy.viewport(VIEWPORT_SIZE[0], VIEWPORT_SIZE[1])
 

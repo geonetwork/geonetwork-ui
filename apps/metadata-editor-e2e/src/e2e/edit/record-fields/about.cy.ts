@@ -11,12 +11,8 @@ describe('editor form', () => {
 
   beforeEach(() => {
     cy.login('admin', 'admin', false)
-    cy.visit('/catalog/search')
-    cy.wrap(recordUuid).as('recordUuid')
+    cy.visit(`/edit/${recordUuid}`)
 
-    cy.get('@recordUuid').then((recordUuid) => {
-      cy.visit(`/edit/${recordUuid}`)
-    })
     // aliases
     cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
       'abstractField'
@@ -47,13 +43,13 @@ describe('editor form', () => {
         .should('eq', 'UWWTD_WASTE_WATER_TREATMENT')
 
       // it edits and saves the resource identifier
-      cy.editor_wrapPreviousDraft()
+      cy.editor_wrapPreviousDraft(recordUuid)
       cy.get('gn-ui-form-field-simple').first().find('input').clear()
       cy.get('gn-ui-form-field-simple')
         .first()
         .find('input')
         .type('Test - resource identifier')
-      cy.editor_publishAndReload()
+      cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
       cy.get('gn-ui-form-field-simple')
         .first()
@@ -74,11 +70,11 @@ describe('editor form', () => {
         .should('eq', '1/1/2005')
 
       // it edits and saves the resource creation date
-      cy.editor_wrapPreviousDraft()
+      cy.editor_wrapPreviousDraft(recordUuid)
       cy.get('@resourceCreatedField')
         .find('input')
         .type('{selectall}{del}01/01/2019{enter}')
-      cy.editor_publishAndReload()
+      cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
       cy.get('@resourceCreatedField')
         .find('input')
@@ -98,11 +94,11 @@ describe('editor form', () => {
         .should('eq', '11/1/2019')
 
       // it edits and saves the resource update date
-      cy.editor_wrapPreviousDraft()
+      cy.editor_wrapPreviousDraft(recordUuid)
       cy.get('@resourceUpdatedField')
         .find('input')
         .type('{selectall}{del}01/01/2019{enter}')
-      cy.editor_publishAndReload()
+      cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
       cy.get('@resourceUpdatedField')
         .find('input')
@@ -112,14 +108,14 @@ describe('editor form', () => {
     it('update frequency', () => {
       // when the regularity switch is on
       // it should allow to select a frequency
-      cy.editor_wrapPreviousDraft()
+      cy.editor_wrapPreviousDraft(recordUuid)
       cy.get('gn-ui-form-field-update-frequency')
         .find('gn-ui-dropdown-selector')
         .openDropdown()
         .children('button')
         .eq(3)
         .click()
-      cy.editor_publishAndReload()
+      cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
       cy.get('gn-ui-form-field-update-frequency')
         .find('gn-ui-dropdown-selector')
@@ -128,15 +124,15 @@ describe('editor form', () => {
         .invoke('text')
         .should('eq', ' Data is updated each day ')
 
-      cy.closeDropdown()
+      cy.clickOnBody()
 
       // when the regularity switch is off
       // it should show default frequency
-      cy.editor_wrapPreviousDraft()
+      cy.editor_wrapPreviousDraft(recordUuid)
       cy.get('gn-ui-form-field-update-frequency')
         .find('gn-ui-check-toggle label')
         .click()
-      cy.editor_publishAndReload()
+      cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
       cy.get('gn-ui-form-field-update-frequency')
         .find('gn-ui-dropdown-selector')
@@ -152,31 +148,31 @@ describe('editor form', () => {
         .should('have.length', 2)
 
       // it adds a time instant
-      cy.editor_wrapPreviousDraft()
+      cy.editor_wrapPreviousDraft(recordUuid)
       cy.get('gn-ui-form-field-temporal-extents')
         .find('gn-ui-button')
         .first()
         .click()
-      cy.editor_publishAndReload()
+      cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
       cy.get('gn-ui-form-field-temporal-extents')
         .find('gn-ui-date-picker')
         .should('be.visible')
 
       // it adds a time period
-      cy.editor_wrapPreviousDraft()
+      cy.editor_wrapPreviousDraft(recordUuid)
       cy.get('gn-ui-form-field-temporal-extents')
         .find('gn-ui-button')
         .eq(1)
         .click()
-      cy.editor_publishAndReload()
+      cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
       cy.get('gn-ui-form-field-temporal-extents')
         .find('gn-ui-date-range-picker')
         .should('be.visible')
 
       // it should delete dates
-      cy.editor_wrapPreviousDraft()
+      cy.editor_wrapPreviousDraft(recordUuid)
       cy.get('gn-ui-form-field-temporal-extents')
         .find('[data-test="remove-item"]')
         .first()
@@ -185,7 +181,7 @@ describe('editor form', () => {
         .find('[data-test="remove-item"]')
         .first()
         .click()
-      cy.editor_publishAndReload()
+      cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
       cy.get('gn-ui-form-field-temporal-extents')
         .find('[data-test="remove-item"]')

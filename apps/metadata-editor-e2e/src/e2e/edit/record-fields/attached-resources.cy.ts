@@ -11,12 +11,8 @@ describe('editor form', () => {
 
   beforeEach(() => {
     cy.login('admin', 'admin', false)
-    cy.visit('/catalog/search')
-    cy.wrap(recordUuid).as('recordUuid')
+    cy.visit(`/edit/${recordUuid}`)
 
-    cy.get('@recordUuid').then((recordUuid) => {
-      cy.visit(`/edit/${recordUuid}`)
-    })
     // aliases
     cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
       'abstractField'
@@ -41,12 +37,12 @@ describe('editor form', () => {
         cy.get(
           'gn-ui-form-field-online-link-resources gn-ui-online-resource-card'
         ).should('have.length', 1)
-        cy.editor_wrapPreviousDraft()
+        cy.editor_wrapPreviousDraft(recordUuid)
         // upload readme file
         cy.get('gn-ui-form-field-online-link-resources label').selectFile(
           'src/fixtures/readme.txt'
         )
-        cy.editor_publishAndReload()
+        cy.editor_publishAndReload(recordUuid)
         cy.get('@saveStatus').should('eq', 'record_up_to_date')
         cy.get('@resourcePageBtn').click()
         cy.get(
@@ -64,7 +60,7 @@ describe('editor form', () => {
           .invoke('text')
           .invoke('trim')
           .should('eql', 'readme.txt')
-        cy.editor_wrapPreviousDraft()
+        cy.editor_wrapPreviousDraft(recordUuid)
         // open modify dialog
         cy.get('@readmeLink').find('button[data-test=card-modify]').click()
         cy.get('gn-ui-modal-dialog gn-ui-text-input')
@@ -74,7 +70,7 @@ describe('editor form', () => {
           .find('textarea')
           .type('new description')
         cy.get('gn-ui-modal-dialog [data-cy=confirm-button]').click()
-        cy.editor_publishAndReload()
+        cy.editor_publishAndReload(recordUuid)
         cy.get('@resourcePageBtn').click()
         cy.get('@readmeLink')
           .find('[data-test=card-title]')
@@ -89,14 +85,14 @@ describe('editor form', () => {
         cy.get(
           'gn-ui-form-field-online-link-resources gn-ui-online-resource-card'
         ).should('have.length', 2)
-        cy.editor_wrapPreviousDraft()
+        cy.editor_wrapPreviousDraft(recordUuid)
         // delete the second item
         cy.get(
           'gn-ui-form-field-online-link-resources gn-ui-sortable-list [data-test=remove-item]'
         )
           .eq(1)
           .click()
-        cy.editor_publishAndReload()
+        cy.editor_publishAndReload(recordUuid)
         cy.get('@saveStatus').should('eq', 'record_up_to_date')
         cy.get('@resourcePageBtn').click()
         cy.get(

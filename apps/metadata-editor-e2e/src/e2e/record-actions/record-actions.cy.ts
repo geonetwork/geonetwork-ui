@@ -317,16 +317,22 @@ describe('record-actions', () => {
         cy.editor_findDraftInLocalStorage().then((value) => {
           expect(value).to.contain('modified abstract')
         })
-        cy.editor_wrapFirstDraft()
+        cy.get<string>('@recordUuid').then((uuid) =>
+          cy.editor_wrapFirstDraft(uuid)
+        )
         cy.clearRecordDrafts()
         cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
-        cy.editor_wrapPreviousDraft()
+        cy.get<string>('@recordUuid').then((uuid) =>
+          cy.editor_wrapPreviousDraft(uuid)
+        )
         cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
           'abstractField'
         )
         cy.get('@abstractField').clear()
         cy.get('@abstractField').type('modified by someone else')
-        cy.editor_publishAndReload()
+        cy.get<string>('@recordUuid').then((uuid) =>
+          cy.editor_publishAndReload(uuid)
+        )
         cy.window().then((win) => {
           cy.get('@firstDraft').then(function (firstDraft) {
             return win.localStorage.setItem(
