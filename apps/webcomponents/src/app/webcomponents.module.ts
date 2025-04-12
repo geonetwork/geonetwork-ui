@@ -1,5 +1,10 @@
 import { OverlayContainer } from '@angular/cdk/overlay'
-import { CUSTOM_ELEMENTS_SCHEMA, Injector, NgModule } from '@angular/core'
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  DoBootstrap,
+  Injector,
+  NgModule,
+} from '@angular/core'
 import { createCustomElement } from '@angular/elements'
 import { BrowserModule } from '@angular/platform-browser'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
@@ -117,7 +122,7 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   // bootstrap: [AppComponent],
 })
-export class WebcomponentsModule {
+export class WebcomponentsModule implements DoBootstrap {
   constructor(private injector: Injector) {
     CUSTOM_ELEMENTS.forEach((ceDefinition) => {
       const angularComponent = ceDefinition[0]

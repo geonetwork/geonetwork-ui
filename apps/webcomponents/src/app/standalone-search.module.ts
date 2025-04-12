@@ -1,4 +1,9 @@
-import { importProvidersFrom, inject, NgModule } from '@angular/core'
+import {
+  DoBootstrap,
+  importProvidersFrom,
+  inject,
+  NgModule,
+} from '@angular/core'
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import {
   EmbeddedTranslateLoader,
@@ -38,8 +43,15 @@ import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
     ),
   ],
 })
-export class StandaloneSearchModule {
+export class StandaloneSearchModule implements DoBootstrap {
   constructor() {
+    if ('GNUI' in window) {
+      console.error(
+        `[geonetwork-ui] a 'GNUI' global already exists, GeoNetwork-UI Standalone Search v${GEONETWORK_UI_VERSION} could not be loaded!`
+      )
+      return
+    }
+
     function init(url) {
       apiConfiguration.basePath = url
     }
