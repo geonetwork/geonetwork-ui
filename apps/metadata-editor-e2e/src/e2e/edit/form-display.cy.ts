@@ -11,12 +11,8 @@ describe('editor form', () => {
 
   beforeEach(() => {
     cy.login('admin', 'admin', false)
-    cy.visit('/catalog/search')
-    cy.wrap(recordUuid).as('recordUuid')
+    cy.visit(`/edit/${recordUuid}`)
 
-    cy.get('@recordUuid').then((recordUuid) => {
-      cy.visit(`/edit/${recordUuid}`)
-    })
     // aliases
     cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
       'abstractField'
@@ -42,10 +38,8 @@ describe('editor form', () => {
   describe('form display', () => {
     it('opens the first page by default', () => {
       cy.get('@accessContactPageBtn').click()
-      cy.visit('/catalog/search')
-      cy.get('@recordUuid').then((recordUuid) => {
-        cy.visit(`/edit/${recordUuid}`)
-      })
+      cy.visit(`/edit/${recordUuid}`)
+
       cy.get('@abstractField').should('be.visible')
     })
     it('form shows correctly', () => {
@@ -58,12 +52,10 @@ describe('editor form', () => {
     it('keeps the draft record', () => {
       cy.get('@abstractField').clear()
       cy.get('@abstractField').type('modified abstract')
-      cy.get('@recordUuid').then((recordUuid) => {
-        cy.window()
-          .its('localStorage')
-          .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
-          .should('contain', 'modified abstract')
-      })
+      cy.window()
+        .its('localStorage')
+        .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
+        .should('contain', 'modified abstract')
 
       cy.reload()
       cy.get('@abstractField').invoke('val').should('eq', 'modified abstract')

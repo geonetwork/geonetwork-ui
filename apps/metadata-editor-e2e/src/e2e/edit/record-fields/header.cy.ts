@@ -11,12 +11,8 @@ describe('editor form', () => {
 
   beforeEach(() => {
     cy.login('admin', 'admin', false)
-    cy.visit('/catalog/search')
-    cy.wrap(recordUuid).as('recordUuid')
+    cy.visit(`/edit/${recordUuid}`)
 
-    cy.get('@recordUuid').then((recordUuid) => {
-      cy.visit(`/edit/${recordUuid}`)
-    })
     // aliases
     cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
       'abstractField'
@@ -40,7 +36,7 @@ describe('editor form', () => {
         )
 
       // it shows very long titles entirely
-      cy.editor_wrapPreviousDraft()
+      cy.editor_wrapPreviousDraft(recordUuid)
       cy.get('gn-ui-form-field').first().find('textarea').focus()
       cy.focused().clear()
       cy.get('gn-ui-form-field').first().find('textarea').focus()
@@ -50,12 +46,13 @@ describe('editor form', () => {
       cy.get('gn-ui-form-field').first().invoke('height').should('eq', 156)
 
       // it edits and saves the title
-      cy.editor_wrapPreviousDraft()
+      cy.editor_wrapPreviousDraft(recordUuid)
       cy.get('gn-ui-form-field').first().find('textarea').focus()
       cy.focused().clear()
       cy.get('gn-ui-form-field').first().find('textarea').focus()
       cy.focused().type('Test record modified')
-      cy.editor_publishAndReload()
+      cy.clickOnBody() // make sure the blur event is called
+      cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
       cy.get('gn-ui-form-field')
         .first()
@@ -71,10 +68,10 @@ describe('editor form', () => {
         .should('contain', 'Cette couche de points reprend les informations')
 
       // it edits and saves the abstract
-      cy.editor_wrapPreviousDraft()
+      cy.editor_wrapPreviousDraft(recordUuid)
       cy.get('@abstractField').clear()
       cy.get('@abstractField').type('modified abstract')
-      cy.editor_publishAndReload()
+      cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
       cy.get('@abstractField').invoke('val').should('eq', 'modified abstract')
     })
@@ -85,9 +82,9 @@ describe('editor form', () => {
 
       // it allows to delete images from the graphic overview
       cy.get('gn-ui-image-input').find('img').should('have.length', 1)
-      cy.editor_wrapPreviousDraft()
+      cy.editor_wrapPreviousDraft(recordUuid)
       cy.get('gn-ui-image-input').find('gn-ui-button').eq(1).click()
-      cy.editor_publishAndReload()
+      cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
       cy.get('gn-ui-image-input').find('img').should('have.length', 0)
 
@@ -96,11 +93,11 @@ describe('editor form', () => {
       cy.get('gn-ui-url-input').should('be.visible')
 
       // it adds overviews
-      cy.editor_wrapPreviousDraft()
+      cy.editor_wrapPreviousDraft(recordUuid)
       cy.get('gn-ui-form-field-overviews label').selectFile(
         'src/fixtures/sample.png'
       )
-      cy.editor_publishAndReload()
+      cy.editor_publishAndReload(recordUuid)
       cy.intercept({
         method: 'GET',
         url: '**/attachments/sample.png',
@@ -114,11 +111,11 @@ describe('editor form', () => {
       cy.get('gn-ui-image-input').find('gn-ui-text-input').should('be.visible')
 
       // it shows and modifies alternative text for an image
-      cy.editor_wrapPreviousDraft()
+      cy.editor_wrapPreviousDraft(recordUuid)
       cy.get('gn-ui-text-input input').type(
         '{selectall}{backspace}This is an alternative text for the test image'
       )
-      cy.editor_publishAndReload()
+      cy.editor_publishAndReload(recordUuid)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
       cy.get('gn-ui-image-input').find('gn-ui-button').eq(2).click()
       cy.get('gn-ui-text-input input')

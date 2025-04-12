@@ -26,9 +26,9 @@ declare namespace Cypress {
     deleteRecord(uuid: string): void
     editor_createRecordCopy(): Chainable<string | number | string[]>
     editor_readFormUniqueIdentifier(): Chainable<string | number | string[]>
-    editor_wrapPreviousDraft(): void
-    editor_wrapFirstDraft(): void
-    editor_publishAndReload(): void
+    editor_wrapPreviousDraft(uuid: string): void
+    editor_wrapFirstDraft(uuid: string): void
+    editor_publishAndReload(uuid: string): void
     editor_findDraftInLocalStorage(): Chainable<string | number | string[]>
     addTranslationKey(): void
     removeTranslationKey(): void
@@ -37,7 +37,8 @@ declare namespace Cypress {
     openDropdown(): Chainable<JQuery<HTMLElement>>
     selectDropdownOption(value: string): void
     getActiveDropdownOption(): Chainable<JQuery<HTMLButtonElement>>
-    closeDropdown(): void
+
+    clickOnBody(): void
   }
 }
 
@@ -198,7 +199,7 @@ Cypress.Commands.add(
   }
 )
 
-Cypress.Commands.add('closeDropdown', () => {
+Cypress.Commands.add('clickOnBody', () => {
   cy.get('body').click(0, 0)
 })
 
@@ -312,41 +313,34 @@ Cypress.Commands.add('editor_findDraftInLocalStorage', () => {
 })
 
 // this needs a recordUuid to have been wrapped
-Cypress.Commands.add('editor_wrapFirstDraft', () => {
-  cy.get('@recordUuid').then((recordUuid) => {
-    cy.window()
-      .its('localStorage')
-      .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
-      .then((previousDraft) => {
-        cy.wrap(previousDraft).as('firstDraft')
-      })
-  })
+Cypress.Commands.add('editor_wrapFirstDraft', (uuid: string) => {
+  cy.window()
+    .its('localStorage')
+    .invoke('getItem', `geonetwork-ui-draft-${uuid}`)
+    .then((previousDraft) => {
+      cy.wrap(previousDraft).as('firstDraft')
+    })
 })
 
 // this needs a recordUuid to have been wrapped
-Cypress.Commands.add('editor_wrapPreviousDraft', () => {
-  cy.get('@recordUuid').then((recordUuid) => {
-    cy.window()
-      .its('localStorage')
-      .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
-      .then((previousDraft) => {
-        cy.wrap(previousDraft).as('previousDraft')
-      })
-  })
+Cypress.Commands.add('editor_wrapPreviousDraft', (uuid: string) => {
+  cy.window()
+    .its('localStorage')
+    .invoke('getItem', `geonetwork-ui-draft-${uuid}`)
+    .then((previousDraft) => {
+      cy.wrap(previousDraft).as('previousDraft')
+    })
 })
 
 // this needs a recordUuid and a previousDraft to have been wrapped
-Cypress.Commands.add('editor_publishAndReload', () => {
-  // wait for the draft to be saved
-  cy.get('@recordUuid').then((recordUuid) => {
-    // nesting thens as Cypress doesn't seem to support the "all" operator
-    //https://github.com/cypress-io/cypress/issues/915
-    cy.get('@previousDraft').then((previousDraft) => {
-      cy.window()
-        .its('localStorage')
-        .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
-        .should('not.eq', previousDraft)
-    })
+Cypress.Commands.add('editor_publishAndReload', (uuid: string) => {
+  // nesting thens as Cypress doesn't seem to support the "all" operator
+  //https://github.com/cypress-io/cypress/issues/915
+  cy.get('@previousDraft').then((previousDraft) => {
+    cy.window()
+      .its('localStorage')
+      .invoke('getItem', `geonetwork-ui-draft-${uuid}`)
+      .should('not.eq', previousDraft)
   })
 
   // publish the record
@@ -358,17 +352,13 @@ Cypress.Commands.add('editor_publishAndReload', () => {
   cy.wait('@insertRecord')
 
   // wait for the draft to be deleted on publication
-  cy.get('@recordUuid').then((recordUuid) => {
-    cy.window()
-      .its('localStorage')
-      .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
-      .should('be.null')
-  })
+  cy.window()
+    .its('localStorage')
+    .invoke('getItem', `geonetwork-ui-draft-${uuid}`)
+    .should('be.null')
 
   // reload the page
-  cy.get('@recordUuid').then((recordUuid) => {
-    cy.visit(`/edit/${recordUuid}`)
-  })
+  cy.visit(`/edit/${uuid}`)
 })
 
 Cypress.Commands.add('addTranslationKey', () => {

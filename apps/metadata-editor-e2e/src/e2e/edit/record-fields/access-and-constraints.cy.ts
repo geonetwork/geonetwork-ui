@@ -11,12 +11,8 @@ describe('editor form', () => {
 
   beforeEach(() => {
     cy.login('admin', 'admin', false)
-    cy.visit('/catalog/search')
-    cy.wrap(recordUuid).as('recordUuid')
+    cy.visit(`/edit/${recordUuid}`)
 
-    cy.get('@recordUuid').then((recordUuid) => {
-      cy.visit(`/edit/${recordUuid}`)
-    })
     // aliases
     cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
       'abstractField'
@@ -44,14 +40,14 @@ describe('editor form', () => {
             .first()
             .invoke('text')
             .should('eq', ' Unknown or absent ')
-          cy.editor_wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft(recordUuid)
           cy.get('gn-ui-form-field-license')
             .find('gn-ui-dropdown-selector')
             .openDropdown()
             .children('button')
             .eq(2)
             .click()
-          cy.editor_publishAndReload()
+          cy.editor_publishAndReload(recordUuid)
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('@accessContactPageBtn').click()
           cy.get('gn-ui-form-field-license')
@@ -64,7 +60,7 @@ describe('editor form', () => {
       })
       describe('constraints', () => {
         it('should add a few constraints and show it on reload', () => {
-          cy.editor_wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft(recordUuid)
           cy.get('[data-cy=legalConstraints]')
             .find('gn-ui-button[data-cy=add-constraint-btn] button')
             .click()
@@ -102,7 +98,7 @@ describe('editor form', () => {
             .type('http://www.example.com/abcd/1234')
 
           cy.screenshot({ capture: 'fullPage' })
-          cy.editor_publishAndReload()
+          cy.editor_publishAndReload(recordUuid)
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('@accessContactPageBtn').click()
 
@@ -139,13 +135,13 @@ describe('editor form', () => {
         })
 
         it('should enable "no applicable constraints" and stay enabled', () => {
-          cy.editor_wrapPreviousDraft()
+          cy.editor_wrapPreviousDraft(recordUuid)
           cy.get('[data-cy=constraints-shortcut-toggles]')
             .find('gn-ui-check-toggle label')
             .eq(0)
             .click()
 
-          cy.editor_publishAndReload()
+          cy.editor_publishAndReload(recordUuid)
           cy.get('@saveStatus').should('eq', 'record_up_to_date')
           cy.get('@accessContactPageBtn').click()
 
@@ -193,7 +189,7 @@ describe('editor form', () => {
               .children()
               .find('gn-ui-contact-card')
               .should('have.length', 3)
-            cy.editor_wrapPreviousDraft()
+            cy.editor_wrapPreviousDraft(recordUuid)
 
             // delete 2 out of 3 contacts
             cy.get('[data-test=displayedRoles] [data-test=remove-item]')
@@ -203,7 +199,7 @@ describe('editor form', () => {
               .first()
               .click()
 
-            cy.editor_publishAndReload()
+            cy.editor_publishAndReload(recordUuid)
             cy.get('@saveStatus').should('eq', 'record_up_to_date')
             cy.get('@accessContactPageBtn').click()
             cy.get('[data-test=displayedRoles]')
@@ -233,7 +229,7 @@ describe('editor form', () => {
               .children()
               .find('gn-ui-contact-card')
               .should('have.length', 1)
-            cy.editor_wrapPreviousDraft()
+            cy.editor_wrapPreviousDraft(recordUuid)
 
             cy.get('[data-test=displayedRoles]')
               .find('gn-ui-autocomplete')
@@ -242,7 +238,7 @@ describe('editor form', () => {
             cy.get('mat-option')
               .should('have.text', ' Barbara Roberts (Barbie Inc.) ')
               .click()
-            cy.editor_publishAndReload()
+            cy.editor_publishAndReload(recordUuid)
             cy.get('@accessContactPageBtn').click()
             cy.get('@saveStatus').should('eq', 'record_up_to_date')
             cy.get('[data-test=displayedRoles]')
