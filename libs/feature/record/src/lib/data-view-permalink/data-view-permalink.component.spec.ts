@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-
 import {
   DataViewPermalinkComponent,
   WEB_COMPONENT_EMBEDDER_URL,
@@ -7,7 +6,6 @@ import {
 import { BehaviorSubject, firstValueFrom } from 'rxjs'
 import { MdViewFacade } from '../state'
 import { TranslateModule } from '@ngx-translate/core'
-import { GN_UI_VERSION } from '../gn-ui-version.token'
 import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 import { MockBuilder } from 'ng-mocks'
 
@@ -36,7 +34,13 @@ class MdViewFacadeMock {
 
 const baseUrl = 'https://example.com/wc-embedder'
 
-const gnUiVersion = 'v1.2.3'
+jest.mock('@geonetwork-ui/util/shared', () => {
+  const originalModule = jest.requireActual('@geonetwork-ui/util/shared')
+  return {
+    ...originalModule,
+    GEONETWORK_UI_TAG_NAME: 'v1.2.3',
+  }
+})
 
 describe('DataViewPermalinkComponent', () => {
   let component: DataViewPermalinkComponent
@@ -58,10 +62,6 @@ describe('DataViewPermalinkComponent', () => {
           provide: WEB_COMPONENT_EMBEDDER_URL,
           useValue: baseUrl,
         },
-        {
-          provide: GN_UI_VERSION,
-          useValue: gnUiVersion,
-        },
       ],
     }).compileComponents()
     facade = TestBed.inject(MdViewFacade)
@@ -80,7 +80,7 @@ describe('DataViewPermalinkComponent', () => {
       it('should generate URL based on configs', async () => {
         const url = await firstValueFrom(component.permalinkUrl$)
         expect(url).toBe(
-          `https://example.com/wc-embedder?v=${gnUiVersion}&e=gn-dataset-view-chart&a=aggregation%3D${
+          `https://example.com/wc-embedder?v=v1.2.3&e=gn-dataset-view-chart&a=aggregation%3D${
             chartConfig1.aggregation
           }&a=x-property%3D${chartConfig1.xProperty}&a=y-property%3D${
             chartConfig1.yProperty
@@ -101,7 +101,7 @@ describe('DataViewPermalinkComponent', () => {
       it('should update URL based on configs', async () => {
         const url = await firstValueFrom(component.permalinkUrl$)
         expect(url).toBe(
-          `https://example.com/wc-embedder?v=${gnUiVersion}&e=gn-dataset-view-chart&a=aggregation%3D${
+          `https://example.com/wc-embedder?v=v1.2.3&e=gn-dataset-view-chart&a=aggregation%3D${
             chartConfig2.aggregation
           }&a=x-property%3D${chartConfig2.xProperty}&a=y-property%3D${
             chartConfig2.yProperty
@@ -124,7 +124,7 @@ describe('DataViewPermalinkComponent', () => {
       it('should generate URL based on configs', async () => {
         const url = await firstValueFrom(component.permalinkUrl$)
         expect(url).toBe(
-          `https://example.com/wc-embedder?v=${gnUiVersion}&e=gn-dataset-view-map&a=api-url%3D${encodeURIComponent(
+          `https://example.com/wc-embedder?v=v1.2.3&e=gn-dataset-view-map&a=api-url%3D${encodeURIComponent(
             component.config.basePath
           )}&a=dataset-id%3D${
             metadata.uniqueIdentifier
@@ -141,7 +141,7 @@ describe('DataViewPermalinkComponent', () => {
       it('should generate URL based on configs', async () => {
         const url = await firstValueFrom(component.permalinkUrl$)
         expect(url).toBe(
-          `https://example.com/wc-embedder?v=${gnUiVersion}&e=gn-dataset-view-table&a=api-url%3D${encodeURIComponent(
+          `https://example.com/wc-embedder?v=v1.2.3&e=gn-dataset-view-table&a=api-url%3D${encodeURIComponent(
             component.config.basePath
           )}&a=dataset-id%3D${
             metadata.uniqueIdentifier

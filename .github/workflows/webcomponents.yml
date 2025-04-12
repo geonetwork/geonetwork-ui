@@ -46,13 +46,14 @@ jobs:
           mkdir wc-dist
           npm run build:demo
           mv dist/demo/webcomponents/gn-wc.js wc-dist
+          mv dist/demo/webcomponents/gn-standalone-search.js wc-dist
 
       - name: Upload archives to release
         if: github.event_name == 'release'
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: wc-dist/gn-wc.js
+          file: wc-dist/*.js
           tag: ${{ github.ref }}
           overwrite: true
 
