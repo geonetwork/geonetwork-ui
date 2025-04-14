@@ -101,6 +101,7 @@ function sidebarForDevelopers() {
         { text: 'Application configuration', link: '/developers/app-config' },
         { text: 'Coding guidelines', link: '/developers/code-guide' },
         { text: 'Styling guidelines', link: '/developers/styling-guide' },
+        { text: 'Caching', link: '/developers/caching' },
         { text: 'ElasticSearch index', link: '/developers/elasticsearch' },
         { text: 'Internationalization', link: '/developers/i18n' },
         { text: 'Interactive maps', link: '/developers/maps' },
