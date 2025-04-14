@@ -35,24 +35,32 @@ export const EXTERNAL_VIEWER_OPEN_NEW_TAB = new InjectionToken<boolean>(
   viewProviders: [provideIcons({ matOpenInNew })],
 })
 export class ExternalViewerButtonComponent {
-  @Input() link: DatasetOnlineResource
+  @Input() set link(value: {
+    link: DatasetOnlineResource
+    style: { href: string; name: string }
+  }) {
+    if (!value) return
+    // do not use style for now
+    this.link_ = value.link
+  }
+  link_: DatasetOnlineResource
 
   get externalViewer() {
     return !!this.urlTemplate && !!this.supportedLinkLayerType
   }
 
   get supportedLinkLayerType() {
-    if (!this.link) return null
-    if (this.link.type === 'service') {
-      if (this.link.accessServiceProtocol === 'wms') {
+    if (!this.link_) return null
+    if (this.link_.type === 'service') {
+      if (this.link_.accessServiceProtocol === 'wms') {
         return 'wms'
       }
-      if (this.link.accessServiceProtocol === 'wfs') {
+      if (this.link_.accessServiceProtocol === 'wfs') {
         return 'wfs'
       }
     } else if (
-      this.link.type === 'download' &&
-      getFileFormat(this.link) === 'geojson'
+      this.link_.type === 'download' &&
+      getFileFormat(this.link_) === 'geojson'
     ) {
       return 'geojson'
     }
@@ -70,14 +78,14 @@ export class ExternalViewerButtonComponent {
 
   openInExternalViewer() {
     const templateUrl = this.urlTemplate
-    const layerName = this.link.name
-      ? this.link.name
+    const layerName = this.link_.name
+      ? this.link_.name
       : this.translateService.instant('externalviewer.dataset.unnamed')
     const url = templateUrl
       .replace('${layer_name}', `${layerName}`)
       .replace(
         '${service_url}',
-        `${encodeURIComponent(this.link.url.toString())}`
+        `${encodeURIComponent(this.link_.url.toString())}`
       )
       .replace('${service_type}', `${this.supportedLinkLayerType}`)
     window.open(url, this.openinNewTab ? '_blank' : '_self').focus()
