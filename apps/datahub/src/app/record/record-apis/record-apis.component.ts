@@ -51,6 +51,7 @@ marker('record.metadata.api.form.title')
 })
 export class RecordApisComponent implements OnInit {
   @ViewChild(CarouselComponent) carousel: CarouselComponent
+  @ViewChild(BlockListComponent) list: BlockListComponent
 
   maxHeight = '0px'
   opacity = 0

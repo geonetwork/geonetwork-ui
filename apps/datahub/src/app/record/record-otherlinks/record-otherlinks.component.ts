@@ -9,7 +9,6 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
   BlockListComponent,
   CarouselComponent,
-  Paginable,
   PreviousNextButtonsComponent,
 } from '@geonetwork-ui/ui/layout'
 import { CommonModule } from '@angular/common'
@@ -43,9 +42,6 @@ export class RecordOtherlinksComponent implements AfterViewInit {
 
   @ViewChild(CarouselComponent) carousel: CarouselComponent
   @ViewChild(BlockListComponent) list: BlockListComponent
-  get paginableElement(): Paginable {
-    return this.carousel || this.list
-  }
 
   constructor(
     public facade: MdViewFacade,

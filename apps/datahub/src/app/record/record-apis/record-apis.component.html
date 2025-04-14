@@ -9,8 +9,14 @@
     <span class="px-1">({{ apiLinksCount$ | async }})</span>
   </div>
   <gn-ui-previous-next-buttons
-    *ngIf="carousel.pagesCount > 1"
+    class="block md:hidden"
+    *ngIf="carousel?.pagesCount > 1"
     [listComponent]="carousel"
+  ></gn-ui-previous-next-buttons>
+  <gn-ui-previous-next-buttons
+    class="hidden md:block"
+    *ngIf="list?.pagesCount > 1"
+    [listComponent]="list"
   ></gn-ui-previous-next-buttons>
 </div>
 <gn-ui-carousel

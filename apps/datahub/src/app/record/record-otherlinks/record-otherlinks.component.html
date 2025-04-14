@@ -9,8 +9,14 @@
     <span>({{ linksCount$ | async }})</span>
   </div>
   <gn-ui-previous-next-buttons
-    *ngIf="paginableElement?.pagesCount > 1"
-    [listComponent]="paginableElement"
+    class="block md:hidden"
+    *ngIf="carousel?.pagesCount > 1"
+    [listComponent]="carousel"
+  ></gn-ui-previous-next-buttons>
+  <gn-ui-previous-next-buttons
+    class="hidden md:block"
+    *ngIf="list?.pagesCount > 1"
+    [listComponent]="list"
   ></gn-ui-previous-next-buttons>
 </div>
 <ng-container *ngrxLet="otherLinks$ as otherLinks">
