@@ -77,9 +77,6 @@ import { ViewportIntersectorComponent } from './viewport-intersector/viewport-in
       matExpandMore,
       matExpandLess,
     }),
-    provideNgIconsConfig({
-      size: '0.9em',
-    }),
   ],
   exports: [
     DropdownSelectorComponent,
