@@ -252,14 +252,4 @@ export const aSetOfLinksFixture = () => ({
       accessServiceProtocol: 'wms',
       type: 'endpoint',
     }) as ServiceEndpoint,
-  tmsEndpoint: () =>
-    ({
-      description:
-        'https://services.geo.sg.ch/wss/service/SG00170_TMS/guest?request=GetCapabilities&service=TMS',
-      endpointUrl: new URL(
-        'https://services.geo.sg.ch/wss/service/SG00170_TMS/guest?request=GetCapabilities&service=TMS'
-      ),
-      protocol: 'tms',
-      type: 'endpoint',
-    }) as ServiceEndpoint,
 })
