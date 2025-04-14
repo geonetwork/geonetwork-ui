@@ -75,6 +75,8 @@ describe('Gn4FieldMapper', () => {
           'link',
           'download',
           'service',
+          'service',
+          'service',
         ])
       })
     })
