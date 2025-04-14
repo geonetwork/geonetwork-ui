@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  ViewChild,
+} from '@angular/core'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { getBadgeColor, getFileFormat } from '@geonetwork-ui/util/shared'
@@ -6,6 +13,11 @@ import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { DownloadItemComponent } from '../download-item/download-item.component'
+import {
+  BlockListComponent,
+  Paginable,
+  PreviousNextButtonsComponent,
+} from '@geonetwork-ui/ui/layout'
 
 marker('datahub.search.filter.all')
 marker('datahub.search.filter.others')
@@ -22,16 +34,31 @@ type FilterFormat = (typeof FILTER_FORMATS)[number]
   imports: [
     CommonModule,
     ButtonComponent,
+    BlockListComponent,
     DownloadItemComponent,
     TranslateModule,
+    PreviousNextButtonsComponent,
   ],
 })
 export class DownloadsListComponent {
-  constructor(private translateService: TranslateService) {}
+  constructor(
+    private translateService: TranslateService,
+    private changeDetector: ChangeDetectorRef
+  ) {}
 
+  _list: BlockListComponent
   @Input() links: DatasetDownloadDistribution[]
 
+  get linksCount(): number {
+    return this.filteredLinks?.length || 0
+  }
+
   activeFilterFormats: FilterFormat[] = ['all']
+
+  updateList($event: BlockListComponent) {
+    this._list = $event
+    this.changeDetector.detectChanges()
+  }
 
   private removeDuplicateFormats(
     links: DatasetDownloadDistribution[]

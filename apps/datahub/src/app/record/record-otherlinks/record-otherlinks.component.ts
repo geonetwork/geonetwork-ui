@@ -9,13 +9,13 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
   BlockListComponent,
   CarouselComponent,
-  Paginable,
   PreviousNextButtonsComponent,
 } from '@geonetwork-ui/ui/layout'
 import { CommonModule } from '@angular/common'
 import { LinkCardComponent } from '@geonetwork-ui/ui/elements'
 import { LetDirective } from '@ngrx/component'
 import { TranslateModule } from '@ngx-translate/core'
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'datahub-record-otherlinks',
@@ -36,11 +36,12 @@ import { TranslateModule } from '@ngx-translate/core'
 export class RecordOtherlinksComponent implements AfterViewInit {
   otherLinks$ = this.facade.otherLinks$
 
+  get linksCount$() {
+    return this.otherLinks$?.pipe(map((links) => links.length))
+  }
+
   @ViewChild(CarouselComponent) carousel: CarouselComponent
   @ViewChild(BlockListComponent) list: BlockListComponent
-  get paginableElement(): Paginable {
-    return this.carousel || this.list
-  }
 
   constructor(
     public facade: MdViewFacade,
@@ -52,7 +53,6 @@ export class RecordOtherlinksComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this is required to show the pagination correctly
     this.changeDetector.detectChanges()
   }
 }

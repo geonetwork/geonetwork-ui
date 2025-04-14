@@ -609,7 +609,9 @@ describe('dataset pages', () => {
     describe('display', () => {
       it('should have a list of downloads based on the WFS capabilities', () => {
         cy.get('datahub-record-downloads')
-          .find('gn-ui-download-item [data-cy="download-format"]')
+          .find(
+            'gn-ui-block-list gn-ui-download-item [data-cy="download-format"]'
+          )
           .then((formatBadges) => {
             const formats = formatBadges
               .toArray()
@@ -647,7 +649,7 @@ describe('dataset pages', () => {
       })
       describe('features', () => {
         it('filters the download list on format filter click', () => {
-          cy.get('datahub-record-downloads')
+          cy.get('[data-cy="download-format-filters"]')
             .find('gn-ui-button')
             .children('button')
             .eq(1)
@@ -708,6 +710,77 @@ describe('dataset pages', () => {
   })
 
   describe('LINKS : display & functions', () => {
+    beforeEach(() => {
+      cy.get('datahub-record-otherlinks').as('otherLinks')
+    })
+
+    describe('display on desktop', () => {
+      it('should display links in a grid layout', () => {
+        cy.viewport(1200, 800)
+        cy.get('@otherLinks').find('gn-ui-block-list').should('be.visible')
+        cy.get('@otherLinks').find('gn-ui-carousel').should('not.be.visible')
+      })
+
+      it('should not show pagination when 4 links or less', () => {
+        cy.viewport(1200, 800)
+        cy.get('@otherLinks')
+          .find('gn-ui-pagination-dots')
+          .should('not.be.visible')
+        cy.get('@otherLinks')
+          .find('gn-ui-previous-next-buttons')
+          .should('not.exist')
+      })
+    })
+
+    describe('display on mobile', () => {
+      beforeEach(() => {
+        cy.viewport(375, 667)
+      })
+
+      it('should display links in a carousel', () => {
+        cy.get('@otherLinks').find('gn-ui-carousel').should('be.visible')
+        cy.get('@otherLinks').find('gn-ui-block-list').should('not.be.visible')
+      })
+
+      it('should show pagination dots in carousel', () => {
+        cy.get('@otherLinks')
+          .find('gn-ui-carousel gn-ui-pagination-dots')
+          .should('be.visible')
+      })
+    })
+
+    describe('responsive behavior', () => {
+      it('should switch from grid to carousel when resizing to mobile', () => {
+        cy.viewport(1200, 800)
+        cy.get('@otherLinks').find('gn-ui-block-list').should('be.visible')
+        cy.get('@otherLinks').find('gn-ui-carousel').should('not.be.visible')
+
+        cy.viewport(375, 667)
+        cy.get('@otherLinks').find('gn-ui-carousel').should('be.visible')
+        cy.get('@otherLinks').find('gn-ui-block-list').should('not.be.visible')
+      })
+    })
+
+    describe('link interactions', () => {
+      it('should maintain link functionality in both layouts', () => {
+        cy.viewport(1200, 800)
+        cy.get('@otherLinks')
+          .find('gn-ui-link-card')
+          .first()
+          .find('a')
+          .should('have.attr', 'href')
+          .and('not.be.empty')
+
+        // Test on mobile
+        cy.viewport(375, 667)
+        cy.get('@otherLinks')
+          .find('gn-ui-link-card')
+          .first()
+          .find('a')
+          .should('have.attr', 'href')
+          .and('not.be.empty')
+      })
+    })
     describe('display', () => {
       it('should have external, API and internal links with one option', () => {
         cy.get('datahub-record-otherlinks')
@@ -720,7 +793,7 @@ describe('dataset pages', () => {
       it('should not display carousel dot button for 4 link cards', () => {
         cy.get('datahub-record-otherlinks')
           .find('.pagination-dot')
-          .should('exist')
+          .should('not.exist')
       })
       it('should not display carousel dot button for 2 API cards', () => {
         cy.get('datahub-record-apis')
@@ -845,7 +918,7 @@ describe('record with file distributions', () => {
 describe('api cards', () => {
   beforeEach(() => {
     cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
-    cy.get('gn-ui-api-card').eq(1).as('firstCard')
+    cy.get('gn-ui-block-list gn-ui-api-card').eq(1).as('firstCard')
   })
 
   it('should display the open panel button', () => {
@@ -869,7 +942,11 @@ describe('api form', () => {
   describe('When the api link is ok', () => {
     beforeEach(() => {
       cy.visit('/dataset/accroche_velos')
-      cy.get('gn-ui-api-card').first().find('button').eq(1).click()
+      cy.get('gn-ui-block-list gn-ui-api-card')
+        .first()
+        .find('button')
+        .eq(1)
+        .click()
       cy.get('gn-ui-record-api-form').children('div').as('apiForm')
     })
     it('should have request inputs', () => {
@@ -956,7 +1033,11 @@ describe('api form', () => {
         .then((url) => {
           cy.get('@apiForm').find('gn-ui-text-input').first().clear()
           cy.get('@apiForm').find('gn-ui-text-input').first().type('54')
-          cy.get('gn-ui-api-card').eq(1).find('button').eq(1).click()
+          cy.get('gn-ui-block-list gn-ui-api-card')
+            .eq(1)
+            .find('button')
+            .eq(1)
+            .click()
           cy.get('@apiForm')
             .find('gn-ui-copy-text-button')
             .find('input')
