@@ -7,15 +7,15 @@ import {
   ViewChild,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { MatTooltipModule } from '@angular/material/tooltip'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
-import { iconoirExpand } from '@ng-icons/iconoir'
+import { iconoirExpand, iconoirCollapse } from '@ng-icons/iconoir'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
 @Component({
   selector: 'gn-ui-truncated-text',
   standalone: true,
-  imports: [CommonModule, MatTooltipModule, NgIconComponent],
-  providers: [provideIcons({ iconoirExpand })],
+  imports: [CommonModule, NgIconComponent, ButtonComponent],
+  providers: [provideIcons({ iconoirExpand, iconoirCollapse })],
   templateUrl: './truncated-text.component.html',
   styles: [],
 })
@@ -23,11 +23,20 @@ export class TruncatedTextComponent implements AfterViewInit {
   @Input() text = ''
   @ViewChild('textElement') textElement: ElementRef<HTMLElement>
   isTextTruncated = false
+  isExpanded = false
 
   constructor(private cd: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     this.checkTextTruncation()
+  }
+
+  ngOnChange() {
+    this.checkTextTruncation()
+  }
+
+  toggleExpand() {
+    this.isExpanded = !this.isExpanded
   }
 
   private checkTextTruncation() {
