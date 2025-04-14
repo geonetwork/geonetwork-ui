@@ -138,7 +138,7 @@ export class MapViewComponent implements AfterViewInit {
   selectedLinkIndex$ = new BehaviorSubject<{
     linkIndex: number
     styleIndex?: number
-  }>({ linkIndex: 0 })
+  }>({ linkIndex: 0, styleIndex: 0 })
 
   loading = false
   error = null
