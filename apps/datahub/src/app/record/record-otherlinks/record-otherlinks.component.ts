@@ -37,7 +37,7 @@ export class RecordOtherlinksComponent implements AfterViewInit {
   otherLinks$ = this.facade.otherLinks$
 
   get linksCount$() {
-    return this.otherLinks$.pipe(map((links) => links.length))
+    return this.otherLinks$?.pipe(map((links) => links.length))
   }
 
   @ViewChild(CarouselComponent) carousel: CarouselComponent

@@ -60,7 +60,7 @@ export class RecordApisComponent implements OnInit {
   apiLinks$ = this.facade.apiLinks$
 
   get apiLinksCount$() {
-    return this.apiLinks$.pipe(map((links) => links.length))
+    return this.apiLinks$?.pipe(map((links) => links.length))
   }
 
   constructor(
