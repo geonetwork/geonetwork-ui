@@ -144,4 +144,14 @@ export const elasticLinkFixture = (): Record<string, unknown> => ({
     name: 'ogcapi features layer',
     url: 'https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/comptages_velo/items?',
   },
+  maplayerTms: {
+    protocol: 'TMS',
+    name: 'mytmslayer',
+    url: 'https://my.tms.server/MapServer',
+  },
+  maplayerTms2: {
+    protocol: 'OSGeo:TMS',
+    name: 'myothertmslayer',
+    url: 'https://my.tms.server/MapServer',
+  },
 })

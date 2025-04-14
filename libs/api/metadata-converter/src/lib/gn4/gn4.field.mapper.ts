@@ -430,7 +430,7 @@ export class Gn4FieldMapper {
       /^OGC:WMS/.test(protocol) ||
       /^OGC:WFS/.test(protocol) ||
       /^OGC:WMTS/.test(protocol) ||
-      /^OGC:TMS/.test(protocol) ||
+      /TMS/.test(protocol) ||
       /ogc\W*api\W*features/i.test(protocol) ||
       (/^WWW:DOWNLOAD-/.test(protocol) && /data.geopf.fr/.test(url)) // TO DO : change with the good protocol when decided
     ) {
