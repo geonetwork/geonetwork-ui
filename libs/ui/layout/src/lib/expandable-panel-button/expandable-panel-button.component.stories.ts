@@ -29,9 +29,6 @@ export default {
         provideIcons({
           matKey,
         }),
-        provideNgIconsConfig({
-          size: '0.9em',
-        }),
       ],
     }),
     componentWrapperDecorator(
