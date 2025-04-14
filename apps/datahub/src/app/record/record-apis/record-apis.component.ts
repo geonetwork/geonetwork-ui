@@ -21,6 +21,7 @@ import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matCloseOutline } from '@ng-icons/material-icons/outline'
 import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { map } from 'rxjs/operators'
 
 marker('record.metadata.api.form.title.gpf')
 marker('record.metadata.api.form.title')
@@ -56,6 +57,10 @@ export class RecordApisComponent implements OnInit {
   selectedApiLink: DatasetServiceDistribution
 
   apiLinks$ = this.facade.apiLinks$
+
+  get apiLinksCount$() {
+    return this.apiLinks$.pipe(map((links) => links.length))
+  }
 
   constructor(
     private facade: MdViewFacade,

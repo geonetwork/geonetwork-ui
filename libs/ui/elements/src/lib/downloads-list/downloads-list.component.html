@@ -3,12 +3,15 @@
   *ngIf="links && links.length > 0"
 >
   <div class="flex flex-row items-center gap-x-4">
-    <p
-      class="font-title text-xl text-title font-medium mr-4 text-center sm:text-left"
-      translate
-    >
-      record.metadata.download
-    </p>
+    <div>
+      <span
+        class="font-title text-xl text-title font-medium text-center sm:text-left"
+        translate
+      >
+        record.metadata.download
+      </span>
+      <span class="px-1">({{ linksCount }})</span>
+    </div>
     <gn-ui-previous-next-buttons
       class="md:block hidden"
       *ngIf="_list?.pagesCount > 1"

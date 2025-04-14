@@ -49,6 +49,10 @@ export class DownloadsListComponent {
   _list: BlockListComponent
   @Input() links: DatasetDownloadDistribution[]
 
+  get linksCount(): number {
+    return this.filteredLinks?.length || 0
+  }
+
   activeFilterFormats: FilterFormat[] = ['all']
 
   updateList($event: BlockListComponent) {

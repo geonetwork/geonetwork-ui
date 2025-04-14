@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common'
 import { LinkCardComponent } from '@geonetwork-ui/ui/elements'
 import { LetDirective } from '@ngrx/component'
 import { TranslateModule } from '@ngx-translate/core'
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'datahub-record-otherlinks',
@@ -35,6 +36,10 @@ import { TranslateModule } from '@ngx-translate/core'
 })
 export class RecordOtherlinksComponent implements AfterViewInit {
   otherLinks$ = this.facade.otherLinks$
+
+  get linksCount$() {
+    return this.otherLinks$.pipe(map((links) => links.length))
+  }
 
   @ViewChild(CarouselComponent) carousel: CarouselComponent
   @ViewChild(BlockListComponent) list: BlockListComponent
