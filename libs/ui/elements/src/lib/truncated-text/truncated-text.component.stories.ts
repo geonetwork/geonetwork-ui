@@ -1,9 +1,22 @@
-import { Meta, StoryObj } from '@storybook/angular'
+import { Meta, StoryObj, applicationConfig } from '@storybook/angular'
 import { TruncatedTextComponent } from './truncated-text.component'
+import { TranslateModule } from '@ngx-translate/core'
+import { importProvidersFrom } from '@angular/core'
 
 const meta: Meta<TruncatedTextComponent> = {
   component: TruncatedTextComponent,
   title: 'Elements/TruncatedText',
+  decorators: [
+    applicationConfig({
+      providers: [
+        importProvidersFrom(
+          TranslateModule.forRoot({
+            defaultLanguage: 'en',
+          })
+        ),
+      ],
+    }),
+  ],
   render: (args) => ({
     props: args,
     template: `

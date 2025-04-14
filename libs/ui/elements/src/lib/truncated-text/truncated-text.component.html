@@ -5,6 +5,8 @@
     </span>
     <gn-ui-button
       *ngIf="isTextTruncated"
+      [matTooltip]="'show.all.text' | translate"
+      matTooltipPosition="above"
       type="outline"
       class="flex-shrink-0"
       (buttonClick)="toggleExpand()"
@@ -24,6 +26,8 @@
         type="light"
         class="px-2 flex-shrink-0"
         (buttonClick)="toggleExpand()"
+        [matTooltip]="'hide.full.text' | translate"
+        matTooltipPosition="above"
       >
         <ng-icon name="iconoirCollapse" size="24"> </ng-icon>
       </gn-ui-button>

@@ -10,11 +10,18 @@ import { CommonModule } from '@angular/common'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { iconoirExpand, iconoirCollapse } from '@ng-icons/iconoir'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-
+import { TranslateModule } from '@ngx-translate/core'
+import { MatTooltip } from '@angular/material/tooltip'
 @Component({
   selector: 'gn-ui-truncated-text',
   standalone: true,
-  imports: [CommonModule, NgIconComponent, ButtonComponent],
+  imports: [
+    CommonModule,
+    NgIconComponent,
+    ButtonComponent,
+    TranslateModule,
+    MatTooltip,
+  ],
   providers: [provideIcons({ iconoirExpand, iconoirCollapse })],
   templateUrl: './truncated-text.component.html',
   styles: [],
