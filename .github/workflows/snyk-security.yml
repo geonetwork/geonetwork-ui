@@ -21,7 +21,7 @@ run-name: ğŸº Run Snyk on ${{ github.event_name == 'pull_request' && 'PR' || 'ğ
 
 on:
   push:
-    branches: ['main']
+    branches: ['2.5.x']
   pull_request:
     types: [opened, synchronize, ready_for_review]
 

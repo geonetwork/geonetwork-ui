@@ -7,7 +7,7 @@ export const environment = {
   production: false,
   version:
     packageJson.version.split('-')[1] === 'dev'
-      ? 'main'
+      ? '2.5.x'
       : `v${packageJson.version}`,
 }
 

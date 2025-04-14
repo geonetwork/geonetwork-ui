@@ -5,11 +5,11 @@ env:
   NODE_VERSION: 20.18.1
 
 # This workflow runs whenever the "deploy affected apps" checkbox is checked (for PR)
-# or on every push to main
+# or on every push to 2.5.x
 on:
   push:
     branches:
-      - main
+      - 2.5.x
   issue_comment:
     types:
       - edited
@@ -38,7 +38,7 @@ jobs:
     name: Deploy docs, apps, Storybook to GitHub Pages
     runs-on: ubuntu-latest
     env:
-      BRANCH_NAME: ${{needs.checks.outputs.ref || 'main'}}
+      BRANCH_NAME: ${{needs.checks.outputs.ref || '2.5.x'}}
 
     steps:
       - name: Dump GitHub event
@@ -79,7 +79,7 @@ jobs:
         run: npm run build:demo
 
       - name: Build metadata-converter app
-        if: github.event_name != 'issue_comment' # This is not done on PR, only on main branch
+        if: github.event_name != 'issue_comment' # This is not done on PR, only on 2.5.x branch
         run: npx nx build metadata-converter --prod --base-href=./
 
       - name: Build docs
