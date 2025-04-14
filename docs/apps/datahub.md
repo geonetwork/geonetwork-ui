@@ -11,14 +11,14 @@ The **Datahub** application offers a very intuitive and easy-to-use search inter
 - Powerful search experience using full-text search, advanced filters, sorting
 - Marking records as favorite to find them more easily later
 - Data visualization using maps, tables and charts
-  - Ability to customize basemap in map visualization with layers from 'xyz', 'wms' or 'wfs' service endpoint; or 'geojson'; or 'maplibre style' (see `map_layer` option in [configure guide](../guide/configure.md#map))
-  - Ability to configure a max feature count for WFS, with pagination, for an optimized display in table dataviz (see `max_feature_count` option in [configure guide](../guide/configure.md#map))
-- Improved record data fetching through cache-based requests, using OGC-client's built-in caching and records' update frequency awareness
+  - Ability to customize basemap in map visualization in [configuration](../guide/configure.md#map)
+  - Ability to limit maximum requested features in [configuration](../guide/configure.md#map)
+- Improved record data fetching through cache-based requests, using OGC-client's built-in caching and records' update frequency awareness [developers' guide](../developers/caching.md#map)
 - Using protocols such as WFS to offer a list of formats for download, as well as a tool for generating download URLs based on given parameters
 - Ability for users to leave feedbacks on catalog record and for administrators to respond
 - Powerful theming system allowing custom colors, fonts and background images
 - Support both geo- and non-geo datasets
-- Ability to show a welcome message to users, which can be configured as needed
+- Ability to show a welcome or maintenance message to users, which can be configured as needed, see [configure guide](../guide/configure.md#application-banner)
 
 ## Run & deploy
 
