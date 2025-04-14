@@ -173,21 +173,7 @@ export class MdViewFacade {
         }),
         toArray(),
         map((links) => {
-          const filtered = links.filter((link) => link !== null)
-          // Sort so that TMS services with styles come after WMS services
-          return filtered.sort((a, b) => {
-            if (
-              a.accessServiceProtocol === 'tms' &&
-              b.accessServiceProtocol === 'wms'
-            )
-              return 1
-            if (
-              a.accessServiceProtocol === 'wms' &&
-              b.accessServiceProtocol === 'tms'
-            )
-              return -1
-            return 0
-          })
+          return links.filter((link) => link !== null)
         })
       )
     )
