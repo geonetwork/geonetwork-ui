@@ -84,7 +84,7 @@
       class="block h-[228px] w-full self-center"
       [imageUrl]="thumbnailUrl"
       (isPlaceholderShown)="showOverlay = !$event"
-      *ngIf="showOverlay"
+      *ngIf="thumbnailUrl && showOverlay"
     >
     </gn-ui-image-overlay-preview>
   </div>
