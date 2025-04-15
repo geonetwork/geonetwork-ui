@@ -225,6 +225,7 @@ Follow these simple rules when writing end-to-end tests:
 2. Do _not_ include fixed waiting times unless there's no other choice; instead, wait for elements to show up using Cypress commands
 3. Do _not_ navigate the legacy GeoNetwork interface as it is really slow and unreliable; if you need to interact with GeoNetwork (e.g. create or modify a user), use the REST API
 4. If your end-to-end test modifies something in the database (e.g. a record), it should _always_ do a clean-up, either right after the modification or (even better) on a `before()` step; this is because a test might not run its full course in case of failure/crash, which means that a clean-up phase at the end might not always happen; this is especially important when iterating over tests locally
+5. When your test relies on external data (ex. a query on a WFS service showing up in a table), _always intercept the call_ and provide a fixture as a result; fixtures should always be as small as possible (no need to copy dozens of megabytes in the fixtures when 10 or 20 objects would suffice)
 
 ### Targeting nodes in the DOM
 
@@ -234,3 +235,7 @@ Similarly to unit tests, a `data-cy` attribute can be used to target elements in
 <div>My component</div>
 <div *ngIf="data$ | async as currentData" data-cy="show-data">{{ currentData }}</div>
 ```
+
+### Testing labels
+
+End-to-end tests are set up to run in a browser with English as default locale. You can safely compare the labels and other readable values (e.g. dates) to English and it will work in any environment.
