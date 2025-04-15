@@ -28,7 +28,9 @@
     </gn-ui-popup-alert>
   </ng-container>
   <ng-template #mapView>
-    <div class="relative w-full h-full bg-white rounded-lg overflow-hidden">
+    <div
+      class="relative w-full h-full bg-white border border-gray-300 rounded-lg overflow-hidden"
+    >
       <gn-ui-map-container
         #mapContainer
         [context]="mapContext$ | async"
