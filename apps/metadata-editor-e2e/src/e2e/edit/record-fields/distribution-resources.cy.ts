@@ -11,12 +11,8 @@ describe('editor form', () => {
 
   beforeEach(() => {
     cy.login('admin', 'admin', false)
-    cy.visit('/catalog/search')
-    cy.wrap(recordUuid).as('recordUuid')
+    cy.visit(`/edit/${recordUuid}`)
 
-    cy.get('@recordUuid').then((recordUuid) => {
-      cy.visit(`/edit/${recordUuid}`)
-    })
     // aliases
     cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
       'abstractField'
@@ -41,7 +37,7 @@ describe('editor form', () => {
         cy.get(
           'gn-ui-form-field-online-resources gn-ui-online-resource-card'
         ).should('have.length', 0)
-        cy.editor_wrapPreviousDraft()
+        cy.editor_wrapPreviousDraft(recordUuid)
         // add a service distribution
         cy.get('[data-cy="online-resources-type"] button').eq(1).click()
         cy.get('gn-ui-online-service-resource-input mat-radio-button')
@@ -56,7 +52,7 @@ describe('editor form', () => {
           .find('[data-cy="identifier-in-service"]')
           .type('A process name as identifier in service')
         cy.get('gn-ui-form-field-online-resources').find('button').eq(2).click()
-        cy.editor_publishAndReload()
+        cy.editor_publishAndReload(recordUuid)
         cy.get('@saveStatus').should('eq', 'record_up_to_date')
         cy.get('@resourcePageBtn').click()
         cy.get(
@@ -72,14 +68,14 @@ describe('editor form', () => {
           .invoke('text')
           .invoke('trim')
           .should('eql', 'A process name as identifier in service')
-        cy.editor_wrapPreviousDraft()
+        cy.editor_wrapPreviousDraft(recordUuid)
         // open modify dialog
         cy.get('@resourceService').find('button[data-test=card-modify]').click()
         cy.get('gn-ui-modal-dialog gn-ui-text-area')
           .find('textarea')
           .type('new description')
         cy.get('gn-ui-modal-dialog [data-cy=confirm-button]').click()
-        cy.editor_publishAndReload()
+        cy.editor_publishAndReload(recordUuid)
         cy.get('@resourcePageBtn').click()
         cy.get('@resourceService')
           .find('[data-test=card-title]')
@@ -94,14 +90,14 @@ describe('editor form', () => {
         cy.get(
           'gn-ui-form-field-online-resources gn-ui-online-resource-card'
         ).should('have.length', 1)
-        cy.editor_wrapPreviousDraft()
+        cy.editor_wrapPreviousDraft(recordUuid)
         // delete the first item
         cy.get(
           'gn-ui-form-field-online-resources gn-ui-sortable-list [data-test=remove-item]'
         )
           .eq(0)
           .click()
-        cy.editor_publishAndReload()
+        cy.editor_publishAndReload(recordUuid)
         cy.get('@saveStatus').should('eq', 'record_up_to_date')
         cy.get('@resourcePageBtn').click()
         cy.get(

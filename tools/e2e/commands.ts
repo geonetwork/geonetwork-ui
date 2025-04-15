@@ -14,13 +14,21 @@ declare namespace Cypress {
   interface Chainable<Subject> {
     login(username?: string, password?: string, redirect?: boolean): void
     signOut(): void
+    addUser(
+      username: string,
+      password: string,
+      email: string,
+      name: string,
+      surname: string
+    ): void
     clearFavorites(): void
     clearRecordDrafts(): void
+    deleteRecord(uuid: string): void
     editor_createRecordCopy(): Chainable<string | number | string[]>
     editor_readFormUniqueIdentifier(): Chainable<string | number | string[]>
-    editor_wrapPreviousDraft(): void
-    editor_wrapFirstDraft(): void
-    editor_publishAndReload(): void
+    editor_wrapPreviousDraft(uuid: string): void
+    editor_wrapFirstDraft(uuid: string): void
+    editor_publishAndReload(uuid: string): void
     editor_findDraftInLocalStorage(): Chainable<string | number | string[]>
     addTranslationKey(): void
     removeTranslationKey(): void
@@ -29,6 +37,8 @@ declare namespace Cypress {
     openDropdown(): Chainable<JQuery<HTMLElement>>
     selectDropdownOption(value: string): void
     getActiveDropdownOption(): Chainable<JQuery<HTMLButtonElement>>
+
+    clickOnBody(): void
   }
 }
 
@@ -78,6 +88,47 @@ Cypress.Commands.add('signOut', () => {
   cy.visit('/geonetwork/srv/eng/catalog.search#/home')
   cy.get('a[title="User details"]').click()
   cy.get('a[title="Sign out"]').click()
+})
+
+Cypress.Commands.add('addUser', (username, password, email, name, surname) => {
+  cy.getCookie('XSRF-TOKEN')
+    .its('value')
+    .then(function (token) {
+      cy.request({
+        url: `/geonetwork/srv/api/users`,
+        method: 'PUT',
+        body: JSON.stringify({
+          id: '',
+          username: username,
+          password: password,
+          name: name,
+          surname: surname,
+          profile: 'RegisteredUser',
+          addresses: [
+            { address: '', city: '', state: '', zip: '', country: '' },
+          ],
+          emailAddresses: [email],
+          organisation: '',
+          enabled: true,
+          groupsRegisteredUser: [],
+          groupsEditor: [],
+          groupsReviewer: [],
+          groupsUserAdmin: [],
+        }),
+        failOnStatusCode: false, // it will fail if the user is already there
+        headers: {
+          accept: 'application/json',
+          'Content-Type': 'application/json',
+          'X-XSRF-TOKEN': token,
+        },
+      }).then((response) => {
+        if (!response.isOkStatusCode) {
+          cy.log(`User ${username} was not created (probably already there)`)
+          return
+        }
+        cy.log(`User ${username} created successfully!`)
+      })
+    })
 })
 
 /**
@@ -148,6 +199,10 @@ Cypress.Commands.add(
   }
 )
 
+Cypress.Commands.add('clickOnBody', () => {
+  cy.get('body').click(0, 0)
+})
+
 Cypress.Commands.add('clearRecordDrafts', () => {
   cy.window().then((window) => {
     const items = { ...window.localStorage }
@@ -158,6 +213,28 @@ Cypress.Commands.add('clearRecordDrafts', () => {
     cy.log(`Cleared ${draftKeys.length} draft(s).`)
   })
   cy.reload()
+})
+
+Cypress.Commands.add('deleteRecord', (uuid: string) => {
+  cy.getCookie('XSRF-TOKEN')
+    .its('value')
+    .then(function (token) {
+      cy.request({
+        url: `/geonetwork/srv/api/records/${uuid}`,
+        method: 'DELETE',
+        failOnStatusCode: false, // it will fail if the user is already there
+        headers: {
+          accept: 'application/json',
+          'X-XSRF-TOKEN': token,
+        },
+      }).then((response) => {
+        if (!response.isOkStatusCode) {
+          cy.log(`Record ${uuid} could not be deleted (probably already gone?)`)
+          return
+        }
+        cy.log(`Record ${uuid} deleted successfully!`)
+      })
+    })
 })
 
 Cypress.Commands.add('editor_createRecordCopy', () => {
@@ -205,6 +282,8 @@ Cypress.Commands.add('editor_createRecordCopy', () => {
 })
 
 Cypress.Commands.add('editor_readFormUniqueIdentifier', () => {
+  // wait for the url to contain edit
+  cy.url().should('contain', '/edit/')
   cy.url().then((url) => {
     if (url.includes('/edit/')) {
       return url.split('edit/').pop()
@@ -234,41 +313,34 @@ Cypress.Commands.add('editor_findDraftInLocalStorage', () => {
 })
 
 // this needs a recordUuid to have been wrapped
-Cypress.Commands.add('editor_wrapFirstDraft', () => {
-  cy.get('@recordUuid').then((recordUuid) => {
-    cy.window()
-      .its('localStorage')
-      .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
-      .then((previousDraft) => {
-        cy.wrap(previousDraft).as('firstDraft')
-      })
-  })
+Cypress.Commands.add('editor_wrapFirstDraft', (uuid: string) => {
+  cy.window()
+    .its('localStorage')
+    .invoke('getItem', `geonetwork-ui-draft-${uuid}`)
+    .then((previousDraft) => {
+      cy.wrap(previousDraft).as('firstDraft')
+    })
 })
 
 // this needs a recordUuid to have been wrapped
-Cypress.Commands.add('editor_wrapPreviousDraft', () => {
-  cy.get('@recordUuid').then((recordUuid) => {
-    cy.window()
-      .its('localStorage')
-      .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
-      .then((previousDraft) => {
-        cy.wrap(previousDraft).as('previousDraft')
-      })
-  })
+Cypress.Commands.add('editor_wrapPreviousDraft', (uuid: string) => {
+  cy.window()
+    .its('localStorage')
+    .invoke('getItem', `geonetwork-ui-draft-${uuid}`)
+    .then((previousDraft) => {
+      cy.wrap(previousDraft).as('previousDraft')
+    })
 })
 
 // this needs a recordUuid and a previousDraft to have been wrapped
-Cypress.Commands.add('editor_publishAndReload', () => {
-  // wait for the draft to be saved
-  cy.get('@recordUuid').then((recordUuid) => {
-    // nesting thens as Cypress doesn't seem to support the "all" operator
-    //https://github.com/cypress-io/cypress/issues/915
-    cy.get('@previousDraft').then((previousDraft) => {
-      cy.window()
-        .its('localStorage')
-        .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
-        .should('not.eq', previousDraft)
-    })
+Cypress.Commands.add('editor_publishAndReload', (uuid: string) => {
+  // nesting thens as Cypress doesn't seem to support the "all" operator
+  //https://github.com/cypress-io/cypress/issues/915
+  cy.get('@previousDraft').then((previousDraft) => {
+    cy.window()
+      .its('localStorage')
+      .invoke('getItem', `geonetwork-ui-draft-${uuid}`)
+      .should('not.eq', previousDraft)
   })
 
   // publish the record
@@ -280,17 +352,13 @@ Cypress.Commands.add('editor_publishAndReload', () => {
   cy.wait('@insertRecord')
 
   // wait for the draft to be deleted on publication
-  cy.get('@recordUuid').then((recordUuid) => {
-    cy.window()
-      .its('localStorage')
-      .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)
-      .should('be.null')
-  })
+  cy.window()
+    .its('localStorage')
+    .invoke('getItem', `geonetwork-ui-draft-${uuid}`)
+    .should('be.null')
 
   // reload the page
-  cy.get('@recordUuid').then((recordUuid) => {
-    cy.visit(`/edit/${recordUuid}`)
-  })
+  cy.visit(`/edit/${uuid}`)
 })
 
 Cypress.Commands.add('addTranslationKey', () => {

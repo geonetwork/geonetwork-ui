@@ -5,7 +5,13 @@ describe('record-actions', () => {
   beforeEach(() => {
     cy.login('admin', 'admin', false)
     cy.visit('/catalog/search')
+
+    // wait for results
+    cy.get('gn-ui-results-table')
+      .find('[data-cy=table-row]')
+      .should('have.length.above', 1)
   })
+
   describe('delete', () => {
     const recordId = `TEST_RECORD_${Date.now()}`
     it('should delete the record, delete its associated draft and refresh the interface', () => {
@@ -16,8 +22,9 @@ describe('record-actions', () => {
         .focus()
       cy.get('@abstractField').type('record abstract')
       cy.get('[data-test="recordTitleInput"]').click()
-      cy.get('[data-test="recordTitleInput"]').type('{selectAll}{backspace}')
-      cy.get('[data-test="recordTitleInput"]').type(recordId)
+      cy.get('[data-test="recordTitleInput"]').type(
+        `{selectAll}{backspace}${recordId}`
+      )
       cy.intercept({
         method: 'PUT',
         pathname: '**/records',
@@ -40,6 +47,7 @@ describe('record-actions', () => {
         .contains(recordId)
         .should('have.length', 1)
       cy.get('[data-cy="dashboard-drafts-count"]').should('contain', '1')
+
       // Delete the record from my-records page
       cy.visit('/my-space/my-records')
       cy.get('gn-ui-pagination-buttons').find('button').eq(2).click()
@@ -50,6 +58,7 @@ describe('record-actions', () => {
         .contains(recordId)
         .should('have.length', 0)
       cy.get('gn-ui-notification').should('contain', 'Delete success')
+
       // check that draft was deleted
       cy.visit('/my-space/my-draft')
       cy.get('[data-cy="table-row"]').should('not.exist')
@@ -61,20 +70,17 @@ describe('record-actions', () => {
       // create a record
       cy.get('[data-cy="create-record"]').click()
       cy.url().should('include', '/edit')
+      cy.editor_readFormUniqueIdentifier().as('newRecordUuid')
     })
 
     afterEach(() => {
       // delete the new record
-      cy.visit('/catalog/search')
-      cy.get('gn-ui-pagination-buttons').find('button').eq(2).click()
-      cy.get('[data-test="record-menu-button"]').first().click()
-      cy.get('[data-test="record-menu-delete-button"]').click()
-      cy.get('[data-cy="confirm-button"]').click()
+      cy.get<string>('@newRecordUuid').then((uuid) => cy.deleteRecord(uuid))
     })
 
-    it('should create the record without error', () => {
-      // Check that the record is correctly displayed
-      cy.get('gn-ui-record-form').should('be.visible')
+    it('record creation', () => {
+      // it should create the record without error
+      cy.get('gn-ui-record-form').should('be.visible') // Check that the record is correctly displayed
 
       cy.get('gn-ui-record-form')
         .children()
@@ -90,14 +96,13 @@ describe('record-actions', () => {
         .children()
         .eq(1)
         .should('contain.text', 'Next')
-    })
 
-    it('back navigation should go to search after creating a record', () => {
+      // back navigation should go to search after creating a record
       cy.go('back')
       cy.url().should('include', '/catalog/search')
-    })
+      cy.go('forward') // go back to edition
 
-    it('the created record should have the registered user as point of contact in the data managers section', () => {
+      // the created record should have the registered user as point of contact in the data managers section
       cy.get('[data-test=pageSelectorButtons]')
         .find('gn-ui-button')
         .eq(2)
@@ -111,8 +116,8 @@ describe('record-actions', () => {
         .get('[data-test=contactCardName]')
         .invoke('text')
         .should('contain', 'admin admin')
-    })
-    it('the created record should display the uuid in the url, not create a draft and be saved but not published', () => {
+
+      // the created record should display the uuid in the url, not create a draft and be saved but not published
       cy.url().should('match', /\/edit\/.+/)
       cy.get('[data-cy="dashboard-drafts-count"]').should('not.exist')
       cy.get('[data-cy="save-status"]')
@@ -121,8 +126,8 @@ describe('record-actions', () => {
       cy.get('md-editor-publish-button')
         .find('gn-ui-button')
         .should('have.attr', 'ng-reflect-message', 'Publish this dataset')
-    })
-    it('the created record should have unknown constraints', () => {
+
+      // it the created record should have unknown constraints
       cy.get('[data-test=pageSelectorButtons]')
         .find('gn-ui-button')
         .eq(2)
@@ -134,186 +139,176 @@ describe('record-actions', () => {
     })
   })
 
-  describe('undo', () => {
-    it('should restore the record and refresh the interface', () => {
-      // Edit an existing record and create a draft
-      cy.get('[data-cy="resultItemTitle"]').first().click()
-      cy.url().should('include', '/edit')
-      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
-        .as('abstractField')
-        .focus()
-      cy.get('@abstractField').type('record abstract')
-      cy.editor_findDraftInLocalStorage().then((value) => {
-        expect(value).to.not.equal('null')
-      })
+  it('undo action', () => {
+    // it should restore the record and refresh the interface
 
-      cy.intercept({
-        method: 'PUT',
-        pathname: '**/records',
-      }).as('insertRecord')
-      cy.get('md-editor-publish-button').click()
-      cy.wait('@insertRecord')
-      cy.get('[data-cy="undo-button"] button').should('be.disabled')
-
-      cy.get('@abstractField').clear()
-      cy.get('@abstractField').focus()
-      cy.get('@abstractField').type('draft abstract')
-      cy.editor_findDraftInLocalStorage().then((value) => {
-        expect(value).to.contain('draft abstract')
-      })
-
-      cy.get('[data-cy="undo-button"]').click()
-      cy.get('[data-cy="confirm-button"]').click()
-      cy.editor_findDraftInLocalStorage().then((value) => {
-        expect(value).to.not.equal('null')
-      })
-      cy.get('@abstractField').should('have.value', 'record abstract')
-
-      // delete the new record
-      cy.visit('/catalog/search')
-      cy.get('.table-header-cell').eq(1).click()
-      cy.get('.table-header-cell').eq(1).click()
-      cy.get('[data-test="record-menu-button"]').first().click()
-      cy.get('[data-test="record-menu-delete-button"]').click()
-      cy.get('[data-cy="confirm-button"]').click()
+    // Edit an existing record and create a draft
+    cy.get('[data-cy="resultItemTitle"]').first().click()
+    cy.url().should('include', '/edit')
+    cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
+      .as('abstractField')
+      .focus()
+    cy.get('@abstractField').type('{selectAll}{backspace}record abstract')
+    cy.editor_findDraftInLocalStorage().then((value) => {
+      expect(value).to.not.equal('null')
     })
-    it('should restore from the draft dashboard', () => {
-      // Edit an existing record and create a draft
-      cy.get('[data-cy="resultItemTitle"]').first().click()
-      cy.url().should('include', '/edit')
-      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
-        .as('abstractField')
-        .focus()
-      cy.get('@abstractField').type('record draft')
-      cy.editor_findDraftInLocalStorage().then((value) => {
-        expect(value).to.not.equal('null')
-      })
-      // undo from the action-menu
-      cy.visit('/my-space/my-draft')
-      cy.get('[data-test="record-menu-button"]').click()
-      cy.get('[data-test="record-menu-delete-button"]').find('button').click()
-      cy.get('[data-test="rollbackMenuSection"]').should('be.visible')
-      cy.get('[data-test="rollbackMenuSection"]').find('button').first().click()
-      cy.get('[data-cy="table-row"]').should('have.length', 0)
+    cy.editor_readFormUniqueIdentifier().as('newRecordUuid')
+
+    cy.intercept({
+      method: 'PUT',
+      pathname: '**/records',
+    }).as('insertRecord')
+    cy.get('md-editor-publish-button').click()
+    cy.wait('@insertRecord')
+    cy.get('[data-cy="undo-button"] button').should('be.disabled')
+
+    cy.get('@abstractField').clear()
+    cy.get('@abstractField').focus()
+    cy.get('@abstractField').type('draft abstract')
+    cy.editor_findDraftInLocalStorage().then((value) => {
+      expect(value).to.contain('draft abstract')
     })
+
+    cy.get('[data-cy="undo-button"]').click()
+    cy.get('[data-cy="confirm-button"]').click()
+    cy.editor_findDraftInLocalStorage().then((value) => {
+      expect(value).to.not.equal('null')
+    })
+    cy.get('@abstractField').should('have.value', 'record abstract')
+
+    // delete the new record
+    cy.get<string>('@newRecordUuid').then((uuid) => cy.deleteRecord(uuid))
+
+    cy.visit('/catalog/search')
+
+    // it should restore from the draft dashboard
+
+    // Edit an existing record and create a draft
+    cy.get('[data-cy="resultItemTitle"]').first().click()
+    cy.url().should('include', '/edit')
+    cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
+      .as('abstractField')
+      .focus()
+    cy.get('@abstractField').type('record draft')
+    cy.editor_findDraftInLocalStorage().then((value) => {
+      expect(value).to.not.equal('null')
+    })
+    // undo from the action-menu
+    cy.visit('/my-space/my-draft')
+    cy.get('[data-test="record-menu-button"]').click()
+    cy.get('[data-test="record-menu-delete-button"]').find('button').click()
+    cy.get('[data-test="rollbackMenuSection"]').should('be.visible')
+    cy.get('[data-test="rollbackMenuSection"]').find('button').first().click()
+    cy.get('[data-cy="table-row"]').should('have.length', 0)
   })
 
-  describe('duplicate', () => {
-    it('should duplicate the record', () => {
-      cy.get('.table-header-cell').eq(1).click()
+  it('duplicate action', () => {
+    // it should duplicate the record
+    cy.get('.table-header-cell').eq(1).click()
 
-      // wait for 500ms because the order might change
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(500)
+    // wait for 500ms because the order might change
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500)
 
-      cy.get('[data-cy="table-row"]')
-        .first()
-        .find('[data-test="record-menu-button"]')
-        .click()
-      cy.get('[data-test="record-menu-duplicate-button"]').click()
+    cy.get('[data-cy="table-row"]')
+      .first()
+      .find('[data-test="record-menu-button"]')
+      .click()
+    cy.get('[data-test="record-menu-duplicate-button"]').click()
 
-      cy.get('gn-ui-form-field')
-        .first()
-        .find('textarea')
-        .invoke('val')
-        .should('include', 'Copy of record Accroches vélos MEL')
+    cy.get('gn-ui-form-field')
+      .first()
+      .find('textarea')
+      .invoke('val')
+      .should('include', 'Copy of record Accroches vélos MEL')
 
-      // delete the new record
-      cy.visit('/catalog/search')
-      cy.get('gn-ui-pagination-buttons').find('button').eq(2).click()
-      cy.get('[data-test="record-menu-button"]').first().click()
-      cy.get('[data-test="record-menu-delete-button"]').click()
-      cy.get('[data-cy="confirm-button"]').click()
-    })
+    // delete the new record
+    cy.editor_readFormUniqueIdentifier().then((uuid: string) =>
+      cy.deleteRecord(uuid)
+    )
   })
-  describe('import', () => {
-    beforeEach(() => {
-      // Open the import overlay
-      cy.get('[data-test="import-record"]').click()
-    })
 
-    it('should show the import menu overlay', () => {
-      cy.get('gn-ui-import-record').should('be.visible')
-      cy.get('[data-test="importMenuMainSection"]').should('be.visible')
-    })
+  it('import action', () => {
+    // Open the import overlay
+    cy.get('[data-test="import-record"]').click()
 
-    describe('import by URL section', () => {
-      beforeEach(() => {
-        cy.get('[data-test="importFromUrlButton"]').click()
-      })
+    // it should show the import menu overlay
+    cy.get('gn-ui-import-record').should('be.visible')
+    cy.get('[data-test="importMenuMainSection"]').should('be.visible')
 
-      it('should show the import by URL section', () => {
-        cy.get('[data-test="importMenuImportExternalFileSection"]').should(
-          'be.visible'
-        )
-      })
+    // import by URL section
+    cy.get('[data-test="importFromUrlButton"]').click()
 
-      it('should show the import by URL section', () => {
-        cy.get('[data-test="importMenuImportExternalFileSection"]').should(
-          'be.visible'
-        )
-      })
+    // it should show the import by URL section
+    cy.get('[data-test="importMenuImportExternalFileSection"]').should(
+      'be.visible'
+    )
 
-      it('should import a record', () => {
-        cy.get('[data-test="importMenuImportExternalFileSection"]')
-          .find('gn-ui-url-input')
-          .type('http://www.marvelous-record/xml/download')
+    // it should import a record
+    cy.get('[data-test="importMenuImportExternalFileSection"]')
+      .find('gn-ui-url-input')
+      .type('http://www.marvelous-record/xml/download')
 
-        cy.intercept(
-          {
-            method: 'GET',
-            url: /\/xml\/download$/,
-          },
-          {
-            statusCode: 200,
-            body: importDatasetRecordAsXmlFixture(),
-          }
-        ).as('importUrlRequest')
+    cy.intercept(
+      {
+        method: 'GET',
+        url: /\/xml\/download$/,
+      },
+      {
+        statusCode: 200,
+        body: importDatasetRecordAsXmlFixture(),
+      }
+    ).as('importUrlRequest')
 
-        cy.get('gn-ui-url-input').find('gn-ui-button').find('button').click()
+    cy.get('gn-ui-url-input').find('gn-ui-button').find('button').click()
 
-        // Check that the record is correctly displayed
-        cy.get('gn-ui-record-form').should('be.visible')
+    // Check that the record is correctly displayed
+    cy.get('gn-ui-record-form').should('be.visible')
 
-        cy.get('gn-ui-record-form')
-          .find('gn-ui-form-field')
-          .eq(0)
-          .find('textarea')
-          .invoke('val')
-          .should('contain', 'Copy')
-        // imported record should be saved right away but not published
-        cy.url().should('not.include', 'TEMP')
-        cy.get('[data-cy="dashboard-drafts-count"]').should('not.exist')
-        cy.get('[data-cy="save-status"]')
-          .find('span')
-          .should('have.text', 'Saved - not published')
-        cy.get('md-editor-publish-button')
-          .find('gn-ui-button')
-          .should('have.attr', 'ng-reflect-message', 'Publish this dataset')
-      })
+    cy.get('gn-ui-record-form')
+      .find('gn-ui-form-field')
+      .eq(0)
+      .find('textarea')
+      .invoke('val')
+      .should('contain', 'Copy')
 
-      it('should be able to navigate back to the main section', () => {
-        cy.get(
-          '[data-test="importMenuImportExternalFileSectionBackButton"]'
-        ).click()
+    cy.editor_readFormUniqueIdentifier().as('importedRecordUuid')
 
-        cy.get('[data-test="importMenuMainSection"]').should('be.visible')
-        cy.get('[data-test="importMenuImportExternalFileSection"]').should(
-          'not.exist'
-        )
-      })
-    })
+    // imported record should be saved right away but not published
+    cy.url().should('not.include', 'TEMP')
+    cy.get('[data-cy="dashboard-drafts-count"]').should('not.exist')
+    cy.get('[data-cy="save-status"]')
+      .find('span')
+      .should('have.text', 'Saved - not published')
+    cy.get('md-editor-publish-button')
+      .find('gn-ui-button')
+      .should('have.attr', 'ng-reflect-message', 'Publish this dataset')
+
+    cy.visit('/catalog/search')
+
+    // delete the imported record
+    cy.get<string>('@importedRecordUuid').then((uuid) => cy.deleteRecord(uuid))
+
+    // Open the import overlay again
+    cy.get('[data-test="import-record"]').click()
+    cy.get('[data-test="importFromUrlButton"]').click()
+
+    // it should be able to navigate back to the main section
+    cy.get(
+      '[data-test="importMenuImportExternalFileSectionBackButton"]'
+    ).click()
+
+    cy.get('[data-test="importMenuMainSection"]').should('be.visible')
+    cy.get('[data-test="importMenuImportExternalFileSection"]').should(
+      'not.exist'
+    )
   })
+
   describe('drafting', () => {
-    let recordUuid: any
     describe('if a user edits the record in the meantime', () => {
       beforeEach(() => {
         cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
-        cy.url().should('include', '/edit/')
-        cy.editor_readFormUniqueIdentifier().then((uuid) => {
-          recordUuid = uuid
-          cy.wrap(uuid).as('recordUuid')
-        })
+        cy.editor_readFormUniqueIdentifier().as('recordUuid')
         cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
           'abstractField'
         )
@@ -322,20 +317,26 @@ describe('record-actions', () => {
         cy.editor_findDraftInLocalStorage().then((value) => {
           expect(value).to.contain('modified abstract')
         })
-        cy.editor_wrapFirstDraft()
+        cy.get<string>('@recordUuid').then((uuid) =>
+          cy.editor_wrapFirstDraft(uuid)
+        )
         cy.clearRecordDrafts()
         cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
-        cy.editor_wrapPreviousDraft()
+        cy.get<string>('@recordUuid').then((uuid) =>
+          cy.editor_wrapPreviousDraft(uuid)
+        )
         cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
           'abstractField'
         )
         cy.get('@abstractField').clear()
         cy.get('@abstractField').type('modified by someone else')
-        cy.editor_publishAndReload()
+        cy.get<string>('@recordUuid').then((uuid) =>
+          cy.editor_publishAndReload(uuid)
+        )
         cy.window().then((win) => {
-          cy.get('@firstDraft').then((firstDraft) => {
+          cy.get('@firstDraft').then(function (firstDraft) {
             return win.localStorage.setItem(
-              `geonetwork-ui-draft-${recordUuid}`,
+              `geonetwork-ui-draft-${this.recordUuid}`,
               firstDraft.toString()
             )
           })

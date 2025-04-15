@@ -1,6 +1,9 @@
 import { VIEWPORT_SIZE } from './settings.js'
+import installLogsPrinter from 'cypress-terminal-report/src/installLogsPrinter.js'
 
 export function configureCommonPlugins(on, config) {
+  installLogsPrinter(on)
+
   on('before:browser:launch', (browser, launchOptions) => {
     // DEFAULT LANGUAGE
     if (browser.name === 'chrome') {
