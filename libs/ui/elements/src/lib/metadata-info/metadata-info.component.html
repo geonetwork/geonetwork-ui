@@ -25,7 +25,7 @@
     [showContent]="fieldReady('keywords')"
   >
     <div *ngIf="metadata.keywords?.length">
-      <div class="sm:pb-4 flex flex-wrap gap-2">
+      <div class="metadata-info-keywords sm:pb-4 flex flex-wrap gap-2">
         <gn-ui-badge
           class="inline-block lowercase"
           (click)="onKeywordClick(keyword)"
@@ -279,6 +279,7 @@
       <p class="text-sm mb-1" translate>record.metadata.topics</p>
       <div class="sm:pb-4 sm:pr-16">
         <gn-ui-badge
+          [clickable]="false"
           class="inline-block mr-2 mb-2 lowercase"
           *ngFor="let topic of metadata.topics"
           >{{ topic }}</gn-ui-badge
