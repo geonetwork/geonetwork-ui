@@ -56,14 +56,14 @@ export class ButtonComponent {
 
   @Input() disabled = false
   @Input() extraClass = ''
-  @Output() buttonClick = new EventEmitter<void>()
+  @Output() buttonClick = new EventEmitter<Event>()
 
   get classList() {
     return `${this.btnClass} ${this.extraClass}`
   }
 
   handleClick(event: MouseEvent) {
-    this.buttonClick.emit()
+    this.buttonClick.emit(event)
     event.preventDefault()
     ;(event.currentTarget as HTMLElement).blur()
     propagateToDocumentOnly(event)
