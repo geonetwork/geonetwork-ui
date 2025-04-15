@@ -36,6 +36,7 @@ export const EXTERNAL_VIEWER_OPEN_NEW_TAB = new InjectionToken<boolean>(
 })
 export class ExternalViewerButtonComponent {
   @Input() link: DatasetOnlineResource
+  @Input() extraClass = ''
 
   get externalViewer() {
     return !!this.urlTemplate && !!this.supportedLinkLayerType
