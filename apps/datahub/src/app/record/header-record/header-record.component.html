@@ -4,13 +4,13 @@
   >
     <div class="sm:col-span-2 justify-center">
       <div class="flex flex-col gap-3">
-        <div
+        <h1
           *ngIf="metadata"
           class="font-title text-[28px] max-w-screen-sm line-clamp-3"
           [style.color]="foregroundColor"
         >
           {{ metadata.title }}
-        </div>
+        </h1>
         <a
           *ngIf="
             metadata.kind === 'reuse' && (reuseLinkUrl$ | async) as reuseLink
