@@ -221,6 +221,10 @@ describe('api form', () => {
 })
 
 describe('LINKS : display & functions', () => {
+  beforeEach(() => {
+    cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
+  })
+
   describe('display', () => {
     it('should have external, API and internal links with one option', () => {
       cy.get('datahub-record-otherlinks')
