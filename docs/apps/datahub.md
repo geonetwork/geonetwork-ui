@@ -13,7 +13,7 @@ The **Datahub** application offers a very intuitive and easy-to-use search inter
 - Data visualization using maps, tables and charts
   - Ability to customize basemap in map visualization in [configuration](../guide/configure.md#map)
   - Ability to limit maximum requested features in [configuration](../guide/configure.md#map)
-- Improved record data fetching through cache-based requests, using OGC-client's built-in caching and records' update frequency awareness [developers' guide](../developers/caching.md#map)
+- Improved record data fetching through cache-based requests, using OGC-client's built-in caching and records' update frequency awareness [developers' guide](../developers/caching.md)
 - Using protocols such as WFS to offer a list of formats for download, as well as a tool for generating download URLs based on given parameters
 - Ability for users to leave feedbacks on catalog record and for administrators to respond
 - Powerful theming system allowing custom colors, fonts and background images
