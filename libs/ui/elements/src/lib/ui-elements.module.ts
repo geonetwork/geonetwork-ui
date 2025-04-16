@@ -64,6 +64,7 @@ import { ServiceCapabilitiesComponent } from './service-capabilities/service-cap
     ApplicationBannerComponent,
     InternalLinkCardComponent,
     ServiceCapabilitiesComponent,
+    KindBadgeComponent,
   ],
 })
 export class UiElementsModule {}
