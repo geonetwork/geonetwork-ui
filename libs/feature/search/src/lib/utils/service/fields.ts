@@ -1,12 +1,5 @@
-import {
-  firstValueFrom,
-  lastValueFrom,
-  Observable,
-  of,
-  switchMap,
-  throwError,
-} from 'rxjs'
-import { map, tap } from 'rxjs/operators'
+import { firstValueFrom, Observable, of, switchMap } from 'rxjs'
+import { map } from 'rxjs/operators'
 import { Injector } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'

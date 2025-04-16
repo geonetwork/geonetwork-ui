@@ -33,7 +33,7 @@ export class ResultsHitsContainerComponent {
     protected searchFacade: SearchFacade,
     private searchService: SearchService,
     private fieldsService: FieldsService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.selected$ = this.searchFacade.searchFilters$.pipe(
