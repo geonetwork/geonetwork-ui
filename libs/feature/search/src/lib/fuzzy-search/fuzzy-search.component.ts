@@ -11,7 +11,7 @@ import {
   AutocompleteComponent,
   AutocompleteItem,
 } from '@geonetwork-ui/ui/inputs'
-import { firstValueFrom, Observable } from 'rxjs'
+import { firstValueFrom, Observable, switchMap } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
@@ -32,23 +32,18 @@ export class FuzzySearchComponent implements OnInit {
   @Input() enterButton = false
   @Output() itemSelected = new EventEmitter<CatalogRecord>()
   @Output() inputSubmitted = new EventEmitter<string>()
-  @Output() isSearchActive = new EventEmitter<boolean>()
-  @Input() autoCompleteActionCustom: (query: string) => Observable<any[]>
   searchInputValue$: Observable<{ title: string }>
+  @Output() isSearchActive = new EventEmitter<boolean>()
 
   displayWithFn: (record: CatalogRecord) => string = (record) => record.title
 
-  autoCompleteAction = (query: string) => {
-    if (
-      this.autoCompleteActionCustom &&
-      typeof this.autoCompleteActionCustom === 'function'
-    ) {
-      return this.autoCompleteActionCustom(query)
-    } else {
-      return this.recordsRepository
-        .fuzzySearch(query)
-        .pipe(map((result) => result.records))
-    }
+  autoCompleteAction = (query: string): Observable<CatalogRecord[]> => {
+    return this.searchFacade.configFilters$.pipe(
+      switchMap((configFilters) =>
+        this.recordsRepository.fuzzySearch(query, configFilters)
+      ),
+      map((result) => result.records)
+    )
   }
 
   constructor(
