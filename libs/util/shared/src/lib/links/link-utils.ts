@@ -260,7 +260,8 @@ export function getLinkLabel(
       format = getFileFormat(link)
   }
   const label = link.description || ('name' in link ? link.name : '')
-  return format ? `${label} (${format})` : label
+  const styleLabel = 'styleInfo' in link ? ` ${link.styleInfo.name}` : ''
+  return format ? `${label} (${format})${styleLabel}` : label
 }
 
 export async function getLayers(url: string, serviceProtocol: ServiceProtocol) {
