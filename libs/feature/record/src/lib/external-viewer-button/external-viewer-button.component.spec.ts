@@ -50,7 +50,7 @@ describe('ExternalViewerButtonComponent', () => {
   })
   describe('with mapConfig and no link', () => {
     beforeEach(() => {
-      component.link_ = null
+      component.link = null
       fixture.detectChanges()
     })
     it('sets externalViewer to display button to false', () => {
@@ -63,7 +63,7 @@ describe('ExternalViewerButtonComponent', () => {
 
     describe('with mapConfig and WMS link', () => {
       beforeEach(() => {
-        component.link_ = {
+        component.link = {
           url: new URL(
             'http://example.com/ows?service=wms&request=getcapabilities'
           ),
@@ -104,7 +104,7 @@ describe('ExternalViewerButtonComponent', () => {
     })
     describe('with mapConfig and WFS link', () => {
       beforeEach(() => {
-        component.link_ = {
+        component.link = {
           url: new URL(
             'http://example.com/ows?service=wfs&request=getcapabilities'
           ),
@@ -145,7 +145,7 @@ describe('ExternalViewerButtonComponent', () => {
     })
     describe('with mapConfig and GEOJSON link', () => {
       beforeEach(() => {
-        component.link_ = {
+        component.link = {
           url: new URL('http://example.com/somespatialdata.geojson'),
           type: 'download',
           mimeType: 'application/vnd.geo+json',
@@ -184,7 +184,7 @@ describe('ExternalViewerButtonComponent', () => {
   })
   describe('with mapConfig and invalid external link (non WMS/WFS/GEOJSON)', () => {
     beforeEach(() => {
-      component.link_ = {
+      component.link = {
         url: new URL('http://example.com/'),
         name: 'layername',
         type: 'link',

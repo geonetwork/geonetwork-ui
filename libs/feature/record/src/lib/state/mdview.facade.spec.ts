@@ -462,7 +462,7 @@ describe('MdViewFacade', () => {
     })
 
     it('should fetch and include styles for TMS services', fakeAsync(() => {
-      const styles = [{ href: 'style1', name: 'Style 1' }]
+      const styles = [{ href: 'https://myserver/style1', name: 'Style 1' }]
       jest
         .spyOn(facade.dataService, 'getStylesFromTms')
         .mockResolvedValue(styles)
@@ -472,28 +472,30 @@ describe('MdViewFacade', () => {
       tick()
 
       expect(result).toEqual([
-        links[1],
         {
           ...links[0],
-          styles,
+          name: 'TMS Service - Style 1',
+          url: new URL('https://myserver/style1'),
+          styleInfo: styles[0],
         },
+        links[1],
       ])
       expect(facade.dataService.getStylesFromTms).toHaveBeenCalledWith(
         'https://my-org.net/tms'
       )
     }))
 
-    it('should handle TMS services without styles', fakeAsync(() => {
+    it('should return TMS services without styles unchanged', fakeAsync(() => {
       jest.spyOn(facade.dataService, 'getStylesFromTms').mockResolvedValue(null)
 
       let result
       facade.mapApiLinks$.subscribe((v) => (result = v))
       tick()
 
-      expect(result).toEqual([links[1]])
+      expect(result).toEqual(links)
     }))
 
-    it('should handle TMS service errors gracefully', fakeAsync(() => {
+    it('should handle TMS service style errors gracefully and return TMS service unchanged', fakeAsync(() => {
       jest
         .spyOn(facade.dataService, 'getStylesFromTms')
         .mockRejectedValue(new Error('Failed to fetch styles'))
@@ -502,7 +504,7 @@ describe('MdViewFacade', () => {
       facade.mapApiLinks$.subscribe((v) => (result = v))
       tick()
 
-      expect(result).toEqual([links[1]])
+      expect(result).toEqual(links)
     }))
 
     it('should only return map api links', fakeAsync(() => {
@@ -526,7 +528,7 @@ describe('MdViewFacade', () => {
       facade.mapApiLinks$.subscribe((v) => (result = v))
       tick()
 
-      expect(result).toEqual([links[1]])
+      expect(result).toEqual(links)
     }))
   })
 })

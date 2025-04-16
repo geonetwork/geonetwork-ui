@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import {
   catchError,
+  concatMap,
   defaultIfEmpty,
   filter,
   map,
@@ -16,12 +17,11 @@ import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/da
 import {
   CatalogRecord,
   DatasetServiceDistribution,
-  ServiceEndpoint,
   UserFeedback,
 } from '@geonetwork-ui/common/domain/model/record'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
 import { OgcApiRecord } from '@camptocamp/ogc-client'
-import { from, of } from 'rxjs'
+import { from, of, Observable } from 'rxjs'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 @Injectable()
@@ -84,97 +84,25 @@ export class MdViewFacade {
   )
 
   apiLinks$ = this.allLinks$.pipe(
-    switchMap((links) => {
-      const apiLinks = links.filter((link) =>
-        this.linkClassifier.hasUsage(link, LinkUsage.API)
+    map((links) =>
+      links.filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.API))
+    ),
+    switchMap((apiLinks) =>
+      this.processLinksForTmsWithStyles(
+        apiLinks as DatasetServiceDistribution[]
       )
-      return from(apiLinks).pipe(
-        mergeMap((link) => {
-          if (link.type === 'service' && link.accessServiceProtocol === 'tms') {
-            return from(this.dataService.getStylesFromTms(link.url.href)).pipe(
-              map((styles) => (styles ? { ...link, styles } : link)),
-              catchError((e) => {
-                console.error('Error fetching TMS styles:', e)
-                return of(link)
-              })
-            )
-          } else {
-            return of(link)
-          }
-        }),
-        toArray(),
-        map((linksWithStyles) => {
-          const processedLinks = linksWithStyles.flatMap((link) => {
-            const linkWithStyles = link as DatasetServiceDistribution & {
-              styles?: Array<{ name: string; href: string }>
-            }
-            if (
-              link.type === 'service' &&
-              link.accessServiceProtocol === 'tms' &&
-              linkWithStyles.styles?.length
-            ) {
-              const result = [link]
-              linkWithStyles.styles.forEach((style) => {
-                const styleLink = {
-                  ...link,
-                  name: `${link.name} - ${style.name}`,
-                  url: new URL(style.href),
-                  styleInfo: {
-                    name: style.name,
-                    href: style.href,
-                  },
-                } as DatasetServiceDistribution
-                result.push(styleLink)
-              })
-              return result
-            }
-            return [link]
-          })
-
-          // Sort links (GPFDL first)
-          return processedLinks.sort((dd1, dd2) => {
-            return (dd2 as DatasetServiceDistribution | ServiceEndpoint)
-              .accessServiceProtocol === 'GPFDL'
-              ? 1
-              : undefined // do not change the sorting otherwise
-          })
-        })
-      )
-    })
+    )
   )
 
   mapApiLinks$ = this.allLinks$.pipe(
-    switchMap((links) =>
-      from(links).pipe(
-        mergeMap((link) => {
-          if (this.linkClassifier.hasUsage(link, LinkUsage.MAP_API)) {
-            if (
-              link.type === 'service' &&
-              link.accessServiceProtocol === 'tms'
-            ) {
-              return from(
-                this.dataService.getStylesFromTms(link.url.href)
-              ).pipe(
-                map((styles) => {
-                  return styles ? { ...link, styles } : null
-                }),
-                defaultIfEmpty(null),
-                catchError((e) => {
-                  console.error(e)
-                  return of(null)
-                })
-              )
-            } else {
-              return of(link)
-            }
-          } else {
-            return of(null)
-          }
-        }),
-        toArray(),
-        map((links) => {
-          return links.filter((link) => link !== null)
-        })
+    map((links) =>
+      links.filter((link) =>
+        this.linkClassifier.hasUsage(link, LinkUsage.MAP_API)
+      )
+    ),
+    switchMap((mapApiLinks) =>
+      this.processLinksForTmsWithStyles(
+        mapApiLinks as DatasetServiceDistribution[]
       )
     )
   )
@@ -289,5 +217,42 @@ export class MdViewFacade {
 
   loadUserFeedbacks(datasetUuid: string) {
     this.store.dispatch(MdViewActions.loadUserFeedbacks({ datasetUuid }))
+  }
+
+  private processLinksForTmsWithStyles(
+    links: DatasetServiceDistribution[]
+  ): Observable<DatasetServiceDistribution[]> {
+    return from(links).pipe(
+      concatMap((link) => this.createOneTmsLinkPerStyle(link)),
+      toArray(),
+      map((links) => links.flat())
+    )
+  }
+
+  private createOneTmsLinkPerStyle(
+    link: DatasetServiceDistribution
+  ): Observable<DatasetServiceDistribution[]> {
+    if (link.type === 'service' && link.accessServiceProtocol === 'tms') {
+      return from(this.dataService.getStylesFromTms(link.url.href)).pipe(
+        map((styles) =>
+          styles
+            ? styles.map((style) => ({
+                ...link,
+                name: `${link.name} - ${style.name}`,
+                url: new URL(style.href),
+                styleInfo: {
+                  name: style.name,
+                  href: style.href,
+                },
+              }))
+            : [link]
+        ),
+        catchError((e) => {
+          console.error('Error fetching TMS styles:', e)
+          return of([link])
+        })
+      )
+    }
+    return of([link])
   }
 }
