@@ -22,11 +22,10 @@ import {
 } from '@geonetwork-ui/common/domain/model/search'
 import { map } from 'rxjs/operators'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
-import { lastValueFrom, Observable } from 'rxjs'
+import { lastValueFrom } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { sortByFromString } from '@geonetwork-ui/util/shared'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { globalConfigFilters } from '../../app.config'
 
 marker('datahub.header.myfavorites')
@@ -59,15 +58,8 @@ export class HomeHeaderComponent {
     public searchFacade: SearchFacade,
     private searchService: SearchService,
     protected platformService: PlatformServiceInterface,
-    private fieldsService: FieldsService,
-    private recordsRepository: RecordsRepositoryInterface
+    private fieldsService: FieldsService
   ) {}
-
-  autoCompleteActionCustom(query: string): Observable<any[]> {
-    return this.recordsRepository
-      .fuzzySearch(query, globalConfigFilters)
-      .pipe(map((result) => result.records))
-  }
 
   displaySortBadges$ = this.routerFacade.currentRoute$.pipe(
     map(
@@ -80,6 +72,10 @@ export class HomeHeaderComponent {
   isAuthenticated$ = this.platformService
     .isAnonymous()
     .pipe(map((isAnonymous) => !isAnonymous))
+
+  ngOnInit() {
+    this.searchFacade.setConfigFilters(globalConfigFilters)
+  }
 
   onFuzzySearchSelection(record: CatalogRecord) {
     this.routerFacade.goToMetadata(record)

@@ -19,7 +19,6 @@ import { SortByEnum } from '@geonetwork-ui/common/domain/model/search'
 import { _setLanguages } from '@geonetwork-ui/util/app-config'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import resetAllMocks = jest.resetAllMocks
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 jest.mock('@geonetwork-ui/util/app-config', () => {
   let _languages = ['pt', 'de']
@@ -90,7 +89,6 @@ describe('HeaderComponent', () => {
   let searchFacade: SearchFacade
   let routerFacade: RouterFacade
   let platform: PlatformServiceInterface
-  let recordsRepository: RecordsRepositoryInterface
 
   beforeEach(async () => {
     _setLanguages(['fr', 'de'])
@@ -99,7 +97,6 @@ describe('HeaderComponent', () => {
       declarations: [HomeHeaderComponent, HeaderBadgeButtonComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
-        RecordsRepositoryInterface,
         {
           provide: RouterFacade,
           useClass: routerFacadeMock,
@@ -126,7 +123,6 @@ describe('HeaderComponent', () => {
     searchFacade = TestBed.inject(SearchFacade)
     routerFacade = TestBed.inject(RouterFacade)
     platform = TestBed.inject(PlatformServiceInterface)
-    recordsRepository = TestBed.inject(RecordsRepositoryInterface)
   })
 
   beforeEach(() => {

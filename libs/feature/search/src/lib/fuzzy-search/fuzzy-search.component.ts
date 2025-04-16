@@ -32,7 +32,6 @@ export class FuzzySearchComponent implements OnInit {
   @Input() enterButton = false
   @Output() itemSelected = new EventEmitter<CatalogRecord>()
   @Output() inputSubmitted = new EventEmitter<string>()
-  @Input() autoCompleteActionCustom: (query: string) => Observable<any[]>
   searchInputValue$: Observable<{ title: string }>
   @Output() isSearchActive = new EventEmitter<boolean>()
 
