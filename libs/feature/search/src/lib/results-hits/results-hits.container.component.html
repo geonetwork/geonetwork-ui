@@ -8,31 +8,9 @@
     [loading]="searchFacade.isLoading$ | async"
     [hits]="searchFacade.resultsHits$ | async"
   ></gn-ui-results-hits-number>
-  <gn-ui-inline-filter
-    [choices]="(filterChoices$ | async) || []"
+  <gn-ui-results-hits-search-kind
+    (selectionChanged)="onSelectionChanged($event)"
+    [choices]="filterChoices$ | async"
     [selected]="selected$ | async"
-    (selectValues)="onSelectedValues($event)"
-  >
-    <ng-template let-choice>
-      <gn-ui-kind-badge
-        [kind]="choice.value"
-        [contentTemplate]="customTemplate"
-        class="gn-ui-btn-outline rounded-md py-2 px-2 border-gray-400 cursor-pointer focus-within:text-primary-darkest focus-within:bg-gray-50 transition-colors bg-transparent hover:text-primary-darker focus:text-primary-darker active:text-primary-black"
-        [ngClass]="{
-          '!bg-primary-lightest hover:bg-primary-lightest':
-            (selected$ | async).includes(choice.value) ||
-            ((selected$ | async).length === 0 && choice.value === 'all'),
-        }"
-      >
-        <ng-template #customTemplate>
-          {{ 'search.filters.recordKind.' + choice.value | translate
-          }}<span
-            class="ml-1"
-            *ngIf="(selected$ | async).includes(choice.value)"
-            >({{ choice.count }})</span
-          >
-        </ng-template>
-      </gn-ui-kind-badge>
-    </ng-template>
-  </gn-ui-inline-filter>
+  ></gn-ui-results-hits-search-kind>
 </div>

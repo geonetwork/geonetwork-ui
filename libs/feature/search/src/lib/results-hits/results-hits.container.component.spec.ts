@@ -6,11 +6,7 @@ import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FieldsService } from '../utils/service/fields.service'
 import { TranslateModule } from '@ngx-translate/core'
-import { ResultsHitsNumberComponent } from '@geonetwork-ui/ui/search'
-import { InlineFilterComponent } from '@geonetwork-ui/ui/inputs'
-import { KindBadgeComponent } from '@geonetwork-ui/ui/elements'
-import { NgIconsModule, provideIcons } from '@ng-icons/core'
-import { iconoirAppleWallet, iconoirAppleShortcuts } from '@ng-icons/iconoir'
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 
 describe('ResultsHitsContainerComponent', () => {
   let component: ResultsHitsContainerComponent
@@ -23,6 +19,9 @@ describe('ResultsHitsContainerComponent', () => {
   }
 
   const fieldsServiceMock = {
+    buildFiltersFromFieldValues: jest
+      .fn()
+      .mockReturnValue(of({ recordKind: ['dataset'] })),
     getAvailableValues: jest.fn().mockReturnValue(
       of([
         { value: 'dataset', label: 'Dataset', count: 5 },
@@ -31,7 +30,7 @@ describe('ResultsHitsContainerComponent', () => {
     ),
     readFieldValuesFromFilters: jest
       .fn()
-      .mockReturnValue(of({ resourceType: ['dataset'] })),
+      .mockReturnValue(of({ recordKind: ['dataset'] })),
   }
 
   const searchServiceMock = {
@@ -40,23 +39,14 @@ describe('ResultsHitsContainerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        ResultsHitsContainerComponent,
-        ResultsHitsNumberComponent,
-        InlineFilterComponent,
-      ],
+      declarations: [ResultsHitsContainerComponent],
       providers: [
         { provide: SearchFacade, useValue: searchFacadeMock },
         { provide: SearchService, useValue: searchServiceMock },
         { provide: FieldsService, useValue: fieldsServiceMock },
-        provideIcons({ iconoirAppleWallet, iconoirAppleShortcuts }),
       ],
-      imports: [
-        CommonModule,
-        TranslateModule.forRoot(),
-        KindBadgeComponent,
-        NgIconsModule,
-      ],
+      imports: [CommonModule, TranslateModule.forRoot()],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents()
   })
 
@@ -82,6 +72,14 @@ describe('ResultsHitsContainerComponent', () => {
     filterChoices.subscribe((choices) => {
       const count = choices.find((choice) => choice.value === 'dataset')?.count
       expect(count).toBe(5)
+    })
+  })
+
+  it('should call updateFilters when onSelectionChanged is triggered', () => {
+    component.onSelectionChanged(['dataset'])
+
+    expect(searchServiceMock.updateFilters).toHaveBeenCalledWith({
+      recordKind: ['dataset'],
     })
   })
 })

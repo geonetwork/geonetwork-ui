@@ -7,7 +7,7 @@ import {
   startWith,
   switchMap,
 } from 'rxjs'
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { SearchFacade } from '../state/search.facade'
 import { FieldAvailableValue, FieldValue } from '../utils/service/fields'
@@ -24,7 +24,7 @@ marker('search.filters.recordKind.reuse')
   templateUrl: './results-hits.container.component.html',
   styleUrls: ['./results-hits.container.component.css'],
 })
-export class ResultsHitsContainerComponent {
+export class ResultsHitsContainerComponent implements OnInit {
   fieldName = 'recordKind'
   filterChoices$: Observable<FieldAvailableValue[]>
   selected$: Observable<FieldValue[]>
@@ -46,38 +46,14 @@ export class ResultsHitsContainerComponent {
       catchError(() => of([]))
     ) as Observable<FieldValue[]>
 
-    this.filterChoices$ = this.fieldsService
-      .getAvailableValues(this.fieldName)
-      .pipe(
-        catchError(() => of([])),
-        map((availableValues: FieldAvailableValue[]) =>
-          this.buildFilterChoices(availableValues)
-        )
-      )
+    this.filterChoices$ = <Observable<FieldAvailableValue[]>>(
+      this.fieldsService.getAvailableValues(this.fieldName)
+    )
   }
 
-  onSelectedValues(values: string[]) {
-    const searchValues = values.includes('all') ? [] : values
-
+  onSelectionChanged(values: string[]) {
     this.fieldsService
-      .buildFiltersFromFieldValues({ [this.fieldName]: searchValues })
+      .buildFiltersFromFieldValues({ [this.fieldName]: values })
       .subscribe((filters) => this.searchService.updateFilters(filters))
-  }
-
-  buildFilterChoices(availableValues: FieldAvailableValue[]) {
-    return [
-      ...[
-        {
-          label: 'all',
-          value: 'all',
-          count: undefined,
-        },
-      ],
-      ...availableValues,
-    ]
-  }
-
-  isChoiceSelected(value: string) {
-    return this.selected$.pipe(map((selected) => selected.includes(value)))
   }
 }

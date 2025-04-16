@@ -19,7 +19,7 @@ export class RouterSearchService implements SearchServiceI {
     private searchFacade: SearchFacade,
     private facade: RouterFacade,
     private fieldsService: FieldsService
-  ) { }
+  ) {}
 
   setSortAndFilters(filters: FieldFilters, sortBy: SortByField) {
     this.fieldsService
