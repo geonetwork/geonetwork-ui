@@ -485,10 +485,10 @@ export class AvailableServicesField extends SimpleSearchField {
 }
 
 /**
- * This class is meant to be used with the legacy filter on resourceType (now deprecated, the use of recordKind field is recommended).
+ * This class is meant to be used with the legacy filter on `resourceType` (now deprecated, the use of `recordKind` field is recommended).
  * Since creating filters on the same ES field is not possible, in order to make the resource type filter still working,
- * we create an ES on the fly: resourceTypeLegacy that references the resourceType under the hood.
- * @deprecated Use recordKind field instead.
+ * we create an ES on the fly: `resourceTypeLegacy` that references the `resourceType` under the hood.
+ * @deprecated Use `recordKind` field instead.
  */
 export class ResourceTypeLegacyField extends TranslatedSearchField {
   constructor(injector: Injector) {

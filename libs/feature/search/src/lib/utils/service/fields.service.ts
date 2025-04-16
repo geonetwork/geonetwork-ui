@@ -49,7 +49,8 @@ export class FieldsService {
   protected fields = {
     organization: new OrganizationSearchField(this.injector),
     format: new SimpleSearchField('format', this.injector, 'asc'),
-    resourceType: new ResourceTypeLegacyField(this.injector),
+    resourceType: new ResourceTypeLegacyField(this.injector), // Deprecated, use `recordKind` instead
+    recordKind: new RecordKindField(this.injector),
     representationType: new TranslatedSearchField(
       'cl_spatialRepresentationType.key',
       this.injector,
@@ -91,7 +92,6 @@ export class FieldsService {
     user: new UserSearchField(this.injector),
     changeDate: new DateRangeSearchField('changeDate', this.injector, 'desc'),
     availableServices: new AvailableServicesField(this.injector),
-    recordKind: new RecordKindField(this.injector),
   } as Record<string, AbstractSearchField>
 
   get supportedFields() {
