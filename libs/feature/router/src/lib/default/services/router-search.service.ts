@@ -19,7 +19,7 @@ export class RouterSearchService implements SearchServiceI {
     private searchFacade: SearchFacade,
     private facade: RouterFacade,
     private fieldsService: FieldsService
-  ) {}
+  ) { }
 
   setSortAndFilters(filters: FieldFilters, sortBy: SortByField) {
     this.fieldsService
@@ -51,7 +51,6 @@ export class RouterSearchService implements SearchServiceI {
     const newParams = await firstValueFrom(
       this.fieldsService.readFieldValuesFromFilters(updatedFilters)
     )
-
     this.facade.updateSearch(newParams as SearchRouteParams)
   }
 
