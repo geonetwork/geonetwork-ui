@@ -160,7 +160,7 @@ advanced_filters = ['organization', 'inspireKeyword', 'keyword', 'topic']
 
 ⚠️ **WARNING**: `'resourceType'` filter has been deprecated, please use `'recordKind'` instead. Using both filters is not recommended as it may imply some inconsistencies in the page results. `'resourceType'` filter will fetch records of all type (instead of `featureCatalog`), whereas `'recordKind'` filter will fetch `datasets` (wich are `datasets`, `featureCatalog` that are `datasets`, and `series`), `services` and `reuse` (`application` and all kind of `map`).
 
-⚠️ **Breaking change**: Record of type featureCatalog are not retrieve anymore.
+⚠️ **Breaking change**: Record of type featureCatalog are not retrieved anymore.
 
 - `[[search_preset]]` (multiple, optional)
 
