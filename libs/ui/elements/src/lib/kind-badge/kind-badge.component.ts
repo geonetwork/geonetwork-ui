@@ -1,13 +1,9 @@
 import { CommonModule } from '@angular/common'
 import {
-  AfterContentInit,
   ChangeDetectionStrategy,
   Component,
-  ContentChild,
-  ElementRef,
   Input,
   TemplateRef,
-  ViewChild,
 } from '@angular/core'
 import { provideIcons } from '@ng-icons/core'
 import {
@@ -46,15 +42,10 @@ enum KindConfig {
 export class KindBadgeComponent {
   @Input() contentTemplate: TemplateRef<unknown>
   @Input() kind: string
-  @Input() mapper = (value: string) => value
 
   hasProjectedContent = false
 
-  get displayKind() {
-    return this.mapper(this.kind)
-  }
-
   get iconKind() {
-    return KindConfig[this.displayKind] || KindConfig.dataset
+    return KindConfig[this.kind] || KindConfig.dataset
   }
 }

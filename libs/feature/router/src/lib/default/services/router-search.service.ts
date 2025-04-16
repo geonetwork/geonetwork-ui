@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
 import {
   FieldsService,
-  FieldValues,
   SearchFacade,
   SearchServiceI,
 } from '@geonetwork-ui/feature/search'
@@ -11,7 +10,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/search'
 import { ROUTE_PARAMS, SearchRouteParams } from '../constants'
 import { RouterFacade } from '../state/router.facade'
-import { firstValueFrom, map } from 'rxjs'
+import { firstValueFrom } from 'rxjs'
 import { sortByToString } from '@geonetwork-ui/util/shared'
 
 @Injectable()
