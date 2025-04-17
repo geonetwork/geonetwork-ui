@@ -135,19 +135,19 @@
   }
 
   .gn-ui-card-xs {
-    @apply min-h-[68px] md:w-[487px];
+    @apply min-h-[68px];
   }
 
   .gn-ui-card-s {
-    @apply min-h-[135px] md:w-80;
+    @apply min-h-[135px] min-w-[260px] sm:min-w-[300px];
   }
 
   .gn-ui-card-m {
-    @apply min-h-[68px] md:w-[487px];
+    @apply min-h-[68px];
   }
 
   .gn-ui-card-l {
-    @apply min-h-[68px] md:w-[992px];
+    @apply min-h-[68px];
   }
 
   .gn-ui-card-title {
