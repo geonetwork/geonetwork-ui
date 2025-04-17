@@ -515,9 +515,7 @@ export class RecordKindField extends SimpleSearchField {
     super('resourceType', injector, 'asc')
   }
 
-  getAvailableValues(): Observable<
-    { label: string; value: string; count: number }[]
-  > {
+  getAvailableValues(): Observable<FieldAvailableValue[]> {
     return this.repository.aggregate(this.getAggregations()).pipe(
       map(
         (response) =>
