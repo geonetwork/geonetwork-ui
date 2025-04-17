@@ -1,11 +1,11 @@
 <a
   href="{{ link.url }}"
   target="_blank"
-  class="group flex flex-row justify-between card-shadow cursor-pointer rounded overflow-hidden"
+  class="group flex flex-row justify-between card-shadow cursor-pointer rounded overflow-hidden w-full"
   rel="noopener"
   [ngClass]="cardClass"
 >
-  <div class="flex flex-col justify-between">
+  <div class="flex flex-col justify-between w-full">
     <div class="gn-ui-card-title" [title]="link.description || link.name">
       {{ link.description || link.name }}
     </div>
@@ -24,7 +24,10 @@
       >
     </div>
   </div>
-  <div class="flex" [ngClass]="size === 'S' ? 'items-end' : 'items-center'">
+  <div
+    class="flex min-w-[32px]"
+    [ngClass]="size === 'S' ? 'items-end' : 'items-center'"
+  >
     <div class="gn-ui-card-icon">
       <ng-icon
         class="inline-block card-icon align-middle"
