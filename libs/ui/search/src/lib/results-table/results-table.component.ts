@@ -32,14 +32,10 @@ import { TranslateModule } from '@ngx-translate/core'
 import { ActionMenuComponent } from './action-menu/action-menu.component'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { iconoirUser, iconoirLock } from '@ng-icons/iconoir'
-import {
-  CdkConnectedOverlay,
-  CdkOverlayOrigin,
-  Overlay,
-  OverlayRef,
-} from '@angular/cdk/overlay'
+import { CdkOverlayOrigin, Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
 import { matMoreVert } from '@ng-icons/material-icons/baseline'
+import { map, Observable, of } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-results-table',
@@ -66,7 +62,8 @@ export class ResultsTableComponent {
   @Input() hasDraft: (record: CatalogRecord) => boolean = () => false
   @Input() canDuplicate: (record: CatalogRecord) => boolean = () => true
   @Input() canDelete: (record: CatalogRecord) => boolean = () => true
-  @Input() isDraftPage = false
+  @Input() canEdit: (record: CatalogRecord) => Observable<boolean> = () =>
+    of(true)
   @Input() isDuplicating = false
 
   // emits the column (field) as well as the order
@@ -173,10 +170,12 @@ export class ResultsTableComponent {
     return getBadgeColor(format)
   }
 
-  handleRecordClick(item: CatalogRecord) {
-    if ((item?.extras?.edit || this.isDraftPage) && item.kind === 'dataset') {
-      this.recordClick.emit(item as CatalogRecord)
-    }
+  handleRecordClick(item: unknown) {
+    this.canEditItemFromTable(item as CatalogRecord).subscribe((canEdit) => {
+      if (canEdit) {
+        this.recordClick.emit(item as CatalogRecord)
+      }
+    })
   }
 
   handleDuplicate(item: unknown) {
@@ -218,5 +217,11 @@ export class ResultsTableComponent {
 
   handleRecordSelectedChange(selected: boolean, record: CatalogRecord) {
     this.recordsSelectedChange.emit([[record], selected])
+  }
+
+  canEditItemFromTable = (item: CatalogRecord): Observable<boolean> => {
+    return this.canEdit(item).pipe(
+      map((canEditItem) => canEditItem && item.kind === 'dataset')
+    )
   }
 }

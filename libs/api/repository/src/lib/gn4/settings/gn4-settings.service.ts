@@ -11,6 +11,9 @@ export class Gn4SettingsService {
     'system/users/identicon'
   )
 
+  public allowEditHarvested$: Observable<boolean> =
+    this.getSettingsSetValueByKey('system/harvester/enableEditing')
+
   constructor(private siteApiService: SiteApiService) {}
 
   private getSettingsSetValueByKey(key: string) {
