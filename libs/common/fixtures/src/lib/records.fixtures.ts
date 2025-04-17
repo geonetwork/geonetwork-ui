@@ -3,6 +3,7 @@ import {
   DatasetRecord,
   DatasetSpatialExtent,
   Keyword,
+  ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 
 export const datasetRecordsFixture: () => CatalogRecord[] = () => [
@@ -810,6 +811,54 @@ export const importDatasetRecordAsXmlFixture = (): string => `
 		</gmd:MD_DataIdentification>
 	</gmd:identificationInfo>
 </gmd:MD_Metadata>`
+
+export const simpleServiceRecordFixture = (): ServiceRecord => ({
+  kind: 'service',
+  status: null,
+  lineage: null,
+  recordUpdated: new Date('2023-03-17T07:38:08.875Z'),
+  recordPublished: null,
+  ownerOrganization: null,
+  licenses: [],
+  legalConstraints: [],
+  securityConstraints: [],
+  otherConstraints: [],
+  contacts: [],
+  contactsForResource: [],
+  keywords: [],
+  topics: [],
+  spatialExtents: [],
+  temporalExtents: [],
+  overviews: [],
+  defaultLanguage: null,
+  otherLanguages: [],
+  title: 'Sites de gestion des déchets miniers - Service de visualisation WMS',
+  onlineResources: [
+    {
+      name: 'Service de visualisation WMS',
+      description:
+        'Adresse de connexion au service de visualisation WMS de la série de couches de données "Sites de gestion des déchets miniers"',
+      type: 'service',
+      url: new URL(
+        'https://geoservices.wallonie.be/arcgis/services/SOL_SOUS_SOL/DECHETS_MINIERS/MapServer/WMSServer?request=GetCapabilities&service=WMS'
+      ),
+      accessServiceProtocol: 'wms',
+      accessRestricted: false,
+    },
+  ],
+  uniqueIdentifier: '00b22798-ec8e-4500-89e8-90eeeda45919',
+  landingPage: new URL(
+    'http://localhost:4200/geonetwork/srv/fre/catalog.search#/metadata/00b22798-ec8e-4500-89e8-90eeeda45919'
+  ),
+  extras: {
+    isPublishedToAll: true,
+    id: '723',
+    isHarvested: true,
+    ownerInfo: 'admin|admin|admin|Administrator',
+    edit: true,
+  },
+  recordCreated: new Date('2023-03-17T07:38:08.875Z'),
+})
 
 export const NATIONAL_KEYWORD = {
   key: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/national',

@@ -24,6 +24,7 @@ export const allSearchFields = [
   'link',
   'owner',
   'resourceType',
+  'isHarvested',
 ]
 @Component({
   selector: 'md-editor-records-list',

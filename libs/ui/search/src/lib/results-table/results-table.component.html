@@ -1,5 +1,6 @@
 <gn-ui-interactive-table
   [items]="records"
+  [canEditItem]="canEdit"
   [isDraftPage]="isDraftPage"
   (itemClick)="handleRecordClick($event)"
 >
@@ -9,15 +10,16 @@
       <ng-icon
         name="iconoirLock"
         class="text-purple"
-        *ngIf="(!item.extras?.edit && !isDraftPage) || item.kind !== 'dataset'"
+        *ngIf="(canEdit(item) | async) === false; else selectCheckbox"
       ></ng-icon>
-      <gn-ui-checkbox
-        *ngIf="(item.extras?.edit || isDraftPage) && item.kind === 'dataset'"
-        [checked]="isChecked(item)"
-        (changed)="handleRecordSelectedChange($event, item)"
-        class="-m-2"
-        type="default"
-      ></gn-ui-checkbox>
+      <ng-template #selectCheckbox>
+        <gn-ui-checkbox
+          [checked]="isChecked(item)"
+          (changed)="handleRecordSelectedChange($event, item)"
+          class="-m-2"
+          type="default"
+        ></gn-ui-checkbox>
+      </ng-template>
     </ng-template>
   </gn-ui-interactive-table-column>
 
@@ -149,14 +151,11 @@
         (buttonClick)="openActionMenu(item, template)"
         type="light"
         data-test="record-menu-button"
-        [disabled]="
-          (!item.extras?.edit && !isDraftPage) || item.kind !== 'dataset'
-        "
+        [disabled]="(canEdit(item) | async) === false"
       >
         <ng-icon
           [ngClass]="{
-            'text-purple-light':
-              (!item.extras?.edit && !isDraftPage) || item.kind !== 'dataset',
+            'text-purple-light': (canEdit(item) | async) === false,
           }"
           name="matMoreVert"
         ></ng-icon>
