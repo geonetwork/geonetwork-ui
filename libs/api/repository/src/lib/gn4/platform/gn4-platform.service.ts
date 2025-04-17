@@ -82,6 +82,13 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     shareReplay(1)
   )
 
+  private readonly allowEditHarvestedMd$ = this.settings$.pipe(
+    map((info) => {
+      return info['system/harvester/enableEditing'] as boolean
+    }),
+    shareReplay(1)
+  )
+
   /**
    * A map of already loaded thesauri (groups of keywords); the key is a URI
    * @private
@@ -121,6 +128,10 @@ export class Gn4PlatformService implements PlatformServiceInterface {
 
   getApiVersion(): Observable<string> {
     return this.apiVersion$
+  }
+
+  getAllowEditHarvestedMd(): Observable<boolean> {
+    return this.allowEditHarvestedMd$
   }
 
   getMe(): Observable<UserModel> {

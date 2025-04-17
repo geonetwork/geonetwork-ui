@@ -23,6 +23,7 @@ export abstract class RecordsRepositoryInterface {
   abstract getSourceOf(record: CatalogRecord): Observable<CatalogRecord[]>
   abstract fuzzySearch(query: string): Observable<SearchResults>
   abstract canEditRecord(uniqueIdentifier: string): Observable<boolean>
+  abstract canEditIndexedRecord(record: CatalogRecord): Observable<boolean>
   /**
    * This emits once:
    * - record object; if a draft exists, this will return it

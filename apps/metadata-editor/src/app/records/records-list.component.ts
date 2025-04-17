@@ -26,6 +26,7 @@ export const allSearchFields = [
   'resourceType',
   'mainLanguage',
   'otherLanguage',
+  'isHarvested',
 ]
 @Component({
   selector: 'md-editor-records-list',
