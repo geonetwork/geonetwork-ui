@@ -22,7 +22,6 @@ import {
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { HttpClient, HttpEventType } from '@angular/common/http'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { url } from 'inspector'
 
 let geonetworkVersion: string
 
@@ -59,6 +58,7 @@ class SiteApiServiceMock {
   getSiteOrPortalDescription = jest.fn(() =>
     of({
       'system/platform/version': geonetworkVersion,
+      'system/harvester/enableEditing': false,
     })
   )
 }
@@ -289,7 +289,7 @@ describe('Gn4PlatformService', () => {
         )
       })
     })
-    describe('when version is euqal or greater than 4.2.2', () => {
+    describe('when version is equal or greater than 4.2.2', () => {
       beforeEach(() => {
         geonetworkVersion = '4.2.2'
       })
@@ -297,6 +297,13 @@ describe('Gn4PlatformService', () => {
         const version = await firstValueFrom(service.getApiVersion())
         expect(version).toEqual('4.2.2')
       })
+    })
+  })
+
+  describe('allow edit harvested MD', () => {
+    it('fetches enableEditing from harvester settings', async () => {
+      const allowEdit = await firstValueFrom(service.getAllowEditHarvestedMd())
+      expect(allowEdit).toEqual(false)
     })
   })
 
