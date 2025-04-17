@@ -1,15 +1,17 @@
 <div class="w-full h-full flex flex-col gap-[13px]">
   <div
-    class="w-full flex py-4 px-5 bg-white border border-color-border rounded-lg mt-6"
+    class="flex py-4 px-5 bg-white border border-color-border rounded-lg mt-6"
   >
-    <gn-ui-dropdown-selector
-      [ngClass]="{ hidden: !displaySource }"
-      class="w-full grow"
-      extraBtnClass="font-sans font-medium"
-      [title]="'map.select.layer' | translate"
-      [choices]="dropdownChoices$ | async"
-      (selectValue)="selectLinkToDisplay($event)"
-    ></gn-ui-dropdown-selector>
+    <div class="grow min-w-0">
+      <gn-ui-dropdown-selector
+        [ngClass]="{ hidden: !displaySource }"
+        class="w-full"
+        extraBtnClass="font-sans font-medium"
+        [title]="'map.select.layer' | translate"
+        [choices]="dropdownChoices$ | async"
+        (selectValue)="selectLinkToDisplay($event)"
+      ></gn-ui-dropdown-selector>
+    </div>
     <div class="self-end">
       <gn-ui-external-viewer-button
         extraClass="w-[44px] h-[44px]"

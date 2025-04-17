@@ -1,13 +1,13 @@
 <div class="w-full h-full flex flex-col gap-[13px]">
   <div
-    class="w-full flex h-[76px] py-4 pl-5 pr-10 bg-white border border-color-border rounded-lg mt-6"
+    class="w-full py-4 px-5 bg-white border border-color-border rounded-lg mt-6"
   >
     <gn-ui-dropdown-selector
       *ngIf="dropdownChoices$ | async as choices"
       [ngClass]="{ hidden: !displaySource }"
       [title]="'table.select.data' | translate"
       class="h-[44px] w-full"
-      extraBtnClass="ml-5 font-sans font-medium"
+      extraBtnClass="font-sans font-medium"
       [choices]="choices"
       (selectValue)="selectLink($event)"
     ></gn-ui-dropdown-selector>
