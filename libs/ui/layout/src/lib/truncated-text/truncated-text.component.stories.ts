@@ -5,7 +5,7 @@ import { importProvidersFrom } from '@angular/core'
 
 const meta: Meta<TruncatedTextComponent> = {
   component: TruncatedTextComponent,
-  title: 'Elements/TruncatedText',
+  title: 'Layout/TruncatedText',
   decorators: [
     applicationConfig({
       providers: [
