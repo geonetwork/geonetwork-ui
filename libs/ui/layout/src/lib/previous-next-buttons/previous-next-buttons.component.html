@@ -1,18 +1,30 @@
-<div class="flex flex-row gap-x-4 items-center">
+<div class="flex flex-row gap-x-1 items-center">
   <gn-ui-button
     data-test="previousButton"
-    type="outline"
+    type="light"
+    [extraClass]="
+      'w-10 h-8 px-2 py-1 rounded-lg ' +
+      (!listComponent.isFirstPage
+        ? 'border border-gray-300'
+        : 'border border-gray-100')
+    "
     [disabled]="listComponent.isFirstPage"
     (buttonClick)="listComponent.goToPrevPage()"
   >
-    <ng-icon name="matArrowBack"></ng-icon>
+    <ng-icon name="matArrowBackIos"></ng-icon>
   </gn-ui-button>
   <gn-ui-button
     data-test="nextButton"
-    type="outline"
+    type="light"
+    [extraClass]="
+      'w-10 h-8 px-2 py-1 rounded-lg ' +
+      (!listComponent.isLastPage
+        ? 'border border-gray-300'
+        : 'border border-gray-100')
+    "
     [disabled]="listComponent.isLastPage"
     (buttonClick)="listComponent.goToNextPage()"
   >
-    <ng-icon name="matArrowForward"></ng-icon>
+    <ng-icon name="matArrowForwardIos"></ng-icon>
   </gn-ui-button>
 </div>
