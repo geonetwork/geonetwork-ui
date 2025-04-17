@@ -10,13 +10,12 @@
       class="gn-ui-btn-outline rounded-md py-2 px-2 border-gray-400 cursor-pointer focus-within:text-primary-darkest focus-within:bg-gray-50 transition-colors bg-transparent hover:text-primary-darker focus:text-primary-darker active:text-primary-black"
       [ngClass]="{
         '!bg-primary-lightest hover:bg-primary-lightest':
-          selected.includes(choice.value) ||
-          (selected.length === 0 && choice.value === 'all'),
+          isSelectedChoice(choice.value) || isAllChoice(choice.value),
       }"
     >
       <ng-template #customTemplate>
         {{ 'search.filters.recordKind.' + choice.value | translate
-        }}<span class="ml-1" *ngIf="selected.includes(choice.value)"
+        }}<span class="ml-1" *ngIf="isSelectedChoice(choice.value)"
           >({{ choice.count }})</span
         >
       </ng-template>

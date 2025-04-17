@@ -42,4 +42,12 @@ export class ResultsHitsSearchKindComponent implements OnChanges {
 
     this.selectionChanged.emit(selectedValues)
   }
+
+  isSelectedChoice(choiceValue: string) {
+    return this.selected.includes(choiceValue)
+  }
+
+  isAllChoice(choiceValue: string) {
+    return this.selected.length === 0 && choiceValue === 'all'
+  }
 }
