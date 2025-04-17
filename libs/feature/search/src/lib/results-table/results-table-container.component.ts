@@ -12,7 +12,7 @@ import { SearchService } from '../utils/service/search.service'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { ResultsTableComponent } from '@geonetwork-ui/ui/search'
 import { CommonModule } from '@angular/common'
-import { Subscription } from 'rxjs'
+import { Observable, Subscription } from 'rxjs'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateService } from '@ngx-translate/core'
 
@@ -38,6 +38,10 @@ export class ResultsTableContainerComponent implements OnDestroy {
 
   hasDraft = (record: CatalogRecord): boolean =>
     this.recordsRepository.recordHasDraft(record.uniqueIdentifier)
+
+  canEdit = (record: CatalogRecord): Observable<boolean> => {
+    return this.recordsRepository.canEditIndexedRecord(record)
+  }
 
   constructor(
     protected searchFacade: SearchFacade,

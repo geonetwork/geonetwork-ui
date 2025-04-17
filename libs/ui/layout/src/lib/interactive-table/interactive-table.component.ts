@@ -14,9 +14,11 @@ import { iconoirNavArrowDown, iconoirNavArrowUp } from '@ng-icons/iconoir'
 import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { Observable, of } from 'rxjs'
 
-marker('editor.record.lock.reason')
-marker('editor.record.lock.format')
+marker('editor.record.lock.resourceType')
+marker('editor.record.lock.harvested')
+marker('editor.record.lock.owner')
 @Component({
   selector: 'gn-ui-interactive-table',
   templateUrl: './interactive-table.component.html',
@@ -31,6 +33,7 @@ export class InteractiveTableComponent {
   columns: QueryList<InteractiveTableColumnComponent>
 
   @Input() items: unknown[] = []
+  @Input() canEditItem: (item: unknown) => Observable<boolean> = () => of(true)
   @Input() isDraftPage = false
   @Output() itemClick = new EventEmitter<unknown>()
 
@@ -48,11 +51,15 @@ export class InteractiveTableComponent {
     }
   }
 
-  getItemTitle(item: CatalogRecord) {
-    if (!item.extras?.edit && !this.isDraftPage && item.kind === 'dataset') {
-      return 'editor.record.lock.reason'
-    } else if (item.kind !== 'dataset') {
-      return 'editor.record.lock.format'
+  getItemTitle(item: unknown) {
+    if (!this.isDraftPage) {
+      if ((item as CatalogRecord).kind !== 'dataset') {
+        return 'editor.record.lock.resourceType'
+      } else if ((item as CatalogRecord).extras?.isHarvested) {
+        return 'editor.record.lock.harvested'
+      } else if (!(item as CatalogRecord).extras?.edit) {
+        return 'editor.record.lock.owner'
+      }
     }
     return ''
   }

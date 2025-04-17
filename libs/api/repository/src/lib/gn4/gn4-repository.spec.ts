@@ -21,6 +21,7 @@ import {
   simpleDatasetRecordFixture,
   simpleDatasetRecordWithFcatsFixture,
   duplicateDatasetRecordAsXmlFixture,
+  simpleServiceRecordFixture,
 } from '@geonetwork-ui/common/fixtures'
 import {
   CatalogRecord,
@@ -35,6 +36,7 @@ import {
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
 import { TranslateService } from '@ngx-translate/core'
+import { Gn4SettingsService } from './settings/gn4-settings.service'
 
 class Gn4MetadataMapperMock {
   readRecords = jest.fn((records) =>
@@ -103,10 +105,16 @@ class PlatformServiceInterfaceMock {
   getApiVersion = jest.fn(() => of('4.2.5'))
 }
 
+let allowEditHarvested = false
+class Gn4SettingsServiceMock {
+  allowEditHarvested$ = of(allowEditHarvested)
+}
+
 const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
   extras: {
     ownerInfo: 'Owner|SomeDetails',
+    isHarvested: false,
     edit: true,
   },
 }
@@ -121,6 +129,7 @@ describe('Gn4Repository', () => {
   let gn4SearchApi: SearchApiService
   let gn4RecordsApi: RecordsApiService
   let platformService: PlatformServiceInterface
+  let settingsService: Gn4SettingsService
   let httpTestingController: HttpTestingController
 
   beforeEach(() => {
@@ -149,6 +158,10 @@ describe('Gn4Repository', () => {
           useClass: PlatformServiceInterfaceMock,
         },
         {
+          provide: Gn4SettingsService,
+          useClass: Gn4SettingsServiceMock,
+        },
+        {
           provide: TranslateService,
           useValue: translateServiceMock,
         },
@@ -159,6 +172,7 @@ describe('Gn4Repository', () => {
     gn4SearchApi = TestBed.inject(SearchApiService)
     gn4RecordsApi = TestBed.inject(RecordsApiService)
     platformService = TestBed.inject(PlatformServiceInterface)
+    settingsService = TestBed.inject(Gn4SettingsService)
     httpTestingController = TestBed.inject(HttpTestingController)
   })
 
@@ -1163,11 +1177,51 @@ describe('Gn4Repository', () => {
         })
     })
   })
-  describe('canEditRecord', () => {
-    it('should return the editing rights', () => {
-      repository.canEditRecord('my-dataset-001').subscribe((canEdit) => {
+
+  describe('canEditIndexedRecord', () => {
+    it('should return true when the record can be edited', () => {
+      repository.canEditIndexedRecord(SAMPLE_RECORD).subscribe((canEdit) => {
         expect(canEdit).toEqual(true)
       })
+    })
+    it('should return false when the record is of the wrong type', () => {
+      repository
+        .canEditIndexedRecord(simpleServiceRecordFixture())
+        .subscribe((canEdit) => {
+          expect(canEdit).toEqual(false)
+        })
+    })
+    it("should return false when the record has been harvested and the settings don't allow edit on harvested records", () => {
+      repository
+        .canEditIndexedRecord({
+          ...SAMPLE_RECORD,
+          extras: { isHarvested: true },
+        })
+        .subscribe((canEdit) => {
+          expect(canEdit).toEqual(false)
+        })
+    })
+    describe('when the record is harvested and the settings allow edit on harvested records', () => {
+      beforeEach(() => {
+        allowEditHarvested = true
+      })
+      it('should return true', () => {
+        repository
+          .canEditIndexedRecord({
+            ...SAMPLE_RECORD,
+            extras: { isHarvested: true },
+          })
+          .subscribe((canEdit) => {
+            expect(canEdit).toEqual(true)
+          })
+      })
+    })
+    it('should return false when the record has edit rights set to false', () => {
+      repository
+        .canEditIndexedRecord({ ...SAMPLE_RECORD, extras: { edit: false } })
+        .subscribe((canEdit) => {
+          expect(canEdit).toEqual(false)
+        })
     })
   })
 })

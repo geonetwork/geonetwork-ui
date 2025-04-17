@@ -29,6 +29,7 @@ export abstract class RecordsRepositoryInterface {
     configFilters?: FieldFilters
   ): Observable<SearchResults>
   abstract canEditRecord(uniqueIdentifier: string): Observable<boolean>
+  abstract canEditIndexedRecord(record: CatalogRecord): Observable<boolean>
   /**
    * This emits once:
    * - record object; if a draft exists, this will return it

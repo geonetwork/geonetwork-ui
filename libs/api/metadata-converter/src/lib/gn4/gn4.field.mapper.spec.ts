@@ -193,15 +193,25 @@ describe('Gn4FieldMapper', () => {
           const result = mappingFn(output, source)
           expect(result).toEqual({ status: 'completed' })
         })
+        it('isHarvested - should return a function that correctly maps the field', () => {
+          const fieldName = 'isHarvested'
+          const mappingFn = service.getMappingFn(fieldName)
+          const output = {}
+          const source = {
+            isHarvested: 'true',
+          }
+          const result = mappingFn(output, source)
+          expect(result).toEqual({ extras: { isHarvested: true } })
+        })
         it('edit - should return a function that correctly maps the field', () => {
           const fieldName = 'edit'
           const mappingFn = service.getMappingFn(fieldName)
           const output = {}
           const source = {
-            edit: 'true',
+            edit: true,
           }
           const result = mappingFn(output, source)
-          expect(result).toEqual({ extras: { edit: 'true' } })
+          expect(result).toEqual({ extras: { edit: true } })
         })
         it('related - should return a function that correctly maps the field', () => {
           const fieldName = 'related'
