@@ -464,30 +464,59 @@ describe('MapViewComponent', () => {
     })
 
     describe('with a link using TMS protocol', () => {
-      beforeEach(fakeAsync(() => {
-        mdViewFacade.mapApiLinks$.next([
-          {
-            url: new URL('http://abcd.com/tms'),
-            name: 'orthophoto',
-            type: 'service',
-            accessServiceProtocol: 'tms',
-            styleInfo: { name: 'style1', href: 'http://abcd.com/style' },
-          },
-        ])
-        mdViewFacade.geoDataLinksWithGeometry$.next([])
-        tick(200)
-        fixture.detectChanges()
-      }))
-      it('emits a map context with the TMS layer', () => {
-        expect(mapComponent.context).toEqual({
-          layers: [
+      describe('containing a style', () => {
+        beforeEach(fakeAsync(() => {
+          mdViewFacade.mapApiLinks$.next([
             {
+              url: new URL('http://abcd.com/tms'),
               name: 'orthophoto',
-              type: 'maplibre-style',
-              styleUrl: 'http://abcd.com/style',
+              type: 'service',
+              accessServiceProtocol: 'tms',
+              styleInfo: { name: 'style1', href: 'http://abcd.com/style' },
             },
-          ],
-          view: expect.any(Object),
+          ])
+          mdViewFacade.geoDataLinksWithGeometry$.next([])
+          tick(200)
+          fixture.detectChanges()
+        }))
+        it('emits a map context using maplibre-style with styleUrl', () => {
+          expect(mapComponent.context).toEqual({
+            layers: [
+              {
+                name: 'orthophoto',
+                type: 'maplibre-style',
+                styleUrl: 'http://abcd.com/style',
+              },
+            ],
+            view: expect.any(Object),
+          })
+        })
+      })
+      describe('containing NO style', () => {
+        beforeEach(fakeAsync(() => {
+          mdViewFacade.mapApiLinks$.next([
+            {
+              url: new URL('http://abcd.com/tms'),
+              name: 'orthophoto',
+              type: 'service',
+              accessServiceProtocol: 'tms',
+            },
+          ])
+          mdViewFacade.geoDataLinksWithGeometry$.next([])
+          tick(200)
+          fixture.detectChanges()
+        }))
+        it('emits a map context using mvt with root url', () => {
+          expect(mapComponent.context).toEqual({
+            layers: [
+              {
+                name: 'orthophoto',
+                type: 'mvt',
+                url: 'http://abcd.com/tms',
+              },
+            ],
+            view: expect.any(Object),
+          })
         })
       })
     })
