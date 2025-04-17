@@ -134,20 +134,8 @@
       border-white focus:ring-4 focus:ring-gray-300;
   }
 
-  .gn-ui-card-xs {
-    @apply min-h-[68px];
-  }
-
   .gn-ui-card-s {
-    @apply min-h-[135px] min-w-[260px] sm:min-w-[300px];
-  }
-
-  .gn-ui-card-m {
-    @apply min-h-[68px];
-  }
-
-  .gn-ui-card-l {
-    @apply min-h-[68px];
+    @apply min-h-[64px] min-w-[260px] sm:min-w-[300px];
   }
 
   .gn-ui-card-title {
