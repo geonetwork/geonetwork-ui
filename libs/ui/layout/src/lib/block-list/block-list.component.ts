@@ -25,7 +25,7 @@ type ComponentSize = 'L' | 'M' | 'S' | 'XS'
   imports: [CommonModule, PaginationDotsComponent],
 })
 export class BlockListComponent implements AfterViewInit, Paginable {
-  pageSize = 10
+  pageSize = 4
   @Input() containerClass = ''
   @Input() paginationContainerClass = 'w-full bottom-0 top-auto'
   @ContentChildren('block', { read: ElementRef }) blocks: QueryList<
@@ -90,6 +90,7 @@ export class BlockListComponent implements AfterViewInit, Paginable {
   protected computeSubComponentSize(): ComponentSize {
     if (!this.blocks) return 'M'
     const subComponentsCount = this.blocks.length
+    if (subComponentsCount <= 3) return 'L'
     if (subComponentsCount <= 12) return 'M'
     if (subComponentsCount <= 18) return 'S'
     return 'XS'
@@ -97,12 +98,14 @@ export class BlockListComponent implements AfterViewInit, Paginable {
 
   protected computePageSize(): number {
     switch (this.subComponentSize) {
+      case 'L':
+        return 3
       case 'S':
         return 6
       case 'XS':
         return 8
       default:
-        return 4 //'M'
+        return 4
     }
   }
 

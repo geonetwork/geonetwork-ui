@@ -57,6 +57,8 @@ describe('BlockListComponent', () => {
     }
 
     const paginationCases: PaginationTestCase[] = [
+      { elements: 1, pageSize: 3, pages: 1 },
+      { elements: 3, pageSize: 3, pages: 1 },
       { elements: 4, pageSize: 4, pages: 1 },
       { elements: 12, pageSize: 4, pages: 3 },
       { elements: 13, pageSize: 6, pages: 3 },
