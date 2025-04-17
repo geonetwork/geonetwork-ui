@@ -10,7 +10,6 @@ import { SearchService } from '@geonetwork-ui/feature/search'
 import {
   ErrorComponent,
   ErrorType,
-  ImageOverlayPreviewComponent,
   MetadataCatalogComponent,
   MetadataContactComponent,
   MetadataInfoComponent,
@@ -46,7 +45,6 @@ import { matChatOutline } from '@ng-icons/material-icons/outline'
   standalone: true,
   imports: [
     CommonModule,
-    ImageOverlayPreviewComponent,
     MatTabsModule,
     ErrorComponent,
     RecordUserFeedbacksComponent,
@@ -117,21 +115,6 @@ export class RecordMetadataComponent {
   )
 
   errorTypes = ErrorType
-
-  thumbnailUrl$ = this.metadataViewFacade.metadata$.pipe(
-    map((metadata) => {
-      // in order to differentiate between metadata not loaded yet
-      // and url not defined
-      // the content-ghost of image-overlay-preview relies on this differentiation
-      if (metadata?.overviews === undefined) {
-        return undefined
-      } else {
-        return metadata?.overviews?.[0]?.url ?? null
-      }
-    })
-  )
-
-  showOverlay = true
 
   constructor(
     public metadataViewFacade: MdViewFacade,

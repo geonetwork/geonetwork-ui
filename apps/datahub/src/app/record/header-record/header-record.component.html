@@ -1,16 +1,16 @@
-<header class="w-full h-[285px]" [style.background]="backgroundCss">
+<header class="w-full min-h-[285px] grid" [style.background]="backgroundCss">
   <div
-    class="h-full container-lg mx-auto flex flex-col gap-2.5 justify-between relative"
+    class="h-full w-full container-lg mx-auto py-3 px-4 grid gap-3 grid-cols-1 sm:gap-6 sm:grid-cols-3 items-center content-center"
   >
-    <div class="flex flex-col gap-7 my-3 flex-grow justify-center mx-4">
+    <div class="sm:col-span-2 justify-center">
       <div class="flex flex-col gap-3">
-        <div
+        <h1
           *ngIf="metadata"
           class="font-title text-[28px] max-w-screen-sm line-clamp-3"
           [style.color]="foregroundColor"
         >
           {{ metadata.title }}
-        </div>
+        </h1>
         <a
           *ngIf="
             metadata.kind === 'reuse' && (reuseLinkUrl$ | async) as reuseLink
@@ -21,56 +21,71 @@
         >
           <span class="mt-1">{{ 'reuse.metadata.access' | translate }}</span>
           <ng-icon
-            class="ml-2 text-[1.5em]"
+            class="ml-2 text-[0.9em]"
             name="iconoirOpenNewWindow"
           ></ng-icon
         ></a>
-      </div>
-      <div
-        class="flex flex-row flex-wrap items-center gap-4 mb-4 sm:mr-[332px]"
-        [style.color]="foregroundColor"
-        data-test="metadataBadges"
-      >
-        <gn-ui-badge
-          [style.--gn-ui-badge-background-color]="'transparent'"
-          class="leading-[1.4em] border border-white rounded-md"
-          *ngIf="metadata?.kind"
-        >
-          <ng-icon
-            class="mr-[5px] text-[1em]"
-            [name]="getBadge().icon"
-          ></ng-icon>
-          <span class="font-semibold text-[12px]">{{
-            getBadge().text | translate
-          }}</span>
-        </gn-ui-badge>
-        <gn-ui-badge
-          *ngIf="metadata.kind !== 'service' && (isGeodata$ | async) === true"
-          [style.--gn-ui-badge-background-color]="'var(--color-primary-darker)'"
-        >
-          <ng-icon
-            class="mr-[5px] text-[1em]"
-            name="matLocationSearchingOutline"
-          ></ng-icon>
-          <span class="font-semibold text-[12px]" translate
-            >record.metadata.type</span
-          >
-        </gn-ui-badge>
-        <div *ngIf="metadata.recordUpdated">
-          <p translate [translateParams]="{ date: lastUpdate }" class="text-sm">
-            record.metadata.lastUpdate
-          </p>
-        </div>
         <div
-          *ngIf="metadata.kind === 'dataset' && metadata.status"
-          class="flex flex-row gap-4 text-sm"
+          class="flex flex-row flex-wrap items-center gap-4"
+          [style.color]="foregroundColor"
+          data-test="metadataBadges"
         >
-          <p>•</p>
-          <p
-            [innerHTML]="'domain.record.status.' + metadata.status | translate"
-          ></p>
+          <gn-ui-badge
+            [style.--gn-ui-badge-background-color]="'transparent'"
+            class="border border-white rounded-md"
+            *ngIf="metadata?.kind"
+          >
+            <ng-icon
+              class="mr-[5px] text-[1em]"
+              [name]="getBadge().icon"
+            ></ng-icon>
+            <span class="font-semibold text-[12px]">{{
+              getBadge().text | translate
+            }}</span>
+          </gn-ui-badge>
+          <gn-ui-badge
+            *ngIf="metadata.kind !== 'service' && (isGeodata$ | async) === true"
+            [style.--gn-ui-badge-background-color]="
+              'var(--color-primary-darker)'
+            "
+          >
+            <ng-icon
+              class="mr-[5px] text-[1em]"
+              name="matLocationSearchingOutline"
+            ></ng-icon>
+            <span class="font-semibold text-[12px]" translate
+              >record.metadata.type</span
+            >
+          </gn-ui-badge>
+          <div *ngIf="metadata.recordUpdated">
+            <p
+              translate
+              [translateParams]="{ date: lastUpdate }"
+              class="text-sm"
+            >
+              record.metadata.lastUpdate
+            </p>
+          </div>
+          <div
+            *ngIf="metadata.kind === 'dataset' && metadata.status"
+            class="flex flex-row gap-4 text-sm"
+          >
+            <p>•</p>
+            <p
+              [innerHTML]="
+                'domain.record.status.' + metadata.status | translate
+              "
+            ></p>
+          </div>
         </div>
       </div>
     </div>
+    <gn-ui-image-overlay-preview
+      class="block h-[228px] w-full self-center"
+      [imageUrl]="thumbnailUrl"
+      (isPlaceholderShown)="showOverlay = !$event"
+      *ngIf="thumbnailUrl && showOverlay"
+    >
+    </gn-ui-image-overlay-preview>
   </div>
 </header>

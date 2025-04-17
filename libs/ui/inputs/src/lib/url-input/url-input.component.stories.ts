@@ -24,9 +24,6 @@ export default {
         provideIcons({
           matStar,
         }),
-        provideNgIconsConfig({
-          size: '0.9em',
-        }),
       ],
     }),
   ],

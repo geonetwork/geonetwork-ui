@@ -7,11 +7,7 @@ import { NgIconComponent, provideNgIconsConfig } from '@ng-icons/core'
 
 @NgModule({
   imports: [CommonModule, TranslateModule.forChild(), NgIconComponent],
-  providers: [
-    provideNgIconsConfig({
-      size: '0.9em',
-    }),
-  ],
+  providers: [],
   declarations: [StickyHeaderComponent, AnchorLinkDirective],
   exports: [StickyHeaderComponent, AnchorLinkDirective],
 })
