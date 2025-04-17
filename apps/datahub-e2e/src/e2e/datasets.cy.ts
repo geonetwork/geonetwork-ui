@@ -398,11 +398,16 @@ describe('datasets', () => {
       it('should have options', () => {
         cy.get('@options').should('have.length.above', 0)
         cy.get('@optionsLabel')
-          .invoke('slice', 0, 3)
+          .invoke('slice', 0, 8)
           .should('eql', [
             'Région wallonne (11)',
             'Reporting INSPIRENO (7)',
             'Nature et environnement (6)',
+            'Sol et sous-sol (5)',
+            'Agriculture (3)',
+            'Aménagement du territoire (3)',
+            'DONNEE OUVERTE (3)',
+            'HAUTS-DE-FRANCE (3)',
           ])
       })
       it('should not have duplicates', () => {

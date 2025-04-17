@@ -1,0 +1,9 @@
+<ng-icon [name]="iconKind" class="mr-1"></ng-icon>
+
+<ng-container *ngIf="contentTemplate; else defaultContent">
+  <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+</ng-container>
+
+<ng-template #defaultContent>
+  {{ kind | translate }}
+</ng-template>

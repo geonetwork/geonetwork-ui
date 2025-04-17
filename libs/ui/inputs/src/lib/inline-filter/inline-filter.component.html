@@ -1,0 +1,23 @@
+<ul class="flex flex-wrap list-none gap-2">
+  <li *ngFor="let choice of choices">
+    <label
+      class=""
+      [ngClass]="{
+        selected: isSelected(choice),
+      }"
+    >
+      <input
+        class="hidden"
+        type="checkbox"
+        #checkBox
+        [checked]="isSelected(choice)"
+        (change)="select(choice, checkBox.checked)"
+        [attr.data-cy]="'inlineFilter-' + choice.value"
+      />
+      <ng-container
+        *ngTemplateOutlet="itemTemplate; context: { $implicit: choice }"
+      >
+      </ng-container>
+    </label>
+  </li>
+</ul>

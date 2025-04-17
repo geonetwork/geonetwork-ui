@@ -89,6 +89,7 @@ describe('FieldsService', () => {
           'organization',
           'format',
           'resourceType',
+          'recordKind',
           'representationType',
           'publicationYear',
           'topic',
@@ -190,6 +191,7 @@ describe('FieldsService', () => {
           user: [],
           changeDate: [],
           availableServices: [],
+          recordKind: [],
         })
       })
     })

@@ -11,6 +11,7 @@ import { RecordPreviewRowComponent } from './record-preview-row/record-preview-r
 import { RecordPreviewTextComponent } from './record-preview-text/record-preview-text.component'
 import { RecordPreviewTitleComponent } from './record-preview-title/record-preview-title.component'
 import { ResultsHitsNumberComponent } from './results-hits-number/results-hits-number.component'
+import { ResultsHitsSearchKindComponent } from './results-hits-search-kind/results-hits-search-kind.component'
 import {
   DEFAULT_RESULTS_LAYOUT_CONFIG,
   RESULTS_LAYOUT_CONFIG,
@@ -24,6 +25,7 @@ import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import {
   MetadataQualityComponent,
   UiElementsModule,
+  KindBadgeComponent,
 } from '@geonetwork-ui/ui/elements'
 import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview-feed.component'
 import { CommonModule } from '@angular/common'
@@ -48,6 +50,7 @@ import { matFace } from '@ng-icons/material-icons/baseline'
     RecordMetricComponent,
     ResultsListComponent,
     ResultsHitsNumberComponent,
+    ResultsHitsSearchKindComponent,
     ResultsListItemComponent,
     RecordPreviewFeedComponent,
     RecordPreviewRowComponent,
@@ -74,6 +77,7 @@ import { matFace } from '@ng-icons/material-icons/baseline'
       matFace,
       matHomeWorkOutline,
     }),
+    KindBadgeComponent,
     MetadataQualityComponent,
   ],
   exports: [
@@ -86,6 +90,7 @@ import { matFace } from '@ng-icons/material-icons/baseline'
     FacetsModule,
     RecordPreviewComponent,
     ResultsHitsNumberComponent,
+    ResultsHitsSearchKindComponent,
     RecordPreviewFeedComponent,
     RecordPreviewRowComponent,
   ],
