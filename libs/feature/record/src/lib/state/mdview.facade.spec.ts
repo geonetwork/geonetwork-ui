@@ -14,6 +14,7 @@ import {
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
 import { TestScheduler } from 'rxjs/testing'
+import { firstValueFrom } from 'rxjs'
 
 const newEndpointCall = jest.fn()
 let testScheduler: TestScheduler
@@ -430,6 +431,147 @@ describe('MdViewFacade', () => {
         tick()
         expect(result).toEqual(values.a)
       }))
+    })
+  })
+
+  describe('mapApiLinks$ & apiLinks$', () => {
+    const links = [
+      {
+        type: 'service',
+        url: new URL('https://my-org.net/tms'),
+        accessServiceProtocol: 'tms',
+        name: 'TMS Service',
+      },
+      {
+        type: 'service',
+        url: new URL('https://my-org.net/wms'),
+        accessServiceProtocol: 'wms',
+        name: 'WMS Service',
+      },
+    ]
+
+    beforeEach(() => {
+      store.setState({
+        [METADATA_VIEW_FEATURE_STATE_KEY]: {
+          ...initialMetadataViewState,
+          metadata: {
+            ...datasetRecordsFixture()[0],
+            onlineResources: links,
+          },
+        },
+      })
+    })
+
+    describe('TMS with styles', () => {
+      let expectedLinks
+      beforeEach(() => {
+        const styles = [{ href: 'https://myserver/style1', name: 'Style 1' }]
+        jest
+          .spyOn(facade.dataService, 'getStylesFromTms')
+          .mockResolvedValue(styles)
+
+        expectedLinks = [
+          {
+            ...links[0],
+            name: 'TMS Service - Style 1',
+            url: new URL('https://myserver/style1'),
+            styleInfo: styles[0],
+          },
+          links[1],
+        ]
+      })
+      it('mapApiLinks$: should fetch and include styles for TMS services', async () => {
+        const mapApiLinksResult = await firstValueFrom(facade.mapApiLinks$)
+        expect(mapApiLinksResult).toEqual(expectedLinks)
+        expect(facade.dataService.getStylesFromTms).toHaveBeenCalledWith(
+          'https://my-org.net/tms'
+        )
+      })
+      it('apiLinks$: should fetch and include styles for TMS services', async () => {
+        const apiLinksResult = await firstValueFrom(facade.apiLinks$)
+        expect(apiLinksResult).toEqual(expectedLinks)
+        expect(facade.dataService.getStylesFromTms).toHaveBeenCalledWith(
+          'https://my-org.net/tms'
+        )
+      })
+    })
+
+    describe('TMS with NO styles', () => {
+      beforeEach(() => {
+        jest
+          .spyOn(facade.dataService, 'getStylesFromTms')
+          .mockResolvedValue(null)
+      })
+      it('mapApiLinks$: should return TMS services without styles unchanged', async () => {
+        const mapApiLinksResult = await firstValueFrom(facade.mapApiLinks$)
+        expect(mapApiLinksResult).toEqual(links)
+      })
+      it('apiLinks$: should return TMS services without styles unchanged', async () => {
+        const apiLinksResult = await firstValueFrom(facade.apiLinks$)
+        expect(apiLinksResult).toEqual(links)
+      })
+    })
+
+    describe('TMS style error', () => {
+      beforeEach(() => {
+        jest
+          .spyOn(facade.dataService, 'getStylesFromTms')
+          .mockRejectedValue(new Error('Failed to fetch styles'))
+      })
+      it('mapApiLinks$: should handle TMS service style errors gracefully and return TMS service unchanged', async () => {
+        const mapApiLinksResult = await firstValueFrom(facade.mapApiLinks$)
+        expect(mapApiLinksResult).toEqual(links)
+      })
+      it('apiLinks$: should handle TMS service style errors gracefully and return TMS service unchanged', async () => {
+        const apiLinksResult = await firstValueFrom(facade.apiLinks$)
+        expect(apiLinksResult).toEqual(links)
+      })
+    })
+
+    describe('links containing other link types and protocols', () => {
+      beforeEach(() => {
+        const nonMapLinks = [
+          {
+            type: 'download',
+            url: new URL('http://my-org.net/download/data.csv'),
+            name: 'Download CSV',
+          },
+          {
+            type: 'service',
+            accessServiceProtocol: 'wfs',
+            url: new URL('https://my-org.net/wfs'),
+            name: 'WFS Service',
+          },
+        ]
+        store.setState({
+          [METADATA_VIEW_FEATURE_STATE_KEY]: {
+            ...initialMetadataViewState,
+            metadata: {
+              ...datasetRecordsFixture()[0],
+              onlineResources: [...links, ...nonMapLinks],
+            },
+          },
+        })
+        jest
+          .spyOn(facade.dataService, 'getStylesFromTms')
+          .mockResolvedValue(null)
+      })
+      it('mapApiLinks$: should only return map api links', async () => {
+        const mapApiLinksResult = await firstValueFrom(facade.mapApiLinks$)
+        expect(mapApiLinksResult).toEqual(links)
+      })
+      it('apiLinks$: should only return api links', async () => {
+        const apiLinksResult = await firstValueFrom(facade.apiLinks$)
+        expect(apiLinksResult).toEqual([
+          ...links,
+          {
+            type: 'service',
+            accessServiceProtocol: 'wfs',
+            url: new URL('https://my-org.net/wfs'),
+            name: 'WFS Service',
+          },
+        ])
+      })
     })
   })
 })

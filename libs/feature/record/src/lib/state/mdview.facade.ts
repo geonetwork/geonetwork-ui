@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import {
   catchError,
+  concatMap,
   defaultIfEmpty,
   filter,
   map,
@@ -16,12 +17,11 @@ import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/da
 import {
   CatalogRecord,
   DatasetServiceDistribution,
-  ServiceEndpoint,
   UserFeedback,
 } from '@geonetwork-ui/common/domain/model/record'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
 import { OgcApiRecord } from '@camptocamp/ogc-client'
-import { from, of } from 'rxjs'
+import { from, of, Observable } from 'rxjs'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 @Injectable()
@@ -85,15 +85,12 @@ export class MdViewFacade {
 
   apiLinks$ = this.allLinks$.pipe(
     map((links) =>
-      links
-        .filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.API))
-        // Put links to IGN Géoplateforme first
-        .sort((dd1, dd2) => {
-          return (dd2 as DatasetServiceDistribution | ServiceEndpoint)
-            .accessServiceProtocol === 'GPFDL'
-            ? 1
-            : undefined // do not change the sorting otherwise
-        })
+      links.filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.API))
+    ),
+    switchMap((apiLinks) =>
+      this.processLinksForTmsWithStyles(
+        apiLinks as DatasetServiceDistribution[]
+      )
     )
   )
 
@@ -101,6 +98,11 @@ export class MdViewFacade {
     map((links) =>
       links.filter((link) =>
         this.linkClassifier.hasUsage(link, LinkUsage.MAP_API)
+      )
+    ),
+    switchMap((mapApiLinks) =>
+      this.processLinksForTmsWithStyles(
+        mapApiLinks as DatasetServiceDistribution[]
       )
     )
   )
@@ -215,5 +217,42 @@ export class MdViewFacade {
 
   loadUserFeedbacks(datasetUuid: string) {
     this.store.dispatch(MdViewActions.loadUserFeedbacks({ datasetUuid }))
+  }
+
+  private processLinksForTmsWithStyles(
+    links: DatasetServiceDistribution[]
+  ): Observable<DatasetServiceDistribution[]> {
+    return from(links).pipe(
+      concatMap((link) => this.createOneTmsLinkPerStyle(link)),
+      toArray(),
+      map((links) => links.flat())
+    )
+  }
+
+  private createOneTmsLinkPerStyle(
+    link: DatasetServiceDistribution
+  ): Observable<DatasetServiceDistribution[]> {
+    if (link.type === 'service' && link.accessServiceProtocol === 'tms') {
+      return from(this.dataService.getStylesFromTms(link.url.href)).pipe(
+        map((styles) =>
+          styles
+            ? styles.map((style) => ({
+                ...link,
+                name: `${link.name} - ${style.name}`,
+                url: new URL(style.href),
+                styleInfo: {
+                  name: style.name,
+                  href: style.href,
+                },
+              }))
+            : [link]
+        ),
+        catchError((e) => {
+          console.error('Error fetching TMS styles:', e)
+          return of([link])
+        })
+      )
+    }
+    return of([link])
   }
 }

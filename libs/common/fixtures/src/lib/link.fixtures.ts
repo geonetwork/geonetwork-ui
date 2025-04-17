@@ -185,6 +185,13 @@ export const aSetOfLinksFixture = () => ({
       url: new URL('https://my.ogc.server/wms'),
       accessServiceProtocol: 'wms',
     }) as DatasetServiceDistribution,
+  geodataTms: () =>
+    ({
+      name: 'mytmslayer',
+      type: 'service',
+      url: new URL('https://my.ogc.server/tms'),
+      accessServiceProtocol: 'tms',
+    }) as DatasetServiceDistribution,
   geodataWfs2: () =>
     ({
       name: 'myotherlayer',
