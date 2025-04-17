@@ -1,9 +1,8 @@
 <div *ngIf="metadataQualityDisplay" class="metadata-quality">
   <div
     class="flex items-center"
-    [class]="
-      smaller ? 'leading-[8px] min-w-[120px] m-h-[120px]' : 'min-w-[200px]'
-    "
+    [class]="min - w - 0"
+    [ngClass]="{ 'leading-[8px] m-h-[120px]': smaller }"
   >
     <gn-ui-progress-bar
       tabindex="0"

@@ -35,8 +35,9 @@
 
   ::ng-deep .mat-mdc-tab.mdc-tab {
     padding: 0px !important;
-    margin-right: 24px;
+    margin-right: 0;
     justify-content: left !important;
+    min-width: 60px;
   }
 
   /*hide chart tab on mobile*/
