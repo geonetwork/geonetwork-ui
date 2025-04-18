@@ -231,7 +231,7 @@ describe('dataset pages', () => {
       .find('gn-ui-thumbnail')
       .should('be.visible')
     cy.get('datahub-record-metadata')
-      .find('[data-cy="organization-name"]')
+      .find('[data-cy="organization-name-link"]')
       .parent()
       .children('div')
       .should('have.length', 4)
