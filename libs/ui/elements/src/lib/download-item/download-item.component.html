@@ -5,16 +5,16 @@
   rel="noopener"
   [ngClass]="cardClass"
 >
-  <div class="flex flex-col justify-between w-full">
+  <div class="flex flex-col flex-1 justify-between min-w-0">
     <div class="gn-ui-card-title" [title]="link.description || link.name">
       {{ link.description || link.name }}
     </div>
     <div class="gn-ui-card-detail">
       {{ link.name }}
     </div>
-    <div class="flex flex-row gap-2 items-center pt-1">
+    <div class="flex flex-row gap-2 items-center pt-1 min-w-0">
       <span
-        class="inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded transition-opacity opacity-70 group-hover:opacity-100"
+        class="inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded transition-opacity opacity-70 group-hover:opacity-100 whitespace-nowrap"
         [style.background-color]="color"
         data-cy="download-format"
         >{{ format || ('downloads.format.unknown' | translate) }}</span
@@ -25,7 +25,7 @@
     </div>
   </div>
   <div
-    class="flex min-w-[32px]"
+    class="flex min-w-[32px] flex-shrink-0"
     [ngClass]="size === 'S' ? 'items-end' : 'items-center'"
   >
     <div class="gn-ui-card-icon">

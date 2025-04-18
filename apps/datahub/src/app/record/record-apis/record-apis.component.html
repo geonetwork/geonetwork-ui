@@ -31,10 +31,6 @@
     [link]="link"
     [currentLink]="selectedApiLink"
     size="S"
-    [ngClass]="{
-      'card-shadow': link !== selectedApiLink || !selectedApiLink,
-      'bg-neutral-100': link === selectedApiLink,
-    }"
     (openRecordApiForm)="openRecordApiForm($event)"
   >
   </gn-ui-api-card>
@@ -51,10 +47,6 @@
     [link]="link"
     [currentLink]="selectedApiLink"
     [size]="blockList.subComponentSize"
-    [ngClass]="{
-      'card-shadow': link !== selectedApiLink || !selectedApiLink,
-      'bg-neutral-100': link === selectedApiLink,
-    }"
     (openRecordApiForm)="openRecordApiForm($event)"
   ></gn-ui-api-card>
 </gn-ui-block-list>
