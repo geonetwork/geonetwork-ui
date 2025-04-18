@@ -1,13 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TruncatedTextComponent } from './truncated-text.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { OverlayComponent } from '../overlay/overlay.component'
+import { By } from '@angular/platform-browser'
+
 describe('TruncatedTextComponent', () => {
   let component: TruncatedTextComponent
   let fixture: ComponentFixture<TruncatedTextComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TruncatedTextComponent, TranslateModule.forRoot()],
+      imports: [
+        TruncatedTextComponent,
+        TranslateModule.forRoot(),
+        OverlayComponent,
+      ],
     }).compileComponents()
 
     fixture = TestBed.createComponent(TruncatedTextComponent)
@@ -55,5 +62,20 @@ describe('TruncatedTextComponent', () => {
     component.textElement = mockElement as any
     component.ngAfterViewInit()
     expect(component.isTextTruncated).toBe(false)
+  })
+
+  it('should show overlay component when text is truncated', () => {
+    const mockElement = {
+      nativeElement: {
+        scrollWidth: 200,
+        clientWidth: 100,
+      },
+    }
+    component.textElement = mockElement as any
+    component.ngAfterViewInit()
+    fixture.detectChanges()
+
+    const overlay = fixture.debugElement.query(By.directive(OverlayComponent))
+    expect(overlay).toBeTruthy()
   })
 })

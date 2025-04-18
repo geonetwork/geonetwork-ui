@@ -1,0 +1,29 @@
+<gn-ui-button
+  type="outline"
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  (buttonClick)="toggleOverlay()"
+>
+  <ng-icon name="iconoirExpand" size="24"> </ng-icon>
+</gn-ui-button>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOpen"
+  (detach)="isOpen = false"
+>
+  <div class="bg-white shadow-lg border border-gray-300 flex">
+    <div class="w-64">
+      <ng-content></ng-content>
+    </div>
+
+    <gn-ui-button
+      class="mt-1 flex-shrink-0"
+      type="light"
+      (buttonClick)="close()"
+    >
+      <ng-icon name="iconoirReduce" size="24"> </ng-icon>
+    </gn-ui-button>
+  </div>
+</ng-template>

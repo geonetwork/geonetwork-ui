@@ -3,32 +3,8 @@
     <span #textElement class="truncate">
       {{ text }}
     </span>
-    <gn-ui-button
-      *ngIf="isTextTruncated"
-      [title]="'ui.showAllText' | translate"
-      type="outline"
-      class="flex-shrink-0"
-      (buttonClick)="toggleExpand()"
-    >
-      <ng-icon name="iconoirExpand" size="24"> </ng-icon>
-    </gn-ui-button>
-  </div>
-
-  <!-- Expanded overlay -->
-  <div
-    *ngIf="isExpanded"
-    class="absolute left-0 top-0 bg-white shadow-lg border border-gray-300 z-10"
-  >
-    <div class="flex justify-between p-2">
-      <span class="w-[258px]">{{ text }}</span>
-      <gn-ui-button
-        type="light"
-        class="px-2 flex-shrink-0"
-        (buttonClick)="toggleExpand()"
-        [title]="'ui.hideFullText' | translate"
-      >
-        <ng-icon name="iconoirCollapse" size="24"> </ng-icon>
-      </gn-ui-button>
-    </div>
+    <gn-ui-overlay *ngIf="isTextTruncated">
+      <p class="m-2">{{ text }}</p>
+    </gn-ui-overlay>
   </div>
 </div>

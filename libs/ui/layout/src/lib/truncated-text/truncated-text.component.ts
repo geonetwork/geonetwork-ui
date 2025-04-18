@@ -7,15 +7,15 @@ import {
   ViewChild,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { NgIconComponent, provideIcons } from '@ng-icons/core'
+import { provideIcons } from '@ng-icons/core'
 import { iconoirExpand, iconoirCollapse } from '@ng-icons/iconoir'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
+import { OverlayComponent } from '../overlay/overlay.component'
 
 @Component({
   selector: 'gn-ui-truncated-text',
   standalone: true,
-  imports: [CommonModule, NgIconComponent, ButtonComponent, TranslateModule],
+  imports: [CommonModule, TranslateModule, OverlayComponent],
   providers: [provideIcons({ iconoirExpand, iconoirCollapse })],
   templateUrl: './truncated-text.component.html',
   styles: [],
