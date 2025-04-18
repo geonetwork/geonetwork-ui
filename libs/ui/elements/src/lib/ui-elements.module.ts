@@ -23,7 +23,7 @@ import { UserPreviewComponent } from './user-preview/user-preview.component'
 import { ApplicationBannerComponent } from './application-banner/application-banner.component'
 import { InternalLinkCardComponent } from './internal-link-card/internal-link-card.component'
 import { ServiceCapabilitiesComponent } from './service-capabilities/service-capabilities.component'
-
+import { SimpleTableComponent } from './simple-table/simple-table.component'
 @NgModule({
   imports: [
     CommonModule,
@@ -47,6 +47,7 @@ import { ServiceCapabilitiesComponent } from './service-capabilities/service-cap
     ApplicationBannerComponent,
     InternalLinkCardComponent,
     ServiceCapabilitiesComponent,
+    SimpleTableComponent,
     KindBadgeComponent,
   ],
   providers: [
@@ -64,6 +65,7 @@ import { ServiceCapabilitiesComponent } from './service-capabilities/service-cap
     ApplicationBannerComponent,
     InternalLinkCardComponent,
     ServiceCapabilitiesComponent,
+    SimpleTableComponent,
     KindBadgeComponent,
   ],
 })
