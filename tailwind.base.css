@@ -135,7 +135,7 @@
   }
 
   .gn-ui-card-s {
-    @apply min-h-[64px] w-full xs:min-w-[260px] xs:max-w-[280px] sm:min-w-[300px] sm:max-w-[500px];
+    @apply min-h-[64px] w-full xs:min-w-[260px] xs:max-w-[280px] sm:min-w-[300px] sm:max-w-[500px] md:min-w-[230px];
   }
 
   .gn-ui-card-title {
