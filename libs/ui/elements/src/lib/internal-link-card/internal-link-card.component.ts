@@ -99,7 +99,7 @@ export class InternalLinkCardComponent implements OnInit {
   private _size: CardSize = 'M'
 
   private readonly sizeClassMap: Record<CardSize, string> = {
-    L: 'min-h-[190px] md:w-[992px] py-3 px-3 flex items-start gap-5',
+    L: 'min-h-[190px] w-full py-3 px-3 flex items-start gap-5',
     M: 'min-h-[140px] md:w-[570px] py-3 px-3 flex items-start gap-4',
     S: 'min-h-[220px] md:w-[370px] py-3 px-3 flex gap-4',
     XS: 'min-h-[108px] md:w-[570px] py-3 px-3 flex gap-4',

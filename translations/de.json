@@ -451,7 +451,7 @@
   "record.metadata.temporalExtent.untilDate": "Bis {end}",
   "record.metadata.title": "Titel",
   "record.metadata.topics": "Kategorien",
-  "record.metadata.type": "Geographischer Datensatz",
+  "record.metadata.isGeographical": "Geographischer Datensatz",
   "record.metadata.uniqueId": "Eindeutige Kennung",
   "record.metadata.updateFrequency": "Aktualisierungsfrequenz der Daten",
   "record.metadata.updatedOn": "Geändert am",

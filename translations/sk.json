@@ -451,7 +451,7 @@
   "record.metadata.temporalExtent.untilDate": "",
   "record.metadata.title": "Názov",
   "record.metadata.topics": "",
-  "record.metadata.type": "Súbor geografických údajov",
+  "record.metadata.isGeographical": "Súbor geografických údajov",
   "record.metadata.uniqueId": "Jedinečný identifikátor",
   "record.metadata.updateFrequency": "Frekvencia aktualizácie metadát",
   "record.metadata.updatedOn": "Posledná aktualizácia metadát",
