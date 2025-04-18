@@ -47,7 +47,7 @@ describe('filters and sorts', () => {
         cy.get('@inlineFilter-service').should('not.be.checked')
         cy.get('@inlineFilter-reuse').should('not.be.checked')
         cy.url().should('not.contain', 'recordKind=')
-        cy.get('[data-cy="resultsHitsFound"]').should('contain.text', '25 ')
+        cy.get('[data-cy="resultsHitsFound"]').should('contain.text', '26 ')
       })
     })
 
@@ -75,7 +75,14 @@ describe('filters and sorts', () => {
         cy.get('@inlineFilter-service').should('not.be.checked')
         cy.get('@inlineFilter-reuse').should('not.be.checked')
         cy.url().should('not.contain', 'recordKind=')
-        cy.get('[data-cy="resultsHitsFound"]').should('contain.text', '25 ')
+        cy.get('[data-cy="resultsHitsFound"]').should('contain.text', '26 ')
+
+        cy.get('@inlineFilter-reuse').check({ force: true })
+        cy.get('@inlineFilter-reuse').should('be.checked')
+        cy.get('@inlineFilter-all').should('not.be.checked')
+        cy.get('@inlineFilter-dataset').should('not.be.checked')
+        cy.get('@inlineFilter-service').should('not.be.checked')
+        cy.get('[data-cy="resultsHitsFound"]').should('contain.text', '1 ')
       })
     })
 
