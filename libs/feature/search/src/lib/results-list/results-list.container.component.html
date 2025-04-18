@@ -2,9 +2,7 @@
   <gn-ui-results-list
     [records]="facade.results$ | async"
     [layoutConfig]="layoutConfig$ | async"
-    [metadataQualityDisplay]="
-      metadataQualityDisplay && (pipelineForQualityScoreActivated | async)
-    "
+    [metadataQualityDisplay]="metadataQualityDisplay"
     [favoriteTemplate]="favoriteToggle"
     [recordUrlGetter]="recordUrlGetter"
     (mdSelect)="onMetadataSelection($event)"
