@@ -1,5 +1,6 @@
 <gn-ui-button
   type="outline"
+  extraClass="w-10 h-8 border rounded-lg"
   cdkOverlayOrigin
   #trigger="cdkOverlayOrigin"
   (buttonClick)="toggleOverlay()"
@@ -19,9 +20,10 @@
     </div>
 
     <gn-ui-button
-      class="mt-1 flex-shrink-0"
+      class="m-2 flex-shrink-0"
       type="light"
       (buttonClick)="close()"
+      extraClass="w-10 h-8 px-1"
     >
       <ng-icon name="iconoirReduce" size="24"> </ng-icon>
     </gn-ui-button>
