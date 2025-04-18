@@ -5,13 +5,15 @@ import {
   ReuseRecord,
   ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import {
+  GeoDataBadgeComponent,
+  MdViewFacade,
+} from '@geonetwork-ui/feature/record'
 import { combineLatest, map } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
 import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
-import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
 import { matArrowBack, matCreditCard } from '@ng-icons/material-icons/baseline'
 import { DateService } from '@geonetwork-ui/util/shared'
 import {
@@ -38,10 +40,10 @@ marker('record.kind.service')
     BadgeComponent,
     NgIcon,
     ImageOverlayPreviewComponent,
+    GeoDataBadgeComponent,
   ],
   viewProviders: [
     provideIcons({
-      matLocationSearchingOutline,
       matArrowBack,
       iconoirCode,
       matCreditCard,

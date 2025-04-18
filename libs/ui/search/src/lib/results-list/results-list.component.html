@@ -5,14 +5,25 @@
       [style]="layoutConfig.itemStyle"
       *ngFor="let record of records"
     >
-      <gn-ui-results-list-item
+      <!-- <gn-ui-results-list-item
         [record]="record"
         [layoutConfig]="layoutConfig"
         [metadataQualityDisplay]="metadataQualityDisplay"
         (mdSelect)="mdSelect.emit($event)"
         [favoriteTemplate]="favoriteTemplate"
         [linkHref]="recordUrlGetter(record)"
-      ></gn-ui-results-list-item>
+      ></gn-ui-results-list-item> -->
+
+      <gn-ui-internal-link-card
+        [record]="record"
+        [favoriteTemplate]="favoriteTemplate"
+        [metadataQualityDisplay]="true"
+        (mdSelect)="mdSelect.emit($event)"
+        [linkHref]="recordUrlGetter(record)"
+        [isGeodata]="true"
+        size="L"
+      >
+      </gn-ui-internal-link-card>
     </div>
   </div>
 </ng-container>
