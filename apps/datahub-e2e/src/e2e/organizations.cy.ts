@@ -66,10 +66,10 @@ describe('organizations', () => {
     })
     it('should display an actual logo', () => {
       cy.get('@organizations')
-        .eq(11)
+        .eq(2)
         .find('img')
         .should('have.attr', 'src')
-        .and('contain', 'G%C3%A9o2France-4-3_decoupe.png')
+        .and('contain', 'GN3.png')
     })
     it('should display navigation options', () => {
       cy.get('@pagination').should('be.visible')
@@ -133,7 +133,7 @@ describe('organizations', () => {
     it('should go to next page with arrow', () => {
       cy.then(() => {
         cy.get('@pagination').find('[data-cy=next-page]').click()
-        cy.get('@organizations').should('have.length', 5)
+        cy.get('@organizations').should('have.length', 9)
       })
     })
     it('should go back to the first page with arrow', () => {
@@ -166,8 +166,8 @@ describe('organizations', () => {
     })
     it('should display multiple results and refine search', () => {
       cy.get('@organisationsSearch').type('de')
-      cy.get('@organizationsName').should('have.length', 11)
-      cy.get('@organisationsResult').should('contain', '11')
+      cy.get('@organizationsName').should('have.length', 12)
+      cy.get('@organisationsResult').should('contain', '14')
       cy.get('@organisationsSearch').type(' Lille')
       cy.get('@organizationsName').should('have.length', 1)
       cy.get('@organisationsResult').should('contain', '1')
