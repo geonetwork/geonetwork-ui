@@ -1,7 +1,7 @@
 <div class="py-5 px-5 rounded-lg bg-gray-100 text-black">
   <div class="grid grid-cols-1 gap-3 overflow-hidden">
     <div>
-      <p class="text-sm font-medium" translate>record.metadata.contact</p>
+      <p class="text-base font-medium" translate>record.metadata.contact</p>
     </div>
     <div
       *ngIf="shownOrganization?.logoUrl?.href"
@@ -16,7 +16,7 @@
     <div class="grid grid-cols-1 gap-1">
       <div class="flex">
         <div
-          class="text-primary font-title text-21 mr-2 cursor-pointer hover:underline"
+          class="font-title text-21 mr-2 cursor-pointer hover:underline"
           (click)="onOrganizationClick()"
           data-cy="organization-name"
         >
@@ -27,7 +27,7 @@
         <a
           [href]="shownOrganization.website"
           target="_blank"
-          class="contact-website text-primary text-sm cursor-pointer hover:underline transition-all"
+          class="contact-website text-sm cursor-pointer hover:underline transition-all"
           >{{ shownOrganization.website }}
           <ng-icon
             class="!w-[12px] !h-[12px] opacity-75 shrink-0"
