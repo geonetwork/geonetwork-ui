@@ -6,7 +6,7 @@
       <gn-ui-dropdown-selector
         [ngClass]="{ hidden: !displaySource }"
         class="w-full"
-        extraBtnClass="font-sans font-medium"
+        extraBtnClass="font-sans font-bold"
         [title]="'map.select.layer' | translate"
         [choices]="dropdownChoices$ | async"
         (selectValue)="selectLinkToDisplay($event)"
