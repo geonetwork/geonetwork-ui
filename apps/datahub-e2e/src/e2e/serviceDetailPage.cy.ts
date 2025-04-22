@@ -1,9 +1,13 @@
 import 'cypress-real-events'
 
 beforeEach(() => {
-  cy.intercept('POST', '/geonetwork/srv/api/search/records/_search?bucket=bucket&relatedType=fcats', {
-    fixture: 'eaufrance-service-eaux-usees.json',
-  })
+  cy.intercept(
+    'POST',
+    '/geonetwork/srv/api/search/records/_search?bucket=bucket&relatedType=fcats',
+    {
+      fixture: 'eaufrance-service-eaux-usees.json',
+    }
+  )
 
   cy.intercept(
     'GET',
@@ -21,11 +25,11 @@ describe('service pages', () => {
   })
   describe('About', () => {
     it('should display the spatial extent', () => {
-      cy.get('gn-ui-expandable-panel').eq(2).click()
+      cy.get('gn-ui-expandable-panel').eq(1).click()
       cy.get('gn-ui-map-container').should('be.visible')
     })
   })
-  describe.only('Technical information', () => {
+  describe('Technical information', () => {
     it('should display the service capabilities component', () => {
       cy.get('gn-ui-service-capabilities').should('be.visible')
     })
