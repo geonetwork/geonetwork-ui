@@ -134,20 +134,8 @@
       border-white focus:ring-4 focus:ring-gray-300;
   }
 
-  .gn-ui-card-xs {
-    @apply min-h-[68px] md:w-[487px];
-  }
-
   .gn-ui-card-s {
-    @apply min-h-[135px] md:w-80;
-  }
-
-  .gn-ui-card-m {
-    @apply min-h-[68px] md:w-[487px];
-  }
-
-  .gn-ui-card-l {
-    @apply min-h-[68px] md:w-[992px];
+    @apply min-h-[64px] w-full xs:min-w-[260px] xs:max-w-[280px] sm:min-w-[300px] sm:max-w-[500px] md:min-w-[230px];
   }
 
   .gn-ui-card-title {

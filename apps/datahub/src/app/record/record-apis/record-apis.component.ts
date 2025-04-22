@@ -10,6 +10,7 @@ import { GpfApiDlComponent, MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
   CarouselComponent,
   PreviousNextButtonsComponent,
+  BlockListComponent,
 } from '@geonetwork-ui/ui/layout'
 import {
   ApiCardComponent,
@@ -20,7 +21,7 @@ import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matCloseOutline } from '@ng-icons/material-icons/outline'
 import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { map } from 'rxjs'
+import { map } from 'rxjs/operators'
 
 marker('record.metadata.api.form.title.gpf')
 marker('record.metadata.api.form.title')
@@ -32,6 +33,7 @@ marker('record.metadata.api.form.title')
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
+    BlockListComponent,
     CommonModule,
     CarouselComponent,
     PreviousNextButtonsComponent,
@@ -49,6 +51,7 @@ marker('record.metadata.api.form.title')
 })
 export class RecordApisComponent implements OnInit {
   @ViewChild(CarouselComponent) carousel: CarouselComponent
+  @ViewChild(BlockListComponent) list: BlockListComponent
 
   maxHeight = '0px'
   opacity = 0
@@ -65,6 +68,10 @@ export class RecordApisComponent implements OnInit {
       )
     )
   )
+
+  get apiLinksCount$() {
+    return this.apiLinks$?.pipe(map((links) => links.length))
+  }
 
   constructor(
     private facade: MdViewFacade,
