@@ -8,7 +8,7 @@ import {
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateModule } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
-import { NgIcon, provideIcons } from '@ng-icons/core'
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { iconoirDownload } from '@ng-icons/iconoir'
 
 type CardSize = 'L' | 'M' | 'S' | 'XS'
@@ -24,6 +24,7 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
     provideIcons({
       iconoirDownload,
     }),
+    provideNgIconsConfig({ size: '1.5em' }),
   ],
 })
 export class DownloadItemComponent {
