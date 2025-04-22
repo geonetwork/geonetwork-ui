@@ -5,3 +5,25 @@
 :host {
   position: relative;
 }
+
+@media screen and (min-width: 769px) {
+  .size-L {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-auto-rows: minmax(0, min-content);
+  }
+
+  .size-M {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: minmax(0, min-content);
+  }
+
+  .size-S {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: minmax(0, min-content);
+  }
+
+  .size-XS {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: minmax(0, min-content);
+  }
+}
