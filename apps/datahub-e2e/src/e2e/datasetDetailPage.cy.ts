@@ -149,6 +149,19 @@ describe('dataset pages', () => {
     cy.visit('/dataset/01491630-78ce-49f3-b479-4b30dabc4c69')
     cy.get('[data-test="metadataBadges"]').as('infoBar')
     cy.get('@infoBar').children().should('have.length', 4)
+
+    // it should display the thumbnail image and magnify
+    cy.get('header')
+      .find('gn-ui-image-overlay-preview')
+      .as('overlay')
+      .should('have.length', 1)
+    cy.get('@overlay').find('gn-ui-button').click()
+    cy.get('[class="basicLightbox__placeholder"]')
+      .as('lightbox')
+      .find('img')
+      .should('have.length', 1)
+    cy.get('body').click()
+    cy.get('@lightbox').should('have.length', 0)
   })
 
   it('ABOUT SECTION : display & functions', () => {
@@ -172,20 +185,6 @@ describe('dataset pages', () => {
     cy.get('[data-cy=readMoreButton]').click()
     cy.get('@maxLines').find('.ease-in').should('exist')
     cy.go('back')
-
-    // it should display the thumbnail image and magnify
-    cy.get('datahub-record-metadata')
-      .find('[id="about"]')
-      .find('gn-ui-image-overlay-preview')
-      .as('overlay')
-      .should('have.length', 1)
-    cy.get('@overlay').find('gn-ui-button').click()
-    cy.get('[class="basicLightbox__placeholder"]')
-      .as('lightbox')
-      .find('img')
-      .should('have.length', 1)
-    cy.get('body').click()
-    cy.get('@lightbox').should('have.length', 0)
 
     // it should display the contact details
     cy.get('datahub-record-metadata')
@@ -306,18 +305,6 @@ describe('dataset pages', () => {
         cy.wrap(input).should('have.value', this.keywordText)
       })
     cy.go('back')
-
-    // it should open the lightbox
-    cy.get('datahub-record-metadata')
-      .find('[id="about"]')
-      .find('gn-ui-thumbnail')
-      .eq(1)
-      .next()
-      .find('gn-ui-button')
-      .click()
-    cy.get('.basicLightbox--visible')
-    cy.screenshot({ capture: 'viewport' })
-    cy.clickOnBody()
 
     // it should go to dataset search page when clicking on org name and filter by org
     cy.get('[data-cy="organization-name"]').eq(1).click()
@@ -759,7 +746,7 @@ describe('dataset pages', () => {
       .should('equal', 'iconoirSettings')
 
     // it should open and close the panel on click on open panel button
-    cy.get('@firstCard').find('button').eq(1).click()
+    cy.get('@firstCard').find('button').eq(1).click({ force: true })
     cy.get('gn-ui-record-api-form').should('be.visible')
     cy.screenshot({ capture: 'fullPage' })
     cy.get('@firstCard').find('button').eq(1).click()
