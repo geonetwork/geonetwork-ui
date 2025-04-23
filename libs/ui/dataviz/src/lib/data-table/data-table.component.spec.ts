@@ -201,12 +201,12 @@ describe('DataTableComponent', () => {
   describe('setProperties', () => {
     beforeEach(() => {
       component.dataset = new MockBaseReader(someHabTableItemFixture)
-      component._featureAttributes = [{ name: 'ID', code: 'identifiant' }]
+      component._featureAttributes = [{ name: 'id', code: 'identifiant' }]
       fixture.detectChanges()
     })
     it('should update properties correctly with featureAttributes', async () => {
       const properties = await firstValueFrom(component.properties$)
-      expect(properties).toEqual(['identifiant', 'Name', 'Population'])
+      expect(properties).toEqual(['identifiant', 'name', 'pop'])
     })
   })
 })

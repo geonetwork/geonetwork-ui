@@ -281,9 +281,13 @@ describe('Gn4Repository', () => {
               name: "Catalogue d'attributs N°1",
               definition: 'Définition du catalogue d attributs N°1',
               attributes: [
-                { name: 'OBJECTID', title: 'Object identifier' },
-                { name: 'Nom', title: 'Nom de la rue' },
-                { name: 'Rue', title: '' },
+                {
+                  name: 'OBJECTID',
+                  title: 'Object identifier',
+                  code: 'OBJECTID',
+                },
+                { name: 'Nom', title: 'Nom de la rue', code: 'NOM' },
+                { name: 'Rue', title: '', code: 'RUE' },
               ],
             },
             {
@@ -291,6 +295,7 @@ describe('Gn4Repository', () => {
               definition: 'Définition du catalogue d attributs N°2',
               attributes: [
                 {
+                  code: 'UniqueObject',
                   name: 'unique object ',
                   title: 'this is the only object of this catalog',
                 },
@@ -328,9 +333,13 @@ describe('Gn4Repository', () => {
               name: "Catalogue d'attributs N°1",
               definition: 'Définition du catalogue d attributs N°1',
               attributes: [
-                { name: 'OBJECTID', title: 'Object identifier' },
-                { name: 'Nom', title: 'Nom de la rue' },
-                { name: 'Rue', title: '' },
+                {
+                  name: 'OBJECTID',
+                  title: 'Object identifier',
+                  code: 'OBJECTID',
+                },
+                { name: 'Nom', title: 'Nom de la rue', code: 'NOM' },
+                { name: 'Rue', title: '', code: 'RUE' },
               ],
             },
             {
@@ -338,6 +347,7 @@ describe('Gn4Repository', () => {
               definition: 'Définition du catalogue d attributs N°2',
               attributes: [
                 {
+                  code: 'UniqueObject',
                   name: 'unique object ',
                   title: 'this is the only object of this catalog',
                 },

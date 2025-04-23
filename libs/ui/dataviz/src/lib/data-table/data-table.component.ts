@@ -69,6 +69,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
     this.properties$.next(null)
     this.dataset_ = value
     this.dataset_.load()
+    this.setProperties()
   }
   @Input() activeId: TableItemId
   @Output() selected = new EventEmitter<any>()
@@ -121,15 +122,15 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
       const updatedProperties = properties.map((p) => {
         if (this._featureAttributes.length) {
           const matchingAttribute = this._featureAttributes.find(
-            (attr) => attr.name === p.label
+            (attr) => attr.name === p.name
           )
 
           if (matchingAttribute && matchingAttribute.code) {
             return matchingAttribute.code
           }
-          return p.label
+          return p.name
         }
-        return p.label
+        return p.name
       })
 
       this.properties$.next(updatedProperties)
