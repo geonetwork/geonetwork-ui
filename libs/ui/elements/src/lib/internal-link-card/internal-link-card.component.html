@@ -17,19 +17,10 @@
     <div class="grow flex flex-col">
       <div class="flex items-center gap-2">
         <div class="grow flex items-center gap-2">
-          <span
-            *ngIf="getKindInfo().text"
-            class="badge-btn text-white text-xs px-2 py-0.5 font-bold shrink-0 bg-primary leading-tight flex items-center justify-evenly h-6 min-h-6"
-          >
-            <ng-icon
-              class="text-[0.9em] text-white mr-1"
-              [name]="getKindInfo().icon"
-            ></ng-icon>
-            <span class="font-medium text-white text-xs" translate>
-              {{ getKindInfo().text }}
-            </span>
-          </span>
-
+          <gn-ui-kind-badge
+            [styling]="'default'"
+            [kind]="this.record?.kind"
+          ></gn-ui-kind-badge>
           <span
             *ngIf="isGeodata"
             [title]="'record.metadata.isGeographical' | translate"
@@ -48,7 +39,6 @@
               </span>
             </ng-container>
           </span>
-
           <gn-ui-metadata-quality
             class="flex items-center"
             [smaller]="true"

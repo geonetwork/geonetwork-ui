@@ -12,6 +12,7 @@ import {
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common'
+import { KindBadgeComponent } from '../kind-badge/kind-badge.component'
 import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component'
 import { MetadataQualityComponent } from '../metadata-quality/metadata-quality.component'
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
@@ -31,8 +32,6 @@ import {
   matPhoneOutline,
   matLocationOnOutline,
 } from '@ng-icons/material-icons/outline'
-import { matCode } from '@ng-icons/material-icons/baseline'
-import { iconoirDatabase, iconoirMap, iconoirInternet } from '@ng-icons/iconoir'
 import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { fromEvent, Subscription } from 'rxjs'
@@ -54,15 +53,12 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
     NgTemplateOutlet,
     NgIconComponent,
     TranslateModule,
+    KindBadgeComponent,
     MarkdownParserComponent,
   ],
   providers: [
     provideIcons({
       matLocationSearchingOutline,
-      matCode,
-      iconoirDatabase,
-      iconoirMap,
-      iconoirInternet,
       matEmailOutline,
       matPhoneOutline,
       matLocationOnOutline,
@@ -167,20 +163,5 @@ export class InternalLinkCardComponent implements OnInit {
 
   get shouldShowThumbnail(): boolean {
     return this.size === 'L' || this.size === 'M'
-  }
-
-  getKindInfo(): { text: string; icon: string } {
-    if (!this.record?.kind) return { text: '', icon: '' }
-
-    switch (this.record.kind.toLowerCase()) {
-      case 'dataset':
-        return { text: 'record.kind.data', icon: 'iconoirDatabase' }
-      case 'reuse':
-        return { text: 'record.kind.reuse', icon: 'iconoirMap' }
-      case 'service':
-        return { text: 'record.kind.service', icon: 'matCode' }
-      default:
-        return { text: '', icon: '' }
-    }
   }
 }

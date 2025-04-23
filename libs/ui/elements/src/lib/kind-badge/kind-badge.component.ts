@@ -40,6 +40,7 @@ enum KindConfig {
   imports: [NgIconsModule, CommonModule, BadgeComponent, TranslateModule],
 })
 export class KindBadgeComponent {
+  @Input() styling = 'default'
   @Input() contentTemplate: TemplateRef<unknown>
   @Input() kind: string
 
@@ -47,5 +48,19 @@ export class KindBadgeComponent {
 
   get iconKind() {
     return KindConfig[this.kind] || KindConfig.dataset
+  }
+
+  get badgeClasses(): string {
+    const baseClasses =
+      'badge-btn text-white text-xs px-2 font-bold shrink-0 flex items-center justify-evenly h-6 min-h-6'
+
+    switch (this.styling) {
+      case 'outline':
+        return `${baseClasses} bg-transparent border border-white py-1.5`
+      case 'default':
+        return `${baseClasses} bg-primary py-0.5`
+      default:
+        return ''
+    }
   }
 }
