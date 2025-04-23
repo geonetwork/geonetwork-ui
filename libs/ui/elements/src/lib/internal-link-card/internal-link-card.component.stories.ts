@@ -22,6 +22,7 @@ import { NgIconComponent } from '@ng-icons/core'
 import { CommonModule } from '@angular/common'
 
 const mockRecord = datasetRecordsFixture()[0] as CatalogRecord
+const mockRecordLong = datasetRecordsFixture()[1] as CatalogRecord
 
 const interactiveFavoriteTemplate = `<div class="flex flex-row items-center">
   <span class="inline-flex items-center text-gray-700 font-medium" style="line-height: 1; margin-top: 1px;">{{record.extras?.favoriteCount || 42}}</span>
@@ -57,7 +58,7 @@ export default {
     }),
     componentWrapperDecorator(
       (story) =>
-        `<div class="p-4 bg-white" style="max-width: 1200px; resize: both; overflow: auto">${story}</div>`
+        `<div class="p-4 bg-white" style="height: 400px; max-width: 1200px; resize: both; overflow: auto">${story}</div>`
     ),
   ],
 } as Meta<InternalLinkCardComponent>
@@ -105,7 +106,9 @@ export const Primary: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
         mdSelect: action('mdSelect'),
       },
       template: `
-      <gn-ui-internal-link-card
+    <div class="border border-gray-100 rounded-md w-auto inline-block card-shadow">
+      <gn-ui-internal-link-card     
+      class="w-auto"   
         [record]="record"
         [size]="size"
         [isGeodata]="isGeodata"
@@ -117,6 +120,7 @@ export const Primary: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
       <ng-template #favoriteRef let-record>
         ${args.favoriteTemplateString}
       </ng-template>
+    </div>
     `,
     }),
   }
@@ -126,6 +130,16 @@ export const LargeCard: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> 
     args: {
       ...Primary.args,
       size: 'L',
+    },
+    render: Primary.render,
+  }
+
+export const LargeCardWithLongContent: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
+  {
+    args: {
+      ...Primary.args,
+      size: 'L',
+      record: mockRecordLong,
     },
     render: Primary.render,
   }
@@ -175,7 +189,7 @@ export const WithoutQualityMetrics: StoryObj<InternalLinkCardComponentWithFavori
     render: Primary.render,
   }
 
-export const MultipleCards: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
+export const MultipleMediumCards: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
   {
     args: {
       ...Primary.args,
@@ -188,8 +202,9 @@ export const MultipleCards: StoryObj<InternalLinkCardComponentWithFavoriteTempla
       },
       template: `
       <div class="flex flex-col gap-4">
-        <gn-ui-internal-link-card
-          *ngFor="let rec of records"
+      <div *ngFor="let rec of records">
+       <div class="border border-gray-100 rounded-md w-auto inline-block card-shadow">
+        <gn-ui-internal-link-card          
           [record]="rec"
           [size]="size"
           [isGeodata]="isGeodata"
@@ -198,6 +213,8 @@ export const MultipleCards: StoryObj<InternalLinkCardComponentWithFavoriteTempla
           [favoriteTemplate]="favoriteRef"
           (mdSelect)="mdSelect($event)">
         </gn-ui-internal-link-card>
+      </div>
+      </div>
       </div>
       <ng-template #favoriteRef let-record>
         ${args.favoriteTemplateString}

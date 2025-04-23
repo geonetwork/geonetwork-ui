@@ -113,13 +113,13 @@ export class InternalLinkCardComponent implements OnInit {
   }
 
   private readonly titleClassMap: Record<CardSize, string> = {
-    L: 'text-xl line-clamp-2',
-    M: 'text-base line-clamp-2',
-    S: 'text-base line-clamp-3',
-    XS: 'text-base mt-3 line-clamp-2',
+    L: 'text-xl line-clamp-1',
+    M: 'text-base line-clamp-1',
+    S: 'text-base line-clamp-3 ml-2',
+    XS: 'text-base line-clamp-1 ml-2',
   }
 
-  constructor(protected elementRef: ElementRef) {}
+  constructor(protected elementRef: ElementRef) { }
 
   ngOnInit(): void {
     this.abstract = removeWhitespace(stripHtml(this.record?.abstract))
@@ -147,11 +147,7 @@ export class InternalLinkCardComponent implements OnInit {
   }
 
   getTitleClass() {
-    return (
-      this.titleClassMap[this._size] +
-        ' ' +
-        (this.record.ownerOrganization?.name ? '' : 'mt-3') || ''
-    )
+    return this.titleClassMap[this._size]
   }
 
   openExternalUrl(event: Event, url: URL): void {
