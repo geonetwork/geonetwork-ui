@@ -235,7 +235,7 @@ export type DatasetFeatureCatalog = {
   featureTypes: Array<{
     name: string
     definition: string
-    attributes: Array<{ name: string; title: string }>
+    attributes: Array<{ name: string; title: string; code: string }>
   }>
 }
 
@@ -272,7 +272,7 @@ export interface DatasetFeatureType {
   isAbstract: string
   typeName: string
   definition: string
-  attributeTable: Array<{ name: string; definition: string }>
+  attributeTable: Array<{ name: string; definition: string; code: string }>
 }
 
 export type ReuseType = 'application' | 'map' | 'other'

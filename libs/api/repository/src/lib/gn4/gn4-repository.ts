@@ -152,6 +152,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         attributes: Array.isArray(featureType.attributeTable)
           ? featureType.attributeTable.map((attr) => ({
               name: attr.name,
+              code: attr.code,
               title: attr.definition,
             }))
           : [],
