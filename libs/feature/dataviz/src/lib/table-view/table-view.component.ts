@@ -10,7 +10,10 @@ import {
 import { BaseReader, FetchError } from '@geonetwork-ui/data-fetcher'
 import { DataService } from '../service/data.service'
 import { DataTableComponent } from '@geonetwork-ui/ui/dataviz'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import {
+  DatasetFeatureCatalog,
+  DatasetOnlineResource,
+} from '@geonetwork-ui/common/domain/model/record'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import {
   LoadingMaskComponent,
@@ -33,6 +36,12 @@ import { CommonModule } from '@angular/common'
   standalone: true,
 })
 export class TableViewComponent {
+  featureAttributes = []
+  @Input() set featureCatalog(value: DatasetFeatureCatalog) {
+    if (value) {
+      this.featureAttributes = value.featureTypes[0].attributes
+    }
+  }
   @Input() cacheActive = true
   @Input() set link(value: DatasetOnlineResource) {
     this.currentLink$.next(value)

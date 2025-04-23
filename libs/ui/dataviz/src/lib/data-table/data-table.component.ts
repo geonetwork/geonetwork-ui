@@ -61,14 +61,14 @@ export interface TableItemModel {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
+  _featureAttributes = []
+  @Input() set featureAttributes(value: []) {
+    if (value) this._featureAttributes = value
+  }
   @Input() set dataset(value: BaseReader) {
     this.properties$.next(null)
     this.dataset_ = value
     this.dataset_.load()
-    this.dataset_.properties.then((properties) =>
-      this.properties$.next(properties.map((p) => p.name))
-    )
-    this.dataset_.info.then((info) => (this.count = info.itemsCount))
   }
   @Input() activeId: TableItemId
   @Output() selected = new EventEmitter<any>()
@@ -92,6 +92,7 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
     this.dataSource = new DataTableDataSource()
+    this.setProperties()
   }
 
   ngAfterViewInit() {
@@ -113,6 +114,27 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
       this.dataset_.orderBy([sort.direction || 'asc', sort.active])
     }
     this.readData()
+  }
+
+  setProperties() {
+    this.dataset_.properties.then((properties) => {
+      const updatedProperties = properties.map((p) => {
+        if (this._featureAttributes.length) {
+          const matchingAttribute = this._featureAttributes.find(
+            (attr) => attr.name === p.label
+          )
+
+          if (matchingAttribute && matchingAttribute.code) {
+            return matchingAttribute.code
+          }
+          return p.label
+        }
+        return p.label
+      })
+
+      this.properties$.next(updatedProperties)
+    })
+    this.dataset_.info.then((info) => (this.count = info.itemsCount))
   }
 
   setPagination() {
