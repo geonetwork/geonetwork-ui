@@ -16,8 +16,8 @@ import {
   MetadataQualityComponent,
   ServiceCapabilitiesComponent,
 } from '@geonetwork-ui/ui/elements'
-import { combineLatest } from 'rxjs'
-import { filter, map, mergeMap } from 'rxjs/operators'
+import { BehaviorSubject, combineLatest } from 'rxjs'
+import { filter, map, mergeMap, startWith } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
   Keyword,
@@ -66,21 +66,60 @@ import { matChatOutline } from '@ng-icons/material-icons/outline'
 })
 export class RecordMetadataComponent {
   @Input() metadataQualityDisplay: boolean
-  @Input() kind: 'dataset' | 'service' | 'reuse'
+  public kindSubject = new BehaviorSubject<'dataset' | 'service' | 'reuse'>(
+    null
+  )
+  @Input()
+  set kind(value: 'dataset' | 'service' | 'reuse') {
+    this.kindSubject.next(value)
+  }
+  get kind() {
+    return this.kindSubject.value
+  }
   @ViewChild('userFeedbacks') userFeedbacks: ElementRef<HTMLElement>
 
-  displayDownload$ = this.metadataViewFacade.downloadLinks$.pipe(
-    map((links) => links?.length > 0 && this.kind === 'dataset')
+  displayDownload$ = combineLatest([
+    this.metadataViewFacade.downloadLinks$,
+    this.kindSubject,
+  ]).pipe(map(([links, kind]) => links?.length > 0 && kind === 'dataset'))
+  apiLinks$ = this.metadataViewFacade.apiLinks$
+  displayApi$ = combineLatest([this.apiLinks$, this.kindSubject]).pipe(
+    map(([links, kind]) => links.length > 0 && kind === 'dataset')
   )
-  displayApi$ = this.metadataViewFacade.apiLinks$.pipe(
-    map((links) => links?.length > 0 && this.kind === 'dataset')
+  displayCapabilities$ = combineLatest([this.apiLinks$, this.kindSubject]).pipe(
+    map(([links, kind]) => links.length > 0 && kind === 'service')
   )
-
   displayOtherLinks = this.metadataViewFacade.otherLinks$.pipe(
     map((links) => links?.length > 0)
   )
   displayRelated$ = this.metadataViewFacade.related$.pipe(
     map((records) => records?.length > 0)
+  )
+
+  displayMap$ = combineLatest([
+    this.metadataViewFacade.mapApiLinks$,
+    this.metadataViewFacade.geoDataLinksWithGeometry$,
+    this.kindSubject,
+  ]).pipe(
+    map(([mapApiLinks, geoDataLinksWithGeometry, kind]) => {
+      return (
+        kind === 'dataset' &&
+        (mapApiLinks?.length > 0 || geoDataLinksWithGeometry?.length > 0)
+      )
+    }),
+    startWith(false)
+  )
+
+  displayData$ = combineLatest([
+    this.metadataViewFacade.dataLinks$,
+    this.metadataViewFacade.geoDataLinks$,
+    this.kindSubject,
+  ]).pipe(
+    map(
+      ([dataLinks, geoDataLinks, kind]) =>
+        kind === 'dataset' &&
+        (dataLinks?.length > 0 || geoDataLinks?.length > 0)
+    )
   )
 
   displayDatasetHasNoLinkBlock$ = combineLatest([
