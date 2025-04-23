@@ -22,7 +22,10 @@ import {
   iconoirOpenNewWindow,
 } from '@ng-icons/iconoir'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { ImageOverlayPreviewComponent } from '@geonetwork-ui/ui/elements'
+import {
+  ImageOverlayPreviewComponent,
+  KindBadgeComponent,
+} from '@geonetwork-ui/ui/elements'
 
 marker('record.kind.dataset')
 marker('record.kind.reuse')
@@ -41,6 +44,7 @@ marker('record.kind.service')
     NgIcon,
     ImageOverlayPreviewComponent,
     GeoDataBadgeComponent,
+    KindBadgeComponent,
   ],
   viewProviders: [
     provideIcons({
