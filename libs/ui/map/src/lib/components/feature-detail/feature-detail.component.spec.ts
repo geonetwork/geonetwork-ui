@@ -60,4 +60,24 @@ describe('FeatureDetailComponent', () => {
       expect(props.length).toBe(2)
     })
   })
+  describe('setProperties', () => {
+    beforeEach(() => {
+      component.feature = {
+        type: 'Feature',
+        properties: {
+          id: 'someId',
+          name: 'ol_feature',
+        },
+        geometry: null,
+      }
+      component._featureAttributes = [{ name: 'id', code: 'Identifiant' }]
+      fixture.detectChanges()
+    })
+    it('should update properties correctly with featureAttributes', () => {
+      expect(component.properties).toEqual({
+        Identifiant: 'someId',
+        name: 'ol_feature',
+      })
+    })
+  })
 })
