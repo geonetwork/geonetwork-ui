@@ -27,7 +27,6 @@ export class ResultsListItemComponent implements OnChanges, AfterViewInit {
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
   @Input() metadataQualityDisplay: boolean
   @Input() linkHref: string
-  @Input() recordUrlGetter: (record: CatalogRecord) => string
   @Output() mdSelect = new EventEmitter<CatalogRecord>()
   initialized = false
 
