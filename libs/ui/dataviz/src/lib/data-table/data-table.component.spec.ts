@@ -198,4 +198,15 @@ describe('DataTableComponent', () => {
       expect(component.error).toEqual('Test Error')
     })
   })
+  describe('setProperties', () => {
+    beforeEach(() => {
+      component.dataset = new MockBaseReader(someHabTableItemFixture)
+      component._featureAttributes = [{ name: 'ID', code: 'identifiant' }]
+      fixture.detectChanges()
+    })
+    it('should update properties correctly with featureAttributes', async () => {
+      const properties = await firstValueFrom(component.properties$)
+      expect(properties).toEqual(['identifiant', 'Name', 'Population'])
+    })
+  })
 })

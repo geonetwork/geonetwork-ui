@@ -2,9 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Inject,
   Input,
-  Optional,
   Output,
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -13,6 +11,7 @@ import {
   FetchError,
   FieldAggregation,
   getJsonDataItemsProxy,
+  PropertyInfo,
 } from '@geonetwork-ui/data-fetcher'
 import {
   DropdownChoice,
@@ -30,7 +29,10 @@ import {
 } from 'rxjs/operators'
 import { DataService } from '../service/data.service'
 import { InputChartType } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import {
+  DatasetFeatureCatalog,
+  DatasetOnlineResource,
+} from '@geonetwork-ui/common/domain/model/record'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import { ChartComponent } from '@geonetwork-ui/ui/dataviz'
@@ -67,6 +69,12 @@ marker('chart.aggregation.count')
   standalone: true,
 })
 export class ChartViewComponent {
+  public featureCatalog$ = new BehaviorSubject<DatasetFeatureCatalog | null>(
+    null
+  )
+  @Input() set featureCatalog(value: DatasetFeatureCatalog) {
+    this.featureCatalog$.next(value)
+  }
   @Input() cacheActive = true
   @Input() set link(value: DatasetOnlineResource) {
     this.currentLink$.next(value)
@@ -150,13 +158,8 @@ export class ChartViewComponent {
     }),
     shareReplay(1)
   )
-  properties$ = this.dataset$.pipe(
-    switchMap((dataset) =>
-      dataset.properties.catch((error) => {
-        this.handleError(error)
-        return []
-      })
-    ),
+  properties$ = combineLatest([this.dataset$, this.featureCatalog$]).pipe(
+    switchMap(([dataset, catalog]) => this.setProperties(dataset, catalog)),
     shareReplay(1)
   )
   yChoices$ = this.properties$.pipe(
@@ -235,6 +238,28 @@ export class ChartViewComponent {
     private translateService: TranslateService
   ) {}
 
+  setProperties(
+    dataset: BaseReader,
+    catalog: DatasetFeatureCatalog
+  ): Promise<PropertyInfo[]> {
+    return dataset.properties
+      .then((properties) => {
+        const featureAttributes = catalog?.featureTypes[0]?.attributes ?? []
+        return properties.map((p) => {
+          const matchingAttribute = featureAttributes.find(
+            (attr) => attr.name === p.label
+          )
+          if (matchingAttribute?.code) {
+            return { ...p, label: matchingAttribute.code }
+          }
+          return p
+        })
+      })
+      .catch((error) => {
+        this.handleError(error)
+        return []
+      })
+  }
   handleError(error: FetchError | Error | string) {
     if (error instanceof FetchError) {
       this.error = this.translateService.instant(
