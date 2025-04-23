@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { RelatedRecordCardComponent } from '@geonetwork-ui/ui/elements'
+import {
+  InternalLinkCardComponent,
+  RelatedRecordCardComponent,
+} from '@geonetwork-ui/ui/elements'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 
@@ -10,7 +13,12 @@ import { TranslateModule } from '@ngx-translate/core'
   styleUrls: ['./record-related-records.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RelatedRecordCardComponent, TranslateModule],
+  imports: [
+    CommonModule,
+    RelatedRecordCardComponent,
+    TranslateModule,
+    InternalLinkCardComponent,
+  ],
 })
 export class RecordRelatedRecordsComponent {
   @Input() records: CatalogRecord[]

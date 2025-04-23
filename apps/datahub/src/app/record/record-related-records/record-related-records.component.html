@@ -1,7 +1,16 @@
 <h2 class="gn-ui-section-title pt-0 mb-10" translate>
   record.metadata.related
 </h2>
-<div class="mb-4 flex flex-wrap gap-6 justify-center sm:justify-start">
-  <gn-ui-related-record-card *ngFor="let record of records" [record]="record">
-  </gn-ui-related-record-card>
+<div class="mb-4 grid gap-4 w-full md:grid-cols-2 pt-5 pb-7 size-M">
+  <gn-ui-internal-link-card
+    *ngFor="let record of records"
+    [record]="record"
+    [favoriteTemplate]="favoriteTemplate"
+    [metadataQualityDisplay]="metadataQualityDisplay"
+    (mdSelect)="mdSelect.emit($event)"
+    [linkHref]="linkHref"
+    [isGeodata]="true"
+    size="M"
+  >
+  </gn-ui-internal-link-card>
 </div>
