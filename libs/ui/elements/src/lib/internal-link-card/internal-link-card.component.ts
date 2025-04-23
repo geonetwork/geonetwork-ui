@@ -119,7 +119,7 @@ export class InternalLinkCardComponent implements OnInit {
     XS: 'text-base line-clamp-1 ml-2',
   }
 
-  constructor(protected elementRef: ElementRef) { }
+  constructor(protected elementRef: ElementRef) {}
 
   ngOnInit(): void {
     this.abstract = removeWhitespace(stripHtml(this.record?.abstract))
