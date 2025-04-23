@@ -1,82 +1,10 @@
-<a
-  class="group container-lg mx-auto flex cursor-pointer flex-wrap sm:flex-nowrap"
-  [title]="record.title"
-  [attr.href]="linkHref"
+<gn-ui-internal-link-card
+  [record]="record"
+  [favoriteTemplate]="favoriteTemplate"
+  [metadataQualityDisplay]="metadataQualityDisplay"
+  (mdSelect)="mdSelect.emit($event)"
+  [linkHref]="linkHref"
+  [isGeodata]="true"
+  size="L"
 >
-  <div class="shrink-0 w-full sm:w-52">
-    <div
-      class="overflow-hidden bg-gray-100 rounded-lg w-full border border-gray-300 h-36"
-    >
-      <gn-ui-thumbnail
-        class="relative h-full w-full object-cover object-left-top"
-        [thumbnailUrl]="[
-          record.overviews?.[0]?.url?.toString(),
-          organization?.logoUrl?.toString(),
-        ]"
-        [fit]="['cover', 'contain']"
-      ></gn-ui-thumbnail>
-    </div>
-  </div>
-  <div
-    class="content grid grow relative sm:pl-6 sm:pr-12"
-    style="grid-template-columns: auto 70px"
-  >
-    <div class="mb-3 mt-5 sm:mt-2">
-      <div
-        class="font-title text-21 text-title line-clamp-2 col-start-1 col-span-2 sm:line-clamp-1 group-hover:text-primary transition-colors"
-        data-cy="recordTitle"
-      >
-        {{ record.title }}
-      </div>
-    </div>
-    <div
-      class="abstract mt-4 mb-5 h-36 line-clamp-6 col-start-1 col-span-2 row-start-3 sm:mb-2 sm:h-[4.5rem] sm:line-clamp-3 sm:row-start-2 sm:mt-0"
-      data-cy="recordAbstract"
-    >
-      <gn-ui-markdown-parser
-        [textContent]="abstract"
-        whitoutStyles="true"
-      ></gn-ui-markdown-parser>
-    </div>
-    <div
-      class="text-primary opacity-45 uppercase col-start-1 col-span-2 row-start-2 sm:truncate sm:row-start-3 sm:col-span-1"
-      data-cy="recordOrg"
-      [class]="metadataQualityDisplay ? 'limit-organisation-with-quality' : ''"
-    >
-      {{ organization?.name }}
-    </div>
-    <div
-      class="icons flex flex-row col-start-1 row-start-4 sm:col-start-2 sm:row-start-3 sm:absolute sm:right-[0.4em]"
-    >
-      <ng-icon
-        *ngIf="isDownloadable"
-        class="text-primary opacity-45 mx-1"
-        name="matCloudDownloadOutline"
-      ></ng-icon>
-      <ng-icon
-        *ngIf="isViewable"
-        class="text-primary opacity-45 mx-1"
-        name="matMapOutline"
-      ></ng-icon>
-    </div>
-    <div
-      *ngIf="metadataQualityDisplay"
-      class="col-start-2 row-start-4 sm:row-start-3 absolute right-[4em] sm:right-[5em]"
-    >
-      <gn-ui-metadata-quality
-        [smaller]="true"
-        [metadata]="record"
-        [metadataQualityDisplay]="metadataQualityDisplay"
-      ></gn-ui-metadata-quality>
-    </div>
-    <div
-      class="text-right col-start-3 row-start-4 sm:absolute sm:col-start-2 sm:row-start-1 sm:top-[-1.125em] sm:right-[0.4em]"
-      data-cy="recordFav"
-    >
-      <ng-container
-        [ngTemplateOutlet]="favoriteTemplate"
-        [ngTemplateOutletContext]="{ $implicit: record }"
-      ></ng-container>
-    </div>
-  </div>
-</a>
+</gn-ui-internal-link-card>

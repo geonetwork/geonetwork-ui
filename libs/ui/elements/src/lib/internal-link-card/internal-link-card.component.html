@@ -1,4 +1,7 @@
-<div class="group hover:cursor-pointer overflow-hidden" [ngClass]="cardClass">
+<div
+  class="group rounded-md hover:cursor-pointer hover:bg-slate-50 overflow-hidden"
+  [ngClass]="cardClass"
+>
   <div class="flex flex-row justify-between w-full">
     <div
       *ngIf="shouldShowThumbnail"
@@ -11,7 +14,7 @@
         [fit]="'cover'"
       ></gn-ui-thumbnail>
     </div>
-    <div class="grow flex flex-col gap-2">
+    <div class="grow flex flex-col">
       <div class="flex items-center gap-2">
         <div class="grow flex items-center gap-2">
           <span
