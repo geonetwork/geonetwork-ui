@@ -1,5 +1,5 @@
 <div
-  class="group rounded-md bg-white hover:cursor-pointer hover:bg-slate-50 overflow-hidden"
+  class="group rounded-md bg-white hover:cursor-pointer hover:bg-slate-50 overflow-hidden w-full"
   [ngClass]="cardClass"
 >
   <div class="flex flex-row justify-between w-full">
@@ -14,7 +14,7 @@
         [fit]="'cover'"
       ></gn-ui-thumbnail>
     </div>
-    <div class="grow flex flex-col">
+    <div class="grow flex flex-col gap-4">
       <div class="flex items-center gap-2">
         <div class="grow flex items-center gap-2">
           <gn-ui-kind-badge
@@ -54,9 +54,9 @@
         </div>
       </div>
 
-      <div class="grow flex flex-col gap-2 place-content-center">
+      <div class="grow flex flex-col gap-2">
         <div
-          class="place-content-center font-medium text-title group-hover:text-primary"
+          class="font-medium text-title group-hover:text-primary"
           [title]="record.title"
         >
           <p class="mr-6 overflow-hidden" [ngClass]="getTitleClass()">

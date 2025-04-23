@@ -201,20 +201,20 @@ export const MultipleMediumCards: StoryObj<InternalLinkCardComponentWithFavorite
         records: datasetRecordsFixture().slice(0, 3),
       },
       template: `
-      <div class="flex flex-col gap-4">
-      <div *ngFor="let rec of records">
-       <div class="border border-gray-100 rounded-md w-auto inline-block card-shadow">
-        <gn-ui-internal-link-card          
-          [record]="rec"
-          [size]="size"
-          [isGeodata]="isGeodata"
-          [metadataQualityDisplay]="metadataQualityDisplay"
-          [linkHref]="linkHref"
-          [favoriteTemplate]="favoriteRef"
-          (mdSelect)="mdSelect($event)">
-        </gn-ui-internal-link-card>
-      </div>
-      </div>
+      <div class="flex flex-col gap-4 w-[620px]">
+        <div class="w-[620px]" *ngFor="let rec of records">
+          <div class="border border-gray-100 rounded-md inline-block card-shadow w-full">
+            <gn-ui-internal-link-card
+              [record]="rec"
+              [size]="size"
+              [isGeodata]="isGeodata"
+              [metadataQualityDisplay]="metadataQualityDisplay"
+              [linkHref]="linkHref"
+              [favoriteTemplate]="favoriteRef"
+              (mdSelect)="mdSelect($event)">
+            </gn-ui-internal-link-card>
+          </div>
+        </div>
       </div>
       <ng-template #favoriteRef let-record>
         ${args.favoriteTemplateString}
