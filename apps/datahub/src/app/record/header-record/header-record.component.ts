@@ -82,16 +82,6 @@ export class HeaderRecordComponent {
     })
   )
 
-  isGeodata$ = combineLatest([
-    this.facade.mapApiLinks$,
-    this.facade.geoDataLinks$,
-  ]).pipe(
-    map(
-      ([mapLinks, geoDataLinks]) =>
-        mapLinks?.length > 0 || geoDataLinks?.length > 0
-    )
-  )
-
   get lastUpdate() {
     return this.dateService.formatDate(this.metadata.recordUpdated)
   }
