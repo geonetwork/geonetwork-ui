@@ -61,8 +61,15 @@
     [title]="'editor.temporary.disabled' | translate"
   >
     <ng-icon name="matHelpOutlineOutline"></ng-icon>
-  </gn-ui-button>
+  </gn-ui-button> -->
   <gn-ui-button
+    [extraClass]="translatePanelOpen ? 'bg-neutral-200 border-0' : ''"
+    (buttonClick)="handleTranslatePanel()"
+    type="light"
+  >
+    <ng-icon name="iconoirTranslate"></ng-icon>
+  </gn-ui-button>
+  <!-- <gn-ui-button
     type="light"
     disabled="true"
     [title]="'editor.temporary.disabled' | translate"
