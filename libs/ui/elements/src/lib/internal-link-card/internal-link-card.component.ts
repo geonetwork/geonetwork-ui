@@ -110,7 +110,7 @@ export class InternalLinkCardComponent implements OnInit {
 
   private readonly titleClassMap: Record<CardSize, string> = {
     L: 'text-xl line-clamp-1',
-    M: 'text-base line-clamp-1',
+    M: 'text-base line-clamp-2',
     S: 'text-base line-clamp-3 ml-2',
     XS: 'text-base line-clamp-1 ml-2',
   }

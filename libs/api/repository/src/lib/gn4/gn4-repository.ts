@@ -193,7 +193,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         'bucket',
         null,
         JSON.stringify(
-          this.gn4SearchHelper.getRelatedRecordPayload(similarTo, 3)
+          this.gn4SearchHelper.getRelatedRecordPayload(similarTo, 4)
         )
       )
       .pipe(
