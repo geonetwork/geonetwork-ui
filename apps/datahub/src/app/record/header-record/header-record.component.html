@@ -35,9 +35,7 @@
             [kind]="metadata.kind"
           ></gn-ui-kind-badge>
           <gn-ui-geo-data-badge
-            [style.--gn-ui-badge-background-color]="
-              'var(--color-primary-darker)'
-            "
+            [styling]="'default'"
             [record]="metadata"
           ></gn-ui-geo-data-badge>
           <div *ngIf="metadata.recordUpdated">

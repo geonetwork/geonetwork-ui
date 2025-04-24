@@ -12,6 +12,7 @@ import {
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common'
+import { GeoDataBadgeComponent } from '../geo-data-badge/geo-data-badge.component'
 import { KindBadgeComponent } from '../kind-badge/kind-badge.component'
 import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component'
 import { MetadataQualityComponent } from '../metadata-quality/metadata-quality.component'
@@ -53,6 +54,7 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
     NgTemplateOutlet,
     NgIconComponent,
     TranslateModule,
+    GeoDataBadgeComponent,
     KindBadgeComponent,
     MarkdownParserComponent,
   ],
