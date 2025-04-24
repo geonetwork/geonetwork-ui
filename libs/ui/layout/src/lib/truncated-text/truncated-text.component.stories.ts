@@ -20,7 +20,7 @@ const meta: Meta<TruncatedTextComponent> = {
   render: (args) => ({
     props: args,
     template: `
-      <div [style.width]="width" class="border border-black p-2">
+      <div [style.width]="width" class="border border-gray-300">
         <gn-ui-truncated-text [text]="text"></gn-ui-truncated-text>
       </div>
     `,

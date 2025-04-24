@@ -21,9 +21,9 @@
     [cdkConnectedOverlayOpen]="isOpen"
     [cdkConnectedOverlayPositions]="[
       {
-        originX: 'start',
+        originX: 'end',
         originY: 'top',
-        overlayX: 'start',
+        overlayX: 'end',
         overlayY: 'top',
       },
     ]"
@@ -37,7 +37,7 @@
         class="m-2 flex-shrink-0"
         type="light"
         (buttonClick)="close()"
-        extraClass="w-10 h-8 px-1"
+        extraClass="w-10 h-8 px-1 bg-white"
       >
         <ng-icon name="iconoirReduce" size="24"> </ng-icon>
       </gn-ui-button>
