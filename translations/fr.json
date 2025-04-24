@@ -205,6 +205,7 @@
   "editor.record.form.license.pddl": "Open Data Commons PDDL",
   "editor.record.form.license.unknown": "Inconnue ou absente",
   "editor.record.form.multilingual.enable": "Mode Multilingue",
+  "editor.record.form.multilingual.open": "Ouvrir le menu multilingue",
   "editor.record.form.multilingual.title": "Traductions",
   "editor.record.form.page.accessAndContact": "Informations pour l'utilisation",
   "editor.record.form.page.description": "Description du jeu de données",

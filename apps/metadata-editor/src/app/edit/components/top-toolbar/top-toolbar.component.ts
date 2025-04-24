@@ -125,7 +125,7 @@ export class TopToolbarComponent {
     })
   }
 
-  handleTranslatePanel() {
+  toggleTranslatePanel() {
     this.translatePanelOpen = !this.translatePanelOpen
     this.openTranslatePanel.emit(this.translatePanelOpen)
   }

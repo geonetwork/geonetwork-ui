@@ -63,8 +63,9 @@
     <ng-icon name="matHelpOutlineOutline"></ng-icon>
   </gn-ui-button> -->
   <gn-ui-button
+    [title]="'editor.record.form.multilingual.open' | translate"
     [extraClass]="translatePanelOpen ? 'bg-neutral-200 border-0' : ''"
-    (buttonClick)="handleTranslatePanel()"
+    (buttonClick)="toggleTranslatePanel()"
     type="light"
   >
     <ng-icon name="iconoirTranslate"></ng-icon>
