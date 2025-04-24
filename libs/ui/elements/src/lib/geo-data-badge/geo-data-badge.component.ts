@@ -1,13 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { combineLatest } from 'rxjs'
-import { map } from 'rxjs/operators'
-import { MdViewFacade } from '../state'
 import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
+import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-geo-data-badge',
@@ -25,16 +23,17 @@ import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
 export class GeoDataBadgeComponent {
   @Input() record: CatalogRecord
 
-  isGeodata$ = combineLatest([
-    this.mdViewFacade.mapApiLinks$,
-    this.mdViewFacade.geoDataLinks$,
-  ]).pipe(
-    map(
-      ([mapLinks, geoDataLinks]) =>
-        this.record.kind !== 'service' &&
-        (mapLinks?.length > 0 || geoDataLinks?.length > 0)
+  isGeodata() {
+    const links =
+      'onlineResources' in this.record ? this.record.onlineResources : []
+    const hasMapApi = links.some((link) =>
+      this.linkClassifier.hasUsage(link, LinkUsage.MAP_API)
     )
-  )
+    const hasGeoData = links.some((link) =>
+      this.linkClassifier.hasUsage(link, LinkUsage.GEODATA)
+    )
+    return hasMapApi || hasGeoData
+  }
 
-  constructor(private mdViewFacade: MdViewFacade) {}
+  constructor(public linkClassifier: LinkClassifierService) {}
 }

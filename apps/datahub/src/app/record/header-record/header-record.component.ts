@@ -5,10 +5,7 @@ import {
   ReuseRecord,
   ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
-import {
-  GeoDataBadgeComponent,
-  MdViewFacade,
-} from '@geonetwork-ui/feature/record'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { combineLatest, map } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
 import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
@@ -23,6 +20,7 @@ import {
 } from '@ng-icons/iconoir'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
+  GeoDataBadgeComponent,
   ImageOverlayPreviewComponent,
   KindBadgeComponent,
 } from '@geonetwork-ui/ui/elements'
