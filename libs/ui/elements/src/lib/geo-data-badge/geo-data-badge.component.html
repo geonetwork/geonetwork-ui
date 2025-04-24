@@ -1,9 +1,7 @@
-<gn-ui-badge *ngIf="isGeodata()">
+<div [class]="badgeClasses" *ngIf="isGeodata()">
   <ng-icon
-    class="mr-[5px] text-[1em]"
+    class="mr-[5px] text-[0.8em]"
     name="matLocationSearchingOutline"
   ></ng-icon>
-  <span class="font-semibold text-[12px]" translate
-    >record.metadata.isGeographical</span
-  >
-</gn-ui-badge>
+  <span *ngIf="showLabel" translate>record.metadata.isGeographical</span>
+</div>

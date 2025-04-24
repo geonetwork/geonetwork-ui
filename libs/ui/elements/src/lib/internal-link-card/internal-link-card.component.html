@@ -21,24 +21,11 @@
             [styling]="'default'"
             [kind]="this.record?.kind"
           ></gn-ui-kind-badge>
-          <span
-            *ngIf="isGeodata"
-            [title]="'record.metadata.isGeographical' | translate"
-            class="badge-btn text-black text-xs px-2 py-0.5 font-bold shrink-0 bg-primary-white leading-tight flex items-center justify-evenly h-6 min-h-6"
-          >
-            <ng-icon
-              class="text-[0.9em] text-primary-darkest"
-              name="matLocationSearchingOutline"
-            ></ng-icon>
-            <ng-container *ngIf="size === 'L'">
-              <span
-                class="font-medium text-primary-darkest text-xs ml-1"
-                translate
-              >
-                record.metadata.isGeographical
-              </span>
-            </ng-container>
-          </span>
+          <gn-ui-geo-data-badge
+            [showLabel]="size === 'L'"
+            [styling]="'light'"
+            [record]="record"
+          ></gn-ui-geo-data-badge>
           <gn-ui-metadata-quality
             class="flex items-center"
             [smaller]="true"
