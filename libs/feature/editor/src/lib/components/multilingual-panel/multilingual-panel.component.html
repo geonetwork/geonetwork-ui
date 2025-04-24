@@ -1,0 +1,14 @@
+<div
+  class="flex flex-col h-full w-[302px] bg-neutral-100 border-l border-gray-300 py-9 px-3 gap-8"
+>
+  <span class="text-3xl font-title text-black/80 px-2" translate
+    >editor.record.form.multilingual.title</span
+  >
+  <gn-ui-check-toggle
+    class="p-2"
+    [label]="'editor.record.form.multilingual.enable' | translate"
+    [color]="'primary'"
+    [value]="translationsEnabled"
+    (toggled)="translationsEnabled = $event"
+  ></gn-ui-check-toggle>
+</div>
