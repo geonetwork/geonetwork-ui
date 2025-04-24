@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core'
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
@@ -21,6 +26,7 @@ import {
   iconoirDownload,
   iconoirLightBulb,
   iconoirSidebarCollapse,
+  iconoirTranslate,
   iconoirUndoAction,
 } from '@ng-icons/iconoir'
 import {
@@ -51,6 +57,7 @@ import {
       iconoirUndoAction,
       iconoirBadgeCheck,
       matHelpOutlineOutline,
+      iconoirTranslate,
     }),
     provideNgIconsConfig({
       size: '1.5rem',
@@ -61,6 +68,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopToolbarComponent {
+  @Output() openTranslatePanel = new EventEmitter(false)
+  translatePanelOpen = false
   protected SaveStatus = [
     'record_not_published', // => when the record is not published yet but saved
     'record_up_to_date', // => when the record was just published (ie saved on the server)
@@ -114,5 +123,10 @@ export class TopToolbarComponent {
         this.editorFacade.undoRecordDraft()
       }
     })
+  }
+
+  toggleTranslatePanel() {
+    this.translatePanelOpen = !this.translatePanelOpen
+    this.openTranslatePanel.emit(this.translatePanelOpen)
   }
 }
