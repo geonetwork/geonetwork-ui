@@ -562,7 +562,7 @@
   "tooltip.url.open": "Open URL",
   "ui.readLess": "Read less",
   "ui.readMore": "Read more",
-  "ui.hideFullText": "hide complete text",
+  "ui.hideFullText": "Hide complete text",
   "ui.showAllText": "Show all text",
   "wfs.feature.limit": "Too many features to display the WFS layer!",
   "wfs.featuretype.notfound": "No matching feature type was found in the service",
