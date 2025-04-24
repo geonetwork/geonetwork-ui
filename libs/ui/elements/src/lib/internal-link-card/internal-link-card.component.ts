@@ -77,7 +77,6 @@ export class InternalLinkCardComponent implements OnInit {
   @Input() metadataQualityDisplay: boolean
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
   @Input() linkHref: string = null
-  @Input() isGeodata: boolean
   @Input() set size(value: CardSize) {
     this._size = value
     this.cardClass = this.sizeClassMap[value] || ''

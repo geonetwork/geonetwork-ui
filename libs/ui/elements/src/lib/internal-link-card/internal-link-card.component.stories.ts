@@ -76,10 +76,6 @@ export const Primary: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
         options: ['L', 'M', 'S', 'XS'],
         description: 'Size variant of the card',
       },
-      isGeodata: {
-        control: 'boolean',
-        description: 'Whether the record represents geodata',
-      },
       metadataQualityDisplay: {
         control: 'boolean',
         description: 'Whether to show metadata quality information',
@@ -95,7 +91,6 @@ export const Primary: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
     args: {
       record: mockRecord,
       size: 'M',
-      isGeodata: true,
       metadataQualityDisplay: true,
       favoriteTemplateString: interactiveFavoriteTemplate,
     },
@@ -111,7 +106,6 @@ export const Primary: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
       class="w-auto"   
         [record]="record"
         [size]="size"
-        [isGeodata]="isGeodata"
         [metadataQualityDisplay]="metadataQualityDisplay"
         [linkHref]="linkHref"
         [favoriteTemplate]="favoriteRef"
@@ -175,7 +169,7 @@ export const WithoutGeodataIndicator: StoryObj<InternalLinkCardComponentWithFavo
   {
     args: {
       ...Primary.args,
-      isGeodata: false,
+      // isGeodata: false, // TODO: update storybook
     },
     render: Primary.render,
   }
@@ -207,7 +201,6 @@ export const MultipleMediumCards: StoryObj<InternalLinkCardComponentWithFavorite
             <gn-ui-internal-link-card
               [record]="rec"
               [size]="size"
-              [isGeodata]="isGeodata"
               [metadataQualityDisplay]="metadataQualityDisplay"
               [linkHref]="linkHref"
               [favoriteTemplate]="favoriteRef"
