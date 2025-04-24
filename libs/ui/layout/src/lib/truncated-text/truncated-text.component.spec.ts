@@ -1,20 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TruncatedTextComponent } from './truncated-text.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { OverlayComponent } from '../overlay/overlay.component'
 import { By } from '@angular/platform-browser'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
 describe('TruncatedTextComponent', () => {
   let component: TruncatedTextComponent
   let fixture: ComponentFixture<TruncatedTextComponent>
 
+  const mockTextElement = (scrollWidth: number, clientWidth: number) => {
+    component.textElement = {
+      nativeElement: { scrollWidth, clientWidth },
+    } as any
+    component.ngAfterViewInit()
+    fixture.detectChanges()
+  }
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        TruncatedTextComponent,
-        TranslateModule.forRoot(),
-        OverlayComponent,
-      ],
+      imports: [TruncatedTextComponent, TranslateModule.forRoot()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(TruncatedTextComponent)
@@ -22,60 +26,36 @@ describe('TruncatedTextComponent', () => {
     fixture.detectChanges()
   })
 
-  it('should create', () => {
+  it('should create with default values', () => {
     expect(component).toBeTruthy()
-  })
-
-  it('should initialize with default values', () => {
     expect(component.text).toBe('')
     expect(component.isTextTruncated).toBe(false)
-    expect(component.isExpanded).toBe(false)
+    expect(component.isOpen).toBe(false)
   })
 
-  it('should toggle expanded state', () => {
-    expect(component.isExpanded).toBe(false)
-    component.toggleExpand()
-    expect(component.isExpanded).toBe(true)
-    component.toggleExpand()
-    expect(component.isExpanded).toBe(false)
+  describe('text truncation', () => {
+    it('should detect truncated text and show expand button', () => {
+      mockTextElement(200, 100)
+      expect(component.isTextTruncated).toBe(true)
+      const button = fixture.debugElement.query(By.directive(ButtonComponent))
+      expect(button).toBeTruthy()
+    })
+
+    it('should not show expand button for non-truncated text', () => {
+      mockTextElement(100, 200)
+      expect(component.isTextTruncated).toBe(false)
+      const button = fixture.debugElement.query(By.directive(ButtonComponent))
+      expect(button).toBeFalsy()
+    })
   })
 
-  it('should check text truncation on init', () => {
-    const mockElement = {
-      nativeElement: {
-        scrollWidth: 200,
-        clientWidth: 100,
-      },
-    }
-    component.textElement = mockElement as any
-    component.ngAfterViewInit()
-    expect(component.isTextTruncated).toBe(true)
-  })
-
-  it('should detect non-truncated text', () => {
-    const mockElement = {
-      nativeElement: {
-        scrollWidth: 100,
-        clientWidth: 200,
-      },
-    }
-    component.textElement = mockElement as any
-    component.ngAfterViewInit()
-    expect(component.isTextTruncated).toBe(false)
-  })
-
-  it('should show overlay component when text is truncated', () => {
-    const mockElement = {
-      nativeElement: {
-        scrollWidth: 200,
-        clientWidth: 100,
-      },
-    }
-    component.textElement = mockElement as any
-    component.ngAfterViewInit()
-    fixture.detectChanges()
-
-    const overlay = fixture.debugElement.query(By.directive(OverlayComponent))
-    expect(overlay).toBeTruthy()
+  describe('overlay behavior', () => {
+    it('should toggle and close overlay correctly', () => {
+      expect(component.isOpen).toBe(false)
+      component.toggleOverlay()
+      expect(component.isOpen).toBe(true)
+      component.close()
+      expect(component.isOpen).toBe(false)
+    })
   })
 })

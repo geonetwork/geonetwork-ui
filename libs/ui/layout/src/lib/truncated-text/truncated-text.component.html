@@ -1,10 +1,46 @@
-<div class="relative">
-  <div class="flex items-center justify-between w-full gap-2">
-    <span #textElement class="truncate">
-      {{ text }}
-    </span>
-    <gn-ui-overlay *ngIf="isTextTruncated">
-      <p class="m-2">{{ text }}</p>
-    </gn-ui-overlay>
-  </div>
+<div
+  class="flex items-center justify-between w-full gap-2"
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+>
+  <span #textElement class="truncate">
+    {{ text }}
+  </span>
+  <gn-ui-button
+    *ngIf="isTextTruncated"
+    type="outline"
+    extraClass="w-10 h-8 border rounded-lg"
+    (buttonClick)="toggleOverlay()"
+  >
+    <ng-icon name="iconoirExpand" size="24"> </ng-icon>
+  </gn-ui-button>
+
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="trigger"
+    [cdkConnectedOverlayOpen]="isOpen"
+    [cdkConnectedOverlayPositions]="[
+      {
+        originX: 'start',
+        originY: 'top',
+        overlayX: 'start',
+        overlayY: 'top',
+      },
+    ]"
+    (detach)="isOpen = false"
+  >
+    <div class="bg-white shadow-lg border border-gray-300 flex">
+      <div class="w-64">
+        <p class="m-2">{{ text }}</p>
+      </div>
+      <gn-ui-button
+        class="m-2 flex-shrink-0"
+        type="light"
+        (buttonClick)="close()"
+        extraClass="w-10 h-8 px-1"
+      >
+        <ng-icon name="iconoirReduce" size="24"> </ng-icon>
+      </gn-ui-button>
+    </div>
+  </ng-template>
 </div>

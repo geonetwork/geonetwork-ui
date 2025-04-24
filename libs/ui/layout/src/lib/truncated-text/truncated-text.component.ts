@@ -8,15 +8,25 @@ import {
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { provideIcons } from '@ng-icons/core'
-import { iconoirExpand, iconoirCollapse } from '@ng-icons/iconoir'
+import { iconoirExpand, iconoirReduce } from '@ng-icons/iconoir'
 import { TranslateModule } from '@ngx-translate/core'
-import { OverlayComponent } from '../overlay/overlay.component'
+import { MatButtonModule } from '@angular/material/button'
+import { OverlayModule } from '@angular/cdk/overlay'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { NgIconComponent } from '@ng-icons/core'
 
 @Component({
   selector: 'gn-ui-truncated-text',
   standalone: true,
-  imports: [CommonModule, TranslateModule, OverlayComponent],
-  providers: [provideIcons({ iconoirExpand, iconoirCollapse })],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    MatButtonModule,
+    OverlayModule,
+    ButtonComponent,
+    NgIconComponent,
+  ],
+  providers: [provideIcons({ iconoirExpand, iconoirReduce })],
   templateUrl: './truncated-text.component.html',
   styles: [],
 })
@@ -24,7 +34,7 @@ export class TruncatedTextComponent implements AfterViewInit {
   @Input() text = ''
   @ViewChild('textElement') textElement: ElementRef<HTMLElement>
   isTextTruncated = false
-  isExpanded = false
+  isOpen = false
 
   constructor(private cd: ChangeDetectorRef) {}
 
@@ -36,8 +46,12 @@ export class TruncatedTextComponent implements AfterViewInit {
     this.checkTextTruncation()
   }
 
-  toggleExpand() {
-    this.isExpanded = !this.isExpanded
+  toggleOverlay() {
+    this.isOpen = !this.isOpen
+  }
+
+  close() {
+    this.isOpen = false
   }
 
   private checkTextTruncation() {
