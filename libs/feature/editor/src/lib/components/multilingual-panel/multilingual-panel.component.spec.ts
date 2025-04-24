@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MultilingualPanelComponent } from './multilingual-panel.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('MultilingualPanelComponent', () => {
   let component: MultilingualPanelComponent
@@ -7,7 +8,7 @@ describe('MultilingualPanelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MultilingualPanelComponent],
+      imports: [MultilingualPanelComponent, TranslateModule.forRoot()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(MultilingualPanelComponent)
