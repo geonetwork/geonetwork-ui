@@ -52,7 +52,7 @@ export class KindBadgeComponent {
 
   get badgeClasses(): string {
     const baseClasses =
-      'badge-btn text-white text-xs px-2 font-bold shrink-0 flex items-center justify-evenly h-6 min-h-6'
+      'badge-btn text-white text-xs px-2 font-bold shrink-0 flex items-center h-6 min-h-6'
 
     switch (this.styling) {
       case 'outline':
@@ -60,7 +60,7 @@ export class KindBadgeComponent {
       case 'default':
         return `${baseClasses} bg-primary py-0.5`
       default:
-        return ''
+        return 'flex items-center'
     }
   }
 }
