@@ -107,7 +107,6 @@ export const Primary: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
         [record]="record"
         [size]="size"
         [metadataQualityDisplay]="metadataQualityDisplay"
-        [linkHref]="linkHref"
         [favoriteTemplate]="favoriteRef"
         (mdSelect)="mdSelect($event)">
       </gn-ui-internal-link-card>
@@ -202,7 +201,6 @@ export const MultipleMediumCards: StoryObj<InternalLinkCardComponentWithFavorite
               [record]="rec"
               [size]="size"
               [metadataQualityDisplay]="metadataQualityDisplay"
-              [linkHref]="linkHref"
               [favoriteTemplate]="favoriteRef"
               (mdSelect)="mdSelect($event)">
             </gn-ui-internal-link-card>
