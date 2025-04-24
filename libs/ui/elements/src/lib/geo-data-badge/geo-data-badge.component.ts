@@ -4,7 +4,6 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 import { NgIcon, provideIcons } from '@ng-icons/core'
-import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
 import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
 
 @Component({
@@ -13,7 +12,7 @@ import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
   styleUrls: ['./geo-data-badge.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [BadgeComponent, CommonModule, NgIcon, TranslateModule],
+  imports: [CommonModule, NgIcon, TranslateModule],
   viewProviders: [
     provideIcons({
       matLocationSearchingOutline,
@@ -21,6 +20,8 @@ import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
   ],
 })
 export class GeoDataBadgeComponent {
+  @Input() showLabel = true
+  @Input() styling = 'default'
   @Input() record: CatalogRecord
 
   isGeodata() {
@@ -33,6 +34,20 @@ export class GeoDataBadgeComponent {
       this.linkClassifier.hasUsage(link, LinkUsage.GEODATA)
     )
     return hasMapApi || hasGeoData
+  }
+
+  get badgeClasses(): string {
+    const baseClasses =
+      'badge-btn text-xs px-2 shrink-0 flex items-center justify-evenly h-6 min-h-6'
+
+    switch (this.styling) {
+      case 'light':
+        return `${baseClasses} bg-primary-white text-primary-darkest`
+      case 'default':
+        return `${baseClasses} bg-primary-darker text-white`
+      default:
+        return ''
+    }
   }
 
   constructor(public linkClassifier: LinkClassifierService) {}
