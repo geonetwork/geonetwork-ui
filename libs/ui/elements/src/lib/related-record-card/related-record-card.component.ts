@@ -1,11 +1,14 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
+import { InternalLinkCardComponent } from '../internal-link-card/internal-link-card.component'
 import { RouterLink } from '@angular/router'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { matOpenInNew } from '@ng-icons/material-icons/baseline'
+import { TemplateRef } from '@angular/core'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'gn-ui-related-record-card',
@@ -13,6 +16,7 @@ import { matOpenInNew } from '@ng-icons/material-icons/baseline'
   styleUrls: ['./related-record-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    InternalLinkCardComponent,
     ThumbnailComponent,
     RouterLink,
     MatTooltipModule,
@@ -27,8 +31,10 @@ export class RelatedRecordCardComponent {
 
   @Input() record: CatalogRecord
   @Input() extraClass = ''
+  @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
+  @Input() metadataQualityDisplay: boolean
 
-  constructor() {
+  constructor(private router: Router) {
     this.baseClasses = [
       'w-72',
       'h-96',
@@ -44,5 +50,12 @@ export class RelatedRecordCardComponent {
 
   get classList() {
     return `${this.baseClasses} ${this.extraClass}`
+  }
+
+  onMdSelect() {
+    const url = this.router
+      .createUrlTree(['/dataset', this.record.uniqueIdentifier])
+      .toString()
+    window.open(url, '_blank')
   }
 }
