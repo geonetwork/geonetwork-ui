@@ -17,7 +17,6 @@ import {
   ResultsLayoutConfigItem,
   ResultsLayoutConfigModel,
 } from '@geonetwork-ui/ui/search'
-import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
 import {
   RECORD_DATASET_URL_TOKEN,
   RECORD_SERVICE_URL_TOKEN,
@@ -48,7 +47,6 @@ export class ResultsListContainerComponent implements OnInit {
 
   errorTypes = ErrorType
   recordUrlGetter = this.getRecordUrl.bind(this)
-  isGeodataGetter = this.getIsGeodata.bind(this)
 
   constructor(
     public facade: SearchFacade,
@@ -60,8 +58,7 @@ export class ResultsListContainerComponent implements OnInit {
     @Inject(RECORD_SERVICE_URL_TOKEN)
     private recordServiceUrlTemplate: string,
     @Inject(RECORD_REUSE_URL_TOKEN)
-    private recordReuseUrlTemplate: string,
-    public linkClassifier: LinkClassifierService
+    private recordReuseUrlTemplate: string
   ) {}
 
   ngOnInit(): void {
@@ -127,16 +124,5 @@ export class ResultsListContainerComponent implements OnInit {
       return null
     const urlKind = tokenMap[metadata.kind]
     return urlKind.replace('${uuid}', metadata.uniqueIdentifier)
-  }
-
-  getIsGeodata(metadata: CatalogRecord) {
-    const links = 'onlineResources' in metadata ? metadata.onlineResources : []
-    const hasMapApi = links.some((link) =>
-      this.linkClassifier.hasUsage(link, LinkUsage.MAP_API)
-    )
-    const hasGeoData = links.some((link) =>
-      this.linkClassifier.hasUsage(link, LinkUsage.GEODATA)
-    )
-    return hasMapApi || hasGeoData
   }
 }
