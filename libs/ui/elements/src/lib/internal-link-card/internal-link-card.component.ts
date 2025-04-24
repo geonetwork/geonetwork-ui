@@ -103,7 +103,7 @@ export class InternalLinkCardComponent implements OnInit {
   }
 
   private readonly thumbnailSizeClassMap: Record<CardSize, string> = {
-    L: 'w-[190px] h-[180px] rounded-lg overflow-hidden shrink-0',
+    L: 'w-full md:w-[190px] h-[180px] rounded-lg overflow-hidden shrink-0',
     M: 'w-[110px] h-[140px] rounded-lg overflow-hidden shrink-0',
     S: 'hidden',
     XS: 'hidden',
@@ -116,7 +116,7 @@ export class InternalLinkCardComponent implements OnInit {
     XS: 'text-base line-clamp-1 ml-2',
   }
 
-  constructor(protected elementRef: ElementRef) {}
+  constructor(protected elementRef: ElementRef) { }
 
   ngOnInit(): void {
     this.abstract = removeWhitespace(stripHtml(this.record?.abstract))

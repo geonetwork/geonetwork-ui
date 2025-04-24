@@ -1,5 +1,5 @@
 <div [class]="badgeClasses" *ngIf="kind">
-  <ng-icon [name]="iconKind" class="mr-1"></ng-icon>
+  <ng-icon [name]="iconKind" class="mr-1 text-[0.85em]"></ng-icon>
 
   <ng-container *ngIf="contentTemplate; else defaultContent">
     <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
