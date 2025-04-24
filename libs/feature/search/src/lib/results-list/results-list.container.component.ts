@@ -7,7 +7,7 @@ import {
   Optional,
   Output,
 } from '@angular/core'
-import { combineLatest, Observable, tap } from 'rxjs'
+import { combineLatest, Observable, tap, of } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchError } from '../state/reducer'
@@ -17,6 +17,7 @@ import {
   ResultsLayoutConfigItem,
   ResultsLayoutConfigModel,
 } from '@geonetwork-ui/ui/search'
+import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
 import {
   RECORD_DATASET_URL_TOKEN,
   RECORD_SERVICE_URL_TOKEN,
@@ -47,6 +48,7 @@ export class ResultsListContainerComponent implements OnInit {
 
   errorTypes = ErrorType
   recordUrlGetter = this.getRecordUrl.bind(this)
+  isGeodataGetter = this.getIsGeodata.bind(this)
 
   constructor(
     public facade: SearchFacade,
@@ -58,7 +60,8 @@ export class ResultsListContainerComponent implements OnInit {
     @Inject(RECORD_SERVICE_URL_TOKEN)
     private recordServiceUrlTemplate: string,
     @Inject(RECORD_REUSE_URL_TOKEN)
-    private recordReuseUrlTemplate: string
+    private recordReuseUrlTemplate: string,
+    public linkClassifier: LinkClassifierService
   ) {}
 
   ngOnInit(): void {
@@ -124,5 +127,16 @@ export class ResultsListContainerComponent implements OnInit {
       return null
     const urlKind = tokenMap[metadata.kind]
     return urlKind.replace('${uuid}', metadata.uniqueIdentifier)
+  }
+
+  getIsGeodata(metadata: CatalogRecord) {
+    const links = 'onlineResources' in metadata ? metadata.onlineResources : []
+    const hasMapApi = links.some((link) =>
+      this.linkClassifier.hasUsage(link, LinkUsage.MAP_API)
+    )
+    const hasGeoData = links.some((link) =>
+      this.linkClassifier.hasUsage(link, LinkUsage.GEODATA)
+    )
+    return hasMapApi || hasGeoData
   }
 }

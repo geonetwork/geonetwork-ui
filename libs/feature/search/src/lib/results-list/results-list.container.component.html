@@ -5,6 +5,7 @@
     [metadataQualityDisplay]="metadataQualityDisplay"
     [favoriteTemplate]="favoriteToggle"
     [recordUrlGetter]="recordUrlGetter"
+    [isGeodataGetter]="isGeodataGetter"
     (mdSelect)="onMetadataSelection($event)"
   ></gn-ui-results-list>
   <ng-container *ngIf="allowShowMore$ | async">
