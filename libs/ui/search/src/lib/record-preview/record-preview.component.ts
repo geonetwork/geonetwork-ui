@@ -30,6 +30,7 @@ export class RecordPreviewComponent implements OnInit, OnDestroy {
   @Input() linkTarget = '_blank'
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
   @Input() linkHref: string = null
+  @Input() isGeodata: boolean
   @Input() metadataQualityDisplay: boolean
   @Output() mdSelect = new EventEmitter<CatalogRecord>()
   subscription = new Subscription()

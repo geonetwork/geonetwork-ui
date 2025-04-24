@@ -24,6 +24,7 @@ export class ResultsListComponent {
     DEFAULT_RESULTS_LAYOUT_CONFIG['CARD']
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
   @Input() recordUrlGetter: (record: CatalogRecord) => string
+  @Input() isGeodataGetter: (record: CatalogRecord) => boolean
   @Input() metadataQualityDisplay: boolean
   @Output() mdSelect = new EventEmitter<CatalogRecord>()
 }

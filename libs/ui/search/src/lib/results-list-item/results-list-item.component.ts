@@ -27,6 +27,7 @@ export class ResultsListItemComponent implements OnChanges, AfterViewInit {
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
   @Input() metadataQualityDisplay: boolean
   @Input() linkHref: string
+  @Input() isGeodata: boolean
   @Output() mdSelect = new EventEmitter<CatalogRecord>()
   initialized = false
 
@@ -59,6 +60,7 @@ export class ResultsListItemComponent implements OnChanges, AfterViewInit {
       this.mdSelect.emit(record)
     )
     componentFactory.instance.linkHref = this.linkHref
+    componentFactory.instance.isGeodata = this.isGeodata
     componentFactory.changeDetectorRef.detectChanges()
   }
 }
