@@ -569,6 +569,8 @@
   "tooltip.url.open": "Ouvrir l'URL",
   "ui.readLess": "Réduire",
   "ui.readMore": "Lire la suite",
+  "ui.hideFullText": "Masquer le texte complet",
+  "ui.showAllText": "Tout afficher",
   "wfs.feature.limit": "Trop d'objets pour afficher la couche WFS !",
   "wfs.featuretype.notfound": "La classe d'objets n'a pas été trouvée dans le service",
   "wfs.geojsongml.notsupported": "Le service ne supporte pas le format GeoJSON ou GML",
