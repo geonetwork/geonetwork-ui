@@ -32,6 +32,7 @@ declare namespace Cypress {
     editor_findDraftInLocalStorage(): Chainable<string | number | string[]>
     addTranslationKey(): void
     removeTranslationKey(): void
+    editor_addLanguages(uuid: string): void
 
     // interaction with gn-ui-dropdown-selector
     openDropdown(): Chainable<JQuery<HTMLElement>>
@@ -359,6 +360,20 @@ Cypress.Commands.add('editor_publishAndReload', (uuid: string) => {
 
   // reload the page
   cy.visit(`/edit/${uuid}`)
+})
+
+Cypress.Commands.add('editor_addLanguages', (uuid) => {
+  cy.get('gn-ui-multilingual-panel')
+    .find('[data-test="activateSelection"]')
+    .click()
+  cy.get('[data-test="langAvailable"]').eq(3).click()
+  cy.get('[data-test="langAvailable"]').eq(7).click()
+  cy.editor_wrapPreviousDraft(uuid)
+  cy.get('[data-test="validateSelection"').click()
+
+  cy.editor_publishAndReload(uuid)
+
+  cy.get('md-editor-top-toolbar').find('gn-ui-button').eq(1).click()
 })
 
 Cypress.Commands.add('addTranslationKey', () => {

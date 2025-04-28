@@ -69,11 +69,4 @@ describe('editor form', () => {
         .should('contain', 'Cette couche de points reprend les informations')
     })
   })
-  describe('Multilingual panel', () => {
-    it('opens the multilingual panel', () => {
-      cy.get('gn-ui-multilingual-panel').should('not.exist')
-      cy.get('md-editor-top-toolbar').find('gn-ui-button').eq(1).click()
-      cy.get('gn-ui-multilingual-panel').should('be.visible')
-    })
-  })
 })
