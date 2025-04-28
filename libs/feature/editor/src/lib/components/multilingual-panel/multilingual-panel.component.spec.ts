@@ -80,10 +80,10 @@ describe('MultilingualPanelComponent (logic only)', () => {
   describe('edit panel toggle', () => {
     it('should toggle translation panel visibility', () => {
       component.editTranslations = false
-      component.toggleTranslatePanel()
+      component.activateLanguageSelection()
       expect(component.editTranslations).toBe(true)
 
-      component.toggleTranslatePanel()
+      component.activateLanguageSelection()
       expect(component.editTranslations).toBe(false)
     })
   })
