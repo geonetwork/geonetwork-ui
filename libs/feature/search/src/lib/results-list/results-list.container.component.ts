@@ -59,7 +59,7 @@ export class ResultsListContainerComponent implements OnInit {
     private recordServiceUrlTemplate: string,
     @Inject(RECORD_REUSE_URL_TOKEN)
     private recordReuseUrlTemplate: string
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.layoutConfig$ = this.facade.layout$.pipe(

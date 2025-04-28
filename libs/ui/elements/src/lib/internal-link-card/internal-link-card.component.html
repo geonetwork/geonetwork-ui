@@ -36,7 +36,7 @@
             [metadataQualityDisplay]="metadataQualityDisplay"
           ></gn-ui-metadata-quality>
         </div>
-        <div *ngIf="size !== 'XS'">
+        <div *ngIf="size !== 'XS'" data-cy="recordFav">
           <ng-container
             [ngTemplateOutlet]="favoriteTemplate"
             [ngTemplateOutletContext]="{ $implicit: record }"
@@ -49,13 +49,18 @@
           class="font-medium text-title group-hover:text-primary"
           [title]="record.title"
         >
-          <p class="mr-6 overflow-hidden" [ngClass]="getTitleClass()">
+          <h4
+            class="mr-6 overflow-hidden"
+            [ngClass]="getTitleClass()"
+            data-cy="recordTitle"
+          >
             {{ record.title }}
-          </p>
+          </h4>
         </div>
         <div
           *ngIf="size === 'L'"
           class="mr-6 text-xs text-gray-900 line-clamp-2 overflow-hidden"
+          data-cy="recordAbstract"
         >
           <gn-ui-markdown-parser
             [textContent]="abstract"
@@ -65,6 +70,7 @@
       </div>
 
       <div
+        data-cy="recordOrg"
         *ngIf="size !== 'XS' && record.ownerOrganization?.name"
         class="flex items-center justify-evenly bg-gray-50 rounded-lg h-[53px] px-2"
       >
@@ -87,7 +93,10 @@
             >
               record.card.metadata.contact
             </div>
-            <div class="text-xl text-primary-black font-medium truncate">
+            <div
+              data-cy="recordOrgName"
+              class="text-xl text-primary-black font-medium truncate"
+            >
               {{ organization.name }}
             </div>
           </div>
