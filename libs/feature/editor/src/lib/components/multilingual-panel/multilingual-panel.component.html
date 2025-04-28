@@ -1,5 +1,5 @@
 <div
-  class="flex flex-col h-full w-[302px] bg-neutral-100 border-l border-gray-300 py-7 px-3 gap-2 overflow-auto"
+  class="flex flex-col h-full w-[302px] bg-neutral-100 border-l border-gray-300 py-8 px-3 gap-6 overflow-auto"
 >
   <div class="flex flex-row px-2 justify-between">
     <span class="text-3xl font-title text-black/80" translate
@@ -14,16 +14,15 @@
       <ng-icon class="mt-1" name="iconoirSettings"></ng-icon>
     </button>
   </div>
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-2" *ngIf="editTranslations || !isMultilingual">
     <gn-ui-check-toggle
-      *ngIf="editTranslations || !isMultilingual"
       class="p-2"
       [label]="'editor.record.form.multilingual.enable' | translate"
       [color]="'primary'"
       [(value)]="isMultilingual"
       (toggled)="switchMultilingual($event)"
     ></gn-ui-check-toggle>
-    <div *ngIf="editTranslations && isMultilingual" class="flex flex-col gap-2">
+    <div *ngIf="isMultilingual" class="flex flex-col gap-2">
       <div class="flex flex-row justify-between border-t border-gray-300 p-3">
         <span class="mt-2 text-sm text-gray-600" translate
           >editor.record.form.multilingual.activate</span
