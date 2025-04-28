@@ -24,10 +24,10 @@ describe.skip('reuse pages', () => {
     it('should only display the service sections buttons', () => {
       cy.get('datahub-navigation-bar')
         .find('[data-cy="capabilities"]')
-        .should('not.exist')
+        .should('not.be.visible')
       cy.get('datahub-navigation-bar')
         .find('[data-cy="data-preview"]')
-        .should('not.exist')
+        .should('not.be.visible')
     })
   })
   describe('About', () => {
