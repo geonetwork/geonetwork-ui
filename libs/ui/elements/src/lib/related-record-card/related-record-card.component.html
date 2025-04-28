@@ -2,7 +2,7 @@
   [record]="record"
   [favoriteTemplate]="favoriteTemplate"
   [metadataQualityDisplay]="metadataQualityDisplay"
-  (mdSelect)="onMdSelect()"
+  (mdSelect)="mdSelect.emit($event)"
   size="M"
 >
 </gn-ui-internal-link-card>

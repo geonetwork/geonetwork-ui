@@ -6,6 +6,7 @@ import {
 } from '@geonetwork-ui/ui/elements'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
+import { RouterFacade } from '@geonetwork-ui/feature/router'
 
 @Component({
   selector: 'datahub-record-related-records',
@@ -22,4 +23,10 @@ import { TranslateModule } from '@ngx-translate/core'
 })
 export class RecordRelatedRecordsComponent {
   @Input() records: CatalogRecord[]
+
+  constructor(private routerFacade: RouterFacade) {}
+
+  onMetadataSelection(metadata: CatalogRecord): void {
+    this.routerFacade.goToMetadata(metadata)
+  }
 }
