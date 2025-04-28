@@ -30,7 +30,7 @@ describe('service pages', () => {
         .should('be.visible')
       cy.get('datahub-navigation-bar')
         .find('[data-cy="data-preview"]')
-        .should('not.exist')
+        .should('not.be.visible')
     })
   })
   describe('About', () => {
