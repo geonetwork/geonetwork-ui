@@ -20,6 +20,17 @@ The **Datahub** application offers a very intuitive and easy-to-use search inter
 - Support both geo- and non-geo datasets
 - Ability to show a welcome or maintenance message to users, which can be configured as needed, see [configure guide](../guide/configure.md#application-banner)
 
+## Pages
+
+The **Datahub** includes record of three different types : datasets, services and reuses.
+Each type has its own 'page-type' with fixed sections (if the related data is available in the record) :
+
+- Common sections : General information about the record (abstract, keywords, licensing, update date...), Point of contact, Links, User feedbacks and Related datasets
+
+- Specificities by page :
+  - Dataset : Download, API links and Preview (Map, Table and Chart)
+  - Service : Capabilities
+
 ## Run & deploy
 
 The Metadata Editor application is available as a docker image or as a ZIP archive.
