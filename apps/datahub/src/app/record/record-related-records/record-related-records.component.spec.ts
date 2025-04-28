@@ -22,8 +22,7 @@ describe('RelatedRecordsComponent', () => {
           useClass: RouterFacadeMock,
         },
       ],
-    })
-      .compileComponents()
+    }).compileComponents()
 
     fixture = TestBed.createComponent(RecordRelatedRecordsComponent)
     component = fixture.componentInstance
