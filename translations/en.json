@@ -438,7 +438,7 @@
   "record.metadata.quality.topic.success": "Topic is specified",
   "record.metadata.quality.updateFrequency.failed": "Update frequency is not specified",
   "record.metadata.quality.updateFrequency.success": "Update frequency is specified",
-  "record.metadata.related": "Related datasets",
+  "record.metadata.related": "Related records",
   "record.metadata.related.contents": "Related content",
   "record.metadata.ressources.and.links": "Resources and links",
   "record.metadata.sheet": "Original metadata",
