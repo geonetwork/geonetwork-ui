@@ -781,22 +781,16 @@ describe('dataset pages', () => {
       )
 
     // it goes to dataset on click
+    cy.url().should(
+      'not.contain',
+      '/dataset/9e1ea778-d0ce-4b49-90b7-37bc0e448300'
+    )
     cy.get('#related')
       .find('datahub-record-related-records')
       .find('gn-ui-related-record-card')
       .first()
-      .children('a')
-      .as('proviLink')
-
-    cy.get('@proviLink')
-      .invoke('attr', 'href')
-      .then((link) => {
-        const targetLink = link
-        cy.get('@proviLink')
-          .invoke('removeAttr', 'target') // this prevents having a target="_blank" attribute
-          .click()
-        cy.url().should('include', targetLink)
-      })
+      .click()
+    cy.url().should('contain', '/dataset/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
 
     // When there is no link
     cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
