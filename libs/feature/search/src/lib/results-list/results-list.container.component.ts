@@ -7,7 +7,7 @@ import {
   Optional,
   Output,
 } from '@angular/core'
-import { combineLatest, Observable, tap, of } from 'rxjs'
+import { combineLatest, Observable, tap } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchError } from '../state/reducer'
@@ -59,7 +59,7 @@ export class ResultsListContainerComponent implements OnInit {
     private recordServiceUrlTemplate: string,
     @Inject(RECORD_REUSE_URL_TOKEN)
     private recordReuseUrlTemplate: string
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.layoutConfig$ = this.facade.layout$.pipe(
