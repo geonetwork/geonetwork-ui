@@ -19,11 +19,43 @@ marker('language.pt')
 marker('language.ru')
 marker('language.zh')
 marker('language.sk')
+marker('language.rm')
+marker('language.ar')
+marker('language.da')
+marker('language.no')
+marker('language.pl')
+marker('language.sv')
+marker('language.tr')
 
 export const DEFAULT_LANG = 'en'
 
 // Caution: changing this can break language selection from third parties!
 export const LANGUAGE_STORAGE_KEY = 'geonetwork-ui-language'
+
+export const SUPPORTED_LANGUAGES = [
+  'en',
+  'nl',
+  'fr',
+  'de',
+  'ko',
+  'es',
+  'cs',
+  'ca',
+  'fi',
+  'is',
+  'it',
+  'pt',
+  'ru',
+  'zh',
+  'sk',
+  'rm',
+  'ar',
+  'da',
+  'no',
+  'pl',
+  'sv',
+  'tr',
+]
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new FileTranslateLoader(http, './assets/i18n/')
