@@ -113,9 +113,16 @@ describe('dataset pages', () => {
 
     // navigation bar
     // it should display the navigation bar, with favorite star and arrow back
+    // it should display only the dataset sections
     cy.get('datahub-record-page').find('datahub-navigation-bar').should('exist')
     cy.get('datahub-record-page').find('[data-cy="backButton"]').should('exist')
     cy.get('datahub-record-page').find('gn-ui-favorite-star').should('exist')
+    cy.get('datahub-navigation-bar')
+      .find('[data-cy="capabilities"]')
+      .should('not.exist')
+    cy.get('datahub-navigation-bar')
+      .find('[data-cy="data-preview"]')
+      .should('be.visible')
 
     // it should display the gnUiAnchorLinkInViewClass when scrolling to the anchor
     cy.get('#user-feedbacks').should('be.visible')
