@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 import { InternalLinkCardComponent } from '../internal-link-card/internal-link-card.component'
@@ -33,6 +39,7 @@ export class RelatedRecordCardComponent {
   @Input() extraClass = ''
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
   @Input() metadataQualityDisplay: boolean
+  @Output() mdSelect = new EventEmitter<CatalogRecord>()
 
   constructor(private router: Router) {
     this.baseClasses = [
@@ -50,12 +57,5 @@ export class RelatedRecordCardComponent {
 
   get classList() {
     return `${this.baseClasses} ${this.extraClass}`
-  }
-
-  onMdSelect() {
-    const url = this.router
-      .createUrlTree(['/dataset', this.record.uniqueIdentifier])
-      .toString()
-    window.open(url, '_blank')
   }
 }
