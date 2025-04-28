@@ -7,6 +7,7 @@ import {
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
+import { FavoriteStarComponent } from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'datahub-record-related-records',
@@ -19,6 +20,7 @@ import { RouterFacade } from '@geonetwork-ui/feature/router'
     RelatedRecordCardComponent,
     TranslateModule,
     InternalLinkCardComponent,
+    FavoriteStarComponent,
   ],
 })
 export class RecordRelatedRecordsComponent {
