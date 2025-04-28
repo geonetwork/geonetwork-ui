@@ -398,6 +398,7 @@ describe('RecordMetadataComponent', () => {
 
       describe('When the metadata is not fully loaded', () => {
         beforeEach(() => {
+          component.kind = 'dataset'
           facade.isMetadataLoading$.next(false)
           facade.apiLinks$.next([])
           facade.downloadLinks$.next([])
