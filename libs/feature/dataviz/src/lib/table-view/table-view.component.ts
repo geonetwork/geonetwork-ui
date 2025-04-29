@@ -6,6 +6,7 @@ import {
   shareReplay,
   startWith,
   switchMap,
+  tap,
 } from 'rxjs/operators'
 import { BaseReader, FetchError } from '@geonetwork-ui/data-fetcher'
 import { DataService } from '../service/data.service'
@@ -37,11 +38,7 @@ import { CommonModule } from '@angular/common'
 })
 export class TableViewComponent {
   featureAttributes = []
-  @Input() set featureCatalog(value: DatasetFeatureCatalog) {
-    if (value) {
-      this.featureAttributes = value.featureTypes[0].attributes
-    }
-  }
+  @Input() featureCatalog: DatasetFeatureCatalog
   @Input() cacheActive = true
   @Input() set link(value: DatasetOnlineResource) {
     this.currentLink$.next(value)
@@ -61,6 +58,7 @@ export class TableViewComponent {
       }
       this.loading = true
       return this.getDatasetReader(link).pipe(
+        tap((dataset: BaseReader) => this.setProperties(dataset)),
         catchError((error) => {
           this.handleError(error)
           return of(undefined)
@@ -104,5 +102,24 @@ export class TableViewComponent {
       console.warn(error)
     }
     this.loading = false
+  }
+
+  setProperties(dataset: BaseReader) {
+    const attributes = this.featureCatalog.featureTypes[0].attributes
+    dataset.properties.then((properties) => {
+      const updatedProperties = properties.map((p) => {
+        if (attributes.length) {
+          const matchingAttribute = attributes.find(
+            (attr) => attr.name === p.name
+          )
+          if (matchingAttribute && matchingAttribute.code) {
+            return { value: p.name, label: matchingAttribute.code }
+          }
+          return { value: p.name, label: p.name }
+        }
+        return { value: p.name, label: p.name }
+      })
+      this.featureAttributes = updatedProperties
+    })
   }
 }

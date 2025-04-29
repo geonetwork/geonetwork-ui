@@ -62,14 +62,14 @@ export interface TableItemModel {
 })
 export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
   _featureAttributes = []
-  @Input() set featureAttributes(value: []) {
-    if (value) this._featureAttributes = value
+  @Input() set featureAttributes(value: { value: string; label: string }[]) {
+    this._featureAttributes = value
+    this.properties$.next(value.map((attr) => attr.value))
   }
   @Input() set dataset(value: BaseReader) {
-    this.properties$.next(null)
     this.dataset_ = value
     this.dataset_.load()
-    this.setProperties()
+    this.dataset_.info.then((info) => (this.count = info.itemsCount))
   }
   @Input() activeId: TableItemId
   @Output() selected = new EventEmitter<any>()
@@ -93,7 +93,6 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
     this.dataSource = new DataTableDataSource()
-    this.setProperties()
   }
 
   ngAfterViewInit() {
@@ -115,27 +114,6 @@ export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
       this.dataset_.orderBy([sort.direction || 'asc', sort.active])
     }
     this.readData()
-  }
-
-  setProperties() {
-    this.dataset_.properties.then((properties) => {
-      const updatedProperties = properties.map((p) => {
-        if (this._featureAttributes.length) {
-          const matchingAttribute = this._featureAttributes.find(
-            (attr) => attr.name === p.name
-          )
-
-          if (matchingAttribute && matchingAttribute.code) {
-            return matchingAttribute.code
-          }
-          return p.name
-        }
-        return p.name
-      })
-
-      this.properties$.next(updatedProperties)
-    })
-    this.dataset_.info.then((info) => (this.count = info.itemsCount))
   }
 
   setPagination() {

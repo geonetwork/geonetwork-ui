@@ -8,21 +8,24 @@
       [matSortDisableClear]="true"
       *ngrxLet="properties$ as properties"
     >
-      <ng-container *ngFor="let prop of properties" [matColumnDef]="prop">
+      <ng-container
+        *ngFor="let attr of _featureAttributes"
+        [matColumnDef]="attr.value"
+      >
         <th
           mat-header-cell
           *matHeaderCellDef
           mat-sort-header
           class="text-sm text-black bg-white"
         >
-          {{ prop }}
+          {{ attr.label }}
         </th>
         <td
           mat-cell
           *matCellDef="let element"
           class="whitespace-nowrap pr-1 truncate"
         >
-          {{ element[prop] }}
+          {{ element[attr.value] }}
         </td>
       </ng-container>
 
