@@ -31,7 +31,8 @@ import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/reposit
 import {
   RecordsApiService,
   SearchApiService,
-  FeatureResponseApiModel,
+  LanguagesApiService,
+  LanguageApiModel,
 } from '@geonetwork-ui/data-access/gn4'
 import {
   combineLatest,
@@ -47,6 +48,10 @@ import {
 import { catchError, map, tap } from 'rxjs/operators'
 import { lt } from 'semver'
 import { ElasticsearchService } from './elasticsearch'
+import {
+  LANG_2_TO_3_MAPPER,
+  LANG_3_TO_2_MAPPER,
+} from '@geonetwork-ui/util/i18n'
 
 const minPublicationApiVersion = '4.2.5'
 
@@ -65,7 +70,8 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     private gn4SearchHelper: ElasticsearchService,
     private gn4Mapper: Gn4Converter,
     private gn4RecordsApi: RecordsApiService,
-    private platformService: PlatformServiceInterface
+    private platformService: PlatformServiceInterface,
+    private gn4LanguagesApi: LanguagesApiService
   ) {}
 
   search({
@@ -507,6 +513,17 @@ export class Gn4Repository implements RecordsRepositoryInterface {
           })
         )
       })
+    )
+  }
+
+  getApplicationLanguages(): Observable<string[]> {
+    return this.gn4LanguagesApi.getApplicationLanguages().pipe(
+      map(
+        (languages) =>
+          languages
+            .map((lang) => LANG_3_TO_2_MAPPER[lang.id ?? ''])
+            .filter((code): code is string => !!code) // pour exclure undefined si id est inconnu
+      )
     )
   }
 
