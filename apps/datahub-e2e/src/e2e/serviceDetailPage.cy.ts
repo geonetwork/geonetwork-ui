@@ -23,6 +23,16 @@ describe('service pages', () => {
   beforeEach(() => {
     cy.visit('/service/01ec6ec7-6454-4504-ac95-befb16bacb0e')
   })
+  describe('Navigation bar', () => {
+    it('should only display the service sections buttons', () => {
+      cy.get('datahub-navigation-bar')
+        .find('[data-cy="capabilities"]')
+        .should('be.visible')
+      cy.get('datahub-navigation-bar')
+        .find('[data-cy="data-preview"]')
+        .should('not.be.visible')
+    })
+  })
   describe('About', () => {
     it('should display the spatial extent', () => {
       cy.get('gn-ui-expandable-panel').eq(1).click()

@@ -20,6 +20,16 @@ describe.skip('reuse pages', () => {
         .and('have.attr', 'target', '_blank')
     })
   })
+  describe('Navigation bar', () => {
+    it('should only display the service sections buttons', () => {
+      cy.get('datahub-navigation-bar')
+        .find('[data-cy="capabilities"]')
+        .should('not.be.visible')
+      cy.get('datahub-navigation-bar')
+        .find('[data-cy="data-preview"]')
+        .should('not.be.visible')
+    })
+  })
   describe('About', () => {
     it('should display the spatial extent', () => {
       cy.get('gn-ui-expandable-panel').eq(1).click()
