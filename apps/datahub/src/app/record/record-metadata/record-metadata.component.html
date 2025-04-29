@@ -1,6 +1,6 @@
 <div *ngIf="(metadataViewFacade.error$ | async) === null">
   <section id="about">
-    <div class="container-lg px-4 mt-10 mb-16 pb-2 lg:mx-auto">
+    <div class="container-lg px-4 mt-10 mb-12 pb-2 lg:mx-auto">
       <gn-ui-metadata-info
         class="sm:block"
         *ngIf="(metadataViewFacade.isPresent$ | async) === false"
@@ -21,14 +21,7 @@
           >
           </gn-ui-metadata-info>
         </div>
-        <div class="flex flex-col gap-5 sm:mt-[-185px]">
-          <gn-ui-image-overlay-preview
-            class="block h-[185px]"
-            [imageUrl]="thumbnailUrl$ | async"
-            (isPlaceholderShown)="showOverlay = !$event"
-            *ngIf="showOverlay"
-          >
-          </gn-ui-image-overlay-preview>
+        <div class="flex flex-col gap-5">
           <gn-ui-metadata-contact
             (organizationClick)="onOrganizationClick($event)"
             [metadata]="metadataViewFacade.metadata$ | async"
@@ -44,11 +37,13 @@
               [metadataQualityDisplay]="metadataQualityDisplay"
             ></gn-ui-metadata-quality>
           </div>
-          <gn-ui-metadata-catalog
+          <div
             *ngIf="kind === 'dataset' && sourceLabel$ | async as sourceLabel"
-            [sourceLabel]="sourceLabel"
+            class="border border-gray-300 rounded-lg py-4 px-5"
           >
-          </gn-ui-metadata-catalog>
+            <gn-ui-metadata-catalog [sourceLabel]="sourceLabel">
+            </gn-ui-metadata-catalog>
+          </div>
           <gn-ui-button
             type="outline"
             extraClass="w-full flex flex-row justify-between bg-white"
@@ -66,12 +61,16 @@
     </div>
   </section>
 
-  <section id="data-preview" class="mb-6" *ngIf="kind === 'dataset'">
+  <section
+    id="data-preview"
+    class="mb-6"
+    *ngIf="(displayMap$ | async) || (displayData$ | async)"
+  >
     <datahub-record-data-preview></datahub-record-data-preview>
   </section>
-  <section id="capabilities" class="mb-16" *ngIf="kind === 'service'">
+  <section id="capabilities" class="mb-16" *ngIf="displayCapabilities$ | async">
     <gn-ui-service-capabilities
-      [apiLinks]="metadataViewFacade.apiLinks$ | async"
+      [apiLinks]="apiLinks$ | async"
     ></gn-ui-service-capabilities>
   </section>
 
@@ -84,19 +83,19 @@
     "
     class="overflow-x-hidden"
   >
-    <div class="gn-ui-section-title container-lg px-4 lg:mx-auto" translate>
+    <h2 class="gn-ui-section-title container-lg px-4 lg:mx-auto" translate>
       record.metadata.ressources.and.links
-    </div>
+    </h2>
     <div class="container-lg px-4 pb-10 lg:mx-auto mt-5">
       <div id="downloads" class="pb-7" *ngIf="displayDownload$ | async">
         <datahub-record-downloads class="block"></datahub-record-downloads>
       </div>
 
-      <div *ngIf="displayOtherLinks | async" id="otherlinks">
+      <div *ngIf="displayOtherLinks | async" id="otherlinks" class="pb-7">
         <datahub-record-otherlinks class="block"></datahub-record-otherlinks>
       </div>
 
-      <div *ngIf="displayApi$ | async" id="apis" class="mt-5">
+      <div *ngIf="displayApi$ | async" id="apis" class="pb-7">
         <datahub-record-apis class="block"></datahub-record-apis>
       </div>
     </div>

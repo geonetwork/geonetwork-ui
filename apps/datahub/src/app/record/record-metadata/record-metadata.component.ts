@@ -10,15 +10,14 @@ import { SearchService } from '@geonetwork-ui/feature/search'
 import {
   ErrorComponent,
   ErrorType,
-  ImageOverlayPreviewComponent,
   MetadataCatalogComponent,
   MetadataContactComponent,
   MetadataInfoComponent,
   MetadataQualityComponent,
   ServiceCapabilitiesComponent,
 } from '@geonetwork-ui/ui/elements'
-import { combineLatest } from 'rxjs'
-import { filter, map, mergeMap } from 'rxjs/operators'
+import { combineLatest, ReplaySubject } from 'rxjs'
+import { filter, map, mergeMap, startWith } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
   Keyword,
@@ -46,7 +45,6 @@ import { matChatOutline } from '@ng-icons/material-icons/outline'
   standalone: true,
   imports: [
     CommonModule,
-    ImageOverlayPreviewComponent,
     MatTabsModule,
     ErrorComponent,
     RecordUserFeedbacksComponent,
@@ -68,14 +66,87 @@ import { matChatOutline } from '@ng-icons/material-icons/outline'
 })
 export class RecordMetadataComponent {
   @Input() metadataQualityDisplay: boolean
-  @Input() kind: 'dataset' | 'service' | 'reuse'
+  private kindValue: 'dataset' | 'service' | 'reuse' = null
+  @Input()
+  set kind(value: 'dataset' | 'service' | 'reuse') {
+    this.kindValue = value
+    this.kind$.next(value)
+  }
+  get kind() {
+    return this.kindValue
+  }
+  private kind$ = new ReplaySubject<'dataset' | 'service' | 'reuse'>(1)
   @ViewChild('userFeedbacks') userFeedbacks: ElementRef<HTMLElement>
 
-  displayDownload$ = this.metadataViewFacade.downloadLinks$.pipe(
-    map((links) => links?.length > 0 && this.kind === 'dataset')
+  private readonly displayConditions = {
+    dataset: {
+      download: (links) => links?.length > 0,
+      api: (links) => links?.length > 0,
+      map: (mapApiLinks, geoDataLinksWithGeometry) =>
+        mapApiLinks?.length > 0 || geoDataLinksWithGeometry?.length > 0,
+      data: (dataLinks, geoDataLinks) =>
+        dataLinks?.length > 0 || geoDataLinks?.length > 0,
+    },
+    service: {
+      capabilities: (links) => links?.length > 0,
+    },
+  }
+
+  private getDisplayCondition(
+    kind: 'dataset' | 'service' | 'reuse',
+    section: string
+  ) {
+    const kindConfig = this.displayConditions[kind]
+    const condition = kindConfig?.[section]
+
+    return condition ?? (() => false)
+  }
+
+  apiLinks$ = this.metadataViewFacade.apiLinks$
+
+  displayDownload$ = combineLatest([
+    this.metadataViewFacade.downloadLinks$,
+    this.kind$,
+  ]).pipe(
+    map(([links, kind]) => this.getDisplayCondition(kind, 'download')(links))
   )
-  displayApi$ = this.metadataViewFacade.apiLinks$.pipe(
-    map((links) => links?.length > 0 && this.kind === 'dataset')
+
+  displayApi$ = combineLatest([
+    this.metadataViewFacade.apiLinks$,
+    this.kind$,
+  ]).pipe(map(([links, kind]) => this.getDisplayCondition(kind, 'api')(links)))
+
+  displayCapabilities$ = combineLatest([
+    this.metadataViewFacade.apiLinks$,
+    this.kind$,
+  ]).pipe(
+    map(([links, kind]) =>
+      this.getDisplayCondition(kind, 'capabilities')(links)
+    )
+  )
+
+  displayMap$ = combineLatest([
+    this.metadataViewFacade.mapApiLinks$,
+    this.metadataViewFacade.geoDataLinksWithGeometry$,
+    this.kind$,
+  ]).pipe(
+    map(([mapApiLinks, geoDataLinksWithGeometry, kind]) =>
+      this.getDisplayCondition(kind, 'map')(
+        mapApiLinks,
+        geoDataLinksWithGeometry
+      )
+    ),
+    startWith(false)
+  )
+
+  displayData$ = combineLatest([
+    this.metadataViewFacade.dataLinks$,
+    this.metadataViewFacade.geoDataLinks$,
+    this.kind$,
+  ]).pipe(
+    map(([dataLinks, geoDataLinks, kind]) =>
+      this.getDisplayCondition(kind, 'data')(dataLinks, geoDataLinks)
+    )
   )
 
   displayOtherLinks = this.metadataViewFacade.otherLinks$.pipe(
@@ -117,21 +188,6 @@ export class RecordMetadataComponent {
   )
 
   errorTypes = ErrorType
-
-  thumbnailUrl$ = this.metadataViewFacade.metadata$.pipe(
-    map((metadata) => {
-      // in order to differentiate between metadata not loaded yet
-      // and url not defined
-      // the content-ghost of image-overlay-preview relies on this differentiation
-      if (metadata?.overviews === undefined) {
-        return undefined
-      } else {
-        return metadata?.overviews?.[0]?.url ?? null
-      }
-    })
-  )
-
-  showOverlay = true
 
   constructor(
     public metadataViewFacade: MdViewFacade,

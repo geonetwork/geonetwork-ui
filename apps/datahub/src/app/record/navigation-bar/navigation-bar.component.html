@@ -10,15 +10,10 @@
     "
   >
     <div
-      class="h-[60px] flex min-w-[60px] items-center justify-center lg:justify-end lg:pr-4"
+      class="h-[60px] flex min-w-[60px] items-center justify-center lg:justify-end lg:pr-4 text-sm"
       [class]="displayMobileMenu ? 'border-r-2 border-gray-300' : ''"
     >
-      <gn-ui-button
-        data-cy="backButton"
-        (buttonClick)="back()"
-        type="outline"
-        [style.--gn-ui-button-font-size]="'24px'"
-      >
+      <gn-ui-button data-cy="backButton" (buttonClick)="back()" type="outline">
         <ng-icon name="matArrowBack"></ng-icon>
       </gn-ui-button>
     </div>
@@ -83,7 +78,7 @@
       </div>
     </div>
     <div
-      class="h-[60px] flex flex-row gap-3 justify-center items-center px-4 lg:pl-4 lg:justify-end"
+      class="h-[60px] flex flex-row gap-3 justify-center items-center px-4 lg:pl-4 lg:justify-end text-sm"
       [class]="displayMobileMenu ? 'border-l-2 border-gray-300' : ''"
     >
       <gn-ui-favorite-star
@@ -92,7 +87,6 @@
         [buttonType]="'outline'"
         [displayCount]="false"
         class="flex text-background content-center"
-        [style.--gn-ui-button-font-size]="'24px'"
       ></gn-ui-favorite-star>
       <gn-ui-language-switcher
         *ngIf="showLanguageSwitcher"

@@ -10,8 +10,10 @@ import {
   MultilingualSearchField,
   OrganizationSearchField,
   OwnerSearchField,
+  ResourceTypeLegacyField,
   SimpleSearchField,
   TranslatedSearchField,
+  RecordKindField,
   UserSearchField,
 } from './fields'
 import { forkJoin, Observable, of } from 'rxjs'
@@ -47,11 +49,8 @@ export class FieldsService {
   protected fields = {
     organization: new OrganizationSearchField(this.injector),
     format: new SimpleSearchField('format', this.injector, 'asc'),
-    resourceType: new TranslatedSearchField(
-      'resourceType',
-      this.injector,
-      'asc'
-    ),
+    resourceType: new ResourceTypeLegacyField(this.injector), // Deprecated, use `recordKind` instead
+    recordKind: new RecordKindField(this.injector),
     representationType: new TranslatedSearchField(
       'cl_spatialRepresentationType.key',
       this.injector,

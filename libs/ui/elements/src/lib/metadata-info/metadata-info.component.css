@@ -17,6 +17,6 @@
   --gn-ui-badge-text-color: var(--color-primary-darkest);
 }
 
-:host ::ng-deep gn-ui-badge:hover {
+:host .metadata-info-keywords ::ng-deep gn-ui-badge:hover {
   --gn-ui-badge-text-color: white;
 }

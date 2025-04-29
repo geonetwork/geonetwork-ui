@@ -1,12 +1,12 @@
 <div
-  class="group flex justify-between rounded filter overflow-hidden"
+  class="group flex justify-between rounded filter overflow-hidden card-shadow"
   [ngClass]="cardClass"
 >
   <ng-container *ngIf="size !== 'S'">
-    <div>
+    <div class="flex-1 min-w-0">
       <ng-container *ngTemplateOutlet="content"></ng-container>
     </div>
-    <div class="flex items-center">
+    <div class="flex items-center min-w-[32px]">
       <ng-container *ngTemplateOutlet="buttons"></ng-container>
     </div>
   </ng-container>
@@ -51,7 +51,7 @@
 </ng-template>
 
 <ng-template #content>
-  <div>
+  <div class="flex-1 min-w-0">
     <div class="gn-ui-card-title">
       {{ link.description || link.name }}
     </div>

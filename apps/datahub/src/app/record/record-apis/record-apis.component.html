@@ -1,16 +1,26 @@
 <div class="flex flex-row gap-x-4 items-center justify-center md:justify-start">
-  <p
-    class="font-title text-xl font-medium text-title text-center sm:text-left"
-    translate
-  >
-    record.metadata.api
-  </p>
+  <div>
+    <h3
+      class="inline-block font-title text-xl font-medium text-title"
+      translate
+    >
+      record.metadata.api
+    </h3>
+    <span class="px-3">({{ apiLinksCount$ | async }})</span>
+  </div>
   <gn-ui-previous-next-buttons
-    *ngIf="carousel.pagesCount > 1"
+    class="block md:hidden"
+    *ngIf="carousel?.pagesCount > 1"
     [listComponent]="carousel"
+  ></gn-ui-previous-next-buttons>
+  <gn-ui-previous-next-buttons
+    class="hidden md:block"
+    *ngIf="list?.pagesCount > 1"
+    [listComponent]="list"
   ></gn-ui-previous-next-buttons>
 </div>
 <gn-ui-carousel
+  class="block md:hidden"
   (currentStepChange)="updateView()"
   containerClass="gap-4 pt-5 pb-7"
   #carousel
@@ -21,14 +31,25 @@
     [link]="link"
     [currentLink]="selectedApiLink"
     size="S"
-    [ngClass]="{
-      'card-shadow': link !== selectedApiLink || !selectedApiLink,
-      'bg-neutral-100': link === selectedApiLink,
-    }"
     (openRecordApiForm)="openRecordApiForm($event)"
   >
   </gn-ui-api-card>
 </gn-ui-carousel>
+<gn-ui-block-list
+  #blockList
+  class="hidden md:block"
+  containerClass="gap-4 pt-5 pb-7"
+>
+  <gn-ui-api-card
+    #block
+    *ngFor="let link of apiLinks$ | async"
+    [title]="link.name"
+    [link]="link"
+    [currentLink]="selectedApiLink"
+    [size]="blockList.subComponentSize"
+    (openRecordApiForm)="openRecordApiForm($event)"
+  ></gn-ui-api-card>
+</gn-ui-block-list>
 <div
   class="content transition-all duration-300 w-screen mx-auto -ml-[calc(50vw-50%)] overflow-hidden"
   [ngClass]="selectedApiLink ? 'ease-in' : 'ease-out'"

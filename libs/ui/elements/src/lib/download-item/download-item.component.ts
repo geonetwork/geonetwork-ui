@@ -27,7 +27,7 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
   ],
 })
 export class DownloadItemComponent {
-  private _size: 'L' | 'M' | 'S' | 'XS'
+  private _size: CardSize
   @Input() link: DatasetOnlineResource
   @Input() color: string
   @Input() format: string
@@ -43,7 +43,7 @@ export class DownloadItemComponent {
     this._size = value
     this.cardClass = this.sizeClassMap[value]
   }
-  get size(): 'L' | 'M' | 'S' | 'XS' {
+  get size(): CardSize {
     return this._size
   }
   cardClass = ''

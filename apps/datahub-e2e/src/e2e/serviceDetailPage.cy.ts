@@ -1,12 +1,41 @@
 import 'cypress-real-events'
 
+beforeEach(() => {
+  cy.intercept(
+    'POST',
+    '/geonetwork/srv/api/search/records/_search?bucket=bucket&relatedType=fcats',
+    {
+      fixture: 'eaufrance-service-eaux-usees.json',
+    }
+  )
+
+  cy.intercept(
+    'GET',
+    'https://geoservices.wallonie.be/arcgis/services/AGRICULTURE/SIGEC_PARC_AGRI_ANON__2020/MapServer/WMSServer?SERVICE=WMS&REQUEST=GetCapabilities',
+    {
+      fixture: 'eaufrance-odp-capabilities.xml',
+    }
+  )
+  // Replace wallonie service by eau de france as the server is down
+})
+
 describe('service pages', () => {
   beforeEach(() => {
     cy.visit('/service/01ec6ec7-6454-4504-ac95-befb16bacb0e')
   })
+  describe('Navigation bar', () => {
+    it('should only display the service sections buttons', () => {
+      cy.get('datahub-navigation-bar')
+        .find('[data-cy="capabilities"]')
+        .should('be.visible')
+      cy.get('datahub-navigation-bar')
+        .find('[data-cy="data-preview"]')
+        .should('not.be.visible')
+    })
+  })
   describe('About', () => {
     it('should display the spatial extent', () => {
-      cy.get('gn-ui-expandable-panel').eq(2).click()
+      cy.get('gn-ui-expandable-panel').eq(1).click()
       cy.get('gn-ui-map-container').should('be.visible')
     })
   })
@@ -25,10 +54,10 @@ describe('service pages', () => {
       cy.get('gn-ui-service-capabilities')
         .find('[data-test="layer-list"]')
         .find('gn-ui-button')
-        .should('have.length', 3)
+        .should('have.length', 12)
       cy.get('gn-ui-service-capabilities')
         .find('gn-ui-text-input')
-        .type('catég{enter}')
+        .type('guy{enter}')
       cy.get('gn-ui-service-capabilities')
         .find('[data-test="layer-list"]')
         .find('gn-ui-button')

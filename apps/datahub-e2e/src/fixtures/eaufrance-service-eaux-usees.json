@@ -1,0 +1,532 @@
+{
+  "took": 2,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 1,
+      "relation": "eq"
+    },
+    "max_score": 1.0,
+    "hits": [
+      {
+        "_index": "gn-records",
+        "_type": "_doc",
+        "_id": "be052079-f1f6-4f6f-a722-cbf11deb40eb",
+        "_score": 1.0,
+        "_source": {
+          "keywordType-other": [
+            {
+              "default": "Service d’accès aux éléments",
+              "langfre": "Service d’accès aux éléments"
+            },
+            {
+              "default": "National",
+              "langfre": "National"
+            },
+            {
+              "default": "Directive 2012/18/EU",
+              "langfre": "Directive 2012/18/EU"
+            }
+          ],
+          "th_Champgeographique": [
+            {
+              "default": "National",
+              "langfre": "National"
+            }
+          ],
+          "contactForResource": [
+            {
+              "website": "",
+              "role": "custodian",
+              "address": "OIEau, 15 Rue Edouad Chamberland, 87000, France",
+              "individual": "",
+              "phone": "",
+              "logo": "",
+              "position": "",
+              "organisationObject": {
+                "default": "Sandre",
+                "langfre": "Sandre"
+              },
+              "email": "sandre@sandre.eaufrance.fr"
+            }
+          ],
+          "rating": "0",
+          "uuid": "be052079-f1f6-4f6f-a722-cbf11deb40eb",
+          "cl_type": [
+            {
+              "default": "Thème",
+              "link": "http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode",
+              "key": "theme",
+              "langfre": "Thème"
+            },
+            {
+              "default": "other",
+              "link": "http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode",
+              "key": "other",
+              "langfre": "other"
+            }
+          ],
+          "isPublishedToAll": "true",
+          "contact": [
+            {
+              "website": "",
+              "role": "pointOfContact",
+              "address": "OIEau, 15 rue Edouard Chamberland, 87000, France",
+              "individual": "",
+              "phone": "",
+              "logo": "",
+              "position": "",
+              "organisationObject": {
+                "default": "Sandre",
+                "langfre": "Sandre"
+              },
+              "email": "sandre@sandre.eaufrance.fr"
+            }
+          ],
+          "record": "record",
+          "draft": "n",
+          "linkUrl": "https://services.sandre.eaufrance.fr/geo/odp?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities",
+          "changeDate": "2025-04-22T15:00:10.494Z",
+          "logo": "/images/logos/3bef299d-cf82-4033-871b-875f6936b2e2.png",
+          "tag": [
+            {
+              "default": "WFS",
+              "langfre": "WFS"
+            },
+            {
+              "default": "Ouvrage de dépollution",
+              "langfre": "Ouvrage de dépollution"
+            },
+            {
+              "default": "Rapportage",
+              "langfre": "Rapportage"
+            },
+            {
+              "default": "ODP",
+              "langfre": "ODP"
+            },
+            {
+              "default": "SysTraitementEauxUsees",
+              "langfre": "SysTraitementEauxUsees"
+            },
+            {
+              "default": "Données ouvertes",
+              "langfre": "Données ouvertes"
+            },
+            {
+              "default": "Services d'utilité publique et services publics",
+              "langfre": "Services d'utilité publique et services publics"
+            },
+            {
+              "default": "France métropolitaine",
+              "langfre": "France métropolitaine"
+            },
+            {
+              "default": "hvd",
+              "langfre": "hvd"
+            },
+            {
+              "default": "Service d’accès aux éléments",
+              "langfre": "Service d’accès aux éléments"
+            },
+            {
+              "default": "National",
+              "langfre": "National"
+            },
+            {
+              "default": "Services d'utilité publique et services publics",
+              "langfre": "Services d'utilité publique et services publics"
+            },
+            {
+              "default": "Observation de la terre et environnement",
+              "langfre": "Observation de la terre et environnement"
+            },
+            {
+              "default": "Directive 2012/18/EU",
+              "langfre": "Directive 2012/18/EU"
+            }
+          ],
+          "linkUrlProtocolOGCWFS": "https://services.sandre.eaufrance.fr/geo/odp?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities",
+          "id": "750",
+          "indexingError": "true",
+          "recordGroup": "be052079-f1f6-4f6f-a722-cbf11deb40eb",
+          "metadataIdentifier": "be052079-f1f6-4f6f-a722-cbf11deb40eb",
+          "isPublishedToIntranet": "false",
+          "th_INSPIREprioritydataset": [
+            {
+              "default": "Directive 2012/18/EU",
+              "langfre": "Directive 2012/18/EU"
+            }
+          ],
+          "th_COMMISSIONREGULATIONECNo12052008of3December2008implementingDirective20072ECoftheEuropeanParliamentandoftheCouncilasregardsmetadataPartD4ClassificationofSpatialDataServicesNumber": "1",
+          "th_RegistredethmeINSPIRENumber": "1",
+          "hasxlinks": "false",
+          "tagNumber": "14",
+          "featureOfRecord": "record",
+          "isPublishedToGuest": "false",
+          "custodianOrgForResourceObject": {
+            "default": "Sandre",
+            "langfre": "Sandre"
+          },
+          "documentStandard": "iso19139",
+          "dateStamp": "2025-04-22T15:00:10.494Z",
+          "creationYearForResource": "2019",
+          "resourceAbstractObject": {
+            "default": "Le service web (WFS) du référentiel des Stations de traitement des eaux permet de télécharger les ouvrages impliqués dans la dépollution des eaux usées. Les différents concepts définis dans le scénario d'échange du référentiel Stations de traitement des eaux usées du Sandre sont diffusés par ce service.",
+            "langfre": "Le service web (WFS) du référentiel des Stations de traitement des eaux permet de télécharger les ouvrages impliqués dans la dépollution des eaux usées. Les différents concepts définis dans le scénario d'échange du référentiel Stations de traitement des eaux usées du Sandre sont diffusés par ce service."
+          },
+          "isTemplate": "n",
+          "feedbackCount": "0",
+          "licenseObject": [
+            {
+              "default": "No limitations on public access",
+              "link": "http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations",
+              "langfre": "No limitations on public access"
+            },
+            {
+              "default": "No conditions apply to access and use",
+              "link": "http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply",
+              "langfre": "No conditions apply to access and use"
+            }
+          ],
+          "isHarvested": "false",
+          "creationMonthForResource": "2019-12",
+          "OrgForResourceObject": {
+            "default": "Sandre",
+            "langfre": "Sandre"
+          },
+          "recordOwner": "admin admin",
+          "isOpenData": "true",
+          "document": "",
+          "resourceTemporalDateRange": [
+            {
+              "gte": "2019-12-02T01:00:00.000Z",
+              "lte": "2019-12-02T01:00:00.000Z"
+            }
+          ],
+          "th_otherKeywords-theme": [
+            {
+              "default": "WFS",
+              "langfre": "WFS"
+            },
+            {
+              "default": "Ouvrage de dépollution",
+              "langfre": "Ouvrage de dépollution"
+            },
+            {
+              "default": "Rapportage",
+              "langfre": "Rapportage"
+            },
+            {
+              "default": "ODP",
+              "langfre": "ODP"
+            },
+            {
+              "default": "SysTraitementEauxUsees",
+              "langfre": "SysTraitementEauxUsees"
+            },
+            {
+              "default": "Données ouvertes",
+              "langfre": "Données ouvertes"
+            },
+            {
+              "default": "Services d'utilité publique et services publics",
+              "langfre": "Services d'utilité publique et services publics"
+            },
+            {
+              "default": "France métropolitaine",
+              "langfre": "France métropolitaine"
+            },
+            {
+              "default": "hvd",
+              "langfre": "hvd"
+            }
+          ],
+          "OrgObject": {
+            "default": "Sandre",
+            "langfre": "Sandre"
+          },
+          "link": [
+            {
+              "protocol": "OGC:WFS",
+              "descriptionObject": {
+                "default": "Ouvrages de dépollution - Système de traitement des eaux usées - France entière",
+                "langfre": "Ouvrages de dépollution - Système de traitement des eaux usées - France entière"
+              },
+              "function": "download",
+              "applicationProfile": "",
+              "mimeType": "",
+              "urlObject": {
+                "default": "https://services.sandre.eaufrance.fr/geo/odp?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetCapabilities"
+              },
+              "group": 0
+            }
+          ],
+          "displayOrder": "0",
+          "cl_hierarchyLevel": [
+            {
+              "default": "Service",
+              "link": "http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode",
+              "key": "service",
+              "langfre": "Service"
+            }
+          ],
+          "mainLanguage": "fre",
+          "cl_function": [
+            {
+              "default": "Téléchargement",
+              "link": "http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode",
+              "key": "download",
+              "langfre": "Téléchargement"
+            }
+          ],
+          "th_COMMISSIONREGULATIONECNo12052008of3December2008implementingDirective20072ECoftheEuropeanParliamentandoftheCouncilasregardsmetadataPartD4ClassificationofSpatialDataServices": [
+            {
+              "default": "Service d’accès aux éléments",
+              "langfre": "Service d’accès aux éléments"
+            }
+          ],
+          "valid": "-1",
+          "groupPublishedId": "1",
+          "indexingDate": "2025-04-22T15:00:11Z",
+          "resourceDate": [
+            {
+              "date": "2019-12-02T01:00:00.000Z",
+              "type": "creation"
+            }
+          ],
+          "sourceCatalogue": "3bef299d-cf82-4033-871b-875f6936b2e2",
+          "cl_accessConstraints": [
+            {
+              "default": "Autres restrictions",
+              "link": "http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode",
+              "key": "otherRestrictions",
+              "langfre": "Autres restrictions"
+            }
+          ],
+          "groupPublished": "all",
+          "popularity": "0",
+          "extra": "null",
+          "th_RegistredethmeINSPIRE": [
+            {
+              "default": "Services d'utilité publique et services publics",
+              "langfre": "Services d'utilité publique et services publics"
+            }
+          ],
+          "qualityScore": 62,
+          "th_INSPIREprioritydatasetNumber": "1",
+          "hasOverview": "false",
+          "userinfo": "admin|admin|admin|Administrator",
+          "createDate": "2025-04-22T15:00:07.197Z",
+          "allKeywords": {
+            "th_Champgeographique": {
+              "keywords": [
+                {
+                  "default": "National",
+                  "langfre": "National"
+                }
+              ],
+              "theme": "other",
+              "title": "Champ géographique"
+            },
+            "th_otherKeywords-theme": {
+              "keywords": [
+                {
+                  "default": "WFS",
+                  "langfre": "WFS"
+                },
+                {
+                  "default": "Ouvrage de dépollution",
+                  "langfre": "Ouvrage de dépollution"
+                },
+                {
+                  "default": "Rapportage",
+                  "langfre": "Rapportage"
+                },
+                {
+                  "default": "ODP",
+                  "langfre": "ODP"
+                },
+                {
+                  "default": "SysTraitementEauxUsees",
+                  "langfre": "SysTraitementEauxUsees"
+                },
+                {
+                  "default": "Données ouvertes",
+                  "langfre": "Données ouvertes"
+                },
+                {
+                  "default": "Services d'utilité publique et services publics",
+                  "langfre": "Services d'utilité publique et services publics"
+                },
+                {
+                  "default": "France métropolitaine",
+                  "langfre": "France métropolitaine"
+                },
+                {
+                  "default": "hvd",
+                  "langfre": "hvd"
+                }
+              ],
+              "theme": "theme",
+              "title": "otherKeywords-theme"
+            },
+            "th_RegistredethmeINSPIRE": {
+              "keywords": [
+                {
+                  "default": "Services d'utilité publique et services publics",
+                  "langfre": "Services d'utilité publique et services publics"
+                }
+              ],
+              "link": "http://inspire.ec.europa.eu/theme",
+              "theme": "theme",
+              "id": "Registre de thème INSPIRE",
+              "title": "GEMET - INSPIRE themes, version 1.0"
+            },
+            "th_high-value-dataset-category-skos-ap-eu": {
+              "keywords": [
+                {
+                  "default": "Observation de la terre et environnement",
+                  "langfre": "Observation de la terre et environnement"
+                }
+              ],
+              "link": "https://www.sandre.eaufrance.fr/atlas/srv/api/registries/vocabularies/external.theme.high-value-dataset-category-skos-ap-eu",
+              "theme": "theme",
+              "id": "geonetwork.thesaurus.external.theme.high-value-dataset-category-skos-ap-eu",
+              "title": "High-value dataset categories"
+            },
+            "th_INSPIREprioritydataset": {
+              "keywords": [
+                {
+                  "default": "Directive 2012/18/EU",
+                  "langfre": "Directive 2012/18/EU"
+                }
+              ],
+              "theme": "other",
+              "title": "INSPIRE priority data set"
+            },
+            "th_COMMISSIONREGULATIONECNo12052008of3December2008implementingDirective20072ECoftheEuropeanParliamentandoftheCouncilasregardsmetadataPartD4ClassificationofSpatialDataServices": {
+              "keywords": [
+                {
+                  "default": "Service d’accès aux éléments",
+                  "langfre": "Service d’accès aux éléments"
+                }
+              ],
+              "theme": "other",
+              "title": "COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata, Part D 4, Classification of Spatial Data Services"
+            }
+          },
+          "owner": "1",
+          "indexingErrorMsg": [
+            "Warning / Keyword Services d'utilité publique et services publics not found in Registre de thème INSPIRE.",
+            "Warning / Keyword Observation de la terre et environnement not found in geonetwork.thesaurus.external.theme.high-value-dataset-category-skos-ap-eu."
+          ],
+          "MD_LegalConstraintsOtherConstraintsObject": [
+            {
+              "default": "No limitations on public access",
+              "link": "http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations",
+              "langfre": "No limitations on public access"
+            },
+            {
+              "default": "No conditions apply to access and use",
+              "link": "http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply",
+              "langfre": "No conditions apply to access and use"
+            }
+          ],
+          "docType": "metadata",
+          "pointOfContactOrgObject": {
+            "default": "Sandre",
+            "langfre": "Sandre"
+          },
+          "creationDateForResource": ["2019-12-02T01:00:00.000Z"],
+          "resourceTitleObject": {
+            "default": "Service web géographique OGC (WFS) du référentiel des Stations de traitement des eaux usées - Ouvrages de dépollution (Copy)",
+            "langfre": "Service web géographique OGC (WFS) du référentiel des Stations de traitement des eaux usées - Ouvrages de dépollution (Copy)"
+          },
+          "th_otherKeywords-themeNumber": "9",
+          "th_high-value-dataset-category-skos-ap-euNumber": "1",
+          "th_high-value-dataset-category-skos-ap-eu": [
+            {
+              "default": "Observation de la terre et environnement",
+              "langfre": "Observation de la terre et environnement"
+            }
+          ],
+          "th_ChampgeographiqueNumber": "1",
+          "resourceIdentifier": [
+            {
+              "code": "https://id.eaufrance.fr/meta/ODP_WFS",
+              "link": "",
+              "codeSpace": ""
+            }
+          ],
+          "keywordType-theme": [
+            {
+              "default": "WFS",
+              "langfre": "WFS"
+            },
+            {
+              "default": "Ouvrage de dépollution",
+              "langfre": "Ouvrage de dépollution"
+            },
+            {
+              "default": "Rapportage",
+              "langfre": "Rapportage"
+            },
+            {
+              "default": "ODP",
+              "langfre": "ODP"
+            },
+            {
+              "default": "SysTraitementEauxUsees",
+              "langfre": "SysTraitementEauxUsees"
+            },
+            {
+              "default": "Données ouvertes",
+              "langfre": "Données ouvertes"
+            },
+            {
+              "default": "Services d'utilité publique et services publics",
+              "langfre": "Services d'utilité publique et services publics"
+            },
+            {
+              "default": "France métropolitaine",
+              "langfre": "France métropolitaine"
+            },
+            {
+              "default": "hvd",
+              "langfre": "hvd"
+            },
+            {
+              "default": "Services d'utilité publique et services publics",
+              "langfre": "Services d'utilité publique et services publics"
+            },
+            {
+              "default": "Observation de la terre et environnement",
+              "langfre": "Observation de la terre et environnement"
+            }
+          ],
+          "userSavedCount": "0",
+          "resourceType": ["service"],
+          "linkProtocol": ["OGC:WFS"]
+        },
+        "edit": false,
+        "canReview": false,
+        "owner": false,
+        "isPublishedToAll": true,
+        "view": true,
+        "notify": false,
+        "download": true,
+        "dynamic": true,
+        "featured": false,
+        "selected": false,
+        "related": {}
+      }
+    ]
+  }
+}

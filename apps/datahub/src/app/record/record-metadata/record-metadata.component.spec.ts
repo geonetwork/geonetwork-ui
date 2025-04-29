@@ -176,49 +176,6 @@ describe('RecordMetadataComponent', () => {
         ).toBeFalsy()
       })
     })
-    describe('Image Overlay Preview', () => {
-      describe('if metadata without overview', () => {
-        let imgOverlayPreview: ImageOverlayPreviewComponent
-        beforeEach(() => {
-          facade.isPresent$.next(true)
-          facade.metadata$.next({})
-          fixture.detectChanges()
-          imgOverlayPreview = fixture.debugElement.query(
-            By.directive(ImageOverlayPreviewComponent)
-          ).componentInstance
-        })
-        it('should send undefined as imageUrl to imgOverlayPreview component', () => {
-          expect(imgOverlayPreview).toBeTruthy()
-          expect(imgOverlayPreview.imageUrl).toBe(undefined)
-        })
-      })
-      describe('if metadata with overview', () => {
-        let imgOverlayPreview: ImageOverlayPreviewComponent
-        beforeEach(() => {
-          facade.isPresent$.next(true)
-          fixture.detectChanges()
-          imgOverlayPreview = fixture.debugElement.query(
-            By.directive(ImageOverlayPreviewComponent)
-          ).componentInstance
-        })
-        describe('and url defined', () => {
-          it('should send the imageUrl to imgOverlayPreview component', () => {
-            expect(imgOverlayPreview).toBeTruthy()
-            expect(imgOverlayPreview.imageUrl).toBeDefined()
-          })
-        })
-        describe('and url undefined', () => {
-          beforeEach(() => {
-            facade.metadata$.next({ overviews: [] })
-            fixture.detectChanges()
-          })
-          it('should send the imagUrl as null to imgOverlayPreview component', () => {
-            expect(imgOverlayPreview).toBeTruthy()
-            expect(imgOverlayPreview.imageUrl).toBeNull()
-          })
-        })
-      })
-    })
   })
   describe('Downloads', () => {
     let downloadsComponent
@@ -441,6 +398,7 @@ describe('RecordMetadataComponent', () => {
 
       describe('When the metadata is not fully loaded', () => {
         beforeEach(() => {
+          component.kind = 'dataset'
           facade.isMetadataLoading$.next(false)
           facade.apiLinks$.next([])
           facade.downloadLinks$.next([])
