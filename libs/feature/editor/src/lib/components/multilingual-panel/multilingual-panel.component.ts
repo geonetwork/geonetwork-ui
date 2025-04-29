@@ -13,13 +13,15 @@ import {
   iconoirCircle,
   iconoirSettings,
 } from '@ng-icons/iconoir'
-import { SUPPORTED_LANGUAGES } from '@geonetwork-ui/util/i18n'
 import { matMoreHorizOutline } from '@ng-icons/material-icons/outline'
 import { EditorFacade } from '../../+state/editor.facade'
 import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
 import { MatDialog } from '@angular/material/dialog'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { map } from 'rxjs'
 
 const extraFlagMap: { [key: string]: string } = {
+  ar: 'arab',
   en: 'gb',
   ko: 'kr',
   cs: 'cz',
@@ -27,6 +29,11 @@ const extraFlagMap: { [key: string]: string } = {
   ca: 'es-ct',
   rm: 'ch',
   da: 'dk',
+  sv: 'se',
+  cy: 'gb-wls',
+  hy: 'am',
+  ka: 'ge',
+  uk: 'ua',
 }
 
 @Component({
@@ -56,7 +63,6 @@ const extraFlagMap: { [key: string]: string } = {
 export class MultilingualPanelComponent {
   isMultilingual: boolean
   _record: CatalogRecord
-  supportedLanguages = SUPPORTED_LANGUAGES
   editTranslations: boolean
   selectedLanguages = []
   recordLanguages = []
@@ -70,10 +76,15 @@ export class MultilingualPanelComponent {
     this.formLanguage = value.defaultLanguage
   }
 
+  supportedLanguages$ = this.recordsRepository
+    .getApplicationLanguages()
+    .pipe(map((languages) => this.sortLanguages(languages)))
+
   constructor(
     public facade: EditorFacade,
     public dialog: MatDialog,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private recordsRepository: RecordsRepositoryInterface
   ) {}
 
   sortLanguages(languages) {
@@ -86,7 +97,7 @@ export class MultilingualPanelComponent {
       .map((item) => item.lang)
   }
 
-  activateLanguageSelection() {
+  toggleLanguageSelection() {
     this.editTranslations = !this.editTranslations
   }
 
@@ -97,17 +108,18 @@ export class MultilingualPanelComponent {
   }
 
   switchMultilingual() {
-    if (this.isMultilingual) {
+    if (this.isMultilingual && this.selectedLanguages.length > 1) {
       this.confirmDeleteAction()
     } else {
       this.isMultilingual = true
+      this.editTranslations = true
     }
   }
 
   getExtraClass(lang) {
-    const baseClass = 'h-[34px] w-full font-bold justify-start'
+    const baseClass = 'h-[34px] w-full font-bold justify-start hover:bg-white'
     if (this.selectedLanguages.includes(lang)) {
-      return `${baseClass} bg-gray-300`
+      return `${baseClass} bg-white border border-black`
     }
     return baseClass
   }
@@ -123,7 +135,10 @@ export class MultilingualPanelComponent {
   }
 
   validateTranslations() {
-    if (this.selectedLanguages.length < this.recordLanguages.length) {
+    if (
+      this.selectedLanguages.length < this.recordLanguages.length ||
+      this.selectedLanguages !== this.recordLanguages
+    ) {
       this.confirmDeleteAction(this.selectedLanguages)
     } else {
       this.updateTranslations()

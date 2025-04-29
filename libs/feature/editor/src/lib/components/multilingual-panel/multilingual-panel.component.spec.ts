@@ -4,11 +4,17 @@ import { TranslateModule } from '@ngx-translate/core'
 import { MatDialog } from '@angular/material/dialog'
 import { of } from 'rxjs'
 import { EditorFacade } from '../../+state/editor.facade'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+
+class RecordsRepositoryMock {
+  getApplicationLanguages = jest.fn(() => of(['en', 'fr', 'it', 'es']))
+}
 
 describe('MultilingualPanelComponent (logic only)', () => {
   let component: MultilingualPanelComponent
   let dialogMock: jest.Mocked<MatDialog>
   let facadeMock: jest.Mocked<EditorFacade>
+  let recordsRepository: RecordsRepositoryInterface
 
   const mockRecord = {
     defaultLanguage: 'en',
@@ -31,10 +37,15 @@ describe('MultilingualPanelComponent (logic only)', () => {
       providers: [
         { provide: MatDialog, useValue: dialogMock },
         { provide: EditorFacade, useValue: facadeMock },
+        {
+          provide: RecordsRepositoryInterface,
+          useClass: RecordsRepositoryMock,
+        },
       ],
     }).compileComponents()
 
     const fixture = TestBed.createComponent(MultilingualPanelComponent)
+    recordsRepository = TestBed.inject(RecordsRepositoryInterface)
     component = fixture.componentInstance
 
     component.record = mockRecord
@@ -80,10 +91,10 @@ describe('MultilingualPanelComponent (logic only)', () => {
   describe('edit panel toggle', () => {
     it('should toggle translation panel visibility', () => {
       component.editTranslations = false
-      component.activateLanguageSelection()
+      component.toggleLanguageSelection()
       expect(component.editTranslations).toBe(true)
 
-      component.activateLanguageSelection()
+      component.toggleLanguageSelection()
       expect(component.editTranslations).toBe(false)
     })
   })

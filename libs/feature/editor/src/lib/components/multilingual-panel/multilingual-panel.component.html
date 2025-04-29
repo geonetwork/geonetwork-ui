@@ -7,7 +7,7 @@
     >
     <button
       [title]="'editor.record.form.multilingual.open' | translate"
-      (click)="activateLanguageSelection()"
+      (click)="toggleLanguageSelection()"
       *ngIf="isMultilingual"
       data-test="activateSelection"
     >
@@ -35,22 +35,24 @@
           >{{ 'editor.record.form.multilingual.validate' | translate }}
         </gn-ui-button>
       </div>
-      <div
-        class="flex flex-col gap-2 w-full px-2"
-        *ngFor="let lang of sortLanguages(supportedLanguages)"
-        data-test="langAvailable"
-      >
-        <gn-ui-button
-          [extraClass]="getExtraClass(lang)"
-          type="gray"
-          (buttonClick)="toggleLanguage(lang)"
-          [disabled]="lang === _record.defaultLanguage"
-          [title]="getToggleTitle(lang)"
+      <ng-container *ngIf="supportedLanguages$ | async as languages">
+        <div
+          class="flex flex-col gap-2 w-full px-2"
+          data-test="langAvailable"
+          *ngFor="let lang of languages"
         >
-          <span [class]="getIconClass(lang)"></span>
-          <span class="ml-2">{{ 'language.' + lang | translate }}</span>
-        </gn-ui-button>
-      </div>
+          <gn-ui-button
+            [extraClass]="getExtraClass(lang)"
+            type="gray"
+            (buttonClick)="toggleLanguage(lang)"
+            [disabled]="lang === _record.defaultLanguage"
+            [title]="getToggleTitle(lang)"
+          >
+            <span [class]="getIconClass(lang)"></span>
+            <span class="ml-2">{{ 'language.' + lang | translate }}</span>
+          </gn-ui-button>
+        </div>
+      </ng-container>
     </div>
   </div>
   <div *ngIf="!editTranslations && isMultilingual" class="flex flex-col gap-2">
