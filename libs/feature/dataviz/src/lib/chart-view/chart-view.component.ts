@@ -171,9 +171,6 @@ export class ChartViewComponent {
     tap((choices) => {
       if (!choices.find((choice) => choice.value === this.yProperty$.value)) {
         const newProp = choices[0]?.value || ''
-        if (!newProp && this.aggregation$.value !== 'count') {
-          this.aggregation$.next('count')
-        }
         this.yProperty$.next(newProp)
       }
     })
