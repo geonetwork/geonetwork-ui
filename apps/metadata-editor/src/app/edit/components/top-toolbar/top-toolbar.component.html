@@ -68,7 +68,16 @@
     (buttonClick)="toggleTranslatePanel()"
     type="light"
   >
-    <ng-icon name="iconoirTranslate"></ng-icon>
+    <div style="position: relative; display: inline-block">
+      <ng-icon
+        size="8px"
+        name="matCircle"
+        class="text-primary"
+        style="position: absolute; top: 0; right: 0"
+        *ngIf="translatePanelOpen"
+      ></ng-icon>
+      <ng-icon name="iconoirTranslate"></ng-icon>
+    </div>
   </gn-ui-button>
   <!-- <gn-ui-button
     type="light"
