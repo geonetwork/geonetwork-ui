@@ -21,6 +21,11 @@ export const LANG_3_TO_2_MAPPER = {
   pol: 'pl',
   swe: 'sv',
   tur: 'tr',
+  arm: 'hy',
+  aze: 'az',
+  geo: 'ka',
+  ukr: 'uk',
+  wel: 'cy',
 }
 
 export const LANGUAGE_NAMES = {
@@ -46,6 +51,11 @@ export const LANGUAGE_NAMES = {
   pl: 'Polski',
   sv: 'Swedish',
   tr: 'Türkçe',
+  hy: 'հայերեն',
+  az: 'Azərbaycan dili',
+  ka: 'ქართული',
+  uk: 'українська',
+  wel: 'Cymraeg',
 }
 
 export const LANG_2_TO_3_MAPPER = Object.entries(LANG_3_TO_2_MAPPER).reduce(
