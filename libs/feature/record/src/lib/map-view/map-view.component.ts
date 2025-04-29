@@ -250,8 +250,9 @@ export class MapViewComponent implements AfterViewInit {
             styleUrl: link.styleInfo.href,
           })
         : of({
-            url: link.url.toString(),
-            type: 'mvt',
+            url: link.url.toString().replace(/\/?$/, '/{z}/{x}/{y}.pbf'),
+            type: 'xyz',
+            tileFormat: 'application/vnd.mapbox-vector-tile',
             name: link.name,
           })
     } else if (

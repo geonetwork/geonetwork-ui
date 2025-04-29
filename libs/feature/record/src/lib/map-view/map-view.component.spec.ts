@@ -506,13 +506,14 @@ describe('MapViewComponent', () => {
           tick(200)
           fixture.detectChanges()
         }))
-        it('emits a map context using mvt with root url', () => {
+        it('emits a map context using mvt tile format with root url', () => {
           expect(mapComponent.context).toEqual({
             layers: [
               {
                 name: 'orthophoto',
-                type: 'mvt',
-                url: 'http://abcd.com/tms',
+                type: 'xyz',
+                tileFormat: 'application/vnd.mapbox-vector-tile',
+                url: 'http://abcd.com/tms/{z}/{x}/{y}.pbf',
               },
             ],
             view: expect.any(Object),
