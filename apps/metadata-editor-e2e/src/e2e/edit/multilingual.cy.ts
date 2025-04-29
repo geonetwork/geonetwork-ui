@@ -24,13 +24,12 @@ describe('Multilingual panel', () => {
   })
   describe('Switching to multilingual', () => {
     describe('Language addition', () => {
-      it('should show the languages list of the record and edit menu access when switching to', () => {
+      it('should show the available languages when switching to multilingual', () => {
         cy.get('md-editor-top-toolbar').find('gn-ui-button').eq(1).click()
         cy.get('gn-ui-multilingual-panel').find('gn-ui-check-toggle').click()
         cy.get('gn-ui-multilingual-panel')
-          .find('[data-test="activateSelection"]')
-          .should('be.visible')
-        cy.get('[data-test="langSwitch"]').should('have.length', 1)
+          .find('[data-test="langAvailable"]')
+          .should('have.length', 21)
       })
       it('should access the editor menu and persist the new languages selection on reload', () => {
         cy.get('md-editor-top-toolbar').find('gn-ui-button').eq(1).click()

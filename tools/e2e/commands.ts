@@ -363,9 +363,6 @@ Cypress.Commands.add('editor_publishAndReload', (uuid: string) => {
 })
 
 Cypress.Commands.add('editor_addLanguages', (uuid) => {
-  cy.get('gn-ui-multilingual-panel')
-    .find('[data-test="activateSelection"]')
-    .click()
   cy.get('[data-test="langAvailable"]').eq(3).click()
   cy.get('[data-test="langAvailable"]').eq(7).click()
   cy.editor_wrapPreviousDraft(uuid)
