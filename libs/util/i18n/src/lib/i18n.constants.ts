@@ -26,6 +26,11 @@ marker('language.no')
 marker('language.pl')
 marker('language.sv')
 marker('language.tr')
+marker('language.hy')
+marker('language.az')
+marker('language.ka')
+marker('language.uk')
+marker('language.cy')
 
 export const DEFAULT_LANG = 'en'
 
@@ -55,6 +60,11 @@ export const SUPPORTED_LANGUAGES = [
   'pl',
   'sv',
   'tr',
+  'hy',
+  'az',
+  'ka',
+  'uk',
+  'cy',
 ]
 
 export function HttpLoaderFactory(http: HttpClient) {
