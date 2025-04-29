@@ -7,6 +7,7 @@ import {
   filter,
   map,
   mergeMap,
+  shareReplay,
   switchMap,
   toArray,
 } from 'rxjs/operators'
@@ -80,7 +81,10 @@ export class MdViewFacade {
   chartConfig$ = this.store.pipe(select(MdViewSelectors.getChartConfig))
 
   allLinks$ = this.metadata$.pipe(
-    map((record) => ('onlineResources' in record ? record.onlineResources : []))
+    map((record) =>
+      'onlineResources' in record ? record.onlineResources : []
+    ),
+    shareReplay(1)
   )
 
   apiLinks$ = this.allLinks$.pipe(
@@ -91,7 +95,8 @@ export class MdViewFacade {
       this.processLinksForTmsWithStyles(
         apiLinks as DatasetServiceDistribution[]
       )
-    )
+    ),
+    shareReplay(1)
   )
 
   mapApiLinks$ = this.allLinks$.pipe(
@@ -104,7 +109,8 @@ export class MdViewFacade {
       this.processLinksForTmsWithStyles(
         mapApiLinks as DatasetServiceDistribution[]
       )
-    )
+    ),
+    shareReplay(1)
   )
 
   downloadLinks$ = this.allLinks$.pipe(
@@ -232,7 +238,11 @@ export class MdViewFacade {
   private createOneTmsLinkPerStyle(
     link: DatasetServiceDistribution
   ): Observable<DatasetServiceDistribution[]> {
-    if (link.type === 'service' && link.accessServiceProtocol === 'tms') {
+    if (
+      link.type === 'service' &&
+      link.accessServiceProtocol === 'tms' &&
+      !link.styleInfo
+    ) {
       return from(this.dataService.getStylesFromTms(link.url.href)).pipe(
         map((styles) =>
           styles
