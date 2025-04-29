@@ -95,4 +95,5 @@ export abstract class RecordsRepositoryInterface {
     localRecord: CatalogRecord
   ): Observable<{ user: string; date: Date }>
   abstract getRecordPublicationStatus(uuid: string): Observable<boolean>
+  abstract getApplicationLanguages(): Observable<string[]>
 }
