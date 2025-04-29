@@ -30,6 +30,7 @@
   "dashboard.labels.mySpace": "Meu espaço",
   "dashboard.records.all": "Catálogo",
   "dashboard.records.hasDraft": "",
+  "dashboard.records.isMultilingual": "Este registro é multilíngue ({languages})",
   "dashboard.records.myDraft": "Meus rascunhos",
   "dashboard.records.myRecords": "Meus Registros",
   "dashboard.records.search": "Buscar por \"{searchText}\"",

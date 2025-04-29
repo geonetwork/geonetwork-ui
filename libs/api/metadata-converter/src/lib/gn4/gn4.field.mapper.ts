@@ -152,12 +152,26 @@ export class Gn4FieldMapper {
       )
       const languages = langList.map((lang) => LANG_3_TO_2_MAPPER[lang])
       const defaultLanguage = output.defaultLanguage ?? languages[0] ?? null // set the first language as main one as fallback
-      const otherLanguages = languages.filter(
+      const resourceLanguage = languages.filter(
         (lang) => lang !== defaultLanguage
       )
+
       return {
         ...output,
         defaultLanguage,
+        resourceLanguage,
+      }
+    },
+    otherLanguage: (output, source) => {
+      const langList = getAsArray(selectField<string>(source, 'otherLanguage'))
+      const languages = langList.map((lang) => LANG_3_TO_2_MAPPER[lang])
+      const defaultLanguage = output.defaultLanguage ?? languages[0] ?? null
+      const otherLanguages = languages.filter(
+        (lang) => lang !== defaultLanguage
+      )
+
+      return {
+        ...output,
         otherLanguages,
       }
     },

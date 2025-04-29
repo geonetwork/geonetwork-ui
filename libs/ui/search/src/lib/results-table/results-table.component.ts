@@ -28,16 +28,11 @@ import {
   getFileFormat,
   getFormatPriority,
 } from '@geonetwork-ui/util/shared'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { ActionMenuComponent } from './action-menu/action-menu.component'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
-import { iconoirUser, iconoirLock } from '@ng-icons/iconoir'
-import {
-  CdkConnectedOverlay,
-  CdkOverlayOrigin,
-  Overlay,
-  OverlayRef,
-} from '@angular/cdk/overlay'
+import { iconoirUser, iconoirLock, iconoirTranslate } from '@ng-icons/iconoir'
+import { CdkOverlayOrigin, Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
 import { matMoreVert } from '@ng-icons/material-icons/baseline'
 
@@ -57,7 +52,9 @@ import { matMoreVert } from '@ng-icons/material-icons/baseline'
     NgIconComponent,
     CdkOverlayOrigin,
   ],
-  providers: [provideIcons({ iconoirUser, iconoirLock, matMoreVert })],
+  providers: [
+    provideIcons({ iconoirUser, iconoirLock, iconoirTranslate, matMoreVert }),
+  ],
 })
 export class ResultsTableComponent {
   @Input() records: CatalogRecord[] = []
@@ -89,7 +86,8 @@ export class ResultsTableComponent {
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef,
     private cdr: ChangeDetectorRef,
-    private dateService: DateService
+    private dateService: DateService,
+    private translateService: TranslateService
   ) {}
 
   openActionMenu(item, template) {
@@ -218,5 +216,15 @@ export class ResultsTableComponent {
 
   handleRecordSelectedChange(selected: boolean, record: CatalogRecord) {
     this.recordsSelectedChange.emit([[record], selected])
+  }
+
+  isMultilingual(record: CatalogRecord): boolean {
+    return record.otherLanguages.length > 0
+  }
+
+  getTxtHoverMultilingual(record: CatalogRecord) {
+    return this.translateService.instant('dashboard.records.isMultilingual', {
+      languages: record.otherLanguages.join(', '),
+    })
   }
 }

@@ -30,6 +30,7 @@
   "dashboard.labels.mySpace": "Mon espace",
   "dashboard.records.all": "Jeux de données",
   "dashboard.records.hasDraft": "brouillon",
+  "dashboard.records.isMultilingual": "Cet enregistrement est multilingue ({languages})",
   "dashboard.records.myDraft": "Mes brouillons",
   "dashboard.records.myRecords": "Mes jeux de données",
   "dashboard.records.search": "Résultats pour \"{searchText}\"",
