@@ -151,19 +151,14 @@
         (buttonClick)="openActionMenu(item, template)"
         type="light"
         data-test="record-menu-button"
-        [disabled]="(canEdit(item) | async) === false"
       >
-        <ng-icon
-          [ngClass]="{
-            'text-purple-light': (canEdit(item) | async) === false,
-          }"
-          name="matMoreVert"
-        ></ng-icon>
+        <ng-icon name="matMoreVert"></ng-icon>
       </gn-ui-button>
       <ng-template #template>
         <gn-ui-action-menu
-          [canDuplicate]="canDuplicate(item) && !isDuplicating"
-          [canDelete]="canDelete(item)"
+          [canDuplicate]="canDuplicate(item)"
+          [isDuplicating]="isDuplicating"
+          [canDelete]="canDelete(item) | async"
           [isDraftPage]="isDraftPage"
           (duplicate)="handleDuplicate(item)"
           (delete)="handleDelete(item)"

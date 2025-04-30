@@ -20,6 +20,8 @@ export abstract class RecordsRepositoryInterface {
     similarTo: CatalogRecord
   ): Observable<CatalogRecord[]>
   abstract fuzzySearch(query: string): Observable<SearchResults>
+  abstract canDuplicate(record: CatalogRecord): boolean
+  abstract canDelete(record: CatalogRecord): Observable<boolean>
   abstract canEditRecord(uniqueIdentifier: string): Observable<boolean>
   abstract canEditIndexedRecord(record: CatalogRecord): Observable<boolean>
   /**
