@@ -68,13 +68,12 @@
     (buttonClick)="toggleTranslatePanel()"
     type="light"
   >
-    <div style="position: relative; display: inline-block">
+    <div class="relative inline-block">
       <ng-icon
         size="8px"
         name="matCircle"
-        class="text-primary"
-        style="position: absolute; top: 0; right: 0"
-        *ngIf="translatePanelOpen"
+        class="text-primary absolute top-0 right-0"
+        *ngIf="isRecordMultilingual$ | async"
       ></ng-icon>
       <ng-icon name="iconoirTranslate"></ng-icon>
     </div>

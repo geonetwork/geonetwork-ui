@@ -95,6 +95,9 @@ export class TopToolbarComponent {
         return !isPublished ? 'record_not_published' : 'record_up_to_date'
       })
     )
+  isRecordMultilingual$ = this.editorFacade.record$.pipe(
+    map((record) => record.otherLanguages.length)
+  )
 
   constructor(
     public dialog: MatDialog,
