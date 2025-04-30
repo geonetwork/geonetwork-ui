@@ -78,6 +78,9 @@ export class ChartViewComponent {
   @Input() cacheActive = true
   @Input() set link(value: DatasetOnlineResource) {
     this.currentLink$.next(value)
+    if (value) {
+      this.aggregation$.next('sum')
+    }
   }
   private currentLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
 
@@ -171,6 +174,9 @@ export class ChartViewComponent {
     tap((choices) => {
       if (!choices.find((choice) => choice.value === this.yProperty$.value)) {
         const newProp = choices[0]?.value || ''
+        if (!newProp && this.aggregation$.value !== 'count') {
+          this.aggregation$.next('count')
+        }
         this.yProperty$.next(newProp)
       }
     })
@@ -241,13 +247,16 @@ export class ChartViewComponent {
   ): Promise<PropertyInfo[]> {
     return dataset.properties
       .then((properties) => {
-        const featureAttributes = catalog?.featureTypes[0]?.attributes ?? []
         return properties.map((p) => {
-          const matchingAttribute = featureAttributes.find(
-            (attr) => attr.name === p.label
-          )
-          if (matchingAttribute?.code) {
-            return { ...p, label: matchingAttribute.code }
+          if (catalog) {
+            const featureAttributes = catalog?.featureTypes[0]?.attributes ?? []
+            const matchingAttribute = featureAttributes.find(
+              (attr) => attr.name === p.label
+            )
+            if (matchingAttribute?.code) {
+              return { ...p, label: matchingAttribute.code }
+            }
+            return p
           }
           return p
         })

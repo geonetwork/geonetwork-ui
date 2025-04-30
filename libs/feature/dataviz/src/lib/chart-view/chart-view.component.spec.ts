@@ -360,6 +360,7 @@ describe('ChartViewComponent', () => {
           'http://server.org/no-number-props/no-date-props/more-results/'
         ),
       }
+      component.yProperty$.next('')
       flushMicrotasks()
       fixture.detectChanges()
       aggChoicesComponent = fixture.debugElement.query(
