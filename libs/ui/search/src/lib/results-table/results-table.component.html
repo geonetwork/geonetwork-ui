@@ -166,8 +166,9 @@
       </div>
       <ng-template #template>
         <gn-ui-action-menu
-          [canDuplicate]="canDuplicate(item) && !isDuplicating"
-          [canDelete]="canDelete(item)"
+          [canDuplicate]="canDuplicate(item)"
+          [isDuplicating]="isDuplicating"
+          [canDelete]="canDelete(item) | async"
           [page]="isDraftPage ? 'draft' : 'main'"
           (duplicate)="handleDuplicate(item)"
           (delete)="handleDelete(item)"

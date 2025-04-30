@@ -298,8 +298,22 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       : of(true)
   }
 
+  canDuplicate(record: CatalogRecord): boolean {
+    return record.kind === 'dataset'
+  }
+
+  canDelete(record: CatalogRecord): Observable<boolean> {
+    return this.settingsService.allowEditHarvested$.pipe(
+      map((allowEditHarvested) => {
+        return (
+          record.extras['edit'] &&
+          (!record.extras['isHarvested'] || allowEditHarvested)
+        )
+      })
+    )
+  }
+
   private canEdit(record: CatalogRecord, allowEditHarvested: boolean): boolean {
-    console.log('record', record)
     return (
       record.kind === 'dataset' &&
       record.extras['edit'] &&
