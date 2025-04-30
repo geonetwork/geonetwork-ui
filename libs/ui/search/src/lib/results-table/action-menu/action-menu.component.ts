@@ -31,6 +31,7 @@ type ActionMenuPage = 'mainMenu' | 'deleteMenu' | 'rollbackMenu'
 })
 export class ActionMenuComponent {
   @Input() canDuplicate = true
+  @Input() isDuplicating: boolean
   @Input() canDelete = true
   @Input() page: 'draft' | 'main' | 'record'
   @Output() duplicate = new EventEmitter<void>()

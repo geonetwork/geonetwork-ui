@@ -28,6 +28,8 @@ export abstract class RecordsRepositoryInterface {
     query: string,
     configFilters?: FieldFilters
   ): Observable<SearchResults>
+  abstract canDuplicate(record: CatalogRecord): boolean
+  abstract canDelete(record: CatalogRecord): Observable<boolean>
   abstract canEditRecord(uniqueIdentifier: string): Observable<boolean>
   abstract canEditIndexedRecord(record: CatalogRecord): Observable<boolean>
   /**
