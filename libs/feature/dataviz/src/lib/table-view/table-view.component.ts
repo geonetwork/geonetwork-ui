@@ -105,10 +105,10 @@ export class TableViewComponent {
   }
 
   setProperties(dataset: BaseReader) {
-    const attributes = this.featureCatalog.featureTypes[0].attributes
     dataset.properties.then((properties) => {
       const updatedProperties = properties.map((p) => {
-        if (attributes.length) {
+        if (this.featureCatalog) {
+          const attributes = this.featureCatalog.featureTypes[0].attributes
           const matchingAttribute = attributes.find(
             (attr) => attr.name === p.name
           )
