@@ -1155,16 +1155,28 @@ export function readSpatialExtents(rootEl: XmlElement) {
   )(rootEl)
 }
 
+export function readRawLanguageCode(): ChainableFunction<
+  XmlElement,
+  string | null
+> {
+  return pipe(
+    findChildElement('lan:LanguageCode'),
+    readAttribute('codeListValue')
+  )
+}
+
 export function readOtherLanguages(rootEl: XmlElement): LanguageCode[] {
   const defaultLanguage = readDefaultLanguage(rootEl)
   return pipe(
     findChildrenElement('gmd:locale', false),
     mapArray(
       pipe(
-        findChildElement('gmd:LanguageCode'),
-        readAttribute('codeListValue'),
-        map((lang) => LANG_3_TO_2_MAPPER[lang.toLowerCase()])
+        readRawLanguageCode(),
+        map((lang) => LANG_3_TO_2_MAPPER[lang.toLowerCase()] ?? null)
       )
+    ),
+    map((languages) =>
+      languages.filter((lang): lang is LanguageCode => lang !== null)
     ),
     map((languages) => (languages.length ? languages : [defaultLanguage]))
   )(rootEl)
@@ -1173,8 +1185,7 @@ export function readOtherLanguages(rootEl: XmlElement): LanguageCode[] {
 export function readDefaultLanguage(rootEl: XmlElement): LanguageCode {
   return pipe(
     findChildElement('gmd:language', false),
-    findChildElement('gmd:LanguageCode'),
-    readAttribute('codeListValue'),
+    readRawLanguageCode(),
     map((lang) => (lang ? LANG_3_TO_2_MAPPER[lang.toLowerCase()] : null))
   )(rootEl)
 }
