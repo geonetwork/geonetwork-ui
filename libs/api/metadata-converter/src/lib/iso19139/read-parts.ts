@@ -1156,6 +1156,16 @@ export function readSpatialExtents(rootEl: XmlElement) {
   )(rootEl)
 }
 
+export function readRawLanguageCode(): ChainableFunction<
+  XmlElement,
+  string | null
+> {
+  return pipe(
+    findChildElement('lan:LanguageCode'),
+    readAttribute('codeListValue')
+  )
+}
+
 export function readOtherLanguages(rootEl: XmlElement): LanguageCode[] {
   const defaultLanguage = readDefaultLanguage(rootEl)
   return pipe(
