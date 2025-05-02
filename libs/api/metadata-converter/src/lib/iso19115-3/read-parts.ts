@@ -394,3 +394,13 @@ export function readOtherLanguages(rootEl: XmlElement): LanguageCode[] {
     )
   )(rootEl)
 }
+
+export function readRawLanguageCode(): ChainableFunction<
+  XmlElement,
+  string | null
+> {
+  return pipe(
+    findChildElement('lan:LanguageCode'),
+    readAttribute('codeListValue')
+  )
+}
