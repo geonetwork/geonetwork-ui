@@ -57,6 +57,7 @@ export class SpatialExtentComponent {
         style: {
           'stroke-color': 'black',
           'stroke-width': 2,
+          'fill-color': 'rgba(153, 153, 153, 0.3)',
         },
       }
       const view = await createViewFromLayer(layer)
