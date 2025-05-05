@@ -8,7 +8,7 @@ import {
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { Observable } from 'rxjs'
 import { FeatureCatalogListComponent } from '@geonetwork-ui/ui/elements'
-import { SearchFeatureCatalogComponent } from '@geonetwork-ui/feature/search'
+import { SearchFeatureCatalogComponent } from '@geonetwork-ui/ui/inputs'
 
 @Component({
   selector: 'datahub-record-feature-catalog',
