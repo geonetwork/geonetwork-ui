@@ -52,7 +52,11 @@ export class SearchFeatureCatalogComponent {
               )
             }
           )
-          this.filteredFeatureCatalogChange.emit({ featureTypes: filtered })
+          this.filteredFeatureCatalog = {
+            ...this.featureCatalog,
+            featureTypes: filtered,
+          }
+          this.filteredFeatureCatalogChange.emit(this.filteredFeatureCatalog)
         })
       )
       .subscribe()
