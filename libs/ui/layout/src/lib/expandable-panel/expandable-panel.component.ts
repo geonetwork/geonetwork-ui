@@ -30,7 +30,6 @@ export class ExpandablePanelComponent implements AfterViewInit, OnDestroy {
   @ViewChild('contentDiv') contentDiv?: ElementRef
 
   maxHeight = '0px'
-  showContent = true
   private _collapsed = true
   private contentObserver?: ResizeObserver
 
@@ -41,7 +40,9 @@ export class ExpandablePanelComponent implements AfterViewInit, OnDestroy {
       this.computeMaxHeight()
       this.changeDetector.detectChanges()
     })
-    this.contentObserver.observe(this.contentDiv.nativeElement)
+    if (this.contentDiv) {
+      this.contentObserver.observe(this.contentDiv.nativeElement)
+    }
   }
 
   @Input() set collapsed(value: boolean) {
@@ -53,6 +54,10 @@ export class ExpandablePanelComponent implements AfterViewInit, OnDestroy {
 
   get collapsed(): boolean {
     return this._collapsed
+  }
+
+  get showContent(): boolean {
+    return !this.collapsed
   }
 
   toggle(): void {
