@@ -38,6 +38,7 @@ export class ExpandablePanelComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.contentObserver = new ResizeObserver(() => {
+      this.showContent = !this.showContent
       this.computeMaxHeight()
       this.changeDetector.detectChanges()
     })
