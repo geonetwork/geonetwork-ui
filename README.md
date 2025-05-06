@@ -2,6 +2,8 @@
 
 # GeoNetwork UI
 
+Welcome to the GeoNetwork UI project, enhancing your GeoNetwork catalog experience with intuitive applications and embeddable web components.
+
 GeoNetwork-UI provides several applications to improve the user experience of your GeoNetwork catalog.
 
 It also provides Web Components to embed various parts of your data catalog in third party websites.
