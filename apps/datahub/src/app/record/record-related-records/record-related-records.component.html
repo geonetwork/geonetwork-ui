@@ -7,7 +7,7 @@
     [record]="record"
     [favoriteTemplate]="favoriteTemplate"
     [metadataQualityDisplay]="metadataQualityDisplay"
-    (mdSelect)="onMetadataSelection($event)"
+    [linkHref]="recordUrlGetter(record)"
   >
   </gn-ui-related-record-card>
 </div>
