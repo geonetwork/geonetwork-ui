@@ -108,6 +108,7 @@ describe('Gn4Converter', () => {
             lineage: null,
             recordPublished: null,
             recordUpdated: null,
+            resourceLanguage: [],
             onlineResources: [],
             licenses: [],
             legalConstraints: [],
@@ -158,6 +159,7 @@ describe('Gn4Converter', () => {
             lineage: null,
             recordPublished: null,
             recordUpdated: null,
+            resourceLanguage: [],
             onlineResources: [],
             contacts: [],
             contactsForResource: [],
@@ -1702,6 +1704,7 @@ describe('Gn4Converter', () => {
             resourceCreated: new Date('2012-01-01T00:00:00.000Z'),
             resourceUpdated: new Date('2021-12-13T00:00:00.000Z'),
             resourcePublished: new Date('2021-04-01T00:00:00.000Z'),
+            resourceLanguage: [],
             status: 'ongoing',
             topics: ['Installations de suivi environnemental', 'Océans'],
             title: 'Surval - Données par paramètre',
@@ -1977,7 +1980,8 @@ describe('Gn4Converter', () => {
               'http://my.catalog.org/metadata/8698bf0b-fceb-4f0f-989b-111e7c4af0a4'
             ),
             defaultLanguage: 'de',
-            otherLanguages: ['fr', 'it'],
+            otherLanguages: ['fr', 'it', 'en', 'rm'],
+            resourceLanguage: ['fr', 'it'],
             legalConstraints: [
               {
                 text: 'Opendata BY: Freie Nutzung. Quellenangabe ist Pflicht.',
@@ -3261,6 +3265,7 @@ describe('Gn4Converter', () => {
             },
             recordCreated: new Date('2024-09-13T10:12:38.614Z'),
             resourceCreated: new Date('2024-05-27T00:00:00.000Z'),
+            resourceLanguage: [],
             reuseType: 'map',
             uniqueIdentifier: '7eb795c2-d612-4b5e-b15e-d985b0f4e697',
             landingPage: new URL(
@@ -3339,6 +3344,7 @@ describe('Gn4Converter', () => {
             recordPublished: null,
             recordCreated: new Date('2024-01-25T07:19:13.493Z'),
             resourcePublished: new Date('2023-12-20T14:23:54.000Z'),
+            resourceLanguage: ['de'],
             ownerOrganization: {
               name: 'My Organization',
               website: new URL('http://my.org/'),
@@ -3392,7 +3398,7 @@ describe('Gn4Converter', () => {
               },
             ],
             defaultLanguage: 'fr',
-            otherLanguages: ['de'],
+            otherLanguages: ['de', 'en'],
             reuseType: 'map',
             title:
               'Herstellung, Verwendung, Forschung und Verteilung von Wasserstoff am Oberrhein',
