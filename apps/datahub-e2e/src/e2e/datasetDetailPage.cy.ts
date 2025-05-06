@@ -100,6 +100,11 @@ beforeEach(() => {
   cy.intercept('GET', '/data/ogcapi/?f=json', {
     fixture: 'ogcapi.json',
   })
+
+  //restricted access stub
+  cy.intercept('GET', '/private/*', {
+    statusCode: 401,
+  })
 })
 
 describe('dataset pages', () => {
