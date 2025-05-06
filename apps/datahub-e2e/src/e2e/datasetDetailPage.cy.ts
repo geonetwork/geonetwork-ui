@@ -256,7 +256,7 @@ describe('dataset pages', () => {
       .eq(2)
       .children('div')
       .as('aboutContent')
-    cy.get('@aboutContent').should('have.length', 5)
+    cy.get('@aboutContent').should('have.length', 4)
     cy.get('@aboutContent')
       .eq(0)
       .children('p')
