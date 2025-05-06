@@ -1,13 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import {
-  InternalLinkCardComponent,
-  RelatedRecordCardComponent,
-} from '@geonetwork-ui/ui/elements'
+import { RelatedRecordCardComponent } from '@geonetwork-ui/ui/elements'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { FavoriteStarComponent } from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'datahub-record-related-records',
@@ -15,13 +11,7 @@ import { FavoriteStarComponent } from '@geonetwork-ui/feature/search'
   styleUrls: ['./record-related-records.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    RelatedRecordCardComponent,
-    TranslateModule,
-    InternalLinkCardComponent,
-    FavoriteStarComponent,
-  ],
+  imports: [CommonModule, RelatedRecordCardComponent, TranslateModule],
 })
 export class RecordRelatedRecordsComponent {
   @Input() records: CatalogRecord[]
