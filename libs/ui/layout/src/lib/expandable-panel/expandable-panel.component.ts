@@ -29,27 +29,22 @@ export class ExpandablePanelComponent implements AfterViewInit, OnDestroy {
   @ContentChild('titleTemplate') titleTemplate?: TemplateRef<HTMLElement>
   @ViewChild('contentDiv') contentDiv?: ElementRef
 
-  maxHeight = '0px'
-  showContent = true
   private _collapsed = true
   private contentObserver?: ResizeObserver
 
   constructor(private readonly changeDetector: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
-    this.contentObserver = new ResizeObserver(() => {
-      this.showContent = !this.showContent
-      this.computeMaxHeight()
-      this.changeDetector.detectChanges()
-    })
-    this.contentObserver.observe(this.contentDiv.nativeElement)
+    if (this.contentDiv) {
+      this.contentObserver = new ResizeObserver(() => {
+        this.changeDetector.detectChanges()
+      })
+      this.contentObserver.observe(this.contentDiv.nativeElement)
+    }
   }
 
   @Input() set collapsed(value: boolean) {
-    if (value !== this._collapsed) {
-      this._collapsed = value
-      this.computeMaxHeight()
-    }
+    this._collapsed = value
   }
 
   get collapsed(): boolean {
@@ -60,13 +55,9 @@ export class ExpandablePanelComponent implements AfterViewInit, OnDestroy {
     this.collapsed = !this.collapsed
   }
 
-  computeMaxHeight(): void {
-    if (!this.contentDiv) return
-    const height = this.contentDiv.nativeElement.scrollHeight
-    this.maxHeight = this.collapsed ? '0px' : `${height}px`
-  }
-
   ngOnDestroy() {
-    this.contentObserver?.disconnect()
+    if (this.contentObserver) {
+      this.contentObserver.disconnect()
+    }
   }
 }

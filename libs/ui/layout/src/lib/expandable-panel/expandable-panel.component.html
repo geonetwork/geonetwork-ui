@@ -29,10 +29,8 @@
 </div>
 <div
   class="content overflow-hidden transition-all duration-300"
-  [ngClass]="collapsed ? 'ease-out' : 'ease-in'"
-  [style.maxHeight]="maxHeight"
   #contentDiv
-  *ngIf="showContent"
+  *ngIf="!collapsed"
   data-cy="expandable-panel-content"
 >
   <ng-content></ng-content>
