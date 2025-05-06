@@ -14,7 +14,6 @@ import { NgIcon, provideIcons } from '@ng-icons/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { matOpenInNew } from '@ng-icons/material-icons/baseline'
 import { TemplateRef } from '@angular/core'
-import { Router } from '@angular/router'
 
 @Component({
   selector: 'gn-ui-related-record-card',
@@ -35,13 +34,13 @@ import { Router } from '@angular/router'
 export class RelatedRecordCardComponent {
   private readonly baseClasses: string
 
+  @Input() linkHref: string = null
   @Input() record: CatalogRecord
   @Input() extraClass = ''
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
   @Input() metadataQualityDisplay: boolean
-  @Output() mdSelect = new EventEmitter<CatalogRecord>()
 
-  constructor(private router: Router) {
+  constructor() {
     this.baseClasses = [
       'w-72',
       'h-96',

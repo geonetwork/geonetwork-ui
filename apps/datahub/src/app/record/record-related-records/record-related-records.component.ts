@@ -1,9 +1,19 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  Inject,
+  Optional,
+} from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { RelatedRecordCardComponent } from '@geonetwork-ui/ui/elements'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
-import { RouterFacade } from '@geonetwork-ui/feature/router'
+import {
+  RECORD_DATASET_URL_TOKEN,
+  RECORD_REUSE_URL_TOKEN,
+  RECORD_SERVICE_URL_TOKEN,
+} from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'datahub-record-related-records',
@@ -16,9 +26,31 @@ import { RouterFacade } from '@geonetwork-ui/feature/router'
 export class RecordRelatedRecordsComponent {
   @Input() records: CatalogRecord[]
 
-  constructor(private routerFacade: RouterFacade) {}
+  recordUrlGetter = this.getRecordUrl.bind(this)
 
-  onMetadataSelection(metadata: CatalogRecord): void {
-    this.routerFacade.goToMetadata(metadata)
+  constructor(
+    @Optional()
+    @Inject(RECORD_DATASET_URL_TOKEN)
+    private recordDatasetUrlTemplate: string,
+    @Inject(RECORD_SERVICE_URL_TOKEN)
+    private recordServiceUrlTemplate: string,
+    @Inject(RECORD_REUSE_URL_TOKEN)
+    private recordReuseUrlTemplate: string
+  ) {}
+
+  getRecordUrl(metadata: CatalogRecord) {
+    const tokenMap = {
+      dataset: this.recordDatasetUrlTemplate,
+      service: this.recordServiceUrlTemplate,
+      reuse: this.recordReuseUrlTemplate,
+    }
+    if (
+      !this.recordDatasetUrlTemplate &&
+      !this.recordServiceUrlTemplate &&
+      !this.recordReuseUrlTemplate
+    )
+      return null
+    const urlKind = tokenMap[metadata.kind]
+    return urlKind.replace('${uuid}', metadata.uniqueIdentifier)
   }
 }
