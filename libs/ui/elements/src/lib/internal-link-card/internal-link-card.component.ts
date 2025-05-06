@@ -76,6 +76,8 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
 })
 export class InternalLinkCardComponent implements OnInit {
   @Input() record: CatalogRecord
+  @Input() linkTarget = '_blank'
+  @Input() linkHref: string = null
   @Input() metadataQualityDisplay: boolean
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
   @Input() set size(value: CardSize) {
@@ -122,12 +124,8 @@ export class InternalLinkCardComponent implements OnInit {
   ngOnInit(): void {
     this.abstract = removeWhitespace(stripHtml(this.record?.abstract))
     this.subscription.add(
-      fromEvent(this.elementRef.nativeElement, 'click').subscribe(
-        (event: Event) => {
-          event.preventDefault()
-          propagateToDocumentOnly(event)
-          this.mdSelect.emit(this.record)
-        }
+      fromEvent(this.elementRef.nativeElement, 'click').subscribe(() =>
+        this.mdSelect.emit(this.record)
       )
     )
   }
