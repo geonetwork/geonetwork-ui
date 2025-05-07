@@ -34,7 +34,7 @@ export const DEFAULT_RESULTS_LAYOUT_CONFIG: ResultsLayoutConfigModel = {
     RecordPreviewRowComponent,
     'py-2',
     '',
-    'grid grid-cols-1 divide-y divide-gray-300'
+    'grid grid-cols-1 divide-y divide-gray-100'
   ),
   FEED: new ResultsLayoutConfigItem(
     RecordPreviewFeedComponent,
