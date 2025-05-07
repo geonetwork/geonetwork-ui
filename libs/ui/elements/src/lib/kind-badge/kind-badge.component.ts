@@ -13,7 +13,6 @@ import {
   iconoirCreditCard,
 } from '@ng-icons/iconoir'
 import { NgIconsModule } from '@ng-icons/core'
-import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 
 enum KindConfig {
@@ -37,7 +36,7 @@ enum KindConfig {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [NgIconsModule, CommonModule, BadgeComponent, TranslateModule],
+  imports: [NgIconsModule, CommonModule, TranslateModule],
 })
 export class KindBadgeComponent {
   @Input() styling = 'default'
