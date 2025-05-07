@@ -224,6 +224,18 @@ export class ChartViewComponent {
     shareReplay(1)
   )
 
+  prettyLabel$ = combineLatest([
+    this.aggregation$,
+    this.properties$,
+    this.yProperty$,
+  ]).pipe(
+    map(([aggregation, properties, yProperty]) => {
+      if (aggregation === 'count') return 'count()'
+      const prop = properties.find((p) => p.name === yProperty)
+      return prop ? `${aggregation}(${prop.label})` : ''
+    })
+  )
+
   get labelProperty() {
     if (!this.xProperty$.value) return ''
     return `distinct(${this.xProperty$.value})`
