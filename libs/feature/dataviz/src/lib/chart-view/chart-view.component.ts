@@ -203,6 +203,7 @@ export class ChartViewComponent {
     this.yProperty$.pipe(filter((value) => value !== undefined)),
     this.aggregation$,
   ]).pipe(
+    filter(([_, x, y]) => !!x || !!y),
     switchMap(([dataset, xProp, yProp, aggregation]) => {
       const fieldAgg: FieldAggregation =
         aggregation === 'count' ? ['count'] : [aggregation, yProp]
