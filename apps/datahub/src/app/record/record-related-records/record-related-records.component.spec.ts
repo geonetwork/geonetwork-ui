@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordRelatedRecordsComponent } from './record-related-records.component'
 import { MockBuilder } from 'ng-mocks'
-import { ChangeDetectionStrategy } from '@angular/core'
 
 describe('RelatedRecordsComponent', () => {
   let component: RecordRelatedRecordsComponent

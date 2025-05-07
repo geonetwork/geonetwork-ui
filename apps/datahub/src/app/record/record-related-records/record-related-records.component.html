@@ -1,6 +1,6 @@
 <div class="pt-0 mb-2 flex items-center gap-6">
   <h2 class="gn-ui-section-title pt-0" translate>record.metadata.related</h2>
-  <span>({{ records.length }})</span>
+  <span>({{ records?.length }})</span>
   <gn-ui-previous-next-buttons
     *ngIf="list?.pagesCount > 1"
     [listComponent]="list"
