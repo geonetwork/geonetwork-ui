@@ -418,7 +418,12 @@ export function extractDatasetOnlineResources(
   const getUrl = pipe(findChildElement('gmd:linkage'), extractMandatoryUrl())
   const getProtocolStr = pipe(
     findChildElement('gmd:protocol'),
-    extractCharacterString()
+    fallback(
+      findChildElement('gco:CharacterString', false),
+      findChildElement('gmx:Anchor', false),
+      findChildElement('gmx:MimeFileType', false)
+    ),
+    readText()
   )
   const getProtocol = pipe(getProtocolStr, map(matchProtocol))
   const getOnlineFunction = pipe(
