@@ -32,8 +32,10 @@ export class RecordRelatedRecordsComponent {
     @Optional()
     @Inject(RECORD_DATASET_URL_TOKEN)
     private recordDatasetUrlTemplate: string,
+    @Optional()
     @Inject(RECORD_SERVICE_URL_TOKEN)
     private recordServiceUrlTemplate: string,
+    @Optional()
     @Inject(RECORD_REUSE_URL_TOKEN)
     private recordReuseUrlTemplate: string
   ) {}
