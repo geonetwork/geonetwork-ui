@@ -1,4 +1,4 @@
-<a [title]="record.title" [attr.href]="linkHref" [target]="linkTarget">
+<a [attr.href]="linkHref" [target]="linkTarget">
   <div
     class="group rounded-md bg-white hover:cursor-pointer hover:bg-slate-50 overflow-hidden w-full"
     [ngClass]="cardClass"
@@ -54,6 +54,7 @@
               class="mr-6 overflow-hidden"
               [ngClass]="getTitleClass()"
               data-cy="recordTitle"
+              [title]="record.title"
             >
               {{ record.title }}
             </h4>
