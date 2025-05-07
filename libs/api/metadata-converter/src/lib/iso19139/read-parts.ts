@@ -65,7 +65,8 @@ export function extractCharacterString(): ChainableFunction<
   return pipe(
     fallback(
       findChildElement('gco:CharacterString', false),
-      findChildElement('gmx:Anchor', false)
+      findChildElement('gmx:Anchor', false),
+      findChildElement('gmx:MimeFileType', false)
     ),
     readText()
   )
