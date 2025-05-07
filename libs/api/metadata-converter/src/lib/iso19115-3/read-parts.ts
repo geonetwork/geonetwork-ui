@@ -357,7 +357,11 @@ export function readOnlineResources(rootEl: XmlElement): OnlineResource[] {
     getOnlineResources = extractReuseOnlineResources()
   }
   return pipe(
-    findNestedElements('mrd:distributionInfo', 'mrd:MD_Distribution'),
+    findNestedElements(
+      'mrd:distributionInfo',
+      'mrd:MD_Distribution',
+      'mrd:transferOptions'
+    ),
     mapArray(getOnlineResources),
     flattenArray()
   )(rootEl)

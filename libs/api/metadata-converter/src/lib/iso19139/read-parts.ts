@@ -418,7 +418,12 @@ export function extractDatasetOnlineResources(
   const getUrl = pipe(findChildElement('gmd:linkage'), extractMandatoryUrl())
   const getProtocolStr = pipe(
     findChildElement('gmd:protocol'),
-    extractCharacterString()
+    fallback(
+      findChildElement('gco:CharacterString', false),
+      findChildElement('gmx:Anchor', false),
+      findChildElement('gmx:MimeFileType', false)
+    ),
+    readText()
   )
   const getProtocol = pipe(getProtocolStr, map(matchProtocol))
   const getOnlineFunction = pipe(
@@ -446,12 +451,7 @@ export function extractDatasetOnlineResources(
     extractLocalizedCharacterString<OnlineResourceTranslations>('description')
   )
   return pipe(
-    findNestedElements(
-      'gmd:transferOptions',
-      'gmd:MD_DigitalTransferOptions',
-      'gmd:onLine',
-      'gmd:CI_OnlineResource'
-    ),
+    findNestedElements('gmd:onLine', 'gmd:CI_OnlineResource'),
     mapArray(
       combine(
         getIsService,
@@ -935,12 +935,7 @@ export function extractServiceOnlineResources(): ChainableFunction<
     )
   )
   return pipe(
-    findNestedElements(
-      'gmd:transferOptions',
-      'gmd:MD_DigitalTransferOptions',
-      'gmd:onLine',
-      'gmd:CI_OnlineResource'
-    ),
+    findNestedElements('gmd:onLine', 'gmd:CI_OnlineResource'),
     mapArray(combine(getIsLink, getProtocol, getUrl, getName, getDescription)),
     mapArray(
       ([
@@ -993,12 +988,7 @@ export function extractReuseOnlineResources(): ChainableFunction<
     )
   )
   return pipe(
-    findNestedElements(
-      'gmd:transferOptions',
-      'gmd:MD_DigitalTransferOptions',
-      'gmd:onLine',
-      'gmd:CI_OnlineResource'
-    ),
+    findNestedElements('gmd:onLine', 'gmd:CI_OnlineResource'),
     mapArray(combine(getUrl, getName, getDescription)),
     mapArray(
       ([
@@ -1032,7 +1022,12 @@ export function readOnlineResources(rootEl: XmlElement): OnlineResource[] {
     getOnlineResources = extractReuseOnlineResources()
   }
   return pipe(
-    findNestedElements('gmd:distributionInfo', 'gmd:MD_Distribution'),
+    findNestedElements(
+      'gmd:distributionInfo',
+      'gmd:MD_Distribution',
+      'gmd:transferOptions',
+      'gmd:MD_DigitalTransferOptions'
+    ),
     mapArray(getOnlineResources),
     flattenArray()
   )(rootEl)
