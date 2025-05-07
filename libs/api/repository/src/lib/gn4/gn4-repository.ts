@@ -362,9 +362,12 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         const record = await converter.readRecord(fetchedRecordAsXml)
 
         record.title = `${record.title} (Copy)`
-        await converter.writeRecord(record, fetchedRecordAsXml)
+        const recordAsXml = await converter.writeRecord(
+          record,
+          fetchedRecordAsXml
+        )
 
-        return this.saveRecord(record, '', false)
+        return this.saveRecord(record, recordAsXml, false)
       }),
       exhaustMap((uuidObservable: Observable<string>) => uuidObservable),
       catchError((error: HttpErrorResponse) => {
