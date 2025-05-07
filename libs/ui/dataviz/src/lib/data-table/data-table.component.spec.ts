@@ -64,6 +64,14 @@ describe('DataTableComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DataTableComponent)
     component = fixture.componentInstance
+    component.featureAttributes = [
+      {
+        label: 'Identifiant',
+        value: 'id',
+      },
+      { label: 'First Name', value: 'firstName' },
+      { label: 'Last Name', value: 'lastName' },
+    ]
     dataset = new MockBaseReader(tableItemsFixture)
     component.dataset = dataset
   })
@@ -90,6 +98,17 @@ describe('DataTableComponent', () => {
     beforeEach(() => {
       previousDataSource = component.dataSource
       component.dataset = new MockBaseReader(someHabTableItemFixture)
+      component.featureAttributes = [
+        {
+          label: 'Identifiant',
+          value: 'id',
+        },
+        {
+          label: 'Name',
+          value: 'name',
+        },
+        { label: 'Population', value: 'pop' },
+      ]
       fixture.detectChanges()
     })
     it('updates the internal data source', () => {

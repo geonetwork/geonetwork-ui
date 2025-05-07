@@ -61,13 +61,14 @@ export interface TableItemModel {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
+  _featureAttributes = []
+  @Input() set featureAttributes(value: { value: string; label: string }[]) {
+    this._featureAttributes = value
+    this.properties$.next(value.map((attr) => attr.value))
+  }
   @Input() set dataset(value: BaseReader) {
-    this.properties$.next(null)
     this.dataset_ = value
     this.dataset_.load()
-    this.dataset_.properties.then((properties) =>
-      this.properties$.next(properties.map((p) => p.name))
-    )
     this.dataset_.info.then((info) => (this.count = info.itemsCount))
   }
   @Input() activeId: TableItemId

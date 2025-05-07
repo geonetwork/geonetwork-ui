@@ -4,6 +4,7 @@
       *ngIf="tableData$ | async as dataset"
       class="overflow-auto grow"
       [dataset]="dataset"
+      [featureAttributes]="featureAttributes"
       (selected)="onTableSelect($event)"
     ></gn-ui-data-table>
     <gn-ui-loading-mask
