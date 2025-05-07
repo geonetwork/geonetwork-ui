@@ -35,12 +35,7 @@ import {
 } from '@ng-icons/material-icons/outline'
 import { iconoirInternet } from '@ng-icons/iconoir'
 import { TranslateModule } from '@ngx-translate/core'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { fromEvent, Subscription } from 'rxjs'
-
-marker('record.kind.data')
-marker('record.kind.reuse')
-marker('record.kind.service')
 
 type CardSize = 'L' | 'M' | 'S' | 'XS'
 
