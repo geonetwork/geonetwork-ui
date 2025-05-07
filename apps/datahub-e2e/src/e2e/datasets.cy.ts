@@ -564,9 +564,9 @@ describe('datasets', () => {
 
       it('should display quality widget', () => {
         cy.get('@sortBy').selectDropdownOption('desc,createDate')
-        cy.get('gn-ui-progress-bar')
-          .eq(2)
-          .should('have.attr', 'ng-reflect-value', 87)
+        cy.get(
+          '[data-cy="9e1ea778-d0ce-4b49-90b7-37bc0e448300"] gn-ui-progress-bar'
+        ).should('have.attr', 'ng-reflect-value', 87)
       })
 
       it('should display results sorted by quality score', () => {
