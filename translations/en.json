@@ -364,7 +364,6 @@
   "record.feature.catalog.number.total.attribute": "Total amount of objects",
   "record.feature.catalog.number.total.object": "Total amount of attributes",
   "record.feature.limit": "Preview disabled due to too many elements",
-  "record.kind.data": "Data",
   "record.kind.dataset": "Dataset",
   "record.kind.reuse": "Reuse",
   "record.kind.service": "Service",
