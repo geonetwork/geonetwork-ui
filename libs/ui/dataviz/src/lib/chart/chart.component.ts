@@ -57,6 +57,7 @@ export class ChartComponent implements OnChanges, AfterViewInit {
     this.dataRaw = value
   }
   @Input() labelProperty: string
+  @Input() prettyLabel: string
   @Input() valueProperty: string
   @Input() secondaryValueProperty: string
   @Input() type: InputChartType = 'bar'
@@ -95,7 +96,7 @@ export class ChartComponent implements OnChanges, AfterViewInit {
       labels: this.getDataProxy(this.labelProperty) as string[],
       datasets: [
         {
-          label: this.valueProperty,
+          label: this.prettyLabel,
           data,
         },
       ],

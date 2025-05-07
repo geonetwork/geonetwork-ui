@@ -45,6 +45,7 @@
       *ngIf="!error"
       [data]="chartData$ | async"
       [type]="chartType$.value"
+      [prettyLabel]="prettyLabel$ | async"
       [labelProperty]="labelProperty"
       [valueProperty]="valueProperty"
     ></gn-ui-chart>
