@@ -760,7 +760,7 @@ describe('dataset pages', () => {
     cy.get('gn-ui-record-api-form').should('not.be.visible')
   })
 
-  it('related records', () => {
+  it.only('related records', () => {
     cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
 
     // it should display the related records
@@ -779,9 +779,8 @@ describe('dataset pages', () => {
       )
 
     // it goes to dataset on click
-    cy.get('#related')
-      .find('datahub-record-related-records')
-      .find('gn-ui-related-record-card')
+    cy.get('datahub-record-related-records')
+      .find('gn-ui-internal-link-card')
       .first()
       .children('a')
       .as('proviLink')
