@@ -4,6 +4,7 @@ import {
   Input,
   Inject,
   Optional,
+  ViewChild,
 } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { RelatedRecordCardComponent } from '@geonetwork-ui/ui/elements'
@@ -14,6 +15,10 @@ import {
   RECORD_REUSE_URL_TOKEN,
   RECORD_SERVICE_URL_TOKEN,
 } from '@geonetwork-ui/feature/search'
+import {
+  PreviousNextButtonsComponent,
+  BlockListComponent,
+} from '@geonetwork-ui/ui/layout'
 
 @Component({
   selector: 'datahub-record-related-records',
@@ -21,10 +26,17 @@ import {
   styleUrls: ['./record-related-records.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RelatedRecordCardComponent, TranslateModule],
+  imports: [
+    CommonModule,
+    RelatedRecordCardComponent,
+    TranslateModule,
+    PreviousNextButtonsComponent,
+    BlockListComponent,
+  ],
 })
 export class RecordRelatedRecordsComponent {
   @Input() records: CatalogRecord[]
+  @ViewChild(BlockListComponent) list: BlockListComponent
 
   recordUrlGetter = this.getRecordUrl.bind(this)
 
