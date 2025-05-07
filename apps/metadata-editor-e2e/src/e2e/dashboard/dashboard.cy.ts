@@ -39,6 +39,22 @@ describe('dashboard (landing page)', () => {
       .find('[data-cy="table-row"]')
       .should('have.length', '15')
 
+    // MULTILINGUAL
+
+    // it should show a multilingual icon when the record is multilingual
+    cy.get('gn-ui-results-table')
+      .find('[data-cy-title="Leitungskataster Fernwärme AEW Energie AG"]')
+      .find('[data-cy="multilingual-indicator"]')
+      .should('exist')
+
+    // it should NOT show a multilingual icon when the record is NOT multilingual
+    cy.get('gn-ui-results-table')
+      .find(
+        '[data-cy-title="Zones de collecte de déchets en porte à porte - par flux de collecte, jour et horaire de tournée"]'
+      )
+      .find('[data-cy="multilingual-indicator"]')
+      .should('not.exist')
+
     // PAGINATION
 
     // it should display different results on click on arrow
