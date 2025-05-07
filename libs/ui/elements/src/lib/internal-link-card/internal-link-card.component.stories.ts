@@ -168,7 +168,7 @@ export const WithoutGeodataIndicator: StoryObj<InternalLinkCardComponentWithFavo
   {
     args: {
       ...Primary.args,
-      // isGeodata: false, // TODO: update storybook
+      record: { ...mockRecord, ...{ onlineResources: [] } },
     },
     render: Primary.render,
   }
