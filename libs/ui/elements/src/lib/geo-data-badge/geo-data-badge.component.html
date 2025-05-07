@@ -1,8 +1,11 @@
-<div [class]="badgeClasses" *ngIf="isGeodata()">
+<div
+  [class]="badgeClasses"
+  [title]="'record.metadata.isGeographical' | translate"
+  *ngIf="isGeodata()"
+>
   <ng-icon
     class="shrink-0 text-[0.75em]"
     name="matLocationSearchingOutline"
-    [title]="!showLabel ? ('record.metadata.isGeographical' | translate) : ''"
   ></ng-icon>
   <span class="ml-1 hidden sm:inline-block shrink-0" *ngIf="showLabel" translate
     >record.metadata.isGeographical</span
