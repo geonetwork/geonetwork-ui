@@ -39,6 +39,7 @@ export class RelatedRecordCardComponent {
   @Input() extraClass = ''
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
   @Input() metadataQualityDisplay: boolean
+  @Input() size: string
 
   constructor() {
     this.baseClasses = [
