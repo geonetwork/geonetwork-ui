@@ -18,16 +18,11 @@ import {
   iconoirCode,
   iconoirOpenNewWindow,
 } from '@ng-icons/iconoir'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   GeoDataBadgeComponent,
   ImageOverlayPreviewComponent,
   KindBadgeComponent,
 } from '@geonetwork-ui/ui/elements'
-
-marker('record.kind.dataset')
-marker('record.kind.reuse')
-marker('record.kind.service')
 
 @Component({
   selector: 'datahub-header-record',
@@ -84,26 +79,5 @@ export class HeaderRecordComponent {
 
   get lastUpdate() {
     return this.dateService.formatDate(this.metadata.recordUpdated)
-  }
-
-  getBadge() {
-    switch (this.metadata.kind) {
-      default:
-      case 'dataset':
-        return {
-          text: 'record.kind.dataset',
-          icon: 'iconoirAppleShortcuts',
-        }
-      case 'reuse':
-        return {
-          text: 'record.kind.reuse',
-          icon: 'matCreditCard',
-        }
-      case 'service':
-        return {
-          text: 'record.kind.service',
-          icon: 'iconoirCode',
-        }
-    }
   }
 }

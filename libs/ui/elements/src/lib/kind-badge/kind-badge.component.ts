@@ -14,6 +14,11 @@ import {
 } from '@ng-icons/iconoir'
 import { NgIconsModule } from '@ng-icons/core'
 import { TranslateModule } from '@ngx-translate/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('record.kind.dataset')
+marker('record.kind.reuse')
+marker('record.kind.service')
 
 enum KindConfig {
   all = 'iconoirAppleWallet', // (this one is for filter)
