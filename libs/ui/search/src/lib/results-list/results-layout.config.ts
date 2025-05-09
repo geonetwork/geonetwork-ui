@@ -32,9 +32,9 @@ export const DEFAULT_RESULTS_LAYOUT_CONFIG: ResultsLayoutConfigModel = {
   ),
   ROW: new ResultsLayoutConfigItem(
     RecordPreviewRowComponent,
-    'pt-4 pb-5 sm:py-7',
+    'py-2',
     '',
-    'grid grid-cols-1 divide-y divide-gray-300'
+    'grid grid-cols-1 divide-y divide-gray-100'
   ),
   FEED: new ResultsLayoutConfigItem(
     RecordPreviewFeedComponent,

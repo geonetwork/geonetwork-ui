@@ -1,9 +1,11 @@
-<ng-icon [name]="iconKind" class="mr-1"></ng-icon>
+<div [class]="badgeClasses" *ngIf="kind">
+  <ng-icon [name]="iconKind" class="mr-1 text-[0.85em]"></ng-icon>
 
-<ng-container *ngIf="contentTemplate; else defaultContent">
-  <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-</ng-container>
+  <ng-container *ngIf="contentTemplate; else defaultContent">
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+  </ng-container>
+</div>
 
 <ng-template #defaultContent>
-  {{ kind | translate }}
+  {{ 'record.kind.' + kind | translate }}
 </ng-template>

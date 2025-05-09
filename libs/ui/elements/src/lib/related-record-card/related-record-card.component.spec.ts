@@ -3,6 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { RelatedRecordCardComponent } from './related-record-card.component'
 import { RouterTestingModule } from '@angular/router/testing'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { matOpenInNew } from '@ng-icons/material-icons/baseline'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: jest.fn(() => ({
@@ -21,7 +23,10 @@ describe('RelatedRecordCardComponent', () => {
         RelatedRecordCardComponent,
         TranslateModule.forRoot(),
         RouterTestingModule,
+
+        NgIcon,
       ],
+      providers: [provideIcons({ matOpenInNew })],
     }).compileComponents()
   })
 

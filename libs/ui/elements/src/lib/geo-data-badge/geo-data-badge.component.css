@@ -1,0 +1,4 @@
+:host {
+  --gn-ui-geo-data-badge-background-color: var(--color-primary-white);
+  --gn-ui-geo-data-badge-text-color: var(--color-primary-darkest);
+}
