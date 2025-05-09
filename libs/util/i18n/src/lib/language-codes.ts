@@ -15,6 +15,17 @@ export const LANG_3_TO_2_MAPPER = {
   chi: 'zh',
   slo: 'sk',
   roh: 'rm',
+  ara: 'ar',
+  dan: 'da',
+  nor: 'no',
+  pol: 'pl',
+  swe: 'sv',
+  tur: 'tr',
+  arm: 'hy',
+  aze: 'az',
+  geo: 'ka',
+  ukr: 'uk',
+  wel: 'cy',
 }
 
 export const LANGUAGE_NAMES = {
@@ -33,7 +44,18 @@ export const LANGUAGE_NAMES = {
   ru: 'Русский',
   zh: '中文',
   sk: 'Slovenčina',
-  roh: 'Rumantsch',
+  rm: 'Rumantsch',
+  ar: 'العربية',
+  da: 'Dansk',
+  no: 'Norsk',
+  pl: 'Polski',
+  sv: 'Swedish',
+  tr: 'Türkçe',
+  hy: 'հայերեն',
+  az: 'Azərbaycan dili',
+  ka: 'ქართული',
+  uk: 'українська',
+  wel: 'Cymraeg',
 }
 
 export const LANG_2_TO_3_MAPPER = Object.entries(LANG_3_TO_2_MAPPER).reduce(

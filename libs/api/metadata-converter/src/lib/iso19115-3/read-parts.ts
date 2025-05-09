@@ -363,11 +363,16 @@ export function readOnlineResources(rootEl: XmlElement): OnlineResource[] {
   )(rootEl)
 }
 
-function readLocaleElement(): ChainableFunction<XmlElement, LanguageCode> {
+export function readLocaleElement(): ChainableFunction<
+  XmlElement,
+  LanguageCode
+> {
   return pipe(
-    findChildElement('lan:LanguageCode'),
-    readAttribute('codeListValue'),
-    map((lang) => (lang ? LANG_3_TO_2_MAPPER[lang.toLowerCase()] : null))
+    readRawLanguageCode(),
+    map((lang) => {
+      const normalized = lang?.toLowerCase()
+      return (normalized && LANG_3_TO_2_MAPPER[normalized]) || null
+    })
   )
 }
 
@@ -381,6 +386,19 @@ export function readDefaultLanguage(rootEl: XmlElement): LanguageCode {
 export function readOtherLanguages(rootEl: XmlElement): LanguageCode[] {
   return pipe(
     findChildrenElement('mdb:otherLocale', false),
-    mapArray(readLocaleElement())
+    mapArray(readLocaleElement()),
+    map((languages) =>
+      languages.filter((lang): lang is LanguageCode => lang !== null)
+    )
   )(rootEl)
+}
+
+export function readRawLanguageCode(): ChainableFunction<
+  XmlElement,
+  string | null
+> {
+  return pipe(
+    findChildElement('lan:LanguageCode'),
+    readAttribute('codeListValue')
+  )
 }
