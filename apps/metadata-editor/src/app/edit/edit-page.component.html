@@ -62,7 +62,10 @@
           </div>
         </div>
       </div>
-      <gn-ui-multilingual-panel *ngIf="translatePanelOpen">
+      <gn-ui-multilingual-panel
+        *ngIf="translatePanelOpen"
+        [record]="facade.record$ | async"
+      >
       </gn-ui-multilingual-panel>
     </div>
   </div>

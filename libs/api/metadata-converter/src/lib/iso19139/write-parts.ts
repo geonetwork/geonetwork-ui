@@ -50,10 +50,13 @@ import {
   writeAttribute,
   XmlElement,
 } from '../xml-utils'
-import { readKind } from './read-parts'
+import { readKind, readOtherLanguages, readRawLanguageCode } from './read-parts'
 import { writeGeometry } from './utils/geometry'
 import { namePartsToFull } from './utils/individual-name'
-import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
+import {
+  LANG_2_TO_3_MAPPER,
+  LANG_3_TO_2_MAPPER,
+} from '@geonetwork-ui/util/i18n/language-codes'
 import { kindToCodeListValue } from '../common/resource-types'
 
 function writeLocalizedElement(
@@ -1457,6 +1460,16 @@ export function writeSpatialExtents(record: DatasetRecord, rootEl: XmlElement) {
 }
 
 export function writeLanguages(record: DatasetRecord, rootEl: XmlElement) {
+  // make sure to keep unsupported languages
+  const existingLanguages = pipe(
+    findChildrenElement('gmd:locale', false),
+    mapArray(readRawLanguageCode())
+  )(rootEl)
+
+  const mergedLanguages = [
+    ...record.otherLanguages,
+    ...existingLanguages.filter((lang) => !LANG_3_TO_2_MAPPER[lang]),
+  ]
   // clear existing
   removeChildrenByName('gmd:locale')(rootEl)
 
@@ -1471,13 +1484,16 @@ export function writeLanguages(record: DatasetRecord, rootEl: XmlElement) {
       writeAttribute('id', lang.toUpperCase()),
       createNestedChild('gmd:languageCode', 'gmd:LanguageCode'),
       writeAttribute('codeList', 'http://www.loc.gov/standards/iso639-2/'),
-      writeAttribute('codeListValue', LANG_2_TO_3_MAPPER[lang])
+      writeAttribute(
+        'codeListValue',
+        lang.length === 2 ? LANG_2_TO_3_MAPPER[lang] : lang
+      )
     )
 
   // add new languages (only if other than default one)
   appendChildren(
     createLanguageEl(record.defaultLanguage),
-    ...record.otherLanguages.map(createLanguageEl)
+    ...mergedLanguages.map(createLanguageEl)
   )(rootEl)
 }
 
