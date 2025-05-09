@@ -6,7 +6,7 @@ describe('datasets', () => {
 
     // aliases
     cy.get('gn-ui-results-list-item').find('a').as('results')
-    cy.get('@results').eq(2).as('sampleResult')
+    cy.get('@results').eq(3).as('sampleResult')
     cy.get('@results')
       .then(($results) => $results.length)
       .as('resultsCount')
@@ -68,7 +68,7 @@ describe('datasets', () => {
           'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/records/9e1ea778-d0ce-4b49-90b7-37bc0e448300/attachments/test.png'
         )
       cy.get('@results')
-        .first()
+        .eq(2)
         .find('gn-ui-thumbnail')
         .children('div')
         .invoke('attr', 'data-cy-is-placeholder')
@@ -212,12 +212,12 @@ describe('datasets', () => {
 
       describe('filter by one option', () => {
         beforeEach(() => {
-          cy.get('@options').eq(11).click()
+          cy.get('@options').eq(10).click()
           cy.get('@resultsCount').then((resultsCount) => {
             cy.get('@results').should('have.length.below', resultsCount) // wait for results change
           })
           cy.get('@options')
-            .eq(11)
+            .eq(10)
             .then((option) => {
               const optionText = option.text().trim()
               const matches = /^(.*) \((\d+)\)$/.exec(optionText)
@@ -246,7 +246,7 @@ describe('datasets', () => {
         })
 
         it('shows all results if another click on option', () => {
-          cy.get('@options').eq(11).click()
+          cy.get('@options').eq(10).click()
           cy.get('@resultsCount').then((resultsCount) => {
             cy.get('@results').should('have.length', resultsCount)
           })
@@ -294,10 +294,14 @@ describe('datasets', () => {
           "Direction de l'Intégration des géodonnées (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (9)",
           'DREAL (1)',
           "DREAL HdF (Direction Régionale de l'Environnement de l'Aménagement et du Logement des Hauts de France) (1)",
+          'Fédération Départementale de la Chasse (1)',
+          'Fédération Nationale de la Chasse (1)',
           'Géo2France (1)',
           "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (11)",
           'Métropole Européenne de Lille (2)',
+          'Office France de la Biodiversité (1)',
           'Région Hauts-de-France (1)',
+          'Réseau Ongulés sauvages OFB-FNC-FDC (1)',
           'Service public de Wallonie (SPW) (11)',
           "Société Publique de Gestion de l'Eau (SPGE) (1)",
         ])
@@ -380,9 +384,9 @@ describe('datasets', () => {
         cy.get('@optionsLabel')
           .invoke('slice', 0, 3)
           .should('eql', [
+            'Administrative units (1)',
             'Environmental monitoring facilities (2)',
             'Land use (1)',
-            'Production and industrial facilities (1)',
           ])
       })
       it('should not have duplicates', () => {

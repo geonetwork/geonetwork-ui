@@ -13,3 +13,4 @@ export class AppComponent implements OnInit {
     if (favicon) ThemeService.setFavicon(favicon)
   }
 }
+//temporal comment to trigger e2e tests

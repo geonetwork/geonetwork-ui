@@ -100,6 +100,11 @@ beforeEach(() => {
   cy.intercept('GET', '/data/ogcapi/?f=json', {
     fixture: 'ogcapi.json',
   })
+
+  //restricted access stub
+  cy.intercept('GET', '/private/*', {
+    statusCode: 401,
+  })
 })
 
 describe('dataset pages', () => {
@@ -362,9 +367,7 @@ describe('dataset pages', () => {
       .should('have.attr', 'ng-reflect-name', 'matCheck')
   })
 
-  it('PREVIEW SECTION : display & functions', () => {
-    cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
-
+  function setTabAliases() {
     cy.get('datahub-record-metadata')
       .find('[id="preview"]')
       .first()
@@ -384,6 +387,11 @@ describe('dataset pages', () => {
       .children('div')
       .eq(2)
       .as('chartTab')
+  }
+  it('PREVIEW SECTION : display & functions', () => {
+    cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
+
+    setTabAliases()
 
     // it should display the tabs
     cy.get('@previewSection')
@@ -522,9 +530,10 @@ describe('dataset pages', () => {
     cy.get('gn-ui-data-view-share').should('be.visible')
   })
 
-  // skip for now as modifying dump on my side breaks all tests on GN 4.2.2
-  it.skip('restricted access', () => {
+  it('restricted access', () => {
     cy.visit('dataset/e27e7006-fdf9-4004-b6c5-af2a5a5c025c')
+
+    setTabAliases()
 
     // MAP: should display the access restriction message for WMS and WFS
     cy.get('@mapTab').click()
