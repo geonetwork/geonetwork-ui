@@ -31,7 +31,6 @@ import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/reposit
 import {
   RecordsApiService,
   SearchApiService,
-  FeatureResponseApiModel,
 } from '@geonetwork-ui/data-access/gn4'
 import {
   combineLatest,
@@ -47,6 +46,7 @@ import {
 import { catchError, map, tap } from 'rxjs/operators'
 import { lt } from 'semver'
 import { ElasticsearchService } from './elasticsearch'
+import { Gn4SettingsService } from './settings/gn4-settings.service'
 
 const minPublicationApiVersion = '4.2.5'
 
@@ -65,7 +65,8 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     private gn4SearchHelper: ElasticsearchService,
     private gn4Mapper: Gn4Converter,
     private gn4RecordsApi: RecordsApiService,
-    private platformService: PlatformServiceInterface
+    private platformService: PlatformServiceInterface,
+    private settingsService: Gn4SettingsService
   ) {}
 
   search({
@@ -253,11 +254,43 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       : of(true)
   }
 
-  canEditRecord(uniqueIdentifier: string): Observable<boolean> {
-    return this.getRecord(uniqueIdentifier).pipe(
-      map((record) => {
-        return record.extras['edit'] as boolean
+  canDuplicate(record: CatalogRecord): boolean {
+    return record.kind === 'dataset'
+  }
+
+  canDelete(record: CatalogRecord): Observable<boolean> {
+    return this.settingsService.allowEditHarvested$.pipe(
+      map((allowEditHarvested) => {
+        return (
+          record.extras['edit'] &&
+          (!record.extras['isHarvested'] || allowEditHarvested)
+        )
       })
+    )
+  }
+
+  private canEdit(record: CatalogRecord, allowEditHarvested: boolean): boolean {
+    return (
+      record.kind === 'dataset' &&
+      record.extras['edit'] &&
+      (!record.extras['isHarvested'] || allowEditHarvested)
+    )
+  }
+
+  canEditRecord(uniqueIdentifier: string): Observable<boolean> {
+    return combineLatest([
+      this.getRecord(uniqueIdentifier),
+      this.settingsService.allowEditHarvested$,
+    ]).pipe(
+      map(([record, allowEditHarvested]) =>
+        record ? this.canEdit(record, allowEditHarvested) : false
+      )
+    )
+  }
+
+  canEditIndexedRecord(record: CatalogRecord): Observable<boolean> {
+    return this.settingsService.allowEditHarvested$.pipe(
+      map((allowEditHarvested) => this.canEdit(record, allowEditHarvested))
     )
   }
 
