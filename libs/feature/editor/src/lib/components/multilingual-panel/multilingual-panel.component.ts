@@ -148,9 +148,7 @@ export class MultilingualPanelComponent {
   updateTranslations() {
     this.facade.updateRecordField(
       'otherLanguages',
-      this.selectedLanguages.filter(
-        (lang) => lang !== this._record.defaultLanguage
-      )
+      this.selectedLanguages.filter((lang) => lang !== this.formLanguage)
     )
     this.recordLanguages = this.selectedLanguages
     this.editTranslations = false
@@ -158,7 +156,11 @@ export class MultilingualPanelComponent {
 
   switchFormLang(lang) {
     this.formLanguage = lang
-    // TO IMPLEMENT FURTHER
+    this.facade.updateRecordField('defaultLanguage', lang)
+    this.facade.updateRecordField(
+      'otherLanguages',
+      this.selectedLanguages.filter((lang) => lang !== this.formLanguage)
+    )
   }
   toggleLangOptions(lang) {
     // TO IMPLEMENT

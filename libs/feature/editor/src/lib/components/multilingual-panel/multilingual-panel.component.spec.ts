@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MultilingualPanelComponent } from './multilingual-panel.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatDialog } from '@angular/material/dialog'
@@ -12,6 +12,7 @@ class RecordsRepositoryMock {
 
 describe('MultilingualPanelComponent (logic only)', () => {
   let component: MultilingualPanelComponent
+  let fixture: ComponentFixture<MultilingualPanelComponent>
   let dialogMock: jest.Mocked<MatDialog>
   let facadeMock: jest.Mocked<EditorFacade>
   let recordsRepository: RecordsRepositoryInterface
@@ -21,7 +22,7 @@ describe('MultilingualPanelComponent (logic only)', () => {
     otherLanguages: ['fr', 'es'],
   } as any
 
-  beforeEach(async () => {
+  beforeEach(() => {
     dialogMock = {
       open: jest.fn().mockReturnValue({
         afterClosed: () => of(true), // simulate confirmed
@@ -32,7 +33,7 @@ describe('MultilingualPanelComponent (logic only)', () => {
       updateRecordField: jest.fn(),
     } as any
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [MultilingualPanelComponent, TranslateModule.forRoot()],
       providers: [
         { provide: MatDialog, useValue: dialogMock },
@@ -44,11 +45,11 @@ describe('MultilingualPanelComponent (logic only)', () => {
       ],
     }).compileComponents()
 
-    const fixture = TestBed.createComponent(MultilingualPanelComponent)
     recordsRepository = TestBed.inject(RecordsRepositoryInterface)
+    fixture = TestBed.createComponent(MultilingualPanelComponent)
     component = fixture.componentInstance
-
     component.record = mockRecord
+    fixture.detectChanges()
   })
 
   describe('initialisation', () => {
@@ -131,6 +132,23 @@ describe('MultilingualPanelComponent (logic only)', () => {
       expect(facadeMock.updateRecordField).toHaveBeenCalledWith(
         'otherLanguages',
         ['fr']
+      )
+    })
+  })
+
+  describe('Default language switching', () => {
+    beforeEach(() => {
+      component.switchFormLang('es')
+      fixture.detectChanges()
+    })
+    it('should set the default language and the otherLanguages accordingly', () => {
+      expect(facadeMock.updateRecordField).toHaveBeenCalledWith(
+        'defaultLanguage',
+        'es'
+      )
+      expect(facadeMock.updateRecordField).toHaveBeenCalledWith(
+        'otherLanguages',
+        ['fr', 'en']
       )
     })
   })
