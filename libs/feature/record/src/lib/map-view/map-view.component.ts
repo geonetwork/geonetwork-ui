@@ -241,6 +241,22 @@ export class MapViewComponent implements AfterViewInit {
       })
     } else if (
       link.type === 'service' &&
+      link.accessServiceProtocol === 'tms'
+    ) {
+      return link.styleInfo
+        ? of({
+            type: 'maplibre-style',
+            name: link.name,
+            styleUrl: link.styleInfo.href,
+          })
+        : of({
+            url: link.url.toString().replace(/\/?$/, '/{z}/{x}/{y}.pbf'),
+            type: 'xyz',
+            tileFormat: 'application/vnd.mapbox-vector-tile',
+            name: link.name,
+          })
+    } else if (
+      link.type === 'service' &&
       link.accessServiceProtocol === 'wmts'
     ) {
       return of({

@@ -8,6 +8,7 @@ import { MockBuilder } from 'ng-mocks'
 
 class MdViewFacadeMock {
   selectedApiLink$ = new BehaviorSubject([])
+  apiLinks$ = new BehaviorSubject([])
 }
 
 const serviceDistributionMock = {
@@ -19,6 +20,7 @@ const serviceDistributionMock = {
 describe('RecordApisComponent', () => {
   let component: RecordApisComponent
   let fixture: ComponentFixture<RecordApisComponent>
+  let facade
 
   beforeEach(() => MockBuilder(RecordApisComponent))
 
@@ -32,7 +34,7 @@ describe('RecordApisComponent', () => {
         },
       ],
     }).compileComponents()
-
+    facade = TestBed.inject(MdViewFacade)
     fixture = TestBed.createComponent(RecordApisComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -67,6 +69,28 @@ describe('RecordApisComponent', () => {
     })
     it('should update opacity for transition', () => {
       expect(component.opacity).toEqual(0)
+    })
+  })
+
+  describe('apiLinks$', () => {
+    beforeEach(() => {
+      const mockLinks = [
+        { accessServiceProtocol: 'ogcFeatures' },
+        { accessServiceProtocol: 'GPFDL' },
+        { accessServiceProtocol: 'wms' },
+      ] as DatasetServiceDistribution[]
+
+      facade.apiLinks$.next(mockLinks)
+    })
+    it('should sort links with GPFDL protocol first', (done) => {
+      component.apiLinks$.subscribe((sortedLinks) => {
+        expect(sortedLinks).toEqual([
+          { accessServiceProtocol: 'GPFDL' },
+          { accessServiceProtocol: 'ogcFeatures' },
+          { accessServiceProtocol: 'wms' },
+        ])
+        done()
+      })
     })
   })
 })

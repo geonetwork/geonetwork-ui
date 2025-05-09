@@ -463,6 +463,65 @@ describe('MapViewComponent', () => {
       })
     })
 
+    describe('with a link using TMS protocol', () => {
+      describe('containing a style', () => {
+        beforeEach(fakeAsync(() => {
+          mdViewFacade.mapApiLinks$.next([
+            {
+              url: new URL('http://abcd.com/tms'),
+              name: 'orthophoto',
+              type: 'service',
+              accessServiceProtocol: 'tms',
+              styleInfo: { name: 'style1', href: 'http://abcd.com/style' },
+            },
+          ])
+          mdViewFacade.geoDataLinksWithGeometry$.next([])
+          tick(200)
+          fixture.detectChanges()
+        }))
+        it('emits a map context using maplibre-style with styleUrl', () => {
+          expect(mapComponent.context).toEqual({
+            layers: [
+              {
+                name: 'orthophoto',
+                type: 'maplibre-style',
+                styleUrl: 'http://abcd.com/style',
+              },
+            ],
+            view: expect.any(Object),
+          })
+        })
+      })
+      describe('containing NO style', () => {
+        beforeEach(fakeAsync(() => {
+          mdViewFacade.mapApiLinks$.next([
+            {
+              url: new URL('http://abcd.com/tms'),
+              name: 'orthophoto',
+              type: 'service',
+              accessServiceProtocol: 'tms',
+            },
+          ])
+          mdViewFacade.geoDataLinksWithGeometry$.next([])
+          tick(200)
+          fixture.detectChanges()
+        }))
+        it('emits a map context using mvt tile format with root url', () => {
+          expect(mapComponent.context).toEqual({
+            layers: [
+              {
+                name: 'orthophoto',
+                type: 'xyz',
+                tileFormat: 'application/vnd.mapbox-vector-tile',
+                url: 'http://abcd.com/tms/{z}/{x}/{y}.pbf',
+              },
+            ],
+            view: expect.any(Object),
+          })
+        })
+      })
+    })
+
     describe('with a link using ESRI:REST protocol', () => {
       beforeEach(fakeAsync(() => {
         mdViewFacade.mapApiLinks$.next([])

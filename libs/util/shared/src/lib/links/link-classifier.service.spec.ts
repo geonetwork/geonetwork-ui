@@ -110,5 +110,12 @@ describe('LinkClassifierService', () => {
         ).toEqual([LinkUsage.API, LinkUsage.DOWNLOAD, LinkUsage.GEODATA])
       })
     })
+    describe('for a TMS link', () => {
+      it('returns API and map API usage', () => {
+        expect(
+          service.getUsagesForLink(aSetOfLinksFixture().geodataTms())
+        ).toEqual([LinkUsage.API, LinkUsage.MAP_API])
+      })
+    })
   })
 })
