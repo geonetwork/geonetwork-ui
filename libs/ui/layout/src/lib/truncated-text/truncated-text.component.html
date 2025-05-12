@@ -1,6 +1,7 @@
 <div
   class="flex items-center justify-between w-full gap-2"
   cdkOverlayOrigin
+  [class]="extraClass"
   #trigger="cdkOverlayOrigin"
 >
   <span #textElement class="truncate">
@@ -19,18 +20,15 @@
     cdkConnectedOverlay
     [cdkConnectedOverlayOrigin]="trigger"
     [cdkConnectedOverlayOpen]="isOpen"
-    [cdkConnectedOverlayPositions]="[
-      {
-        originX: 'end',
-        originY: 'top',
-        overlayX: 'end',
-        overlayY: 'top',
-      },
-    ]"
-    (detach)="isOpen = false"
+    [cdkConnectedOverlayPositions]="[overlayPosition]"
+    cdkConnectedOverlayPush
+    [cdkConnectedOverlayWidth]="'auto'"
+    [cdkConnectedOverlayFlexibleDimensions]="true"
+    [cdkConnectedOverlayGrowAfterOpen]="true"
+    (detach)="close()"
   >
     <div class="bg-white shadow-lg border border-gray-300 flex">
-      <div class="w-64">
+      <div class="sm:w-64 xs:w-32">
         <p class="m-2">{{ text }}</p>
       </div>
       <gn-ui-button

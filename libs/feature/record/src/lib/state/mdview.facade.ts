@@ -225,44 +225,10 @@ export class MdViewFacade {
     this.store.dispatch(MdViewActions.loadUserFeedbacks({ datasetUuid }))
   }
 
-  // private processLinksForTmsWithStyles(
-  //   links: DatasetServiceDistribution[]
-  // ): Observable<DatasetServiceDistribution[]> {
-  //   return from(links).pipe(
-  //     concatMap((link) => this.createOneTmsLinkPerStyle(link)),
-  //     toArray(),
-  //     map((links) => links.flat())
-  //   )
-  // }
-  //
-  // private createOneTmsLinkPerStyle(
-  //   link: DatasetServiceDistribution
-  // ): Observable<DatasetServiceDistribution[]> {
-  //   if (
-  //     link.type === 'service' &&
-  //     link.accessServiceProtocol === 'tms' &&
-  //     !link.styleInfo
-  //   ) {
-  //     return from(this.dataService.getStylesFromTms(link.url.href)).pipe(
-  //       map((styles) =>
-  //         styles
-  //           ? styles.map((style) => ({
-  //               ...link,
-  //               name: `${link.name} - ${style.name}`,
-  //               url: new URL(style.href),
-  //               styleInfo: {
-  //                 name: style.name,
-  //                 href: style.href,
-  //               },
-  //             }))
-  //           : [link]
-  //       ),
-  //       catchError((e) => {
-  //         console.error('Error fetching TMS styles:', e)
-  //         return of([link])
-  //       })
-  //     )
-  //   }
-  //   return of([link])
-  // }
+  /**
+   * loadFeatureCatalog
+   */
+  loadFeatureCatalog(metadata: CatalogRecord) {
+    this.store.dispatch(MdViewActions.loadFeatureCatalog({ metadata }))
+  }
 }
