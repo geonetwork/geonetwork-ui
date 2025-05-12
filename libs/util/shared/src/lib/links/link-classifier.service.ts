@@ -31,9 +31,10 @@ export class LinkClassifierService {
             return [LinkUsage.API, LinkUsage.DOWNLOAD, LinkUsage.GEODATA]
           case 'wms':
           case 'wmts':
-            return [LinkUsage.API, LinkUsage.MAP_API]
           case 'tms':
             return [LinkUsage.API, LinkUsage.MAP_API]
+          case 'maplibre-style':
+            return [LinkUsage.GEODATA]
           case 'ogcFeatures':
             return [LinkUsage.API, LinkUsage.DOWNLOAD, LinkUsage.GEODATA]
           case 'GPFDL':

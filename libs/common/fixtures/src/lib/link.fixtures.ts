@@ -192,6 +192,13 @@ export const aSetOfLinksFixture = () => ({
       url: new URL('https://my.ogc.server/tms'),
       accessServiceProtocol: 'tms',
     }) as DatasetServiceDistribution,
+  geodataAsMaplibreStyle: () =>
+    ({
+      name: 'mytmslayerAsMaplibreJson',
+      type: 'service',
+      url: new URL('https://my.ogc.server/tms/layer/style.json'),
+      accessServiceProtocol: 'maplibre-style',
+    }) as DatasetServiceDistribution,
   geodataWfs2: () =>
     ({
       name: 'myotherlayer',

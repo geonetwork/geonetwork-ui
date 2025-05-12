@@ -232,28 +232,58 @@ export class DataService {
       })
   }
 
-  async getStylesFromTms(
-    url: string
-  ): Promise<{ href: string; name: string }[]> {
-    try {
-      const endpoint = new TmsEndpoint(url)
+  async getGeodataLinksFromTms(
+    tmsLink: DatasetServiceDistribution,
+    keepOriginalLink = false
+  ): Promise<DatasetServiceDistribution[]> {
+      const endpoint = new TmsEndpoint(tmsLink.url.toString())
       const tileMaps = await endpoint.allTileMaps
       if (!tileMaps?.length) return null
 
+      // TODO: at some point use the identifierInService field if more that one layers in the TMS service
       const tileMapInfo = await endpoint.getTileMapInfo(tileMaps[0].href)
-      if (!tileMapInfo?.metadata?.length) return null
 
-      return tileMapInfo.metadata
+      // case 1: no styles; return a plain TMS link
+      if (!tileMapInfo?.metadata?.length) return [tmsLink]
+
+      // case 2: styles present; return each as a separate link
+      const styleLinks = tileMapInfo.metadata
         .filter((meta) => meta.href)
         .map((meta) => {
           const fileName = meta.href.split('/').pop() || ''
-          const name = fileName.split('.')[0]
-          return { href: meta.href, name }
+          const linkName = tmsLink.description || ('name' in tmsLink ? tmsLink.name : '')
+          const styleName = fileName.split('.')[0]
+          const name = `${linkName} - ${styleName}`
+          return { type: 'service', url: new URL(meta.href), name, accessServiceProtocol: 'maplibre-style' } as DatasetServiceDistribution
         })
-    } catch {
-      return null
+    if (keepOriginalLink) {
+      styleLinks.unshift(tmsLink)
     }
+    return styleLinks
   }
+
+  // async getStylesFromTms(
+  //   url: string
+  // ): Promise<{ href: string; name: string }[]> {
+  //   try {
+  //     const endpoint = new TmsEndpoint(url)
+  //     const tileMaps = await endpoint.allTileMaps
+  //     if (!tileMaps?.length) return null
+  //
+  //     const tileMapInfo = await endpoint.getTileMapInfo(tileMaps[0].href)
+  //     if (!tileMapInfo?.metadata?.length) return null
+  //
+  //     return tileMapInfo.metadata
+  //       .filter((meta) => meta.href)
+  //       .map((meta) => {
+  //         const fileName = meta.href.split('/').pop() || ''
+  //         const name = fileName.split('.')[0]
+  //         return { href: meta.href, name }
+  //       })
+  //   } catch {
+  //     return null
+  //   }
+  // }
 
   getDownloadLinksFromEsriRest(
     esriRestLink: DatasetServiceDistribution

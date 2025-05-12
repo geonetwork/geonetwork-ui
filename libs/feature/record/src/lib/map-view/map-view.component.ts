@@ -39,8 +39,8 @@ import {
 import {
   FeatureDetailComponent,
   MapContainerComponent,
-  prioritizePageScroll,
   MapLegendComponent,
+  prioritizePageScroll,
 } from '@geonetwork-ui/ui/map'
 import { Feature } from 'geojson'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
@@ -109,9 +109,20 @@ export class MapViewComponent implements AfterViewInit {
     this.mdViewFacade.mapApiLinks$,
     this.mdViewFacade.geoDataLinksWithGeometry$,
   ]).pipe(
-    map(([mapApiLinks, geoDataLinksWithGeometry]) => {
-      return [...mapApiLinks, ...geoDataLinksWithGeometry]
-    })
+    switchMap(async ([mapApiLinks, geoDataLinksWithGeometry]) => {
+      // looking for TMS links to process
+      let processedMapApiLinks = await Promise.all(
+        mapApiLinks.map((link) => {
+          if (link.type === 'service' && link.accessServiceProtocol === 'tms') {
+            return this.dataService.getGeodataLinksFromTms(link)
+          }
+          return link
+        })
+      )
+      processedMapApiLinks = processedMapApiLinks.flat()
+      return [...processedMapApiLinks, ...geoDataLinksWithGeometry]
+    }),
+    shareReplay(1)
   )
 
   dropdownChoices$ = this.compatibleMapLinks$.pipe(
@@ -153,6 +164,7 @@ export class MapViewComponent implements AfterViewInit {
       return this.getLayerFromLink(link).pipe(
         map((layer) => [layer]),
         catchError((e) => {
+          console.error(e)
           this.handleError(e)
           return of([])
         }),
@@ -243,18 +255,22 @@ export class MapViewComponent implements AfterViewInit {
       link.type === 'service' &&
       link.accessServiceProtocol === 'tms'
     ) {
-      return link.styleInfo
-        ? of({
-            type: 'maplibre-style',
-            name: link.name,
-            styleUrl: link.styleInfo.href,
-          })
-        : of({
-            url: link.url.toString().replace(/\/?$/, '/{z}/{x}/{y}.pbf'),
-            type: 'xyz',
-            tileFormat: 'application/vnd.mapbox-vector-tile',
-            name: link.name,
-          })
+      // FIXME: here we're assuming that the TMS serves vector tiles only; should be checked with ogc-client first
+      return of({
+        url: link.url.toString().replace(/\/?$/, '/{z}/{x}/{y}.pbf'),
+        type: 'xyz',
+        tileFormat: 'application/vnd.mapbox-vector-tile',
+        name: link.name,
+      })
+    } else if (
+      link.type === 'service' &&
+      link.accessServiceProtocol === 'maplibre-style'
+    ) {
+      return of({
+        type: 'maplibre-style',
+        name: link.name,
+        styleUrl: link.url.toString(),
+      })
     } else if (
       link.type === 'service' &&
       link.accessServiceProtocol === 'wmts'

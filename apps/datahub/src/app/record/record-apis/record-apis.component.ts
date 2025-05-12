@@ -21,7 +21,9 @@ import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matCloseOutline } from '@ng-icons/material-icons/outline'
 import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { map } from 'rxjs/operators'
+import { map } from 'rxjs'
+import { shareReplay, switchMap } from 'rxjs/operators'
+import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 marker('record.metadata.api.form.title.gpf')
 marker('record.metadata.api.form.title')
@@ -58,15 +60,26 @@ export class RecordApisComponent implements OnInit {
   selectedApiLink: DatasetServiceDistribution
 
   apiLinks$ = this.facade.apiLinks$.pipe(
+    switchMap(async (apiLinks) => {
+      const linksPromises = apiLinks.map((link) => {
+        if (link.type === 'service' && link.accessServiceProtocol === 'tms') {
+          return this.dataService.getGeodataLinksFromTms(link, true)
+        }
+        return Promise.resolve(link)
+      })
+      const processedLinks = await Promise.all(linksPromises)
+      return processedLinks.flat()
+    }),
     map((links) =>
       (links || []).sort((a, b) =>
-        a.accessServiceProtocol === 'GPFDL'
+        a.type === 'service' && a.accessServiceProtocol === 'GPFDL'
           ? -1
-          : b.accessServiceProtocol === 'GPFDL'
+          : b.type === 'service' && b.accessServiceProtocol === 'GPFDL'
             ? 1
             : 0
       )
-    )
+    ),
+    shareReplay(1)
   )
 
   get apiLinksCount$() {
@@ -75,7 +88,8 @@ export class RecordApisComponent implements OnInit {
 
   constructor(
     private facade: MdViewFacade,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {

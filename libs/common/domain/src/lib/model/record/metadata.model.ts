@@ -153,6 +153,7 @@ export type ServiceProtocol =
   | 'ogcFeatures'
   | 'GPFDL'
   | 'tms'
+  | 'maplibre-style'
   | 'other'
 
 export type OnlineResourceType = 'service' | 'download' | 'link' | 'endpoint'
@@ -166,10 +167,6 @@ export interface DatasetServiceDistribution {
   description?: string
   translations?: OnlineResourceTranslations
   accessRestricted?: boolean
-  styleInfo?: {
-    name: string
-    href: string
-  }
 }
 
 export interface DatasetDownloadDistribution {
