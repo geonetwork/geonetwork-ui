@@ -23,7 +23,6 @@ import { UserPreviewComponent } from './user-preview/user-preview.component'
 import { ApplicationBannerComponent } from './application-banner/application-banner.component'
 import { InternalLinkCardComponent } from './internal-link-card/internal-link-card.component'
 import { ServiceCapabilitiesComponent } from './service-capabilities/service-capabilities.component'
-
 @NgModule({
   imports: [
     CommonModule,

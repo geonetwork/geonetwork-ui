@@ -68,6 +68,15 @@
   >
     <datahub-record-data-preview></datahub-record-data-preview>
   </section>
+  <section
+    id="feature-catalog"
+    class="mb-6"
+    *ngIf="displayFeatureCatalog$ | async"
+  >
+    <datahub-record-feature-catalog
+      [metadata]="metadata$ | async"
+    ></datahub-record-feature-catalog>
+  </section>
   <section id="capabilities" class="mb-16" *ngIf="displayCapabilities$ | async">
     <gn-ui-service-capabilities
       [apiLinks]="apiLinks$ | async"
