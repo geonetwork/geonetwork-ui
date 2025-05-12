@@ -27,8 +27,8 @@ jest.mock('@camptocamp/ogc-client', () => ({
       }
       return {
         metadata: [
-          { href: 'style1', name: 'Style 1' },
-          { href: 'style2', name: 'Style 2' },
+          { href: 'https://my.tms.server/styles/style1.json', name: 'Style 1' },
+          { href: 'https://my.tms.server/styles/style2.json', name: 'Style 2' },
         ],
       }
     }
@@ -804,26 +804,40 @@ describe('DataService', () => {
       })
     })
 
-    describe('#getStylesFromTms', () => {
-      describe('calling getStylesFromTms() with a valid URL', () => {
-        it('returns styles with href and name', async () => {
-          const styles = await service.getStylesFromTms(
-            'https://my.tms.server/tms'
-          )
-          expect(styles).toEqual([
-            { href: 'style1', name: 'style1' },
-            { href: 'style2', name: 'style2' },
-          ])
-        })
+    describe('#getGeodataLinksFromTms', () => {
+      const tmsLink = {
+        url: new URL('https://my.tms.server/tms'),
+        name: 'LayerName',
+        description: 'Layer Description',
+        type: 'service',
+        accessServiceProtocol: 'tms',
+      } as const
+
+      it('returns style links as DatasetServiceDistribution objects', async () => {
+        const styles = await service.getGeodataLinksFromTms(tmsLink)
+        expect(styles).toEqual([
+          {
+            type: 'service',
+            url: new URL('https://my.tms.server/styles/style1.json'),
+            name: 'Layer Description - style1',
+            accessServiceProtocol: 'maplibre-style',
+          },
+          {
+            type: 'service',
+            url: new URL('https://my.tms.server/styles/style2.json'),
+            name: 'Layer Description - style2',
+            accessServiceProtocol: 'maplibre-style',
+          },
+        ])
       })
 
-      describe('calling getStylesFromTms() with a URL having no styles', () => {
-        it('returns null', async () => {
-          const styles = await service.getStylesFromTms(
-            'https://my.tms.server/no-styles'
-          )
-          expect(styles).toBeNull()
-        })
+      it('returns [tmsLink] when there are no styles', async () => {
+        const noStyleLink = {
+          ...tmsLink,
+          url: new URL('https://my.tms.server/no-styles'),
+        }
+        const styles = await service.getGeodataLinksFromTms(noStyleLink)
+        expect(styles).toEqual([noStyleLink])
       })
     })
   })

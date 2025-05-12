@@ -117,5 +117,12 @@ describe('LinkClassifierService', () => {
         ).toEqual([LinkUsage.API, LinkUsage.MAP_API])
       })
     })
+    describe('for a Maplibre Style JSON', () => {
+      it('returns map API usage', () => {
+        expect(
+          service.getUsagesForLink(aSetOfLinksFixture().geodataAsMaplibreStyle())
+        ).toEqual([LinkUsage.GEODATA])
+      })
+    })
   })
 })
