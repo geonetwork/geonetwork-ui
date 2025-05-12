@@ -16,17 +16,29 @@
             <div class="h-14 md:w-2/5 w-full mb-4 flex flex-row relative">
               <gn-ui-text-input
                 class="w-full"
+                [(value)]="searchQuery"
                 [extraClass]="getExtraInputClass()"
                 [placeholder]="'service.metadata.search' | translate"
                 (input)="onSearchChange($event)"
                 (keydown.enter)="onSearchEnter($event)"
               >
               </gn-ui-text-input>
+              <div class="absolute right-14 h-14 w-14">
+                <button
+                  #inputBtn
+                  *ngIf="searchQuery"
+                  aria-label="Clear"
+                  (click)="clearSearch()"
+                  class="h-12 w-12 border-0 absolute right-1 top-2"
+                >
+                  <ng-icon name="matClose"></ng-icon>
+                </button>
+              </div>
               <div class="border-l absolute border-gray-200 right-0 h-14 w-14">
                 <gn-ui-button
                   #inputBtn
                   type="outline"
-                  extraClass="h-12 w-12 border-0 absolute right-1 top-1"
+                  extraClass="h-12 w-12 border-0 absolute right-1 top-1 bg-white"
                   (buttonClick)="searchLayers()"
                 >
                   <ng-icon name="iconoirSearch"></ng-icon>
