@@ -49,8 +49,12 @@ import {
 } from '../iso19139/write-parts'
 import { findIdentification } from '../iso19139/read-parts'
 import { namePartsToFull } from '../iso19139/utils/individual-name'
-import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
+import {
+  LANG_2_TO_3_MAPPER,
+  LANG_3_TO_2_MAPPER,
+} from '@geonetwork-ui/util/i18n/language-codes'
 import { kindToCodeListValue } from '../common/resource-types'
+import { readOtherLanguages, readRawLanguageCode } from './read-parts'
 
 export function writeUniqueIdentifier(
   record: CatalogRecord,
@@ -529,7 +533,11 @@ export function writeOnlineResources(
 }
 
 function writeLocaleElement(language: LanguageCode) {
-  const lang3 = LANG_2_TO_3_MAPPER[language.toLowerCase()]
+  const normalizedLang = language.toLowerCase()
+  const lang3 =
+    normalizedLang.length === 2
+      ? LANG_2_TO_3_MAPPER[normalizedLang]
+      : normalizedLang
   return pipe(
     findChildOrCreate('lan:PT_Locale'),
     writeAttribute('id', language.toUpperCase()),
@@ -550,6 +558,17 @@ export function writeDefaultLanguage(
 }
 
 export function writeOtherLanguages(record: DatasetRecord, rootEl: XmlElement) {
+  // make sure to keep unsupported languages
+  const existingLanguages = pipe(
+    findChildrenElement('mdb:otherLocale', false),
+    mapArray(readRawLanguageCode())
+  )(rootEl)
+
+  const mergedLanguages = [
+    ...record.otherLanguages,
+    ...existingLanguages.filter((lang) => !LANG_3_TO_2_MAPPER[lang]),
+  ]
+
   // clear existing
   removeChildrenByName('mdb:otherLocale')(rootEl)
 
@@ -559,7 +578,7 @@ export function writeOtherLanguages(record: DatasetRecord, rootEl: XmlElement) {
   }
 
   appendChildren(
-    ...record.otherLanguages.map((lang: LanguageCode) =>
+    ...mergedLanguages.map((lang: LanguageCode) =>
       pipe(createElement('mdb:otherLocale'), writeLocaleElement(lang))
     )
   )(rootEl)
