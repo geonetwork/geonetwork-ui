@@ -23,13 +23,15 @@
                 (keydown.enter)="onSearchEnter($event)"
               >
               </gn-ui-text-input>
-              <div class="absolute right-14 h-14 w-14">
+              <div
+                class="absolute right-14 h-14 w-14 flex items-center justify-center"
+              >
                 <button
                   #inputBtn
                   *ngIf="searchQuery"
-                  aria-label="Clear"
+                  [aria-label]="'service.metadata.search.clear' | translate"
                   (click)="clearSearch()"
-                  class="h-12 w-12 border-0 absolute right-1 top-2"
+                  class="h-12 w-12 border-0 flex items-center justify-center"
                 >
                   <ng-icon name="matClose"></ng-icon>
                 </button>
