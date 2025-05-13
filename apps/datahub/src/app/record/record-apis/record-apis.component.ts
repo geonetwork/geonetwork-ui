@@ -71,13 +71,15 @@ export class RecordApisComponent implements OnInit {
       return processedLinks.flat()
     }),
     map((links) =>
-      (links || []).sort((a, b) =>
-        a.type === 'service' && a.accessServiceProtocol === 'GPFDL'
-          ? -1
-          : b.type === 'service' && b.accessServiceProtocol === 'GPFDL'
-            ? 1
-            : 0
-      )
+      (links || []).sort((a, b) => {
+        const aIsGPFDL =
+          'accessServiceProtocol' in a && a.accessServiceProtocol === 'GPFDL'
+        const bIsGPFDL =
+          'accessServiceProtocol' in b && b.accessServiceProtocol === 'GPFDL'
+        if (aIsGPFDL) return -1
+        if (bIsGPFDL) return 1
+        return 0
+      })
     ),
     shareReplay(1)
   )

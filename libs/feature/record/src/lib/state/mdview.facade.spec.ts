@@ -435,20 +435,19 @@ describe('MdViewFacade', () => {
   })
 
   describe('mapApiLinks$ & apiLinks$', () => {
-    const links = [
-      {
-        type: 'service',
-        url: new URL('https://my-org.net/tms'),
-        accessServiceProtocol: 'tms',
-        name: 'TMS Service',
-      },
-      {
-        type: 'service',
-        url: new URL('https://my-org.net/wms'),
-        accessServiceProtocol: 'wms',
-        name: 'WMS Service',
-      },
-    ]
+    const tmsLink = {
+      type: 'service' as const,
+      url: new URL('https://my-org.net/tms'),
+      accessServiceProtocol: 'tms' as const,
+      name: 'TMS Service',
+    }
+    const wmsLink = {
+      type: 'service' as const,
+      url: new URL('https://my-org.net/wms'),
+      accessServiceProtocol: 'wms' as const,
+      name: 'WMS Service',
+    }
+    const links = [tmsLink, wmsLink]
 
     beforeEach(() => {
       store.setState({
@@ -460,89 +459,37 @@ describe('MdViewFacade', () => {
           },
         },
       })
+      jest.spyOn(facade.dataService, 'getGeodataLinksFromTms')
     })
 
-    describe('TMS with styles', () => {
-      let expectedLinks
-      beforeEach(() => {
-        const styles = [{ href: 'https://myserver/style1', name: 'Style 1' }]
-        jest
-          .spyOn(facade.dataService, 'getStylesFromTms')
-          .mockResolvedValue(styles)
-
-        expectedLinks = [
-          {
-            ...links[0],
-            name: 'TMS Service - Style 1',
-            url: new URL('https://myserver/style1'),
-            styleInfo: styles[0],
-          },
-          links[1],
-        ]
-      })
-      it('mapApiLinks$: should fetch and include styles for TMS services', async () => {
-        const mapApiLinksResult = await firstValueFrom(facade.mapApiLinks$)
-        expect(mapApiLinksResult).toEqual(expectedLinks)
-        expect(facade.dataService.getStylesFromTms).toHaveBeenCalledWith(
-          'https://my-org.net/tms'
-        )
-      })
-      it('apiLinks$: should fetch and include styles for TMS services', async () => {
-        const apiLinksResult = await firstValueFrom(facade.apiLinks$)
-        expect(apiLinksResult).toEqual(expectedLinks)
-        expect(facade.dataService.getStylesFromTms).toHaveBeenCalledWith(
-          'https://my-org.net/tms'
-        )
-      })
+    it('mapApiLinks$: should return TMS & WMS services unchanged', async () => {
+      const result = await firstValueFrom(facade.mapApiLinks$)
+      expect(result).toEqual(links)
+      expect(facade.dataService.getGeodataLinksFromTms).not.toHaveBeenCalled()
     })
 
-    describe('TMS with NO styles', () => {
-      beforeEach(() => {
-        jest
-          .spyOn(facade.dataService, 'getStylesFromTms')
-          .mockResolvedValue(null)
-      })
-      it('mapApiLinks$: should return TMS services without styles unchanged', async () => {
-        const mapApiLinksResult = await firstValueFrom(facade.mapApiLinks$)
-        expect(mapApiLinksResult).toEqual(links)
-      })
-      it('apiLinks$: should return TMS services without styles unchanged', async () => {
-        const apiLinksResult = await firstValueFrom(facade.apiLinks$)
-        expect(apiLinksResult).toEqual(links)
-      })
-    })
-
-    describe('TMS style error', () => {
-      beforeEach(() => {
-        jest
-          .spyOn(facade.dataService, 'getStylesFromTms')
-          .mockRejectedValue(new Error('Failed to fetch styles'))
-      })
-      it('mapApiLinks$: should handle TMS service style errors gracefully and return TMS service unchanged', async () => {
-        const mapApiLinksResult = await firstValueFrom(facade.mapApiLinks$)
-        expect(mapApiLinksResult).toEqual(links)
-      })
-      it('apiLinks$: should handle TMS service style errors gracefully and return TMS service unchanged', async () => {
-        const apiLinksResult = await firstValueFrom(facade.apiLinks$)
-        expect(apiLinksResult).toEqual(links)
-      })
+    it('apiLinks$: should return TMS & WMS services unchanged', async () => {
+      const result = await firstValueFrom(facade.apiLinks$)
+      expect(result).toEqual(links)
+      expect(facade.dataService.getGeodataLinksFromTms).not.toHaveBeenCalled()
     })
 
     describe('links containing other link types and protocols', () => {
+      const nonMapLinks = [
+        {
+          type: 'download' as const,
+          url: new URL('http://my-org.net/download/data.csv'),
+          name: 'Download CSV',
+        },
+        {
+          type: 'service' as const,
+          accessServiceProtocol: 'wfs' as const,
+          url: new URL('https://my-org.net/wfs'),
+          name: 'WFS Service',
+        },
+      ]
+
       beforeEach(() => {
-        const nonMapLinks = [
-          {
-            type: 'download',
-            url: new URL('http://my-org.net/download/data.csv'),
-            name: 'Download CSV',
-          },
-          {
-            type: 'service',
-            accessServiceProtocol: 'wfs',
-            url: new URL('https://my-org.net/wfs'),
-            name: 'WFS Service',
-          },
-        ]
         store.setState({
           [METADATA_VIEW_FEATURE_STATE_KEY]: {
             ...initialMetadataViewState,
@@ -552,25 +499,19 @@ describe('MdViewFacade', () => {
             },
           },
         })
-        jest
-          .spyOn(facade.dataService, 'getStylesFromTms')
-          .mockResolvedValue(null)
+        jest.spyOn(facade.dataService, 'getGeodataLinksFromTms')
       })
+
       it('mapApiLinks$: should only return map api links', async () => {
-        const mapApiLinksResult = await firstValueFrom(facade.mapApiLinks$)
-        expect(mapApiLinksResult).toEqual(links)
+        const result = await firstValueFrom(facade.mapApiLinks$)
+        expect(result).toEqual(links)
+        expect(facade.dataService.getGeodataLinksFromTms).not.toHaveBeenCalled()
       })
+
       it('apiLinks$: should only return api links', async () => {
-        const apiLinksResult = await firstValueFrom(facade.apiLinks$)
-        expect(apiLinksResult).toEqual([
-          ...links,
-          {
-            type: 'service',
-            accessServiceProtocol: 'wfs',
-            url: new URL('https://my-org.net/wfs'),
-            name: 'WFS Service',
-          },
-        ])
+        const result = await firstValueFrom(facade.apiLinks$)
+        expect(result).toEqual([...links, nonMapLinks[1]])
+        expect(facade.dataService.getGeodataLinksFromTms).not.toHaveBeenCalled()
       })
     })
   })
