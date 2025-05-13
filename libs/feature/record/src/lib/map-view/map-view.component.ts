@@ -164,7 +164,6 @@ export class MapViewComponent implements AfterViewInit {
       return this.getLayerFromLink(link).pipe(
         map((layer) => [layer]),
         catchError((e) => {
-          console.error(e)
           this.handleError(e)
           return of([])
         }),
