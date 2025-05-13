@@ -1,7 +1,11 @@
-import { ChangeDetectorRef, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+} from '@angular/core'
 import {
   ComponentFixture,
-  discardPeriodicTasks,
   fakeAsync,
   TestBed,
   tick,
@@ -13,7 +17,7 @@ import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { of, Subject, throwError } from 'rxjs'
 import { MapViewComponent } from './map-view.component'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { delay } from 'rxjs/operators'
+import { delay, tap } from 'rxjs/operators'
 import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 import { Collection } from 'ol'
 import { Interaction } from 'ol/interaction'
@@ -29,6 +33,8 @@ import { MockBuilder, MockProvider } from 'ng-mocks'
 import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component'
 import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
+
+// jest.useFakeTimers()
 
 jest.mock('@geonetwork-ui/ui/map', () => ({
   ...jest.requireActual('@geonetwork-ui/ui/map'),
@@ -100,8 +106,13 @@ class DataServiceMock {
   readAsGeoJson = jest.fn(({ url }) =>
     url.toString().indexOf('error') > -1
       ? throwError(() => new Error('data loading error'))
-      : of(SAMPLE_GEOJSON).pipe(delay(100))
+      : of(SAMPLE_GEOJSON).pipe(
+          tap(() => console.log('before delay(100)')),
+          delay(100),
+          tap(() => console.log('after delay(100)'))
+        )
   )
+  getGeodataLinksFromTms = jest.fn((mapLink) => Promise.resolve([mapLink]))
 }
 
 class OpenLayersMapMock {
@@ -167,7 +178,13 @@ describe('MapViewComponent', () => {
         }),
       ],
       imports: [TranslateModule.forRoot(), MapLegendComponent],
-    }).compileComponents()
+    })
+      .overrideComponent(MapViewComponent, {
+        set: {
+          changeDetection: ChangeDetectionStrategy.Default,
+        },
+      })
+      .compileComponents()
     mdViewFacade = TestBed.inject(MdViewFacade)
   })
 
@@ -279,7 +296,7 @@ describe('MapViewComponent', () => {
     })
 
     describe('with links compatible with MAP_API and GEODATA usage', () => {
-      beforeEach(() => {
+      beforeEach(fakeAsync(() => {
         mdViewFacade.mapApiLinks$.next([
           {
             url: new URL('http://abcd.com/'),
@@ -307,8 +324,9 @@ describe('MapViewComponent', () => {
             accessServiceProtocol: 'ogcFeatures',
           },
         ])
+        tick()
         fixture.detectChanges()
-      })
+      }))
       it('provides a list of links to the dropdown', () => {
         expect(dropdownComponent.choices).toEqual([
           {
@@ -340,7 +358,7 @@ describe('MapViewComponent', () => {
     })
 
     describe('excludeWfs = true: with links compatible with MAP_API and GEODATA usage', () => {
-      beforeEach(() => {
+      beforeEach(fakeAsync(() => {
         component.excludeWfs$.next(true)
         mdViewFacade.mapApiLinks$.next([
           {
@@ -369,9 +387,9 @@ describe('MapViewComponent', () => {
             accessServiceProtocol: 'ogcFeatures',
           },
         ])
-        fixture.detectChanges()
-      })
+      }))
       it('provides a list of links to the dropdown (including the WFS layer)', () => {
+        fixture.detectChanges()
         expect(dropdownComponent.choices).toEqual([
           {
             value: 0,
@@ -392,10 +410,12 @@ describe('MapViewComponent', () => {
         ])
       })
       describe('when selecting the WFS layer (excludeWfs)', () => {
-        beforeEach(() => {
+        beforeEach(fakeAsync(() => {
           dropdownComponent.selectValue.emit(1)
           component.excludeWfs$.next(true)
-        })
+          tick()
+          fixture.detectChanges()
+        }))
         it('set hidePreview to true', () => {
           expect(component.hidePreview).toEqual(true)
         })
@@ -463,6 +483,64 @@ describe('MapViewComponent', () => {
       })
     })
 
+    describe('with a link using TMS protocol', () => {
+      describe('points to a maplibre-style json', () => {
+        beforeEach(fakeAsync(() => {
+          mdViewFacade.mapApiLinks$.next([
+            {
+              url: new URL('http://abcd.com/tms/style.json'),
+              name: 'orthophoto',
+              type: 'service',
+              accessServiceProtocol: 'maplibre-style',
+            },
+          ])
+          mdViewFacade.geoDataLinksWithGeometry$.next([])
+          tick(200)
+          fixture.detectChanges()
+        }))
+        it('emits a map context using maplibre-style with styleUrl', () => {
+          expect(mapComponent.context).toEqual({
+            layers: [
+              {
+                name: 'orthophoto',
+                type: 'maplibre-style',
+                styleUrl: 'http://abcd.com/tms/style.json',
+              },
+            ],
+            view: expect.any(Object),
+          })
+        })
+      })
+      describe('containing NO style', () => {
+        beforeEach(fakeAsync(() => {
+          mdViewFacade.mapApiLinks$.next([
+            {
+              url: new URL('http://abcd.com/tms'),
+              name: 'orthophoto',
+              type: 'service',
+              accessServiceProtocol: 'tms',
+            },
+          ])
+          mdViewFacade.geoDataLinksWithGeometry$.next([])
+          tick(200)
+          fixture.detectChanges()
+        }))
+        it('emits a map context using mvt tile format with root url', () => {
+          expect(mapComponent.context).toEqual({
+            layers: [
+              {
+                name: 'orthophoto',
+                type: 'xyz',
+                tileFormat: 'application/vnd.mapbox-vector-tile',
+                url: 'http://abcd.com/tms/{z}/{x}/{y}.pbf',
+              },
+            ],
+            view: expect.any(Object),
+          })
+        })
+      })
+    })
+
     describe('with a link using ESRI:REST protocol', () => {
       beforeEach(fakeAsync(() => {
         mdViewFacade.mapApiLinks$.next([])
@@ -479,7 +557,7 @@ describe('MapViewComponent', () => {
         tick(200)
         fixture.detectChanges()
       }))
-      it('emits a map context with the the downloaded data from the ESRI REST API', () => {
+      it('emits a map context with the downloaded data from the ESRI REST API', () => {
         expect(mapComponent.context).toEqual({
           layers: [
             {
@@ -506,7 +584,7 @@ describe('MapViewComponent', () => {
         tick(200)
         fixture.detectChanges()
       }))
-      it('emits a map context with the the downloaded data from the ESRI REST API', () => {
+      it('emits a map context with the downloaded data from the OGC Features API', () => {
         expect(mapComponent.context).toEqual({
           layers: [
             {
@@ -545,7 +623,7 @@ describe('MapViewComponent', () => {
 
     describe('with a link using DOWNLOAD protocol', () => {
       describe('during download', () => {
-        beforeEach(fakeAsync(() => {
+        beforeEach(() => {
           mdViewFacade.mapApiLinks$.next([])
           mdViewFacade.geoDataLinksWithGeometry$.next([
             {
@@ -554,10 +632,10 @@ describe('MapViewComponent', () => {
               type: 'download',
             },
           ])
+        })
+        beforeEach(() => {
           fixture.detectChanges()
-          tick(50)
-          discardPeriodicTasks()
-        }))
+        })
         it('emit an empty map context', () => {
           expect(mapComponent.context).toEqual(emptyMapContext)
         })
@@ -577,11 +655,10 @@ describe('MapViewComponent', () => {
               type: 'download',
             },
           ])
-          fixture.detectChanges()
           tick(200)
+          fixture.detectChanges()
         }))
         it('emits a map context after loading with the downloaded data', () => {
-          fixture.detectChanges()
           expect(mapComponent.context).toEqual({
             layers: [
               {
@@ -593,7 +670,6 @@ describe('MapViewComponent', () => {
           })
         })
         it('does not show a loading indicator', () => {
-          fixture.detectChanges()
           expect(
             fixture.debugElement.query(By.directive(LoadingMaskComponent))
           ).toBeFalsy()

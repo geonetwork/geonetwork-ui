@@ -152,6 +152,8 @@ export type ServiceProtocol =
   | 'esriRest'
   | 'ogcFeatures'
   | 'GPFDL'
+  | 'tms'
+  | 'maplibre-style'
   | 'other'
 
 export type OnlineResourceType = 'service' | 'download' | 'link' | 'endpoint'
