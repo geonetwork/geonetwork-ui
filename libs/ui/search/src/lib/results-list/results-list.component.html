@@ -6,6 +6,7 @@
       *ngFor="let record of records"
     >
       <gn-ui-results-list-item
+        [attr.data-cy]="record.uniqueIdentifier"
         [record]="record"
         [layoutConfig]="layoutConfig"
         [metadataQualityDisplay]="metadataQualityDisplay"
