@@ -22,6 +22,7 @@ import { NgIconComponent } from '@ng-icons/core'
 import { CommonModule } from '@angular/common'
 
 const mockRecord = datasetRecordsFixture()[0] as CatalogRecord
+const mockRecordLong = datasetRecordsFixture()[1] as CatalogRecord
 
 const interactiveFavoriteTemplate = `<div class="flex flex-row items-center">
   <span class="inline-flex items-center text-gray-700 font-medium" style="line-height: 1; margin-top: 1px;">{{record.extras?.favoriteCount || 42}}</span>
@@ -57,7 +58,7 @@ export default {
     }),
     componentWrapperDecorator(
       (story) =>
-        `<div class="p-4 bg-white" style="max-width: 1200px; resize: both; overflow: auto">${story}</div>`
+        `<div class="p-4 bg-white" style="height: 400px; max-width: 1200px; resize: both; overflow: auto">${story}</div>`
     ),
   ],
 } as Meta<InternalLinkCardComponent>
@@ -75,10 +76,6 @@ export const Primary: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
         options: ['L', 'M', 'S', 'XS'],
         description: 'Size variant of the card',
       },
-      isGeodata: {
-        control: 'boolean',
-        description: 'Whether the record represents geodata',
-      },
       metadataQualityDisplay: {
         control: 'boolean',
         description: 'Whether to show metadata quality information',
@@ -94,7 +91,6 @@ export const Primary: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
     args: {
       record: mockRecord,
       size: 'M',
-      isGeodata: true,
       metadataQualityDisplay: true,
       favoriteTemplateString: interactiveFavoriteTemplate,
     },
@@ -105,18 +101,19 @@ export const Primary: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
         mdSelect: action('mdSelect'),
       },
       template: `
-      <gn-ui-internal-link-card
+    <div class="border border-gray-100 rounded-md w-auto inline-block card-shadow">
+      <gn-ui-internal-link-card     
+      class="w-auto"   
         [record]="record"
         [size]="size"
-        [isGeodata]="isGeodata"
         [metadataQualityDisplay]="metadataQualityDisplay"
-        [linkHref]="linkHref"
         [favoriteTemplate]="favoriteRef"
         (mdSelect)="mdSelect($event)">
       </gn-ui-internal-link-card>
       <ng-template #favoriteRef let-record>
         ${args.favoriteTemplateString}
       </ng-template>
+    </div>
     `,
     }),
   }
@@ -126,6 +123,16 @@ export const LargeCard: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> 
     args: {
       ...Primary.args,
       size: 'L',
+    },
+    render: Primary.render,
+  }
+
+export const LargeCardWithLongContent: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
+  {
+    args: {
+      ...Primary.args,
+      size: 'L',
+      record: mockRecordLong,
     },
     render: Primary.render,
   }
@@ -161,7 +168,7 @@ export const WithoutGeodataIndicator: StoryObj<InternalLinkCardComponentWithFavo
   {
     args: {
       ...Primary.args,
-      isGeodata: false,
+      record: { ...mockRecord, ...{ onlineResources: [] } },
     },
     render: Primary.render,
   }
@@ -175,7 +182,7 @@ export const WithoutQualityMetrics: StoryObj<InternalLinkCardComponentWithFavori
     render: Primary.render,
   }
 
-export const MultipleCards: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
+export const MultipleMediumCards: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
   {
     args: {
       ...Primary.args,
@@ -187,17 +194,18 @@ export const MultipleCards: StoryObj<InternalLinkCardComponentWithFavoriteTempla
         records: datasetRecordsFixture().slice(0, 3),
       },
       template: `
-      <div class="flex flex-col gap-4">
-        <gn-ui-internal-link-card
-          *ngFor="let rec of records"
-          [record]="rec"
-          [size]="size"
-          [isGeodata]="isGeodata"
-          [metadataQualityDisplay]="metadataQualityDisplay"
-          [linkHref]="linkHref"
-          [favoriteTemplate]="favoriteRef"
-          (mdSelect)="mdSelect($event)">
-        </gn-ui-internal-link-card>
+      <div class="flex flex-col gap-4 w-[620px]">
+        <div class="w-[620px]" *ngFor="let rec of records">
+          <div class="border border-gray-100 rounded-md inline-block card-shadow w-full">
+            <gn-ui-internal-link-card
+              [record]="rec"
+              [size]="size"
+              [metadataQualityDisplay]="metadataQualityDisplay"
+              [favoriteTemplate]="favoriteRef"
+              (mdSelect)="mdSelect($event)">
+            </gn-ui-internal-link-card>
+          </div>
+        </div>
       </div>
       <ng-template #favoriteRef let-record>
         ${args.favoriteTemplateString}

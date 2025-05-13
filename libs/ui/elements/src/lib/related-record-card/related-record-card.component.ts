@@ -1,11 +1,19 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
+import { InternalLinkCardComponent } from '../internal-link-card/internal-link-card.component'
 import { RouterLink } from '@angular/router'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { matOpenInNew } from '@ng-icons/material-icons/baseline'
+import { TemplateRef } from '@angular/core'
 
 @Component({
   selector: 'gn-ui-related-record-card',
@@ -13,6 +21,7 @@ import { matOpenInNew } from '@ng-icons/material-icons/baseline'
   styleUrls: ['./related-record-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    InternalLinkCardComponent,
     ThumbnailComponent,
     RouterLink,
     MatTooltipModule,
@@ -25,8 +34,12 @@ import { matOpenInNew } from '@ng-icons/material-icons/baseline'
 export class RelatedRecordCardComponent {
   private readonly baseClasses: string
 
+  @Input() linkHref: string = null
   @Input() record: CatalogRecord
   @Input() extraClass = ''
+  @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
+  @Input() metadataQualityDisplay: boolean
+  @Input() size: string
 
   constructor() {
     this.baseClasses = [

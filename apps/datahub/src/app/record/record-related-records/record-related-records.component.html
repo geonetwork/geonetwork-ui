@@ -1,7 +1,28 @@
-<h2 class="gn-ui-section-title pt-0 mb-10" translate>
-  record.metadata.related
-</h2>
-<div class="mb-4 flex flex-wrap gap-6 justify-center sm:justify-start">
-  <gn-ui-related-record-card *ngFor="let record of records" [record]="record">
-  </gn-ui-related-record-card>
+<div class="pt-0 mb-2 flex items-center gap-6">
+  <h2 class="gn-ui-section-title pt-0" translate>record.metadata.related</h2>
+  <span>({{ records?.length }})</span>
+  <gn-ui-previous-next-buttons
+    *ngIf="list?.pagesCount > 1"
+    [listComponent]="list"
+  ></gn-ui-previous-next-buttons>
 </div>
+
+<gn-ui-block-list
+  #blockList
+  containerClass="mb-4 grid gap-4 w-full md:grid-cols-2 pt-5 pb-7 size-M"
+>
+  <gn-ui-related-record-card
+    #block
+    *ngFor="let record of records"
+    [record]="record"
+    [favoriteTemplate]="favoriteTemplate"
+    [metadataQualityDisplay]="metadataQualityDisplay"
+    [linkHref]="recordUrlGetter(record)"
+    [size]="blockList.subComponentSize"
+  >
+  </gn-ui-related-record-card>
+</gn-ui-block-list>
+
+<ng-template #favoriteTemplate let-record>
+  <gn-ui-favorite-star [record]="record"></gn-ui-favorite-star>
+</ng-template>

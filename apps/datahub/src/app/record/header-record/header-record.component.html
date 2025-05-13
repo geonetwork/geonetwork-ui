@@ -30,33 +30,14 @@
           [style.color]="foregroundColor"
           data-test="metadataBadges"
         >
-          <gn-ui-badge
-            [style.--gn-ui-badge-background-color]="'transparent'"
-            class="border border-white rounded-md"
-            *ngIf="metadata?.kind"
-          >
-            <ng-icon
-              class="mr-[5px] text-[1em]"
-              [name]="getBadge().icon"
-            ></ng-icon>
-            <span class="font-semibold text-[12px]">{{
-              getBadge().text | translate
-            }}</span>
-          </gn-ui-badge>
-          <gn-ui-badge
-            *ngIf="metadata.kind !== 'service' && (isGeodata$ | async) === true"
-            [style.--gn-ui-badge-background-color]="
-              'var(--color-primary-darker)'
-            "
-          >
-            <ng-icon
-              class="mr-[5px] text-[1em]"
-              name="matLocationSearchingOutline"
-            ></ng-icon>
-            <span class="font-semibold text-[12px]" translate
-              >record.metadata.type</span
-            >
-          </gn-ui-badge>
+          <gn-ui-kind-badge
+            [styling]="'outline'"
+            [kind]="metadata.kind"
+          ></gn-ui-kind-badge>
+          <gn-ui-geo-data-badge
+            [styling]="'default'"
+            [record]="metadata"
+          ></gn-ui-geo-data-badge>
           <div *ngIf="metadata.recordUpdated">
             <p
               translate

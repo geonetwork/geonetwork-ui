@@ -15,6 +15,7 @@ import { provideNgIconsConfig } from '@ng-icons/core'
 import { TranslateModule } from '@ngx-translate/core'
 import { AvatarComponent } from './avatar/avatar.component'
 import { ImageInputComponent } from './image-input/image-input.component'
+import { GeoDataBadgeComponent } from './geo-data-badge/geo-data-badge.component'
 import { MarkdownParserComponent } from './markdown-parser/markdown-parser.component'
 import { KindBadgeComponent } from './kind-badge/kind-badge.component'
 import { ThumbnailComponent } from './thumbnail/thumbnail.component'
@@ -47,6 +48,7 @@ import { ServiceCapabilitiesComponent } from './service-capabilities/service-cap
     InternalLinkCardComponent,
     ServiceCapabilitiesComponent,
     KindBadgeComponent,
+    GeoDataBadgeComponent,
   ],
   providers: [
     provideNgIconsConfig({
@@ -64,6 +66,7 @@ import { ServiceCapabilitiesComponent } from './service-capabilities/service-cap
     InternalLinkCardComponent,
     ServiceCapabilitiesComponent,
     KindBadgeComponent,
+    GeoDataBadgeComponent,
   ],
 })
 export class UiElementsModule {}

@@ -231,7 +231,7 @@ As such, **it is not very interesting at all.**`,
     recordUpdated: new Date('2022-04-15T14:18:19'),
     resourceUpdated: new Date('2022-03-29'),
     title:
-      "Plan local d'urbanisme (PLU) dématérialisé - commune d'Avrigny - approbation du 29/03/2022",
+      "Plan local d'urbanisme (PLU) dématérialisé - commune d'Avrigny - approbation du 29/03/2022 (Ce lot informe du droit à bâtir sur la commune d'Avrigny)",
     abstract: `Plan local d'urbanisme (PLU) dématérialisé - commune d'Avrigny - approbation du 29/03/2022.
 
 Ce lot informe du droit à bâtir sur la commune d'Avrigny.

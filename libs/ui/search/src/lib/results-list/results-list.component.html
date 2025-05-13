@@ -6,13 +6,13 @@
       *ngFor="let record of records"
     >
       <gn-ui-results-list-item
+        [attr.data-cy]="record.uniqueIdentifier"
         [record]="record"
         [layoutConfig]="layoutConfig"
         [metadataQualityDisplay]="metadataQualityDisplay"
         (mdSelect)="mdSelect.emit($event)"
         [favoriteTemplate]="favoriteTemplate"
         [linkHref]="recordUrlGetter(record)"
-        [attr.data-cy]="record.uniqueIdentifier"
       ></gn-ui-results-list-item>
     </div>
   </div>

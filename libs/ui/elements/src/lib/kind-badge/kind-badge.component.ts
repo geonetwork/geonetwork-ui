@@ -13,8 +13,12 @@ import {
   iconoirCreditCard,
 } from '@ng-icons/iconoir'
 import { NgIconsModule } from '@ng-icons/core'
-import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('record.kind.dataset')
+marker('record.kind.reuse')
+marker('record.kind.service')
 
 enum KindConfig {
   all = 'iconoirAppleWallet', // (this one is for filter)
@@ -37,9 +41,10 @@ enum KindConfig {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [NgIconsModule, CommonModule, BadgeComponent, TranslateModule],
+  imports: [NgIconsModule, CommonModule, TranslateModule],
 })
 export class KindBadgeComponent {
+  @Input() styling = 'default'
   @Input() contentTemplate: TemplateRef<unknown>
   @Input() kind: string
 
@@ -47,5 +52,19 @@ export class KindBadgeComponent {
 
   get iconKind() {
     return KindConfig[this.kind] || KindConfig.dataset
+  }
+
+  get badgeClasses(): string {
+    const baseClasses =
+      'badge-btn text-white text-xs px-2 font-bold shrink-0 flex items-center h-6 min-h-6'
+
+    switch (this.styling) {
+      case 'outline':
+        return `${baseClasses} bg-transparent border border-white py-1.5`
+      case 'default':
+        return `${baseClasses} bg-primary py-0.5`
+      default:
+        return 'flex items-center'
+    }
   }
 }
