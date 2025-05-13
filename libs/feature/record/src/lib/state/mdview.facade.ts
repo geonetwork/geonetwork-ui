@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import {
   catchError,
-  concatMap,
   defaultIfEmpty,
   filter,
   map,
@@ -17,7 +16,6 @@ import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import {
   CatalogRecord,
-  DatasetServiceDistribution,
   UserFeedback,
 } from '@geonetwork-ui/common/domain/model/record'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
@@ -91,11 +89,6 @@ export class MdViewFacade {
     map((links) =>
       links.filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.API))
     ),
-    // switchMap((apiLinks) =>
-    //   this.processLinksForTmsWithStyles(
-    //     apiLinks as DatasetServiceDistribution[]
-    //   )
-    // ),
     shareReplay(1)
   )
 
@@ -105,11 +98,6 @@ export class MdViewFacade {
         this.linkClassifier.hasUsage(link, LinkUsage.MAP_API)
       )
     ),
-    // switchMap((mapApiLinks) =>
-    //   this.processLinksForTmsWithStyles(
-    //     mapApiLinks as DatasetServiceDistribution[]
-    //   )
-    // ),
     shareReplay(1)
   )
 
@@ -224,47 +212,6 @@ export class MdViewFacade {
   loadUserFeedbacks(datasetUuid: string) {
     this.store.dispatch(MdViewActions.loadUserFeedbacks({ datasetUuid }))
   }
-
-  // private processLinksForTmsWithStyles(
-  //   links: DatasetServiceDistribution[]
-  // ): Observable<DatasetServiceDistribution[]> {
-  //   return from(links).pipe(
-  //     concatMap((link) => this.createOneTmsLinkPerStyle(link)),
-  //     toArray(),
-  //     map((links) => links.flat())
-  //   )
-  // }
-  //
-  // private createOneTmsLinkPerStyle(
-  //   link: DatasetServiceDistribution
-  // ): Observable<DatasetServiceDistribution[]> {
-  //   if (
-  //     link.type === 'service' &&
-  //     link.accessServiceProtocol === 'tms' &&
-  //     !link.styleInfo
-  //   ) {
-  //     return from(this.dataService.getStylesFromTms(link.url.href)).pipe(
-  //       map((styles) =>
-  //         styles
-  //           ? styles.map((style) => ({
-  //               ...link,
-  //               name: `${link.name} - ${style.name}`,
-  //               url: new URL(style.href),
-  //               styleInfo: {
-  //                 name: style.name,
-  //                 href: style.href,
-  //               },
-  //             }))
-  //           : [link]
-  //       ),
-  //       catchError((e) => {
-  //         console.error('Error fetching TMS styles:', e)
-  //         return of([link])
-  //       })
-  //     )
-  //   }
-  //   return of([link])
-  // }
 
   /**
    * loadFeatureCatalog
