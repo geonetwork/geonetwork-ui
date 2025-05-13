@@ -10,10 +10,10 @@
       <div
         *ngIf="shouldShowThumbnail"
         [ngClass]="thumbnailContainerClass"
-        class="mr-4 flex flex-col"
+        class="border mr-4 flex flex-col"
       >
         <gn-ui-thumbnail
-          class="w-full h-full border object-cover"
+          class="w-full h-full object-cover"
           [thumbnailUrl]="record.overviews?.[0]?.url?.toString() || ''"
           [fit]="'cover'"
         ></gn-ui-thumbnail>
