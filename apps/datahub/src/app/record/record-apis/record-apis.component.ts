@@ -61,24 +61,25 @@ export class RecordApisComponent implements OnInit {
 
   apiLinks$ = this.facade.apiLinks$.pipe(
     switchMap(async (apiLinks) => {
-        const linksPromises = apiLinks.map((link) => {
-          if (link.type === 'service' && link.accessServiceProtocol === 'tms') {
-            return this.dataService.getGeodataLinksFromTms(link, true)
-          }
-          return Promise.resolve(link)
-        })
-        const processedLinks = await Promise.all(linksPromises)
+      const linksPromises = apiLinks.map((link) => {
+        if (link.type === 'service' && link.accessServiceProtocol === 'tms') {
+          return this.dataService.getGeodataLinksFromTms(link, true)
+        }
+        return Promise.resolve(link)
+      })
+      const processedLinks = await Promise.all(linksPromises)
       return processedLinks.flat()
-      }
-    ),
+    }),
     map((links) =>
-      (links || []).sort((a, b) =>
-        a.type === 'service' && a.accessServiceProtocol === 'GPFDL'
-          ? -1
-          : b.type === 'service' && b.accessServiceProtocol === 'GPFDL'
-            ? 1
-            : 0
-      )
+      (links || []).sort((a, b) => {
+        const aIsGPFDL =
+          'accessServiceProtocol' in a && a.accessServiceProtocol === 'GPFDL'
+        const bIsGPFDL =
+          'accessServiceProtocol' in b && b.accessServiceProtocol === 'GPFDL'
+        if (aIsGPFDL) return -1
+        if (bIsGPFDL) return 1
+        return 0
+      })
     ),
     shareReplay(1)
   )
@@ -90,7 +91,7 @@ export class RecordApisComponent implements OnInit {
   constructor(
     private facade: MdViewFacade,
     private changeDetector: ChangeDetectorRef,
-    private dataService: DataService,
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
