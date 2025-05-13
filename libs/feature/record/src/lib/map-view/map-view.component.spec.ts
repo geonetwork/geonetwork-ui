@@ -106,11 +106,7 @@ class DataServiceMock {
   readAsGeoJson = jest.fn(({ url }) =>
     url.toString().indexOf('error') > -1
       ? throwError(() => new Error('data loading error'))
-      : of(SAMPLE_GEOJSON).pipe(
-          tap(() => console.log('before delay(100)')),
-          delay(100),
-          tap(() => console.log('after delay(100)'))
-        )
+      : of(SAMPLE_GEOJSON).pipe(delay(100))
   )
   getGeodataLinksFromTms = jest.fn((mapLink) => Promise.resolve([mapLink]))
 }
