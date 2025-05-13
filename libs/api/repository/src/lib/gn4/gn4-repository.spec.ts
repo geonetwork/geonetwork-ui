@@ -281,9 +281,19 @@ describe('Gn4Repository', () => {
               name: "Catalogue d'attributs N°1",
               definition: 'Définition du catalogue d attributs N°1',
               attributes: [
-                { name: 'OBJECTID', title: 'Object identifier' },
-                { name: 'Nom', title: 'Nom de la rue' },
-                { name: 'Rue', title: '' },
+                {
+                  code: 'OBJECTID',
+                  name: 'OBJECTID',
+                  title: 'Object identifier',
+                  type: 'OID',
+                },
+                {
+                  code: 'NOM',
+                  name: 'Nom',
+                  title: 'Nom de la rue',
+                  type: 'String (48)',
+                },
+                { code: 'RUE', name: 'Rue', title: '', type: 'String (50)' },
               ],
             },
             {
@@ -291,8 +301,10 @@ describe('Gn4Repository', () => {
               definition: 'Définition du catalogue d attributs N°2',
               attributes: [
                 {
+                  code: 'UniqueObject',
                   name: 'unique object ',
                   title: 'this is the only object of this catalog',
+                  type: 'String (50)',
                 },
               ],
             },
@@ -328,9 +340,19 @@ describe('Gn4Repository', () => {
               name: "Catalogue d'attributs N°1",
               definition: 'Définition du catalogue d attributs N°1',
               attributes: [
-                { name: 'OBJECTID', title: 'Object identifier' },
-                { name: 'Nom', title: 'Nom de la rue' },
-                { name: 'Rue', title: '' },
+                {
+                  code: 'OBJECTID',
+                  name: 'OBJECTID',
+                  title: 'Object identifier',
+                  type: 'OID',
+                },
+                {
+                  code: 'NOM',
+                  name: 'Nom',
+                  title: 'Nom de la rue',
+                  type: 'String (48)',
+                },
+                { code: 'RUE', name: 'Rue', title: '', type: 'String (50)' },
               ],
             },
             {
@@ -338,8 +360,10 @@ describe('Gn4Repository', () => {
               definition: 'Définition du catalogue d attributs N°2',
               attributes: [
                 {
+                  code: 'UniqueObject',
                   name: 'unique object ',
                   title: 'this is the only object of this catalog',
+                  type: 'String (50)',
                 },
               ],
             },

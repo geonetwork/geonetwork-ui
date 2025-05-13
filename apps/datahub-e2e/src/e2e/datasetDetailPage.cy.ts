@@ -237,8 +237,8 @@ describe('dataset pages', () => {
       .find('gn-ui-thumbnail')
       .should('be.visible')
     cy.get('datahub-record-metadata')
-      .find('[data-cy="organization-name"]')
-      .parent()
+      .find('[data-cy="metadata-organization"]')
+      .children('div')
       .children('div')
       .should('have.length', 4)
 
@@ -314,7 +314,7 @@ describe('dataset pages', () => {
     cy.go('back')
 
     // it should go to dataset search page when clicking on org name and filter by org
-    cy.get('[data-cy="organization-name"]').eq(1).click()
+    cy.get('[data-cy="organization-name-link"]').eq(0).click()
     cy.url().should('include', '/search?organization=')
   })
 

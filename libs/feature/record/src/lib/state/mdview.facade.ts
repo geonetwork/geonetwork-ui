@@ -265,4 +265,11 @@ export class MdViewFacade {
   //   }
   //   return of([link])
   // }
+
+  /**
+   * loadFeatureCatalog
+   */
+  loadFeatureCatalog(metadata: CatalogRecord) {
+    this.store.dispatch(MdViewActions.loadFeatureCatalog({ metadata }))
+  }
 }

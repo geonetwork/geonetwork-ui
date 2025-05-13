@@ -55,7 +55,10 @@
         >
           <ng-icon name="matClose" class="align-middle text-sm"></ng-icon>
         </gn-ui-button>
-        <gn-ui-feature-detail [feature]="selection"></gn-ui-feature-detail>
+        <gn-ui-feature-detail
+          [featureCatalog]="mdViewFacade.featureCatalog$ | async"
+          [feature]="selection"
+        ></gn-ui-feature-detail>
       </div>
 
       <div
