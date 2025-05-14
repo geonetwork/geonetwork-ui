@@ -342,6 +342,11 @@ describe('Gn4Repository', () => {
                   name: 'Nom',
                   title: 'Nom de la rue',
                   type: 'String (48)',
+                  values: [
+                    { code: 'Pomme', label: 'Les Pommiers' },
+                    { code: 'Cotton', label: 'Rue Cotton' },
+                    { code: "Passage de l'échiquier", label: undefined },
+                  ],
                 },
                 { code: 'RUE', name: 'Rue', title: '', type: 'String (50)' },
               ],
@@ -401,6 +406,11 @@ describe('Gn4Repository', () => {
                   name: 'Nom',
                   title: 'Nom de la rue',
                   type: 'String (48)',
+                  values: [
+                    { code: 'Pomme', label: 'Les Pommiers' },
+                    { code: 'Cotton', label: 'Rue Cotton' },
+                    { code: "Passage de l'échiquier", label: undefined },
+                  ],
                 },
                 { code: 'RUE', name: 'Rue', title: '', type: 'String (50)' },
               ],

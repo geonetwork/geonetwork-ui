@@ -175,12 +175,18 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         name: featureType.typeName || '',
         definition: featureType.definition || '',
         attributes: Array.isArray(featureType.attributeTable)
-          ? featureType.attributeTable.map((attr) => ({
-              name: attr.name,
-              code: attr.code,
-              title: attr.definition,
-              type: attr.type,
-            }))
+          ? featureType.attributeTable.map((attr) => {
+              const values = attr.values
+                ?.filter((v) => v.code || v.label)
+                .map((v) => ({ code: v.code, label: v.label }))
+              return {
+                name: attr.name,
+                code: attr.code,
+                title: attr.definition,
+                type: attr.type,
+                ...(values?.length > 0 ? { values } : {}),
+              }
+            })
           : [],
       })),
     }

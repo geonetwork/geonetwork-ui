@@ -1,0 +1,549 @@
+{
+  "took": 1,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 1,
+      "relation": "eq"
+    },
+    "max_score": 1.0,
+    "hits": [
+      {
+        "_index": "gn-records",
+        "_type": "_doc",
+        "_id": "n_tri_lill_inondable_s_059",
+        "_score": 1.0,
+        "_source": {
+          "contactForResource": [
+            {
+              "website": "",
+              "role": "originator",
+              "address": "",
+              "individual": "",
+              "phone": "",
+              "logo": "",
+              "position": "",
+              "organisationObject": {
+                "default": "DREAL",
+                "langfre": "DREAL"
+              },
+              "email": ""
+            }
+          ],
+          "rating": "0",
+          "originalFormat": ["CSV", "JSON", "GeoJSON", "ESRI Shapefile"],
+          "uuid": "n_tri_lill_inondable_s_059",
+          "lineageObject": {},
+          "publisherOrgObject": {
+            "default": "DREAL",
+            "langfre": "DREAL"
+          },
+          "resourceLanguage": ["fre"],
+          "cl_type": [
+            {
+              "default": "Thème",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode",
+              "key": "theme",
+              "langfre": "Thème"
+            }
+          ],
+          "isPublishedToAll": "true",
+          "contact": [
+            {
+              "website": "",
+              "role": "publisher",
+              "address": "",
+              "individual": "",
+              "phone": "",
+              "logo": "",
+              "position": "",
+              "organisationObject": {
+                "default": "DREAL",
+                "langfre": "DREAL"
+              },
+              "email": ""
+            }
+          ],
+          "record": "record",
+          "draft": "n",
+          "linkUrl": [
+            "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=shapefile&timezone=Europe/Berlin&use_labels_for_header=false",
+            "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=json&timezone=Europe/Berlin&use_labels_for_header=false",
+            "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=geojson&timezone=Europe/Berlin&use_labels_for_header=false",
+            "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=csv&timezone=Europe/Berlin&use_labels_for_header=false",
+            "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/information/"
+          ],
+          "changeDate": "2025-05-14T12:21:52.051Z",
+          "logo": "/images/logos/3bef299d-cf82-4033-871b-875f6936b2e2.png",
+          "tag": [
+            {
+              "default": "Eau",
+              "langfre": "Eau"
+            },
+            {
+              "default": "Innondation",
+              "langfre": "Innondation"
+            },
+            {
+              "default": "Aléa",
+              "langfre": "Aléa"
+            },
+            {
+              "default": "Environnement",
+              "langfre": "Environnement"
+            }
+          ],
+          "id": "750",
+          "recordGroup": "n_tri_lill_inondable_s_059",
+          "metadataIdentifier": "n_tri_lill_inondable_s_059",
+          "isPublishedToIntranet": "true",
+          "format": ["CSV", "JSON", "GeoJSON", "ESRI Shapefile"],
+          "linkUrlProtocolWWWDOWNLOADxgisxshapefile": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=shapefile&timezone=Europe/Berlin&use_labels_for_header=false",
+          "hasxlinks": "false",
+          "tagNumber": "4",
+          "featureOfRecord": "record",
+          "isPublishedToGuest": "true",
+          "documentStandard": "iso19115-3.2018",
+          "dateStamp": "2025-05-14T12:21:52.051Z",
+          "resourceAbstractObject": {
+            "default": "<p>Aléa de débordement de cours d’eau de la Lys et de ses\n affluents pour une période de retour 10 ans (proba. forte), 100 ans (proba. moyenne) ou\n 1000 ans (proba. faible) : l’événement présente une probabilité sur 10, 100 ou 1000 de se\n produire chaque année sur le TRI de Lille.</p><hr/><p><a\n href=\"http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/apps/search/?uuid=fr-120066022-jdd-99fb7b58-afc1-42e8-ae55-28baf821390b\"><strong>Lien\n vers les métadonnées</strong></a></p><hr/><p>Donnée issue\n d’une modélisation hydraulique réalisée pour le compte de la DREAL Nord – Pas-de-Calais\n par le bureau d’études Safège dans le cadre de la cartographie de la Directive\n Inondation.</p>",
+            "langfre": "<p>Aléa de débordement de cours d’eau de la Lys et de ses\n affluents pour une période de retour 10 ans (proba. forte), 100 ans (proba. moyenne) ou\n 1000 ans (proba. faible) : l’événement présente une probabilité sur 10, 100 ou 1000 de se\n produire chaque année sur le TRI de Lille.</p><hr/><p><a\n href=\"http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/apps/search/?uuid=fr-120066022-jdd-99fb7b58-afc1-42e8-ae55-28baf821390b\"><strong>Lien\n vers les métadonnées</strong></a></p><hr/><p>Donnée issue\n d’une modélisation hydraulique réalisée pour le compte de la DREAL Nord – Pas-de-Calais\n par le bureau d’études Safège dans le cadre de la cartographie de la Directive\n Inondation.</p>"
+          },
+          "isTemplate": "n",
+          "linkUrlProtocolWWWDOWNLOADapplicationjson": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=json&timezone=Europe/Berlin&use_labels_for_header=false",
+          "feedbackCount": "0",
+          "licenseObject": [
+            {
+              "default": "Licence Ouverte (Etalab)",
+              "langfre": "Licence Ouverte (Etalab)"
+            }
+          ],
+          "linkUrlProtocolWWWDOWNLOADapplicationvndgeojson": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=geojson&timezone=Europe/Berlin&use_labels_for_header=false",
+          "isHarvested": "false",
+          "OrgForResourceObject": {
+            "default": "DREAL",
+            "langfre": "DREAL"
+          },
+          "recordOwner": "admin admin",
+          "isOpenData": "false",
+          "document": "",
+          "th_otherKeywords-theme": [
+            {
+              "default": "Environnement",
+              "langfre": "Environnement"
+            }
+          ],
+          "OrgObject": {
+            "default": "DREAL",
+            "langfre": "DREAL"
+          },
+          "th_otherKeywords-Number": "3",
+          "link": [
+            {
+              "protocol": "WWW:DOWNLOAD:x-gis/x-shapefile",
+              "descriptionObject": {
+                "default": "shapefile",
+                "langfre": "shapefile"
+              },
+              "function": "fileAccess",
+              "applicationProfile": "",
+              "mimeType": "x-gis/x-shapefile",
+              "urlObject": {
+                "default": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=shapefile&timezone=Europe/Berlin&use_labels_for_header=false",
+                "langfre": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=shapefile&timezone=Europe/Berlin&use_labels_for_header=false"
+              },
+              "nameObject": {
+                "default": "shapefile",
+                "langfre": "shapefile"
+              },
+              "group": 0
+            },
+            {
+              "protocol": "WWW:DOWNLOAD:application/json",
+              "descriptionObject": {
+                "default": "json",
+                "langfre": "json"
+              },
+              "function": "fileAccess",
+              "applicationProfile": "",
+              "mimeType": "application/json",
+              "urlObject": {
+                "default": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=json&timezone=Europe/Berlin&use_labels_for_header=false",
+                "langfre": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=json&timezone=Europe/Berlin&use_labels_for_header=false"
+              },
+              "nameObject": {
+                "default": "json",
+                "langfre": "json"
+              },
+              "group": 0
+            },
+            {
+              "protocol": "WWW:DOWNLOAD:application/vnd.geo+json",
+              "descriptionObject": {
+                "default": "geojson",
+                "langfre": "geojson"
+              },
+              "function": "fileAccess",
+              "applicationProfile": "",
+              "mimeType": "application/vnd.geo+json",
+              "urlObject": {
+                "default": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=geojson&timezone=Europe/Berlin&use_labels_for_header=false",
+                "langfre": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=geojson&timezone=Europe/Berlin&use_labels_for_header=false"
+              },
+              "nameObject": {
+                "default": "geojson",
+                "langfre": "geojson"
+              },
+              "group": 0
+            },
+            {
+              "protocol": "WWW:DOWNLOAD:text/csv",
+              "descriptionObject": {
+                "default": "csv",
+                "langfre": "csv"
+              },
+              "function": "fileAccess",
+              "applicationProfile": "",
+              "mimeType": "text/csv",
+              "urlObject": {
+                "default": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=csv&timezone=Europe/Berlin&use_labels_for_header=false",
+                "langfre": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=csv&timezone=Europe/Berlin&use_labels_for_header=false"
+              },
+              "nameObject": {
+                "default": "csv",
+                "langfre": "csv"
+              },
+              "group": 0
+            },
+            {
+              "protocol": "WWW:LINK:LANDING_PAGE",
+              "function": "",
+              "applicationProfile": "",
+              "mimeType": "",
+              "urlObject": {
+                "default": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/information/",
+                "langfre": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/information/"
+              },
+              "nameObject": {
+                "default": "Landing Page",
+                "langfre": "Landing Page"
+              },
+              "group": 1
+            }
+          ],
+          "displayOrder": "0",
+          "cl_resourceCharacterSet": [
+            {
+              "default": "Utf8",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_CharacterSetCode",
+              "key": "utf8",
+              "langfre": "Utf8"
+            }
+          ],
+          "linkUrlProtocolWWWLINKLANDINGPAGE": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/information/",
+          "mainLanguage": "fre",
+          "cl_function": [
+            {
+              "default": "Métadonnées intégrales",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode",
+              "key": "completeMetadata",
+              "langfre": "Métadonnées intégrales"
+            },
+            {
+              "default": "Accès au fichier",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode",
+              "key": "fileAccess",
+              "langfre": "Accès au fichier"
+            }
+          ],
+          "valid": "-1",
+          "groupPublishedId": ["-1", "0", "1", "2", "104"],
+          "indexingDate": "2025-05-14T12:21:54.159Z",
+          "sourceCatalogue": "3bef299d-cf82-4033-871b-875f6936b2e2",
+          "cl_accessConstraints": [
+            {
+              "default": "Autres restrictions",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_RestrictionCode",
+              "key": "otherRestrictions",
+              "langfre": "Autres restrictions"
+            }
+          ],
+          "groupPublished": [
+            "GUEST",
+            "intranet",
+            "all",
+            "sample",
+            "Barbie Inc."
+          ],
+          "popularity": 3,
+          "extra": "null",
+          "qualityScore": 50,
+          "featureTypes": [
+            {
+              "attributeTable": [
+                {
+                  "code": "",
+                  "name": "geo_point_2d",
+                  "link": "",
+                  "definition": "Geo Point",
+                  "type": "geo_point_2d"
+                },
+                {
+                  "code": "",
+                  "name": "geo_shape",
+                  "link": "",
+                  "definition": "Geo Shape",
+                  "type": "geo_shape"
+                },
+                {
+                  "code": "",
+                  "name": "id_s_inond",
+                  "link": "",
+                  "definition": "ID_S_INOND",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "typ_inond",
+                  "link": "",
+                  "definition": "TYP_INOND",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "scenario",
+                  "link": "",
+                  "definition": "SCENARIO",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "datentree",
+                  "link": "",
+                  "definition": "DATENTREE",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "datsortie",
+                  "link": "",
+                  "definition": "DATSORTIE",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "est_ref",
+                  "link": "",
+                  "definition": "EST_REF",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "id_tri",
+                  "link": "",
+                  "definition": "ID_TRI",
+                  "type": "text"
+                }
+              ],
+              "code": "",
+              "aliases": "",
+              "typeName": "Aléa de débordement de cours d'eau de la Lys",
+              "definition": "",
+              "isAbstract": "false"
+            },
+            {
+              "attributeTable": [
+                {
+                  "code": "",
+                  "name": "geo_point_2d",
+                  "link": "",
+                  "definition": "Geo Point",
+                  "type": "geo_point_2d"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "star",
+                      "definition": "",
+                      "label": "Starlight Label ---"
+                    }
+                  ],
+                  "name": "geo_shape",
+                  "link": "",
+                  "definition": "Geo Shape",
+                  "type": "geo_shape"
+                },
+                {
+                  "code": "",
+                  "name": "id_s_inond",
+                  "link": "",
+                  "definition": "ID_S_INOND",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "typ_inond",
+                  "link": "",
+                  "definition": "TYP_INOND",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "scenario",
+                  "link": "",
+                  "definition": "SCENARIO",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "datentree",
+                  "link": "",
+                  "definition": "DATENTREE",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "datsortie",
+                  "link": "",
+                  "definition": "DATSORTIE",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "est_ref",
+                  "link": "",
+                  "definition": "EST_REF",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "id_tri",
+                  "link": "",
+                  "definition": "ID_TRI",
+                  "type": "text"
+                }
+              ],
+              "code": "",
+              "aliases": "",
+              "typeName": "Zone inondable de la Lys",
+              "definition": "Zones soumises aux inondations par débordement de la Lys selon\n différents scénarios de crues",
+              "isAbstract": "false"
+            }
+          ],
+          "th_otherKeywords-": [
+            {
+              "default": "Eau",
+              "langfre": "Eau"
+            },
+            {
+              "default": "Innondation",
+              "langfre": "Innondation"
+            },
+            {
+              "default": "Aléa",
+              "langfre": "Aléa"
+            }
+          ],
+          "cl_level": [
+            {
+              "default": "Jeu de données",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode",
+              "key": "dataset",
+              "langfre": "Jeu de données"
+            }
+          ],
+          "hasOverview": "false",
+          "userinfo": "admin|admin|admin|Administrator",
+          "createDate": "2025-04-30T10:36:26.686Z",
+          "allKeywords": {
+            "th_otherKeywords-theme": {
+              "keywords": [
+                {
+                  "default": "Environnement",
+                  "langfre": "Environnement"
+                }
+              ],
+              "theme": "theme",
+              "title": "otherKeywords-theme"
+            },
+            "th_otherKeywords-": {
+              "keywords": [
+                {
+                  "default": "Eau",
+                  "langfre": "Eau"
+                },
+                {
+                  "default": "Innondation",
+                  "langfre": "Innondation"
+                },
+                {
+                  "default": "Aléa",
+                  "langfre": "Aléa"
+                }
+              ],
+              "theme": "",
+              "title": "otherKeywords-"
+            }
+          },
+          "owner": "1",
+          "MD_LegalConstraintsOtherConstraintsObject": [
+            {
+              "default": "Licence Ouverte (Etalab)",
+              "langfre": "Licence Ouverte (Etalab)"
+            }
+          ],
+          "groupOwner": "2",
+          "docType": "metadata",
+          "resourceTitleObject": {
+            "default": "Aléa de débordement de cours d'eau de la Lys",
+            "langfre": "Aléa de débordement de cours d'eau de la Lys"
+          },
+          "th_otherKeywords-themeNumber": "1",
+          "linkUrlProtocolWWWDOWNLOADtextcsv": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=csv&timezone=Europe/Berlin&use_labels_for_header=false",
+          "standardNameObject": {
+            "default": "ISO 19115-3",
+            "langfre": "ISO 19115-3"
+          },
+          "keywordType-theme": [
+            {
+              "default": "Environnement",
+              "langfre": "Environnement"
+            }
+          ],
+          "originatorOrgForResourceObject": {
+            "default": "DREAL",
+            "langfre": "DREAL"
+          },
+          "userSavedCount": "0",
+          "resourceType": ["featureCatalog"],
+          "linkProtocol": [
+            "WWW:DOWNLOAD:x-gis/x-shapefile",
+            "WWW:DOWNLOAD:application/json",
+            "WWW:DOWNLOAD:application/vnd.geo+json",
+            "WWW:DOWNLOAD:text/csv",
+            "WWW:LINK:LANDING_PAGE"
+          ]
+        },
+        "edit": false,
+        "canReview": false,
+        "owner": false,
+        "isPublishedToAll": true,
+        "view": true,
+        "notify": false,
+        "download": false,
+        "dynamic": true,
+        "featured": false,
+        "guestdownload": false,
+        "selected": false,
+        "related": {}
+      }
+    ]
+  }
+}
