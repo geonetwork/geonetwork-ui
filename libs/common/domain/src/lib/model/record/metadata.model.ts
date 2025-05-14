@@ -233,14 +233,6 @@ export interface DatasetRecord extends BaseRecord {
   spatialRepresentation?: SpatialRepresentationType
 }
 
-export type DatasetFeatureCatalog = {
-  featureTypes: Array<{
-    name: string
-    definition: string
-    attributes: Array<{ name: string; title: string; code: string }>
-  }>
-}
-
 export interface ServiceEndpoint {
   url: URL
   accessServiceProtocol: ServiceProtocol
@@ -268,18 +260,31 @@ export interface ReuseRecord extends BaseRecord {
   temporalExtents: Array<DatasetTemporalExtent>
 }
 
+export type DatasetFeatureCatalog = {
+  featureTypes: Array<{
+    name: string
+    definition: string
+    attributes: Array<{ name: string; title: string; code: string }>
+  }>
+}
+export interface DatasetFeatureAttributeValue {
+  code?: string
+  label?: string
+}
+export interface DatasetFeatureAttribute {
+  name: string
+  definition: string
+  type: string
+  code: string
+  values?: Array<DatasetFeatureAttributeValue>
+}
 export interface DatasetFeatureType {
   aliases: string
   code: string
   isAbstract: string
   typeName: string
   definition: string
-  attributeTable: Array<{
-    name: string
-    definition: string
-    type: string
-    code: string
-  }>
+  attributeTable: Array<DatasetFeatureAttribute>
 }
 
 export type ReuseType = 'application' | 'map' | 'other'

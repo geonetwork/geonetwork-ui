@@ -17,29 +17,51 @@
       </ng-template>
       <div
         class="grid gap-0"
-        [style.grid-template-columns]="gridTemplateColumns"
+        [style.grid-template-columns]="
+          getGridTemplateColumns(featureType.attributes)
+        "
         data-cy="feature-type-content"
       >
         <div
           class="py-1 px-2 text-sm font-bold text-left border-t"
           [class.border-l]="i > 0"
           [class.border-gray-300]="i > 0"
-          *ngFor="let col of columns; let i = index"
+          *ngFor="
+            let col of getColumnsDefinition(featureType.attributes);
+            let i = index
+          "
           data-test="column-label"
         >
-          {{ col.label | translate }}
+          {{ 'feature.catalog.attribute.' + col.key | translate }}
         </div>
         <ng-container *ngFor="let row of featureType.attributes">
           <div
             class="bg-white text-sm font-normal text-left border-t"
             [class.border-l]="i > 0"
             [class.border-gray-300]="i > 0"
-            *ngFor="let col of columns; let i = index"
+            *ngFor="
+              let col of getColumnsDefinition(featureType.attributes);
+              let i = index
+            "
+            data-test="cell-content"
           >
-            <gn-ui-truncated-text
-              extraClass="py-3 px-2"
-              [text]="row[col.key]"
-            ></gn-ui-truncated-text>
+            <ng-container
+              *ngIf="col.key === 'values'; then tplValues; else defaultTpl"
+            >
+            </ng-container>
+
+            <ng-template #defaultTpl>
+              <gn-ui-truncated-text
+                extraClass="py-3 px-2"
+                [text]="row[col.key]"
+              ></gn-ui-truncated-text>
+            </ng-template>
+
+            <ng-template #tplValues>
+              <div *ngFor="let value of row.values">
+                {{ value.label || value.code }}
+              </div>
+            </ng-template>
           </div>
         </ng-container>
       </div>

@@ -1,8 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { DatasetFeatureCatalog } from '@geonetwork-ui/common/domain/model/record'
+import {
+  DatasetFeatureAttribute,
+  DatasetFeatureCatalog,
+} from '@geonetwork-ui/common/domain/model/record'
 import {
   ExpandablePanelComponent,
   TruncatedTextComponent,
@@ -11,7 +14,8 @@ import {
 marker('feature.catalog.attribute.type')
 marker('feature.catalog.attribute.name')
 marker('feature.catalog.attribute.code')
-marker('feature.catalog.attribute.description')
+marker('feature.catalog.attribute.title')
+marker('feature.catalog.attribute.values')
 
 @Component({
   selector: 'gn-ui-feature-catalog-list',
@@ -24,35 +28,47 @@ marker('feature.catalog.attribute.description')
     TruncatedTextComponent,
   ],
 })
-export class FeatureCatalogListComponent implements OnInit {
+export class FeatureCatalogListComponent {
   @Input() filteredFeatureCatalog: DatasetFeatureCatalog
 
-  columns = [
-    {
-      key: 'type',
-      label: 'feature.catalog.attribute.type',
-      width: '19%',
-    },
-    {
-      key: 'name',
-      label: 'feature.catalog.attribute.name',
-      width: '32%',
-    },
-    {
-      key: 'code',
-      label: 'feature.catalog.attribute.code',
-      width: '24%',
-    },
-    {
-      key: 'title',
-      label: 'feature.catalog.attribute.description',
-      width: '25%',
-    },
-  ]
+  getColumnsDefinition(attributes: DatasetFeatureAttribute[]) {
+    const baseColumns = [
+      {
+        key: 'type',
+        width: '19%',
+      },
+      {
+        key: 'name',
+        width: '32%',
+      },
+      {
+        key: 'code',
+        width: '20%',
+      },
+      {
+        key: 'title',
+        width: 'minmax(0px, 1fr)',
+      },
+    ]
+    const hasValues = attributes.some((a) => a.values?.length > 0)
 
-  gridTemplateColumns = ''
+    if (hasValues) {
+      return [
+        ...baseColumns,
+        {
+          // TODO: column label is centered for this one
+          key: 'values',
+          width: '73px',
+        },
+      ]
+    }
 
-  ngOnInit(): void {
-    this.gridTemplateColumns = this.columns.map((col) => col.width).join(' ')
+    return baseColumns
+  }
+
+  getGridTemplateColumns(attributes: DatasetFeatureAttribute[]) {
+    return this.getColumnsDefinition(attributes)
+      .map((col) => col.width)
+      .join(' ')
   }
 }
