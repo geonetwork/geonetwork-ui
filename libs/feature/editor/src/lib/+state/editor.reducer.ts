@@ -26,6 +26,7 @@ export interface EditorState {
   hasRecordChanged: { user: string; date: Date }
   isPublished: boolean
   canEditRecord: boolean
+  currentLanguage: string | null
 }
 
 export interface EditorPartialState {
@@ -43,6 +44,7 @@ export const initialEditorState: EditorState = {
   hasRecordChanged: null,
   isPublished: true,
   canEditRecord: true,
+  currentLanguage: null,
 }
 
 const reducer = createReducer(
@@ -52,6 +54,7 @@ const reducer = createReducer(
     changedSinceSave: false,
     recordSource: recordSource ?? null,
     record,
+    currentLanguage: null,
   })),
   on(EditorActions.saveRecord, (state) => ({
     ...state,

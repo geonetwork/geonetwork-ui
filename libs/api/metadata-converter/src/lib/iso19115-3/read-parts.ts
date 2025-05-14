@@ -185,15 +185,15 @@ export function extractOrganizationIndividuals(
       els.length
         ? els.map((el) => extractIndividual(role, org, orgContact)(el))
         : [
-          {
-            email: orgContact.email,
-            ...(orgContact.address && { address: orgContact.address }),
-            ...(orgContact.phone && { phone: orgContact.phone }),
-            ...(orgContact.position && { position: orgContact.position }),
-            organization: org,
-            role,
-          },
-        ]
+            {
+              email: orgContact.email,
+              ...(orgContact.address && { address: orgContact.address }),
+              ...(orgContact.phone && { phone: orgContact.phone }),
+              ...(orgContact.position && { position: orgContact.position }),
+              organization: org,
+              role,
+            },
+          ]
     )
   )
 }
@@ -393,14 +393,4 @@ export function readOtherLanguages(rootEl: XmlElement): LanguageCode[] {
       languages.filter((lang): lang is LanguageCode => lang !== null)
     )
   )(rootEl)
-}
-
-export function readRawLanguageCode(): ChainableFunction<
-  XmlElement,
-  string | null
-> {
-  return pipe(
-    findChildElement('lan:LanguageCode'),
-    readAttribute('codeListValue')
-  )
 }
