@@ -59,6 +59,11 @@ export const setSources = createAction(
   props<{ sources: CatalogRecord[] }>()
 )
 
+export const setHasSources = createAction(
+  '[Metadata view] Set has sources',
+  props<{ hasSources: CatalogRecord[] }>()
+)
+
 /*
   ChartConfig actions
  */

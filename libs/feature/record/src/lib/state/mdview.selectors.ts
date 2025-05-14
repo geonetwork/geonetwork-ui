@@ -45,6 +45,11 @@ export const getSources = createSelector(
   getMdViewState,
   (state: MetadataViewState) => state.sources
 )
+
+export const getHasSources = createSelector(
+  getMdViewState,
+  (state: MetadataViewState) => state.hasSources
+)
 /*
   Metadata selectors
 */

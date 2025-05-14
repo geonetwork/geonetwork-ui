@@ -211,6 +211,16 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return of(null)
   }
 
+  getHasSources(record: CatalogRecord): Observable<CatalogRecord[]> {
+    const hasSourcesIdentifiers = record.extras?.[
+      'hasSourcesIdentifiers'
+    ] as string[]
+    if (hasSourcesIdentifiers && hasSourcesIdentifiers.length > 0) {
+      return forkJoin(hasSourcesIdentifiers.map((id) => this.getRecord(id)))
+    }
+    return of(null)
+  }
+
   aggregate(params: AggregationsParams): Observable<Aggregations> {
     // if aggregations are empty, return an empty object right away
     if (Object.keys(params).length === 0) return of({})
