@@ -294,12 +294,50 @@ export class Gn4FieldMapper {
         ) ?? {},
         '_source'
       )
-      const featureCatalogIdentifier = selectField(
+      const featureCatalogIdentifier: string = selectField(
         <SourceWithUnknownProps>fcatSource,
         'uuid'
       )
-      return featureCatalogIdentifier
-        ? this.addExtra({ featureCatalogIdentifier }, output)
+      const hasSourcesLinks = getAsArray(
+        selectField(
+          <SourceWithUnknownProps>selectField(source, 'related'),
+          'hassources'
+        )
+      )
+      const hasSourcesIdentifiers: string[] = hasSourcesLinks
+        .filter((link) => link['origin'] === 'catalog')
+        .map((link) => {
+          return selectField(
+            selectField(<SourceWithUnknownProps>link, '_source'),
+            'uuid'
+          )
+        })
+      const sourcesLinks = getAsArray(
+        selectField(
+          <SourceWithUnknownProps>selectField(source, 'related'),
+          'sources'
+        )
+      )
+      const sourcesIdentifiers: string[] = sourcesLinks
+        .filter((link) => link['origin'] === 'catalog')
+        .map((link) =>
+          selectField(
+            selectField(<SourceWithUnknownProps>link, '_source'),
+            'uuid'
+          )
+        )
+      const extraValues: Record<string, string | string[]> = {}
+      if (featureCatalogIdentifier) {
+        extraValues.featureCatalogIdentifier = featureCatalogIdentifier
+      }
+      if (hasSourcesIdentifiers && hasSourcesIdentifiers.length > 0) {
+        extraValues.hasSourcesIdentifiers = hasSourcesIdentifiers
+      }
+      if (sourcesIdentifiers && sourcesIdentifiers.length > 0) {
+        extraValues.sourcesIdentifiers = sourcesIdentifiers
+      }
+      return Object.keys(extraValues).length > 0
+        ? this.addExtra(extraValues, output)
         : output
     },
     isPublishedToAll: (output, source) =>
