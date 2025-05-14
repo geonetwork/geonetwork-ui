@@ -10,8 +10,6 @@ import { TranslateModule } from '@ngx-translate/core'
 import { PopoverComponent } from '@geonetwork-ui/ui/widgets'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
-import { cold } from 'jasmine-marbles'
-import { of } from 'rxjs'
 import {
   DatasetRecord,
   ServiceRecord,
@@ -62,12 +60,6 @@ describe('MetadataQualityComponent', () => {
   it('content', () => {
     expect(component.metadata?.contacts[0]?.email).toBe('bob@org.net')
   })
-
-  /*it('should populate info', () => {
-    const infoObservable = of(component.items)
-    const expected$ = cold('(a|)', { a: expectedItems })
-    expect(infoObservable).toBeObservable(expected$)
-  })*/
 
   it('should show correct default items for dataset type', () => {
     const datasetMetadata = datasetRecordsFixture()[0]
