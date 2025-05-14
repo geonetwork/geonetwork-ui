@@ -31,6 +31,7 @@ type ActionMenuPage = 'mainMenu' | 'deleteMenu' | 'rollbackMenu'
 })
 export class ActionMenuComponent {
   @Input() canDuplicate: boolean
+  @Input() isDuplicating: boolean
   @Input() canDelete: boolean
   @Input() isDraftPage: boolean
   @Output() duplicate = new EventEmitter<void>()
