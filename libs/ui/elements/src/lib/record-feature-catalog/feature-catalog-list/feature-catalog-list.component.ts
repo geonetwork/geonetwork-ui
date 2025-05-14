@@ -1,11 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { DatasetFeatureCatalog } from '@geonetwork-ui/common/domain/model/record'
 import {
   ExpandablePanelComponent,
   TruncatedTextComponent,
 } from '@geonetwork-ui/ui/layout'
+
+marker('feature.catalog.attribute.type')
+marker('feature.catalog.attribute.name')
+marker('feature.catalog.attribute.code')
+marker('feature.catalog.attribute.description')
 
 @Component({
   selector: 'gn-ui-feature-catalog-list',
