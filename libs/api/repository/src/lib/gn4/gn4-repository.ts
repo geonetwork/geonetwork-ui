@@ -129,7 +129,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return this.gn4SearchApi
       .search(
         'bucket',
-        ['fcats'],
+        ['fcats', 'sources', 'hassources'],
         JSON.stringify(
           this.gn4SearchHelper.getMetadataByIdPayload(uniqueIdentifier)
         )
@@ -186,6 +186,8 @@ export class Gn4Repository implements RecordsRepositoryInterface {
 
     return of(null)
   }
+
+  //TODO: add getHasSources to be used in effect
 
   getSimilarRecords(similarTo: CatalogRecord): Observable<CatalogRecord[]> {
     return this.gn4SearchApi
