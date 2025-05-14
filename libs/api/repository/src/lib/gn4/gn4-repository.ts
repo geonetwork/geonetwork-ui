@@ -187,8 +187,6 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return of(null)
   }
 
-  //TODO: add getHasSources to be used in effect
-
   getSimilarRecords(similarTo: CatalogRecord): Observable<CatalogRecord[]> {
     return this.gn4SearchApi
       .search(
@@ -203,6 +201,14 @@ export class Gn4Repository implements RecordsRepositoryInterface {
           this.gn4Mapper.readRecords(results.hits.hits)
         )
       )
+  }
+
+  getSources(record: CatalogRecord): Observable<CatalogRecord[]> {
+    const sourcesIdentifiers = record.extras?.['sourcesIdentifiers'] as string[]
+    if (sourcesIdentifiers && sourcesIdentifiers.length > 0) {
+      return forkJoin(sourcesIdentifiers.map((id) => this.getRecord(id)))
+    }
+    return of(null)
   }
 
   aggregate(params: AggregationsParams): Observable<Aggregations> {
