@@ -340,7 +340,7 @@ describe('dataset pages', () => {
     cy.get('gn-ui-metadata-quality').find('gn-ui-popover').trigger('mouseenter')
     cy.get('gn-ui-metadata-quality-item')
       .find('ng-icon')
-      .eq(4)
+      .eq(3)
       .should('have.attr', 'ng-reflect-name', 'matWarningAmber')
 
     // Score is 100%
