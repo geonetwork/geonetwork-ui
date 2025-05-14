@@ -765,7 +765,7 @@ describe('read parts', () => {
                     <gmd:URL/>
                 </gmd:linkage>
                 <gmd:protocol>
-                    <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                    <gmx:MimeFileType>WWW:LINK-1.0-http--link</gmx:MimeFileType>
                 </gmd:protocol>
                 <gmd:function>
                     <gmd:CI_OnLineFunctionCode codeListValue="information" codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" />

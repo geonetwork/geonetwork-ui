@@ -11,7 +11,6 @@ import { TranslateModule } from '@ngx-translate/core'
 import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
-import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
 import { matArrowBack, matCreditCard } from '@ng-icons/material-icons/baseline'
 import { DateService } from '@geonetwork-ui/util/shared'
 import {
@@ -19,12 +18,11 @@ import {
   iconoirCode,
   iconoirOpenNewWindow,
 } from '@ng-icons/iconoir'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { ImageOverlayPreviewComponent } from '@geonetwork-ui/ui/elements'
-
-marker('record.kind.dataset')
-marker('record.kind.reuse')
-marker('record.kind.service')
+import {
+  GeoDataBadgeComponent,
+  ImageOverlayPreviewComponent,
+  KindBadgeComponent,
+} from '@geonetwork-ui/ui/elements'
 
 @Component({
   selector: 'datahub-header-record',
@@ -38,10 +36,11 @@ marker('record.kind.service')
     BadgeComponent,
     NgIcon,
     ImageOverlayPreviewComponent,
+    GeoDataBadgeComponent,
+    KindBadgeComponent,
   ],
   viewProviders: [
     provideIcons({
-      matLocationSearchingOutline,
       matArrowBack,
       iconoirCode,
       matCreditCard,
@@ -78,38 +77,7 @@ export class HeaderRecordComponent {
     })
   )
 
-  isGeodata$ = combineLatest([
-    this.facade.mapApiLinks$,
-    this.facade.geoDataLinks$,
-  ]).pipe(
-    map(
-      ([mapLinks, geoDataLinks]) =>
-        mapLinks?.length > 0 || geoDataLinks?.length > 0
-    )
-  )
-
   get lastUpdate() {
     return this.dateService.formatDate(this.metadata.recordUpdated)
-  }
-
-  getBadge() {
-    switch (this.metadata.kind) {
-      default:
-      case 'dataset':
-        return {
-          text: 'record.kind.dataset',
-          icon: 'iconoirAppleShortcuts',
-        }
-      case 'reuse':
-        return {
-          text: 'record.kind.reuse',
-          icon: 'matCreditCard',
-        }
-      case 'service':
-        return {
-          text: 'record.kind.service',
-          icon: 'iconoirCode',
-        }
-    }
   }
 }

@@ -16,6 +16,7 @@ import {
   WmsLayerFull,
   WmtsLayer,
 } from '@camptocamp/ogc-client'
+import { matClose } from '@ng-icons/material-icons/baseline'
 
 marker(`service.metadata.search`)
 marker(`service.metadata.capabilities.title`)
@@ -48,6 +49,7 @@ marker(`service.metadata.capabilities.attribution`)
     provideIcons({
       iconoirSearch,
       matInfoOutline,
+      matClose,
     }),
   ],
   templateUrl: './service-capabilities.component.html',
@@ -102,6 +104,12 @@ export class ServiceCapabilitiesComponent implements OnInit {
       this.searchActive = true
       this.searchLayers()
     }
+  }
+
+  clearSearch() {
+    this.searchActive = false
+    this.searchQuery = ''
+    this.filteredLayers = this.availableLayers
   }
 
   async loadLayers() {
@@ -176,7 +184,7 @@ export class ServiceCapabilitiesComponent implements OnInit {
   }
 
   getExtraClass(layerItem) {
-    return layerItem.title === this.selectedLayer?.title
+    return layerItem === this.selectedLayer
       ? `h-8 rounded-lg bg-primary-darker text-white hover:text-primary-darker hover:bg-white`
       : `h-8 rounded-lg`
   }

@@ -68,6 +68,15 @@
   >
     <datahub-record-data-preview></datahub-record-data-preview>
   </section>
+  <section
+    id="feature-catalog"
+    class="mb-6"
+    *ngIf="displayFeatureCatalog$ | async"
+  >
+    <datahub-record-feature-catalog
+      [metadata]="metadata$ | async"
+    ></datahub-record-feature-catalog>
+  </section>
   <section id="capabilities" class="mb-16" *ngIf="displayCapabilities$ | async">
     <gn-ui-service-capabilities
       [apiLinks]="apiLinks$ | async"
@@ -126,7 +135,7 @@
     </div>
   </section>
   <section id="related" *ngIf="displayRelated$ | async" class="pt-6">
-    <div class="py-16 mt-[32px] bg-gray-100">
+    <div class="py-10 mt-[32px] bg-gray-100">
       <div class="container-lg px-4 lg:mx-auto">
         <datahub-record-related-records
           [records]="metadataViewFacade.related$ | async"
@@ -136,7 +145,7 @@
   </section>
 </div>
 <div
-  class="mt-10 p-4 max-w-[600px] m-auto text-[13px]"
+  class="mt-14 p-4 max-w-[600px] m-auto text-[13px]"
   *ngIf="metadataViewFacade.error$ | async as error"
 >
   <gn-ui-error

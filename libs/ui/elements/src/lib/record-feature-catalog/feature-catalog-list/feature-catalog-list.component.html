@@ -1,0 +1,48 @@
+<div class="flex flex-col gap-2 py-5 px-5 h-[562px] overflow-y-auto">
+  <div
+    *ngFor="let featureType of filteredFeatureCatalog?.featureTypes"
+    class="rounded shadow bg-white"
+  >
+    <gn-ui-expandable-panel
+      [collapsed]="filteredFeatureCatalog?.featureTypes?.length !== 1"
+      iconColor="black"
+    >
+      <ng-template #titleTemplate>
+        <div class="px-2">
+          <div class="text-lg font-bold">{{ featureType.name }}</div>
+          <div class="text-sm" *ngIf="featureType.definition">
+            {{ featureType.definition }}
+          </div>
+        </div>
+      </ng-template>
+      <div
+        class="grid gap-0"
+        [style.grid-template-columns]="gridTemplateColumns"
+        data-cy="feature-type-content"
+      >
+        <div
+          class="py-1 px-2 text-sm font-bold text-left border-t"
+          [class.border-l]="i > 0"
+          [class.border-gray-300]="i > 0"
+          *ngFor="let col of columns; let i = index"
+          data-test="column-label"
+        >
+          {{ col.label | translate }}
+        </div>
+        <ng-container *ngFor="let row of featureType.attributes">
+          <div
+            class="bg-white text-sm font-normal text-left border-t"
+            [class.border-l]="i > 0"
+            [class.border-gray-300]="i > 0"
+            *ngFor="let col of columns; let i = index"
+          >
+            <gn-ui-truncated-text
+              extraClass="py-3 px-2"
+              [text]="row[col.key]"
+            ></gn-ui-truncated-text>
+          </div>
+        </ng-container>
+      </div>
+    </gn-ui-expandable-panel>
+  </div>
+</div>

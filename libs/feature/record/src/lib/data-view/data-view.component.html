@@ -27,12 +27,14 @@
         *ngIf="mode === 'table'"
         [cacheActive]="cacheActive$ | async"
         [link]="selectedLink$ | async"
+        [featureCatalog]="mdViewFacade.featureCatalog$ | async"
       ></gn-ui-table-view>
       <gn-ui-chart-view
         *ngIf="mode === 'chart'"
         (chartConfig$)="setChartConfig($event)"
         [cacheActive]="cacheActive$ | async"
         [link]="selectedLink$ | async"
+        [featureCatalog]="mdViewFacade.featureCatalog$ | async"
       ></gn-ui-chart-view>
     </div>
   </ng-template>

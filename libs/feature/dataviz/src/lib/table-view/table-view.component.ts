@@ -6,11 +6,15 @@ import {
   shareReplay,
   startWith,
   switchMap,
+  tap,
 } from 'rxjs/operators'
 import { BaseReader, FetchError } from '@geonetwork-ui/data-fetcher'
 import { DataService } from '../service/data.service'
 import { DataTableComponent } from '@geonetwork-ui/ui/dataviz'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import {
+  DatasetFeatureCatalog,
+  DatasetOnlineResource,
+} from '@geonetwork-ui/common/domain/model/record'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import {
   LoadingMaskComponent,
@@ -33,6 +37,8 @@ import { CommonModule } from '@angular/common'
   standalone: true,
 })
 export class TableViewComponent {
+  featureAttributes = []
+  @Input() featureCatalog: DatasetFeatureCatalog
   @Input() cacheActive = true
   @Input() set link(value: DatasetOnlineResource) {
     this.currentLink$.next(value)
@@ -52,6 +58,7 @@ export class TableViewComponent {
       }
       this.loading = true
       return this.getDatasetReader(link).pipe(
+        tap((dataset: BaseReader) => this.setProperties(dataset)),
         catchError((error) => {
           this.handleError(error)
           return of(undefined)
@@ -95,5 +102,24 @@ export class TableViewComponent {
       console.warn(error)
     }
     this.loading = false
+  }
+
+  setProperties(dataset: BaseReader) {
+    dataset.properties.then((properties) => {
+      const updatedProperties = properties.map((p) => {
+        let label = p.name
+        if (this.featureCatalog) {
+          const attributes = this.featureCatalog.featureTypes[0].attributes
+          const matchingAttribute = attributes.find(
+            (attr) => attr.name === p.name
+          )
+          if (matchingAttribute && matchingAttribute.code) {
+            label = matchingAttribute.code
+          }
+        }
+        return { value: p.name, label }
+      })
+      this.featureAttributes = updatedProperties
+    })
   }
 }

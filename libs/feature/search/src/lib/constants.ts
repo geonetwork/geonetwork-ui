@@ -12,6 +12,7 @@ export const FIELDS_SUMMARY: FieldName[] = [
   'overview',
   'logo',
   'codelist_status_text',
+  'link',
   'linkProtocol',
   'contactForResource*.organisation*',
   'contact*.organisation*',

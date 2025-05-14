@@ -29,22 +29,27 @@ class DatasetReaderMock {
       {
         name: 'propNum1',
         type: 'number',
+        label: 'propNum1',
       },
       {
         name: 'propStr1',
         type: 'string',
+        label: 'propStr1',
       },
       {
         name: 'propStr2',
         type: 'string',
+        label: 'propStr2',
       },
       {
         name: 'propDate1',
         type: 'date',
+        label: 'propDate1',
       },
       {
         name: 'propNum2',
         type: 'number',
+        label: 'propNum2',
       },
     ]
     if (url.indexOf('no-string-props') > -1) {
@@ -355,6 +360,7 @@ describe('ChartViewComponent', () => {
           'http://server.org/no-number-props/no-date-props/more-results/'
         ),
       }
+      component.yProperty$.next('')
       flushMicrotasks()
       fixture.detectChanges()
       aggChoicesComponent = fixture.debugElement.query(
@@ -414,6 +420,52 @@ describe('ChartViewComponent', () => {
       }
       fixture.detectChanges()
       expect(component.error).toEqual('dataset.error.restrictedAccess')
+    })
+  })
+  describe('setProperties', () => {
+    beforeEach(() => {
+      component.featureCatalog$.next({
+        featureTypes: [
+          {
+            name: 'someName',
+            definition: 'definition',
+            attributes: [
+              { name: 'propNum1', code: 'Proper name', title: 'propNum1' },
+            ],
+          },
+        ],
+      })
+      fixture.detectChanges()
+    })
+    it('should update properties correctly with featureAttributes', async () => {
+      const properties = await firstValueFrom(component.properties$)
+      expect(properties).toEqual([
+        {
+          name: 'propNum1',
+          type: 'number',
+          label: 'Proper name',
+        },
+        {
+          name: 'propStr1',
+          type: 'string',
+          label: 'propStr1',
+        },
+        {
+          name: 'propStr2',
+          type: 'string',
+          label: 'propStr2',
+        },
+        {
+          name: 'propDate1',
+          type: 'date',
+          label: 'propDate1',
+        },
+        {
+          name: 'propNum2',
+          type: 'number',
+          label: 'propNum2',
+        },
+      ])
     })
   })
 })

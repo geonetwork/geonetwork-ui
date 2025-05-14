@@ -12,6 +12,8 @@ import {
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common'
+import { GeoDataBadgeComponent } from '../geo-data-badge/geo-data-badge.component'
+import { KindBadgeComponent } from '../kind-badge/kind-badge.component'
 import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component'
 import { MetadataQualityComponent } from '../metadata-quality/metadata-quality.component'
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
@@ -31,15 +33,9 @@ import {
   matPhoneOutline,
   matLocationOnOutline,
 } from '@ng-icons/material-icons/outline'
-import { matCode } from '@ng-icons/material-icons/baseline'
-import { iconoirDatabase, iconoirMap, iconoirInternet } from '@ng-icons/iconoir'
+import { iconoirInternet } from '@ng-icons/iconoir'
 import { TranslateModule } from '@ngx-translate/core'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { fromEvent, Subscription } from 'rxjs'
-
-marker('record.kind.data')
-marker('record.kind.reuse')
-marker('record.kind.service')
 
 type CardSize = 'L' | 'M' | 'S' | 'XS'
 
@@ -54,15 +50,14 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
     NgTemplateOutlet,
     NgIconComponent,
     TranslateModule,
+    GeoDataBadgeComponent,
+    KindBadgeComponent,
     MarkdownParserComponent,
   ],
   providers: [
     provideIcons({
-      matLocationSearchingOutline,
-      matCode,
-      iconoirDatabase,
-      iconoirMap,
       iconoirInternet,
+      matLocationSearchingOutline,
       matEmailOutline,
       matPhoneOutline,
       matLocationOnOutline,
@@ -76,10 +71,10 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
 })
 export class InternalLinkCardComponent implements OnInit {
   @Input() record: CatalogRecord
+  @Input() linkTarget = '_blank'
+  @Input() linkHref: string = null
   @Input() metadataQualityDisplay: boolean
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
-  @Input() linkHref: string = null
-  @Input() isGeodata: boolean
   @Input() set size(value: CardSize) {
     this._size = value
     this.cardClass = this.sizeClassMap[value] || ''
@@ -99,24 +94,24 @@ export class InternalLinkCardComponent implements OnInit {
   private _size: CardSize = 'M'
 
   private readonly sizeClassMap: Record<CardSize, string> = {
-    L: 'min-h-[190px] md:w-[992px] py-3 px-3 flex items-start gap-5',
-    M: 'min-h-[140px] md:w-[570px] py-3 px-3 flex items-start gap-4',
-    S: 'min-h-[220px] md:w-[370px] py-3 px-3 flex gap-4',
-    XS: 'min-h-[108px] md:w-[570px] py-3 px-3 flex gap-4',
+    L: 'min-h-[190px] w-full py-3 px-3 flex items-start gap-5',
+    M: 'min-h-[140px] py-3 px-3 flex items-start gap-4',
+    S: 'min-h-[220px] py-3 px-3 flex gap-4',
+    XS: 'min-h-[108px] py-3 px-3 flex gap-4',
   }
 
   private readonly thumbnailSizeClassMap: Record<CardSize, string> = {
-    L: 'w-[190px] h-[180px] rounded-lg overflow-hidden shrink-0',
+    L: 'w-full md:w-[190px] h-[180px] rounded-lg overflow-hidden shrink-0',
     M: 'w-[110px] h-[140px] rounded-lg overflow-hidden shrink-0',
     S: 'hidden',
     XS: 'hidden',
   }
 
   private readonly titleClassMap: Record<CardSize, string> = {
-    L: 'text-xl line-clamp-2',
+    L: 'text-xl line-clamp-1',
     M: 'text-base line-clamp-2',
-    S: 'text-base line-clamp-3',
-    XS: 'text-base mt-3 line-clamp-2',
+    S: 'text-base line-clamp-3 ml-2',
+    XS: 'text-base line-clamp-1 ml-2',
   }
 
   constructor(protected elementRef: ElementRef) {}
@@ -124,12 +119,8 @@ export class InternalLinkCardComponent implements OnInit {
   ngOnInit(): void {
     this.abstract = removeWhitespace(stripHtml(this.record?.abstract))
     this.subscription.add(
-      fromEvent(this.elementRef.nativeElement, 'click').subscribe(
-        (event: Event) => {
-          event.preventDefault()
-          propagateToDocumentOnly(event)
-          this.mdSelect.emit(this.record)
-        }
+      fromEvent(this.elementRef.nativeElement, 'click').subscribe(() =>
+        this.mdSelect.emit(this.record)
       )
     )
   }
@@ -147,11 +138,7 @@ export class InternalLinkCardComponent implements OnInit {
   }
 
   getTitleClass() {
-    return (
-      this.titleClassMap[this._size] +
-        ' ' +
-        (this.record.ownerOrganization?.name ? '' : 'mt-3') || ''
-    )
+    return this.titleClassMap[this._size]
   }
 
   openExternalUrl(event: Event, url: URL): void {
@@ -171,20 +158,5 @@ export class InternalLinkCardComponent implements OnInit {
 
   get shouldShowThumbnail(): boolean {
     return this.size === 'L' || this.size === 'M'
-  }
-
-  getKindInfo(): { text: string; icon: string } {
-    if (!this.record?.kind) return { text: '', icon: '' }
-
-    switch (this.record.kind.toLowerCase()) {
-      case 'dataset':
-        return { text: 'record.kind.data', icon: 'iconoirDatabase' }
-      case 'reuse':
-        return { text: 'record.kind.reuse', icon: 'iconoirMap' }
-      case 'service':
-        return { text: 'record.kind.service', icon: 'matCode' }
-      default:
-        return { text: '', icon: '' }
-    }
   }
 }

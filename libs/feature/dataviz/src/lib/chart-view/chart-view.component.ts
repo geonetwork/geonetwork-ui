@@ -2,9 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Inject,
   Input,
-  Optional,
   Output,
 } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -13,6 +11,7 @@ import {
   FetchError,
   FieldAggregation,
   getJsonDataItemsProxy,
+  PropertyInfo,
 } from '@geonetwork-ui/data-fetcher'
 import {
   DropdownChoice,
@@ -30,7 +29,10 @@ import {
 } from 'rxjs/operators'
 import { DataService } from '../service/data.service'
 import { InputChartType } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import {
+  DatasetFeatureCatalog,
+  DatasetOnlineResource,
+} from '@geonetwork-ui/common/domain/model/record'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import { ChartComponent } from '@geonetwork-ui/ui/dataviz'
@@ -67,9 +69,18 @@ marker('chart.aggregation.count')
   standalone: true,
 })
 export class ChartViewComponent {
+  public featureCatalog$ = new BehaviorSubject<DatasetFeatureCatalog | null>(
+    null
+  )
+  @Input() set featureCatalog(value: DatasetFeatureCatalog) {
+    this.featureCatalog$.next(value)
+  }
   @Input() cacheActive = true
   @Input() set link(value: DatasetOnlineResource) {
     this.currentLink$.next(value)
+    if (value) {
+      this.aggregation$.next('sum')
+    }
   }
   private currentLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
 
@@ -150,13 +161,8 @@ export class ChartViewComponent {
     }),
     shareReplay(1)
   )
-  properties$ = this.dataset$.pipe(
-    switchMap((dataset) =>
-      dataset.properties.catch((error) => {
-        this.handleError(error)
-        return []
-      })
-    ),
+  properties$ = combineLatest([this.dataset$, this.featureCatalog$]).pipe(
+    switchMap(([dataset, catalog]) => this.setProperties(dataset, catalog)),
     shareReplay(1)
   )
   yChoices$ = this.properties$.pipe(
@@ -197,6 +203,7 @@ export class ChartViewComponent {
     this.yProperty$.pipe(filter((value) => value !== undefined)),
     this.aggregation$,
   ]).pipe(
+    filter(([_, x, y]) => !!x || !!y),
     switchMap(([dataset, xProp, yProp, aggregation]) => {
       const fieldAgg: FieldAggregation =
         aggregation === 'count' ? ['count'] : [aggregation, yProp]
@@ -217,6 +224,18 @@ export class ChartViewComponent {
     shareReplay(1)
   )
 
+  prettyLabel$ = combineLatest([
+    this.aggregation$,
+    this.properties$,
+    this.yProperty$,
+  ]).pipe(
+    map(([aggregation, properties, yProperty]) => {
+      if (aggregation === 'count') return 'count()'
+      const prop = properties.find((p) => p.name === yProperty)
+      return prop ? `${aggregation}(${prop.label})` : ''
+    })
+  )
+
   get labelProperty() {
     if (!this.xProperty$.value) return ''
     return `distinct(${this.xProperty$.value})`
@@ -235,6 +254,31 @@ export class ChartViewComponent {
     private translateService: TranslateService
   ) {}
 
+  setProperties(
+    dataset: BaseReader,
+    catalog: DatasetFeatureCatalog
+  ): Promise<PropertyInfo[]> {
+    return dataset.properties
+      .then((properties) => {
+        return properties.map((p) => {
+          if (catalog) {
+            const featureAttributes = catalog?.featureTypes[0]?.attributes ?? []
+            const matchingAttribute = featureAttributes.find(
+              (attr) => attr.name === p.label
+            )
+            if (matchingAttribute?.code) {
+              return { ...p, label: matchingAttribute.code }
+            }
+            return p
+          }
+          return p
+        })
+      })
+      .catch((error) => {
+        this.handleError(error)
+        return []
+      })
+  }
   handleError(error: FetchError | Error | string) {
     if (error instanceof FetchError) {
       this.error = this.translateService.instant(

@@ -153,7 +153,9 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         attributes: Array.isArray(featureType.attributeTable)
           ? featureType.attributeTable.map((attr) => ({
               name: attr.name,
+              code: attr.code,
               title: attr.definition,
+              type: attr.type,
             }))
           : [],
       })),
@@ -165,7 +167,8 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   ): Observable<DatasetFeatureCatalog | null> {
     if (
       record.extras?.['featureTypes'] &&
-      Array.isArray(record.extras['featureTypes'])
+      Array.isArray(record.extras['featureTypes']) &&
+      record.extras['featureTypes'].length > 0
     ) {
       return of(this.mapEmbeddedFeatureCatalog(record.extras['featureTypes']))
     }
@@ -395,9 +398,12 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         const record = await converter.readRecord(fetchedRecordAsXml)
 
         record.title = `${record.title} (Copy)`
-        await converter.writeRecord(record, fetchedRecordAsXml)
+        const recordAsXml = await converter.writeRecord(
+          record,
+          fetchedRecordAsXml
+        )
 
-        return this.saveRecord(record, '', false)
+        return this.saveRecord(record, recordAsXml, false)
       }),
       exhaustMap((uuidObservable: Observable<string>) => uuidObservable),
       catchError((error: HttpErrorResponse) => {

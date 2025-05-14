@@ -1,0 +1,43 @@
+<div
+  class="flex items-center justify-between p-3 mt-8 bg-white rounded-lg border-b solid border-gray-300"
+>
+  <div
+    class="relative shrink-0"
+    *ngIf="featureCatalog?.featureTypes?.length > 1"
+  >
+    <input
+      type="text"
+      [placeholder]="'search.filter.into.feature.catalog' | translate"
+      class="w-[220px] h-8 pl-3 pr-10 py-2 border rounded-md"
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="filterAction(searchTerm)"
+    />
+    <ng-icon
+      class="absolute right-2.5 top-1 w-6 h-6 text-black"
+      name="iconoirSearch"
+    ></ng-icon>
+  </div>
+  <div class="text-sm px-1 ml-auto hidden sm:inline">
+    <ng-container *ngIf="featureCatalog?.featureTypes?.length > 1">
+      <span
+        class="text-sm font-medium text-gray-900"
+        data-cy="total-objects-label"
+        translate
+        >record.feature.catalog.number.total.object</span
+      ><span
+        class="text-sm font-bold px-1 text-gray-900"
+        data-cy="total-objects"
+        >{{ totalObjects }}</span
+      >
+      <span class="px-1.5">|</span>
+    </ng-container>
+    <span
+      class="text-sm font-medium px-1 text-gray-900"
+      data-cy="total-attributes-label"
+      translate
+      >record.feature.catalog.number.total.attribute</span
+    ><span class="text-sm font-bold text-gray-900" data-cy="total-attributes">{{
+      totalAttributes
+    }}</span>
+  </div>
+</div>

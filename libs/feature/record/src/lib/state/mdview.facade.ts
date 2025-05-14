@@ -6,6 +6,7 @@ import {
   filter,
   map,
   mergeMap,
+  shareReplay,
   switchMap,
   toArray,
 } from 'rxjs/operators'
@@ -15,13 +16,11 @@ import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import {
   CatalogRecord,
-  DatasetServiceDistribution,
-  ServiceEndpoint,
   UserFeedback,
 } from '@geonetwork-ui/common/domain/model/record'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
 import { OgcApiRecord } from '@camptocamp/ogc-client'
-import { from, of } from 'rxjs'
+import { from, of, Observable } from 'rxjs'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 @Injectable()
@@ -80,21 +79,17 @@ export class MdViewFacade {
   chartConfig$ = this.store.pipe(select(MdViewSelectors.getChartConfig))
 
   allLinks$ = this.metadata$.pipe(
-    map((record) => ('onlineResources' in record ? record.onlineResources : []))
+    map((record) =>
+      'onlineResources' in record ? record.onlineResources : []
+    ),
+    shareReplay(1)
   )
 
   apiLinks$ = this.allLinks$.pipe(
     map((links) =>
-      links
-        .filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.API))
-        // Put links to IGN Géoplateforme first
-        .sort((dd1, dd2) => {
-          return (dd2 as DatasetServiceDistribution | ServiceEndpoint)
-            .accessServiceProtocol === 'GPFDL'
-            ? 1
-            : undefined // do not change the sorting otherwise
-        })
-    )
+      links.filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.API))
+    ),
+    shareReplay(1)
   )
 
   mapApiLinks$ = this.allLinks$.pipe(
@@ -102,7 +97,8 @@ export class MdViewFacade {
       links.filter((link) =>
         this.linkClassifier.hasUsage(link, LinkUsage.MAP_API)
       )
-    )
+    ),
+    shareReplay(1)
   )
 
   downloadLinks$ = this.allLinks$.pipe(
@@ -215,5 +211,12 @@ export class MdViewFacade {
 
   loadUserFeedbacks(datasetUuid: string) {
     this.store.dispatch(MdViewActions.loadUserFeedbacks({ datasetUuid }))
+  }
+
+  /**
+   * loadFeatureCatalog
+   */
+  loadFeatureCatalog(metadata: CatalogRecord) {
+    this.store.dispatch(MdViewActions.loadFeatureCatalog({ metadata }))
   }
 }

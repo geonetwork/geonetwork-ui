@@ -14,6 +14,7 @@ import {
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
 import { TestScheduler } from 'rxjs/testing'
+import { firstValueFrom } from 'rxjs'
 
 const newEndpointCall = jest.fn()
 let testScheduler: TestScheduler
@@ -430,6 +431,88 @@ describe('MdViewFacade', () => {
         tick()
         expect(result).toEqual(values.a)
       }))
+    })
+  })
+
+  describe('mapApiLinks$ & apiLinks$', () => {
+    const tmsLink = {
+      type: 'service' as const,
+      url: new URL('https://my-org.net/tms'),
+      accessServiceProtocol: 'tms' as const,
+      name: 'TMS Service',
+    }
+    const wmsLink = {
+      type: 'service' as const,
+      url: new URL('https://my-org.net/wms'),
+      accessServiceProtocol: 'wms' as const,
+      name: 'WMS Service',
+    }
+    const links = [tmsLink, wmsLink]
+
+    beforeEach(() => {
+      store.setState({
+        [METADATA_VIEW_FEATURE_STATE_KEY]: {
+          ...initialMetadataViewState,
+          metadata: {
+            ...datasetRecordsFixture()[0],
+            onlineResources: links,
+          },
+        },
+      })
+      jest.spyOn(facade.dataService, 'getGeodataLinksFromTms')
+    })
+
+    it('mapApiLinks$: should return TMS & WMS services unchanged', async () => {
+      const result = await firstValueFrom(facade.mapApiLinks$)
+      expect(result).toEqual(links)
+      expect(facade.dataService.getGeodataLinksFromTms).not.toHaveBeenCalled()
+    })
+
+    it('apiLinks$: should return TMS & WMS services unchanged', async () => {
+      const result = await firstValueFrom(facade.apiLinks$)
+      expect(result).toEqual(links)
+      expect(facade.dataService.getGeodataLinksFromTms).not.toHaveBeenCalled()
+    })
+
+    describe('links containing other link types and protocols', () => {
+      const nonMapLinks = [
+        {
+          type: 'download' as const,
+          url: new URL('http://my-org.net/download/data.csv'),
+          name: 'Download CSV',
+        },
+        {
+          type: 'service' as const,
+          accessServiceProtocol: 'wfs' as const,
+          url: new URL('https://my-org.net/wfs'),
+          name: 'WFS Service',
+        },
+      ]
+
+      beforeEach(() => {
+        store.setState({
+          [METADATA_VIEW_FEATURE_STATE_KEY]: {
+            ...initialMetadataViewState,
+            metadata: {
+              ...datasetRecordsFixture()[0],
+              onlineResources: [...links, ...nonMapLinks],
+            },
+          },
+        })
+        jest.spyOn(facade.dataService, 'getGeodataLinksFromTms')
+      })
+
+      it('mapApiLinks$: should only return map api links', async () => {
+        const result = await firstValueFrom(facade.mapApiLinks$)
+        expect(result).toEqual(links)
+        expect(facade.dataService.getGeodataLinksFromTms).not.toHaveBeenCalled()
+      })
+
+      it('apiLinks$: should only return api links', async () => {
+        const result = await firstValueFrom(facade.apiLinks$)
+        expect(result).toEqual([...links, nonMapLinks[1]])
+        expect(facade.dataService.getGeodataLinksFromTms).not.toHaveBeenCalled()
+      })
     })
   })
 })

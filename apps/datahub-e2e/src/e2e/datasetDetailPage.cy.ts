@@ -237,8 +237,8 @@ describe('dataset pages', () => {
       .find('gn-ui-thumbnail')
       .should('be.visible')
     cy.get('datahub-record-metadata')
-      .find('[data-cy="organization-name"]')
-      .parent()
+      .find('[data-cy="metadata-organization"]')
+      .children('div')
       .children('div')
       .should('have.length', 4)
 
@@ -314,7 +314,7 @@ describe('dataset pages', () => {
     cy.go('back')
 
     // it should go to dataset search page when clicking on org name and filter by org
-    cy.get('[data-cy="organization-name"]').eq(1).click()
+    cy.get('[data-cy="organization-name-link"]').eq(0).click()
     cy.url().should('include', '/search?organization=')
   })
 
@@ -764,26 +764,23 @@ describe('dataset pages', () => {
     cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
 
     // it should display the related records
-    cy.get('#related')
-      .find('datahub-record-related-records')
+    cy.get('datahub-record-related-records')
       .find('gn-ui-related-record-card')
       .should('have.length.gt', 0)
 
     // it should display a similar related record
-    cy.get('#related')
-      .find('datahub-record-related-records')
+    cy.get('datahub-record-related-records')
       .find('gn-ui-related-record-card')
       .first()
-      .find('h4')
+      .find('[data-cy="recordTitle"]')
       .should(
         'have.text',
         ` Metadata for E2E testing purpose. (this title is too long and should be cut, this title is too long and should be cut, this title is too long and should be cut, this title is too long and should be cut, this title is too long and should be cut) `
       )
 
     // it goes to dataset on click
-    cy.get('#related')
-      .find('datahub-record-related-records')
-      .find('gn-ui-related-record-card')
+    cy.get('datahub-record-related-records')
+      .find('gn-ui-internal-link-card')
       .first()
       .children('a')
       .as('proviLink')

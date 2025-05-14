@@ -1,6 +1,6 @@
 <div *ngIf="feature" class="root">
-  <div class="property" *ngFor="let propName of properties">
-    <div>{{ propName }}</div>
-    <div class="font-bold">{{ feature.properties[propName] }}</div>
+  <div class="property" *ngFor="let prop of properties | keyvalue">
+    <div>{{ prop.key }}</div>
+    <div class="font-bold">{{ prop.value }}</div>
   </div>
 </div>

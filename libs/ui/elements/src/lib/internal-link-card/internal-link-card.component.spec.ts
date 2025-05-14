@@ -8,6 +8,14 @@ import {
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
+import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
+import {
+  matLocationSearchingOutline,
+  matEmailOutline,
+  matPhoneOutline,
+  matLocationOnOutline,
+} from '@ng-icons/material-icons/outline'
+import { iconoirInternet } from '@ng-icons/iconoir'
 
 // Mock organization
 const mockOrganization: Organization = {
@@ -69,6 +77,18 @@ describe('InternalLinkCardComponent', () => {
       imports: [InternalLinkCardComponent, TranslateModule.forRoot()],
       declarations: [TestHostComponent],
       schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        provideIcons({
+          iconoirInternet,
+          matLocationSearchingOutline,
+          matEmailOutline,
+          matPhoneOutline,
+          matLocationOnOutline,
+        }),
+        provideNgIconsConfig({
+          size: '1.2em',
+        }),
+      ],
     })
       .overrideComponent(InternalLinkCardComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
@@ -246,43 +266,6 @@ describe('InternalLinkCardComponent', () => {
       await component.copyToClipboard(mockEvent, text)
 
       expect(writeSpy).toHaveBeenCalledWith(text)
-    })
-  })
-
-  describe('getKindInfo', () => {
-    it('returns correct info for dataset', () => {
-      component.record.kind = 'dataset'
-      const result = component.getKindInfo()
-      expect(result.text).toBe('record.kind.data')
-      expect(result.icon).toBe('iconoirDatabase')
-    })
-
-    it('returns correct info for reuse', () => {
-      component.record.kind = 'reuse'
-      const result = component.getKindInfo()
-      expect(result.text).toBe('record.kind.reuse')
-      expect(result.icon).toBe('iconoirMap')
-    })
-
-    it('returns correct info for service', () => {
-      component.record.kind = 'service'
-      const result = component.getKindInfo()
-      expect(result.text).toBe('record.kind.service')
-      expect(result.icon).toBe('matCode')
-    })
-
-    it('returns empty values for unknown kind', () => {
-      component.record.kind = 'unknown' as any
-      const result = component.getKindInfo()
-      expect(result.text).toBe('')
-      expect(result.icon).toBe('')
-    })
-
-    it('returns empty values when kind is undefined', () => {
-      component.record.kind = undefined
-      const result = component.getKindInfo()
-      expect(result.text).toBe('')
-      expect(result.icon).toBe('')
     })
   })
 
