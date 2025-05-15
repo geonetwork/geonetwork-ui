@@ -30,6 +30,7 @@
   "dashboard.labels.mySpace": "Mijn ruimte",
   "dashboard.records.all": "Catalogus",
   "dashboard.records.hasDraft": "",
+  "dashboard.records.isMultilingual": "Dit record is meertalig ({languages})",
   "dashboard.records.myDraft": "Mijn concepten",
   "dashboard.records.myRecords": "Mijn Records",
   "dashboard.records.search": "Zoeken naar \"{searchText}\"",
