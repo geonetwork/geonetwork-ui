@@ -203,6 +203,53 @@ describe('Gn4FieldMapper', () => {
           const result = mappingFn(output, source)
           expect(result).toEqual({ extras: { edit: 'true' } })
         })
+        it('related - should return a function that correctly maps the field', () => {
+          const fieldName = 'related'
+          const mappingFn = service.getMappingFn(fieldName)
+          const output = {}
+          const source = {
+            related: {
+              fcats: [
+                {
+                  origin: 'catalog',
+                  _source: {
+                    uuid: 'featurecatalog-001',
+                  },
+                },
+              ],
+              hassources: [
+                {
+                  origin: 'catalog',
+                  _source: {
+                    uuid: 'hassource-001',
+                  },
+                },
+              ],
+              sources: [
+                {
+                  origin: 'catalog',
+                  _source: {
+                    uuid: 'source-001',
+                  },
+                },
+                {
+                  origin: 'catalog',
+                  _source: {
+                    uuid: 'source-002',
+                  },
+                },
+              ],
+            },
+          }
+          const result = mappingFn(output, source)
+          expect(result).toEqual({
+            extras: {
+              featureCatalogIdentifier: 'featurecatalog-001',
+              hasSourcesIdentifiers: ['hassource-001'],
+              sourcesIdentifiers: ['source-001', 'source-002'],
+            },
+          })
+        })
       })
     })
   })

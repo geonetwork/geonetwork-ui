@@ -328,7 +328,7 @@ describe('Gn4Repository', () => {
       it('calls the API with correct parameters', () => {
         expect(spySearch).toHaveBeenCalledWith(
           'bucket',
-          ['fcats'],
+          ['fcats', 'sources', 'hassources'],
           '{"uuids":["feature-catalog-identifier"]}'
         )
       })
@@ -420,6 +420,71 @@ describe('Gn4Repository', () => {
     })
     it('returns the given results as records', () => {
       expect(results).toStrictEqual(datasetRecordsFixture())
+    })
+  })
+  describe('getSources', () => {
+    let sources: CatalogRecord[]
+    const mockRecord = {
+      ...SAMPLE_RECORD,
+      extras: {
+        sourcesIdentifiers: ['source-1', 'source-2'],
+      },
+    }
+
+    beforeEach(async () => {
+      repository.getRecord = jest
+        .fn()
+        .mockImplementation((id) => of({ uuid: id }))
+      sources = await lastValueFrom(repository.getSources(mockRecord))
+    })
+
+    it('calls getRecord for each source identifier', () => {
+      expect(repository.getRecord).toHaveBeenCalledWith('source-1')
+      expect(repository.getRecord).toHaveBeenCalledWith('source-2')
+    })
+
+    it('returns the sources as an array of CatalogRecord', () => {
+      expect(sources).toEqual([{ uuid: 'source-1' }, { uuid: 'source-2' }])
+    })
+
+    it('returns null if no sourcesIdentifiers are defined', async () => {
+      const recordWithoutSources = { ...mockRecord, extras: {} }
+      const result = await lastValueFrom(
+        repository.getSources(recordWithoutSources)
+      )
+      expect(result).toBeNull()
+    })
+  })
+  describe('getHasSources', () => {
+    let hasSources: CatalogRecord[]
+    const mockRecord = {
+      ...SAMPLE_RECORD,
+      extras: {
+        hasSourcesIdentifiers: ['hasSource-1', 'hasSource-2'],
+      },
+    }
+    beforeEach(async () => {
+      repository.getRecord = jest
+        .fn()
+        .mockImplementation((id) => of({ uuid: id }))
+      hasSources = await lastValueFrom(repository.getHasSources(mockRecord))
+    })
+    it('calls getRecord for each hasSource identifier', () => {
+      expect(repository.getRecord).toHaveBeenCalledWith('hasSource-1')
+      expect(repository.getRecord).toHaveBeenCalledWith('hasSource-2')
+    })
+    it('returns the hasSources as an array of CatalogRecord', () => {
+      expect(hasSources).toEqual([
+        { uuid: 'hasSource-1' },
+        { uuid: 'hasSource-2' },
+      ])
+    })
+    it('returns null if no hasSourcesIdentifiers are defined', async () => {
+      const recordWithoutHasSources = { ...mockRecord, extras: {} }
+      const result = await lastValueFrom(
+        repository.getHasSources(recordWithoutHasSources)
+      )
+      expect(result).toBeNull()
     })
   })
   describe('aggregate', () => {
