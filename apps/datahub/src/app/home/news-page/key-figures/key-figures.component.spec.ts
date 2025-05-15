@@ -7,6 +7,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { RouterTestingModule } from '@angular/router/testing'
 import { By } from '@angular/platform-browser'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { globalConfigFilters } from '../../../app.config'
 
 const recordsCount$ = new BehaviorSubject(1234)
 class RecordsServiceMock {
@@ -46,6 +47,17 @@ describe('KeyFiguresComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy()
+  })
+
+  it('should getOrganisations call with globalConfigFilters', () => {
+    expect(component.catalogOrgs.getOrganisations).toHaveBeenCalledWith(
+      globalConfigFilters
+    )
+  })
+  it('should getRecordsCount call with globalConfigFilters', () => {
+    expect(component.catalogRecords.getRecordsCount).toHaveBeenCalledWith(
+      globalConfigFilters
+    )
   })
 
   describe('recordsCount$', () => {

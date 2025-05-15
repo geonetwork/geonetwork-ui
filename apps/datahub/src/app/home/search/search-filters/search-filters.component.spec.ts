@@ -72,7 +72,6 @@ class SearchFacadeMock {
   hasSpatialFilter$ = new BehaviorSubject(false)
   spatialFilterEnabled$ = new BehaviorSubject(false)
   setSpatialFilterEnabled = jest.fn()
-  setConfigFilters = jest.fn(() => this)
 }
 class SearchServiceMock {
   updateFilters = jest.fn()

@@ -25,8 +25,8 @@ export class KeyFiguresComponent {
   ROUTE_ORGANISATIONS = `/${ROUTER_ROUTE_ORGANIZATIONS}`
 
   constructor(
-    private catalogRecords: RecordsService,
-    private catalogOrgs: OrganizationsServiceInterface
+    public catalogRecords: RecordsService,
+    public catalogOrgs: OrganizationsServiceInterface
   ) {
     this.recordsCount$ = this.catalogRecords
       .getRecordsCount(globalConfigFilters)
@@ -34,7 +34,7 @@ export class KeyFiguresComponent {
         startWith('-'),
         catchError(() => of('-'))
       )
-    this.catalogOrgs.getOrganisations()
+    this.catalogOrgs.getOrganisations(globalConfigFilters)
     this.orgsCount$ = this.catalogOrgs.organisationsCount$.pipe(startWith('-'))
   }
 }

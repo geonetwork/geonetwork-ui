@@ -26,7 +26,6 @@ import { lastValueFrom } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { sortByFromString } from '@geonetwork-ui/util/shared'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { globalConfigFilters } from '../../app.config'
 
 marker('datahub.header.myfavorites')
 marker('datahub.header.lastRecords')
@@ -72,10 +71,6 @@ export class HomeHeaderComponent {
   isAuthenticated$ = this.platformService
     .isAnonymous()
     .pipe(map((isAnonymous) => !isAnonymous))
-
-  ngOnInit() {
-    this.searchFacade.setConfigFilters(globalConfigFilters)
-  }
 
   onFuzzySearchSelection(record: CatalogRecord) {
     this.routerFacade.goToMetadata(record)
