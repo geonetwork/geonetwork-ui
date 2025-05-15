@@ -437,6 +437,11 @@
   "record.metadata.quality.topic.success": "Le thème est renseigné",
   "record.metadata.quality.updateFrequency.failed": "La fréquence de mise à jour n'est pas renseignée",
   "record.metadata.quality.updateFrequency.success": "La fréquence de mise à jour est renseignée",
+  "record.metadata.quality.capabilities.failed": "Les spécifications du service ne sont pas renseignées",
+  "record.metadata.quality.capabilities.success": "Les spécifications du service sont renseignées",
+  "record.metadata.quality.sources.failed": "Le catalogue liée n'est pas renseignée",
+  "record.metadata.quality.sources.success": "Le catalogue liée est renseignée",
+
   "record.metadata.related": "Voir aussi",
   "record.metadata.related.contents": "Contenu associé",
   "record.metadata.ressources.and.links": "Ressources et liens",
