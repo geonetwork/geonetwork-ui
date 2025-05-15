@@ -20,6 +20,10 @@ marker('record.metadata.quality.updateFrequency.success')
 marker('record.metadata.quality.updateFrequency.failed')
 marker('record.metadata.quality.organisation.success')
 marker('record.metadata.quality.organisation.failed')
+marker('record.metadata.quality.capabilities.success')
+marker('record.metadata.quality.capabilities.failed')
+marker('record.metadata.quality.sources.success')
+marker('record.metadata.quality.sources.failed')
 
 export interface MetadataQualityItem {
   name: string
