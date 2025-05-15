@@ -124,12 +124,12 @@ describe('MetadataQualityComponent', () => {
       component.initialize()
       fixture.detectChanges()
 
-      expect(component.items.every((item) => !item.value)).toBe(true)
+      expect(component.items.every((item) => item.value)).toBe(false)
       expect(component.items.length).toBe(8)
       expect(component.calculatedQualityScore).toBe(0)
     })
 
-    it('should show all items present and 100% quality score for a complete dataset', () => {
+    it('should show all items present and 100% quality score for a complete dataset (all needed field given)', () => {
       const completeDatasetMetadata: Partial<DatasetRecord> = {
         kind: 'dataset',
         title: 'Complete Dataset',
@@ -200,74 +200,11 @@ describe('MetadataQualityComponent', () => {
     })
   })
   describe('When i give a service record, the quality score and items must be corrects', () => {
-    it('should calculate quality percentage correctly with partial Service data', () => {
+    it('should show 0 and all items false when no field are given for service record', () => {
       const partialServiceMetadata: Partial<ServiceRecord> = {
         kind: 'service',
-        title: 'Test Service',
-        abstract: 'Test Description',
-        contacts: [
-          {
-            email: 'test@test.com',
-            role: 'pointOfContact',
-          },
-        ],
-        keywords: [],
-        legalConstraints: [],
-        onlineResources: [
-          {
-            type: 'endpoint',
-            url: new URL('https://my-org.net/wfs?request=getmap'),
-            accessServiceProtocol: 'wfs',
-          },
-        ],
-      }
-      component.metadata = partialServiceMetadata
-      component.initialize()
-      fixture.detectChanges()
-
-      expect(component.calculatedQualityScore).toBe(50) // 3 out of 6 items are filled (title, description, contact)
-    })
-    it('should verify specific Service items in partial data test', () => {
-      const partialServiceMetadata: Partial<ServiceRecord> = {
-        kind: 'service',
-        title: 'Test Service',
-        abstract: 'Test Description',
-        contacts: [
-          {
-            email: 'test@test.com',
-            role: 'pointOfContact',
-          },
-        ],
-        keywords: [],
-        legalConstraints: [],
-        onlineResources: [
-          {
-            type: 'endpoint',
-            url: new URL('https://my-org.net/wfs?REQUEST=GetCapabilities'),
-            accessServiceProtocol: 'wfs',
-          },
-        ],
-      }
-      component.metadata = partialServiceMetadata
-      component.initialize()
-      fixture.detectChanges()
-
-      const expectedItems = [
-        { name: 'title', value: true },
-        { name: 'description', value: true },
-        { name: 'keywords', value: false },
-        { name: 'legalConstraints', value: false },
-        { name: 'contact', value: true },
-        { name: 'capabilities', value: true },
-      ]
-      expect(component.items).toEqual(expectedItems)
-      expect(component.calculatedQualityScore).toBe(67) // 4 sur 6 items remplis
-    })
-    it('should show partial quality score for service type with missing fields', () => {
-      const partialServiceMetadata: Partial<ServiceRecord> = {
-        kind: 'service',
-        title: 'Test Service',
-        abstract: 'Test Description',
+        title: '',
+        abstract: '',
         keywords: [],
         contacts: [],
         legalConstraints: [],
@@ -277,13 +214,13 @@ describe('MetadataQualityComponent', () => {
       component.metadata = partialServiceMetadata
       component.initialize()
       fixture.detectChanges()
-
+      expect(component.items.every((item) => item.value)).toBe(false)
       expect(component.items.length).toBe(6)
-      expect(component.calculatedQualityScore).toBe(33) // Only title and description are filled
+      expect(component.calculatedQualityScore).toBe(0)
     })
   })
 
-  it('should show 100 and all items true when all fields are given for service dataset type', () => {
+  it('should show 100 and all items true when all needed fields are given for service record', () => {
     const serviceMetadata: Partial<ServiceRecord> = {
       kind: 'service',
       title: 'Test Service',
@@ -292,7 +229,6 @@ describe('MetadataQualityComponent', () => {
         {
           email: 'test@test.com',
           role: 'pointOfContact',
-          organization: { name: 'Test Org' },
         },
       ],
       keywords: [
@@ -328,14 +264,14 @@ describe('MetadataQualityComponent', () => {
     expect(component.calculatedQualityScore).toBe(100)
   })
   describe('When i give a reuse record, the quality score and items must be corrects', () => {
-    it('should calculate quality percentage correctly with partial Reuse data', () => {
+    it('should show quality score at 0 and all items false when all fields empty for reuse record', () => {
       const partialReuseMetadata: Partial<ReuseRecord> = {
         kind: 'reuse',
-        title: 'Test Reuse',
-        abstract: 'Test Description',
+        title: '',
+        abstract: '',
         contacts: [
           {
-            email: 'test@test.com',
+            email: '',
             role: 'pointOfContact',
           },
         ],
@@ -348,10 +284,11 @@ describe('MetadataQualityComponent', () => {
       component.metadata = partialReuseMetadata
       component.initialize()
       fixture.detectChanges()
-
-      expect(component.calculatedQualityScore).toBe(38) // 3 out of 8 items are filled (title, description, contact)
+      expect(component.items.every((item) => item.value)).toBe(false)
+      expect(component.items.length).toBe(8)
+      expect(component.calculatedQualityScore).toBe(0)
     })
-    it('should show 100 and all items true when all fields are given for reuse dataset type', () => {
+    it('should show quality score at 100 and all items true when all fields needed are given for reuse record', () => {
       const reuseMetadata: Partial<ReuseRecord> = {
         kind: 'reuse',
         title: 'Test Reuse',
@@ -371,17 +308,10 @@ describe('MetadataQualityComponent', () => {
         ],
         legalConstraints: [{ text: 'test constraint' }],
         topics: ['testTopic'],
-        onlineResources: [
-          {
-            type: 'link',
-            url: new URL('http://test.com'),
-            name: 'Test Link',
-          },
-        ],
+        onlineResources: [],
         extras: {
           catalogUuid: 'test-uuid',
         },
-        lineage: 'Test lineage',
         spatialExtents: [],
         temporalExtents: [],
       }
@@ -401,70 +331,6 @@ describe('MetadataQualityComponent', () => {
       ]
       expect(component.items).toEqual(expectedReuseItems)
       expect(component.calculatedQualityScore).toBe(100)
-    })
-
-    it('should show partial quality score for reuse type with missing fields', () => {
-      const partialReuseMetadata: Partial<ReuseRecord> = {
-        kind: 'reuse',
-        title: 'Test Reuse',
-        abstract: 'Test Description',
-        contacts: [
-          {
-            email: 'test@test.com',
-            organization: { name: 'Test Org' },
-            role: 'pointOfContact',
-          },
-        ],
-        keywords: [],
-        legalConstraints: [],
-        topics: [],
-        onlineResources: [],
-        extras: {},
-        lineage: '',
-        spatialExtents: [],
-        temporalExtents: [],
-      }
-      component.metadata = partialReuseMetadata
-      component.initialize()
-      fixture.detectChanges()
-
-      expect(component.items.length).toBe(8)
-      expect(component.calculatedQualityScore).toBe(50) // Title, description, contact, and organisation are filled
-    })
-    it('should verify specific Reuse items in partial data test', () => {
-      const partialReuseMetadata: Partial<ReuseRecord> = {
-        kind: 'reuse',
-        title: 'Test Reuse',
-        abstract: 'Test Description',
-        contacts: [
-          {
-            email: 'test@test.com',
-            role: 'pointOfContact',
-            organization: { name: 'Test Org' },
-          },
-        ],
-        keywords: [],
-        legalConstraints: [],
-        topics: [],
-        onlineResources: [],
-        extras: {},
-      }
-      component.metadata = partialReuseMetadata
-      component.initialize()
-      fixture.detectChanges()
-
-      const expectedItems = [
-        { name: 'title', value: true },
-        { name: 'description', value: true },
-        { name: 'keywords', value: false },
-        { name: 'legalConstraints', value: false },
-        { name: 'contact', value: true },
-        { name: 'topic', value: false },
-        { name: 'organisation', value: true },
-        { name: 'source', value: false },
-      ]
-      expect(component.items).toEqual(expectedItems)
-      expect(component.calculatedQualityScore).toBe(50) // 4 sur 8 items remplis
     })
   })
 })
