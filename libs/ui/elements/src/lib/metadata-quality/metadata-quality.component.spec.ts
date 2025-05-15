@@ -51,7 +51,7 @@ describe('MetadataQualityComponent', () => {
     expect(component.metadata?.contacts[0]?.email).toBe('bob@org.net')
   })
 
-  it('should show correct default items for dataset type', () => {
+  it('should show correct quality score an item presence for a sample dataset ', () => {
     const datasetMetadata = datasetRecordsFixture()[0]
     component.metadata = datasetMetadata
     component.initialize()
@@ -68,33 +68,11 @@ describe('MetadataQualityComponent', () => {
       { name: 'organisation', value: true },
     ]
     expect(component.items).toEqual(expectedDatasetItems)
-    expect(component.calculatedQualityScore).toBe(100) // tous les critères sont remplis
+    expect(component.calculatedQualityScore).toBe(100)
   })
 
   describe('When i give a dataset record, the quality score and items must be corrects', () => {
-    it('should calculate quality percentage correctly with partial data', () => {
-      const partialMetadata: Partial<DatasetRecord> = {
-        kind: 'dataset',
-        title: 'Test Title',
-        abstract: 'Test Description',
-        keywords: [],
-        contacts: [],
-        topics: [],
-        legalConstraints: [],
-        status: 'completed',
-        lineage: '',
-        onlineResources: [],
-        spatialExtents: [],
-        temporalExtents: [],
-      }
-      component.metadata = partialMetadata
-      component.initialize()
-      fixture.detectChanges()
-
-      expect(component.calculatedQualityScore).toBe(25)
-    })
-
-    it('should verify specific Dataset items in partial data test', () => {
+    it('should display correct quality score and items presence in a partial record', () => {
       const partialMetadata: Partial<DatasetRecord> = {
         kind: 'dataset',
         title: 'Test Title',
@@ -124,10 +102,10 @@ describe('MetadataQualityComponent', () => {
         { name: 'organisation', value: false },
       ]
       expect(component.items).toEqual(expectedItems)
-      expect(component.calculatedQualityScore).toBe(25) // 2 sur 8 items remplis
+      expect(component.calculatedQualityScore).toBe(25)
     })
 
-    it('should show all items at false and quality score at 0 when nothing was given', () => {
+    it('should display all items absent and quality score at 0 when nothing was given', () => {
       const emptyMetadata: Partial<DatasetRecord> = {
         kind: 'dataset',
         title: '',
@@ -151,7 +129,7 @@ describe('MetadataQualityComponent', () => {
       expect(component.calculatedQualityScore).toBe(0)
     })
 
-    it('should show 100% quality score for complete dataset type', () => {
+    it('should show all items present and 100% quality score for a complete dataset', () => {
       const completeDatasetMetadata: Partial<DatasetRecord> = {
         kind: 'dataset',
         title: 'Complete Dataset',
@@ -167,8 +145,8 @@ describe('MetadataQualityComponent', () => {
         topics: ['environment'],
         legalConstraints: [{ text: 'test constraint' }],
         updateFrequency: 'daily',
-        status: 'completed',
-        lineage: 'Test lineage',
+        status: '',
+        lineage: '',
         onlineResources: [],
         spatialExtents: [],
         temporalExtents: [],
@@ -182,101 +160,22 @@ describe('MetadataQualityComponent', () => {
       expect(component.items.every((item) => item.value)).toBe(true)
     })
 
-    it('should show 100% quality score when all required Dataset fields are filled', () => {
-      const completeDatasetMetadata: Partial<DatasetRecord> = {
-        kind: 'dataset',
-        title: 'Complete Dataset',
-        abstract: 'A complete dataset with all required fields',
-        contacts: [
-          {
-            email: 'contact@org.com',
-            role: 'pointOfContact',
-            organization: { name: 'Test Organization' },
-          },
-        ],
-        keywords: [{ label: 'test', type: 'theme' }],
-        legalConstraints: [{ text: 'legal constraint' }],
-        topics: ['environment'],
-        updateFrequency: 'daily',
-        status: 'completed',
-        lineage: 'Dataset lineage',
-        onlineResources: [
-          {
-            type: 'download',
-            url: new URL('https://test.org/data'),
-            name: 'Download Link',
-          },
-        ],
-        spatialExtents: [
-          {
-            bbox: [0, 0, 1, 1],
-            description: 'Test extent',
-          },
-        ],
-        temporalExtents: [],
-      }
-      component.metadata = completeDatasetMetadata
-      component.initialize()
-      fixture.detectChanges()
-
-      expect(component.items.length).toBe(8)
-      expect(component.calculatedQualityScore).toBe(100)
-      expect(component.items.every((item) => item.value)).toBe(true)
-    })
-
-    it('should verify specific Dataset items with update frequency and spatial extent', () => {
-      const datasetWithSpecificFields: Partial<DatasetRecord> = {
-        kind: 'dataset',
-        title: 'Test Dataset',
-        abstract: 'Test Description',
-        contacts: [],
-        keywords: [],
-        topics: [],
-        legalConstraints: [],
-        updateFrequency: 'daily',
-        status: 'completed',
-        spatialExtents: [
-          {
-            bbox: [0, 0, 1, 1],
-            description: 'Test extent',
-          },
-        ],
-        temporalExtents: [],
-        onlineResources: [],
-      }
-      component.metadata = datasetWithSpecificFields
-      component.initialize()
-      fixture.detectChanges()
-
-      const expectedItems = [
-        { name: 'title', value: true },
-        { name: 'description', value: true },
-        { name: 'keywords', value: false },
-        { name: 'legalConstraints', value: false },
-        { name: 'contact', value: false },
-        { name: 'updateFrequency', value: true },
-        { name: 'topic', value: false },
-        { name: 'organisation', value: false },
-      ]
-      expect(component.items).toEqual(expectedItems)
-      expect(component.calculatedQualityScore).toBe(38) // 3 sur 8 items remplis
-    })
-
-    it('should verify specific Dataset items with topics and contacts', () => {
+    it('should verify specific Dataset items', () => {
       const datasetWithTopicsAndContacts: Partial<DatasetRecord> = {
         kind: 'dataset',
-        title: 'Test Dataset',
-        abstract: 'Test Description',
+        title: '',
+        abstract: '',
         contacts: [
           {
-            email: 'test@test.com',
-            role: 'pointOfContact',
+            email: '',
             organization: { name: 'Test Organization' },
+            role: 'pointOfContact',
           },
         ],
         keywords: [],
         topics: ['environment', 'climate'],
         legalConstraints: [],
+        updateFrequency: 'daily',
         status: 'completed',
         spatialExtents: [],
         temporalExtents: [],
@@ -287,50 +186,17 @@ describe('MetadataQualityComponent', () => {
       fixture.detectChanges()
 
       const expectedItems = [
-        { name: 'title', value: true },
-        { name: 'description', value: true },
+        { name: 'title', value: false },
+        { name: 'description', value: false },
         { name: 'keywords', value: false },
         { name: 'legalConstraints', value: false },
-        { name: 'contact', value: true },
-        { name: 'updateFrequency', value: false },
+        { name: 'contact', value: false },
+        { name: 'updateFrequency', value: true },
         { name: 'topic', value: true },
         { name: 'organisation', value: true },
       ]
       expect(component.items).toEqual(expectedItems)
-      expect(component.calculatedQualityScore).toBe(63) // 6 sur 8 items remplis
-    })
-
-    it('should verify specific Dataset items with lineage and keywords', () => {
-      const datasetWithLineageAndKeywords: Partial<DatasetRecord> = {
-        kind: 'dataset',
-        title: 'Test Dataset',
-        abstract: 'Test Description',
-        contacts: [],
-        keywords: [{ label: 'test', type: 'theme' }],
-        topics: [],
-        legalConstraints: [],
-        lineage: 'This is the data lineage',
-        status: 'completed',
-        spatialExtents: [],
-        temporalExtents: [],
-        onlineResources: [],
-      }
-      component.metadata = datasetWithLineageAndKeywords
-      component.initialize()
-      fixture.detectChanges()
-
-      const expectedItems = [
-        { name: 'title', value: true },
-        { name: 'description', value: true },
-        { name: 'keywords', value: true },
-        { name: 'legalConstraints', value: false },
-        { name: 'contact', value: false },
-        { name: 'updateFrequency', value: false },
-        { name: 'topic', value: false },
-        { name: 'organisation', value: false },
-      ]
-      expect(component.items).toEqual(expectedItems)
-      expect(component.calculatedQualityScore).toBe(38) // 3 sur 8 items remplis
+      expect(component.calculatedQualityScore).toBe(38)
     })
   })
   describe('When i give a service record, the quality score and items must be corrects', () => {
