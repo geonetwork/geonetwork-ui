@@ -453,6 +453,16 @@ describe('ElasticsearchService', () => {
             },
           ],
         },
+      })
+    })
+    it('handle values expressed as reg exp', () => {
+      const query = service['buildPayloadQuery'](
+        {
+          Org: {
+            '/world.*/': true,
+            '/*country^[fr|en]/': false,
+          },
+        },
         {},
         []
       )
@@ -601,14 +611,6 @@ describe('ElasticsearchService', () => {
           ],
           should: [],
           must: [],
-          must_not: [
-            {
-              query_string: {
-                query:
-                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
-              },
-            },
-          ],
         },
       })
     })
@@ -735,7 +737,7 @@ describe('ElasticsearchService', () => {
       it('returns the search payload with configFilter', () => {
         const payload = service.buildAutocompletePayload('blarg', configFilters)
         expect(payload).toEqual({
-          _source: ['resourceTitleObject', 'uuid'],
+          _source: ['resourceTitleObject', 'uuid', 'resourceType'],
 
           query: {
             bool: {
@@ -768,6 +770,14 @@ describe('ElasticsearchService', () => {
                     ],
                     query: 'blarg',
                     type: 'bool_prefix',
+                  },
+                },
+              ],
+              must_not: [
+                {
+                  query_string: {
+                    query:
+                      'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
                   },
                 },
               ],
