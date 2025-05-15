@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
+import { globalConfigFilters } from '../../app.config'
 
 @Component({
   selector: 'datahub-home-page',
@@ -6,4 +8,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   styleUrls: ['./home-page.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomePageComponent {}
+export class HomePageComponent {
+  constructor(public searchFacade: SearchFacade) {}
+
+  ngOnInit() {
+    this.searchFacade
+      .setResultsLayout('ROW')
+      .setConfigFilters(globalConfigFilters)
+  }
+}

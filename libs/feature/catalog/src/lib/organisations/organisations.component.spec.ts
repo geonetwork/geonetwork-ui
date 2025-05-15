@@ -15,11 +15,15 @@ import {
   OrganisationsFilterComponent,
   OrganisationsResultComponent,
 } from '@geonetwork-ui/ui/catalog'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
 
 class OrganisationsServiceMock {
   organisations$ = of(someOrganizationsFixture())
   organisationsCount$ = of(someOrganizationsFixture().length)
   getOrganisations = jest.fn(() => of(someOrganizationsFixture()))
+}
+class SearchFacadeMock {
+  configFilters$ = of({})
 }
 
 const organisationMock = {
@@ -44,6 +48,10 @@ describe('OrganisationsComponent', () => {
         {
           provide: OrganizationsServiceInterface,
           useClass: OrganisationsServiceMock,
+        },
+        {
+          provide: SearchFacade,
+          useClass: SearchFacadeMock,
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],

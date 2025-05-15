@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
-import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { globalConfigFilters } from '../../../app.config'
 import {
   MetadataQualityConfig,
   getMetadataQualityConfig,
@@ -17,15 +15,9 @@ import {
 export class SearchPageComponent implements OnInit {
   metadataQualityDisplay: boolean
 
-  constructor(
-    private searchRouter: RouterFacade,
-    public searchFacade: SearchFacade
-  ) {}
+  constructor(private searchRouter: RouterFacade) {}
 
   ngOnInit() {
-    this.searchFacade.setConfigFilters(globalConfigFilters)
-    this.searchFacade.setResultsLayout('ROW')
-
     const cfg: MetadataQualityConfig =
       getMetadataQualityConfig() || ({} as MetadataQualityConfig)
     this.metadataQualityDisplay = cfg.ENABLED
