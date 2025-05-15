@@ -71,7 +71,7 @@ describe('MetadataQualityComponent', () => {
     expect(component.calculatedQualityScore).toBe(100)
   })
 
-  describe('When i give a dataset record, the quality score and items must be corrects', () => {
+  describe('When a dataset record is provided, the quality score and items must be correct', () => {
     it('should display correct quality score and items presence in a partial record', () => {
       const partialMetadata: Partial<DatasetRecord> = {
         kind: 'dataset',
@@ -199,8 +199,8 @@ describe('MetadataQualityComponent', () => {
       expect(component.calculatedQualityScore).toBe(38)
     })
   })
-  describe('When i give a service record, the quality score and items must be corrects', () => {
-    it('should show 0 and all items false when no field are given for service record', () => {
+  describe('When a service record is provided, the quality score and items must be correct', () => {
+    it('should show 0 and all items false when no fields are given for service record', () => {
       const partialServiceMetadata: Partial<ServiceRecord> = {
         kind: 'service',
         title: '',
@@ -263,7 +263,7 @@ describe('MetadataQualityComponent', () => {
     expect(component.items).toEqual(expectedServiceItems)
     expect(component.calculatedQualityScore).toBe(100)
   })
-  describe('When i give a reuse record, the quality score and items must be corrects', () => {
+  describe('When a reuse record is provided, the quality score and items must be correct', () => {
     it('should show quality score at 0 and all items false when all fields empty for reuse record', () => {
       const partialReuseMetadata: Partial<ReuseRecord> = {
         kind: 'reuse',
