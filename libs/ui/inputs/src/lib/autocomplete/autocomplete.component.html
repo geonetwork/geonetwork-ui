@@ -79,7 +79,7 @@
   <mat-option
     *ngFor="let suggestion of suggestions$ | async"
     [value]="suggestion"
-    class="p-2 suggestion"
+    class="p-2 suggestion text-start"
   >
     {{ displayWithFnInternal(suggestion) }}
   </mat-option>
