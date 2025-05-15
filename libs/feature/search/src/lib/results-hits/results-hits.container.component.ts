@@ -46,9 +46,11 @@ export class ResultsHitsContainerComponent implements OnInit {
       catchError(() => of([]))
     ) as Observable<FieldValue[]>
 
-    this.filterChoices$ = <Observable<FieldAvailableValue[]>>(
-      this.fieldsService.getAvailableValues(this.fieldName)
-    )
+    this.filterChoices$ = this.searchFacade.searchFilters$.pipe(
+      switchMap((configFilters) =>
+        this.fieldsService.getAvailableValues(this.fieldName, configFilters)
+      )
+    ) as Observable<FieldAvailableValue[]>
   }
 
   onSelectionChanged(values: string[]) {

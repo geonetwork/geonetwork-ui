@@ -100,6 +100,7 @@ const resultFilterStateMerge = {
     'overview',
     'logo',
     'codelist_status_text',
+    'link',
     'linkProtocol',
     'contactForResource*.organisation*',
     'contact*.organisation*',
