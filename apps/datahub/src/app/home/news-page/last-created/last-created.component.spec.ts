@@ -13,7 +13,6 @@ class SearchFacadeMock {
   setSortBy = jest.fn(() => this)
   setConfigRequestFields = jest.fn(() => this)
   setResultsLayout = jest.fn(() => this)
-  setConfigFilters = jest.fn(() => this)
 }
 class RouterFacadeMock {
   goToMetadata = jest.fn()

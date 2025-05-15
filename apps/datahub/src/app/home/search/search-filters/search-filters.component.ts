@@ -16,7 +16,6 @@ import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
 import { Observable, switchMap } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { globalConfigFilters } from '../../../app.config'
 
 @Component({
   selector: 'datahub-search-filters',
@@ -51,8 +50,6 @@ export class SearchFiltersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.searchFacade.setConfigFilters(globalConfigFilters)
-
     this.platformService.getMe().subscribe((user) => (this.userId = user?.id))
     this.searchConfig = (
       getOptionalSearchConfig().ADVANCED_FILTERS || [
