@@ -47,8 +47,8 @@ class ElasticsearchServiceMock {
     aggregations,
     size,
   }))
-  getMetadataByIdPayload = jest.fn((uuid) => ({
-    uuids: [uuid],
+  getMetadataByIdsPayload = jest.fn((uuid) => ({
+    uuids: uuid,
   }))
   getRelatedRecordPayload = jest.fn(() => ({}))
   buildAutocompletePayload = jest.fn(() => ({}))
@@ -237,7 +237,9 @@ describe('Gn4Repository', () => {
       record = await lastValueFrom(repository.getRecord('1234-5678'))
     })
     it('builds a payload with the specified uuid', () => {
-      expect(gn4Helper.getMetadataByIdPayload).toHaveBeenCalledWith('1234-5678')
+      expect(gn4Helper.getMetadataByIdsPayload).toHaveBeenCalledWith([
+        '1234-5678',
+      ])
     })
     it('returns the given result as record', () => {
       expect(record).toStrictEqual(datasetRecordsFixture()[0])
@@ -254,6 +256,40 @@ describe('Gn4Repository', () => {
       })
       it('returns null', () => {
         expect(record).toBe(null)
+      })
+    })
+  })
+
+  describe('getMultipleRecords', () => {
+    let records: CatalogRecord[]
+    beforeEach(async () => {
+      records = await lastValueFrom(
+        repository.getMultipleRecords(['1234-5678', '1234-5679'])
+      )
+    })
+    it('builds a payload with the specified uuid', () => {
+      expect(gn4Helper.getMetadataByIdsPayload).toHaveBeenCalledWith([
+        '1234-5678',
+        '1234-5679',
+      ])
+    })
+    it('returns the given result as records', () => {
+      expect(records).toStrictEqual(datasetRecordsFixture())
+    })
+    describe('if records are not found', () => {
+      beforeEach(async () => {
+        ;(gn4SearchApi as any).search = () =>
+          of({
+            hits: {
+              hits: [],
+            },
+          })
+        records = await lastValueFrom(
+          repository.getMultipleRecords(['1234-5678', '1234-5679'])
+        )
+      })
+      it('returns null', () => {
+        expect(records).toBe(null)
       })
     })
   })
@@ -432,15 +468,17 @@ describe('Gn4Repository', () => {
     }
 
     beforeEach(async () => {
-      repository.getRecord = jest
+      repository.getMultipleRecords = jest
         .fn()
-        .mockImplementation((id) => of({ uuid: id }))
+        .mockImplementation((ids) => of(ids.map((id) => ({ uuid: id }))))
       sources = await lastValueFrom(repository.getSources(mockRecord))
     })
 
-    it('calls getRecord for each source identifier', () => {
-      expect(repository.getRecord).toHaveBeenCalledWith('source-1')
-      expect(repository.getRecord).toHaveBeenCalledWith('source-2')
+    it('calls getMultipleRecords for source identifiers', () => {
+      expect(repository.getMultipleRecords).toHaveBeenCalledWith([
+        'source-1',
+        'source-2',
+      ])
     })
 
     it('returns the sources as an array of CatalogRecord', () => {
@@ -464,14 +502,16 @@ describe('Gn4Repository', () => {
       },
     }
     beforeEach(async () => {
-      repository.getRecord = jest
+      repository.getMultipleRecords = jest
         .fn()
-        .mockImplementation((id) => of({ uuid: id }))
+        .mockImplementation((ids) => of(ids.map((id) => ({ uuid: id }))))
       hasSources = await lastValueFrom(repository.getHasSources(mockRecord))
     })
-    it('calls getRecord for each hasSource identifier', () => {
-      expect(repository.getRecord).toHaveBeenCalledWith('hasSource-1')
-      expect(repository.getRecord).toHaveBeenCalledWith('hasSource-2')
+    it('calls getMultipleRecords for hasSource identifiers', () => {
+      expect(repository.getMultipleRecords).toHaveBeenCalledWith([
+        'hasSource-1',
+        'hasSource-2',
+      ])
     })
     it('returns the hasSources as an array of CatalogRecord', () => {
       expect(hasSources).toEqual([

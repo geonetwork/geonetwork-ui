@@ -131,13 +131,34 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         'bucket',
         ['fcats', 'sources', 'hassources'],
         JSON.stringify(
-          this.gn4SearchHelper.getMetadataByIdPayload(uniqueIdentifier)
+          this.gn4SearchHelper.getMetadataByIdsPayload([uniqueIdentifier])
         )
       )
       .pipe(
         map((results: Gn4SearchResults) => results.hits.hits[0]),
         switchMap((record) =>
           record ? this.gn4Mapper.readRecord(record) : of(null)
+        )
+      )
+  }
+
+  getMultipleRecords(
+    uniqueIdentifiers: string[]
+  ): Observable<CatalogRecord[] | null> {
+    return this.gn4SearchApi
+      .search(
+        'bucket',
+        undefined,
+        JSON.stringify(
+          this.gn4SearchHelper.getMetadataByIdsPayload(uniqueIdentifiers)
+        )
+      )
+      .pipe(
+        map((results: Gn4SearchResults) => results.hits.hits),
+        switchMap((records) =>
+          records && records.length > 0
+            ? this.gn4Mapper.readRecords(records)
+            : of(null)
         )
       )
   }
@@ -206,7 +227,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
   getSources(record: CatalogRecord): Observable<CatalogRecord[]> {
     const sourcesIdentifiers = record.extras?.['sourcesIdentifiers'] as string[]
     if (sourcesIdentifiers && sourcesIdentifiers.length > 0) {
-      return forkJoin(sourcesIdentifiers.map((id) => this.getRecord(id)))
+      return this.getMultipleRecords(sourcesIdentifiers)
     }
     return of(null)
   }
@@ -216,7 +237,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       'hasSourcesIdentifiers'
     ] as string[]
     if (hasSourcesIdentifiers && hasSourcesIdentifiers.length > 0) {
-      return forkJoin(hasSourcesIdentifiers.map((id) => this.getRecord(id)))
+      return this.getMultipleRecords(hasSourcesIdentifiers)
     }
     return of(null)
   }
