@@ -16,6 +16,7 @@ describe('ResultsHitsContainerComponent', () => {
     resultsHits$: of(10),
     isLoading$: of(false),
     searchFilters$: of({ type: ['dataset'] }),
+    configFilters$: of({}),
   }
 
   const fieldsServiceMock = {
