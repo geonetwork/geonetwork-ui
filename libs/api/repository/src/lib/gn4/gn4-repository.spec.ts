@@ -334,21 +334,38 @@ describe('Gn4Repository', () => {
                 {
                   code: 'OBJECTID',
                   name: 'OBJECTID',
-                  title: 'Object identifier',
+                  definition: 'Object identifier',
                   type: 'OID',
                 },
                 {
                   code: 'NOM',
                   name: 'Nom',
-                  title: 'Nom de la rue',
+                  definition: 'Nom de la rue',
                   type: 'String (48)',
                   values: [
-                    { code: 'Pomme', label: 'Les Pommiers' },
-                    { code: 'Cotton', label: 'Rue Cotton' },
-                    { code: "Passage de l'échiquier", label: undefined },
+                    {
+                      code: 'Pomme',
+                      definition: undefined,
+                      label: 'Les Pommiers',
+                    },
+                    {
+                      code: 'Cotton',
+                      definition: undefined,
+                      label: 'Rue Cotton',
+                    },
+                    {
+                      code: "Passage de l'échiquier",
+                      definition: undefined,
+                      label: undefined,
+                    },
                   ],
                 },
-                { code: 'RUE', name: 'Rue', title: '', type: 'String (50)' },
+                {
+                  code: 'RUE',
+                  name: 'Rue',
+                  definition: '',
+                  type: 'String (50)',
+                },
               ],
             },
             {
@@ -358,7 +375,7 @@ describe('Gn4Repository', () => {
                 {
                   code: 'UniqueObject',
                   name: 'unique object ',
-                  title: 'this is the only object of this catalog',
+                  definition: 'this is the only object of this catalog',
                   type: 'String (50)',
                 },
               ],
@@ -398,21 +415,38 @@ describe('Gn4Repository', () => {
                 {
                   code: 'OBJECTID',
                   name: 'OBJECTID',
-                  title: 'Object identifier',
+                  definition: 'Object identifier',
                   type: 'OID',
                 },
                 {
                   code: 'NOM',
                   name: 'Nom',
-                  title: 'Nom de la rue',
+                  definition: 'Nom de la rue',
                   type: 'String (48)',
                   values: [
-                    { code: 'Pomme', label: 'Les Pommiers' },
-                    { code: 'Cotton', label: 'Rue Cotton' },
-                    { code: "Passage de l'échiquier", label: undefined },
+                    {
+                      code: 'Pomme',
+                      definition: undefined,
+                      label: 'Les Pommiers',
+                    },
+                    {
+                      code: 'Cotton',
+                      definition: undefined,
+                      label: 'Rue Cotton',
+                    },
+                    {
+                      code: "Passage de l'échiquier",
+                      definition: undefined,
+                      label: undefined,
+                    },
                   ],
                 },
-                { code: 'RUE', name: 'Rue', title: '', type: 'String (50)' },
+                {
+                  code: 'RUE',
+                  name: 'Rue',
+                  definition: '',
+                  type: 'String (50)',
+                },
               ],
             },
             {
@@ -422,7 +456,7 @@ describe('Gn4Repository', () => {
                 {
                   code: 'UniqueObject',
                   name: 'unique object ',
-                  title: 'this is the only object of this catalog',
+                  definition: 'this is the only object of this catalog',
                   type: 'String (50)',
                 },
               ],

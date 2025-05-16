@@ -295,7 +295,7 @@
   "facets.block.title.th_regions_tree.default": "Regions",
   "favorite.not.authenticated.tooltip": "<div><a href=' {link} '>Login</a> to access this feature</div>",
   "feature.catalog.attribute.code": "Code",
-  "feature.catalog.attribute.title": "Description",
+  "feature.catalog.attribute.definition": "Description",
   "feature.catalog.attribute.name": "Name",
   "feature.catalog.attribute.type": "Type",
   "feature.catalog.attribute.values": "Values",

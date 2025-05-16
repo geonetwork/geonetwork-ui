@@ -32,13 +32,13 @@ describe('FeatureCatalogListComponent', () => {
         {
           code: 'OBJECTID',
           name: 'OBJECTID',
-          title: 'Object identifier',
+          definition: 'Object identifier',
           type: 'OID',
         },
       ]
       expect(
         component.getColumnsDefinition(attributes).map((c) => c.key)
-      ).toStrictEqual(['type', 'name', 'code', 'title'])
+      ).toStrictEqual(['type', 'name', 'code', 'definition'])
     })
 
     it('returns the right column definition with "values" column', () => {
@@ -46,14 +46,14 @@ describe('FeatureCatalogListComponent', () => {
         {
           code: 'OBJECTID',
           name: 'OBJECTID',
-          title: 'Object identifier',
+          definition: 'Object identifier',
           type: 'OID',
           values: [{ code: 'Code', label: 'The Label' }],
         },
       ]
       expect(
         component.getColumnsDefinition(attributesWithValues).map((c) => c.key)
-      ).toStrictEqual(['type', 'name', 'code', 'title', 'values'])
+      ).toStrictEqual(['type', 'name', 'code', 'definition', 'values'])
     })
   })
 
@@ -63,7 +63,7 @@ describe('FeatureCatalogListComponent', () => {
         {
           code: 'OBJECTID',
           name: 'OBJECTID',
-          title: 'Object identifier',
+          definition: 'Object identifier',
           type: 'OID',
         },
       ]
@@ -76,7 +76,7 @@ describe('FeatureCatalogListComponent', () => {
         {
           code: 'OBJECTID',
           name: 'OBJECTID',
-          title: 'Object identifier',
+          definition: 'Object identifier',
           type: 'OID',
           values: [{ code: 'Code', label: 'The Label' }],
         },
