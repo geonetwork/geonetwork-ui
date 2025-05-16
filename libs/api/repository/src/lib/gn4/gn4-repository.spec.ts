@@ -364,7 +364,7 @@ describe('Gn4Repository', () => {
       it('calls the API with correct parameters', () => {
         expect(spySearch).toHaveBeenCalledWith(
           'bucket',
-          ['fcats', 'sources', 'hassources'],
+          ['fcats', 'hassources'],
           '{"uuids":["feature-catalog-identifier"]}'
         )
       })

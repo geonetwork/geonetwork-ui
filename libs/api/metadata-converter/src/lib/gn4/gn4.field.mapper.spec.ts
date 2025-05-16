@@ -225,20 +225,6 @@ describe('Gn4FieldMapper', () => {
                   },
                 },
               ],
-              sources: [
-                {
-                  origin: 'catalog',
-                  _source: {
-                    uuid: 'source-001',
-                  },
-                },
-                {
-                  origin: 'catalog',
-                  _source: {
-                    uuid: 'source-002',
-                  },
-                },
-              ],
             },
           }
           const result = mappingFn(output, source)
@@ -246,9 +232,51 @@ describe('Gn4FieldMapper', () => {
             extras: {
               featureCatalogIdentifier: 'featurecatalog-001',
               hasSourcesIdentifiers: ['hassource-001'],
-              sourcesIdentifiers: ['source-001', 'source-002'],
             },
           })
+        })
+      })
+      it('recordLink - should return a function that correctly maps the field', () => {
+        const fieldName = 'recordLink'
+        const mappingFn = service.getMappingFn(fieldName)
+        const output = {}
+        const source = {
+          recordLink: [
+            {
+              origin: 'catalog',
+              to: 'source-001',
+              type: 'sources',
+              title: 'Some source data',
+              url: 'http://www.catalog.org/record/12345',
+            },
+            {
+              origin: 'catalog',
+              to: 'source-002',
+              type: 'sources',
+              title: 'Some other source data',
+              url: 'http://www.catalog.org/record/67890',
+            },
+            {
+              origin: 'remote',
+              to: 'source-003',
+              type: 'sources',
+              title: 'Some remote source data',
+              url: 'http://www.othercatalog.org/record/12345',
+            },
+            {
+              origin: 'catalog',
+              to: 'featurecatalog-001',
+              type: 'fcats',
+              title: 'Some feature catalog',
+              url: 'http://www.catalog.org/record/featurecatalog-001',
+            },
+          ],
+        }
+        const result = mappingFn(output, source)
+        expect(result).toEqual({
+          extras: {
+            sourcesIdentifiers: ['source-001', 'source-002'],
+          },
         })
       })
     })

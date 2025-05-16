@@ -3,7 +3,7 @@ import 'cypress-real-events'
 beforeEach(() => {
   cy.intercept(
     'POST',
-    '/geonetwork/srv/api/search/records/_search?bucket=bucket&relatedType=fcats&relatedType=sources&relatedType=hassources',
+    '/geonetwork/srv/api/search/records/_search?bucket=bucket&relatedType=fcats&relatedType=hassources',
     {
       fixture: 'eaufrance-service-eaux-usees.json',
     }

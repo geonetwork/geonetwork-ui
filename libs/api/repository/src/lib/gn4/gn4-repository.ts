@@ -129,7 +129,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return this.gn4SearchApi
       .search(
         'bucket',
-        ['fcats', 'sources', 'hassources'],
+        ['fcats', 'hassources'],
         JSON.stringify(
           this.gn4SearchHelper.getMetadataByIdsPayload([uniqueIdentifier])
         )
