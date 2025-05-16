@@ -285,7 +285,7 @@
   "facets.block.title.th_regions_tree.default": "",
   "favorite.not.authenticated.tooltip": "",
   "feature.catalog.attribute.code": "Code",
-  "feature.catalog.attribute.title": "Beschrijving",
+  "feature.catalog.attribute.definition": "Beschrijving",
   "feature.catalog.attribute.name": "Naam",
   "feature.catalog.attribute.type": "Type",
   "feature.catalog.attribute.values": "Waarden",

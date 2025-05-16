@@ -285,7 +285,7 @@
   "facets.block.title.th_regions_tree.default": "Régions",
   "favorite.not.authenticated.tooltip": "<div><a href=' {link} '>Connectez-vous</a> pour avoir accès à cette fonctionnalité</div>",
   "feature.catalog.attribute.code": "Code",
-  "feature.catalog.attribute.title": "Description",
+  "feature.catalog.attribute.definition": "Description",
   "feature.catalog.attribute.name": "Nom",
   "feature.catalog.attribute.type": "Type",
   "feature.catalog.attribute.values": "Valeurs",

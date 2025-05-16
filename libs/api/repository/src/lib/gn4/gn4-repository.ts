@@ -31,7 +31,6 @@ import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/reposit
 import {
   RecordsApiService,
   SearchApiService,
-  FeatureResponseApiModel,
 } from '@geonetwork-ui/data-access/gn4'
 import {
   combineLatest,
@@ -153,11 +152,15 @@ export class Gn4Repository implements RecordsRepositoryInterface {
           ? featureType.attributeTable.map((attr) => {
               const values = attr.values
                 ?.filter((v) => v.code || v.label)
-                .map((v) => ({ code: v.code, label: v.label }))
+                .map((v) => ({
+                  code: v.code,
+                  definition: v.definition,
+                  label: v.label,
+                }))
               return {
                 name: attr.name,
                 code: attr.code,
-                title: attr.definition,
+                definition: attr.definition,
                 type: attr.type,
                 ...(values?.length > 0 ? { values } : {}),
               }

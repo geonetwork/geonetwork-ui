@@ -285,7 +285,7 @@
   "facets.block.title.th_regions_tree.default": "Regióny",
   "favorite.not.authenticated.tooltip": "<div><a href='{link}'>Prihlásiť sa</a> pre prístup k tejto funkcii</div>",
   "feature.catalog.attribute.code": "Kód",
-  "feature.catalog.attribute.title": "Popis",
+  "feature.catalog.attribute.definition": "Popis",
   "feature.catalog.attribute.name": "Názov",
   "feature.catalog.attribute.type": "Typ",
   "feature.catalog.attribute.values": "Hodnoty",

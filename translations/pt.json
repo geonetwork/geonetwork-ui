@@ -285,7 +285,7 @@
   "facets.block.title.th_regions_tree.default": "",
   "favorite.not.authenticated.tooltip": "",
   "feature.catalog.attribute.code": "Código",
-  "feature.catalog.attribute.title": "Descrição",
+  "feature.catalog.attribute.definition": "Descrição",
   "feature.catalog.attribute.name": "Nome",
   "feature.catalog.attribute.type": "Tipo",
   "feature.catalog.attribute.values": "Valores",
