@@ -54,6 +54,16 @@ export const setRelated = createAction(
   props<{ related: CatalogRecord[] }>()
 )
 
+export const setSources = createAction(
+  '[Metadata view] Set sources',
+  props<{ sources: CatalogRecord[] }>()
+)
+
+export const setHasSources = createAction(
+  '[Metadata view] Set has sources',
+  props<{ hasSources: CatalogRecord[] }>()
+)
+
 /*
   ChartConfig actions
  */

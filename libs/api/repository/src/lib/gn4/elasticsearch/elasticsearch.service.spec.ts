@@ -745,11 +745,11 @@ describe('ElasticsearchService', () => {
     })
   })
 
-  describe('#getMetadataByIdPayload', () => {
+  describe('#getMetadataByIdsPayload', () => {
     let uuid, payload
     beforeEach(() => {
       uuid = '132132132132321'
-      payload = service.getMetadataByIdPayload(uuid)
+      payload = service.getMetadataByIdsPayload([uuid])
     })
     it('returns ES payload', () => {
       expect(payload).toEqual({

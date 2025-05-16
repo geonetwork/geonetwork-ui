@@ -68,6 +68,28 @@ export class MdViewEffects {
     )
   )
 
+  loadSources$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MdViewActions.loadFullMetadataSuccess),
+      switchMap(({ full }) => this.recordsRepository.getSources(full)),
+      map((sources) => {
+        return MdViewActions.setSources({ sources })
+      }),
+      catchError(() => of(MdViewActions.setSources({ sources: null })))
+    )
+  )
+
+  loadHasSources$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MdViewActions.loadFullMetadataSuccess),
+      switchMap(({ full }) => this.recordsRepository.getHasSources(full)),
+      map((hasSources) => {
+        return MdViewActions.setHasSources({ hasSources })
+      }),
+      catchError(() => of(MdViewActions.setHasSources({ hasSources: null })))
+    )
+  )
+
   /*
     UserFeedback effects
   */

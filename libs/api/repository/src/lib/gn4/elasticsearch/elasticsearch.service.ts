@@ -124,11 +124,11 @@ export class ElasticsearchService {
     this.runtimeFields[fieldName] = expression
   }
 
-  getMetadataByIdPayload(uuid: string): EsSearchParams {
+  getMetadataByIdsPayload(uuids: string[]): EsSearchParams {
     return {
       query: {
         ids: {
-          values: [uuid],
+          values: uuids,
         },
       },
     }
