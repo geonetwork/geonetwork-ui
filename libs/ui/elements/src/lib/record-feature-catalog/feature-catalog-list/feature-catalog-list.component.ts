@@ -14,7 +14,7 @@ import {
 marker('feature.catalog.attribute.type')
 marker('feature.catalog.attribute.name')
 marker('feature.catalog.attribute.code')
-marker('feature.catalog.attribute.title')
+marker('feature.catalog.attribute.definition')
 marker('feature.catalog.attribute.values')
 
 @Component({
@@ -46,7 +46,7 @@ export class FeatureCatalogListComponent {
         width: '20%',
       },
       {
-        key: 'title',
+        key: 'definition',
         width: 'minmax(0px, 1fr)',
       },
     ]

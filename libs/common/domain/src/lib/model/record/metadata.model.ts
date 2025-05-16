@@ -264,11 +264,12 @@ export type DatasetFeatureCatalog = {
   featureTypes: Array<{
     name: string
     definition: string
-    attributes: Array<{ name: string; title: string; code: string }>
+    attributes: DatasetFeatureAttribute[]
   }>
 }
 export interface DatasetFeatureAttributeValue {
   code?: string
+  definition?: string
   label?: string
 }
 export interface DatasetFeatureAttribute {
