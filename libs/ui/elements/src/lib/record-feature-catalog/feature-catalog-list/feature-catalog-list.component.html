@@ -28,6 +28,7 @@
           [class.border-gray-300]="i > 0"
           *ngFor="
             let col of getColumnsDefinition(featureType.attributes);
+            trackBy: trackByColumn;
             let i = index
           "
           data-test="column-label"
@@ -41,14 +42,14 @@
             [class.border-gray-300]="i > 0"
             *ngFor="
               let col of getColumnsDefinition(featureType.attributes);
+              trackBy: trackByColumn;
               let i = index
             "
             data-test="cell-content"
           >
             <ng-container
               *ngIf="col.key === 'values'; then tplValues; else defaultTpl"
-            >
-            </ng-container>
+            ></ng-container>
 
             <ng-template #defaultTpl>
               <gn-ui-truncated-text
