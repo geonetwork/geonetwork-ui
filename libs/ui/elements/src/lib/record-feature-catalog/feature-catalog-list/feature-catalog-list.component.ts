@@ -29,7 +29,7 @@ marker('feature.catalog.attribute.values')
   ],
 })
 export class FeatureCatalogListComponent {
-  @Input() filteredFeatureCatalog: DatasetFeatureCatalog
+  @Input() filteredFeatureCatalog!: DatasetFeatureCatalog
 
   getColumnsDefinition(attributes: DatasetFeatureAttribute[]) {
     const baseColumns = [
@@ -70,5 +70,9 @@ export class FeatureCatalogListComponent {
     return this.getColumnsDefinition(attributes)
       .map((col) => col.width)
       .join(' ')
+  }
+
+  trackByColumn(_i: number, col: { key: string }) {
+    return col.key
   }
 }
