@@ -60,12 +60,11 @@
             </ng-template>
 
             <ng-template #tplValues>
-              <div class="flex justify-center w-full">
-                <gn-ui-value-list
-                  [values]="row.values"
-                  extraClass="py-3"
-                ></gn-ui-value-list>
-              </div>
+              <gn-ui-value-list
+                *ngIf="row.values?.length > 0"
+                [values]="row.values"
+                extraClass="py-3"
+              ></gn-ui-value-list>
             </ng-template>
           </div>
         </ng-container>
