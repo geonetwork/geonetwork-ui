@@ -21,9 +21,9 @@ import {
 } from '@geonetwork-ui/ui/layout'
 
 @Component({
-  selector: 'datahub-record-related-records',
-  templateUrl: './record-related-records.component.html',
-  styleUrls: ['./record-related-records.component.css'],
+  selector: 'datahub-record-internal-links',
+  templateUrl: './record-internal-links.component.html',
+  styleUrls: ['./record-internal-links.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
@@ -34,7 +34,7 @@ import {
     InternalLinkCardComponent,
   ],
 })
-export class RecordRelatedRecordsComponent {
+export class RecordInternalLinksComponent {
   @Input() records: CatalogRecord[]
   @Input() title: string
   @Input() titleIsSectionTitle = false

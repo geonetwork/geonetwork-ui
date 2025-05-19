@@ -20,7 +20,7 @@ import { MockBuilder } from 'ng-mocks'
 import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component'
 import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
 import { RecordApisComponent } from '../record-apis/record-apis.component'
-import { RecordRelatedRecordsComponent } from '../record-related-records/record-related-records.component'
+import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
 
 const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
@@ -291,7 +291,7 @@ describe('RecordMetadataComponent', () => {
         facade.related$.next([])
         fixture.detectChanges()
         relatedComponent = fixture.debugElement.query(
-          By.directive(RecordRelatedRecordsComponent)
+          By.directive(RecordInternalLinksComponent)
         )
       })
       it('Related component does not render', () => {
@@ -303,7 +303,7 @@ describe('RecordMetadataComponent', () => {
         facade.related$.next([{ title: 'title' }])
         fixture.detectChanges()
         relatedComponent = fixture.debugElement.query(
-          By.directive(RecordRelatedRecordsComponent)
+          By.directive(RecordInternalLinksComponent)
         )
       })
       it('Related component renders', () => {
