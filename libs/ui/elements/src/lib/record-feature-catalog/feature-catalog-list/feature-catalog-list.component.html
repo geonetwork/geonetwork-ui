@@ -26,6 +26,7 @@
           class="py-1 px-2 text-sm font-bold text-left border-t"
           [class.border-l]="i > 0"
           [class.border-gray-300]="i > 0"
+          [ngClass]="col.class || ''"
           *ngFor="
             let col of getColumnsDefinition(featureType.attributes);
             trackBy: trackByColumn;
@@ -59,8 +60,11 @@
             </ng-template>
 
             <ng-template #tplValues>
-              <div *ngFor="let value of row.values">
-                {{ value.label || value.code }}
+              <div class="flex justify-center w-full">
+                <gn-ui-value-list
+                  [values]="row.values"
+                  extraClass="py-3"
+                ></gn-ui-value-list>
               </div>
             </ng-template>
           </div>

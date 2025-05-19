@@ -178,7 +178,6 @@ export class Gn4Repository implements RecordsRepositoryInterface {
                 ?.filter((v) => v.code || v.label)
                 .map((v) => ({
                   code: v.code,
-                  definition: v.definition,
                   label: v.label,
                 }))
               return {

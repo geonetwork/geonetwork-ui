@@ -1,0 +1,44 @@
+<div
+  class="flex items-center justify-center"
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  [class]="extraClass"
+>
+  <gn-ui-button
+    #iconElement
+    type="light"
+    extraClass="flex items-center bg-transparent border-none justify-center"
+    (buttonClick)="toggleOverlay()"
+  >
+    <ng-icon name="iconoirList" size="24"></ng-icon>
+  </gn-ui-button>
+
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="trigger"
+    [cdkConnectedOverlayOpen]="isOpen"
+    [cdkConnectedOverlayPositions]="[overlayPosition]"
+    cdkConnectedOverlayPush
+    [cdkConnectedOverlayWidth]="'auto'"
+    [cdkConnectedOverlayFlexibleDimensions]="true"
+    [cdkConnectedOverlayGrowAfterOpen]="true"
+    (detach)="close()"
+  >
+    <div class="bg-white shadow-lg border border-gray-300 flex">
+      <ul
+        class="list-disc list-inside m-2 space-y-1 w-64 max-h-60 overflow-y-auto"
+      >
+        <li *ngFor="let v of values">{{ v.label || v.code }}</li>
+      </ul>
+
+      <gn-ui-button
+        class="m-2 flex-shrink-0"
+        type="light"
+        (buttonClick)="close()"
+        extraClass="w-10 h-8 px-1 bg-white"
+      >
+        <ng-icon name="iconoirReduce" size="24"></ng-icon>
+      </gn-ui-button>
+    </div>
+  </ng-template>
+</div>
