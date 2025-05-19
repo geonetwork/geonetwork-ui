@@ -23,7 +23,6 @@ import {
 import {
   iconoirBadgeCheck,
   iconoirCheckCircle,
-  iconoirCircle,
   iconoirDownload,
   iconoirLightBulb,
   iconoirSidebarCollapse,
