@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { map } from 'rxjs'
-import { RecordRelatedRecordsComponent } from '../record-related-records/record-related-records.component'
+import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 
 @Component({
   selector: 'datahub-record-linked-records',
   standalone: true,
-  imports: [CommonModule, TranslateModule, RecordRelatedRecordsComponent],
+  imports: [CommonModule, TranslateModule, RecordInternalLinksComponent],
   templateUrl: './record-linked-records.component.html',
   styleUrl: './record-linked-records.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

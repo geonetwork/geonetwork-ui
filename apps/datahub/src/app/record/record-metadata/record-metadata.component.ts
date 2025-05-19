@@ -30,7 +30,7 @@ import { RecordUserFeedbacksComponent } from '../record-user-feedbacks/record-us
 import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component'
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
-import { RecordRelatedRecordsComponent } from '../record-related-records/record-related-records.component'
+import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
@@ -57,7 +57,7 @@ import { RecordLinkedRecordsComponent } from '../record-linked-records/record-li
     MetadataContactComponent,
     MetadataQualityComponent,
     MetadataCatalogComponent,
-    RecordRelatedRecordsComponent,
+    RecordInternalLinksComponent,
     TranslateModule,
     RecordDataPreviewComponent,
     ButtonComponent,

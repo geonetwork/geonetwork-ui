@@ -147,11 +147,11 @@
   <section *ngIf="displayRelated$ | async" class="pt-6">
     <div class="py-10 mt-[32px] bg-gray-100">
       <div class="container-lg px-4 lg:mx-auto">
-        <datahub-record-related-records
+        <datahub-record-internal-links
           [title]="'record.metadata.related' | translate"
           [titleIsSectionTitle]="true"
           [records]="metadataViewFacade.related$ | async"
-        ></datahub-record-related-records>
+        ></datahub-record-internal-links>
       </div>
     </div>
   </section>
