@@ -37,6 +37,7 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matChatOutline } from '@ng-icons/material-icons/outline'
 import { RecordFeatureCatalogComponent } from '../record-feature-catalog/record-feature-catalog.component'
+import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -63,6 +64,7 @@ import { RecordFeatureCatalogComponent } from '../record-feature-catalog/record-
     NgIcon,
     ServiceCapabilitiesComponent,
     RecordFeatureCatalogComponent,
+    RecordLinkedRecordsComponent,
   ],
   viewProviders: [provideIcons({ matChatOutline })],
 })
@@ -156,6 +158,15 @@ export class RecordMetadataComponent {
   )
   displayRelated$ = this.metadataViewFacade.related$.pipe(
     map((records) => records?.length > 0)
+  )
+
+  displayLinked$ = combineLatest([
+    this.metadataViewFacade.sources$,
+    this.metadataViewFacade.hasSources$,
+  ]).pipe(
+    map(
+      ([sources, hasSources]) => sources?.length > 0 || hasSources?.length > 0
+    )
   )
 
   displayFeatureCatalog$ = combineLatest([
