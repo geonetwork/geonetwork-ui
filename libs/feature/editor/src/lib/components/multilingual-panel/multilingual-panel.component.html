@@ -57,8 +57,12 @@
   </div>
   <div *ngIf="!editTranslations && isMultilingual" class="flex flex-col gap-2">
     <gn-ui-button
-      *ngFor="let recordLang of sortLanguages(recordLanguages)"
+      *ngFor="let recordLang of sortLanguages(recordLanguages); let i = index"
       extraClass="flex flex-row justify-between bg-white border border-white rounded mb-1 h-[34px] w-full"
+      [ngClass]="{
+        'mt-8': isFirstUnsupported(i),
+        '': true,
+      }"
       (buttonClick)="switchFormLang(recordLang)"
       type="outline"
       data-test="langSwitch"
@@ -74,9 +78,14 @@
           class="text-gray-800 mt-1"
           name="iconoirCircle"
         ></ng-icon>
-        <span [class]="getIconClass(recordLang) + 'mt-1'"></span>
+        <span
+          *ngIf="recordLang.length === 2"
+          [class]="getIconClass(recordLang) + 'mt-1'"
+        ></span>
         <span [ngClass]="recordLang === formLanguage ? 'text-black' : ''">{{
-          'language.' + recordLang | translate
+          isLangSupported(recordLang)
+            ? ('language.' + recordLang | translate)
+            : recordLang.toUpperCase()
         }}</span>
       </div>
       <div class="flex flex-row gap-2 items-center">

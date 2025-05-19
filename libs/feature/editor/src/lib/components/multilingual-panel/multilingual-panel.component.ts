@@ -101,7 +101,7 @@ export class MultilingualPanelComponent {
     this.editTranslations = !this.editTranslations
   }
 
-  getIconClass(lang) {
+  getIconClass(lang: string) {
     return extraFlagMap[lang]
       ? `fi fi-${extraFlagMap[lang]} w-4 h-3`
       : `fi fi-${lang} w-4 h-3`
@@ -198,6 +198,18 @@ export class MultilingualPanelComponent {
       }
       this.editTranslations = false
     })
+  }
+
+  isFirstUnsupported(index: number): boolean {
+    const langs = this.sortLanguages(this.recordLanguages)
+    return (
+      langs[index].length === 3 &&
+      langs.slice(0, index).every((lang) => lang.length !== 3)
+    )
+  }
+
+  isLangSupported(lang: string) {
+    return lang.length === 2
   }
 
   getToggleTitle(lang) {
