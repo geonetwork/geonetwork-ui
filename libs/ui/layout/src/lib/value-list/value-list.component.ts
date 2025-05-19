@@ -3,7 +3,6 @@ import {
   Component,
   ElementRef,
   Input,
-  NgZone,
   OnDestroy,
   ViewChild,
 } from '@angular/core'
@@ -15,9 +14,13 @@ import {
   OverlayModule,
   ConnectedPosition,
   ViewportRuler,
+  Overlay,
+  ScrollDispatcher,
+  CdkScrollable,
 } from '@angular/cdk/overlay'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { Subscription } from 'rxjs'
+import { fromEvent, Subscription, throttleTime } from 'rxjs'
+import { CdkConnectedOverlay } from '@angular/cdk/overlay'
 
 @Component({
   selector: 'gn-ui-value-list',
@@ -36,8 +39,10 @@ import { Subscription } from 'rxjs'
 export class ValueListComponent implements AfterViewInit, OnDestroy {
   @Input() values: { label?: string; code?: string }[] = []
   @Input() extraClass = ''
-
+  @Input() scrollContainer!: CdkScrollable
   @ViewChild('iconElement') iconElement!: ElementRef<HTMLElement>
+  @ViewChild(CdkConnectedOverlay) connectedOverlay!: CdkConnectedOverlay
+  // @Input() scrollContainer!: HTMLElement
 
   isOpen = false
   overlayPosition: ConnectedPosition = {
@@ -48,21 +53,58 @@ export class ValueListComponent implements AfterViewInit, OnDestroy {
   }
 
   private viewportSub!: Subscription
+  protected scrollStrategy = this.overlay.scrollStrategies.reposition()
+
+  private scrollSub!: Subscription
 
   constructor(
-    private readonly ngZone: NgZone,
-    private readonly viewport: ViewportRuler
+    private readonly viewport: ViewportRuler,
+    private scrollDispatcher: ScrollDispatcher,
+    private overlay: Overlay
   ) {}
 
   ngAfterViewInit() {
+    if (this.scrollContainer) {
+      this.scrollDispatcher.register(this.scrollContainer)
+    }
+
+    // this.scrollSub = this.scrollDispatcher
+    //   .scrolled(100) // audit time en ms
+    //   .subscribe(() => {
+    //     console.log('scrolled ----')
+    //     const overlayRef = this.connectedOverlay?.overlayRef
+    //     if (overlayRef) {
+    //       overlayRef.updatePosition()
+    //     }
+    //   })
+
+    // const element = this.scrollContainer.getElementRef().nativeElement
+
+    // this.scrollSub = fromEvent(element, 'scroll')
+    //   .pipe(throttleTime(100))
+    //   .subscribe(() => {
+    //     console.log('fesfes scrolled ----')
+    //     this.connectedOverlay?.overlayRef?.updatePosition()
+    //   })
+
+    // if (this.scrollContainer) {
+    //   this.scrollSub = fromEvent(this.scrollContainer, 'scroll')
+    //     .pipe(throttleTime(100))
+    //     .subscribe(() => {
+    //       console.log('[Overlay] scroll détecté');
+    //       this.connectedOverlay?.overlayRef?.updatePosition();
+    //     });
+    // }
+
     this.viewportSub = this.viewport.change().subscribe(() => {
       if (this.isOpen) {
-        this.updateOverlayPosition()
+        // this.updateOverlayPosition()
       }
     })
   }
 
   ngOnDestroy() {
+    // this.scrollDispatcher.deregister(this.scrollContainer)
     this.viewportSub?.unsubscribe()
     this.close()
   }
@@ -70,7 +112,7 @@ export class ValueListComponent implements AfterViewInit, OnDestroy {
   toggleOverlay() {
     this.isOpen = !this.isOpen
     if (this.isOpen) {
-      this.updateOverlayPosition()
+      // this.updateOverlayPosition()
     }
   }
 

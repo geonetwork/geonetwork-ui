@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, ElementRef, Input, ViewChild } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -11,6 +11,7 @@ import {
   TruncatedTextComponent,
   ValueListComponent,
 } from '@geonetwork-ui/ui/layout'
+import { CdkScrollable, ScrollingModule } from '@angular/cdk/scrolling'
 
 marker('feature.catalog.attribute.type')
 marker('feature.catalog.attribute.name')
@@ -34,10 +35,12 @@ interface ColumnDefinition {
     ExpandablePanelComponent,
     TruncatedTextComponent,
     ValueListComponent,
+    ScrollingModule,
   ],
 })
 export class FeatureCatalogListComponent {
   @Input() filteredFeatureCatalog!: DatasetFeatureCatalog
+  @ViewChild(CdkScrollable, { static: true }) scrollable!: CdkScrollable
 
   readonly COLUMNS_DEFAULT: ColumnDefinition[] = [
     { key: 'type', width: '19%' },
