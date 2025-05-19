@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { RelatedRecordCardComponent } from '@geonetwork-ui/ui/elements'
+import { InternalLinkCardComponent } from '@geonetwork-ui/ui/elements'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 import {
@@ -28,14 +28,16 @@ import {
   standalone: true,
   imports: [
     CommonModule,
-    RelatedRecordCardComponent,
     TranslateModule,
     PreviousNextButtonsComponent,
     BlockListComponent,
+    InternalLinkCardComponent,
   ],
 })
 export class RecordRelatedRecordsComponent {
   @Input() records: CatalogRecord[]
+  @Input() title: string
+  @Input() titleIsSectionTitle = false
   @ViewChild(BlockListComponent) list: BlockListComponent
 
   recordUrlGetter = this.getRecordUrl.bind(this)
