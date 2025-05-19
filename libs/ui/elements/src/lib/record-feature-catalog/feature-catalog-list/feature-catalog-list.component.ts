@@ -42,21 +42,19 @@ export class FeatureCatalogListComponent {
   readonly COLUMNS_DEFAULT: ColumnDefinition[] = [
     { key: 'type', width: '19%' },
     { key: 'name', width: '32%' },
-    { key: 'code', width: '24%' },
-    { key: 'definition', width: '25%' },
+    { key: 'code', width: '20%' },
+    { key: 'definition', width: 'minmax(0px, 1fr)' },
   ]
 
-  readonly COLUMNS_WITH_VALUES: ColumnDefinition[] = [
-    { key: 'type', width: '17%' },
-    { key: 'name', width: '30%' },
-    { key: 'code', width: '18%' },
-    { key: 'definition', width: '25%' },
-    { key: 'values', width: '10%', class: 'text-center' },
-  ]
+  readonly COLUMN_VALUES: ColumnDefinition = {
+    key: 'values',
+    width: '73px',
+    class: 'text-center',
+  }
 
   getColumnsDefinition(attrs: DatasetFeatureAttribute[]): ColumnDefinition[] {
     const hasValues = attrs.some((a) => a.values?.length > 0)
-    return hasValues ? this.COLUMNS_WITH_VALUES : this.COLUMNS_DEFAULT
+    return [...this.COLUMNS_DEFAULT, ...(hasValues ? [this.COLUMN_VALUES] : [])]
   }
 
   getGridTemplateColumns(attributes: DatasetFeatureAttribute[]) {
