@@ -116,7 +116,7 @@ background_color = "#fdfbff"
 # This section contains settings used for fine-tuning the metadata quality experience
 [metadata-quality]
 # By default the widget is not activated to enable it, just add this parameter.
-# enabled = true
+enabled = true
 # If u want to use metadata quality widget this configuration is required
 
 ### MAP SETTINGS
@@ -200,3 +200,4 @@ background_color = "#fdfbff"
 #     Welcome to <span class="text-primary">Organization</span>'s<br>
 #     wonderful <span style="font-size: 1.2em;">data catalogue</span>
 #     """
+
