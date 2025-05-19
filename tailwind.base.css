@@ -131,7 +131,7 @@
   .gn-ui-btn-light {
     @apply gn-ui-btn
       hover:bg-gray-50 focus:bg-gray-50 active:bg-gray-100
-      border-white focus:ring-4 focus:ring-gray-300;
+      bg-white border-white focus:ring-4 focus:ring-gray-300;
   }
 
   .gn-ui-card-s {

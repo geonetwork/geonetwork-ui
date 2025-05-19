@@ -6,7 +6,7 @@
     >
       <ul class="flex flex-col gap-2 w-full">
         <gn-ui-button
-          *ngIf="!isDraftPage"
+          *ngIf="page === 'main'"
           type="light"
           extraClass="flex flex-row items-center gap-2 w-full justify-start"
           (buttonClick)="duplicate.emit()"
@@ -19,13 +19,21 @@
           ></gn-ui-button
         >
         <gn-ui-button
+          *ngIf="page === 'record'"
+          type="light"
+          extraClass="flex flex-row items-center gap-2 w-full justify-start"
+          (buttonClick)="switch.emit()"
+          data-test="record-menu-switch-button"
+          ><span translate>record.action.switchLang</span></gn-ui-button
+        >
+        <gn-ui-button
           type="light"
           extraClass="flex flex-row items-center gap-2 w-full justify-start"
           (buttonClick)="displayDeleteMenu()"
           [disabled]="!canDelete"
           data-test="record-menu-delete-button"
-          ><span *ngIf="!isDraftPage" translate>record.action.delete</span>
-          <span *ngIf="isDraftPage" translate
+          ><span *ngIf="page !== 'draft'" translate>record.action.delete</span>
+          <span *ngIf="page === 'draft'" translate
             >record.action.rollback</span
           ></gn-ui-button
         >

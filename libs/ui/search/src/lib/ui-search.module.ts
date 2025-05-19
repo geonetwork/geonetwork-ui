@@ -39,6 +39,7 @@ import {
   matMapOutline,
 } from '@ng-icons/material-icons/outline'
 import { matFace } from '@ng-icons/material-icons/baseline'
+import { ActionMenuComponent } from './results-table/action-menu/action-menu.component'
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { matFace } from '@ng-icons/material-icons/baseline'
     }),
     KindBadgeComponent,
     MetadataQualityComponent,
+    ActionMenuComponent,
   ],
   exports: [
     RecordPreviewListComponent,
@@ -93,6 +95,7 @@ import { matFace } from '@ng-icons/material-icons/baseline'
     ResultsHitsSearchKindComponent,
     RecordPreviewFeedComponent,
     RecordPreviewRowComponent,
+    ActionMenuComponent,
   ],
   providers: [
     provideNgIconsConfig({
