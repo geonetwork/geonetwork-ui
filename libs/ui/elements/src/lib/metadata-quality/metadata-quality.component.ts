@@ -99,7 +99,7 @@ export class MetadataQualityComponent implements OnChanges {
     } else if (datasetType === 'reuse') {
       this.add('topic', this.metadata?.topics?.length > 0)
       this.add('organisation', !!contact?.organization)
-      this.add('source', !!this.metadata?.extras?.catalogUuid)
+      this.add('source', !!this.metadata?.extras?.sourcesIdentifiers)
     }
   }
 

@@ -310,7 +310,7 @@ describe('MetadataQualityComponent', () => {
         topics: ['testTopic'],
         onlineResources: [],
         extras: {
-          catalogUuid: 'test-uuid',
+          sourcesIdentifiers: 'test-uuid',
         },
         spatialExtents: [],
         temporalExtents: [],
