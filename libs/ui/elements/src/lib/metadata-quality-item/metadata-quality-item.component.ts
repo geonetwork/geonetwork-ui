@@ -22,8 +22,8 @@ marker('record.metadata.quality.organisation.success')
 marker('record.metadata.quality.organisation.failed')
 marker('record.metadata.quality.capabilities.success')
 marker('record.metadata.quality.capabilities.failed')
-marker('record.metadata.quality.sources.success')
-marker('record.metadata.quality.sources.failed')
+marker('record.metadata.quality.source.success')
+marker('record.metadata.quality.source.failed')
 
 export interface MetadataQualityItem {
   name: string
