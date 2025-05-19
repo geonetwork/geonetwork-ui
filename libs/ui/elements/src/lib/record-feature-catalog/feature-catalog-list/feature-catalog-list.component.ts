@@ -9,6 +9,7 @@ import {
 import {
   ExpandablePanelComponent,
   TruncatedTextComponent,
+  ValueListComponent,
 } from '@geonetwork-ui/ui/layout'
 
 marker('feature.catalog.attribute.type')
@@ -16,6 +17,12 @@ marker('feature.catalog.attribute.name')
 marker('feature.catalog.attribute.code')
 marker('feature.catalog.attribute.definition')
 marker('feature.catalog.attribute.values')
+
+interface ColumnDefinition {
+  key: string
+  width: string
+  class?: string
+}
 
 @Component({
   selector: 'gn-ui-feature-catalog-list',
@@ -26,44 +33,30 @@ marker('feature.catalog.attribute.values')
     TranslateModule,
     ExpandablePanelComponent,
     TruncatedTextComponent,
+    ValueListComponent,
   ],
 })
 export class FeatureCatalogListComponent {
   @Input() filteredFeatureCatalog!: DatasetFeatureCatalog
 
-  getColumnsDefinition(attributes: DatasetFeatureAttribute[]) {
-    const baseColumns = [
-      {
-        key: 'type',
-        width: '19%',
-      },
-      {
-        key: 'name',
-        width: '32%',
-      },
-      {
-        key: 'code',
-        width: '20%',
-      },
-      {
-        key: 'definition',
-        width: 'minmax(0px, 1fr)',
-      },
-    ]
-    const hasValues = attributes.some((a) => a.values?.length > 0)
+  readonly COLUMNS_DEFAULT: ColumnDefinition[] = [
+    { key: 'type', width: '19%' },
+    { key: 'name', width: '32%' },
+    { key: 'code', width: '24%' },
+    { key: 'definition', width: '25%' },
+  ]
 
-    if (hasValues) {
-      return [
-        ...baseColumns,
-        {
-          // TODO: column label is centered for this one
-          key: 'values',
-          width: '73px',
-        },
-      ]
-    }
+  readonly COLUMNS_WITH_VALUES: ColumnDefinition[] = [
+    { key: 'type', width: '17%' },
+    { key: 'name', width: '30%' },
+    { key: 'code', width: '18%' },
+    { key: 'definition', width: '25%' },
+    { key: 'values', width: '10%', class: 'text-center' },
+  ]
 
-    return baseColumns
+  getColumnsDefinition(attrs: DatasetFeatureAttribute[]): ColumnDefinition[] {
+    const hasValues = attrs.some((a) => a.values?.length > 0)
+    return hasValues ? this.COLUMNS_WITH_VALUES : this.COLUMNS_DEFAULT
   }
 
   getGridTemplateColumns(attributes: DatasetFeatureAttribute[]) {

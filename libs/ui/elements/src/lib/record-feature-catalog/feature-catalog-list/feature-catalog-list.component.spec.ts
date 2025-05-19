@@ -68,7 +68,7 @@ describe('FeatureCatalogListComponent', () => {
         },
       ]
       expect(component.getGridTemplateColumns(attributes)).toBe(
-        '19% 32% 20% minmax(0px, 1fr)'
+        '19% 32% 24% 25%'
       )
     })
     it('returns the right grid template with "values" column', () => {
@@ -82,7 +82,7 @@ describe('FeatureCatalogListComponent', () => {
         },
       ]
       expect(component.getGridTemplateColumns(attributesWithValues)).toBe(
-        '19% 32% 20% minmax(0px, 1fr) 73px'
+        '17% 30% 18% 25% 10%'
       )
     })
   })
