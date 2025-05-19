@@ -15,10 +15,11 @@
 
   <ng-template
     cdkConnectedOverlay
+    cdkConnectedOverlayPush
     [cdkConnectedOverlayOrigin]="trigger"
     [cdkConnectedOverlayOpen]="isOpen"
     [cdkConnectedOverlayPositions]="[overlayPosition]"
-    cdkConnectedOverlayPush
+    [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
     [cdkConnectedOverlayWidth]="'auto'"
     [cdkConnectedOverlayFlexibleDimensions]="true"
     [cdkConnectedOverlayGrowAfterOpen]="true"
