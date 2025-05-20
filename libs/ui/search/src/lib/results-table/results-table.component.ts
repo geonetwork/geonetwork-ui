@@ -224,7 +224,9 @@ export class ResultsTableComponent {
 
   getTxtHoverMultilingual(record: CatalogRecord) {
     return this.translateService.instant('dashboard.records.isMultilingual', {
-      languages: record.otherLanguages.join(', '),
+      languages: [...[record.defaultLanguage], ...record.otherLanguages].join(
+        ', '
+      ),
     })
   }
 }
