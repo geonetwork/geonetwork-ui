@@ -1,11 +1,11 @@
 <div
+  #originRef
   class="flex items-center justify-center"
   cdkOverlayOrigin
   #trigger="cdkOverlayOrigin"
   [class]="extraClass"
 >
   <gn-ui-button
-    #iconElement
     type="light"
     extraClass="flex items-center bg-transparent border-none justify-center"
     (buttonClick)="toggleOverlay()"
@@ -15,31 +15,42 @@
 
   <ng-template
     cdkConnectedOverlay
-    cdkConnectedOverlayPush
+    [cdkConnectedOverlayPush]="false"
     [cdkConnectedOverlayOrigin]="trigger"
     [cdkConnectedOverlayOpen]="isOpen"
-    [cdkConnectedOverlayPositions]="[overlayPosition]"
-    [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
+    [cdkConnectedOverlayPositions]="overlayPositions"
     [cdkConnectedOverlayWidth]="'auto'"
     [cdkConnectedOverlayFlexibleDimensions]="true"
     [cdkConnectedOverlayGrowAfterOpen]="true"
     (detach)="close()"
   >
-    <div class="bg-white shadow-lg border border-gray-300 flex">
-      <ul
-        class="list-disc list-inside m-2 space-y-1 w-64 max-h-60 overflow-y-auto"
+    <div
+      *ngIf="isVisible"
+      class="bg-white shadow-lg border border-gray-300 relative"
+    >
+      <div
+        class="max-h-60 overflow-y-auto min-w-64 py-4 px-6"
+        style="scrollbar-width: thin"
       >
-        <li *ngFor="let v of values">{{ v.label || v.code }}</li>
-      </ul>
+        <ul class="list-disc list-inside mr-4">
+          <li *ngFor="let v of values">{{ v.label || v.code }}</li>
+        </ul>
+      </div>
 
       <gn-ui-button
-        class="m-2 flex-shrink-0"
+        [style.--gn-ui-button-background]="'bg-transparent'"
+        class="absolute top-2 right-2"
         type="light"
-        (buttonClick)="close()"
-        extraClass="w-10 h-8 px-1 bg-white"
+        (buttonClick)="closeOverlay()"
+        extraClass="w-10 h-8 px-1"
       >
         <ng-icon name="iconoirReduce" size="24"></ng-icon>
       </gn-ui-button>
     </div>
   </ng-template>
 </div>
+
+<ng-template #simpleOverlay>
+  <!-- contenu de ton overlay -->
+  <div *ngIf="isVisible">Mon overlay HTML isVisible = {{ isVisible }}</div>
+</ng-template>

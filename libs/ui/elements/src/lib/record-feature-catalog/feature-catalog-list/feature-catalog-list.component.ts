@@ -1,4 +1,10 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core'
+import {
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -28,6 +34,7 @@ interface ColumnDefinition {
 @Component({
   selector: 'gn-ui-feature-catalog-list',
   templateUrl: './feature-catalog-list.component.html',
+  styleUrls: ['./feature-catalog-list.component.css'],
   standalone: true,
   imports: [
     CommonModule,
@@ -41,9 +48,17 @@ interface ColumnDefinition {
 export class FeatureCatalogListComponent {
   @Input() filteredFeatureCatalog!: DatasetFeatureCatalog
   @ViewChild(CdkScrollable, { static: true }) scrollable!: CdkScrollable
+  // @ViewChild(ViewContainerRef, { read: ViewContainerRef, static: true }) vcRefMarker!: ViewContainerRef
+  @ViewChild('totomarker', { read: ViewContainerRef, static: true })
+  vcRefMarker!: ViewContainerRef
+
+  @ViewChild('expanel', { read: ExpandablePanelComponent, static: true })
+  panelComponent: ExpandablePanelComponent
+
+  @ViewChild('zecontainer', { static: false }) zecontainer!: ElementRef
 
   readonly COLUMNS_DEFAULT: ColumnDefinition[] = [
-    { key: 'type', width: '19%' },
+    { key: 'type', width: '17%' },
     { key: 'name', width: '32%' },
     { key: 'code', width: '20%' },
     { key: 'definition', width: 'minmax(0px, 1fr)' },
