@@ -379,6 +379,7 @@
   "record.action.duplicate": "Duplicato",
   "record.action.duplicating": "Duplicazione",
   "record.action.rollback": "Annulla",
+  "record.action.switchLang": "",
   "record.action.view": "Visualizza",
   "record.card.metadata.contact": "Contatto del metadata",
   "record.externalViewer.open": "Aprire nel visualizzatore esterno",

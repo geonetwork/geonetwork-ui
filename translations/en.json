@@ -379,6 +379,7 @@
   "record.action.duplicate": "Duplicate",
   "record.action.duplicating": "Duplicating...",
   "record.action.rollback": "Rollback",
+  "record.action.switchLang": "Switch to default",
   "record.action.view": "View",
   "record.card.metadata.contact": "Metadata Contact",
   "record.externalViewer.open": "Open in the external map viewer",

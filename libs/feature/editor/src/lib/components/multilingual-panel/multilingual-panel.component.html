@@ -95,9 +95,25 @@
           translate
           >editor.record.form.multilingual.default</span
         >
-        <button (click)="toggleLangOptions(recordLang)">
+        <button
+          (click)="
+            openActionMenu(recordLang, template); $event.stopPropagation()
+          "
+          cdkOverlayOrigin
+          #actionMenuButton
+        >
           <ng-icon class="pb-5" name="matMoreHorizOutline"></ng-icon>
         </button>
+        <ng-template #template>
+          <gn-ui-action-menu
+            [canDelete]="recordLang !== _record.defaultLanguage"
+            page="record"
+            (delete)="confirmDeleteAction(recordLang)"
+            (closeActionMenu)="closeActionMenu()"
+            (switch)="switchDefaultLang(item)"
+          >
+          </gn-ui-action-menu>
+        </ng-template>
       </div>
     </gn-ui-button>
   </div>

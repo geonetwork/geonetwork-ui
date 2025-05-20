@@ -1,4 +1,12 @@
-import { Component, Input } from '@angular/core'
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  QueryList,
+  ViewChildren,
+  ViewContainerRef,
+} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent, CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
@@ -19,6 +27,9 @@ import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
 import { MatDialog } from '@angular/material/dialog'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { map } from 'rxjs'
+import { Overlay, OverlayRef } from '@angular/cdk/overlay'
+import { TemplatePortal } from '@angular/cdk/portal'
+import { ActionMenuComponent } from '@geonetwork-ui/ui/search'
 
 const extraFlagMap: { [key: string]: string } = {
   ar: 'arab',
@@ -45,6 +56,7 @@ const extraFlagMap: { [key: string]: string } = {
     TranslateModule,
     ButtonComponent,
     NgIconComponent,
+    ActionMenuComponent,
   ],
   providers: [
     provideIcons({
@@ -75,6 +87,11 @@ export class MultilingualPanelComponent {
     this.selectedLanguages = this.recordLanguages
     this.formLanguage = value.defaultLanguage
   }
+  @ViewChildren('actionMenuButton', { read: ElementRef })
+  actionMenuButtons!: QueryList<ElementRef>
+  private overlayRef!: OverlayRef
+
+  isActionMenuOpen = false
 
   supportedLanguages$ = this.recordsRepository
     .getApplicationLanguages()
@@ -84,10 +101,13 @@ export class MultilingualPanelComponent {
     public facade: EditorFacade,
     public dialog: MatDialog,
     private translateService: TranslateService,
-    private recordsRepository: RecordsRepositoryInterface
+    private recordsRepository: RecordsRepositoryInterface,
+    private overlay: Overlay,
+    private viewContainerRef: ViewContainerRef,
+    private cdr: ChangeDetectorRef
   ) {}
 
-  sortLanguages(languages) {
+  sortLanguages(languages: string[]) {
     return languages
       .map((lang) => ({
         lang,
@@ -116,7 +136,7 @@ export class MultilingualPanelComponent {
     }
   }
 
-  getExtraClass(lang) {
+  getExtraClass(lang: string) {
     const baseClass = 'h-[34px] w-full font-bold justify-start hover:bg-white'
     if (this.selectedLanguages.includes(lang)) {
       return `${baseClass} bg-white border border-black`
@@ -124,20 +144,26 @@ export class MultilingualPanelComponent {
     return baseClass
   }
 
-  toggleLanguage(lang) {
+  toggleLanguage(lang: string) {
     if (this.selectedLanguages.includes(lang)) {
-      this.selectedLanguages = this.selectedLanguages.filter(
-        (language) => language !== lang
-      )
+      this.removeSelectedLanguage(lang)
     } else {
       this.selectedLanguages.push(lang)
     }
   }
 
+  removeSelectedLanguage(lang: string) {
+    this.selectedLanguages = this.selectedLanguages.filter(
+      (language) => language !== lang
+    )
+  }
+
   validateTranslations() {
+    const equalLength =
+      this.selectedLanguages.length === this.recordLanguages.length
     if (
       this.selectedLanguages.length < this.recordLanguages.length ||
-      this.selectedLanguages !== this.recordLanguages
+      (equalLength && this.selectedLanguages !== this.recordLanguages)
     ) {
       this.confirmDeleteAction(this.selectedLanguages)
     } else {
@@ -157,14 +183,15 @@ export class MultilingualPanelComponent {
   }
 
   switchFormLang(lang) {
+    // TO IMPLEMENT FURTHER
+  }
+
+  switchDefaultLang(lang: string) {
     this.formLanguage = lang
     // TO IMPLEMENT FURTHER
   }
-  toggleLangOptions(lang) {
-    // TO IMPLEMENT
-  }
 
-  confirmDeleteAction(lang?) {
+  confirmDeleteAction(lang?: string[] | string) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         title: this.translateService.instant(
@@ -186,6 +213,10 @@ export class MultilingualPanelComponent {
     dialogRef.afterClosed().subscribe((confirmed) => {
       if (confirmed) {
         if (lang) {
+          if (!Array.isArray(lang)) {
+            this.removeSelectedLanguage(lang)
+            this.closeActionMenu()
+          }
           this.updateTranslations()
         } else {
           this.facade.updateRecordField('otherLanguages', [])
@@ -212,12 +243,61 @@ export class MultilingualPanelComponent {
     return lang.length === 2
   }
 
-  getToggleTitle(lang) {
+  getToggleTitle(lang: string) {
     if (lang === this._record.defaultLanguage) {
       return this.translateService.instant(
         'editor.record.form.multilingual.forbidden'
       )
     }
     return ''
+  }
+
+  openActionMenu(item: string, template) {
+    this.isActionMenuOpen = true
+    const index = this.sortLanguages(this.selectedLanguages).indexOf(item)
+    const buttonElement = this.actionMenuButtons.toArray()[index]
+
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(buttonElement)
+      .withFlexibleDimensions(true)
+      .withPush(true)
+      .withPositions([
+        {
+          originX: 'end',
+          originY: 'bottom',
+          overlayX: 'end',
+          overlayY: 'top',
+        },
+        {
+          originX: 'end',
+          originY: 'top',
+          overlayX: 'end',
+          overlayY: 'bottom',
+        },
+      ])
+
+    this.overlayRef = this.overlay.create({
+      hasBackdrop: true,
+      backdropClass: 'cdk-overlay-transparent-backdrop',
+      positionStrategy: positionStrategy,
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+    })
+
+    const portal = new TemplatePortal(template, this.viewContainerRef)
+
+    this.overlayRef.attach(portal)
+
+    this.overlayRef.backdropClick().subscribe(() => {
+      this.closeActionMenu()
+    })
+  }
+
+  closeActionMenu() {
+    if (this.overlayRef) {
+      this.isActionMenuOpen = false
+      this.overlayRef.dispose()
+      this.cdr.markForCheck()
+    }
   }
 }

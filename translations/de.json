@@ -379,6 +379,7 @@
   "record.action.duplicate": "",
   "record.action.duplicating": "",
   "record.action.rollback": "",
+  "record.action.switchLang": "",
   "record.action.view": "Anzeigen",
   "record.card.metadata.contact": "",
   "record.externalViewer.open": "In externem Kartenviewer öffnen",

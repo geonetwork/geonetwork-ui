@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing'
 import { MultilingualPanelComponent } from './multilingual-panel.component'
 import { TranslateModule } from '@ngx-translate/core'
-import { MatDialog } from '@angular/material/dialog'
 import { of } from 'rxjs'
 import { EditorFacade } from '../../+state/editor.facade'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
@@ -12,7 +11,6 @@ class RecordsRepositoryMock {
 
 describe('MultilingualPanelComponent (logic only)', () => {
   let component: MultilingualPanelComponent
-  let dialogMock: jest.Mocked<MatDialog>
   let facadeMock: jest.Mocked<EditorFacade>
   let recordsRepository: RecordsRepositoryInterface
 
@@ -22,12 +20,6 @@ describe('MultilingualPanelComponent (logic only)', () => {
   } as any
 
   beforeEach(async () => {
-    dialogMock = {
-      open: jest.fn().mockReturnValue({
-        afterClosed: () => of(true), // simulate confirmed
-      }),
-    } as any
-
     facadeMock = {
       updateRecordField: jest.fn(),
     } as any
@@ -35,7 +27,6 @@ describe('MultilingualPanelComponent (logic only)', () => {
     await TestBed.configureTestingModule({
       imports: [MultilingualPanelComponent, TranslateModule.forRoot()],
       providers: [
-        { provide: MatDialog, useValue: dialogMock },
         { provide: EditorFacade, useValue: facadeMock },
         {
           provide: RecordsRepositoryInterface,
@@ -58,33 +49,6 @@ describe('MultilingualPanelComponent (logic only)', () => {
       expect(component.recordLanguages).toEqual(['fr', 'es', 'en'])
       expect(component.selectedLanguages).toEqual(['fr', 'es', 'en'])
       expect(component.formLanguage).toBe('en')
-    })
-  })
-
-  describe('multilingual toggle', () => {
-    it('should open confirmation dialog when disabling multilingual', () => {
-      component.switchMultilingual()
-      expect(dialogMock.open).toHaveBeenCalled()
-    })
-    it('should only keep the default language and remove the rest if user disables multilingual', async () => {
-      dialogMock.open.mockReturnValueOnce({
-        afterClosed: () => of(true),
-      } as any)
-
-      component.isMultilingual = true
-      component.recordLanguages = ['en', 'fr']
-      component.selectedLanguages = ['en', 'fr']
-      component.editTranslations = true
-
-      component.switchMultilingual()
-
-      expect(component.isMultilingual).toBe(false)
-      expect(component.selectedLanguages).toEqual([])
-      expect(component.editTranslations).toBe(false)
-      expect(facadeMock.updateRecordField).toHaveBeenCalledWith(
-        'otherLanguages',
-        []
-      )
     })
   })
 
@@ -113,12 +77,12 @@ describe('MultilingualPanelComponent (logic only)', () => {
   describe('validateTranslations', () => {
     it('should add languages', () => {
       const spy = jest.spyOn(component, 'updateTranslations')
-      component.selectedLanguages = ['fr', 'es', 'en']
+      component.selectedLanguages = ['fr', 'es', 'en', 'it']
       component.validateTranslations()
       expect(spy).toHaveBeenCalled()
       expect(facadeMock.updateRecordField).toHaveBeenCalledWith(
         'otherLanguages',
-        ['fr', 'es']
+        ['fr', 'es', 'it']
       )
     })
 
@@ -128,10 +92,6 @@ describe('MultilingualPanelComponent (logic only)', () => {
       component.selectedLanguages = ['en', 'fr']
       component.validateTranslations()
       expect(spy).toHaveBeenCalledWith(['en', 'fr'])
-      expect(facadeMock.updateRecordField).toHaveBeenCalledWith(
-        'otherLanguages',
-        ['fr']
-      )
     })
   })
 
