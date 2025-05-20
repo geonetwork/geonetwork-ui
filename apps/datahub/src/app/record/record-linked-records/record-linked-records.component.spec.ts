@@ -17,7 +17,7 @@ describe('RecordLinkedRecordsComponent', () => {
       providers: [
         MockProvider(MdViewFacade, {
           sources$: new BehaviorSubject([]),
-          hasSources$: new BehaviorSubject([]),
+          sourceOf$: new BehaviorSubject([]),
         }),
       ],
     }).compileComponents()
