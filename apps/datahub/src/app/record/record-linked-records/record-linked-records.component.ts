@@ -15,13 +15,13 @@ import { TranslateModule } from '@ngx-translate/core'
 })
 export class RecordLinkedRecordsComponent {
   sourceDatasets$ = this.metadataViewFacade.sources$
-  linkedDatasets$ = this.metadataViewFacade.hasSources$.pipe(
+  linkedDatasets$ = this.metadataViewFacade.sourceOf$.pipe(
     map((records) => records?.filter((record) => record?.kind === 'dataset'))
   )
-  linkedReuses$ = this.metadataViewFacade.hasSources$.pipe(
+  linkedReuses$ = this.metadataViewFacade.sourceOf$.pipe(
     map((records) => records?.filter((record) => record?.kind === 'reuse'))
   )
-  linkedServices$ = this.metadataViewFacade.hasSources$.pipe(
+  linkedServices$ = this.metadataViewFacade.sourceOf$.pipe(
     map((records) => records?.filter((record) => record?.kind === 'service'))
   )
 

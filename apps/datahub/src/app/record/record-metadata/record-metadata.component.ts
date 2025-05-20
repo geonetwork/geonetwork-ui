@@ -162,11 +162,9 @@ export class RecordMetadataComponent {
 
   displayLinked$ = combineLatest([
     this.metadataViewFacade.sources$,
-    this.metadataViewFacade.hasSources$,
+    this.metadataViewFacade.sourceOf$,
   ]).pipe(
-    map(
-      ([sources, hasSources]) => sources?.length > 0 || hasSources?.length > 0
-    )
+    map(([sources, sourceOf]) => sources?.length > 0 || sourceOf?.length > 0)
   )
 
   displayFeatureCatalog$ = combineLatest([
