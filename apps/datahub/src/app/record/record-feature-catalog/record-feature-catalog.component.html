@@ -7,11 +7,20 @@
       record.metadata.feature.catalog
     </h2>
 
-    <div class="bg-gray-100 rounded-lg shadow-md">
+    <div
+      class="bg-gray-100 rounded-lg shadow-md"
+      cdkOverlayOrigin
+      #trigger="cdkOverlayOrigin"
+    >
+      <!-- <ng-template cdkConnectedOverlay [cdkConnectedOverlayPush]="false" [cdkConnectedOverlayOrigin]="trigger"
+        [cdkConnectedOverlayOpen]="true" [cdkConnectedOverlayPositions]="overlayPositions"
+        [cdkConnectedOverlayWidth]="'auto'" [cdkConnectedOverlayFlexibleDimensions]="true"
+        [cdkConnectedOverlayGrowAfterOpen]="true"> -->
       <gn-ui-search-feature-catalog
         [featureCatalog]="metadataViewFacade.featureCatalog$ | async"
         (filteredFeatureCatalogChange)="onFilteredFeatureCatalogChange($event)"
       ></gn-ui-search-feature-catalog>
+      <!-- </ng-template> -->
 
       <gn-ui-feature-catalog-list
         [filteredFeatureCatalog]="filteredFeatureCatalog"

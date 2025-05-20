@@ -40,6 +40,9 @@ export class TruncatedTextComponent implements AfterViewInit, OnDestroy {
   @Input() text = ''
   @Input() extraClass = ''
 
+  @Input() zecontainer!: ElementRef
+
+  @ViewChild('originRef') originRef!: ElementRef
   @ViewChild('textElement') textElement: ElementRef<HTMLElement>
   isTextTruncated = false
   isOpen = false
@@ -49,14 +52,18 @@ export class TruncatedTextComponent implements AfterViewInit, OnDestroy {
     overlayX: 'end',
     overlayY: 'top',
   }
+  protected isVisible = true
+  firstCheck = true
   private readonly resizeObserver: ResizeObserver
   private readonly mutationObserver: MutationObserver
   private readonly viewportSubscription: Subscription
+  private intersectionObserver: IntersectionObserver
 
   constructor(
     private readonly cd: ChangeDetectorRef,
     private readonly ngZone: NgZone,
-    private readonly viewportRuler: ViewportRuler
+    private readonly viewportRuler: ViewportRuler,
+    private cdr: ChangeDetectorRef
   ) {
     this.resizeObserver = new ResizeObserver(() => {
       this.ngZone.run(() => this.checkTextTruncation())
@@ -65,7 +72,6 @@ export class TruncatedTextComponent implements AfterViewInit, OnDestroy {
     this.mutationObserver = new MutationObserver(() => {
       this.ngZone.run(() => {
         this.checkTextTruncation()
-        this.close()
       })
     })
 
@@ -85,12 +91,49 @@ export class TruncatedTextComponent implements AfterViewInit, OnDestroy {
       subtree: true,
     })
     this.checkTextTruncation()
+
+    const container = this.zecontainer.nativeElement
+    const target = this.originRef.nativeElement
+
+    this.intersectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        const visible = entry.intersectionRatio >= 1
+
+        // Ignorer la première émission si visible est false
+        if (this.firstCheck && !visible) {
+          this.firstCheck = false
+          return
+        }
+
+        this.firstCheck = false
+
+        if (this.isVisible !== visible) {
+          this.isVisible = visible
+          this.cdr.detectChanges()
+        }
+
+        if (!visible) {
+          console.log(
+            '❗️Element sort partiellement ou complètement du conteneur'
+          )
+        } else {
+          console.log('✅ Element entièrement visible dans le conteneur')
+        }
+      },
+      {
+        root: container,
+        threshold: 1.0,
+      }
+    )
+
+    this.intersectionObserver.observe(target)
   }
 
   ngOnDestroy() {
     this.resizeObserver?.disconnect()
     this.mutationObserver?.disconnect()
     this.viewportSubscription?.unsubscribe()
+    this.intersectionObserver?.disconnect()
     this.close()
   }
 
