@@ -20,7 +20,7 @@ export abstract class RecordsRepositoryInterface {
     similarTo: CatalogRecord
   ): Observable<CatalogRecord[]>
   abstract getSources(record: CatalogRecord): Observable<CatalogRecord[]>
-  abstract getHasSources(record: CatalogRecord): Observable<CatalogRecord[]>
+  abstract getSourceOf(record: CatalogRecord): Observable<CatalogRecord[]>
   abstract fuzzySearch(query: string): Observable<SearchResults>
   abstract canEditRecord(uniqueIdentifier: string): Observable<boolean>
   /**

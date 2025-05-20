@@ -79,14 +79,14 @@ export class MdViewEffects {
     )
   )
 
-  loadHasSources$ = createEffect(() =>
+  loadSourceOf$ = createEffect(() =>
     this.actions$.pipe(
       ofType(MdViewActions.loadFullMetadataSuccess),
-      switchMap(({ full }) => this.recordsRepository.getHasSources(full)),
-      map((hasSources) => {
-        return MdViewActions.setHasSources({ hasSources })
+      switchMap(({ full }) => this.recordsRepository.getSourceOf(full)),
+      map((sourceOf) => {
+        return MdViewActions.setSourceOf({ sourceOf })
       }),
-      catchError(() => of(MdViewActions.setHasSources({ hasSources: null })))
+      catchError(() => of(MdViewActions.setSourceOf({ sourceOf: null })))
     )
   )
 

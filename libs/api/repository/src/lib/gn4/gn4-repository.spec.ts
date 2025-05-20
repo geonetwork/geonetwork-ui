@@ -493,19 +493,19 @@ describe('Gn4Repository', () => {
       expect(result).toBeNull()
     })
   })
-  describe('getHasSources', () => {
-    let hasSources: CatalogRecord[]
+  describe('getSourceOf', () => {
+    let sourceOf: CatalogRecord[]
     const mockRecord = {
       ...SAMPLE_RECORD,
       extras: {
-        hasSourcesIdentifiers: ['hasSource-1', 'hasSource-2'],
+        sourceOfIdentifiers: ['hasSource-1', 'hasSource-2'],
       },
     }
     beforeEach(async () => {
       repository.getMultipleRecords = jest
         .fn()
         .mockImplementation((ids) => of(ids.map((id) => ({ uuid: id }))))
-      hasSources = await lastValueFrom(repository.getHasSources(mockRecord))
+      sourceOf = await lastValueFrom(repository.getSourceOf(mockRecord))
     })
     it('calls getMultipleRecords for hasSource identifiers', () => {
       expect(repository.getMultipleRecords).toHaveBeenCalledWith([
@@ -513,16 +513,16 @@ describe('Gn4Repository', () => {
         'hasSource-2',
       ])
     })
-    it('returns the hasSources as an array of CatalogRecord', () => {
-      expect(hasSources).toEqual([
+    it('returns the sourceOf as an array of CatalogRecord', () => {
+      expect(sourceOf).toEqual([
         { uuid: 'hasSource-1' },
         { uuid: 'hasSource-2' },
       ])
     })
-    it('returns null if no hasSourcesIdentifiers are defined', async () => {
-      const recordWithoutHasSources = { ...mockRecord, extras: {} }
+    it('returns null if no sourceOfIdentifiers are defined', async () => {
+      const recordWithoutSourceOf = { ...mockRecord, extras: {} }
       const result = await lastValueFrom(
-        repository.getHasSources(recordWithoutHasSources)
+        repository.getSourceOf(recordWithoutSourceOf)
       )
       expect(result).toBeNull()
     })

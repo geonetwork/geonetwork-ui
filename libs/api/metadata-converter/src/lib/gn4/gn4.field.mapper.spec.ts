@@ -231,7 +231,7 @@ describe('Gn4FieldMapper', () => {
           expect(result).toEqual({
             extras: {
               featureCatalogIdentifier: 'featurecatalog-001',
-              hasSourcesIdentifiers: ['hassource-001'],
+              sourceOfIdentifiers: ['hassource-001'],
             },
           })
         })

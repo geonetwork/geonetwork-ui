@@ -78,7 +78,7 @@ export class MdViewFacade {
 
   sources$ = this.store.pipe(select(MdViewSelectors.getSources))
 
-  hasSources$ = this.store.pipe(select(MdViewSelectors.getHasSources))
+  sourceOf$ = this.store.pipe(select(MdViewSelectors.getSourceOf))
 
   chartConfig$ = this.store.pipe(select(MdViewSelectors.getChartConfig))
 

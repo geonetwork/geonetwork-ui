@@ -284,19 +284,19 @@ describe('MdViewFacade', () => {
     })
   })
 
-  describe('hasSources$', () => {
-    it('emits hasSources', () => {
+  describe('sourceOf$', () => {
+    it('emits sourceOf', () => {
       store.setState({
         [METADATA_VIEW_FEATURE_STATE_KEY]: {
           ...initialMetadataViewState,
           metadata: datasetRecordsFixture()[0],
-          hasSources: [datasetRecordsFixture()[1]],
+          sourceOf: [datasetRecordsFixture()[1]],
         },
       })
       const expected = hot('a', {
         a: [datasetRecordsFixture()[1]],
       })
-      expect(facade.hasSources$).toBeObservable(expected)
+      expect(facade.sourceOf$).toBeObservable(expected)
     })
   })
 

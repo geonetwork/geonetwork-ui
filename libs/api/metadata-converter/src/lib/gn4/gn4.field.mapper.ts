@@ -298,13 +298,13 @@ export class Gn4FieldMapper {
         <SourceWithUnknownProps>fcatSource,
         'uuid'
       )
-      const hasSourcesLinks = getAsArray(
+      const sourceOfLinks = getAsArray(
         selectField(
           <SourceWithUnknownProps>selectField(source, 'related'),
           'hassources'
         )
       )
-      const hasSourcesIdentifiers: string[] = hasSourcesLinks
+      const sourceOfIdentifiers: string[] = sourceOfLinks
         .filter((link) => link['origin'] === 'catalog')
         .map((link) => {
           return selectField(
@@ -316,8 +316,8 @@ export class Gn4FieldMapper {
       if (featureCatalogIdentifier) {
         extraValues.featureCatalogIdentifier = featureCatalogIdentifier
       }
-      if (hasSourcesIdentifiers && hasSourcesIdentifiers.length > 0) {
-        extraValues.hasSourcesIdentifiers = hasSourcesIdentifiers
+      if (sourceOfIdentifiers && sourceOfIdentifiers.length > 0) {
+        extraValues.sourceOfIdentifiers = sourceOfIdentifiers
       }
       return Object.keys(extraValues).length > 0
         ? this.addExtra(extraValues, output)

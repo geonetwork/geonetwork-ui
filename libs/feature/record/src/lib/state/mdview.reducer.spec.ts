@@ -151,19 +151,19 @@ describe('metadataViewReducer', () => {
     })
   })
 
-  describe('setHasSources', () => {
+  describe('setSourceOf', () => {
     let action
-    const hasSources = [datasetRecordsFixture()[1]]
+    const sourceOf = [datasetRecordsFixture()[1]]
     beforeEach(() => {
-      action = MdViewActions.setHasSources({
-        hasSources,
+      action = MdViewActions.setSourceOf({
+        sourceOf,
       })
     })
     it('set has sources', () => {
       const state = reducer({ ...initialMetadataViewState }, action)
       expect(state).toEqual({
         ...initialMetadataViewState,
-        hasSources,
+        sourceOf,
       })
     })
   })

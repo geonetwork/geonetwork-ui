@@ -15,7 +15,7 @@ export interface MetadataViewState {
   metadata?: Partial<CatalogRecord>
   related?: CatalogRecord[]
   sources?: CatalogRecord[]
-  hasSources?: CatalogRecord[]
+  sourceOf?: CatalogRecord[]
   userFeedbacks?: UserFeedback[]
   allUserFeedbacksLoading: boolean
   addUserFeedbackLoading: boolean
@@ -82,9 +82,9 @@ const metadataViewReducer = createReducer(
     sources,
   })),
 
-  on(MetadataViewActions.setHasSources, (state, { hasSources }) => ({
+  on(MetadataViewActions.setSourceOf, (state, { sourceOf }) => ({
     ...state,
-    hasSources,
+    sourceOf,
   })),
 
   /*

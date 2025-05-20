@@ -232,12 +232,12 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return of(null)
   }
 
-  getHasSources(record: CatalogRecord): Observable<CatalogRecord[]> {
-    const hasSourcesIdentifiers = record.extras?.[
-      'hasSourcesIdentifiers'
+  getSourceOf(record: CatalogRecord): Observable<CatalogRecord[]> {
+    const sourceOfIdentifiers = record.extras?.[
+      'sourceOfIdentifiers'
     ] as string[]
-    if (hasSourcesIdentifiers && hasSourcesIdentifiers.length > 0) {
-      return this.getMultipleRecords(hasSourcesIdentifiers)
+    if (sourceOfIdentifiers && sourceOfIdentifiers.length > 0) {
+      return this.getMultipleRecords(sourceOfIdentifiers)
     }
     return of(null)
   }

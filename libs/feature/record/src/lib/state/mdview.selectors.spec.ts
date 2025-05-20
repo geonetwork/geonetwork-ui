@@ -153,11 +153,11 @@ describe('MdView Selectors', () => {
       })
     })
 
-    describe('getHasSources', () => {
+    describe('getSourceOf', () => {
       it('returns has sources records', () => {
-        const results = MdViewSelectors.getHasSources.projector({
+        const results = MdViewSelectors.getSourceOf.projector({
           ...state,
-          hasSources: [relatedRecord],
+          sourceOf: [relatedRecord],
         })
         expect(results).toEqual([relatedRecord])
       })
