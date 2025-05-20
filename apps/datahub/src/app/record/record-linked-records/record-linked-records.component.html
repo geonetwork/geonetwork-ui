@@ -5,9 +5,9 @@
   record.metadata.linked.records
 </h2>
 <datahub-record-internal-links
-  *ngIf="(metadataViewFacade.sources$ | async).length > 0"
+  *ngIf="hasSourceDatasets$ | async"
   [title]="'record.metadata.linked.sourceDatasets' | translate"
-  [records]="metadataViewFacade.sources$ | async"
+  [records]="sourceDatasets$ | async"
 ></datahub-record-internal-links>
 <datahub-record-internal-links
   *ngIf="hasLinkedDatasets$ | async"
