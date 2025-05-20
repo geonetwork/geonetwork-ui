@@ -11,6 +11,7 @@ class RecordsRepositoryMock {
 
 describe('MultilingualPanelComponent (logic only)', () => {
   let component: MultilingualPanelComponent
+  let fixture: ComponentFixture<MultilingualPanelComponent>
   let facadeMock: jest.Mocked<EditorFacade>
   let recordsRepository: RecordsRepositoryInterface
 
