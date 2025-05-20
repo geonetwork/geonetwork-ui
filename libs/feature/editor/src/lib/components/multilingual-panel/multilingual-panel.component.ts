@@ -109,11 +109,22 @@ export class MultilingualPanelComponent {
 
   sortLanguages(languages: string[]) {
     return languages
-      .map((lang) => ({
-        lang,
-        label: this.translateService.instant('language.' + lang),
-      }))
-      .sort((a, b) => a.label.localeCompare(b.label))
+      .map((lang) => {
+        const label = this.translateService.instant('language.' + lang)
+        const isTranslated = label !== 'language.' + lang
+
+        return {
+          lang,
+          label,
+          isTranslated,
+        }
+      })
+      .sort((a, b) => {
+        if (a.isTranslated && !b.isTranslated) return -1
+        if (!a.isTranslated && b.isTranslated) return 1
+
+        return a.label.localeCompare(b.label)
+      })
       .map((item) => item.lang)
   }
 
@@ -174,9 +185,7 @@ export class MultilingualPanelComponent {
   updateTranslations() {
     this.facade.updateRecordField(
       'otherLanguages',
-      this.selectedLanguages.filter(
-        (lang) => lang !== this._record.defaultLanguage
-      )
+      this.selectedLanguages.filter((lang) => lang !== this.formLanguage)
     )
     this.recordLanguages = this.selectedLanguages
     this.editTranslations = false
@@ -188,7 +197,11 @@ export class MultilingualPanelComponent {
 
   switchDefaultLang(lang: string) {
     this.formLanguage = lang
-    // TO IMPLEMENT FURTHER
+    this.facade.updateRecordField('defaultLanguage', lang)
+    this.facade.updateRecordField(
+      'otherLanguages',
+      this.selectedLanguages.filter((lang) => lang !== this.formLanguage)
+    )
   }
 
   confirmDeleteAction(lang?: string[] | string) {
