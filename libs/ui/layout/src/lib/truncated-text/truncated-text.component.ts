@@ -14,6 +14,7 @@ import { iconoirExpand } from '@ng-icons/iconoir'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatButtonModule } from '@angular/material/button'
 import {
+  CdkScrollable,
   OverlayModule,
   ViewportRuler,
   ConnectedPosition,
@@ -41,6 +42,7 @@ export class TruncatedTextComponent implements AfterViewInit, OnDestroy {
   @Input() text = ''
   @Input() extraClass = ''
   @Input() scrollContainer!: ElementRef
+  @Input() cdkScrollContainer!: CdkScrollable
 
   @ViewChild('textElement') textElement: ElementRef<HTMLElement>
 
