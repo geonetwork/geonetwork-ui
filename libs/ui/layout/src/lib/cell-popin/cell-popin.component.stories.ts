@@ -1,11 +1,12 @@
 import { Meta, StoryObj, applicationConfig } from '@storybook/angular'
-import { importProvidersFrom } from '@angular/core'
+import { TruncatedTextComponent } from '../truncated-text/truncated-text.component'
 import { TranslateModule } from '@ngx-translate/core'
+import { importProvidersFrom } from '@angular/core'
 import { CellPopinComponent } from './cell-popin.component'
 
 const meta: Meta<CellPopinComponent> = {
   component: CellPopinComponent,
-  title: 'Layout/CellPopin',
+  title: 'Layout/Cell Popin',
   decorators: [
     applicationConfig({
       providers: [
@@ -20,40 +21,27 @@ const meta: Meta<CellPopinComponent> = {
   render: (args) => ({
     props: args,
     template: `
-      <div [style.width]="width" class="border border-gray-300">
+      <div class="border border-gray-300 w-96">
         <gn-ui-cell-popin
-          #popinRef
-        >
-          <div cellContent>
-            <button>Open popin</button>
-            <gn-ui-button
-              type="light"
-              extraClass="bg-transparent border-none"
-              (buttonClick)="popinRef.openOverlay()"
-            >
-              <ng-icon name="iconoirList" size="24"></ng-icon>
-            </gn-ui-button>
-          </div>
-          <div
-            popinContent
-            class="max-h-60 overflow-y-auto min-w-64 py-4 px-6"
-            style="scrollbar-width: thin"
+            #popinRef
           >
-            <ul class="list-disc list-inside mr-4">
-              <li *ngFor="let v of row.values">
-                {{ v.label || v.code }}
-              </li>
-            </ul>
-          </div>
-        </gn-ui-cell-popin>
+            <div cellContent>
+              <button (click)="popinRef.openOverlay()">Click Me</button>              
+            </div>
+            <div
+              popinContent
+              class="max-h-60 max-w-56 overflow-y-auto min-w-64 py-4 px-6 pr-9"
+              style="scrollbar-width: thin"
+            >
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque suscipit aliquet ligula, posuere egestas mi. In consectetur tortor sit amet nibh posuere, ut facilisis dolor laoreet. Morbi in dapibus libero. Praesent quam enim, vehicula id nibh at, scelerisque faucibus libero. In hac habitasse platea dictumst. 
+            </div>
+          </gn-ui-cell-popin>
       </div>
     `,
   }),
 }
 
 export default meta
-type Story = StoryObj<
-  CellPopinComponent & {
-    width: string
-  }
->
+type Story = StoryObj<CellPopinComponent>
+
+export const Primary: Story = {}
