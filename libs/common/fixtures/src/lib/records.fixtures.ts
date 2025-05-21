@@ -64,7 +64,6 @@ This is a section about details. Here is an HTML tag: <img src="http://google.co
 
 ## Informations intéressantes
 Cette section contient des *caractères internationaux* (ainsi que des "caractères spéciaux"). 'çàü^@/~^&`,
-
     overviews: [
       {
         url: new URL('http://my-org.net/one.png'),

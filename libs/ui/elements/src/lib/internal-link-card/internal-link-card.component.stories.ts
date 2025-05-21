@@ -26,10 +26,11 @@ const mockRecordLong = datasetRecordsFixture()[1] as CatalogRecord
 const mockRecordWithoutContact = {
   ...mockRecord,
   ownerOrganization: null,
-  contactsForResource: [],
-  contacts: [],
 } as CatalogRecord
-
+const mockLongRecordWithoutContact = {
+  ...mockRecordLong,
+  ownerOrganization: null,
+} as CatalogRecord
 const interactiveFavoriteTemplate = `<div class="flex flex-row items-center">
   <span class="inline-flex items-center text-gray-700 font-medium" style="line-height: 1; margin-top: 1px;">{{record.extras?.favoriteCount || 42}}</span>
   <button type="button" class="ml-1 flex items-center justify-center text-secondary hover:scale-125 transition will-change-transform"
@@ -225,7 +226,7 @@ export const LargeCardWithoutContact: StoryObj<InternalLinkCardComponentWithFavo
     args: {
       ...Primary.args,
       size: 'L',
-      record: mockRecordWithoutContact,
+      record: mockLongRecordWithoutContact,
     },
     render: Primary.render,
   }

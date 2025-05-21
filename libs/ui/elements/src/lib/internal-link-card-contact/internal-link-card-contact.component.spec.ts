@@ -45,8 +45,6 @@ const mockRecord = {
 const mockRecordWithoutContact = {
   ...mockRecord,
   ownerOrganization: null,
-  contactsForResource: [],
-  contacts: [],
 } as unknown as CatalogRecord
 
 describe('InternalLinkCardContactComponent', () => {
