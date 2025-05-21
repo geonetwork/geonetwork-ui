@@ -202,17 +202,14 @@ describe('InternalLinkCardComponent', () => {
 
   describe('event handlers', () => {
     let openSpy: jest.SpyInstance
-    let consoleSpy: jest.SpyInstance
 
     beforeEach(() => {
       openSpy = jest.spyOn(window, 'open').mockImplementation(() => null)
-      consoleSpy = jest.spyOn(console, 'log').mockImplementation()
       fixture.detectChanges()
     })
 
     afterEach(() => {
       openSpy.mockRestore()
-      consoleSpy.mockRestore()
     })
 
     it('should emit mdSelect when card is clicked', () => {
@@ -223,111 +220,75 @@ describe('InternalLinkCardComponent', () => {
     })
   })
 
-  describe('getAbstractLineClamp', () => {
-    describe('with owner organization', () => {
-      beforeEach(() => {
-        component.record = mockRecord
-      })
-
-      it('returns line-clamp-2 for size L', () => {
-        component.size = 'L'
-        expect(component.getAbstractLineClamp()).toBe('line-clamp-2')
-      })
-
-      it('returns empty string for size M', () => {
-        component.size = 'M'
-        expect(component.getAbstractLineClamp()).toBe('')
-      })
-
-      it('returns empty string for size S', () => {
-        component.size = 'S'
-        expect(component.getAbstractLineClamp()).toBe('')
-      })
-
-      it('returns empty string for size XS', () => {
-        component.size = 'XS'
-        expect(component.getAbstractLineClamp()).toBe('')
-      })
+  describe('getAbstractLineClamp with owner organization', () => {
+    beforeEach(() => {
+      component.record = mockRecord
     })
 
-    describe('without owner organization', () => {
-      beforeEach(() => {
-        component.record = mockRecordWithoutContact
-      })
-
-      it('returns line-clamp-6 for size L', () => {
-        component.size = 'L'
-        expect(component.getAbstractLineClamp()).toBe('line-clamp-6')
-      })
-
-      it('returns line-clamp-2 for size M', () => {
-        component.size = 'M'
-        expect(component.getAbstractLineClamp()).toBe('line-clamp-2')
-      })
-
-      it('returns line-clamp-2 for size S', () => {
-        component.size = 'S'
-        expect(component.getAbstractLineClamp()).toBe('line-clamp-2')
-      })
-
-      it('returns empty string for size XS', () => {
-        component.size = 'XS'
-        expect(component.getAbstractLineClamp()).toBe('')
-      })
+    it('returns the right line-clamp for each size ', () => {
+      component.size = 'L'
+      expect(component.getAbstractLineClamp()).toBe('line-clamp-2')
+      component.size = 'M'
+      expect(component.getAbstractLineClamp()).toBe('')
+      component.size = 'S'
+      expect(component.getAbstractLineClamp()).toBe('')
+      component.size = 'XS'
+      expect(component.getAbstractLineClamp()).toBe('')
     })
   })
 
-  describe('displayAbstract', () => {
-    describe('with owner organization', () => {
-      beforeEach(() => {
-        component.record = mockRecord
-      })
-
-      it('returns true for size L', () => {
-        component.size = 'L'
-        expect(component.displayAbstract()).toBe(true)
-      })
-
-      it('returns false for size M', () => {
-        component.size = 'M'
-        expect(component.displayAbstract()).toBe(false)
-      })
-
-      it('returns false for size S', () => {
-        component.size = 'S'
-        expect(component.displayAbstract()).toBe(false)
-      })
-
-      it('returns false for size XS', () => {
-        component.size = 'XS'
-        expect(component.displayAbstract()).toBe(false)
-      })
+  describe('getAbstractLineClamp without owner organization', () => {
+    beforeEach(() => {
+      component.record = mockRecordWithoutContact
     })
 
-    describe('without owner organization', () => {
-      beforeEach(() => {
-        component.record = mockRecordWithoutContact
-      })
+    it('returns the right line-clamp for each size', () => {
+      component.size = 'L'
+      expect(component.getAbstractLineClamp()).toBe('line-clamp-6')
+      component.size = 'M'
+      expect(component.getAbstractLineClamp()).toBe('line-clamp-2')
+      component.size = 'S'
+      expect(component.getAbstractLineClamp()).toBe('line-clamp-2')
+      component.size = 'XS'
+      expect(component.getAbstractLineClamp()).toBe('')
+    })
+  })
 
-      it('returns true for size L', () => {
-        component.size = 'L'
-        expect(component.displayAbstract()).toBe(true)
-      })
+  describe('displayAbstract with owner organization', () => {
+    beforeEach(() => {
+      component.record = mockRecord
+    })
 
-      it('returns true for size M', () => {
-        component.size = 'M'
-        expect(component.displayAbstract()).toBe(true)
-      })
+    it('returns true for size L', () => {
+      component.size = 'L'
+      expect(component.displayAbstract()).toBe(true)
+    })
 
-      it('returns true for size S', () => {
-        component.size = 'S'
-        expect(component.displayAbstract()).toBe(true)
-      })
+    it('returns false for all other size M', () => {
+      component.size = 'M'
+      expect(component.displayAbstract()).toBe(false)
+      component.size = 'S'
+      expect(component.displayAbstract()).toBe(false)
+      component.size = 'XS'
+      expect(component.displayAbstract()).toBe(false)
+    })
+  })
 
-      it('returns false for size XS', () => {
-        component.size = 'XS'
-        expect(component.displayAbstract()).toBe(false)
-      })
+  describe('displayAbstract without owner organization', () => {
+    beforeEach(() => {
+      component.record = mockRecordWithoutContact
+    })
+    it('returns false for size XS', () => {
+      component.size = 'XS'
+      expect(component.displayAbstract()).toBe(false)
+    })
+    it('returns true for all other size', () => {
+      component.size = 'L'
+      expect(component.displayAbstract()).toBe(true)
+      component.size = 'M'
+      expect(component.displayAbstract()).toBe(true)
+      component.size = 'S'
+      expect(component.displayAbstract()).toBe(true)
     })
   })
 })
