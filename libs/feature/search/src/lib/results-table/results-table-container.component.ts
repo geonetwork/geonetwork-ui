@@ -12,7 +12,7 @@ import { SearchService } from '../utils/service/search.service'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { ResultsTableComponent } from '@geonetwork-ui/ui/search'
 import { CommonModule } from '@angular/common'
-import { Subscription } from 'rxjs'
+import { Observable, Subscription } from 'rxjs'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { TranslateService } from '@ngx-translate/core'
 
@@ -24,8 +24,6 @@ import { TranslateService } from '@ngx-translate/core'
   imports: [CommonModule, ResultsTableComponent],
 })
 export class ResultsTableContainerComponent implements OnDestroy {
-  @Input() canDuplicate: (record: CatalogRecord) => boolean = () => true
-  @Input() canDelete: (record: CatalogRecord) => boolean = () => true
   @Input() isDuplicating: false
 
   @Output() recordClick = new EventEmitter<CatalogRecord>()
@@ -38,6 +36,18 @@ export class ResultsTableContainerComponent implements OnDestroy {
 
   hasDraft = (record: CatalogRecord): boolean =>
     this.recordsRepository.recordHasDraft(record.uniqueIdentifier)
+
+  canDuplicate = (record: CatalogRecord): boolean => {
+    return this.recordsRepository.canDuplicate(record)
+  }
+
+  canDelete = (record: CatalogRecord): Observable<boolean> => {
+    return this.recordsRepository.canDelete(record)
+  }
+
+  canEdit = (record: CatalogRecord): Observable<boolean> => {
+    return this.recordsRepository.canEditIndexedRecord(record)
+  }
 
   constructor(
     protected searchFacade: SearchFacade,

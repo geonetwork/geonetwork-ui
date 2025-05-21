@@ -1238,6 +1238,7 @@ describe('Gn4Converter', () => {
               catalogUuid: '81e8a591-7815-4d2f-a7da-5673192e74c9',
               favoriteCount: 12,
               id: '11700',
+              isHarvested: false,
               isOpenData: true,
               isPublishedToAll: true,
               ownerInfo: 'testadmin|ADMIN|Test|Administrator',
@@ -1773,6 +1774,7 @@ describe('Gn4Converter', () => {
               catalogUuid: '7ea582d4-9ddf-422e-b28f-29760a4c0147',
               favoriteCount: 0,
               id: '39253641',
+              isHarvested: false,
               isOpenData: true,
               isPublishedToAll: true,
               ownerInfo: 'AREadmin|admin|ARE|UserAdmin',
@@ -2404,6 +2406,7 @@ describe('Gn4Converter', () => {
             abstract:
               "Point d'accès OGC API Records du catalogue NAP-ITS-Wallonia contenant la description des données régionales de mobilité telles que demandé par la législation sur les systèmes de transport intelligents.",
             extras: {
+              isHarvested: false,
               isOpenData: false,
               ownerInfo: 'vbombaerts_admin|Admin|Vincent|Administrator',
               isPublishedToAll: true,
@@ -2607,6 +2610,7 @@ describe('Gn4Converter', () => {
               isPublishedToAll: true,
               id: '15415',
               qualityScore: 62,
+              isHarvested: true,
               isOpenData: false,
               catalogUuid: 'c3f93209-4363-4e30-bec2-3cc43bd7a8a7',
               ownerInfo: 'vfabry|Fabry|Vincent|Administrator',
@@ -2692,6 +2696,7 @@ describe('Gn4Converter', () => {
               favoriteCount: 0,
               featureTypes: [],
               id: '1215',
+              isHarvested: false,
               isOpenData: false,
               isPublishedToAll: true,
               edit: true,
@@ -3253,6 +3258,7 @@ describe('Gn4Converter', () => {
               isPublishedToAll: true,
               id: '19436',
               qualityScore: 62,
+              isHarvested: true,
               isOpenData: false,
               catalogUuid: 'c3f93209-4363-4e30-bec2-3cc43bd7a8a7',
               ownerInfo: 'vfabry|Fabry|Vincent|Administrator',
@@ -3399,6 +3405,7 @@ describe('Gn4Converter', () => {
             abstract:
               'Im Rahmen des Interreg-Projekts CO2-InnO hat TRION-climate rund 50 Wasserstoffprojekte am Oberrhein erfasst und beschrieben. Auf diese Weise findet man die verschiedenen Standorte der Wasserstoffproduktion, die wichtigsten Forschungsprojekte, die Transport- und Verteilungsnetze sowie die großen Abnehmer von grünem Wasserstoff in der Region. GeoRhena, das Geoinformationssystem des Oberrheins, präsentierte diese Anlagen auf einer interaktiven Karte der Wasserstoffanlagen und -projekte.',
             extras: {
+              isHarvested: false,
               isOpenData: false,
               ownerInfo: 'sritzenthaler|Ritzenthaler|Stéphane|Administrator',
               isPublishedToAll: true,
