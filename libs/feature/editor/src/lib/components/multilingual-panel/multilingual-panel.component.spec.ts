@@ -98,7 +98,7 @@ describe('MultilingualPanelComponent (logic only)', () => {
 
   describe('Default language switching', () => {
     beforeEach(() => {
-      component.switchFormLang('es')
+      component.switchDefaultLang('es')
       fixture.detectChanges()
     })
     it('should set the default language and the otherLanguages accordingly', () => {
