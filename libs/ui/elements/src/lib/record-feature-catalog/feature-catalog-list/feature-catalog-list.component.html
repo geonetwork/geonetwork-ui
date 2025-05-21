@@ -1,8 +1,4 @@
-<div
-  #totomarker
-  cdkScrollable
-  class="h-[562px] relative overflow-y-auto overflow-hidden"
->
+<div cdkScrollable class="h-[562px] relative overflow-y-auto overflow-hidden">
   <div #scrollContainer class="flex flex-col gap-2 py-5 px-5">
     <div
       *ngFor="let featureType of filteredFeatureCatalog?.featureTypes"
@@ -21,6 +17,7 @@
             </div>
           </div>
         </ng-template>
+        <!-- KEEP all *ngIf="expanel && !expanel.collapsed" for UI perf issues! -->
         <div
           *ngIf="expanel && !expanel.collapsed"
           class="grid gap-0"
@@ -43,6 +40,7 @@
           >
             {{ 'feature.catalog.attribute.' + col.key | translate }}
           </div>
+          <!-- KEEP all *ngIf="expanel && !expanel.collapsed" for UI perf issues! -->
           <ng-container *ngIf="expanel && !expanel.collapsed">
             <ng-container *ngFor="let row of featureType.attributes">
               <div
@@ -63,18 +61,38 @@
                 <ng-template #defaultTpl>
                   <gn-ui-truncated-text
                     [scrollContainer]="scrollContainer"
-                    extraClass="py-3 px-2"
                     [text]="row[col.key]"
                   ></gn-ui-truncated-text>
                 </ng-template>
 
                 <ng-template #tplValues>
-                  <gn-ui-value-list
+                  <gn-ui-cell-popin
+                    #popinRef
                     [scrollContainer]="scrollContainer"
                     [cdkScrollContainer]="scrollable"
                     *ngIf="row.values?.length > 0"
-                    [values]="row.values"
-                  ></gn-ui-value-list>
+                  >
+                    <div cellContent>
+                      <gn-ui-button
+                        type="light"
+                        extraClass="bg-transparent border-none"
+                        (buttonClick)="popinRef.openOverlay()"
+                      >
+                        <ng-icon name="iconoirList" size="24"></ng-icon>
+                      </gn-ui-button>
+                    </div>
+                    <div
+                      popinContent
+                      class="max-h-60 overflow-y-auto min-w-64 py-4 px-6"
+                      style="scrollbar-width: thin"
+                    >
+                      <ul class="list-disc list-inside mr-4">
+                        <li *ngFor="let v of row.values">
+                          {{ v.label || v.code }}
+                        </li>
+                      </ul>
+                    </div>
+                  </gn-ui-cell-popin>
                 </ng-template>
               </div>
             </ng-container>

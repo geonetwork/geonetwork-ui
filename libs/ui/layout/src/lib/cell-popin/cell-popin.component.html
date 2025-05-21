@@ -1,19 +1,16 @@
 <div
-  #originRef
   class="h-full flex items-center justify-center"
   cdkOverlayOrigin
+  #anchorRef
   #trigger="cdkOverlayOrigin"
   [class]="extraClass"
 >
-  <gn-ui-button
-    type="light"
-    extraClass="bg-transparent border-none"
-    (buttonClick)="openOverlay()"
-  >
-    <ng-icon name="iconoirList" size="24"></ng-icon>
-  </gn-ui-button>
+  <!-- [Overlay trigger] usage in cellContent, if trigger needed: <button (click)="openOverlay()"> -->
+  <ng-content select="[cellContent]"></ng-content>
 
+  <!-- [Overlay content] -->
   <ng-template
+    *ngIf="activePopin"
     cdkConnectedOverlay
     [cdkConnectedOverlayPush]="false"
     [cdkConnectedOverlayOrigin]="trigger"
@@ -25,18 +22,13 @@
     (detach)="closeOverlay()"
   >
     <div
-      *ngIf="isVisible"
+      *ngIf="activePopin && isVisible"
       class="bg-white shadow-lg border border-gray-300 relative"
     >
-      <div
-        class="max-h-60 overflow-y-auto min-w-64 py-4 px-6"
-        style="scrollbar-width: thin"
-      >
-        <ul class="list-disc list-inside mr-4">
-          <li *ngFor="let v of values">{{ v.label || v.code }}</li>
-        </ul>
-      </div>
+      <!-- Populate popin content here -->
+      <ng-content select="[popinContent]"></ng-content>
 
+      <!-- [Overlay closing button] -->
       <gn-ui-button
         [style.--gn-ui-button-background]="'bg-transparent'"
         class="absolute top-2 right-2"

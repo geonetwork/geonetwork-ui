@@ -11,7 +11,7 @@ import {
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { provideIcons, NgIconComponent } from '@ng-icons/core'
-import { iconoirList, iconoirReduce } from '@ng-icons/iconoir'
+import { iconoirReduce } from '@ng-icons/iconoir'
 import { MatButtonModule } from '@angular/material/button'
 import {
   OverlayModule,
@@ -23,7 +23,7 @@ import {
 } from '@angular/cdk/overlay'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 @Component({
-  selector: 'gn-ui-value-list',
+  selector: 'gn-ui-cell-popin',
   standalone: true,
   imports: [
     CommonModule,
@@ -32,17 +32,16 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
     ButtonComponent,
     NgIconComponent,
   ],
-  providers: [provideIcons({ iconoirList, iconoirReduce })],
-  templateUrl: './value-list.component.html',
-  styleUrls: ['./value-list.component.css'],
+  providers: [provideIcons({ iconoirReduce })],
+  templateUrl: './cell-popin.component.html',
+  styleUrls: [],
 })
-export class ValueListComponent implements AfterViewInit, OnDestroy {
-  @Input() values: { label?: string; code?: string }[] = []
+export class CellPopinComponent implements AfterViewInit, OnDestroy {
   @Input() extraClass = ''
   @Input() cdkScrollContainer!: CdkScrollable
   @Input() scrollContainer!: ElementRef
 
-  @ViewChild('originRef') originRef!: ElementRef
+  @ViewChild('anchorRef') anchorRef!: ElementRef
 
   protected isOpen = false
   protected isVisible = true
@@ -53,10 +52,27 @@ export class ValueListComponent implements AfterViewInit, OnDestroy {
       overlayX: 'end',
       overlayY: 'top',
     },
+    {
+      originX: 'start',
+      originY: 'top',
+      overlayX: 'start',
+      overlayY: 'top',
+    },
   ]
 
   private firstCheck = true
   private intersectionObserver: IntersectionObserver
+
+  private _activePopin = true
+
+  @Input()
+  set activePopin(active: boolean | undefined) {
+    this._activePopin = !!active
+    this.updateIntersectionObserver()
+  }
+  get activePopin(): boolean {
+    return this._activePopin
+  }
 
   constructor(
     private scrollDispatcher: ScrollDispatcher,
@@ -64,18 +80,36 @@ export class ValueListComponent implements AfterViewInit, OnDestroy {
   ) {}
 
   ngAfterViewInit() {
+    if (!this.activePopin) {
+      return
+    }
+
     if (this.cdkScrollContainer) {
       this.scrollDispatcher.register(this.cdkScrollContainer)
     }
 
-    const container = this.scrollContainer.nativeElement
-    const target = this.originRef.nativeElement
+    this.updateIntersectionObserver()
+  }
+
+  ngOnDestroy() {
+    this.intersectionObserver?.disconnect()
+    this.scrollDispatcher.deregister(this.cdkScrollContainer)
+  }
+
+  updateIntersectionObserver() {
+    if (!this.scrollContainer || !this.anchorRef) {
+      return
+    }
+
+    if (this.intersectionObserver) {
+      this.intersectionObserver?.disconnect()
+    }
 
     this.intersectionObserver = new IntersectionObserver(
       ([entry]) => {
         const visible = entry.intersectionRatio >= 1
 
-        // Ignorer la première émission si visible est false
+        // Ignore first visibility if first time opening it
         if (this.firstCheck && !visible) {
           this.firstCheck = false
           return
@@ -87,27 +121,14 @@ export class ValueListComponent implements AfterViewInit, OnDestroy {
           this.isVisible = visible
           this.cdr.detectChanges()
         }
-
-        if (!visible) {
-          console.log(
-            '❗️Element sort partiellement ou complètement du conteneur'
-          )
-        } else {
-          console.log('✅ Element entièrement visible dans le conteneur')
-        }
       },
       {
-        root: container,
+        root: this.scrollContainer.nativeElement,
         threshold: 1.0,
       }
     )
 
-    this.intersectionObserver.observe(target)
-  }
-
-  ngOnDestroy() {
-    this.intersectionObserver?.disconnect()
-    this.scrollDispatcher.deregister(this.cdkScrollContainer)
+    this.intersectionObserver.observe(this.anchorRef.nativeElement)
   }
 
   openOverlay() {
