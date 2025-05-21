@@ -40,7 +40,7 @@ export class TruncatedTextComponent implements AfterViewInit, OnDestroy {
   @Input() text = ''
   @Input() extraClass = ''
 
-  @Input() zecontainer!: ElementRef
+  @Input() scrollContainer!: ElementRef
 
   @ViewChild('originRef') originRef!: ElementRef
   @ViewChild('textElement') textElement: ElementRef<HTMLElement>
@@ -92,7 +92,7 @@ export class TruncatedTextComponent implements AfterViewInit, OnDestroy {
     })
     this.checkTextTruncation()
 
-    const container = this.zecontainer.nativeElement
+    const container = this.scrollContainer.nativeElement
     const target = this.originRef.nativeElement
 
     this.intersectionObserver = new IntersectionObserver(

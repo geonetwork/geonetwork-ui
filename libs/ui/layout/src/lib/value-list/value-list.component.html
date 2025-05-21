@@ -1,14 +1,14 @@
 <div
   #originRef
-  class="flex items-center justify-center"
+  class="h-full flex items-center justify-center"
   cdkOverlayOrigin
   #trigger="cdkOverlayOrigin"
   [class]="extraClass"
 >
   <gn-ui-button
     type="light"
-    extraClass="flex items-center bg-transparent border-none justify-center"
-    (buttonClick)="toggleOverlay()"
+    extraClass="bg-transparent border-none"
+    (buttonClick)="openOverlay()"
   >
     <ng-icon name="iconoirList" size="24"></ng-icon>
   </gn-ui-button>
@@ -22,7 +22,7 @@
     [cdkConnectedOverlayWidth]="'auto'"
     [cdkConnectedOverlayFlexibleDimensions]="true"
     [cdkConnectedOverlayGrowAfterOpen]="true"
-    (detach)="close()"
+    (detach)="closeOverlay()"
   >
     <div
       *ngIf="isVisible"
@@ -49,8 +49,3 @@
     </div>
   </ng-template>
 </div>
-
-<ng-template #simpleOverlay>
-  <!-- contenu de ton overlay -->
-  <div *ngIf="isVisible">Mon overlay HTML isVisible = {{ isVisible }}</div>
-</ng-template>

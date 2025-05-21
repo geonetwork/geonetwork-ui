@@ -34,7 +34,7 @@ interface ColumnDefinition {
 @Component({
   selector: 'gn-ui-feature-catalog-list',
   templateUrl: './feature-catalog-list.component.html',
-  styleUrls: ['./feature-catalog-list.component.css'],
+  styleUrls: [],
   standalone: true,
   imports: [
     CommonModule,
@@ -55,7 +55,7 @@ export class FeatureCatalogListComponent {
   @ViewChild('expanel', { read: ExpandablePanelComponent, static: true })
   panelComponent: ExpandablePanelComponent
 
-  @ViewChild('zecontainer', { static: false }) zecontainer!: ElementRef
+  @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef
 
   readonly COLUMNS_DEFAULT: ColumnDefinition[] = [
     { key: 'type', width: '17%' },
