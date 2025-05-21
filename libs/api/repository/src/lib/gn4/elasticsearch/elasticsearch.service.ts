@@ -368,6 +368,7 @@ export class ElasticsearchService {
     return {
       bool: {
         must,
+        must_not,
         should,
         filter,
       },
