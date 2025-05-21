@@ -12,17 +12,9 @@ import { TranslateModule } from '@ngx-translate/core'
 import { EditorEffects } from './+state/editor.effects'
 import { EditorFacade } from './+state/editor.facade'
 import * as fromEditor from './+state/editor.reducer'
-import { WizardFieldComponent } from './components/wizard-field/wizard-field.component'
-import { WizardSummarizeComponent } from './components/wizard-summarize/wizard-summarize.component'
-import { WizardComponent } from './components/wizard/wizard.component'
 import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
 
 @NgModule({
-  declarations: [
-    WizardComponent,
-    WizardFieldComponent,
-    WizardSummarizeComponent,
-  ],
   imports: [
     CommonModule,
     UiInputsModule,
@@ -40,9 +32,6 @@ import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
     EffectsModule.forFeature([EditorEffects]),
     TextInputComponent,
   ],
-  exports: [WizardComponent, WizardSummarizeComponent],
   providers: [EditorFacade, Gn4PlatformService],
 })
 export class FeatureEditorModule {}
-export * from './models/index'
-export * from './services/wizard.service'

@@ -70,10 +70,6 @@ export const SUPPORTED_LANGUAGES = [
 export function HttpLoaderFactory(http: HttpClient) {
   return new FileTranslateLoader(http, './assets/i18n/')
 }
-//Deprecated, but currently still used in datafeeder
-export function getLangFromBrowser() {
-  return navigator.language.substr(0, 2)
-}
 const COMPILER_CONFIG = {
   provide: TranslateCompiler,
   useClass: TranslateMessageFormatCompiler,
