@@ -64,11 +64,19 @@
   </gn-ui-button> -->
   <gn-ui-button
     [title]="'editor.record.form.multilingual.open' | translate"
-    [extraClass]="translatePanelOpen ? 'bg-neutral-200 border-0' : ''"
+    [extraClass]="translatePanelOpen ? 'bg-neutral-200 border-0' : 'bg-white'"
     (buttonClick)="toggleTranslatePanel()"
     type="light"
   >
-    <ng-icon name="iconoirTranslate"></ng-icon>
+    <div class="relative inline-block">
+      <ng-icon
+        size="8px"
+        name="matCircle"
+        class="text-primary absolute top-0 right-0"
+        *ngIf="isRecordMultilingual$ | async"
+      ></ng-icon>
+      <ng-icon name="iconoirTranslate"></ng-icon>
+    </div>
   </gn-ui-button>
   <!-- <gn-ui-button
     type="light"

@@ -9,6 +9,9 @@ import { TranslateModule } from '@ngx-translate/core'
 class EditorFacadeMock {
   changedSinceSave$ = new BehaviorSubject(false)
   isPublished$ = new BehaviorSubject(false)
+  record$ = new BehaviorSubject({
+    otherLanguages: [],
+  })
 }
 
 @Component({
@@ -86,6 +89,19 @@ describe('TopToolbarComponent', () => {
       it('sets the correct status', () => {
         expect(saveStatus).toBe('draft_changes_pending')
       })
+    })
+  })
+  describe('Multilingual panel', () => {
+    it('should not have multilingual mode activate if the record has no extra languages', () => {
+      const ngIcon = fixture.nativeElement.querySelectorAll('ng-icon')[2]
+      expect(ngIcon.getAttribute('name')).not.toBe('matCircle')
+    })
+    it('should activate the multilingual mode if the record has extra languages', () => {
+      editorFacade.record$.next({ otherLanguages: ['en', 'it', 'fr'] })
+      fixture.detectChanges()
+
+      const ngIcon = fixture.nativeElement.querySelectorAll('ng-icon')[2]
+      expect(ngIcon.getAttribute('name')).toBe('matCircle')
     })
   })
 })

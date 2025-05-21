@@ -2,7 +2,9 @@ import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
 import {
   writeContacts,
   writeContactsForResource,
+  writeDefaultLanguage,
   writeOnlineResources,
+  writeOtherLanguages,
   writeRecordCreated,
   writeResourceCreated,
   writeResourcePublished,
@@ -634,6 +636,71 @@ describe('write parts', () => {
     <gmd:identificationInfo>
         <gmd:MD_DataIdentification/>
     </gmd:identificationInfo>
+</root>`)
+    })
+  })
+  describe('writeLanguages + writeDefaultLanguage', () => {
+    it('writes only default language when no otherLanguages provided', () => {
+      datasetRecord.defaultLanguage = 'fr'
+      datasetRecord.otherLanguages = []
+
+      writeDefaultLanguage(datasetRecord, rootEl)
+      writeOtherLanguages(datasetRecord, rootEl)
+
+      expect(rootAsString()).toEqual(`<root>
+    <mdb:defaultLocale>
+        <lan:PT_Locale id="FR">
+            <lan:language>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="fre"/>
+            </lan:language>
+        </lan:PT_Locale>
+    </mdb:defaultLocale>
+</root>`)
+    })
+
+    it('writes supported and unsupported other languages correctly', () => {
+      datasetRecord.defaultLanguage = 'fr'
+      datasetRecord.otherLanguages = ['en', 'de', 'it', 'aar']
+
+      writeDefaultLanguage(datasetRecord, rootEl)
+      writeOtherLanguages(datasetRecord, rootEl)
+
+      expect(rootAsString()).toEqual(`<root>
+    <mdb:defaultLocale>
+        <lan:PT_Locale id="FR">
+            <lan:language>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="fre"/>
+            </lan:language>
+        </lan:PT_Locale>
+    </mdb:defaultLocale>
+    <mdb:otherLocale>
+        <lan:PT_Locale id="EN">
+            <lan:language>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng"/>
+            </lan:language>
+        </lan:PT_Locale>
+    </mdb:otherLocale>
+    <mdb:otherLocale>
+        <lan:PT_Locale id="DE">
+            <lan:language>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ger"/>
+            </lan:language>
+        </lan:PT_Locale>
+    </mdb:otherLocale>
+    <mdb:otherLocale>
+        <lan:PT_Locale id="IT">
+            <lan:language>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="ita"/>
+            </lan:language>
+        </lan:PT_Locale>
+    </mdb:otherLocale>
+    <mdb:otherLocale>
+        <lan:PT_Locale id="AAR">
+            <lan:language>
+                <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="aar"/>
+            </lan:language>
+        </lan:PT_Locale>
+    </mdb:otherLocale>
 </root>`)
     })
   })

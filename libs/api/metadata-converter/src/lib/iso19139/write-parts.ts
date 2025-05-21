@@ -1471,7 +1471,10 @@ export function writeLanguages(record: DatasetRecord, rootEl: XmlElement) {
       writeAttribute('id', lang.toUpperCase()),
       createNestedChild('gmd:languageCode', 'gmd:LanguageCode'),
       writeAttribute('codeList', 'http://www.loc.gov/standards/iso639-2/'),
-      writeAttribute('codeListValue', LANG_2_TO_3_MAPPER[lang])
+      writeAttribute(
+        'codeListValue',
+        lang.length === 2 ? LANG_2_TO_3_MAPPER[lang] : lang
+      )
     )
 
   // add new languages (only if other than default one)

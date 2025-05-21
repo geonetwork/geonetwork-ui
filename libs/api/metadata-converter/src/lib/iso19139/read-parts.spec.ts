@@ -17,7 +17,9 @@ import {
   findIdentification,
   getUpdateFrequencyFromCustomPeriod,
   readContacts,
+  readDefaultLanguage,
   readOnlineResources,
+  readOtherLanguages,
   readOwnerOrganization,
   readSpatialExtents,
   readTemporalExtents,
@@ -29,6 +31,19 @@ describe('read parts', () => {
   describe('common functions', () => {
     beforeEach(() => {
       recordRootEl = getRootElement(parseXmlString(GEOCAT_CH_DATASET))
+    })
+    describe('readDefaultLanguage, readOtherLanguages', () => {
+      it('should read default language and otherLanguages separately, keep unsupported languages in ISO3', () => {
+        expect(readDefaultLanguage(recordRootEl)).toBe('de')
+        expect(readOtherLanguages(recordRootEl)).toEqual([
+          'fr',
+          'it',
+          'en',
+          'rm',
+          'de',
+          'aar',
+        ])
+      })
     })
     describe('readContacts', () => {
       it('returns an array of individuals with their organization', () => {

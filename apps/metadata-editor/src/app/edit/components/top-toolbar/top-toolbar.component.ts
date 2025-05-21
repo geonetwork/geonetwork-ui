@@ -33,6 +33,7 @@ import {
   matHelpOutlineOutline,
   matPendingOutline,
 } from '@ng-icons/material-icons/outline'
+import { matCircle } from '@ng-icons/material-icons/baseline'
 
 @Component({
   selector: 'md-editor-top-toolbar',
@@ -58,6 +59,7 @@ import {
       iconoirBadgeCheck,
       matHelpOutlineOutline,
       iconoirTranslate,
+      matCircle,
     }),
     provideNgIconsConfig({
       size: '1.5rem',
@@ -92,6 +94,9 @@ export class TopToolbarComponent {
         return !isPublished ? 'record_not_published' : 'record_up_to_date'
       })
     )
+  isRecordMultilingual$ = this.editorFacade.record$.pipe(
+    map((record) => record.otherLanguages.length)
+  )
 
   constructor(
     public dialog: MatDialog,

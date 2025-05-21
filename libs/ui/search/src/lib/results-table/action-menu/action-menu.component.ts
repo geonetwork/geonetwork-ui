@@ -30,13 +30,14 @@ type ActionMenuPage = 'mainMenu' | 'deleteMenu' | 'rollbackMenu'
   ],
 })
 export class ActionMenuComponent {
-  @Input() canDuplicate: boolean
-  @Input() canDelete: boolean
-  @Input() isDraftPage: boolean
+  @Input() canDuplicate = true
+  @Input() canDelete = true
+  @Input() page: 'draft' | 'main' | 'record'
   @Output() duplicate = new EventEmitter<void>()
   @Output() delete = new EventEmitter<void>()
   @Output() closeActionMenu = new EventEmitter<void>()
   @Output() rollback = new EventEmitter<void>()
+  @Output() switch = new EventEmitter<void>()
 
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger
 
@@ -47,20 +48,22 @@ export class ActionMenuComponent {
     private cdr: ChangeDetectorRef
   ) {}
 
-  openMenu() {
-    this.trigger.openMenu()
-  }
-
   displayMainMenu() {
     this.sectionDisplayed = 'mainMenu'
     this.cdr.markForCheck()
   }
 
   displayDeleteMenu() {
-    if (this.isDraftPage) {
-      this.sectionDisplayed = 'rollbackMenu'
-    } else {
-      this.sectionDisplayed = 'deleteMenu'
+    switch (this.page) {
+      case 'draft':
+        this.sectionDisplayed = 'rollbackMenu'
+        break
+      case 'record':
+        this.delete.emit()
+        break
+      case 'main':
+      default:
+        this.sectionDisplayed = 'deleteMenu'
     }
     this.cdr.markForCheck()
   }

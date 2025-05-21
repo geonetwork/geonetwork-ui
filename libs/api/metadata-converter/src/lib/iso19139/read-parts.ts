@@ -1162,10 +1162,13 @@ export function readOtherLanguages(rootEl: XmlElement): LanguageCode[] {
     findChildrenElement('gmd:locale', false),
     mapArray(
       pipe(
-        findChildElement('gmd:LanguageCode'),
+        findChildElement('lan:LanguageCode'),
         readAttribute('codeListValue'),
-        map((lang) => LANG_3_TO_2_MAPPER[lang.toLowerCase()])
+        map((lang) => LANG_3_TO_2_MAPPER[lang.toLowerCase()] ?? lang)
       )
+    ),
+    map((languages) =>
+      languages.filter((lang): lang is LanguageCode => lang !== null)
     ),
     map((languages) => (languages.length ? languages : [defaultLanguage]))
   )(rootEl)
@@ -1174,7 +1177,7 @@ export function readOtherLanguages(rootEl: XmlElement): LanguageCode[] {
 export function readDefaultLanguage(rootEl: XmlElement): LanguageCode {
   return pipe(
     findChildElement('gmd:language', false),
-    findChildElement('gmd:LanguageCode'),
+    findChildElement('lan:LanguageCode'),
     readAttribute('codeListValue'),
     map((lang) => (lang ? LANG_3_TO_2_MAPPER[lang.toLowerCase()] : null))
   )(rootEl)

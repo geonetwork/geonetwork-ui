@@ -175,7 +175,7 @@
         <gn-ui-action-menu
           [canDuplicate]="canDuplicate(item) && !isDuplicating"
           [canDelete]="canDelete(item)"
-          [isDraftPage]="isDraftPage"
+          [page]="isDraftPage ? 'draft' : 'main'"
           (duplicate)="handleDuplicate(item)"
           (delete)="handleDelete(item)"
           (closeActionMenu)="closeActionMenu()"

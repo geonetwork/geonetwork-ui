@@ -529,7 +529,11 @@ export function writeOnlineResources(
 }
 
 function writeLocaleElement(language: LanguageCode) {
-  const lang3 = LANG_2_TO_3_MAPPER[language.toLowerCase()]
+  const normalizedLang = language.toLowerCase()
+  const lang3 =
+    normalizedLang.length === 2
+      ? LANG_2_TO_3_MAPPER[normalizedLang]
+      : normalizedLang
   return pipe(
     findChildOrCreate('lan:PT_Locale'),
     writeAttribute('id', language.toUpperCase()),

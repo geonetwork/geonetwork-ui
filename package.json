@@ -92,6 +92,7 @@
     "duration-relativetimeformat": "^2.0.4",
     "embla-carousel": "8.5.1",
     "express": "^4.21.1",
+    "flag-icons": "^7.3.2",
     "geojson-validation": "^1.0.2",
     "marked": "15.0.4",
     "moment": "2.30.1",

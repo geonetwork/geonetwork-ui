@@ -617,7 +617,7 @@ Die Quelle ist zu bezeichnen: „Quelle: Stadt Zürich“.`,
   status: 'completed',
   updateFrequency: 'asNeeded',
   defaultLanguage: 'de',
-  otherLanguages: ['fr', 'it', 'en', 'rm'],
+  otherLanguages: ['fr', 'it', 'en', 'rm', 'aar'],
   translations: {
     abstract: {
       en: 'The perimeters of the Alpine Convention in Switzerland. The Alpine Convention is an international treaty between the eight Alpine countries: Germany, France, Italy, Liechtenstein, Monaco, Austria, Switzerland and Slovenia, plus the European Union. The aim of the treaty is to protect the Alps by means of cross-sectoral, integrated and sustainable policies.',
