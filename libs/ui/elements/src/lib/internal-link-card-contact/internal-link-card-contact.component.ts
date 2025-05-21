@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core'
-import { NgClass, NgIf } from '@angular/common'
+import { NgIf } from '@angular/common'
 import {
   CatalogRecord,
   Organization,
@@ -17,13 +17,7 @@ import { TranslateModule } from '@ngx-translate/core'
 @Component({
   selector: 'gn-ui-internal-link-card-contact',
   standalone: true,
-  imports: [
-    NgClass,
-    NgIf,
-    ThumbnailComponent,
-    NgIconComponent,
-    TranslateModule,
-  ],
+  imports: [NgIf, ThumbnailComponent, NgIconComponent, TranslateModule],
   providers: [
     provideIcons({
       iconoirInternet,

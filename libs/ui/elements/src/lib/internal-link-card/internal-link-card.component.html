@@ -60,8 +60,9 @@
             </h4>
           </div>
           <div
-            *ngIf="size === 'L'"
-            class="mr-6 text-xs text-gray-900 line-clamp-2 overflow-hidden"
+            *ngIf="displayAbstract()"
+            class="mr-6 text-xs text-gray-900 overflow-hidden"
+            [ngClass]="getAbstractLineClamp()"
             data-cy="recordAbstract"
           >
             <gn-ui-markdown-parser
@@ -72,6 +73,7 @@
         </div>
 
         <gn-ui-internal-link-card-contact
+          *ngIf="size !== 'XS' && record.ownerOrganization?.name"
           [record]="record"
           [size]="size"
         ></gn-ui-internal-link-card-contact>

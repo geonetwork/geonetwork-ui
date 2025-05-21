@@ -63,7 +63,15 @@ This dataset has been established for testing purposes.
 This is a section about details. Here is an HTML tag: <img src="http://google.com" />. And [a link](https://google.com).
 
 ## Informations intéressantes
-Cette section contient des *caractères internationaux* (ainsi que des "caractères spéciaux"). 'çàü^@/~^&`,
+Cette section contient des *caractères internationaux* (ainsi que des "caractères spéciaux"). 'çàü^@/~^&,
+
+### Autres informations
+ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sit amet magna vel velit condimentum viverra ac in metus. Aenean fermentum molestie nulla, id dapibus dolor. Maecenas sodales erat in lectus viverra, eget mattis arcu malesuada. Nam nec orci sed libero sollicitudin sagittis. Sed in ex venenatis purus elementum lobortis. Nam fringilla eleifend metus vel vulputate. Duis faucibus egestas fringilla. Nam et sagittis nisl, et laoreet nulla. Duis ligula purus, molestie eu elit sed, mattis rhoncus lorem. Nam facilisis orci ut odio convallis efficitur.
+
+Etiam nec nisl vestibulum, rhoncus metus convallis, aliquet lacus. Pellentesque in nulla sed justo venenatis luctus non ac magna. Nullam nibh sapien, ullamcorper vel mi vitae, egestas congue enim. Donec congue nisi at lacinia elementum. Curabitur arcu sem, finibus at velit a, facilisis auctor ligula. Praesent vulputate lacus et dui posuere aliquet. Fusce nec mauris nec purus rutrum condimentum in tempus eros. Mauris ipsum leo, consectetur vitae mauris eget, mattis luctus ligula. Praesent sed lorem tempor, viverra nunc at, pharetra nulla. Aliquam sed pellentesque est. Mauris volutpat orci in purus dictum, vitae luctus dolor viverra. Sed suscipit ornare mollis. Sed lobortis sed enim at fringilla.
+
+Ut fringilla vestibulum eros, vel ultricies diam interdum nec. Fusce lobortis rutrum nibh, nec volutpat nisl sagittis nec. Donec posuere tortor sit amet dolor varius ultrices. Praesent vitae justo commodo, elementum quam et, sollicitudin libero. Fusce posuere non quam vitae sagittis. Mauris odio ipsum, fermentum ut vulputate id, auctor eu mauris. Pellentesque facilisis imperdiet nulla a scelerisque. Mauris dolor magna, scelerisque feugiat massa nec, placerat lacinia urna. Nulla viverra efficitur dignissim. Morbi euismod, turpis id pharetra fringilla, felis nunc varius nisl, eu pretium risus sapien eu massa. Aliquam a ligula sed tellus dapibus dapibus. In ullamcorper nibh ac interdum fringilla. `,
+
     overviews: [
       {
         url: new URL('http://my-org.net/one.png'),

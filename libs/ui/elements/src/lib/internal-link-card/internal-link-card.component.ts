@@ -20,6 +20,7 @@ import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
 import { iconoirInternet } from '@ng-icons/iconoir'
 import { TranslateModule } from '@ngx-translate/core'
 import { fromEvent, Subscription } from 'rxjs'
+import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 
 type CardSize = 'L' | 'M' | 'S' | 'XS'
 
@@ -36,6 +37,7 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
     KindBadgeComponent,
     MarkdownParserComponent,
     InternalLinkCardContactComponent,
+    ThumbnailComponent,
   ],
   providers: [
     provideIcons({
@@ -107,6 +109,29 @@ export class InternalLinkCardComponent implements OnInit {
 
   getTitleClass() {
     return this.titleClassMap[this._size]
+  }
+
+  getAbstractLineClamp(): string {
+    if (this.size === 'L') {
+      return this.record.ownerOrganization?.name
+        ? 'line-clamp-2'
+        : 'line-clamp-6'
+    }
+    if (
+      (this.size === 'M' || this.size === 'S') &&
+      !this.record.ownerOrganization?.name
+    ) {
+      return 'line-clamp-2'
+    }
+    return ''
+  }
+
+  displayAbstract(): boolean {
+    return (
+      this.size === 'L' ||
+      ((this.size === 'M' || this.size === 'S') &&
+        !this.record.ownerOrganization?.name)
+    )
   }
 
   get shouldShowThumbnail(): boolean {
