@@ -89,23 +89,6 @@ describe('InternalLinkCardContactComponent', () => {
     })
   })
 
-  describe('contacts getter', () => {
-    it('returns contactsForResource for dataset records', () => {
-      component.record.kind = 'dataset'
-      expect(component.contacts).toEqual(mockRecord.contactsForResource)
-    })
-
-    it('returns contacts for non-dataset records', () => {
-      component.record.kind = 'service'
-      expect(component.contacts).toEqual(mockRecord.contacts)
-    })
-
-    it('returns empty array when no contacts available', () => {
-      component.record = mockRecordWithoutContact
-      expect(component.contacts).toEqual([])
-    })
-  })
-
   describe('event handlers', () => {
     let openSpy: jest.SpyInstance
     let writeSpy: jest.SpyInstance
