@@ -113,14 +113,8 @@ describe('Multilingual panel', () => {
         .should('eq', 'Alpenkonvention')
       cy.editor_wrapPreviousDraft(multilingualRecord)
       cy.get('[data-test="activateSelection"]').click()
-      cy.get('[data-test="langSwitch"]').eq(1).click()
-      cy.editor_publishAndReload(multilingualRecord)
-    })
-    after(() => {
-      cy.visit(`/edit/${multilingualRecord}`)
-      cy.get('md-editor-top-toolbar').find('gn-ui-button').eq(1).click()
-      cy.editor_wrapPreviousDraft(multilingualRecord)
-      cy.get('[data-test="langSwitch"]').eq(2).click()
+      cy.get('[data-test="langSwitch"]').eq(1).find('button').eq(1).click()
+      cy.get('gn-ui-action-menu').find('gn-ui-button').first().click()
       cy.editor_publishAndReload(multilingualRecord)
     })
     beforeEach(() => {
