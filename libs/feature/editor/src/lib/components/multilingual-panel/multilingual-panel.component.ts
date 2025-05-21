@@ -208,6 +208,7 @@ export class MultilingualPanelComponent implements OnDestroy {
       'otherLanguages',
       this.selectedLanguages.filter((lang) => lang !== this.formLanguage)
     )
+    this.closeActionMenu()
   }
 
   confirmDeleteAction(lang?: string[] | string) {

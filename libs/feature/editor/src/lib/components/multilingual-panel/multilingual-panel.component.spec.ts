@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MultilingualPanelComponent } from './multilingual-panel.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { of } from 'rxjs'
@@ -11,6 +11,7 @@ class RecordsRepositoryMock {
 
 describe('MultilingualPanelComponent (logic only)', () => {
   let component: MultilingualPanelComponent
+  let fixture: ComponentFixture<MultilingualPanelComponent>
   let facadeMock: jest.Mocked<EditorFacade>
   let recordsRepository: RecordsRepositoryInterface
 
@@ -24,7 +25,7 @@ describe('MultilingualPanelComponent (logic only)', () => {
       updateRecordField: jest.fn(),
     } as any
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [MultilingualPanelComponent, TranslateModule.forRoot()],
       providers: [
         { provide: EditorFacade, useValue: facadeMock },
@@ -35,11 +36,11 @@ describe('MultilingualPanelComponent (logic only)', () => {
       ],
     }).compileComponents()
 
-    const fixture = TestBed.createComponent(MultilingualPanelComponent)
     recordsRepository = TestBed.inject(RecordsRepositoryInterface)
+    fixture = TestBed.createComponent(MultilingualPanelComponent)
     component = fixture.componentInstance
-
     component.record = mockRecord
+    fixture.detectChanges()
   })
 
   describe('initialisation', () => {
@@ -92,6 +93,23 @@ describe('MultilingualPanelComponent (logic only)', () => {
       component.selectedLanguages = ['en', 'fr']
       component.validateTranslations()
       expect(spy).toHaveBeenCalledWith(['en', 'fr'])
+    })
+  })
+
+  describe('Default language switching', () => {
+    beforeEach(() => {
+      component.switchDefaultLang('es')
+      fixture.detectChanges()
+    })
+    it('should set the default language and the otherLanguages accordingly', () => {
+      expect(facadeMock.updateRecordField).toHaveBeenCalledWith(
+        'defaultLanguage',
+        'es'
+      )
+      expect(facadeMock.updateRecordField).toHaveBeenCalledWith(
+        'otherLanguages',
+        ['fr', 'en']
+      )
     })
   })
 
