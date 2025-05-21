@@ -164,7 +164,6 @@ export type MetadataObject = Partial<{
   resourceDate: ResourceDate[]
   resourceEdition: string
   resourceIdentifier: ResourceIdentifier[]
-  resourceLanguage: string[]
   resourceTemporalDateRange: ResourceTemporalDateRange[]
   resourceTemporalExtentDateRange: ResourceTemporalDateRange[]
   resourceTitleObject: MultilingualField

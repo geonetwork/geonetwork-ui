@@ -30,6 +30,7 @@
   "dashboard.labels.mySpace": "Môj priestor",
   "dashboard.records.all": "Katalóg",
   "dashboard.records.hasDraft": "",
+  "dashboard.records.isMultilingual": "Tento záznam je viacjazyčný ({languages})",
   "dashboard.records.myDraft": "Moje koncepty",
   "dashboard.records.myRecords": "Moje záznamy",
   "dashboard.records.search": "Hľadať \"{searchText}\"",

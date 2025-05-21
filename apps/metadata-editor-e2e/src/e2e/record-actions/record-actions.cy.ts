@@ -139,67 +139,87 @@ describe('record-actions', () => {
     })
   })
 
-  it('undo action', () => {
-    // it should restore the record and refresh the interface
-
-    // Edit an existing record and create a draft
-    cy.get('[data-cy="resultItemTitle"]').first().click()
-    cy.url().should('include', '/edit')
-    cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
-      .as('abstractField')
-      .focus()
-    cy.get('@abstractField').type('{selectAll}{backspace}record abstract')
-    cy.editor_findDraftInLocalStorage().then((value) => {
-      expect(value).to.not.equal('null')
+  describe('undo action', () => {
+    beforeEach(() => {
+      // create a record
+      cy.get('[data-cy="create-record"]').click()
+      cy.url().should('include', '/edit')
+      cy.editor_readFormUniqueIdentifier().as('newRecordUuid')
     })
-    cy.editor_readFormUniqueIdentifier().as('newRecordUuid')
-
-    cy.intercept({
-      method: 'PUT',
-      pathname: '**/records',
-    }).as('insertRecord')
-    cy.get('md-editor-publish-button').click()
-    cy.wait('@insertRecord')
-    cy.get('[data-cy="undo-button"] button').should('be.disabled')
-
-    cy.get('@abstractField').clear()
-    cy.get('@abstractField').focus()
-    cy.get('@abstractField').type('draft abstract')
-    cy.editor_findDraftInLocalStorage().then((value) => {
-      expect(value).to.contain('draft abstract')
+    afterEach(() => {
+      // delete the new record
+      cy.get<string>('@newRecordUuid').then((uuid) => cy.deleteRecord(uuid))
     })
+    it('should restore the record and refresh the interface', () => {
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
+        .as('abstractField')
+        .focus()
+      cy.get('@abstractField').should('have.value', '')
+      cy.get('@abstractField').type('record abstract')
+      cy.editor_findDraftInLocalStorage().then((value) => {
+        expect(value).to.not.equal('null')
+      })
 
-    cy.get('[data-cy="undo-button"]').click()
-    cy.get('[data-cy="confirm-button"]').click()
-    cy.editor_findDraftInLocalStorage().then((value) => {
-      expect(value).to.not.equal('null')
+      cy.intercept({
+        method: 'PUT',
+        pathname: '**/records',
+      }).as('insertRecord')
+      cy.get('md-editor-publish-button').click()
+      cy.wait('@insertRecord')
+      cy.get('[data-cy="undo-button"] button').should('be.disabled')
+
+      cy.get('@abstractField').clear()
+      cy.get('@abstractField').focus()
+      cy.get('@abstractField').type('draft abstract')
+      cy.editor_findDraftInLocalStorage().then((value) => {
+        expect(value).to.contain('draft abstract')
+      })
+
+      cy.get('[data-cy="undo-button"]').click()
+      cy.get('gn-ui-confirmation-dialog').find('gn-ui-button').eq(1).click()
+      cy.editor_findDraftInLocalStorage().then((value) => {
+        expect(value).to.not.equal('null')
+      })
+      cy.get('@abstractField').should('have.value', 'record abstract')
     })
-    cy.get('@abstractField').should('have.value', 'record abstract')
+    it('should restore from the draft dashboard', () => {
+      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
+        .as('abstractField')
+        .focus()
+      cy.get('@abstractField').should('have.value', '')
+      cy.get('@abstractField').type('{selectAll}{backspace}record abstract')
+      cy.editor_findDraftInLocalStorage().then((value) => {
+        expect(value).to.not.equal('null')
+      })
 
-    // delete the new record
-    cy.get<string>('@newRecordUuid').then((uuid) => cy.deleteRecord(uuid))
+      cy.intercept({
+        method: 'PUT',
+        pathname: '**/records',
+      }).as('insertRecord')
+      cy.get('md-editor-publish-button').click()
+      cy.wait('@insertRecord')
+      cy.get('[data-cy="undo-button"] button').should('be.disabled')
 
-    cy.visit('/catalog/search')
+      cy.get('@abstractField').clear()
+      cy.get('@abstractField').focus()
+      cy.get('@abstractField').type('draft abstract')
+      cy.editor_findDraftInLocalStorage().then((value) => {
+        expect(value).to.contain('draft abstract')
+      })
 
-    // it should restore from the draft dashboard
+      // undo from the action-menu
+      cy.visit('/my-space/my-draft')
+      cy.get('[data-test="record-menu-button"]').click()
+      cy.get('[data-test="record-menu-delete-button"]').find('button').click()
+      cy.get('[data-test="rollbackMenuSection"]').should('be.visible')
+      cy.get('[data-test="rollbackMenuSection"]').find('button').first().click()
+      cy.get('[data-cy="table-row"]').should('have.length', 0)
+      // check that the rollback was effective
+      cy.visit('/catalog/search')
+      cy.get('[data-cy="resultItemTitle"]').first().click()
 
-    // Edit an existing record and create a draft
-    cy.get('[data-cy="resultItemTitle"]').first().click()
-    cy.url().should('include', '/edit')
-    cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
-      .as('abstractField')
-      .focus()
-    cy.get('@abstractField').type('record draft')
-    cy.editor_findDraftInLocalStorage().then((value) => {
-      expect(value).to.not.equal('null')
+      cy.get('@abstractField').should('have.value', 'record abstract')
     })
-    // undo from the action-menu
-    cy.visit('/my-space/my-draft')
-    cy.get('[data-test="record-menu-button"]').click()
-    cy.get('[data-test="record-menu-delete-button"]').find('button').click()
-    cy.get('[data-test="rollbackMenuSection"]').should('be.visible')
-    cy.get('[data-test="rollbackMenuSection"]').find('button').first().click()
-    cy.get('[data-cy="table-row"]').should('have.length', 0)
   })
 
   it('duplicate action', () => {

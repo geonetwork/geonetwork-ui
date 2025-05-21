@@ -1977,7 +1977,7 @@ describe('Gn4Converter', () => {
               'http://my.catalog.org/metadata/8698bf0b-fceb-4f0f-989b-111e7c4af0a4'
             ),
             defaultLanguage: 'de',
-            otherLanguages: ['fr', 'it'],
+            otherLanguages: ['fr', 'it', 'en', 'rm'],
             legalConstraints: [
               {
                 text: 'Opendata BY: Freie Nutzung. Quellenangabe ist Pflicht.',
@@ -3392,7 +3392,7 @@ describe('Gn4Converter', () => {
               },
             ],
             defaultLanguage: 'fr',
-            otherLanguages: ['de'],
+            otherLanguages: ['de', 'en'],
             reuseType: 'map',
             title:
               'Herstellung, Verwendung, Forschung und Verteilung von Wasserstoff am Oberrhein',

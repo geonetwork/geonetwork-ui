@@ -24,6 +24,8 @@ export const allSearchFields = [
   'link',
   'owner',
   'resourceType',
+  'mainLanguage',
+  'otherLanguage',
 ]
 @Component({
   selector: 'md-editor-records-list',
