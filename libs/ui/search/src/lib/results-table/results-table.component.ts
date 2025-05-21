@@ -35,7 +35,7 @@ import { iconoirUser, iconoirLock } from '@ng-icons/iconoir'
 import { CdkOverlayOrigin, Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
 import { matMoreVert } from '@ng-icons/material-icons/baseline'
-import { map, Observable, of } from 'rxjs'
+import { Observable, of, take } from 'rxjs'
 
 @Component({
   selector: 'gn-ui-results-table',
@@ -173,11 +173,13 @@ export class ResultsTableComponent {
   }
 
   handleRecordClick(item: unknown) {
-    this.canEdit(item as CatalogRecord).subscribe((canEdit) => {
-      if (canEdit) {
-        this.recordClick.emit(item as CatalogRecord)
-      }
-    })
+    this.canEdit(item as CatalogRecord)
+      .pipe(take(1))
+      .subscribe((canEdit) => {
+        if (canEdit) {
+          this.recordClick.emit(item as CatalogRecord)
+        }
+      })
   }
 
   handleDuplicate(item: unknown) {
