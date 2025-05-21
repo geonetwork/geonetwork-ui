@@ -252,6 +252,54 @@ describe('MdViewFacade', () => {
     })
   })
 
+  describe('related$', () => {
+    it('emits related', () => {
+      store.setState({
+        [METADATA_VIEW_FEATURE_STATE_KEY]: {
+          ...initialMetadataViewState,
+          metadata: datasetRecordsFixture()[0],
+          related: [datasetRecordsFixture()[1]],
+        },
+      })
+      const expected = hot('a', {
+        a: [datasetRecordsFixture()[1]],
+      })
+      expect(facade.related$).toBeObservable(expected)
+    })
+  })
+
+  describe('sources$', () => {
+    it('emits sources', () => {
+      store.setState({
+        [METADATA_VIEW_FEATURE_STATE_KEY]: {
+          ...initialMetadataViewState,
+          metadata: datasetRecordsFixture()[0],
+          sources: [datasetRecordsFixture()[1]],
+        },
+      })
+      const expected = hot('a', {
+        a: [datasetRecordsFixture()[1]],
+      })
+      expect(facade.sources$).toBeObservable(expected)
+    })
+  })
+
+  describe('sourceOf$', () => {
+    it('emits sourceOf', () => {
+      store.setState({
+        [METADATA_VIEW_FEATURE_STATE_KEY]: {
+          ...initialMetadataViewState,
+          metadata: datasetRecordsFixture()[0],
+          sourceOf: [datasetRecordsFixture()[1]],
+        },
+      })
+      const expected = hot('a', {
+        a: [datasetRecordsFixture()[1]],
+      })
+      expect(facade.sourceOf$).toBeObservable(expected)
+    })
+  })
+
   describe('closeMetadata', () => {
     it('dispatches a close action', () => {
       facade.closeMetadata()

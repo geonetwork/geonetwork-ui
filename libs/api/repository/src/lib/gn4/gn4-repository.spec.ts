@@ -47,8 +47,8 @@ class ElasticsearchServiceMock {
     aggregations,
     size,
   }))
-  getMetadataByIdPayload = jest.fn((uuid) => ({
-    uuids: [uuid],
+  getMetadataByIdsPayload = jest.fn((uuid) => ({
+    uuids: uuid,
   }))
   getRelatedRecordPayload = jest.fn(() => ({}))
   buildAutocompletePayload = jest.fn(() => ({}))
@@ -237,7 +237,9 @@ describe('Gn4Repository', () => {
       record = await lastValueFrom(repository.getRecord('1234-5678'))
     })
     it('builds a payload with the specified uuid', () => {
-      expect(gn4Helper.getMetadataByIdPayload).toHaveBeenCalledWith('1234-5678')
+      expect(gn4Helper.getMetadataByIdsPayload).toHaveBeenCalledWith([
+        '1234-5678',
+      ])
     })
     it('returns the given result as record', () => {
       expect(record).toStrictEqual(datasetRecordsFixture()[0])
@@ -254,6 +256,40 @@ describe('Gn4Repository', () => {
       })
       it('returns null', () => {
         expect(record).toBe(null)
+      })
+    })
+  })
+
+  describe('getMultipleRecords', () => {
+    let records: CatalogRecord[]
+    beforeEach(async () => {
+      records = await lastValueFrom(
+        repository.getMultipleRecords(['1234-5678', '1234-5679'])
+      )
+    })
+    it('builds a payload with the specified uuid', () => {
+      expect(gn4Helper.getMetadataByIdsPayload).toHaveBeenCalledWith([
+        '1234-5678',
+        '1234-5679',
+      ])
+    })
+    it('returns the given result as records', () => {
+      expect(records).toStrictEqual(datasetRecordsFixture())
+    })
+    describe('if records are not found', () => {
+      beforeEach(async () => {
+        ;(gn4SearchApi as any).search = () =>
+          of({
+            hits: {
+              hits: [],
+            },
+          })
+        records = await lastValueFrom(
+          repository.getMultipleRecords(['1234-5678', '1234-5679'])
+        )
+      })
+      it('returns null', () => {
+        expect(records).toBe(null)
       })
     })
   })
@@ -328,7 +364,7 @@ describe('Gn4Repository', () => {
       it('calls the API with correct parameters', () => {
         expect(spySearch).toHaveBeenCalledWith(
           'bucket',
-          ['fcats'],
+          ['fcats', 'hassources'],
           '{"uuids":["feature-catalog-identifier"]}'
         )
       })
@@ -420,6 +456,75 @@ describe('Gn4Repository', () => {
     })
     it('returns the given results as records', () => {
       expect(results).toStrictEqual(datasetRecordsFixture())
+    })
+  })
+  describe('getSources', () => {
+    let sources: CatalogRecord[]
+    const mockRecord = {
+      ...SAMPLE_RECORD,
+      extras: {
+        sourcesIdentifiers: ['source-1', 'source-2'],
+      },
+    }
+
+    beforeEach(async () => {
+      repository.getMultipleRecords = jest
+        .fn()
+        .mockImplementation((ids) => of(ids.map((id) => ({ uuid: id }))))
+      sources = await lastValueFrom(repository.getSources(mockRecord))
+    })
+
+    it('calls getMultipleRecords for source identifiers', () => {
+      expect(repository.getMultipleRecords).toHaveBeenCalledWith([
+        'source-1',
+        'source-2',
+      ])
+    })
+
+    it('returns the sources as an array of CatalogRecord', () => {
+      expect(sources).toEqual([{ uuid: 'source-1' }, { uuid: 'source-2' }])
+    })
+
+    it('returns null if no sourcesIdentifiers are defined', async () => {
+      const recordWithoutSources = { ...mockRecord, extras: {} }
+      const result = await lastValueFrom(
+        repository.getSources(recordWithoutSources)
+      )
+      expect(result).toBeNull()
+    })
+  })
+  describe('getSourceOf', () => {
+    let sourceOf: CatalogRecord[]
+    const mockRecord = {
+      ...SAMPLE_RECORD,
+      extras: {
+        sourceOfIdentifiers: ['hasSource-1', 'hasSource-2'],
+      },
+    }
+    beforeEach(async () => {
+      repository.getMultipleRecords = jest
+        .fn()
+        .mockImplementation((ids) => of(ids.map((id) => ({ uuid: id }))))
+      sourceOf = await lastValueFrom(repository.getSourceOf(mockRecord))
+    })
+    it('calls getMultipleRecords for hasSource identifiers', () => {
+      expect(repository.getMultipleRecords).toHaveBeenCalledWith([
+        'hasSource-1',
+        'hasSource-2',
+      ])
+    })
+    it('returns the sourceOf as an array of CatalogRecord', () => {
+      expect(sourceOf).toEqual([
+        { uuid: 'hasSource-1' },
+        { uuid: 'hasSource-2' },
+      ])
+    })
+    it('returns null if no sourceOfIdentifiers are defined', async () => {
+      const recordWithoutSourceOf = { ...mockRecord, extras: {} }
+      const result = await lastValueFrom(
+        repository.getSourceOf(recordWithoutSourceOf)
+      )
+      expect(result).toBeNull()
     })
   })
   describe('aggregate', () => {

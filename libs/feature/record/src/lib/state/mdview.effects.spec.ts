@@ -31,6 +31,8 @@ class RecordsRepositoryMock {
   search = jest.fn(() => of(searchResultsFixture()))
   getRecord = jest.fn(() => of(datasetRecordsFixture()[0]))
   getSimilarRecords = jest.fn(() => of(datasetRecordsFixture()))
+  getSources = jest.fn(() => of(datasetRecordsFixture()))
+  getSourceOf = jest.fn(() => of(datasetRecordsFixture()))
 }
 
 class PlatformServiceInterfaceMock {
@@ -147,6 +149,66 @@ describe('MdViewEffects', () => {
           a: MdViewActions.setRelated({ related: null }),
         })
         expect(effects.loadRelatedRecords$).toBeObservable(expected)
+      })
+    })
+  })
+
+  describe('loadSources$', () => {
+    describe('when load full success', () => {
+      it('dispatch setSources', () => {
+        actions = hot('-a-|', {
+          a: MdViewActions.loadFullMetadataSuccess({ full }),
+        })
+        const expected = hot('-a-|', {
+          a: MdViewActions.setSources({
+            sources: datasetRecordsFixture() as CatalogRecord[],
+          }),
+        })
+        expect(effects.loadSources$).toBeObservable(expected)
+      })
+    })
+    describe('when api fails', () => {
+      beforeEach(() => {
+        repository.getSources = jest.fn(() => throwError(() => 'api'))
+      })
+      it('dispatch loadFullFailure', () => {
+        actions = hot('-a-|', {
+          a: MdViewActions.loadFullMetadataSuccess({ full }),
+        })
+        const expected = hot('-(a|)', {
+          a: MdViewActions.setSources({ sources: null }),
+        })
+        expect(effects.loadSources$).toBeObservable(expected)
+      })
+    })
+  })
+
+  describe('loadSourceOf$', () => {
+    describe('when load full success', () => {
+      it('dispatch setSourceOf', () => {
+        actions = hot('-a-|', {
+          a: MdViewActions.loadFullMetadataSuccess({ full }),
+        })
+        const expected = hot('-a-|', {
+          a: MdViewActions.setSourceOf({
+            sourceOf: datasetRecordsFixture() as CatalogRecord[],
+          }),
+        })
+        expect(effects.loadSourceOf$).toBeObservable(expected)
+      })
+      describe('when api fails', () => {
+        beforeEach(() => {
+          repository.getSourceOf = jest.fn(() => throwError(() => 'api'))
+        })
+        it('dispatch loadFullFailure', () => {
+          actions = hot('-a-|', {
+            a: MdViewActions.loadFullMetadataSuccess({ full }),
+          })
+          const expected = hot('-(a|)', {
+            a: MdViewActions.setSourceOf({ sourceOf: null }),
+          })
+          expect(effects.loadSourceOf$).toBeObservable(expected)
+        })
       })
     })
   })
