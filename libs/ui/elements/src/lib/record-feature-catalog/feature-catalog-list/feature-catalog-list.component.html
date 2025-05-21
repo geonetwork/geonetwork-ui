@@ -3,7 +3,7 @@
   cdkScrollable
   class="h-[562px] relative overflow-y-auto overflow-hidden"
 >
-  <div #zecontainer class="flex flex-col gap-2 py-5 px-5">
+  <div #scrollContainer class="flex flex-col gap-2 py-5 px-5">
     <div
       *ngFor="let featureType of filteredFeatureCatalog?.featureTypes"
       class="rounded shadow bg-white"
@@ -62,7 +62,7 @@
 
                 <ng-template #defaultTpl>
                   <gn-ui-truncated-text
-                    [zecontainer]="zecontainer"
+                    [scrollContainer]="scrollContainer"
                     extraClass="py-3 px-2"
                     [text]="row[col.key]"
                   ></gn-ui-truncated-text>
@@ -70,9 +70,8 @@
 
                 <ng-template #tplValues>
                   <gn-ui-value-list
-                    [zecontainer]="zecontainer"
-                    [vcRefMarker]="vcRefMarker"
-                    [scrollContainer]="scrollable"
+                    [scrollContainer]="scrollContainer"
+                    [cdkScrollContainer]="scrollable"
                     *ngIf="row.values?.length > 0"
                     [values]="row.values"
                   ></gn-ui-value-list>
