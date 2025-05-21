@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  ViewChild,
-  ViewContainerRef,
-} from '@angular/core'
+import { Component, ElementRef, Input, ViewChild } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -12,12 +6,15 @@ import {
   DatasetFeatureAttribute,
   DatasetFeatureCatalog,
 } from '@geonetwork-ui/common/domain/model/record'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import {
+  CellPopinComponent,
   ExpandablePanelComponent,
   TruncatedTextComponent,
-  ValueListComponent,
 } from '@geonetwork-ui/ui/layout'
 import { CdkScrollable, ScrollingModule } from '@angular/cdk/scrolling'
+import { provideIcons, NgIconComponent } from '@ng-icons/core'
+import { iconoirList } from '@ng-icons/iconoir'
 
 marker('feature.catalog.attribute.type')
 marker('feature.catalog.attribute.name')
@@ -37,30 +34,29 @@ interface ColumnDefinition {
   styleUrls: [],
   standalone: true,
   imports: [
+    ButtonComponent,
+    CellPopinComponent,
     CommonModule,
     TranslateModule,
     ExpandablePanelComponent,
     TruncatedTextComponent,
-    ValueListComponent,
+    NgIconComponent,
     ScrollingModule,
   ],
+  providers: [provideIcons({ iconoirList })],
 })
 export class FeatureCatalogListComponent {
   @Input() filteredFeatureCatalog!: DatasetFeatureCatalog
-  @ViewChild(CdkScrollable, { static: true }) scrollable!: CdkScrollable
-  // @ViewChild(ViewContainerRef, { read: ViewContainerRef, static: true }) vcRefMarker!: ViewContainerRef
-  @ViewChild('totomarker', { read: ViewContainerRef, static: true })
-  vcRefMarker!: ViewContainerRef
 
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef
+  @ViewChild(CdkScrollable, { static: true }) scrollable!: CdkScrollable
   @ViewChild('expanel', { read: ExpandablePanelComponent, static: true })
   panelComponent: ExpandablePanelComponent
-
-  @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef
 
   readonly COLUMNS_DEFAULT: ColumnDefinition[] = [
     { key: 'type', width: '17%' },
     { key: 'name', width: '32%' },
-    { key: 'code', width: '20%' },
+    { key: 'code', width: '17%' },
     { key: 'definition', width: 'minmax(0px, 1fr)' },
   ]
 
