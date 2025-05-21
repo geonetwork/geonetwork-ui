@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   Input,
+  OnDestroy,
   QueryList,
   ViewChildren,
   ViewContainerRef,
@@ -26,7 +27,7 @@ import { EditorFacade } from '../../+state/editor.facade'
 import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
 import { MatDialog } from '@angular/material/dialog'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { map } from 'rxjs'
+import { map, Subscription } from 'rxjs'
 import { Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
 import { ActionMenuComponent } from '@geonetwork-ui/ui/search'
@@ -72,7 +73,7 @@ const extraFlagMap: { [key: string]: string } = {
   templateUrl: './multilingual-panel.component.html',
   styleUrl: './multilingual-panel.component.css',
 })
-export class MultilingualPanelComponent {
+export class MultilingualPanelComponent implements OnDestroy {
   isMultilingual: boolean
   _record: CatalogRecord
   editTranslations: boolean
@@ -92,6 +93,7 @@ export class MultilingualPanelComponent {
   private overlayRef!: OverlayRef
 
   isActionMenuOpen = false
+  subscription = new Subscription()
 
   supportedLanguages$ = this.recordsRepository
     .getApplicationLanguages()
@@ -106,6 +108,10 @@ export class MultilingualPanelComponent {
     private viewContainerRef: ViewContainerRef,
     private cdr: ChangeDetectorRef
   ) {}
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
+  }
 
   sortLanguages(languages: string[]) {
     return languages
@@ -222,26 +228,27 @@ export class MultilingualPanelComponent {
       },
       restoreFocus: true,
     })
-
-    dialogRef.afterClosed().subscribe((confirmed) => {
-      if (confirmed) {
-        if (lang) {
-          if (!Array.isArray(lang)) {
-            this.removeSelectedLanguage(lang)
-            this.closeActionMenu()
+    this.subscription.add(
+      dialogRef.afterClosed().subscribe((confirmed) => {
+        if (confirmed) {
+          if (lang) {
+            if (!Array.isArray(lang)) {
+              this.removeSelectedLanguage(lang)
+              this.closeActionMenu()
+            }
+            this.updateTranslations()
+          } else {
+            this.facade.updateRecordField('otherLanguages', [])
+            this.isMultilingual = false
+            this.selectedLanguages = []
           }
-          this.updateTranslations()
         } else {
-          this.facade.updateRecordField('otherLanguages', [])
-          this.isMultilingual = false
-          this.selectedLanguages = []
+          this.isMultilingual = true
+          this.selectedLanguages = this.recordLanguages
         }
-      } else {
-        this.isMultilingual = true
-        this.selectedLanguages = this.recordLanguages
-      }
-      this.editTranslations = false
-    })
+        this.editTranslations = false
+      })
+    )
   }
 
   isFirstUnsupported(index: number): boolean {
@@ -300,10 +307,11 @@ export class MultilingualPanelComponent {
     const portal = new TemplatePortal(template, this.viewContainerRef)
 
     this.overlayRef.attach(portal)
-
-    this.overlayRef.backdropClick().subscribe(() => {
-      this.closeActionMenu()
-    })
+    this.subscription.add(
+      this.overlayRef.backdropClick().subscribe(() => {
+        this.closeActionMenu()
+      })
+    )
   }
 
   closeActionMenu() {
