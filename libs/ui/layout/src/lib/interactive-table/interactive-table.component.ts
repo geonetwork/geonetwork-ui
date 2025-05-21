@@ -51,13 +51,13 @@ export class InteractiveTableComponent {
     }
   }
 
-  getItemTitle(item: unknown) {
+  getItemTitle(item: CatalogRecord) {
     if (!this.isDraftPage) {
-      if ((item as CatalogRecord).kind !== 'dataset') {
+      if (item.kind !== 'dataset') {
         return 'editor.record.lock.resourceType'
-      } else if ((item as CatalogRecord).extras?.isHarvested) {
+      } else if (item.extras?.isHarvested) {
         return 'editor.record.lock.harvested'
-      } else if (!(item as CatalogRecord).extras?.edit) {
+      } else if (!item.extras?.edit) {
         return 'editor.record.lock.owner'
       }
     }
