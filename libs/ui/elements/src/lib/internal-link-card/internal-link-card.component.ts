@@ -112,15 +112,17 @@ export class InternalLinkCardComponent implements OnInit {
   }
 
   getAbstractLineClamp(): string {
-    if (this.size === 'L') {
-      return this.record.ownerOrganization?.name
-        ? 'line-clamp-2'
-        : 'line-clamp-6'
+    if (this.record.ownerOrganization?.name) {
+      if (this.size === 'L') {
+        return 'line-clamp-2'
+      }
+      return ''
     }
-    if (
-      (this.size === 'M' || this.size === 'S') &&
-      !this.record.ownerOrganization?.name
-    ) {
+
+    if (this.size === 'L') {
+      return 'line-clamp-6'
+    }
+    if (this.size === 'M' || this.size === 'S') {
       return 'line-clamp-2'
     }
     return ''
