@@ -765,12 +765,12 @@ describe('dataset pages', () => {
 
     // it should display the related records
     cy.get('datahub-record-internal-links')
-      .find('gn-ui-related-record-card')
+      .find('gn-ui-internal-link-card')
       .should('have.length.gt', 0)
 
     // it should display a similar related record
     cy.get('datahub-record-internal-links')
-      .find('gn-ui-related-record-card')
+      .find('gn-ui-internal-link-card')
       .first()
       .find('[data-cy="recordTitle"]')
       .should(
