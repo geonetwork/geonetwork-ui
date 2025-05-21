@@ -9,6 +9,7 @@ import {
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 import { readKeywords } from '../iso19139/read-parts'
+import { readDefaultLanguage, readOtherLanguages } from './read-parts'
 
 describe('read parts', () => {
   describe('readContacts, readContactsForResource, readOwnerOrganization', () => {
@@ -432,6 +433,60 @@ describe('read parts', () => {
           type: 'other',
         },
       ])
+    })
+  })
+  describe('readDefaultLanguage, readOtherLanguages', () => {
+    it('should read default language only', () => {
+      const xml = parseXmlString(`
+<mdb:MD_Metadata>
+<mdb:defaultLocale>
+<gmd:LanguageCode codeListValue="fre"/>
+</mdb:defaultLocale>
+</mdb:MD_Metadata>`)
+      const root = getRootElement(xml)
+
+      expect(readDefaultLanguage(root)).toBe('fr')
+      expect(readOtherLanguages(root)).toEqual([])
+    })
+
+    it('should read other languages along with default', () => {
+      const xml = parseXmlString(`
+<mdb:MD_Metadata>
+  <mdb:defaultLocale>
+    <gmd:LanguageCode codeListValue="fre" />
+  </mdb:defaultLocale>
+  <mdb:otherLocale>
+    <gmd:LanguageCode codeListValue="eng" />
+  </mdb:otherLocale>
+  <mdb:otherLocale>
+    <gmd:LanguageCode codeListValue="spa" />
+  </mdb:otherLocale>
+</mdb:MD_Metadata>`)
+      const root = getRootElement(xml)
+
+      expect(readDefaultLanguage(root)).toBe('fr')
+      expect(readOtherLanguages(root)).toEqual(['en', 'es'])
+    })
+
+    it('should keep the unsupported languages in ISO3 format', () => {
+      const xml = parseXmlString(`
+<mdb:MD_Metadata>
+  <mdb:defaultLocale>
+    <gmd:LanguageCode codeListValue="fre" />
+  </mdb:defaultLocale>
+  <mdb:otherLocale>
+    <gmd:LanguageCode codeListValue="eng" />
+  </mdb:otherLocale>
+  <mdb:otherLocale>
+    <gmd:LanguageCode codeListValue="spa" />
+  </mdb:otherLocale>
+  <mdb:otherLocale>
+    <gmd:LanguageCode codeListValue="aar" />
+  </mdb:otherLocale>
+</mdb:MD_Metadata>`)
+      const root = getRootElement(xml)
+
+      expect(readOtherLanguages(root)).toEqual(['en', 'es', 'aar'])
     })
   })
 })
