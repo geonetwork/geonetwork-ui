@@ -7,32 +7,16 @@ import {
   EventEmitter,
   ElementRef,
 } from '@angular/core'
-import {
-  CatalogRecord,
-  Organization,
-} from '@geonetwork-ui/common/domain/model/record'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common'
 import { GeoDataBadgeComponent } from '../geo-data-badge/geo-data-badge.component'
 import { KindBadgeComponent } from '../kind-badge/kind-badge.component'
 import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component'
 import { MetadataQualityComponent } from '../metadata-quality/metadata-quality.component'
-import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
-import {
-  propagateToDocumentOnly,
-  removeWhitespace,
-  stripHtml,
-} from '@geonetwork-ui/util/shared'
-import {
-  NgIconComponent,
-  provideIcons,
-  provideNgIconsConfig,
-} from '@ng-icons/core'
-import {
-  matLocationSearchingOutline,
-  matEmailOutline,
-  matPhoneOutline,
-  matLocationOnOutline,
-} from '@ng-icons/material-icons/outline'
+import { InternalLinkCardContactComponent } from '../internal-link-card-contact/internal-link-card-contact.component'
+import { removeWhitespace, stripHtml } from '@geonetwork-ui/util/shared'
+import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
+import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
 import { iconoirInternet } from '@ng-icons/iconoir'
 import { TranslateModule } from '@ngx-translate/core'
 import { fromEvent, Subscription } from 'rxjs'
@@ -45,22 +29,18 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
   imports: [
     NgClass,
     NgIf,
-    ThumbnailComponent,
     MetadataQualityComponent,
     NgTemplateOutlet,
-    NgIconComponent,
     TranslateModule,
     GeoDataBadgeComponent,
     KindBadgeComponent,
     MarkdownParserComponent,
+    InternalLinkCardContactComponent,
   ],
   providers: [
     provideIcons({
       iconoirInternet,
       matLocationSearchingOutline,
-      matEmailOutline,
-      matPhoneOutline,
-      matLocationOnOutline,
     }),
     provideNgIconsConfig({
       size: '1.2em',
@@ -125,35 +105,8 @@ export class InternalLinkCardComponent implements OnInit {
     )
   }
 
-  get organization(): Organization {
-    return this.record.ownerOrganization
-  }
-
-  get contacts() {
-    return (
-      (this.record.kind === 'dataset'
-        ? this.record.contactsForResource
-        : this.record.contacts) || []
-    )
-  }
-
   getTitleClass() {
     return this.titleClassMap[this._size]
-  }
-
-  openExternalUrl(event: Event, url: URL): void {
-    event.stopPropagation()
-    window.open(url, '_blank')
-  }
-
-  openMailto(event: Event, email: string): void {
-    event.stopPropagation()
-    window.open(`mailto:${email}`, '_blank')
-  }
-
-  copyToClipboard(event: Event, text: string): void {
-    event.stopPropagation()
-    navigator.clipboard.writeText(text)
   }
 
   get shouldShowThumbnail(): boolean {
