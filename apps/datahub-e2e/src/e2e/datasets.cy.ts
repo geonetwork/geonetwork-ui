@@ -214,12 +214,12 @@ describe('datasets', () => {
 
       describe('filter by one option', () => {
         beforeEach(() => {
-          cy.get('@options').eq(11).click()
+          cy.get('@options').eq(13).click()
           cy.get('@resultsCount').then((resultsCount) => {
             cy.get('@results').should('have.length.below', resultsCount) // wait for results change
           })
           cy.get('@options')
-            .eq(11)
+            .eq(13)
             .then((option) => {
               const optionText = option.text().trim()
               const matches = /^(.*) \((\d+)\)$/.exec(optionText)
@@ -246,7 +246,7 @@ describe('datasets', () => {
         })
 
         it('shows all results if another click on option', () => {
-          cy.get('@options').eq(11).click()
+          cy.get('@options').eq(13).click()
           cy.get('@resultsCount').then((resultsCount) => {
             cy.get('@results').should('have.length', resultsCount)
           })
@@ -291,14 +291,18 @@ describe('datasets', () => {
           'Cellule informatique et géomatique (SPW - Intérieur et Action sociale - Direction fonctionnelle et d’appui) (1)',
           'Coordination, Services et Informations Géographiques (COSIG), swisstopo (1)',
           "Direction de l'Action sociale (SPW - Intérieur et Action sociale - Département de l'Action sociale - Direction de l'Action sociale) (1)",
-          "Direction de l'Intégration des géodonnées (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (9)",
+          "Direction de l'Intégration des géodonnées (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (10)",
           'DREAL (1)',
           "DREAL HdF (Direction Régionale de l'Environnement de l'Aménagement et du Logement des Hauts de France) (1)",
+          'Fédération Départementale de la Chasse (1)',
+          'Fédération Nationale de la Chasse (1)',
           'Géo2France (1)',
-          "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (11)",
+          "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (12)",
           'Métropole Européenne de Lille (2)',
+          'Office France de la Biodiversité (1)',
           'Région Hauts-de-France (1)',
-          'Service public de Wallonie (SPW) (11)',
+          'Réseau Ongulés sauvages OFB-FNC-FDC (1)',
+          'Service public de Wallonie (SPW) (12)',
           "Société Publique de Gestion de l'Eau (SPGE) (1)",
         ])
         cy.screenshot({ capture: 'viewport' })
@@ -380,9 +384,9 @@ describe('datasets', () => {
         cy.get('@optionsLabel')
           .invoke('slice', 0, 3)
           .should('eql', [
+            'Administrative units (1)',
             'Environmental monitoring facilities (2)',
             'Land use (1)',
-            'Production and industrial facilities (1)',
           ])
       })
       it('should not have duplicates', () => {
@@ -400,14 +404,14 @@ describe('datasets', () => {
         cy.get('@optionsLabel')
           .invoke('slice', 0, 8)
           .should('eql', [
-            'Région wallonne (11)',
-            'Reporting INSPIRENO (7)',
-            'Nature et environnement (6)',
-            'Sol et sous-sol (5)',
+            'Région wallonne (12)',
+            'Reporting INSPIRENO (8)',
+            'Nature et environnement (7)',
+            'Sol et sous-sol (6)',
+            'pollution (4)',
             'Agriculture (3)',
             'Aménagement du territoire (3)',
             'DONNEE OUVERTE (3)',
-            'HAUTS-DE-FRANCE (3)',
           ])
       })
       it('should not have duplicates', () => {
