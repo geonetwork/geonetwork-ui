@@ -1,5 +1,6 @@
 beforeEach(() => {
-  // Return a search bucket with linked records
+  // Return a search bucket with various linked records
+  // Note: The links to the reuse and service also exist in the dump, but not all the links between the datasets
   cy.intercept(
     'POST',
     '/geonetwork/srv/api/search/records/_search?bucket=bucket&relatedType=fcats&relatedType=hassources',
@@ -9,7 +10,7 @@ beforeEach(() => {
   )
 })
 
-describe('linked records', () => {
+describe('dataset: linked records', () => {
   beforeEach(() => {
     cy.visit('/dataset/n_tri_lill_inondable_s_059')
   })
