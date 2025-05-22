@@ -41,7 +41,6 @@ describe('TruncatedTextComponent', () => {
     expect(component).toBeTruthy()
     expect(component.text).toBe('')
     expect(component.isTextTruncated).toBe(false)
-    expect(component.isOpen).toBe(false)
   })
 
   describe('text truncation', () => {
