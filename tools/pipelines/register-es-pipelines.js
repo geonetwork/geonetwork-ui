@@ -70,7 +70,7 @@ boolean isDataset=false;
 boolean isService=false;
 boolean isReuse=false;
 if (ctx.resourceType != null && ctx.resourceType.size() > 0) {
-  if (ctx.resourceType[0]=='dataset'||ctx.resourceType[0]=='series') {
+  if (ctx.resourceType[0]=='dataset'||ctx.resourceType[0]=='series'||ctx.resourceType[0]=='featureCatalog') {
     isDataset = true;
   }
   if (ctx.resourceType[0]=='service') {
