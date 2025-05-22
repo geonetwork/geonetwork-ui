@@ -2,15 +2,15 @@ describe('dataset feature catalog - Single feature type', () => {
   beforeEach(() => {
     cy.intercept(
       'POST',
-      '/geonetwork/srv/api/search/records/_search?bucket=bucket&relatedType=fcats',
+      '/geonetwork/srv/api/search/records/_search?bucket=bucket&relatedType=fcats*',
       {
-        fixture: '_search_IGNF_BD-TOPO.json',
+        fixture: '_search_Exemple_de_catalogue_ISO19110_de_la_BDTOPO.json',
       }
     )
   })
 
   beforeEach(() => {
-    cy.visit('/dataset/IGNF_BD-TOPO')
+    cy.visit('/dataset/50aa3037-ac17-4c0d-ad15-b43a5a0929ae')
   })
 
   it('should display the right columns for each feature types', () => {
@@ -111,7 +111,7 @@ describe('dataset feature catalog - Single feature type', () => {
     cy.get('@cellPopinContent').should('contain', 'Bananeraie')
     cy.get('@cellPopinContent').should('contain', 'Bois')
     cy.get('@cellPopinContent').should('contain', 'Canne à sucre')
-    cy.get('@cellPopinContent').get('li').should('have.length', 26)
+    cy.get('@cellPopinContent').get('li').should('have.length', 17)
 
     // Check if popin closes correctly
     cy.get('[data-cy="cell-popin-close"]').click()
