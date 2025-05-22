@@ -811,11 +811,19 @@
             },
             {
               "origin": "catalog",
-              "properties": {
-                "overview": "https://metawal.wallonie.be/geonetwork/srv/api/records/bb87e8fe-e33b-453a-9989-b81f34ed83cb/attachments/wms.png"
-              },
+              "properties": null,
               "_source": {
                 "op1": ["1", "0"],
+                "overview": [
+                  {
+                    "data": "",
+                    "text": {
+                      "default": "wms.png",
+                      "langfre": "wms.png"
+                    },
+                    "url": "https://metawal.wallonie.be/geonetwork/srv/api/records/ce551730-ee1a-4de3-9b49-7e432375d08a/attachments/wms.png"
+                  }
+                ],
                 "op3": "2",
                 "op5": ["1", "0"],
                 "resourceAbstractObject": {
@@ -830,38 +838,30 @@
                 "link": [
                   {
                     "protocol": "OGC:WMS",
-                    "descriptionObject": {
-                      "default": "Adresse de connexion au service de visualisation WMS de la série de couches de données \"Sites de gestion des déchets miniers\"",
-                      "langfre": "Adresse de connexion au service de visualisation WMS de la série de couches de données \"Sites de gestion des déchets miniers\""
-                    },
                     "function": "browsing",
+                    "name": "Service de visualisation WMS",
                     "applicationProfile": "",
+                    "description": "Adresse de connexion au service de visualisation WMS de la série de couches de données \"Sites de gestion des déchets miniers\"",
                     "mimeType": "",
-                    "urlObject": {
-                      "default": "https://geoservices.wallonie.be/arcgis/services/SOL_SOUS_SOL/DECHETS_MINIERS/MapServer/WMSServer?request=GetCapabilities&service=WMS"
-                    },
-                    "nameObject": {
-                      "default": "Service de visualisation WMS",
-                      "langfre": "Service de visualisation WMS"
-                    },
+                    "url": "https://geoservices.wallonie.be/arcgis/services/SOL_SOUS_SOL/DECHETS_MINIERS/MapServer/WMSServer?request=GetCapabilities&service=WMS",
                     "group": 0
                   }
                 ],
                 "id": "752",
-                "uuid": "bb87e8fe-e33b-453a-9989-b81f34ed83cb",
+                "uuid": "ce551730-ee1a-4de3-9b49-7e432375d08a",
                 "op0": ["2", "1", "0"],
                 "resourceType": ["service"],
-                "edit": true,
-                "canReview": true,
-                "owner": true,
+                "edit": false,
+                "canReview": false,
+                "owner": false,
                 "isPublishedToAll": true,
                 "view": true,
-                "notify": true,
+                "notify": false,
                 "download": true,
                 "dynamic": true,
-                "featured": true
+                "featured": false
               },
-              "_id": "bb87e8fe-e33b-453a-9989-b81f34ed83cb"
+              "_id": "ce551730-ee1a-4de3-9b49-7e432375d08a"
             },
             {
               "origin": "catalog",
