@@ -34,6 +34,9 @@ export class EditorFacade {
   )
   isPublished$ = this.store.pipe(select(EditorSelectors.selectIsPublished))
   canEditRecord$ = this.store.pipe(select(EditorSelectors.selectCanEditRecord))
+  currentLanguage$ = this.store.pipe(
+    select(EditorSelectors.selectCurrentLanguage)
+  )
 
   openRecord(record: CatalogRecord, recordSource: string) {
     this.store.dispatch(
@@ -75,5 +78,9 @@ export class EditorFacade {
 
   canEditRecord(canEditRecord: boolean) {
     this.store.dispatch(EditorActions.canEditRecord({ canEditRecord }))
+  }
+
+  currentLanguage(currentLanguage: string) {
+    this.store.dispatch(EditorActions.currentLanguage({ currentLanguage }))
   }
 }

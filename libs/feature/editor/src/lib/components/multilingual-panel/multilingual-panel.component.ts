@@ -79,14 +79,13 @@ export class MultilingualPanelComponent implements OnDestroy {
   editTranslations: boolean
   selectedLanguages = []
   recordLanguages = []
-  formLanguage = ''
   @Input() set record(value: CatalogRecord) {
     this._record = value
     this.isMultilingual = value.otherLanguages.length > 0
     this.editTranslations = false
     this.recordLanguages = [...value.otherLanguages, value.defaultLanguage]
     this.selectedLanguages = this.recordLanguages
-    this.formLanguage = value.defaultLanguage
+    this.setCurrentLanguage(value.defaultLanguage)
   }
   @ViewChildren('actionMenuButton', { read: ElementRef })
   actionMenuButtons!: QueryList<ElementRef>
