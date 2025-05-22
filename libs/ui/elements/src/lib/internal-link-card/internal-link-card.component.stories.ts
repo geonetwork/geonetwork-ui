@@ -23,7 +23,14 @@ import { CommonModule } from '@angular/common'
 
 const mockRecord = datasetRecordsFixture()[0] as CatalogRecord
 const mockRecordLong = datasetRecordsFixture()[1] as CatalogRecord
-
+const mockRecordWithoutContact = {
+  ...mockRecord,
+  ownerOrganization: null,
+} as CatalogRecord
+const mockLongRecordWithoutContact = {
+  ...mockRecordLong,
+  ownerOrganization: null,
+} as CatalogRecord
 const interactiveFavoriteTemplate = `<div class="flex flex-row items-center">
   <span class="inline-flex items-center text-gray-700 font-medium" style="line-height: 1; margin-top: 1px;">{{record.extras?.favoriteCount || 42}}</span>
   <button type="button" class="ml-1 flex items-center justify-center text-secondary hover:scale-125 transition will-change-transform"
@@ -212,4 +219,34 @@ export const MultipleMediumCards: StoryObj<InternalLinkCardComponentWithFavorite
       </ng-template>
     `,
     }),
+  }
+
+export const LargeCardWithoutContact: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
+  {
+    args: {
+      ...Primary.args,
+      size: 'L',
+      record: mockLongRecordWithoutContact,
+    },
+    render: Primary.render,
+  }
+
+export const MediumCardWithoutContact: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
+  {
+    args: {
+      ...Primary.args,
+      size: 'M',
+      record: mockRecordWithoutContact,
+    },
+    render: Primary.render,
+  }
+
+export const SmallCardWithoutContact: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
+  {
+    args: {
+      ...Primary.args,
+      size: 'S',
+      record: mockRecordWithoutContact,
+    },
+    render: Primary.render,
   }
