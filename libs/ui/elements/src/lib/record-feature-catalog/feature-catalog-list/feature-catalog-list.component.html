@@ -1,4 +1,8 @@
-<div cdkScrollable class="h-[562px] relative overflow-y-auto overflow-hidden">
+<div
+  cdkScrollable
+  class="h-[562px] relative overflow-y-auto overflow-hidden"
+  data-cy="feat-catalog-scrollable"
+>
   <div #scrollContainer class="flex flex-col gap-2 py-5 px-5">
     <div
       *ngFor="let featureType of filteredFeatureCatalog?.featureTypes"
@@ -73,7 +77,7 @@
                     [cdkScrollContainer]="scrollable"
                     *ngIf="row.values?.length > 0"
                   >
-                    <div cellContent>
+                    <div cellContent data-cy="values-cell-popin-trigger">
                       <gn-ui-button
                         type="light"
                         extraClass="bg-transparent border-none"
