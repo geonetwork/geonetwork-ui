@@ -1,7 +1,6 @@
 import 'cypress-real-events'
 
-// Skipping this because the dump cannot be updated without 4.2.2 failing
-describe.skip('reuse pages', () => {
+describe('reuse pages', () => {
   beforeEach(() => {
     cy.visit('/reuse/7eb795c2-d612-4b5e-b15e-d985b0f4e697')
   })

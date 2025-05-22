@@ -30,13 +30,14 @@ import { RecordUserFeedbacksComponent } from '../record-user-feedbacks/record-us
 import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component'
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
-import { RecordRelatedRecordsComponent } from '../record-related-records/record-related-records.component'
+import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
 import { TranslateModule } from '@ngx-translate/core'
 import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matChatOutline } from '@ng-icons/material-icons/outline'
 import { RecordFeatureCatalogComponent } from '../record-feature-catalog/record-feature-catalog.component'
+import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -56,13 +57,14 @@ import { RecordFeatureCatalogComponent } from '../record-feature-catalog/record-
     MetadataContactComponent,
     MetadataQualityComponent,
     MetadataCatalogComponent,
-    RecordRelatedRecordsComponent,
+    RecordInternalLinksComponent,
     TranslateModule,
     RecordDataPreviewComponent,
     ButtonComponent,
     NgIcon,
     ServiceCapabilitiesComponent,
     RecordFeatureCatalogComponent,
+    RecordLinkedRecordsComponent,
   ],
   viewProviders: [provideIcons({ matChatOutline })],
 })
@@ -156,6 +158,13 @@ export class RecordMetadataComponent {
   )
   displayRelated$ = this.metadataViewFacade.related$.pipe(
     map((records) => records?.length > 0)
+  )
+
+  displayLinked$ = combineLatest([
+    this.metadataViewFacade.sources$,
+    this.metadataViewFacade.sourceOf$,
+  ]).pipe(
+    map(([sources, sourceOf]) => sources?.length > 0 || sourceOf?.length > 0)
   )
 
   displayFeatureCatalog$ = combineLatest([

@@ -1,0 +1,26 @@
+<h2
+  class="gn-ui-section-title pt-[40px] pb-[34px] container-lg lg:mx-auto"
+  translate
+>
+  record.metadata.linked.records
+</h2>
+<datahub-record-internal-links
+  *ngIf="hasSourceDatasets$ | async"
+  [title]="'record.metadata.linked.sourceDatasets' | translate"
+  [records]="sourceDatasets$ | async"
+></datahub-record-internal-links>
+<datahub-record-internal-links
+  *ngIf="hasLinkedDatasets$ | async"
+  [title]="'record.metadata.linked.datasets' | translate"
+  [records]="linkedDatasets$ | async"
+></datahub-record-internal-links>
+<datahub-record-internal-links
+  *ngIf="hasLinkedReuses$ | async"
+  [title]="'record.metadata.linked.reuses' | translate"
+  [records]="linkedReuses$ | async"
+></datahub-record-internal-links>
+<datahub-record-internal-links
+  *ngIf="hasLinkedServices$ | async"
+  [title]="'record.metadata.linked.services' | translate"
+  [records]="linkedServices$ | async"
+></datahub-record-internal-links>

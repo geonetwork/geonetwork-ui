@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { RelatedRecordCardComponent } from '@geonetwork-ui/ui/elements'
+import { InternalLinkCardComponent } from '@geonetwork-ui/ui/elements'
 import { CommonModule } from '@angular/common'
 import { TranslateModule } from '@ngx-translate/core'
 import {
@@ -21,21 +21,23 @@ import {
 } from '@geonetwork-ui/ui/layout'
 
 @Component({
-  selector: 'datahub-record-related-records',
-  templateUrl: './record-related-records.component.html',
-  styleUrls: ['./record-related-records.component.css'],
+  selector: 'datahub-record-internal-links',
+  templateUrl: './record-internal-links.component.html',
+  styleUrls: ['./record-internal-links.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
     CommonModule,
-    RelatedRecordCardComponent,
     TranslateModule,
     PreviousNextButtonsComponent,
     BlockListComponent,
+    InternalLinkCardComponent,
   ],
 })
-export class RecordRelatedRecordsComponent {
+export class RecordInternalLinksComponent {
   @Input() records: CatalogRecord[]
+  @Input() title: string
+  @Input() titleIsSectionTitle = false
   @ViewChild(BlockListComponent) list: BlockListComponent
 
   recordUrlGetter = this.getRecordUrl.bind(this)

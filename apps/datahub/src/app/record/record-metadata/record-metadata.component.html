@@ -120,6 +120,16 @@
   </ng-container>
 
   <section
+    id="linked-records"
+    *ngIf="displayLinked$ | async"
+    class="bg-primary-opacity-10 pb-3"
+  >
+    <div class="container-lg px-4 lg:mx-auto">
+      <datahub-record-linked-records></datahub-record-linked-records>
+    </div>
+  </section>
+
+  <section
     id="user-feedbacks"
     #userFeedbacks
     *ngIf="(metadataViewFacade.isPresent$ | async) === true"
@@ -134,12 +144,14 @@
       </div>
     </div>
   </section>
-  <section id="related" *ngIf="displayRelated$ | async" class="pt-6">
+  <section *ngIf="displayRelated$ | async" class="pt-6">
     <div class="py-10 mt-[32px] bg-gray-100">
       <div class="container-lg px-4 lg:mx-auto">
-        <datahub-record-related-records
+        <datahub-record-internal-links
+          [title]="'record.metadata.related' | translate"
+          [titleIsSectionTitle]="true"
           [records]="metadataViewFacade.related$ | async"
-        ></datahub-record-related-records>
+        ></datahub-record-internal-links>
       </div>
     </div>
   </section>

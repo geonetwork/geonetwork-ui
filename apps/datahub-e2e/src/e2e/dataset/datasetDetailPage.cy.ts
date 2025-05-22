@@ -360,6 +360,28 @@ describe('dataset pages', () => {
       .find('ng-icon')
       .eq(4)
       .should('have.attr', 'ng-reflect-name', 'matCheck')
+
+    // Score for a Reuse is 75%
+    cy.visit('/reuse/7eb795c2-d612-4b5e-b15e-d985b0f4e697')
+
+    // it should display the score
+    cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
+      .eq(0)
+      .find('[data-cy=progressPercentage]')
+      .invoke('text')
+      .invoke('trim')
+      .should('eql', '75%')
+
+    // Score for a Service is 83%
+    cy.visit('/service/00916a35-786b-4569-9da6-71ca64ca54b1')
+
+    // it should display the score
+    cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
+      .eq(0)
+      .find('[data-cy=progressPercentage]')
+      .invoke('text')
+      .invoke('trim')
+      .should('match', /^(83|66)%$/) // may be different on GN v4.2.2
   })
 
   it('PREVIEW SECTION : display & functions', () => {
@@ -764,13 +786,13 @@ describe('dataset pages', () => {
     cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
 
     // it should display the related records
-    cy.get('datahub-record-related-records')
-      .find('gn-ui-related-record-card')
+    cy.get('datahub-record-internal-links')
+      .find('gn-ui-internal-link-card')
       .should('have.length.gt', 0)
 
     // it should display a similar related record
-    cy.get('datahub-record-related-records')
-      .find('gn-ui-related-record-card')
+    cy.get('datahub-record-internal-links')
+      .find('gn-ui-internal-link-card')
       .first()
       .find('[data-cy="recordTitle"]')
       .should(
@@ -779,7 +801,7 @@ describe('dataset pages', () => {
       )
 
     // it goes to dataset on click
-    cy.get('datahub-record-related-records')
+    cy.get('datahub-record-internal-links')
       .find('gn-ui-internal-link-card')
       .first()
       .children('a')
