@@ -69,18 +69,38 @@ export class MetadataQualityComponent implements OnChanges {
       this.items.push({ name, value })
     }
   }
+  hasGetCapabilities(url: string): boolean {
+    const searchParams = new URLSearchParams(url)
+    return searchParams.get('REQUEST')?.toLowerCase() === 'getcapabilities'
+  }
 
   initialize() {
+    const datasetType = this.metadata?.kind
     const contact = this.metadata?.contacts?.[0]
+    const linkUrl = this.metadata?.onlineResources?.map(
+      (resource) => resource.url?.search
+    )
     this.items = []
     this.add('title', !!this.metadata?.title)
     this.add('description', !!this.metadata?.abstract)
-    this.add('topic', this.metadata?.topics?.length > 0)
     this.add('keywords', this.metadata?.keywords?.length > 0)
     this.add('legalConstraints', this.metadata?.legalConstraints?.length > 0)
-    this.add('organisation', !!contact?.organization)
     this.add('contact', !!contact?.email)
-    this.add('updateFrequency', !!this.metadata?.updateFrequency)
+
+    if (datasetType === 'dataset') {
+      this.add('updateFrequency', !!this.metadata?.updateFrequency)
+      this.add('topic', this.metadata?.topics?.length > 0)
+      this.add('organisation', !!contact?.organization)
+    } else if (datasetType === 'service') {
+      this.add(
+        'capabilities',
+        linkUrl.some((url) => this.hasGetCapabilities(url))
+      )
+    } else if (datasetType === 'reuse') {
+      this.add('topic', this.metadata?.topics?.length > 0)
+      this.add('organisation', !!contact?.organization)
+      this.add('source', !!this.metadata?.extras?.sourcesIdentifiers)
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
