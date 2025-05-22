@@ -47,7 +47,7 @@ export class Gn4FieldMapper {
   constructor(
     private metadataUrlService: MetadataUrlService,
     private translateService: TranslateService
-  ) {}
+  ) { }
 
   private get lang3() {
     return getLocalizedIndexKey(this.translateService.currentLang)
@@ -206,7 +206,7 @@ export class Gn4FieldMapper {
       ...output,
       contactsForResource: [
         ...('contactsForResource' in output &&
-        Array.isArray(output.contactsForResource)
+          Array.isArray(output.contactsForResource)
           ? output.contactsForResource
           : []),
         ...getAsArray(selectField(source, 'contactForResource')).map(
@@ -351,11 +351,11 @@ export class Gn4FieldMapper {
 
       return sourcesIdentifiers && sourcesIdentifiers.length > 0
         ? this.addExtra(
-            {
-              sourcesIdentifiers,
-            },
-            output
-          )
+          {
+            sourcesIdentifiers,
+          },
+          output
+        )
         : output
     },
     isPublishedToAll: (output, source) =>
