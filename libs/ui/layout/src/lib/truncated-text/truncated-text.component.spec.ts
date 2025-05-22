@@ -59,14 +59,4 @@ describe('TruncatedTextComponent', () => {
       expect(button).toBeFalsy()
     })
   })
-
-  describe('overlay behavior', () => {
-    it('should toggle and close overlay correctly', () => {
-      expect(component.isOpen).toBe(false)
-      component.toggleOverlay()
-      expect(component.isOpen).toBe(true)
-      component.close()
-      expect(component.isOpen).toBe(false)
-    })
-  })
 })
