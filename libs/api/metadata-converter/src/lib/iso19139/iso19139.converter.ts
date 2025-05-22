@@ -183,8 +183,10 @@ export class Iso19139Converter extends BaseConverter<string> {
         }
         // add languages that have translations to the root language list
         for (const lang in fieldTranslations) {
-          if (!record.otherLanguages.includes(lang)) {
-            record.otherLanguages.push(lang)
+          if (!record.otherLanguages.length) {
+            if (!record.otherLanguages.includes(lang)) {
+              record.otherLanguages.push(lang)
+            }
           }
         }
       }
