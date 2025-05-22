@@ -232,7 +232,7 @@
   "editor.record.lock.resourceType": "Les fiches d'un type autre que jeu de données ne sont pas éditables",
   "editor.record.multilingual.confirmation.cancelText": "Garder le(s) language(s)",
   "editor.record.multilingual.confirmation.confirmText": "Supprimer le(s) language(s)",
-  "editor.record.multilingual.confirmation.message": "Vous allez supprimer un ou plusieurs languages, ce qui supprimera toutes les traductions qui y sont liées et est irréversible. Voulez-vous procéder ?",
+  "editor.record.multilingual.confirmation.message": "Vous allez supprimer un ou plusieurs languages, ce qui supprimera toutes les traductions qui y sont liées. Voulez-vous procéder ?",
   "editor.record.multilingual.confirmation.title": "Suppression de language(s)",
   "editor.record.onlineResource.protocol.other": "Autre",
   "editor.record.onlineResourceError.body": "Une erreur est survenue lors de l'ajout de la ressource :",

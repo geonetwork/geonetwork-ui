@@ -232,7 +232,7 @@
   "editor.record.lock.resourceType": "Records of a type other than dataset are not editable",
   "editor.record.multilingual.confirmation.cancelText": "Keep the language(s)",
   "editor.record.multilingual.confirmation.confirmText": "Remove the language(s)",
-  "editor.record.multilingual.confirmation.message": "You are about to remove one or several languages, which will delete all of the related translations and is irreversible. Do you want to proceed?",
+  "editor.record.multilingual.confirmation.message": "You are about to remove one or several languages, which will delete all of the related translations. Do you want to proceed?",
   "editor.record.multilingual.confirmation.title": "Remove languages",
   "editor.record.onlineResource.protocol.other": "Other",
   "editor.record.onlineResourceError.body": "An error happened while adding the resource:",

@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   Input,
+  OnChanges,
   OnDestroy,
   QueryList,
   ViewChildren,
@@ -194,11 +195,11 @@ export class MultilingualPanelComponent implements OnDestroy {
   }
 
   updateTranslations() {
-    this.facade.updateRecordField(
-      'otherLanguages',
-      this.selectedLanguages.filter((lang) => lang !== this.formLanguage)
+    const newLanguageSelection = this.selectedLanguages.filter(
+      (lang) => lang !== this.formLanguage
     )
-    this.recordLanguages = this.selectedLanguages
+    this.facade.updateRecordField('otherLanguages', newLanguageSelection)
+    this.recordLanguages = newLanguageSelection
     this.editTranslations = false
   }
 
@@ -231,6 +232,7 @@ export class MultilingualPanelComponent implements OnDestroy {
         cancelText: this.translateService.instant(
           'editor.record.multilingual.confirmation.cancelText'
         ),
+        focusCancel: true,
       },
       restoreFocus: true,
     })
