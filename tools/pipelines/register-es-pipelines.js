@@ -102,8 +102,15 @@ if(ctx.contact != null && ctx.contact.length > 0 && ctx.contact[0].email != null
 if(!isService && ctx.cl_topic != null && ctx.cl_topic.length > 0) {
   ok++
 }
-if(ctx.tag != null && ctx.tag.length > 0) {
-  ok++
+if (ctx.allKeywords != null && !ctx.allKeywords.isEmpty()) {
+  for (def thesaurus : ctx.allKeywords.values()) {
+    if (thesaurus != null && 
+        thesaurus.keywords != null && 
+        thesaurus.keywords.length > 0) {
+      ok++;
+      break;
+    }
+  }
 }
 if(isDataset && ctx.cl_maintenanceAndUpdateFrequency != null && ctx.cl_maintenanceAndUpdateFrequency.length > 0) {
   ok++
