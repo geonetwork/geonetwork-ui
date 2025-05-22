@@ -4,18 +4,20 @@ describe('dataset feature catalog - Single feature type', () => {
       'POST',
       '/geonetwork/srv/api/search/records/_search?bucket=bucket&relatedType=fcats',
       {
-        fixture: '_search_n_tri_lill_inondable.json',
+        fixture: '_search_IGNF_BD-TOPO.json',
       }
     )
   })
 
   beforeEach(() => {
-    cy.visit('/dataset/accroche_velos')
+    cy.visit('/dataset/IGNF_BD-TOPO')
   })
 
   it('should display the right columns for each feature types', () => {
     // Test the first attribute type, that does not have "Values" column
-    cy.get('gn-ui-feature-catalog-list gn-ui-expandable-panel')
+    cy.get('gn-ui-feature-catalog-list gn-ui-expandable-panel', {
+      timeout: 50000,
+    })
       .eq(0)
       .as('firstExpandableFeatType')
     cy.get('@firstExpandableFeatType').click()
@@ -44,7 +46,12 @@ describe('dataset feature catalog - Single feature type', () => {
     // Check that there are the right count of cells content
     cy.get('@firstExpandableFeatType')
       .find('[data-test="cell-content"]')
-      .should('have.length', 36)
+      .should('have.length', 44)
+
+    // Close first panel
+    cy.get('@firstExpandableFeatType')
+      .find('[data-cy="expandable-panel-header"]')
+      .click()
 
     // Test the second attribute type, that DOES have "Values" column
     cy.get('gn-ui-feature-catalog-list gn-ui-expandable-panel')
@@ -80,6 +87,34 @@ describe('dataset feature catalog - Single feature type', () => {
     // Check that there are the right count of cells content
     cy.get('@secondExpandableFeatType')
       .find('[data-test="cell-content"]')
-      .should('have.length', 45)
+      .should('have.length', 50)
+
+    // Open the popin
+    cy.get('@secondExpandableFeatType')
+      .find('[data-cy="values-cell-popin-trigger"]')
+      .eq(0)
+      .as('secondExpandableFeatTypeCellPopin')
+      .find('button')
+      .eq(0)
+      .click()
+
+    // Scroll, because otherwise popin does not display
+    cy.scrollTo(0, 700)
+    cy.get('[data-cy="feat-catalog-scrollable"]').scrollTo('top')
+
+    // Popin should display
+    cy.get('[data-cy="cell-popin-content"]')
+      .as('cellPopinContent')
+      .should('be.visible')
+
+    // Check popin content
+    cy.get('@cellPopinContent').should('contain', 'Bananeraie')
+    cy.get('@cellPopinContent').should('contain', 'Bois')
+    cy.get('@cellPopinContent').should('contain', 'Canne à sucre')
+    cy.get('@cellPopinContent').get('li').should('have.length', 26)
+
+    // Check if popin closes correctly
+    cy.get('[data-cy="cell-popin-close"]').click()
+    cy.get('@cellPopinContent').should('not.exist')
   })
 })
