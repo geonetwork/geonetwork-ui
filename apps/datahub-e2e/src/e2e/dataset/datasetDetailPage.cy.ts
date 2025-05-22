@@ -360,6 +360,28 @@ describe('dataset pages', () => {
       .find('ng-icon')
       .eq(4)
       .should('have.attr', 'ng-reflect-name', 'matCheck')
+
+    // Score for a Reuse is 75%
+    cy.visit('/reuse/7eb795c2-d612-4b5e-b15e-d985b0f4e697')
+
+    // it should display the score
+    cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
+      .eq(0)
+      .find('[data-cy=progressPercentage]')
+      .invoke('text')
+      .invoke('trim')
+      .should('eql', '75%')
+
+    // Score for a Service is 83%
+    cy.visit('/service/00916a35-786b-4569-9da6-71ca64ca54b1')
+
+    // it should display the score
+    cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
+      .eq(0)
+      .find('[data-cy=progressPercentage]')
+      .invoke('text')
+      .invoke('trim')
+      .should('match', /^(83|66)%$/) // may be different on GN v4.2.2
   })
 
   it('PREVIEW SECTION : display & functions', () => {
