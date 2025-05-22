@@ -41,7 +41,6 @@ describe('TruncatedTextComponent', () => {
     expect(component).toBeTruthy()
     expect(component.text).toBe('')
     expect(component.isTextTruncated).toBe(false)
-    expect(component.isOpen).toBe(false)
   })
 
   describe('text truncation', () => {
@@ -57,16 +56,6 @@ describe('TruncatedTextComponent', () => {
       expect(component.isTextTruncated).toBe(false)
       const button = fixture.debugElement.query(By.directive(ButtonComponent))
       expect(button).toBeFalsy()
-    })
-  })
-
-  describe('overlay behavior', () => {
-    it('should toggle and close overlay correctly', () => {
-      expect(component.isOpen).toBe(false)
-      component.toggleOverlay()
-      expect(component.isOpen).toBe(true)
-      component.close()
-      expect(component.isOpen).toBe(false)
     })
   })
 })

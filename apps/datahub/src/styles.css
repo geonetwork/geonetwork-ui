@@ -3,6 +3,7 @@ body {
   height: 100%;
   color: var(--color-main);
 }
+
 body {
   margin: 0;
 }
@@ -10,6 +11,7 @@ body {
 html.record-page-active {
   scroll-padding-top: 220px;
 }
+
 @media only screen and (min-width: 640px) {
   html.record-page-active {
     scroll-padding-top: 80px;
@@ -19,9 +21,11 @@ html.record-page-active {
 .btn-text-white {
   @apply text-white hover:text-primary-lighter;
 }
+
 .badge-btn {
   @apply transition-colors;
 }
+
 .badge-btn.active {
   @apply bg-primary;
 }
@@ -30,12 +34,21 @@ html.record-page-active {
   @apply text-primary-lighter;
   text-decoration: underline;
 }
+
 .tippy-box a:hover {
   @apply text-primary-lightest;
 }
 
 /* this targets the main search field */
 gn-ui-autocomplete .gn-ui-text-input {
-  @apply focus:outline-white focus:outline-2 focus:outline-dotted focus:outline-offset-2
-  shadow-xl focus:shadow-[0_0_24px_0_rgba(21,40,184,0.09)];
+  @apply focus:outline-white focus:outline-2 focus:outline-dotted focus:outline-offset-2 shadow-xl;
+
+  &:focus {
+    box-shadow: 0 0 24px 0 rgba(21, 40, 184, 0.09);
+  }
+}
+
+.basicLightbox.basicLightbox--visible {
+  z-index: 1003;
+  /* 1000 is for cdk overlays, 1002 is for nav bar */
 }

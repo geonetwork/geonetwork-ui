@@ -7,18 +7,7 @@ import { ExpandablePanelComponent } from '@geonetwork-ui/ui/layout'
 describe('FeatureCatalogListComponent', () => {
   let component: FeatureCatalogListComponent
   let fixture: ComponentFixture<FeatureCatalogListComponent>
-  beforeAll(() => {
-    global.ResizeObserver = class ResizeObserver {
-      observe = jest.fn()
-      unobserve = jest.fn()
-      disconnect = jest.fn()
-    }
-    global.MutationObserver = class MutationObserver {
-      observe = jest.fn()
-      disconnect = jest.fn()
-      takeRecords = jest.fn().mockReturnValue([])
-    }
-  })
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -30,39 +19,71 @@ describe('FeatureCatalogListComponent', () => {
 
     fixture = TestBed.createComponent(FeatureCatalogListComponent)
     component = fixture.componentInstance
-    component.filteredFeatureCatalog = {
-      featureTypes: [
-        {
-          name: 'TestFeature',
-          definition: 'Test Definition',
-          attributes: [
-            {
-              type: 'String',
-              name: 'test_field',
-              code: 'TEST_001',
-              title: 'Test description',
-            },
-          ],
-        },
-      ],
-    }
-    component.columns = [
-      { key: 'type', label: 'Type', width: '25%' },
-      { key: 'name', label: 'Name', width: '25%' },
-      { key: 'code', label: 'Code', width: '20%' },
-      { key: 'title', label: 'Description', width: '30%' },
-    ]
     fixture.detectChanges()
   })
 
-  it('should create the template with title and colums with right width', () => {
+  it('should create', () => {
     expect(component).toBeTruthy()
-    component.ngOnInit()
-    fixture.detectChanges()
-    expect(component.gridTemplateColumns).toBe('25% 25% 20% 30%')
-    const columnLabels = fixture.debugElement
-      .queryAll(By.css('[data-test="column-label"]'))
-      .map((el) => el.nativeElement.textContent.trim())
-    expect(columnLabels).toEqual(['Type', 'Name', 'Code', 'Description'])
+  })
+
+  describe('#getColumnsDefinition', () => {
+    it('returns the right base column definition', () => {
+      const attributes = [
+        {
+          code: 'OBJECTID',
+          name: 'OBJECTID',
+          definition: 'Object identifier',
+          type: 'OID',
+        },
+      ]
+      expect(
+        component.getColumnsDefinition(attributes).map((c) => c.key)
+      ).toStrictEqual(['type', 'name', 'code', 'definition'])
+    })
+
+    it('returns the right column definition with "values" column', () => {
+      const attributesWithValues = [
+        {
+          code: 'OBJECTID',
+          name: 'OBJECTID',
+          definition: 'Object identifier',
+          type: 'OID',
+          values: [{ code: 'Code', label: 'The Label' }],
+        },
+      ]
+      expect(
+        component.getColumnsDefinition(attributesWithValues).map((c) => c.key)
+      ).toStrictEqual(['type', 'name', 'code', 'definition', 'values'])
+    })
+  })
+
+  describe('#getGridTemplateColumns', () => {
+    it('returns the right base grid template', () => {
+      const attributes = [
+        {
+          code: 'OBJECTID',
+          name: 'OBJECTID',
+          definition: 'Object identifier',
+          type: 'OID',
+        },
+      ]
+      expect(component.getGridTemplateColumns(attributes)).toBe(
+        '17% 32% 17% minmax(0px, 1fr)'
+      )
+    })
+    it('returns the right grid template with "values" column', () => {
+      const attributesWithValues = [
+        {
+          code: 'OBJECTID',
+          name: 'OBJECTID',
+          definition: 'Object identifier',
+          type: 'OID',
+          values: [{ code: 'Code', label: 'The Label' }],
+        },
+      ]
+      expect(component.getGridTemplateColumns(attributesWithValues)).toBe(
+        '17% 32% 17% minmax(0px, 1fr) 73px'
+      )
+    })
   })
 })
