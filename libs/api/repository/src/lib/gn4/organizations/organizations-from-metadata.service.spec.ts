@@ -16,6 +16,7 @@ import {
 } from '@geonetwork-ui/common/fixtures'
 import { LangService } from '@geonetwork-ui/util/i18n'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 
 const sampleOrgA: Organization = {
   description: 'A description for ARE',
@@ -212,11 +213,15 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
         : 'email.keyword'
     })
 
+    beforeEach(() => {
+      service.getOrganisations({})
+    })
     describe('organisations$', () => {
       let organisations
       describe('initially', () => {
         beforeEach(() => {
-          service.organisations$
+          service
+            .getOrganisations({})
             .pipe(take(1))
             .subscribe((orgs) => (organisations = orgs))
         })
@@ -315,12 +320,106 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
       describe('when groups tick', () => {
         beforeEach(() => {
           organisations = null
-          service.organisations$
+          service
+            .getOrganisations({})
             .pipe(take(2))
             .subscribe((orgs) => (organisations = orgs))
         })
         it('get organisations hydrated from groups via name or email mapping', () => {
           expect(organisations).toEqual([sampleOrgA, sampleOrgB, sampleOrgC])
+        })
+      })
+      describe('With ConfigFilter', () => {
+        beforeEach(() => {
+          service
+            .getOrganisations({
+              resourceType: {
+                service: false,
+                map: false,
+                'map/static': false,
+                mapDigital: false,
+              },
+            } as FieldFilters)
+            .pipe(take(1))
+            .subscribe((orgs) => (organisations = orgs))
+        })
+        it('call search service with configFilter', () => {
+          expect(searchService.search).toHaveBeenCalledWith(
+            'bucket',
+            null,
+            JSON.stringify({
+              aggregations: {
+                contact: {
+                  nested: { path: 'contactForResource' },
+                  aggs: {
+                    org: {
+                      terms: {
+                        field: `contactForResource.${contactOrgField}`,
+                        exclude: '',
+                        size: 5000,
+                        order: { _key: 'asc' },
+                      },
+                      aggs: {
+                        mail: {
+                          terms: {
+                            size: 50,
+                            exclude: '',
+                            field: `contactForResource.${emailField}`,
+                          },
+                        },
+                        logoUrl: {
+                          terms: {
+                            size: 1,
+                            exclude: '',
+                            field: `contactForResource.logo.keyword`,
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                orgForResource: {
+                  terms: {
+                    size: 5000,
+                    exclude: '',
+                    field: orgField,
+                    order: {
+                      _key: 'asc',
+                    },
+                  },
+                },
+              },
+              from: 0,
+              size: 0,
+              query: {
+                bool: {
+                  must: [],
+                  must_not: [
+                    {
+                      query_string: {
+                        query:
+                          'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+                      },
+                    },
+                  ],
+                  should: [],
+                  filter: [
+                    {
+                      terms: {
+                        isTemplate: ['n'],
+                      },
+                    },
+                    {
+                      query_string: {
+                        query:
+                          'resourceType:(-"service" OR -"map" OR -"map/static" OR -"mapDigital")',
+                      },
+                    },
+                  ],
+                },
+              },
+            })
+          )
         })
       })
     })

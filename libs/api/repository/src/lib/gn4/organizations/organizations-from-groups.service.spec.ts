@@ -14,6 +14,8 @@ import {
   elasticFullResponseFixture,
   groupsFixture,
 } from '@geonetwork-ui/common/fixtures'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
+import { ElasticsearchService } from '../elasticsearch'
 
 const groupsAggregationMock = {
   aggregations: {
@@ -70,8 +72,8 @@ const sampleOrgC: Organization = {
   email: 'rolf.giezendanner@are.admin.ch',
 }
 
-class SearchApiServiceMock {
-  search = jest.fn(() => of(groupsAggregationMock))
+const SearchApiServiceMock = {
+  search: jest.fn(() => of(groupsAggregationMock)),
 }
 
 class GoupsApiServiceMock {
@@ -82,9 +84,14 @@ class TranslateServiceMock {
   currentLang = 'fr'
   get = jest.fn((key) => of(key))
 }
+const ElasticsearchServiceMock = {
+  getSearchRequestBody: jest.fn((...args) => args),
+}
 
 describe('OrganizationsFromGroupsService', () => {
   let service: OrganizationsFromGroupsService
+  //let searchApiService: SearchApiServiceMock
+  //let esService: ElasticsearchServiceMock
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -96,11 +103,15 @@ describe('OrganizationsFromGroupsService', () => {
         },
         {
           provide: SearchApiService,
-          useClass: SearchApiServiceMock,
+          useValue: SearchApiServiceMock,
         },
         {
           provide: TranslateService,
           useClass: TranslateServiceMock,
+        },
+        {
+          provide: ElasticsearchService,
+          useValue: ElasticsearchServiceMock,
         },
       ],
     })
@@ -111,18 +122,58 @@ describe('OrganizationsFromGroupsService', () => {
     expect(service).toBeTruthy()
   })
   describe('organisations$', () => {
-    let organisations
-    beforeEach(() => {
-      organisations = null
-      service.organisations$.subscribe((orgs) => (organisations = orgs))
-    })
     it('get organisations with record count', () => {
+      let organisations = null
+      service.getOrganisations({}).subscribe((orgs) => (organisations = orgs))
       expect(organisations).toEqual([sampleOrgA, sampleOrgB, sampleOrgC])
+    })
+    it('get organisations with configFilter', (done) => {
+      service
+        .getOrganisations({
+          resourceType: {
+            service: false,
+            map: false,
+            'map/static': false,
+            mapDigital: false,
+          },
+        } as FieldFilters)
+        .subscribe(() => {
+          expect(SearchApiServiceMock.search).toHaveBeenCalledWith(
+            'bucket',
+            null,
+            JSON.stringify(
+              ElasticsearchServiceMock.getSearchRequestBody(
+                {
+                  groups: {
+                    terms: {
+                      field: 'groupOwner',
+                      size: 5000,
+                    },
+                  },
+                },
+                0,
+                0,
+                undefined,
+                undefined,
+                {
+                  resourceType: {
+                    service: false,
+                    map: false,
+                    'map/static': false,
+                    mapDigital: false,
+                  },
+                } as FieldFilters
+              )
+            )
+          )
+          done()
+        })
     })
   })
   describe('#getFiltersForOrgs', () => {
     let filters
     beforeEach(async () => {
+      service.getOrganisations({})
       filters = await firstValueFrom(
         service.getFiltersForOrgs([sampleOrgA, sampleOrgB])
       )
@@ -136,6 +187,7 @@ describe('OrganizationsFromGroupsService', () => {
   describe('#getOrgsFromFilters', () => {
     let orgs
     beforeEach(async () => {
+      service.getOrganisations({})
       orgs = await firstValueFrom(
         service.getOrgsFromFilters({
           groupOwner: {
@@ -152,6 +204,7 @@ describe('OrganizationsFromGroupsService', () => {
   describe('#addOrganizationToRecordFromSource', () => {
     let record
     beforeEach(async () => {
+      service.getOrganisations({})
       const source = {
         ...elasticFullResponseFixture().hits.hits[0]._source,
         groupOwner: '34838580',
@@ -179,6 +232,7 @@ describe('OrganizationsFromGroupsService', () => {
     })
     describe('when a non existent group is the owner', () => {
       beforeEach(async () => {
+        service.getOrganisations({})
         const source = {
           ...elasticFullResponseFixture().hits.hits[0]._source,
           groupOwner: '-1',

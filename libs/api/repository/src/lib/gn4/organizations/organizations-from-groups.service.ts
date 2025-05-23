@@ -23,33 +23,10 @@ const IMAGE_URL = '/geonetwork/images/harvesting/'
 export class OrganizationsFromGroupsService
   implements OrganizationsServiceInterface
 {
-  private groups$: Observable<GroupApiModel[]> = this.groupsApiService
-    .getGroups()
-    .pipe(shareReplay())
-  private groupsAggregation$ = this.searchApiService
-    .search(
-      'bucket',
-      null,
-      JSON.stringify(
-        this.esService.getSearchRequestBody({
-          groups: {
-            terms: {
-              field: 'groupOwner',
-              size: 5000,
-            },
-          },
-        })
-      )
-    )
-    .pipe(
-      map((response) => response.aggregations.groups.buckets),
-      shareReplay()
-    )
-  organisations$ = forkJoin([this.groupsAggregation$, this.groups$]).pipe(
-    map(([groupsAgg, groups]) => this.mapGroups(groupsAgg, groups)),
-    shareReplay()
-  )
-  organisationsCount$ = this.organisations$.pipe(map((orgs) => orgs.length))
+  private groups$: Observable<GroupApiModel[]>
+  private groupsAggregation$: Observable<any[]>
+  private organisations$: Observable<Organization[]>
+  organisationsCount$: Observable<number>
 
   constructor(
     private esService: ElasticsearchService,
@@ -57,6 +34,46 @@ export class OrganizationsFromGroupsService
     private groupsApiService: GroupsApiService,
     private translateService: TranslateService
   ) {}
+  getOrganisations(configFilters: FieldFilters): Observable<Organization[]> {
+    this.groups$ = this.groupsApiService.getGroups().pipe(shareReplay())
+    this.groupsAggregation$ = this.searchApiService
+      .search(
+        'bucket',
+        null,
+        JSON.stringify(
+          this.esService.getSearchRequestBody(
+            {
+              groups: {
+                terms: {
+                  field: 'groupOwner',
+                  size: 5000,
+                },
+              },
+            },
+            0,
+            0,
+            undefined,
+            undefined,
+            configFilters
+          )
+        )
+      )
+      .pipe(
+        map((response) => response.aggregations.groups.buckets),
+        shareReplay()
+      )
+    this.organisations$ = forkJoin([
+      this.groupsAggregation$,
+      this.groups$,
+    ]).pipe(
+      map(([groupsAgg, groups]) => this.mapGroups(groupsAgg, groups)),
+      shareReplay()
+    )
+    this.organisationsCount$ = this.organisations$.pipe(
+      map((orgs) => orgs.length)
+    )
+    return this.organisations$
+  }
 
   private mapGroups(groupBuckets: any[], groups: GroupApiModel[]) {
     return groupBuckets

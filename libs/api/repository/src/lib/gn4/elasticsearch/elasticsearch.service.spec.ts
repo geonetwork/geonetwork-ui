@@ -7,6 +7,7 @@ import { LangService } from '@geonetwork-ui/util/i18n'
 import { EsSearchParams } from '@geonetwork-ui/api/metadata-converter'
 import { TestBed } from '@angular/core/testing'
 import { METADATA_LANGUAGE } from '../../metadata-language'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 
 class LangServiceMock {
   iso3 = 'eng'
@@ -629,6 +630,53 @@ describe('ElasticsearchService', () => {
         })
       })
     })
+    it('add configFilter - query string', () => {
+      const query = service['buildPayloadQuery'](
+        {
+          resourceType: {
+            service: false,
+            map: false,
+            'map/static': false,
+            mapDigital: false,
+          },
+        } as FieldFilters,
+        {},
+        ['record-1', 'record-2', 'record-3']
+      )
+
+      expect(query).toEqual({
+        bool: {
+          filter: [
+            {
+              terms: {
+                isTemplate: ['n'],
+              },
+            },
+            {
+              query_string: {
+                query:
+                  'resourceType:(-"service" OR -"map" OR -"map/static" OR -"mapDigital")',
+              },
+            },
+            {
+              ids: {
+                values: ['record-1', 'record-2', 'record-3'],
+              },
+            },
+          ],
+          should: [],
+          must: [],
+          must_not: [
+            {
+              query_string: {
+                query:
+                  'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+              },
+            },
+          ],
+        },
+      })
+    })
   })
 
   describe('#injectLangInQueryStringFields - Search language', () => {
@@ -702,12 +750,19 @@ describe('ElasticsearchService', () => {
   describe('#buildAutocompletePayload', () => {
     describe('given an autocomplete config', () => {
       it('returns the search payload', () => {
-        const payload = service.buildAutocompletePayload('blarg')
+        const payload = service.buildAutocompletePayload('blarg', {})
         expect(payload).toEqual({
           _source: ['resourceTitleObject', 'uuid', 'resourceType'],
 
           query: {
             bool: {
+              filter: [
+                {
+                  terms: {
+                    isTemplate: ['n'],
+                  },
+                },
+              ],
               must: [
                 {
                   terms: {
@@ -738,6 +793,66 @@ describe('ElasticsearchService', () => {
             },
           },
 
+          from: 0,
+          size: 20,
+        })
+      })
+      it('returns the search payload with configFilter', () => {
+        const payload = service.buildAutocompletePayload('blarg', {
+          resourceType: {
+            service: false,
+            map: false,
+            'map/static': false,
+            mapDigital: false,
+          },
+        } as FieldFilters)
+        expect(payload).toEqual({
+          _source: ['resourceTitleObject', 'uuid', 'resourceType'],
+
+          query: {
+            bool: {
+              filter: [
+                {
+                  terms: {
+                    isTemplate: ['n'],
+                  },
+                },
+                {
+                  query_string: {
+                    query:
+                      'resourceType:(-"service" OR -"map" OR -"map/static" OR -"mapDigital")',
+                  },
+                },
+              ],
+              must: [
+                {
+                  terms: {
+                    isTemplate: ['n'],
+                  },
+                },
+                {
+                  multi_match: {
+                    fields: [
+                      'resourceTitleObject.langfre^4',
+                      'resourceAbstractObject.langfre^3',
+                      'tag^2',
+                      'resourceIdentifier',
+                    ],
+                    query: 'blarg',
+                    type: 'bool_prefix',
+                  },
+                },
+              ],
+              must_not: [
+                {
+                  query_string: {
+                    query:
+                      'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
+                  },
+                },
+              ],
+            },
+          },
           from: 0,
           size: 20,
         })

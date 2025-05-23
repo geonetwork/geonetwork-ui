@@ -46,10 +46,9 @@ describe('FormFieldContactsForResourceComponent', () => {
     organizationsServiceInterface = TestBed.inject(
       OrganizationsServiceInterface
     )
-    organizationsServiceInterface.organisations$ = new BehaviorSubject([
-      organizationBarbie,
-      organizationGoogle,
-    ])
+
+    organizationsServiceInterface.getOrganisations = () =>
+      new BehaviorSubject([organizationBarbie, organizationGoogle])
 
     fixture = TestBed.createComponent(FormFieldContactsForResourceComponent)
     component = fixture.componentInstance

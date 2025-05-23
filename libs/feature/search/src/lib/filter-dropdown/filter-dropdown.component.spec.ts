@@ -21,6 +21,7 @@ import { FilterDropdownComponent } from './filter-dropdown.component'
 
 class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject<any>({})
+  configFilters$ = new BehaviorSubject<any>({})
 }
 class SearchServiceMock {
   updateFilters = jest.fn()
@@ -180,7 +181,10 @@ describe('FilterDropdownComponent', () => {
           component.ngOnInit()
         })
         it('reads available values', () => {
-          expect(fieldsService.getAvailableValues).toHaveBeenCalledWith('Org')
+          expect(fieldsService.getAvailableValues).toHaveBeenCalledWith(
+            'Org',
+            {}
+          )
         })
       })
       describe('when there are available values', () => {
