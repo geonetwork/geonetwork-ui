@@ -31,7 +31,7 @@ import {
   ModalDialogComponent,
   SortableListComponent,
 } from '@geonetwork-ui/ui/layout'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateDirective, TranslateService } from '@ngx-translate/core'
 import { Subscription } from 'rxjs'
 import { MAX_UPLOAD_SIZE_MB } from '../../../../fields.config'
 import { OnlineResourceCardComponent } from '../../../online-resource-card/online-resource-card.component'
@@ -58,7 +58,7 @@ type OnlineNotLinkResource =
     OnlineResourceCardComponent,
     TextInputComponent,
     TextAreaComponent,
-    TranslateModule,
+    TranslateDirective,
   ],
 })
 export class FormFieldOnlineResourcesComponent {

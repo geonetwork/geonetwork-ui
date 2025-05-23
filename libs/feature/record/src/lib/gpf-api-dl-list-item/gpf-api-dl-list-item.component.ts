@@ -1,16 +1,22 @@
 import { CommonModule } from '@angular/common'
 import { HttpClient } from '@angular/common/http'
 import { Component, Input, OnInit } from '@angular/core'
-import { NgIconsModule } from '@ng-icons/core'
-import { TranslateModule } from '@ngx-translate/core'
-import { Observable, map, mergeMap } from 'rxjs'
+import { NgIconsModule, provideIcons } from '@ng-icons/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
+import { map, mergeMap, Observable } from 'rxjs'
+import { matCloudDownloadOutline } from '@ng-icons/material-icons/outline'
 
 @Component({
   selector: 'gn-ui-gpf-api-dl-list-item',
   templateUrl: './gpf-api-dl-list-item.component.html',
   styleUrls: ['./gpf-api-dl-list-item.component.css'],
   standalone: true,
-  imports: [CommonModule, TranslateModule, NgIconsModule],
+  imports: [CommonModule, TranslateDirective, TranslatePipe, NgIconsModule],
+  providers: [
+    provideIcons({
+      matCloudDownloadOutline,
+    }),
+  ],
 })
 export class GpfApiDlListItemComponent implements OnInit {
   @Input() link

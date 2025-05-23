@@ -15,7 +15,7 @@ import {
   DatasetFeatureCatalog,
   DatasetOnlineResource,
 } from '@geonetwork-ui/common/domain/model/record'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import {
   LoadingMaskComponent,
   PopupAlertComponent,
@@ -32,7 +32,7 @@ import { CommonModule } from '@angular/common'
     DataTableComponent,
     LoadingMaskComponent,
     PopupAlertComponent,
-    TranslateModule,
+    TranslatePipe,
   ],
   standalone: true,
 })

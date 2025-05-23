@@ -10,7 +10,11 @@ import {
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent, CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import {
+  TranslateDirective,
+  TranslatePipe,
+  TranslateService,
+} from '@ngx-translate/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
   NgIconComponent,
@@ -54,7 +58,8 @@ const extraFlagMap: { [key: string]: string } = {
   imports: [
     CommonModule,
     CheckToggleComponent,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     ButtonComponent,
     NgIconComponent,
     ActionMenuComponent,

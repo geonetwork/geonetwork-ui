@@ -16,7 +16,7 @@ import {
   withLatestFrom,
 } from 'rxjs/operators'
 import tippy from 'tippy.js'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 import { StarToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { Observable, Subscription } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -30,7 +30,7 @@ import { CommonModule } from '@angular/common'
   styleUrls: ['./favorite-star.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, StarToggleComponent, TranslateModule],
+  imports: [CommonModule, StarToggleComponent],
 })
 export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   @Input() displayCount? = true

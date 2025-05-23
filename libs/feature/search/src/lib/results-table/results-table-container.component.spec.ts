@@ -4,12 +4,12 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
-import { TranslateModule } from '@ngx-translate/core'
 import { MockBuilder, MockProviders } from 'ng-mocks'
 import { of, Subject, throwError } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { ResultsTableContainerComponent } from './results-table-container.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('ResultsTableContainerComponent', () => {
   let component: ResultsTableContainerComponent
@@ -26,8 +26,8 @@ describe('ResultsTableContainerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         MockProviders(
           SearchFacade,
           SearchService,

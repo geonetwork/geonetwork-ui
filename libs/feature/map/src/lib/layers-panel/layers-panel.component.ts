@@ -9,7 +9,7 @@ import { AddLayerFromWfsComponent } from '../add-layer-from-wfs/add-layer-from-w
 import { AddLayerFromWmsComponent } from '../add-layer-from-wms/add-layer-from-wms.component'
 import { AddLayerFromCatalogComponent } from '../add-layer-from-catalog/add-layer-from-catalog.component'
 import { AddLayerFromFileComponent } from '../add-layer-from-file/add-layer-from-file.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import {
   NgIconComponent,
@@ -35,7 +35,8 @@ import { matChevronRight } from '@ng-icons/material-icons/baseline'
     AddLayerFromWmsComponent,
     AddLayerFromCatalogComponent,
     AddLayerFromFileComponent,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     CommonModule,
     NgIconComponent,
     ExpandablePanelButtonComponent,

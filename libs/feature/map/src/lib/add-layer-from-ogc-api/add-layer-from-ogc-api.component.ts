@@ -8,11 +8,12 @@ import {
 } from '@angular/core'
 import { OgcApiEndpoint } from '@camptocamp/ogc-client'
 import { debounceTime, Subject } from 'rxjs'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import {
+  ButtonComponent,
   DropdownChoice,
+  DropdownSelectorComponent,
   TextInputComponent,
-  UiInputsModule,
 } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
 import { MapContextLayer, MapContextLayerOgcApi } from '@geospatial-sdk/core'
@@ -22,7 +23,13 @@ import { MapContextLayer, MapContextLayerOgcApi } from '@geospatial-sdk/core'
   templateUrl: './add-layer-from-ogc-api.component.html',
   styleUrls: ['./add-layer-from-ogc-api.component.css'],
   standalone: true,
-  imports: [CommonModule, TranslateModule, UiInputsModule, TextInputComponent],
+  imports: [
+    CommonModule,
+    TextInputComponent,
+    DropdownSelectorComponent,
+    TranslatePipe,
+    ButtonComponent,
+  ],
 })
 export class AddLayerFromOgcApiComponent implements OnInit {
   @Input() ogcUrl: string

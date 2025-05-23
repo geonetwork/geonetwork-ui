@@ -9,7 +9,7 @@ import { MdViewFacade } from '../state'
 import { BehaviorSubject, combineLatest, map } from 'rxjs'
 import { CopyTextButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import { GEONETWORK_UI_TAG_NAME } from '@geonetwork-ui/util/shared'
 
 @Component({
@@ -18,7 +18,7 @@ import { GEONETWORK_UI_TAG_NAME } from '@geonetwork-ui/util/shared'
   styleUrls: ['./data-view-web-component.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, CopyTextButtonComponent, TranslateModule],
+  imports: [CommonModule, CopyTextButtonComponent, TranslatePipe],
 })
 export class DataViewWebComponentComponent {
   viewType$ = new BehaviorSubject<string>('map')
