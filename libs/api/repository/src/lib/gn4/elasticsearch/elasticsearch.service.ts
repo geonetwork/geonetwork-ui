@@ -26,9 +26,10 @@ import {
   SortParams,
   TermsAggregationResult,
 } from '@geonetwork-ui/api/metadata-converter'
-import { LangService } from '@geonetwork-ui/util/i18n'
+import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n'
 import { formatDate, isDateRange } from './date-range.utils'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { TranslateService } from '@ngx-translate/core'
 
 export type DateRange = { start?: Date; end?: Date }
 
@@ -39,10 +40,12 @@ export class ElasticsearchService {
   // runtime fields are computed using a Painless script
   // see: https://www.elastic.co/guide/en/elasticsearch/reference/current/runtime-mapping-fields.html
   private runtimeFields: Record<string, string> = {}
-  private lang3 = this.langService.iso3
+  private get lang3() {
+    return getLang3FromLang2(this.translateService.currentLang)
+  }
 
   constructor(
-    private langService: LangService,
+    private translateService: TranslateService,
     @Optional() @Inject(METADATA_LANGUAGE) private metadataLang: string
   ) {}
 

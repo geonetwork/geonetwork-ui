@@ -13,7 +13,6 @@ import { Gn4PlatformService } from './gn4-platform.service'
 import { firstValueFrom, lastValueFrom, of, Subject, throwError } from 'rxjs'
 import { AvatarServiceInterface } from '../auth/avatar.service.interface'
 import { Gn4PlatformMapper } from './gn4-platform.mapper'
-import { LangService } from '@geonetwork-ui/util/i18n'
 import {
   datasetRecordsFixture,
   someUserFeedbacksFixture,
@@ -22,7 +21,7 @@ import {
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { HttpClient, HttpEventType } from '@angular/common/http'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { url } from 'inspector'
+import { TranslateService } from '@ngx-translate/core'
 
 let geonetworkVersion: string
 
@@ -170,8 +169,8 @@ class RegistriesApiServiceMock {
   )
 }
 
-class LangServiceMock {
-  iso3 = 'fre'
+class TranslateServiceMock {
+  currentLang = 'fr'
 }
 
 const associatedResources = {
@@ -244,8 +243,8 @@ describe('Gn4PlatformService', () => {
           useClass: RegistriesApiServiceMock,
         },
         {
-          provide: LangService,
-          useClass: LangServiceMock,
+          provide: TranslateService,
+          useClass: TranslateServiceMock,
         },
         {
           provide: UserfeedbackApiService,
@@ -458,7 +457,7 @@ describe('Gn4PlatformService', () => {
     })
     describe('if translations are unavailable', () => {
       it('uses default values', async () => {
-        service['langService']['iso3'] = 'ger'
+        service['translateService']['currentLang'] = 'de'
         const keywords = await lastValueFrom(
           service.searchKeywords('road', ['theme'])
         )
@@ -600,7 +599,7 @@ describe('Gn4PlatformService', () => {
     })
     describe('if translations are unavailable', () => {
       it('uses default values', async () => {
-        service['langService']['iso3'] = 'ger'
+        service['translateService']['currentLang'] = 'de'
         const thesaurusDomain = await lastValueFrom(
           service.getKeywordsByUri('http://inspire.ec.europa.eu/theme/')
         )

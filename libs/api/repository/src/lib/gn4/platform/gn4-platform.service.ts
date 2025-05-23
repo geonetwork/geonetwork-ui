@@ -29,7 +29,6 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { Gn4PlatformMapper } from './gn4-platform.mapper'
 import { ltr } from 'semver'
-import { LangService } from '@geonetwork-ui/util/i18n'
 import { HttpClient, HttpEventType } from '@angular/common/http'
 import {
   KeywordApiResponse,
@@ -45,6 +44,8 @@ import {
   switchMap,
   throwError,
 } from 'rxjs'
+import { TranslateService } from '@ngx-translate/core'
+import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n'
 
 const minApiVersion = '4.2.2'
 
@@ -88,6 +89,10 @@ export class Gn4PlatformService implements PlatformServiceInterface {
    */
   private keywordsByThesauri: Record<string, Observable<Keyword[]>> = {}
 
+  private get lang3() {
+    return getLang3FromLang2(this.translateService.currentLang)
+  }
+
   constructor(
     private siteApiService: SiteApiService,
     private meApi: MeApiService,
@@ -95,7 +100,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     private mapper: Gn4PlatformMapper,
     private toolsApiService: ToolsApiService,
     private registriesApiService: RegistriesApiService,
-    private langService: LangService,
+    private translateService: TranslateService,
     private userfeedbackApiService: UserfeedbackApiService,
     private httpClient: HttpClient,
     private recordsApiService: RecordsApiService
@@ -187,7 +192,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
 
         return this.registriesApiService.searchKeywords(
           query,
-          this.langService.iso3,
+          this.lang3,
           10,
           0,
           null,
@@ -200,11 +205,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
 
     return combineLatest([keywords$, this.allThesaurus$]).pipe(
       map(([keywords, thesaurus]) => {
-        return this.mapper.keywordsFromApi(
-          keywords,
-          thesaurus,
-          this.langService.iso3
-        )
+        return this.mapper.keywordsFromApi(keywords, thesaurus, this.lang3)
       })
     )
   }
@@ -215,7 +216,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     }
     const keywords$ = this.registriesApiService.searchKeywords(
       null,
-      this.langService.iso3,
+      this.lang3,
       1000,
       0,
       null,
@@ -229,11 +230,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
       this.allThesaurus$,
     ]).pipe(
       map(([keywords, thesaurus]) => {
-        return this.mapper.keywordsFromApi(
-          keywords,
-          thesaurus,
-          this.langService.iso3
-        )
+        return this.mapper.keywordsFromApi(keywords, thesaurus, this.lang3)
       }),
       shareReplay(1)
     )
@@ -253,7 +250,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
         return this.registriesApiService
           .searchKeywords(
             query,
-            this.langService.iso3,
+            this.lang3,
             100,
             0,
             null,
@@ -262,11 +259,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
           )
           .pipe(
             map((keywords: KeywordApiResponse[]) =>
-              this.mapper.keywordsFromApi(
-                keywords,
-                thesauri,
-                this.langService.iso3
-              )
+              this.mapper.keywordsFromApi(keywords, thesauri, this.lang3)
             )
           )
       })

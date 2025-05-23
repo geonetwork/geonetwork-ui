@@ -7,7 +7,7 @@ import {
 import { forkJoin, Observable, of } from 'rxjs'
 import { map, shareReplay } from 'rxjs/operators'
 import { TranslateService } from '@ngx-translate/core'
-import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n'
+import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n'
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import {
   CatalogRecord,
@@ -51,6 +51,10 @@ export class OrganizationsFromGroupsService
   )
   organisationsCount$ = this.organisations$.pipe(map((orgs) => orgs.length))
 
+  private get lang3() {
+    return getLang3FromLang2(this.translateService.currentLang)
+  }
+
   constructor(
     private esService: ElasticsearchService,
     private searchApiService: SearchApiService,
@@ -72,9 +76,8 @@ export class OrganizationsFromGroupsService
   }
 
   private mapOrgFromGroup(group: GroupApiModel) {
-    const lang3 = LANG_2_TO_3_MAPPER[this.translateService.currentLang]
     return {
-      name: group.label[lang3],
+      name: group.label[this.lang3],
       ...(group.description && { description: group.description }),
       ...(group.email && { email: group.email }),
       ...(group.logo && {
@@ -89,9 +92,8 @@ export class OrganizationsFromGroupsService
   getFiltersForOrgs(orgs: Organization[]): Observable<FieldFilters> {
     return this.groups$.pipe(
       map((allGroups) => {
-        const lang3 = LANG_2_TO_3_MAPPER[this.translateService.currentLang]
         const groups = orgs.map((org) =>
-          allGroups.find((group) => group.label[lang3] === org.name)
+          allGroups.find((group) => group.label[this.lang3] === org.name)
         )
         return {
           groupOwner: groups.reduce(
@@ -108,10 +110,9 @@ export class OrganizationsFromGroupsService
     return forkJoin([this.groups$, this.organisations$]).pipe(
       map(([groups, orgs]) => {
         const groupIds = Object.keys(filters['groupOwner'])
-        const lang3 = LANG_2_TO_3_MAPPER[this.translateService.currentLang]
         return groupIds.map((id) => {
           const group = groups.find((group) => group.id.toString() === id)
-          return orgs.find((org) => org.name === group.label[lang3])
+          return orgs.find((org) => org.name === group.label[this.lang3])
         })
       })
     )

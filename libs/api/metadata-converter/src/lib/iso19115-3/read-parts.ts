@@ -22,9 +22,9 @@ import {
   extractDatasetOnlineResources,
   extractDateTime,
   extractLocalizedCharacterString,
+  extractReuseOnlineResources,
   extractRole,
   extractServiceOnlineResources,
-  extractReuseOnlineResources,
   extractUrl,
   findIdentification,
 } from '../iso19139/read-parts'
@@ -41,7 +41,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchMimeType } from '../common/distribution.mapper'
 import { fullNameToParts } from '../iso19139/utils/individual-name'
-import { LANG_3_TO_2_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
+import { getLang2FromLang3 } from '@geonetwork-ui/util/i18n/language-codes'
 import { getResourceType, getReuseType } from '../common/resource-types'
 
 export function readKind(rootEl: XmlElement): RecordKind {
@@ -367,7 +367,7 @@ function readLocaleElement(): ChainableFunction<XmlElement, LanguageCode> {
   return pipe(
     findChildElement('lan:LanguageCode'),
     readAttribute('codeListValue'),
-    map((lang) => (lang ? LANG_3_TO_2_MAPPER[lang.toLowerCase()] : null))
+    map((lang) => (lang ? getLang2FromLang3(lang.toLowerCase()) : null))
   )
 }
 
