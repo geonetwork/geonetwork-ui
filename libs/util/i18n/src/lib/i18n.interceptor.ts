@@ -1,25 +1,27 @@
-import { Injectable } from '@angular/core'
 import {
-  HttpRequest,
-  HttpHandler,
   HttpEvent,
+  HttpHandler,
   HttpInterceptor,
+  HttpRequest,
 } from '@angular/common/http'
-import { TranslateService } from '@ngx-translate/core'
-import { Observable } from 'rxjs'
 import { DEFAULT_LANG } from './i18n.constants'
+import { Observable } from 'rxjs'
+import { Injectable, Injector } from '@angular/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Injectable()
 export class I18nInterceptor implements HttpInterceptor {
-  constructor(private translate: TranslateService) {}
+  constructor(private injector: Injector) {}
 
   intercept(
-    request: HttpRequest<any>,
+    request: HttpRequest<unknown>,
     next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  ): Observable<HttpEvent<unknown>> {
+    // we're injecting the service only when necessary to avoid circular dependencies
+    const translate = this.injector.get(TranslateService)
     request = request.clone({
       setHeaders: {
-        'Accept-Language': this.translate.currentLang || DEFAULT_LANG,
+        'Accept-Language': translate.currentLang || DEFAULT_LANG,
       },
     })
     return next.handle(request)
