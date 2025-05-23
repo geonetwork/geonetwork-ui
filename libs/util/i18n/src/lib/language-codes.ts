@@ -1,4 +1,6 @@
-export const LANG_3_TO_2_MAPPER = {
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+const LANG_3_TO_2_MAPPER = {
   eng: 'en',
   dut: 'nl',
   fre: 'fr',
@@ -64,3 +66,44 @@ export const LANG_2_TO_3_MAPPER = Object.entries(LANG_3_TO_2_MAPPER).reduce(
   },
   {}
 )
+
+export function getLang3FromLang2(lang2: string): string {
+  return LANG_2_TO_3_MAPPER[lang2] ?? null
+}
+
+export function getLang2FromLang3(lang3: string): string {
+  return LANG_3_TO_2_MAPPER[lang3] ?? null
+}
+
+export function getLocalizedIndexKey(lang2: string): string {
+  const lang3 = getLang3FromLang2(lang2)
+  return lang3 ? `lang${lang3}` : null
+}
+
+marker('language.en')
+marker('language.nl')
+marker('language.fr')
+marker('language.de')
+marker('language.ko')
+marker('language.es')
+marker('language.cs')
+marker('language.ca')
+marker('language.fi')
+marker('language.is')
+marker('language.it')
+marker('language.pt')
+marker('language.ru')
+marker('language.zh')
+marker('language.sk')
+marker('language.rm')
+marker('language.ar')
+marker('language.da')
+marker('language.no')
+marker('language.pl')
+marker('language.sv')
+marker('language.tr')
+marker('language.hy')
+marker('language.az')
+marker('language.ka')
+marker('language.uk')
+marker('language.cy')
