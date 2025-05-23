@@ -19,15 +19,11 @@ describe('UserPreviewComponent', () => {
   let fixture: ComponentFixture<UserPreviewComponent>
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [UserPreviewComponent, AvatarComponent],
-    })
-      .overrideComponent(UserPreviewComponent, {
-        set: {
-          changeDetection: ChangeDetectionStrategy.Default,
-        },
-      })
-      .compileComponents()
+    await TestBed.overrideComponent(UserPreviewComponent, {
+      set: {
+        changeDetection: ChangeDetectionStrategy.Default,
+      },
+    }).compileComponents()
 
     fixture = TestBed.createComponent(UserPreviewComponent)
     component = fixture.componentInstance

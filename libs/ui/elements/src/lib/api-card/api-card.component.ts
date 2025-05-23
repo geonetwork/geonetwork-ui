@@ -11,7 +11,7 @@ import {
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { CopyTextButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { iconoirSettings } from '@ng-icons/iconoir'
@@ -27,7 +27,8 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
   imports: [
     CommonModule,
     CopyTextButtonComponent,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     MatTooltipModule,
     NgIcon,
   ],

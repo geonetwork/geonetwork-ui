@@ -1,12 +1,10 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   Input,
-  ViewChild,
 } from '@angular/core'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateDirective, TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { getBadgeColor, getFileFormat } from '@geonetwork-ui/util/shared'
 import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/record'
@@ -15,7 +13,6 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { DownloadItemComponent } from '../download-item/download-item.component'
 import {
   BlockListComponent,
-  Paginable,
   PreviousNextButtonsComponent,
 } from '@geonetwork-ui/ui/layout'
 
@@ -36,7 +33,7 @@ type FilterFormat = (typeof FILTER_FORMATS)[number]
     ButtonComponent,
     BlockListComponent,
     DownloadItemComponent,
-    TranslateModule,
+    TranslateDirective,
     PreviousNextButtonsComponent,
   ],
 })

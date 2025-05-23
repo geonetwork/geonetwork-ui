@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { MetadataQualityItemComponent } from './metadata-quality-item.component'
 import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy } from '@angular/core'
@@ -11,11 +10,8 @@ describe('MetadataQualityInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        MetadataQualityItemComponent,
-        UtilI18nModule,
-        TranslateModule.forRoot(),
-      ],
+      imports: [MetadataQualityItemComponent],
+      providers: [provideI18n()],
     })
       .overrideComponent(MetadataQualityItemComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },

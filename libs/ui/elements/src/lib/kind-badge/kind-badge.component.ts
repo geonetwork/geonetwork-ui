@@ -5,15 +5,14 @@ import {
   Input,
   TemplateRef,
 } from '@angular/core'
-import { provideIcons } from '@ng-icons/core'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import {
-  iconoirAppleWallet,
   iconoirAppleShortcuts,
+  iconoirAppleWallet,
   iconoirCode,
   iconoirCreditCard,
 } from '@ng-icons/iconoir'
-import { NgIconsModule } from '@ng-icons/core'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 marker('record.kind.dataset')
@@ -41,7 +40,7 @@ enum KindConfig {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [NgIconsModule, CommonModule, TranslateModule],
+  imports: [NgIconComponent, CommonModule, TranslatePipe],
 })
 export class KindBadgeComponent {
   @Input() styling = 'default'

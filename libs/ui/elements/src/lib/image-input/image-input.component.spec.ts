@@ -1,11 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing'
 import { HttpHeaders } from '@angular/common/http'
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing'
-import { TranslateModule } from '@ngx-translate/core'
+import { HttpTestingController } from '@angular/common/http/testing'
 import { ImageInputComponent } from './image-input.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('ImageInputComponent', () => {
   let component: ImageInputComponent
@@ -14,11 +11,7 @@ describe('ImageInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        ImageInputComponent,
-        HttpClientTestingModule,
-        TranslateModule.forRoot(),
-      ],
+      providers: [provideI18n()],
     }).compileComponents()
     httpTestingController = TestBed.inject(HttpTestingController)
   })

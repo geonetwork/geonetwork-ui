@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 
 import { MetadataCatalogComponent } from './metadata-catalog.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('MetadataCatalogComponent', () => {
   let component: MetadataCatalogComponent
@@ -10,7 +10,7 @@ describe('MetadataCatalogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MetadataCatalogComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
   })
 
