@@ -1,18 +1,13 @@
-import { HttpClientModule } from '@angular/common/http'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideHttpClient } from '@angular/common/http'
 import {
   applicationConfig,
   componentWrapperDecorator,
   Meta,
   StoryObj,
 } from '@storybook/angular'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { DataTableComponent } from './data-table.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { UiDatavizModule } from '../ui-dataviz.module'
 import { importProvidersFrom } from '@angular/core'
 import { tableItemsFixture } from './data-table.fixtures'
 import {
@@ -28,11 +23,9 @@ export default {
   decorators: [
     applicationConfig({
       providers: [
-        importProvidersFrom(UiDatavizModule),
         importProvidersFrom(BrowserAnimationsModule),
-        importProvidersFrom(HttpClientModule),
-        importProvidersFrom(UtilI18nModule),
-        importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
+        provideHttpClient(),
+        provideI18n(),
       ],
     }),
     componentWrapperDecorator(
