@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FeatureCatalogListComponent } from './feature-catalog-list.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
-import { ExpandablePanelComponent } from '@geonetwork-ui/ui/layout'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('FeatureCatalogListComponent', () => {
   let component: FeatureCatalogListComponent
@@ -21,10 +20,10 @@ describe('FeatureCatalogListComponent', () => {
   })
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        FeatureCatalogListComponent,
-        TranslateModule.forRoot(),
-        ExpandablePanelComponent,
+      providers: [
+        provideI18n({
+          useDefaultLang: false, // this leaves the keys untouched
+        }),
       ],
     }).compileComponents()
 
@@ -46,23 +45,22 @@ describe('FeatureCatalogListComponent', () => {
         },
       ],
     }
-    component.columns = [
-      { key: 'type', label: 'Type', width: '25%' },
-      { key: 'name', label: 'Name', width: '25%' },
-      { key: 'code', label: 'Code', width: '20%' },
-      { key: 'title', label: 'Description', width: '30%' },
-    ]
     fixture.detectChanges()
   })
 
-  it('should create the template with title and colums with right width', () => {
+  it('should create the template with title and columns with right width', () => {
     expect(component).toBeTruthy()
     component.ngOnInit()
     fixture.detectChanges()
-    expect(component.gridTemplateColumns).toBe('25% 25% 20% 30%')
+    expect(component.gridTemplateColumns).toBe('19% 32% 24% 25%')
     const columnLabels = fixture.debugElement
       .queryAll(By.css('[data-test="column-label"]'))
       .map((el) => el.nativeElement.textContent.trim())
-    expect(columnLabels).toEqual(['Type', 'Name', 'Code', 'Description'])
+    expect(columnLabels).toEqual([
+      'feature.catalog.attribute.type',
+      'feature.catalog.attribute.name',
+      'feature.catalog.attribute.code',
+      'feature.catalog.attribute.description',
+    ])
   })
 })

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-metadata-catalog',
@@ -7,7 +7,7 @@ import { TranslateModule } from '@ngx-translate/core'
   styleUrls: ['./metadata-catalog.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [TranslateModule],
+  imports: [TranslateDirective],
 })
 export class MetadataCatalogComponent {
   @Input() sourceLabel: string

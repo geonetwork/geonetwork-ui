@@ -15,10 +15,9 @@ import {
   ProgressBarComponent,
 } from '@geonetwork-ui/ui/widgets'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
-import { NgIcon } from '@ng-icons/core'
+import { TranslateDirective } from '@ngx-translate/core'
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { matInfoOutline } from '@ng-icons/material-icons/outline'
-import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 
 @Component({
   selector: 'gn-ui-metadata-quality',
@@ -31,7 +30,7 @@ import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
     PopoverComponent,
     ProgressBarComponent,
     MetadataQualityItemComponent,
-    TranslateModule,
+    TranslateDirective,
     NgIcon,
   ],
   providers: [

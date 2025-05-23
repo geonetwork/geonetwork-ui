@@ -8,7 +8,7 @@ import {
 } from '@ng-icons/core'
 import { matOpenInNew } from '@ng-icons/material-icons/baseline'
 import { getBadgeColor, getFileFormat } from '@geonetwork-ui/util/shared'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 
 type CardSize = 'L' | 'M' | 'S' | 'XS'
 @Component({
@@ -17,7 +17,7 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
   styleUrls: ['./link-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, NgIconComponent, TranslateModule],
+  imports: [CommonModule, NgIconComponent, TranslatePipe],
   providers: [
     provideIcons({
       matOpenInNew,

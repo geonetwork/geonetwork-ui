@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import { DatasetFeatureCatalog } from '@geonetwork-ui/common/domain/model/record'
 import {
   ExpandablePanelComponent,
@@ -13,7 +13,7 @@ import {
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslatePipe,
     ExpandablePanelComponent,
     TruncatedTextComponent,
   ],

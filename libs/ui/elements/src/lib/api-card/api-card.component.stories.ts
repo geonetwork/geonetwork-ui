@@ -1,36 +1,13 @@
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
-import { TranslateModule } from '@ngx-translate/core'
-import {
-  applicationConfig,
-  Meta,
-  moduleMetadata,
-  StoryObj,
-} from '@storybook/angular'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { ApiCardComponent } from './api-card.component'
-import { MatTooltipModule } from '@angular/material/tooltip'
-import { provideIcons } from '@ng-icons/core'
-import { iconoirSettings } from '@ng-icons/iconoir'
 
 export default {
   title: 'Elements/ApiCardComponent',
   component: ApiCardComponent,
   decorators: [
-    moduleMetadata({
-      imports: [
-        UtilI18nModule,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        MatTooltipModule,
-      ],
-    }),
     applicationConfig({
-      providers: [
-        provideIcons({
-          iconoirSettings,
-        }),
-      ],
+      providers: [provideI18n()],
     }),
   ],
 } as Meta<ApiCardComponent>

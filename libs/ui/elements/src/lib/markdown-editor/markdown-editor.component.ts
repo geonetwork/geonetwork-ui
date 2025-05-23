@@ -8,8 +8,7 @@ import {
 } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component'
-import { TranslateModule } from '@ngx-translate/core'
-import { ButtonComponent, TextAreaComponent } from '@geonetwork-ui/ui/inputs'
+import { TextAreaComponent } from '@geonetwork-ui/ui/inputs'
 import { MatTooltipModule } from '@angular/material/tooltip'
 
 @Component({
@@ -22,10 +21,8 @@ import { MatTooltipModule } from '@angular/material/tooltip'
     CommonModule,
     FormsModule,
     MatTooltipModule,
-    ButtonComponent,
     TextAreaComponent,
     MarkdownParserComponent,
-    TranslateModule,
   ],
 })
 export class MarkdownEditorComponent {

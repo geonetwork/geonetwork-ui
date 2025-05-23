@@ -22,7 +22,7 @@ import {
   matLocationOnOutline,
 } from '@ng-icons/material-icons/outline'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-metadata-contact',
@@ -30,7 +30,7 @@ import { TranslateModule } from '@ngx-translate/core'
   styleUrls: ['./metadata-contact.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, ThumbnailComponent, NgIcon, TranslateModule],
+  imports: [CommonModule, ThumbnailComponent, NgIcon, TranslateDirective],
   viewProviders: [
     provideIcons({
       matOpenInNew,

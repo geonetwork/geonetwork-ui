@@ -2,23 +2,19 @@ import {
   applicationConfig,
   componentWrapperDecorator,
   Meta,
-  moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
 import { DownloadItemComponent } from './download-item.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { TranslateModule } from '@ngx-translate/core'
 import { importProvidersFrom } from '@angular/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export default {
   title: 'Elements/DownloadsListItemComponent',
   component: DownloadItemComponent,
   decorators: [
-    moduleMetadata({
-      imports: [TranslateModule.forRoot()],
-    }),
     applicationConfig({
-      providers: [importProvidersFrom(BrowserAnimationsModule)],
+      providers: [importProvidersFrom(BrowserAnimationsModule), provideI18n()],
     }),
     componentWrapperDecorator(
       (story) => `<div style="max-width: 800px">${story}</div>`
