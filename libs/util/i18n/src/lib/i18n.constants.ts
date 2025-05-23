@@ -1,8 +1,14 @@
 import { HttpClient } from '@angular/common/http'
-import { TranslateCompiler, TranslateLoader } from '@ngx-translate/core'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
 import { FileTranslateLoader } from './file.translate.loader'
-import { TranslateModuleConfig } from '@ngx-translate/core/dist/public-api'
+import {
+  TranslateCompiler,
+  TranslateDefaultParser,
+  TranslateLoader,
+  TranslateModuleConfig,
+  TranslateParser,
+} from '@ngx-translate/core'
+import { Injectable } from '@angular/core'
 
 export const DEFAULT_LANG = 'en'
 
@@ -23,5 +29,31 @@ export const TRANSLATE_DEFAULT_CONFIG: TranslateModuleConfig = {
     provide: TranslateLoader,
     useFactory: HttpLoaderFactory,
     deps: [HttpClient],
+  },
+}
+
+@Injectable()
+class DebugTranslateParser extends TranslateDefaultParser {
+  interpolate(expr: string | (() => string), params?: any): string | undefined {
+    if (!params) return expr?.toString()
+    const paramsStr = Object.keys(params)
+      .map((key) => `${key}=${params[key]}`)
+      .join(', ')
+    return `${expr} {{${paramsStr}}}`
+  }
+}
+
+/**
+ * This config will print translation keys in the UI directly; used to identify which keys are used
+ */
+export const TRANSLATE_DEBUG_CONFIG: TranslateModuleConfig = {
+  compiler: {
+    provide: TranslateCompiler,
+    useClass: TranslateMessageFormatCompiler,
+  },
+  defaultLanguage: DEFAULT_LANG,
+  parser: {
+    provide: TranslateParser,
+    useClass: DebugTranslateParser,
   },
 }
