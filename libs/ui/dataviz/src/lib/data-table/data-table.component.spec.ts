@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { MatSort, MatSortModule } from '@angular/material/sort'
-import { MatTableModule } from '@angular/material/table'
+import { MatSort } from '@angular/material/sort'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import {
   someHabTableItemFixture,
@@ -9,15 +8,13 @@ import {
 } from './data-table.fixtures'
 import { DataTableComponent } from './data-table.component'
 import { By } from '@angular/platform-browser'
-import { TableItemSizeDirective } from 'ng-table-virtual-scroll'
-import { TranslateModule } from '@ngx-translate/core'
 import {
   BaseFileReader,
   DataItem,
   PropertyInfo,
-  DatasetInfo,
 } from '@geonetwork-ui/data-fetcher'
 import { firstValueFrom } from 'rxjs'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const ITEMS_COUNT = 153
 export class MockBaseReader extends BaseFileReader {
@@ -35,7 +32,7 @@ export class MockBaseReader extends BaseFileReader {
   }> {
     return Promise.resolve(this.data)
   }
-  override get info(): Promise<DatasetInfo> {
+  override get info(): Promise<{ itemsCount: number }> {
     return Promise.resolve({ itemsCount: ITEMS_COUNT })
   }
 }
@@ -47,13 +44,8 @@ describe('DataTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        MatTableModule,
-        MatSortModule,
-        TranslateModule.forRoot(),
-      ],
-      declarations: [TableItemSizeDirective],
+      imports: [NoopAnimationsModule],
+      providers: [provideI18n()],
     })
       .overrideComponent(DataTableComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
