@@ -4,17 +4,16 @@ import {
   Meta,
   StoryObj,
 } from '@storybook/angular'
-import { importProvidersFrom } from '@angular/core'
 import { MapContainerComponent } from './map-container.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { mapCtxFixture } from '@geonetwork-ui/common/fixtures'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export default {
   title: 'Map/Map Container',
   component: MapContainerComponent,
   decorators: [
     applicationConfig({
-      providers: [importProvidersFrom(TranslateModule.forRoot())],
+      providers: [provideI18n()],
     }),
     componentWrapperDecorator(
       (story) => `

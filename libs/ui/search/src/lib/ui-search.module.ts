@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { RouterLink } from '@angular/router'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { NgxDropzoneModule } from 'ngx-dropzone'
 import { FacetsModule } from './facets/facets.module'
 import { RecordMetricComponent } from './record-metric/record-metric.component'
@@ -21,15 +21,15 @@ import { RecordPreviewComponent } from './record-preview/record-preview.componen
 import { TagInputModule } from 'ngx-chips'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ResultsListItemComponent } from './results-list-item/results-list-item.component'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import {
-  MetadataQualityComponent,
-  UiElementsModule,
+  InternalLinkCardComponent,
   KindBadgeComponent,
+  MarkdownParserComponent,
+  MetadataQualityComponent,
+  ThumbnailComponent,
 } from '@geonetwork-ui/ui/elements'
 import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview-feed.component'
 import { CommonModule } from '@angular/common'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { InteractiveTableComponent } from '@geonetwork-ui/ui/layout'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
@@ -39,6 +39,7 @@ import {
   matMapOutline,
 } from '@ng-icons/material-icons/outline'
 import { matFace } from '@ng-icons/material-icons/baseline'
+import { InlineFilterComponent } from '@geonetwork-ui/ui/inputs'
 import { ActionMenuComponent } from './results-table/action-menu/action-menu.component'
 
 @NgModule({
@@ -58,16 +59,14 @@ import { ActionMenuComponent } from './results-table/action-menu/action-menu.com
   ],
   imports: [
     CommonModule,
-    TranslateModule.forChild(),
+    TranslateDirective,
+    TranslatePipe,
     NgxDropzoneModule,
     FacetsModule,
     FormsModule,
     ReactiveFormsModule,
     TagInputModule,
     UtilSharedModule,
-    UiWidgetsModule,
-    UiInputsModule,
-    UiElementsModule,
     MatCheckboxModule,
     RouterLink,
     InteractiveTableComponent,
@@ -80,6 +79,10 @@ import { ActionMenuComponent } from './results-table/action-menu/action-menu.com
     }),
     KindBadgeComponent,
     MetadataQualityComponent,
+    InlineFilterComponent,
+    ThumbnailComponent,
+    MarkdownParserComponent,
+    InternalLinkCardComponent,
     ActionMenuComponent,
   ],
   exports: [

@@ -15,7 +15,11 @@ import {
   FieldSort,
   SortByField,
 } from '@geonetwork-ui/common/domain/model/search'
-import { BadgeComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import {
+  BadgeComponent,
+  ButtonComponent,
+  CheckboxComponent,
+} from '@geonetwork-ui/ui/inputs'
 import {
   InteractiveTableColumnComponent,
   InteractiveTableComponent,
@@ -28,10 +32,14 @@ import {
   getFileFormat,
   getFormatPriority,
 } from '@geonetwork-ui/util/shared'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import {
+  TranslateDirective,
+  TranslatePipe,
+  TranslateService,
+} from '@ngx-translate/core'
 import { ActionMenuComponent } from './action-menu/action-menu.component'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
-import { iconoirUser, iconoirLock, iconoirTranslate } from '@ng-icons/iconoir'
+import { iconoirLock, iconoirTranslate, iconoirUser } from '@ng-icons/iconoir'
 import { CdkOverlayOrigin, Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
 import { matMoreVert } from '@ng-icons/material-icons/baseline'
@@ -44,14 +52,16 @@ import { Observable, of, take } from 'rxjs'
   standalone: true,
   imports: [
     CommonModule,
-    UiInputsModule,
     InteractiveTableComponent,
     InteractiveTableColumnComponent,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     BadgeComponent,
     ActionMenuComponent,
     NgIconComponent,
     CdkOverlayOrigin,
+    CheckboxComponent,
+    ButtonComponent,
   ],
   providers: [
     provideIcons({ iconoirUser, iconoirLock, iconoirTranslate, matMoreVert }),

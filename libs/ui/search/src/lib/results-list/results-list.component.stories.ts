@@ -12,11 +12,7 @@ import { RecordPreviewCardComponent } from '../record-preview-card/record-previe
 import { RecordPreviewTextComponent } from '../record-preview-text/record-preview-text.component'
 import { RecordPreviewTitleComponent } from '../record-preview-title/record-preview-title.component'
 import { ResultsListItemComponent } from '../results-list-item/results-list-item.component'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { importProvidersFrom } from '@angular/core'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -33,13 +29,9 @@ export default {
         RecordPreviewTitleComponent,
         ResultsListItemComponent,
       ],
-      imports: [
-        UtilI18nModule,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-      ],
     }),
     applicationConfig({
-      providers: [importProvidersFrom(UtilSharedModule)],
+      providers: [importProvidersFrom(UtilSharedModule), provideI18n()],
     }),
   ],
 } as Meta<ResultsListComponent>

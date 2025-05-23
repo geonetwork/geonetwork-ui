@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { OrganisationsFilterComponent } from './organisations-filter.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { MockBuilder } from 'ng-mocks'
 
 describe('OrganisationsOrderComponent', () => {
@@ -12,9 +11,7 @@ describe('OrganisationsOrderComponent', () => {
   })
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
-    }).compileComponents()
+    await TestBed.compileComponents()
 
     fixture = TestBed.createComponent(OrganisationsFilterComponent)
     component = fixture.componentInstance

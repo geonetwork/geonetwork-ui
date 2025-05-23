@@ -11,14 +11,14 @@ import {
   DropdownSelectorComponent,
   SearchInputComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-organisations-filter',
   templateUrl: './organisations-filter.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [SearchInputComponent, DropdownSelectorComponent, TranslateModule],
+  imports: [SearchInputComponent, DropdownSelectorComponent, TranslatePipe],
 })
 export class OrganisationsFilterComponent {
   choices: { value: string; label: string }[] = [
