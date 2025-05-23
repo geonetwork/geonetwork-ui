@@ -1,6 +1,6 @@
 module.exports = {
   '/geonetwork': {
-    target: 'http://localhost:8080',
+    target: 'https://hdf-dev.geofit.fr',
     secure: true,
     logLevel: 'debug',
     changeOrigin: true,
