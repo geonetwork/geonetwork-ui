@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
+import { Meta, StoryObj } from '@storybook/angular'
 import { MarkdownEditorComponent } from './markdown-editor.component'
 
 const textContent = ` 
@@ -125,11 +125,7 @@ const textContent = `
 export default {
   title: 'Elements/MarkdownEditorComponent',
   component: MarkdownEditorComponent,
-  decorators: [
-    moduleMetadata({
-      imports: [MarkdownEditorComponent],
-    }),
-  ],
+  decorators: [],
 } as Meta<MarkdownEditorComponent>
 
 export const Edition: StoryObj<MarkdownEditorComponent> = {

@@ -1,19 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MetadataQualityComponent } from './metadata-quality.component'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { CommonModule } from '@angular/common'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
-import { TranslateModule } from '@ngx-translate/core'
-import { PopoverComponent } from '@geonetwork-ui/ui/widgets'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import {
   DatasetRecord,
-  ServiceRecord,
   ReuseRecord,
+  ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 
 describe('MetadataQualityComponent', () => {
@@ -23,14 +16,7 @@ describe('MetadataQualityComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        MetadataQualityComponent,
-        UtilSharedModule,
-        CommonModule,
-        UtilI18nModule,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        PopoverComponent,
-      ],
+      providers: [provideI18n()],
     }).compileComponents()
   })
 

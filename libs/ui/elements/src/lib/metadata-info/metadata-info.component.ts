@@ -15,7 +15,7 @@ import {
   ExpandablePanelComponent,
   MaxLinesComponent,
 } from '@geonetwork-ui/ui/layout'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import {
   BadgeComponent,
   CopyTextButtonComponent,
@@ -28,10 +28,7 @@ import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 import { GnUiLinkifyDirective } from './linkify.directive'
 
 import { CommonModule } from '@angular/common'
-import {
-  MapContainerComponent,
-  SpatialExtentComponent,
-} from '@geonetwork-ui/ui/map'
+import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
 
 @Component({
   selector: 'gn-ui-metadata-info',
@@ -41,7 +38,8 @@ import {
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     MarkdownParserComponent,
     ExpandablePanelComponent,
     BadgeComponent,
@@ -51,7 +49,6 @@ import {
     CopyTextButtonComponent,
     NgIcon,
     GnUiLinkifyDirective,
-    MapContainerComponent,
     SpatialExtentComponent,
   ],
   viewProviders: [

@@ -7,18 +7,14 @@ import {
 } from '@storybook/angular'
 import { InternalLinkCardComponent } from './internal-link-card.component'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
-import { TranslateModule } from '@ngx-translate/core'
-import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
-import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
 import { action } from '@storybook/addon-actions'
-import { HttpClientModule } from '@angular/common/http'
-import { provideIcons } from '@ng-icons/core'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matStar, matStarBorder } from '@ng-icons/material-icons/baseline'
-import { NgIconComponent } from '@ng-icons/core'
 import { CommonModule } from '@angular/common'
 
 const mockRecord = datasetRecordsFixture()[0] as CatalogRecord
@@ -45,18 +41,12 @@ export default {
   component: InternalLinkCardComponent,
   decorators: [
     moduleMetadata({
-      imports: [
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        UtilSharedModule,
-        UiDatavizModule,
-        NgIconComponent,
-        CommonModule,
-      ],
+      imports: [UtilSharedModule, NgIconComponent, CommonModule],
     }),
     applicationConfig({
       providers: [
         importProvidersFrom(BrowserAnimationsModule),
-        importProvidersFrom(HttpClientModule),
+        provideI18n(),
         provideIcons({
           matStar,
           matStarBorder,

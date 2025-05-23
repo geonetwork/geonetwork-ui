@@ -1,8 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FeatureCatalogListComponent } from './feature-catalog-list.component'
-import { TranslateModule } from '@ngx-translate/core'
-import { By } from '@angular/platform-browser'
-import { ExpandablePanelComponent } from '@geonetwork-ui/ui/layout'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('FeatureCatalogListComponent', () => {
   let component: FeatureCatalogListComponent
@@ -10,11 +8,7 @@ describe('FeatureCatalogListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        FeatureCatalogListComponent,
-        TranslateModule.forRoot(),
-        ExpandablePanelComponent,
-      ],
+      providers: [provideI18n()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(FeatureCatalogListComponent)

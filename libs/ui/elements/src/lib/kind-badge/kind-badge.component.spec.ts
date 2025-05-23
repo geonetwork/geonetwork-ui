@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { NgIconComponent, provideIcons } from '@ng-icons/core'
+import { provideIcons } from '@ng-icons/core'
 import { matClose } from '@ng-icons/material-icons/baseline'
 import { Component } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
 import { KindBadgeComponent } from './kind-badge.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 @Component({
   selector: 'gn-ui-badge',
@@ -17,8 +17,7 @@ describe('KindBadgeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [KindBadgeComponent, NgIconComponent, TranslateModule.forRoot()],
-      providers: [provideIcons({ matClose })],
+      providers: [provideIcons({ matClose }), provideI18n()],
       declarations: [MockBadgeComponent],
     }).compileComponents()
   })

@@ -1,11 +1,11 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
-import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { TranslatePipe } from '@ngx-translate/core'
 import {
   DatasetFeatureAttribute,
   DatasetFeatureCatalog,
 } from '@geonetwork-ui/common/domain/model/record'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import {
   CellPopinComponent,
@@ -13,7 +13,7 @@ import {
   TruncatedTextComponent,
 } from '@geonetwork-ui/ui/layout'
 import { CdkScrollable, ScrollingModule } from '@angular/cdk/scrolling'
-import { provideIcons, NgIconComponent } from '@ng-icons/core'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { iconoirList } from '@ng-icons/iconoir'
 
 marker('feature.catalog.attribute.type')
@@ -37,7 +37,7 @@ interface ColumnDefinition {
     ButtonComponent,
     CellPopinComponent,
     CommonModule,
-    TranslateModule,
+    TranslatePipe,
     ExpandablePanelComponent,
     TruncatedTextComponent,
     NgIconComponent,

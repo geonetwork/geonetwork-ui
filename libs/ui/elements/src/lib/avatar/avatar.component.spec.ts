@@ -17,13 +17,9 @@ describe('AvatarComponent', () => {
   }
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [AvatarComponent],
-    })
-      .overrideComponent(AvatarComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
-      })
-      .compileComponents()
+    await TestBed.overrideComponent(AvatarComponent, {
+      set: { changeDetection: ChangeDetectionStrategy.Default },
+    }).compileComponents()
 
     fixture = TestBed.createComponent(AvatarComponent)
     component = fixture.componentInstance
