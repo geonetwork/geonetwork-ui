@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TruncatedTextComponent } from './truncated-text.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('TruncatedTextComponent', () => {
   let component: TruncatedTextComponent
@@ -29,7 +29,7 @@ describe('TruncatedTextComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TruncatedTextComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(TruncatedTextComponent)

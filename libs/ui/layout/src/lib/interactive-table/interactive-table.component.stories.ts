@@ -7,7 +7,6 @@ import {
 import { InteractiveTableComponent } from './interactive-table.component'
 import { InteractiveTableColumnComponent } from './interactive-table-column/interactive-table-column.component'
 import { CommonModule } from '@angular/common'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { action } from '@storybook/addon-actions'
 
 const meta: Meta<InteractiveTableComponent> = {
@@ -19,7 +18,6 @@ const meta: Meta<InteractiveTableComponent> = {
         CommonModule,
         InteractiveTableComponent,
         InteractiveTableColumnComponent,
-        UiInputsModule,
       ],
     }),
     componentWrapperDecorator(
