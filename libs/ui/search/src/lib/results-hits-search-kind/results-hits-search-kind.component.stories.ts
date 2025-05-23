@@ -1,24 +1,22 @@
-import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
 import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
+  applicationConfig,
+  Meta,
+  moduleMetadata,
+  StoryObj,
+} from '@storybook/angular'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { ResultsHitsSearchKindComponent } from './results-hits-search-kind.component'
-import { TranslateModule } from '@ngx-translate/core'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { KindBadgeComponent } from '@geonetwork-ui/ui/elements'
 
 export default {
   title: 'Search/ResultsHitsSearchKindComponent',
   component: ResultsHitsSearchKindComponent,
   decorators: [
     moduleMetadata({
-      imports: [
-        UtilI18nModule,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        UiInputsModule,
-        UiElementsModule,
-      ],
+      imports: [KindBadgeComponent],
+    }),
+    applicationConfig({
+      providers: [provideI18n()],
     }),
   ],
 } as Meta<ResultsHitsSearchKindComponent>

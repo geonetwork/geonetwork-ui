@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-organisations-result',
   templateUrl: './organisations-result.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TranslateModule],
+  imports: [TranslateDirective],
   standalone: true,
 })
 export class OrganisationsResultComponent {
