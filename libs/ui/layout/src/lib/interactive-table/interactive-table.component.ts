@@ -11,7 +11,7 @@ import { InteractiveTableColumnComponent } from './interactive-table-column/inte
 import { CommonModule } from '@angular/common'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { iconoirNavArrowDown, iconoirNavArrowUp } from '@ng-icons/iconoir'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { Observable, of } from 'rxjs'
@@ -25,7 +25,7 @@ marker('editor.record.lock.owner')
   styleUrls: ['./interactive-table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, NgIconComponent, TranslateModule],
+  imports: [CommonModule, NgIconComponent, TranslatePipe],
   providers: [provideIcons({ iconoirNavArrowDown, iconoirNavArrowUp })],
 })
 export class InteractiveTableComponent {

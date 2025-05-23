@@ -4,19 +4,18 @@ import {
   Component,
   ElementRef,
   Input,
+  NgZone,
   OnDestroy,
   ViewChild,
-  NgZone,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { provideIcons, NgIconComponent } from '@ng-icons/core'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { iconoirExpand, iconoirReduce } from '@ng-icons/iconoir'
-import { TranslateModule } from '@ngx-translate/core'
 import { MatButtonModule } from '@angular/material/button'
 import {
+  ConnectedPosition,
   OverlayModule,
   ViewportRuler,
-  ConnectedPosition,
 } from '@angular/cdk/overlay'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { Subscription } from 'rxjs'
@@ -26,7 +25,6 @@ import { Subscription } from 'rxjs'
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
     MatButtonModule,
     OverlayModule,
     ButtonComponent,
