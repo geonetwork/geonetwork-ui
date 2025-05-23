@@ -3,8 +3,8 @@ import { By } from '@angular/platform-browser'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { TranslateModule } from '@ngx-translate/core'
 import { ResultsTableComponent } from './results-table.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('ResultsTableComponent', () => {
   let component: ResultsTableComponent
@@ -12,7 +12,8 @@ describe('ResultsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), NoopAnimationsModule],
+      imports: [NoopAnimationsModule],
+      providers: [provideI18n()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(ResultsTableComponent)

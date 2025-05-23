@@ -1,5 +1,3 @@
-import { HttpClientModule } from '@angular/common/http'
-import { TranslateModule } from '@ngx-translate/core'
 import {
   applicationConfig,
   componentWrapperDecorator,
@@ -7,10 +5,7 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { OrganisationPreviewComponent } from './organisation-preview.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -21,17 +16,10 @@ export default {
   component: OrganisationPreviewComponent,
   decorators: [
     applicationConfig({
-      providers: [
-        importProvidersFrom(BrowserAnimationsModule),
-        importProvidersFrom(HttpClientModule),
-      ],
+      providers: [importProvidersFrom(BrowserAnimationsModule), provideI18n()],
     }),
     moduleMetadata({
-      imports: [
-        UtilI18nModule,
-        UtilSharedModule,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-      ],
+      imports: [UtilSharedModule],
     }),
     componentWrapperDecorator(
       (story) =>
