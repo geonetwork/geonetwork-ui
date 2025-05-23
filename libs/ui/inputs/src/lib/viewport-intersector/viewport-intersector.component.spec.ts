@@ -18,9 +18,7 @@ describe('ViewportIntersectorComponent', () => {
   beforeEach(async () => {
     jest.clearAllMocks()
 
-    await TestBed.configureTestingModule({
-      declarations: [ViewportIntersectorComponent],
-    }).compileComponents()
+    await TestBed.configureTestingModule({}).compileComponents()
 
     fixture = TestBed.createComponent(ViewportIntersectorComponent)
     component = fixture.componentInstance

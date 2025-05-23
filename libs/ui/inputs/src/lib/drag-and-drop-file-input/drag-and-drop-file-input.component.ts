@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { NgxDropzoneModule } from 'ngx-dropzone'
+import { CommonModule } from '@angular/common'
 
 export const placeholder = 'dropFile'
 marker('dropFile')
@@ -8,6 +10,8 @@ marker('dropFile')
   selector: 'gn-ui-drag-and-drop-file-input',
   templateUrl: './drag-and-drop-file-input.component.html',
   styleUrls: ['./drag-and-drop-file-input.component.css'],
+  standalone: true,
+  imports: [NgxDropzoneModule, CommonModule],
 })
 export class DragAndDropFileInputComponent {
   @Input() placeholder = placeholder
