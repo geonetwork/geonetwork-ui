@@ -17,7 +17,7 @@ import {
   DropdownChoice,
   DropdownSelectorComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { firstValueFrom } from 'rxjs'
 
 const initialListValues = updateFrequencyCodeValues.filter(
@@ -30,7 +30,7 @@ const initialListValues = updateFrequencyCodeValues.filter(
   styleUrls: ['./form-field-update-frequency.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CheckToggleComponent, DropdownSelectorComponent, TranslateModule],
+  imports: [CheckToggleComponent, DropdownSelectorComponent, TranslatePipe],
 })
 export class FormFieldUpdateFrequencyComponent implements OnInit {
   @Input() value: UpdateFrequency

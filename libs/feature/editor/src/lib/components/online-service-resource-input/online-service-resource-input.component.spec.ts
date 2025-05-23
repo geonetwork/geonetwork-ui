@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TranslateModule } from '@ngx-translate/core'
 import { OnlineServiceResourceInputComponent } from './online-service-resource-input.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('OnlineServiceResourceInputComponent', () => {
   let component: OnlineServiceResourceInputComponent
@@ -8,7 +8,7 @@ describe('OnlineServiceResourceInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OnlineServiceResourceInputComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(OnlineServiceResourceInputComponent)

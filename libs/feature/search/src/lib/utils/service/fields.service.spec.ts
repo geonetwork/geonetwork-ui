@@ -2,11 +2,11 @@ import { TestBed } from '@angular/core/testing'
 import { FieldsService } from './fields.service'
 import { EMPTY, lastValueFrom, of } from 'rxjs'
 import { ToolsApiService } from '@geonetwork-ui/data-access/gn4'
-import { TranslateModule } from '@ngx-translate/core'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { ElasticsearchService } from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class RecordsRepositoryMock {
   aggregate = jest.fn(() => EMPTY)
@@ -48,8 +48,8 @@ describe('FieldsService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         {
           provide: RecordsRepositoryInterface,
           useClass: RecordsRepositoryMock,

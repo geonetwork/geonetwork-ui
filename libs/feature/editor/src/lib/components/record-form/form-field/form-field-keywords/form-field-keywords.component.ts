@@ -6,20 +6,13 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import {
-  AutocompleteComponent,
-  DropdownSelectorComponent,
-  UiInputsModule,
-} from '@geonetwork-ui/ui/inputs'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { Keyword } from '@geonetwork-ui/common/domain/model/record'
 import { GenericKeywordsComponent } from '../../../generic-keywords/generic-keywords.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
 import { EditorFacade } from '../../../../+state/editor.facade'
 import { firstValueFrom, map } from 'rxjs'
 import { SPATIAL_SCOPES } from '../../../../fields.config'
-import { all } from 'ol/loadingstrategy'
 
 @Component({
   selector: 'gn-ui-form-field-keywords',
@@ -27,15 +20,7 @@ import { all } from 'ol/loadingstrategy'
   styleUrls: ['./form-field-keywords.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    DropdownSelectorComponent,
-    UiInputsModule,
-    CommonModule,
-    UiWidgetsModule,
-    AutocompleteComponent,
-    GenericKeywordsComponent,
-    TranslateModule,
-  ],
+  imports: [CommonModule, GenericKeywordsComponent, TranslatePipe],
 })
 export class FormFieldKeywordsComponent {
   @Input() value: Keyword[]

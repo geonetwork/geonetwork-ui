@@ -2,8 +2,8 @@ import { ChangeDetectorRef, Component } from '@angular/core'
 import { MapFacade } from '../+state/map.facade'
 import { MapContextLayerGeojson } from '@geospatial-sdk/core'
 import { firstValueFrom } from 'rxjs'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
+import { DragAndDropFileInputComponent } from '@geonetwork-ui/ui/inputs'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 
 const INVALID_FILE_FORMAT_ERROR_MESSAGE = 'Invalid file format'
@@ -13,7 +13,12 @@ const INVALID_FILE_FORMAT_ERROR_MESSAGE = 'Invalid file format'
   templateUrl: './add-layer-from-file.component.html',
   styleUrls: ['./add-layer-from-file.component.css'],
   standalone: true,
-  imports: [UiInputsModule, TranslateModule, CommonModule],
+  imports: [
+    TranslateDirective,
+    TranslatePipe,
+    CommonModule,
+    DragAndDropFileInputComponent,
+  ],
 })
 export class AddLayerFromFileComponent {
   errorMessage: string | null = null

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TranslateModule } from '@ngx-translate/core'
 import { FormFieldTemporalExtentsComponent } from './form-field-temporal-extents.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('FormFieldTemporalExtentsComponent', () => {
   let component: FormFieldTemporalExtentsComponent
@@ -8,7 +8,7 @@ describe('FormFieldTemporalExtentsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormFieldTemporalExtentsComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(FormFieldTemporalExtentsComponent)

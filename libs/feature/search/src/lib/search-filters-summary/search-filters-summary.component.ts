@@ -1,19 +1,25 @@
-import { Component, Inject, Input, OnInit, Optional } from '@angular/core'
+import {
+  Component,
+  Inject,
+  InjectionToken,
+  Input,
+  OnInit,
+  Optional,
+} from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { first, map, Observable } from 'rxjs'
 import { SearchFiltersSummaryItemComponent } from '../search-filters-summary-item/search-filters-summary-item.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
-import { InjectionToken } from '@angular/core'
 
 export const FILTER_SUMMARY_IGNORE_LIST = new InjectionToken<string[]>(
   'FILTER_SUMMARY_IGNORE_LIST'
 )
 @Component({
   selector: 'gn-ui-search-filters-summary',
-  imports: [CommonModule, SearchFiltersSummaryItemComponent, TranslateModule],
+  imports: [CommonModule, SearchFiltersSummaryItemComponent, TranslatePipe],
   templateUrl: './search-filters-summary.component.html',
   styleUrls: ['./search-filters-summary.component.css'],
   standalone: true,

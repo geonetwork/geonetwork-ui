@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { FormFieldLicenseComponent } from './form-field-license.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('FormFieldLicenseComponent', () => {
   let component: FormFieldLicenseComponent
@@ -9,7 +9,7 @@ describe('FormFieldLicenseComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormFieldLicenseComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(FormFieldLicenseComponent)

@@ -7,8 +7,11 @@ import {
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent, UrlInputComponent } from '@geonetwork-ui/ui/inputs'
-import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import {
+  TranslateDirective,
+  TranslatePipe,
+  TranslateService,
+} from '@ngx-translate/core'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { Router } from '@angular/router'
@@ -19,7 +22,6 @@ import {
 } from '@ng-icons/core'
 import {
   iconoirArrowLeft,
-  iconoirAttachment,
   iconoirImport,
   iconoirLightBulbOn,
 } from '@ng-icons/iconoir'
@@ -43,9 +45,9 @@ type ImportMenuPage = 'mainMenu' | 'importExternalFile'
   imports: [
     CommonModule,
     ButtonComponent,
-    ThumbnailComponent,
     UrlInputComponent,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     NgIconComponent,
   ],
   providers: [
