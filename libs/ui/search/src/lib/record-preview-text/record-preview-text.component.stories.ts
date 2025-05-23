@@ -1,11 +1,5 @@
-import {
-  applicationConfig,
-  Meta,
-  moduleMetadata,
-  StoryObj,
-} from '@storybook/angular'
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { RecordPreviewTextComponent } from './record-preview-text.component'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { importProvidersFrom } from '@angular/core'
 import { RecordPreviewTitleComponent } from '../record-preview-title/record-preview-title.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
@@ -17,9 +11,6 @@ export default {
   title: 'Search/RecordPreviewTextComponent',
   component: RecordPreviewTextComponent,
   decorators: [
-    moduleMetadata({
-      imports: [UtilSharedModule],
-    }),
     applicationConfig({
       providers: [importProvidersFrom(BrowserAnimationsModule), provideI18n()],
     }),

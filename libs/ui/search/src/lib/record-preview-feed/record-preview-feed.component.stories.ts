@@ -5,7 +5,6 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { RecordPreviewFeedComponent } from './record-preview-feed.component'
 import { importProvidersFrom } from '@angular/core'
 import { action } from '@storybook/addon-actions'
@@ -21,7 +20,7 @@ export default {
   component: RecordPreviewFeedComponent,
   decorators: [
     moduleMetadata({
-      imports: [UtilSharedModule, NgIconComponent, ThumbnailComponent],
+      imports: [NgIconComponent, ThumbnailComponent],
     }),
     applicationConfig({
       providers: [

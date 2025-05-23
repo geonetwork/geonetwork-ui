@@ -2,20 +2,17 @@ import {
   applicationConfig,
   componentWrapperDecorator,
   Meta,
-  moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
 import { InternalLinkCardComponent } from './internal-link-card.component'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
 import { action } from '@storybook/addon-actions'
-import { NgIconComponent, provideIcons } from '@ng-icons/core'
+import { provideIcons } from '@ng-icons/core'
 import { matStar, matStarBorder } from '@ng-icons/material-icons/baseline'
-import { CommonModule } from '@angular/common'
 
 const mockRecord = datasetRecordsFixture()[0] as CatalogRecord
 const mockRecordLong = datasetRecordsFixture()[1] as CatalogRecord
@@ -40,9 +37,6 @@ export default {
   title: 'Elements/InternalLinkCardComponent',
   component: InternalLinkCardComponent,
   decorators: [
-    moduleMetadata({
-      imports: [UtilSharedModule, NgIconComponent, CommonModule],
-    }),
     applicationConfig({
       providers: [
         importProvidersFrom(BrowserAnimationsModule),

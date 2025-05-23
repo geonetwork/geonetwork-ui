@@ -2,11 +2,9 @@ import {
   applicationConfig,
   componentWrapperDecorator,
   Meta,
-  moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { OrganisationPreviewComponent } from './organisation-preview.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
@@ -17,9 +15,6 @@ export default {
   decorators: [
     applicationConfig({
       providers: [importProvidersFrom(BrowserAnimationsModule), provideI18n()],
-    }),
-    moduleMetadata({
-      imports: [UtilSharedModule],
     }),
     componentWrapperDecorator(
       (story) =>

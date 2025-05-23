@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core'
 import { RouterLink } from '@angular/router'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { NgxDropzoneModule } from 'ngx-dropzone'
 import { FacetsModule } from './facets/facets.module'
@@ -66,7 +65,6 @@ import { ActionMenuComponent } from './results-table/action-menu/action-menu.com
     FormsModule,
     ReactiveFormsModule,
     TagInputModule,
-    UtilSharedModule,
     MatCheckboxModule,
     RouterLink,
     InteractiveTableComponent,

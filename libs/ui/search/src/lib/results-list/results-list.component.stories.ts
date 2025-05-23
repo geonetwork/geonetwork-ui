@@ -6,14 +6,12 @@ import {
 } from '@storybook/angular'
 import { DEFAULT_RESULTS_LAYOUT_CONFIG } from './results-layout.config'
 import { ResultsListComponent } from './results-list.component'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { RecordPreviewListComponent } from '../record-preview-list/record-preview-list.component'
 import { RecordPreviewCardComponent } from '../record-preview-card/record-preview-card.component'
 import { RecordPreviewTextComponent } from '../record-preview-text/record-preview-text.component'
 import { RecordPreviewTitleComponent } from '../record-preview-title/record-preview-title.component'
 import { ResultsListItemComponent } from '../results-list-item/results-list-item.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { importProvidersFrom } from '@angular/core'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
@@ -31,7 +29,7 @@ export default {
       ],
     }),
     applicationConfig({
-      providers: [importProvidersFrom(UtilSharedModule), provideI18n()],
+      providers: [provideI18n()],
     }),
   ],
 } as Meta<ResultsListComponent>
