@@ -1,10 +1,4 @@
-import { HttpClientModule } from '@angular/common/http'
-import { importProvidersFrom } from '@angular/core'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
   applicationConfig,
   Meta,
@@ -19,11 +13,7 @@ export default {
   component: FileInputComponent,
   decorators: [
     applicationConfig({
-      providers: [
-        importProvidersFrom(HttpClientModule),
-        importProvidersFrom(UtilI18nModule),
-        importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
-      ],
+      providers: [provideI18n()],
     }),
     moduleMetadata({
       imports: [FileInputComponent],
