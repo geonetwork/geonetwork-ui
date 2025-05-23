@@ -18,7 +18,7 @@ import { getAsValidUrl } from '../common/url'
 import { fullNameToParts } from '../iso19139/utils/individual-name'
 import { readLicenseFromString } from '../common/license'
 import { matchProtocol } from '../common/distribution.mapper'
-import { LANG_3_TO_2_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
+import { getLang2FromLang3 } from '@geonetwork-ui/util/i18n/language-codes'
 
 function getDatasetNode(dataStore: Store, recordNode: NamedNode): NamedNode {
   return (dataStore.the(recordNode, FOAF('primaryTopic'), null) ||
@@ -457,7 +457,7 @@ export function readDefaultLanguage(dataStore: Store, recordNode: NamedNode) {
   const languageNode = statements[0].object as NamedNode
   let language = languageNode.value.split('/').pop().toLowerCase()
   if (language.length === 3) {
-    language = LANG_3_TO_2_MAPPER[language] ?? language
+    language = getLang2FromLang3(language) ?? language
   }
   return language.substring(0, 2)
 }

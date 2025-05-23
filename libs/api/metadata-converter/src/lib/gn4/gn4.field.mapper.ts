@@ -26,8 +26,12 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchProtocol } from '../common/distribution.mapper'
 import { Thesaurus } from './types'
-import { LANG_3_TO_2_MAPPER, LangService } from '@geonetwork-ui/util/i18n'
 import { getResourceType, getReuseType } from '../common/resource-types'
+import { TranslateService } from '@ngx-translate/core'
+import {
+  getLang2FromLang3,
+  getLocalizedIndexKey,
+} from '@geonetwork-ui/util/i18n'
 
 type ESResponseSource = SourceWithUnknownProps
 
@@ -42,10 +46,12 @@ type EsFieldMapperFn = (
 export class Gn4FieldMapper {
   constructor(
     private metadataUrlService: MetadataUrlService,
-    private langService: LangService
+    private translateService: TranslateService
   ) {}
 
-  private lang3 = this.langService.gnLang
+  private get lang3() {
+    return getLocalizedIndexKey(this.translateService.currentLang)
+  }
 
   protected fields: Record<string, EsFieldMapperFn> = {
     id: (output, source) =>
@@ -150,7 +156,7 @@ export class Gn4FieldMapper {
       const langList = getAsArray(
         selectField<string>(source, 'resourceLanguage')
       )
-      const languages = langList.map((lang) => LANG_3_TO_2_MAPPER[lang])
+      const languages = langList.map(getLang2FromLang3)
       const defaultLanguage = output.defaultLanguage ?? languages[0] ?? null // set the first language as main one as fallback
 
       return {
@@ -160,7 +166,7 @@ export class Gn4FieldMapper {
     },
     otherLanguage: (output, source) => {
       const langList = getAsArray(selectField<string>(source, 'otherLanguage'))
-      const languages = langList.map((lang) => LANG_3_TO_2_MAPPER[lang])
+      const languages = langList.map(getLang2FromLang3)
       const defaultLanguage = output.defaultLanguage ?? languages[0] ?? null
       const otherLanguages = languages.filter(
         (lang) => lang !== defaultLanguage
@@ -175,7 +181,7 @@ export class Gn4FieldMapper {
       const language = selectField<string>(source, 'mainLanguage')
       return {
         ...output,
-        defaultLanguage: language ? LANG_3_TO_2_MAPPER[language] : null,
+        defaultLanguage: language ? getLang2FromLang3(language) : null,
       }
     },
     link: (output, source) => {
