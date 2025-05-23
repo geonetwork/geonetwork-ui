@@ -1,4 +1,8 @@
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { DEFAULT_LANG, LANGUAGE_STORAGE_KEY } from './i18n.constants'
@@ -6,9 +10,10 @@ import { I18nInterceptor } from './i18n.interceptor'
 import { CommonModule } from '@angular/common'
 
 @NgModule({
-  imports: [HttpClientModule, TranslateModule.forChild(), CommonModule],
+  imports: [TranslateModule.forChild(), CommonModule],
   exports: [],
   providers: [
+    provideHttpClient(withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true },
   ],
 })
