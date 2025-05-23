@@ -1,11 +1,11 @@
 import {
   Component,
+  ElementRef,
+  EventEmitter,
   Input,
-  TemplateRef,
   OnInit,
   Output,
-  EventEmitter,
-  ElementRef,
+  TemplateRef,
 } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common'
@@ -13,14 +13,13 @@ import { GeoDataBadgeComponent } from '../geo-data-badge/geo-data-badge.componen
 import { KindBadgeComponent } from '../kind-badge/kind-badge.component'
 import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component'
 import { MetadataQualityComponent } from '../metadata-quality/metadata-quality.component'
-import { InternalLinkCardContactComponent } from '../internal-link-card-contact/internal-link-card-contact.component'
+import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 import { removeWhitespace, stripHtml } from '@geonetwork-ui/util/shared'
 import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
+import { InternalLinkCardContactComponent } from '../internal-link-card-contact/internal-link-card-contact.component'
 import { iconoirInternet } from '@ng-icons/iconoir'
-import { TranslateModule } from '@ngx-translate/core'
 import { fromEvent, Subscription } from 'rxjs'
-import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 
 type CardSize = 'L' | 'M' | 'S' | 'XS'
 
@@ -32,7 +31,6 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
     NgIf,
     MetadataQualityComponent,
     NgTemplateOutlet,
-    TranslateModule,
     GeoDataBadgeComponent,
     KindBadgeComponent,
     MarkdownParserComponent,

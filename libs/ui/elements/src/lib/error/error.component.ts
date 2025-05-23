@@ -7,7 +7,7 @@ import {
   matQuestionMark,
 } from '@ng-icons/material-icons/baseline'
 import { matComputerOutline } from '@ng-icons/material-icons/outline'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 
 export enum ErrorType {
   COULD_NOT_REACH_API,
@@ -24,7 +24,7 @@ export enum ErrorType {
   styleUrls: ['./error.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, NgIcon, TranslateModule],
+  imports: [CommonModule, NgIcon, TranslateDirective],
   viewProviders: [
     provideIcons({
       matFace,

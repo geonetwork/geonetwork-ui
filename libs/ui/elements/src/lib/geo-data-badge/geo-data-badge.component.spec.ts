@@ -1,9 +1,9 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { GeoDataBadgeComponent } from './geo-data-badge.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const mockRecord = {
   kind: 'dataset',
@@ -34,7 +34,7 @@ describe('LinkCardComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [GeoDataBadgeComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
   })
 

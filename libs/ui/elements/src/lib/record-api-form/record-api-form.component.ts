@@ -13,7 +13,8 @@ import {
   TextInputComponent,
 } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 const DEFAULT_PARAMS = {
   OFFSET: '',
@@ -32,7 +33,8 @@ const DEFAULT_PARAMS = {
     TextInputComponent,
     DropdownSelectorComponent,
     CopyTextButtonComponent,
-    TranslateModule,
+    TranslateDirective,
+    MatTooltipModule,
   ],
 })
 export class RecordApiFormComponent {

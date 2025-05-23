@@ -1,7 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { LinkCardComponent } from './link-card.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('LinkCardComponent', () => {
   let component: LinkCardComponent
@@ -10,7 +10,7 @@ describe('LinkCardComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [LinkCardComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
   })
 

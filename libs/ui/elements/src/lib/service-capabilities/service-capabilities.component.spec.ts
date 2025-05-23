@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ServiceCapabilitiesComponent } from './service-capabilities.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { WfsFeatureTypeFull, WmsLayerFull } from '@camptocamp/ogc-client'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('ServiceCapabilitiesComponent', () => {
   let component: ServiceCapabilitiesComponent
@@ -9,8 +9,7 @@ describe('ServiceCapabilitiesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ServiceCapabilitiesComponent, TranslateModule.forRoot()],
-      // Add any necessary providers or mocks here
+      providers: [provideI18n()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(ServiceCapabilitiesComponent)

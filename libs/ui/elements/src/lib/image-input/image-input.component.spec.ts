@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing'
-import { HttpHeaders } from '@angular/common/http'
+import { HttpHeaders, provideHttpClient } from '@angular/common/http'
 import {
-  HttpClientTestingModule,
   HttpTestingController,
+  provideHttpClientTesting,
 } from '@angular/common/http/testing'
-import { TranslateModule } from '@ngx-translate/core'
 import { ImageInputComponent } from './image-input.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('ImageInputComponent', () => {
   let component: ImageInputComponent
@@ -14,11 +14,8 @@ describe('ImageInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        ImageInputComponent,
-        HttpClientTestingModule,
-        TranslateModule.forRoot(),
-      ],
+      imports: [TranslateModule.forRoot()],
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents()
     httpTestingController = TestBed.inject(HttpTestingController)
   })
