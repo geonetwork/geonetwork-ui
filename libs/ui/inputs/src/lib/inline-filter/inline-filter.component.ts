@@ -7,10 +7,13 @@ import {
   TemplateRef,
 } from '@angular/core'
 import { Choice } from './inline-filter.model'
+import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'gn-ui-inline-filter',
   templateUrl: './inline-filter.component.html',
+  standalone: true,
+  imports: [CommonModule],
 })
 export class InlineFilterComponent {
   @Input() choices: Choice[]

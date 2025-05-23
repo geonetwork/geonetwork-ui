@@ -7,8 +7,8 @@ import {
   AutocompleteItem,
 } from './autocomplete.component'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
-import { TranslateModule } from '@ngx-translate/core'
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('AutocompleteComponent', () => {
   let component: AutocompleteComponent
@@ -16,11 +16,8 @@ describe('AutocompleteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        AutocompleteComponent,
-        NoopAnimationsModule,
-        TranslateModule.forRoot(),
-      ],
+      imports: [NoopAnimationsModule],
+      providers: [provideI18n()],
     })
       .overrideComponent(AutocompleteComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
