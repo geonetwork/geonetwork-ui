@@ -2,23 +2,19 @@ import {
   applicationConfig,
   componentWrapperDecorator,
   Meta,
-  moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { UiLayoutModule } from '../ui-layout.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { StickyHeaderComponent } from './sticky-header.component'
 import { importProvidersFrom } from '@angular/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export default {
   title: 'Layout/Sticky Header',
   component: StickyHeaderComponent,
   decorators: [
-    moduleMetadata({
-      imports: [UiLayoutModule],
-    }),
     applicationConfig({
-      providers: [importProvidersFrom(BrowserAnimationsModule)],
+      providers: [importProvidersFrom(BrowserAnimationsModule), provideI18n()],
     }),
     componentWrapperDecorator(
       (story) =>

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-form-field-wrapper',
@@ -9,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core'
   styleUrls: ['./form-field-wrapper.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [MatTooltipModule, CommonModule, TranslateModule],
+  imports: [MatTooltipModule, CommonModule, TranslateDirective],
 })
 export class FormFieldWrapperComponent {
   @Input() label?: string

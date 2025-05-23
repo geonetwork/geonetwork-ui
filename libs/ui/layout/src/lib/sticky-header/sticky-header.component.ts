@@ -16,6 +16,7 @@ import {
 } from '@angular/core'
 import { animationFrameScheduler, fromEvent, Subscription } from 'rxjs'
 import { throttleTime } from 'rxjs/operators'
+import { CommonModule } from '@angular/common'
 
 /**
  * This component will make a block that will stay sticky on the top of the page,
@@ -32,6 +33,8 @@ import { throttleTime } from 'rxjs/operators'
   templateUrl: './sticky-header.component.html',
   styleUrls: ['./sticky-header.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule],
 })
 export class StickyHeaderComponent
   implements AfterViewInit, OnDestroy, OnInit, AfterViewChecked
