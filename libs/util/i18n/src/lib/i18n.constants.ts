@@ -24,7 +24,6 @@ export const TRANSLATE_DEFAULT_CONFIG: TranslateModuleConfig = {
     provide: TranslateCompiler,
     useClass: TranslateMessageFormatCompiler,
   },
-  defaultLanguage: DEFAULT_LANG,
   loader: {
     provide: TranslateLoader,
     useFactory: HttpLoaderFactory,
@@ -51,7 +50,6 @@ export const TRANSLATE_DEBUG_CONFIG: TranslateModuleConfig = {
     provide: TranslateCompiler,
     useClass: TranslateMessageFormatCompiler,
   },
-  defaultLanguage: DEFAULT_LANG,
   parser: {
     provide: TranslateParser,
     useClass: DebugTranslateParser,
