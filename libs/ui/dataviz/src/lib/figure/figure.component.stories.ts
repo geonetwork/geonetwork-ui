@@ -2,28 +2,19 @@ import {
   applicationConfig,
   componentWrapperDecorator,
   Meta,
-  moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
 import { FigureComponent } from './figure.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { UiDatavizModule } from '../ui-dataviz.module'
 import { importProvidersFrom } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
-import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export default {
   title: 'Dataviz/FigureComponent',
   component: FigureComponent,
   decorators: [
-    moduleMetadata({
-      imports: [UiDatavizModule],
-    }),
     applicationConfig({
-      providers: [
-        importProvidersFrom(BrowserAnimationsModule),
-        importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
-      ],
+      providers: [importProvidersFrom(BrowserAnimationsModule), provideI18n()],
     }),
     componentWrapperDecorator(
       (story) => `

@@ -1,4 +1,3 @@
-export * from './lib/ui-dataviz.module'
 export * from './lib/chart/chart.component'
 export * from './lib/data-table/data-table.component'
 export * from './lib/data-table/data-table.fixtures'
