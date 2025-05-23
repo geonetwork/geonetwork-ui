@@ -9,15 +9,17 @@ import { ImageFallbackDirective } from './image-fallback.directive'
     [fallbackUrl]="'/assets/img/placeholder.svg'"
     gnUiImageFallback
   />`,
+  imports: [ImageFallbackDirective],
+  standalone: true,
 })
 class TestComponent {}
 
 describe('ImageFallbackDirective', () => {
   let de
   beforeEach(() => {
-    const fixture = TestBed.configureTestingModule({
-      declarations: [ImageFallbackDirective, TestComponent],
-    }).createComponent(TestComponent)
+    const fixture = TestBed.configureTestingModule({}).createComponent(
+      TestComponent
+    )
     fixture.detectChanges()
     de = fixture.debugElement.query(By.directive(ImageFallbackDirective))
   })
