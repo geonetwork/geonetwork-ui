@@ -16,7 +16,7 @@ import { MdViewFacade } from '../state/mdview.facade'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { of, Subject, throwError } from 'rxjs'
 import { MapViewComponent } from './map-view.component'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 import { delay } from 'rxjs/operators'
 import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 import { Collection } from 'ol'
@@ -175,7 +175,6 @@ describe('MapViewComponent', () => {
           instant: jest.fn((key: string) => key),
         }),
       ],
-      imports: [TranslateModule.forRoot(), MapLegendComponent],
     })
       .overrideComponent(MapViewComponent, {
         set: {

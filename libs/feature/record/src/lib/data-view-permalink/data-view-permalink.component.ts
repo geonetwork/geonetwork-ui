@@ -11,7 +11,7 @@ import { BehaviorSubject, combineLatest, map } from 'rxjs'
 import { MdViewFacade } from '../state'
 import { CopyTextButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import { GEONETWORK_UI_TAG_NAME } from '@geonetwork-ui/util/shared'
 
 export const WEB_COMPONENT_EMBEDDER_URL = new InjectionToken<string>(
@@ -24,7 +24,7 @@ export const WEB_COMPONENT_EMBEDDER_URL = new InjectionToken<string>(
   styleUrls: ['./data-view-permalink.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, CopyTextButtonComponent, TranslateModule],
+  imports: [CommonModule, CopyTextButtonComponent, TranslatePipe],
 })
 export class DataViewPermalinkComponent {
   viewType$ = new BehaviorSubject<string>('map')

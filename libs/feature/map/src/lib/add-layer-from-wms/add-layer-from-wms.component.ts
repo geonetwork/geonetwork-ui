@@ -6,14 +6,20 @@ import { debounceTime } from 'rxjs/operators'
 import { MapContextLayer } from '@geospatial-sdk/core'
 import { ButtonComponent, TextInputComponent } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-add-layer-from-wms',
   templateUrl: './add-layer-from-wms.component.html',
   styleUrls: ['./add-layer-from-wms.component.css'],
   standalone: true,
-  imports: [TextInputComponent, CommonModule, TranslateModule, ButtonComponent],
+  imports: [
+    TextInputComponent,
+    CommonModule,
+    TranslateDirective,
+    TranslatePipe,
+    ButtonComponent,
+  ],
 })
 export class AddLayerFromWmsComponent implements OnInit {
   wmsUrl = ''

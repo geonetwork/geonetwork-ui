@@ -1,5 +1,4 @@
 import { Location } from '@angular/common'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { Params, Router } from '@angular/router'
@@ -19,9 +18,9 @@ import * as fromActions from './router.actions'
 import { RouterGoActionPayload } from './router.actions'
 import * as fromEffects from './router.effects'
 import { RouterFacade } from './router.facade'
-import { TranslateModule } from '@ngx-translate/core'
 import { ROUTER_CONFIG } from '../router.config'
 import { ROUTE_PARAMS } from '../constants'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class SearchRouteComponent extends Component {}
 class MetadataRouteComponent extends Component {}
@@ -83,8 +82,8 @@ describe('RouterEffects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         fromEffects.RouterEffects,
         provideMockActions(() => actions),
         {

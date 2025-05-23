@@ -2,8 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormFieldConstraintsShortcutsComponent } from './form-field-constraints-shortcuts.component'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { EditorFacade } from '../../../../+state/editor.facade'
-import { importProvidersFrom } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject, firstValueFrom } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
@@ -11,6 +9,7 @@ import {
   NOT_APPLICABLE_CONSTRAINT,
   NOT_KNOWN_CONSTRAINT,
 } from './constraints.utils'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('FormFieldConstraintsShortcutsComponent', () => {
   let component: FormFieldConstraintsShortcutsComponent
@@ -30,7 +29,7 @@ describe('FormFieldConstraintsShortcutsComponent', () => {
         MockProvider(EditorFacade, {
           record$: sampleRecord$,
         }),
-        importProvidersFrom(TranslateModule.forRoot()),
+        provideI18n(),
       ],
     })
     editorFacade = TestBed.inject(EditorFacade)

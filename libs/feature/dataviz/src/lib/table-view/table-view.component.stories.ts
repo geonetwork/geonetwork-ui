@@ -1,33 +1,24 @@
-import { HttpClientModule } from '@angular/common/http'
+import { provideHttpClient } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
   applicationConfig,
   componentWrapperDecorator,
   Meta,
-  moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
 import { TableViewComponent } from './table-view.component'
-import { DataTableComponent, UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { importProvidersFrom } from '@angular/core'
 
 export default {
   title: 'Smart/Dataviz/TableView',
   component: TableViewComponent,
   decorators: [
-    moduleMetadata({
-      imports: [
-        DataTableComponent,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-      ],
-    }),
     applicationConfig({
       providers: [
-        importProvidersFrom(UiDatavizModule),
         importProvidersFrom(BrowserAnimationsModule),
-        importProvidersFrom(HttpClientModule),
+        provideHttpClient(),
+        provideI18n(),
       ],
     }),
     componentWrapperDecorator(

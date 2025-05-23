@@ -4,12 +4,9 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Injector,
   Input,
   Output,
   ViewChild,
-  afterNextRender,
-  inject,
 } from '@angular/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import {
@@ -22,9 +19,8 @@ import {
   OnlineResource,
   UpdateFrequency,
 } from '@geonetwork-ui/common/domain/model/record'
-import { EditableLabelDirective } from '@geonetwork-ui/ui/inputs'
 import { FormFieldWrapperComponent } from '@geonetwork-ui/ui/layout'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import {
   FormFieldDateComponent,
   FormFieldLicenseComponent,
@@ -35,15 +31,11 @@ import {
   FormFieldComponentName,
   FormFieldConfig,
 } from '../../../models'
-import { FormFieldArrayComponent } from './form-field-array/form-field-array.component'
 import { FormFieldContactsForResourceComponent } from './form-field-contacts-for-resource/form-field-contacts-for-resource.component'
 import { FormFieldContactsComponent } from './form-field-contacts/form-field-contacts.component'
-import { FormFieldFileComponent } from './form-field-file/form-field-file.component'
 import { FormFieldKeywordsComponent } from './form-field-keywords/form-field-keywords.component'
-import { FormFieldObjectComponent } from './form-field-object/form-field-object.component'
 import { FormFieldOnlineLinkResourcesComponent } from './form-field-online-link-resources/form-field-online-link-resources.component'
 import { FormFieldOnlineResourcesComponent } from './form-field-online-resources/form-field-online-resources.component'
-import { FormFieldOpenDataComponent } from './form-field-open-data/form-field-open-data.component'
 import { FormFieldOverviewsComponent } from './form-field-overviews/form-field-overviews.component'
 import { FormFieldRichComponent } from './form-field-rich/form-field-rich.component'
 import { FormFieldSimpleComponent } from './form-field-simple/form-field-simple.component'
@@ -62,8 +54,7 @@ import { FormFieldSpatialToggleComponent } from './form-field-spatial-toggle/for
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
-    EditableLabelDirective,
+    TranslatePipe,
     MatTooltipModule,
     FormFieldWrapperComponent,
     FormFieldLicenseComponent,
@@ -72,14 +63,10 @@ import { FormFieldSpatialToggleComponent } from './form-field-spatial-toggle/for
     FormFieldTemporalExtentsComponent,
     FormFieldSimpleComponent,
     FormFieldRichComponent,
-    FormFieldObjectComponent,
     FormFieldSpatialExtentComponent,
-    FormFieldFileComponent,
-    FormFieldArrayComponent,
     FormFieldKeywordsComponent,
     FormFieldOverviewsComponent,
     FormFieldContactsForResourceComponent,
-    FormFieldOpenDataComponent,
     FormFieldOnlineResourcesComponent,
     FormFieldOnlineLinkResourcesComponent,
     FormFieldContactsComponent,

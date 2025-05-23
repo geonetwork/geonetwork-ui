@@ -7,21 +7,12 @@ import {
   Output,
 } from '@angular/core'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import {
-  AutocompleteComponent,
-  DropdownSelectorComponent,
-  UiInputsModule,
-} from '@geonetwork-ui/ui/inputs'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { AutocompleteComponent, BadgeComponent } from '@geonetwork-ui/ui/inputs'
 import { map } from 'rxjs'
 import { Keyword } from '@geonetwork-ui/common/domain/model/record'
 import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
-import { TranslateModule } from '@ngx-translate/core'
-import {
-  NgIconComponent,
-  provideIcons,
-  provideNgIconsConfig,
-} from '@ng-icons/core'
+import { TranslatePipe } from '@ngx-translate/core'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matWarningAmberOutline } from '@ng-icons/material-icons/outline'
 
 type AutocompleteItem = { title: string; value: Keyword }
@@ -33,13 +24,11 @@ type AutocompleteItem = { title: string; value: Keyword }
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    DropdownSelectorComponent,
-    UiInputsModule,
     CommonModule,
-    UiWidgetsModule,
     AutocompleteComponent,
-    TranslateModule,
     NgIconComponent,
+    BadgeComponent,
+    TranslatePipe,
   ],
   providers: [
     provideIcons({

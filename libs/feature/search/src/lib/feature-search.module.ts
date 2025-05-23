@@ -3,7 +3,7 @@ import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { NgIconsModule } from '@ng-icons/core'
 import { FacetsModule } from './facets/facets.module'
 import { FuzzySearchComponent } from './fuzzy-search/fuzzy-search.component'
@@ -18,19 +18,13 @@ import { SearchStateContainerDirective } from './state/container/search-state.co
 import {
   AutocompleteComponent,
   DateRangeDropdownComponent,
-  UiInputsModule,
+  DropdownMultiselectComponent,
+  DropdownSelectorComponent,
 } from '@geonetwork-ui/ui/inputs'
 import { NgModule } from '@angular/core'
-import {
-  ErrorComponent,
-  KindBadgeComponent,
-  UiElementsModule,
-} from '@geonetwork-ui/ui/elements'
+import { ErrorComponent, KindBadgeComponent } from '@geonetwork-ui/ui/elements'
 import { FilterDropdownComponent } from './filter-dropdown/filter-dropdown.component'
-import {
-  SpinningLoaderComponent,
-  UiWidgetsModule,
-} from '@geonetwork-ui/ui/widgets'
+import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 import { FavoriteStarComponent } from './favorites/favorite-star/favorite-star.component'
 
 @NgModule({
@@ -46,7 +40,8 @@ import { FavoriteStarComponent } from './favorites/favorite-star/favorite-star.c
   ],
   imports: [
     CommonModule,
-    TranslateModule.forChild(),
+    TranslateDirective,
+    TranslatePipe,
     StoreModule.forFeature(SEARCH_FEATURE_KEY, reducer, {
       initialState,
     }),
@@ -54,10 +49,7 @@ import { FavoriteStarComponent } from './favorites/favorite-star/favorite-star.c
     HttpClientModule,
     HttpClientXsrfModule,
     UiSearchModule,
-    UiInputsModule,
-    UiElementsModule,
     FacetsModule,
-    UiWidgetsModule,
     AutocompleteComponent,
     SpinningLoaderComponent,
     ErrorComponent,
@@ -65,6 +57,8 @@ import { FavoriteStarComponent } from './favorites/favorite-star/favorite-star.c
     DateRangeDropdownComponent,
     NgIconsModule,
     KindBadgeComponent,
+    DropdownSelectorComponent,
+    DropdownMultiselectComponent,
   ],
   exports: [
     SortByComponent,

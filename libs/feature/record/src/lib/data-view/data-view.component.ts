@@ -6,8 +6,8 @@ import {
   Output,
 } from '@angular/core'
 import { getLinkLabel, getLinkPriority } from '@geonetwork-ui/util/shared'
-import { BehaviorSubject, combineLatest, of } from 'rxjs'
-import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators'
+import { BehaviorSubject, combineLatest } from 'rxjs'
+import { map, tap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import {
@@ -20,7 +20,7 @@ import {
   TableViewComponent,
 } from '@geonetwork-ui/feature/dataviz'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 
 @Component({
@@ -33,7 +33,8 @@ import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
     CommonModule,
     DropdownSelectorComponent,
     TableViewComponent,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     ChartViewComponent,
     PopupAlertComponent,
   ],

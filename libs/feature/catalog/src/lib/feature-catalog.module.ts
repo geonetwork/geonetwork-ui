@@ -10,10 +10,7 @@ import {
 } from '@geonetwork-ui/data-access/gn4'
 import { CommonModule } from '@angular/common'
 import { SourceLabelComponent } from './source-label/source-label.component'
-import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
-import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { TranslateService } from '@ngx-translate/core'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
   ElasticsearchService,
@@ -54,15 +51,7 @@ const organizationsServiceFactory = (
 
 @NgModule({
   declarations: [SiteTitleComponent, SourceLabelComponent],
-  imports: [
-    UiLayoutModule,
-    CommonModule,
-    UtilI18nModule,
-    TranslateModule.forChild(),
-    UiElementsModule,
-    OrganisationsFilterComponent,
-    CatalogTitleComponent,
-  ],
+  imports: [CommonModule, OrganisationsFilterComponent, CatalogTitleComponent],
   exports: [SiteTitleComponent, SourceLabelComponent],
   providers: [
     {

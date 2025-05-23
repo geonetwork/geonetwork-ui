@@ -8,7 +8,6 @@ import { By } from '@angular/platform-browser'
 import { Subject } from 'rxjs'
 import { MdViewFacade } from '../state'
 import { DataViewComponent } from './data-view.component'
-import { TranslateModule } from '@ngx-translate/core'
 import {
   someDataLinksFixture,
   someGeoDatalinksFixture,
@@ -20,6 +19,7 @@ import {
   TableViewComponent,
 } from '@geonetwork-ui/feature/dataviz'
 import { hot } from 'jasmine-marbles'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class MdViewFacadeMock {
   isHighUpdateFrequency$ = new Subject()
@@ -52,8 +52,8 @@ describe('DataViewComponent', () => {
           provide: MdViewFacade,
           useClass: MdViewFacadeMock,
         },
+        provideI18n(),
       ],
-      imports: [TranslateModule.forRoot()],
     }).compileComponents()
     facade = TestBed.inject(MdViewFacade)
   })

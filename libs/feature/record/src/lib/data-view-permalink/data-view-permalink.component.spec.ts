@@ -5,9 +5,9 @@ import {
 } from './data-view-permalink.component'
 import { BehaviorSubject, firstValueFrom } from 'rxjs'
 import { MdViewFacade } from '../state'
-import { TranslateModule } from '@ngx-translate/core'
 import { provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 import { MockBuilder } from 'ng-mocks'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const chartConfig1 = {
   aggregation: 'sum',
@@ -51,8 +51,8 @@ describe('DataViewPermalinkComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         provideRepositoryUrl('http://gn-api.url/'),
         {
           provide: MdViewFacade,
