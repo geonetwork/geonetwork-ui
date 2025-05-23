@@ -10,7 +10,7 @@ import {
 } from '@geonetwork-ui/data-access/gn4'
 import { CommonModule } from '@angular/common'
 import { SourceLabelComponent } from './source-label/source-label.component'
-import { LangService, UtilI18nModule } from '@geonetwork-ui/util/i18n'
+import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
 import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
 import { UiElementsModule } from '@geonetwork-ui/ui/elements'
@@ -35,8 +35,7 @@ const organizationsServiceFactory = (
   searchApiService: SearchApiService,
   groupsApiService: GroupsApiService,
   translateService: TranslateService,
-  platformService: PlatformServiceInterface,
-  langService: LangService
+  platformService: PlatformServiceInterface
 ) =>
   strategy === 'groups'
     ? new OrganizationsFromGroupsService(
@@ -50,7 +49,7 @@ const organizationsServiceFactory = (
         searchApiService,
         groupsApiService,
         platformService,
-        langService
+        translateService
       )
 
 @NgModule({
@@ -76,7 +75,6 @@ const organizationsServiceFactory = (
         GroupsApiService,
         TranslateService,
         PlatformServiceInterface,
-        LangService,
       ],
     },
   ],

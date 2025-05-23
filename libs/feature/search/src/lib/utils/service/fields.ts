@@ -20,7 +20,6 @@ import {
   isDateRange,
   METADATA_LANGUAGE,
 } from '@geonetwork-ui/api/repository'
-import { LangService } from '@geonetwork-ui/util/i18n'
 import { formatUserInfo } from '@geonetwork-ui/util/shared'
 import { PossibleResourceTypes } from '@geonetwork-ui/api/metadata-converter'
 
@@ -170,7 +169,6 @@ export class TranslatedSearchField extends SimpleSearchField {
  * The provided ES field name should not include any prefix such as `.langeng`
  */
 export class MultilingualSearchField extends SimpleSearchField {
-  private langService = this.injector.get(LangService)
   private searchLanguage = this.injector.get(METADATA_LANGUAGE, null)
 
   constructor(

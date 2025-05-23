@@ -33,9 +33,10 @@ import {
   tap,
   withLatestFrom,
 } from 'rxjs/operators'
-import { LangService } from '@geonetwork-ui/util/i18n'
+import { getLocalizedIndexKey } from '@geonetwork-ui/util/i18n'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { coerce, satisfies, valid } from 'semver'
+import { TranslateService } from '@ngx-translate/core'
 
 const IMAGE_URL = '/geonetwork/images/harvesting/'
 
@@ -121,10 +122,12 @@ export class OrganizationsFromMetadataService
     private searchApiService: SearchApiService,
     private groupsApiService: GroupsApiService,
     private platformService: PlatformServiceInterface,
-    private langService: LangService
+    private translateService: TranslateService
   ) {}
 
-  private lang3 = this.langService.gnLang
+  private get langIndex() {
+    return getLocalizedIndexKey(this.translateService.currentLang)
+  }
 
   equalsNormalizedStrings(
     str1: string,
@@ -287,19 +290,23 @@ export class OrganizationsFromMetadataService
   ): Observable<CatalogRecord> {
     const contacts: SourceWithUnknownProps[] = getAsArray(
       selectFallback(
-        selectTranslatedField(source, 'contactObject', this.lang3),
+        selectTranslatedField(source, 'contactObject', this.langIndex),
         selectField(source, 'contact')
       )
     )
     const resourceContacts: SourceWithUnknownProps[] = getAsArray(
       selectFallback(
-        selectTranslatedField(source, 'contactForResourceObject', this.lang3),
+        selectTranslatedField(
+          source,
+          'contactForResourceObject',
+          this.langIndex
+        ),
         selectField(source, 'contactForResource')
       )
     )
     const allContactOrgs = resourceContacts
       .concat(contacts)
-      .map((contact) => mapOrganization(contact, this.lang3))
+      .map((contact) => mapOrganization(contact, this.langIndex))
 
     if (!allContactOrgs.length) return of(record)
 

@@ -3,13 +3,13 @@ import {
   datasetRecordsFixture,
   elasticAggsResponseFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { LangService } from '@geonetwork-ui/util/i18n'
 import { EsSearchParams } from '@geonetwork-ui/api/metadata-converter'
 import { TestBed } from '@angular/core/testing'
 import { METADATA_LANGUAGE } from '../../metadata-language'
+import { TranslateService } from '@ngx-translate/core'
 
-class LangServiceMock {
-  iso3 = 'eng'
+class TranslateServiceMock {
+  currentLang = 'en'
 }
 
 describe('ElasticsearchService', () => {
@@ -20,8 +20,8 @@ describe('ElasticsearchService', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: LangService,
-          useClass: LangServiceMock,
+          provide: TranslateService,
+          useClass: TranslateServiceMock,
         },
         {
           provide: METADATA_LANGUAGE,
@@ -662,7 +662,6 @@ describe('ElasticsearchService', () => {
     describe('When "current" language from config"', () => {
       beforeEach(() => {
         service['metadataLang'] = 'current'
-        service['lang3'] = 'eng'
       })
       it('search in the UI language', () => {
         expect(

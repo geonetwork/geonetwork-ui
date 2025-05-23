@@ -1,5 +1,5 @@
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core'
-import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n'
+import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n'
 import { TranslateService } from '@ngx-translate/core'
 import { Location } from '@angular/common'
 
@@ -36,10 +36,7 @@ export class AuthService {
         new URL(this.location.path(), window.location.href).toString()
       )
       .replace('${lang2}', this.translateService.currentLang)
-      .replace(
-        '${lang3}',
-        LANG_2_TO_3_MAPPER[this.translateService.currentLang]
-      )
+      .replace('${lang3}', getLang3FromLang2(this.translateService.currentLang))
   }
 
   get logoutUrl() {
@@ -49,7 +46,7 @@ export class AuthService {
   get settingsUrl() {
     return this.baseSettingsUrl.replace(
       '${lang3}',
-      LANG_2_TO_3_MAPPER[this.translateService.currentLang]
+      getLang3FromLang2(this.translateService.currentLang)
     )
   }
 

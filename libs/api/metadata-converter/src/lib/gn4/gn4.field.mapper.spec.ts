@@ -18,6 +18,7 @@ const translateServiceMock = {
 
 describe('Gn4FieldMapper', () => {
   let service: Gn4FieldMapper
+  let translateService: TranslateService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -30,6 +31,7 @@ describe('Gn4FieldMapper', () => {
       ],
     })
     service = TestBed.inject(Gn4FieldMapper)
+    translateService = TestBed.inject(TranslateService)
   })
 
   it('should be created', () => {
@@ -121,7 +123,7 @@ describe('Gn4FieldMapper', () => {
           })
         })
         it('resourceTitleObject - should return a function that correctly maps the field to default lang', () => {
-          service.lang3 = 'langeng'
+          translateService.currentLang = 'en'
           const fieldName = 'resourceTitleObject'
           const mappingFn = service.getMappingFn(fieldName)
           const output = {}
@@ -137,7 +139,7 @@ describe('Gn4FieldMapper', () => {
           })
         })
         it('resourceAbstractObject - should return a function that correctly maps the field to fre lang', () => {
-          service.lang3 = 'langfre'
+          translateService.currentLang = 'fr'
           const fieldName = 'resourceAbstractObject'
           const mappingFn = service.getMappingFn(fieldName)
           const output = {}
@@ -153,7 +155,7 @@ describe('Gn4FieldMapper', () => {
           })
         })
         it('overview - should return a function that correctly maps the field', () => {
-          service.lang3 = 'langfre'
+          translateService.currentLang = 'fr'
           const fieldName = 'overview'
           const mappingFn = service.getMappingFn(fieldName)
           const output = {}
