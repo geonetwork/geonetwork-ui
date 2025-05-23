@@ -1,10 +1,9 @@
-import { HttpClientModule } from '@angular/common/http'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject, of } from 'rxjs'
 import { SourcesService } from '../sources/sources.service'
 import { SourceLabelComponent } from './source-label.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const catalogUuid = 'x5g40aa4-867e-40b9-9c37-3cb735465935'
 const label = 'some label'
@@ -21,8 +20,8 @@ describe('SourceLabelComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SourceLabelComponent],
-      imports: [TranslateModule.forRoot(), HttpClientModule],
       providers: [
+        provideI18n(),
         {
           provide: SourcesService,
           useValue: sourcesServiceMock,

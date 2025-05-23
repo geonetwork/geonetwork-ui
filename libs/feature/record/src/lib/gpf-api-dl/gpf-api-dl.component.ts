@@ -5,12 +5,12 @@ import {
   OnInit,
 } from '@angular/core'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
-import { BehaviorSubject, Observable, combineLatest, map, mergeMap } from 'rxjs'
+import { BehaviorSubject, combineLatest, map, mergeMap, Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { Choice, DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import axios from 'axios'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { GpfApiDlListItemComponent } from '../gpf-api-dl-list-item/gpf-api-dl-list-item.component'
 
 export interface Label {
@@ -57,7 +57,8 @@ export interface Field {
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     DropdownSelectorComponent,
     GpfApiDlListItemComponent,
   ],

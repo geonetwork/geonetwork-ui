@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MultilingualPanelComponent } from './multilingual-panel.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('MultilingualPanelComponent', () => {
   let component: MultilingualPanelComponent
@@ -8,7 +8,7 @@ describe('MultilingualPanelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MultilingualPanelComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(MultilingualPanelComponent)

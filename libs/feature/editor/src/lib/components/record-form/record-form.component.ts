@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { EditorFacade } from '../../+state/editor.facade'
 import { EditorFieldValue } from '../../models'
 import { FormFieldComponent } from './form-field'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 import {
   EditorFieldWithValue,
   EditorSectionWithValues,
@@ -17,7 +17,7 @@ import { CatalogRecordKeys } from '@geonetwork-ui/common/domain/model/record'
   styleUrls: ['./record-form.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, FormFieldComponent, TranslateModule],
+  imports: [CommonModule, FormFieldComponent, TranslateDirective],
 })
 export class RecordFormComponent {
   recordUniqueIdentifier$ = this.facade.record$.pipe(

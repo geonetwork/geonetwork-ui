@@ -4,7 +4,7 @@ import {
   Input,
   OnChanges,
 } from '@angular/core'
-import { TableItemModel, UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
+import { FigureComponent, TableItemModel } from '@geonetwork-ui/ui/dataviz'
 import { FigureService } from '../figure.service'
 
 @Component({
@@ -13,7 +13,7 @@ import { FigureService } from '../figure.service'
   styleUrls: ['./figure-container.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [UiDatavizModule],
+  imports: [FigureComponent],
 })
 export class FigureContainerComponent implements OnChanges {
   @Input() dataset: TableItemModel[]

@@ -8,7 +8,7 @@ import {
 } from '@angular/core'
 import { Constraint } from '@geonetwork-ui/common/domain/model/record'
 import { CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import { OPEN_DATA_LICENSE } from './../../../../fields.config'
 
 @Component({
@@ -16,7 +16,7 @@ import { OPEN_DATA_LICENSE } from './../../../../fields.config'
   templateUrl: './form-field-open-data.component.html',
   styleUrls: ['./form-field-open-data.component.css'],
   standalone: true,
-  imports: [CheckToggleComponent, TranslateModule],
+  imports: [CheckToggleComponent, TranslatePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormFieldOpenDataComponent implements OnChanges {

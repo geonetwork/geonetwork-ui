@@ -2,20 +2,20 @@ import { lastValueFrom, of } from 'rxjs'
 import {
   AbstractSearchField,
   AvailableServicesField,
+  DateRangeSearchField,
   FullTextSearchField,
   IsSpatialSearchField,
   LicenseSearchField,
   MultilingualSearchField,
   OrganizationSearchField,
+  RecordKindField,
   SimpleSearchField,
   TranslatedSearchField,
   UserSearchField,
-  DateRangeSearchField,
-  RecordKindField,
 } from './fields'
 import { TestBed } from '@angular/core/testing'
 import { Injector } from '@angular/core'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import {
@@ -24,6 +24,7 @@ import {
 } from '@geonetwork-ui/api/repository'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class ElasticsearchServiceMock {
   registerRuntimeField = jest.fn()
@@ -222,8 +223,8 @@ describe('search fields implementations', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         {
           provide: RecordsRepositoryInterface,
           useClass: RecordsRepositoryMock,

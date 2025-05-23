@@ -13,9 +13,10 @@ import {
   RESULTS_LAYOUT_CONFIG,
 } from '@geonetwork-ui/ui/search'
 import { SearchFacade } from '../state/search.facade'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { of } from 'rxjs'
 import { ResultsLayoutComponent } from './results-layout.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 @Component({
   selector: 'gn-ui-dropdown-selector',
@@ -46,10 +47,15 @@ describe('ResultsLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ResultsLayoutComponent, DropdownSelectorMockComponent],
-      imports: [TranslateModule.forRoot()],
+      declarations: [
+        ResultsLayoutComponent,
+        DropdownSelectorMockComponent,
+        TranslateDirective,
+        TranslatePipe,
+      ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        provideI18n(),
         {
           provide: SearchFacade,
           useValue: searchFacadeMock,

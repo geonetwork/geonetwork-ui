@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TranslateModule } from '@ngx-translate/core'
 import { FormFieldOpenDataComponent } from './form-field-open-data.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 jest.mock('./../../../../fields.config', () => {
   return {
@@ -14,7 +14,7 @@ describe('FormFieldOpenDataComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormFieldOpenDataComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(FormFieldOpenDataComponent)

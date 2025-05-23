@@ -5,7 +5,6 @@ import { MockProvider } from 'ng-mocks'
 import { EditorFacade } from '../../../../+state/editor.facade'
 import { BehaviorSubject, firstValueFrom, from } from 'rxjs'
 import {
-  datasetRecordsFixture,
   NATIONAL_KEYWORD,
   SAMPLE_PLACE_KEYWORDS,
   SAMPLE_RECORD,
@@ -14,7 +13,7 @@ import {
   CatalogRecord,
   Keyword,
 } from '@geonetwork-ui/common/domain/model/record'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('FormFieldSpatialToggleComponent', () => {
   let component: FormFieldSpatialToggleComponent
@@ -23,8 +22,8 @@ describe('FormFieldSpatialToggleComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FormFieldSpatialToggleComponent, TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         MockProvider(EditorFacade, {
           record$: new BehaviorSubject(SAMPLE_RECORD),
           updateRecordField: jest.fn(),

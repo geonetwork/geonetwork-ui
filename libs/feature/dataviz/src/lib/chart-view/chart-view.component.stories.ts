@@ -1,7 +1,6 @@
-import { HttpClientModule } from '@angular/common/http'
+import { provideHttpClient } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
   applicationConfig,
   componentWrapperDecorator,
@@ -10,33 +9,21 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { ChartViewComponent } from './chart-view.component'
-import { ChartComponent, UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
-import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
+import { ChartComponent } from '@geonetwork-ui/ui/dataviz'
 import { importProvidersFrom } from '@angular/core'
-import {
-  DropdownSelectorComponent,
-  UiInputsModule,
-} from '@geonetwork-ui/ui/inputs'
-import { MatProgressSpinner } from '@angular/material/progress-spinner'
-import { OverlayModule } from '@angular/cdk/overlay'
 
 export default {
   title: 'Smart/Dataviz/ChartView',
   component: ChartViewComponent,
   decorators: [
     moduleMetadata({
-      imports: [
-        ChartComponent,
-        OverlayModule,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        UiInputsModule,
-      ],
+      imports: [ChartComponent],
     }),
     applicationConfig({
       providers: [
-        importProvidersFrom(UiDatavizModule),
         importProvidersFrom(BrowserAnimationsModule),
-        importProvidersFrom(HttpClientModule),
+        provideHttpClient(),
+        provideI18n(),
       ],
     }),
     componentWrapperDecorator(

@@ -1,18 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { FormFieldKeywordsComponent } from './form-field-keywords.component'
-import {
-  DropdownSelectorComponent,
-  UiInputsModule,
-} from '@geonetwork-ui/ui/inputs'
-import { CommonModule } from '@angular/common'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { of } from 'rxjs'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { TranslateModule } from '@ngx-translate/core'
 import { Keyword } from '@geonetwork-ui/common/domain/model/record'
 import { MockBuilder } from 'ng-mocks'
 import { EditorFacade } from '../../../../+state/editor.facade'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const placeKeywords: Keyword[] = [
   {
@@ -84,15 +78,8 @@ describe('FormFieldKeywordsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        FormFieldKeywordsComponent,
-        DropdownSelectorComponent,
-        UiInputsModule,
-        CommonModule,
-        UiWidgetsModule,
-        TranslateModule.forRoot(),
-      ],
       providers: [
+        provideI18n(),
         {
           provide: PlatformServiceInterface,
           useClass: PlatformServiceInterfaceMock,

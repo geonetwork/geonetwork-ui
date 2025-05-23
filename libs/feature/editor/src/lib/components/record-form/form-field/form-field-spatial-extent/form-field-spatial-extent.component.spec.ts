@@ -16,7 +16,7 @@ import {
   SAMPLE_RECORD,
   SAMPLE_SPATIAL_EXTENTS,
 } from '@geonetwork-ui/common/fixtures'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class PlatformServiceInterfaceMock {
   // this simulates a search of a complete keyword with bbox, key...
@@ -39,8 +39,8 @@ describe('FormFieldSpatialExtentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         MockProvider(
           PlatformServiceInterface,
           PlatformServiceInterfaceMock,

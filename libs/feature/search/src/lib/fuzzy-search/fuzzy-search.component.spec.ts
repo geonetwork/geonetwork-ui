@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { AutocompleteComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
+import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
@@ -12,6 +12,7 @@ import {
   searchResultsFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class SearchFacadeMock {
   setFilters = jest.fn()
@@ -36,6 +37,7 @@ describe('FuzzySearchComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [FuzzySearchComponent],
       providers: [
+        provideI18n(),
         {
           provide: SearchFacade,
           useClass: SearchFacadeMock,
@@ -49,11 +51,7 @@ describe('FuzzySearchComponent', () => {
           useClass: RecordsRepositoryMock,
         },
       ],
-      imports: [
-        AutocompleteComponent,
-        UiInputsModule,
-        TranslateModule.forRoot(),
-      ],
+      imports: [AutocompleteComponent, TranslateDirective, TranslatePipe],
     }).compileComponents()
 
     searchService = TestBed.inject(SearchService)
