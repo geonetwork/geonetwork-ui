@@ -1,11 +1,9 @@
-import { OverlayModule } from '@angular/cdk/overlay'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { DropdownMultiselectComponent } from './dropdown-multiselect.component'
 import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import { ButtonComponent } from '../button/button.component'
-import { TranslateModule } from '@ngx-translate/core'
-import { FormsModule } from '@angular/forms'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('DropdownMultiselectComponent', () => {
   let component: DropdownMultiselectComponent
@@ -13,13 +11,7 @@ describe('DropdownMultiselectComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DropdownMultiselectComponent],
-      imports: [
-        ButtonComponent,
-        OverlayModule,
-        TranslateModule.forRoot(),
-        FormsModule,
-      ],
+      providers: [provideI18n()],
     })
       .overrideComponent(DropdownMultiselectComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },

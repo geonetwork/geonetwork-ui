@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TranslateModule } from '@ngx-translate/core'
 import { FileInputComponent } from './file-input.component'
 import { By } from '@angular/platform-browser'
 import { UrlInputComponent } from '../url-input/url-input.component'
 import { ChangeDetectionStrategy } from '@angular/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('FileInputComponent', () => {
   let component: FileInputComponent
@@ -11,7 +11,7 @@ describe('FileInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FileInputComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     })
       .overrideComponent(FileInputComponent, {
         set: {

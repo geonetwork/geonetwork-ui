@@ -8,9 +8,8 @@ import {
   Output,
 } from '@angular/core'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
-import { ButtonComponent } from '../button/button.component'
 import { FilesDropDirective } from '../files-drop/files-drop.directive'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { UrlInputComponent } from '../url-input/url-input.component'
 import {
@@ -28,12 +27,12 @@ import { iconoirCloudUpload, iconoirFramePlusIn } from '@ng-icons/iconoir'
   standalone: true,
   imports: [
     CommonModule,
-    ButtonComponent,
     FilesDropDirective,
     MatProgressSpinnerModule,
-    TranslateModule,
     UrlInputComponent,
     NgIconComponent,
+    TranslatePipe,
+    TranslateDirective,
   ],
   providers: [
     provideIcons({
