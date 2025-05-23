@@ -6,8 +6,7 @@ import {
 } from '@storybook/angular'
 import { RecordPreviewCardComponent } from './record-preview-card.component'
 import { importProvidersFrom } from '@angular/core'
-import { HttpClientModule } from '@angular/common/http'
-import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
+import { provideHttpClient } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
@@ -18,11 +17,12 @@ export default {
   component: RecordPreviewCardComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiDatavizModule, UtilSharedModule],
+      imports: [UtilSharedModule],
     }),
     applicationConfig({
       providers: [
-        importProvidersFrom(HttpClientModule, BrowserAnimationsModule),
+        importProvidersFrom(BrowserAnimationsModule),
+        provideHttpClient(),
       ],
     }),
   ],

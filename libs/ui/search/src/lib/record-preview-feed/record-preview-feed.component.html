@@ -62,7 +62,10 @@
         {{ record.title }}
       </h1>
       <p class="line-clamp-3">
-        <gn-ui-markdown-parser [textContent]="abstract" whitoutStyles="true" />
+        <gn-ui-markdown-parser
+          [textContent]="abstract"
+          [whitoutStyles]="true"
+        />
       </p>
       <gn-ui-thumbnail
         *ngIf="record.overviews?.[0]"

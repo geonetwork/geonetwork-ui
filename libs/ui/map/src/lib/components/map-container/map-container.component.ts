@@ -14,7 +14,7 @@ import {
 import { fromEvent, merge, Observable, of, timer } from 'rxjs'
 import { delay, map, startWith, switchMap } from 'rxjs/operators'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 import {
   computeMapContextDiff,
   Extent,
@@ -67,7 +67,7 @@ const DEFAULT_VIEW: MapContextView = {
   styleUrls: ['./map-container.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, TranslateModule, NgIconComponent],
+  imports: [CommonModule, TranslateDirective, NgIconComponent],
   providers: [
     provideIcons({ matSwipeOutline }),
     provideNgIconsConfig({
