@@ -19,7 +19,7 @@ marker('record.metadata.about')
 marker('record.metadata.capabilities')
 marker('record.metadata.preview')
 marker('record.metadata.ressources.and.links')
-marker('record.metadata.related.contents')
+marker('record.metadata.linked.records')
 marker('record.metadata.userFeedbacks')
 
 @Component({
@@ -64,12 +64,12 @@ export class NavigationBarComponent {
       label: 'record.metadata.ressources.and.links',
     },
     {
-      anchor: 'user-feedbacks',
-      label: 'record.metadata.userFeedbacks',
+      anchor: 'linked-records',
+      label: 'record.metadata.linked.records',
     },
     {
-      anchor: 'related',
-      label: 'record.metadata.related.contents',
+      anchor: 'user-feedbacks',
+      label: 'record.metadata.userFeedbacks',
     },
   ]
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0

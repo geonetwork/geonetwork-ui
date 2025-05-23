@@ -1,0 +1,1426 @@
+{
+  "took": 1,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 1,
+      "relation": "eq"
+    },
+    "max_score": 1.0,
+    "hits": [
+      {
+        "_index": "gn-records",
+        "_type": "_doc",
+        "_id": "n_tri_lill_inondable_s_059",
+        "_score": 1.0,
+        "_source": {
+          "contactForResource": [
+            {
+              "website": "",
+              "role": "originator",
+              "address": "",
+              "individual": "",
+              "phone": "",
+              "logo": "",
+              "position": "",
+              "organisationObject": {
+                "default": "DREAL",
+                "langfre": "DREAL"
+              },
+              "email": ""
+            }
+          ],
+          "rating": "0",
+          "originalFormat": ["CSV", "JSON", "GeoJSON", "ESRI Shapefile"],
+          "uuid": "n_tri_lill_inondable_s_059",
+          "lineageObject": {},
+          "publisherOrgObject": {
+            "default": "DREAL",
+            "langfre": "DREAL"
+          },
+          "resourceLanguage": ["fre"],
+          "cl_type": [
+            {
+              "default": "Thème",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode",
+              "key": "theme",
+              "langfre": "Thème"
+            }
+          ],
+          "isPublishedToAll": "true",
+          "contact": [
+            {
+              "website": "",
+              "role": "publisher",
+              "address": "",
+              "individual": "",
+              "phone": "",
+              "logo": "",
+              "position": "",
+              "organisationObject": {
+                "default": "DREAL",
+                "langfre": "DREAL"
+              },
+              "email": ""
+            }
+          ],
+          "record": "record",
+          "draft": "n",
+          "linkUrl": [
+            "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=shapefile&timezone=Europe/Berlin&use_labels_for_header=false",
+            "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=json&timezone=Europe/Berlin&use_labels_for_header=false",
+            "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=geojson&timezone=Europe/Berlin&use_labels_for_header=false",
+            "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=csv&timezone=Europe/Berlin&use_labels_for_header=false",
+            "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/information/"
+          ],
+          "changeDate": "2025-04-30T10:36:26.686Z",
+          "logo": "/images/logos/3bef299d-cf82-4033-871b-875f6936b2e2.png",
+          "tag": [
+            {
+              "default": "Eau",
+              "langfre": "Eau"
+            },
+            {
+              "default": "Innondation",
+              "langfre": "Innondation"
+            },
+            {
+              "default": "Aléa",
+              "langfre": "Aléa"
+            },
+            {
+              "default": "Environnement",
+              "langfre": "Environnement"
+            }
+          ],
+          "id": "750",
+          "recordGroup": "n_tri_lill_inondable_s_059",
+          "metadataIdentifier": "n_tri_lill_inondable_s_059",
+          "isPublishedToIntranet": "true",
+          "recordLink": [
+            {
+              "origin": "catalog",
+              "to": "ed34db28-5dd4-480f-bf29-dc08f0086131",
+              "type": "sources",
+              "title": "Zones de collecte de déchets en porte à porte - par flux de collecte, jour et horaire de tournée",
+              "url": "http://localhost:8080/geonetwork/srv/api/records/ed34db28-5dd4-480f-bf29-dc08f0086131"
+            }
+          ],
+          "format": ["CSV", "JSON", "GeoJSON", "ESRI Shapefile"],
+          "hassource": "ed34db28-5dd4-480f-bf29-dc08f0086131",
+          "linkUrlProtocolWWWDOWNLOADxgisxshapefile": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=shapefile&timezone=Europe/Berlin&use_labels_for_header=false",
+          "hasxlinks": "false",
+          "tagNumber": "4",
+          "featureOfRecord": "record",
+          "isPublishedToGuest": "true",
+          "documentStandard": "iso19115-3.2018",
+          "dateStamp": "2025-04-30T10:36:26.686Z",
+          "resourceAbstractObject": {
+            "default": "<p>Aléa de débordement de cours d’eau de la Lys et de ses\n affluents pour une période de retour 10 ans (proba. forte), 100 ans (proba. moyenne) ou\n 1000 ans (proba. faible) : l’événement présente une probabilité sur 10, 100 ou 1000 de se\n produire chaque année sur le TRI de Lille.</p><hr/><p><a\n href=\"http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/apps/search/?uuid=fr-120066022-jdd-99fb7b58-afc1-42e8-ae55-28baf821390b\"><strong>Lien\n vers les métadonnées</strong></a></p><hr/><p>Donnée issue\n d’une modélisation hydraulique réalisée pour le compte de la DREAL Nord – Pas-de-Calais\n par le bureau d’études Safège dans le cadre de la cartographie de la Directive\n Inondation.</p>",
+            "langfre": "<p>Aléa de débordement de cours d’eau de la Lys et de ses\n affluents pour une période de retour 10 ans (proba. forte), 100 ans (proba. moyenne) ou\n 1000 ans (proba. faible) : l’événement présente une probabilité sur 10, 100 ou 1000 de se\n produire chaque année sur le TRI de Lille.</p><hr/><p><a\n href=\"http://catalogue.geo-ide.developpement-durable.gouv.fr/catalogue/apps/search/?uuid=fr-120066022-jdd-99fb7b58-afc1-42e8-ae55-28baf821390b\"><strong>Lien\n vers les métadonnées</strong></a></p><hr/><p>Donnée issue\n d’une modélisation hydraulique réalisée pour le compte de la DREAL Nord – Pas-de-Calais\n par le bureau d’études Safège dans le cadre de la cartographie de la Directive\n Inondation.</p>"
+          },
+          "isTemplate": "n",
+          "linkUrlProtocolWWWDOWNLOADapplicationjson": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=json&timezone=Europe/Berlin&use_labels_for_header=false",
+          "feedbackCount": "0",
+          "licenseObject": [
+            {
+              "default": "Licence Ouverte (Etalab)",
+              "langfre": "Licence Ouverte (Etalab)"
+            }
+          ],
+          "linkUrlProtocolWWWDOWNLOADapplicationvndgeojson": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=geojson&timezone=Europe/Berlin&use_labels_for_header=false",
+          "isHarvested": "false",
+          "OrgForResourceObject": {
+            "default": "DREAL",
+            "langfre": "DREAL"
+          },
+          "recordOwner": "admin admin",
+          "isOpenData": "false",
+          "document": "",
+          "th_otherKeywords-theme": [
+            {
+              "default": "Environnement",
+              "langfre": "Environnement"
+            }
+          ],
+          "OrgObject": {
+            "default": "DREAL",
+            "langfre": "DREAL"
+          },
+          "th_otherKeywords-Number": "3",
+          "link": [
+            {
+              "protocol": "WWW:DOWNLOAD:x-gis/x-shapefile",
+              "descriptionObject": {
+                "default": "shapefile",
+                "langfre": "shapefile"
+              },
+              "function": "fileAccess",
+              "applicationProfile": "",
+              "mimeType": "x-gis/x-shapefile",
+              "urlObject": {
+                "default": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=shapefile&timezone=Europe/Berlin&use_labels_for_header=false",
+                "langfre": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=shapefile&timezone=Europe/Berlin&use_labels_for_header=false"
+              },
+              "nameObject": {
+                "default": "shapefile",
+                "langfre": "shapefile"
+              },
+              "group": 0
+            },
+            {
+              "protocol": "WWW:DOWNLOAD:application/json",
+              "descriptionObject": {
+                "default": "json",
+                "langfre": "json"
+              },
+              "function": "fileAccess",
+              "applicationProfile": "",
+              "mimeType": "application/json",
+              "urlObject": {
+                "default": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=json&timezone=Europe/Berlin&use_labels_for_header=false",
+                "langfre": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=json&timezone=Europe/Berlin&use_labels_for_header=false"
+              },
+              "nameObject": {
+                "default": "json",
+                "langfre": "json"
+              },
+              "group": 0
+            },
+            {
+              "protocol": "WWW:DOWNLOAD:application/vnd.geo+json",
+              "descriptionObject": {
+                "default": "geojson",
+                "langfre": "geojson"
+              },
+              "function": "fileAccess",
+              "applicationProfile": "",
+              "mimeType": "application/vnd.geo+json",
+              "urlObject": {
+                "default": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=geojson&timezone=Europe/Berlin&use_labels_for_header=false",
+                "langfre": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=geojson&timezone=Europe/Berlin&use_labels_for_header=false"
+              },
+              "nameObject": {
+                "default": "geojson",
+                "langfre": "geojson"
+              },
+              "group": 0
+            },
+            {
+              "protocol": "WWW:DOWNLOAD:text/csv",
+              "descriptionObject": {
+                "default": "csv",
+                "langfre": "csv"
+              },
+              "function": "fileAccess",
+              "applicationProfile": "",
+              "mimeType": "text/csv",
+              "urlObject": {
+                "default": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=csv&timezone=Europe/Berlin&use_labels_for_header=false",
+                "langfre": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=csv&timezone=Europe/Berlin&use_labels_for_header=false"
+              },
+              "nameObject": {
+                "default": "csv",
+                "langfre": "csv"
+              },
+              "group": 0
+            },
+            {
+              "protocol": "WWW:LINK:LANDING_PAGE",
+              "function": "",
+              "applicationProfile": "",
+              "mimeType": "",
+              "urlObject": {
+                "default": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/information/",
+                "langfre": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/information/"
+              },
+              "nameObject": {
+                "default": "Landing Page",
+                "langfre": "Landing Page"
+              },
+              "group": 1
+            }
+          ],
+          "displayOrder": "0",
+          "cl_resourceCharacterSet": [
+            {
+              "default": "Utf8",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_CharacterSetCode",
+              "key": "utf8",
+              "langfre": "Utf8"
+            }
+          ],
+          "linkUrlProtocolWWWLINKLANDINGPAGE": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/information/",
+          "mainLanguage": "fre",
+          "cl_function": [
+            {
+              "default": "Métadonnées intégrales",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode",
+              "key": "completeMetadata",
+              "langfre": "Métadonnées intégrales"
+            },
+            {
+              "default": "Accès au fichier",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode",
+              "key": "fileAccess",
+              "langfre": "Accès au fichier"
+            }
+          ],
+          "valid": "-1",
+          "groupPublishedId": ["-1", "0", "1", "2", "104"],
+          "indexingDate": "2025-05-21T09:22:52Z",
+          "sourceCatalogue": "3bef299d-cf82-4033-871b-875f6936b2e2",
+          "cl_accessConstraints": [
+            {
+              "default": "Autres restrictions",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_RestrictionCode",
+              "key": "otherRestrictions",
+              "langfre": "Autres restrictions"
+            }
+          ],
+          "groupPublished": [
+            "GUEST",
+            "intranet",
+            "all",
+            "sample",
+            "Barbie Inc."
+          ],
+          "popularity": "5",
+          "extra": "null",
+          "qualityScore": 37,
+          "featureTypes": [
+            {
+              "attributeTable": [
+                {
+                  "code": "",
+                  "name": "geo_point_2d",
+                  "link": "",
+                  "definition": "Geo Point",
+                  "type": "geo_point_2d"
+                },
+                {
+                  "code": "",
+                  "name": "geo_shape",
+                  "link": "",
+                  "definition": "Geo Shape",
+                  "type": "geo_shape"
+                },
+                {
+                  "code": "",
+                  "name": "id_s_inond",
+                  "link": "",
+                  "definition": "ID_S_INOND",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "typ_inond",
+                  "link": "",
+                  "definition": "TYP_INOND",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "scenario",
+                  "link": "",
+                  "definition": "SCENARIO",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "datentree",
+                  "link": "",
+                  "definition": "DATENTREE",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "datsortie",
+                  "link": "",
+                  "definition": "DATSORTIE",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "est_ref",
+                  "link": "",
+                  "definition": "EST_REF",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "id_tri",
+                  "link": "",
+                  "definition": "ID_TRI",
+                  "type": "text"
+                }
+              ],
+              "code": "",
+              "aliases": "",
+              "typeName": "Aléa de débordement de cours d'eau de la Lys",
+              "definition": "",
+              "isAbstract": "false"
+            },
+            {
+              "attributeTable": [
+                {
+                  "code": "",
+                  "name": "geo_point_2d",
+                  "link": "",
+                  "definition": "Geo Point",
+                  "type": "geo_point_2d"
+                },
+                {
+                  "code": "",
+                  "name": "geo_shape",
+                  "link": "",
+                  "definition": "Geo Shape",
+                  "type": "geo_shape"
+                },
+                {
+                  "code": "",
+                  "name": "id_s_inond",
+                  "link": "",
+                  "definition": "ID_S_INOND",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "typ_inond",
+                  "link": "",
+                  "definition": "TYP_INOND",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "scenario",
+                  "link": "",
+                  "definition": "SCENARIO",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "datentree",
+                  "link": "",
+                  "definition": "DATENTREE",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "datsortie",
+                  "link": "",
+                  "definition": "DATSORTIE",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "est_ref",
+                  "link": "",
+                  "definition": "EST_REF",
+                  "type": "text"
+                },
+                {
+                  "code": "",
+                  "name": "id_tri",
+                  "link": "",
+                  "definition": "ID_TRI",
+                  "type": "text"
+                }
+              ],
+              "code": "",
+              "aliases": "",
+              "typeName": "Zone inondable de la Lys",
+              "definition": "Zones soumises aux inondations par débordement de la Lys selon\n différents scénarios de crues",
+              "isAbstract": "false"
+            }
+          ],
+          "th_otherKeywords-": [
+            {
+              "default": "Eau",
+              "langfre": "Eau"
+            },
+            {
+              "default": "Innondation",
+              "langfre": "Innondation"
+            },
+            {
+              "default": "Aléa",
+              "langfre": "Aléa"
+            }
+          ],
+          "cl_level": [
+            {
+              "default": "Jeu de données",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode",
+              "key": "dataset",
+              "langfre": "Jeu de données"
+            }
+          ],
+          "hasOverview": "false",
+          "userinfo": "admin|admin|admin|Administrator",
+          "createDate": "2025-04-30T10:36:26.686Z",
+          "allKeywords": {
+            "th_otherKeywords-theme": {
+              "keywords": [
+                {
+                  "default": "Environnement",
+                  "langfre": "Environnement"
+                }
+              ],
+              "theme": "theme",
+              "title": "otherKeywords-theme"
+            },
+            "th_otherKeywords-": {
+              "keywords": [
+                {
+                  "default": "Eau",
+                  "langfre": "Eau"
+                },
+                {
+                  "default": "Innondation",
+                  "langfre": "Innondation"
+                },
+                {
+                  "default": "Aléa",
+                  "langfre": "Aléa"
+                }
+              ],
+              "theme": "",
+              "title": "otherKeywords-"
+            }
+          },
+          "owner": "1",
+          "MD_LegalConstraintsOtherConstraintsObject": [
+            {
+              "default": "Licence Ouverte (Etalab)",
+              "langfre": "Licence Ouverte (Etalab)"
+            }
+          ],
+          "groupOwner": "2",
+          "docType": "metadata",
+          "resourceTitleObject": {
+            "default": "Aléa de débordement de cours d'eau de la Lys",
+            "langfre": "Aléa de débordement de cours d'eau de la Lys"
+          },
+          "th_otherKeywords-themeNumber": "1",
+          "linkUrlProtocolWWWDOWNLOADtextcsv": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/n_tri_lill_inondable_s_059/download?format=csv&timezone=Europe/Berlin&use_labels_for_header=false",
+          "standardNameObject": {
+            "default": "ISO 19115-3",
+            "langfre": "ISO 19115-3"
+          },
+          "keywordType-theme": [
+            {
+              "default": "Environnement",
+              "langfre": "Environnement"
+            }
+          ],
+          "originatorOrgForResourceObject": {
+            "default": "DREAL",
+            "langfre": "DREAL"
+          },
+          "userSavedCount": "0",
+          "resourceType": ["featureCatalog"],
+          "linkProtocol": [
+            "WWW:DOWNLOAD:x-gis/x-shapefile",
+            "WWW:DOWNLOAD:application/json",
+            "WWW:DOWNLOAD:application/vnd.geo+json",
+            "WWW:DOWNLOAD:text/csv",
+            "WWW:LINK:LANDING_PAGE"
+          ]
+        },
+        "ownerId": 1,
+        "edit": true,
+        "canReview": true,
+        "owner": true,
+        "isPublishedToAll": true,
+        "view": true,
+        "notify": true,
+        "download": true,
+        "dynamic": true,
+        "featured": true,
+        "selected": false,
+        "related": {
+          "hassources": [
+            {
+              "origin": "catalog",
+              "properties": null,
+              "_source": {
+                "groupOwner": "2",
+                "resourceTitleObject": {
+                  "default": "Leitungskataster Fernwärme AEW Energie AG",
+                  "langger": "Leitungskataster Fernwärme AEW Energie AG"
+                },
+                "format": ["PDF", "PDF"],
+                "link": [
+                  {
+                    "protocol": "WWW:LINK",
+                    "descriptionObject": {
+                      "default": "Leitungsauskunft über www.aew.ch/leitungsauskunft",
+                      "langger": "Leitungsauskunft über www.aew.ch/leitungsauskunft"
+                    },
+                    "function": "order",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "http://www.aew.ch/leitungsauskunft"
+                    },
+                    "group": 0
+                  }
+                ],
+                "uuid": "e27e7006-fdf9-4004-b6c5-af2a5a5c025c",
+                "op0": ["2", "1"],
+                "op1": "1",
+                "op3": "2",
+                "resourceAbstractObject": {
+                  "default": "Leitungskataster Fernwärme der AEW Energie AG in SIA405 Darstellung",
+                  "langger": "Leitungskataster Fernwärme der AEW Energie AG in SIA405 Darstellung"
+                },
+                "op5": "1",
+                "id": "733",
+                "cl_status": [
+                  {
+                    "key": "onGoing"
+                  }
+                ],
+                "resourceType": ["dataset"],
+                "edit": true,
+                "canReview": true,
+                "owner": true,
+                "isPublishedToAll": true,
+                "view": true,
+                "notify": true,
+                "download": true,
+                "dynamic": true,
+                "featured": true
+              },
+              "_id": "e27e7006-fdf9-4004-b6c5-af2a5a5c025c"
+            },
+            {
+              "origin": "catalog",
+              "properties": null,
+              "_source": {
+                "op1": ["1", "0"],
+                "op3": "2",
+                "resourceAbstractObject": {
+                  "default": "<p></p><p>Localisation des accroches vélo du territoire de la MEL.</p><p>Attention l’implantation de ces accroches-vélos peut évoluer rapidement et peut ne pas être exhaustif.</p>\n<img src=\"https://www.lillemetropole.fr/sites/default/files/styles/header_image/public/images/accrochevelo.jpg?itok=sZUbIWF1\" style=\"width: 50%;\"/><p></p><p>Pour en savoir plus : <a href=\"https://www.lillemetropole.fr/actualites/bientot-mille-accroche-velos\" target=\"_blank\">Cliquez ici</a></p>\n<p>Ce dispositif vient en complément des arceaux vélos implantés par chacune des Villes.</p>",
+                  "langfre": "<p></p><p>Localisation des accroches vélo du territoire de la MEL.</p><p>Attention l’implantation de ces accroches-vélos peut évoluer rapidement et peut ne pas être exhaustif.</p>\n<img src=\"https://www.lillemetropole.fr/sites/default/files/styles/header_image/public/images/accrochevelo.jpg?itok=sZUbIWF1\" style=\"width: 50%;\"/><p></p><p>Pour en savoir plus : <a href=\"https://www.lillemetropole.fr/actualites/bientot-mille-accroche-velos\" target=\"_blank\">Cliquez ici</a></p>\n<p>Ce dispositif vient en complément des arceaux vélos implantés par chacune des Villes.</p>"
+                },
+                "groupOwner": "2",
+                "op5": ["1", "0"],
+                "resourceTitleObject": {
+                  "default": "Accroches vélos MEL",
+                  "langfre": "Accroches vélos MEL"
+                },
+                "format": ["CSV", "JSON", "GeoJSON", "ESRI Shapefile"],
+                "link": [
+                  {
+                    "protocol": "WWW:DOWNLOAD:text/csv",
+                    "descriptionObject": {
+                      "default": "csv",
+                      "langfre": "csv"
+                    },
+                    "function": "fileAccess",
+                    "applicationProfile": "",
+                    "mimeType": "text/csv",
+                    "urlObject": {
+                      "default": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/accroche_velos/download?format=csv&timezone=Europe/Berlin&use_labels_for_header=false",
+                      "langfre": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/accroche_velos/download?format=csv&timezone=Europe/Berlin&use_labels_for_header=false"
+                    },
+                    "nameObject": {
+                      "default": "csv",
+                      "langfre": "csv"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:DOWNLOAD:application/json",
+                    "descriptionObject": {
+                      "default": "json",
+                      "langfre": "json"
+                    },
+                    "function": "fileAccess",
+                    "applicationProfile": "",
+                    "mimeType": "application/json",
+                    "urlObject": {
+                      "default": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/accroche_velos/download?format=json&timezone=Europe/Berlin&use_labels_for_header=false",
+                      "langfre": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/accroche_velos/download?format=json&timezone=Europe/Berlin&use_labels_for_header=false"
+                    },
+                    "nameObject": {
+                      "default": "json",
+                      "langfre": "json"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:DOWNLOAD:application/vnd.geo+json",
+                    "descriptionObject": {
+                      "default": "geojson",
+                      "langfre": "geojson"
+                    },
+                    "function": "fileAccess",
+                    "applicationProfile": "",
+                    "mimeType": "application/vnd.geo+json",
+                    "urlObject": {
+                      "default": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/accroche_velos/download?format=geojson&timezone=Europe/Berlin&use_labels_for_header=false",
+                      "langfre": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/accroche_velos/download?format=geojson&timezone=Europe/Berlin&use_labels_for_header=false"
+                    },
+                    "nameObject": {
+                      "default": "geojson",
+                      "langfre": "geojson"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:DOWNLOAD:x-gis/x-shapefile",
+                    "descriptionObject": {
+                      "default": "shapefile",
+                      "langfre": "shapefile"
+                    },
+                    "function": "fileAccess",
+                    "applicationProfile": "",
+                    "mimeType": "x-gis/x-shapefile",
+                    "urlObject": {
+                      "default": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/accroche_velos/download?format=shapefile&timezone=Europe/Berlin&use_labels_for_header=false",
+                      "langfre": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/accroche_velos/download?format=shapefile&timezone=Europe/Berlin&use_labels_for_header=false"
+                    },
+                    "nameObject": {
+                      "default": "shapefile",
+                      "langfre": "shapefile"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "OGC API - Features",
+                    "function": "fileAccess",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?",
+                      "langfre": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?"
+                    },
+                    "nameObject": {
+                      "default": "Test OGC 1",
+                      "langfre": "Test OGC 1"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "OGC API - Features",
+                    "function": "fileAccess",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/covoit-mel/items?",
+                      "langfre": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/covoit-mel/items?"
+                    },
+                    "nameObject": {
+                      "default": "Test OGC 2",
+                      "langfre": "Test OGC 2"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "OGC:WMS",
+                    "function": "download",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://geobretagne.fr/geoserver/atout_fr/wms?",
+                      "langfre": "https://geobretagne.fr/geoserver/atout_fr/wms?"
+                    },
+                    "nameObject": {
+                      "default": "WFS link test",
+                      "langfre": "WFS link test"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:LINK:LANDING_PAGE",
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/accroche_velos/information/",
+                      "langfre": "https://metropole-europeenne-de-lille.opendatasoft.com/explore/dataset/accroche_velos/information/"
+                    },
+                    "nameObject": {
+                      "default": "Landing Page",
+                      "langfre": "Landing Page"
+                    },
+                    "group": 1
+                  }
+                ],
+                "id": "103",
+                "uuid": "accroche_velos",
+                "op0": ["2", "1", "0"],
+                "resourceType": ["featureCatalog"],
+                "edit": true,
+                "canReview": true,
+                "owner": true,
+                "isPublishedToAll": true,
+                "view": true,
+                "notify": true,
+                "download": true,
+                "dynamic": true,
+                "featured": true
+              },
+              "_id": "accroche_velos"
+            },
+            {
+              "origin": "catalog",
+              "properties": null,
+              "_source": {
+                "op1": ["1", "0"],
+                "op3": "2",
+                "resourceAbstractObject": {
+                  "default": "Read the abstract and supplemental information\n provided in the Vector template for more details.",
+                  "langeng": "Read the abstract and supplemental information\n provided in the Vector template for more details."
+                },
+                "groupOwner": "2",
+                "op5": ["1", "0"],
+                "resourceTitleObject": {
+                  "default": "Record with no link",
+                  "langeng": "Record with no link"
+                },
+                "id": "747",
+                "cl_status": [
+                  {
+                    "key": "onGoing"
+                  }
+                ],
+                "uuid": "a3774ef6-809d-4dd1-984f-9254f49cbd0a",
+                "op0": ["2", "1", "0"],
+                "resourceType": ["dataset"],
+                "edit": true,
+                "canReview": true,
+                "owner": true,
+                "isPublishedToAll": true,
+                "view": true,
+                "notify": true,
+                "download": true,
+                "dynamic": true,
+                "featured": true
+              },
+              "_id": "a3774ef6-809d-4dd1-984f-9254f49cbd0a"
+            },
+            {
+              "origin": "catalog",
+              "properties": null,
+              "_source": {
+                "op1": ["1", "0"],
+                "overview": [
+                  {
+                    "data": "",
+                    "text": {
+                      "default": "wms.png",
+                      "langfre": "wms.png"
+                    },
+                    "url": "https://metawal.wallonie.be/geonetwork/srv/api/records/ce551730-ee1a-4de3-9b49-7e432375d08a/attachments/wms.png"
+                  }
+                ],
+                "op3": "2",
+                "op5": ["1", "0"],
+                "resourceAbstractObject": {
+                  "default": "Ce service de visualisation WMS permet de consulter la série de couches de données \"Sites de gestion des déchets miniers - Série\".",
+                  "langfre": "Ce service de visualisation WMS permet de consulter la série de couches de données \"Sites de gestion des déchets miniers - Série\"."
+                },
+                "groupOwner": "2",
+                "resourceTitleObject": {
+                  "default": "Copie (modifiable) de la fiche Sites de gestion des déchets miniers - Service de visualisation WMS",
+                  "langfre": "Copie (modifiable) de la fiche Sites de gestion des déchets miniers - Service de visualisation WMS"
+                },
+                "link": [
+                  {
+                    "protocol": "OGC:WMS",
+                    "function": "browsing",
+                    "name": "Service de visualisation WMS",
+                    "applicationProfile": "",
+                    "description": "Adresse de connexion au service de visualisation WMS de la série de couches de données \"Sites de gestion des déchets miniers\"",
+                    "mimeType": "",
+                    "url": "https://geoservices.wallonie.be/arcgis/services/SOL_SOUS_SOL/DECHETS_MINIERS/MapServer/WMSServer?request=GetCapabilities&service=WMS",
+                    "group": 0
+                  }
+                ],
+                "id": "752",
+                "uuid": "ce551730-ee1a-4de3-9b49-7e432375d08a",
+                "op0": ["2", "1", "0"],
+                "resourceType": ["service"],
+                "edit": false,
+                "canReview": false,
+                "owner": false,
+                "isPublishedToAll": true,
+                "view": true,
+                "notify": false,
+                "download": true,
+                "dynamic": true,
+                "featured": false
+              },
+              "_id": "ce551730-ee1a-4de3-9b49-7e432375d08a"
+            },
+            {
+              "origin": "catalog",
+              "properties": {
+                "overview": "https://geocatalogue.hautsdefrance.fr/geonetwork/srv/api/records/ee965118-2416-4d48-b07e-bbc696f002c2/attachments/Scot_21.JPG"
+              },
+              "_source": {
+                "op1": ["1", "0"],
+                "op3": "103",
+                "op5": ["1", "0"],
+                "resourceAbstractObject": {
+                  "default": "Le SCoT (Schéma de Cohérence Territoriale) est régi par le code de l'urbanisme (articles L et R.141-1 et suivants). C’est un document d'urbanisme déterminant à l’échelle de plusieurs communes ou groupements de communes, un projet de territoire visant à mettre en cohérence l'ensemble des politiques sectorielles, notamment pour l’habitat, la mobilité, l’aménagement commercial, l’environnement et le paysage.\n\nLa donnée sur les SCoT se décompose en 3 données distinctes :\n- scot_approuves : SCoT approuvés et opposables. Le périmètre correspond au périmètre du document approuvé.\n\n- scot_en_cours : Scot en cours d’élaboration ou de révision. Tout changement apporté à un SCoT crée une nouvelle version qui vient remplacer la précédente. Ainsi, un SCoT en révision peut avoir un périmètre différent du périmètre du précédent document approuvé.\n\n- scot_archives : SCoT remplacé, annulé ou caduc. Tout changement apporté à un SCoT crée une nouvelle version qui vient remplacer la précédente. Ainsi, un SCoT en révision (préalablement dans la couche scot_en_cours) qui se retrouve approuvé et opposable passe donc dans la couche scot_approuves. Le SCoT qui est remplacé par ce nouveau passe quant à lui dans la couche scot_archives. Il en est de même pour un SCoT annulé ou caduc (plus de détails dans le dictionnaire d'attributs ci-dessous).\n\nLes données produites s'appuient sur le modèle CNIG de juin 2018 relatif aux SCoT : \nhttp://cnig.gouv.fr/wp-content/uploads/2019/04/190315_Standard_CNIG_SCOT.pdf\n\n! La structure a été modifiée au 03/2023 pour prendre en compte les évolutions du modèle CNIG du 10/06/2021 : \nhttp://cnig.gouv.fr/IMG/pdf/210615_standard_cnig_nouveauscot.pdf\n(il coexiste donc dans le modèle des champs liés aux deux modèles, par exemple sur les PADD pour les \"anciens\" SCoT, ou encore sur les PAS ou les DAAC pour les \"nouveaux\" SCoT)\n\nPlus d'information sur : \nhttps://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006074075/LEGISCTA000031210896/#LEGISCTA000031212094\net sur\nhttp://cnig.gouv.fr/ressources-dematerialisation-documents-d-urbanisme-a2732.html",
+                  "langfre": "Le SCoT (Schéma de Cohérence Territoriale) est régi par le code de l'urbanisme (articles L et R.141-1 et suivants). C’est un document d'urbanisme déterminant à l’échelle de plusieurs communes ou groupements de communes, un projet de territoire visant à mettre en cohérence l'ensemble des politiques sectorielles, notamment pour l’habitat, la mobilité, l’aménagement commercial, l’environnement et le paysage.\n\nLa donnée sur les SCoT se décompose en 3 données distinctes :\n- scot_approuves : SCoT approuvés et opposables. Le périmètre correspond au périmètre du document approuvé.\n\n- scot_en_cours : Scot en cours d’élaboration ou de révision. Tout changement apporté à un SCoT crée une nouvelle version qui vient remplacer la précédente. Ainsi, un SCoT en révision peut avoir un périmètre différent du périmètre du précédent document approuvé.\n\n- scot_archives : SCoT remplacé, annulé ou caduc. Tout changement apporté à un SCoT crée une nouvelle version qui vient remplacer la précédente. Ainsi, un SCoT en révision (préalablement dans la couche scot_en_cours) qui se retrouve approuvé et opposable passe donc dans la couche scot_approuves. Le SCoT qui est remplacé par ce nouveau passe quant à lui dans la couche scot_archives. Il en est de même pour un SCoT annulé ou caduc (plus de détails dans le dictionnaire d'attributs ci-dessous).\n\nLes données produites s'appuient sur le modèle CNIG de juin 2018 relatif aux SCoT : \nhttp://cnig.gouv.fr/wp-content/uploads/2019/04/190315_Standard_CNIG_SCOT.pdf\n\n! La structure a été modifiée au 03/2023 pour prendre en compte les évolutions du modèle CNIG du 10/06/2021 : \nhttp://cnig.gouv.fr/IMG/pdf/210615_standard_cnig_nouveauscot.pdf\n(il coexiste donc dans le modèle des champs liés aux deux modèles, par exemple sur les PADD pour les \"anciens\" SCoT, ou encore sur les PAS ou les DAAC pour les \"nouveaux\" SCoT)\n\nPlus d'information sur : \nhttps://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006074075/LEGISCTA000031210896/#LEGISCTA000031212094\net sur\nhttp://cnig.gouv.fr/ressources-dematerialisation-documents-d-urbanisme-a2732.html"
+                },
+                "groupOwner": "103",
+                "resourceTitleObject": {
+                  "default": "SCoT (Schéma de cohérence territoriale) en région Hauts-de-France",
+                  "langfre": "SCoT (Schéma de cohérence territoriale) en région Hauts-de-France"
+                },
+                "link": [
+                  {
+                    "protocol": "OGC:WMS",
+                    "descriptionObject": {
+                      "default": "scot en cours d'élaboration ou de révision",
+                      "langfre": "scot en cours d'élaboration ou de révision"
+                    },
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://qgisserver.hautsdefrance.fr/cgi-bin/qgis_mapserv.fcgi?MAP=/var/www/data/qgis/applications/limites_admin.qgz"
+                    },
+                    "nameObject": {
+                      "default": "scot_en_cours",
+                      "langfre": "scot_en_cours"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "OGC:WFS",
+                    "descriptionObject": {
+                      "default": "scot en cours d'élaboration ou de révision",
+                      "langfre": "scot en cours d'élaboration ou de révision"
+                    },
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://qgisserver.hautsdefrance.fr/cgi-bin/qgis_mapserv.fcgi?MAP=/var/www/data/qgis/applications/limites_admin.qgz"
+                    },
+                    "nameObject": {
+                      "default": "scot_en_cours",
+                      "langfre": "scot_en_cours"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:LINK-1.0-http--link",
+                    "descriptionObject": {
+                      "default": "scot en cours d'élaboration ou de révision",
+                      "langfre": "scot en cours d'élaboration ou de révision"
+                    },
+                    "function": "download",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://qgisserver.hautsdefrance.fr/cgi-bin/qgis_mapserv.fcgi?MAP=/var/www/data/qgis/applications/limites_admin.qgz&request=GetFeature&typename=scot_en_cours&outputformat=csv&service=WFS"
+                    },
+                    "nameObject": {
+                      "default": "scot_en_cours - CSV",
+                      "langfre": "scot_en_cours - CSV"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:LINK-1.0-http--link",
+                    "descriptionObject": {
+                      "default": "Scot en cours d'élaboration ou de révision",
+                      "langfre": "Scot en cours d'élaboration ou de révision"
+                    },
+                    "function": "download",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://qgisserver.hautsdefrance.fr/cgi-bin/qgis_mapserv.fcgi?MAP=/var/www/data/qgis/applications/limites_admin.qgz&request=GetFeature&typename=scot_en_cours&outputformat=geojson&service=WFS"
+                    },
+                    "nameObject": {
+                      "default": "scot_en_cours - Geojson",
+                      "langfre": "scot_en_cours - Geojson"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "OGC:WMS",
+                    "descriptionObject": {
+                      "default": "scot approuvé et opposable",
+                      "langfre": "scot approuvé et opposable"
+                    },
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://qgisserver.hautsdefrance.fr/cgi-bin/qgis_mapserv.fcgi?MAP=/var/www/data/qgis/applications/limites_admin.qgz"
+                    },
+                    "nameObject": {
+                      "default": "scot_approuves",
+                      "langfre": "scot_approuves"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "OGC:WFS",
+                    "descriptionObject": {
+                      "default": "scot approuvé et opposable",
+                      "langfre": "scot approuvé et opposable"
+                    },
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://qgisserver.hautsdefrance.fr/cgi-bin/qgis_mapserv.fcgi?MAP=/var/www/data/qgis/applications/limites_admin.qgz"
+                    },
+                    "nameObject": {
+                      "default": "scot_approuves",
+                      "langfre": "scot_approuves"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:LINK-1.0-http--link",
+                    "descriptionObject": {
+                      "default": "Scot approuvé et opposable",
+                      "langfre": "Scot approuvé et opposable"
+                    },
+                    "function": "download",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://qgisserver.hautsdefrance.fr/cgi-bin/qgis_mapserv.fcgi?MAP=/var/www/data/qgis/applications/limites_admin.qgz&request=GetFeature&typename=scot_approuves&outputformat=csv&service=WFS"
+                    },
+                    "nameObject": {
+                      "default": "scot_approuves - CSV",
+                      "langfre": "scot_approuves - CSV"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:LINK-1.0-http--link",
+                    "descriptionObject": {
+                      "default": "Scot approuvé et opposable",
+                      "langfre": "Scot approuvé et opposable"
+                    },
+                    "function": "download",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://qgisserver.hautsdefrance.fr/cgi-bin/qgis_mapserv.fcgi?MAP=/var/www/data/qgis/applications/limites_admin.qgz&request=GetFeature&typename=%20scot_approuves%20&outputformat=geojson&service=WFS"
+                    },
+                    "nameObject": {
+                      "default": "scot_approuves - Geojson",
+                      "langfre": "scot_approuves - Geojson"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "OGC:WMS",
+                    "descriptionObject": {
+                      "default": "scot remplacé",
+                      "langfre": "scot remplacé"
+                    },
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://qgisserver.hautsdefrance.fr/cgi-bin/qgis_mapserv.fcgi?MAP=/var/www/data/qgis/applications/limites_admin.qgz"
+                    },
+                    "nameObject": {
+                      "default": "scot_archives",
+                      "langfre": "scot_archives"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "OGC:WFS",
+                    "descriptionObject": {
+                      "default": "scot remplacé",
+                      "langfre": "scot remplacé"
+                    },
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://qgisserver.hautsdefrance.fr/cgi-bin/qgis_mapserv.fcgi?MAP=/var/www/data/qgis/applications/limites_admin.qgz"
+                    },
+                    "nameObject": {
+                      "default": "scot_archives",
+                      "langfre": "scot_archives"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:LINK-1.0-http--link",
+                    "descriptionObject": {
+                      "default": "Scot remplacé",
+                      "langfre": "Scot remplacé"
+                    },
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://qgisserver.hautsdefrance.fr/cgi-bin/qgis_mapserv.fcgi?MAP=/var/www/data/qgis/applications/limites_admin.qgz&request=GetFeature&typename=scot_archives&outputformat=csv&service=WFS"
+                    },
+                    "nameObject": {
+                      "default": "scot_archives - CSV",
+                      "langfre": "scot_archives - CSV"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:LINK-1.0-http--link",
+                    "descriptionObject": {
+                      "default": "Scot remplacé",
+                      "langfre": "Scot remplacé"
+                    },
+                    "function": "download",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://qgisserver.hautsdefrance.fr/cgi-bin/qgis_mapserv.fcgi?MAP=/var/www/data/qgis/applications/limites_admin.qgz&request=GetFeature&typename=scot_archives&outputformat=geojson&service=WFS"
+                    },
+                    "nameObject": {
+                      "default": "scot_archives - Geojson",
+                      "langfre": "scot_archives - Geojson"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:LINK-1.0-http--related",
+                    "descriptionObject": {
+                      "default": "Dictionnaire d'attributs des Scot",
+                      "langfre": "Dictionnaire d'attributs des Scot"
+                    },
+                    "function": "download",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://sig.hautsdefrance.fr/ext/opendata/Referentiel/SCoT_Dictionnnaire_attributs_2023.xlsx"
+                    },
+                    "nameObject": {
+                      "default": "Dictionnaire d'attributs des Scot 2023",
+                      "langfre": "Dictionnaire d'attributs des Scot 2023"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "OGC API - Features",
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://mel.integration.apps.gs-fr-prod.camptocamp.com/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?"
+                    },
+                    "nameObject": {
+                      "default": "test ogc",
+                      "langfre": "test ogc"
+                    },
+                    "group": 0
+                  }
+                ],
+                "id": "100",
+                "cl_status": [
+                  {
+                    "key": "onGoing"
+                  }
+                ],
+                "uuid": "ee965118-2416-4d48-b07e-bbc696f002c2",
+                "op0": ["1", "0", "103"],
+                "resourceType": ["dataset"],
+                "edit": true,
+                "canReview": true,
+                "owner": true,
+                "isPublishedToAll": true,
+                "view": true,
+                "notify": true,
+                "download": true,
+                "dynamic": true,
+                "featured": true
+              },
+              "_id": "ee965118-2416-4d48-b07e-bbc696f002c2"
+            },
+            {
+              "origin": "catalog",
+              "properties": {
+                "overview": "https://www.geo2france.fr/public/vignettes_geonetwork/part_menage_5ans.jpg"
+              },
+              "_source": {
+                "op1": ["1", "0"],
+                "op3": "103",
+                "op5": ["1", "0"],
+                "resourceAbstractObject": {
+                  "default": "Part des ménages présents depuis 5 ans ou plus dans leur logement actuel, par \"rectangle INSEE\" en Région Hauts-de-France. La taille des cercles proportionnels est relative au nombre de ménages. Le nombre de ménages présents depuis 5 ans ou plus dans leur logement actuel est indiqué dans chaque cercle. Le \"rectangle\" est l'objet élémentaire des données carroyées à 200 mètres de l'INSEE relatives aux ménages (Millésime 2010).",
+                  "langfre": "Part des ménages présents depuis 5 ans ou plus dans leur logement actuel, par \"rectangle INSEE\" en Région Hauts-de-France. La taille des cercles proportionnels est relative au nombre de ménages. Le nombre de ménages présents depuis 5 ans ou plus dans leur logement actuel est indiqué dans chaque cercle. Le \"rectangle\" est l'objet élémentaire des données carroyées à 200 mètres de l'INSEE relatives aux ménages (Millésime 2010)."
+                },
+                "groupOwner": "103",
+                "resourceTitleObject": {
+                  "default": "INSEE - Part des ménages présents depuis 5 ans ou plus dans leur logement actuel (2010)",
+                  "langfre": "INSEE - Part des ménages présents depuis 5 ans ou plus dans leur logement actuel (2010)"
+                },
+                "link": [
+                  {
+                    "protocol": "WWW:LINK-1.0-http--link",
+                    "function": "information",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://www.data.gouv.fr/fr/datasets/donnees-carroyees-a-200-m-sur-la-population/"
+                    },
+                    "nameObject": {
+                      "default": "Métadonnées INSEE - data.gouv.fr",
+                      "langfre": "Métadonnées INSEE - data.gouv.fr"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:LINK-1.0-http--link",
+                    "function": "information",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://www.insee.fr/fr/statistiques/2520034"
+                    },
+                    "nameObject": {
+                      "default": "insee.fr - données carroyées à 200 mètres",
+                      "langfre": "insee.fr - données carroyées à 200 mètres"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:LINK-1.0-http--link",
+                    "descriptionObject": {
+                      "default": "Documentation générale - données carroyées",
+                      "langfre": "Documentation générale - données carroyées"
+                    },
+                    "function": "information",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=2&ved=0ahUKEwiO7-e20qLZAhVE7BQKHWU7DRwQFgg2MAE&url=https%3A%2F%2Fwww.insee.fr%2Ffr%2Fstatistiques%2Ffichier%2F2520034%2Fdonnee-carroyees-documentation-generale.pdf&usg=AOvVaw23DGMDgbpfAt_WkAENe3eG"
+                    },
+                    "nameObject": {
+                      "default": "Documentation générale - données carroyées",
+                      "langfre": "Documentation générale - données carroyées"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:LINK-1.0-http--link",
+                    "function": "information",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://www.insee.fr/fr/statistiques/fichier/2520034/documentation-complete-donnees-a-200m-1.pdf"
+                    },
+                    "nameObject": {
+                      "default": "Documentation complète - données carroyées à 200 mètres",
+                      "langfre": "Documentation complète - données carroyées à 200 mètres"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "OGC:WMS",
+                    "descriptionObject": {
+                      "default": "INSEE - Part des ménages présents depuis plus de 5 ans",
+                      "langfre": "INSEE - Part des ménages présents depuis plus de 5 ans"
+                    },
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://www.geo2france.fr/geoserver/insee/ows"
+                    },
+                    "nameObject": {
+                      "default": "rectangles_200m_menage_erbm",
+                      "langfre": "rectangles_200m_menage_erbm"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "OGC:WFS",
+                    "descriptionObject": {
+                      "default": "INSEE - Part des ménages présents depuis plus de 5 ans",
+                      "langfre": "INSEE - Part des ménages présents depuis plus de 5 ans"
+                    },
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://www.geo2france.fr/geoserver/insee/ows"
+                    },
+                    "nameObject": {
+                      "default": "insee:rectangles_200m_menage_erbm",
+                      "langfre": "insee:rectangles_200m_menage_erbm"
+                    },
+                    "group": 0
+                  }
+                ],
+                "id": "104",
+                "uuid": "04bcec79-5b25-4b16-b635-73115f7456e4",
+                "op0": ["1", "0", "103"],
+                "resourceType": ["dataset"],
+                "edit": true,
+                "canReview": true,
+                "owner": true,
+                "isPublishedToAll": true,
+                "view": true,
+                "notify": true,
+                "download": true,
+                "dynamic": true,
+                "featured": true
+              },
+              "_id": "04bcec79-5b25-4b16-b635-73115f7456e4"
+            },
+            {
+              "origin": "catalog",
+              "properties": {
+                "overview": "https://data.ofb.fr/catalogue/Donnees-geographiques-OFB/api/records/7eb795c2-d612-4b5e-b15e-d985b0f4e697/attachments/OFB.png"
+              },
+              "_source": {
+                "op1": "1",
+                "op3": "2",
+                "resourceAbstractObject": {
+                  "default": "----------------------------\nContexte & objectifs\n----------------------------\n\nDans le cadre de ses missions, l’OFB (anciennement l’ONC puis l’ONCFS) réalise le suivi des populations de grands ongulés sauvages en France métropolitaine. \nPour réaliser cette tâche complexe un réseau de correspondants départementaux, l’actuel réseau « Ongulés sauvages OFB-FNC-FDC » a été créée en 1985, et fonctionne grâce à la collaboration entre l’OFB et les fédérations nationale (FNC) et départementales des chasseurs (FDC). \n\nLes données ont été compilées à partir des données fournies par les Interlocuteurs techniques des FDC du Réseau Ongulés sauvages OFB-FNC-FDC pour toutes les espèces d'ongulés sauvages présentes en France métropolitaine.\n\n----------------------------\nLes espèces concernées\n----------------------------\n\nLes espèces concernées sont les suivantes : \nBouquetin des Alpes (Capra ibex)\nBouquetin ibérique (Capra pyrenaica)\nCerf élaphe (Cervus elaphus)\nCerf sika (Cervus nippon)\nChamois (Rupicapra rupicapra)\nDaim (Dama dama)\nIsard (Rupicapra pyrenaica)\nMouflon de Corse (Ovis gmelinii musimon)\nMouflon méditerranéen (Ovis gmelini musimon x Ovis sp.)\nMuntjac de Chine (Muntiacus reevesi)\net le Mouflon à manchettes (Ammotragus lervia).\n\n----------------------------\nProtocole et limites d'utilisations \n----------------------------\nLa méthode se basant sur des connaissances locales de la présence de populations établies par des professionnels connaissant bien leur territoire, la notion d’échantillonnage qualifiée d’\"exhaustif\" est crédible.\nLe travail est réalisé par unité de population, c’est-à-dire par secteur occupé par au minimum un groupe d’individus adultes susceptibles de se rencontrer et d’établir entre eux des rapports sociaux et génétiques (reproduction). Il peut donc exister des individus isolés présents en dehors des zones délimitées par ce programme.\nPour des raisons administratives l’inventaire est fait par département. Ainsi pour une population à cheval sur plusieurs départements chaque portion départementale constitue une zone. Un département peut abriter plusieurs zones. \nLes données sont vérifiées, harmonisées et validées par l’administrateur(rice) national(e) du réseau tous les 5 ans (avec un rythme différents selon les espèces).\n\n----------------------------\nFréquence de mise à jour\n----------------------------\n\npériodique \n\n----------------------------\nOutils\n----------------------------\n\nLes données de chacune de ces espèces sont consultables sur la carte interactive de l'espèce. créées à partir de l'outil Lizmap.",
+                  "langfre": "----------------------------\nContexte & objectifs\n----------------------------\n\nDans le cadre de ses missions, l’OFB (anciennement l’ONC puis l’ONCFS) réalise le suivi des populations de grands ongulés sauvages en France métropolitaine. \nPour réaliser cette tâche complexe un réseau de correspondants départementaux, l’actuel réseau « Ongulés sauvages OFB-FNC-FDC » a été créée en 1985, et fonctionne grâce à la collaboration entre l’OFB et les fédérations nationale (FNC) et départementales des chasseurs (FDC). \n\nLes données ont été compilées à partir des données fournies par les Interlocuteurs techniques des FDC du Réseau Ongulés sauvages OFB-FNC-FDC pour toutes les espèces d'ongulés sauvages présentes en France métropolitaine.\n\n----------------------------\nLes espèces concernées\n----------------------------\n\nLes espèces concernées sont les suivantes : \nBouquetin des Alpes (Capra ibex)\nBouquetin ibérique (Capra pyrenaica)\nCerf élaphe (Cervus elaphus)\nCerf sika (Cervus nippon)\nChamois (Rupicapra rupicapra)\nDaim (Dama dama)\nIsard (Rupicapra pyrenaica)\nMouflon de Corse (Ovis gmelinii musimon)\nMouflon méditerranéen (Ovis gmelini musimon x Ovis sp.)\nMuntjac de Chine (Muntiacus reevesi)\net le Mouflon à manchettes (Ammotragus lervia).\n\n----------------------------\nProtocole et limites d'utilisations \n----------------------------\nLa méthode se basant sur des connaissances locales de la présence de populations établies par des professionnels connaissant bien leur territoire, la notion d’échantillonnage qualifiée d’\"exhaustif\" est crédible.\nLe travail est réalisé par unité de population, c’est-à-dire par secteur occupé par au minimum un groupe d’individus adultes susceptibles de se rencontrer et d’établir entre eux des rapports sociaux et génétiques (reproduction). Il peut donc exister des individus isolés présents en dehors des zones délimitées par ce programme.\nPour des raisons administratives l’inventaire est fait par département. Ainsi pour une population à cheval sur plusieurs départements chaque portion départementale constitue une zone. Un département peut abriter plusieurs zones. \nLes données sont vérifiées, harmonisées et validées par l’administrateur(rice) national(e) du réseau tous les 5 ans (avec un rythme différents selon les espèces).\n\n----------------------------\nFréquence de mise à jour\n----------------------------\n\npériodique \n\n----------------------------\nOutils\n----------------------------\n\nLes données de chacune de ces espèces sont consultables sur la carte interactive de l'espèce. créées à partir de l'outil Lizmap."
+                },
+                "groupOwner": "2",
+                "op5": "1",
+                "resourceTitleObject": {
+                  "default": "Carte dynamique sur la répartition des ongulés sauvages en France",
+                  "langfre": "Carte dynamique sur la répartition des ongulés sauvages en France"
+                },
+                "link": [
+                  {
+                    "protocol": "WWW:LINK-1.0-http--link",
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=reseau_cerf_lizmap"
+                    },
+                    "nameObject": {
+                      "default": "Carte dynamique de répartition du Cerf élaphe",
+                      "langfre": "Carte dynamique de répartition du Cerf élaphe"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:LINK-1.0-http--link",
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_MOM"
+                    },
+                    "nameObject": {
+                      "default": "Carte dynamique de répartition du Mouflon méditerranéen",
+                      "langfre": "Carte dynamique de répartition du Mouflon méditerranéen"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:LINK-1.0-http--link",
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_MOC"
+                    },
+                    "nameObject": {
+                      "default": "Carte dynamique de répartition du Mouflon de Corse",
+                      "langfre": "Carte dynamique de répartition du Mouflon de Corse"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:LINK-1.0-http--link",
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_ISA"
+                    },
+                    "nameObject": {
+                      "default": "Carte dynamique de répartition de l'ISARD",
+                      "langfre": "Carte dynamique de répartition de l'ISARD"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:LINK-1.0-http--link",
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_CHA"
+                    },
+                    "nameObject": {
+                      "default": "Carte dynamique de répartition du Chamois",
+                      "langfre": "Carte dynamique de répartition du Chamois"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:LINK-1.0-http--link",
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_BOQ"
+                    },
+                    "nameObject": {
+                      "default": "Carte dynamique de répartition du Bouquetin des Alpes",
+                      "langfre": "Carte dynamique de répartition du Bouquetin des Alpes"
+                    },
+                    "group": 0
+                  },
+                  {
+                    "protocol": "WWW:LINK-1.0-http--link",
+                    "function": "",
+                    "applicationProfile": "",
+                    "mimeType": "",
+                    "urlObject": {
+                      "default": "https://lizmap.ofb.fr/ofb/reseau_ongules/index.php/view/map?repository=repartition&project=ongules_2022_BOI"
+                    },
+                    "nameObject": {
+                      "default": "Carte dynamique de répartition du Bouquetin ibérique",
+                      "langfre": "Carte dynamique de répartition du Bouquetin ibérique"
+                    },
+                    "group": 0
+                  }
+                ],
+                "id": "751",
+                "uuid": "7eb795c2-d612-4b5e-b15e-d985b0f4e697",
+                "op0": ["2", "1"],
+                "resourceType": ["interactiveMap"],
+                "edit": true,
+                "canReview": true,
+                "owner": true,
+                "isPublishedToAll": true,
+                "view": true,
+                "notify": true,
+                "download": true,
+                "dynamic": true,
+                "featured": true
+              },
+              "_id": "7eb795c2-d612-4b5e-b15e-d985b0f4e697"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
