@@ -16,6 +16,7 @@ import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/reposit
 class SearchFacadeMock {
   setFilters = jest.fn()
   searchFilters$ = new BehaviorSubject({ any: 'scot' })
+  configFilters$ = new BehaviorSubject({})
 }
 
 class SearchServiceMock {

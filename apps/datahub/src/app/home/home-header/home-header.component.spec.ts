@@ -61,6 +61,7 @@ class searchFacadeMock {
   setFavoritesOnly = jest.fn()
   setSortBy = jest.fn()
   sortBy$ = new BehaviorSubject(['desc', 'createDate'])
+  setConfigFilters = jest.fn()
 }
 
 class searchServiceMock {

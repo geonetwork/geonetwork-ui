@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { FIELDS_BRIEF, SearchFacade } from '@geonetwork-ui/feature/search'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { globalConfigFilters } from '../../../app.config'
 
 @Component({
   selector: 'datahub-last-created',
@@ -17,6 +18,7 @@ export class LastCreatedComponent implements OnInit {
 
   ngOnInit() {
     this.searchFacade
+      .setConfigFilters(globalConfigFilters)
       .setConfigRequestFields([...FIELDS_BRIEF, 'createDate', 'changeDate'])
       .setPageSize(10)
       .setSortBy(['desc', 'createDate'])

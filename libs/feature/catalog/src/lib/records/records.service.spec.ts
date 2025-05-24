@@ -1,6 +1,7 @@
 import { RecordsService } from './records.service'
 import { of } from 'rxjs'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 
 class RecordsRepositoryMock {
   getMatchesCount = jest.fn(() => of(123))
@@ -23,14 +24,23 @@ describe('RecordsService', () => {
     describe('when the request works as expected', () => {
       it('emits the total amount of records', () => {
         let count
-        service.recordsCount$.subscribe((v) => (count = v))
+        service.getRecordsCount().subscribe((v) => (count = v))
         expect(count).toBe(123)
       })
-      it('does not call the api several times', () => {
-        service.recordsCount$.subscribe()
-        service.recordsCount$.subscribe()
-        service.recordsCount$.subscribe()
-        expect(repository.getMatchesCount).toHaveBeenCalledTimes(1)
+      it('calls the api with filters', (done) => {
+        const configFilters: FieldFilters = {
+          resourceType: {
+            service: false,
+            map: false,
+            'map/static': false,
+            mapDigital: false,
+          },
+        }
+        service.getRecordsCount(configFilters).subscribe((result) => {
+          expect(result).toBe(123)
+          expect(repository.getMatchesCount).toHaveBeenCalledWith(configFilters)
+          done()
+        })
       })
     })
   })

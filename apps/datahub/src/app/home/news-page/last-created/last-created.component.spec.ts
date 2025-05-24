@@ -5,6 +5,7 @@ import { LastCreatedComponent } from './last-created.component'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
+import { globalConfigFilters } from '../../../app.config'
 
 class SearchFacadeMock {
   init = jest.fn()
@@ -13,6 +14,7 @@ class SearchFacadeMock {
   setSortBy = jest.fn(() => this)
   setConfigRequestFields = jest.fn(() => this)
   setResultsLayout = jest.fn(() => this)
+  setConfigFilters = jest.fn(() => this)
 }
 class RouterFacadeMock {
   goToMetadata = jest.fn()
@@ -74,6 +76,7 @@ describe('LastCreatedComponent', () => {
           'changeDate',
         ])
       )
+      expect(facade.setConfigFilters).toHaveBeenCalledWith(globalConfigFilters)
     })
   })
 })

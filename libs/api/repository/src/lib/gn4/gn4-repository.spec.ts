@@ -13,6 +13,7 @@ import {
 import {
   Aggregations,
   SearchResults,
+  FieldFilters,
 } from '@geonetwork-ui/common/domain/model/search'
 import {
   datasetRecordsFixture,
@@ -539,10 +540,33 @@ describe('Gn4Repository', () => {
       },
     }
     beforeEach(async () => {
-      results = await lastValueFrom(repository.aggregate(aggParams))
+      results = await lastValueFrom(
+        repository.aggregate(aggParams, {
+          resourceType: {
+            service: false,
+            map: false,
+            'map/static': false,
+            mapDigital: false,
+          },
+        } as FieldFilters)
+      )
     })
     it('builds an aggregation payload', () => {
-      expect(gn4Helper.getSearchRequestBody).toHaveBeenCalledWith(aggParams)
+      expect(gn4Helper.getSearchRequestBody).toHaveBeenCalledWith(
+        aggParams,
+        expect.any(Number),
+        expect.any(Number),
+        undefined,
+        undefined,
+        {
+          resourceType: {
+            service: false,
+            map: false,
+            'map/static': false,
+            mapDigital: false,
+          },
+        } as FieldFilters
+      )
     })
     it('returns the aggregation results', () => {
       expect(results).toStrictEqual({
@@ -555,14 +579,45 @@ describe('Gn4Repository', () => {
   describe('fuzzySearch', () => {
     let results: SearchResults
     beforeEach(async () => {
-      results = await lastValueFrom(repository.fuzzySearch('blargz'))
+      results = await lastValueFrom(repository.fuzzySearch('blargz', {}))
     })
     it('uses an autocomplete ES payload', () => {
-      expect(gn4Helper.buildAutocompletePayload).toHaveBeenCalledWith('blargz')
+      expect(gn4Helper.buildAutocompletePayload).toHaveBeenCalledWith(
+        'blargz',
+        {}
+      )
     })
     it('returns the given results as records', () => {
       expect(results.count).toBe(1234)
       expect(results.records).toStrictEqual(datasetRecordsFixture())
+    })
+  })
+  describe('fuzzySearch with configFilter', () => {
+    let results: SearchResults
+    beforeEach(async () => {
+      results = await lastValueFrom(
+        repository.fuzzySearch('blargz', {
+          resourceType: {
+            service: false,
+            map: false,
+            'map/static': false,
+            mapDigital: false,
+          },
+        } as FieldFilters)
+      )
+    })
+    it('uses an autocomplete ES payload', () => {
+      expect(gn4Helper.buildAutocompletePayload).toHaveBeenCalledWith(
+        'blargz',
+        {
+          resourceType: {
+            service: false,
+            map: false,
+            'map/static': false,
+            mapDigital: false,
+          },
+        }
+      )
     })
   })
   describe('openRecordForEdition', () => {

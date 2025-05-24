@@ -22,7 +22,6 @@ class OrganisationsServiceMock {
       orgs: orgs.reduce((prev, curr) => ({ ...prev, [curr.name]: true }), {}),
     })
   )
-  organisations$ = of(someOrganizationsFixture())
 }
 
 const anOrganizationWithManyDatasets: Organization =

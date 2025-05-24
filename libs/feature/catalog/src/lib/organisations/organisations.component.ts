@@ -9,7 +9,7 @@ import {
 } from '@angular/core'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
-import { map, startWith, tap } from 'rxjs/operators'
+import { map, startWith, tap, switchMap } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { SortByField } from '@geonetwork-ui/common/domain/model/search'
 import { createFuzzyFilter } from '@geonetwork-ui/util/shared'
@@ -22,6 +22,7 @@ import {
   OrganisationsResultComponent,
 } from '@geonetwork-ui/ui/catalog'
 import { Paginable, PaginationComponent } from '@geonetwork-ui/ui/layout'
+import { SearchFacade } from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'gn-ui-organisations',
@@ -46,7 +47,8 @@ export class OrganisationsComponent implements Paginable {
     private organisationsService: OrganizationsServiceInterface,
     @Optional()
     @Inject(ORGANIZATION_PAGE_URL_TOKEN)
-    private urlTemplate: string
+    private urlTemplate: string,
+    private searchFacade: SearchFacade
   ) {}
 
   totalPages: number
@@ -54,10 +56,14 @@ export class OrganisationsComponent implements Paginable {
   organisationResults: number
   sortBy$: BehaviorSubject<SortByField> = new BehaviorSubject(['asc', 'name'])
   filterBy$: BehaviorSubject<string> = new BehaviorSubject('')
-  organisationsTotal$ = this.organisationsService.organisationsCount$
+
   organisationsFilteredAndSorted$: Observable<Organization[]> = combineLatest([
-    this.organisationsService.organisations$.pipe(
-      startWith(Array(this.itemsOnPage).fill({}))
+    this.searchFacade.configFilters$.pipe(
+      switchMap((configFilters) =>
+        this.organisationsService
+          .getOrganisations(configFilters)
+          .pipe(startWith(Array(this.itemsOnPage).fill({})))
+      )
     ),
     this.sortBy$,
     this.filterBy$,
@@ -71,6 +77,7 @@ export class OrganisationsComponent implements Paginable {
     })
   )
 
+  organisationsTotal$ = this.organisationsService.organisationsCount$
   organisations$: Observable<Organization[]> = combineLatest([
     this.organisationsFilteredAndSorted$,
     this.currentPage$,

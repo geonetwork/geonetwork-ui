@@ -24,6 +24,7 @@ import {
 } from '@geonetwork-ui/api/repository'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 
 class ElasticsearchServiceMock {
   registerRuntimeField = jest.fn()
@@ -196,9 +197,17 @@ const sampleOrgs: Organization[] = [
     recordCount: 30,
   },
 ]
+const configFilters: FieldFilters = {
+  resourceType: {
+    service: false,
+    map: false,
+    'map/static': false,
+    mapDigital: false,
+  },
+}
 
 class OrganisationsServiceMock {
-  organisations$ = of(sampleOrgs)
+  getOrganisations = jest.fn(() => of(sampleOrgs))
   getOrgsFromFilters = jest.fn(() => of(sampleOrgs.slice(0, 2)))
   getFiltersForOrgs = jest.fn((orgs) =>
     of({
@@ -264,17 +273,22 @@ describe('search fields implementations', () => {
     describe('#getAvailableValues', () => {
       let values
       beforeEach(async () => {
-        values = await lastValueFrom(searchField.getAvailableValues())
+        values = await lastValueFrom(
+          searchField.getAvailableValues(configFilters)
+        )
       })
       it('calls search with a simple terms aggregation', () => {
-        expect(repository.aggregate).toHaveBeenCalledWith({
-          myField: {
-            type: 'terms',
-            limit: 1000,
-            field: 'myField',
-            sort: ['desc', 'key'],
+        expect(repository.aggregate).toHaveBeenCalledWith(
+          {
+            myField: {
+              type: 'terms',
+              limit: 1000,
+              field: 'myField',
+              sort: ['desc', 'key'],
+            },
           },
-        })
+          configFilters
+        )
       })
       it('returns a list of values from the buckets', () => {
         expect(values).toEqual([
@@ -367,7 +381,9 @@ describe('search fields implementations', () => {
     describe('#getAvailableValues', () => {
       let values
       beforeEach(async () => {
-        values = await lastValueFrom(searchField.getAvailableValues())
+        values = await lastValueFrom(
+          searchField.getAvailableValues(configFilters)
+        )
       })
       it('returns an empty list of values for now', () => {
         expect(values).toEqual([])
@@ -445,17 +461,22 @@ describe('search fields implementations', () => {
       describe('#getAvailableValues', () => {
         let values
         beforeEach(async () => {
-          values = await lastValueFrom(searchField.getAvailableValues())
+          values = await lastValueFrom(
+            searchField.getAvailableValues(configFilters)
+          )
         })
         it('calls search with a simple unsorted terms', () => {
-          expect(repository.aggregate).toHaveBeenCalledWith({
-            'cl_topic.key': {
-              type: 'terms',
-              limit: 1000,
-              field: 'cl_topic.key',
-              sort: ['asc', 'key'],
+          expect(repository.aggregate).toHaveBeenCalledWith(
+            {
+              'cl_topic.key': {
+                type: 'terms',
+                limit: 1000,
+                field: 'cl_topic.key',
+                sort: ['asc', 'key'],
+              },
             },
-          })
+            configFilters
+          )
         })
         it('returns a list of values sorted by translated labels', () => {
           expect(values).toEqual([
@@ -486,17 +507,22 @@ describe('search fields implementations', () => {
       describe('#getAvailableValues', () => {
         let values
         beforeEach(async () => {
-          values = await lastValueFrom(searchField.getAvailableValues())
+          values = await lastValueFrom(
+            searchField.getAvailableValues(configFilters)
+          )
         })
         it('calls search with a simple unsorted terms', () => {
-          expect(repository.aggregate).toHaveBeenCalledWith({
-            'tag.default': {
-              type: 'terms',
-              limit: 1000,
-              field: 'tag.default',
-              sort: ['desc', 'count'],
+          expect(repository.aggregate).toHaveBeenCalledWith(
+            {
+              'tag.default': {
+                type: 'terms',
+                limit: 1000,
+                field: 'tag.default',
+                sort: ['desc', 'count'],
+              },
             },
-          })
+            configFilters
+          )
         })
         it('returns a list of values sorted by count', () => {
           expect(values).toEqual([
@@ -524,17 +550,20 @@ describe('search fields implementations', () => {
           'desc',
           'count'
         )
-        await lastValueFrom(searchField.getAvailableValues())
+        await lastValueFrom(searchField.getAvailableValues(configFilters))
       })
       it('appends the field name with the default field', () => {
-        expect(repository.aggregate).toHaveBeenCalledWith({
-          'myField.default': {
-            type: 'terms',
-            limit: 1000,
-            field: 'myField.default',
-            sort: ['desc', 'count'],
+        expect(repository.aggregate).toHaveBeenCalledWith(
+          {
+            'myField.default': {
+              type: 'terms',
+              limit: 1000,
+              field: 'myField.default',
+              sort: ['desc', 'count'],
+            },
           },
-        })
+          configFilters
+        )
       })
     })
     describe('METADATA_LANGUAGE set to an explicit language', () => {
@@ -546,17 +575,20 @@ describe('search fields implementations', () => {
           'desc',
           'count'
         )
-        await lastValueFrom(searchField.getAvailableValues())
+        await lastValueFrom(searchField.getAvailableValues(configFilters))
       })
       it('appends the field name with the given language', () => {
-        expect(repository.aggregate).toHaveBeenCalledWith({
-          'myField.langswe': {
-            type: 'terms',
-            limit: 1000,
-            field: 'myField.langswe',
-            sort: ['desc', 'count'],
+        expect(repository.aggregate).toHaveBeenCalledWith(
+          {
+            'myField.langswe': {
+              type: 'terms',
+              limit: 1000,
+              field: 'myField.langswe',
+              sort: ['desc', 'count'],
+            },
           },
-        })
+          configFilters
+        )
       })
     })
     describe('METADATA_LANGUAGE unset', () => {
@@ -568,17 +600,20 @@ describe('search fields implementations', () => {
           'desc',
           'count'
         )
-        await lastValueFrom(searchField.getAvailableValues())
+        await lastValueFrom(searchField.getAvailableValues(configFilters))
       })
       it('appends the field name with the default field', () => {
-        expect(repository.aggregate).toHaveBeenCalledWith({
-          'myField.default': {
-            type: 'terms',
-            limit: 1000,
-            field: 'myField.default',
-            sort: ['desc', 'count'],
+        expect(repository.aggregate).toHaveBeenCalledWith(
+          {
+            'myField.default': {
+              type: 'terms',
+              limit: 1000,
+              field: 'myField.default',
+              sort: ['desc', 'count'],
+            },
           },
-        })
+          configFilters
+        )
       })
     })
   })
@@ -590,7 +625,9 @@ describe('search fields implementations', () => {
     describe('#getAvailableValues', () => {
       let values
       beforeEach(async () => {
-        values = await lastValueFrom(searchField.getAvailableValues())
+        values = await lastValueFrom(
+          searchField.getAvailableValues(configFilters)
+        )
       })
       it('returns an empty array', () => {
         expect(values).toEqual([])
@@ -637,7 +674,9 @@ describe('search fields implementations', () => {
     describe('#getAvailableValues', () => {
       let values
       beforeEach(async () => {
-        values = await lastValueFrom(searchField.getAvailableValues())
+        values = await lastValueFrom(
+          searchField.getAvailableValues(configFilters)
+        )
       })
       it('returns the available values', () => {
         expect(values).toEqual([
@@ -695,17 +734,20 @@ describe('search fields implementations', () => {
     describe('#getAvailableValues', () => {
       let values
       beforeEach(async () => {
-        values = await lastValueFrom(searchField.getAvailableValues())
+        values = await lastValueFrom(searchField.getAvailableValues({}))
       })
       it('orders results by descending count', () => {
-        expect(repository.aggregate).toHaveBeenCalledWith({
-          license: {
-            type: 'terms',
-            limit: 10,
-            field: 'license',
-            sort: ['desc', 'count'],
+        expect(repository.aggregate).toHaveBeenCalledWith(
+          {
+            license: {
+              type: 'terms',
+              limit: 10,
+              field: 'license',
+              sort: ['desc', 'count'],
+            },
           },
-        })
+          {}
+        )
       })
       it('returns the available licenses, order by descending count', () => {
         expect(values).toEqual([
@@ -790,7 +832,7 @@ describe('search fields implementations', () => {
     describe('#getAvailableValues', () => {
       let values
       beforeEach(async () => {
-        values = await lastValueFrom(searchField.getAvailableValues())
+        values = await lastValueFrom(searchField.getAvailableValues({}))
       })
       it('returns the groups ordered by label', () => {
         expect(values).toEqual([
@@ -818,17 +860,20 @@ describe('search fields implementations', () => {
     describe('#getAvailableValues', () => {
       let values
       beforeEach(async () => {
-        values = await lastValueFrom(searchField.getAvailableValues())
+        values = await lastValueFrom(searchField.getAvailableValues({}))
       })
       it('calls aggregate with expected payload', () => {
-        expect(repository.aggregate).toHaveBeenCalledWith({
-          'userinfo.keyword': {
-            type: 'terms',
-            limit: 1000,
-            field: 'userinfo.keyword',
-            sort: ['asc', 'key'],
+        expect(repository.aggregate).toHaveBeenCalledWith(
+          {
+            'userinfo.keyword': {
+              type: 'terms',
+              limit: 1000,
+              field: 'userinfo.keyword',
+              sort: ['asc', 'key'],
+            },
           },
-        })
+          {}
+        )
       })
       it('returns the available users, in expected format', () => {
         expect(values).toEqual([
@@ -859,7 +904,7 @@ describe('search fields implementations', () => {
     describe('#getAvailableValues', () => {
       let values
       beforeEach(async () => {
-        values = await lastValueFrom(searchField.getAvailableValues())
+        values = await lastValueFrom(searchField.getAvailableValues({}))
       })
       it('returns the available values', () => {
         expect(values).toEqual([
@@ -934,7 +979,7 @@ describe('search fields implementations', () => {
           })
         )
 
-        values = await lastValueFrom(searchField.getAvailableValues())
+        values = await lastValueFrom(searchField.getAvailableValues({}))
       })
 
       it('returns the available values mapped by type', () => {

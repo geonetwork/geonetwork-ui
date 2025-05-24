@@ -7,6 +7,7 @@ import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/orga
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { ElasticsearchService } from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 
 class RecordsRepositoryMock {
   aggregate = jest.fn(() => EMPTY)
@@ -19,7 +20,7 @@ class ToolsApiServiceMock {
   getTranslationsPackage1 = jest.fn(() => EMPTY)
 }
 class OrganisationsServiceMock {
-  organisations$ = of([{ name: 'orgA', recordCount: 10 }])
+  getOrganisations = jest.fn(() => of([{ name: 'orgA', recordCount: 10 }]))
   getOrgsFromFilters = jest.fn(() => of([{ name: 'orgB' }]))
   getFiltersForOrgs = jest.fn(() =>
     of({
@@ -43,6 +44,14 @@ class PlatformServiceInterfaceMock {
   })
 }
 
+const configFilters: FieldFilters = {
+  resourceType: {
+    service: false,
+    map: false,
+    'map/static': false,
+    mapDigital: false,
+  },
+}
 describe('FieldsService', () => {
   let service: FieldsService
 
@@ -111,15 +120,17 @@ describe('FieldsService', () => {
     describe('#getAvailableValues', () => {
       let values
       beforeEach(async () => {
-        values = await lastValueFrom(service.getAvailableValues('organization'))
+        values = await lastValueFrom(
+          service.getAvailableValues('organization', configFilters)
+        )
       })
       it('gets the values from the orgs service', () => {
         expect(values).toEqual([{ label: 'orgA (10)', value: 'orgA' }])
       })
       it('throws for an unsupported field', () => {
-        expect(() => service.getAvailableValues('blarg')).toThrowError(
-          'Unsupported search field: blarg'
-        )
+        expect(() =>
+          service.getAvailableValues('blarg', configFilters)
+        ).toThrowError('Unsupported search field: blarg')
       })
     })
     describe('#buildFiltersFromFieldValues', () => {

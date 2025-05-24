@@ -398,10 +398,22 @@ export class ElasticsearchService {
         }
   }
 
-  buildAutocompletePayload(query: string): EsSearchParams {
+  buildAutocompletePayload(
+    query: string,
+    fieldSearchFilters: FieldFilters
+  ): EsSearchParams {
+    const filter = [this.queryFilterOnValues('isTemplate', 'n')] as Record<
+      string,
+      unknown
+    >[]
+    const queryFilters = this.filtersToQuery(fieldSearchFilters)
+    if (queryFilters) {
+      filter.push(...queryFilters)
+    }
     return {
       query: {
         bool: {
+          filter,
           must: [
             this.queryFilterOnValues('isTemplate', 'n'),
             {

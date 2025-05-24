@@ -49,13 +49,36 @@ import { FavoritesService } from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 const defaultSearchState = initialState[DEFAULT_SEARCH_KEY]
-const stateWithSearches = {
+const stateWithSearches: SearchState = {
   ...initialState,
   [DEFAULT_SEARCH_KEY]: {
     ...defaultSearchState,
     config: {
       ...defaultSearchState.config,
       aggregations: SAMPLE_AGGREGATIONS_PARAMS(),
+      filters: {
+        resourceType: {
+          service: false,
+          map: false,
+          'map/static': false,
+          mapDigital: false,
+        },
+        format: {
+          PDF: true,
+        },
+      },
+    },
+    params: {
+      ...defaultSearchState.params,
+      filters: {
+        resourceType: {
+          dataset: true,
+        },
+        format: {},
+        publicationYearForResource: {
+          '2024': true,
+        },
+      },
     },
   },
   main: {
@@ -67,6 +90,50 @@ const stateWithSearches = {
   },
 }
 
+const resultFilterStateMerge = {
+  fields: [
+    'uuid',
+    'id',
+    'title',
+    'resource*',
+    'resourceTitleObject',
+    'resourceAbstractObject',
+    'overview',
+    'logo',
+    'codelist_status_text',
+    'link',
+    'linkProtocol',
+    'contactForResource*.organisation*',
+    'contact*.organisation*',
+    'contact*.email',
+    'userSavedCount',
+    'cl_topic',
+    'cl_maintenanceAndUpdateFrequency',
+    'MD_LegalConstraintsUseLimitationObject',
+    'qualityScore',
+    'allKeywords',
+  ],
+  filterGeometry: undefined,
+  filterIds: undefined,
+  filters: {
+    resourceType: {
+      dataset: true,
+      service: false,
+      map: false,
+      'map/static': false,
+      mapDigital: false,
+    },
+    format: {
+      PDF: true,
+    },
+    publicationYearForResource: {
+      '2024': true,
+    },
+  },
+  limit: 10,
+  offset: 0,
+  sort: undefined,
+}
 class PlatformServiceMock {
   getMe = jest.fn(() => of(true))
 }
@@ -531,6 +598,18 @@ describe('Effects', () => {
           )
         })
       })
+    })
+    it('Hit merge state configs and params state filters', () => {
+      actions$ = hot('-a-', { a: new RequestMoreResults() })
+      const expected = hot('-(ebcd)-', {
+        b: new AddResults(datasetRecordsFixture()),
+        c: new SetResultsAggregations(SAMPLE_AGGREGATIONS_RESULTS()),
+        d: new SetResultsHits(123),
+        e: new ClearError(),
+      })
+      expect(effects.loadResults$).toBeObservable(expected)
+      const repository = TestBed.inject(RecordsRepositoryInterface)
+      expect(repository.search).toHaveBeenCalledWith(resultFilterStateMerge)
     })
   })
 

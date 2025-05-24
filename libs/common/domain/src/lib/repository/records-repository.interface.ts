@@ -15,13 +15,19 @@ export abstract class RecordsRepositoryInterface {
   abstract getFeatureCatalog(
     record: CatalogRecord
   ): Observable<DatasetFeatureCatalog | null>
-  abstract aggregate(params: AggregationsParams): Observable<Aggregations>
+  abstract aggregate(
+    params: AggregationsParams,
+    configFilters?: FieldFilters
+  ): Observable<Aggregations>
   abstract getSimilarRecords(
     similarTo: CatalogRecord
   ): Observable<CatalogRecord[]>
   abstract getSources(record: CatalogRecord): Observable<CatalogRecord[]>
   abstract getSourceOf(record: CatalogRecord): Observable<CatalogRecord[]>
-  abstract fuzzySearch(query: string): Observable<SearchResults>
+  abstract fuzzySearch(
+    query: string,
+    configFilters?: FieldFilters
+  ): Observable<SearchResults>
   abstract canEditRecord(uniqueIdentifier: string): Observable<boolean>
   /**
    * This emits once:
