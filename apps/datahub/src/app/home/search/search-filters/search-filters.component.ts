@@ -7,6 +7,7 @@ import {
   ViewChildren,
 } from '@angular/core'
 import {
+  FeatureSearchModule,
   FieldsService,
   FilterDropdownComponent,
   SearchFacade,
@@ -16,12 +17,47 @@ import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
 import { Observable, switchMap } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { CommonModule } from '@angular/common'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { ButtonComponent, CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
+import {
+  matAddOutline,
+  matCloseOutline,
+  matMoreHorizOutline,
+  matRemoveOutline,
+} from '@ng-icons/material-icons/outline'
 
 @Component({
   selector: 'datahub-search-filters',
   templateUrl: './search-filters.component.html',
   styleUrls: ['./search-filters.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    NgIconComponent,
+    FeatureSearchModule,
+    ButtonComponent,
+    CheckToggleComponent,
+    TranslatePipe,
+    TranslateDirective,
+  ],
+  providers: [
+    provideIcons({
+      matRemoveOutline,
+      matMoreHorizOutline,
+      matAddOutline,
+      matCloseOutline,
+    }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
+  ],
 })
 export class SearchFiltersComponent implements OnInit {
   @ViewChildren(FilterDropdownComponent)

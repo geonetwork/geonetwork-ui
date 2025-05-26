@@ -14,7 +14,7 @@ import {
 import { CommonModule } from '@angular/common'
 import { LinkCardComponent } from '@geonetwork-ui/ui/elements'
 import { LetDirective } from '@ngrx/component'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
 
 @Component({
@@ -30,7 +30,7 @@ import { map } from 'rxjs/operators'
     LinkCardComponent,
     CarouselComponent,
     LetDirective,
-    TranslateModule,
+    TranslateDirective,
   ],
 })
 export class RecordOtherlinksComponent implements AfterViewInit {

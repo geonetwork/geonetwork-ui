@@ -8,9 +8,9 @@ import {
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { GpfApiDlComponent, MdViewFacade } from '@geonetwork-ui/feature/record'
 import {
+  BlockListComponent,
   CarouselComponent,
   PreviousNextButtonsComponent,
-  BlockListComponent,
 } from '@geonetwork-ui/ui/layout'
 import {
   ApiCardComponent,
@@ -19,7 +19,7 @@ import {
 import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matCloseOutline } from '@ng-icons/material-icons/outline'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { map } from 'rxjs'
 import { shareReplay, switchMap } from 'rxjs/operators'
@@ -42,7 +42,7 @@ marker('record.metadata.api.form.title')
     ApiCardComponent,
     RecordApiFormComponent,
     NgIcon,
-    TranslateModule,
+    TranslateDirective,
     GpfApiDlComponent,
   ],
   viewProviders: [

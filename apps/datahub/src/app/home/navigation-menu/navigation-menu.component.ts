@@ -10,6 +10,15 @@ import {
   ROUTER_ROUTE_ORGANIZATIONS,
 } from '../../router/constants'
 import { getThemeConfig } from '@geonetwork-ui/util/app-config'
+import { CommonModule } from '@angular/common'
+import { RouterLink } from '@angular/router'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
+import { matMenuOutline } from '@ng-icons/material-icons/outline'
 
 marker('datahub.header.news')
 marker('datahub.header.datasets')
@@ -19,6 +28,22 @@ marker('datahub.header.organizations')
   selector: 'datahub-navigation-menu',
   templateUrl: './navigation-menu.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterLink,
+    NgIconComponent,
+    TranslatePipe,
+    TranslateDirective,
+  ],
+  providers: [
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
+    provideIcons({
+      matMenuOutline,
+    }),
+  ],
 })
 export class NavigationMenuComponent {
   foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
