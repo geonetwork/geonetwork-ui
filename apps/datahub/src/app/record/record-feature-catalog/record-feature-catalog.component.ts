@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 import {
   CatalogRecord,
   DatasetFeatureCatalog,
@@ -9,13 +9,7 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { Observable } from 'rxjs'
 import { FeatureCatalogListComponent } from '@geonetwork-ui/ui/elements'
 import { SearchFeatureCatalogComponent } from '@geonetwork-ui/ui/inputs'
-import {
-  OverlayModule,
-  ConnectedPosition,
-  Overlay,
-  ScrollDispatcher,
-  CdkScrollable,
-} from '@angular/cdk/overlay'
+import { ConnectedPosition, OverlayModule } from '@angular/cdk/overlay'
 
 @Component({
   selector: 'datahub-record-feature-catalog',
@@ -23,10 +17,10 @@ import {
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
-    OverlayModule,
+    TranslateDirective,
     SearchFeatureCatalogComponent,
     FeatureCatalogListComponent,
+    OverlayModule,
   ],
 })
 export class RecordFeatureCatalogComponent implements OnInit {

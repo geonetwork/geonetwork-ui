@@ -31,12 +31,12 @@ import { RecordDownloadsComponent } from '../record-downloads/record-downloads.c
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
 import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matChatOutline } from '@ng-icons/material-icons/outline'
 import { RecordFeatureCatalogComponent } from '../record-feature-catalog/record-feature-catalog.component'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
 
 @Component({
@@ -58,13 +58,14 @@ import { RecordLinkedRecordsComponent } from '../record-linked-records/record-li
     MetadataQualityComponent,
     MetadataCatalogComponent,
     RecordInternalLinksComponent,
-    TranslateModule,
     RecordDataPreviewComponent,
     ButtonComponent,
     NgIcon,
     ServiceCapabilitiesComponent,
     RecordFeatureCatalogComponent,
     RecordLinkedRecordsComponent,
+    TranslateDirective,
+    TranslatePipe,
   ],
   viewProviders: [provideIcons({ matChatOutline })],
 })

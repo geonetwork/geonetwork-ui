@@ -1,10 +1,8 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import {
   ROUTER_ROUTE_SEARCH,
   RouterFacade,
 } from '@geonetwork-ui/feature/router'
-import { TranslateModule } from '@ngx-translate/core'
 import { readFirst } from '@nx/angular/testing'
 import { BehaviorSubject } from 'rxjs'
 import {
@@ -13,6 +11,7 @@ import {
 } from '../../router/constants'
 
 import { NavigationMenuComponent } from './navigation-menu.component'
+import { MockBuilder } from 'ng-mocks'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
@@ -30,17 +29,16 @@ describe('NavigationMenuComponent', () => {
   let component: NavigationMenuComponent
   let fixture: ComponentFixture<NavigationMenuComponent>
 
+  beforeEach(() => MockBuilder(NavigationMenuComponent))
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
-      declarations: [NavigationMenuComponent],
       providers: [
         {
           provide: RouterFacade,
           useValue: routerFacadeMock,
         },
       ],
-      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   })
 

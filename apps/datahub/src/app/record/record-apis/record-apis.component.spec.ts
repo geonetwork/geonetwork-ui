@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordApisComponent } from './record-apis.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { BehaviorSubject } from 'rxjs'
 import { MockBuilder } from 'ng-mocks'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class MdViewFacadeMock {
   selectedApiLink$ = new BehaviorSubject([])
@@ -26,8 +26,8 @@ describe('RecordApisComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         {
           provide: MdViewFacade,
           useClass: MdViewFacadeMock,
