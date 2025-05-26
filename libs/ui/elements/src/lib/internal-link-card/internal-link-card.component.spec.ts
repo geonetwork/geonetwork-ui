@@ -225,15 +225,9 @@ describe('InternalLinkCardComponent', () => {
       component.record = mockRecord
     })
 
-    it('returns the right line-clamp for each size ', () => {
+    it('returns the right line-clamp for L size ', () => {
       component.size = 'L'
       expect(component.getAbstractLineClamp()).toBe('line-clamp-2')
-      component.size = 'M'
-      expect(component.getAbstractLineClamp()).toBe('')
-      component.size = 'S'
-      expect(component.getAbstractLineClamp()).toBe('')
-      component.size = 'XS'
-      expect(component.getAbstractLineClamp()).toBe('')
     })
   })
 
@@ -249,8 +243,6 @@ describe('InternalLinkCardComponent', () => {
       expect(component.getAbstractLineClamp()).toBe('line-clamp-2')
       component.size = 'S'
       expect(component.getAbstractLineClamp()).toBe('line-clamp-2')
-      component.size = 'XS'
-      expect(component.getAbstractLineClamp()).toBe('')
     })
   })
 

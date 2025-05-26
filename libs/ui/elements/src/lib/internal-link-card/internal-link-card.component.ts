@@ -110,29 +110,15 @@ export class InternalLinkCardComponent implements OnInit {
   getTitleClass() {
     return this.titleClassMap[this._size]
   }
-
   getAbstractLineClamp(): string {
-    if (this.record.ownerOrganization?.name) {
-      if (this.size === 'L') {
-        return 'line-clamp-2'
-      }
-      return ''
-    }
-
-    if (this.size === 'L') {
-      return 'line-clamp-6'
-    }
-    if (this.size === 'M' || this.size === 'S') {
-      return 'line-clamp-2'
-    }
-    return ''
+    return this.size === 'L' && !this.record.ownerOrganization?.name
+      ? 'line-clamp-6'
+      : 'line-clamp-2'
   }
-
   displayAbstract(): boolean {
     return (
       this.size === 'L' ||
-      ((this.size === 'M' || this.size === 'S') &&
-        !this.record.ownerOrganization?.name)
+      (['M', 'S'].includes(this.size) && !this.record.ownerOrganization?.name)
     )
   }
 
