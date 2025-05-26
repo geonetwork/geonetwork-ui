@@ -220,29 +220,29 @@ describe('InternalLinkCardComponent', () => {
     })
   })
 
-  describe('getAbstractLineClamp with owner organization', () => {
+  describe('getAbstractClass with owner organization', () => {
     beforeEach(() => {
       component.record = mockRecord
     })
 
     it('returns the right line-clamp for L size ', () => {
       component.size = 'L'
-      expect(component.getAbstractLineClamp()).toBe('line-clamp-2')
+      expect(component.getAbstractClass()).toBe('line-clamp-2')
     })
   })
 
-  describe('getAbstractLineClamp without owner organization', () => {
+  describe('getAbstractClass without owner organization', () => {
     beforeEach(() => {
       component.record = mockRecordWithoutContact
     })
 
     it('returns the right line-clamp for each size', () => {
       component.size = 'L'
-      expect(component.getAbstractLineClamp()).toBe('line-clamp-6')
+      expect(component.getAbstractClass()).toBe('line-clamp-6')
       component.size = 'M'
-      expect(component.getAbstractLineClamp()).toBe('line-clamp-2')
+      expect(component.getAbstractClass()).toBe('line-clamp-2')
       component.size = 'S'
-      expect(component.getAbstractLineClamp()).toBe('line-clamp-2')
+      expect(component.getAbstractClass()).toBe('line-clamp-2 ml-2')
     })
   })
 
