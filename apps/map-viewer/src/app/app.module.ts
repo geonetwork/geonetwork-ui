@@ -9,11 +9,6 @@ import {
   MapStateContainerComponent,
 } from '@geonetwork-ui/feature/map'
 import { ThemeService } from '@geonetwork-ui/util/shared'
-import { TranslateModule } from '@ngx-translate/core'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { EffectsModule } from '@ngrx/effects'
@@ -23,6 +18,7 @@ import { provideGn4, provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
@@ -34,8 +30,6 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     BrowserModule,
     BrowserAnimationsModule,
     FeatureMapModule,
-    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-    UtilI18nModule,
     StoreModule.forRoot({}, { metaReducers }),
     StoreDevtoolsModule.instrument({ connectInZone: true }),
     EffectsModule.forRoot(),
@@ -45,6 +39,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     GeocodingComponent,
   ],
   providers: [
+    provideI18n(),
     importProvidersFrom(FeatureAuthModule),
     provideRepositoryUrl('/geonetwork/srv/api'),
     provideGn4(),
