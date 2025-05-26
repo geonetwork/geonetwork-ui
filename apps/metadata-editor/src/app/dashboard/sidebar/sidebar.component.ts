@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { DashboardMenuComponent } from '../dashboard-menu/dashboard-menu.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
   AuthService,
   AvatarServiceInterface,
 } from '@geonetwork-ui/api/repository'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { UserPreviewComponent } from '@geonetwork-ui/ui/elements'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { combineLatest, Observable } from 'rxjs'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
@@ -26,12 +26,13 @@ import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
   imports: [
     DashboardMenuComponent,
     CommonModule,
-    TranslateModule,
-    UiElementsModule,
+    TranslateDirective,
+    TranslatePipe,
     ButtonComponent,
     RouterLink,
     NgIcon,
     FeatureSearchModule,
+    UserPreviewComponent,
   ],
   providers: [
     provideIcons({

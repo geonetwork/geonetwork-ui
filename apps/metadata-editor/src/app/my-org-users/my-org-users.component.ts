@@ -1,11 +1,9 @@
 import { Component } from '@angular/core'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import { MyOrgService } from '@geonetwork-ui/feature/catalog'
 import { UsersListComponent } from './users-list.component'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
-import { tap } from 'rxjs'
+import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 
 @Component({
   selector: 'md-editor-my-org-users',
@@ -13,11 +11,10 @@ import { tap } from 'rxjs'
   styleUrls: ['./my-org-users.component.css'],
   standalone: true,
   imports: [
-    UiInputsModule,
-    TranslateModule,
+    TranslateDirective,
     CommonModule,
     UsersListComponent,
-    UiElementsModule,
+    ThumbnailComponent,
   ],
 })
 export class MyOrgUsersComponent {

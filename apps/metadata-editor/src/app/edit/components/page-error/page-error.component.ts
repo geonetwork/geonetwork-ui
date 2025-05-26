@@ -7,12 +7,18 @@ import {
 } from '@ng-icons/core'
 import { iconoirEmojiPuzzled, iconoirJournal } from '@ng-icons/iconoir'
 import { RouterModule } from '@angular/router'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'md-editor-page-error',
   standalone: true,
-  imports: [CommonModule, NgIconComponent, RouterModule, TranslateModule],
+  imports: [
+    CommonModule,
+    NgIconComponent,
+    RouterModule,
+    TranslateDirective,
+    TranslatePipe,
+  ],
   providers: [
     provideIcons({ iconoirEmojiPuzzled, iconoirJournal }),
     provideNgIconsConfig({
