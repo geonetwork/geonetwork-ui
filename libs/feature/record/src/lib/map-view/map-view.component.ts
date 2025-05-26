@@ -29,7 +29,10 @@ import {
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import {
+  DatasetOnlineResource,
+  DatasetServiceDistribution,
+} from '@geonetwork-ui/common/domain/model/record'
 import {
   createViewFromLayer,
   MapContext,
@@ -62,6 +65,7 @@ import { FetchError } from '@geonetwork-ui/data-fetcher'
 marker('map.dropdown.placeholder')
 marker('wfs.feature.limit')
 marker('dataset.error.restrictedAccess')
+marker('map.select.style')
 
 @Component({
   selector: 'gn-ui-map-view',
@@ -96,14 +100,16 @@ export class MapViewComponent implements AfterViewInit {
   selection: Feature
   showLegend = true
   legendExists = false
+  loading = false
+  error = null
 
-  toggleLegend() {
-    this.showLegend = !this.showLegend
-  }
-
-  onLegendStatusChange(status: boolean) {
-    this.legendExists = status
-  }
+  constructor(
+    private mdViewFacade: MdViewFacade,
+    private mapUtils: MapUtilsService,
+    private dataService: DataService,
+    private changeRef: ChangeDetectorRef,
+    private translateService: TranslateService
+  ) {}
 
   compatibleMapLinks$ = combineLatest([
     this.mdViewFacade.mapApiLinks$,
@@ -111,21 +117,35 @@ export class MapViewComponent implements AfterViewInit {
   ]).pipe(
     switchMap(async ([mapApiLinks, geoDataLinksWithGeometry]) => {
       // looking for TMS links to process
-      let processedMapApiLinks = await Promise.all(
-        mapApiLinks.map((link) => {
-          if (link.type === 'service' && link.accessServiceProtocol === 'tms') {
-            return this.dataService.getGeodataLinksFromTms(link)
-          }
-          return link
-        })
+      const processedMapApiLinks = await Promise.all(
+        mapApiLinks.map((link) =>
+          link.type === 'service' && link.accessServiceProtocol === 'tms'
+            ? this.dataService.getGeodataLinksFromTms(
+                link as DatasetServiceDistribution,
+                true
+              )
+            : link
+        )
       )
-      processedMapApiLinks = processedMapApiLinks.flat()
-      return [...processedMapApiLinks, ...geoDataLinksWithGeometry]
+      return [...processedMapApiLinks.flat(), ...geoDataLinksWithGeometry]
     }),
     shareReplay(1)
   )
 
-  dropdownChoices$ = this.compatibleMapLinks$.pipe(
+  sourceLinks$ = this.compatibleMapLinks$.pipe(
+    map((links) => {
+      const nonStyle = links.filter(
+        (l) =>
+          !(
+            l.type === 'service' && l.accessServiceProtocol === 'maplibre-style'
+          )
+      )
+      return nonStyle.length ? nonStyle : links
+    }),
+    shareReplay(1)
+  )
+
+  dropdownChoices$ = this.sourceLinks$.pipe(
     map((links) =>
       links.length
         ? links.map((link, index) => ({
@@ -135,15 +155,63 @@ export class MapViewComponent implements AfterViewInit {
         : [{ label: 'map.dropdown.placeholder', value: 0 }]
     )
   )
-  selectedLinkIndex$ = new BehaviorSubject(0)
 
-  loading = false
-  error = null
+  private selectedLinkIndex$ = new BehaviorSubject(0)
+  private selectedStyleIndex$ = new BehaviorSubject(0)
+
+  selectedSourceLink$ = combineLatest([
+    this.sourceLinks$,
+    this.selectedLinkIndex$.pipe(distinctUntilChanged()),
+  ]).pipe(
+    map(([links, idx]) => links[idx]),
+    shareReplay(1)
+  )
+
+  styleLinks$ = combineLatest([
+    this.compatibleMapLinks$,
+    this.selectedSourceLink$,
+  ]).pipe(
+    map(([all, src]) => {
+      if (
+        src &&
+        src.type === 'service' &&
+        src.accessServiceProtocol === 'tms'
+      ) {
+        const layerId = src.url.pathname.split('/').pop() || ''
+        return all.filter(
+          (l) =>
+            l.type === 'service' &&
+            l.accessServiceProtocol === 'maplibre-style' &&
+            l.url.pathname.includes(layerId)
+        )
+      }
+      return []
+    }),
+    tap(() => this.selectedStyleIndex$.next(0)),
+    shareReplay(1)
+  )
+
+  styleDropdownChoices$ = this.styleLinks$.pipe(
+    map((links) =>
+      links.length
+        ? links.map((l, i) => ({ label: getLinkLabel(l), value: i }))
+        : [
+            {
+              label: '\u00A0\u00A0\u00A0\u00A0',
+              value: 0,
+            },
+          ]
+    )
+  )
 
   selectedLink$ = combineLatest([
-    this.compatibleMapLinks$,
-    this.selectedLinkIndex$.pipe(distinctUntilChanged()),
-  ]).pipe(map(([links, index]) => links[index]))
+    this.selectedSourceLink$,
+    this.styleLinks$,
+    this.selectedStyleIndex$.pipe(distinctUntilChanged()),
+  ]).pipe(
+    map(([src, styles, styleIdx]) => (styles.length ? styles[styleIdx] : src)),
+    shareReplay(1)
+  )
 
   currentLayers$ = combineLatest([this.selectedLink$, this.excludeWfs$]).pipe(
     switchMap(([link, excludeWfs]) => {
@@ -202,19 +270,24 @@ export class MapViewComponent implements AfterViewInit {
     shareReplay(1)
   )
 
-  constructor(
-    private mdViewFacade: MdViewFacade,
-    private mapUtils: MapUtilsService,
-    private dataService: DataService,
-    private changeRef: ChangeDetectorRef,
-    private translateService: TranslateService
-  ) {}
-
   async ngAfterViewInit() {
     const map = await this.mapContainer.openlayersMap
     prioritizePageScroll(map.getInteractions())
   }
 
+  selectLinkToDisplay(i: number) {
+    this.selectedLinkIndex$.next(i)
+  }
+  selectStyleToDisplay(i: number) {
+    this.selectedStyleIndex$.next(i)
+  }
+
+  toggleLegend() {
+    this.showLegend = !this.showLegend
+  }
+  onLegendStatusChange(v: boolean) {
+    this.legendExists = v
+  }
   onMapFeatureSelect(features: Feature[]): void {
     this.resetSelection()
     this.selection = features?.length > 0 && features[0]
@@ -296,11 +369,6 @@ export class MapViewComponent implements AfterViewInit {
     }
     return throwError(() => 'protocol not supported')
   }
-
-  selectLinkToDisplay(link: number) {
-    this.selectedLinkIndex$.next(link)
-  }
-
   handleError(error: FetchError | Error | string) {
     if (error instanceof FetchError) {
       this.error = this.translateService.instant(
