@@ -1,20 +1,14 @@
-import {
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick,
-} from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { PublishButtonComponent } from './publish-button.component'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
-import { BehaviorSubject, Subject, firstValueFrom, of } from 'rxjs'
-import { TranslateModule } from '@ngx-translate/core'
-import { HttpClientModule } from '@angular/common/http'
+import { BehaviorSubject, firstValueFrom, of, Subject } from 'rxjs'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
   GroupsApiService,
   RecordsApiService,
 } from '@geonetwork-ui/data-access/gn4'
 import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class EditorFacadeMock {
   changedSinceSave$ = new BehaviorSubject(false)
@@ -74,12 +68,8 @@ describe('PublishButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        PublishButtonComponent,
-        TranslateModule.forRoot(),
-        HttpClientModule,
-      ],
       providers: [
+        provideI18n(),
         {
           provide: EditorFacade,
           useClass: EditorFacadeMock,

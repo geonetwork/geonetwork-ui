@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import {
   NgIconComponent,
   provideIcons,
@@ -17,7 +17,7 @@ import {
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslatePipe,
     FeatureSearchModule,
     NgIconComponent,
     SearchFiltersSummaryComponent,

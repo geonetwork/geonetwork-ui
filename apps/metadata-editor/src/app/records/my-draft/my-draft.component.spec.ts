@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { TranslateModule } from '@ngx-translate/core'
 import { cold, hot } from 'jasmine-marbles'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { MyDraftComponent } from './my-draft.component'
 import { EditorService } from '@geonetwork-ui/feature/editor'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('MyDraftComponent', () => {
   let component: MyDraftComponent
@@ -18,8 +18,8 @@ describe('MyDraftComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         MockProvider(RecordsRepositoryInterface),
         MockProvider(EditorService),
       ],
