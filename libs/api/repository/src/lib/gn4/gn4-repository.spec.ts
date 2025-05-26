@@ -758,6 +758,73 @@ describe('Gn4Repository', () => {
       })
     })
   })
+  describe('duplicateExternalRecord', () => {
+    const recordDownloadUrl = 'https://example.com/record/xml'
+    const mockXml = simpleDatasetRecordAsXmlFixture()
+    const mockRecord = simpleDatasetRecordFixture()
+
+    beforeEach(() => {
+      jest.spyOn(repository, 'saveRecord').mockReturnValue(of('mock-uuid'))
+      jest
+        .spyOn(repository as any, 'getExternalRecordAsXml')
+        .mockReturnValue(of(mockXml))
+    })
+
+    it('fetches the external record as XML', async () => {
+      await lastValueFrom(repository.duplicateExternalRecord(recordDownloadUrl))
+      expect((repository as any).getExternalRecordAsXml).toHaveBeenCalledWith(
+        recordDownloadUrl
+      )
+    })
+
+    it('edits title and calls saveRecord with record and recordAsXml', async () => {
+      const result = await lastValueFrom(
+        repository.duplicateExternalRecord(recordDownloadUrl)
+      )
+      expect(repository.saveRecord).toHaveBeenCalledWith(
+        {
+          ...mockRecord,
+          title: mockRecord.title + ' (Copy)',
+          defaultLanguage: null,
+          recordUpdated: expect.any(Date),
+          resourceCreated: expect.any(Date),
+          resourceUpdated: expect.any(Date),
+        },
+        mockXml
+          .replace(
+            'A very interesting dataset (un jeu de données très intéressant)',
+            'A very interesting dataset (un jeu de données très intéressant) (Copy)'
+          )
+          .concat('\n'),
+        false
+      )
+      expect(result).toBe('mock-uuid')
+    })
+
+    it('handles errors when fetching the external record', fakeAsync(() => {
+      jest
+        .spyOn(repository as any, 'getExternalRecordAsXml')
+        .mockReturnValue(
+          throwError(
+            () =>
+              new HttpErrorResponse({ status: 404, statusText: 'Not Found' })
+          )
+        )
+
+      let errorResponse: any
+      repository.duplicateExternalRecord(recordDownloadUrl).subscribe({
+        error: (error) => {
+          errorResponse = error
+        },
+      })
+
+      tick()
+
+      expect(errorResponse).toBeDefined()
+      expect(errorResponse.status).toBe(404)
+      expect(errorResponse.statusText).toBe('Not Found')
+    }))
+  })
   describe('record draft', () => {
     beforeEach(async () => {
       ;(gn4RecordsApi.insert as jest.Mock).mockReturnValueOnce(
