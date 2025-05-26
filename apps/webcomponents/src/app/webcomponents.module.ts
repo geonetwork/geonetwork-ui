@@ -13,18 +13,16 @@ import {
   MapViewComponent,
 } from '@geonetwork-ui/feature/record'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import {
   EmbeddedTranslateLoader,
+  provideI18n,
   TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
 } from '@geonetwork-ui/util/i18n'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
+import { TranslateLoader } from '@ngx-translate/core'
 import { AppComponent } from './app.component'
 import { WebcomponentOverlayContainer } from './webcomponent-overlay-container'
 import { apiConfiguration, BaseComponent } from './components/base.component'
@@ -44,7 +42,6 @@ import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { provideGn4 } from '@geonetwork-ui/api/repository'
 import { GnFigureDatasetsComponent } from './components/gn-figure-datasets/gn-figure-datasets.component'
-import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { GnDatasetViewMapComponent } from './components/gn-dataset-view-map/gn-dataset-view-map.component'
 import {
   ChartViewComponent,
@@ -81,24 +78,13 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   ],
   imports: [
     BrowserModule,
-    UiInputsModule,
     UiSearchModule,
-    UiElementsModule,
-    UiDatavizModule,
     FeatureSearchModule,
     FeatureRecordModule,
     FeatureMapModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({ connectInZone: true }),
     EffectsModule.forRoot(),
-    UtilI18nModule,
-    TranslateModule.forRoot({
-      ...TRANSLATE_DEFAULT_CONFIG,
-      loader: {
-        provide: TranslateLoader,
-        useClass: EmbeddedTranslateLoader,
-      },
-    }),
     FeatureAuthModule,
     BrowserAnimationsModule,
     MapStateContainerComponent,
@@ -110,6 +96,13 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   ],
   providers: [
     provideGn4(),
+    provideI18n({
+      ...TRANSLATE_DEFAULT_CONFIG,
+      loader: {
+        provide: TranslateLoader,
+        useClass: EmbeddedTranslateLoader,
+      },
+    }),
     {
       provide: Configuration,
       useValue: apiConfiguration,

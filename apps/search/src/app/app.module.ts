@@ -3,16 +3,14 @@ import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { FeatureMapModule } from '@geonetwork-ui/feature/map'
-import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
-import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+  FeatureSearchModule,
+  FuzzySearchComponent,
+} from '@geonetwork-ui/feature/search'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { TranslateModule } from '@ngx-translate/core'
 import { storeFreeze } from 'ngrx-store-freeze'
 import { environment } from '../environments/environment'
 import { AppRoutingModule } from './app-routing.module'
@@ -31,11 +29,8 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    UtilI18nModule,
-    TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
     FeatureSearchModule,
     FeatureCatalogModule,
-    UiLayoutModule,
     FeatureMapModule,
     StoreModule.forRoot({}, { metaReducers }),
     !environment.production
@@ -43,8 +38,9 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
       : [],
     EffectsModule.forRoot(),
     NoopAnimationsModule,
+    FuzzySearchComponent,
   ],
-  providers: [provideRepositoryUrl(environment.API_BASE_PATH)],
+  providers: [provideRepositoryUrl(environment.API_BASE_PATH), provideI18n()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
