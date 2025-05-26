@@ -394,10 +394,18 @@ describe('dataset pages', () => {
     // it should display the dataset dropdown with at least 1 option
     cy.get('@previewSection')
       .find('gn-ui-dropdown-selector')
+      .eq(0)
       .openDropdown()
       .children('button')
       .should('have.length.gt', 1)
     cy.clickOnBody()
+
+    // it checks if style selector is disabled when no style is available
+    cy.get('@previewSection')
+      .find('gn-ui-dropdown-selector')
+      .eq(1)
+      .should('exist')
+      .should('have.attr', 'ng-reflect-disabled', 'true')
 
     // Source under the max features limit
 
@@ -503,6 +511,7 @@ describe('dataset pages', () => {
     // it should not show the map and chart previews and display an error message
     cy.get('@previewSection')
       .find('gn-ui-dropdown-selector')
+      .eq(0)
       .openDropdown()
       .children('button')
       .eq(1)
