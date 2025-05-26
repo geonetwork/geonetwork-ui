@@ -6,9 +6,8 @@ import {
   ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { combineLatest, map } from 'rxjs'
-import { TranslateModule } from '@ngx-translate/core'
-import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
+import { map } from 'rxjs'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matArrowBack, matCreditCard } from '@ng-icons/material-icons/baseline'
@@ -32,8 +31,8 @@ import {
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
-    BadgeComponent,
+    TranslateDirective,
+    TranslatePipe,
     NgIcon,
     ImageOverlayPreviewComponent,
     GeoDataBadgeComponent,

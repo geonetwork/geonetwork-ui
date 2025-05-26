@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
+import { ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { OrganizationPageComponent } from './organization-page.component'
@@ -6,10 +6,8 @@ import { of } from 'rxjs'
 import { someOrganizationsFixture } from '@geonetwork-ui/common/fixtures'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import { Params } from '@angular/router'
-import { TranslateModule } from '@ngx-translate/core'
-import { EffectsModule } from '@ngrx/effects'
-import { StoreModule } from '@ngrx/store'
-import { RouterTestingModule } from '@angular/router/testing'
+import { MockBuilder } from 'ng-mocks'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const expectedOrganization = someOrganizationsFixture()[0]
 
@@ -25,17 +23,12 @@ describe('OrganizationPageComponent', () => {
   let component: OrganizationPageComponent
   let fixture: ComponentFixture<OrganizationPageComponent>
 
+  beforeEach(() => MockBuilder(OrganizationPageComponent))
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        OrganizationPageComponent,
-        TranslateModule.forRoot({}),
-        RouterTestingModule,
-        EffectsModule.forRoot(),
-        StoreModule.forRoot({}),
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        provideI18n(),
         {
           provide: RouterFacade,
           useClass: RouterFacadeMock,
@@ -49,8 +42,6 @@ describe('OrganizationPageComponent', () => {
       .overrideComponent(OrganizationPageComponent, {
         set: {
           changeDetection: ChangeDetectionStrategy.Default,
-          imports: [],
-          schemas: [NO_ERRORS_SCHEMA],
         },
       })
       .compileComponents()

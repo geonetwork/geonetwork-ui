@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-
 import { HeaderBadgeButtonComponent } from './header-badge-button.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('HeaderBadgeButtonComponent', () => {
   let component: HeaderBadgeButtonComponent
@@ -9,8 +8,7 @@ describe('HeaderBadgeButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [HeaderBadgeButtonComponent],
-      imports: [TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
   })
 

@@ -3,7 +3,6 @@ import {
   datasetRecordsFixture,
   SAMPLE_RECORD,
 } from '@geonetwork-ui/common/fixtures'
-import { TranslateModule } from '@ngx-translate/core'
 
 import { HeaderRecordComponent } from './header-record.component'
 import { MockBuilder } from 'ng-mocks'
@@ -12,6 +11,7 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { BehaviorSubject } from 'rxjs'
 import { ImageOverlayPreviewComponent } from '@geonetwork-ui/ui/elements'
 import { By } from '@angular/platform-browser'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
@@ -40,8 +40,8 @@ describe('HeaderRecordComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         {
           provide: MdViewFacade,
           useClass: MdViewFacadeMock,

@@ -5,7 +5,6 @@ import {
   tick,
 } from '@angular/core/testing'
 import { RecordUserFeedbacksComponent } from './record-user-feedbacks.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { BehaviorSubject, of, Subject } from 'rxjs'
 import { ChangeDetectionStrategy } from '@angular/core'
@@ -21,6 +20,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { Gn4PlatformMapper } from '@geonetwork-ui/api/repository'
 import { MockBuilder, MockProvider } from 'ng-mocks'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('RecordUserFeedbacksComponent', () => {
   const allUserFeedbacks = someUserFeedbacksFixture()
@@ -59,8 +59,8 @@ describe('RecordUserFeedbacksComponent', () => {
     mockDestroy$ = new Subject()
 
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         MockProvider(MdViewFacade, mdViewFacadeMock),
         MockProvider(PlatformServiceInterface, platformServiceInterfaceMock),
         MockProvider(Gn4PlatformMapper, gn4PlatformMapperMock),

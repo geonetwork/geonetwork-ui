@@ -1,23 +1,23 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   Inject,
+  Input,
   Optional,
   ViewChild,
 } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { InternalLinkCardComponent } from '@geonetwork-ui/ui/elements'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
 import {
+  FavoriteStarComponent,
   RECORD_DATASET_URL_TOKEN,
   RECORD_REUSE_URL_TOKEN,
   RECORD_SERVICE_URL_TOKEN,
 } from '@geonetwork-ui/feature/search'
 import {
-  PreviousNextButtonsComponent,
   BlockListComponent,
+  PreviousNextButtonsComponent,
 } from '@geonetwork-ui/ui/layout'
 
 @Component({
@@ -28,10 +28,10 @@ import {
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
     PreviousNextButtonsComponent,
     BlockListComponent,
     InternalLinkCardComponent,
+    FavoriteStarComponent,
   ],
 })
 export class RecordInternalLinksComponent {

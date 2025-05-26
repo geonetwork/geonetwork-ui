@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 import {
   CatalogRecord,
   DatasetFeatureCatalog,
@@ -16,7 +16,7 @@ import { SearchFeatureCatalogComponent } from '@geonetwork-ui/ui/inputs'
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslateDirective,
     SearchFeatureCatalogComponent,
     FeatureCatalogListComponent,
   ],
