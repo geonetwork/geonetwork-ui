@@ -61,7 +61,7 @@ const GEONETWORK_UI_PIPELINE = {
       script: {
         lang: 'painless',
         source: `
-int total=0;
+int total=8;
 int totalDataset=8;
 int totalService=6;
 int totalReuse=8;
