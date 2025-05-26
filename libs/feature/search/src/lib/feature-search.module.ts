@@ -6,7 +6,6 @@ import { StoreModule } from '@ngrx/store'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { NgIconsModule } from '@ng-icons/core'
 import { FacetsModule } from './facets/facets.module'
-import { FuzzySearchComponent } from './fuzzy-search/fuzzy-search.component'
 import { RecordsMetricsComponent } from './records-metrics/records-metrics.component'
 import { ResultsLayoutComponent } from './results-layout/results-layout.component'
 import { ResultsListContainerComponent } from './results-list/results-list.container.component'
@@ -17,9 +16,11 @@ import { ResultsHitsContainerComponent } from './results-hits/results-hits.conta
 import { SearchStateContainerDirective } from './state/container/search-state.container.directive'
 import {
   AutocompleteComponent,
+  ButtonComponent,
   DateRangeDropdownComponent,
   DropdownMultiselectComponent,
   DropdownSelectorComponent,
+  ViewportIntersectorComponent,
 } from '@geonetwork-ui/ui/inputs'
 import { NgModule } from '@angular/core'
 import { ErrorComponent, KindBadgeComponent } from '@geonetwork-ui/ui/elements'
@@ -31,7 +32,6 @@ import { FavoriteStarComponent } from './favorites/favorite-star/favorite-star.c
   declarations: [
     SortByComponent,
     ResultsLayoutComponent,
-    FuzzySearchComponent,
     RecordsMetricsComponent,
     ResultsListContainerComponent,
     ResultsHitsContainerComponent,
@@ -59,11 +59,12 @@ import { FavoriteStarComponent } from './favorites/favorite-star/favorite-star.c
     KindBadgeComponent,
     DropdownSelectorComponent,
     DropdownMultiselectComponent,
+    ViewportIntersectorComponent,
+    ButtonComponent,
   ],
   exports: [
     SortByComponent,
     ResultsLayoutComponent,
-    FuzzySearchComponent,
     RecordsMetricsComponent,
     ResultsListContainerComponent,
     ResultsHitsContainerComponent,
