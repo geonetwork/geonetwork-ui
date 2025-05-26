@@ -4,7 +4,7 @@ import { Component } from '@angular/core'
 import { PublishButtonComponent } from '../publish-button/publish-button.component'
 import { BehaviorSubject } from 'rxjs'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class EditorFacadeMock {
   changedSinceSave$ = new BehaviorSubject(false)
@@ -28,8 +28,8 @@ describe('TopToolbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TopToolbarComponent, TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         {
           provide: EditorFacade,
           useClass: EditorFacadeMock,

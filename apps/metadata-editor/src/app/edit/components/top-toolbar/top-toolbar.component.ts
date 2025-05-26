@@ -11,7 +11,11 @@ import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { LetDirective } from '@ngrx/component'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import {
+  TranslateDirective,
+  TranslatePipe,
+  TranslateService,
+} from '@ngx-translate/core'
 import { combineLatest, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { PublishButtonComponent } from '../publish-button/publish-button.component'
@@ -45,7 +49,8 @@ import { matCircle } from '@ng-icons/material-icons/baseline'
     LetDirective,
     MatTooltipModule,
     MatDialogModule,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     NgIconComponent,
   ],
   providers: [

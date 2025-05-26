@@ -9,11 +9,9 @@ import { BehaviorSubject, firstValueFrom, Subject } from 'rxjs'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { MockBuilder } from 'ng-mocks'
-import { TranslateModule } from '@ngx-translate/core'
-import { HttpClientModule } from '@angular/common/http'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { PageSelectorComponent } from './components/page-selector/page-selector.component'
 import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const getRoute = () => ({
   snapshot: {
@@ -63,13 +61,8 @@ describe('EditPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        EditPageComponent,
-        TranslateModule.forRoot(),
-        PageSelectorComponent,
-        HttpClientModule,
-      ],
       providers: [
+        provideI18n(),
         {
           provide: ActivatedRoute,
           useFactory: getRoute,

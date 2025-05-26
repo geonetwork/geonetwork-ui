@@ -12,7 +12,7 @@ import { EditorRouterService } from '../../router.service'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { MockBuilder, MockInstance, MockProviders } from 'ng-mocks'
 import { ActivatedRoute, Router } from '@angular/router'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('MyRecordsComponent', () => {
   MockInstance.scope()
@@ -37,8 +37,8 @@ describe('MyRecordsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         MockProviders(
           FieldsService,
           SearchFacade,

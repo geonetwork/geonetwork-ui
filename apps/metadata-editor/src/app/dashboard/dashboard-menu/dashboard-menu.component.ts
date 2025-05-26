@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { RouterModule } from '@angular/router'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { startWith, switchMap } from 'rxjs/operators'
 import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
@@ -32,7 +32,7 @@ import {
   imports: [
     CommonModule,
     RouterModule,
-    TranslateModule,
+    TranslateDirective,
     BadgeComponent,
     NgIconComponent,
   ],

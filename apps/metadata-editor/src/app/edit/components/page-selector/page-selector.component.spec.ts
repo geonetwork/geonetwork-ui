@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TranslateModule } from '@ngx-translate/core'
 import { PageSelectorComponent } from './page-selector.component'
 import { editorConfigFixture } from '@geonetwork-ui/common/fixtures'
 import { BehaviorSubject } from 'rxjs'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { By } from '@angular/platform-browser'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class EditorFacadeMock {
   editorConfig$ = new BehaviorSubject(editorConfigFixture())
@@ -19,8 +19,8 @@ describe('PageSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), PageSelectorComponent],
       providers: [
+        provideI18n(),
         {
           provide: EditorFacade,
           useClass: EditorFacadeMock,

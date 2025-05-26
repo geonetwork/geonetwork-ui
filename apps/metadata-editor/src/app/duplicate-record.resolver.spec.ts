@@ -1,13 +1,12 @@
 import { TestBed } from '@angular/core/testing'
 import { DuplicateRecordResolver } from './duplicate-record.resolver'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { of, throwError } from 'rxjs'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { ActivatedRouteSnapshot, convertToParamMap } from '@angular/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { TranslateModule } from '@ngx-translate/core'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class NotificationsServiceMock {
   showNotification = jest.fn()
@@ -32,8 +31,8 @@ describe('DuplicateRecordResolver', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         { provide: NotificationsService, useClass: NotificationsServiceMock },
         {
           provide: RecordsRepositoryInterface,
