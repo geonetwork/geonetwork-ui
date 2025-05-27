@@ -1021,4 +1021,156 @@ describe('MapViewComponent', () => {
       expect(component.error).toBe('string error')
     })
   })
+  describe('style selector with TMS', () => {
+    it('enables and populates styles for selected TMS', fakeAsync(() => {
+      const dataService = TestBed.inject(
+        DataService
+      ) as unknown as DataServiceMock
+      dataService.getGeodataLinksFromTms.mockImplementation((link) =>
+        Promise.resolve([
+          link,
+          {
+            ...link,
+            accessServiceProtocol: 'maplibre-style',
+            url: new URL('http://abcd.com/tms/style/a.json'),
+            name: 'style-A',
+          },
+          {
+            ...link,
+            accessServiceProtocol: 'maplibre-style',
+            url: new URL('http://abcd.com/tms/style/b.json'),
+            name: 'style-B',
+          },
+        ])
+      )
+
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/tms'),
+          name: 'orthophoto',
+          type: 'service',
+          accessServiceProtocol: 'tms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+
+      tick(200)
+      fixture.detectChanges()
+
+      const dropdowns = fixture.debugElement.queryAll(
+        By.directive(DropdownSelectorComponent)
+      )
+      const styleDropdown = dropdowns[1]
+        .componentInstance as DropdownSelectorComponent
+
+      expect(styleDropdown.disabled).toBeFalsy()
+      expect(styleDropdown.choices.map((c) => c.label)).toEqual([
+        'style-A',
+        'style-B',
+      ])
+    }))
+    it('resets style selection when switching away and back', fakeAsync(() => {
+      const ds = TestBed.inject(DataService) as unknown as DataServiceMock
+      ds.getGeodataLinksFromTms.mockImplementation((link) =>
+        Promise.resolve([
+          link,
+          {
+            ...link,
+            accessServiceProtocol: 'maplibre-style',
+            url: new URL('http://abcd.com/tms/style/a.json'),
+            name: 'style-A',
+          },
+          {
+            ...link,
+            accessServiceProtocol: 'maplibre-style',
+            url: new URL('http://abcd.com/tms/style/b.json'),
+            name: 'style-B',
+          },
+        ])
+      )
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/tms'),
+          name: 'orthophoto',
+          type: 'service',
+          accessServiceProtocol: 'tms',
+        },
+        {
+          url: new URL('http://abcd.com/wms'),
+          name: 'layer-wms',
+          type: 'service',
+          accessServiceProtocol: 'wms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+
+      tick(200)
+      fixture.detectChanges()
+
+      let dropdowns = fixture.debugElement.queryAll(
+        By.directive(DropdownSelectorComponent)
+      )
+      const srcDropdown = dropdowns[0]
+        .componentInstance as DropdownSelectorComponent
+      let styleDropdown = dropdowns[1]
+        .componentInstance as DropdownSelectorComponent
+
+      styleDropdown.selectValue.emit(1)
+      tick()
+      fixture.detectChanges()
+      expect(mapComponent.context.layers[0].styleUrl).toBe(
+        'http://abcd.com/tms/style/b.json'
+      )
+
+      srcDropdown.selectValue.emit(1)
+      tick()
+      fixture.detectChanges()
+
+      dropdowns = fixture.debugElement.queryAll(
+        By.directive(DropdownSelectorComponent)
+      )
+      styleDropdown = dropdowns[1]
+        .componentInstance as DropdownSelectorComponent
+      expect(styleDropdown.disabled).toBeTruthy()
+
+      srcDropdown.selectValue.emit(0)
+      tick()
+      fixture.detectChanges()
+
+      dropdowns = fixture.debugElement.queryAll(
+        By.directive(DropdownSelectorComponent)
+      )
+      styleDropdown = dropdowns[1]
+        .componentInstance as DropdownSelectorComponent
+
+      expect(styleDropdown.disabled).toBeFalsy()
+      expect(styleDropdown.choices[0].label).toBe('style-A')
+      expect(mapComponent.context.layers[0].styleUrl).toBe(
+        'http://abcd.com/tms/style/a.json'
+      )
+    }))
+    it('disables style dropdown when no TMS is present', fakeAsync(() => {
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/wms'),
+          name: 'layer-wms',
+          type: 'service',
+          accessServiceProtocol: 'wms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+
+      tick(200)
+      fixture.detectChanges()
+
+      const dropdowns = fixture.debugElement.queryAll(
+        By.directive(DropdownSelectorComponent)
+      )
+      const styleDropdown = dropdowns[1]
+        .componentInstance as DropdownSelectorComponent
+
+      expect(styleDropdown.disabled).toBeTruthy()
+      expect(styleDropdown.choices.length).toBe(1)
+    }))
+  })
 })
