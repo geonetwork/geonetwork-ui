@@ -4,6 +4,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { StickyHeaderComponent } from './sticky-header/sticky-header.component'
 import { AnchorLinkDirective } from './anchor-link/anchor-link.directive'
 import { NgIconComponent, provideNgIconsConfig } from '@ng-icons/core'
+import { OverlayContainer } from '@angular/cdk/overlay'
 
 @NgModule({
   imports: [CommonModule, TranslateModule.forChild(), NgIconComponent],
