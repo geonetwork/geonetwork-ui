@@ -12,6 +12,8 @@ class TranslateServiceMock {
   currentLang = 'en'
 }
 
+let currentMetadataLang: string
+
 describe('ElasticsearchService', () => {
   let service: ElasticsearchService
   let searchFilters
@@ -25,10 +27,11 @@ describe('ElasticsearchService', () => {
         },
         {
           provide: METADATA_LANGUAGE,
-          useValue: 'fre',
+          useFactory: () => currentMetadataLang,
         },
       ],
     })
+    currentMetadataLang = 'fre'
     service = TestBed.inject(ElasticsearchService)
   })
 
@@ -637,7 +640,7 @@ describe('ElasticsearchService', () => {
     }
     describe('When no lang from config', () => {
       beforeEach(() => {
-        service['metadataLang'] = undefined
+        currentMetadataLang = undefined
       })
       it('use * wildcard', () => {
         expect(
@@ -649,7 +652,7 @@ describe('ElasticsearchService', () => {
     })
     describe('When one lang in config', () => {
       beforeEach(() => {
-        service['metadataLang'] = 'fre'
+        currentMetadataLang = 'fre'
       })
       it('search in the config language', () => {
         expect(
@@ -661,7 +664,7 @@ describe('ElasticsearchService', () => {
     })
     describe('When "current" language from config"', () => {
       beforeEach(() => {
-        service['metadataLang'] = 'current'
+        currentMetadataLang = 'current'
       })
       it('search in the UI language', () => {
         expect(
