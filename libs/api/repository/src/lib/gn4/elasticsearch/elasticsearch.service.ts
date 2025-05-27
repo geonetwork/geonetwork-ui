@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional } from '@angular/core'
+import { Injectable, Injector } from '@angular/core'
 import { Geometry } from 'geojson'
 import {
   ES_QUERY_FIELDS_PRIORITY,
@@ -40,13 +40,18 @@ export class ElasticsearchService {
   // runtime fields are computed using a Painless script
   // see: https://www.elastic.co/guide/en/elasticsearch/reference/current/runtime-mapping-fields.html
   private runtimeFields: Record<string, string> = {}
+
+  // we're using getters in case the defined languages change over time
   private get lang3() {
     return getLang3FromLang2(this.translateService.currentLang)
+  }
+  private get metadataLang() {
+    return this.injector.get(METADATA_LANGUAGE, null)
   }
 
   constructor(
     private translateService: TranslateService,
-    @Optional() @Inject(METADATA_LANGUAGE) private metadataLang: string
+    private injector: Injector
   ) {}
 
   getSearchRequestBody(
