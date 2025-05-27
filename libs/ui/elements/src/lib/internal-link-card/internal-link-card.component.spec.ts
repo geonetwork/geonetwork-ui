@@ -55,6 +55,13 @@ const mockRecord = {
   resourcePublished: new Date(),
 } as unknown as CatalogRecord
 
+const mockRecordWithoutContact = {
+  ...mockRecord,
+  ownerOrganization: null,
+  contactsForResource: [],
+  contacts: [],
+} as unknown as CatalogRecord
+
 // Mock template component for favoriteTemplate
 @Component({
   template: `<ng-template #favoriteTemplate let-record>
@@ -195,38 +202,14 @@ describe('InternalLinkCardComponent', () => {
 
   describe('event handlers', () => {
     let openSpy: jest.SpyInstance
-    let writeSpy: jest.SpyInstance
-    let consoleSpy: jest.SpyInstance
 
     beforeEach(() => {
       openSpy = jest.spyOn(window, 'open').mockImplementation(() => null)
-
-      // Improved clipboard mock implementation
-      if (!navigator.clipboard) {
-        Object.defineProperty(navigator, 'clipboard', {
-          value: {
-            writeText: jest.fn().mockImplementation(() => Promise.resolve()),
-          },
-          writable: true,
-        })
-      } else {
-        // Ensure writeText method exists and returns a promise
-        if (!navigator.clipboard.writeText) {
-          navigator.clipboard.writeText = jest
-            .fn()
-            .mockImplementation(() => Promise.resolve())
-        }
-      }
-      writeSpy = jest.spyOn(navigator.clipboard, 'writeText')
-
-      consoleSpy = jest.spyOn(console, 'log').mockImplementation()
       fixture.detectChanges()
     })
 
     afterEach(() => {
       openSpy.mockRestore()
-      writeSpy.mockRestore()
-      consoleSpy.mockRestore()
     })
 
     it('should emit mdSelect when card is clicked', () => {
@@ -235,45 +218,69 @@ describe('InternalLinkCardComponent', () => {
       cardElement.click()
       expect(mdSelectSpy).toHaveBeenCalledWith(mockRecord)
     })
+  })
 
-    it('should open external URL in new window', () => {
-      const url = new URL('https://test-url.com')
-      const mockEvent = new Event('click')
-      jest.spyOn(mockEvent, 'stopPropagation').mockImplementation()
-      component.openExternalUrl(mockEvent, url)
-      expect(openSpy).toHaveBeenCalledWith(url, '_blank')
+  describe('getAbstractClass with owner organization', () => {
+    beforeEach(() => {
+      component.record = mockRecord
     })
 
-    it('should open mailto link', () => {
-      const email = 'test@example.com'
-      const mockEvent = new Event('click')
-      jest.spyOn(mockEvent, 'stopPropagation').mockImplementation()
-      component.openMailto(mockEvent, email)
-      expect(openSpy).toHaveBeenCalledWith(`mailto:${email}`, '_blank')
-    })
-
-    it('should copy text to clipboard', async () => {
-      const text = 'text to copy'
-      const mockEvent = new Event('click')
-      jest.spyOn(mockEvent, 'stopPropagation').mockImplementation()
-
-      const clipboardWriteMock = jest.fn().mockReturnValue(Promise.resolve())
-
-      navigator.clipboard.writeText = clipboardWriteMock
-
-      writeSpy = jest.spyOn(navigator.clipboard, 'writeText')
-
-      await component.copyToClipboard(mockEvent, text)
-
-      expect(writeSpy).toHaveBeenCalledWith(text)
+    it('returns the right line-clamp for L size ', () => {
+      component.size = 'L'
+      expect(component.getAbstractClass()).toBe('line-clamp-2')
     })
   })
 
-  describe('contacts', () => {
-    it('returns contactsForResource for dataset records', () => {
-      component.record.kind = 'dataset'
-      fixture.detectChanges()
-      expect(component.contacts).toEqual(mockRecord.contactsForResource)
+  describe('getAbstractClass without owner organization', () => {
+    beforeEach(() => {
+      component.record = mockRecordWithoutContact
+    })
+
+    it('returns the right line-clamp for each size', () => {
+      component.size = 'L'
+      expect(component.getAbstractClass()).toBe('line-clamp-6')
+      component.size = 'M'
+      expect(component.getAbstractClass()).toBe('line-clamp-2')
+      component.size = 'S'
+      expect(component.getAbstractClass()).toBe('line-clamp-2 ml-2')
+    })
+  })
+
+  describe('displayAbstract with owner organization', () => {
+    beforeEach(() => {
+      component.record = mockRecord
+    })
+
+    it('returns true for size L', () => {
+      component.size = 'L'
+      expect(component.displayAbstract()).toBe(true)
+    })
+
+    it('returns false for all other size M', () => {
+      component.size = 'M'
+      expect(component.displayAbstract()).toBe(false)
+      component.size = 'S'
+      expect(component.displayAbstract()).toBe(false)
+      component.size = 'XS'
+      expect(component.displayAbstract()).toBe(false)
+    })
+  })
+
+  describe('displayAbstract without owner organization', () => {
+    beforeEach(() => {
+      component.record = mockRecordWithoutContact
+    })
+    it('returns false for size XS', () => {
+      component.size = 'XS'
+      expect(component.displayAbstract()).toBe(false)
+    })
+    it('returns true for all other size', () => {
+      component.size = 'L'
+      expect(component.displayAbstract()).toBe(true)
+      component.size = 'M'
+      expect(component.displayAbstract()).toBe(true)
+      component.size = 'S'
+      expect(component.displayAbstract()).toBe(true)
     })
   })
 })
