@@ -75,7 +75,7 @@ export class MetadataQualityComponent implements OnChanges {
   }
   hasGetCapabilities(url: string): boolean {
     const searchParams = new URLSearchParams(url)
-    return searchParams.get('REQUEST')?.toLowerCase() === 'capabilities'
+    return searchParams.get('REQUEST')?.toLowerCase().includes('capabilities')
   }
 
   private readonly COMMON_CHECKS: QualityChecks = {
