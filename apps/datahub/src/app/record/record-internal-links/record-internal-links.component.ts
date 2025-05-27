@@ -19,6 +19,7 @@ import {
   PreviousNextButtonsComponent,
   BlockListComponent,
 } from '@geonetwork-ui/ui/layout'
+import { RouterLink } from '@angular/router'
 
 @Component({
   selector: 'datahub-record-internal-links',
@@ -31,6 +32,7 @@ import {
     TranslateModule,
     PreviousNextButtonsComponent,
     BlockListComponent,
+    RouterLink,
     InternalLinkCardComponent,
   ],
 })
@@ -38,6 +40,11 @@ export class RecordInternalLinksComponent {
   @Input() records: CatalogRecord[]
   @Input() title: string
   @Input() titleIsSectionTitle = false
+  @Input() routerLinkButton: {
+    routerLink: string[]
+    label: string
+    queryParams: Record<string, string>
+  } = null
   @ViewChild(BlockListComponent) list: BlockListComponent
 
   recordUrlGetter = this.getRecordUrl.bind(this)

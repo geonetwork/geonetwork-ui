@@ -8,11 +8,21 @@
   <ng-template #subtitle>
     <h3>{{ title }}</h3>
   </ng-template>
-  <span>({{ records?.length }})</span>
+  <span *ngIf="!routerLinkButton">({{ records?.length }})</span>
   <gn-ui-previous-next-buttons
     *ngIf="list?.pagesCount > 1"
     [listComponent]="list"
   ></gn-ui-previous-next-buttons>
+  <div *ngIf="routerLinkButton" class="ml-auto">
+    <a
+      [routerLink]="routerLinkButton.routerLink"
+      [queryParams]="routerLinkButton.queryParams"
+      class="gn-ui-btn-primary text-base h-8 w-fit"
+      data-test="orgDetailsSearchAllBtn"
+    >
+      {{ routerLinkButton.label }}
+    </a>
+  </div>
 </div>
 
 <gn-ui-block-list
