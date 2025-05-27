@@ -169,7 +169,10 @@ export class TranslatedSearchField extends SimpleSearchField {
  * The provided ES field name should not include any prefix such as `.langeng`
  */
 export class MultilingualSearchField extends SimpleSearchField {
-  private searchLanguage = this.injector.get(METADATA_LANGUAGE, null)
+  // we're using a getter in case the token value changes over time
+  private get searchLanguage() {
+    return this.injector.get(METADATA_LANGUAGE, null)
+  }
 
   constructor(
     protected esFieldName: string,
