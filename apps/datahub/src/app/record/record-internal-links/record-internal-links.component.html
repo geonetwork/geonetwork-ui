@@ -11,13 +11,15 @@
   <span *ngIf="!routerLinkButton">({{ records?.length }})</span>
   <gn-ui-previous-next-buttons
     *ngIf="list?.pagesCount > 1"
+    class="text-base"
     [listComponent]="list"
   ></gn-ui-previous-next-buttons>
   <div *ngIf="routerLinkButton" class="ml-auto">
     <a
       [routerLink]="routerLinkButton.routerLink"
       [queryParams]="routerLinkButton.queryParams"
-      class="gn-ui-btn-primary text-base h-8 w-fit"
+      class="gn-ui-btn-primary text-base h-fit w-fit rounded-lg"
+      [style.--gn-ui-button-padding]="'8px 16px'"
       data-test="routerLinkButton"
     >
       {{ routerLinkButton.label }}
