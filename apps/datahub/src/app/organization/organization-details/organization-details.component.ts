@@ -101,6 +101,7 @@ export class OrganizationDetailsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.searchFacade.setPageSize(12)
     this.isSearchFacadeLoading$ = this.searchFacade.isLoading$.pipe(
       distinctUntilChanged()
     )
