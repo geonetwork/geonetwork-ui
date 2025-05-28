@@ -203,13 +203,11 @@ describe('OrganizationDetailsComponent', () => {
 
       describe('Search all button', () => {
         it('should send to the search page filtered on the correct organization', () => {
-          const orgDetailsSearchAllBtn = getHTMLElement(
-            'orgDetailsSearchAllBtn'
-          )
+          const routerLinkButton = getHTMLElement('routerLinkButton')
 
-          expect(orgDetailsSearchAllBtn).toBeTruthy()
+          expect(routerLinkButton).toBeTruthy()
 
-          expect(orgDetailsSearchAllBtn?.getAttribute('href')).toEqual(
+          expect(routerLinkButton?.getAttribute('href')).toEqual(
             `/${ROUTER_ROUTE_SEARCH}?organization=${encodeURIComponent(
               anOrganizationWithManyDatasets.name
             )}`
