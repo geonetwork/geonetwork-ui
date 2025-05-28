@@ -50,7 +50,7 @@ program
 
 program.parse(process.argv)
 
-const VERSION = 101 // increment on changes
+const VERSION = 102 // increment on changes
 
 const GEONETWORK_UI_PIPELINE = {
   description: 'GeoNetwork-UI pipeline',
@@ -115,7 +115,8 @@ if (ctx.allKeywords != null && !ctx.allKeywords.isEmpty()) {
 if(isDataset && ctx.cl_maintenanceAndUpdateFrequency != null && ctx.cl_maintenanceAndUpdateFrequency.length > 0) {
   ok++
 }
-if(ctx.MD_LegalConstraintsUseLimitationObject != null && ctx.MD_LegalConstraintsUseLimitationObject.length > 0) {
+if((ctx.MD_LegalConstraintsUseLimitationObject != null && ctx.MD_LegalConstraintsUseLimitationObject.length > 0) ||
+   (ctx.MD_LegalConstraintsOtherConstraintsObject != null && ctx.MD_LegalConstraintsOtherConstraintsObject.length > 0)) {
   ok++
 }
 if(isService && ctx.link != null){

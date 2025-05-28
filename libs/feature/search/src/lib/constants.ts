@@ -20,9 +20,10 @@ export const FIELDS_SUMMARY: FieldName[] = [
   'userSavedCount',
   'cl_topic',
   'cl_maintenanceAndUpdateFrequency',
-  'MD_LegalConstraintsUseLimitationObject',
+  'MD_LegalConstraints*Object',
   'qualityScore',
   'allKeywords',
+  'recordLink',
 ]
 
 export const FIELDS_BRIEF: FieldName[] = [
