@@ -7,6 +7,7 @@ import {
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
 export interface ConfirmationDialogData {
+  focusCancel: string
   title: string
   message: string
   confirmText: string
@@ -22,10 +23,13 @@ export interface ConfirmationDialogData {
   imports: [MatDialogModule, ButtonComponent],
 })
 export class ConfirmationDialogComponent {
+  focusCancel = null
   constructor(
     public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ConfirmationDialogData
-  ) {}
+  ) {
+    this.focusCancel = data.focusCancel ? true : null
+  }
 
   onConfirm() {
     this.dialogRef.close(true)
