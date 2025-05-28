@@ -506,7 +506,7 @@ describe('editing restrictions as non admin', () => {
   })
 
   it('editing access restrictions', () => {
-    // it should not have access to other organization records
+    // it should not have edit rights on other organization records
     cy.get('gn-ui-results-table')
       .find('[data-cy="table-row"]')
       .first()
@@ -524,8 +524,13 @@ describe('editing restrictions as non admin', () => {
     )
     cy.get('@record').children('div').eq(2).click()
     cy.url().should('include', '/catalog/')
+    cy.get('@record').find('[data-test="record-menu-button"]').click()
+    cy.get('[data-test="record-menu-delete-button"]')
+      .find('button')
+      .should('be.disabled')
+    cy.get('body').click()
 
-    // it should have access to their organization records
+    // it should have edit rights on their organization records
     cy.get('gn-ui-results-table')
       .find('[data-cy="table-row"]')
       .eq(4)
@@ -539,7 +544,7 @@ describe('editing restrictions as non admin', () => {
     cy.get('@record').children('div').eq(2).click()
     cy.url().should('include', '/edit/')
 
-    // it should not allow the user to access other organization records and let them go back to the catalog
+    // it should not allow the user to directly access other organization records and let them go back to the catalog
     cy.visit('/edit/accroche_velos')
     cy.get('md-editor-page-error').should('be.visible')
     cy.get('md-editor-page-error').find('a').click()

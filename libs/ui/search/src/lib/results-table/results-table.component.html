@@ -1,5 +1,6 @@
 <gn-ui-interactive-table
   [items]="records"
+  [canEditItem]="canEdit"
   [isDraftPage]="isDraftPage"
   (itemClick)="handleRecordClick($event)"
 >
@@ -9,15 +10,16 @@
       <ng-icon
         name="iconoirLock"
         class="text-purple"
-        *ngIf="(!item.extras?.edit && !isDraftPage) || item.kind !== 'dataset'"
+        *ngIf="(canEdit(item) | async) === false; else selectCheckbox"
       ></ng-icon>
-      <gn-ui-checkbox
-        *ngIf="(item.extras?.edit || isDraftPage) && item.kind === 'dataset'"
-        [checked]="isChecked(item)"
-        (changed)="handleRecordSelectedChange($event, item)"
-        class="-m-2"
-        type="default"
-      ></gn-ui-checkbox>
+      <ng-template #selectCheckbox>
+        <gn-ui-checkbox
+          [checked]="isChecked(item)"
+          (changed)="handleRecordSelectedChange($event, item)"
+          class="-m-2"
+          type="default"
+        ></gn-ui-checkbox>
+      </ng-template>
     </ng-template>
   </gn-ui-interactive-table-column>
 
@@ -158,23 +160,15 @@
           (buttonClick)="openActionMenu(item, template)"
           type="light"
           data-test="record-menu-button"
-          [disabled]="
-            (!item.extras?.edit && !isDraftPage) || item.kind !== 'dataset'
-          "
         >
-          <ng-icon
-            [ngClass]="{
-              'text-purple-light':
-                (!item.extras?.edit && !isDraftPage) || item.kind !== 'dataset',
-            }"
-            name="matMoreVert"
-          ></ng-icon>
+          <ng-icon name="matMoreVert"></ng-icon>
         </gn-ui-button>
       </div>
       <ng-template #template>
         <gn-ui-action-menu
-          [canDuplicate]="canDuplicate(item) && !isDuplicating"
-          [canDelete]="canDelete(item)"
+          [canDuplicate]="canDuplicate(item)"
+          [isDuplicating]="isDuplicating"
+          [canDelete]="canDelete(item) | async"
           [page]="isDraftPage ? 'draft' : 'main'"
           (duplicate)="handleDuplicate(item)"
           (delete)="handleDelete(item)"

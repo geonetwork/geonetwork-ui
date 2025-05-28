@@ -359,6 +359,13 @@ export class Gn4FieldMapper {
         },
         output
       ),
+    isHarvested: (output, source) =>
+      this.addExtra(
+        {
+          isHarvested: selectField(source, 'isHarvested') !== 'false',
+        },
+        output
+      ),
     edit: (output, source) =>
       this.addExtra(
         {

@@ -13,11 +13,13 @@
           [disabled]="!canDuplicate"
           data-test="record-menu-duplicate-button"
         >
-          <span *ngIf="canDuplicate" translate>record.action.duplicate</span>
-          <span *ngIf="!canDuplicate" translate
+          <span *ngIf="isDuplicating; else notDuplicating" translate
             >record.action.duplicating</span
-          ></gn-ui-button
-        >
+          >
+          <ng-template #notDuplicating>
+            <span translate>record.action.duplicate</span>
+          </ng-template>
+        </gn-ui-button>
         <gn-ui-button
           *ngIf="page === 'record'"
           type="light"
