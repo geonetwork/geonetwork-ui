@@ -324,6 +324,11 @@ wonderful <span style="font-size: 1.2em;">data catalogue</span>
 
 :::
 
+::: tip Displaying translation keys in the UI
+Including the `?debugTranslations=true` query parameter in the URL will display all translation keys instead of their translated values. This is useful when customizing translations keys in the configuration.
+
+:::
+
 ### Backwards compatibility
 
 A `default.toml` file authored for a previous release of GeoNetwork-UI _should_ always work when using a more recent version. There are two caveats:
