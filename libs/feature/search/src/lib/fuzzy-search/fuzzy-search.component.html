@@ -1,5 +1,5 @@
 <gn-ui-autocomplete
-  [placeholder]="'search.field.any.placeholder' | translate"
+  [placeholder]="placeholder ?? ('search.field.any.placeholder' | translate)"
   [displayWithFn]="displayWithFn"
   [action]="autoCompleteAction"
   (itemSelected)="handleItemSelection($event)"

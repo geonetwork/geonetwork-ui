@@ -1,5 +1,4 @@
 import {
-  AfterViewChecked,
   ChangeDetectionStrategy,
   Component,
   Input,
@@ -23,6 +22,7 @@ export class GnSearchInputComponent extends BaseComponent {
   @Input() forceTrackPosition = ''
   @Input() openOnSearch: string
   @Input() openOnSelect: string
+  @Input() placeholder?: string
   @ViewChild('searchInput') searchInput: FuzzySearchComponent
 
   search(any: string) {
