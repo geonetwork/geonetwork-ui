@@ -7,11 +7,11 @@ import {
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 import {
   EmbeddedTranslateLoader,
+  provideI18n,
   TRANSLATE_DEFAULT_CONFIG,
 } from '@geonetwork-ui/util/i18n'
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
-import { apiConfiguration } from './components/base.component'
-import { provideGn4 } from '@geonetwork-ui/api/repository'
+import { TranslateLoader } from '@ngx-translate/core'
+import { METADATA_LANGUAGE, provideGn4 } from '@geonetwork-ui/api/repository'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { GEONETWORK_UI_VERSION } from '@geonetwork-ui/util/shared'
@@ -19,23 +19,31 @@ import { BrowserModule } from '@angular/platform-browser'
 import { provideHttpClient } from '@angular/common/http'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
+import {
+  StandaloneConfiguration,
+  standaloneConfigurationObject,
+} from './configuration'
 
 @NgModule({
   providers: [
+    {
+      provide: METADATA_LANGUAGE,
+      useFactory: () => standaloneConfigurationObject.metadataLanguage,
+    },
     provideHttpClient(),
-    provideGn4(),
     {
       provide: Configuration,
-      useValue: apiConfiguration,
+      useValue: standaloneConfigurationObject.apiConfiguration,
     },
+    provideGn4(),
+    provideI18n({
+      ...TRANSLATE_DEFAULT_CONFIG,
+      loader: {
+        provide: TranslateLoader,
+        useClass: EmbeddedTranslateLoader,
+      },
+    }),
     importProvidersFrom(
-      TranslateModule.forRoot({
-        ...TRANSLATE_DEFAULT_CONFIG,
-        loader: {
-          provide: TranslateLoader,
-          useClass: EmbeddedTranslateLoader,
-        },
-      }),
       BrowserModule,
       // theses shouldn't be needed; we rely on them for the Org service and Avatar service which should both be provided by `providedGn4`
       FeatureCatalogModule,
@@ -52,9 +60,12 @@ export class StandaloneSearchModule implements DoBootstrap {
       return
     }
 
-    function init(url) {
-      apiConfiguration.basePath = url
+    function init(config: StandaloneConfiguration) {
+      standaloneConfigurationObject.apiConfiguration.basePath = config.apiUrl
+      standaloneConfigurationObject.metadataLanguage =
+        config.metadataLanguage ?? null
     }
+
     const recordsRepository = inject(RecordsRepositoryInterface)
     const platformService = inject(PlatformServiceInterface)
     window['GNUI'] = {

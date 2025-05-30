@@ -1,10 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TranslateModule } from '@ngx-translate/core'
 import { RelatedRecordCardComponent } from './related-record-card.component'
-import { RouterTestingModule } from '@angular/router/testing'
-import { NgIcon, provideIcons } from '@ng-icons/core'
-import { matOpenInNew } from '@ng-icons/material-icons/baseline'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: jest.fn(() => ({
@@ -19,14 +16,7 @@ describe('RelatedRecordCardComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
-      imports: [
-        RelatedRecordCardComponent,
-        TranslateModule.forRoot(),
-        RouterTestingModule,
-
-        NgIcon,
-      ],
-      providers: [provideIcons({ matOpenInNew })],
+      providers: [provideI18n()],
     }).compileComponents()
   })
 

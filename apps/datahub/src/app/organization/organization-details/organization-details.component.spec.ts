@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject, of } from 'rxjs'
 import { OrganizationDetailsComponent } from './organization-details.component'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
@@ -10,9 +9,10 @@ import {
   someOrganizationsFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
-import { RouterTestingModule } from '@angular/router/testing'
 import { By } from '@angular/platform-browser'
 import { ROUTER_ROUTE_SEARCH } from '@geonetwork-ui/feature/router'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { RouterModule } from '@angular/router'
 
 let getHTMLElement: (dataTest: string) => HTMLElement | undefined
 
@@ -62,12 +62,9 @@ describe('OrganizationDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        OrganizationDetailsComponent,
-        TranslateModule.forRoot(),
-        RouterTestingModule,
-      ],
+      imports: [RouterModule.forRoot([])],
       providers: [
+        provideI18n(),
         {
           provide: OrganizationsServiceInterface,
           useClass: OrganisationsServiceMock,

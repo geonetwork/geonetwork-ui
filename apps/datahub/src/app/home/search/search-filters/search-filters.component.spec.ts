@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DebugElement,
-  EventEmitter,
-  Input,
-  NO_ERRORS_SCHEMA,
-  Output,
-} from '@angular/core'
+import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import {
   FieldsService,
@@ -16,12 +8,13 @@ import {
 } from '@geonetwork-ui/feature/search'
 import { BehaviorSubject, of } from 'rxjs'
 import { SearchFiltersComponent } from './search-filters.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
-import { FormsModule } from '@angular/forms'
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { MockBuilder } from 'ng-mocks'
+import { CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getOptionalSearchConfig: () => ({
@@ -38,41 +31,16 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
   }),
 }))
 
-@Component({
-  selector: 'gn-ui-check-toggle', // eslint-disable-line
-  template: '<div></div>',
-})
-export class MockCheckToggleComponent {
-  @Input() title: string
-  @Input() label: string
-  @Input() value: boolean
-  @Input() color: 'primary' | 'secondary' = 'primary'
-  @Output() toggled = new EventEmitter()
-}
-@Component({
-  selector: 'gn-ui-filter-dropdown', // eslint-disable-line
-  template: '<div></div>',
-  providers: [
-    // this is needed to make the ViewChildren in the main component work
-    // see: https://indepth.dev/posts/1184/angular-unit-testing-viewchild
-    {
-      provide: FilterDropdownComponent,
-      useExisting: MockFilterDropdownComponent,
-    },
-  ],
-})
-export class MockFilterDropdownComponent {
-  @Input() fieldName: string
-  @Input() title: string
-}
 const state = { OrgForResource: { mel: true } } as FieldFilters
 const user = barbieUserFixture()
+
 class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject(state)
   hasSpatialFilter$ = new BehaviorSubject(false)
   spatialFilterEnabled$ = new BehaviorSubject(false)
   setSpatialFilterEnabled = jest.fn()
 }
+
 class SearchServiceMock {
   updateFilters = jest.fn()
 }
@@ -113,16 +81,12 @@ describe('SearchFiltersComponent', () => {
   let searchFacade
   let searchService
 
+  beforeEach(() => MockBuilder(SearchFiltersComponent))
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        SearchFiltersComponent,
-        MockCheckToggleComponent,
-        MockFilterDropdownComponent,
-      ],
-      imports: [TranslateModule.forRoot(), FormsModule],
-      schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        provideI18n(),
         {
           provide: SearchFacade,
           useClass: SearchFacadeMock,
@@ -163,9 +127,7 @@ describe('SearchFiltersComponent', () => {
 
   describe('spatial filter button', () => {
     function getCheckToggleDebugElement() {
-      return fixture.debugElement.queryAll(
-        By.directive(MockCheckToggleComponent)
-      )
+      return fixture.debugElement.queryAll(By.directive(CheckToggleComponent))
     }
 
     describe('when panel is closed', () => {
@@ -223,7 +185,7 @@ describe('SearchFiltersComponent', () => {
     }
     function getFilterButtons(): DebugElement[] {
       return fixture.debugElement.queryAll(
-        By.directive(MockFilterDropdownComponent)
+        By.directive(FilterDropdownComponent)
       )
     }
     describe('when panel is closed', () => {

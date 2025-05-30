@@ -8,7 +8,7 @@ import {
   EventEmitter,
   NO_ERRORS_SCHEMA,
 } from '@angular/core'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 import tippy from 'tippy.js'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { FavoritesService } from '@geonetwork-ui/api/repository'
@@ -38,11 +38,6 @@ describe('FavoriteStarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-        FavoriteStarComponent,
-        StarToggleComponent,
-      ],
       providers: [
         {
           provide: PlatformServiceInterface,

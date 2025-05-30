@@ -9,13 +9,13 @@ import { ThemeService } from '@geonetwork-ui/util/shared'
 import { RecordFieldSimpleComponent } from './components/record-field-simple/record-field-simple.component'
 import { RecordFieldGroupComponent } from './components/record-field-group/record-field-group.component'
 import { RecordFieldArrayComponent } from './components/record-field-array/record-field-array.component'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { TranslateModule } from '@ngx-translate/core'
 import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
 import { HttpClientModule } from '@angular/common/http'
 import { RecordFieldObjectComponent } from './components/record-field-object/record-field-object.component'
 import { matDeleteForeverSharp } from '@ng-icons/material-icons/sharp'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
 @NgModule({
   declarations: [
@@ -31,13 +31,13 @@ import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
   imports: [
     BrowserModule,
     FormsModule,
-    UiInputsModule,
     HttpClientModule,
     TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
     // FIXME: these imports are required by non-standalone components and should be removed once all components have been made standalone
     NgIconsModule.withIcons({
       matDeleteForeverSharp,
     }),
+    ButtonComponent,
   ],
   providers: [
     provideNgIconsConfig({

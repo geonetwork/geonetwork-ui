@@ -1,20 +1,13 @@
-import { Meta, StoryObj, applicationConfig } from '@storybook/angular'
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { TruncatedTextComponent } from './truncated-text.component'
-import { TranslateModule } from '@ngx-translate/core'
-import { importProvidersFrom } from '@angular/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const meta: Meta<TruncatedTextComponent> = {
   component: TruncatedTextComponent,
   title: 'Layout/TruncatedText',
   decorators: [
     applicationConfig({
-      providers: [
-        importProvidersFrom(
-          TranslateModule.forRoot({
-            defaultLanguage: 'en',
-          })
-        ),
-      ],
+      providers: [provideI18n()],
     }),
   ],
   render: (args) => ({

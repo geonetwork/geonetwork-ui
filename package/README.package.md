@@ -24,18 +24,17 @@ This is what using this package looks like in an Angular application:
 
 ```ts
 // ...
-import { UiElementsModule, UiInputsModule, UiWidgetsModule, provideRepositoryUrl, ThemeService } from 'geonetwork-ui'
+import { UiElementsModule, provideRepositoryUrl, provideI18n, ThemeService } from 'geonetwork-ui'
 
 @NgModule({
   imports: [
     // ...
-    UiWidgetsModule,
     UiElementsModule,
-    UiInputsModule,
   ],
   providers: [
     // ...
     provideRepositoryUrl('http://localhost:8080/geonetwork/srv/api'),
+    provideI18n(),
   ],
   bootstrap: [AppComponent],
 })

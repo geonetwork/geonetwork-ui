@@ -1,9 +1,6 @@
-import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { RecordPreviewTitleComponent } from './record-preview-title.component'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
-import { TranslateModule } from '@ngx-translate/core'
-import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
-import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
@@ -11,12 +8,8 @@ export default {
   title: 'Search/RecordPreviewTitleComponent',
   component: RecordPreviewTitleComponent,
   decorators: [
-    moduleMetadata({
-      imports: [
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        UtilSharedModule,
-        UiDatavizModule,
-      ],
+    applicationConfig({
+      providers: [provideI18n()],
     }),
   ],
 } as Meta<RecordPreviewTitleComponent>

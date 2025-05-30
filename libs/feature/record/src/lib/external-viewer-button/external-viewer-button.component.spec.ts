@@ -7,8 +7,7 @@ import {
 } from './external-viewer-button.component'
 import { MockBuilder } from 'ng-mocks'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { importProvidersFrom } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 window.open = jest.fn().mockImplementation(() => window)
 window.focus = jest.fn().mockImplementation(() => window)
@@ -26,7 +25,7 @@ describe('ExternalViewerButtonComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
-        importProvidersFrom(TranslateModule.forRoot()),
+        provideI18n(),
         {
           provide: EXTERNAL_VIEWER_URL_TEMPLATE,
           useValue:

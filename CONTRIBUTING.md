@@ -122,13 +122,13 @@ You'll need manual configuration to make the application running:
     // ...
     TRANSLATE_WITH_OVERRIDES_CONFIG,
   } from '@geonetwork-ui/util/app-config'
+  import { provideI18n } from '@geonetwork-ui/util/i18n'
 
   @NgModule({
     // ...
-    imports: [
+    providers: [
       // ...
-      UtilI18nModule,
-      TranslateModule.forRoot(TRANSLATE_WITH_OVERRIDES_CONFIG),
+      provideI18n(TRANSLATE_WITH_OVERRIDES_CONFIG),
     ],
   })
   export class AppModule {
@@ -235,28 +235,36 @@ To regenerate the client, update the `spec.yaml` files in the `libs/data-access/
 
 Translations are managed by [ngx-translate](https://github.com/ngx-translate/core).
 
-To set up translate service, import the module in your application/lib root module:
+To set up translate service, use the predefined providers in your application/lib root module:
 
 ```typescript
 // Application module, root
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http)
 }
+
+...
+providers: [
+  provideI18n({
+    loader: {
+      provide: TranslateLoader,
+      useFactory: HttpLoaderFactory,
+      deps: [HttpClient],
+    },
+    defaultLanguage: 'fr',
+  }),
+]
+```
+
+```typescript
+// In standalone components
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
+
 ...
 imports: [
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-      defaultLanguage: 'fr',
-    }),
-]
-
-// Library module, child
-imports: [
-    TranslateModule.forChild(),
+  TranslateDirective, TranslatePipe
 ]
 ```
 

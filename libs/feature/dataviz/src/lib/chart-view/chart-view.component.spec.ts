@@ -7,7 +7,6 @@ import {
 } from '@angular/core/testing'
 import { ChartViewComponent } from './chart-view.component'
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
 import { DataService } from '../service/data.service'
 import { firstValueFrom, of, throwError } from 'rxjs'
 import { By } from '@angular/platform-browser'
@@ -16,6 +15,7 @@ import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
 import { MockBuilder } from 'ng-mocks'
 import { ChartComponent } from '@geonetwork-ui/ui/dataviz'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const SAMPLE_DATA_ITEMS = [
   { type: 'Feature', properties: { id: 1 } },
@@ -93,8 +93,8 @@ describe('ChartViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         {
           provide: DataService,
           useClass: DataServiceMock,

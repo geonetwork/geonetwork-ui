@@ -10,14 +10,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  importProvidersFrom,
 } from '@angular/core'
 import { Paginable } from '../paginable.interface'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 @Component({
   selector: 'gn-ui-mock-list',
@@ -72,10 +67,7 @@ export default {
       imports: [MockListComponent],
     }),
     applicationConfig({
-      providers: [
-        importProvidersFrom(UtilI18nModule),
-        importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
-      ],
+      providers: [provideI18n()],
     }),
     componentWrapperDecorator(
       (story) =>

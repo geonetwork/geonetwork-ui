@@ -26,6 +26,8 @@ Object.defineProperty(window, 'IntersectionObserver', {
       My Link
     </a>
   </div>`,
+  imports: [AnchorLinkDirective],
+  standalone: true,
 })
 class HostComponent {}
 
@@ -36,9 +38,7 @@ describe('AnchorLinkDirective', () => {
   let fixture: ComponentFixture<HostComponent>
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [HostComponent, AnchorLinkDirective],
-    }).compileComponents()
+    await TestBed.compileComponents()
   })
 
   beforeEach(() => {

@@ -9,7 +9,7 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { firstValueFrom, map, shareReplay } from 'rxjs'
 import { EditorFacade } from '../../../../+state/editor.facade'
 import { switchMap } from 'rxjs/operators'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { SPATIAL_SCOPES } from '../../../../fields.config'
 import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
 
@@ -35,7 +35,7 @@ type KeywordWithExtent = Keyword & {
   imports: [
     CommonModule,
     GenericKeywordsComponent,
-    TranslateModule,
+    TranslatePipe,
     SpatialExtentComponent,
   ],
 })

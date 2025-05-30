@@ -1,10 +1,14 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { NgIcon } from '@ng-icons/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-figure',
   templateUrl: './figure.component.html',
   styleUrls: ['./figure.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [TranslatePipe, TranslateDirective, NgIcon],
 })
 export class FigureComponent {
   @Input() icon!: string

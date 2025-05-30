@@ -1,7 +1,5 @@
 import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
-import { RecordsListComponent } from '../records-list.component'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 
 @Component({
@@ -9,7 +7,7 @@ import { SearchFacade } from '@geonetwork-ui/feature/search'
   templateUrl: './templates.component.html',
   styleUrls: ['./templates.component.css'],
   standalone: true,
-  imports: [CommonModule, TranslateModule, RecordsListComponent],
+  imports: [CommonModule],
 })
 export class TemplatesComponent {
   constructor(public searchFacade: SearchFacade) {

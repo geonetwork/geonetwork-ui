@@ -3,13 +3,12 @@ import {
   FILTER_SUMMARY_IGNORE_LIST,
   SearchFiltersSummaryComponent,
 } from './search-filters-summary.component'
-import { MockComponent, MockProvider } from 'ng-mocks'
+import { MockProvider } from 'ng-mocks'
 import { SearchService } from '../utils/service/search.service'
 import { SearchFacade } from '../state/search.facade'
 import { BehaviorSubject, firstValueFrom } from 'rxjs'
-import { TranslateModule } from '@ngx-translate/core'
-import { SearchFiltersSummaryItemComponent } from '../search-filters-summary-item/search-filters-summary-item.component'
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject<FieldFilters>({
@@ -32,12 +31,8 @@ describe('SearchFiltersSummaryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
-      declarations: [
-        SearchFiltersSummaryComponent,
-        MockComponent(SearchFiltersSummaryItemComponent),
-      ],
       providers: [
+        provideI18n(),
         MockProvider(SearchFacade, SearchFacadeMock, 'useClass'),
         MockProvider(SearchService, SearchServiceMock, 'useClass'),
       ],

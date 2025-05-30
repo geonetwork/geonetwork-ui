@@ -1,8 +1,4 @@
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
   applicationConfig,
   componentWrapperDecorator,
@@ -15,8 +11,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterModule } from '@angular/router'
 import { APP_BASE_HREF } from '@angular/common'
 import { importProvidersFrom } from '@angular/core'
-import { MatTooltipModule } from '@angular/material/tooltip'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
@@ -25,18 +19,12 @@ export default {
   component: RelatedRecordCardComponent,
   decorators: [
     moduleMetadata({
-      imports: [
-        RouterModule,
-        UtilI18nModule,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        MatTooltipModule,
-        UtilSharedModule,
-      ],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
     }),
     applicationConfig({
       providers: [
         importProvidersFrom(BrowserAnimationsModule, RouterModule.forRoot([])),
+        provideI18n(),
       ],
     }),
     componentWrapperDecorator(

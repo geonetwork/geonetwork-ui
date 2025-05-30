@@ -1,14 +1,15 @@
-import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
+import {
+  applicationConfig,
+  Meta,
+  moduleMetadata,
+  StoryObj,
+} from '@storybook/angular'
 import { FacetListComponent } from './facet-list.component'
 import { blockModelFixture } from '../fixtures'
 import { FacetItemComponent } from '../facet-item/facet-item.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { FacetBlockComponent } from '../facet-block/facet-block.component'
 import { FormsModule } from '@angular/forms'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export default {
   title: 'Search/FacetListComponent',
@@ -16,11 +17,10 @@ export default {
   decorators: [
     moduleMetadata({
       declarations: [FacetItemComponent, FacetBlockComponent],
-      imports: [
-        UtilI18nModule,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        FormsModule,
-      ],
+      imports: [FormsModule],
+    }),
+    applicationConfig({
+      providers: [provideI18n()],
     }),
   ],
 } as Meta<FacetListComponent>

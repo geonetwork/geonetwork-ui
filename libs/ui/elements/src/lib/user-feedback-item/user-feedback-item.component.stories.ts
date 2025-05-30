@@ -1,37 +1,17 @@
 import {
   applicationConfig,
   componentWrapperDecorator,
-  moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { CommonModule } from '@angular/common'
 import { UserFeedbackItemComponent } from './user-feedback-item.component'
-import { TranslateModule } from '@ngx-translate/core'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
-import { TimeSincePipe } from './time-since.pipe'
-import { HttpClientModule } from '@angular/common/http'
-import { importProvidersFrom } from '@angular/core'
-import { ButtonComponent, TextAreaComponent } from '@geonetwork-ui/ui/inputs'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export default {
   title: 'Elements/UserFeedbackItemComponent',
   component: UserFeedbackItemComponent,
   decorators: [
-    moduleMetadata({
-      imports: [
-        CommonModule,
-        UtilI18nModule,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        TimeSincePipe,
-        TextAreaComponent,
-        ButtonComponent,
-      ],
-    }),
     applicationConfig({
-      providers: [importProvidersFrom(HttpClientModule)],
+      providers: [provideI18n()],
     }),
     componentWrapperDecorator(
       (story) => `<div style="max-width: 800px">${story}</div>`

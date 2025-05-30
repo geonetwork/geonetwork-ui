@@ -4,9 +4,6 @@ import { RecordOtherlinksComponent } from './record-otherlinks.component'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 
-class MdViewFacadeMock {
-  otherLinks$ = new BehaviorSubject([])
-}
 describe('RecordOtherlinksComponent', () => {
   let component: RecordOtherlinksComponent
   let fixture: ComponentFixture<RecordOtherlinksComponent>

@@ -10,7 +10,7 @@ import {
   CatalogRecord,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 import {
   MaxLinesComponent,
   Paginable,
@@ -21,8 +21,9 @@ import { LetDirective } from '@ngrx/component'
 import {
   ErrorComponent,
   ErrorType,
+  MarkdownParserComponent,
   RelatedRecordCardComponent,
-  UiElementsModule,
+  ThumbnailComponent,
 } from '@geonetwork-ui/ui/elements'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
@@ -34,15 +35,14 @@ import {
   Subscription,
   switchMap,
 } from 'rxjs'
-import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { RouterLink } from '@angular/router'
 import { ROUTER_ROUTE_SEARCH } from '@geonetwork-ui/feature/router'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import {
-  SpinningLoaderComponent,
-  UiWidgetsModule,
-} from '@geonetwork-ui/ui/widgets'
+import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 import { startWith } from 'rxjs/operators'
+import { FigureComponent } from '@geonetwork-ui/ui/dataviz'
+import { provideIcons } from '@ng-icons/core'
+import { tablerFolderOpen } from '@ng-icons/tabler-icons'
 
 @Component({
   selector: 'datahub-organization-details',
@@ -52,19 +52,24 @@ import { startWith } from 'rxjs/operators'
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslateDirective,
     LetDirective,
     PreviousNextButtonsComponent,
-    UiElementsModule,
     UiSearchModule,
     MaxLinesComponent,
-    UiDatavizModule,
     RouterLink,
-    UiWidgetsModule,
     ErrorComponent,
     SpinningLoaderComponent,
     RelatedRecordCardComponent,
     PaginationDotsComponent,
+    FigureComponent,
+    MarkdownParserComponent,
+    ThumbnailComponent,
+  ],
+  viewProviders: [
+    provideIcons({
+      tablerFolderOpen,
+    }),
   ],
 })
 export class OrganizationDetailsComponent

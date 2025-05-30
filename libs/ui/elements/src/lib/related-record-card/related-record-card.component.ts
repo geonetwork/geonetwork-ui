@@ -1,33 +1,21 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   Input,
-  Output,
+  TemplateRef,
 } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 import { InternalLinkCardComponent } from '../internal-link-card/internal-link-card.component'
-import { RouterLink } from '@angular/router'
 import { MatTooltipModule } from '@angular/material/tooltip'
-import { NgIcon, provideIcons } from '@ng-icons/core'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideIcons } from '@ng-icons/core'
 import { matOpenInNew } from '@ng-icons/material-icons/baseline'
-import { TemplateRef } from '@angular/core'
 
 @Component({
   selector: 'gn-ui-related-record-card',
   templateUrl: './related-record-card.component.html',
   styleUrls: ['./related-record-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    InternalLinkCardComponent,
-    ThumbnailComponent,
-    RouterLink,
-    MatTooltipModule,
-    NgIcon,
-    TranslateModule,
-  ],
+  imports: [InternalLinkCardComponent, MatTooltipModule],
   standalone: true,
   viewProviders: [provideIcons({ matOpenInNew })],
 })

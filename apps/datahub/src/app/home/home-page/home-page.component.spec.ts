@@ -1,18 +1,15 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { HomePageComponent } from './home-page.component'
-import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
+import { MockBuilder } from 'ng-mocks'
 
 describe('HomePageComponent', () => {
   let component: HomePageComponent
   let fixture: ComponentFixture<HomePageComponent>
 
+  beforeEach(() => MockBuilder(HomePageComponent))
+
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [HomePageComponent],
-      imports: [UiLayoutModule],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents()
+    await TestBed.compileComponents()
   })
 
   beforeEach(() => {
