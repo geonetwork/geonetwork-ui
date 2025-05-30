@@ -212,4 +212,22 @@ describe('FuzzySearchComponent', () => {
       })
     })
   })
+
+  describe('custom placeholder', () => {
+    beforeEach(() => {
+      fixture = TestBed.createComponent(FuzzySearchComponent);
+      component = fixture.componentInstance;
+      component.placeholder = 'Type your custom placeholder text here…';
+      fixture.detectChanges();
+    });
+
+    it('uses custom placeholder when provided', () => {
+      const autocomplete = fixture.debugElement
+        .query(By.directive(AutocompleteComponent))
+        .componentInstance as AutocompleteComponent;
+
+      expect(autocomplete.placeholder).toBe('Type your custom placeholder text here…');
+    });
+  });
+
 })
