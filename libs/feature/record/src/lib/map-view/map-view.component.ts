@@ -103,47 +103,33 @@ export class MapViewComponent implements AfterViewInit {
   loading = false
   error = null
 
-  constructor(
-    private mdViewFacade: MdViewFacade,
-    private mapUtils: MapUtilsService,
-    private dataService: DataService,
-    private changeRef: ChangeDetectorRef,
-    private translateService: TranslateService
-  ) {}
+  selectLinkToDisplay(i: number) {
+    this.selectedLinkIndex$.next(i)
+  }
+
+  selectStyleToDisplay(i: number) {
+    this.selectedStyleIndex$.next(i)
+  }
+
+  toggleLegend() {
+    this.showLegend = !this.showLegend
+  }
+  onLegendStatusChange(v: boolean) {
+    this.legendExists = v
+  }
 
   compatibleMapLinks$ = combineLatest([
     this.mdViewFacade.mapApiLinks$,
     this.mdViewFacade.geoDataLinksWithGeometry$,
   ]).pipe(
-    switchMap(async ([mapApiLinks, geoDataLinksWithGeometry]) => {
-      // looking for TMS links to process
-      const processedMapApiLinks = await Promise.all(
-        mapApiLinks.map((link) =>
-          link.type === 'service' && link.accessServiceProtocol === 'tms'
-            ? this.dataService.getGeodataLinksFromTms(
-                link as DatasetServiceDistribution,
-                true
-              )
-            : link
-        )
-      )
-      return [...processedMapApiLinks.flat(), ...geoDataLinksWithGeometry]
-    }),
+    map(([mapApiLinks, geoDataLinksWithGeometry]) => [
+      ...mapApiLinks,
+      ...geoDataLinksWithGeometry,
+    ]),
     shareReplay(1)
   )
 
-  sourceLinks$ = this.compatibleMapLinks$.pipe(
-    map((links) => {
-      const nonStyle = links.filter(
-        (l) =>
-          !(
-            l.type === 'service' && l.accessServiceProtocol === 'maplibre-style'
-          )
-      )
-      return nonStyle.length ? nonStyle : links
-    }),
-    shareReplay(1)
-  )
+  sourceLinks$ = this.compatibleMapLinks$.pipe(shareReplay(1))
 
   dropdownChoices$ = this.sourceLinks$.pipe(
     map((links) =>
@@ -167,25 +153,30 @@ export class MapViewComponent implements AfterViewInit {
     shareReplay(1)
   )
 
-  styleLinks$ = combineLatest([
-    this.compatibleMapLinks$,
-    this.selectedSourceLink$,
-  ]).pipe(
-    map(([all, src]) => {
+  styleLinks$ = this.selectedSourceLink$.pipe(
+    switchMap((src) => {
       if (
         src &&
         src.type === 'service' &&
         src.accessServiceProtocol === 'tms'
       ) {
-        const layerId = src.url.pathname.split('/').pop() || ''
-        return all.filter(
-          (l) =>
-            l.type === 'service' &&
-            l.accessServiceProtocol === 'maplibre-style' &&
-            l.url.pathname.includes(layerId)
+        return from(
+          this.dataService.getGeodataLinksFromTms(
+            src as DatasetServiceDistribution,
+            false
+          )
+        ).pipe(
+          map(
+            (links) =>
+              links?.filter(
+                (l) =>
+                  l.type === 'service' &&
+                  l.accessServiceProtocol === 'maplibre-style'
+              ) || []
+          )
         )
       }
-      return []
+      return of([])
     }),
     tap(() => this.selectedStyleIndex$.next(0)),
     shareReplay(1)
@@ -270,24 +261,19 @@ export class MapViewComponent implements AfterViewInit {
     shareReplay(1)
   )
 
+  constructor(
+    private mdViewFacade: MdViewFacade,
+    private mapUtils: MapUtilsService,
+    private dataService: DataService,
+    private changeRef: ChangeDetectorRef,
+    private translateService: TranslateService
+  ) {}
+
   async ngAfterViewInit() {
     const map = await this.mapContainer.openlayersMap
     prioritizePageScroll(map.getInteractions())
   }
 
-  selectLinkToDisplay(i: number) {
-    this.selectedLinkIndex$.next(i)
-  }
-  selectStyleToDisplay(i: number) {
-    this.selectedStyleIndex$.next(i)
-  }
-
-  toggleLegend() {
-    this.showLegend = !this.showLegend
-  }
-  onLegendStatusChange(v: boolean) {
-    this.legendExists = v
-  }
   onMapFeatureSelect(features: Feature[]): void {
     this.resetSelection()
     this.selection = features?.length > 0 && features[0]
