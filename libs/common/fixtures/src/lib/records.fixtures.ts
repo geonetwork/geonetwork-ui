@@ -177,6 +177,20 @@ As such, **it is not very interesting at all.**`,
               link: '',
               definition: 'Nom de la rue',
               type: 'String (48)',
+              values: [
+                {
+                  code: 'Pomme',
+                  label: 'Les Pommiers',
+                  description: 'Sous les pommiers',
+                },
+                {
+                  code: 'Cotton',
+                  label: 'Rue Cotton',
+                  description: 'Rue Cotton',
+                },
+                { code: "Passage de l'échiquier" },
+                { description: 'Rue du Charlieu' },
+              ],
             },
             {
               code: 'RUE',

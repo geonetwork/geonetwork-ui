@@ -65,7 +65,6 @@ export class TruncatedTextComponent implements AfterViewInit, OnDestroy {
     this.mutationObserver = new MutationObserver(() => {
       this.ngZone.run(() => {
         this.checkTextTruncation()
-        this.close()
       })
     })
 
