@@ -74,8 +74,7 @@ export class MetadataQualityComponent implements OnChanges {
     }
   }
   hasGetCapabilities(url: string): boolean {
-    const searchParams = new URLSearchParams(url)
-    return searchParams.get('REQUEST')?.toLowerCase().includes('capabilities')
+    return url.toLowerCase().includes('capabilities')
   }
 
   private readonly COMMON_CHECKS: QualityChecks = {
@@ -96,7 +95,7 @@ export class MetadataQualityComponent implements OnChanges {
     service: {
       capabilities: (metadata) =>
         (metadata?.onlineResources ?? []).some((resource) =>
-          this.hasGetCapabilities(resource?.url?.search ?? '')
+          this.hasGetCapabilities(resource?.url?.href ?? '')
         ),
     },
     reuse: {
