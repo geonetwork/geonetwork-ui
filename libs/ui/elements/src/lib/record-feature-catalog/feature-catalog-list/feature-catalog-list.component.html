@@ -21,7 +21,6 @@
             </div>
           </div>
         </ng-template>
-        <!-- KEEP all *ngIf="expanel && !expanel.collapsed" for UI perf issues! -->
         <div
           *ngIf="expanel && !expanel.collapsed"
           class="grid gap-0"
@@ -44,7 +43,6 @@
           >
             {{ 'feature.catalog.attribute.' + col.key | translate }}
           </div>
-          <!-- KEEP all *ngIf="expanel && !expanel.collapsed" for UI perf issues! -->
           <ng-container *ngIf="expanel && !expanel.collapsed">
             <ng-container *ngFor="let row of featureType.attributes">
               <div
