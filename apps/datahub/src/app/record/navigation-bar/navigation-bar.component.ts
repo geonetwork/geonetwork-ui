@@ -56,12 +56,12 @@ export class NavigationBarComponent {
       label: 'record.metadata.preview',
     },
     {
-      anchor: 'feature-catalog',
-      label: 'record.metadata.feature.catalog',
-    },
-    {
       anchor: 'resources',
       label: 'record.metadata.ressources.and.links',
+    },
+    {
+      anchor: 'feature-catalog',
+      label: 'record.metadata.feature.catalog',
     },
     {
       anchor: 'linked-records',
