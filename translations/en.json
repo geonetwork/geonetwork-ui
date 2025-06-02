@@ -463,7 +463,7 @@
   "record.metadata.quality.organisation.failed": "Organisation is not specified",
   "record.metadata.quality.organisation.success": "Organisation is specified",
   "record.metadata.quality.source.failed": "No source dataset is specified",
-  "record.metadata.quality.source.success": "No source dataset is specified",
+  "record.metadata.quality.source.success": "A source dataset is specified",
   "record.metadata.quality.title.failed": "Title is not specified",
   "record.metadata.quality.title.success": "Title is specified",
   "record.metadata.quality.topic.failed": "Topic is not specified",
