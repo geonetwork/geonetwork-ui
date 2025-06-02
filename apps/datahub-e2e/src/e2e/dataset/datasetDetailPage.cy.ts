@@ -342,7 +342,13 @@ describe('dataset pages', () => {
       .find('ng-icon')
       .eq(3)
       .should('have.attr', 'ng-reflect-name', 'matWarningAmber')
-
+    //87%, 7 OK , 1 Warning
+    cy.get(
+      'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matCheck"]'
+    ).should('have.length', 7)
+    cy.get(
+      'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matWarningAmber"]'
+    ).should('have.length', 1)
     // Score is 100%
     cy.visit('/dataset/6d0bfdf4-4e94-48c6-9740-3f9facfd453c')
 
@@ -353,13 +359,16 @@ describe('dataset pages', () => {
       .invoke('text')
       .invoke('trim')
       .should('eql', '100%')
-
+    //100%, 8 OK , 0 Warning
+    cy.get('gn-ui-metadata-quality').find('gn-ui-popover').trigger('mouseenter')
+    cy.get(
+      'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matCheck"]'
+    ).should('have.length', 8)
+    cy.get(
+      'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matWarningAmber"]'
+    ).should('have.length', 0)
     // it should check all the criteria if score is 100
     cy.get('gn-ui-metadata-quality').find('gn-ui-popover').trigger('mouseenter')
-    cy.get('gn-ui-metadata-quality-item')
-      .find('ng-icon')
-      .eq(4)
-      .should('have.attr', 'ng-reflect-name', 'matCheck')
 
     // Score for a Reuse is 75%
     cy.visit('/reuse/7eb795c2-d612-4b5e-b15e-d985b0f4e697')
@@ -371,7 +380,14 @@ describe('dataset pages', () => {
       .invoke('text')
       .invoke('trim')
       .should('eql', '75%')
-
+    // 6 OK , 2 Warning
+    cy.get('gn-ui-metadata-quality').find('gn-ui-popover').trigger('mouseenter')
+    cy.get(
+      'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matCheck"]'
+    ).should('have.length', 6)
+    cy.get(
+      'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matWarningAmber"]'
+    ).should('have.length', 2)
     // Score for a Service is 83%
     cy.visit('/service/00916a35-786b-4569-9da6-71ca64ca54b1')
 
