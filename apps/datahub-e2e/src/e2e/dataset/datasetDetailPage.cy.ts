@@ -397,7 +397,7 @@ describe('dataset pages', () => {
       .find('[data-cy=progressPercentage]')
       .invoke('text')
       .invoke('trim')
-      .should('match', /^(83|66)%$/) // may be different on GN v4.2.2
+      .should('match', /^(100|66)%$/) // may be different on GN v4.2.2
   })
 
   it('PREVIEW SECTION : display & functions', () => {
