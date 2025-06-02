@@ -1,5 +1,6 @@
 export * from './lib/anchor-link/anchor-link.directive'
 export * from './lib/carousel/carousel.component'
+export * from './lib/cell-popin/cell-popin.component'
 export * from './lib/expandable-panel-button/expandable-panel-button.component'
 export * from './lib/expandable-panel/expandable-panel.component'
 export * from './lib/form-field-wrapper/form-field-wrapper.component'
