@@ -6,10 +6,7 @@
   [class]="extraClass"
   data-cy="cell-popin"
 >
-  <!-- [Overlay trigger] usage in cellContent, if trigger needed: <button (click)="openOverlay()"> -->
   <ng-content select="[cellContent]"></ng-content>
-
-  <!-- [Overlay content] -->
   <ng-template
     *ngIf="activePopin"
     cdkConnectedOverlay
@@ -27,10 +24,7 @@
       class="bg-white shadow-lg border border-gray-300 relative"
       data-cy="cell-popin-content"
     >
-      <!-- Populate popin content here -->
       <ng-content select="[popinContent]"></ng-content>
-
-      <!-- [Overlay closing button] -->
       <gn-ui-button
         data-cy="cell-popin-close"
         [style.--gn-ui-button-background]="'bg-transparent'"
