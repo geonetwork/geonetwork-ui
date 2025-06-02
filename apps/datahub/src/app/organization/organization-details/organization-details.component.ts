@@ -36,7 +36,7 @@ import {
   SpinningLoaderComponent,
   UiWidgetsModule,
 } from '@geonetwork-ui/ui/widgets'
-import { map, startWith, tap } from 'rxjs/operators'
+import { map, startWith } from 'rxjs/operators'
 import { RecordInternalLinksComponent } from '../../record/record-internal-links/record-internal-links.component'
 
 @Component({
