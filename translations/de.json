@@ -352,7 +352,7 @@
   "map.navigation.message": "Bitte verwenden Sie STRG + Maus (oder zwei Finger auf einem Mobilgerät), um die Karte zu navigieren",
   "map.ogc.urlInput.hint": "",
   "map.select.layer": "Datenquelle",
-  "map.select.style": "",
+  "map.select.style": "Style",
   "map.wfs.urlInput.hint": "Geben Sie die WFS URL ein",
   "map.wms.urlInput.hint": "Geben Sie die WMS URL ein",
   "multiselect.filter.placeholder": "Suche",

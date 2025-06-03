@@ -129,9 +129,7 @@ export class MapViewComponent implements AfterViewInit {
     shareReplay(1)
   )
 
-  sourceLinks$ = this.compatibleMapLinks$.pipe(shareReplay(1))
-
-  dropdownChoices$ = this.sourceLinks$.pipe(
+  dropdownChoices$ = this.compatibleMapLinks$.pipe(
     map((links) =>
       links.length
         ? links.map((link, index) => ({
@@ -146,7 +144,7 @@ export class MapViewComponent implements AfterViewInit {
   private selectedStyleIndex$ = new BehaviorSubject(0)
 
   selectedSourceLink$ = combineLatest([
-    this.sourceLinks$,
+    this.compatibleMapLinks$,
     this.selectedLinkIndex$.pipe(distinctUntilChanged()),
   ]).pipe(
     map(([links, idx]) => links[idx]),
@@ -185,7 +183,10 @@ export class MapViewComponent implements AfterViewInit {
   styleDropdownChoices$ = this.styleLinks$.pipe(
     map((links) =>
       links.length
-        ? links.map((l, i) => ({ label: getLinkLabel(l), value: i }))
+        ? links.map((link, index) => ({
+            label: getLinkLabel(link),
+            value: index,
+          }))
         : [
             {
               label: '\u00A0\u00A0\u00A0\u00A0',

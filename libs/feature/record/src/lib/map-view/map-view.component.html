@@ -4,7 +4,7 @@
   >
     <gn-ui-dropdown-selector
       *ngIf="displaySource"
-      class="w-full md:w-1/2"
+      class="w-full md:flex-1 md:min-w-0"
       extraBtnClass="font-sans font-bold"
       [title]="'map.select.layer' | translate"
       [choices]="dropdownChoices$ | async"
@@ -13,7 +13,7 @@
 
     <ng-container *ngIf="(styleLinks$ | async)?.length > 0; else styleDisabled">
       <gn-ui-dropdown-selector
-        class="w-full md:w-1/2"
+        class="w-full md:flex-1 md:min-w-0"
         extraBtnClass="font-sans font-bold"
         [title]="'map.select.style' | translate"
         [choices]="styleDropdownChoices$ | async"
@@ -22,7 +22,7 @@
     </ng-container>
     <ng-template #styleDisabled>
       <gn-ui-dropdown-selector
-        class="w-full md:w-1/2 text-gray-400"
+        class="w-full md:flex-1 md:min-w-0 text-gray-400"
         extraBtnClass="font-sans font-bold text-gray-400"
         [title]="'map.select.style' | translate"
         [choices]="styleDropdownChoices$ | async"
