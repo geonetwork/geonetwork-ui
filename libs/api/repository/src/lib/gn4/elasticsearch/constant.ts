@@ -19,6 +19,7 @@ export const ES_SOURCE_SUMMARY = [
   'cl_maintenanceAndUpdateFrequency',
   'tag',
   'MD_LegalConstraintsUseLimitationObject',
+  'MD_LegalConstraintsOtherConstraintsObject',
   'qualityScore',
 ]
 

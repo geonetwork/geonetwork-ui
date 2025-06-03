@@ -791,6 +791,7 @@ describe('ElasticsearchService', () => {
           'cl_maintenanceAndUpdateFrequency',
           'tag',
           'MD_LegalConstraintsUseLimitationObject',
+          'MD_LegalConstraintsOtherConstraintsObject',
           'qualityScore',
           'allKeywords',
           'createDate',
