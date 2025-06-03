@@ -17,7 +17,7 @@ import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { of, Subject, throwError } from 'rxjs'
 import { MapViewComponent } from './map-view.component'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { delay, tap } from 'rxjs/operators'
+import { delay } from 'rxjs/operators'
 import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 import { Collection } from 'ol'
 import { Interaction } from 'ol/interaction'
@@ -33,8 +33,6 @@ import { MockBuilder, MockProvider } from 'ng-mocks'
 import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component'
 import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
-
-// jest.useFakeTimers()
 
 jest.mock('@geonetwork-ui/ui/map', () => ({
   ...jest.requireActual('@geonetwork-ui/ui/map'),
@@ -108,7 +106,11 @@ class DataServiceMock {
       ? throwError(() => new Error('data loading error'))
       : of(SAMPLE_GEOJSON).pipe(delay(100))
   )
-  getGeodataLinksFromTms = jest.fn((mapLink) => Promise.resolve([mapLink]))
+  getGeodataLinksFromTms = jest.fn((mapLink) => {
+    return mapLink.url.toString().indexOf('error') > -1
+      ? Promise.reject([mapLink])
+      : Promise.resolve([mapLink])
+  })
 }
 
 class OpenLayersMapMock {
@@ -529,6 +531,34 @@ describe('MapViewComponent', () => {
                 type: 'xyz',
                 tileFormat: 'application/vnd.mapbox-vector-tile',
                 url: 'http://abcd.com/tms/{z}/{x}/{y}.pbf',
+              },
+            ],
+            view: expect.any(Object),
+          })
+        })
+      })
+      describe('when endpoint is in error', () => {
+        beforeEach(fakeAsync(() => {
+          mdViewFacade.mapApiLinks$.next([
+            {
+              url: new URL('http://error.com/tms'),
+              name: 'tmserror',
+              type: 'service',
+              accessServiceProtocol: 'tms',
+            },
+          ])
+          mdViewFacade.geoDataLinksWithGeometry$.next([])
+          tick(200)
+          fixture.detectChanges()
+        }))
+        it('still emits a map context using mvt tile format with root url', () => {
+          expect(mapComponent.context).toEqual({
+            layers: [
+              {
+                name: 'tmserror',
+                type: 'xyz',
+                tileFormat: 'application/vnd.mapbox-vector-tile',
+                url: 'http://error.com/tms/{z}/{x}/{y}.pbf',
               },
             ],
             view: expect.any(Object),
