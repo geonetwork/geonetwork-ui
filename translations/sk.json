@@ -358,6 +358,7 @@
   "map.navigation.message": "Použite prosím CTRL + myš (alebo dva prsty na mobilnom zariadení) na navigáciu po mape",
   "map.ogc.urlInput.hint": "",
   "map.select.layer": "Zdroj dát",
+  "map.select.style": "",
   "map.wfs.urlInput.hint": "Zadajte URL adresu služby WFS",
   "map.wms.urlInput.hint": "Zadajte URL adresu služby WMS",
   "multiselect.filter.placeholder": "Hľadať",

@@ -358,6 +358,7 @@
   "map.navigation.message": "",
   "map.ogc.urlInput.hint": "",
   "map.select.layer": "",
+  "map.select.style": "",
   "map.wfs.urlInput.hint": "",
   "map.wms.urlInput.hint": "",
   "multiselect.filter.placeholder": "",

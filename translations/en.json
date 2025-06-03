@@ -358,6 +358,7 @@
   "map.navigation.message": "Please use CTRL + mouse (or two fingers on mobile) to navigate the map",
   "map.ogc.urlInput.hint": "Enter OGC API service URL",
   "map.select.layer": "Data source",
+  "map.select.style": "Style",
   "map.wfs.urlInput.hint": "Enter WFS service URL",
   "map.wms.urlInput.hint": "Enter WMS service URL",
   "multiselect.filter.placeholder": "Search",
