@@ -164,12 +164,14 @@ export class MapViewComponent implements AfterViewInit {
             false
           )
         ).pipe(
+          // We need to check for maplibre-style links because when a TMS service has no styles,
+          // getGeodataLinksFromTms returns the original TMS link, which isn't a maplibre-style link
           map(
             (links) =>
               links?.filter(
-                (l) =>
-                  l.type === 'service' &&
-                  l.accessServiceProtocol === 'maplibre-style'
+                (link) =>
+                  link.type === 'service' &&
+                  link.accessServiceProtocol === 'maplibre-style'
               ) || []
           )
         )
