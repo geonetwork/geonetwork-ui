@@ -93,7 +93,7 @@ if(!isService && ctx.contact != null && ctx.contact.length > 0 && ctx.contact[0]
   ok++
 }
 // this checks for multilingual Organizations (GN 4.2.3+)
-if(!isService && ctx.contact != null && ctx.contact.length > 0 && ctx.contact[0].organisationObject != null && ctx.contact[0].organisationObject.default != '') {
+if(!isService && ctx.contact != null && ctx.contact.length > 0 && ctx.contact[0].organisationObject != null && ctx.contact[0].organisationObject.default != null && ctx.contact[0].organisationObject.default != '') {
   ok++
 }
 if(ctx.contact != null && ctx.contact.length > 0 && ctx.contact[0].email != null && ctx.contact[0].email != '') {

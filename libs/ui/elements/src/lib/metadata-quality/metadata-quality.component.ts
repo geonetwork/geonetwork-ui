@@ -90,7 +90,7 @@ export class MetadataQualityComponent implements OnChanges {
     dataset: {
       updateFrequency: (metadata) => !!metadata?.updateFrequency,
       topic: (metadata) => (metadata?.topics?.length ?? 0) > 0,
-      organisation: (metadata) => !!metadata?.contacts?.[0]?.organization,
+      organisation: (metadata) => !!metadata?.contacts?.[0]?.organization?.name,
     },
     service: {
       capabilities: (metadata) =>
@@ -100,7 +100,7 @@ export class MetadataQualityComponent implements OnChanges {
     },
     reuse: {
       topic: (metadata) => (metadata?.topics?.length ?? 0) > 0,
-      organisation: (metadata) => !!metadata?.contacts?.[0]?.organization,
+      organisation: (metadata) => !!metadata?.contacts?.[0]?.organization?.name,
       source: (metadata) => !!metadata?.extras?.sourcesIdentifiers,
     },
   }
