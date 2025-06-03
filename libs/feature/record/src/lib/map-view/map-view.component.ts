@@ -133,10 +133,21 @@ export class MapViewComponent implements AfterViewInit {
     this.mdViewFacade.mapApiLinks$,
     this.mdViewFacade.geoDataLinksWithGeometry$,
   ]).pipe(
-    map(([mapApiLinks, geoDataLinksWithGeometry]) => [
-      ...mapApiLinks,
-      ...geoDataLinksWithGeometry,
-    ]),
+    switchMap(async ([mapApiLinks, geoDataLinksWithGeometry]) => {
+      // looking for TMS links to process
+      let processedMapApiLinks = await Promise.all(
+        mapApiLinks.map((link) => {
+          if (link.type === 'service' && link.accessServiceProtocol === 'tms') {
+            return this.dataService.getGeodataLinksFromTms(link).catch(() => {
+              return link
+            })
+          }
+          return link
+        })
+      )
+      processedMapApiLinks = processedMapApiLinks.flat()
+      return [...processedMapApiLinks, ...geoDataLinksWithGeometry]
+    }),
     shareReplay(1)
   )
 
@@ -144,9 +155,9 @@ export class MapViewComponent implements AfterViewInit {
     map((links) =>
       links.length
         ? links.map((link, index) => ({
-            label: getLinkLabel(link),
-            value: index,
-          }))
+          label: getLinkLabel(link),
+          value: index,
+        }))
         : [{ label: 'map.dropdown.placeholder', value: 0 }]
     )
   )
@@ -199,15 +210,15 @@ export class MapViewComponent implements AfterViewInit {
     map((links) =>
       links.length
         ? links.map((link, index) => ({
-            label: getLinkLabel(link),
-            value: index,
-          }))
+          label: getLinkLabel(link),
+          value: index,
+        }))
         : [
-            {
-              label: '\u00A0\u00A0\u00A0\u00A0',
-              value: 0,
-            },
-          ]
+          {
+            label: '\u00A0\u00A0\u00A0\u00A0',
+            value: 0,
+          },
+        ]
     )
   )
 
@@ -283,7 +294,7 @@ export class MapViewComponent implements AfterViewInit {
     private dataService: DataService,
     private changeRef: ChangeDetectorRef,
     private translateService: TranslateService
-  ) {}
+  ) { }
 
   async ngAfterViewInit() {
     const map = await this.mapContainer.openlayersMap

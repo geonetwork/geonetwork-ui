@@ -839,6 +839,19 @@ describe('DataService', () => {
         const styles = await service.getGeodataLinksFromTms(noStyleLink)
         expect(styles).toEqual([noStyleLink])
       })
+
+      it('throws an error', async () => {
+        const noStyleLink = {
+          ...tmsLink,
+          url: new URL('http://error.http/tms'),
+        }
+
+        try {
+          await service.getGeodataLinksFromTms(noStyleLink)
+        } catch (e) {
+          expect((e as Error).message).toBe('ogc.unreachable.unknown')
+        }
+      })
     })
   })
 
