@@ -337,7 +337,10 @@ describe('dataset pages', () => {
     cy.screenshot({ capture: 'fullPage' })
 
     // it should not check all the criteria
-    cy.get('gn-ui-metadata-quality').find('gn-ui-popover').trigger('mouseenter')
+    cy.get('gn-ui-metadata-quality')
+      .find('gn-ui-popover')
+      .first()
+      .trigger('mouseenter')
     cy.get('gn-ui-metadata-quality-item')
       .find('ng-icon')
       .eq(3)
@@ -360,15 +363,16 @@ describe('dataset pages', () => {
       .invoke('trim')
       .should('eql', '100%')
     //100%, 8 OK , 0 Warning
-    cy.get('gn-ui-metadata-quality').find('gn-ui-popover').trigger('mouseenter')
+    cy.get('gn-ui-metadata-quality')
+      .find('gn-ui-popover')
+      .first()
+      .trigger('mouseenter')
     cy.get(
       'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matCheck"]'
     ).should('have.length', 8)
     cy.get(
       'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matWarningAmber"]'
     ).should('have.length', 0)
-    // it should check all the criteria if score is 100
-    cy.get('gn-ui-metadata-quality').find('gn-ui-popover').trigger('mouseenter')
 
     // Score for a Reuse is 75%
     cy.visit('/reuse/7eb795c2-d612-4b5e-b15e-d985b0f4e697')
@@ -381,7 +385,10 @@ describe('dataset pages', () => {
       .invoke('trim')
       .should('eql', '75%')
     // 6 OK , 2 Warning
-    cy.get('gn-ui-metadata-quality').find('gn-ui-popover').trigger('mouseenter')
+    cy.get('gn-ui-metadata-quality')
+      .find('gn-ui-popover')
+      .first()
+      .trigger('mouseenter')
     cy.get(
       'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matCheck"]'
     ).should('have.length', 6)

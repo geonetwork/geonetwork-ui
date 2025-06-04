@@ -18,9 +18,10 @@ export const ES_SOURCE_SUMMARY = [
   'cl_topic',
   'cl_maintenanceAndUpdateFrequency',
   'tag',
-  'MD_LegalConstraintsUseLimitationObject',
-  'MD_LegalConstraintsOtherConstraintsObject',
+  'MD_LegalConstraints*Object',
   'qualityScore',
+  'allKeywords',
+  'recordLink',
 ]
 
 export type EsQueryFieldsPriorityType = Record<string, number>

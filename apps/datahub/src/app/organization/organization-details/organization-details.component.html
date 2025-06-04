@@ -60,68 +60,32 @@
       </div>
 
       <div class="w-full bg-primary-opacity-10">
-        <div class="container-lg lg:mx-auto min-h-[534px] pt-12 pb-[72px]">
-          <div class="flex flex-col gap-6">
-            <div class="flex flex-row gap-[18px] items-center px-[25px]">
-              <p
-                class="font-title text-[28px] font-medium text-title text-center sm:text-left"
-                translate
-              >
-                organization.details.lastPublishedDatasets
-              </p>
-              <ng-container
-                *ngIf="
-                  !isSearchFacadeLoading && lastPublishedDatasets.length > 0
-                "
-              >
-                <gn-ui-previous-next-buttons
-                  data-test="orgDetailsNavBtn"
-                  *ngIf="hasPagination"
-                  [listComponent]="this"
-                ></gn-ui-previous-next-buttons>
-                <div class="ml-auto">
-                  <a
-                    [routerLink]="['/', ROUTER_ROUTE_SEARCH]"
-                    [queryParams]="{ organization: organization.name }"
-                    class="gn-ui-btn-primary h-[34px] rounded-lg"
-                    data-test="orgDetailsSearchAllBtn"
-                    translate
-                  >
-                    organization.details.lastPublishedDatasets.searchAllButton
-                  </a>
-                </div>
-              </ng-container>
+        <div class="container-lg lg:mx-auto px-4 pt-12 pb-[72px]">
+          <ng-container
+            *ngIf="isSearchFacadeLoading$ | async; else listRecords"
+          >
+            <div
+              data-test="orgPageIsOrgLoading"
+              class="flex justify-center w-full h-[200px] items-center"
+            >
+              <gn-ui-spinning-loader></gn-ui-spinning-loader>
             </div>
-
-            <div id="lastPublishedDatasets" data-test="lastPubliDatasets">
-              <ng-container *ngIf="!isSearchFacadeLoading">
-                <div
-                  class="mb-4 flex flex-wrap gap-9 justify-center sm:justify-start px-[25px]"
-                  data-test="orgPageLasPubDat"
-                >
-                  <gn-ui-related-record-card
-                    *ngFor="let dataset of lastPublishedDatasets"
-                    [record]="dataset"
-                    [extraClass]="'w-[300px]'"
-                  ></gn-ui-related-record-card>
-                </div>
-                <gn-ui-pagination-dots
-                  [listComponent]="this"
-                  [containerClass]="paginationContainerClass"
-                >
-                </gn-ui-pagination-dots>
-              </ng-container>
-
-              <ng-container *ngIf="isSearchFacadeLoading">
-                <div
-                  data-test="orgPageIsOrgLoading"
-                  class="flex justify-center w-full h-[200px] items-center"
-                >
-                  <gn-ui-spinning-loader></gn-ui-spinning-loader>
-                </div>
-              </ng-container>
-            </div>
-          </div>
+          </ng-container>
+          <ng-template #listRecords>
+            <datahub-record-internal-links
+              [title]="'organization.details.lastPublishedDatasets' | translate"
+              [titleIsSectionTitle]="true"
+              [records]="lastPublishedDatasets"
+              [routerLinkButton]="{
+                routerLink: ['/', ROUTER_ROUTE_SEARCH],
+                queryParams: { organization: organization.name },
+                label:
+                  'organization.details.lastPublishedDatasets.searchAllButton'
+                  | translate,
+              }"
+              data-test="orgPageLasPubDat"
+            ></datahub-record-internal-links>
+          </ng-template>
         </div>
       </div>
     </div>
