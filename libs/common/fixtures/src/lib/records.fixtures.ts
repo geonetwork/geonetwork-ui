@@ -827,9 +827,8 @@ export const importDatasetRecordAsXmlFixture = (): string => `
 </gmd:MD_Metadata>`
 
 export const simpleServiceRecordFixture = (): ServiceRecord => ({
+  abstract: `Ce service de visualisation WMS permet de consulter la série de couches de données "Sites de gestion des déchets miniers - Série".`,
   kind: 'service',
-  status: null,
-  lineage: null,
   recordUpdated: new Date('2023-03-17T07:38:08.875Z'),
   recordPublished: null,
   ownerOrganization: null,
@@ -842,7 +841,6 @@ export const simpleServiceRecordFixture = (): ServiceRecord => ({
   keywords: [],
   topics: [],
   spatialExtents: [],
-  temporalExtents: [],
   overviews: [],
   defaultLanguage: null,
   otherLanguages: [],
