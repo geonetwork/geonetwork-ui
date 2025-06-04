@@ -790,10 +790,10 @@ describe('ElasticsearchService', () => {
           'cl_topic',
           'cl_maintenanceAndUpdateFrequency',
           'tag',
-          'MD_LegalConstraintsUseLimitationObject',
-          'MD_LegalConstraintsOtherConstraintsObject',
+          'MD_LegalConstraints*Object',
           'qualityScore',
           'allKeywords',
+          'recordLink',
           'createDate',
         ],
         query: {
