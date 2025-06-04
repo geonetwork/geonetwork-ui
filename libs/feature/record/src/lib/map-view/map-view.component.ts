@@ -147,6 +147,9 @@ export class MapViewComponent implements AfterViewInit {
     this.compatibleMapLinks$,
     this.selectedLinkIndex$.pipe(distinctUntilChanged()),
   ]).pipe(
+    tap(() => {
+      this.error = null
+    }),
     map(([links, idx]) => links[idx]),
     shareReplay(1)
   )
@@ -174,7 +177,10 @@ export class MapViewComponent implements AfterViewInit {
                   link.accessServiceProtocol === 'maplibre-style'
               ) || []
           ),
-          catchError(() => of(src))
+          catchError((error) => {
+            this.handleError(error)
+            return of(src)
+          })
         )
       }
       return of([])
@@ -219,7 +225,6 @@ export class MapViewComponent implements AfterViewInit {
       }
       this.hidePreview = false
       this.loading = true
-      this.error = null
       if (link.accessRestricted) {
         this.handleError('dataset.error.restrictedAccess')
         return of([])
