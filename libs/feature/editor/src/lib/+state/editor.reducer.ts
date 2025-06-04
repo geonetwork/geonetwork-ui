@@ -4,6 +4,7 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { SaveRecordError } from './editor.models'
 import { EditorConfig } from '../models'
 import { DEFAULT_CONFIGURATION } from '../fields.config'
+import { updateRecordLanguages } from '@geonetwork-ui/util/shared'
 
 export const EDITOR_FEATURE_KEY = 'editor'
 
@@ -116,7 +117,18 @@ const reducer = createReducer(
   on(EditorActions.canEditRecord, (state, { canEditRecord }) => ({
     ...state,
     canEditRecord: canEditRecord,
-  }))
+  })),
+  on(
+    EditorActions.updateRecordLanguages,
+    (state, { defaultLanguage, otherLanguages }) => ({
+      ...state,
+      record: updateRecordLanguages(
+        state.record,
+        defaultLanguage,
+        otherLanguages
+      ),
+    })
+  )
 )
 
 export function editorReducer(state: EditorState | undefined, action: Action) {

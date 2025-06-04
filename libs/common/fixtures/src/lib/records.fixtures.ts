@@ -970,3 +970,55 @@ export const SAMPLE_RECORD = {
     ...SAMPLE_PLACE_KEYWORDS_FROM_XML,
   ],
 }
+
+export const multilingualDatasetFixture: () => DatasetRecord = () => ({
+  kind: 'dataset',
+  defaultLanguage: 'en',
+  otherLanguages: ['fr', 'de'],
+  title: 'English Title',
+  abstract: 'English Abstract',
+  lineage: 'English Lineage',
+  translations: {
+    title: { fr: 'Titre Français', de: 'Titel DE' },
+    abstract: { fr: 'Résumé Français', de: 'Beschreibung DE' },
+    lineage: { fr: 'Généalogie Français', de: 'Lineage DE' },
+  },
+  keywords: [
+    {
+      label: 'Keyword EN',
+      description: 'Keyword Desc EN',
+      type: 'theme',
+      translations: {
+        label: { fr: 'Mot-clé FR', de: 'Schlusselwort DE' },
+        description: { fr: 'Description FR', de: 'Schlusselwort DE' },
+      },
+    },
+  ],
+  onlineResources: [], // todo online resources
+  licenses: [],
+  legalConstraints: [], // TODO constraints
+  securityConstraints: [],
+  otherConstraints: [],
+  contacts: [], // TODO contacts
+  contactsForResource: [],
+  ownerOrganization: {
+    name: 'Org EN',
+    translations: {
+      name: { fr: 'Org FR', de: 'Org DE' },
+    },
+  },
+  spatialExtents: [
+    {
+      description: 'Extent EN',
+      translations: {
+        description: { fr: 'Étendue FR', de: 'Bereich DE' },
+      },
+    },
+  ],
+  temporalExtents: [],
+  status: 'ongoing',
+  uniqueIdentifier: 'ABCD-EFGH',
+  overviews: [],
+  topics: [],
+  recordUpdated: null,
+})
