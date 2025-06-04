@@ -155,6 +155,7 @@ describe('dashboard (landing page)', () => {
   })
 
   it('author and publishing status', () => {
+    cy.visit('/')
     // create a draft record
     cy.get('[data-cy="create-record"]').click()
     cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').focus()
