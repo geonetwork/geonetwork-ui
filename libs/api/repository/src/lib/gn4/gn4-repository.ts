@@ -255,7 +255,10 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return of(null)
   }
 
-  aggregate(params: AggregationsParams): Observable<Aggregations> {
+  aggregate(
+    params: AggregationsParams,
+    configFilters: FieldFilters
+  ): Observable<Aggregations> {
     // if aggregations are empty, return an empty object right away
     if (Object.keys(params).length === 0) return of({})
 
@@ -264,7 +267,16 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       .search(
         'bucket',
         null,
-        JSON.stringify(this.gn4SearchHelper.getSearchRequestBody(aggregations))
+        JSON.stringify(
+          this.gn4SearchHelper.getSearchRequestBody(
+            aggregations,
+            0,
+            0,
+            undefined,
+            undefined,
+            configFilters
+          )
+        )
       )
       .pipe(
         map((response: Gn4SearchResults) =>
@@ -282,12 +294,17 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       )
   }
 
-  fuzzySearch(query: string): Observable<SearchResults> {
+  fuzzySearch(
+    query: string,
+    configFilters: FieldFilters = {}
+  ): Observable<SearchResults> {
     return this.gn4SearchApi
       .search(
         'bucket',
         null,
-        JSON.stringify(this.gn4SearchHelper.buildAutocompletePayload(query))
+        JSON.stringify(
+          this.gn4SearchHelper.buildAutocompletePayload(query, configFilters)
+        )
       )
       .pipe(
         switchMap((results: Gn4SearchResults) =>

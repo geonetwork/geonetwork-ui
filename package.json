@@ -39,7 +39,8 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "version": "node tools/update-all-package-json.js && git add package"
+    "version": "node tools/update-all-package-json.js && git add package",
+    "e2e:metadata-editor": "nx e2e metadata-editor-e2e --spec 'apps/metadata-editor/src/e2e/dashboard/dashboard.cy' --watch"
   },
   "private": true,
   "dependencies": {
@@ -94,6 +95,7 @@
     "express": "^4.21.1",
     "flag-icons": "^7.3.2",
     "geojson-validation": "^1.0.2",
+    "lodash-es": "^4.17.21",
     "marked": "15.0.4",
     "moment": "2.30.1",
     "ng-table-virtual-scroll": "1.6.1",

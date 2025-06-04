@@ -155,6 +155,7 @@ describe('dashboard (landing page)', () => {
   })
 
   it('author and publishing status', () => {
+    cy.visit('/')
     // create a draft record
     cy.get('[data-cy="create-record"]').click()
     cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').focus()
@@ -245,7 +246,7 @@ describe('dashboard (landing page)', () => {
       cy.get('gn-ui-autocomplete').type('{selectall}{del}velo')
       cy.get('mat-option').first().click()
       cy.url().should('include', '/edit/accroche_velos')
-      cy.go('back')
+      cy.visit('/catalog/search')
       cy.url().should('not.include', '/edit/accroche_velos')
     }
 
@@ -276,7 +277,7 @@ describe('dashboard (landing page)', () => {
     cy.get('gn-ui-autocomplete').should('have.value', '')
 
     // it should allow to search in the entire catalog
-    cy.get('gn-ui-autocomplete').type('mat{enter}')
+    cy.get('gn-ui-autocomplete').type('{selectall}{del}mat{enter}')
     cy.get('gn-ui-interactive-table')
       .find('[data-cy="table-row"]')
       .should('have.length', '1')

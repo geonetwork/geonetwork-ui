@@ -8,6 +8,8 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { TranslateModule } from '@ngx-translate/core'
 import { MockBuilder, MockProvider, MockProviders } from 'ng-mocks'
 import { SidebarComponent } from './sidebar.component'
+import { someOrganizationsFixture } from '@geonetwork-ui/common/fixtures'
+import { of } from 'rxjs'
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent
@@ -26,11 +28,12 @@ describe('SidebarComponent', () => {
     await TestBed.configureTestingModule({
       imports: [SidebarComponent, TranslateModule.forRoot()],
       providers: [
-        MockProviders(
-          PlatformServiceInterface,
-          AvatarServiceInterface,
-          OrganizationsServiceInterface
-        ),
+        MockProviders(PlatformServiceInterface, AvatarServiceInterface),
+        MockProvider(OrganizationsServiceInterface, {
+          getOrganisations: jest
+            .fn()
+            .mockImplementation(() => of(someOrganizationsFixture())),
+        }),
         MockProvider(AuthService, {
           logoutUrl: 'http://logout.com/bla?',
         }),

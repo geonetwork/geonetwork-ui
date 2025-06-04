@@ -6,6 +6,8 @@ import { ROUTER_ROUTE_ORGANIZATIONS } from '../../../router/constants'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { of } from 'rxjs'
+import { Observable } from 'rxjs'
+import { globalConfigFilters } from '../../../app.config'
 
 marker('catalog.figures.datasets')
 marker('catalog.figures.organizations')
@@ -17,16 +19,22 @@ marker('catalog.figures.organizations')
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KeyFiguresComponent {
-  recordsCount$ = this.catalogRecords.recordsCount$.pipe(
-    startWith('-'),
-    catchError(() => of('-'))
-  )
-  orgsCount$ = this.catalogOrgs.organisationsCount$.pipe(startWith('-'))
+  recordsCount$: Observable<string | number>
+  orgsCount$: Observable<string | number>
   ROUTE_SEARCH = `/${ROUTER_ROUTE_SEARCH}`
   ROUTE_ORGANISATIONS = `/${ROUTER_ROUTE_ORGANIZATIONS}`
 
   constructor(
     private catalogRecords: RecordsService,
     private catalogOrgs: OrganizationsServiceInterface
-  ) {}
+  ) {
+    this.recordsCount$ = this.catalogRecords
+      .getRecordsCount(globalConfigFilters)
+      .pipe(
+        startWith('-'),
+        catchError(() => of('-'))
+      )
+    this.catalogOrgs.getOrganisations(globalConfigFilters)
+    this.orgsCount$ = this.catalogOrgs.organisationsCount$.pipe(startWith('-'))
+  }
 }

@@ -29,7 +29,7 @@ export class GnFigureDatasetsComponent extends BaseComponent {
   ) {
     super(injector)
     this.catalogRecords = injector.get(RecordsService)
-    this.recordsCount$ = this.catalogRecords.recordsCount$.pipe(
+    this.recordsCount$ = this.catalogRecords.getRecordsCount().pipe(
       startWith('-'),
       catchError(() => of('-'))
     )
