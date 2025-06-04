@@ -9,6 +9,13 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { Observable } from 'rxjs'
 import { FeatureCatalogListComponent } from '@geonetwork-ui/ui/elements'
 import { SearchFeatureCatalogComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  OverlayModule,
+  ConnectedPosition,
+  Overlay,
+  ScrollDispatcher,
+  CdkScrollable,
+} from '@angular/cdk/overlay'
 
 @Component({
   selector: 'datahub-record-feature-catalog',
@@ -17,6 +24,7 @@ import { SearchFeatureCatalogComponent } from '@geonetwork-ui/ui/inputs'
   imports: [
     CommonModule,
     TranslateModule,
+    OverlayModule,
     SearchFeatureCatalogComponent,
     FeatureCatalogListComponent,
   ],
@@ -25,6 +33,15 @@ export class RecordFeatureCatalogComponent implements OnInit {
   @Input() metadata: CatalogRecord
   featureCatalog$: Observable<DatasetFeatureCatalog>
   filteredFeatureCatalog: DatasetFeatureCatalog
+
+  protected overlayPositions: ConnectedPosition[] = [
+    {
+      originX: 'end',
+      originY: 'top',
+      overlayX: 'end',
+      overlayY: 'top',
+    },
+  ]
 
   constructor(public readonly metadataViewFacade: MdViewFacade) {}
 

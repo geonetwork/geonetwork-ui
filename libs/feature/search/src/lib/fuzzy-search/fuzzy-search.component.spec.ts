@@ -213,4 +213,35 @@ describe('FuzzySearchComponent', () => {
       })
     })
   })
+
+  describe('placeholder behaviour', () => {
+    let autocomplete: AutocompleteComponent
+
+    const create = (custom?: string) => {
+      fixture = TestBed.createComponent(FuzzySearchComponent)
+      component = fixture.componentInstance
+
+      if (custom !== undefined) {
+        component.placeholder = custom
+      }
+
+      fixture.detectChanges()
+
+      autocomplete = fixture.debugElement.query(
+        By.directive(AutocompleteComponent)
+      ).componentInstance as AutocompleteComponent
+    }
+
+    it('passes runtime placeholder verbatim', () => {
+      create('Type your custom placeholder text here…')
+      expect(autocomplete.placeholder).toBe(
+        'Type your custom placeholder text here…'
+      )
+    })
+
+    it('falls back to default placeholder when none supplied', () => {
+      create()
+      expect(autocomplete.placeholder).toBe('search.field.any.placeholder')
+    })
+  })
 })

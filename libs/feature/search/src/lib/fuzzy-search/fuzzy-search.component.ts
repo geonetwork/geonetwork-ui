@@ -30,6 +30,7 @@ export class FuzzySearchComponent implements OnInit {
   @Input() autoFocus = false
   @Input() forceTrackPosition = false
   @Input() enterButton = false
+  @Input() placeholder?: string
   @Output() itemSelected = new EventEmitter<CatalogRecord>()
   @Output() inputSubmitted = new EventEmitter<string>()
   @Output() isSearchActive = new EventEmitter<boolean>()

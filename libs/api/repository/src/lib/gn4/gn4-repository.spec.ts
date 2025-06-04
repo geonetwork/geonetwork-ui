@@ -335,16 +335,38 @@ describe('Gn4Repository', () => {
                 {
                   code: 'OBJECTID',
                   name: 'OBJECTID',
-                  title: 'Object identifier',
+                  definition: 'Object identifier',
                   type: 'OID',
                 },
                 {
                   code: 'NOM',
                   name: 'Nom',
-                  title: 'Nom de la rue',
+                  definition: 'Nom de la rue',
                   type: 'String (48)',
+                  values: [
+                    {
+                      code: 'Pomme',
+                      definition: undefined,
+                      label: 'Les Pommiers',
+                    },
+                    {
+                      code: 'Cotton',
+                      definition: undefined,
+                      label: 'Rue Cotton',
+                    },
+                    {
+                      code: "Passage de l'échiquier",
+                      definition: undefined,
+                      label: undefined,
+                    },
+                  ],
                 },
-                { code: 'RUE', name: 'Rue', title: '', type: 'String (50)' },
+                {
+                  code: 'RUE',
+                  name: 'Rue',
+                  definition: '',
+                  type: 'String (50)',
+                },
               ],
             },
             {
@@ -354,7 +376,7 @@ describe('Gn4Repository', () => {
                 {
                   code: 'UniqueObject',
                   name: 'unique object ',
-                  title: 'this is the only object of this catalog',
+                  definition: 'this is the only object of this catalog',
                   type: 'String (50)',
                 },
               ],
@@ -394,16 +416,38 @@ describe('Gn4Repository', () => {
                 {
                   code: 'OBJECTID',
                   name: 'OBJECTID',
-                  title: 'Object identifier',
+                  definition: 'Object identifier',
                   type: 'OID',
                 },
                 {
                   code: 'NOM',
                   name: 'Nom',
-                  title: 'Nom de la rue',
+                  definition: 'Nom de la rue',
                   type: 'String (48)',
+                  values: [
+                    {
+                      code: 'Pomme',
+                      definition: undefined,
+                      label: 'Les Pommiers',
+                    },
+                    {
+                      code: 'Cotton',
+                      definition: undefined,
+                      label: 'Rue Cotton',
+                    },
+                    {
+                      code: "Passage de l'échiquier",
+                      definition: undefined,
+                      label: undefined,
+                    },
+                  ],
                 },
-                { code: 'RUE', name: 'Rue', title: '', type: 'String (50)' },
+                {
+                  code: 'RUE',
+                  name: 'Rue',
+                  definition: '',
+                  type: 'String (50)',
+                },
               ],
             },
             {
@@ -413,7 +457,7 @@ describe('Gn4Repository', () => {
                 {
                   code: 'UniqueObject',
                   name: 'unique object ',
-                  title: 'this is the only object of this catalog',
+                  definition: 'this is the only object of this catalog',
                   type: 'String (50)',
                 },
               ],
@@ -826,6 +870,73 @@ describe('Gn4Repository', () => {
     </gmd:fileIdentifier>`)
       })
     })
+  })
+  describe('duplicateExternalRecord', () => {
+    const recordDownloadUrl = 'https://example.com/record/xml'
+    const mockXml = simpleDatasetRecordAsXmlFixture()
+    const mockRecord = simpleDatasetRecordFixture()
+
+    beforeEach(() => {
+      jest.spyOn(repository, 'saveRecord').mockReturnValue(of('mock-uuid'))
+      jest
+        .spyOn(repository as any, 'getExternalRecordAsXml')
+        .mockReturnValue(of(mockXml))
+    })
+
+    it('fetches the external record as XML', async () => {
+      await lastValueFrom(repository.duplicateExternalRecord(recordDownloadUrl))
+      expect((repository as any).getExternalRecordAsXml).toHaveBeenCalledWith(
+        recordDownloadUrl
+      )
+    })
+
+    it('edits title and calls saveRecord with record and recordAsXml', async () => {
+      const result = await lastValueFrom(
+        repository.duplicateExternalRecord(recordDownloadUrl)
+      )
+      expect(repository.saveRecord).toHaveBeenCalledWith(
+        {
+          ...mockRecord,
+          title: mockRecord.title + ' (Copy)',
+          defaultLanguage: null,
+          recordUpdated: expect.any(Date),
+          resourceCreated: expect.any(Date),
+          resourceUpdated: expect.any(Date),
+        },
+        mockXml
+          .replace(
+            'A very interesting dataset (un jeu de données très intéressant)',
+            'A very interesting dataset (un jeu de données très intéressant) (Copy)'
+          )
+          .concat('\n'),
+        false
+      )
+      expect(result).toBe('mock-uuid')
+    })
+
+    it('handles errors when fetching the external record', fakeAsync(() => {
+      jest
+        .spyOn(repository as any, 'getExternalRecordAsXml')
+        .mockReturnValue(
+          throwError(
+            () =>
+              new HttpErrorResponse({ status: 404, statusText: 'Not Found' })
+          )
+        )
+
+      let errorResponse: any
+      repository.duplicateExternalRecord(recordDownloadUrl).subscribe({
+        error: (error) => {
+          errorResponse = error
+        },
+      })
+
+      tick()
+
+      expect(errorResponse).toBeDefined()
+      expect(errorResponse.status).toBe(404)
+      expect(errorResponse.statusText).toBe('Not Found')
+    }))
   })
   describe('record draft', () => {
     beforeEach(async () => {

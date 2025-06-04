@@ -1,18 +1,36 @@
 <div class="w-full h-full flex flex-col gap-[13px]">
   <div
-    class="flex py-4 px-5 bg-white border border-color-border rounded-lg mt-6"
+    class="flex flex-col md:flex-row gap-4 py-4 px-5 bg-white border border-color-border rounded-lg mt-6"
   >
-    <div class="grow min-w-0">
+    <gn-ui-dropdown-selector
+      *ngIf="displaySource"
+      class="w-full md:flex-1 md:min-w-0"
+      extraBtnClass="font-sans font-bold"
+      [title]="'map.select.layer' | translate"
+      [choices]="dropdownChoices$ | async"
+      (selectValue)="selectLinkToDisplay($event)"
+    ></gn-ui-dropdown-selector>
+
+    <ng-container *ngIf="(styleLinks$ | async)?.length > 0; else styleDisabled">
       <gn-ui-dropdown-selector
-        [ngClass]="{ hidden: !displaySource }"
-        class="w-full"
+        class="w-full md:flex-1 md:min-w-0"
         extraBtnClass="font-sans font-bold"
-        [title]="'map.select.layer' | translate"
-        [choices]="dropdownChoices$ | async"
-        (selectValue)="selectLinkToDisplay($event)"
+        [title]="'map.select.style' | translate"
+        [choices]="styleDropdownChoices$ | async"
+        (selectValue)="selectStyleToDisplay($event)"
       ></gn-ui-dropdown-selector>
-    </div>
-    <div class="self-end">
+    </ng-container>
+    <ng-template #styleDisabled>
+      <gn-ui-dropdown-selector
+        class="w-full md:flex-1 md:min-w-0 text-gray-400"
+        extraBtnClass="font-sans font-bold text-gray-400"
+        [title]="'map.select.style' | translate"
+        [choices]="styleDropdownChoices$ | async"
+        [disabled]="true"
+      ></gn-ui-dropdown-selector>
+    </ng-template>
+
+    <div class="self-end md:ml-2">
       <gn-ui-external-viewer-button
         extraClass="w-[44px] h-[44px]"
         [link]="selectedLink$ | async"

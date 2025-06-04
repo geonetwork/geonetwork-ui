@@ -337,12 +337,21 @@ describe('dataset pages', () => {
     cy.screenshot({ capture: 'fullPage' })
 
     // it should not check all the criteria
-    cy.get('gn-ui-metadata-quality').find('gn-ui-popover').trigger('mouseenter')
+    cy.get('gn-ui-metadata-quality')
+      .find('gn-ui-popover')
+      .first()
+      .trigger('mouseenter')
     cy.get('gn-ui-metadata-quality-item')
       .find('ng-icon')
-      .eq(4)
+      .eq(3)
       .should('have.attr', 'ng-reflect-name', 'matWarningAmber')
-
+    //87%, 7 OK , 1 Warning
+    cy.get(
+      'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matCheck"]'
+    ).should('have.length', 7)
+    cy.get(
+      'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matWarningAmber"]'
+    ).should('have.length', 1)
     // Score is 100%
     cy.visit('/dataset/6d0bfdf4-4e94-48c6-9740-3f9facfd453c')
 
@@ -353,13 +362,17 @@ describe('dataset pages', () => {
       .invoke('text')
       .invoke('trim')
       .should('eql', '100%')
-
-    // it should check all the criteria if score is 100
-    cy.get('gn-ui-metadata-quality').find('gn-ui-popover').trigger('mouseenter')
-    cy.get('gn-ui-metadata-quality-item')
-      .find('ng-icon')
-      .eq(4)
-      .should('have.attr', 'ng-reflect-name', 'matCheck')
+    //100%, 8 OK , 0 Warning
+    cy.get('gn-ui-metadata-quality')
+      .find('gn-ui-popover')
+      .first()
+      .trigger('mouseenter')
+    cy.get(
+      'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matCheck"]'
+    ).should('have.length', 8)
+    cy.get(
+      'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matWarningAmber"]'
+    ).should('have.length', 0)
 
     // Score for a Reuse is 75%
     cy.visit('/reuse/7eb795c2-d612-4b5e-b15e-d985b0f4e697')
@@ -371,7 +384,17 @@ describe('dataset pages', () => {
       .invoke('text')
       .invoke('trim')
       .should('eql', '75%')
-
+    // 6 OK , 2 Warning
+    cy.get('gn-ui-metadata-quality')
+      .find('gn-ui-popover')
+      .first()
+      .trigger('mouseenter')
+    cy.get(
+      'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matCheck"]'
+    ).should('have.length', 6)
+    cy.get(
+      'gn-ui-metadata-quality-item ng-icon[ng-reflect-name="matWarningAmber"]'
+    ).should('have.length', 2)
     // Score for a Service is 83%
     cy.visit('/service/00916a35-786b-4569-9da6-71ca64ca54b1')
 
@@ -381,7 +404,7 @@ describe('dataset pages', () => {
       .find('[data-cy=progressPercentage]')
       .invoke('text')
       .invoke('trim')
-      .should('match', /^(83|66)%$/) // may be different on GN v4.2.2
+      .should('match', /^(100|83)%$/) // may be different on GN v4.2.2
   })
 
   it('PREVIEW SECTION : display & functions', () => {
@@ -416,10 +439,18 @@ describe('dataset pages', () => {
     // it should display the dataset dropdown with at least 1 option
     cy.get('@previewSection')
       .find('gn-ui-dropdown-selector')
+      .eq(0)
       .openDropdown()
       .children('button')
       .should('have.length.gt', 1)
     cy.clickOnBody()
+
+    // it checks if style selector is disabled when no style is available
+    cy.get('@previewSection')
+      .find('gn-ui-dropdown-selector')
+      .eq(1)
+      .should('exist')
+      .should('have.attr', 'ng-reflect-disabled', 'true')
 
     // Source under the max features limit
 
@@ -525,6 +556,7 @@ describe('dataset pages', () => {
     // it should not show the map and chart previews and display an error message
     cy.get('@previewSection')
       .find('gn-ui-dropdown-selector')
+      .eq(0)
       .openDropdown()
       .children('button')
       .eq(1)

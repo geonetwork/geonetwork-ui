@@ -6,13 +6,15 @@
     <h2 class="text-[28px] text-title font-title mb-6" translate>
       record.metadata.feature.catalog
     </h2>
-
-    <div class="bg-gray-100 rounded-lg shadow-md">
+    <div
+      class="bg-gray-100 rounded-lg shadow-md"
+      cdkOverlayOrigin
+      #trigger="cdkOverlayOrigin"
+    >
       <gn-ui-search-feature-catalog
         [featureCatalog]="metadataViewFacade.featureCatalog$ | async"
         (filteredFeatureCatalogChange)="onFilteredFeatureCatalogChange($event)"
       ></gn-ui-search-feature-catalog>
-
       <gn-ui-feature-catalog-list
         [filteredFeatureCatalog]="filteredFeatureCatalog"
       ></gn-ui-feature-catalog-list>

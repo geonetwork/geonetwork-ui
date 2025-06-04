@@ -137,7 +137,7 @@ export class ElasticsearchService {
   getRelatedRecordPayload(
     record: CatalogRecord,
     size = 6,
-    _source = [...ES_SOURCE_SUMMARY, 'allKeywords', 'createDate']
+    _source = [...ES_SOURCE_SUMMARY, 'createDate']
   ): EsSearchParams {
     return {
       query: {

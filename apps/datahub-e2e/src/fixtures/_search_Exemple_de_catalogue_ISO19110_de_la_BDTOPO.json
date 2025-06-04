@@ -1,0 +1,1243 @@
+{
+  "took": 19,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 1,
+      "relation": "eq"
+    },
+    "max_score": 1.0,
+    "hits": [
+      {
+        "_index": "gn-records",
+        "_type": "_doc",
+        "_id": "50aa3037-ac17-4c0d-ad15-b43a5a0929ae",
+        "_score": 1.0,
+        "_source": {
+          "resourceEdition": "1.0",
+          "rating": "0",
+          "cl_characterSet": [
+            {
+              "default": "anyValidURI",
+              "langeng": "anyValidURI",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_CharacterSetCode",
+              "key": "anyValidURI"
+            }
+          ],
+          "uuid": "50aa3037-ac17-4c0d-ad15-b43a5a0929ae",
+          "isPublishedToAll": "true",
+          "contact": [
+            {
+              "website": "",
+              "role": "pointOfContact",
+              "address": "",
+              "individual": "",
+              "phone": "",
+              "logo": "",
+              "position": "",
+              "organisationObject": {},
+              "email": ""
+            }
+          ],
+          "record": "record",
+          "draft": "n",
+          "changeDate": "2025-05-22T08:01:50.279Z",
+          "logo": "/images/logos/3bef299d-cf82-4033-871b-875f6936b2e2.png",
+          "id": "749",
+          "recordGroup": "50aa3037-ac17-4c0d-ad15-b43a5a0929ae",
+          "metadataIdentifier": "50aa3037-ac17-4c0d-ad15-b43a5a0929ae",
+          "isPublishedToIntranet": "true",
+          "hasxlinks": "false",
+          "featureOfRecord": "record",
+          "isPublishedToGuest": "false",
+          "documentStandard": "iso19115-3.2018",
+          "dateStamp": "2025-05-22T08:01:50.280Z",
+          "resourceAbstractObject": {
+            "default": "Description des classes et données attributaires de la BDTOPO",
+            "langeng": "Description des classes et données attributaires de la BDTOPO"
+          },
+          "isTemplate": "n",
+          "feedbackCount": "0",
+          "isHarvested": "false",
+          "recordOwner": "admin admin",
+          "document": "",
+          "displayOrder": "0",
+          "mainLanguage": "eng",
+          "cl_function": [
+            {
+              "default": "Complete Metadata",
+              "langeng": "Complete Metadata",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode",
+              "key": "completeMetadata"
+            }
+          ],
+          "valid": "-1",
+          "groupPublishedId": ["2", "1", "0"],
+          "indexingDate": "2025-05-22T13:27:55.852Z",
+          "sourceCatalogue": "3bef299d-cf82-4033-871b-875f6936b2e2",
+          "groupPublished": ["sample", "all", "intranet"],
+          "popularity": 5,
+          "extra": "null",
+          "qualityScore": 37,
+          "featureTypes": [
+            {
+              "attributeTable": [
+                {
+                  "code": "",
+                  "name": "cleabs",
+                  "link": "",
+                  "definition": "Identifiant unique de l'objet.",
+                  "type": "ID"
+                },
+                {
+                  "code": "",
+                  "name": "Nom officiel",
+                  "link": "",
+                  "definition": "Nom officiel de l’Arrondissement selon l'INSEE.",
+                  "type": "STRING"
+                },
+                {
+                  "code": "",
+                  "name": "Code INSEE de l'arrondissement",
+                  "link": "",
+                  "definition": "Code INSEE de l'Arrondissement.",
+                  "type": "STRING"
+                },
+                {
+                  "code": "",
+                  "name": "Code INSEE du département",
+                  "link": "",
+                  "definition": "Code INSEE du Département.",
+                  "type": "STRING"
+                },
+                {
+                  "code": "",
+                  "name": "Code INSEE de la région",
+                  "link": "",
+                  "definition": "Code INSEE de la région",
+                  "type": "STRING"
+                },
+                {
+                  "code": "",
+                  "name": "Lien vers autorité administrative",
+                  "link": "",
+                  "definition": "Lien vers (clé absolue) l'objet Zone d'activité ou d'intérêt de Nature=\"Sous-préfecture\" de l'arrondissement.",
+                  "type": "STRING"
+                },
+                {
+                  "code": "",
+                  "name": "Date de création",
+                  "link": "",
+                  "definition": "Date et heure à laquelle l'objet a été saisi pour la première fois dans la base de données de production de l'IGN.",
+                  "type": "DATE"
+                },
+                {
+                  "code": "",
+                  "name": "Date de modification",
+                  "link": "",
+                  "definition": "Date et heure à laquelle l'objet a été modifié pour la dernière fois dans la base de données de production.",
+                  "type": "DATE"
+                },
+                {
+                  "code": "",
+                  "name": "Date d'apparition",
+                  "link": "",
+                  "definition": "Date de création, de construction ou d'apparition de l'objet, ou date la plus ancienne à laquelle on peut attester de sa présence sur le terrain.",
+                  "type": "DATE"
+                },
+                {
+                  "code": "",
+                  "name": "Date de confirmation",
+                  "link": "",
+                  "definition": "Date la plus récente à laquelle on peut attester de la présence de l'objet sur le terrain, ou par des données externes de référence.",
+                  "type": "DATE"
+                },
+                {
+                  "code": "",
+                  "name": "Géométrie GE MultiPolygon",
+                  "link": "",
+                  "definition": "Géométrie surfacique de l'objet à utiliser pour une représentation à grande échelle.",
+                  "type": "MultiPolygone 2D"
+                }
+              ],
+              "code": "",
+              "aliases": "",
+              "typeName": "Arrondissement",
+              "definition": "Circonscription administrative de l'État dont le chef-lieu est la sous-préfecture, subdivision du département. Le sous-préfet est chargé de son administration. Le libellé de l'arrondissement est le plus souvent celui de son chef-lieu.",
+              "isAbstract": "false"
+            },
+            {
+              "attributeTable": [
+                {
+                  "code": "",
+                  "name": "cleabs",
+                  "link": "",
+                  "definition": "Identifiant unique de l'objet.",
+                  "type": "ID"
+                },
+                {
+                  "code": "",
+                  "name": "Géométrie",
+                  "link": "",
+                  "definition": "Géométrie",
+                  "type": "2D MULTIPOLYGON"
+                },
+                {
+                  "code": "",
+                  "name": "Date d'apparition",
+                  "link": "",
+                  "definition": "Date de création, de construction ou d'apparition de l'objet, ou date la plus ancienne à laquelle on peut attester de sa présence sur le terrain.",
+                  "type": "DATE"
+                },
+                {
+                  "code": "",
+                  "name": "Date de confirmation",
+                  "link": "",
+                  "definition": "Date la plus récente à laquelle on peut attester de la présence de l'objet sur le terrain, ou par des données externes de référence.",
+                  "type": "DATE"
+                },
+                {
+                  "code": "",
+                  "name": "Préicision planimétrique",
+                  "link": "",
+                  "definition": "Précision planimétrique (en mètres) de la géométrie décrivant l'objet",
+                  "type": "DECIMAL"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "Plantation de bananiers.",
+                      "label": "Bananeraie"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "Espace peuplé d’arbres forestiers couvrant au moins 40 % du sol. Les jeunes plantations forestières, le reboisement naturel et les coupes à blanc sont également saisis en Nature=\"Bois\".",
+                      "label": "Bois"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "Plantation de canne à sucre..",
+                      "label": "Canne à sucre"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "Espace peuplé d’arbres forestiers couvrant au moins 40 % du sol et composé essentiellement de conifères (soit un taux de couvert relatif de plus de 75 %). Les jeunes plantations de résineux, le reboisement naturel et les coupes à blanc de ces essences sont également saisis en Nature=\"Forêt fermée de conifères\".",
+                      "label": "Forêt fermée de conifères"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "Espace peuplé d’arbres forestiers couvrant au moins 40 % du sol, et composée de plus de 75 % de feuillus (taux de couvert relatif). Les jeunes plantations de feuillus, le reboisement naturel et les coupes à blanc de ces essences sont également saisis en Nature=\"Forêt fermée de feuillus\".",
+                      "label": "Forêt fermée de feuillus"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "Espace peuplé d’arbres forestiers couvrant au moins 40 % du sol, et composée de plus de 25 % et moins de 75 % de feuillus (taux de couvert relatif). Les jeunes plantations forestières, le reboisement naturel et les coupes à blanc sont saisis en Nature=\"Forêt fermée mixte\".",
+                      "label": "Forêt fermée mixtes"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "Espace peuplé d’arbres forestiers dont le couvert absolu est compris entre 10 % et 40 %. Les jeunes plantations forestières, le reboisement naturel et les coupes à blanc sont saisis en Nature=\"Forêt fermée...\".",
+                      "label": "Forêt ouvertes"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "Clôture naturelle composée d’arbres, d’arbustes, d’épines ou de branchages et servant à limiter ou à protéger un champ. Alignement d’arbres ou plantation d’arbres fruitiers dont la largeur est inférieure à 25 m.",
+                      "label": "Haie"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "Champ planté de houblon.",
+                      "label": "Houblonnière"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "Cette valeur est dépréciée en métropole et n'est utilisée que pour coder l'occupation du sol en Guyane.",
+                      "label": "Lande herbacée"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "Végétation spontanée qui comprend une proportion importante de plantes ligneuses (bruyères, genêts, ajoncs, épineux divers, etc.) et semi-ligneuses (fougères, phragmites…) dont la hauteur ne dépasse pas 5 m. Cette végétation ligneuse.",
+                      "label": "Lande ligneuse"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "Zone de mangrove. Dans les régions côtières intertropicales, formation végétale caractérisée par des forêts impénétrables de palétuviers qui fixent leurs fortes racines dans les baies aux eaux calmes où se déposent boues et limons.",
+                      "label": "Mangrove"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "Zone de culture de peuplier.",
+                      "label": "Peupleraie"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "Champ régulièrement cultivé de riz, disposant d'un système d'irrigation.",
+                      "label": "Rizière"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "Zone de plantation d’arbres hors peuplement forestier.",
+                      "label": "Verger"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "Zone de vignes.",
+                      "label": "Vigne"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "Espace peuplé d’arbres d’essence quelconque.",
+                      "label": "Zone arborée"
+                    }
+                  ],
+                  "name": "nature",
+                  "link": "",
+                  "definition": "Nature de la zone de végétation.",
+                  "type": "STRING"
+                },
+                {
+                  "code": "",
+                  "name": "Sources",
+                  "link": "",
+                  "definition": "Sources attestant l'existence de l'objet, éventuellement dans le cadre d'un partenariat : organisme, administration, fichier de référence.",
+                  "type": "STRING"
+                },
+                {
+                  "code": "",
+                  "name": "Identifiants sources",
+                  "link": "",
+                  "definition": "Identifiants de l'objet dans les répertoires des organismes consultés pour leur inventaire.",
+                  "type": "STRING"
+                },
+                {
+                  "code": "",
+                  "name": "Date de création",
+                  "link": "",
+                  "definition": "Date et heure à laquelle l'objet a été saisi pour la première fois dans la base de données de production de l'IGN.",
+                  "type": "DATE"
+                },
+                {
+                  "code": "",
+                  "name": "Date de modification",
+                  "link": "",
+                  "definition": "Date et heure à laquelle l'objet a été modifié pour la dernière fois dans la base de données de production.",
+                  "type": "DATE"
+                }
+              ],
+              "code": "",
+              "aliases": "",
+              "typeName": "Zone de végétation",
+              "definition": "Espace végétal naturel ou non, différencié en particulier selon le couvert arboré.",
+              "isAbstract": "false"
+            },
+            {
+              "attributeTable": [
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "geometrie",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "LineString"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "cleabs",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcvs_empreinte",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "LineString"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcvs_nom_lot",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcms_date_creation",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "timestamp without time zone"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcms_date_modification",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "timestamp without time zone"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcms_date_destruction",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "timestamp without time zone"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcms_detruit",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "boolean"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcms_numrec",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "integer"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcms_fingerprint",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcms_territoire",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "date_d_apparition",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "date"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "date_de_confirmation",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "date"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "diffusion",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "boolean"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Photogrammétrie"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Calcul d'enveloppe urbaine"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Levé non GPS"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "BDTopo"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Image satellite HR"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Scan25"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Plan métrique papier"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Fichier numérique métrique"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Levé GPS"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "BDParcellaire"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "BDParcellaire recalée"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Plan non métrique papier"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Image satellite"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Calculé"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Géoroute"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Géocodage"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "BDCarto"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Lidar"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Fichier numérique non métrique"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Inconnue"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "BDNyme"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Orthophotographie"
+                    }
+                  ],
+                  "name": "methode_d_acquisition_planimetrique",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "complement",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "jsonb"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "commentaire_collecteur",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "commentaire_centralise",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "exception_legitime",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "liens_vers_evolution",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "nom",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "source_detaillee",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "jsonb"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Limite de collectivité territoriale"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Limite de condominium"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Frontière internationale"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Limite côtière"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Limite de commune"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Limite de département"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Limite d'arrondissement"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Limite d'arrondissement municipal"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Limite de commune associée ou déléguée"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Limite de région"
+                    }
+                  ],
+                  "name": "nature",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "En discussion"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Non validé"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Validé"
+                    }
+                  ],
+                  "name": "statut_legal",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Non topologique"
+                    },
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": "Topologique"
+                    }
+                  ],
+                  "name": "statut_technique",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "lien_vers_commune_gauche",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "lien_vers_commune_droite",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "lien_vers_comm_ass_del_gauche",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "lien_vers_comm_ass_del_droite",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "lien_vers_arrond_municipal_gauche",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "lien_vers_arrond_municipal_droite",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "lien_vers_etat_gauche",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "lien_vers_etat_droite",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                }
+              ],
+              "code": "",
+              "aliases": "",
+              "typeName": "limite_administrative",
+              "definition": "remplir def couche",
+              "isAbstract": "false"
+            },
+            {
+              "attributeTable": [
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "geometrie",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "LineString"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "cleabs",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcvs_empreinte",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "LineString"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcvs_nom_lot",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcms_date_creation",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "timestamp without time zone"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcms_date_modification",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "timestamp without time zone"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcms_date_destruction",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "timestamp without time zone"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcms_detruit",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "boolean"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcms_numrec",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "integer"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcms_fingerprint",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "gcms_territoire",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "diffusion",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "boolean"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "id",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "lien_vers_comm_ass_del_gauche",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                },
+                {
+                  "code": "",
+                  "values": [
+                    {
+                      "code": "1",
+                      "definition": "remplir def valeur",
+                      "label": ""
+                    }
+                  ],
+                  "name": "lien_vers_comm_ass_del_droite",
+                  "link": "",
+                  "definition": "remplir def attribut",
+                  "type": "string"
+                }
+              ],
+              "code": "",
+              "aliases": "",
+              "typeName": "limite_de_commune_ass_ou_del",
+              "definition": "remplir def couche",
+              "isAbstract": "false"
+            }
+          ],
+          "userinfo": "admin|admin|admin|Administrator",
+          "createDate": "2025-03-07T15:39:06.49Z",
+          "owner": "1",
+          "groupOwner": "2",
+          "docType": "metadata",
+          "resourceTypeNameObject": {},
+          "resourceTitleObject": {
+            "default": "Exemple de catalogue ISO19110 de la BDTOPO",
+            "langeng": "Exemple de catalogue ISO19110 de la BDTOPO"
+          },
+          "cl_resourceScope": [
+            {
+              "default": "Feature type",
+              "langeng": "Feature type",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode",
+              "key": "featureType"
+            }
+          ],
+          "standardNameObject": {
+            "default": "ISO 19115-3 / ISO 19110",
+            "langeng": "ISO 19115-3 / ISO 19110"
+          },
+          "userSavedCount": "0",
+          "resourceType": ["featureCatalog", "featureType", "featureCatalog"]
+        },
+        "edit": false,
+        "canReview": false,
+        "owner": false,
+        "isPublishedToAll": true,
+        "view": true,
+        "notify": false,
+        "download": true,
+        "dynamic": true,
+        "featured": false,
+        "selected": false,
+        "related": {
+          "hassources": []
+        }
+      }
+    ]
+  }
+}
