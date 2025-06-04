@@ -1488,7 +1488,9 @@ export function writeDefaultLanguage(
   record: DatasetRecord,
   rootEl: XmlElement
 ) {
-  const lang3 = LANG_2_TO_3_MAPPER[record.defaultLanguage.toLowerCase()]
+  const lang3 =
+    LANG_2_TO_3_MAPPER[record.defaultLanguage.toLowerCase()] ??
+    record.defaultLanguage
   return pipe(
     findNestedChildOrCreate('gmd:language', 'gmd:LanguageCode'),
     writeAttribute('codeList', 'http://www.loc.gov/standards/iso639-2/'),

@@ -1179,7 +1179,7 @@ export function readDefaultLanguage(rootEl: XmlElement): LanguageCode {
     findChildElement('gmd:language', false),
     findChildElement('lan:LanguageCode'),
     readAttribute('codeListValue'),
-    map((lang) => (lang ? LANG_3_TO_2_MAPPER[lang.toLowerCase()] : null))
+    map((lang) => (lang ? LANG_3_TO_2_MAPPER[lang.toLowerCase()] : lang))
   )(rootEl)
 }
 
