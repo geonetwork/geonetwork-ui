@@ -1052,6 +1052,37 @@ describe('MapViewComponent', () => {
     })
   })
   describe('style selector with TMS', () => {
+    it('handles error when TMS endpoint is in error', fakeAsync(() => {
+      const dataService = TestBed.inject(
+        DataService
+      ) as unknown as DataServiceMock
+      dataService.getGeodataLinksFromTms.mockImplementation((link) =>
+        Promise.reject(new Error('Endpoint is in error'))
+      )
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/tms'),
+          name: 'orthophoto',
+          type: 'service',
+          accessServiceProtocol: 'tms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+      tick(200)
+      fixture.detectChanges()
+      const dropdowns = fixture.debugElement.queryAll(
+        By.directive(DropdownSelectorComponent)
+      )
+      const styleDropdown = dropdowns[1]
+        .componentInstance as DropdownSelectorComponent
+      expect(styleDropdown.disabled).toBeTruthy()
+      expect(styleDropdown.choices).toEqual([
+        {
+          label: '\u00A0\u00A0\u00A0\u00A0',
+          value: 0,
+        },
+      ])
+    }))
     it('enables and populates styles for selected TMS', fakeAsync(() => {
       const dataService = TestBed.inject(
         DataService
@@ -1179,6 +1210,7 @@ describe('MapViewComponent', () => {
         'http://abcd.com/tms/style/a.json'
       )
     }))
+
     it('disables style dropdown when no TMS is present', fakeAsync(() => {
       mdViewFacade.mapApiLinks$.next([
         {

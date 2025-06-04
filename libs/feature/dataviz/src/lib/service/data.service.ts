@@ -237,9 +237,9 @@ export class DataService {
     keepOriginalLink = false
   ): Promise<DatasetServiceDistribution[]> {
     const endpoint = new TmsEndpoint(tmsLink.url.toString())
-    const tileMaps = await endpoint.allTileMaps.catch(() => {
+    const tileMaps = await endpoint.allTileMaps /*.catch(() => {
       throw new Error(`ogc.unreachable.unknown`)
-    })
+    })*/
     if (!tileMaps?.length) return null
 
     // TODO: at some point use the identifierInService field if more that one layers in the TMS service
