@@ -146,14 +146,12 @@
     <ng-template #header> </ng-template>
     <ng-template #cell let-item>
       <div class="flex justify-end items-center gap-4 w-full">
-        <!-- IS MULTILINGUAL -->
         <ng-icon
           *ngIf="isMultilingual(item)"
           data-cy="multilingual-indicator"
           name="iconoirTranslate"
           [attr.title]="getTxtHoverMultilingual(item)"
         ></ng-icon>
-        <!-- MORE ACTIONS MENU BUTTON -->
         <gn-ui-button
           cdkOverlayOrigin
           #actionMenuButton
