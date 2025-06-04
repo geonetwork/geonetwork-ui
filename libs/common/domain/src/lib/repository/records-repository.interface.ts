@@ -6,7 +6,11 @@ import {
   SearchParams,
   SearchResults,
 } from '../model/search'
-import { CatalogRecord, DatasetFeatureCatalog } from '../model/record'
+import {
+  CatalogRecord,
+  DatasetFeatureCatalog,
+  LanguageCode,
+} from '../model/record'
 
 export abstract class RecordsRepositoryInterface {
   abstract search(params: SearchParams): Observable<SearchResults>
@@ -100,5 +104,6 @@ export abstract class RecordsRepositoryInterface {
     localRecord: CatalogRecord
   ): Observable<{ user: string; date: Date }>
   abstract getRecordPublicationStatus(uuid: string): Observable<boolean>
-  abstract getApplicationLanguages(): Observable<string[]>
+  abstract getApplicationLanguages(): Observable<LanguageCode[]>
+  abstract getRecordLanguages(record: CatalogRecord): Observable<LanguageCode[]>
 }

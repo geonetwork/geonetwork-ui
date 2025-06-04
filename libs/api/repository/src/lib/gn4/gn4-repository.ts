@@ -16,6 +16,7 @@ import {
   CatalogRecord,
   DatasetFeatureCatalog,
   DatasetFeatureType,
+  LanguageCode,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
   Aggregations,
@@ -555,7 +556,29 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     )
   }
 
-  getApplicationLanguages(): Observable<string[]> {
+  getRecordLanguages(record: CatalogRecord): Observable<LanguageCode[]> {
+    return of(this.recordHasDraft(record.uniqueIdentifier)).pipe(
+      switchMap((hasDraft) => {
+        if (!hasDraft) {
+          return of([...record.otherLanguages, record.defaultLanguage]) // on wrappe dans un Observable
+        }
+
+        return this.getAllDrafts().pipe(
+          map((drafts) => {
+            const matchingRecord = drafts.find(
+              (draft) => draft.uniqueIdentifier === record.uniqueIdentifier
+            )
+            return [
+              ...matchingRecord.otherLanguages,
+              matchingRecord.defaultLanguage,
+            ]
+          })
+        )
+      })
+    )
+  }
+
+  getApplicationLanguages(): Observable<LanguageCode[]> {
     return this.gn4LanguagesApi
       .getApplicationLanguages()
       .pipe(

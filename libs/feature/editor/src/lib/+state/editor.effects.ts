@@ -31,15 +31,7 @@ export class EditorEffects {
       ),
       switchMap(([, record, recordSource, fieldsConfig]) =>
         this.editorService.saveRecord(record, recordSource, fieldsConfig).pipe(
-          switchMap(([record, recordSource]) =>
-            of(
-              EditorActions.saveRecordSuccess(),
-              EditorActions.openRecord({
-                record,
-                recordSource,
-              })
-            )
-          ),
+          switchMap(() => of(EditorActions.saveRecordSuccess())),
           catchError((error) =>
             of(
               EditorActions.saveRecordFailure({
@@ -78,14 +70,20 @@ export class EditorEffects {
 
   markAsChanged$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(EditorActions.updateRecordField),
+      ofType(
+        EditorActions.updateRecordField,
+        EditorActions.updateRecordLanguages
+      ),
       map(() => EditorActions.markRecordAsChanged())
     )
   )
 
   saveRecordDraft$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(EditorActions.updateRecordField),
+      ofType(
+        EditorActions.updateRecordField,
+        EditorActions.updateRecordLanguages
+      ),
       debounceTime(1000),
       withLatestFrom(
         this.store.select(selectRecord),

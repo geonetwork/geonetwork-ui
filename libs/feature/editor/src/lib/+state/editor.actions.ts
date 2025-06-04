@@ -1,5 +1,8 @@
 import { createAction, props } from '@ngrx/store'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  LanguageCode,
+} from '@geonetwork-ui/common/domain/model/record'
 import { SaveRecordError } from './editor.models'
 import { EditorFieldIdentification } from '../models'
 
@@ -14,6 +17,11 @@ export const openRecord = createAction(
 export const updateRecordField = createAction(
   '[Editor] Update record field',
   props<{ field: string; value: unknown }>()
+)
+
+export const updateRecordLanguages = createAction(
+  '[Editor] Update record languages',
+  props<{ defaultLanguage: LanguageCode; otherLanguages: LanguageCode[] }>()
 )
 
 export const markRecordAsChanged = createAction(
