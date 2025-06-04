@@ -1,12 +1,12 @@
 import { multilingualDatasetFixture } from '@geonetwork-ui/common/fixtures'
-import { updateRecordLanguages } from './record.util'
+import { updateLanguages } from './record.util'
 
 describe('record utils', () => {
   describe('updateRecordLanguages', () => {
     const record = multilingualDatasetFixture()
 
     it('switches between default and secondary language', () => {
-      const updated = updateRecordLanguages(record, 'fr', ['en', 'de'])
+      const updated = updateLanguages(record, 'fr', ['en', 'de'])
 
       expect(updated).toMatchObject({
         defaultLanguage: 'fr',
@@ -49,7 +49,7 @@ describe('record utils', () => {
     })
 
     it('deletes a secondary language', () => {
-      const updated = updateRecordLanguages(record, 'en', ['de'])
+      const updated = updateLanguages(record, 'en', ['de'])
 
       expect(updated).toMatchObject({
         defaultLanguage: 'en',
@@ -91,7 +91,7 @@ describe('record utils', () => {
     })
 
     it('deletes all secondary languages', () => {
-      const updated = updateRecordLanguages(record, 'en', [])
+      const updated = updateLanguages(record, 'en', [])
 
       expect(updated).toMatchObject({
         defaultLanguage: 'en',
@@ -122,7 +122,7 @@ describe('record utils', () => {
     })
 
     it('adds a secondary language', () => {
-      const updated = updateRecordLanguages(record, 'en', ['fr', 'de', 'it'])
+      const updated = updateLanguages(record, 'en', ['fr', 'de', 'it'])
 
       expect(updated).toMatchObject({
         defaultLanguage: 'en',

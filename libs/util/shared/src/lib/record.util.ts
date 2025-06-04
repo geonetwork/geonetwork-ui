@@ -23,7 +23,7 @@ type TranslatedRecordObjects =
   | DatasetSpatialExtent
   | Organization
 
-export function updateRecordLanguages<T extends CatalogRecord>(
+export function updateLanguages<T extends CatalogRecord>(
   record: T,
   defaultLanguage: LanguageCode,
   otherLanguages: LanguageCode[]
