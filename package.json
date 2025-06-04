@@ -39,7 +39,8 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "version": "node tools/update-all-package-json.js && git add package"
+    "version": "node tools/update-all-package-json.js && git add package",
+    "e2e:metadata-editor": "nx e2e metadata-editor-e2e --spec 'apps/metadata-editor/src/e2e/dashboard/dashboard.cy' --watch"
   },
   "private": true,
   "dependencies": {
