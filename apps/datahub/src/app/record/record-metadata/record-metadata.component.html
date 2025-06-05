@@ -38,7 +38,10 @@
             ></gn-ui-metadata-quality>
           </div>
           <div
-            *ngIf="kind === 'dataset' && sourceLabel$ | async as sourceLabel"
+            *ngIf="
+              (kind$ | async) === 'dataset' && sourceLabel$
+                | async as sourceLabel
+            "
             class="border border-gray-300 rounded-lg py-4 px-5"
           >
             <gn-ui-metadata-catalog [sourceLabel]="sourceLabel">
