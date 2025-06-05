@@ -108,8 +108,8 @@ describe('RecordMetadataComponent', () => {
     let catalogComponent: MetadataCatalogComponent
 
     beforeEach(() => {
+      facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'dataset' } })
       facade.isPresent$.next(true)
-      component.kind = 'dataset'
       fixture.detectChanges()
       metadataInfo = fixture.debugElement.query(
         By.directive(MetadataInfoComponent)
@@ -138,7 +138,7 @@ describe('RecordMetadataComponent', () => {
     describe('if metadata present and kind is service', () => {
       beforeEach(() => {
         facade.isPresent$.next(true)
-        component.kind = 'service'
+        facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'service' } })
         fixture.detectChanges()
       })
       it('does not display the metadata catalog component', () => {
@@ -192,7 +192,7 @@ describe('RecordMetadataComponent', () => {
     })
     describe('when DOWNLOAD link and kind is dataset', () => {
       beforeEach(() => {
-        component.kind = 'dataset'
+        facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'dataset' } })
         facade.downloadLinks$.next(['link'])
         fixture.detectChanges()
         downloadsComponent = fixture.debugElement.query(
@@ -205,7 +205,7 @@ describe('RecordMetadataComponent', () => {
     })
     describe('when DOWNLOAD link and kind is other than dataset', () => {
       beforeEach(() => {
-        component.kind = 'service'
+        facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'service' } })
         facade.downloadLinks$.next(['link'])
         fixture.detectChanges()
         downloadsComponent = fixture.debugElement.query(
@@ -258,7 +258,7 @@ describe('RecordMetadataComponent', () => {
     })
     describe('when API link and kind is dataset', () => {
       beforeEach(() => {
-        component.kind = 'dataset'
+        facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'dataset' } })
         facade.apiLinks$.next(['link'])
         fixture.detectChanges()
         apiComponent = fixture.debugElement.query(
@@ -271,7 +271,7 @@ describe('RecordMetadataComponent', () => {
     })
     describe('when API link and kind is other than dataset', () => {
       beforeEach(() => {
-        component.kind = 'reuse'
+        facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'reuse' } })
         facade.apiLinks$.next(['link'])
         fixture.detectChanges()
         apiComponent = fixture.debugElement.query(
@@ -398,7 +398,7 @@ describe('RecordMetadataComponent', () => {
 
       describe('When the metadata is not fully loaded', () => {
         beforeEach(() => {
-          component.kind = 'dataset'
+          facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'dataset' } })
           facade.isMetadataLoading$.next(false)
           facade.apiLinks$.next([])
           facade.downloadLinks$.next([])

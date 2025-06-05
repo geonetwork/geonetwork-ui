@@ -17,7 +17,7 @@ import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { of, Subject, throwError } from 'rxjs'
 import { MapViewComponent } from './map-view.component'
 import { TranslateModule, TranslateService } from '@ngx-translate/core'
-import { delay, tap } from 'rxjs/operators'
+import { delay } from 'rxjs/operators'
 import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 import { Collection } from 'ol'
 import { Interaction } from 'ol/interaction'
@@ -33,8 +33,6 @@ import { MockBuilder, MockProvider } from 'ng-mocks'
 import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component'
 import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
-
-// jest.useFakeTimers()
 
 jest.mock('@geonetwork-ui/ui/map', () => ({
   ...jest.requireActual('@geonetwork-ui/ui/map'),
@@ -108,7 +106,11 @@ class DataServiceMock {
       ? throwError(() => new Error('data loading error'))
       : of(SAMPLE_GEOJSON).pipe(delay(100))
   )
-  getGeodataLinksFromTms = jest.fn((mapLink) => Promise.resolve([mapLink]))
+  getGeodataLinksFromTms = jest.fn((mapLink) => {
+    return mapLink.url.toString().indexOf('error') > -1
+      ? Promise.reject([mapLink])
+      : Promise.resolve([mapLink])
+  })
 }
 
 class OpenLayersMapMock {
@@ -529,6 +531,34 @@ describe('MapViewComponent', () => {
                 type: 'xyz',
                 tileFormat: 'application/vnd.mapbox-vector-tile',
                 url: 'http://abcd.com/tms/{z}/{x}/{y}.pbf',
+              },
+            ],
+            view: expect.any(Object),
+          })
+        })
+      })
+      describe('when endpoint is in error', () => {
+        beforeEach(fakeAsync(() => {
+          mdViewFacade.mapApiLinks$.next([
+            {
+              url: new URL('http://error.com/tms'),
+              name: 'tmserror',
+              type: 'service',
+              accessServiceProtocol: 'tms',
+            },
+          ])
+          mdViewFacade.geoDataLinksWithGeometry$.next([])
+          tick(200)
+          fixture.detectChanges()
+        }))
+        it('still emits a map context using mvt tile format with root url', () => {
+          expect(mapComponent.context).toEqual({
+            layers: [
+              {
+                name: 'tmserror',
+                type: 'xyz',
+                tileFormat: 'application/vnd.mapbox-vector-tile',
+                url: 'http://error.com/tms/{z}/{x}/{y}.pbf',
               },
             ],
             view: expect.any(Object),
@@ -1022,6 +1052,37 @@ describe('MapViewComponent', () => {
     })
   })
   describe('style selector with TMS', () => {
+    it('handles error when TMS endpoint is in error', fakeAsync(() => {
+      const dataService = TestBed.inject(
+        DataService
+      ) as unknown as DataServiceMock
+      dataService.getGeodataLinksFromTms.mockImplementation((link) =>
+        Promise.reject(new Error('Endpoint is in error'))
+      )
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/tms'),
+          name: 'orthophoto',
+          type: 'service',
+          accessServiceProtocol: 'tms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+      tick(200)
+      fixture.detectChanges()
+      const dropdowns = fixture.debugElement.queryAll(
+        By.directive(DropdownSelectorComponent)
+      )
+      const styleDropdown = dropdowns[1]
+        .componentInstance as DropdownSelectorComponent
+      expect(styleDropdown.disabled).toBeTruthy()
+      expect(styleDropdown.choices).toEqual([
+        {
+          label: '\u00A0\u00A0\u00A0\u00A0',
+          value: 0,
+        },
+      ])
+    }))
     it('enables and populates styles for selected TMS', fakeAsync(() => {
       const dataService = TestBed.inject(
         DataService
@@ -1149,6 +1210,7 @@ describe('MapViewComponent', () => {
         'http://abcd.com/tms/style/a.json'
       )
     }))
+
     it('disables style dropdown when no TMS is present', fakeAsync(() => {
       mdViewFacade.mapApiLinks$.next([
         {

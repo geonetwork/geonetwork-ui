@@ -16,7 +16,7 @@ import {
   MetadataQualityComponent,
   ServiceCapabilitiesComponent,
 } from '@geonetwork-ui/ui/elements'
-import { combineLatest, ReplaySubject } from 'rxjs'
+import { combineLatest } from 'rxjs'
 import { filter, map, mergeMap, startWith } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
@@ -70,16 +70,6 @@ import { RecordLinkedRecordsComponent } from '../record-linked-records/record-li
 })
 export class RecordMetadataComponent {
   @Input() metadataQualityDisplay: boolean
-  private kindValue: 'dataset' | 'service' | 'reuse' = null
-  @Input()
-  set kind(value: 'dataset' | 'service' | 'reuse') {
-    this.kindValue = value
-    this.kind$.next(value)
-  }
-  get kind() {
-    return this.kindValue
-  }
-  private kind$ = new ReplaySubject<'dataset' | 'service' | 'reuse'>(1)
   @ViewChild('userFeedbacks') userFeedbacks: ElementRef<HTMLElement>
 
   private readonly displayConditions = {
@@ -107,6 +97,11 @@ export class RecordMetadataComponent {
   }
 
   apiLinks$ = this.metadataViewFacade.apiLinks$
+
+  kind$ = this.metadataViewFacade.metadata$.pipe(
+    map((record) => record?.kind),
+    filter((kind) => kind !== undefined)
+  )
 
   displayDownload$ = combineLatest([
     this.metadataViewFacade.downloadLinks$,

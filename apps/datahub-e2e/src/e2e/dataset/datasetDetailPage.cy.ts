@@ -408,6 +408,19 @@ describe('dataset pages', () => {
   })
 
   it('PREVIEW SECTION : display & functions', () => {
+    // Testing a dataset with TMS endpoint in error
+    cy.visit('/dataset/zzz_nl_test_wfs_syth_la_ciotat')
+
+    // it should show the map and display an error message
+    cy.get('gn-ui-map-container').should('exist')
+    cy.get('gn-ui-popup-alert').should('be.visible')
+
+    // it should have API links
+    cy.get('datahub-record-apis')
+      .find('gn-ui-api-card')
+      .should('have.length.gt', 0)
+
+    // Testing a dataset for default behavior on preview section
     cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
 
     cy.get('datahub-record-metadata')
