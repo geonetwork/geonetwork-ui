@@ -63,7 +63,11 @@ export class RecordApisComponent implements OnInit {
     switchMap(async (apiLinks) => {
       const linksPromises = apiLinks.map((link) => {
         if (link.type === 'service' && link.accessServiceProtocol === 'tms') {
-          return this.dataService.getGeodataLinksFromTms(link, true)
+          return this.dataService
+            .getGeodataLinksFromTms(link, true)
+            .catch(() => {
+              return link
+            })
         }
         return Promise.resolve(link)
       })
