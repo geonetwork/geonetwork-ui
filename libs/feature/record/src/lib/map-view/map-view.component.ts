@@ -175,6 +175,8 @@ export class MapViewComponent implements AfterViewInit {
         src.accessServiceProtocol === 'tms'
       ) {
         return from(
+          // WARNING: when using "getGeodataLinksFromTms", make sure to add error handling to prevent the rest of the logic from failing
+          // this may happen when TMS endpoint is in error
           this.dataService.getGeodataLinksFromTms(
             src as DatasetServiceDistribution,
             false
