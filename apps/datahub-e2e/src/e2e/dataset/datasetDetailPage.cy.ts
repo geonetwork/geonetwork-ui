@@ -416,13 +416,6 @@ describe('dataset pages', () => {
       .as('previewSection')
 
     // it should show the map and display an error message
-    cy.get('@previewSection')
-      .find('gn-ui-dropdown-selector')
-      .eq(0)
-      .openDropdown()
-      .children('button')
-      .eq(1)
-      .click()
     cy.get('gn-ui-map-container').should('exist')
     cy.get('gn-ui-popup-alert').should('be.visible')
 
