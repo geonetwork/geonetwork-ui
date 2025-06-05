@@ -1,0 +1,19 @@
+.fade-enter {
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+}
+.fade-enter-active {
+  opacity: 1;
+}
+.fade-leave {
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+.fade-leave-active {
+  opacity: 0;
+}
+
+#accordion {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
