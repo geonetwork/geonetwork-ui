@@ -3,7 +3,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
+  Output,
   ViewChild,
 } from '@angular/core'
 import { MapUtilsService } from '@geonetwork-ui/feature/map'
@@ -93,6 +95,7 @@ export class MapViewComponent implements AfterViewInit {
     this.excludeWfs$.next(value)
   }
   @Input() displaySource = true
+  @Output() linkSelected = new EventEmitter<any>()
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
 
   excludeWfs$ = new BehaviorSubject(false)
@@ -140,15 +143,17 @@ export class MapViewComponent implements AfterViewInit {
     )
   )
 
-  private selectedLinkIndex$ = new BehaviorSubject(0)
+  selectedLinkIndex$ = new BehaviorSubject(null)
   private selectedStyleIndex$ = new BehaviorSubject(0)
 
   selectedSourceLink$ = combineLatest([
     this.compatibleMapLinks$,
     this.selectedLinkIndex$.pipe(distinctUntilChanged()),
   ]).pipe(
-    map(([links, idx]) => links[idx]),
-    shareReplay(1)
+    map(([links, index]) => {
+      this.linkSelected.emit(links[index])
+      return links[index]
+    })
   )
 
   styleLinks$ = this.selectedSourceLink$.pipe(
