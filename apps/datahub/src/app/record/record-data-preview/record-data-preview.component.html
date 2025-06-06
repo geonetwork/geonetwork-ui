@@ -27,6 +27,7 @@
             >
               <gn-ui-map-view
                 [exceedsLimit]="exceedsMaxFeatureCount$ | async"
+                (linkSelected)="selectedLink$.next($event)"
               ></gn-ui-map-view>
             </div>
           </mat-tab>
@@ -37,6 +38,7 @@
             <div class="block" *ngIf="displayData$ | async">
               <gn-ui-data-view
                 [exceedsLimit]="exceedsMaxFeatureCount$ | async"
+                (linkSelected)="selectedLink$.next($event)"
                 mode="table"
               ></gn-ui-data-view>
             </div>
@@ -48,6 +50,7 @@
             <div class="block" *ngIf="displayData$ | async">
               <gn-ui-data-view
                 [exceedsLimit]="exceedsMaxFeatureCount$ | async"
+                (linkSelected)="selectedLink$.next($event)"
                 mode="chart"
               ></gn-ui-data-view>
             </div>

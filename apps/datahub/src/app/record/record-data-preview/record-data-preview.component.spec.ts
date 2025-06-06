@@ -246,5 +246,67 @@ describe('RecordDataPreviewComponent', () => {
         done()
       })
     })
+    it('should return true when switching between non-exceeding and exceeding maxFeatureCount links', (done) => {
+      const firstLink = {
+        accessServiceProtocol: 'wfs',
+        url: 'http://example.com',
+        name: 'test',
+      }
+      const secondLink = {
+        accessServiceProtocol: 'wfs',
+        url: 'http://example.com',
+        name: 'switch test',
+      }
+      facade.geoDataLinksWithGeometry$.next([firstLink])
+      dataService.getWfsFeatureCount.mockReturnValue(of(50))
+
+      facade.geoDataLinksWithGeometry$.next([secondLink])
+      dataService.getWfsFeatureCount.mockReturnValue(of(150))
+      component.exceedsMaxFeatureCount$.subscribe((result) => {
+        expect(result).toBe(true)
+        done()
+      })
+    })
+    it('should return false when switching between exceeding and non-exceeding maxFeatureCount links', (done) => {
+      const firstLink = {
+        accessServiceProtocol: 'wfs',
+        url: 'http://example.com',
+        name: 'test',
+      }
+      const secondLink = {
+        accessServiceProtocol: 'wfs',
+        url: 'http://example.com',
+        name: 'switch test',
+      }
+      facade.geoDataLinksWithGeometry$.next([firstLink])
+      dataService.getWfsFeatureCount.mockReturnValue(of(150))
+
+      facade.geoDataLinksWithGeometry$.next([secondLink])
+      dataService.getWfsFeatureCount.mockReturnValue(of(50))
+      component.exceedsMaxFeatureCount$.subscribe((result) => {
+        expect(result).toBe(false)
+        done()
+      })
+    })
+    it('should return true when switching between non-WFS link to WFS link exceeding maxFeatureCount', (done) => {
+      const firstLink = {
+        accessServiceProtocol: 'wms',
+        url: 'http://example.com',
+        name: 'test',
+      }
+      const secondLink = {
+        accessServiceProtocol: 'wfs',
+        url: 'http://example.com',
+        name: 'switch test',
+      }
+      facade.geoDataLinksWithGeometry$.next([firstLink])
+
+      facade.geoDataLinksWithGeometry$.next([secondLink])
+      dataService.getWfsFeatureCount.mockReturnValue(of(150))
+      component.exceedsMaxFeatureCount$.subscribe((result) => {
+        expect(result).toBe(true)
+        done()
+      })
+    })
   })
 })
