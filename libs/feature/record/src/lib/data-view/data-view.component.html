@@ -12,7 +12,7 @@
       (selectValue)="selectLink($event)"
     ></gn-ui-dropdown-selector>
   </div>
-  <ng-container *ngIf="hidePreview; else dataView">
+  <ng-container *ngIf="hidePreview$ | async; else dataView">
     <gn-ui-popup-alert
       type="warning"
       icon="matErrorOutlineOutline"
