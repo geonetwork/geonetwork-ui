@@ -4,7 +4,7 @@ import { debounceTime, EMPTY, filter, of, withLatestFrom } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
 import * as EditorActions from './editor.actions'
 import { EditorService } from '../services/editor.service'
-import { Store } from '@ngrx/store'
+import { Action, Store } from '@ngrx/store'
 import {
   selectEditorConfig,
   selectRecord,
@@ -31,7 +31,20 @@ export class EditorEffects {
       ),
       switchMap(([, record, recordSource, fieldsConfig]) =>
         this.editorService.saveRecord(record, recordSource, fieldsConfig).pipe(
-          switchMap(() => of(EditorActions.saveRecordSuccess())),
+          switchMap(([savedRecord, savedRecordSource]) => {
+            const actions: Action[] = [EditorActions.saveRecordSuccess()]
+
+            if (!record?.uniqueIdentifier) {
+              actions.push(
+                EditorActions.openRecord({
+                  record: savedRecord,
+                  recordSource: savedRecordSource,
+                })
+              )
+            }
+
+            return of(...actions)
+          }),
           catchError((error) =>
             of(
               EditorActions.saveRecordFailure({
