@@ -19,6 +19,8 @@ import { By } from '@angular/platform-browser'
       </ng-template>
     </gn-ui-sticky-header>
   </div>`,
+  standalone: true,
+  imports: [StickyHeaderComponent],
 })
 class ContainerComponent {}
 
@@ -28,9 +30,7 @@ describe('StickyHeaderComponent', () => {
   let fixture: ComponentFixture<ContainerComponent>
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ContainerComponent, StickyHeaderComponent],
-    }).compileComponents()
+    await TestBed.compileComponents()
   })
 
   beforeEach(() => {

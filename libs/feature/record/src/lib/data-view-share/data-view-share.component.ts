@@ -12,7 +12,7 @@ import {
 import { MatTabsModule } from '@angular/material/tabs'
 import { CommonModule } from '@angular/common'
 import { DataViewWebComponentComponent } from '../data-view-web-component/data-view-web-component.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-data-view-share',
@@ -24,7 +24,7 @@ import { TranslateModule } from '@ngx-translate/core'
     MatTabsModule,
     DataViewPermalinkComponent,
     DataViewWebComponentComponent,
-    TranslateModule,
+    TranslateDirective,
   ],
   standalone: true,
 })

@@ -1,7 +1,4 @@
-import { HttpClientModule } from '@angular/common/http'
-import { importProvidersFrom } from '@angular/core'
-import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
   applicationConfig,
   componentWrapperDecorator,
@@ -15,12 +12,7 @@ export default {
   component: DropdownSelectorComponent,
   decorators: [
     applicationConfig({
-      providers: [
-        importProvidersFrom(
-          HttpClientModule,
-          TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)
-        ),
-      ],
+      providers: [provideI18n()],
     }),
     componentWrapperDecorator(
       (story) =>

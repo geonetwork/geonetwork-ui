@@ -13,6 +13,7 @@ import {
   Organization,
   Role,
   RoleLabels,
+  RoleValues,
 } from '@geonetwork-ui/common/domain/model/record'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
@@ -20,12 +21,10 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { SortableListComponent } from '@geonetwork-ui/ui/layout'
 import {
   AutocompleteComponent,
-  DropdownSelectorComponent,
-  UiInputsModule,
+  ButtonComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { createFuzzyFilter } from '@geonetwork-ui/util/shared'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import {
   debounceTime,
   distinctUntilChanged,
@@ -40,7 +39,6 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirPlus } from '@ng-icons/iconoir'
-import { RoleValues } from '@geonetwork-ui/common/domain/model/record'
 
 @Component({
   selector: 'gn-ui-form-field-contacts-for-resource',
@@ -49,15 +47,13 @@ import { RoleValues } from '@geonetwork-ui/common/domain/model/record'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    DropdownSelectorComponent,
-    UiInputsModule,
     CommonModule,
-    UiWidgetsModule,
     AutocompleteComponent,
-    TranslateModule,
     ContactCardComponent,
     SortableListComponent,
     NgIconComponent,
+    ButtonComponent,
+    TranslatePipe,
   ],
   providers: [
     provideIcons({ iconoirPlus }),

@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject, of } from 'rxjs'
 import {
   MAX_FEATURE_COUNT,
@@ -15,6 +14,7 @@ import {
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { MatTab, MatTabGroup } from '@angular/material/tabs'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('RecordDataPreviewComponent', () => {
   let component: RecordDataPreviewComponent
@@ -26,8 +26,8 @@ describe('RecordDataPreviewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         MockProvider(MdViewFacade, {
           mapApiLinks$: new BehaviorSubject([]),
           dataLinks$: new BehaviorSubject([]),

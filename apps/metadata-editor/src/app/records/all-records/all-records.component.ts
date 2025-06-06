@@ -10,12 +10,11 @@ import {
   ViewContainerRef,
 } from '@angular/core'
 import { SearchFacade, SearchService } from '@geonetwork-ui/feature/search'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 import { Router } from '@angular/router'
 import { RecordsCountComponent } from '../records-count/records-count.component'
 import { Observable, Subscription } from 'rxjs'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { CdkOverlayOrigin, Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
 import { ImportRecordComponent } from '@geonetwork-ui/feature/editor'
@@ -40,15 +39,14 @@ import {
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslateDirective,
     RecordsCountComponent,
-    UiElementsModule,
-    UiInputsModule,
     ImportRecordComponent,
     CdkOverlayOrigin,
     RecordsListComponent,
     SearchFiltersComponent,
     NgIconComponent,
+    ButtonComponent,
   ],
   providers: [
     provideIcons({

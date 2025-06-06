@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ActivatedRoute } from '@angular/router'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { TranslateModule } from '@ngx-translate/core'
 import { cold, hot } from 'jasmine-marbles'
 import { MockBuilder, MockProviders } from 'ng-mocks'
 import { DashboardMenuComponent } from './dashboard-menu.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('DashboardMenuComponent', () => {
   let component: DashboardMenuComponent
@@ -17,8 +17,10 @@ describe('DashboardMenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DashboardMenuComponent, TranslateModule.forRoot()],
-      providers: [MockProviders(ActivatedRoute, RecordsRepositoryInterface)],
+      providers: [
+        provideI18n(),
+        MockProviders(ActivatedRoute, RecordsRepositoryInterface),
+      ],
     }).compileComponents()
     recordsRepository = TestBed.inject(RecordsRepositoryInterface)
     fixture = TestBed.createComponent(DashboardMenuComponent)

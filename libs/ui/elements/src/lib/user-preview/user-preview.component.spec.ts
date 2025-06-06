@@ -1,33 +1,26 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { ChangeDetectionStrategy } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
-
 import { UserPreviewComponent } from './user-preview.component'
+import { MockBuilder } from 'ng-mocks'
+import { AvatarComponent } from '../avatar/avatar.component'
+import { MatTooltip } from '@angular/material/tooltip'
 
 const user = barbieUserFixture()
-@Component({
-  selector: 'gn-ui-avatar',
-  template: '',
-})
-export class AvatarComponent {
-  @Input() avatarUrl?: string
-}
 
 describe('UserPreviewComponent', () => {
   let component: UserPreviewComponent
   let fixture: ComponentFixture<UserPreviewComponent>
 
+  beforeEach(() => MockBuilder(UserPreviewComponent))
+
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [UserPreviewComponent, AvatarComponent],
-    })
-      .overrideComponent(UserPreviewComponent, {
-        set: {
-          changeDetection: ChangeDetectionStrategy.Default,
-        },
-      })
-      .compileComponents()
+    await TestBed.overrideComponent(UserPreviewComponent, {
+      set: {
+        changeDetection: ChangeDetectionStrategy.Default,
+      },
+    }).compileComponents()
 
     fixture = TestBed.createComponent(UserPreviewComponent)
     component = fixture.componentInstance
@@ -56,12 +49,15 @@ describe('UserPreviewComponent', () => {
     })
   })
   describe('displays user info', () => {
-    let elts
+    let tooltip: MatTooltip
     beforeEach(() => {
-      elts = fixture.debugElement.queryAll(By.css('figure > div'))
+      // see https://angular.dev/guide/testing/attribute-directives
+      tooltip = fixture.debugElement
+        .query(By.directive(MatTooltip))
+        .injector.get(MatTooltip)
     })
     it('displays user name', () => {
-      expect(elts[0].nativeElement['matTooltip']).toEqual('Barbara Roberts')
+      expect(tooltip.message).toEqual('Barbara Roberts')
     })
   })
 })

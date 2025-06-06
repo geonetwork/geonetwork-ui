@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { InternalLinkCardContactComponent } from './internal-link-card-contact.component'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import {
   matEmailOutline,
-  matPhoneOutline,
   matLocationOnOutline,
+  matPhoneOutline,
 } from '@ng-icons/material-icons/outline'
 import { iconoirInternet } from '@ng-icons/iconoir'
-import { TranslateModule } from '@ngx-translate/core'
 import {
   CatalogRecord,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 // Mock organization
 const mockOrganization: Organization = {
@@ -53,9 +52,8 @@ describe('InternalLinkCardContactComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InternalLinkCardContactComponent, TranslateModule.forRoot()],
-      schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        provideI18n(),
         provideIcons({
           iconoirInternet,
           matEmailOutline,

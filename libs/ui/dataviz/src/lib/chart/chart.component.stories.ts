@@ -1,31 +1,25 @@
-import { HttpClientModule } from '@angular/common/http'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideHttpClient } from '@angular/common/http'
 import { CHART_TYPE_VALUES } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import {
   applicationConfig,
   componentWrapperDecorator,
   Meta,
-  moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
-import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { ChartComponent } from './chart.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { UiDatavizModule } from '../ui-dataviz.module'
 import { importProvidersFrom } from '@angular/core'
 
 const meta: Meta<ChartComponent> = {
   title: 'Dataviz/ChartComponent',
   component: ChartComponent,
   decorators: [
-    moduleMetadata({
-      imports: [TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)],
-    }),
     applicationConfig({
       providers: [
-        importProvidersFrom(UiDatavizModule),
         importProvidersFrom(BrowserAnimationsModule),
-        importProvidersFrom(HttpClientModule),
+        provideHttpClient(),
+        provideI18n(),
       ],
     }),
     componentWrapperDecorator(

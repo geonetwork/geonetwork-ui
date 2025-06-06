@@ -49,7 +49,7 @@ import {
 } from '../iso19139/write-parts'
 import { findIdentification } from '../iso19139/read-parts'
 import { namePartsToFull } from '../iso19139/utils/individual-name'
-import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
+import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n/language-codes'
 import { kindToCodeListValue } from '../common/resource-types'
 
 export function writeUniqueIdentifier(
@@ -529,11 +529,7 @@ export function writeOnlineResources(
 }
 
 function writeLocaleElement(language: LanguageCode) {
-  const normalizedLang = language.toLowerCase()
-  const lang3 =
-    normalizedLang.length === 2
-      ? LANG_2_TO_3_MAPPER[normalizedLang]
-      : normalizedLang
+  const lang3 = getLang3FromLang2(language.toLowerCase()) ?? language
   return pipe(
     findChildOrCreate('lan:PT_Locale'),
     writeAttribute('id', language.toUpperCase()),

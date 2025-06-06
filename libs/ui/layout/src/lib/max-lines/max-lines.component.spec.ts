@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { MaxLinesComponent } from './max-lines.component'
-import { Component, importProvidersFrom } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
+import { Component } from '@angular/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 // Mock implementation of ResizeObserver
 class ResizeObserverMock {
@@ -19,6 +19,8 @@ class ResizeObserverMock {
       </div>
     </gn-ui-max-lines>
   `,
+  standalone: true,
+  imports: [MaxLinesComponent],
 })
 class TestHostComponent {
   maxLines: number
@@ -32,9 +34,7 @@ describe('MaxLinesComponent', () => {
     ;(window as any).ResizeObserver = ResizeObserverMock
 
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), MaxLinesComponent],
-      providers: [importProvidersFrom(TranslateModule.forRoot())],
-      declarations: [TestHostComponent],
+      providers: [provideI18n()],
     })
     fixture = TestBed.createComponent(TestHostComponent)
     hostComponent = fixture.componentInstance

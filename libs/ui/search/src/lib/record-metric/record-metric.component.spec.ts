@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { RecordMetricComponent } from './record-metric.component'
 import { By } from '@angular/platform-browser'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('RecordMetricComponent', () => {
   let component: RecordMetricComponent
@@ -9,7 +10,8 @@ describe('RecordMetricComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
+      imports: [TranslateDirective, TranslatePipe],
+      providers: [provideI18n()],
       declarations: [RecordMetricComponent],
     }).compileComponents()
   })

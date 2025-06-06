@@ -5,8 +5,9 @@ import { CommonModule } from '@angular/common'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FieldsService } from '../utils/service/fields.service'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('ResultsHitsContainerComponent', () => {
   let component: ResultsHitsContainerComponent
@@ -41,11 +42,12 @@ describe('ResultsHitsContainerComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ResultsHitsContainerComponent],
       providers: [
+        provideI18n(),
         { provide: SearchFacade, useValue: searchFacadeMock },
         { provide: SearchService, useValue: searchServiceMock },
         { provide: FieldsService, useValue: fieldsServiceMock },
       ],
-      imports: [CommonModule, TranslateModule.forRoot()],
+      imports: [CommonModule, TranslateDirective, TranslatePipe],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents()
   })

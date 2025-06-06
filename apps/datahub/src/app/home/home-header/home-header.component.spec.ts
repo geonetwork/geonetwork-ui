@@ -1,4 +1,3 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import {
@@ -10,14 +9,14 @@ import {
   SearchFacade,
   SearchService,
 } from '@geonetwork-ui/feature/search'
-import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject, firstValueFrom, of } from 'rxjs'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
-import { HeaderBadgeButtonComponent } from '../header-badge-button/header-badge-button.component'
 import { HomeHeaderComponent } from './home-header.component'
 import { SortByEnum } from '@geonetwork-ui/common/domain/model/search'
 import { _setLanguages } from '@geonetwork-ui/util/app-config'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { MockBuilder } from 'ng-mocks'
 import resetAllMocks = jest.resetAllMocks
 
 jest.mock('@geonetwork-ui/util/app-config', () => {
@@ -81,7 +80,7 @@ class FieldsServiceMock {
   buildFiltersFromFieldValues = jest.fn(() => of({ thisIs: 'a fake filter' }))
 }
 
-describe('HeaderComponent', () => {
+describe('HomeHeaderComponent', () => {
   let component: HomeHeaderComponent
   let fixture: ComponentFixture<HomeHeaderComponent>
   let searchService: SearchService
@@ -89,13 +88,13 @@ describe('HeaderComponent', () => {
   let routerFacade: RouterFacade
   let platform: PlatformServiceInterface
 
+  beforeEach(() => MockBuilder(HomeHeaderComponent))
+
   beforeEach(async () => {
     _setLanguages(['fr', 'de'])
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
-      declarations: [HomeHeaderComponent, HeaderBadgeButtonComponent],
-      schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        provideI18n(),
         {
           provide: RouterFacade,
           useClass: routerFacadeMock,

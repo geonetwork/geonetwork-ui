@@ -3,12 +3,17 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { map } from 'rxjs'
 import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'datahub-record-linked-records',
   standalone: true,
-  imports: [CommonModule, TranslateModule, RecordInternalLinksComponent],
+  imports: [
+    CommonModule,
+    RecordInternalLinksComponent,
+    TranslatePipe,
+    TranslateDirective,
+  ],
   templateUrl: './record-linked-records.component.html',
   styleUrl: './record-linked-records.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

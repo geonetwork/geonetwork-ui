@@ -1,4 +1,3 @@
-import { TranslateModule } from '@ngx-translate/core'
 import {
   applicationConfig,
   componentWrapperDecorator,
@@ -7,10 +6,9 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { GeoTableViewComponent } from './geo-table-view.component'
-import { importProvidersFrom } from '@angular/core'
 import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
-import { HttpClientModule } from '@angular/common/http'
-import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
+import { provideHttpClient } from '@angular/common/http'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import {
   BaseFileReader,
@@ -26,10 +24,7 @@ export default {
       imports: [BrowserAnimationsModule],
     }),
     applicationConfig({
-      providers: [
-        importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
-        importProvidersFrom(HttpClientModule),
-      ],
+      providers: [provideHttpClient(), provideI18n()],
     }),
     componentWrapperDecorator(
       (story) => `<div style="height: 400px">${story}</div>`

@@ -2,20 +2,20 @@ import { lastValueFrom, of } from 'rxjs'
 import {
   AbstractSearchField,
   AvailableServicesField,
+  DateRangeSearchField,
   FullTextSearchField,
   IsSpatialSearchField,
   LicenseSearchField,
   MultilingualSearchField,
   OrganizationSearchField,
+  RecordKindField,
   SimpleSearchField,
   TranslatedSearchField,
   UserSearchField,
-  DateRangeSearchField,
-  RecordKindField,
 } from './fields'
 import { TestBed } from '@angular/core/testing'
 import { Injector } from '@angular/core'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import {
@@ -222,7 +222,6 @@ describe('search fields implementations', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
         {
           provide: RecordsRepositoryInterface,

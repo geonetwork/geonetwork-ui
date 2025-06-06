@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { UsersListComponent } from './users-list.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('RecordsListComponent', () => {
   let component: UsersListComponent
@@ -8,7 +8,7 @@ describe('RecordsListComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
+      providers: [provideI18n()],
     })
     fixture = TestBed.createComponent(UsersListComponent)
     component = fixture.componentInstance

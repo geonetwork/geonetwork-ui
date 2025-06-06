@@ -10,7 +10,6 @@ import {
   MetadataContactComponent,
   MetadataInfoComponent,
 } from '@geonetwork-ui/ui/elements'
-import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject, of } from 'rxjs'
 import { RecordMetadataComponent } from './record-metadata.component'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
@@ -21,6 +20,7 @@ import { RecordDownloadsComponent } from '../record-downloads/record-downloads.c
 import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
@@ -67,8 +67,8 @@ describe('RecordMetadataComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         {
           provide: MdViewFacade,
           useClass: MdViewFacadeMock,

@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { DatasetFeatureCatalog } from '@geonetwork-ui/common/domain/model/record'
 import { FormsModule } from '@angular/forms'
@@ -14,7 +14,13 @@ import { iconoirSearch } from '@ng-icons/iconoir'
   templateUrl: './search-feature-catalog.component.html',
   styleUrls: ['./search-feature-catalog.component.css'],
   standalone: true,
-  imports: [CommonModule, NgIcon, TranslateModule, FormsModule],
+  imports: [
+    CommonModule,
+    NgIcon,
+    TranslateDirective,
+    TranslatePipe,
+    FormsModule,
+  ],
   viewProviders: [
     provideIcons({ iconoirSearch }),
     provideNgIconsConfig({

@@ -5,12 +5,15 @@ import {
   Input,
   Output,
 } from '@angular/core'
+import { MatCheckboxModule } from '@angular/material/checkbox'
 
 @Component({
   selector: 'gn-ui-checkbox',
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [MatCheckboxModule],
 })
 export class CheckboxComponent {
   @Input() type: 'primary' | 'secondary' | 'default' = 'default'

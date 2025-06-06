@@ -45,7 +45,11 @@
       </div>
     </main>
     <script>
-      GNUI.init('https://www.geocat.ch/geonetwork/srv/api')
+      GNUI.init({
+        apiUrl: 'https://www.geocat.ch/geonetwork/srv/api',
+        metadataLanguage: 'ger',
+        textLanguage: 'de',
+      })
 
       const searchInput = document.getElementById('search')
       const resultsContainer = document.getElementById('results')

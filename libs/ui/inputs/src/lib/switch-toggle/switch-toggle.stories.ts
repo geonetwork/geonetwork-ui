@@ -5,10 +5,7 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { SwitchToggleComponent } from './switch-toggle.component'
-import { importProvidersFrom } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
-import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
-import { HttpClientModule } from '@angular/common/http'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export default {
   title: 'Inputs/SwitchToggle',
@@ -18,10 +15,7 @@ export default {
       imports: [SwitchToggleComponent],
     }),
     applicationConfig({
-      providers: [
-        importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
-        importProvidersFrom(HttpClientModule),
-      ],
+      providers: [provideI18n()],
     }),
   ],
 } as Meta<SwitchToggleComponent>

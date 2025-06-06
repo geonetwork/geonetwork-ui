@@ -13,6 +13,7 @@ import { Observable } from 'rxjs'
   selector: 'gn-ui-viewport-intersector',
   templateUrl: './viewport-intersector.component.html',
   styleUrls: ['./viewport-intersector.component.css'],
+  standalone: true,
 })
 export class ViewportIntersectorComponent implements OnInit, OnDestroy {
   @Output() isInViewport = new EventEmitter<boolean>()

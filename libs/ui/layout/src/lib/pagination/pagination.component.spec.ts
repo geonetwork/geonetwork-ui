@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { PaginationComponent } from './pagination.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { Paginable } from '../paginable.interface'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class MockPaginable implements Paginable {
   currentPage = 1
@@ -21,7 +21,7 @@ describe('PaginationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PaginationComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(PaginationComponent)

@@ -9,9 +9,8 @@ import {
 } from '@angular/core'
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu'
-import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 
 type ActionMenuPage = 'mainMenu' | 'deleteMenu' | 'rollbackMenu'
 
@@ -25,8 +24,8 @@ type ActionMenuPage = 'mainMenu' | 'deleteMenu' | 'rollbackMenu'
     ButtonComponent,
     MatMenuModule,
     MatDialogModule,
-    ConfirmationDialogComponent,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
   ],
 })
 export class ActionMenuComponent {

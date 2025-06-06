@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { SearchFiltersComponent } from './search-filters.component'
 import { MockBuilder } from 'ng-mocks'
-import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 import { SearchFiltersSummaryComponent } from '@geonetwork-ui/feature/search'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('SearchFiltersComponent', () => {
   let component: SearchFiltersComponent
@@ -17,7 +17,7 @@ describe('SearchFiltersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SearchFiltersComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
     fixture = TestBed.createComponent(SearchFiltersComponent)
     component = fixture.componentInstance

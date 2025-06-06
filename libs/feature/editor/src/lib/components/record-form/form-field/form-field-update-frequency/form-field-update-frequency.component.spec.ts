@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TranslateModule } from '@ngx-translate/core'
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency.component'
+import { provideTranslateService } from '@ngx-translate/core'
 
 describe('FormFieldUpdateFrequencyComponent', () => {
   let component: FormFieldUpdateFrequencyComponent
@@ -8,7 +8,7 @@ describe('FormFieldUpdateFrequencyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormFieldUpdateFrequencyComponent, TranslateModule.forRoot()],
+      providers: [provideTranslateService()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(FormFieldUpdateFrequencyComponent)

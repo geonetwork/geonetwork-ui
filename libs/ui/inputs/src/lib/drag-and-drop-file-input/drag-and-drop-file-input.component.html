@@ -1,7 +1,7 @@
 <div class="flex h-full">
   <ngx-dropzone
     class="flex-1"
-    multiple="false"
+    [multiple]="false"
     (change)="selectFile($event)"
     [accept]="accept"
   >

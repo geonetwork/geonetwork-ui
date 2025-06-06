@@ -2,13 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { SearchFiltersSummaryItemComponent } from './search-filters-summary-item.component'
 import { BehaviorSubject, firstValueFrom, of } from 'rxjs'
-import { MockBuilder, MockComponent, MockProvider } from 'ng-mocks'
+import { MockBuilder, MockProvider } from 'ng-mocks'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
-import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
-import { CommonModule, DatePipe } from '@angular/common'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { DatePipe } from '@angular/common'
+import { TranslateService } from '@ngx-translate/core'
 import { FieldsService } from '../utils/service/fields.service'
 import { FieldType } from '../utils/service/fields'
 
@@ -61,11 +60,6 @@ describe('SearchFiltersSummaryItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommonModule, TranslateModule.forRoot()],
-      declarations: [
-        SearchFiltersSummaryItemComponent,
-        MockComponent(BadgeComponent),
-      ],
       providers: [
         MockProvider(SearchFacade, SearchFacadeMock, 'useClass'),
         MockProvider(SearchService, SearchServiceMock, 'useClass'),

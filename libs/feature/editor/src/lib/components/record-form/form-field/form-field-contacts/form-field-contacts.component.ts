@@ -10,17 +10,12 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core'
-import {
-  AutocompleteComponent,
-  DropdownSelectorComponent,
-  UiInputsModule,
-} from '@geonetwork-ui/ui/inputs'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
 import {
   Individual,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import {
   debounceTime,
   distinctUntilChanged,
@@ -44,12 +39,10 @@ import { SortableListComponent } from '@geonetwork-ui/ui/layout'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    DropdownSelectorComponent,
-    UiInputsModule,
     CommonModule,
-    UiWidgetsModule,
     AutocompleteComponent,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     ContactCardComponent,
     SortableListComponent,
   ],
