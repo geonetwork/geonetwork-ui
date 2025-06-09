@@ -28,6 +28,7 @@
               <gn-ui-map-view
                 [exceedsLimit]="exceedsMaxFeatureCount$ | async"
                 (linkSelected)="selectedLink$.next($event)"
+                [selectedView]="selectedView$ | async"
               ></gn-ui-map-view>
             </div>
           </mat-tab>
@@ -51,6 +52,7 @@
               <gn-ui-data-view
                 [exceedsLimit]="exceedsMaxFeatureCount$ | async"
                 (linkSelected)="selectedLink$.next($event)"
+                [selectedView]="selectedView$ | async"
                 mode="chart"
               ></gn-ui-data-view>
             </div>

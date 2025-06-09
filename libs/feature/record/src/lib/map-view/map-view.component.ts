@@ -27,6 +27,7 @@ import {
   map,
   shareReplay,
   switchMap,
+  take,
   tap,
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
@@ -94,6 +95,13 @@ export class MapViewComponent implements AfterViewInit {
   @Input() set exceedsLimit(value: boolean) {
     this.excludeWfs$.next(value)
   }
+  @Input() set selectedView(value: string) {
+    if (value === 'map') {
+      this.selectedLink$.pipe(take(1)).subscribe((link) => {
+        this.linkSelected.emit(link)
+      })
+    }
+  }
   @Input() displaySource = true
   @Output() linkSelected = new EventEmitter<any>()
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
@@ -143,7 +151,7 @@ export class MapViewComponent implements AfterViewInit {
     )
   )
 
-  selectedLinkIndex$ = new BehaviorSubject(null)
+  selectedLinkIndex$ = new BehaviorSubject(0)
   private selectedStyleIndex$ = new BehaviorSubject(0)
 
   selectedSourceLink$ = combineLatest([

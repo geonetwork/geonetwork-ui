@@ -44,6 +44,11 @@ export class DataViewComponent {
   @Input() set exceedsLimit(value: boolean) {
     this.excludeWfs$.next(value)
   }
+  @Input() set selectedView(value: string) {
+    if (value !== 'map') {
+      this.linkSelected.emit(this.selectedLink$.value)
+    }
+  }
   @Output() chartConfig$ = new BehaviorSubject<DatavizConfigurationModel>(null)
   @Output() linkSelected = new EventEmitter<any>()
   cacheActive$ = this.mdViewFacade.isHighUpdateFrequency$.pipe(
