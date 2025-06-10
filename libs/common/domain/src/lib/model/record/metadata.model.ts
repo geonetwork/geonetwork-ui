@@ -241,11 +241,7 @@ export interface ServiceEndpoint {
   translations?: OnlineResourceTranslations
 }
 
-export type ServiceOnlineResource = (
-  | ServiceEndpoint
-  | OnlineLinkResource
-  | DatasetServiceDistribution
-) & {
+export type ServiceOnlineResource = (ServiceEndpoint | OnlineLinkResource) & {
   type: OnlineResourceType
 }
 
