@@ -7,6 +7,7 @@ import {
   Optional,
 } from '@angular/core'
 import { MatInkBar, MatTabsModule } from '@angular/material/tabs'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import {
   DataViewComponent,
@@ -64,7 +65,7 @@ export class RecordDataPreviewComponent {
     )
   )
 
-  selectedLink$ = new BehaviorSubject<any>(null)
+  selectedLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
 
   exceedsMaxFeatureCount$ = combineLatest([
     this.metadataViewFacade.geoDataLinksWithGeometry$,
@@ -121,5 +122,8 @@ export class RecordDataPreviewComponent {
     setTimeout(() => {
       window.dispatchEvent(new Event('resize'))
     }, 0)
+  }
+  onSelectedLinkChange(link: DatasetOnlineResource) {
+    this.selectedLink$.next(link)
   }
 }

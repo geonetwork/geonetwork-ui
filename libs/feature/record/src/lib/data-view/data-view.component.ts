@@ -50,7 +50,7 @@ export class DataViewComponent {
     }
   }
   @Output() chartConfig$ = new BehaviorSubject<DatavizConfigurationModel>(null)
-  @Output() linkSelected = new EventEmitter<any>()
+  @Output() linkSelected = new EventEmitter<DatasetOnlineResource>()
   cacheActive$ = this.mdViewFacade.isHighUpdateFrequency$.pipe(
     map((highF) => !highF)
   )
@@ -78,7 +78,7 @@ export class DataViewComponent {
       }))
     )
   )
-  selectedLink$ = new BehaviorSubject<DatasetServiceDistribution>(null)
+  selectedLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
 
   hidePreview$ = this.excludeWfs$.pipe(
     map((excludeWfs) => this.mode === 'chart' && excludeWfs)
@@ -91,7 +91,7 @@ export class DataViewComponent {
   }
 
   selectLink(linkAsString: string) {
-    const link: DatasetServiceDistribution = JSON.parse(linkAsString)
+    const link: DatasetOnlineResource = JSON.parse(linkAsString)
     this.linkSelected.emit(link)
     link.url = new URL(link.url)
     this.selectedLink$.next(link)

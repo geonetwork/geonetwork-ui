@@ -103,7 +103,7 @@ export class MapViewComponent implements AfterViewInit {
     }
   }
   @Input() displaySource = true
-  @Output() linkSelected = new EventEmitter<any>()
+  @Output() linkSelected = new EventEmitter<DatasetOnlineResource>()
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
 
   excludeWfs$ = new BehaviorSubject(false)
