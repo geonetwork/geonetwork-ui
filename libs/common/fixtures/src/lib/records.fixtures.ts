@@ -996,12 +996,12 @@ export const multilingualDatasetFixture: () => DatasetRecord = () => ({
       },
     },
   ],
-  onlineResources: [], // todo online resources
+  onlineResources: [],
   licenses: [],
-  legalConstraints: [], // TODO constraints
+  legalConstraints: [],
   securityConstraints: [],
   otherConstraints: [],
-  contacts: [], // TODO contacts
+  contacts: [],
   contactsForResource: [],
   ownerOrganization: {
     name: 'Org EN',
