@@ -3,7 +3,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
+  Output,
   ViewChild,
 } from '@angular/core'
 import { MapUtilsService } from '@geonetwork-ui/feature/map'
@@ -25,6 +27,7 @@ import {
   map,
   shareReplay,
   switchMap,
+  take,
   tap,
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
@@ -92,7 +95,15 @@ export class MapViewComponent implements AfterViewInit {
   @Input() set exceedsLimit(value: boolean) {
     this.excludeWfs$.next(value)
   }
+  @Input() set selectedView(value: string) {
+    if (value === 'map') {
+      this.selectedLink$.pipe(take(1)).subscribe((link) => {
+        this.linkSelected.emit(link)
+      })
+    }
+  }
   @Input() displaySource = true
+  @Output() linkSelected = new EventEmitter<DatasetOnlineResource>()
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
 
   excludeWfs$ = new BehaviorSubject(false)
@@ -140,15 +151,17 @@ export class MapViewComponent implements AfterViewInit {
     )
   )
 
-  private selectedLinkIndex$ = new BehaviorSubject(0)
+  selectedLinkIndex$ = new BehaviorSubject(0)
   private selectedStyleIndex$ = new BehaviorSubject(0)
 
   selectedSourceLink$ = combineLatest([
     this.compatibleMapLinks$,
     this.selectedLinkIndex$.pipe(distinctUntilChanged()),
   ]).pipe(
-    map(([links, idx]) => links[idx]),
-    shareReplay(1)
+    map(([links, index]) => {
+      this.linkSelected.emit(links[index])
+      return links[index]
+    })
   )
 
   styleLinks$ = this.selectedSourceLink$.pipe(

@@ -19,6 +19,7 @@ import {
   ChartViewComponent,
   TableViewComponent,
 } from '@geonetwork-ui/feature/dataviz'
+import { hot } from 'jasmine-marbles'
 
 class MdViewFacadeMock {
   isHighUpdateFrequency$ = new Subject()
@@ -166,7 +167,8 @@ describe('DataViewComponent', () => {
       fixture.detectChanges()
     }))
     it('should set hidePreview to true', () => {
-      expect(component.hidePreview).toEqual(true)
+      const expected = hot('a', { a: true })
+      expect(component.hidePreview$).toBeObservable(expected)
     })
   })
 })

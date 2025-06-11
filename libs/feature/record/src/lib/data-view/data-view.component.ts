@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
   Output,
 } from '@angular/core'
@@ -9,7 +10,10 @@ import { BehaviorSubject, combineLatest, of } from 'rxjs'
 import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
 import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import {
+  DatasetOnlineResource,
+  DatasetServiceDistribution,
+} from '@geonetwork-ui/common/domain/model/record'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import {
   ChartViewComponent,
@@ -40,11 +44,16 @@ export class DataViewComponent {
   @Input() set exceedsLimit(value: boolean) {
     this.excludeWfs$.next(value)
   }
+  @Input() set selectedView(value: string) {
+    if (value !== 'map') {
+      this.linkSelected.emit(this.selectedLink$.value)
+    }
+  }
   @Output() chartConfig$ = new BehaviorSubject<DatavizConfigurationModel>(null)
+  @Output() linkSelected = new EventEmitter<DatasetOnlineResource>()
   cacheActive$ = this.mdViewFacade.isHighUpdateFrequency$.pipe(
     map((highF) => !highF)
   )
-  hidePreview = false
   excludeWfs$ = new BehaviorSubject(false)
   compatibleDataLinks$ = combineLatest([
     this.mdViewFacade.dataLinks$,
@@ -71,6 +80,10 @@ export class DataViewComponent {
   )
   selectedLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
 
+  hidePreview$ = this.excludeWfs$.pipe(
+    map((excludeWfs) => this.mode === 'chart' && excludeWfs)
+  )
+
   constructor(private mdViewFacade: MdViewFacade) {}
 
   setChartConfig(event: DatavizConfigurationModel) {
@@ -79,19 +92,8 @@ export class DataViewComponent {
 
   selectLink(linkAsString: string) {
     const link: DatasetOnlineResource = JSON.parse(linkAsString)
+    this.linkSelected.emit(link)
     link.url = new URL(link.url)
-    this.excludeWfs$
-      .pipe(
-        tap((excludeWfs) => {
-          this.hidePreview =
-            link['accessServiceProtocol'] === 'wfs' &&
-            excludeWfs &&
-            this.mode === 'chart'
-              ? true
-              : false
-          this.selectedLink$.next(link)
-        })
-      )
-      .subscribe()
+    this.selectedLink$.next(link)
   }
 }

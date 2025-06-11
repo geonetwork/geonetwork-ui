@@ -6,7 +6,8 @@ import {
   InjectionToken,
   Optional,
 } from '@angular/core'
-import { MatTabsModule } from '@angular/material/tabs'
+import { MatInkBar, MatTabsModule } from '@angular/material/tabs'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import {
   DataViewComponent,
@@ -64,21 +65,23 @@ export class RecordDataPreviewComponent {
     )
   )
 
-  exceedsMaxFeatureCount$ =
-    this.metadataViewFacade.geoDataLinksWithGeometry$.pipe(
-      // FIXME: improve this to potentially not only handle first WFS link
-      map(
-        (links) =>
-          links.filter((link) => link.accessServiceProtocol === 'wfs')[0]
-      ),
-      switchMap((link) =>
-        link
-          ? this.dataService
-              .getWfsFeatureCount(link.url.toString(), link.name)
-              .pipe(map((count) => count > this.maxFeatureCount))
-          : of(false)
-      )
-    )
+  selectedLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
+
+  exceedsMaxFeatureCount$ = combineLatest([
+    this.metadataViewFacade.geoDataLinksWithGeometry$,
+    this.selectedLink$,
+  ]).pipe(
+    map(([links, selectedLink]) =>
+      selectedLink != null ? selectedLink : links[0]
+    ),
+    switchMap((link) => {
+      return link && link.accessServiceProtocol === 'wfs'
+        ? this.dataService
+            .getWfsFeatureCount(link.url.toString(), link.name)
+            .pipe(map((count) => count > this.maxFeatureCount))
+        : of(false)
+    })
+  )
 
   selectedView$ = new BehaviorSubject('map')
 
@@ -119,5 +122,8 @@ export class RecordDataPreviewComponent {
     setTimeout(() => {
       window.dispatchEvent(new Event('resize'))
     }, 0)
+  }
+  onSelectedLinkChange(link: DatasetOnlineResource) {
+    this.selectedLink$.next(link)
   }
 }
