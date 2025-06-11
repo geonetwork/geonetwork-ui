@@ -230,8 +230,6 @@
   "editor.record.lock.harvested": "Les jeux de données moissonnés ne sont pas éditables",
   "editor.record.lock.owner": "Vous n'êtes pas éditeur d'un des groupes autorisés",
   "editor.record.lock.resourceType": "Les fiches d'un type autre que jeu de données ne sont pas éditables",
-  "editor.record.lock.format": "Les jeux de données de type 'service' et 'reuse' ne sont pas éditables",
-  "editor.record.lock.reason": "Vous n'êtes pas éditeur d'un des groupes autorisés.",
   "editor.record.multilingual.confirmation.cancelText": "Garder le(s) langue(s)",
   "editor.record.multilingual.confirmation.confirmText": "Supprimer le(s) langue(s)",
   "editor.record.multilingual.confirmation.message": "Vous allez supprimer une ou plusieurs langues, ce qui supprimera toutes les traductions qui y sont liées. Voulez-vous procéder ?",
