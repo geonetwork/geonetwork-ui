@@ -1,6 +1,6 @@
 import { Configuration } from '@geonetwork-ui/data-access/gn4'
 
-export type TextLanguage = 'browser' | 'localStorage' | string // can be a hardcoded language code
+export type TextLanguage = 'browser' | string // can be a hardcoded language code
 export type MetadataLanguage = 'current' | null | string // can be a hardcoded language code
 
 export interface StandaloneConfiguration {
@@ -11,6 +11,6 @@ export interface StandaloneConfiguration {
 
 export const standaloneConfigurationObject = {
   apiConfiguration: new Configuration(),
-  textLanguage: 'auto',
+  textLanguage: 'browser',
   metadataLanguage: null,
 }

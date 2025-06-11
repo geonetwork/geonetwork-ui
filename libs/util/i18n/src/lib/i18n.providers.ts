@@ -2,6 +2,7 @@ import {
   APP_INITIALIZER,
   EnvironmentProviders,
   makeEnvironmentProviders,
+  Provider,
 } from '@angular/core'
 import {
   provideTranslateService,
@@ -35,7 +36,8 @@ function i18nInitializerFromLocalStorageFactory(translate: TranslateService) {
 }
 
 export function provideI18n(
-  config?: TranslateModuleConfig
+  config?: TranslateModuleConfig,
+  useLocalStorage = true
 ): EnvironmentProviders {
   // fallback to default config
   let usedConfig = config ?? TRANSLATE_DEFAULT_CONFIG
@@ -48,15 +50,19 @@ export function provideI18n(
     usedConfig = TRANSLATE_DEBUG_CONFIG
   }
 
-  return makeEnvironmentProviders([
+  const providers: (EnvironmentProviders | Provider)[] = [
     provideHttpClient(withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: I18nInterceptor, multi: true },
     provideTranslateService(usedConfig),
-    {
+  ]
+  if (useLocalStorage) {
+    providers.push({
       provide: APP_INITIALIZER,
       useFactory: i18nInitializerFromLocalStorageFactory,
       deps: [TranslateService],
       multi: true,
-    },
-  ])
+    })
+  }
+
+  return makeEnvironmentProviders(providers)
 }

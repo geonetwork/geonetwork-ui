@@ -38,7 +38,7 @@ export class BaseComponent implements OnChanges, OnInit {
   @Input() backgroundColor = '#cecece'
   @Input() mainFont = ''
   @Input() titleFont = ''
-  @Input() textLanguage: TextLanguage = 'auto'
+  @Input() textLanguage: TextLanguage = 'browser'
   @Input() metadataLanguage: MetadataLanguage = ''
 
   isInitialized = false
@@ -83,7 +83,7 @@ export class BaseComponent implements OnChanges, OnInit {
 
     if (this.textLanguage === 'browser') {
       this.translate.use(this.translate.getBrowserLang())
-    } else if (typeof this.textLanguage === 'string') {
+    } else {
       this.translate.use(this.textLanguage)
     }
 
