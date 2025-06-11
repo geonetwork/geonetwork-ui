@@ -827,9 +827,8 @@ export const importDatasetRecordAsXmlFixture = (): string => `
 </gmd:MD_Metadata>`
 
 export const simpleServiceRecordFixture = (): ServiceRecord => ({
+  abstract: `Ce service de visualisation WMS permet de consulter la série de couches de données "Sites de gestion des déchets miniers - Série".`,
   kind: 'service',
-  status: null,
-  lineage: null,
   recordUpdated: new Date('2023-03-17T07:38:08.875Z'),
   recordPublished: null,
   ownerOrganization: null,
@@ -842,21 +841,20 @@ export const simpleServiceRecordFixture = (): ServiceRecord => ({
   keywords: [],
   topics: [],
   spatialExtents: [],
-  temporalExtents: [],
   overviews: [],
   defaultLanguage: null,
   otherLanguages: [],
   title: 'Sites de gestion des déchets miniers - Service de visualisation WMS',
   onlineResources: [
     {
-      name: 'Service de visualisation WMS',
+      name: 'Rapport de disponibilité du service WMS',
       description:
-        'Adresse de connexion au service de visualisation WMS de la série de couches de données "Sites de gestion des déchets miniers"',
-      type: 'service',
+        'Ce service de visualisation WMS permet de consulter la série de couches de données "Sites de gestion des déchets miniers - Série".',
+      mimeType: 'text/html',
+      type: 'link',
       url: new URL(
-        'https://geoservices.wallonie.be/arcgis/services/SOL_SOUS_SOL/DECHETS_MINIERS/MapServer/WMSServer?request=GetCapabilities&service=WMS'
+        'https://geoservices.wallonie.be/rapportDisponibilite/wms/sites_de_gestion_des_dechets_miniers_srie.html'
       ),
-      accessServiceProtocol: 'wms',
       accessRestricted: false,
     },
   ],
