@@ -189,6 +189,7 @@ export class Iso19139Converter extends BaseConverter<string> {
         }
       }
     }
+
     fixLanguages(record)
     record.keywords.map(fixLanguages)
     record.onlineResources.map(fixLanguages)
@@ -275,7 +276,6 @@ export class Iso19139Converter extends BaseConverter<string> {
   async readRecord(document: string): Promise<CatalogRecord> {
     const doc = parseXmlString(document)
     const rootEl = getRootElement(doc)
-
     const tr: RecordTranslations = {}
     const kind = this.readers['kind'](rootEl, tr) as RecordKind
 
@@ -398,9 +398,10 @@ export class Iso19139Converter extends BaseConverter<string> {
         this.writers['spatialExtents'](record, rootEl)
       fieldChanged('lineage') && this.writers['lineage'](record, rootEl)
     }
-
     fieldChanged('otherLanguages') &&
       this.writers['otherLanguages'](record, rootEl)
+
+    fieldChanged('translations') && this.writers['translations'](record, rootEl)
 
     this.beforeDocumentCreation(rootEl)
 

@@ -2,7 +2,10 @@ import { inject, Injectable } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import * as EditorActions from './editor.actions'
 import * as EditorSelectors from './editor.selectors'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  LanguageCode,
+} from '@geonetwork-ui/common/domain/model/record'
 import { filter } from 'rxjs'
 import { Actions, ofType } from '@ngrx/effects'
 import { EditorFieldIdentification } from '../models'
@@ -55,6 +58,15 @@ export class EditorFacade {
 
   updateRecordField(field: string, value: unknown) {
     this.store.dispatch(EditorActions.updateRecordField({ field, value }))
+  }
+
+  updateRecordLanguages(
+    defaultLanguage: LanguageCode,
+    otherLanguages: LanguageCode[]
+  ) {
+    this.store.dispatch(
+      EditorActions.updateRecordLanguages({ defaultLanguage, otherLanguages })
+    )
   }
 
   setCurrentPage(page: number) {
