@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
@@ -8,12 +8,12 @@ import {
 } from '@geonetwork-ui/feature/search'
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { iconoirMenu } from '@ng-icons/iconoir'
 import { matArrowBack } from '@ng-icons/material-icons/baseline'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
+import { AnchorLinkDirective } from '@geonetwork-ui/ui/layout'
 
 marker('record.metadata.about')
 marker('record.metadata.capabilities')
@@ -31,11 +31,11 @@ marker('record.metadata.userFeedbacks')
   imports: [
     NgIcon,
     CommonModule,
-    TranslateModule,
-    UiLayoutModule,
+    TranslateDirective,
     ButtonComponent,
     LanguageSwitcherComponent,
     FavoriteStarComponent,
+    AnchorLinkDirective,
   ],
   viewProviders: [provideIcons({ iconoirMenu, matArrowBack })],
 })

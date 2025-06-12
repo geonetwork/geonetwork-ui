@@ -1,26 +1,18 @@
 import {
+  applicationConfig,
   componentWrapperDecorator,
   Meta,
-  moduleMetadata,
   StoryObj,
 } from '@storybook/angular'
 import { DropdownMultiselectComponent } from './dropdown-multiselect.component'
-import { OverlayModule } from '@angular/cdk/overlay'
-import { MatCheckboxModule } from '@angular/material/checkbox'
-import { TranslateModule } from '@ngx-translate/core'
-import { ButtonComponent } from '../button/button.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export default {
   title: 'Inputs/DropdownMultiselectComponent',
   component: DropdownMultiselectComponent,
   decorators: [
-    moduleMetadata({
-      imports: [
-        ButtonComponent,
-        OverlayModule,
-        MatCheckboxModule,
-        TranslateModule.forRoot(),
-      ],
+    applicationConfig({
+      providers: [provideI18n()],
     }),
     componentWrapperDecorator(
       (story) => `

@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MultilingualPanelComponent } from './multilingual-panel.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { of } from 'rxjs'
 import { EditorFacade } from '../../+state/editor.facade'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class RecordsRepositoryMock {
   getApplicationLanguages = jest.fn(() => of(['en', 'fr', 'it', 'es']))
@@ -25,9 +25,9 @@ describe('MultilingualPanelComponent (logic only)', () => {
       updateRecordField: jest.fn(),
     } as any
 
-    TestBed.configureTestingModule({
-      imports: [MultilingualPanelComponent, TranslateModule.forRoot()],
+    await TestBed.configureTestingModule({
       providers: [
+        provideI18n(),
         { provide: EditorFacade, useValue: facadeMock },
         {
           provide: RecordsRepositoryInterface,

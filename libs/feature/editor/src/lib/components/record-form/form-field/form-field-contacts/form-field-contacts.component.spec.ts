@@ -9,7 +9,6 @@ import {
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 import { MockBuilder, MockInstance, MockProvider } from 'ng-mocks'
-import { TranslateModule } from '@ngx-translate/core'
 import {
   barbieIncOrganizationFixture,
   barbieUserFixture,
@@ -17,6 +16,7 @@ import {
   someOrganizationsFixture,
   someUsersFixture,
 } from '@geonetwork-ui/common/fixtures'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('FormFieldContactsComponent', () => {
   MockInstance.scope()
@@ -35,8 +35,8 @@ describe('FormFieldContactsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FormFieldContactsComponent, TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         MockProvider(OrganizationsServiceInterface),
         MockProvider(PlatformServiceInterface, {
           getUsers: jest.fn().mockReturnValue(of(mockUsers)),

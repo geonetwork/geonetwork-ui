@@ -34,7 +34,7 @@ import {
 } from 'rxjs/operators'
 import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 import { ButtonComponent } from '../button/button.component'
 import {
   NgIconComponent,
@@ -56,7 +56,7 @@ export type AutocompleteItem = unknown
     PopupAlertComponent,
     MatAutocompleteModule,
     CommonModule,
-    TranslateModule,
+    TranslateDirective,
     ReactiveFormsModule,
     ButtonComponent,
     NgIconComponent,

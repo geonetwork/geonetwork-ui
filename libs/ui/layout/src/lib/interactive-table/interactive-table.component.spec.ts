@@ -3,7 +3,7 @@ import { InteractiveTableComponent } from './interactive-table.component'
 import { Component, DebugElement, EventEmitter, Output } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { InteractiveTableColumnComponent } from './interactive-table-column/interactive-table-column.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 @Component({
   template: `
@@ -43,7 +43,7 @@ describe('InteractiveTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TestHostComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(TestHostComponent)

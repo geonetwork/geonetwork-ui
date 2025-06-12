@@ -29,6 +29,13 @@ Web Components are made to be easily included in any context. To do so, you have
 The Web Components script also includes the [Standalone Search](./standalone-search.md).
 :::
 
+## Internationalization
+
+Web Components support the following attributes for handling internationalization:
+
+- `text-language`: the language to use for labels; can be either be `browser` (will use the browser language) or a 2-char code (e.g. `en`); defaults to `browser`
+- `metadata-anguage`: identical to the [`metadata_language` configuration option](./configure.md#global)
+
 ## Publication and Versioning
 
 The Web Component script is automatically built upon merges on main and for releases. These builds are made available via a jsdelivr CDN, which points at `wc-dist` branches in the github repository. There is a `wc-dist` branch for every release tag > `v2.0.0` as well as `wc-dist-main`.

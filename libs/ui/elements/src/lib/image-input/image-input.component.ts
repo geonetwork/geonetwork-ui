@@ -30,7 +30,7 @@ import {
   iconoirMediaImageXmark,
   iconoirPlus,
 } from '@ng-icons/iconoir'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import { firstValueFrom } from 'rxjs'
 import { ImageOverlayPreviewComponent } from '../image-overlay-preview/image-overlay-preview.component'
 
@@ -45,7 +45,7 @@ import { ImageOverlayPreviewComponent } from '../image-overlay-preview/image-ove
     ButtonComponent,
     FilesDropDirective,
     MatProgressSpinnerModule,
-    TranslateModule,
+    TranslatePipe,
     UrlInputComponent,
     TextInputComponent,
     NgIconComponent,

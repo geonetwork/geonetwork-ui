@@ -1,23 +1,19 @@
 import {
+  applicationConfig,
   Meta,
   moduleMetadata,
   StoryObj,
-  applicationConfig,
 } from '@storybook/angular'
 import { ButtonComponent } from './button.component'
-import { TranslateModule } from '@ngx-translate/core'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import {
   matDownloading,
-  matPestControl,
-  matWaves,
-  matTravelExplore,
   matFitScreen,
+  matPestControl,
+  matTravelExplore,
+  matWaves,
 } from '@ng-icons/material-icons/baseline'
 
 export default {
@@ -25,15 +21,11 @@ export default {
   component: ButtonComponent,
   decorators: [
     moduleMetadata({
-      imports: [
-        UtilI18nModule,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        MatProgressSpinnerModule,
-        NgIconComponent,
-      ],
+      imports: [MatProgressSpinnerModule, NgIconComponent],
     }),
     applicationConfig({
       providers: [
+        provideI18n(),
         provideIcons({
           matDownloading,
           matPestControl,

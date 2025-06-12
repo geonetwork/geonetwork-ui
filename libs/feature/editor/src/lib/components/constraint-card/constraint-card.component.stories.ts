@@ -8,8 +8,7 @@ import { ConstraintCardComponent } from './constraint-card.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
-import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export default {
   title: 'Elements/ConstraintCardComponent',
@@ -19,11 +18,7 @@ export default {
       imports: [CommonModule, ConstraintCardComponent],
     }),
     applicationConfig({
-      providers: [
-        importProvidersFrom(BrowserAnimationsModule),
-        importProvidersFrom(UtilI18nModule),
-        importProvidersFrom(TranslateModule.forRoot()),
-      ],
+      providers: [provideI18n(), importProvidersFrom(BrowserAnimationsModule)],
     }),
   ],
   argTypes: {

@@ -1,6 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
-import { TranslateModule } from '@ngx-translate/core'
 import { MetadataInfoComponent } from './metadata-info.component'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { TranslateTestingModule } from 'ngx-translate-testing'
@@ -26,8 +24,6 @@ describe('MetadataInfoComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        TranslateModule.forRoot(),
-        UtilSharedModule,
         TranslateTestingModule.withTranslations({
           en: {
             'domain.record.updateFrequency.notPlanned': 'Not planned',

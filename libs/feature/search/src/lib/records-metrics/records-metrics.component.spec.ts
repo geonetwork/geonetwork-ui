@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { RecordsMetricsComponent } from './records-metrics.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { SAMPLE_AGGREGATIONS_RESULTS } from '@geonetwork-ui/common/fixtures'
 import { of } from 'rxjs'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class RecordsRepositoryMock {
   aggregate = jest.fn(() => of(SAMPLE_AGGREGATIONS_RESULTS()))
@@ -17,8 +18,9 @@ describe('RecordsMetricsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [RecordsMetricsComponent],
-      imports: [UiSearchModule, TranslateModule.forRoot()],
+      imports: [UiSearchModule, TranslateDirective, TranslatePipe],
       providers: [
+        provideI18n(),
         {
           provide: RecordsRepositoryInterface,
           useClass: RecordsRepositoryMock,

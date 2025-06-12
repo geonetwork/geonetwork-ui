@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-
 import { FigureComponent } from './figure.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { matPerson } from '@ng-icons/material-icons/baseline'
+import { By } from '@angular/platform-browser'
 
 describe('FigureComponent', () => {
   let component: FigureComponent
@@ -11,9 +13,13 @@ describe('FigureComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FigureComponent],
-      imports: [TranslateModule.forRoot({})],
       schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        provideI18n(),
+        provideIcons({
+          matPerson,
+        }),
+      ],
     })
       .overrideComponent(FigureComponent, {
         set: {
@@ -27,7 +33,7 @@ describe('FigureComponent', () => {
     fixture = TestBed.createComponent(FigureComponent)
     component = fixture.componentInstance
     component.title = 'Average population in European countries'
-    component.icon = 'group'
+    component.icon = 'matPerson'
     component.figure = '1020500'
     component.unit = 'hab.'
     fixture.detectChanges()
@@ -50,8 +56,10 @@ describe('FigureComponent', () => {
     )
   })
   it('should render icon', () => {
-    const icon = compiled.querySelector('ng-icon') as HTMLElement
-    expect(icon['name']).toContain('group')
+    const icon = fixture.debugElement.query(
+      By.directive(NgIcon)
+    ).componentInstance
+    expect(icon.name()).toContain('matPerson')
   })
   it('icon is primary color', () => {
     expect(

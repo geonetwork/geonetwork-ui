@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ApiCardComponent } from './api-card.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('ApiCardComponent', () => {
   let component: ApiCardComponent
@@ -9,7 +9,7 @@ describe('ApiCardComponent', () => {
   let openRecordApiFormEmit
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ApiCardComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
   })
 

@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TranslateModule } from '@ngx-translate/core'
 import { FormFieldOnlineResourcesComponent } from './form-field-online-resources.component'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { Subject } from 'rxjs'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { MatDialog, MatDialogRef } from '@angular/material/dialog'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 let uploadSubject: Subject<any>
 class PlatformServiceInterfaceMock {
@@ -32,8 +32,8 @@ describe('FormFieldOnlineResourcesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         MockProvider(
           PlatformServiceInterface,
           PlatformServiceInterfaceMock,

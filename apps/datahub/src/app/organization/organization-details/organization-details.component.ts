@@ -10,13 +10,14 @@ import {
   CatalogRecord,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { MaxLinesComponent } from '@geonetwork-ui/ui/layout'
 import { LetDirective } from '@ngrx/component'
 import {
   ErrorComponent,
   ErrorType,
-  UiElementsModule,
+  MarkdownParserComponent,
+  ThumbnailComponent,
 } from '@geonetwork-ui/ui/elements'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
@@ -28,16 +29,15 @@ import {
   Subscription,
   switchMap,
 } from 'rxjs'
-import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import { RouterLink } from '@angular/router'
 import { ROUTER_ROUTE_SEARCH } from '@geonetwork-ui/feature/router'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
-import {
-  SpinningLoaderComponent,
-  UiWidgetsModule,
-} from '@geonetwork-ui/ui/widgets'
+import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 import { map, startWith } from 'rxjs/operators'
 import { RecordInternalLinksComponent } from '../../record/record-internal-links/record-internal-links.component'
+import { FigureComponent } from '@geonetwork-ui/ui/dataviz'
+import { provideIcons } from '@ng-icons/core'
+import { tablerFolderOpen } from '@ng-icons/tabler-icons'
 
 @Component({
   selector: 'datahub-organization-details',
@@ -47,17 +47,23 @@ import { RecordInternalLinksComponent } from '../../record/record-internal-links
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslateDirective,
     LetDirective,
-    UiElementsModule,
     UiSearchModule,
     MaxLinesComponent,
-    UiDatavizModule,
     RouterLink,
-    UiWidgetsModule,
     ErrorComponent,
     SpinningLoaderComponent,
     RecordInternalLinksComponent,
+    FigureComponent,
+    MarkdownParserComponent,
+    ThumbnailComponent,
+    TranslatePipe,
+  ],
+  viewProviders: [
+    provideIcons({
+      tablerFolderOpen,
+    }),
   ],
 })
 export class OrganizationDetailsComponent implements OnInit, OnDestroy {

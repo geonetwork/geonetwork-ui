@@ -8,15 +8,15 @@ import {
 } from '@angular/core/testing'
 import { TableViewComponent } from './table-view.component'
 import { delay, firstValueFrom, of, throwError } from 'rxjs'
-import { ChangeDetectionStrategy, importProvidersFrom } from '@angular/core'
+import { ChangeDetectionStrategy } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { DataService } from '../service/data.service'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
 import { BaseReader, FetchError } from '@geonetwork-ui/data-fetcher'
 import { MockBuilder } from 'ng-mocks'
-import { TranslateModule } from '@ngx-translate/core'
 import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
 import { DataTableComponent } from '@geonetwork-ui/ui/dataviz'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const SAMPLE_DATA_ITEMS_CSV = [
   { type: 'Feature', properties: { id: 1 } },
@@ -65,7 +65,7 @@ describe('TableViewComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
-        importProvidersFrom(TranslateModule.forRoot()),
+        provideI18n(),
         {
           provide: DataService,
           useClass: DataServiceMock,

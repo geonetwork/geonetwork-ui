@@ -7,13 +7,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { LinkClassifierService } from '@geonetwork-ui/util/shared'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
-import { TranslateModule } from '@ngx-translate/core'
 import { DownloadsListComponent } from './downloads-list.component'
 import {
   DatasetDownloadDistribution,
   ServiceProtocol,
 } from '@geonetwork-ui/common/domain/model/record'
 import { DownloadItemComponent } from '../download-item/download-item.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('DownloadsListComponent', () => {
   let component: DownloadsListComponent
@@ -22,9 +22,8 @@ describe('DownloadsListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), DownloadsListComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [LinkClassifierService],
+      providers: [LinkClassifierService, provideI18n()],
     })
       .overrideComponent(DownloadsListComponent, {
         set: {

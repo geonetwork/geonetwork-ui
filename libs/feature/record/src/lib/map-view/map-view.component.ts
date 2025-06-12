@@ -56,7 +56,11 @@ import {
   ButtonComponent,
   DropdownSelectorComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import {
+  TranslateDirective,
+  TranslatePipe,
+  TranslateService,
+} from '@ngx-translate/core'
 import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component'
 import {
   LoadingMaskComponent,
@@ -82,7 +86,8 @@ marker('map.select.style')
     MapContainerComponent,
     FeatureDetailComponent,
     PopupAlertComponent,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     LoadingMaskComponent,
     NgIconComponent,
     ExternalViewerButtonComponent,

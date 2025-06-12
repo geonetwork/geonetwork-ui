@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TranslateModule } from '@ngx-translate/core'
 import { DownloadItemComponent } from './download-item.component'
 import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('DownloadsListItemComponent', () => {
   let component: DownloadItemComponent
@@ -10,7 +10,7 @@ describe('DownloadsListItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DownloadItemComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     })
       .overrideComponent(DownloadItemComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },

@@ -1,6 +1,10 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import {
+  TranslateDirective,
+  TranslatePipe,
+  TranslateService,
+} from '@ngx-translate/core'
 import { getLayers } from '@geonetwork-ui/util/shared'
 import { ButtonComponent, TextInputComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIcon, provideIcons } from '@ng-icons/core'
@@ -38,7 +42,8 @@ marker(`service.metadata.capabilities.attribution`)
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     ButtonComponent,
     TextInputComponent,
     NgIcon,

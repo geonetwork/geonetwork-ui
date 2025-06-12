@@ -13,9 +13,7 @@ describe('InlineFilterComponent', () => {
   ]
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [InlineFilterComponent],
-    }).compileComponents()
+    await TestBed.configureTestingModule({}).compileComponents()
 
     fixture = TestBed.createComponent(InlineFilterComponent)
     component = fixture.componentInstance

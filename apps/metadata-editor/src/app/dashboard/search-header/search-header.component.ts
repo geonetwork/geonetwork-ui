@@ -4,13 +4,9 @@ import {
   Component,
   EventEmitter,
   Output,
-  ViewChild,
 } from '@angular/core'
-import { LetDirective } from '@ngrx/component'
-import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
+import { FuzzySearchComponent } from '@geonetwork-ui/feature/search'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
-import { TranslateModule } from '@ngx-translate/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { Router } from '@angular/router'
 
@@ -20,13 +16,7 @@ import { Router } from '@angular/router'
   styleUrls: ['./search-header.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FeatureSearchModule,
-    CommonModule,
-    LetDirective,
-    UiElementsModule,
-    TranslateModule,
-  ],
+  imports: [CommonModule, FuzzySearchComponent],
 })
 export class SearchHeaderComponent {
   public placeholder$ = this.avatarService.getPlaceholder()

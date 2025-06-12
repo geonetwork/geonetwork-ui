@@ -8,16 +8,16 @@ import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import {
   matEmailOutline,
-  matPhoneOutline,
   matLocationOnOutline,
+  matPhoneOutline,
 } from '@ng-icons/material-icons/outline'
 import { iconoirInternet } from '@ng-icons/iconoir'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-internal-link-card-contact',
   standalone: true,
-  imports: [NgIf, ThumbnailComponent, NgIconComponent, TranslateModule],
+  imports: [NgIf, ThumbnailComponent, NgIconComponent, TranslateDirective],
   providers: [
     provideIcons({
       iconoirInternet,

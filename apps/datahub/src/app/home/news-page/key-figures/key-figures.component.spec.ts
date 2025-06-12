@@ -2,11 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { KeyFiguresComponent } from './key-figures.component'
 import { BehaviorSubject, of } from 'rxjs'
 import { RecordsService } from '@geonetwork-ui/feature/catalog'
-import { TranslateModule } from '@ngx-translate/core'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { RouterTestingModule } from '@angular/router/testing'
 import { By } from '@angular/platform-browser'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { provideRouter } from '@angular/router'
 
 const recordsCount$ = new BehaviorSubject(1234)
 class RecordsServiceMock {
@@ -23,9 +22,9 @@ describe('KeyFiguresComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [KeyFiguresComponent],
-      imports: [TranslateModule.forRoot(), RouterTestingModule],
       providers: [
+        provideRouter([]),
+        provideI18n(),
         {
           provide: RecordsService,
           useClass: RecordsServiceMock,
@@ -35,7 +34,6 @@ describe('KeyFiguresComponent', () => {
           useClass: OrganisationsServiceMock,
         },
       ],
-      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
 
     fixture = TestBed.createComponent(KeyFiguresComponent)

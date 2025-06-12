@@ -5,9 +5,9 @@ import {
 } from '@geonetwork-ui/api/repository'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { TranslateModule } from '@ngx-translate/core'
 import { MockBuilder, MockProvider, MockProviders } from 'ng-mocks'
 import { SidebarComponent } from './sidebar.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent
@@ -24,8 +24,8 @@ describe('SidebarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SidebarComponent, TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         MockProviders(
           PlatformServiceInterface,
           AvatarServiceInterface,

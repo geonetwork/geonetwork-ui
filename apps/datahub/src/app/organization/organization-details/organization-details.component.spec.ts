@@ -1,13 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { OrganizationDetailsComponent } from './organization-details.component'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { of } from 'rxjs'
+import { OrganizationDetailsComponent } from './organization-details.component'
+import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
+import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import {
   CatalogRecord,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
+import { RouterModule } from '@angular/router'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 
 describe('OrganizationDetailsComponent', () => {
@@ -20,7 +21,7 @@ describe('OrganizationDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OrganizationDetailsComponent],
+      imports: [RouterModule.forRoot([])],
       providers: [
         MockProvider(SearchFacade, {
           setPageSize: jest.fn(),

@@ -1,15 +1,8 @@
-import {
-  applicationConfig,
-  Meta,
-  moduleMetadata,
-  StoryObj,
-} from '@storybook/angular'
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { RecordPreviewCardComponent } from './record-preview-card.component'
 import { importProvidersFrom } from '@angular/core'
-import { HttpClientModule } from '@angular/common/http'
-import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
+import { provideHttpClient } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
@@ -17,12 +10,10 @@ export default {
   title: 'Search/RecordPreviewCardComponent',
   component: RecordPreviewCardComponent,
   decorators: [
-    moduleMetadata({
-      imports: [UiDatavizModule, UtilSharedModule],
-    }),
     applicationConfig({
       providers: [
-        importProvidersFrom(HttpClientModule, BrowserAnimationsModule),
+        importProvidersFrom(BrowserAnimationsModule),
+        provideHttpClient(),
       ],
     }),
   ],

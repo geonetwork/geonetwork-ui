@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordPreviewFeedComponent } from './record-preview-feed.component'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { someOrganizationsFixture } from '@geonetwork-ui/common/fixtures'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('RecordPreviewFeedComponent', () => {
   let component: RecordPreviewFeedComponent
@@ -12,7 +13,8 @@ describe('RecordPreviewFeedComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [RecordPreviewFeedComponent],
-      imports: [TranslateModule.forRoot()],
+      imports: [TranslateDirective, TranslatePipe],
+      providers: [provideI18n()],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
 

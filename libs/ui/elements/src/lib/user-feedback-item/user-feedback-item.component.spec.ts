@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TranslateModule } from '@ngx-translate/core'
 import { UserFeedbackItemComponent } from './user-feedback-item.component'
 import { ChangeDetectionStrategy } from '@angular/core'
 import { someUserFeedbacksFixture } from '@geonetwork-ui/common/fixtures'
-import { TimeSincePipe } from './time-since.pipe'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('UserFeedbackItemComponent', () => {
   let component: UserFeedbackItemComponent
@@ -11,11 +10,7 @@ describe('UserFeedbackItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        UserFeedbackItemComponent,
-        TranslateModule.forRoot(),
-        TimeSincePipe,
-      ],
+      providers: [provideI18n()],
     })
       .overrideComponent(UserFeedbackItemComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },

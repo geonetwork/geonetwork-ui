@@ -28,7 +28,7 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirRefresh } from '@ng-icons/iconoir'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import {
   BehaviorSubject,
   debounceTime,
@@ -57,7 +57,8 @@ marker(
     MatRadioModule,
     NgIconComponent,
     TextInputComponent,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     UrlInputComponent,
   ],
   providers: [

@@ -19,8 +19,12 @@ import {
   NotificationsContainerComponent,
   NotificationsService,
 } from '@geonetwork-ui/feature/notifications'
-import { ButtonComponent, CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  TranslateDirective,
+  TranslatePipe,
+  TranslateService,
+} from '@ngx-translate/core'
 import { combineLatest, filter, firstValueFrom, Subscription, take } from 'rxjs'
 import { map, skip } from 'rxjs/operators'
 import { SidebarComponent } from '../dashboard/sidebar/sidebar.component'
@@ -48,7 +52,8 @@ marker('editor.record.form.bottomButtons.next')
     TopToolbarComponent,
     NotificationsContainerComponent,
     PageSelectorComponent,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     SidebarComponent,
     SpinningLoaderComponent,
     SearchHeaderComponent,

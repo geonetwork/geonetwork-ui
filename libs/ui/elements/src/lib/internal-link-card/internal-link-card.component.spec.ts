@@ -1,21 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { InternalLinkCardComponent } from './internal-link-card.component'
 import { By } from '@angular/platform-browser'
-import { ChangeDetectionStrategy, Component, TemplateRef } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  NO_ERRORS_SCHEMA,
+  TemplateRef,
+} from '@angular/core'
 import {
   CatalogRecord,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import {
-  matLocationSearchingOutline,
   matEmailOutline,
-  matPhoneOutline,
   matLocationOnOutline,
+  matLocationSearchingOutline,
+  matPhoneOutline,
 } from '@ng-icons/material-icons/outline'
 import { iconoirInternet } from '@ng-icons/iconoir'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 // Mock organization
 const mockOrganization: Organization = {
@@ -67,6 +71,7 @@ const mockRecordWithoutContact = {
   template: `<ng-template #favoriteTemplate let-record>
     <button data-test="favorite-button">Favorite</button>
   </ng-template>`,
+  standalone: true,
 })
 class TestHostComponent {
   record: CatalogRecord = mockRecord
@@ -81,10 +86,10 @@ describe('InternalLinkCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InternalLinkCardComponent, TranslateModule.forRoot()],
-      declarations: [TestHostComponent],
+      imports: [TestHostComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        provideI18n(),
         provideIcons({
           iconoirInternet,
           matLocationSearchingOutline,

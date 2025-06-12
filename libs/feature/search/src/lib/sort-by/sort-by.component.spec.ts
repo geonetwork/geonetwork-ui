@@ -2,10 +2,11 @@ import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { SearchFacade } from '../state/search.facade'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { BehaviorSubject } from 'rxjs'
 import { SearchService } from '../utils/service/search.service'
 import { SortByComponent } from './sort-by.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const sortBySubject = new BehaviorSubject(['asc', 'title'])
 class FacadeMock {
@@ -35,9 +36,10 @@ describe('SortByComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SortByComponent, MockDropdownSelectorComponent],
-      imports: [TranslateModule.forRoot()],
+      imports: [TranslateDirective, TranslatePipe],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        provideI18n(),
         {
           provide: SearchFacade,
           useClass: FacadeMock,

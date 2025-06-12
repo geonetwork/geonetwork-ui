@@ -1,14 +1,15 @@
-import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
+import {
+  applicationConfig,
+  Meta,
+  moduleMetadata,
+  StoryObj,
+} from '@storybook/angular'
 import {
   AutocompleteComponent,
   AutocompleteItem,
 } from './autocomplete.component'
 import { Observable, of, throwError } from 'rxjs'
-import { TranslateModule } from '@ngx-translate/core'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 export default {
@@ -16,12 +17,10 @@ export default {
   component: AutocompleteComponent,
   decorators: [
     moduleMetadata({
-      imports: [
-        AutocompleteComponent,
-        UtilI18nModule,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        BrowserAnimationsModule,
-      ],
+      imports: [AutocompleteComponent, BrowserAnimationsModule],
+    }),
+    applicationConfig({
+      providers: [provideI18n()],
     }),
   ],
 } as Meta<AutocompleteComponent>

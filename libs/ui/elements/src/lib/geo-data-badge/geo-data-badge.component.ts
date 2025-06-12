@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { matLocationSearchingOutline } from '@ng-icons/material-icons/outline'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
 
@@ -12,7 +12,7 @@ import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
   styleUrls: ['./geo-data-badge.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, NgIcon, TranslateModule],
+  imports: [CommonModule, NgIcon, TranslateDirective, TranslatePipe],
   viewProviders: [
     provideIcons({
       matLocationSearchingOutline,

@@ -15,8 +15,7 @@ import {
   MapViewComponent,
   MdViewFacade,
 } from '@geonetwork-ui/feature/record'
-import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 import {
   BehaviorSubject,
   combineLatest,
@@ -37,11 +36,10 @@ export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
   imports: [
     CommonModule,
     MatTabsModule,
-    TranslateModule,
+    TranslateDirective,
     DataViewShareComponent,
     DataViewComponent,
     MapViewComponent,
-    PopupAlertComponent,
   ],
 })
 export class RecordDataPreviewComponent {

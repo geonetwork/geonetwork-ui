@@ -1,11 +1,11 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { firstValueFrom } from 'rxjs'
-import { Choice, UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
+import { Choice } from '@geonetwork-ui/ui/inputs'
 import { GpfApiDlComponent as GpfApiDlComponent } from './gpf-api-dl.component'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { MockBuilder } from 'ng-mocks'
 
 const mockDatasetServiceDistribution: DatasetServiceDistribution = {
   url: new URL('https://api.example.com/data'),
@@ -16,14 +16,12 @@ const mockDatasetServiceDistribution: DatasetServiceDistribution = {
 describe('GpfApiDlComponent', () => {
   let component: GpfApiDlComponent
   let fixture: ComponentFixture<GpfApiDlComponent>
+
+  beforeEach(() => MockBuilder(GpfApiDlComponent))
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        UiInputsModule,
-        HttpClientTestingModule,
-        TranslateModule.forRoot(),
-        GpfApiDlComponent,
-      ],
+      providers: [provideI18n()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(GpfApiDlComponent)

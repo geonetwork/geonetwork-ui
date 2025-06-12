@@ -6,6 +6,12 @@ import { ROUTER_ROUTE_ORGANIZATIONS } from '../../../router/constants'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { of } from 'rxjs'
+import { FigureComponent } from '@geonetwork-ui/ui/dataviz'
+import { RouterLink } from '@angular/router'
+import { CommonModule } from '@angular/common'
+import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
+import { matCorporateFare } from '@ng-icons/material-icons/baseline'
+import { tablerFolderOpen } from '@ng-icons/tabler-icons'
 
 marker('catalog.figures.datasets')
 marker('catalog.figures.organizations')
@@ -15,6 +21,17 @@ marker('catalog.figures.organizations')
   templateUrl: './key-figures.component.html',
   styleUrls: ['./key-figures.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, FigureComponent, RouterLink],
+  providers: [
+    provideIcons({
+      matCorporateFare,
+      tablerFolderOpen,
+    }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
+  ],
 })
 export class KeyFiguresComponent {
   recordsCount$ = this.catalogRecords.recordsCount$.pipe(

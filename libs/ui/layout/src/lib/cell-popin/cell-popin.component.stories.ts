@@ -1,21 +1,13 @@
-import { Meta, StoryObj, applicationConfig } from '@storybook/angular'
-import { TruncatedTextComponent } from '../truncated-text/truncated-text.component'
-import { TranslateModule } from '@ngx-translate/core'
-import { importProvidersFrom } from '@angular/core'
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { CellPopinComponent } from './cell-popin.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const meta: Meta<CellPopinComponent> = {
   component: CellPopinComponent,
   title: 'Layout/Cell Popin',
   decorators: [
     applicationConfig({
-      providers: [
-        importProvidersFrom(
-          TranslateModule.forRoot({
-            defaultLanguage: 'en',
-          })
-        ),
-      ],
+      providers: [provideI18n()],
     }),
   ],
   render: (args) => ({

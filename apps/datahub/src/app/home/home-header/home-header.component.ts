@@ -6,6 +6,7 @@ import {
 } from '@geonetwork-ui/feature/router'
 import {
   FieldsService,
+  FuzzySearchComponent,
   SearchFacade,
   SearchService,
 } from '@geonetwork-ui/feature/search'
@@ -26,6 +27,15 @@ import { lastValueFrom } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { sortByFromString } from '@geonetwork-ui/util/shared'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { CommonModule } from '@angular/common'
+import { ApplicationBannerComponent } from '@geonetwork-ui/ui/elements'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
+import { HeaderBadgeButtonComponent } from '../header-badge-button/header-badge-button.component'
+import { RouterLink } from '@angular/router'
+import { NavigationMenuComponent } from '../navigation-menu/navigation-menu.component'
+import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
+import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
+import { matStarOutline } from '@ng-icons/material-icons/outline'
 
 marker('datahub.header.myfavorites')
 marker('datahub.header.lastRecords')
@@ -36,6 +46,26 @@ marker('datahub.header.popularRecords')
   templateUrl: './home-header.component.html',
   styleUrls: ['./home-header.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [
+    CommonModule,
+    ApplicationBannerComponent,
+    TranslatePipe,
+    TranslateDirective,
+    HeaderBadgeButtonComponent,
+    RouterLink,
+    NavigationMenuComponent,
+    LanguageSwitcherComponent,
+    FuzzySearchComponent,
+  ],
+  providers: [
+    provideIcons({
+      matStarOutline,
+    }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
+  ],
 })
 export class HomeHeaderComponent {
   @Input() expandRatio: number

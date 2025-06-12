@@ -7,7 +7,7 @@ import {
 import { CommonModule } from '@angular/common'
 import { EditorFacade } from '../../../../+state/editor.facade'
 import { ButtonComponent, CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import {
   combineLatest,
   distinctUntilChanged,
@@ -53,7 +53,7 @@ export type ConstraintChoice =
     CommonModule,
     CheckToggleComponent,
     ButtonComponent,
-    TranslateModule,
+    TranslatePipe,
     NgIconComponent,
   ],
   providers: [

@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { elasticSummaryHitsFixture } from '@geonetwork-ui/common/fixtures'
 import { of } from 'rxjs'
 import { LastCreatedComponent } from './last-created.component'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
+import { MockBuilder } from 'ng-mocks'
 
 class SearchFacadeMock {
   init = jest.fn()
@@ -23,9 +23,10 @@ describe('LastCreatedComponent', () => {
   let fixture: ComponentFixture<LastCreatedComponent>
   let facade: SearchFacade
 
+  beforeEach(() => MockBuilder(LastCreatedComponent))
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LastCreatedComponent],
       providers: [
         {
           provide: SearchFacade,
@@ -36,14 +37,7 @@ describe('LastCreatedComponent', () => {
           useClass: RouterFacadeMock,
         },
       ],
-      schemas: [NO_ERRORS_SCHEMA],
-    })
-      .overrideComponent(LastCreatedComponent, {
-        set: {
-          providers: [], // remove component providers to be able to run tests
-        },
-      })
-      .compileComponents()
+    }).compileComponents()
     facade = TestBed.inject(SearchFacade)
   })
 

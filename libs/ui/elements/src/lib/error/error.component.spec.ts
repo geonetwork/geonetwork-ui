@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ErrorComponent, ErrorType } from './error.component'
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core'
 import { By } from '@angular/platform-browser'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('ErrorComponent', () => {
   let component: ErrorComponent
@@ -12,7 +12,7 @@ describe('ErrorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ErrorComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   })

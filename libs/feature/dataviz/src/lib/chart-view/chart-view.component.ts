@@ -33,7 +33,7 @@ import {
   DatasetFeatureCatalog,
   DatasetOnlineResource,
 } from '@geonetwork-ui/common/domain/model/record'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import { ChartComponent } from '@geonetwork-ui/ui/dataviz'
 import {
@@ -61,10 +61,10 @@ marker('chart.aggregation.count')
   imports: [
     CommonModule,
     DropdownSelectorComponent,
-    TranslateModule,
     ChartComponent,
     LoadingMaskComponent,
     PopupAlertComponent,
+    TranslatePipe,
   ],
   standalone: true,
 })

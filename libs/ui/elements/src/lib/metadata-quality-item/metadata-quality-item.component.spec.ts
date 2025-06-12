@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
-import { TranslateModule } from '@ngx-translate/core'
 import { MetadataQualityItemComponent } from './metadata-quality-item.component'
 import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy } from '@angular/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('MetadataQualityInfoComponent', () => {
   let component: MetadataQualityItemComponent
@@ -11,10 +10,10 @@ describe('MetadataQualityInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        MetadataQualityItemComponent,
-        UtilI18nModule,
-        TranslateModule.forRoot(),
+      providers: [
+        provideI18n({
+          useDefaultLang: false, // this leaves the keys untouched
+        }),
       ],
     })
       .overrideComponent(MetadataQualityItemComponent, {

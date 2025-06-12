@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-max-lines',
@@ -17,7 +17,7 @@ import { TranslateModule } from '@ngx-translate/core'
   styleUrls: ['./max-lines.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslatePipe],
 })
 export class MaxLinesComponent implements AfterViewInit, OnDestroy {
   @Input() maxLines = 6
