@@ -299,6 +299,7 @@ describe('datasets', () => {
           'Géo2France (1)',
           "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (12)",
           'Métropole Européenne de Lille (2)',
+          'Moi même (1)',
           'Office France de la Biodiversité (1)',
           'Région Hauts-de-France (1)',
           'Réseau Ongulés sauvages OFB-FNC-FDC (1)',

@@ -158,6 +158,9 @@ export class MapViewComponent implements AfterViewInit {
     this.compatibleMapLinks$,
     this.selectedLinkIndex$.pipe(distinctUntilChanged()),
   ]).pipe(
+    tap(() => {
+      this.error = null
+    }),
     map(([links, index]) => {
       this.linkSelected.emit(links[index])
       return links[index]
@@ -172,6 +175,8 @@ export class MapViewComponent implements AfterViewInit {
         src.accessServiceProtocol === 'tms'
       ) {
         return from(
+          // WARNING: when using "getGeodataLinksFromTms", make sure to add error handling to prevent the rest of the logic from failing
+          // this may happen when TMS endpoint is in error
           this.dataService.getGeodataLinksFromTms(
             src as DatasetServiceDistribution,
             false
@@ -186,7 +191,11 @@ export class MapViewComponent implements AfterViewInit {
                   link.type === 'service' &&
                   link.accessServiceProtocol === 'maplibre-style'
               ) || []
-          )
+          ),
+          catchError((error) => {
+            this.handleError(error)
+            return of(src)
+          })
         )
       }
       return of([])
@@ -231,7 +240,6 @@ export class MapViewComponent implements AfterViewInit {
       }
       this.hidePreview = false
       this.loading = true
-      this.error = null
       if (link.accessRestricted) {
         this.handleError('dataset.error.restrictedAccess')
         return of([])
