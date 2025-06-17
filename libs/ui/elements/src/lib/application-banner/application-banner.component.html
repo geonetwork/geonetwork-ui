@@ -1,21 +1,21 @@
 <div
   *ngIf="message && bannerOpen"
-  class="absolute left-0 right-0 text-wrap bg-white mt-4 max-h-24"
+  class="absolute left-0 right-0 text-wrap bg-white mt-4"
 >
   <div
-    class="flex flex-row py-2.5 px-5 gap-5 justify-start border max-h-20"
+    class="flex flex-row py-3 px-4 gap-3 justify-start border relative"
     [ngClass]="classList"
   >
     <div [ngClass]="message.length > 200 ? 'pt-5' : 'pt-1'">
       <ng-icon [name]="icon"></ng-icon>
     </div>
-    <div class="flex flex-col justify-start gap-2.5">
+    <div class="flex flex-col justify-start gap-2.5 flex-grow pr-6">
       <span *ngIf="title" class="font-bold">{{ title }}</span>
-      <span class="font-medium max-w-2xl" [innerHTML]="message"></span>
+      <span class="font-medium break-words" [innerHTML]="message"></span>
     </div>
     <button
       *ngIf="closeEnabled"
-      class="self-start"
+      class="absolute top-2 right-2"
       type="button"
       (click)="closeMessage()"
     >
