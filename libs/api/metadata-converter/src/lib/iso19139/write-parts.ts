@@ -339,11 +339,11 @@ function appendResponsibleParty(
     ),
     contact.address
       ? appendChildren(
-        pipe(
-          createElement('gmd:deliveryPoint'),
-          writeCharacterString(contact.address)
+          pipe(
+            createElement('gmd:deliveryPoint'),
+            writeCharacterString(contact.address)
+          )
         )
-      )
       : noop
   )
 
@@ -351,20 +351,20 @@ function appendResponsibleParty(
     createNestedElement('gmd:contactInfo', 'gmd:CI_Contact'),
     contact.phone
       ? appendChildren(
-        pipe(
-          createNestedElement('gmd:phone', 'gmd:CI_Telephone', 'gmd:voice'),
-          writeCharacterString(contact.phone)
+          pipe(
+            createNestedElement('gmd:phone', 'gmd:CI_Telephone', 'gmd:voice'),
+            writeCharacterString(contact.phone)
+          )
         )
-      )
       : noop,
     appendChildren(createAddress),
     contact.organization?.website
       ? appendChildren(
-        pipe(
-          createNestedElement('gmd:onlineResource', 'gmd:CI_OnlineResource'),
-          writeLinkage(contact.organization.website)
+          pipe(
+            createNestedElement('gmd:onlineResource', 'gmd:CI_OnlineResource'),
+            writeLinkage(contact.organization.website)
+          )
         )
-      )
       : noop
   )
 
@@ -373,28 +373,28 @@ function appendResponsibleParty(
       createElement('gmd:CI_ResponsibleParty'),
       fullName
         ? appendChildren(
-          pipe(
-            createElement('gmd:individualName'),
-            writeCharacterString(fullName)
+            pipe(
+              createElement('gmd:individualName'),
+              writeCharacterString(fullName)
+            )
           )
-        )
         : noop,
       contact.position
         ? appendChildren(
-          pipe(
-            createElement('gmd:positionName'),
-            writeCharacterString(contact.position)
+            pipe(
+              createElement('gmd:positionName'),
+              writeCharacterString(contact.position)
+            )
           )
-        )
         : noop,
 
       contact.organization?.name
         ? appendChildren(
-          pipe(
-            createElement('gmd:organisationName'),
-            writeCharacterString(contact.organization.name)
+            pipe(
+              createElement('gmd:organisationName'),
+              writeCharacterString(contact.organization.name)
+            )
           )
-        )
         : noop,
       appendChildren(
         createContact,
@@ -520,16 +520,16 @@ export function createConstraint(
           createElement('gmd:useLimitation'),
           'url' in constraint
             ? writeLocalizedAnchor(
-              constraint.url,
-              constraint.text,
-              constraint.translations?.text,
-              defaultLanguage
-            )
+                constraint.url,
+                constraint.text,
+                constraint.translations?.text,
+                defaultLanguage
+              )
             : writeLocalizedCharacterString(
-              constraint.text,
-              constraint.translations?.text,
-              defaultLanguage
-            )
+                constraint.text,
+                constraint.translations?.text,
+                defaultLanguage
+              )
         )
       )
     )
@@ -552,16 +552,16 @@ export function createConstraint(
           createElement('gmd:otherConstraints'),
           'url' in constraint
             ? writeLocalizedAnchor(
-              constraint.url,
-              constraint.text,
-              constraint.translations?.text,
-              defaultLanguage
-            )
+                constraint.url,
+                constraint.text,
+                constraint.translations?.text,
+                defaultLanguage
+              )
             : writeLocalizedCharacterString(
-              constraint.text,
-              constraint.translations?.text,
-              defaultLanguage
-            )
+                constraint.text,
+                constraint.translations?.text,
+                defaultLanguage
+              )
         )
       )
     )
@@ -575,16 +575,16 @@ export function createConstraint(
     ),
     'url' in constraint
       ? writeLocalizedAnchor(
-        constraint.url,
-        constraint.text,
-        constraint.translations?.text,
-        defaultLanguage
-      )
+          constraint.url,
+          constraint.text,
+          constraint.translations?.text,
+          defaultLanguage
+        )
       : writeLocalizedCharacterString(
-        constraint.text,
-        constraint.translations?.text,
-        defaultLanguage
-      )
+          constraint.text,
+          constraint.translations?.text,
+          defaultLanguage
+        )
   )
 }
 
@@ -713,10 +713,10 @@ export function createLicense(
         'url' in license
           ? writeAnchor(license.url, license.text)
           : writeLocalizedCharacterString(
-            license.text,
-            license.translations?.text,
-            defaultLanguage
-          )
+              license.text,
+              license.translations?.text,
+              defaultLanguage
+            )
       )
     )
   )
@@ -782,27 +782,27 @@ export function appendOnlineResource(
       writeLinkage(onlineResource.url),
       'description' in onlineResource
         ? appendChildren(
-          pipe(
-            createElement('gmd:description'),
-            writeLocalizedCharacterString(
-              onlineResource.description,
-              onlineResource.translations?.description,
-              defaultLanguage
+            pipe(
+              createElement('gmd:description'),
+              writeLocalizedCharacterString(
+                onlineResource.description,
+                onlineResource.translations?.description,
+                defaultLanguage
+              )
             )
           )
-        )
         : noop,
       name !== undefined
         ? appendChildren(
-          pipe(
-            createElement('gmd:name'),
-            writeLocalizedCharacterString(
-              name,
-              onlineResource.translations?.name,
-              defaultLanguage
+            pipe(
+              createElement('gmd:name'),
+              writeLocalizedCharacterString(
+                name,
+                onlineResource.translations?.name,
+                defaultLanguage
+              )
             )
           )
-        )
         : noop,
       appendChildren(
         pipe(createElement('gmd:protocol'), writeCharacterString(protocol)),
@@ -1039,26 +1039,26 @@ export function writeUpdateFrequency(
     findChildOrCreate('gmd:MD_MaintenanceInformation'),
     typeof record.updateFrequency === 'object'
       ? pipe(
-        createNestedChild(
-          'gmd:userDefinedMaintenanceFrequency',
-          'gts:TM_PeriodDuration'
-        ),
-        setTextContent(getISODuration(record.updateFrequency))
-      )
-      : pipe(
-        createNestedChild(
-          'gmd:maintenanceAndUpdateFrequency',
-          'gmd:MD_MaintenanceFrequencyCode'
-        ),
-        writeAttribute(
-          'codeList',
-          'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_MaintenanceFrequencyCode'
-        ),
-        writeAttribute(
-          'codeListValue',
-          getMaintenanceFrequencyCode(record.updateFrequency)
+          createNestedChild(
+            'gmd:userDefinedMaintenanceFrequency',
+            'gts:TM_PeriodDuration'
+          ),
+          setTextContent(getISODuration(record.updateFrequency))
         )
-      )
+      : pipe(
+          createNestedChild(
+            'gmd:maintenanceAndUpdateFrequency',
+            'gmd:MD_MaintenanceFrequencyCode'
+          ),
+          writeAttribute(
+            'codeList',
+            'http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_MaintenanceFrequencyCode'
+          ),
+          writeAttribute(
+            'codeListValue',
+            getMaintenanceFrequencyCode(record.updateFrequency)
+          )
+        )
   )(rootEl)
 }
 
@@ -1198,11 +1198,11 @@ export function writeGraphicOverviews(
             ),
             'description' in overview
               ? appendChildren(
-                pipe(
-                  createElement('gmd:fileDescription'),
-                  writeCharacterString(overview.description)
+                  pipe(
+                    createElement('gmd:fileDescription'),
+                    writeCharacterString(overview.description)
+                  )
                 )
-              )
               : noop
           )
         )
@@ -1262,19 +1262,19 @@ export function createOnlineResource(onlineResource: ServiceOnlineResource) {
       writeLinkage(linkageUrl),
       'description' in onlineResource
         ? appendChildren(
-          pipe(
-            createElement('gmd:description'),
-            writeCharacterString(onlineResource.description)
+            pipe(
+              createElement('gmd:description'),
+              writeCharacterString(onlineResource.description)
+            )
           )
-        )
         : noop,
       'name' in onlineResource
         ? appendChildren(
-          pipe(
-            createElement('gmd:name'),
-            writeCharacterString(onlineResource.name)
+            pipe(
+              createElement('gmd:name'),
+              writeCharacterString(onlineResource.name)
+            )
           )
-        )
         : noop,
       appendChildren(
         pipe(createElement('gmd:protocol'), writeCharacterString(protocol)),
@@ -1349,36 +1349,36 @@ export function writeTemporalExtents(
           appendChildren(
             'start' in extent && 'end' in extent
               ? pipe(
-                createNestedElement('gmd:extent', 'gml:TimePeriod'),
-                appendChildren(
-                  pipe(
-                    createElement('gml:beginPosition'),
+                  createNestedElement('gmd:extent', 'gml:TimePeriod'),
+                  appendChildren(
                     pipe(
-                      extent.start
-                        ? setTextContent(format(extent.start, 'yyyy-MM-dd'))
-                        : writeAttribute('indeterminatePosition', 'unknown')
-                    )
-                  ),
-                  pipe(
-                    createElement('gml:endPosition'),
+                      createElement('gml:beginPosition'),
+                      pipe(
+                        extent.start
+                          ? setTextContent(format(extent.start, 'yyyy-MM-dd'))
+                          : writeAttribute('indeterminatePosition', 'unknown')
+                      )
+                    ),
                     pipe(
-                      extent.end
-                        ? setTextContent(format(extent.end, 'yyyy-MM-dd'))
-                        : writeAttribute('indeterminatePosition', 'unknown')
+                      createElement('gml:endPosition'),
+                      pipe(
+                        extent.end
+                          ? setTextContent(format(extent.end, 'yyyy-MM-dd'))
+                          : writeAttribute('indeterminatePosition', 'unknown')
+                      )
                     )
                   )
                 )
-              )
               : pipe(
-                createNestedElement(
-                  'gmd:extent',
-                  'gml:TimeInstant',
-                  'gml:timePosition'
-                ),
-                extent.start
-                  ? setTextContent(format(extent.start, 'yyyy-MM-dd'))
-                  : writeAttribute('indeterminatePosition', 'unknown')
-              )
+                  createNestedElement(
+                    'gmd:extent',
+                    'gml:TimeInstant',
+                    'gml:timePosition'
+                  ),
+                  extent.start
+                    ? setTextContent(format(extent.start, 'yyyy-MM-dd'))
+                    : writeAttribute('indeterminatePosition', 'unknown')
+                )
           )
         )
       )
@@ -1504,9 +1504,9 @@ export function writeResourceIdentifier(
     removeChildrenByName('gmd:identifier'),
     record.resourceIdentifier
       ? pipe(
-        createNestedChild('gmd:identifier', 'gmd:MD_Identifier', 'gmd:code'),
-        writeCharacterString(record.resourceIdentifier)
-      )
+          createNestedChild('gmd:identifier', 'gmd:MD_Identifier', 'gmd:code'),
+          writeCharacterString(record.resourceIdentifier)
+        )
       : noop
   )(rootEl)
 }
