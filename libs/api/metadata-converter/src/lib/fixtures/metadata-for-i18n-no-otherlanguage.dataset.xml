@@ -21,7 +21,7 @@
             <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset"/>
         </gmd:hierarchyLevel>
         <gmd:dateStamp xmlns:che="http://www.geocat.ch/2008/che" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmi="http://www.isotc211.org/2005/gmi" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <gco:DateTime>2023-12-21T14:59:44</gco:DateTime>
+            <gco:DateTime>2023-12-21T13:59:44</gco:DateTime>
         </gmd:dateStamp>
         <gmd:metadataStandardName>
             <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ISO 19115/19119</gco:CharacterString>
@@ -57,7 +57,7 @@
                         <gmd:date>
                             <gmd:CI_Date>
                                 <gmd:date>
-                                    <gco:DateTime>2022-01-27T01:00:00</gco:DateTime>
+                                    <gco:DateTime>2022-01-27T00:00:00</gco:DateTime>
                                 </gmd:date>
                                 <gmd:dateType>
                                     <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation"/>
