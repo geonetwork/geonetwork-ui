@@ -8,6 +8,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { BaseConverter, MetadataMapperContext } from '../base.converter'
 import { isEqual } from '../convert-utils'
+import { isFieldTranslatable } from '../translate-utils'
 import {
   readAbstract,
   readContacts,
@@ -404,6 +405,7 @@ export class DcatApConverter extends BaseConverter<string> {
     let fieldChanged: (name: string) => boolean
     if (reference) {
       const originalRecord = await this.readRecord(reference)
+      let languagesChanged: boolean
       await loadGraph(
         dataStore,
         reference,
@@ -413,9 +415,11 @@ export class DcatApConverter extends BaseConverter<string> {
 
       fieldChanged = (name: string) => {
         return originalRecord !== null
-          ? !isEqual(record[name], originalRecord[name])
+          ? !isEqual(record[name], originalRecord[name]) ||
+              (languagesChanged && isFieldTranslatable(name))
           : true
       }
+      languagesChanged = fieldChanged('otherLanguages')
     } else {
       fieldChanged = () => true
     }
@@ -437,6 +441,8 @@ export class DcatApConverter extends BaseConverter<string> {
     fieldChanged('uniqueIdentifier') &&
       this.writers['uniqueIdentifier'](record, dataStore, recordNode)
     fieldChanged('kind') && this.writers['kind'](record, dataStore, recordNode)
+    fieldChanged('defaultLanguage') &&
+      this.writers['defaultLanguage'](record, dataStore, recordNode)
 
     fieldChanged('contacts') &&
       this.writers['contacts'](record, dataStore, recordNode)
@@ -494,6 +500,8 @@ export class DcatApConverter extends BaseConverter<string> {
       fieldChanged('lineage') &&
         this.writers['lineage'](record, dataStore, recordNode)
     }
+    fieldChanged('otherLanguages') &&
+      this.writers['otherLanguages'](record, dataStore, recordNode)
 
     if (this.contentType.includes('xml')) {
       return exportGraphToXml(dataStore)
