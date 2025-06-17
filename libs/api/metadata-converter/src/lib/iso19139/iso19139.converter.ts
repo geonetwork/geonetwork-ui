@@ -327,6 +327,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     let rootEl: XmlElement
     let fieldChanged: (name: string) => boolean
     if (reference) {
+      // eslint-disable-next-line prefer-const
       let languagesChanged: boolean
       const originalDoc = parseXmlString(reference)
       const originalRecord = await this.readRecord(reference)

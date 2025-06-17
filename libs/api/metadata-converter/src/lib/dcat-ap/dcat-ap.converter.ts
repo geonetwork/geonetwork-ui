@@ -405,6 +405,7 @@ export class DcatApConverter extends BaseConverter<string> {
     let fieldChanged: (name: string) => boolean
     if (reference) {
       const originalRecord = await this.readRecord(reference)
+      // eslint-disable-next-line prefer-const
       let languagesChanged: boolean
       await loadGraph(
         dataStore,
