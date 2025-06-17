@@ -58,8 +58,8 @@ export class ApplicationBannerComponent {
   }
 
   get classList() {
-    if (this.message.length > 200) {
-      return `${this.msgClass} ${this.extraClass} overflow-y-scroll items-start`
+    if (this.message.length > 200 && !this.closeEnabled) {
+      return `${this.msgClass} ${this.extraClass} overflow-y-scroll items-start max-h-16`
     }
     return `${this.msgClass} ${this.extraClass} items-center`
   }
