@@ -7,10 +7,10 @@ import {
 } from '@angular/core'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import {
-  iconoirAppleShortcuts,
+  iconoirDatabase,
   iconoirAppleWallet,
   iconoirCode,
-  iconoirCreditCard,
+  iconoirAppWindow,
 } from '@ng-icons/iconoir'
 import { TranslatePipe } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
@@ -21,9 +21,9 @@ marker('record.kind.service')
 
 enum KindConfig {
   all = 'iconoirAppleWallet', // (this one is for filter)
-  dataset = 'iconoirAppleShortcuts',
+  dataset = 'iconoirDatabase',
   service = 'iconoirCode',
-  reuse = 'iconoirCreditCard',
+  reuse = 'iconoirAppWindow',
 }
 
 @Component({
@@ -33,9 +33,9 @@ enum KindConfig {
   viewProviders: [
     provideIcons({
       iconoirAppleWallet,
-      iconoirAppleShortcuts,
+      iconoirDatabase,
       iconoirCode,
-      iconoirCreditCard,
+      iconoirAppWindow,
     }),
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -43,9 +43,10 @@ enum KindConfig {
   imports: [NgIconComponent, CommonModule, TranslatePipe],
 })
 export class KindBadgeComponent {
-  @Input() styling = 'default'
+  @Input() styling = 'primary'
   @Input() contentTemplate: TemplateRef<unknown>
   @Input() kind: string
+  @Input() iconSize: 'S' | 'M' = 'S'
 
   hasProjectedContent = false
 
@@ -55,15 +56,17 @@ export class KindBadgeComponent {
 
   get badgeClasses(): string {
     const baseClasses =
-      'badge-btn text-xs px-2 font-bold shrink-0 flex items-center h-6 min-h-6'
+      'badge-btn text-xs px-2 font-bold shrink-0 flex items-center gap-2 h-6 min-h-6'
 
     switch (this.styling) {
       case 'outline':
         return `${baseClasses} bg-transparent border border-current py-1.5`
-      case 'default':
+      case 'primary':
         return `${baseClasses} bg-primary py-0.5`
+      case 'gray':
+        return `${baseClasses} bg-gray-100 text-gray-900 py-0.5`
       default:
-        return 'flex items-center'
+        return 'flex items-center gap-2'
     }
   }
 }
