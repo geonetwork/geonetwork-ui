@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { getThemeConfig } from '@geonetwork-ui/util/app-config'
+import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import {
   DatasetRecord,
   ReuseRecord,
@@ -23,6 +23,12 @@ import {
   KindBadgeComponent,
 } from '@geonetwork-ui/ui/elements'
 import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  FavoriteStarComponent,
+  SearchService,
+} from '@geonetwork-ui/feature/search'
+import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 
 @Component({
   selector: 'datahub-header-record',
@@ -39,6 +45,9 @@ import { NavigationBarComponent } from '../navigation-bar/navigation-bar.compone
     GeoDataBadgeComponent,
     KindBadgeComponent,
     NavigationBarComponent,
+    ButtonComponent,
+    FavoriteStarComponent,
+    LanguageSwitcherComponent,
   ],
   viewProviders: [
     provideIcons({
@@ -57,12 +66,14 @@ export class HeaderRecordComponent {
     getThemeConfig().HEADER_BACKGROUND ||
     `center /cover url('assets/img/header_bg.webp')`
   foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
+  showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
 
   showOverlay = true
 
   constructor(
     public facade: MdViewFacade,
-    private dateService: DateService
+    private dateService: DateService,
+    private searchService: SearchService
   ) {}
 
   get thumbnailUrl() {
@@ -81,5 +92,9 @@ export class HeaderRecordComponent {
 
   get lastUpdate() {
     return this.dateService.formatDate(this.metadata.recordUpdated)
+  }
+
+  back() {
+    this.searchService.updateFilters({})
   }
 }
