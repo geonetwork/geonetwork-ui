@@ -1,13 +1,19 @@
 <div id="record-page">
-  <datahub-navigation-bar
-    [metadata]="mdViewFacade.metadata$ | async"
-  ></datahub-navigation-bar>
-  <gn-ui-record-meta
-    [metadata]="mdViewFacade.metadata$ | async"
-  ></gn-ui-record-meta>
-  <datahub-header-record
-    [metadata]="mdViewFacade.metadata$ | async"
-  ></datahub-header-record>
+  <gn-ui-sticky-header [fullHeightPx]="285" [minHeightPx]="0">
+    <ng-template let-expandRatio>
+      <gn-ui-record-meta
+        [metadata]="mdViewFacade.metadata$ | async"
+      ></gn-ui-record-meta>
+      <datahub-header-record
+        [metadata]="mdViewFacade.metadata$ | async"
+      ></datahub-header-record>
+      <datahub-navigation-bar
+        [metadata]="mdViewFacade.metadata$ | async"
+        [style.opacity]="-1 + (1 - expandRatio) * 2"
+      ></datahub-navigation-bar>
+    </ng-template>
+  </gn-ui-sticky-header>
+
   <datahub-record-metadata
     [metadataQualityDisplay]="metadataQualityDisplay"
   ></datahub-record-metadata>

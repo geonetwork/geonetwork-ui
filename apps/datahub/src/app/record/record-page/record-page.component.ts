@@ -11,6 +11,7 @@ import { RecordMetadataComponent } from '../record-metadata/record-metadata.comp
 import { HeaderRecordComponent } from '../header-record/header-record.component'
 import { CommonModule } from '@angular/common'
 import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component'
+import { StickyHeaderComponent } from '@geonetwork-ui/ui/layout'
 
 @Component({
   selector: 'datahub-record-page',
@@ -20,6 +21,7 @@ import { NavigationBarComponent } from '../navigation-bar/navigation-bar.compone
   standalone: true,
   imports: [
     CommonModule,
+    StickyHeaderComponent,
     RecordMetadataComponent,
     HeaderRecordComponent,
     RecordMetaComponent,
