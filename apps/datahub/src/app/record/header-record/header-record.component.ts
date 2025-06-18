@@ -22,6 +22,7 @@ import {
   ImageOverlayPreviewComponent,
   KindBadgeComponent,
 } from '@geonetwork-ui/ui/elements'
+import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component'
 
 @Component({
   selector: 'datahub-header-record',
@@ -37,6 +38,7 @@ import {
     ImageOverlayPreviewComponent,
     GeoDataBadgeComponent,
     KindBadgeComponent,
+    NavigationBarComponent,
   ],
   viewProviders: [
     provideIcons({
@@ -50,6 +52,7 @@ import {
 })
 export class HeaderRecordComponent {
   @Input() metadata: DatasetRecord | ServiceRecord | ReuseRecord
+  @Input() expandRatio: number
   backgroundCss =
     getThemeConfig().HEADER_BACKGROUND ||
     `center /cover url('assets/img/header_bg.webp')`

@@ -1,16 +1,13 @@
 <div id="record-page">
-  <gn-ui-sticky-header [fullHeightPx]="285" [minHeightPx]="0">
+  <gn-ui-sticky-header [fullHeightPx]="285" [minHeightPx]="60">
     <ng-template let-expandRatio>
       <gn-ui-record-meta
         [metadata]="mdViewFacade.metadata$ | async"
       ></gn-ui-record-meta>
       <datahub-header-record
         [metadata]="mdViewFacade.metadata$ | async"
+        [expandRatio]="expandRatio"
       ></datahub-header-record>
-      <datahub-navigation-bar
-        [metadata]="mdViewFacade.metadata$ | async"
-        [style.opacity]="-1 + (1 - expandRatio) * 2"
-      ></datahub-navigation-bar>
     </ng-template>
   </gn-ui-sticky-header>
 
