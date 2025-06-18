@@ -11,7 +11,7 @@ The following GeoNetwork-UI applications are available as docker images or ZIP a
 
 ## As a Plugin to GeoNetwork
 
-GeoNetwork documentation recommeneds installing [GeoNetwork-UI as a plugin](https://docs.geonetwork-opensource.org/4.4/install-guide/plugins/), this can be archeved using Docker. 
+GeoNetwork documentation recommends installing [GeoNetwork-UI as a plugin](https://docs.geonetwork-opensource.org/4.4/install-guide/plugins/), this can be achieved using Docker. 
 
 Example Dockerfile for v4.4.8 below: 
 
