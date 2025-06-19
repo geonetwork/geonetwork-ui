@@ -38,4 +38,7 @@ export class RecordPageComponent implements OnDestroy {
   ngOnDestroy() {
     document.documentElement.classList.remove('record-page-active')
   }
+  get isMobile() {
+    return window.innerWidth < 640
+  }
 }

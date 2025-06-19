@@ -1,5 +1,5 @@
 <div id="record-page">
-  <gn-ui-sticky-header [fullHeightPx]="344" [minHeightPx]="60">
+  <gn-ui-sticky-header [fullHeightPx]="isMobile ? 544 : 344" [minHeightPx]="60">
     <ng-template let-expandRatio>
       <gn-ui-record-meta
         [metadata]="mdViewFacade.metadata$ | async"
