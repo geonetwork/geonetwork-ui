@@ -1,26 +1,25 @@
-<div *ngIf="metadataQualityDisplay" class="metadata-quality">
-  <div
-    class="flex items-center"
-    [class]="min - w - 0"
-    [ngClass]="{ 'text-xs leading-[8px] m-h-[120px]': smaller }"
+<div
+  *ngIf="metadataQualityDisplay"
+  class="flex items-center metadata-quality"
+  [class]="min - w - 0"
+  [ngClass]="{ 'text-xs leading-[8px] m-h-[120px]': smaller }"
+>
+  <gn-ui-progress-bar
+    tabindex="0"
+    [value]="qualityScore"
+    [type]="'light'"
+    class="flex-grow"
+  ></gn-ui-progress-bar>
+  <gn-ui-popover
+    [content]="popoverItems"
+    theme="light-border"
+    [class]="smaller ? 'ml-2' : 'ml-2 mt-1'"
   >
-    <gn-ui-progress-bar
-      tabindex="0"
-      [value]="qualityScore"
-      [type]="'light'"
-      class="flex-grow"
-    ></gn-ui-progress-bar>
-    <gn-ui-popover
-      [content]="popoverItems"
-      theme="light-border"
-      [class]="smaller ? 'ml-2' : 'ml-2 mt-1'"
-    >
-      <ng-icon
-        name="matInfoOutline"
-        class="flex-shrink-0 text-gray-600"
-      ></ng-icon>
-    </gn-ui-popover>
-  </div>
+    <ng-icon
+      name="matInfoOutline"
+      class="flex-shrink-0 text-gray-600"
+    ></ng-icon>
+  </gn-ui-popover>
 </div>
 <ng-template #popoverItems>
   <div class="p-2 py-4">

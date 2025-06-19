@@ -1,9 +1,4 @@
-import {
-  applicationConfig,
-  componentWrapperDecorator,
-  Meta,
-  StoryObj,
-} from '@storybook/angular'
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { InternalLinkCardComponent } from './internal-link-card.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
@@ -13,18 +8,16 @@ import { importProvidersFrom } from '@angular/core'
 import { action } from '@storybook/addon-actions'
 import { provideIcons } from '@ng-icons/core'
 import { matStar, matStarBorder } from '@ng-icons/material-icons/baseline'
+import { iconoirBank } from '@ng-icons/iconoir'
 
 const mockRecord = datasetRecordsFixture()[0] as CatalogRecord
 const mockRecordLong = datasetRecordsFixture()[1] as CatalogRecord
-const mockRecordWithoutContact = {
-  ...mockRecord,
-  ownerOrganization: null,
-} as CatalogRecord
 const mockLongRecordWithoutContact = {
   ...mockRecordLong,
   ownerOrganization: null,
 } as CatalogRecord
-const interactiveFavoriteTemplate = `<div class="flex flex-row items-center">
+const interactiveFavoriteTemplate = `
+<div class="flex flex-row items-center">
   <span class="inline-flex items-center text-gray-700 font-medium" style="line-height: 1; margin-top: 1px;">{{record.extras?.favoriteCount || 42}}</span>
   <button type="button" class="ml-1 flex items-center justify-center text-secondary hover:scale-125 transition will-change-transform"
           title="Add to favorites"
@@ -44,13 +37,10 @@ export default {
         provideIcons({
           matStar,
           matStarBorder,
+          iconoirBank,
         }),
       ],
     }),
-    componentWrapperDecorator(
-      (story) =>
-        `<div class="p-4 bg-white" style="height: 400px; max-width: 1200px; resize: both; overflow: auto">${story}</div>`
-    ),
   ],
 } as Meta<InternalLinkCardComponent>
 
@@ -59,12 +49,12 @@ type InternalLinkCardComponentWithFavoriteTemplate =
     favoriteTemplateString: string
   }
 
-export const Primary: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
+export const RecordCard: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
   {
     argTypes: {
       size: {
         control: 'radio',
-        options: ['L', 'M', 'S', 'XS'],
+        options: ['L', 'L', 'M', 'S'],
         description: 'Size variant of the card',
       },
       metadataQualityDisplay: {
@@ -80,8 +70,8 @@ export const Primary: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
       },
     },
     args: {
-      record: mockRecord,
-      size: 'M',
+      record: mockRecordLong,
+      size: 'L',
       metadataQualityDisplay: true,
       favoriteTemplateString: interactiveFavoriteTemplate,
     },
@@ -109,74 +99,10 @@ export const Primary: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
     }),
   }
 
-export const LargeCard: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
+export const AllSizeOfCards: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
   {
     args: {
-      ...Primary.args,
-      size: 'L',
-    },
-    render: Primary.render,
-  }
-
-export const LargeCardWithLongContent: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
-  {
-    args: {
-      ...Primary.args,
-      size: 'L',
-      record: mockRecordLong,
-    },
-    render: Primary.render,
-  }
-
-export const MediumCard: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
-  {
-    args: {
-      ...Primary.args,
-      size: 'M',
-    },
-    render: Primary.render,
-  }
-
-export const SmallCard: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
-  {
-    args: {
-      ...Primary.args,
-      size: 'S',
-    },
-    render: Primary.render,
-  }
-
-export const ExtraSmallCard: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
-  {
-    args: {
-      ...Primary.args,
-      size: 'XS',
-    },
-    render: Primary.render,
-  }
-
-export const WithoutGeodataIndicator: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
-  {
-    args: {
-      ...Primary.args,
-      record: { ...mockRecord, ...{ onlineResources: [] } },
-    },
-    render: Primary.render,
-  }
-
-export const WithoutQualityMetrics: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
-  {
-    args: {
-      ...Primary.args,
-      metadataQualityDisplay: false,
-    },
-    render: Primary.render,
-  }
-
-export const MultipleMediumCards: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
-  {
-    args: {
-      ...Primary.args,
+      ...RecordCard.args,
     },
     render: (args) => ({
       props: {
@@ -186,7 +112,142 @@ export const MultipleMediumCards: StoryObj<InternalLinkCardComponentWithFavorite
       },
       template: `
       <div class="flex flex-col gap-4 w-[620px]">
-        <div class="w-[620px]" *ngFor="let rec of records">
+        <div class="w-[800px]">
+          <div class="border border-gray-100 rounded-md inline-block card-shadow w-full">
+            <gn-ui-internal-link-card
+              [record]="records[1]"
+              [size]="'L'"
+              [metadataQualityDisplay]="metadataQualityDisplay"
+              [favoriteTemplate]="favoriteRef"
+              (mdSelect)="mdSelect($event)">
+            </gn-ui-internal-link-card>
+          </div>
+        </div>
+        <div class="w-[800px]">
+          <div class="border border-gray-100 rounded-md inline-block card-shadow w-full">
+            <gn-ui-internal-link-card
+              [record]="records[1]"
+              [size]="'M'"
+              [metadataQualityDisplay]="metadataQualityDisplay"
+              [favoriteTemplate]="favoriteRef"
+              (mdSelect)="mdSelect($event)">
+            </gn-ui-internal-link-card>
+          </div>
+        </div>
+        <div class="w-full flex gap-4">
+          <div class="border border-gray-100 rounded-md inline-block card-shadow">
+            <gn-ui-internal-link-card
+              [record]="records[0]"
+              [size]="'S'"
+              [metadataQualityDisplay]="metadataQualityDisplay"
+              [favoriteTemplate]="favoriteRef"
+              (mdSelect)="mdSelect($event)">
+            </gn-ui-internal-link-card>
+          </div><div class="border border-gray-100 rounded-md inline-block card-shadow">
+            <gn-ui-internal-link-card
+              [record]="records[1]"
+              [size]="'S'"
+              [metadataQualityDisplay]="metadataQualityDisplay"
+              [favoriteTemplate]="favoriteRef"
+              (mdSelect)="mdSelect($event)">
+            </gn-ui-internal-link-card>
+          </div>
+        </div>
+        <div class="w-full flex gap-4">
+          <div class="border border-gray-100 rounded-md card-shadow">
+            <gn-ui-internal-link-card
+              [record]="records[1]"
+              [size]="'XS'"
+              [metadataQualityDisplay]="metadataQualityDisplay"
+              [favoriteTemplate]="favoriteRef"
+              (mdSelect)="mdSelect($event)">
+            </gn-ui-internal-link-card>
+          </div>
+          <div class="border border-gray-100 rounded-md card-shadow">
+            <gn-ui-internal-link-card
+              [record]="records[0]"
+              [size]="'XS'"
+              [metadataQualityDisplay]="metadataQualityDisplay"
+              [favoriteTemplate]="favoriteRef"
+              (mdSelect)="mdSelect($event)">
+            </gn-ui-internal-link-card>
+          </div>
+        </div>
+      </div>
+      <ng-template #favoriteRef let-record>
+        ${args.favoriteTemplateString}
+      </ng-template>
+    `,
+    }),
+  }
+
+export const LargeCardWithSmallContent: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
+  {
+    args: {
+      ...RecordCard.args,
+      size: 'L',
+      record: {
+        ...mockRecord,
+        ...{
+          ownerOrganization: {
+            name: 'The very long organisation name long organisation namelong organisation name',
+          },
+        },
+      },
+    },
+    render: RecordCard.render,
+  }
+
+export const MediumCard: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
+  {
+    args: {
+      ...RecordCard.args,
+      size: 'M',
+    },
+    render: RecordCard.render,
+  }
+
+export const SmallCard: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
+  {
+    args: {
+      ...RecordCard.args,
+      size: 'S',
+    },
+    render: RecordCard.render,
+  }
+
+export const ExtraSmallCard: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
+  {
+    args: {
+      ...RecordCard.args,
+      size: 'XS',
+    },
+    render: RecordCard.render,
+  }
+
+export const WithoutQualityMetrics: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
+  {
+    args: {
+      ...RecordCard.args,
+      metadataQualityDisplay: false,
+    },
+    render: RecordCard.render,
+  }
+
+export const MultipleLargeCards: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
+  {
+    args: {
+      ...RecordCard.args,
+    },
+    render: (args) => ({
+      props: {
+        ...args,
+        mdSelect: action('mdSelect'),
+        records: datasetRecordsFixture().slice(0, 3),
+      },
+      template: `
+      <div class="flex flex-col gap-4 w-[620px]">
+        <div class="w-[800px]" *ngFor="let rec of records">
           <div class="border border-gray-100 rounded-md inline-block card-shadow w-full">
             <gn-ui-internal-link-card
               [record]="rec"
@@ -208,29 +269,19 @@ export const MultipleMediumCards: StoryObj<InternalLinkCardComponentWithFavorite
 export const LargeCardWithoutContact: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
   {
     args: {
-      ...Primary.args,
+      ...RecordCard.args,
       size: 'L',
       record: mockLongRecordWithoutContact,
     },
-    render: Primary.render,
+    render: RecordCard.render,
   }
 
 export const MediumCardWithoutContact: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
   {
     args: {
-      ...Primary.args,
+      ...RecordCard.args,
       size: 'M',
-      record: mockRecordWithoutContact,
+      record: mockLongRecordWithoutContact,
     },
-    render: Primary.render,
-  }
-
-export const SmallCardWithoutContact: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
-  {
-    args: {
-      ...Primary.args,
-      size: 'S',
-      record: mockRecordWithoutContact,
-    },
-    render: Primary.render,
+    render: RecordCard.render,
   }
