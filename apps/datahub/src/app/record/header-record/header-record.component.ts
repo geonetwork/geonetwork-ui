@@ -6,7 +6,7 @@ import {
   ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { map } from 'rxjs'
+import { combineLatest, fromEvent, map, startWith } from 'rxjs'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
@@ -29,7 +29,11 @@ import {
   SearchService,
 } from '@geonetwork-ui/feature/search'
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
+import { StickyHeaderComponent } from '@geonetwork-ui/ui/layout'
 
+const MOBILE_MAX_WIDTH = 640
+const HEADER_HEIGHT_DEFAULT = 344
+const HEADER_HEIGHT_MOBILE_THUMBNAIL = 518
 @Component({
   selector: 'datahub-header-record',
   templateUrl: './header-record.component.html',
@@ -48,6 +52,7 @@ import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
     ButtonComponent,
     FavoriteStarComponent,
     LanguageSwitcherComponent,
+    StickyHeaderComponent,
   ],
   viewProviders: [
     provideIcons({
@@ -62,7 +67,6 @@ import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 export class HeaderRecordComponent {
   @Input() metadata: DatasetRecord | ServiceRecord | ReuseRecord
   @Input() expandRatio: number
-  @Input() isMobile: boolean
   backgroundCss =
     getThemeConfig().HEADER_BACKGROUND ||
     `center /cover url('assets/img/header_bg.webp')`
@@ -71,19 +75,34 @@ export class HeaderRecordComponent {
 
   showOverlay = true
 
+  thumbnailUrl$ = this.facade.metadata$.pipe(
+    map((metadata) => {
+      if (metadata?.overviews === undefined) {
+        return undefined
+      } else {
+        return metadata?.overviews?.[0]?.url ?? null
+      }
+    })
+  )
+
+  isMobile$ = fromEvent(window, 'resize').pipe(
+    startWith(window.innerWidth),
+    map(() => window.innerWidth < MOBILE_MAX_WIDTH)
+  )
+
+  fullHeaderHeight$ = combineLatest([this.isMobile$, this.thumbnailUrl$]).pipe(
+    map(([isMobile, thumbnailUrl]) =>
+      isMobile && thumbnailUrl
+        ? HEADER_HEIGHT_MOBILE_THUMBNAIL
+        : HEADER_HEIGHT_DEFAULT
+    )
+  )
+
   constructor(
     public facade: MdViewFacade,
     private dateService: DateService,
     private searchService: SearchService
   ) {}
-
-  get thumbnailUrl() {
-    if (this.metadata?.overviews === undefined) {
-      return undefined
-    } else {
-      return this.metadata?.overviews?.[0]?.url ?? null
-    }
-  }
 
   reuseLinkUrl$ = this.facade.otherLinks$.pipe(
     map((links) => {
