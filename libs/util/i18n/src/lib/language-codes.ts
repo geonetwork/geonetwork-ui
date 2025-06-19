@@ -68,11 +68,11 @@ export const LANG_2_TO_3_MAPPER = Object.entries(LANG_3_TO_2_MAPPER).reduce(
 )
 
 export function getLang3FromLang2(lang2: string): string {
-  return LANG_2_TO_3_MAPPER[lang2] ?? null
+  return LANG_2_TO_3_MAPPER[lang2] ?? lang2
 }
 
 export function getLang2FromLang3(lang3: string): string {
-  return LANG_3_TO_2_MAPPER[lang3] ?? null
+  return LANG_3_TO_2_MAPPER[lang3] ?? lang3
 }
 
 export function getLocalizedIndexKey(lang2: string): string {

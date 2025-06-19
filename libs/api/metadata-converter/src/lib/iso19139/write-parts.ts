@@ -62,7 +62,8 @@ function writeLocalizedElement(
   translations: FieldTranslation,
   defaultLanguage: LanguageCode
 ): ChainableFunction<XmlElement, XmlElement> {
-  if (!translations) return writeFn
+  if (!translations)
+    return pipe(writeFn, removeChildrenByName('gmd:PT_FreeText')) // If no translations, remove existing if any
   function createLocalized(lang: LanguageCode, translation: string) {
     return pipe(
       createNestedElement('gmd:textGroup', 'gmd:LocalisedCharacterString'),

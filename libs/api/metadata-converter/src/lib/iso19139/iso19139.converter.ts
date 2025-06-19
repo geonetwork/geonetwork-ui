@@ -11,6 +11,7 @@ import {
 import { XmlElement } from '@rgrove/parse-xml'
 import { BaseConverter } from '../base.converter'
 import { isEqual } from '../convert-utils'
+import { isFieldTranslatable } from '../translate-utils'
 import {
   createDocument,
   createElement,
@@ -160,7 +161,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     // TODO
     extras: () => undefined,
     landingPage: () => undefined,
-    translations: () => undefined,
+    translations: () => undefined, // NB. translations are handled in properties
   }
 
   protected beforeDocumentCreation(rootElement: XmlElement) {
@@ -189,6 +190,7 @@ export class Iso19139Converter extends BaseConverter<string> {
         }
       }
     }
+
     fixLanguages(record)
     record.keywords.map(fixLanguages)
     record.onlineResources.map(fixLanguages)
@@ -275,7 +277,6 @@ export class Iso19139Converter extends BaseConverter<string> {
   async readRecord(document: string): Promise<CatalogRecord> {
     const doc = parseXmlString(document)
     const rootEl = getRootElement(doc)
-
     const tr: RecordTranslations = {}
     const kind = this.readers['kind'](rootEl, tr) as RecordKind
 
@@ -326,15 +327,19 @@ export class Iso19139Converter extends BaseConverter<string> {
     let rootEl: XmlElement
     let fieldChanged: (name: string) => boolean
     if (reference) {
+      // eslint-disable-next-line prefer-const
+      let languagesChanged: boolean
       const originalDoc = parseXmlString(reference)
       const originalRecord = await this.readRecord(reference)
       rootEl = getRootElement(originalDoc)
 
       fieldChanged = (name: string) => {
         return originalRecord !== null
-          ? !isEqual(record[name], originalRecord[name])
+          ? !isEqual(record[name], originalRecord[name]) ||
+              (languagesChanged && isFieldTranslatable(name))
           : true
       }
+      languagesChanged = fieldChanged('otherLanguages')
     } else {
       rootEl = createElement('gmd:MD_Metadata')()
       fieldChanged = () => true
@@ -357,9 +362,10 @@ export class Iso19139Converter extends BaseConverter<string> {
       this.writers['recordCreated'](record, rootEl)
     fieldChanged('recordPublished') &&
       this.writers['recordPublished'](record, rootEl)
-
-    fieldChanged('title') && this.writers['title'](record, rootEl)
-    fieldChanged('abstract') && this.writers['abstract'](record, rootEl)
+    ;(fieldChanged('title') || fieldChanged('translations')) &&
+      this.writers['title'](record, rootEl)
+    ;(fieldChanged('abstract') || fieldChanged('translations')) &&
+      this.writers['abstract'](record, rootEl)
 
     fieldChanged('resourceCreated') &&
       this.writers['resourceCreated'](record, rootEl)
@@ -396,9 +402,9 @@ export class Iso19139Converter extends BaseConverter<string> {
         this.writers['temporalExtents'](record, rootEl)
       fieldChanged('spatialExtents') &&
         this.writers['spatialExtents'](record, rootEl)
-      fieldChanged('lineage') && this.writers['lineage'](record, rootEl)
+      ;(fieldChanged('lineage') || fieldChanged('translations')) &&
+        this.writers['lineage'](record, rootEl)
     }
-
     fieldChanged('otherLanguages') &&
       this.writers['otherLanguages'](record, rootEl)
 

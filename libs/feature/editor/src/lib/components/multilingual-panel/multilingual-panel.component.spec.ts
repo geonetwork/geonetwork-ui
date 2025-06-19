@@ -9,7 +9,7 @@ class RecordsRepositoryMock {
   getApplicationLanguages = jest.fn(() => of(['en', 'fr', 'it', 'es']))
 }
 
-describe('MultilingualPanelComponent (logic only)', () => {
+describe('MultilingualPanelComponent', () => {
   let component: MultilingualPanelComponent
   let fixture: ComponentFixture<MultilingualPanelComponent>
   let facadeMock: jest.Mocked<EditorFacade>
@@ -22,7 +22,7 @@ describe('MultilingualPanelComponent (logic only)', () => {
 
   beforeEach(async () => {
     facadeMock = {
-      updateRecordField: jest.fn(),
+      updateRecordLanguages: jest.fn(),
     } as any
 
     await TestBed.configureTestingModule({
@@ -81,10 +81,11 @@ describe('MultilingualPanelComponent (logic only)', () => {
       component.selectedLanguages = ['fr', 'es', 'en', 'it']
       component.validateTranslations()
       expect(spy).toHaveBeenCalled()
-      expect(facadeMock.updateRecordField).toHaveBeenCalledWith(
-        'otherLanguages',
-        ['fr', 'es', 'it']
-      )
+      expect(facadeMock.updateRecordLanguages).toHaveBeenCalledWith('en', [
+        'fr',
+        'es',
+        'it',
+      ])
     })
 
     it('should remove languages', () => {
@@ -102,14 +103,10 @@ describe('MultilingualPanelComponent (logic only)', () => {
       fixture.detectChanges()
     })
     it('should set the default language and the otherLanguages accordingly', () => {
-      expect(facadeMock.updateRecordField).toHaveBeenCalledWith(
-        'defaultLanguage',
-        'es'
-      )
-      expect(facadeMock.updateRecordField).toHaveBeenCalledWith(
-        'otherLanguages',
-        ['fr', 'en']
-      )
+      expect(facadeMock.updateRecordLanguages).toHaveBeenCalledWith('es', [
+        'fr',
+        'en',
+      ])
     })
   })
 

@@ -215,6 +215,14 @@ describe('Gn4FieldMapper', () => {
           const result = mappingFn(output, source)
           expect(result).toEqual({ extras: { edit: true } })
         })
+        it('languages - should return a list of languages even with unsupported ones and without defaultLang', () => {
+          const fieldName = 'otherLanguage'
+          const mappingFn = service.getMappingFn(fieldName)
+          const output = {}
+          const source = { otherLanguage: ['fre', 'ger', 'aar'] }
+          const result = mappingFn(output, source)
+          expect(result).toEqual({ otherLanguages: ['de', 'aar'] })
+        })
         it('related - should return a function that correctly maps the field', () => {
           const fieldName = 'related'
           const mappingFn = service.getMappingFn(fieldName)

@@ -1,10 +1,14 @@
 <h1 mat-dialog-title>{{ data.title }}</h1>
 <div mat-dialog-content>{{ data.message }}</div>
 <div mat-dialog-actions>
-  <gn-ui-button (buttonClick)="onCancel()">{{ data.cancelText }}</gn-ui-button>
+  <gn-ui-button
+    [attr.cdkFocusInitial]="focusCancel"
+    (buttonClick)="onCancel()"
+    >{{ data.cancelText }}</gn-ui-button
+  >
   <gn-ui-button
     (buttonClick)="onConfirm()"
-    cdkFocusInitial
+    [attr.cdkFocusInitial]="!focusCancel"
     class="ml-2"
     data-cy="confirm-button"
     >{{ data.confirmText }}</gn-ui-button

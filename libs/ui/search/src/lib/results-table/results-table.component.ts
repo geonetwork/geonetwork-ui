@@ -241,10 +241,13 @@ export class ResultsTableComponent {
   }
 
   getTxtHoverMultilingual(record: CatalogRecord) {
+    const languages = [
+      ...[record.defaultLanguage],
+      ...record.otherLanguages,
+    ].sort((a, b) => a.localeCompare(b))
+
     return this.translateService.instant('dashboard.records.isMultilingual', {
-      languages: [...[record.defaultLanguage], ...record.otherLanguages].join(
-        ', '
-      ),
+      languages: languages.join(', '),
     })
   }
 }

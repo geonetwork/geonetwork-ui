@@ -4,7 +4,7 @@ import { debounceTime, EMPTY, filter, of, withLatestFrom } from 'rxjs'
 import { catchError, map, switchMap } from 'rxjs/operators'
 import * as EditorActions from './editor.actions'
 import { EditorService } from '../services/editor.service'
-import { Store } from '@ngrx/store'
+import { Action, Store } from '@ngrx/store'
 import {
   selectEditorConfig,
   selectRecord,
@@ -31,15 +31,20 @@ export class EditorEffects {
       ),
       switchMap(([, record, recordSource, fieldsConfig]) =>
         this.editorService.saveRecord(record, recordSource, fieldsConfig).pipe(
-          switchMap(([record, recordSource]) =>
-            of(
-              EditorActions.saveRecordSuccess(),
-              EditorActions.openRecord({
-                record,
-                recordSource,
-              })
-            )
-          ),
+          switchMap(([savedRecord, savedRecordSource]) => {
+            const actions: Action[] = [EditorActions.saveRecordSuccess()]
+
+            if (!record?.uniqueIdentifier) {
+              actions.push(
+                EditorActions.openRecord({
+                  record: savedRecord,
+                  recordSource: savedRecordSource,
+                })
+              )
+            }
+
+            return of(...actions)
+          }),
           catchError((error) =>
             of(
               EditorActions.saveRecordFailure({
@@ -78,14 +83,20 @@ export class EditorEffects {
 
   markAsChanged$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(EditorActions.updateRecordField),
+      ofType(
+        EditorActions.updateRecordField,
+        EditorActions.updateRecordLanguages
+      ),
       map(() => EditorActions.markRecordAsChanged())
     )
   )
 
   saveRecordDraft$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(EditorActions.updateRecordField),
+      ofType(
+        EditorActions.updateRecordField,
+        EditorActions.updateRecordLanguages
+      ),
       debounceTime(1000),
       withLatestFrom(
         this.store.select(selectRecord),
