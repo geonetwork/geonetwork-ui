@@ -280,6 +280,7 @@
   "facets.block.title.tag.default": "",
   "facets.block.title.th_regions_tree.default": "",
   "favorite.not.authenticated.tooltip": "",
+  "favorite.starToggle.label": "Añadir a favoritos",
   "feature.catalog.attribute.code": "Código",
   "feature.catalog.attribute.definition": "Descripción",
   "feature.catalog.attribute.name": "Nombre",
