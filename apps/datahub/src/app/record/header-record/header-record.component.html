@@ -122,6 +122,7 @@
         </div>
       </div>
       <datahub-navigation-bar
+        *ngIf="(facade.isMetadataLoading$ | async) === false"
         [metadata]="metadata"
         [style.opacity]="-1 + (1 - expandRatio) * 2"
       ></datahub-navigation-bar>
