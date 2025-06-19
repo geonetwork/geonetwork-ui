@@ -9,5 +9,6 @@
     [toggled]="isFavorite$ | async"
     (newValue)="toggleFavorite($event)"
     [disabled]="loading || (isAnonymous$ | async)"
+    [displayLabel]="displayLabel"
   ></gn-ui-star-toggle>
 </div>

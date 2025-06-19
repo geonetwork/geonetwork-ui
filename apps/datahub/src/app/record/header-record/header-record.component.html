@@ -21,6 +21,7 @@
         <gn-ui-favorite-star
           *ngIf="metadata?.uniqueIdentifier"
           [record]="metadata"
+          [displayLabel]="isMobile ? false : true"
           [displayCount]="false"
           class="flex text-background content-center"
           [buttonType]="'outline'"

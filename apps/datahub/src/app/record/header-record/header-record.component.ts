@@ -62,6 +62,7 @@ import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 export class HeaderRecordComponent {
   @Input() metadata: DatasetRecord | ServiceRecord | ReuseRecord
   @Input() expandRatio: number
+  @Input() isMobile: boolean
   backgroundCss =
     getThemeConfig().HEADER_BACKGROUND ||
     `center /cover url('assets/img/header_bg.webp')`
