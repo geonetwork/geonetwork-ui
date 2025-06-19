@@ -1,5 +1,8 @@
 <div id="record-page">
-  <gn-ui-sticky-header [fullHeightPx]="isMobile ? 544 : 344" [minHeightPx]="60">
+  <gn-ui-sticky-header
+    [fullHeightPx]="fullHeaderHeight$ | async"
+    [minHeightPx]="60"
+  >
     <ng-template let-expandRatio>
       <gn-ui-record-meta
         [metadata]="mdViewFacade.metadata$ | async"
@@ -7,7 +10,7 @@
       <datahub-header-record
         [metadata]="mdViewFacade.metadata$ | async"
         [expandRatio]="expandRatio"
-        [isMobile]="isMobile"
+        [isMobile]="isMobile$ | async"
       ></datahub-header-record>
     </ng-template>
   </gn-ui-sticky-header>
