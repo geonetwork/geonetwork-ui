@@ -4,7 +4,7 @@ outline: deep
 
 # How to run GeoNetwork-UI applications
 
-The following GeoNetwork-UI applications are available as docker images or ZIP archives:
+The following GeoNetwork-UI applications are available as docker images or ZIP archives, it can be installed as a plugin to GeoNetwork or run as a stand alone application using the GeoNetwork v4.x API:
 
 - [Datahub](../apps/datahub)
 - [Metadata Editor](../apps/editor)
