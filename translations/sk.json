@@ -280,6 +280,7 @@
   "facets.block.title.tag.default": "Štítok",
   "facets.block.title.th_regions_tree.default": "Regióny",
   "favorite.not.authenticated.tooltip": "<div><a href='{link}'>Prihlásiť sa</a> pre prístup k tejto funkcii</div>",
+  "favorite.starToggle.label": "",
   "feature.catalog.attribute.code": "Kód",
   "feature.catalog.attribute.definition": "Popis",
   "feature.catalog.attribute.name": "Názov",

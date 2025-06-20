@@ -15,7 +15,6 @@ button.disabled {
   stroke-linecap: round;
   position: absolute;
   top: 50%;
-  left: 50%;
   width: 2.5em;
   height: 2.5em;
   transform: translate(-50%, -50%);

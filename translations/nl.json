@@ -280,6 +280,7 @@
   "facets.block.title.tag.default": "",
   "facets.block.title.th_regions_tree.default": "",
   "favorite.not.authenticated.tooltip": "",
+  "favorite.starToggle.label": "",
   "feature.catalog.attribute.code": "Code",
   "feature.catalog.attribute.definition": "Beschrijving",
   "feature.catalog.attribute.name": "Naam",

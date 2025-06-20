@@ -33,6 +33,7 @@ import { CommonModule } from '@angular/common'
   imports: [CommonModule, StarToggleComponent],
 })
 export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
+  @Input() displayLabel? = false
   @Input() displayCount? = true
   @Input() set record(value) {
     this.record_ = value
@@ -87,7 +88,7 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
             content: loginMessage,
             allowHTML: true,
             interactive: true,
-            zIndex: 40,
+            zIndex: 60,
             maxWidth: 250,
           })
         }

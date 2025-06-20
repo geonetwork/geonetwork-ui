@@ -12,6 +12,7 @@ import { NgIcon, provideIcons } from '@ng-icons/core'
 import { CommonModule } from '@angular/common'
 import { matStar, matStarBorder } from '@ng-icons/material-icons/baseline'
 import { ButtonComponent } from '../button/button.component'
+import { TranslateDirective } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-star-toggle',
@@ -19,12 +20,13 @@ import { ButtonComponent } from '../button/button.component'
   styleUrls: ['./star-toggle.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, NgIcon, ButtonComponent],
+  imports: [CommonModule, NgIcon, ButtonComponent, TranslateDirective],
   viewProviders: [provideIcons({ matStar, matStarBorder })],
 })
 export class StarToggleComponent {
   @Input() toggled!: boolean
   @Input() disabled = false
+  @Input() displayLabel = false
   @Output() newValue = new EventEmitter<boolean>()
   @ViewChild('starOverlay') overlay: ElementRef
 
