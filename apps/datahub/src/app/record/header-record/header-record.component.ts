@@ -33,7 +33,8 @@ import { StickyHeaderComponent } from '@geonetwork-ui/ui/layout'
 
 const MOBILE_MAX_WIDTH = 640
 const HEADER_HEIGHT_DEFAULT = 344
-const HEADER_HEIGHT_MOBILE_THUMBNAIL = 518
+const HEADER_HEIGHT_MOBILE_THUMBNAIL = 554
+
 @Component({
   selector: 'datahub-header-record',
   templateUrl: './header-record.component.html',
@@ -75,6 +76,11 @@ export class HeaderRecordComponent {
 
   showOverlay = true
 
+  isMobile$ = fromEvent(window, 'resize').pipe(
+    startWith(window.innerWidth),
+    map(() => window.innerWidth < MOBILE_MAX_WIDTH)
+  )
+
   thumbnailUrl$ = this.facade.metadata$.pipe(
     map((metadata) => {
       if (metadata?.overviews === undefined) {
@@ -83,11 +89,6 @@ export class HeaderRecordComponent {
         return metadata?.overviews?.[0]?.url ?? null
       }
     })
-  )
-
-  isMobile$ = fromEvent(window, 'resize').pipe(
-    startWith(window.innerWidth),
-    map(() => window.innerWidth < MOBILE_MAX_WIDTH)
   )
 
   fullHeaderHeight$ = combineLatest([this.isMobile$, this.thumbnailUrl$]).pipe(

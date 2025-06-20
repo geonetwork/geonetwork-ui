@@ -4,7 +4,8 @@
 >
   <ng-template let-expandRatio>
     <header
-      class="w-full min-h-[344px] grid"
+      class="w-full sm:h-[344px] grid"
+      [ngClass]="(thumbnailUrl$ | async) ? 'h-[554px]' : 'h-[344px]'"
       [style.background]="backgroundCss"
     >
       <div class="h-full w-full container-lg mx-auto px-4">
