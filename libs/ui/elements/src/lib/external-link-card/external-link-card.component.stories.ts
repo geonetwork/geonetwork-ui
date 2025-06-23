@@ -4,14 +4,14 @@ import {
   Meta,
   StoryObj,
 } from '@storybook/angular'
-import { LinkCardComponent } from './link-card.component'
+import { ExternalLinkCardComponent } from './external-link-card.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export default {
-  title: 'Elements/LinkCardComponent',
-  component: LinkCardComponent,
+  title: 'Elements/ExternalLinkCardComponent',
+  component: ExternalLinkCardComponent,
   decorators: [
     applicationConfig({
       providers: [importProvidersFrom(BrowserAnimationsModule), provideI18n()],
@@ -20,9 +20,9 @@ export default {
       (story) => `<div style="max-width: 800px">${story}</div>`
     ),
   ],
-} as Meta<LinkCardComponent>
+} as Meta<ExternalLinkCardComponent>
 
-export const SizeXS: StoryObj<LinkCardComponent> = {
+export const SizeXS: StoryObj<ExternalLinkCardComponent> = {
   args: {
     size: 'XS',
     link: {
@@ -38,12 +38,12 @@ export const SizeXS: StoryObj<LinkCardComponent> = {
     props: args,
     template: `
     <div class='border border-black inline-block rounded'>
-      <gn-ui-link-card [link]="link" size="XS"></gn-ui-link-card>
+      <gn-ui-external-link-card [link]="link" size="XS"></gn-ui-external-link-card>
     </div>`,
   }),
 }
 
-export const SizeS: StoryObj<LinkCardComponent> = {
+export const SizeS: StoryObj<ExternalLinkCardComponent> = {
   args: {
     size: 'S',
     link: {
@@ -59,12 +59,12 @@ export const SizeS: StoryObj<LinkCardComponent> = {
     props: args,
     template: `
     <div class='border border-black inline-block rounded'>
-      <gn-ui-link-card [link]="link" size="S"></gn-ui-link-card>
+      <gn-ui-external-link-card [link]="link" size="S"></gn-ui-external-link-card>
     </div>`,
   }),
 }
 
-export const SizeM: StoryObj<LinkCardComponent> = {
+export const SizeM: StoryObj<ExternalLinkCardComponent> = {
   args: {
     size: 'M',
     link: {
@@ -80,12 +80,12 @@ export const SizeM: StoryObj<LinkCardComponent> = {
     props: args,
     template: `
     <div class='border border-black inline-block rounded'>
-      <gn-ui-link-card [link]="link" size="M"></gn-ui-link-card>
+      <gn-ui-external-link-card [link]="link" size="M"></gn-ui-external-link-card>
     </div>`,
   }),
 }
 
-export const SizeL: StoryObj<LinkCardComponent> = {
+export const SizeL: StoryObj<ExternalLinkCardComponent> = {
   args: {
     size: 'L',
     link: {
@@ -101,7 +101,7 @@ export const SizeL: StoryObj<LinkCardComponent> = {
     props: args,
     template: `
     <div class='border border-black inline-block rounded'>
-      <gn-ui-link-card [link]="link" size="L"></gn-ui-link-card>
+      <gn-ui-external-link-card [link]="link" size="L"></gn-ui-external-link-card>
     </div>`,
   }),
 }

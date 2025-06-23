@@ -12,9 +12,9 @@ import { TranslatePipe } from '@ngx-translate/core'
 
 type CardSize = 'L' | 'M' | 'S' | 'XS'
 @Component({
-  selector: 'gn-ui-link-card',
-  templateUrl: './link-card.component.html',
-  styleUrls: ['./link-card.component.css'],
+  selector: 'gn-ui-external-link-card',
+  templateUrl: './external-link-card.component.html',
+  styleUrls: ['./external-link-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, NgIconComponent, TranslatePipe],
@@ -25,7 +25,7 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
     provideNgIconsConfig({ size: '1.5em' }),
   ],
 })
-export class LinkCardComponent {
+export class ExternalLinkCardComponent {
   private _size: CardSize
   @Input() link: DatasetOnlineResource
   private readonly sizeClassMap: Record<CardSize, string> = {
