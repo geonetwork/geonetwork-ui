@@ -47,12 +47,13 @@
           >
         </div>
         <div class="record-card__footer__other">
-          <div class="border-r last:border-r-0 flex grow gap-4 last:pr-0">
+          <div class="xs:border-r last:border-r-0 flex grow gap-4 last:pr-0">
             <gn-ui-kind-badge
               [extraClass]="'text-[1.2em]'"
               [styling]="'gray'"
               [kind]="record?.kind"
               [contentTemplate]="customTemplate"
+              class="pt-1"
             >
               <ng-template #customTemplate></ng-template
             ></gn-ui-kind-badge>
@@ -64,12 +65,13 @@
               [metadataQualityDisplay]="metadataQualityDisplay"
             ></gn-ui-metadata-quality>
           </div>
-          <ng-container
-            [ngTemplateOutlet]="favoriteTemplate"
-            *ngIf="size !== 'XS'"
-            data-cy="recordFav"
-            [ngTemplateOutletContext]="{ $implicit: record }"
-          ></ng-container>
+          <div class="flex justify-center" data-cy="recordFav">
+            <ng-container
+              [ngTemplateOutlet]="favoriteTemplate"
+              *ngIf="size !== 'XS'"
+              [ngTemplateOutletContext]="{ $implicit: record }"
+            ></ng-container>
+          </div>
         </div>
       </div>
     </div>

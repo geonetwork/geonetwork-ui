@@ -91,7 +91,7 @@
 }
 
 .record-card__footer__other {
-  @apply flex flex-nowrap gap-3 border-l first:border-l-0;
+  @apply flex flex-col xs:flex-row flex-nowrap gap-3 xs:border-l first:border-l-0;
 
   & > div {
     @apply px-4 py-1;
