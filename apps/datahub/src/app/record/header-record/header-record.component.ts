@@ -32,8 +32,8 @@ import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { StickyHeaderComponent } from '@geonetwork-ui/ui/layout'
 
 const MOBILE_MAX_WIDTH = 640
-const HEADER_HEIGHT_DEFAULT = 344
-const HEADER_HEIGHT_MOBILE_THUMBNAIL = 554
+export const HEADER_HEIGHT_DEFAULT = 344
+export const HEADER_HEIGHT_MOBILE_THUMBNAIL = 554
 
 @Component({
   selector: 'datahub-header-record',
@@ -86,7 +86,7 @@ export class HeaderRecordComponent {
       if (metadata?.overviews === undefined) {
         return undefined
       } else {
-        return metadata?.overviews?.[0]?.url ?? null
+        return metadata?.overviews?.[0]?.url.toString() ?? null
       }
     })
   )

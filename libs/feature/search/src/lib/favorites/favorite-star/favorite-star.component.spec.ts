@@ -139,7 +139,7 @@ describe('FavoriteStarComponent', () => {
             content: 'You can log in here',
             allowHTML: true,
             interactive: true,
-            zIndex: 40,
+            zIndex: 60,
             maxWidth: 250,
           })
         )
