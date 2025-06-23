@@ -7,7 +7,7 @@ describe('reuse pages', () => {
   describe('Header', () => {
     it('should display a link to the reuse', () => {
       cy.get('datahub-header-record')
-        .children('header')
+        .find('header')
         .find('a')
         .first()
         .should('be.visible')
@@ -20,7 +20,13 @@ describe('reuse pages', () => {
     })
   })
   describe('Navigation bar', () => {
-    it('should only display the service sections buttons', () => {
+    it('should not display navigation bar on unscrollable page', () => {
+      cy.get('datahub-record-page')
+        .find('datahub-navigation-bar')
+        .should('not.be.visible')
+    })
+    // skip as the page currently does not contain enough content to scroll
+    it.skip('should only display the reuse sections buttons', () => {
       cy.get('datahub-navigation-bar')
         .find('[data-cy="capabilities"]')
         .should('not.be.visible')

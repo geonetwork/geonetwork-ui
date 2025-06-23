@@ -25,6 +25,7 @@ describe('service pages', () => {
   })
   describe('Navigation bar', () => {
     it('should only display the service sections buttons', () => {
+      cy.scrollTo(0, 1000)
       cy.get('datahub-navigation-bar')
         .find('[data-cy="capabilities"]')
         .should('be.visible')
