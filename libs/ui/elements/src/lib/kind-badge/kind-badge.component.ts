@@ -46,7 +46,7 @@ export class KindBadgeComponent {
   @Input() styling = 'primary'
   @Input() contentTemplate: TemplateRef<unknown>
   @Input() kind: string
-  @Input() iconSize: 'S' | 'M' = 'S'
+  @Input() extraClass = 'text-[0.85em]'
 
   hasProjectedContent = false
 

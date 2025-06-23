@@ -18,6 +18,12 @@
   }
 }
 
+.record-card:hover {
+  .record-card__title {
+    @apply text-primary;
+  }
+}
+
 .record-card__thumbnail {
   @apply border rounded-lg overflow-hidden shrink-0;
 
@@ -51,6 +57,8 @@
 }
 
 .record-card__abstract {
+  @apply text-gray-900 overflow-hidden;
+
   .size-L & {
     @apply line-clamp-3;
   }
