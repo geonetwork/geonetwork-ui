@@ -10,7 +10,6 @@ import {
 import { RecordMetadataComponent } from '../record-metadata/record-metadata.component'
 import { HeaderRecordComponent } from '../header-record/header-record.component'
 import { CommonModule } from '@angular/common'
-import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component'
 
 @Component({
   selector: 'datahub-record-page',
@@ -23,7 +22,6 @@ import { NavigationBarComponent } from '../navigation-bar/navigation-bar.compone
     RecordMetadataComponent,
     HeaderRecordComponent,
     RecordMetaComponent,
-    NavigationBarComponent,
   ],
 })
 export class RecordPageComponent implements OnDestroy {

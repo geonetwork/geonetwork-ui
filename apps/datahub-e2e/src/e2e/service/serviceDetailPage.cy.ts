@@ -25,12 +25,26 @@ describe('service pages', () => {
   })
   describe('Navigation bar', () => {
     it('should only display the service sections buttons', () => {
-      cy.get('datahub-navigation-bar')
-        .find('[data-cy="capabilities"]')
-        .should('be.visible')
-      cy.get('datahub-navigation-bar')
-        .find('[data-cy="data-preview"]')
-        .should('not.be.visible')
+      cy.get('datahub-record-page')
+        .find('gn-ui-service-capabilities')
+        .should('exist')
+      cy.scrollTo(0, 1000, { ensureScrollable: false })
+      cy.window().then((win) => {
+        if (win.scrollY > 0) {
+          cy.get('datahub-navigation-bar')
+            .find('[data-cy="capabilities"]')
+            .should('be.visible')
+          cy.get('datahub-navigation-bar')
+            .find('[data-cy="data-preview"]')
+            .should('not.be.visible')
+        } else {
+          // If the page is not scrollable, the navigation bar should not be visible
+          // This occurs on GN 4.2.2 where the related records are not displayed for this service
+          cy.get('datahub-record-page')
+            .find('datahub-navigation-bar')
+            .should('not.be.visible')
+        }
+      })
     })
   })
   describe('About', () => {

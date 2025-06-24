@@ -280,6 +280,7 @@
   "facets.block.title.tag.default": "Tag",
   "facets.block.title.th_regions_tree.default": "Régions",
   "favorite.not.authenticated.tooltip": "<div><a href=' {link} '>Connectez-vous</a> pour avoir accès à cette fonctionnalité</div>",
+  "favorite.starToggle.label": "Ajouter aux favoris",
   "feature.catalog.attribute.code": "Code",
   "feature.catalog.attribute.definition": "Description",
   "feature.catalog.attribute.name": "Nom",

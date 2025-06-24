@@ -1,4 +1,4 @@
-<div class="inline-block relative align-middle">
+<div class="inline-block relative align-middle cursor-pointer">
   <gn-ui-button
     [type]="'outline'"
     [disabled]="disabled"
@@ -10,6 +10,9 @@
     }"
   >
     <ng-icon [name]="toggled ? 'matStar' : 'matStarBorder'"></ng-icon>
+    <span *ngIf="displayLabel" class="mx-2 text-[16px] content-center" translate
+      >favorite.starToggle.label</span
+    >
   </gn-ui-button>
   <svg
     #starOverlay
@@ -17,6 +20,7 @@
     width="40px"
     height="40px"
     viewBox="-15 -15 30 30"
+    [style]="displayLabel ? 'left: 16px' : 'left: 50%'"
   >
     <g>
       <path d="M 0,13.229167 V 0" />
