@@ -67,7 +67,6 @@ export const HEADER_HEIGHT_MOBILE_THUMBNAIL = 554
 })
 export class HeaderRecordComponent {
   @Input() metadata: DatasetRecord | ServiceRecord | ReuseRecord
-  @Input() expandRatio: number
   backgroundCss =
     getThemeConfig().HEADER_BACKGROUND ||
     `center /cover url('assets/img/header_bg.webp')`
