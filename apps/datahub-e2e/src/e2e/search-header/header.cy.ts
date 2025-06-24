@@ -59,22 +59,25 @@ describe('header', () => {
       cy.get('mat-option').should('have.text', ' Accroches vélos MEL ').click()
       cy.url().should('include', '/dataset/')
     })
-    it('should display the search results on click on icon', () => {
+    it('should display the search results on click on icon and close suggestions', () => {
       cy.get('gn-ui-fuzzy-search').type('velo')
+      cy.get('mat-option').should('have.length.above', 0)
       cy.get('ng-icon')
         .eq(1)
         .should('have.attr', 'name', 'iconoirSearch')
         .trigger('click', { waitForAnimations: false })
       cy.get('gn-ui-record-preview-row').should('have.length', 1)
+      cy.get('mat-option').should('have.length', 0)
       cy.get('gn-ui-record-preview-row')
         .find('[data-cy="recordTitle"]')
         .first()
         .should('contain', 'Accroches vélos MEL')
       cy.screenshot({ capture: 'viewport' })
     })
-    it('should display the search results on enter touch', () => {
+    it('should display the search results on enter touch and close suggestions', () => {
       cy.get('gn-ui-fuzzy-search').type('velo{enter}')
       cy.get('gn-ui-record-preview-row').should('have.length', 1)
+      cy.get('mat-option').should('have.length', 0)
       cy.get('gn-ui-record-preview-row')
         .find('[data-cy="recordTitle"]')
         .first()

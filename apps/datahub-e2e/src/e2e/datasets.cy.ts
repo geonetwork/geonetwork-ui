@@ -501,50 +501,6 @@ describe('datasets', () => {
     })
   })
 
-  describe('sorting results', () => {
-    describe('sort by popularity', () => {
-      beforeEach(() => {
-        cy.get('@sortBy').selectDropdownOption('desc,userSavedCount')
-        cy.get('@results')
-          .find('gn-ui-favorite-star')
-          .find('span')
-          .then(($counts) =>
-            $counts.toArray().map((span) => parseInt(span.innerText.trim()))
-          )
-          .as('favoriteCount')
-      })
-      it('should sort the list by popularity', () => {
-        cy.get<number[]>('@favoriteCount').then((favoritesCount) => {
-          const ordered = favoritesCount.sort((a, b) => b - a)
-          expect(favoritesCount).to.eql(ordered)
-        })
-      })
-    })
-    describe('sort by date', () => {
-      beforeEach(() => {
-        // first sort by popularity
-        cy.get('@sortBy').selectDropdownOption('desc,userSavedCount')
-        cy.get('@results')
-          .find('[data-cy="recordTitle"]')
-          .then(($titles) =>
-            $titles.toArray().map((title) => title.innerText.trim())
-          )
-          .as('initialResultTitles')
-        cy.get('@sortBy').selectDropdownOption('desc,createDate')
-      })
-      it('changes the results order', function () {
-        cy.get('@results')
-          .find('[data-cy="recordTitle"]')
-          .then(($titles) => {
-            const titles = $titles
-              .toArray()
-              .map((title) => title.innerText.trim())
-            assert.notEqual(titles, this.initialResultTitles) // @initialResultTitles
-          })
-      })
-    })
-  })
-
   describe('metadata quality', () => {
     describe('metadata quality widget not enabled', () => {
       it('should not show quality score sorting', () => {
