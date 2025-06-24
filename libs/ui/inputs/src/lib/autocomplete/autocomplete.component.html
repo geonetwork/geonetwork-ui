@@ -14,7 +14,7 @@
       [placeholder]="placeholder"
       [formControl]="control"
       [matAutocomplete]="auto"
-      (keyup.enter)="handleSearch(searchInput.value)"
+      (keyup.enter)="handleSearch()"
       [ngClass]="{
         'text-primary': searchActive && enterButton,
         'text-gray-900': !searchActive,

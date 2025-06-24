@@ -296,11 +296,11 @@ export class AutocompleteComponent
     this.inputRef.nativeElement.focus()
   }
 
-  handleSearch(any?: string) {
+  handleSearch() {
     if (!this.cancelEnter && this.allowSubmit) {
       this.isSearchActive.emit(true)
       this.searchActive = true
-      this.inputSubmitted.emit(any ?? this.inputRef.nativeElement.value)
+      this.inputSubmitted.emit(this.inputRef.nativeElement.value)
     }
     this.triggerRef?.closePanel()
   }
