@@ -174,6 +174,7 @@ describe('AutocompleteComponent', () => {
     beforeEach(() => {
       anyEmitted = []
       component.allowSubmit = true
+      component.cancelEnter = false
     })
     describe('with a text value', () => {
       beforeEach(() => {

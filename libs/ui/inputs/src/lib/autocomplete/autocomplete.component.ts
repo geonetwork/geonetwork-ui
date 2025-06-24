@@ -183,7 +183,7 @@ export class AutocompleteComponent
       switchMap((value) => this.action(value)),
       tap((suggestions) => {
         // forcing the panel to open if there are suggestions
-        if (suggestions.length > 0) {
+        if (suggestions.length > 0 && !this.isSearchActive) {
           this.triggerRef?.openPanel()
         }
       }),
@@ -296,16 +296,13 @@ export class AutocompleteComponent
     this.inputRef.nativeElement.focus()
   }
 
-  handleEnter(any: string) {
+  handleSearch() {
     if (!this.cancelEnter && this.allowSubmit) {
       this.isSearchActive.emit(true)
       this.searchActive = true
-      this.inputSubmitted.emit(any)
+      this.inputSubmitted.emit(this.inputRef.nativeElement.value)
     }
-  }
-
-  handleClickSearch() {
-    this.inputSubmitted.emit(this.inputRef.nativeElement.value)
+    this.triggerRef?.closePanel()
   }
 
   /**

@@ -14,7 +14,7 @@
       [placeholder]="placeholder"
       [formControl]="control"
       [matAutocomplete]="auto"
-      (keyup.enter)="handleEnter(searchInput.value)"
+      (keyup.enter)="handleSearch()"
       [ngClass]="{
         'text-primary': searchActive && enterButton,
         'text-gray-900': !searchActive,
@@ -54,7 +54,7 @@
     aria-label="Trigger search"
     *ngIf="allowSubmit"
     data-test="autocomplete-submit-btn"
-    (buttonClick)="handleClickSearch()"
+    (buttonClick)="handleSearch()"
   >
     <ng-icon name="iconoirSearch"></ng-icon>
   </gn-ui-button>
