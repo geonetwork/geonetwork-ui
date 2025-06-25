@@ -15,12 +15,16 @@ import { MockBuilder, MockProvider } from 'ng-mocks'
 import { MatTab, MatTabGroup } from '@angular/material/tabs'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { SAMPLE_RECORD } from '@geonetwork-ui/common/fixtures'
+import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 
 describe('RecordDataPreviewComponent', () => {
   let component: RecordDataPreviewComponent
   let fixture: ComponentFixture<RecordDataPreviewComponent>
   let facade
   let dataService
+  let platformService: PlatformServiceInterface
 
   beforeEach(() => MockBuilder(RecordDataPreviewComponent))
 
@@ -29,6 +33,10 @@ describe('RecordDataPreviewComponent', () => {
       providers: [
         provideI18n(),
         MockProvider(MdViewFacade, {
+          metadata$: new BehaviorSubject<CatalogRecord>({
+            ...SAMPLE_RECORD,
+            extras: { ownerInfo: 'fakeuser|other' },
+          }),
           mapApiLinks$: new BehaviorSubject([]),
           dataLinks$: new BehaviorSubject([]),
           geoDataLinks$: new BehaviorSubject([]),
@@ -36,6 +44,9 @@ describe('RecordDataPreviewComponent', () => {
         }),
         MockProvider(DataService, {
           getWfsFeatureCount: jest.fn(),
+        }),
+        MockProvider(PlatformServiceInterface, {
+          getMe: jest.fn(),
         }),
         {
           provide: MAX_FEATURE_COUNT,
@@ -45,6 +56,7 @@ describe('RecordDataPreviewComponent', () => {
     }).compileComponents()
     facade = TestBed.inject(MdViewFacade)
     dataService = TestBed.inject(DataService)
+    platformService = TestBed.inject(PlatformServiceInterface)
   })
 
   beforeEach(() => {
@@ -305,6 +317,59 @@ describe('RecordDataPreviewComponent', () => {
       dataService.getWfsFeatureCount.mockReturnValue(of(150))
       component.exceedsMaxFeatureCount$.subscribe((result) => {
         expect(result).toBe(true)
+        done()
+      })
+    })
+  })
+  describe('displayDatavizConfig$', () => {
+    it('should emit true if user is Administrator', (done) => {
+      ;(platformService.getMe as jest.Mock).mockReturnValue(
+        of({ profile: 'Administrator', username: 'admin' })
+      )
+      // recreate component after setting platformService mock values
+      fixture = TestBed.createComponent(RecordDataPreviewComponent)
+      component = fixture.componentInstance
+      facade.metadata$.next({
+        ...SAMPLE_RECORD,
+        extras: { ownerInfo: 'someone|other' },
+      })
+      fixture.detectChanges()
+      component.displayDatavizConfig$.subscribe((result) => {
+        expect(result).toBe(true)
+        done()
+      })
+    })
+
+    it('should emit true if user is the owner', (done) => {
+      ;(platformService.getMe as jest.Mock).mockReturnValue(
+        of({ profile: 'User', username: 'owner' })
+      )
+      fixture = TestBed.createComponent(RecordDataPreviewComponent)
+      component = fixture.componentInstance
+      facade.metadata$.next({
+        ...SAMPLE_RECORD,
+        extras: { ownerInfo: 'owner|other' },
+      })
+      fixture.detectChanges()
+      component.displayDatavizConfig$.subscribe((result) => {
+        expect(result).toBe(true)
+        done()
+      })
+    })
+
+    it('should emit false if user is not admin nor owner', (done) => {
+      ;(platformService.getMe as jest.Mock).mockReturnValue(
+        of({ profile: 'User', username: 'someoneelse' })
+      )
+      fixture = TestBed.createComponent(RecordDataPreviewComponent)
+      component = fixture.componentInstance
+      facade.metadata$.next({
+        ...SAMPLE_RECORD,
+        extras: { ownerInfo: 'owner|other' },
+      })
+      fixture.detectChanges()
+      component.displayDatavizConfig$.subscribe((result) => {
+        expect(result).toBe(false)
         done()
       })
     })

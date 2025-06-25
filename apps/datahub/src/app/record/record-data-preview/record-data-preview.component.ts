@@ -6,8 +6,9 @@ import {
   InjectionToken,
   Optional,
 } from '@angular/core'
-import { MatInkBar, MatTabsModule } from '@angular/material/tabs'
+import { MatTabsModule } from '@angular/material/tabs'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import {
   DataViewComponent,
@@ -23,6 +24,7 @@ import {
   of,
   startWith,
   switchMap,
+  tap,
 } from 'rxjs'
 
 export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
@@ -96,8 +98,21 @@ export class RecordDataPreviewComponent {
     )
   )
 
+  displayDatavizConfig$ = combineLatest([
+    this.platformService.getMe(),
+    this.metadataViewFacade.metadata$,
+  ]).pipe(
+    map(
+      ([userInfo, metadata]) =>
+        userInfo?.profile === 'Administrator' ||
+        userInfo?.username ===
+          (metadata?.extras?.ownerInfo as string).split('|')[0]
+    )
+  )
+
   constructor(
     public metadataViewFacade: MdViewFacade,
+    private platformService: PlatformServiceInterface,
     private dataService: DataService,
     @Inject(MAX_FEATURE_COUNT)
     @Optional()
