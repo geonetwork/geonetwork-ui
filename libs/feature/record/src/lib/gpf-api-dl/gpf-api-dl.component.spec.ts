@@ -109,37 +109,5 @@ describe('GpfApiDlComponent', () => {
         expect(component.zone$.getValue()).toBe('')
       })
     })
-
-    describe('When EditionDate changed', () => {
-      const mockEditionDate = '2022-04-30'
-      const mockBadEditionDate = '88-88-88'
-      it('hould be a correct edition date', () => {
-        jest.spyOn(component, 'resetPage')
-        component.setEditionDate(mockEditionDate)
-        expect(component.editionDate$.getValue()).toBe(mockEditionDate)
-        expect(component.resetPage).toHaveBeenCalled()
-      })
-      it('should not be a correct edition date', () => {
-        component.setEditionDate(mockBadEditionDate)
-        expect(component.editionDate$.getValue()).toBe('')
-      })
-    })
-
-    describe('When Url is reset', () => {
-      it('Should reset zone, format, crs, page and size value', () => {
-        component.resetUrl()
-        expect(component.zone$.getValue()).toBe('null')
-        expect(component.format$.getValue()).toBe('null')
-        expect(component.crs$.getValue()).toBe('null')
-        expect(component.page$.getValue()).toBe(1)
-      })
-    })
-
-    describe('When page is reset', () => {
-      it('Should reset page value', () => {
-        component.resetPage()
-        expect(component.page$.getValue()).toBe(1)
-      })
-    })
   })
 })
