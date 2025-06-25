@@ -29,7 +29,6 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { Gn4PlatformMapper } from './gn4-platform.mapper'
 import { ltr } from 'semver'
-import { LangService } from '@geonetwork-ui/util/i18n'
 import { HttpClient, HttpEventType } from '@angular/common/http'
 import {
   KeywordApiResponse,
@@ -45,6 +44,8 @@ import {
   switchMap,
   throwError,
 } from 'rxjs'
+import { TranslateService } from '@ngx-translate/core'
+import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n'
 
 const minApiVersion = '4.2.2'
 
@@ -82,11 +83,22 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     shareReplay(1)
   )
 
+  private readonly allowEditHarvestedMd$ = this.settings$.pipe(
+    map((info) => {
+      return info['system/harvester/enableEditing'] as boolean
+    }),
+    shareReplay(1)
+  )
+
   /**
    * A map of already loaded thesauri (groups of keywords); the key is a URI
    * @private
    */
   private keywordsByThesauri: Record<string, Observable<Keyword[]>> = {}
+
+  private get lang3() {
+    return getLang3FromLang2(this.translateService.currentLang)
+  }
 
   constructor(
     private siteApiService: SiteApiService,
@@ -95,7 +107,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     private mapper: Gn4PlatformMapper,
     private toolsApiService: ToolsApiService,
     private registriesApiService: RegistriesApiService,
-    private langService: LangService,
+    private translateService: TranslateService,
     private userfeedbackApiService: UserfeedbackApiService,
     private httpClient: HttpClient,
     private recordsApiService: RecordsApiService
@@ -121,6 +133,10 @@ export class Gn4PlatformService implements PlatformServiceInterface {
 
   getApiVersion(): Observable<string> {
     return this.apiVersion$
+  }
+
+  getAllowEditHarvestedMd(): Observable<boolean> {
+    return this.allowEditHarvestedMd$
   }
 
   getMe(): Observable<UserModel> {
@@ -187,7 +203,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
 
         return this.registriesApiService.searchKeywords(
           query,
-          this.langService.iso3,
+          this.lang3,
           10,
           0,
           null,
@@ -200,11 +216,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
 
     return combineLatest([keywords$, this.allThesaurus$]).pipe(
       map(([keywords, thesaurus]) => {
-        return this.mapper.keywordsFromApi(
-          keywords,
-          thesaurus,
-          this.langService.iso3
-        )
+        return this.mapper.keywordsFromApi(keywords, thesaurus, this.lang3)
       })
     )
   }
@@ -215,7 +227,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     }
     const keywords$ = this.registriesApiService.searchKeywords(
       null,
-      this.langService.iso3,
+      this.lang3,
       1000,
       0,
       null,
@@ -229,11 +241,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
       this.allThesaurus$,
     ]).pipe(
       map(([keywords, thesaurus]) => {
-        return this.mapper.keywordsFromApi(
-          keywords,
-          thesaurus,
-          this.langService.iso3
-        )
+        return this.mapper.keywordsFromApi(keywords, thesaurus, this.lang3)
       }),
       shareReplay(1)
     )
@@ -253,7 +261,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
         return this.registriesApiService
           .searchKeywords(
             query,
-            this.langService.iso3,
+            this.lang3,
             100,
             0,
             null,
@@ -262,11 +270,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
           )
           .pipe(
             map((keywords: KeywordApiResponse[]) =>
-              this.mapper.keywordsFromApi(
-                keywords,
-                thesauri,
-                this.langService.iso3
-              )
+              this.mapper.keywordsFromApi(keywords, thesauri, this.lang3)
             )
           )
       })
@@ -312,33 +316,31 @@ export class Gn4PlatformService implements PlatformServiceInterface {
       this.recordsApiService.getAssociatedResources(record.uniqueIdentifier),
       this.recordsApiService.getAllResources(record.uniqueIdentifier),
     ]).pipe(
-      map(([associatedResources, recordResources]) => {
-        // Received object from API is not a RelatedResponseApiModel, so we need
-        // to cast it as any and do the bellow mappings to get the wanted values.
-        const resourceIdsToKeep = [
-          ...((associatedResources as any).onlines ?? []).map(
-            (o) => Object.values(o.title)[0]
-          ),
-          ...((associatedResources as any).thumbnails ?? []).map(
-            (o) => Object.values(o.title)[0]
-          ),
-        ]
+      map(([associated, attachments]) => {
+        const { onlines = [], thumbnails = [] } = associated
 
-        const resourceIdsToRemove = recordResources
-          .map((r) => r.filename)
-          .filter((resourceId) => !resourceIdsToKeep.includes(resourceId))
+        const urlsToKeep = [
+          ...(Array.isArray(onlines) ? onlines : []),
+          ...(Array.isArray(thumbnails) ? thumbnails : []),
+        ].map((resource) => Object.values(resource.url)[0])
 
-        return resourceIdsToRemove
+        const fileToDelete = attachments
+          .filter((attachment) => !urlsToKeep.includes(attachment.url))
+          .map((attachment) => attachment.filename)
+
+        return fileToDelete
       }),
-      mergeMap((resourceIdsToRemove) =>
-        forkJoin(
-          resourceIdsToRemove.map((attachementId) =>
-            this.recordsApiService.delResource(
-              record.uniqueIdentifier,
-              attachementId
-            )
-          )
-        ).pipe(map(() => undefined))
+      mergeMap((filesToDelete) =>
+        filesToDelete.length
+          ? forkJoin(
+              filesToDelete.map((filename) =>
+                this.recordsApiService.delResource(
+                  record.uniqueIdentifier,
+                  filename
+                )
+              )
+            ).pipe(map(() => undefined))
+          : of(undefined)
       ),
       catchError((error) => {
         console.error('Error while cleaning attachments:', error)

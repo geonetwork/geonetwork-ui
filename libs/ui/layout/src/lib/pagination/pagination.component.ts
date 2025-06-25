@@ -7,7 +7,7 @@ import {
   matChevronRight,
 } from '@ng-icons/material-icons/baseline'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 import { Paginable } from '../paginable.interface'
 
 @Component({
@@ -20,7 +20,7 @@ import { Paginable } from '../paginable.interface'
     ButtonComponent,
     NgIcon,
     FormsModule,
-    TranslateModule,
+    TranslateDirective,
   ],
   viewProviders: [
     provideIcons({

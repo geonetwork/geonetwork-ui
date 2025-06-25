@@ -1,17 +1,9 @@
-import {
-  componentWrapperDecorator,
-  Meta,
-  moduleMetadata,
-  StoryObj,
-} from '@storybook/angular'
+import { componentWrapperDecorator, Meta, StoryObj } from '@storybook/angular'
 import { AnchorLinkDirective } from './anchor-link.directive'
 
 export default {
   title: 'Layout/AnchorLinkDirective',
   decorators: [
-    moduleMetadata({
-      declarations: [AnchorLinkDirective],
-    }),
     componentWrapperDecorator(
       (story) => `
 <div class="p-3 border border-gray-200 relative overflow-y-scroll h-[400px]">
@@ -68,7 +60,9 @@ export const Primary: StoryObj<AnchorLinkDirective> = {
     <div class='cursor-pointer'
          gnUiAnchorLink="${args.targetId}"
          gnUiAnchorLinkDisabledClass="opacity-50 cursor-default"
-         gnUiAnchorLinkEnabledClass="hover:underline">
+         gnUiAnchorLinkEnabledClass="hover:underline"
+         gnUiAnchorLinkInViewClass="text-blue-500"
+         gnUiAnchorLinkOutOfViewClass="bg-gray-500">
       A link to ${args.targetId}
     </div>`,
   }),

@@ -21,4 +21,11 @@ beforeEach(() => {
 
   // all tests should show english translations
   window.localStorage.setItem('geonetwork-ui-language', 'en')
+
+  // Prevent Cypress from stopping test when encountering this error:
+  // ResizeObserver loop completed with undelivered notifications.
+  Cypress.on(
+    'uncaught:exception',
+    (err) => !err.message.includes('ResizeObserver loop')
+  )
 })

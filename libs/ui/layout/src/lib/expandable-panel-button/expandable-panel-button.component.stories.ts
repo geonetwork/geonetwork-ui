@@ -6,14 +6,9 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { ExpandablePanelButtonComponent } from './expandable-panel-button.component'
-import { UiLayoutModule } from '../ui-layout.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { importProvidersFrom } from '@angular/core'
-import {
-  NgIconComponent,
-  provideIcons,
-  provideNgIconsConfig,
-} from '@ng-icons/core'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matKey } from '@ng-icons/material-icons/baseline'
 
 export default {
@@ -21,16 +16,13 @@ export default {
   component: ExpandablePanelButtonComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiLayoutModule, NgIconComponent],
+      imports: [NgIconComponent],
     }),
     applicationConfig({
       providers: [
         importProvidersFrom(BrowserAnimationsModule),
         provideIcons({
           matKey,
-        }),
-        provideNgIconsConfig({
-          size: '0.9em',
         }),
       ],
     }),

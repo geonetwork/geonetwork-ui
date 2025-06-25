@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { PreviousNextButtonsComponent } from './previous-next-buttons.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 import { DebugElement } from '@angular/core'
 import { Paginable } from '../paginable.interface'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class MockPaginable implements Paginable {
   currentPage = 1
@@ -22,7 +22,7 @@ describe('PreviousNextButtonsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PreviousNextButtonsComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
   })
 

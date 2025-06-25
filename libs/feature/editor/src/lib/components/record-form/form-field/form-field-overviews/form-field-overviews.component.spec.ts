@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TranslateModule } from '@ngx-translate/core'
 import { FormFieldOverviewsComponent } from './form-field-overviews.component'
 import { BehaviorSubject, Subject } from 'rxjs'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
@@ -8,6 +7,7 @@ import {
   PlatformServiceInterface,
   RecordAttachment,
 } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 let uploadSubject: Subject<any>
 
@@ -38,8 +38,8 @@ describe('FormFieldOverviewsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         MockProvider(
           PlatformServiceInterface,
           PlatformServiceInterfaceMock,
@@ -108,7 +108,7 @@ describe('FormFieldOverviewsComponent', () => {
       expect(component.uploadProgress).toBeUndefined()
       expect(valueChange).toEqual([
         {
-          description: 'test.png',
+          description: 'test',
           url: new URL('http://example.com/test.png'),
         },
       ])

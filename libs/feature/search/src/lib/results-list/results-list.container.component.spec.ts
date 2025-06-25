@@ -11,6 +11,11 @@ import { ResultsListContainerComponent } from './results-list.container.componen
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  RECORD_DATASET_URL_TOKEN,
+  RECORD_SERVICE_URL_TOKEN,
+  RECORD_REUSE_URL_TOKEN,
+} from '../record-url.token'
 
 @Component({
   selector: 'gn-ui-results-list',
@@ -60,6 +65,18 @@ describe('ResultsListContainerComponent', () => {
         {
           provide: RESULTS_LAYOUT_CONFIG,
           useValue: DEFAULT_RESULTS_LAYOUT_CONFIG,
+        },
+        {
+          provide: RECORD_DATASET_URL_TOKEN,
+          useValue: '/my/record/${uuid}/open',
+        },
+        {
+          provide: RECORD_SERVICE_URL_TOKEN,
+          useValue: '/my/service/${uuid}/open',
+        },
+        {
+          provide: RECORD_REUSE_URL_TOKEN,
+          useValue: '/my/reuse/${uuid}/open',
         },
       ],
     }).compileComponents()
@@ -158,6 +175,11 @@ describe('ResultsListContainerComponent', () => {
 
   describe('record url', () => {
     describe('without templates', () => {
+      beforeEach(() => {
+        component['recordDatasetUrlTemplate'] = undefined
+        component['recordServiceUrlTemplate'] = undefined
+        component['recordReuseUrlTemplate'] = undefined
+      })
       it('returns null', () => {
         expect(component.getRecordUrl(datasetRecordsFixture()[0])).toBe(null)
       })

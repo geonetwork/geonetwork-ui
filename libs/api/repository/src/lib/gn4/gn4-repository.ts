@@ -15,6 +15,8 @@ import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/erro
 import {
   CatalogRecord,
   DatasetFeatureCatalog,
+  DatasetFeatureType,
+  LanguageCode,
 } from '@geonetwork-ui/common/domain/model/record'
 import {
   Aggregations,
@@ -28,9 +30,9 @@ import {
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import {
+  LanguagesApiService,
   RecordsApiService,
   SearchApiService,
-  FeatureResponseApiModel,
 } from '@geonetwork-ui/data-access/gn4'
 import {
   combineLatest,
@@ -46,6 +48,8 @@ import {
 import { catchError, map, tap } from 'rxjs/operators'
 import { lt } from 'semver'
 import { ElasticsearchService } from './elasticsearch'
+import { getLang2FromLang3 } from '@geonetwork-ui/util/i18n'
+import { Gn4SettingsService } from './settings/gn4-settings.service'
 
 const minPublicationApiVersion = '4.2.5'
 
@@ -64,7 +68,9 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     private gn4SearchHelper: ElasticsearchService,
     private gn4Mapper: Gn4Converter,
     private gn4RecordsApi: RecordsApiService,
-    private platformService: PlatformServiceInterface
+    private platformService: PlatformServiceInterface,
+    private gn4LanguagesApi: LanguagesApiService,
+    private settingsService: Gn4SettingsService
   ) {}
 
   search({
@@ -128,9 +134,9 @@ export class Gn4Repository implements RecordsRepositoryInterface {
     return this.gn4SearchApi
       .search(
         'bucket',
-        ['fcats'],
+        ['fcats', 'hassources'],
         JSON.stringify(
-          this.gn4SearchHelper.getMetadataByIdPayload(uniqueIdentifier)
+          this.gn4SearchHelper.getMetadataByIdsPayload([uniqueIdentifier])
         )
       )
       .pipe(
@@ -141,24 +147,64 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       )
   }
 
+  getMultipleRecords(
+    uniqueIdentifiers: string[]
+  ): Observable<CatalogRecord[] | null> {
+    return this.gn4SearchApi
+      .search(
+        'bucket',
+        undefined,
+        JSON.stringify(
+          this.gn4SearchHelper.getMetadataByIdsPayload(uniqueIdentifiers)
+        )
+      )
+      .pipe(
+        map((results: Gn4SearchResults) => results.hits.hits),
+        switchMap((records) =>
+          records && records.length > 0
+            ? this.gn4Mapper.readRecords(records)
+            : of(null)
+        )
+      )
+  }
+
+  private mapEmbeddedFeatureCatalog(
+    featureTypes: Array<DatasetFeatureType>
+  ): DatasetFeatureCatalog {
+    return {
+      featureTypes: featureTypes.map((featureType) => ({
+        name: featureType.typeName || '',
+        definition: featureType.definition || '',
+        attributes: Array.isArray(featureType.attributeTable)
+          ? featureType.attributeTable.map((attr) => {
+              const values = attr.values
+                ?.filter((v) => v.code || v.label)
+                .map((v) => ({
+                  code: v.code,
+                  label: v.label,
+                }))
+              return {
+                name: attr.name,
+                code: attr.code,
+                definition: attr.definition,
+                type: attr.type,
+                ...(values?.length > 0 ? { values } : {}),
+              }
+            })
+          : [],
+      })),
+    }
+  }
   getFeatureCatalog(
     record: CatalogRecord,
     visited: Set<string> = new Set() // prevent looping
   ): Observable<DatasetFeatureCatalog | null> {
     if (
-      record.extras &&
-      record.extras['featureTypes'] &&
-      record.extras['featureTypes'][0]?.attributeTable &&
-      Array.isArray(record.extras['featureTypes'][0].attributeTable)
+      record.extras?.['featureTypes'] &&
+      Array.isArray(record.extras['featureTypes']) &&
+      record.extras['featureTypes'].length > 0
     ) {
-      return of({
-        attributes: record.extras['featureTypes'][0]?.attributeTable?.map(
-          (attr) => ({
-            name: attr.name,
-            title: attr.definition,
-          })
-        ),
-      } as DatasetFeatureCatalog)
+      return of(this.mapEmbeddedFeatureCatalog(record.extras['featureTypes']))
     }
 
     const featureCatalogIdentifier = record.extras[
@@ -190,6 +236,24 @@ export class Gn4Repository implements RecordsRepositoryInterface {
           this.gn4Mapper.readRecords(results.hits.hits)
         )
       )
+  }
+
+  getSources(record: CatalogRecord): Observable<CatalogRecord[]> {
+    const sourcesIdentifiers = record.extras?.['sourcesIdentifiers'] as string[]
+    if (sourcesIdentifiers && sourcesIdentifiers.length > 0) {
+      return this.getMultipleRecords(sourcesIdentifiers)
+    }
+    return of(null)
+  }
+
+  getSourceOf(record: CatalogRecord): Observable<CatalogRecord[]> {
+    const sourceOfIdentifiers = record.extras?.[
+      'sourceOfIdentifiers'
+    ] as string[]
+    if (sourceOfIdentifiers && sourceOfIdentifiers.length > 0) {
+      return this.getMultipleRecords(sourceOfIdentifiers)
+    }
+    return of(null)
   }
 
   aggregate(params: AggregationsParams): Observable<Aggregations> {
@@ -244,11 +308,43 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       : of(true)
   }
 
-  canEditRecord(uniqueIdentifier: string): Observable<boolean> {
-    return this.getRecord(uniqueIdentifier).pipe(
-      map((record) => {
-        return record.extras['edit'] as boolean
+  canDuplicate(record: CatalogRecord): boolean {
+    return record.kind === 'dataset'
+  }
+
+  canDelete(record: CatalogRecord): Observable<boolean> {
+    return this.settingsService.allowEditHarvested$.pipe(
+      map((allowEditHarvested) => {
+        return (
+          record.extras['edit'] &&
+          (!record.extras['isHarvested'] || allowEditHarvested)
+        )
       })
+    )
+  }
+
+  private canEdit(record: CatalogRecord, allowEditHarvested: boolean): boolean {
+    return (
+      record.kind === 'dataset' &&
+      record.extras['edit'] &&
+      (!record.extras['isHarvested'] || allowEditHarvested)
+    )
+  }
+
+  canEditRecord(uniqueIdentifier: string): Observable<boolean> {
+    return combineLatest([
+      this.getRecord(uniqueIdentifier),
+      this.settingsService.allowEditHarvested$,
+    ]).pipe(
+      map(([record, allowEditHarvested]) =>
+        record ? this.canEdit(record, allowEditHarvested) : false
+      )
+    )
+  }
+
+  canEditIndexedRecord(record: CatalogRecord): Observable<boolean> {
+    return this.settingsService.allowEditHarvested$.pipe(
+      map((allowEditHarvested) => this.canEdit(record, allowEditHarvested))
     )
   }
 
@@ -354,9 +450,12 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         const record = await converter.readRecord(fetchedRecordAsXml)
 
         record.title = `${record.title} (Copy)`
-        await converter.writeRecord(record, fetchedRecordAsXml)
+        const recordAsXml = await converter.writeRecord(
+          record,
+          fetchedRecordAsXml
+        )
 
-        return this.saveRecord(record, '', false)
+        return this.saveRecord(record, recordAsXml, false)
       }),
       exhaustMap((uuidObservable: Observable<string>) => uuidObservable),
       catchError((error: HttpErrorResponse) => {
@@ -455,6 +554,18 @@ export class Gn4Repository implements RecordsRepositoryInterface {
         )
       })
     )
+  }
+
+  getApplicationLanguages(): Observable<LanguageCode[]> {
+    return this.gn4LanguagesApi
+      .getApplicationLanguages()
+      .pipe(
+        map((languages) =>
+          languages
+            .map((lang) => getLang2FromLang3(lang.id))
+            .filter((code): code is string => !!code)
+        )
+      )
   }
 
   private getRecordAsXml(uniqueIdentifier: string): Observable<string | null> {

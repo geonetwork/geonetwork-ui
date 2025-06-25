@@ -8,6 +8,7 @@ export const ES_SOURCE_SUMMARY = [
   'overview',
   'logo',
   'codelist_status_text',
+  'link',
   'linkProtocol',
   'contactForResource.organisation',
   'contact.organisation',
@@ -17,8 +18,10 @@ export const ES_SOURCE_SUMMARY = [
   'cl_topic',
   'cl_maintenanceAndUpdateFrequency',
   'tag',
-  'MD_LegalConstraintsUseLimitationObject',
+  'MD_LegalConstraints*Object',
   'qualityScore',
+  'allKeywords',
+  'recordLink',
 ]
 
 export type EsQueryFieldsPriorityType = Record<string, number>

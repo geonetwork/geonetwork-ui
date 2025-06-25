@@ -1,17 +1,23 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+} from '@angular/core'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import {
   ErrorComponent,
   ErrorType,
-  ImageOverlayPreviewComponent,
   MetadataCatalogComponent,
   MetadataContactComponent,
   MetadataInfoComponent,
   MetadataQualityComponent,
+  ServiceCapabilitiesComponent,
 } from '@geonetwork-ui/ui/elements'
 import { combineLatest } from 'rxjs'
-import { filter, map, mergeMap } from 'rxjs/operators'
+import { filter, map, mergeMap, startWith } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
   Keyword,
@@ -24,9 +30,14 @@ import { RecordUserFeedbacksComponent } from '../record-user-feedbacks/record-us
 import { RecordDownloadsComponent } from '../record-downloads/record-downloads.component'
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
-import { RecordRelatedRecordsComponent } from '../record-related-records/record-related-records.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
 import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { matChatOutline } from '@ng-icons/material-icons/outline'
+import { RecordFeatureCatalogComponent } from '../record-feature-catalog/record-feature-catalog.component'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
+import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -36,7 +47,6 @@ import { RecordDataPreviewComponent } from '../record-data-preview/record-data-p
   standalone: true,
   imports: [
     CommonModule,
-    ImageOverlayPreviewComponent,
     MatTabsModule,
     ErrorComponent,
     RecordUserFeedbacksComponent,
@@ -47,19 +57,96 @@ import { RecordDataPreviewComponent } from '../record-data-preview/record-data-p
     MetadataContactComponent,
     MetadataQualityComponent,
     MetadataCatalogComponent,
-    RecordRelatedRecordsComponent,
-    TranslateModule,
+    RecordInternalLinksComponent,
     RecordDataPreviewComponent,
+    ButtonComponent,
+    NgIcon,
+    ServiceCapabilitiesComponent,
+    RecordFeatureCatalogComponent,
+    RecordLinkedRecordsComponent,
+    TranslateDirective,
+    TranslatePipe,
   ],
+  viewProviders: [provideIcons({ matChatOutline })],
 })
 export class RecordMetadataComponent {
   @Input() metadataQualityDisplay: boolean
+  @ViewChild('userFeedbacks') userFeedbacks: ElementRef<HTMLElement>
 
-  displayDownload$ = this.metadataViewFacade.downloadLinks$.pipe(
-    map((links) => links?.length > 0)
+  private readonly displayConditions = {
+    dataset: {
+      download: (links) => links?.length > 0,
+      api: (links) => links?.length > 0,
+      map: (mapApiLinks, geoDataLinksWithGeometry) =>
+        mapApiLinks?.length > 0 || geoDataLinksWithGeometry?.length > 0,
+      data: (dataLinks, geoDataLinks) =>
+        dataLinks?.length > 0 || geoDataLinks?.length > 0,
+    },
+    service: {
+      capabilities: (links) => links?.length > 0,
+    },
+  }
+
+  private getDisplayCondition(
+    kind: 'dataset' | 'service' | 'reuse',
+    section: string
+  ) {
+    const kindConfig = this.displayConditions[kind]
+    const condition = kindConfig?.[section]
+
+    return condition ?? (() => false)
+  }
+
+  apiLinks$ = this.metadataViewFacade.apiLinks$
+
+  kind$ = this.metadataViewFacade.metadata$.pipe(
+    map((record) => record?.kind),
+    filter((kind) => kind !== undefined)
   )
-  displayApi$ = this.metadataViewFacade.apiLinks$.pipe(
-    map((links) => links?.length > 0)
+
+  displayDownload$ = combineLatest([
+    this.metadataViewFacade.downloadLinks$,
+    this.kind$,
+  ]).pipe(
+    map(([links, kind]) => this.getDisplayCondition(kind, 'download')(links))
+  )
+
+  displayApi$ = combineLatest([
+    this.metadataViewFacade.apiLinks$,
+    this.kind$,
+  ]).pipe(map(([links, kind]) => this.getDisplayCondition(kind, 'api')(links)))
+
+  displayCapabilities$ = combineLatest([
+    this.metadataViewFacade.apiLinks$,
+    this.kind$,
+  ]).pipe(
+    map(([links, kind]) =>
+      this.getDisplayCondition(kind, 'capabilities')(links)
+    )
+  )
+
+  displayMap$ = combineLatest([
+    this.metadataViewFacade.mapApiLinks$,
+    this.metadataViewFacade.geoDataLinksWithGeometry$,
+    this.kind$,
+  ]).pipe(
+    map(([mapApiLinks, geoDataLinksWithGeometry, kind]) =>
+      this.getDisplayCondition(kind, 'map')(
+        mapApiLinks,
+        geoDataLinksWithGeometry
+      )
+    ),
+    startWith(false)
+  )
+
+  displayData$ = combineLatest([
+    this.metadataViewFacade.dataLinks$,
+    this.metadataViewFacade.geoDataLinks$,
+    this.kind$,
+  ]).pipe(
+    map(([dataLinks, geoDataLinks, kind]) =>
+      this.getDisplayCondition(kind, 'data')(dataLinks, geoDataLinks)
+    )
   )
 
   displayOtherLinks = this.metadataViewFacade.otherLinks$.pipe(
@@ -67,6 +154,24 @@ export class RecordMetadataComponent {
   )
   displayRelated$ = this.metadataViewFacade.related$.pipe(
     map((records) => records?.length > 0)
+  )
+
+  displayLinked$ = combineLatest([
+    this.metadataViewFacade.sources$,
+    this.metadataViewFacade.sourceOf$,
+  ]).pipe(
+    map(([sources, sourceOf]) => sources?.length > 0 || sourceOf?.length > 0)
+  )
+
+  displayFeatureCatalog$ = combineLatest([
+    this.metadataViewFacade.metadata$,
+    this.metadataViewFacade.featureCatalog$,
+  ]).pipe(
+    map(
+      ([metadata, featureCatalog]) =>
+        //subscribing to metadata in order to refresh featureCatalog information
+        featureCatalog?.featureTypes?.length > 0
+    )
   )
 
   displayDatasetHasNoLinkBlock$ = combineLatest([
@@ -102,21 +207,6 @@ export class RecordMetadataComponent {
 
   errorTypes = ErrorType
 
-  thumbnailUrl$ = this.metadataViewFacade.metadata$.pipe(
-    map((metadata) => {
-      // in order to differentiate between metadata not loaded yet
-      // and url not defined
-      // the content-ghost of image-overlay-preview relies on this differentiation
-      if (metadata?.overviews === undefined) {
-        return undefined
-      } else {
-        return metadata?.overviews?.[0]?.url ?? null
-      }
-    })
-  )
-
-  showOverlay = true
-
   constructor(
     public metadataViewFacade: MdViewFacade,
     private searchService: SearchService,
@@ -132,5 +222,13 @@ export class RecordMetadataComponent {
     this.orgsService
       .getFiltersForOrgs([org])
       .subscribe((filters) => this.searchService.updateFilters(filters))
+  }
+
+  scrollToQuestions() {
+    if (this.userFeedbacks) {
+      this.userFeedbacks.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+      })
+    }
   }
 }

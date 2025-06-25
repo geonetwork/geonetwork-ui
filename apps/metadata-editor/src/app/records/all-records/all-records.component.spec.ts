@@ -5,7 +5,6 @@ import {
   SearchService,
 } from '@geonetwork-ui/feature/search'
 import { ChangeDetectionStrategy } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
 import { BehaviorSubject, firstValueFrom, of } from 'rxjs'
 import { barbieUserFixture } from '@geonetwork-ui/common/fixtures'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -19,6 +18,7 @@ import {
 } from 'ng-mocks'
 import { EditorRouterService } from '../../router.service'
 import { Overlay } from '@angular/cdk/overlay'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('AllRecordsComponent', () => {
   MockInstance.scope()
@@ -45,8 +45,8 @@ describe('AllRecordsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         MockProviders(
           FieldsService,
           SearchFacade,

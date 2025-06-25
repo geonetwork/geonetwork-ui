@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional } from '@angular/core'
+import { Injectable, Injector } from '@angular/core'
 import { Geometry } from 'geojson'
 import {
   ES_QUERY_FIELDS_PRIORITY,
@@ -26,9 +26,10 @@ import {
   SortParams,
   TermsAggregationResult,
 } from '@geonetwork-ui/api/metadata-converter'
-import { LangService } from '@geonetwork-ui/util/i18n'
+import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n'
 import { formatDate, isDateRange } from './date-range.utils'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { TranslateService } from '@ngx-translate/core'
 
 export type DateRange = { start?: Date; end?: Date }
 
@@ -39,11 +40,18 @@ export class ElasticsearchService {
   // runtime fields are computed using a Painless script
   // see: https://www.elastic.co/guide/en/elasticsearch/reference/current/runtime-mapping-fields.html
   private runtimeFields: Record<string, string> = {}
-  private lang3 = this.langService.iso3
+
+  // we're using getters in case the defined languages change over time
+  private get lang3() {
+    return getLang3FromLang2(this.translateService.currentLang)
+  }
+  private get metadataLang() {
+    return this.injector.get(METADATA_LANGUAGE, null)
+  }
 
   constructor(
-    private langService: LangService,
-    @Optional() @Inject(METADATA_LANGUAGE) private metadataLang: string
+    private translateService: TranslateService,
+    private injector: Injector
   ) {}
 
   getSearchRequestBody(
@@ -124,11 +132,11 @@ export class ElasticsearchService {
     this.runtimeFields[fieldName] = expression
   }
 
-  getMetadataByIdPayload(uuid: string): EsSearchParams {
+  getMetadataByIdsPayload(uuids: string[]): EsSearchParams {
     return {
       query: {
         ids: {
-          values: [uuid],
+          values: uuids,
         },
       },
     }
@@ -137,7 +145,7 @@ export class ElasticsearchService {
   getRelatedRecordPayload(
     record: CatalogRecord,
     size = 6,
-    _source = [...ES_SOURCE_SUMMARY, 'allKeywords', 'createDate']
+    _source = [...ES_SOURCE_SUMMARY, 'createDate']
   ): EsSearchParams {
     return {
       query: {
@@ -300,14 +308,6 @@ export class ElasticsearchService {
   private mustNotFilters(): Record<string, unknown>[] {
     return [
       {
-        ...this.queryFilterOnValues('resourceType', [
-          'service',
-          'map',
-          'map/static',
-          'mapDigital',
-        ]),
-      },
-      {
         query_string: {
           query:
             'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
@@ -429,7 +429,7 @@ export class ElasticsearchService {
           must_not: this.mustNotFilters(),
         },
       },
-      _source: ['resourceTitleObject', 'uuid'],
+      _source: ['resourceTitleObject', 'uuid', 'resourceType'],
       from: 0,
       size: 20,
     }

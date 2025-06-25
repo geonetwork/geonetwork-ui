@@ -1,0 +1,107 @@
+<div
+  cdkScrollable
+  class="h-[562px] relative overflow-y-auto overflow-hidden"
+  data-cy="feat-catalog-scrollable"
+>
+  <div #scrollContainer class="flex flex-col gap-2 py-5 px-5">
+    <div
+      *ngFor="let featureType of filteredFeatureCatalog?.featureTypes"
+      class="rounded shadow bg-white"
+    >
+      <gn-ui-expandable-panel
+        #expanel
+        [collapsed]="filteredFeatureCatalog?.featureTypes?.length !== 1"
+        iconColor="black"
+      >
+        <ng-template #titleTemplate>
+          <div class="px-2">
+            <div class="text-lg font-bold">{{ featureType.name }}</div>
+            <div class="text-sm" *ngIf="featureType.definition">
+              {{ featureType.definition }}
+            </div>
+          </div>
+        </ng-template>
+        <div
+          *ngIf="expanel && !expanel.collapsed"
+          class="grid gap-0"
+          [style.grid-template-columns]="
+            getGridTemplateColumns(featureType.attributes)
+          "
+          data-cy="feature-type-content"
+        >
+          <div
+            class="py-1 px-2 text-sm font-bold text-left border-t break-all"
+            [class.border-l]="i > 0"
+            [class.border-gray-300]="i > 0"
+            [ngClass]="col.class || ''"
+            *ngFor="
+              let col of getColumnsDefinition(featureType.attributes);
+              trackBy: trackByColumn;
+              let i = index
+            "
+            data-test="column-label"
+          >
+            {{ 'feature.catalog.attribute.' + col.key | translate }}
+          </div>
+          <ng-container *ngIf="expanel && !expanel.collapsed">
+            <ng-container *ngFor="let row of featureType.attributes">
+              <div
+                class="bg-white text-sm font-normal text-left border-t"
+                [class.border-l]="i > 0"
+                [class.border-gray-300]="i > 0"
+                *ngFor="
+                  let col of getColumnsDefinition(featureType.attributes);
+                  trackBy: trackByColumn;
+                  let i = index
+                "
+                data-test="cell-content"
+              >
+                <ng-container
+                  *ngIf="col.key === 'values'; then tplValues; else defaultTpl"
+                ></ng-container>
+
+                <ng-template #defaultTpl>
+                  <gn-ui-truncated-text
+                    [scrollContainer]="scrollContainer"
+                    [cdkScrollContainer]="scrollable"
+                    [text]="row[col.key]"
+                  ></gn-ui-truncated-text>
+                </ng-template>
+
+                <ng-template #tplValues>
+                  <gn-ui-cell-popin
+                    #popinRef
+                    [scrollContainer]="scrollContainer"
+                    [cdkScrollContainer]="scrollable"
+                    *ngIf="row.values?.length > 0"
+                  >
+                    <div cellContent data-cy="values-cell-popin-trigger">
+                      <gn-ui-button
+                        type="light"
+                        extraClass="bg-transparent border-none"
+                        (buttonClick)="popinRef.openOverlay()"
+                      >
+                        <ng-icon name="iconoirList" size="24"></ng-icon>
+                      </gn-ui-button>
+                    </div>
+                    <div
+                      popinContent
+                      class="max-h-60 overflow-y-auto min-w-64 py-4 px-6"
+                      style="scrollbar-width: thin"
+                    >
+                      <ul class="list-disc list-inside mr-4">
+                        <li *ngFor="let v of row.values">
+                          {{ v.label || v.code }}
+                        </li>
+                      </ul>
+                    </div>
+                  </gn-ui-cell-popin>
+                </ng-template>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </gn-ui-expandable-panel>
+    </div>
+  </div>
+</div>

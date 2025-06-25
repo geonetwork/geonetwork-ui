@@ -2,6 +2,7 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core'
 
 @Directive({
   selector: 'img[gnUiImageFallback]',
+  standalone: true,
 })
 export class ImageFallbackDirective {
   @Input() fallbackUrl: string

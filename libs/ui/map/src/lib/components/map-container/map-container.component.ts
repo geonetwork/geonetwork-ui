@@ -14,7 +14,7 @@ import {
 import { fromEvent, merge, Observable, of, timer } from 'rxjs'
 import { delay, map, startWith, switchMap } from 'rxjs/operators'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 import {
   computeMapContextDiff,
   Extent,
@@ -28,6 +28,8 @@ import {
   MapContextLayer,
   MapContextLayerXyz,
   MapContextView,
+  SourceLoadErrorEvent,
+  SourceLoadErrorType,
 } from '@geospatial-sdk/core'
 import {
   applyContextDiffToMap,
@@ -65,7 +67,7 @@ const DEFAULT_VIEW: MapContextView = {
   styleUrls: ['./map-container.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, TranslateModule, NgIconComponent],
+  imports: [CommonModule, TranslateDirective, NgIconComponent],
   providers: [
     provideIcons({ matSwipeOutline }),
     provideNgIconsConfig({
@@ -118,6 +120,18 @@ export class MapContainerComponent implements AfterViewInit, OnChanges {
       this._mapClick = new EventEmitter<[number, number]>()
     }
     return this._mapClick
+  }
+  _sourceLoadError: EventEmitter<SourceLoadErrorEvent>
+  @Output() get sourceLoadError() {
+    if (!this._sourceLoadError) {
+      this.openlayersMap.then((olMap) => {
+        listen(olMap, SourceLoadErrorType, (error: SourceLoadErrorEvent) =>
+          this._sourceLoadError.emit(error)
+        )
+      })
+      this._sourceLoadError = new EventEmitter<SourceLoadErrorEvent>()
+    }
+    return this._sourceLoadError
   }
 
   @ViewChild('map') container: ElementRef

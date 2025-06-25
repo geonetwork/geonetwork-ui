@@ -1,7 +1,6 @@
-import { DOCUMENT } from '@angular/common'
-import { importProvidersFrom, Inject, NgModule } from '@angular/core'
+import { importProvidersFrom, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import { Router, RouterModule } from '@angular/router'
+import { RouterModule } from '@angular/router'
 import {
   FeatureCatalogModule,
   OrganisationsComponent,
@@ -12,31 +11,29 @@ import {
   EXTERNAL_VIEWER_OPEN_NEW_TAB,
   EXTERNAL_VIEWER_URL_TEMPLATE,
   FeatureRecordModule,
-  GN_UI_VERSION,
-  WEB_COMPONENT_EMBEDDER_URL,
   RecordMetaComponent,
+  WEB_COMPONENT_EMBEDDER_URL,
 } from '@geonetwork-ui/feature/record'
 import {
   DefaultRouterModule,
   ROUTE_PARAMS,
   ROUTER_ROUTE_DATASET,
   ROUTER_ROUTE_ORGANIZATION,
+  ROUTER_ROUTE_REUSE,
   ROUTER_ROUTE_SEARCH,
+  ROUTER_ROUTE_SERVICE,
   RouterService,
 } from '@geonetwork-ui/feature/router'
 import {
   FeatureSearchModule,
   FILTER_GEOMETRY,
-  RECORD_URL_TOKEN,
+  RECORD_DATASET_URL_TOKEN,
+  RECORD_REUSE_URL_TOKEN,
+  RECORD_SERVICE_URL_TOKEN,
 } from '@geonetwork-ui/feature/search'
-import {
-  THUMBNAIL_PLACEHOLDER,
-  UiElementsModule,
-} from '@geonetwork-ui/ui/elements'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
+import { THUMBNAIL_PLACEHOLDER } from '@geonetwork-ui/ui/elements'
+import { StickyHeaderComponent } from '@geonetwork-ui/ui/layout'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
-import { GpfApiDlComponent } from '@geonetwork-ui/feature/record'
 import {
   getGlobalConfig,
   getMapContextLayerFromConfig,
@@ -45,35 +42,21 @@ import {
   getThemeConfig,
   TRANSLATE_WITH_OVERRIDES_CONFIG,
 } from '@geonetwork-ui/util/app-config'
-import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
 import {
   getGeometryFromGeoJSON,
   PROXY_PATH,
   ThemeService,
-  UtilSharedModule,
 } from '@geonetwork-ui/util/shared'
 import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { TranslateModule } from '@ngx-translate/core'
 import { environment } from '../environments/environment'
 import { AppComponent } from './app.component'
-import { HeaderBadgeButtonComponent } from './home/header-badge-button/header-badge-button.component'
-import { HomeHeaderComponent } from './home/home-header/home-header.component'
-import { HomePageComponent } from './home/home-page/home-page.component'
-import { KeyFiguresComponent } from './home/news-page/key-figures/key-figures.component'
-import { LastCreatedComponent } from './home/news-page/last-created/last-created.component'
-import { NewsPageComponent } from './home/news-page/news-page.component'
-import { OrganisationsPageComponent } from './home/organisations-page/organisations-page.component'
 import { SearchPageComponent } from './home/search/search-page/search-page.component'
-import { SearchFiltersComponent } from './home/search/search-filters/search-filters.component'
-import { NavigationBarComponent } from './record/navigation-bar/navigation-bar.component'
 import { RecordPageComponent } from './record/record-page/record-page.component'
 import { DatahubRouterService } from './router/datahub-router.service'
-import { NavigationMenuComponent } from './home/navigation-menu/navigation-menu.component'
 import { FormsModule } from '@angular/forms'
-import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
 import {
   LANGUAGES_LIST,
   LanguageSwitcherComponent,
@@ -86,7 +69,6 @@ import {
 } from '@geonetwork-ui/api/repository'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatTabsModule } from '@angular/material/tabs'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import { LetDirective } from '@ngrx/component'
 import { OrganizationPageComponent } from './organization/organization-page/organization-page.component'
 
@@ -107,25 +89,16 @@ import {
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
 import { MAX_FEATURE_COUNT } from './record/record-data-preview/record-data-preview.component'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { FigureComponent } from '@geonetwork-ui/ui/dataviz'
+import { ButtonComponent, CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
+import { KeyFiguresComponent } from './home/news-page/key-figures/key-figures.component'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
 // https://github.com/nrwl/nx/issues/191
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomePageComponent,
-    HomeHeaderComponent,
-    HeaderBadgeButtonComponent,
-    SearchFiltersComponent,
-    NavigationBarComponent,
-    NewsPageComponent,
-    OrganisationsPageComponent,
-    SearchPageComponent,
-    LastCreatedComponent,
-    KeyFiguresComponent,
-    NavigationMenuComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -147,26 +120,20 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
       ? StoreDevtoolsModule.instrument({ connectInZone: true })
       : [],
     EffectsModule.forRoot(),
-    UtilI18nModule,
-    TranslateModule.forRoot(TRANSLATE_WITH_OVERRIDES_CONFIG),
     FeatureSearchModule,
     DefaultRouterModule.forRoot({
       searchStateId: 'mainSearch',
       searchRouteComponent: SearchPageComponent,
       recordRouteComponent: RecordPageComponent,
+      serviceRouteComponent: RecordPageComponent,
+      reuseRouteComponent: RecordPageComponent,
       organizationRouteComponent: OrganizationPageComponent,
     }),
     FeatureRecordModule,
     FeatureCatalogModule,
     UiSearchModule,
-    UtilSharedModule,
-    UiLayoutModule,
-    UiElementsModule,
-    UiDatavizModule,
     FormsModule,
-    UiInputsModule,
     MatTabsModule,
-    UiWidgetsModule,
     RecordMetaComponent,
     LetDirective,
     // FIXME: these imports are required by non-standalone components and should be removed once all components have been made standalone
@@ -182,8 +149,14 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     OrganisationsComponent,
     LanguageSwitcherComponent,
     MatButtonToggleModule,
+    FigureComponent,
+    StickyHeaderComponent,
+    CheckToggleComponent,
+    ButtonComponent,
+    KeyFiguresComponent,
   ],
   providers: [
+    provideI18n(TRANSLATE_WITH_OVERRIDES_CONFIG),
     provideNgIconsConfig({
       size: '1.5em',
     }),
@@ -191,7 +164,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
     provideGn4(),
     { provide: RouterService, useClass: DatahubRouterService },
-    { provide: GN_UI_VERSION, useValue: environment.version },
     {
       provide: PROXY_PATH,
       useFactory: () => getGlobalConfig().PROXY_PATH,
@@ -237,7 +209,18 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
         return null
       },
     },
-    { provide: RECORD_URL_TOKEN, useValue: `${ROUTER_ROUTE_DATASET}/\${uuid}` },
+    {
+      provide: RECORD_DATASET_URL_TOKEN,
+      useValue: `${ROUTER_ROUTE_DATASET}/\${uuid}`,
+    },
+    {
+      provide: RECORD_SERVICE_URL_TOKEN,
+      useValue: `${ROUTER_ROUTE_SERVICE}/\${uuid}`,
+    },
+    {
+      provide: RECORD_REUSE_URL_TOKEN,
+      useValue: `${ROUTER_ROUTE_REUSE}/\${uuid}`,
+    },
     {
       provide: ORGANIZATION_PAGE_URL_TOKEN,
       useValue: `${ROUTER_ROUTE_ORGANIZATION}/\${name}`,
@@ -279,10 +262,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(
-    router: Router,
-    @Inject(DOCUMENT) private document: Document
-  ) {
+  constructor() {
     ThemeService.applyCssVariables(
       getThemeConfig().PRIMARY_COLOR,
       getThemeConfig().SECONDARY_COLOR,

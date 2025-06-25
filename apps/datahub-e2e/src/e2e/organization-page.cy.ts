@@ -5,7 +5,7 @@ describe('organizations', () => {
     cy.visit('organization/Barbie%20Inc.')
 
     // aliases
-    cy.get('gn-ui-navigation-button').as('backButton')
+    cy.get('[data-cy="backButton"]').as('backButton')
     cy.get('[data-test="organizationHeaderName"]').as('organizationHeaderName')
     cy.get('[data-test="organizationHeaderWebsiteLink"]').as(
       'organizationHeaderWebsiteLink'
@@ -20,7 +20,7 @@ describe('organizations', () => {
     )
     cy.get('[data-test="organizationEmail"]').as('organizationEmail')
     cy.get('[data-test="orgPageLasPubDat"]').as('orgPageLasPubDat')
-    cy.get('[data-test="orgDetailsSearchAllBtn"]').as('orgDetailsSearchAllBtn')
+    cy.get('[data-test="routerLinkButton"]').as('routerLinkButton')
   })
 
   describe('general display', () => {
@@ -101,11 +101,11 @@ describe('organizations', () => {
         })
 
         it('should display the search all button', () => {
-          cy.get('@orgDetailsSearchAllBtn').should('be.visible')
+          cy.get('@routerLinkButton').should('be.visible')
         })
 
         it('a click on the search all button should open the dataset search page filtered on the organization', () => {
-          cy.get('@orgDetailsSearchAllBtn').then(($link) => {
+          cy.get('@routerLinkButton').then(($link) => {
             const url = $link.prop('href')
             cy.wrap($link).click()
 

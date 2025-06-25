@@ -18,6 +18,7 @@ const translateServiceMock = {
 
 describe('Gn4FieldMapper', () => {
   let service: Gn4FieldMapper
+  let translateService: TranslateService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -30,6 +31,7 @@ describe('Gn4FieldMapper', () => {
       ],
     })
     service = TestBed.inject(Gn4FieldMapper)
+    translateService = TestBed.inject(TranslateService)
   })
 
   it('should be created', () => {
@@ -46,7 +48,7 @@ describe('Gn4FieldMapper', () => {
           (key) => elasticLinkFixture()[key]
         )
         const linkTypes = allLinks.map((fixture) =>
-          service.getLinkType(fixture.url, fixture.protocol)
+          service.getLinkType(fixture.url, fixture.accessServiceProtocol)
         )
         expect(linkTypes).toStrictEqual([
           'link',
@@ -74,6 +76,8 @@ describe('Gn4FieldMapper', () => {
           'link',
           'link',
           'download',
+          'service',
+          'service',
           'service',
         ])
       })
@@ -119,7 +123,7 @@ describe('Gn4FieldMapper', () => {
           })
         })
         it('resourceTitleObject - should return a function that correctly maps the field to default lang', () => {
-          service.lang3 = 'langeng'
+          translateService.currentLang = 'en'
           const fieldName = 'resourceTitleObject'
           const mappingFn = service.getMappingFn(fieldName)
           const output = {}
@@ -135,7 +139,7 @@ describe('Gn4FieldMapper', () => {
           })
         })
         it('resourceAbstractObject - should return a function that correctly maps the field to fre lang', () => {
-          service.lang3 = 'langfre'
+          translateService.currentLang = 'fr'
           const fieldName = 'resourceAbstractObject'
           const mappingFn = service.getMappingFn(fieldName)
           const output = {}
@@ -151,7 +155,7 @@ describe('Gn4FieldMapper', () => {
           })
         })
         it('overview - should return a function that correctly maps the field', () => {
-          service.lang3 = 'langfre'
+          translateService.currentLang = 'fr'
           const fieldName = 'overview'
           const mappingFn = service.getMappingFn(fieldName)
           const output = {}
@@ -191,15 +195,108 @@ describe('Gn4FieldMapper', () => {
           const result = mappingFn(output, source)
           expect(result).toEqual({ status: 'completed' })
         })
+        it('isHarvested - should return a function that correctly maps the field', () => {
+          const fieldName = 'isHarvested'
+          const mappingFn = service.getMappingFn(fieldName)
+          const output = {}
+          const source = {
+            isHarvested: 'true',
+          }
+          const result = mappingFn(output, source)
+          expect(result).toEqual({ extras: { isHarvested: true } })
+        })
         it('edit - should return a function that correctly maps the field', () => {
           const fieldName = 'edit'
           const mappingFn = service.getMappingFn(fieldName)
           const output = {}
           const source = {
-            edit: 'true',
+            edit: true,
           }
           const result = mappingFn(output, source)
-          expect(result).toEqual({ extras: { edit: 'true' } })
+          expect(result).toEqual({ extras: { edit: true } })
+        })
+        it('languages - should return a list of languages even with unsupported ones and without defaultLang', () => {
+          const fieldName = 'otherLanguage'
+          const mappingFn = service.getMappingFn(fieldName)
+          const output = {}
+          const source = { otherLanguage: ['fre', 'ger', 'aar'] }
+          const result = mappingFn(output, source)
+          expect(result).toEqual({ otherLanguages: ['de', 'aar'] })
+        })
+        it('related - should return a function that correctly maps the field', () => {
+          const fieldName = 'related'
+          const mappingFn = service.getMappingFn(fieldName)
+          const output = {}
+          const source = {
+            related: {
+              fcats: [
+                {
+                  origin: 'catalog',
+                  _source: {
+                    uuid: 'featurecatalog-001',
+                  },
+                },
+              ],
+              hassources: [
+                {
+                  origin: 'catalog',
+                  _source: {
+                    uuid: 'hassource-001',
+                  },
+                },
+              ],
+            },
+          }
+          const result = mappingFn(output, source)
+          expect(result).toEqual({
+            extras: {
+              featureCatalogIdentifier: 'featurecatalog-001',
+              sourceOfIdentifiers: ['hassource-001'],
+            },
+          })
+        })
+      })
+      it('recordLink - should return a function that correctly maps the field', () => {
+        const fieldName = 'recordLink'
+        const mappingFn = service.getMappingFn(fieldName)
+        const output = {}
+        const source = {
+          recordLink: [
+            {
+              origin: 'catalog',
+              to: 'source-001',
+              type: 'sources',
+              title: 'Some source data',
+              url: 'http://www.catalog.org/record/12345',
+            },
+            {
+              origin: 'catalog',
+              to: 'source-002',
+              type: 'sources',
+              title: 'Some other source data',
+              url: 'http://www.catalog.org/record/67890',
+            },
+            {
+              origin: 'remote',
+              to: 'source-003',
+              type: 'sources',
+              title: 'Some remote source data',
+              url: 'http://www.othercatalog.org/record/12345',
+            },
+            {
+              origin: 'catalog',
+              to: 'featurecatalog-001',
+              type: 'fcats',
+              title: 'Some feature catalog',
+              url: 'http://www.catalog.org/record/featurecatalog-001',
+            },
+          ],
+        }
+        const result = mappingFn(output, source)
+        expect(result).toEqual({
+          extras: {
+            sourcesIdentifiers: ['source-001', 'source-002'],
+          },
         })
       })
     })

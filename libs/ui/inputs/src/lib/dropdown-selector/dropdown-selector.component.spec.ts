@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TranslateModule } from '@ngx-translate/core'
 import { DropdownSelectorComponent } from './dropdown-selector.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('DropdownSelectorComponent', () => {
   let component: DropdownSelectorComponent
@@ -8,7 +8,7 @@ describe('DropdownSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DropdownSelectorComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
   })
 

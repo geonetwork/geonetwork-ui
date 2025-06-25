@@ -8,15 +8,15 @@ import {
 } from '@angular/core/testing'
 import { TableViewComponent } from './table-view.component'
 import { delay, firstValueFrom, of, throwError } from 'rxjs'
-import { ChangeDetectionStrategy, importProvidersFrom } from '@angular/core'
+import { ChangeDetectionStrategy } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { DataService } from '../service/data.service'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
-import { FetchError } from '@geonetwork-ui/data-fetcher'
+import { BaseReader, FetchError } from '@geonetwork-ui/data-fetcher'
 import { MockBuilder } from 'ng-mocks'
-import { TranslateModule } from '@ngx-translate/core'
 import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
 import { DataTableComponent } from '@geonetwork-ui/ui/dataviz'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const SAMPLE_DATA_ITEMS_CSV = [
   { type: 'Feature', properties: { id: 1 } },
@@ -29,9 +29,19 @@ const SAMPLE_DATA_ITEMS_GEOJSON = [
 
 class DatasetCsvReaderMock {
   read = jest.fn(() => Promise.resolve(SAMPLE_DATA_ITEMS_CSV))
+  properties = Promise.resolve([
+    { name: 'propNum1', type: 'number' },
+    { name: 'propStr1', type: 'string' },
+    { name: 'propStr2', type: 'string' },
+  ])
 }
+
 class DatasetGeoJsonReaderMock {
   read = jest.fn(() => Promise.resolve(SAMPLE_DATA_ITEMS_GEOJSON))
+  properties = Promise.resolve([
+    { name: 'propStr1', type: 'string' },
+    { name: 'propStr2', type: 'string' },
+  ])
 }
 class DataServiceMock {
   getDataset = jest.fn(({ url }) => {
@@ -55,7 +65,7 @@ describe('TableViewComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
-        importProvidersFrom(TranslateModule.forRoot()),
+        provideI18n(),
         {
           provide: DataService,
           useClass: DataServiceMock,
@@ -72,6 +82,17 @@ describe('TableViewComponent', () => {
   })
   beforeEach(fakeAsync(() => {
     component.link = aSetOfLinksFixture().dataCsv()
+    component.featureCatalog = {
+      featureTypes: [
+        {
+          name: 'someName',
+          definition: 'definition',
+          attributes: [
+            { name: 'propNum1', code: 'Proper name', title: 'propNum1' },
+          ],
+        },
+      ],
+    }
     fixture.detectChanges()
     flushMicrotasks()
   }))
@@ -204,6 +225,49 @@ describe('TableViewComponent', () => {
         aSetOfLinksFixture().dataCsv(),
         false
       )
+    })
+  })
+  describe('When link is restricted', () => {
+    it('shows an error message', () => {
+      component.link = {
+        ...aSetOfLinksFixture().dataCsv(),
+        accessRestricted: true,
+      }
+      fixture.detectChanges()
+      expect(component.error).toEqual('dataset.error.restrictedAccess')
+    })
+  })
+  describe('setProperties', () => {
+    beforeEach(() => {
+      const dataset = {
+        properties: Promise.resolve([
+          {
+            name: 'propNum1',
+            type: 'number',
+            label: 'propNum1',
+          },
+          {
+            name: 'propStr1',
+            type: 'string',
+            label: 'propStr1',
+          },
+          {
+            name: 'propStr2',
+            type: 'string',
+            label: 'propStr2',
+          },
+        ]),
+      } as unknown as BaseReader
+
+      component.setProperties(dataset)
+      fixture.detectChanges()
+    })
+    it('should update properties correctly with featureAttributes', async () => {
+      expect(component.featureAttributes).toEqual([
+        { label: 'Proper name', value: 'propNum1' },
+        { label: 'propStr1', value: 'propStr1' },
+        { label: 'propStr2', value: 'propStr2' },
+      ])
     })
   })
 })

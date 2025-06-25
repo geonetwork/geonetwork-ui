@@ -13,7 +13,6 @@ import { Gn4PlatformService } from './gn4-platform.service'
 import { firstValueFrom, lastValueFrom, of, Subject, throwError } from 'rxjs'
 import { AvatarServiceInterface } from '../auth/avatar.service.interface'
 import { Gn4PlatformMapper } from './gn4-platform.mapper'
-import { LangService } from '@geonetwork-ui/util/i18n'
 import {
   datasetRecordsFixture,
   someUserFeedbacksFixture,
@@ -22,6 +21,7 @@ import {
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { HttpClient, HttpEventType } from '@angular/common/http'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { TranslateService } from '@ngx-translate/core'
 
 let geonetworkVersion: string
 
@@ -58,6 +58,7 @@ class SiteApiServiceMock {
   getSiteOrPortalDescription = jest.fn(() =>
     of({
       'system/platform/version': geonetworkVersion,
+      'system/harvester/enableEditing': false,
     })
   )
 }
@@ -169,8 +170,8 @@ class RegistriesApiServiceMock {
   )
 }
 
-class LangServiceMock {
-  iso3 = 'fre'
+class TranslateServiceMock {
+  currentLang = 'fr'
 }
 
 const associatedResources = {
@@ -243,8 +244,8 @@ describe('Gn4PlatformService', () => {
           useClass: RegistriesApiServiceMock,
         },
         {
-          provide: LangService,
-          useClass: LangServiceMock,
+          provide: TranslateService,
+          useClass: TranslateServiceMock,
         },
         {
           provide: UserfeedbackApiService,
@@ -288,7 +289,7 @@ describe('Gn4PlatformService', () => {
         )
       })
     })
-    describe('when version is euqal or greater than 4.2.2', () => {
+    describe('when version is equal or greater than 4.2.2', () => {
       beforeEach(() => {
         geonetworkVersion = '4.2.2'
       })
@@ -296,6 +297,13 @@ describe('Gn4PlatformService', () => {
         const version = await firstValueFrom(service.getApiVersion())
         expect(version).toEqual('4.2.2')
       })
+    })
+  })
+
+  describe('allow edit harvested MD', () => {
+    it('fetches enableEditing from harvester settings', async () => {
+      const allowEdit = await firstValueFrom(service.getAllowEditHarvestedMd())
+      expect(allowEdit).toEqual(false)
     })
   })
 
@@ -457,7 +465,7 @@ describe('Gn4PlatformService', () => {
     })
     describe('if translations are unavailable', () => {
       it('uses default values', async () => {
-        service['langService']['iso3'] = 'ger'
+        service['translateService']['currentLang'] = 'de'
         const keywords = await lastValueFrom(
           service.searchKeywords('road', ['theme'])
         )
@@ -599,7 +607,7 @@ describe('Gn4PlatformService', () => {
     })
     describe('if translations are unavailable', () => {
       it('uses default values', async () => {
-        service['langService']['iso3'] = 'ger'
+        service['translateService']['currentLang'] = 'de'
         const thesaurusDomain = await lastValueFrom(
           service.getKeywordsByUri('http://inspire.ec.europa.eu/theme/')
         )
@@ -794,17 +802,22 @@ describe('Gn4PlatformService', () => {
     it('should clean record attachments no longer used', (done) => {
       const record = { uniqueIdentifier: '123' } as CatalogRecord
       const associatedResources = {
-        onlines: [{ title: { en: 'doge.jpg' } }],
-        thumbnails: [{ title: { en: 'flower.jpg' } }],
+        onlines: [{ title: { en: 'doge.jpg' }, url: 'http://doge.jpg' }],
+        thumbnails: [
+          {
+            title: { en: 'my-beautiful-flower.jpg' },
+            url: 'http://flower.jpg',
+          },
+        ],
       }
       ;(recordsApiService.getAssociatedResources as jest.Mock).mockReturnValue(
         of(associatedResources)
       )
       ;(recordsApiService.getAllResources as jest.Mock).mockReturnValue(
         of([
-          { filename: 'doge.jpg' },
-          { filename: 'flower.jpg' },
-          { filename: 'remove1.jpg' },
+          { filename: 'doge.jpg', url: 'http://doge.jpg' },
+          { filename: 'flower.jpg', url: 'http://flower.jpg' },
+          { filename: 'remove1.jpg', url: 'http://remove1.jpg' },
         ])
       )
       ;(recordsApiService.delResource as jest.Mock).mockReturnValue(

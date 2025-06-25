@@ -1,22 +1,33 @@
 <div
-  class="flex flex-wrap justify-between mt-8 mb-6 sm:mt-12 sm:mb-2"
+  class="flex flex-wrap justify-between items-center pb-4"
   *ngIf="links && links.length > 0"
 >
-  <p
-    class="font-title text-[28px] text-title font-medium mr-4 pb-4 text-center sm:text-left"
-    translate
-  >
-    record.metadata.download
-  </p>
+  <div class="flex flex-row items-center gap-x-4">
+    <div>
+      <h3
+        class="inline-block font-title text-xl text-title font-medium mr-4"
+        translate
+      >
+        record.metadata.download
+      </h3>
+      <span class="px-3">({{ linksCount }})</span>
+    </div>
+    <gn-ui-previous-next-buttons
+      class="md:block hidden"
+      *ngIf="_list?.pagesCount > 1"
+      [listComponent]="_list"
+    ></gn-ui-previous-next-buttons>
+  </div>
+
   <div
-    class="flex flex-wrap justify-start sm:justify-end sm:pb-4"
+    class="flex flex-wrap justify-start sm:justify-end"
     data-cy="download-format-filters"
   >
     <gn-ui-button
       class="m-1 format-filter"
       [extraClass]="
         '!px-[12px] !py-[8px] !text-[15px]' +
-        (isFilterActive(format) ? ' opacity-100' : ' opacity-50')
+        (isFilterActive(format) ? ' opacity-100' : ' opacity-60')
       "
       (buttonClick)="toggleFilterFormat(format)"
       [attr.data-format]="format"
@@ -26,8 +37,29 @@
     </gn-ui-button>
   </div>
 </div>
-<div class="mb-2 sm:mb-3" *ngFor="let link of filteredLinks">
+
+<ng-container>
+  <gn-ui-block-list
+    class="md:block hidden"
+    #blockList
+    (listChanges)="updateList($event)"
+    containerClass="gap-4 pt-5 pb-7"
+  >
+    <gn-ui-download-item
+      #block
+      *ngFor="let link of filteredLinks"
+      [link]="link"
+      [color]="getLinkColor(link)"
+      [format]="getLinkFormat(link)"
+      [isFromApi]="isFromApi(link)"
+      [size]="blockList.subComponentSize"
+    ></gn-ui-download-item>
+  </gn-ui-block-list>
+</ng-container>
+
+<div class="mb-5 md:hidden block" *ngFor="let link of filteredLinks">
   <gn-ui-download-item
+    size="M"
     [link]="link"
     [color]="getLinkColor(link)"
     [format]="getLinkFormat(link)"

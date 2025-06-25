@@ -13,9 +13,9 @@ import {
   CatalogRecordKeys,
   Constraint,
 } from '@geonetwork-ui/common/domain/model/record'
-import { ButtonComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import {
   NgIconComponent,
   provideIcons,
@@ -36,10 +36,9 @@ marker('editor.record.form.constraint.header.otherConstraints')
     CommonModule,
     SortableListComponent,
     ConstraintCardComponent,
-    UiInputsModule,
     ButtonComponent,
-    TranslateModule,
     NgIconComponent,
+    TranslatePipe,
   ],
   providers: [
     provideIcons({ iconoirPlus }),

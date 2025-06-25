@@ -22,9 +22,9 @@ import {
   extractDatasetOnlineResources,
   extractDateTime,
   extractLocalizedCharacterString,
+  extractReuseOnlineResources,
   extractRole,
   extractServiceOnlineResources,
-  extractReuseOnlineResources,
   extractUrl,
   findIdentification,
 } from '../iso19139/read-parts'
@@ -41,7 +41,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchMimeType } from '../common/distribution.mapper'
 import { fullNameToParts } from '../iso19139/utils/individual-name'
-import { LANG_3_TO_2_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
+import { getLang2FromLang3 } from '@geonetwork-ui/util/i18n/language-codes'
 import { getResourceType, getReuseType } from '../common/resource-types'
 
 export function readKind(rootEl: XmlElement): RecordKind {
@@ -363,11 +363,14 @@ export function readOnlineResources(rootEl: XmlElement): OnlineResource[] {
   )(rootEl)
 }
 
-function readLocaleElement(): ChainableFunction<XmlElement, LanguageCode> {
+export function readLocaleElement(): ChainableFunction<
+  XmlElement,
+  LanguageCode
+> {
   return pipe(
     findChildElement('lan:LanguageCode'),
     readAttribute('codeListValue'),
-    map((lang) => (lang ? LANG_3_TO_2_MAPPER[lang.toLowerCase()] : null))
+    map((lang) => getLang2FromLang3(lang?.toLowerCase()) ?? lang)
   )
 }
 
@@ -381,6 +384,9 @@ export function readDefaultLanguage(rootEl: XmlElement): LanguageCode {
 export function readOtherLanguages(rootEl: XmlElement): LanguageCode[] {
   return pipe(
     findChildrenElement('mdb:otherLocale', false),
-    mapArray(readLocaleElement())
+    mapArray(readLocaleElement()),
+    map((languages) =>
+      languages.filter((lang): lang is LanguageCode => lang !== null)
+    )
   )(rootEl)
 }

@@ -1,6 +1,5 @@
 import { importProvidersFrom, NgModule } from '@angular/core'
 import { RouterModule } from '@angular/router'
-import { TranslateModule } from '@ngx-translate/core'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
@@ -12,10 +11,7 @@ import {
 } from '@geonetwork-ui/feature/router'
 import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { ThemeService } from '@geonetwork-ui/util/shared'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { AppComponent } from './app.component'
 import { appRoutes } from './app.routes'
 import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
@@ -27,9 +23,9 @@ import { EditorRouterService } from './router.service'
 import {
   LOGIN_URL,
   LOGOUT_URL,
-  SETTINGS_URL,
   provideGn4,
   provideRepositoryUrl,
+  SETTINGS_URL,
 } from '@geonetwork-ui/api/repository'
 import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
 
@@ -51,6 +47,8 @@ import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
       searchStateId: 'editor',
       searchRouteComponent: DashboardPageComponent,
       recordRouteComponent: null,
+      serviceRouteComponent: null,
+      reuseRouteComponent: null,
       organizationRouteComponent: null,
     }),
     ...extModules,
@@ -62,8 +60,7 @@ import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
     importProvidersFrom(FeatureCatalogModule),
     importProvidersFrom(FeatureRecordModule),
     importProvidersFrom(FeatureEditorModule),
-    importProvidersFrom(UtilI18nModule),
-    importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
+    provideI18n(),
     provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
     importProvidersFrom(EffectsModule.forRoot()),
     provideGn4(),

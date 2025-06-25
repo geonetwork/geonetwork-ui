@@ -31,11 +31,8 @@
     *ngFor="let item of items"
     (click)="handleRowClick(item)"
     data-cy="table-row"
-    [title]="
-      !item.extras?.edit && !isDraftPage
-        ? ('editor.record.lock.reason' | translate)
-        : ''
-    "
+    [attr.data-cy-title]="item.title"
+    [title]="getItemTitle(item) | translate"
   >
     <div
       class="relative h-0"
@@ -52,9 +49,9 @@
         class="table-row-cell px-3 py-1.5 flex items-center bg-white transition-colors duration-75 truncate border-b border-gray-200"
         [ngClass]="{
           'text-purple-light cursor-default':
-            !item.extras?.edit && !isDraftPage,
+            (canEditItem(item) | async) === false,
           'group-hover:text-main group-hover:bg-gray-50':
-            item.extras?.edit || isDraftPage,
+            canEditItem(item) | async,
         }"
       >
         <ng-container

@@ -6,12 +6,6 @@ describe('ColorScaleComponent', () => {
   let component: ColorScaleComponent
   let fixture: ComponentFixture<ColorScaleComponent>
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ColorScaleComponent],
-    }).compileComponents()
-  })
-
   beforeEach(() => {
     fixture = TestBed.createComponent(ColorScaleComponent)
     component = fixture.componentInstance

@@ -1,11 +1,9 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
-
 import { SearchPageComponent } from './search-page.component'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
-import { UiLayoutModule } from '@geonetwork-ui/ui/layout'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
+import { MockBuilder } from 'ng-mocks'
 
 const RouterFacadeMock = {
   goToMetadata: jest.fn(),
@@ -16,15 +14,14 @@ const SearchFacadeMock = {
   setResultsLayout: jest.fn(() => this),
 }
 
-describe('MainSearchComponent', () => {
+describe('SearchPageComponent', () => {
   let component: SearchPageComponent
   let fixture: ComponentFixture<SearchPageComponent>
 
+  beforeEach(() => MockBuilder(SearchPageComponent))
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SearchPageComponent],
-      imports: [UiLayoutModule],
-      schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
           provide: RouterFacade,

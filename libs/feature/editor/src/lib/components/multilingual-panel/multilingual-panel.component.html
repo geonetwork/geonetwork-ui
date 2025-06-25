@@ -1,0 +1,120 @@
+<div
+  class="flex flex-col h-full w-[302px] bg-neutral-100 border-l border-gray-300 py-8 px-3 gap-6 overflow-auto"
+>
+  <div class="flex flex-row px-2 justify-between">
+    <span class="text-3xl font-title text-black/80" translate
+      >editor.record.form.multilingual.title</span
+    >
+    <button
+      [title]="'editor.record.form.multilingual.open' | translate"
+      (click)="toggleLanguageSelection()"
+      *ngIf="isMultilingual"
+      data-test="activateSelection"
+    >
+      <ng-icon class="mt-1" name="iconoirSettings"></ng-icon>
+    </button>
+  </div>
+  <div class="flex flex-col gap-2" *ngIf="editTranslations || !isMultilingual">
+    <gn-ui-check-toggle
+      class="p-2"
+      [label]="'editor.record.form.multilingual.enable' | translate"
+      [color]="'primary'"
+      [(value)]="isMultilingual"
+      (toggled)="switchMultilingual($event)"
+    ></gn-ui-check-toggle>
+    <div *ngIf="isMultilingual" class="flex flex-col gap-2">
+      <div class="flex flex-row justify-between border-t border-gray-300 p-3">
+        <span class="mt-2 text-sm text-gray-600" translate
+          >editor.record.form.multilingual.activate</span
+        >
+        <gn-ui-button
+          extraClass="w-16 h-8 font-bold"
+          type="gray"
+          (buttonClick)="validateTranslations()"
+          data-test="validateSelection"
+          >{{ 'editor.record.form.multilingual.validate' | translate }}
+        </gn-ui-button>
+      </div>
+      <ng-container *ngIf="supportedLanguages$ | async as languages">
+        <div
+          class="flex flex-col gap-2 w-full px-2"
+          data-test="langAvailable"
+          *ngFor="let lang of languages"
+        >
+          <gn-ui-button
+            [extraClass]="getExtraClass(lang)"
+            type="gray"
+            (buttonClick)="toggleLanguage(lang)"
+            [disabled]="lang === _record.defaultLanguage"
+            [title]="getToggleTitle(lang)"
+          >
+            <span [class]="getIconClass(lang)"></span>
+            <span class="ml-2">{{ 'language.' + lang | translate }}</span>
+          </gn-ui-button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div *ngIf="!editTranslations && isMultilingual" class="flex flex-col gap-2">
+    <gn-ui-button
+      *ngFor="let recordLang of sortLanguages(recordLanguages); let i = index"
+      extraClass="flex flex-row justify-between bg-white border border-white rounded mb-1 h-[34px] w-full"
+      [ngClass]="{
+        'mt-8': isFirstUnsupported(i),
+        '': true,
+      }"
+      (buttonClick)="switchFormLang(recordLang)"
+      type="outline"
+      data-test="langSwitch"
+    >
+      <div class="flex flex-row gap-2 items-center">
+        <ng-icon
+          *ngIf="recordLang === formLanguage"
+          class="text-primary mt-1"
+          name="iconoirCheckCircle"
+        ></ng-icon>
+        <ng-icon
+          *ngIf="recordLang !== formLanguage"
+          class="text-gray-800 mt-1"
+          name="iconoirCircle"
+        ></ng-icon>
+        <span
+          *ngIf="recordLang.length === 2"
+          [class]="getIconClass(recordLang) + 'mt-1'"
+        ></span>
+        <span [ngClass]="recordLang === formLanguage ? 'text-black' : ''">{{
+          isLangSupported(recordLang)
+            ? ('language.' + recordLang | translate)
+            : recordLang.toUpperCase()
+        }}</span>
+      </div>
+      <div class="flex flex-row gap-2 items-center">
+        <span
+          *ngIf="recordLang === formLanguage"
+          class="text-xs text-base"
+          translate
+          >editor.record.form.multilingual.default</span
+        >
+        <button
+          (click)="
+            openActionMenu(recordLang, template); $event.stopPropagation()
+          "
+          cdkOverlayOrigin
+          #actionMenuButton
+        >
+          <ng-icon class="pb-5" name="matMoreHorizOutline"></ng-icon>
+        </button>
+        <ng-template #template>
+          <gn-ui-action-menu
+            [canDelete]="recordLang !== _record.defaultLanguage"
+            page="record"
+            (delete)="confirmDeleteAction(recordLang)"
+            (closeActionMenu)="closeActionMenu()"
+            (switch)="switchDefaultLang(recordLang)"
+          >
+          </gn-ui-action-menu>
+        </ng-template>
+      </div>
+    </gn-ui-button>
+  </div>
+</div>

@@ -66,15 +66,20 @@
   /* this is a base class, do not use it directly */
   .gn-ui-btn {
     --rounded: var(--gn-ui-button-rounded, 0.25em);
+    --border-width: var(--gn-ui-button-border-width, 1px);
     --padding: var(--gn-ui-button-padding, 1em);
     --width: var(--gn-ui-button-width, auto);
     --height: var(--gn-ui-button-height, auto);
-    --background: var(--gn-ui-button-background, --color-background);
+    --background: var(--gn-ui-button-background, var(--color-background));
+    --bg-hover: var(--gn-ui-button-bg-hover, var(--color-background));
     --font-size: var(--gn-ui-button-font-size, 1em);
+    --color: var(--gn-ui-button-color, var(--color-main));
     @apply flex flex-row items-center justify-center
       text-[length:--font-size] leading-none
+      text-[color:--color]
       p-[--padding] rounded-[--rounded] w-[--width] h-[--height] overflow-hidden
-      bg-[--background] transition-all duration-100
+      border-[length:--border-width] bg-[--background] transition-all duration-100
+      hover:bg-[--bg-hover] focus:bg-[--bg-hover] active:bg-[--background]
       outline-none
       relative
       disabled:opacity-50 disabled:pointer-events-none
@@ -89,44 +94,60 @@
 
   .gn-ui-btn-default {
     @apply gn-ui-btn text-white
-      bg-gray-700 hover:bg-gray-800 active:bg-gray-900
-      border border-gray-700 focus:ring-4 focus:ring-gray-200;
+      bg-gray-700 hover:bg-gray-800 hover:!text-white active:bg-gray-900
+      border-gray-700 focus:ring-4 focus:ring-gray-200 focus:text-gray-900;
   }
 
   .gn-ui-btn-primary {
     @apply gn-ui-btn text-white
       bg-primary hover:bg-primary-darker focus:bg-primary-darker active:bg-primary-darkest
-      border border-primary focus:ring-4 focus:ring-primary-lightest;
+      border-primary focus:ring-4 focus:ring-primary-lightest;
   }
 
   .gn-ui-btn-secondary {
     @apply gn-ui-btn text-white
       bg-secondary hover:bg-secondary-darker focus:bg-secondary-darker active:bg-secondary-darkest
-      border border-secondary focus:ring-4 focus:ring-secondary-lightest;
+      border-secondary focus:ring-4 focus:ring-secondary-lightest;
   }
 
   .gn-ui-btn-gray {
     @apply gn-ui-btn text-black
     bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 active:bg-gray-300
-    border border-gray-100 focus:ring-4 focus:ring-gray-50;
+    border-gray-100 focus:ring-4 focus:ring-gray-50;
   }
 
   .gn-ui-btn-black {
     @apply gn-ui-btn text-white
     bg-black hover:bg-gray-950 focus:bg-gray-950 active:bg-gray-900
-    border border-black focus:ring-4 focus:ring-gray-300;
+    border-black focus:ring-4 focus:ring-gray-300;
   }
 
   .gn-ui-btn-outline {
-    @apply gn-ui-btn text-main
+    @apply gn-ui-btn
     hover:text-primary-darker focus:text-primary-darker active:text-primary-black
-    border border-gray-300 hover:border-primary-lighter focus:border-primary-lighter focus:ring-4 focus:ring-primary-lightest active:border-primary-darker;
+    border-gray-300 hover:border-primary-lighter focus:border-primary-lighter focus:ring-4 focus:ring-primary-lightest active:border-primary-darker;
   }
 
   .gn-ui-btn-light {
-    @apply gn-ui-btn text-main
+    @apply gn-ui-btn
       hover:bg-gray-50 focus:bg-gray-50 active:bg-gray-100
-      border border-white focus:ring-4 focus:ring-gray-300;
+      bg-white border-white focus:ring-4 focus:ring-gray-300;
+  }
+
+  .gn-ui-card-s {
+    @apply min-h-[64px] w-full xs:min-w-[260px] xs:max-w-[280px] sm:min-w-[300px] sm:max-w-[500px] md:min-w-[230px];
+  }
+
+  .gn-ui-card-title {
+    @apply font-title font-medium text-black text-ellipsis overflow-hidden break-words line-clamp-3;
+  }
+
+  .gn-ui-card-icon {
+    @apply flex border border-gray-300 rounded-lg py-1 px-2 align-middle;
+  }
+
+  .gn-ui-card-detail {
+    @apply font-medium text-gray-500 text-ellipsis break-words text-sm;
   }
 
   /* DROPDOWN MULTISELECT CLASS */
@@ -186,13 +207,18 @@
 
   /* TODO: add prefix */
   .card-icon {
-    @apply text-primary opacity-50 group-hover:text-secondary group-hover:opacity-100 transition-colors transition-opacity;
+    @apply text-black group-hover:text-primary-darkest transition-colors;
   }
 
   /* makes spinners appear in the right color */
   mat-spinner circle,
   mat-progress-spinner circle {
     stroke: currentColor !important;
+  }
+
+  /* Section title */
+  .gn-ui-section-title {
+    @apply text-title font-medium pt-9 text-[28px];
   }
 }
 

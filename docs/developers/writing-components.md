@@ -76,6 +76,8 @@ This is the progression status of creating Storybook entries for all presentatio
 Storybook entries for standalone components are usually straightforward to set up:
 
 ```ts
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+
 export default {
   title: 'Category/MyStandaloneComponent',
   component: MyStandaloneComponent,
@@ -84,8 +86,7 @@ export default {
     applicationConfig({
       providers: [
         // provide here what's needed; for translation this is:
-        importProvidersFrom(UtilI18nModule),
-        importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
+        provideI18n(),
       ],
     }),
   ],
@@ -97,6 +98,8 @@ export default {
 Legacy components will often rely on other modules. These should be imported like so:
 
 ```ts
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+
 export default {
   title: 'Category/MyComponent',
   component: MyComponent,
@@ -105,14 +108,13 @@ export default {
       imports: [
         // import whatever module is required
         // ...
-        // note: these are required if the module needs translations:
-        UtilI18nModule,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
       ],
     }),
     applicationConfig({
       providers: [
-        // provider wheter is needed here
+        // provider whatever is needed here
+        // note: these are required if the module needs translations:
+        provideI18n(),
       ],
     }),
   ],

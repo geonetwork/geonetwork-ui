@@ -31,6 +31,7 @@ describe('ChartComponent', () => {
     component.data = charItemFixture()
     component.labelProperty = 'name'
     component.valueProperty = 'age'
+    component.prettyLabel = 'Age'
     component.type = 'bar'
     component.ngOnChanges()
   })
@@ -56,7 +57,7 @@ describe('ChartComponent', () => {
           datasets: [
             {
               data: [15, 10, 55],
-              label: 'age',
+              label: 'Age',
             },
           ],
           labels: ['name 1', 'name 2', 'name 3'],
@@ -96,7 +97,7 @@ describe('ChartComponent', () => {
               datasets: [
                 {
                   data: [15, 10],
-                  label: 'age',
+                  label: 'Age',
                 },
               ],
               labels: ['name 1', 'name 2'],
@@ -110,6 +111,7 @@ describe('ChartComponent', () => {
       beforeEach(() => {
         component.labelProperty = 'id'
         component.valueProperty = 'amount'
+        component.prettyLabel = 'Amount'
         component.ngOnChanges()
         fixture.detectChanges()
       })
@@ -122,7 +124,7 @@ describe('ChartComponent', () => {
               datasets: [
                 {
                   data: [100, 101, 102],
-                  label: 'amount',
+                  label: 'Amount',
                 },
               ],
               labels: ['id 1', 'id 2', 'id 3'],
@@ -176,7 +178,7 @@ describe('ChartComponent', () => {
                   y: 55,
                 },
               ],
-              label: 'age',
+              label: 'Age',
             },
           ],
           labels: ['id 1', 'id 2', 'id 3'],

@@ -10,6 +10,29 @@ const newEndpointCall = jest.fn()
 
 jest.mock('@camptocamp/ogc-client', () => ({
   _newEndpointCall: jest.fn(),
+  TmsEndpoint: class {
+    constructor(private url) {
+      newEndpointCall(url)
+    }
+    allTileMaps =
+      this.url.indexOf('error.http') > -1
+        ? Promise.reject(new Error())
+        : Promise.resolve([{ href: 'tilemap1' }])
+
+    async getTileMapInfo(_href: string) {
+      if (this.url.indexOf('no-styles') > -1) {
+        return {
+          metadata: [],
+        }
+      }
+      return {
+        metadata: [
+          { href: 'https://my.tms.server/styles/style1.json', name: 'Style 1' },
+          { href: 'https://my.tms.server/styles/style2.json', name: 'Style 2' },
+        ],
+      }
+    }
+  },
   WfsEndpoint: class {
     constructor(private url) {
       newEndpointCall(url) // to track endpoint creation
@@ -116,7 +139,7 @@ jest.mock('@camptocamp/ogc-client', () => ({
       this.url.indexOf('error.http') > -1
         ? Promise.reject(new Error())
         : Promise.resolve(['collection1', 'collection2'])
-    getCollectionItem(collection, id) {
+    getCollectionItem(_collection: string, _id: string) {
       return Promise.resolve('item1')
     }
   },
@@ -216,7 +239,7 @@ describe('DataService', () => {
               })
             )
           } catch (e) {
-            expect(e.message).toBe('wfs.unreachable.cors')
+            expect((e as Error).message).toBe('wfs.unreachable.cors')
           }
         })
       })
@@ -230,7 +253,7 @@ describe('DataService', () => {
               })
             )
           } catch (e) {
-            expect(e.message).toBe('wfs.unreachable.http')
+            expect((e as Error).message).toBe('wfs.unreachable.http')
           }
         })
       })
@@ -244,7 +267,7 @@ describe('DataService', () => {
               })
             )
           } catch (e) {
-            expect(e.message).toBe('wfs.unreachable.unknown')
+            expect((e as Error).message).toBe('wfs.unreachable.unknown')
           }
         })
       })
@@ -258,7 +281,7 @@ describe('DataService', () => {
               })
             )
           } catch (e) {
-            expect(e.message).toBe('wfs.featuretype.notfound')
+            expect((e as Error).message).toBe('wfs.featuretype.notfound')
           }
         })
       })
@@ -469,7 +492,7 @@ describe('DataService', () => {
             service.getWfsFeatureCount(wfsUrl, featureTypeName)
           )
         } catch (e) {
-          expect(e.message).toBe('wfs.featuretype.notfound')
+          expect((e as Error).message).toBe('wfs.featuretype.notfound')
         }
       })
 
@@ -528,7 +551,7 @@ describe('DataService', () => {
               service.getDownloadUrlsFromWfs('http://local/wfs', 'nojsontype')
             )
           } catch (e) {
-            expect(e.message).toBe('wfs.geojsongml.notsupported')
+            expect((e as Error).message).toBe('wfs.geojsongml.notsupported')
           }
         })
       })
@@ -780,6 +803,56 @@ describe('DataService', () => {
         })
       })
     })
+
+    describe('#getGeodataLinksFromTms', () => {
+      const tmsLink = {
+        url: new URL('https://my.tms.server/tms'),
+        name: 'LayerName',
+        description: 'Layer Description',
+        type: 'service',
+        accessServiceProtocol: 'tms',
+      } as const
+
+      it('returns style links as DatasetServiceDistribution objects', async () => {
+        const styles = await service.getGeodataLinksFromTms(tmsLink)
+        expect(styles).toEqual([
+          {
+            type: 'service',
+            url: new URL('https://my.tms.server/styles/style1.json'),
+            name: 'Layer Description - style1',
+            accessServiceProtocol: 'maplibre-style',
+          },
+          {
+            type: 'service',
+            url: new URL('https://my.tms.server/styles/style2.json'),
+            name: 'Layer Description - style2',
+            accessServiceProtocol: 'maplibre-style',
+          },
+        ])
+      })
+
+      it('returns [tmsLink] when there are no styles', async () => {
+        const noStyleLink = {
+          ...tmsLink,
+          url: new URL('https://my.tms.server/no-styles'),
+        }
+        const styles = await service.getGeodataLinksFromTms(noStyleLink)
+        expect(styles).toEqual([noStyleLink])
+      })
+
+      it('throws an error', async () => {
+        const noStyleLink = {
+          ...tmsLink,
+          url: new URL('http://error.http/tms'),
+        }
+
+        try {
+          await service.getGeodataLinksFromTms(noStyleLink)
+        } catch (e) {
+          expect((e as Error).message).toBe('ogc.unreachable.unknown')
+        }
+      })
+    })
   })
 
   describe('with a proxy path', () => {
@@ -895,7 +968,7 @@ describe('DataService', () => {
           try {
             await service.getItemsFromOgcApi('http://error.http/ogcapi')
           } catch (e) {
-            expect(e.message).toBe('ogc.unreachable.unknown')
+            expect((e as Error).message).toBe('ogc.unreachable.unknown')
           }
         })
       })

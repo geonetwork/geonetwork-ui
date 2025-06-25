@@ -30,7 +30,7 @@ import {
   iconoirMediaImageXmark,
   iconoirPlus,
 } from '@ng-icons/iconoir'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import { firstValueFrom } from 'rxjs'
 import { ImageOverlayPreviewComponent } from '../image-overlay-preview/image-overlay-preview.component'
 
@@ -45,7 +45,7 @@ import { ImageOverlayPreviewComponent } from '../image-overlay-preview/image-ove
     ButtonComponent,
     FilesDropDirective,
     MatProgressSpinnerModule,
-    TranslateModule,
+    TranslatePipe,
     UrlInputComponent,
     TextInputComponent,
     NgIconComponent,
@@ -66,9 +66,22 @@ import { ImageOverlayPreviewComponent } from '../image-overlay-preview/image-ove
   ],
 })
 export class ImageInputComponent {
-  @Input() maxSizeMB: number
+  private _altText?: string
+
   @Input() previewUrl?: string
-  @Input() altText?: string
+  @Input()
+  get altText(): string | undefined {
+    return this._altText
+  }
+  set altText(value: string | undefined) {
+    if (value !== 'KO' && this._altText === 'KO') {
+      //This is a dataset rollback after upload error
+      this.resetErrors()
+    }
+    this._altText = value
+  }
+
+  @Input() maxSizeMB: number
   @Input() uploadProgress?: number
   @Input() uploadError?: boolean
   @Input() disabled?: boolean = false
@@ -80,11 +93,9 @@ export class ImageInputComponent {
 
   dragFilesOver = false
   showUrlInput = false
-  downloadError = false
+  imageFileError = this.uploadError
   showAltTextInput = false
-
-  lastUploadType?: 'file' | 'url'
-  lastUploadContent?: string | File
+  pendingAltText: string
 
   get isUploadInProgress() {
     return this.uploadProgress !== undefined
@@ -95,8 +106,12 @@ export class ImageInputComponent {
     private cd: ChangeDetectorRef
   ) {}
 
+  getIsActionBlocked() {
+    return this.isUploadInProgress || this.disabled
+  }
+
   getPrimaryText() {
-    if (this.uploadError) {
+    if (this.imageFileError) {
       return marker('input.image.uploadErrorLabel')
     }
     if (this.uploadProgress) {
@@ -106,8 +121,8 @@ export class ImageInputComponent {
   }
 
   getSecondaryText() {
-    if (this.uploadError) {
-      return marker('input.image.uploadErrorRetry')
+    if (this.imageFileError) {
+      return '\u00A0' // (only to keep same spacing, next step is to handle "Retry")
     }
     if (this.uploadProgress) {
       return marker('input.image.uploadProgressCancel')
@@ -123,18 +138,26 @@ export class ImageInputComponent {
   }
 
   handleDropFiles(files: File[]) {
+    this.resetErrors()
     const validFiles = this.filterTypeImage(files)
     if (validFiles.length > 0) {
       this.showUrlInput = false
       this.resizeAndEmit(validFiles[0])
+    } else {
+      this.imageFileError = true
+      this.handleAltTextChange('KO')
     }
   }
 
   handleFileInput(event: Event) {
+    this.resetErrors()
     const inputFiles = Array.from((event.target as HTMLInputElement).files)
     const validFiles = this.filterTypeImage(inputFiles)
     if (validFiles.length > 0) {
       this.resizeAndEmit(validFiles[0])
+    } else {
+      this.imageFileError = true
+      this.handleAltTextChange('KO')
     }
   }
 
@@ -144,7 +167,7 @@ export class ImageInputComponent {
   }
 
   async downloadUrl(url: string) {
-    this.downloadError = false
+    this.resetErrors()
     const name = url.split('/').pop()
     try {
       const response = await firstValueFrom(
@@ -162,45 +185,39 @@ export class ImageInputComponent {
             this.fileChange.emit(file)
           },
           error: () => {
-            this.downloadError = true
+            this.imageFileError = true
+            this.handleAltTextChange('KO')
             this.cd.markForCheck()
             this.urlChange.emit(url)
           },
         })
       }
     } catch {
-      this.downloadError = true
+      this.imageFileError = true
+      this.handleAltTextChange('KO')
       this.cd.markForCheck()
       return
     }
   }
 
   handleSecondaryTextClick(event: Event) {
-    if (this.uploadError) {
-      this.handleRetry()
-    } else if (this.uploadProgress) {
-      this.handleCancel()
+    if (this.uploadProgress) {
+      this.handleCancelUpload()
       event.preventDefault()
     }
   }
 
-  handleCancel() {
+  handleCancelUpload() {
     this.uploadCancel.emit()
-  }
-
-  handleRetry() {
-    switch (this.lastUploadType) {
-      case 'file':
-        this.fileChange.emit(this.lastUploadContent as File)
-        break
-      case 'url':
-        this.urlChange.emit(this.lastUploadContent as string)
-        break
-    }
   }
 
   handleDelete() {
     this.delete.emit()
+  }
+
+  resetErrors() {
+    this.imageFileError = false
+    this.uploadError = false
   }
 
   toggleAltTextInput() {
@@ -210,7 +227,6 @@ export class ImageInputComponent {
   handleAltTextChange(altText: string) {
     this.altTextChange.emit(altText)
   }
-
   private filterTypeImage(files: File[]) {
     return files.filter((file) => {
       return file.type.startsWith('image/')

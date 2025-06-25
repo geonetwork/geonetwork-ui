@@ -13,6 +13,7 @@ import {
   CdkConnectedOverlay,
   CdkOverlayOrigin,
   ConnectedPosition,
+  OverlayModule,
   ScrollStrategyOptions,
 } from '@angular/cdk/overlay'
 import { take } from 'rxjs/operators'
@@ -21,12 +22,38 @@ import {
   createFuzzyFilter,
   propagateToDocumentOnly,
 } from '@geonetwork-ui/util/shared'
+import { ButtonComponent } from '../button/button.component'
+import { NgIcon, provideIcons } from '@ng-icons/core'
+import { FormsModule } from '@angular/forms'
+import { TranslatePipe } from '@ngx-translate/core'
+import { CommonModule } from '@angular/common'
+import {
+  matClose,
+  matExpandLess,
+  matExpandMore,
+} from '@ng-icons/material-icons/baseline'
 
 @Component({
   selector: 'gn-ui-dropdown-multiselect',
   templateUrl: './dropdown-multiselect.component.html',
   styleUrls: ['./dropdown-multiselect.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    ButtonComponent,
+    NgIcon,
+    OverlayModule,
+    FormsModule,
+    TranslatePipe,
+  ],
+  providers: [
+    provideIcons({
+      matClose,
+      matExpandMore,
+      matExpandLess,
+    }),
+  ],
+  standalone: true,
 })
 export class DropdownMultiselectComponent {
   @Input() title: string

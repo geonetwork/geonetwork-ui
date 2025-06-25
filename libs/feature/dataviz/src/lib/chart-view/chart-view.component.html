@@ -18,15 +18,17 @@
       [selected]="xProperty$.value"
       [title]="'chart.dropdown.xProperty' | translate"
     ></gn-ui-dropdown-selector>
-    <gn-ui-dropdown-selector
-      class="basis-1/4"
-      *ngIf="!isCountAggregation"
-      [choices]="yChoices$ | async"
-      (selectValue)="yProperty$.next($event)"
-      [selected]="yProperty$.value"
-      [title]="'chart.dropdown.yProperty' | translate"
-      class="select-y-prop"
-    ></gn-ui-dropdown-selector>
+    <ng-container *ngIf="yChoices$ | async as yChoices">
+      <gn-ui-dropdown-selector
+        class="basis-1/4"
+        *ngIf="!isCountAggregation"
+        [choices]="yChoices"
+        (selectValue)="yProperty$.next($event)"
+        [selected]="yProperty$.value"
+        [title]="'chart.dropdown.yProperty' | translate"
+        class="select-y-prop"
+      ></gn-ui-dropdown-selector>
+    </ng-container>
     <gn-ui-dropdown-selector
       class="basis-1/4"
       [choices]="aggregationChoices"
@@ -40,8 +42,10 @@
     class="relative h-full mt-2 bg-white border border-gray-300 rounded-lg overflow-hidden"
   >
     <gn-ui-chart
+      *ngIf="!error"
       [data]="chartData$ | async"
       [type]="chartType$.value"
+      [prettyLabel]="prettyLabel$ | async"
       [labelProperty]="labelProperty"
       [valueProperty]="valueProperty"
     ></gn-ui-chart>

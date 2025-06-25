@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { AutocompleteComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
+import { AutocompleteComponent } from '@geonetwork-ui/ui/inputs'
 import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
@@ -12,6 +11,7 @@ import {
   searchResultsFixture,
 } from '@geonetwork-ui/common/fixtures'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class SearchFacadeMock {
   setFilters = jest.fn()
@@ -34,8 +34,10 @@ describe('FuzzySearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FuzzySearchComponent],
       providers: [
+        provideI18n({
+          useDefaultLang: false,
+        }),
         {
           provide: SearchFacade,
           useClass: SearchFacadeMock,
@@ -48,11 +50,6 @@ describe('FuzzySearchComponent', () => {
           provide: RecordsRepositoryInterface,
           useClass: RecordsRepositoryMock,
         },
-      ],
-      imports: [
-        AutocompleteComponent,
-        UiInputsModule,
-        TranslateModule.forRoot(),
       ],
     }).compileComponents()
 
@@ -210,6 +207,37 @@ describe('FuzzySearchComponent', () => {
           title: 'abc',
         })
       })
+    })
+  })
+
+  describe('placeholder behaviour', () => {
+    let autocomplete: AutocompleteComponent
+
+    const create = (custom?: string) => {
+      fixture = TestBed.createComponent(FuzzySearchComponent)
+      component = fixture.componentInstance
+
+      if (custom !== undefined) {
+        component.placeholder = custom
+      }
+
+      fixture.detectChanges()
+
+      autocomplete = fixture.debugElement.query(
+        By.directive(AutocompleteComponent)
+      ).componentInstance as AutocompleteComponent
+    }
+
+    it('passes runtime placeholder verbatim', () => {
+      create('Type your custom placeholder text here…')
+      expect(autocomplete.placeholder).toBe(
+        'Type your custom placeholder text here…'
+      )
+    })
+
+    it('falls back to default placeholder when none supplied', () => {
+      create()
+      expect(autocomplete.placeholder).toBe('search.field.any.placeholder')
     })
   })
 })

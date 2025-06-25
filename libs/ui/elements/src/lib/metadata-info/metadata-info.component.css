@@ -11,3 +11,12 @@
 :host ::ng-deep gn-ui-copy-text-button button ng-icon {
   transform: scale(0.8);
 }
+
+:host {
+  --gn-ui-badge-background-color: var(--color-primary-white);
+  --gn-ui-badge-text-color: var(--color-primary-darkest);
+}
+
+:host .metadata-info-keywords ::ng-deep gn-ui-badge:hover {
+  --gn-ui-badge-text-color: white;
+}

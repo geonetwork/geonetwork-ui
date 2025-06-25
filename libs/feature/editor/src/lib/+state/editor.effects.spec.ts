@@ -82,12 +82,8 @@ describe('EditorEffects', () => {
         actions = hot('-a---|', {
           a: EditorActions.saveRecord(),
         })
-        const expected = hot('-(ab)|', {
+        const expected = hot('-a---|', {
           a: EditorActions.saveRecordSuccess(),
-          b: EditorActions.openRecord({
-            record: datasetRecordsFixture()[0],
-            recordSource: '<xml>blabla</xml>',
-          }),
         })
         expect(effects.saveRecord$).toBeObservable(expected)
         expect(service.saveRecord).toHaveBeenCalledWith(

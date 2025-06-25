@@ -5,8 +5,10 @@ describe('datasets', () => {
     cy.visit('/search')
 
     // aliases
-    cy.get('gn-ui-results-list-item').find('a').as('results')
-    cy.get('@results').eq(2).as('sampleResult')
+    cy.get('gn-ui-results-list-item').as('results')
+    cy.get('[data-cy="9e1ea778-d0ce-4b49-90b7-37bc0e448300"]').as(
+      'sampleResult'
+    )
     cy.get('@results')
       .then(($results) => $results.length)
       .as('resultsCount')
@@ -65,7 +67,7 @@ describe('datasets', () => {
         .invoke('attr', 'src')
         .should(
           'eql',
-          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/records/9e1ea778-d0ce-4b49-90b7-37bc0e448300/attachments/test.png'
+          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH5gkNDCUFYjA1nwAAA1pJREFUeNrtnW2TmjAURh8CLlTdrmun///3tZ22+zLuYlehH7jsMGogwRiiec4MM44K6D3x3hAwAIQQQgghhJDYSM5cPwNQAMgBpACUg22GTg2gArAD8A9AKY+9CsgALAF8YRsGALwDeAWw9yGgALCKoKWP+WU8iwxjUsudLBj83sZciIiPSwhoWz7pJ5dUZFQXlEXOZ/DNeTBt3JnhBpc9aacGsOn0BuoIUk3b+5trGnEC4B7Ak4sUlInRU+wB/JbgVxG18KrTBc01EmYmcTFJQUVPy/9zTh/4BthLDOqeenB2DdBtZBN58LsSNpcUoEtTJWM/GIvMhQDde9j6h2OhXAjo6/2Q/lgkLgSQC0IBFEABZEKyiaQv5AAv7fSlS+lPVxRwOXTnEtoTPAs04yfRHGMoz8F/HOiaJfKeggLc78dmOHsVS33y9SUXsDuLlsg6FOAw/fhYhwI0pJ7WoQASpoC9p3UoQEPpaR0K0LCB3fB1e6KfAhxRweAKgQ5PsQxJ+CzCJYC/A7+EWt4TzVCE77GgEsBPHA/G7QBswcE4b+noVRZ2QxkCCqAAQgEUQCiAAggFUAChAAogFEABhAJcfT9FAdOxQuB/ML9lAfdo/qWYy2MK8EiO5mrrliUCvdIudAEzWWzQzWuxwjRnAK9WwAzAWhZTCe3l7cryNQrQBL/txZhKGGrlwc36ogIPfvdzfhuQsDDM80EVZXUFwe+mEJ2EOwBfLfYTTFFWVxL8Qwl3nedSye1jjhEyCjAPflfCWiScU1iDKMrqyoJ/KOFxRDf1sCg/xCxgTPC7EnIHn6GYsiirKw2+ayYryorBn7YoKwb/qCgntywg1OBPdqSsGPyTRXnp07gvPgD8AAl6KIICCAVQAAlLwOg5MSNi9NyqJgKqAHpQoZNZxs5KgG7SDN7AZzgWOxcCtprn5/wVfLb+uWXsrASUPXlvHbmETGKQjBVgMitVJTuaaQS2t/GoEMeE3onEor2jlK4RvwN4G1u9T4n6zp6PMTWAXzCYdCq12OCOhdeYZzT3mIErAW1Fr+HmNOAt82KSesYIAJoRzR2aIVumo+Ms8WwT/HOOZlM0Y+Zzxv2zp/gCTzfzPOyGtdfgp7LEcDvbvSxbWXg/HUIIIYQQQogx/wHLoX7NoCMFPwAAAABJRU5ErkJggg=='
         )
       cy.get('@results')
         .first()
@@ -212,12 +214,12 @@ describe('datasets', () => {
 
       describe('filter by one option', () => {
         beforeEach(() => {
-          cy.get('@options').eq(11).click()
+          cy.get('@options').eq(13).click()
           cy.get('@resultsCount').then((resultsCount) => {
             cy.get('@results').should('have.length.below', resultsCount) // wait for results change
           })
           cy.get('@options')
-            .eq(11)
+            .eq(13)
             .then((option) => {
               const optionText = option.text().trim()
               const matches = /^(.*) \((\d+)\)$/.exec(optionText)
@@ -232,21 +234,19 @@ describe('datasets', () => {
           cy.get<[string, number]>('@nameAndCount').then(
             ([orgName, resultsCount]) => {
               cy.get('@results')
-                .find('[data-cy="recordOrg"]')
+                .find('[data-cy="recordOrgName"]')
                 .then((orgs) => {
                   const orgNames = orgs
                     .toArray()
                     .map((org) => org.innerText.trim())
-                  expect(orgNames).to.eql(
-                    new Array(resultsCount).fill(orgName.toUpperCase())
-                  )
+                  expect(orgNames).to.eql(new Array(resultsCount).fill(orgName))
                 })
             }
           )
         })
 
         it('shows all results if another click on option', () => {
-          cy.get('@options').eq(11).click()
+          cy.get('@options').eq(13).click()
           cy.get('@resultsCount').then((resultsCount) => {
             cy.get('@results').should('have.length', resultsCount)
           })
@@ -291,13 +291,19 @@ describe('datasets', () => {
           'Cellule informatique et géomatique (SPW - Intérieur et Action sociale - Direction fonctionnelle et d’appui) (1)',
           'Coordination, Services et Informations Géographiques (COSIG), swisstopo (1)',
           "Direction de l'Action sociale (SPW - Intérieur et Action sociale - Département de l'Action sociale - Direction de l'Action sociale) (1)",
+          "Direction de l'Intégration des géodonnées (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (10)",
           'DREAL (1)',
           "DREAL HdF (Direction Régionale de l'Environnement de l'Aménagement et du Logement des Hauts de France) (1)",
+          'Fédération Départementale de la Chasse (1)',
+          'Fédération Nationale de la Chasse (1)',
           'Géo2France (1)',
-          "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (2)",
+          "Helpdesk carto du SPW (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (12)",
           'Métropole Européenne de Lille (2)',
+          'Moi même (1)',
+          'Office France de la Biodiversité (1)',
           'Région Hauts-de-France (1)',
-          'Service public de Wallonie (SPW) (2)',
+          'Réseau Ongulés sauvages OFB-FNC-FDC (1)',
+          'Service public de Wallonie (SPW) (12)',
           "Société Publique de Gestion de l'Eau (SPGE) (1)",
         ])
         cy.screenshot({ capture: 'viewport' })
@@ -379,9 +385,9 @@ describe('datasets', () => {
         cy.get('@optionsLabel')
           .invoke('slice', 0, 3)
           .should('eql', [
+            'Administrative units (1)',
             'Environmental monitoring facilities (2)',
             'Land use (1)',
-            'Production and industrial facilities (1)',
           ])
       })
       it('should not have duplicates', () => {
@@ -397,11 +403,16 @@ describe('datasets', () => {
       it('should have options', () => {
         cy.get('@options').should('have.length.above', 0)
         cy.get('@optionsLabel')
-          .invoke('slice', 0, 3)
+          .invoke('slice', 0, 8)
           .should('eql', [
+            'Région wallonne (12)',
+            'Reporting INSPIRENO (8)',
+            'Nature et environnement (7)',
+            'Sol et sous-sol (6)',
+            'pollution (4)',
+            'Agriculture (3)',
+            'Aménagement du territoire (3)',
             'DONNEE OUVERTE (3)',
-            'HAUTS-DE-FRANCE (3)',
-            'Open Data (3)',
           ])
       })
       it('should not have duplicates', () => {
@@ -490,50 +501,6 @@ describe('datasets', () => {
     })
   })
 
-  describe('sorting results', () => {
-    describe('sort by popularity', () => {
-      beforeEach(() => {
-        cy.get('@sortBy').selectDropdownOption('desc,userSavedCount')
-        cy.get('@results')
-          .find('gn-ui-favorite-star')
-          .find('span')
-          .then(($counts) =>
-            $counts.toArray().map((span) => parseInt(span.innerText.trim()))
-          )
-          .as('favoriteCount')
-      })
-      it('should sort the list by popularity', () => {
-        cy.get<number[]>('@favoriteCount').then((favoritesCount) => {
-          const ordered = favoritesCount.sort((a, b) => b - a)
-          expect(favoritesCount).to.eql(ordered)
-        })
-      })
-    })
-    describe('sort by date', () => {
-      beforeEach(() => {
-        // first sort by popularity
-        cy.get('@sortBy').selectDropdownOption('desc,userSavedCount')
-        cy.get('@results')
-          .find('[data-cy="recordTitle"]')
-          .then(($titles) =>
-            $titles.toArray().map((title) => title.innerText.trim())
-          )
-          .as('initialResultTitles')
-        cy.get('@sortBy').selectDropdownOption('desc,createDate')
-      })
-      it('changes the results order', function () {
-        cy.get('@results')
-          .find('[data-cy="recordTitle"]')
-          .then(($titles) => {
-            const titles = $titles
-              .toArray()
-              .map((title) => title.innerText.trim())
-            assert.notEqual(titles, this.initialResultTitles) // @initialResultTitles
-          })
-      })
-    })
-  })
-
   describe('metadata quality', () => {
     describe('metadata quality widget not enabled', () => {
       it('should not show quality score sorting', () => {
@@ -556,9 +523,9 @@ describe('datasets', () => {
 
       it('should display quality widget', () => {
         cy.get('@sortBy').selectDropdownOption('desc,createDate')
-        cy.get('gn-ui-progress-bar')
-          .eq(2)
-          .should('have.attr', 'ng-reflect-value', 87)
+        cy.get(
+          '[data-cy="9e1ea778-d0ce-4b49-90b7-37bc0e448300"] gn-ui-progress-bar'
+        ).should('have.attr', 'ng-reflect-value', 100)
       })
 
       it('should display results sorted by quality score', () => {

@@ -3,14 +3,16 @@ import {
   datasetRecordsFixture,
   elasticAggsResponseFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { LangService } from '@geonetwork-ui/util/i18n'
 import { EsSearchParams } from '@geonetwork-ui/api/metadata-converter'
 import { TestBed } from '@angular/core/testing'
 import { METADATA_LANGUAGE } from '../../metadata-language'
+import { TranslateService } from '@ngx-translate/core'
 
-class LangServiceMock {
-  iso3 = 'eng'
+class TranslateServiceMock {
+  currentLang = 'en'
 }
+
+let currentMetadataLang: string
 
 describe('ElasticsearchService', () => {
   let service: ElasticsearchService
@@ -20,15 +22,16 @@ describe('ElasticsearchService', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: LangService,
-          useClass: LangServiceMock,
+          provide: TranslateService,
+          useClass: TranslateServiceMock,
         },
         {
           provide: METADATA_LANGUAGE,
-          useValue: 'fre',
+          useFactory: () => currentMetadataLang,
         },
       ],
     })
+    currentMetadataLang = 'fre'
     service = TestBed.inject(ElasticsearchService)
   })
 
@@ -183,11 +186,6 @@ describe('ElasticsearchService', () => {
           ],
           must_not: [
             {
-              terms: {
-                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
-              },
-            },
-            {
               query_string: {
                 query:
                   'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
@@ -259,11 +257,6 @@ describe('ElasticsearchService', () => {
           ],
           must_not: [
             {
-              terms: {
-                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
-              },
-            },
-            {
               query_string: {
                 query:
                   'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
@@ -333,11 +326,6 @@ describe('ElasticsearchService', () => {
           ],
           must_not: [
             {
-              terms: {
-                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
-              },
-            },
-            {
               query_string: {
                 query:
                   'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
@@ -400,11 +388,6 @@ describe('ElasticsearchService', () => {
           ],
           must_not: [
             {
-              terms: {
-                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
-              },
-            },
-            {
               query_string: {
                 query:
                   'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
@@ -448,11 +431,6 @@ describe('ElasticsearchService', () => {
           should: [],
           must: [],
           must_not: [
-            {
-              terms: {
-                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
-              },
-            },
             {
               query_string: {
                 query:
@@ -509,11 +487,6 @@ describe('ElasticsearchService', () => {
             },
           ],
           must_not: [
-            {
-              terms: {
-                resourceType: ['service', 'map', 'map/static', 'mapDigital'],
-              },
-            },
             {
               query_string: {
                 query:
@@ -629,11 +602,6 @@ describe('ElasticsearchService', () => {
             ],
             must_not: [
               {
-                terms: {
-                  resourceType: ['service', 'map', 'map/static', 'mapDigital'],
-                },
-              },
-              {
                 query_string: {
                   query:
                     'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
@@ -672,7 +640,7 @@ describe('ElasticsearchService', () => {
     }
     describe('When no lang from config', () => {
       beforeEach(() => {
-        service['metadataLang'] = undefined
+        currentMetadataLang = undefined
       })
       it('use * wildcard', () => {
         expect(
@@ -684,7 +652,7 @@ describe('ElasticsearchService', () => {
     })
     describe('When one lang in config', () => {
       beforeEach(() => {
-        service['metadataLang'] = 'fre'
+        currentMetadataLang = 'fre'
       })
       it('search in the config language', () => {
         expect(
@@ -696,8 +664,7 @@ describe('ElasticsearchService', () => {
     })
     describe('When "current" language from config"', () => {
       beforeEach(() => {
-        service['metadataLang'] = 'current'
-        service['lang3'] = 'eng'
+        currentMetadataLang = 'current'
       })
       it('search in the UI language', () => {
         expect(
@@ -739,7 +706,7 @@ describe('ElasticsearchService', () => {
       it('returns the search payload', () => {
         const payload = service.buildAutocompletePayload('blarg')
         expect(payload).toEqual({
-          _source: ['resourceTitleObject', 'uuid'],
+          _source: ['resourceTitleObject', 'uuid', 'resourceType'],
 
           query: {
             bool: {
@@ -764,16 +731,6 @@ describe('ElasticsearchService', () => {
               ],
               must_not: [
                 {
-                  terms: {
-                    resourceType: [
-                      'service',
-                      'map',
-                      'map/static',
-                      'mapDigital',
-                    ],
-                  },
-                },
-                {
                   query_string: {
                     query:
                       'resourceType:featureCatalog AND !resourceType:dataset AND !cl_level.key:dataset',
@@ -790,11 +747,11 @@ describe('ElasticsearchService', () => {
     })
   })
 
-  describe('#getMetadataByIdPayload', () => {
+  describe('#getMetadataByIdsPayload', () => {
     let uuid, payload
     beforeEach(() => {
       uuid = '132132132132321'
-      payload = service.getMetadataByIdPayload(uuid)
+      payload = service.getMetadataByIdsPayload([uuid])
     })
     it('returns ES payload', () => {
       expect(payload).toEqual({
@@ -825,6 +782,7 @@ describe('ElasticsearchService', () => {
           'overview',
           'logo',
           'codelist_status_text',
+          'link',
           'linkProtocol',
           'contactForResource.organisation',
           'contact.organisation',
@@ -834,9 +792,10 @@ describe('ElasticsearchService', () => {
           'cl_topic',
           'cl_maintenanceAndUpdateFrequency',
           'tag',
-          'MD_LegalConstraintsUseLimitationObject',
+          'MD_LegalConstraints*Object',
           'qualityScore',
           'allKeywords',
+          'recordLink',
           'createDate',
         ],
         query: {

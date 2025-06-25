@@ -1,13 +1,66 @@
 <div
-  class="group flex flex-col justify-between h-40 pt-5 pb-6 px-7 rounded filter overflow-hidden cursor-default"
+  class="group flex justify-between rounded filter overflow-hidden card-shadow"
+  [ngClass]="cardClass"
 >
-  <div
-    class="font-title font-medium text-21 text-black text-ellipsis overflow-hidden break-words pb-5 h-[4.5rem]"
-  >
-    {{ link.name || link.description }}
+  <ng-container *ngIf="size !== 'S'">
+    <div class="flex-1 min-w-0">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </div>
+    <div class="flex items-center min-w-[32px]">
+      <ng-container *ngTemplateOutlet="buttons"></ng-container>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="size === 'S'">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </ng-container>
+</div>
+
+<ng-template #buttons>
+  <div class="flex flex-row gap-2">
+    <gn-ui-copy-text-button
+      [text]="link.url"
+      [tooltipText]="'tooltip.url.copy' | translate"
+      [displayText]="false"
+      class="border border-gray-300 rounded-lg pt-1 px-2 h-[34px]"
+    ></gn-ui-copy-text-button>
+    <button
+      *ngIf="displayApiFormButton"
+      type="button"
+      class="gn-ui-card-icon"
+      [ngClass]="{
+        'py-2 px-4 rounded-r-md bg-gray-400 hover:bg-gray-600 focus:bg-gray-800 text-white':
+          displayText,
+      }"
+      [matTooltip]="
+        !currentlyActive
+          ? ('record.metadata.api.form.openForm' | translate)
+          : ('record.metadata.api.form.closeForm' | translate)
+      "
+      matTooltipPosition="above"
+      (click)="openRecordApiFormPanel()"
+    >
+      <ng-icon
+        class="pointer-events-none align-middle card-icon"
+        name="iconoirSettings"
+        [ngClass]="{
+          'text-secondary opacity-100': currentlyActive,
+        }"
+      ></ng-icon>
+    </button>
   </div>
-  <div class="">
-    <div class="flex flex-row justify-between">
+</ng-template>
+
+<ng-template #content>
+  <div class="flex-1 min-w-0">
+    <div class="gn-ui-card-title">
+      {{ link.description || link.name }}
+    </div>
+    <div class="gn-ui-card-detail">
+      {{ link.name }}
+    </div>
+  </div>
+  <div class="flex flex-row justify-between">
+    <div class="flex flex-row gap-2.5 items-center pt-1">
       <span
         *ngIf="link.accessServiceProtocol !== 'GPFDL'"
         class="bg-primary-opacity-50 uppercase inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded text-primary-lightest group-hover:bg-primary transition-colors"
@@ -26,36 +79,9 @@
       >
         record.metadata.api.gpfdl</span
       >
-      <div class="flex flex-row gap-2 items-center">
-        <gn-ui-copy-text-button
-          [text]="link.url"
-          [tooltipText]="'tooltip.url.copy' | translate"
-          [displayText]="false"
-        ></gn-ui-copy-text-button>
-        <button
-          *ngIf="displayApiFormButton"
-          type="button"
-          [ngClass]="{
-            'py-2 px-4 rounded-r-md bg-gray-400 hover:bg-gray-600 focus:bg-gray-800 text-white':
-              displayText,
-          }"
-          [matTooltip]="
-            !currentlyActive
-              ? ('record.metadata.api.form.openForm' | translate)
-              : ('record.metadata.api.form.closeForm' | translate)
-          "
-          matTooltipPosition="above"
-          (click)="openRecordApiFormPanel()"
-        >
-          <ng-icon
-            class="pointer-events-none align-middle card-icon"
-            name="matMoreHoriz"
-            [ngClass]="{
-              'text-secondary opacity-100': currentlyActive,
-            }"
-          ></ng-icon>
-        </button>
-      </div>
+    </div>
+    <div *ngIf="size === 'S'">
+      <ng-container *ngTemplateOutlet="buttons"></ng-container>
     </div>
   </div>
-</div>
+</ng-template>

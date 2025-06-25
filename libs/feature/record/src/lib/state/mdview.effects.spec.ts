@@ -18,6 +18,7 @@ import { hot } from 'jasmine-marbles'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { Router } from '@angular/router'
 
 const full = {
   uniqueIdentifier: '1231321321',
@@ -30,6 +31,8 @@ class RecordsRepositoryMock {
   search = jest.fn(() => of(searchResultsFixture()))
   getRecord = jest.fn(() => of(datasetRecordsFixture()[0]))
   getSimilarRecords = jest.fn(() => of(datasetRecordsFixture()))
+  getSources = jest.fn(() => of(datasetRecordsFixture()))
+  getSourceOf = jest.fn(() => of(datasetRecordsFixture()))
 }
 
 class PlatformServiceInterfaceMock {
@@ -37,11 +40,16 @@ class PlatformServiceInterfaceMock {
   postUserFeedbacks = jest.fn(() => of(undefined))
 }
 
+const RouterMock = {
+  url: 'dataset/1231321321',
+}
+
 describe('MdViewEffects', () => {
   let actions: Observable<any>
   let effects: MdViewEffects
   let repository: RecordsRepositoryInterface
   let platform: PlatformServiceInterface
+  let router: Router
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -58,9 +66,13 @@ describe('MdViewEffects', () => {
           provide: PlatformServiceInterface,
           useClass: PlatformServiceInterfaceMock,
         },
+        {
+          provide: Router,
+          useValue: RouterMock,
+        },
       ],
     })
-
+    router = TestBed.inject(Router)
     repository = TestBed.inject(RecordsRepositoryInterface)
     effects = TestBed.inject(MdViewEffects)
     platform = TestBed.inject(PlatformServiceInterface)
@@ -137,6 +149,66 @@ describe('MdViewEffects', () => {
           a: MdViewActions.setRelated({ related: null }),
         })
         expect(effects.loadRelatedRecords$).toBeObservable(expected)
+      })
+    })
+  })
+
+  describe('loadSources$', () => {
+    describe('when load full success', () => {
+      it('dispatch setSources', () => {
+        actions = hot('-a-|', {
+          a: MdViewActions.loadFullMetadataSuccess({ full }),
+        })
+        const expected = hot('-a-|', {
+          a: MdViewActions.setSources({
+            sources: datasetRecordsFixture() as CatalogRecord[],
+          }),
+        })
+        expect(effects.loadSources$).toBeObservable(expected)
+      })
+    })
+    describe('when api fails', () => {
+      beforeEach(() => {
+        repository.getSources = jest.fn(() => throwError(() => 'api'))
+      })
+      it('dispatch loadFullFailure', () => {
+        actions = hot('-a-|', {
+          a: MdViewActions.loadFullMetadataSuccess({ full }),
+        })
+        const expected = hot('-(a|)', {
+          a: MdViewActions.setSources({ sources: null }),
+        })
+        expect(effects.loadSources$).toBeObservable(expected)
+      })
+    })
+  })
+
+  describe('loadSourceOf$', () => {
+    describe('when load full success', () => {
+      it('dispatch setSourceOf', () => {
+        actions = hot('-a-|', {
+          a: MdViewActions.loadFullMetadataSuccess({ full }),
+        })
+        const expected = hot('-a-|', {
+          a: MdViewActions.setSourceOf({
+            sourceOf: datasetRecordsFixture() as CatalogRecord[],
+          }),
+        })
+        expect(effects.loadSourceOf$).toBeObservable(expected)
+      })
+      describe('when api fails', () => {
+        beforeEach(() => {
+          repository.getSourceOf = jest.fn(() => throwError(() => 'api'))
+        })
+        it('dispatch loadFullFailure', () => {
+          actions = hot('-a-|', {
+            a: MdViewActions.loadFullMetadataSuccess({ full }),
+          })
+          const expected = hot('-(a|)', {
+            a: MdViewActions.setSourceOf({ sourceOf: null }),
+          })
+          expect(effects.loadSourceOf$).toBeObservable(expected)
+        })
       })
     })
   })

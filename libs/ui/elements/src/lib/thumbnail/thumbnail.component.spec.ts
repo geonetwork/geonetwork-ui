@@ -6,7 +6,6 @@ import {
   tick,
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { ThumbnailComponent } from './thumbnail.component'
 
 describe('ThumbnailComponent', () => {
@@ -15,13 +14,9 @@ describe('ThumbnailComponent', () => {
   let de: DebugElement
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ThumbnailComponent, UtilSharedModule],
-    })
-      .overrideComponent(ThumbnailComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
-      })
-      .compileComponents()
+    await TestBed.overrideComponent(ThumbnailComponent, {
+      set: { changeDetection: ChangeDetectionStrategy.Default },
+    }).compileComponents()
   })
 
   beforeEach(() => {

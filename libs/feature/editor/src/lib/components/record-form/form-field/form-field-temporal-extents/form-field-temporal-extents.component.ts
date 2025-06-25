@@ -13,7 +13,7 @@ import {
   DatePickerComponent,
   DateRangePickerComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateDirective, TranslateService } from '@ngx-translate/core'
 import { combineLatest, map } from 'rxjs'
 import {
   NgIconComponent,
@@ -34,7 +34,7 @@ import { iconoirPlus } from '@ng-icons/iconoir'
     SortableListComponent,
     DatePickerComponent,
     DateRangePickerComponent,
-    TranslateModule,
+    TranslateDirective,
     NgIconComponent,
   ],
   providers: [

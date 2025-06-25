@@ -1,5 +1,6 @@
 <gn-ui-interactive-table
   [items]="records"
+  [canEditItem]="canEdit"
   [isDraftPage]="isDraftPage"
   (itemClick)="handleRecordClick($event)"
 >
@@ -9,15 +10,16 @@
       <ng-icon
         name="iconoirLock"
         class="text-purple"
-        *ngIf="!item.extras?.edit && !isDraftPage"
+        *ngIf="(canEdit(item) | async) === false; else selectCheckbox"
       ></ng-icon>
-      <gn-ui-checkbox
-        *ngIf="item.extras?.edit || isDraftPage"
-        [checked]="isChecked(item)"
-        (changed)="handleRecordSelectedChange($event, item)"
-        class="-m-2"
-        type="default"
-      ></gn-ui-checkbox>
+      <ng-template #selectCheckbox>
+        <gn-ui-checkbox
+          [checked]="isChecked(item)"
+          (changed)="handleRecordSelectedChange($event, item)"
+          class="-m-2"
+          type="default"
+        ></gn-ui-checkbox>
+      </ng-template>
     </ng-template>
   </gn-ui-interactive-table-column>
 
@@ -143,26 +145,29 @@
   <gn-ui-interactive-table-column>
     <ng-template #header> </ng-template>
     <ng-template #cell let-item>
-      <gn-ui-button
-        cdkOverlayOrigin
-        #actionMenuButton
-        (buttonClick)="openActionMenu(item, template)"
-        type="light"
-        data-test="record-menu-button"
-        [disabled]="!item.extras?.edit && !isDraftPage"
-      >
+      <div class="flex justify-end items-center gap-4 w-full">
         <ng-icon
-          [ngClass]="{
-            'text-purple-light': !item.extras?.edit && !isDraftPage,
-          }"
-          name="matMoreVert"
+          *ngIf="isMultilingual(item)"
+          data-cy="multilingual-indicator"
+          name="iconoirTranslate"
+          [attr.title]="getTxtHoverMultilingual(item)"
         ></ng-icon>
-      </gn-ui-button>
+        <gn-ui-button
+          cdkOverlayOrigin
+          #actionMenuButton
+          (buttonClick)="openActionMenu(item, template)"
+          type="light"
+          data-test="record-menu-button"
+        >
+          <ng-icon name="matMoreVert"></ng-icon>
+        </gn-ui-button>
+      </div>
       <ng-template #template>
         <gn-ui-action-menu
-          [canDuplicate]="canDuplicate(item) && !isDuplicating"
-          [canDelete]="canDelete(item)"
-          [isDraftPage]="isDraftPage"
+          [canDuplicate]="canDuplicate(item)"
+          [isDuplicating]="isDuplicating"
+          [canDelete]="canDelete(item) | async"
+          [page]="isDraftPage ? 'draft' : 'main'"
           (duplicate)="handleDuplicate(item)"
           (delete)="handleDelete(item)"
           (closeActionMenu)="closeActionMenu()"

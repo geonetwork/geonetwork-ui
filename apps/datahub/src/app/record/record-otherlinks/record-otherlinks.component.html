@@ -1,37 +1,47 @@
 <div class="flex flex-row gap-x-4 items-center justify-center md:justify-start">
-  <p
-    class="font-title text-[28px] font-medium text-title text-center sm:text-left"
-    translate
-  >
-    record.metadata.links
-  </p>
+  <div>
+    <h3
+      class="inline-block font-title text-xl font-medium text-title"
+      translate
+    >
+      record.metadata.links
+    </h3>
+    <span class="px-3">({{ linksCount$ | async }})</span>
+  </div>
   <gn-ui-previous-next-buttons
-    *ngIf="paginableElement?.pagesCount > 1"
-    [listComponent]="paginableElement"
+    class="block md:hidden"
+    *ngIf="carousel?.pagesCount > 1"
+    [listComponent]="carousel"
+  ></gn-ui-previous-next-buttons>
+  <gn-ui-previous-next-buttons
+    class="hidden md:block"
+    *ngIf="list?.pagesCount > 1"
+    [listComponent]="list"
   ></gn-ui-previous-next-buttons>
 </div>
 <ng-container *ngrxLet="otherLinks$ as otherLinks">
+  <gn-ui-carousel
+    class="block md:hidden"
+    containerClass="gap-4 pt-5 pb-7"
+    (currentStepChange)="updateView()"
+  >
+    <gn-ui-link-card
+      *ngFor="let otherLink of otherLinks"
+      [link]="otherLink"
+      class="w-80"
+      size="S"
+    ></gn-ui-link-card>
+  </gn-ui-carousel>
   <gn-ui-block-list
-    containerClass="gap-4 py-10"
-    *ngIf="otherLinks.length >= 10; else carouselTemplate"
+    #blockList
+    class="hidden md:block"
+    containerClass="gap-4 pt-5 pb-7"
   >
     <gn-ui-link-card
       #block
       *ngFor="let otherLink of otherLinks"
       [link]="otherLink"
-      [compact]="true"
+      [size]="blockList.subComponentSize"
     ></gn-ui-link-card>
   </gn-ui-block-list>
-  <ng-template #carouselTemplate>
-    <gn-ui-carousel
-      containerClass="gap-4 pt-[26px] pb-[38px]"
-      (currentStepChange)="updateView()"
-    >
-      <gn-ui-link-card
-        *ngFor="let otherLink of otherLinks; let first = first; let last = last"
-        [link]="otherLink"
-        class="w-80"
-      ></gn-ui-link-card>
-    </gn-ui-carousel>
-  </ng-template>
 </ng-container>

@@ -55,7 +55,7 @@ import { getKeywordTypeFromKeywordTypeCode } from './utils/keyword.mapper'
 import { getRoleFromRoleCode } from './utils/role.mapper'
 import { getStatusFromStatusCode } from './utils/status.mapper'
 import { getUpdateFrequencyFromFrequencyCode } from './utils/update-frequency.mapper'
-import { LANG_3_TO_2_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
+import { getLang2FromLang3 } from '@geonetwork-ui/util/i18n/language-codes'
 import { getResourceType, getReuseType } from '../common/resource-types'
 
 export function extractCharacterString(): ChainableFunction<
@@ -65,7 +65,8 @@ export function extractCharacterString(): ChainableFunction<
   return pipe(
     fallback(
       findChildElement('gco:CharacterString', false),
-      findChildElement('gmx:Anchor', false)
+      findChildElement('gmx:Anchor', false),
+      findChildElement('gmx:MimeFileType', false)
     ),
     readText()
   )
@@ -965,8 +966,8 @@ export function extractServiceOnlineResources(): ChainableFunction<
         } else {
           return {
             type: 'endpoint',
-            endpointUrl: url,
-            protocol,
+            url: url,
+            accessServiceProtocol: protocol,
             ...(description && { description }),
             translations,
           }
@@ -1161,10 +1162,13 @@ export function readOtherLanguages(rootEl: XmlElement): LanguageCode[] {
     findChildrenElement('gmd:locale', false),
     mapArray(
       pipe(
-        findChildElement('gmd:LanguageCode'),
+        findChildElement('lan:LanguageCode'),
         readAttribute('codeListValue'),
-        map((lang) => LANG_3_TO_2_MAPPER[lang.toLowerCase()])
+        map((lang) => getLang2FromLang3(lang?.toLowerCase()) ?? lang)
       )
+    ),
+    map((languages) =>
+      languages.filter((lang): lang is LanguageCode => lang !== null)
     ),
     map((languages) => (languages.length ? languages : [defaultLanguage]))
   )(rootEl)
@@ -1173,9 +1177,9 @@ export function readOtherLanguages(rootEl: XmlElement): LanguageCode[] {
 export function readDefaultLanguage(rootEl: XmlElement): LanguageCode {
   return pipe(
     findChildElement('gmd:language', false),
-    findChildElement('gmd:LanguageCode'),
+    findChildElement('lan:LanguageCode'),
     readAttribute('codeListValue'),
-    map((lang) => (lang ? LANG_3_TO_2_MAPPER[lang.toLowerCase()] : null))
+    map((lang) => (lang ? getLang2FromLang3(lang.toLowerCase()) : null))
   )(rootEl)
 }
 

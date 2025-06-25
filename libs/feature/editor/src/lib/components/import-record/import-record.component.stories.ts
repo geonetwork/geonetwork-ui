@@ -11,8 +11,7 @@ import { importProvidersFrom } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent, UrlInputComponent } from '@geonetwork-ui/ui/inputs'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
-import { UtilI18nModule } from '@geonetwork-ui/util/i18n'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { of } from 'rxjs'
 
@@ -41,11 +40,7 @@ export default {
       ],
     }),
     applicationConfig({
-      providers: [
-        importProvidersFrom(BrowserAnimationsModule),
-        importProvidersFrom(UtilI18nModule),
-        importProvidersFrom(TranslateModule.forRoot()),
-      ],
+      providers: [importProvidersFrom(BrowserAnimationsModule), provideI18n()],
     }),
     componentWrapperDecorator(
       (story) => `<div style="max-width: 500px; margin: auto;">${story}</div>`

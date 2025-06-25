@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 
 export type SwitchToggleOption = {
   label: string
@@ -21,7 +21,7 @@ export type SwitchToggleOption = {
   styleUrls: ['./switch-toggle.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [MatButtonToggleModule, CommonModule, TranslateModule],
+  imports: [MatButtonToggleModule, CommonModule, TranslatePipe],
 })
 export class SwitchToggleComponent {
   @Input() options: SwitchToggleOption[]

@@ -2,11 +2,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { ImportRecordComponent } from './import-record.component'
 import { ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
 import { Router } from '@angular/router'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 import { NotificationsService } from '@geonetwork-ui/feature/notifications'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { of, throwError } from 'rxjs'
-import { MockBuilder, MockComponent, MockModule, MockProviders } from 'ng-mocks'
+import { MockBuilder, MockProviders } from 'ng-mocks'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { NgIconComponent } from '@ng-icons/core'
 
 describe('ImportRecordComponent', () => {
   let component: ImportRecordComponent
@@ -17,19 +19,15 @@ describe('ImportRecordComponent', () => {
   let recordsRepository: RecordsRepositoryInterface
 
   beforeEach(() => {
-    return MockBuilder(ImportRecordComponent)
+    return MockBuilder(ImportRecordComponent).keep(NgIconComponent)
   })
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        MockComponent(ImportRecordComponent),
-        MockModule(TranslateModule.forRoot()),
-      ],
       providers: [
+        provideI18n(),
         MockProviders(
           Router,
-          TranslateService,
           NotificationsService,
           RecordsRepositoryInterface,
           ChangeDetectorRef
@@ -39,7 +37,6 @@ describe('ImportRecordComponent', () => {
       .overrideComponent(ImportRecordComponent, {
         set: {
           changeDetection: ChangeDetectionStrategy.Default,
-          imports: [TranslateModule],
         },
       })
       .compileComponents()

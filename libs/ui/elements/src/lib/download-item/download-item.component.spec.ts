@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TranslateModule } from '@ngx-translate/core'
 import { DownloadItemComponent } from './download-item.component'
 import { By } from '@angular/platform-browser'
 import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('DownloadsListItemComponent', () => {
   let component: DownloadItemComponent
@@ -10,7 +10,7 @@ describe('DownloadsListItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DownloadItemComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     })
       .overrideComponent(DownloadItemComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default },
@@ -39,7 +39,7 @@ describe('DownloadsListItemComponent', () => {
   describe('download description', () => {
     describe('when has a description', () => {
       it('displays the description', () => {
-        const descElmt = fixture.debugElement.query(By.css('.text-21'))
+        const descElmt = fixture.debugElement.query(By.css('.gn-ui-card-title'))
 
         expect(descElmt.attributes.title).toEqual(
           'A file that contains all roads'
@@ -55,7 +55,7 @@ describe('DownloadsListItemComponent', () => {
         fixture.detectChanges()
       })
       it('displays name', () => {
-        const descElmt = fixture.debugElement.query(By.css('.text-21'))
+        const descElmt = fixture.debugElement.query(By.css('.gn-ui-card-title'))
 
         expect(descElmt.attributes.title).toEqual('allroads.geojson')
         expect(descElmt.nativeElement.textContent.trim()).toEqual(

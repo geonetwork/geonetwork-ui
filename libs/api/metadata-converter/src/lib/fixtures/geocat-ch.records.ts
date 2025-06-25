@@ -617,7 +617,7 @@ Die Quelle ist zu bezeichnen: „Quelle: Stadt Zürich“.`,
   status: 'completed',
   updateFrequency: 'asNeeded',
   defaultLanguage: 'de',
-  otherLanguages: ['fr', 'it', 'en', 'rm'],
+  otherLanguages: ['fr', 'it', 'en', 'rm', 'aar'],
   translations: {
     abstract: {
       en: 'The perimeters of the Alpine Convention in Switzerland. The Alpine Convention is an international treaty between the eight Alpine countries: Germany, France, Italy, Liechtenstein, Monaco, Austria, Switzerland and Slovenia, plus the European Union. The aim of the treaty is to protect the Alps by means of cross-sectoral, integrated and sustainable policies.',
@@ -772,10 +772,10 @@ export const GEOCAT_CH_SERVICE_RECORD: ServiceRecord = {
     },
     {
       type: 'endpoint',
-      endpointUrl: new URL(
+      url: new URL(
         'https://services.geo.sg.ch/wss/service/SG00170_WMS/guest?request=GetCapabilities&service=WMS'
       ),
-      protocol: 'wms',
+      accessServiceProtocol: 'wms',
       description:
         'https://services.geo.sg.ch/wss/service/SG00170_WMS/guest?request=GetCapabilities&service=WMS',
       translations: {

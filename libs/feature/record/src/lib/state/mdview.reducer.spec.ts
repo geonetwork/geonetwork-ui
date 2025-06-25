@@ -134,6 +134,40 @@ describe('metadataViewReducer', () => {
     })
   })
 
+  describe('setSources', () => {
+    let action
+    const sources = [datasetRecordsFixture()[1]]
+    beforeEach(() => {
+      action = MdViewActions.setSources({
+        sources,
+      })
+    })
+    it('set sources', () => {
+      const state = reducer({ ...initialMetadataViewState }, action)
+      expect(state).toEqual({
+        ...initialMetadataViewState,
+        sources,
+      })
+    })
+  })
+
+  describe('setSourceOf', () => {
+    let action
+    const sourceOf = [datasetRecordsFixture()[1]]
+    beforeEach(() => {
+      action = MdViewActions.setSourceOf({
+        sourceOf,
+      })
+    })
+    it('set has sources', () => {
+      const state = reducer({ ...initialMetadataViewState }, action)
+      expect(state).toEqual({
+        ...initialMetadataViewState,
+        sourceOf,
+      })
+    })
+  })
+
   describe('setChartConfig', () => {
     let action
 

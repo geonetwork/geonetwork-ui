@@ -60,6 +60,14 @@ const expectedRoutes = [
     component: RecordPageComponent,
   },
   {
+    path: `service/:metadataUuid`,
+    component: RecordPageComponent,
+  },
+  {
+    path: `reuse/:metadataUuid`,
+    component: RecordPageComponent,
+  },
+  {
     path: `${ROUTER_ROUTE_ORGANIZATION}/:name`,
     component: OrganizationPageComponent,
     data: {

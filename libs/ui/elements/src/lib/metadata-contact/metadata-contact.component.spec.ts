@@ -2,7 +2,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { MetadataContactComponent } from './metadata-contact.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('MetadataContactComponent', () => {
   let component: MetadataContactComponent
@@ -10,7 +10,7 @@ describe('MetadataContactComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MetadataContactComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   })
@@ -52,7 +52,7 @@ describe('MetadataContactComponent', () => {
     })
     it('emit contact click with contact name', () => {
       const el = fixture.debugElement.query(
-        By.css('.text-primary.font-title')
+        By.css('[data-cy="organization-name-link"]')
       ).nativeElement
       el.click()
       expect(component.organizationClick.emit).toHaveBeenCalledWith({
@@ -68,7 +68,7 @@ describe('MetadataContactComponent', () => {
     })
     it('displays the contact name', () => {
       const el = fixture.debugElement.query(
-        By.css('.text-primary.font-title')
+        By.css('[data-cy="organization-name-link"]')
       ).nativeElement
       expect(el.innerHTML).toBe(' Worldcorp ')
     })

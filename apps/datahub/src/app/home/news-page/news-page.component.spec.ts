@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { NewsPageComponent } from './news-page.component'
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 import { TranslateTestingModule } from 'ngx-translate-testing'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
+import { MockBuilder } from 'ng-mocks'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getGlobalConfig: jest.fn(() => ({
@@ -14,9 +14,10 @@ describe('NewsPageComponent', () => {
   let component: NewsPageComponent
   let fixture: ComponentFixture<NewsPageComponent>
 
+  beforeEach(() => MockBuilder(NewsPageComponent))
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NewsPageComponent],
       imports: [
         TranslateTestingModule.withTranslations({
           en: {
@@ -26,7 +27,6 @@ describe('NewsPageComponent', () => {
           .withDefaultLanguage('en')
           .withCompiler(new TranslateMessageFormatCompiler()),
       ],
-      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
 
     fixture = TestBed.createComponent(NewsPageComponent)

@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-4">
   <div class="flex flex-col">
-    <div class="menu-title" translate="">dashboard.labels.catalog</div>
+    <div class="menu-title" translate>dashboard.labels.catalog</div>
     <a
       class="menu-item"
       routerLink="/catalog/search"
@@ -8,12 +8,12 @@
       #rlaAll="routerLinkActive"
     >
       <ng-icon name="iconoirJournal"></ng-icon>
-      <span class="text-sm" translate="">dashboard.catalog.allRecords</span>
+      <span class="text-sm" translate>dashboard.catalog.allRecords</span>
     </a>
   </div>
 
   <div class="flex flex-col">
-    <div class="menu-title" translate="">dashboard.labels.mySpace</div>
+    <div class="menu-title" translate>dashboard.labels.mySpace</div>
     <a
       class="menu-item"
       routerLink="/my-space/my-records"
@@ -21,7 +21,7 @@
       #rlaMyRecords="routerLinkActive"
     >
       <ng-icon name="iconoirJournalPage"></ng-icon>
-      <span class="text-sm" translate="">dashboard.records.myRecords</span>
+      <span class="text-sm" translate>dashboard.records.myRecords</span>
     </a>
     <a
       class="menu-item"
@@ -30,7 +30,7 @@
       #rlaMyDraft="routerLinkActive"
     >
       <ng-icon name="iconoirPageEdit"></ng-icon>
-      <span class="text-sm" translate="">dashboard.records.myDraft</span>
+      <span class="text-sm" translate>dashboard.records.myDraft</span>
       <ng-container *ngIf="draftsCount$ | async as draftsCount">
         <gn-ui-badge
           [style.--gn-ui-badge-padding]="'0.375em 0.875em'"

@@ -4,10 +4,11 @@
 import fetchMock from 'fetch-mock-jest'
 import path from 'path'
 import fs from 'fs/promises'
-import { WfsReader } from './wfs'
+import { WfsReader, getWfsEndpoint } from './wfs'
 import { WfsEndpoint, useCache } from '@camptocamp/ogc-client'
-import { GeojsonReader, parseGeojson } from './geojson'
+import { GeojsonReader } from './geojson'
 import { GmlReader } from './gml'
+import { FetchError } from '../model'
 
 const urlGeojson =
   'http://localfile/fixtures/perimetre-des-epci-concernes-par-un-contrat-de-ville.geojson'
@@ -41,7 +42,21 @@ jest.mock('@camptocamp/ogc-client', () => ({
   WfsEndpoint: class {
     constructor(private url) {}
     isReady() {
-      return Promise.resolve(this)
+      if (this.url.includes('forbidden')) {
+        const error = new Error('Forbidden')
+        error['httpStatus'] = 403
+        error['isCrossOriginRelated'] = false
+        return Promise.reject(error)
+      } else if (this.url.includes('httperror')) {
+        const error = new Error('Http')
+        error['httpStatus'] = 500
+        error['isCrossOriginRelated'] = false
+        return Promise.reject(error)
+      } else if (this.url.includes('error')) {
+        return Promise.reject(new Error('Unknown'))
+      } else {
+        return Promise.resolve(this)
+      }
     }
     getVersion() {
       if (this.url === urlGeojson || this.url === urlGml) {
@@ -481,5 +496,44 @@ describe('WfsReader', () => {
         })
       })
     })
+  })
+})
+
+describe('#getWfsEndpoint', () => {
+  it('should return a WfsEndpoint instance when the endpoint is ready', async () => {
+    const wfsEndpoint = await getWfsEndpoint(urlGeojson)
+    expect(wfsEndpoint).toBeInstanceOf(WfsEndpoint)
+  })
+
+  it('should throw a forbidden error for 401 or 403 status', async () => {
+    const urlForbidden = 'http://forbidden'
+    try {
+      await getWfsEndpoint(urlForbidden)
+    } catch (error) {
+      expect(error).toBeInstanceOf(FetchError)
+      expect(error.httpStatus).toBe(403)
+      expect(error.type).toBe('forbidden')
+    }
+  })
+
+  it('should throw an http error for other http status', async () => {
+    const urlHttpError = 'http://httperror'
+    try {
+      await getWfsEndpoint(urlHttpError)
+    } catch (error) {
+      expect(error).toBeInstanceOf(FetchError)
+      expect(error.httpStatus).toBe(500)
+      expect(error.type).toBe('http')
+    }
+  })
+
+  it('should throw an unknown error for other cases', async () => {
+    const urlError = 'http://error'
+    try {
+      await getWfsEndpoint(urlError)
+    } catch (error) {
+      expect(error).toBeInstanceOf(FetchError)
+      expect(error.type).toBe('unknown')
+    }
   })
 })

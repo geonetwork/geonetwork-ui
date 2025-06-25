@@ -1,0 +1,83 @@
+<a [attr.href]="linkHref" [target]="linkTarget">
+  <div
+    class="group rounded-md bg-white hover:cursor-pointer hover:bg-slate-50 overflow-hidden w-full"
+    [ngClass]="cardClass"
+  >
+    <div
+      class="flex flex-row md:gap-0 justify-between w-full"
+      [ngClass]="{ 'flex-wrap md:flex-nowrap gap-3': size === 'L' }"
+    >
+      <div
+        *ngIf="shouldShowThumbnail"
+        [ngClass]="thumbnailContainerClass"
+        class="border mr-4 flex flex-col"
+      >
+        <gn-ui-thumbnail
+          class="w-full h-full object-cover"
+          [thumbnailUrl]="record.overviews?.[0]?.url?.toString() || ''"
+          [fit]="'cover'"
+        ></gn-ui-thumbnail>
+      </div>
+      <div class="grow flex flex-col gap-3 w-0">
+        <div class="flex items-center gap-2">
+          <div class="grow flex flex-wrap items-center gap-2">
+            <gn-ui-kind-badge
+              [styling]="'default'"
+              [kind]="record?.kind"
+            ></gn-ui-kind-badge>
+            <gn-ui-geo-data-badge
+              [showLabel]="size === 'L'"
+              [styling]="'light'"
+              [record]="record"
+            ></gn-ui-geo-data-badge>
+            <gn-ui-metadata-quality
+              class="flex items-center"
+              [smaller]="true"
+              [metadata]="record"
+              [metadataQualityDisplay]="metadataQualityDisplay"
+            ></gn-ui-metadata-quality>
+          </div>
+          <div *ngIf="size !== 'XS'" data-cy="recordFav">
+            <ng-container
+              [ngTemplateOutlet]="favoriteTemplate"
+              [ngTemplateOutletContext]="{ $implicit: record }"
+            ></ng-container>
+          </div>
+        </div>
+
+        <div class="grow flex flex-col gap-2">
+          <div
+            class="font-medium text-title group-hover:text-primary"
+            [title]="record.title"
+          >
+            <h4
+              class="mr-6 overflow-hidden"
+              [ngClass]="getTitleClass()"
+              data-cy="recordTitle"
+              [title]="record.title"
+            >
+              {{ record.title }}
+            </h4>
+          </div>
+          <div
+            *ngIf="displayAbstract()"
+            class="mr-6 text-xs text-gray-900 overflow-hidden"
+            [ngClass]="getAbstractClass()"
+            data-cy="recordAbstract"
+          >
+            <gn-ui-markdown-parser
+              [textContent]="abstract"
+              [whitoutStyles]="true"
+            ></gn-ui-markdown-parser>
+          </div>
+        </div>
+
+        <gn-ui-internal-link-card-contact
+          *ngIf="size !== 'XS' && record.ownerOrganization?.name"
+          [record]="record"
+          [size]="size"
+        ></gn-ui-internal-link-card-contact>
+      </div>
+    </div>
+  </div>
+</a>

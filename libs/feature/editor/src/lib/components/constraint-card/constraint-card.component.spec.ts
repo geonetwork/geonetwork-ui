@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { ConstraintCardComponent } from './constraint-card.component'
-import { importProvidersFrom } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('ConstraintCardComponent', () => {
   let component: ConstraintCardComponent
@@ -10,8 +9,7 @@ describe('ConstraintCardComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ConstraintCardComponent],
-      providers: [importProvidersFrom(TranslateModule.forRoot())],
+      providers: [provideI18n()],
     })
     fixture = TestBed.createComponent(ConstraintCardComponent)
     component = fixture.componentInstance

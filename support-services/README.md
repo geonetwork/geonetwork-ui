@@ -31,10 +31,10 @@ $ docker compose down -v
 
 ## Specifying a different GeoNetwork version
 
-By default, the version of GeoNetwork used as a backend is 4.2.2. You can specify another version like so:
+By default, the version of GeoNetwork used as a backend is 4.2.5. You can specify another version like so:
 
 ```shell
-$ GEONETWORK_VERSION=4.2.5 docker compose up -d
+$ GEONETWORK_VERSION=4.2.2 docker compose up -d
 ```
 
 ## Access services
@@ -51,5 +51,9 @@ Running the following command will extract the current state of the database and
 $ docker compose exec database pg_dump -U geonetwork -d geonetwork -Fp > docker-entrypoint-initdb.d/dump.sql
 ```
 
-Please keep in mind that the initial state of the database should be as lightweight as possible and that changing it might break
+Warning: Only run this command when running Geonetwork in version 4.2.2, as otherwise the DB will be migrated and e2e tests may fail.
+
+Please also keep in mind that the initial state of the database should be as lightweight as possible and that changing it might break
 integration tests relying on it.
+
+💡 When adding new datasets, if you want to minimize the modifications of e2e tests, manually adjust the creation/modification/id dates of the new datasets (either in the dump.sql file or via a database tool). Don't forget to reindex to take these changes into account on your local datahub. You will still have to update some e2e tests, those that rely on dataset counts.

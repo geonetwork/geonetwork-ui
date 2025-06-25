@@ -5,22 +5,14 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
 import { RecordPreviewFeedComponent } from './record-preview-feed.component'
 import { importProvidersFrom } from '@angular/core'
 import { action } from '@storybook/addon-actions'
-import { HttpClientModule } from '@angular/common/http'
-import { TranslateModule } from '@ngx-translate/core'
-import { TRANSLATE_DEFAULT_CONFIG } from '@geonetwork-ui/util/i18n'
-import { UiDatavizModule } from '@geonetwork-ui/ui/dataviz'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import {
-  NgIconComponent,
-  provideIcons,
-  provideNgIconsConfig,
-} from '@ng-icons/core'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matStar } from '@ng-icons/material-icons/baseline'
 
 export default {
@@ -28,22 +20,14 @@ export default {
   component: RecordPreviewFeedComponent,
   decorators: [
     moduleMetadata({
-      imports: [
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        UiDatavizModule,
-        UtilSharedModule,
-        NgIconComponent,
-        ThumbnailComponent,
-      ],
+      imports: [NgIconComponent, ThumbnailComponent],
     }),
     applicationConfig({
       providers: [
-        importProvidersFrom(HttpClientModule, BrowserAnimationsModule),
+        importProvidersFrom(BrowserAnimationsModule),
+        provideI18n(),
         provideIcons({
           matStar,
-        }),
-        provideNgIconsConfig({
-          size: '0.9em',
         }),
       ],
     }),

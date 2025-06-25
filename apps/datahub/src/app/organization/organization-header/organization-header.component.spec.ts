@@ -1,10 +1,8 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { OrganizationHeaderComponent } from './organization-header.component'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule } from '@ngx-translate/core'
-import { AsyncPipe, Location, NgIf } from '@angular/common'
+import { Location } from '@angular/common'
 import { someOrganizationsFixture } from '@geonetwork-ui/common/fixtures'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
@@ -28,16 +26,8 @@ describe('OrganizationHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        OrganizationHeaderComponent,
-        UiInputsModule,
-        TranslateModule,
-        NgIf,
-        AsyncPipe,
-        TranslateModule.forRoot(),
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        provideI18n(),
         {
           provide: Location,
           useValue: locationMock,

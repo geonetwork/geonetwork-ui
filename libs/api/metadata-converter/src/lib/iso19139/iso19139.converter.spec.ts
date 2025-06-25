@@ -10,6 +10,12 @@ import {
   GEOCAT_CH_SERVICE_RECORD,
 } from '../fixtures/geocat-ch.records'
 import { GENERIC_DATASET_RECORD } from '../fixtures/generic.records'
+import {
+  METADATA_FOR_I18N_DATASET_RECORD,
+  METADATA_FOR_I18N_NO_OTHERLANGUAGE,
+} from '../fixtures/metadata-for-i18n.records'
+import METADATA_FOR_I18N_XML from '../fixtures/metadata-for-i18n.dataset.xml'
+import METADATA_FOR_I18N_NO_OTHERLANGUAGE_XML from '../fixtures/metadata-for-i18n-no-otherlanguage.dataset.xml'
 // @ts-ignore
 import GEO2FRANCE_PLU_DATASET from '../fixtures/geo2france.iso19139.plu.xml'
 // @ts-ignore
@@ -105,6 +111,18 @@ describe('ISO19139 converter', () => {
       const xml = await converter.writeRecord(
         recordChanged,
         GEO2FRANCE_REUSE_ONGULES
+      )
+      expect(xml).toStrictEqual(ref)
+    })
+    it('produces a valid XML document when otherlanguages are removed', async () => {
+      const recordChanged: ReuseRecord = METADATA_FOR_I18N_NO_OTHERLANGUAGE
+      // parse and output xml to guarantee identical formatting
+      const ref = xmlToString(
+        parseXmlString(METADATA_FOR_I18N_NO_OTHERLANGUAGE_XML)
+      )
+      const xml = await converter.writeRecord(
+        recordChanged,
+        METADATA_FOR_I18N_XML
       )
       expect(xml).toStrictEqual(ref)
     })

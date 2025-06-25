@@ -1,16 +1,5 @@
-import { HttpClientModule } from '@angular/common/http'
-import { importProvidersFrom } from '@angular/core'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
-import { TranslateModule } from '@ngx-translate/core'
-import {
-  applicationConfig,
-  Meta,
-  moduleMetadata,
-  StoryObj,
-} from '@storybook/angular'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { ImageInputComponent } from './image-input.component'
 import { action } from '@storybook/addon-actions'
 
@@ -19,14 +8,7 @@ export default {
   component: ImageInputComponent,
   decorators: [
     applicationConfig({
-      providers: [
-        importProvidersFrom(HttpClientModule),
-        importProvidersFrom(UtilI18nModule),
-        importProvidersFrom(TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG)),
-      ],
-    }),
-    moduleMetadata({
-      imports: [ImageInputComponent, UtilI18nModule, TranslateModule],
+      providers: [provideI18n()],
     }),
   ],
 } as Meta<ImageInputComponent>

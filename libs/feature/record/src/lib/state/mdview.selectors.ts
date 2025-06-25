@@ -41,6 +41,15 @@ export const getRelated = createSelector(
   (state: MetadataViewState) => state.related
 )
 
+export const getSources = createSelector(
+  getMdViewState,
+  (state: MetadataViewState) => state.sources
+)
+
+export const getSourceOf = createSelector(
+  getMdViewState,
+  (state: MetadataViewState) => state.sourceOf
+)
 /*
   Metadata selectors
 */

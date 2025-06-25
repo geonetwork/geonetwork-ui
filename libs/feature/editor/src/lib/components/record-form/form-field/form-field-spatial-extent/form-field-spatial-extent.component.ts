@@ -9,9 +9,9 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { firstValueFrom, map, shareReplay } from 'rxjs'
 import { EditorFacade } from '../../../../+state/editor.facade'
 import { switchMap } from 'rxjs/operators'
-import { FormFieldMapContainerComponent } from '../form-field-map-container/form-field-map-container.component'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { SPATIAL_SCOPES } from '../../../../fields.config'
+import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
 
 // This intermediary type will let us keep track of which keyword is bound to
 // which extent; these properties will not be persisted
@@ -35,8 +35,8 @@ type KeywordWithExtent = Keyword & {
   imports: [
     CommonModule,
     GenericKeywordsComponent,
-    FormFieldMapContainerComponent,
-    TranslateModule,
+    TranslatePipe,
+    SpatialExtentComponent,
   ],
 })
 export class FormFieldSpatialExtentComponent {

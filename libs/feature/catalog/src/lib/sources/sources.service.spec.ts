@@ -1,11 +1,9 @@
 import { TestBed } from '@angular/core/testing'
-import { HttpClientModule } from '@angular/common/http'
 import { SourcesService } from './sources.service'
-import { TranslateModule } from '@ngx-translate/core'
 import { SourcesApiService } from '@geonetwork-ui/data-access/gn4'
 import { someSourcesFixture } from './sources.fixture'
 import { Observable } from 'rxjs'
-import { LangService } from '@geonetwork-ui/util/i18n'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class SourcesApiServiceMock {
   getSubPortals1 = jest.fn(function () {
@@ -14,19 +12,15 @@ class SourcesApiServiceMock {
     })
   })
 }
-class LangServiceMock {
-  iso3 = 'fre'
-}
 
 describe('SourcesService', () => {
   let service: SourcesService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), HttpClientModule],
       providers: [
+        provideI18n(),
         { provide: SourcesApiService, useClass: SourcesApiServiceMock },
-        { provide: LangService, useClass: LangServiceMock },
       ],
     })
     service = TestBed.inject(SourcesService)

@@ -6,11 +6,10 @@ import {
   Output,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { MarkdownEditorComponent } from '@geonetwork-ui/ui/elements'
 import { FormFieldRichComponent } from '../record-form/form-field/form-field-rich/form-field-rich.component'
 import { ButtonComponent, UrlInputComponent } from '@geonetwork-ui/ui/inputs'
 import { MatIconModule } from '@angular/material/icon'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { Constraint } from '@geonetwork-ui/common/domain/model/record'
 import {
   NgIconComponent,
@@ -25,12 +24,12 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
   standalone: true,
   imports: [
     CommonModule,
-    MarkdownEditorComponent,
     FormFieldRichComponent,
     UrlInputComponent,
     ButtonComponent,
     MatIconModule,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     NgIconComponent,
   ],
   providers: [

@@ -11,7 +11,7 @@ import {
   LinkUsage,
   ThemeService,
 } from '@geonetwork-ui/util/shared'
-import { Configuration, SearchApiService } from '@geonetwork-ui/data-access/gn4'
+import { SearchApiService } from '@geonetwork-ui/data-access/gn4'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import { TranslateService } from '@ngx-translate/core'
 import { firstValueFrom } from 'rxjs'
@@ -19,8 +19,11 @@ import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { OverlayContainer } from '@angular/cdk/overlay'
 import { WebcomponentOverlayContainer } from '../webcomponent-overlay-container'
-
-export const apiConfiguration = new Configuration()
+import {
+  MetadataLanguage,
+  standaloneConfigurationObject,
+  TextLanguage,
+} from '../configuration'
 
 @Component({
   selector: 'wc-base',
@@ -35,6 +38,8 @@ export class BaseComponent implements OnChanges, OnInit {
   @Input() backgroundColor = '#cecece'
   @Input() mainFont = ''
   @Input() titleFont = ''
+  @Input() textLanguage: TextLanguage = 'browser'
+  @Input() metadataLanguage: MetadataLanguage = ''
 
   isInitialized = false
   facade: SearchFacade
@@ -72,7 +77,16 @@ export class BaseComponent implements OnChanges, OnInit {
   }
 
   init() {
-    apiConfiguration.basePath = this.apiUrl
+    standaloneConfigurationObject.apiConfiguration.basePath = this.apiUrl
+    standaloneConfigurationObject.metadataLanguage ??= this.metadataLanguage
+    standaloneConfigurationObject.textLanguage ??= this.textLanguage
+
+    if (this.textLanguage === 'browser') {
+      this.translate.use(this.translate.getBrowserLang())
+    } else {
+      this.translate.use(this.textLanguage)
+    }
+
     this.translate.reloadLang(this.translate.currentLang)
     ThemeService.applyCssVariables(
       this.primaryColor,

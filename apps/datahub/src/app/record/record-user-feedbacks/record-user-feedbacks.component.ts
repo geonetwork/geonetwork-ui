@@ -21,7 +21,11 @@ import {
   TextAreaComponent,
 } from '@geonetwork-ui/ui/inputs'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import {
+  TranslateDirective,
+  TranslatePipe,
+  TranslateService,
+} from '@ngx-translate/core'
 import { AuthService, Gn4PlatformMapper } from '@geonetwork-ui/api/repository'
 import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 import { NgIcon, provideIcons } from '@ng-icons/core'
@@ -51,7 +55,8 @@ type UserFeedbackSortingFunction = (
     NgIcon,
     ButtonComponent,
     TextAreaComponent,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     UserFeedbackItemComponent,
   ],
   viewProviders: [

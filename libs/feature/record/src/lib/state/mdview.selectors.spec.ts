@@ -143,6 +143,26 @@ describe('MdView Selectors', () => {
       })
     })
 
+    describe('getSources', () => {
+      it('returns sources records', () => {
+        const results = MdViewSelectors.getSources.projector({
+          ...state,
+          sources: [relatedRecord],
+        })
+        expect(results).toEqual([relatedRecord])
+      })
+    })
+
+    describe('getSourceOf', () => {
+      it('returns has sources records', () => {
+        const results = MdViewSelectors.getSourceOf.projector({
+          ...state,
+          sourceOf: [relatedRecord],
+        })
+        expect(results).toEqual([relatedRecord])
+      })
+    })
+
     describe('getChartConfig', () => {
       it('returns chart config', () => {
         const results = MdViewSelectors.getChartConfig.projector({

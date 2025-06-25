@@ -53,7 +53,7 @@ import {
 import { readKind } from './read-parts'
 import { writeGeometry } from './utils/geometry'
 import { namePartsToFull } from './utils/individual-name'
-import { LANG_2_TO_3_MAPPER } from '@geonetwork-ui/util/i18n/language-codes'
+import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n/language-codes'
 import { kindToCodeListValue } from '../common/resource-types'
 
 function writeLocalizedElement(
@@ -62,7 +62,8 @@ function writeLocalizedElement(
   translations: FieldTranslation,
   defaultLanguage: LanguageCode
 ): ChainableFunction<XmlElement, XmlElement> {
-  if (!translations) return writeFn
+  if (!translations)
+    return pipe(writeFn, removeChildrenByName('gmd:PT_FreeText')) // If no translations, remove existing if any
   function createLocalized(lang: LanguageCode, translation: string) {
     return pipe(
       createNestedElement('gmd:textGroup', 'gmd:LocalisedCharacterString'),
@@ -1184,25 +1185,27 @@ export function writeGraphicOverviews(
     findOrCreateIdentification(),
     removeChildrenByName('gmd:graphicOverview'),
     appendChildren(
-      ...record.overviews.map((overview) =>
-        pipe(
-          createNestedElement('gmd:graphicOverview', 'gmd:MD_BrowseGraphic'),
-          appendChildren(
-            pipe(
-              createElement('gmd:fileName'),
-              writeCharacterString(overview.url.toString())
-            )
-          ),
-          'description' in overview
-            ? appendChildren(
-                pipe(
-                  createElement('gmd:fileDescription'),
-                  writeCharacterString(overview.description)
-                )
+      ...record.overviews
+        .filter((overview) => overview.url)
+        .map((overview) =>
+          pipe(
+            createNestedElement('gmd:graphicOverview', 'gmd:MD_BrowseGraphic'),
+            appendChildren(
+              pipe(
+                createElement('gmd:fileName'),
+                writeCharacterString(overview.url.toString())
               )
-            : noop
+            ),
+            'description' in overview
+              ? appendChildren(
+                  pipe(
+                    createElement('gmd:fileDescription'),
+                    writeCharacterString(overview.description)
+                  )
+                )
+              : noop
+          )
         )
-      )
     )
   )(rootEl)
 }
@@ -1225,7 +1228,7 @@ export function writeLineage(record: DatasetRecord, rootEl: XmlElement) {
 }
 
 export function getServiceEndpointProtocol(endpoint: ServiceEndpoint): string {
-  switch (endpoint.protocol.toLowerCase()) {
+  switch (endpoint.accessServiceProtocol.toLowerCase()) {
     case 'wfs':
       return 'OGC:WFS'
     case 'wms':
@@ -1233,14 +1236,14 @@ export function getServiceEndpointProtocol(endpoint: ServiceEndpoint): string {
     case 'wps':
       return 'OGC:WPS'
     default:
-      return endpoint.protocol
+      return endpoint.accessServiceProtocol
   }
 }
 
 export function createOnlineResource(onlineResource: ServiceOnlineResource) {
   let linkageUrl, functionCode, protocol
   if (onlineResource.type === 'endpoint') {
-    linkageUrl = onlineResource.endpointUrl.toString()
+    linkageUrl = onlineResource.url.toString()
     protocol = getServiceEndpointProtocol(onlineResource)
     functionCode = 'download'
   } else {
@@ -1469,7 +1472,7 @@ export function writeLanguages(record: DatasetRecord, rootEl: XmlElement) {
       writeAttribute('id', lang.toUpperCase()),
       createNestedChild('gmd:languageCode', 'gmd:LanguageCode'),
       writeAttribute('codeList', 'http://www.loc.gov/standards/iso639-2/'),
-      writeAttribute('codeListValue', LANG_2_TO_3_MAPPER[lang])
+      writeAttribute('codeListValue', getLang3FromLang2(lang) ?? lang)
     )
 
   // add new languages (only if other than default one)
@@ -1483,7 +1486,7 @@ export function writeDefaultLanguage(
   record: DatasetRecord,
   rootEl: XmlElement
 ) {
-  const lang3 = LANG_2_TO_3_MAPPER[record.defaultLanguage.toLowerCase()]
+  const lang3 = getLang3FromLang2(record.defaultLanguage.toLowerCase())
   return pipe(
     findNestedChildOrCreate('gmd:language', 'gmd:LanguageCode'),
     writeAttribute('codeList', 'http://www.loc.gov/standards/iso639-2/'),

@@ -1,22 +1,13 @@
-import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
 import { DragAndDropFileInputComponent } from './drag-and-drop-file-input.component'
-import { TranslateModule } from '@ngx-translate/core'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
-import { NgxDropzoneModule } from 'ngx-dropzone'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export default {
   title: 'Inputs/DragAndDropFileInputComponent',
   component: DragAndDropFileInputComponent,
   decorators: [
-    moduleMetadata({
-      imports: [
-        UtilI18nModule,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-        NgxDropzoneModule,
-      ],
+    applicationConfig({
+      providers: [provideI18n()],
     }),
   ],
 } as Meta<DragAndDropFileInputComponent>

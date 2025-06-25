@@ -1,10 +1,11 @@
-<div id="record-page" class="overflow-hidden">
+<div id="record-page">
   <gn-ui-record-meta
     [metadata]="mdViewFacade.metadata$ | async"
   ></gn-ui-record-meta>
   <datahub-header-record
     [metadata]="mdViewFacade.metadata$ | async"
   ></datahub-header-record>
+
   <datahub-record-metadata
     [metadataQualityDisplay]="metadataQualityDisplay"
   ></datahub-record-metadata>

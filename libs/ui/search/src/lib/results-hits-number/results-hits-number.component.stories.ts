@@ -1,20 +1,13 @@
-import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
-import {
-  TRANSLATE_DEFAULT_CONFIG,
-  UtilI18nModule,
-} from '@geonetwork-ui/util/i18n'
+import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { ResultsHitsNumberComponent } from './results-hits-number.component'
-import { TranslateModule } from '@ngx-translate/core'
 
 export default {
   title: 'Search/ResultsHitsNumberComponent',
   component: ResultsHitsNumberComponent,
   decorators: [
-    moduleMetadata({
-      imports: [
-        UtilI18nModule,
-        TranslateModule.forRoot(TRANSLATE_DEFAULT_CONFIG),
-      ],
+    applicationConfig({
+      providers: [provideI18n()],
     }),
   ],
 } as Meta<ResultsHitsNumberComponent>

@@ -14,7 +14,7 @@ import { By } from '@angular/platform-browser'
   </gn-ui-block-list>`,
 })
 class BlockListWrapperComponent {
-  @Input() blocks = [1, 2, 3, 4, 5, 6, 7]
+  @Input() blocks = Array.from({ length: 24 }, (_, i) => i + 1)
 }
 
 describe('BlockListComponent', () => {
@@ -36,139 +36,113 @@ describe('BlockListComponent', () => {
       .queryAll(By.css('.block'))
       .map((el) => el.nativeElement)
   })
+  function initializeBlocks(length: number) {
+    fixture.componentInstance.blocks = Array.from({ length }, (_, i) => i + 1)
+    fixture.detectChanges()
+  }
+
+  function getVisibleBlocks(count: number) {
+    return blockEls.slice(0, count).map((el) => el.style.display !== 'none')
+  }
 
   it('should create', () => {
     expect(component).toBeTruthy()
   })
 
   describe('pages computation', () => {
-    it('shows 5 items per page initially', () => {
-      const blocksVisibility = blockEls.map((el) => el.style.display !== 'none')
-      expect(blocksVisibility).toEqual([
-        true,
-        true,
-        true,
-        true,
-        true,
-        false,
-        false,
-      ])
+    interface PaginationTestCase {
+      elements: number
+      pageSize: number
+      pages: number
+    }
+
+    const paginationCases: PaginationTestCase[] = [
+      { elements: 1, pageSize: 3, pages: 1 },
+      { elements: 3, pageSize: 3, pages: 1 },
+      { elements: 4, pageSize: 4, pages: 1 },
+      { elements: 12, pageSize: 4, pages: 3 },
+      { elements: 13, pageSize: 6, pages: 3 },
+      { elements: 18, pageSize: 6, pages: 3 },
+      { elements: 19, pageSize: 8, pages: 3 },
+      { elements: 24, pageSize: 8, pages: 3 },
+      { elements: 80, pageSize: 8, pages: 10 },
+    ]
+
+    describe('pagination behavior', () => {
+      paginationCases.forEach(({ elements, pageSize, pages }) => {
+        it(`with ${elements} elements: shows ${pages} pages of ${pageSize} elements`, () => {
+          initializeBlocks(elements)
+          expect(component.pageSize).toBe(pageSize)
+          expect(component.pagesCount).toBe(pages)
+        })
+      })
     })
-    describe('click on step', () => {
+
+    describe('previousPage', () => {
       beforeEach(() => {
+        component.pageSize = 2
         component.goToPage(2)
+        component.goToPrevPage()
       })
-      it('updates visibility', () => {
-        const blocksVisibility = blockEls.map(
-          (el) => el.style.display !== 'none'
-        )
-        expect(blocksVisibility).toEqual([
-          false,
-          false,
-          false,
-          false,
-          false,
-          true,
-          true,
-        ])
+      it('changes to previous page', () => {
+        expect(component['currentPage']).toEqual(1)
       })
-      it('emits the selected page', () => {
+    })
+
+    describe('nextPage', () => {
+      beforeEach(() => {
+        component.pageSize = 2
+        component.goToPage(1)
+        component.goToNextPage()
+      })
+      it('changes to next page', () => {
         expect(component['currentPage']).toEqual(2)
       })
     })
-    describe('custom page size', () => {
+
+    describe('isFirstPage', () => {
+      it('returns true if the current page is the first one', () => {
+        expect(component.isFirstPage).toBe(true)
+      })
+      it('returns false if the current page is not the first one', () => {
+        component.goToPage(2)
+        expect(component.isFirstPage).toBe(false)
+      })
+    })
+
+    describe('isLastPage', () => {
+      it('returns true if the current page is the last one', () => {
+        component.goToPage(component.pagesCount)
+        expect(component.isLastPage).toBe(true)
+      })
+      it('returns false if the current page is not the last one', () => {
+        component.goToPage(2)
+        expect(component.isLastPage).toBe(false)
+      })
+    })
+
+    describe('set initial height as min height, keeps value when height changes', () => {
       beforeEach(() => {
-        component.pageSize = 3
-        component.goToPage(3)
+        Object.defineProperties(component.blockContainer.nativeElement, {
+          clientHeight: {
+            configurable: true,
+            value: 150,
+          },
+        })
+        fixture.detectChanges()
+        component.ngAfterViewInit()
+        Object.defineProperties(component.blockContainer.nativeElement, {
+          clientHeight: {
+            value: 50,
+          },
+        })
         fixture.detectChanges()
       })
-      it('updates visibility', () => {
-        const blocksVisibility = blockEls.map(
-          (el) => el.style.display !== 'none'
+      it('sets the min height of the container according to its initial content', () => {
+        expect(component.blockContainer.nativeElement.style.minHeight).toBe(
+          '150px'
         )
-        expect(blocksVisibility).toEqual([
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          true,
-        ])
       })
-    })
-  })
-
-  describe('previousPage', () => {
-    beforeEach(() => {
-      component.pageSize = 2
-      component.goToPage(2)
-      component.goToPrevPage()
-    })
-    it('changes to previous page', () => {
-      expect(component['currentPage']).toEqual(1)
-    })
-  })
-
-  describe('nextPage', () => {
-    beforeEach(() => {
-      component.pageSize = 2
-      component.goToPage(1)
-      component.goToNextPage()
-    })
-    it('changes to next page', () => {
-      expect(component['currentPage']).toEqual(2)
-    })
-  })
-
-  describe('isFirstPage', () => {
-    beforeEach(() => {
-      component.pageSize = 3
-    })
-    it('returns true if the current page is the first one', () => {
-      expect(component.isFirstPage).toBe(true)
-    })
-    it('returns false if the current page is not the first one', () => {
-      component.goToPage(2)
-      expect(component.isFirstPage).toBe(false)
-    })
-  })
-
-  describe('isLastPage', () => {
-    beforeEach(() => {
-      component.pageSize = 3
-    })
-    it('returns true if the current page is the last one', () => {
-      component.goToPage(3)
-      expect(component.isLastPage).toBe(true)
-    })
-    it('returns false if the current page is not the last one', () => {
-      component.goToPage(2)
-      expect(component.isLastPage).toBe(false)
-    })
-  })
-
-  describe('set initial height as min height, keeps value when height changes', () => {
-    beforeEach(() => {
-      Object.defineProperties(component.blockContainer.nativeElement, {
-        clientHeight: {
-          configurable: true,
-          value: 150,
-        },
-      })
-      fixture.detectChanges()
-      component.ngAfterViewInit()
-      Object.defineProperties(component.blockContainer.nativeElement, {
-        clientHeight: {
-          value: 50,
-        },
-      })
-      fixture.detectChanges()
-    })
-    it('sets the min height of the container according to its initial content', () => {
-      expect(component.blockContainer.nativeElement.style.minHeight).toBe(
-        '150px'
-      )
     })
   })
 })

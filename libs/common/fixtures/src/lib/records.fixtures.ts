@@ -3,6 +3,7 @@ import {
   DatasetRecord,
   DatasetSpatialExtent,
   Keyword,
+  ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 
 export const datasetRecordsFixture: () => CatalogRecord[] = () => [
@@ -176,6 +177,20 @@ As such, **it is not very interesting at all.**`,
               link: '',
               definition: 'Nom de la rue',
               type: 'String (48)',
+              values: [
+                {
+                  code: 'Pomme',
+                  label: 'Les Pommiers',
+                  description: 'Sous les pommiers',
+                },
+                {
+                  code: 'Cotton',
+                  label: 'Rue Cotton',
+                  description: 'Rue Cotton',
+                },
+                { code: "Passage de l'échiquier" },
+                { description: 'Rue du Charlieu' },
+              ],
             },
             {
               code: 'RUE',
@@ -187,8 +202,24 @@ As such, **it is not very interesting at all.**`,
           ],
           code: '',
           aliases: '',
-          typeName: "Catalogue d'attributs",
-          definition: '',
+          typeName: "Catalogue d'attributs N°1",
+          definition: 'Définition du catalogue d attributs N°1',
+          isAbstract: 'false',
+        },
+        {
+          attributeTable: [
+            {
+              code: 'UniqueObject',
+              name: 'unique object ',
+              link: '',
+              definition: 'this is the only object of this catalog',
+              type: 'String (50)',
+            },
+          ],
+          code: '',
+          aliases: '',
+          typeName: "Catalogue d'attributs N°2",
+          definition: 'Définition du catalogue d attributs N°2',
           isAbstract: 'false',
         },
       ],
@@ -215,7 +246,7 @@ As such, **it is not very interesting at all.**`,
     recordUpdated: new Date('2022-04-15T14:18:19'),
     resourceUpdated: new Date('2022-03-29'),
     title:
-      "Plan local d'urbanisme (PLU) dématérialisé - commune d'Avrigny - approbation du 29/03/2022",
+      "Plan local d'urbanisme (PLU) dématérialisé - commune d'Avrigny - approbation du 29/03/2022 (Ce lot informe du droit à bâtir sur la commune d'Avrigny)",
     abstract: `Plan local d'urbanisme (PLU) dématérialisé - commune d'Avrigny - approbation du 29/03/2022.
 
 Ce lot informe du droit à bâtir sur la commune d'Avrigny.
@@ -795,6 +826,52 @@ export const importDatasetRecordAsXmlFixture = (): string => `
 	</gmd:identificationInfo>
 </gmd:MD_Metadata>`
 
+export const simpleServiceRecordFixture = (): ServiceRecord => ({
+  abstract: `Ce service de visualisation WMS permet de consulter la série de couches de données "Sites de gestion des déchets miniers - Série".`,
+  kind: 'service',
+  recordUpdated: new Date('2023-03-17T07:38:08.875Z'),
+  recordPublished: null,
+  ownerOrganization: null,
+  licenses: [],
+  legalConstraints: [],
+  securityConstraints: [],
+  otherConstraints: [],
+  contacts: [],
+  contactsForResource: [],
+  keywords: [],
+  topics: [],
+  spatialExtents: [],
+  overviews: [],
+  defaultLanguage: null,
+  otherLanguages: [],
+  title: 'Sites de gestion des déchets miniers - Service de visualisation WMS',
+  onlineResources: [
+    {
+      name: 'Rapport de disponibilité du service WMS',
+      description:
+        'Ce service de visualisation WMS permet de consulter la série de couches de données "Sites de gestion des déchets miniers - Série".',
+      mimeType: 'text/html',
+      type: 'link',
+      url: new URL(
+        'https://geoservices.wallonie.be/rapportDisponibilite/wms/sites_de_gestion_des_dechets_miniers_srie.html'
+      ),
+      accessRestricted: false,
+    },
+  ],
+  uniqueIdentifier: '00b22798-ec8e-4500-89e8-90eeeda45919',
+  landingPage: new URL(
+    'http://localhost:4200/geonetwork/srv/fre/catalog.search#/metadata/00b22798-ec8e-4500-89e8-90eeeda45919'
+  ),
+  extras: {
+    isPublishedToAll: true,
+    id: '723',
+    isHarvested: true,
+    ownerInfo: 'admin|admin|admin|Administrator',
+    edit: true,
+  },
+  recordCreated: new Date('2023-03-17T07:38:08.875Z'),
+})
+
 export const NATIONAL_KEYWORD = {
   key: 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/national',
   label: 'National',
@@ -893,3 +970,55 @@ export const SAMPLE_RECORD = {
     ...SAMPLE_PLACE_KEYWORDS_FROM_XML,
   ],
 }
+
+export const multilingualDatasetFixture: () => DatasetRecord = () => ({
+  kind: 'dataset',
+  defaultLanguage: 'en',
+  otherLanguages: ['fr', 'de'],
+  title: 'English Title',
+  abstract: 'English Abstract',
+  lineage: 'English Lineage',
+  translations: {
+    title: { fr: 'Titre Français', de: 'Titel DE' },
+    abstract: { fr: 'Résumé Français', de: 'Beschreibung DE' },
+    lineage: { fr: 'Généalogie Français', de: 'Lineage DE' },
+  },
+  keywords: [
+    {
+      label: 'Keyword EN',
+      description: 'Keyword Desc EN',
+      type: 'theme',
+      translations: {
+        label: { fr: 'Mot-clé FR', de: 'Schlusselwort DE' },
+        description: { fr: 'Description FR', de: 'Schlusselwort DE' },
+      },
+    },
+  ],
+  onlineResources: [],
+  licenses: [],
+  legalConstraints: [],
+  securityConstraints: [],
+  otherConstraints: [],
+  contacts: [],
+  contactsForResource: [],
+  ownerOrganization: {
+    name: 'Org EN',
+    translations: {
+      name: { fr: 'Org FR', de: 'Org DE' },
+    },
+  },
+  spatialExtents: [
+    {
+      description: 'Extent EN',
+      translations: {
+        description: { fr: 'Étendue FR', de: 'Bereich DE' },
+      },
+    },
+  ],
+  temporalExtents: [],
+  status: 'ongoing',
+  uniqueIdentifier: 'ABCD-EFGH',
+  overviews: [],
+  topics: [],
+  recordUpdated: null,
+})

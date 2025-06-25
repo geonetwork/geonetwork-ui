@@ -13,7 +13,8 @@ import {
   TextInputComponent,
 } from '@geonetwork-ui/ui/inputs'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 const DEFAULT_PARAMS = {
   OFFSET: '',
@@ -32,7 +33,8 @@ const DEFAULT_PARAMS = {
     TextInputComponent,
     DropdownSelectorComponent,
     CopyTextButtonComponent,
-    TranslateModule,
+    TranslateDirective,
+    MatTooltipModule,
   ],
 })
 export class RecordApiFormComponent {
@@ -162,7 +164,7 @@ export class RecordApiFormComponent {
       limit: limit !== '-1' ? Number(limit) : -1,
       offset: offset !== '' ? Number(offset) : undefined,
       outputCrs:
-        format === ('application/json' || 'geojson') ? 'EPSG:4326' : undefined,
+        format.toLowerCase().indexOf('json') > -1 ? 'EPSG:4326' : undefined,
     }
 
     if (this.endpoint instanceof WfsEndpoint) {
@@ -170,6 +172,7 @@ export class RecordApiFormComponent {
       options.maxFeatures = limit !== '-1' ? Number(limit) : undefined
       return this.endpoint.getFeatureUrl(this.apiFeatureType, options)
     } else {
+      delete options.outputCrs
       return await this.endpoint.getCollectionItemsUrl(
         this.apiFeatureType,
         options

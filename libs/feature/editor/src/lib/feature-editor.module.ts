@@ -4,30 +4,20 @@ import { NgModule } from '@angular/core'
 import { MatNativeDateModule } from '@angular/material/core'
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatFormFieldModule } from '@angular/material/form-field'
-import { TextInputComponent, UiInputsModule } from '@geonetwork-ui/ui/inputs'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
+import { TextInputComponent } from '@geonetwork-ui/ui/inputs'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { EditorEffects } from './+state/editor.effects'
 import { EditorFacade } from './+state/editor.facade'
 import * as fromEditor from './+state/editor.reducer'
-import { WizardFieldComponent } from './components/wizard-field/wizard-field.component'
-import { WizardSummarizeComponent } from './components/wizard-summarize/wizard-summarize.component'
-import { WizardComponent } from './components/wizard/wizard.component'
 import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
 
 @NgModule({
-  declarations: [
-    WizardComponent,
-    WizardFieldComponent,
-    WizardSummarizeComponent,
-  ],
   imports: [
     CommonModule,
-    UiInputsModule,
-    UiWidgetsModule,
-    TranslateModule.forChild(),
+    TranslateDirective,
+    TranslatePipe,
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
@@ -40,9 +30,6 @@ import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
     EffectsModule.forFeature([EditorEffects]),
     TextInputComponent,
   ],
-  exports: [WizardComponent, WizardSummarizeComponent],
   providers: [EditorFacade, Gn4PlatformService],
 })
 export class FeatureEditorModule {}
-export * from './models/index'
-export * from './services/wizard.service'

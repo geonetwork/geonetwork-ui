@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordApiFormComponent } from './record-api-form.component'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { firstValueFrom } from 'rxjs'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const mockDatasetServiceDistribution: DatasetServiceDistribution = {
   url: new URL('https://api.example.com/data'),
@@ -40,6 +40,8 @@ jest.mock('@camptocamp/ogc-client', () => ({
       if (options.limit !== undefined) queryParams.set('limit', options.limit)
       if (options.offset !== undefined)
         queryParams.set('offset', options.offset)
+      if (options.outputCrs !== undefined)
+        queryParams.set('crs', options.outputCrs)
       queryParams.set('f', options.outputFormat)
       return `${
         this.url
@@ -78,7 +80,7 @@ describe('RecordApiFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RecordApiFormComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(RecordApiFormComponent)
@@ -200,13 +202,28 @@ describe('RecordApiFormComponent', () => {
         `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"application/json","outputCrs":"EPSG:4326"}`
       )
     })
-
-    it('sets maxFeatures if a limit is set', async () => {
+    it('should set maxFeatures if a limit is set', async () => {
       component.setLimit('12')
       expect(component.limit$.getValue()).toBe('12')
       const url = await firstValueFrom(component.apiQueryUrl$)
       expect(url).toBe(
         `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"application/json","maxFeatures":12,"outputCrs":"EPSG:4326"}`
+      )
+    })
+    it('should set outputCrs if format is geojson', async () => {
+      const mockFormat = 'application/geo+json'
+      component.setFormat(mockFormat)
+      const url = await firstValueFrom(component.apiQueryUrl$)
+      expect(url).toBe(
+        `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"application/geo+json","outputCrs":"EPSG:4326"}`
+      )
+    })
+    it('should not set outputCrs if not a json format', async () => {
+      const mockFormat = 'text/csv'
+      component.setFormat(mockFormat)
+      const url = await firstValueFrom(component.apiQueryUrl$)
+      expect(url).toBe(
+        `https://api.example.com/data?type=mockFeatureType&options={"outputFormat":"text/csv"}`
       )
     })
   })

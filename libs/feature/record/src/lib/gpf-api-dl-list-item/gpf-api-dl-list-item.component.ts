@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { Observable, map, take } from 'rxjs'
 import { CdkAccordionModule } from '@angular/cdk/accordion'
 
+
 @Component({
   selector: 'gn-ui-gpf-api-dl-list-item',
   templateUrl: './gpf-api-dl-list-item.component.html',
@@ -13,6 +14,7 @@ import { CdkAccordionModule } from '@angular/cdk/accordion'
   standalone: true,
 
   imports: [CommonModule, TranslateModule, NgIconsModule, CdkAccordionModule],
+
 })
 export class GpfApiDlListItemComponent implements OnInit {
   @Input() link

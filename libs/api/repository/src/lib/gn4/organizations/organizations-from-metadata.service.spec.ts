@@ -14,8 +14,8 @@ import {
   elasticFullResponseFixture,
   groupsFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { LangService } from '@geonetwork-ui/util/i18n'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { TranslateService } from '@ngx-translate/core'
 
 const sampleOrgA: Organization = {
   description: 'A description for ARE',
@@ -152,8 +152,8 @@ class Gn4PlatformServiceMock {
   getApiVersion = jest.fn(() => of(geonetworkVersion))
 }
 
-class LangServiceMock {
-  gnLang = jest.fn(() => 'langger')
+class TranslateServiceMock {
+  currentLang = 'de'
 }
 
 describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
@@ -179,8 +179,8 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
             useClass: SearchApiServiceMock,
           },
           {
-            provide: LangService,
-            useClass: LangServiceMock,
+            provide: TranslateService,
+            useClass: TranslateServiceMock,
           },
           {
             provide: PlatformServiceInterface,
@@ -272,16 +272,6 @@ describe.each(['4.2.2-00', '4.2.3-xx', '4.2.5-xx'])(
                 bool: {
                   must: [],
                   must_not: [
-                    {
-                      terms: {
-                        resourceType: [
-                          'service',
-                          'map',
-                          'map/static',
-                          'mapDigital',
-                        ],
-                      },
-                    },
                     {
                       query_string: {
                         query:

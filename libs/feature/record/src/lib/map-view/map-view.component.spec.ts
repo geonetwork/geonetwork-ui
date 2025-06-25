@@ -1,7 +1,11 @@
-import { ChangeDetectorRef, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+} from '@angular/core'
 import {
   ComponentFixture,
-  discardPeriodicTasks,
   fakeAsync,
   TestBed,
   tick,
@@ -12,7 +16,7 @@ import { MdViewFacade } from '../state/mdview.facade'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import { of, Subject, throwError } from 'rxjs'
 import { MapViewComponent } from './map-view.component'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 import { delay } from 'rxjs/operators'
 import { pointFeatureCollectionFixture } from '@geonetwork-ui/common/fixtures'
 import { Collection } from 'ol'
@@ -25,9 +29,10 @@ import {
   MapLegendComponent,
   prioritizePageScroll,
 } from '@geonetwork-ui/ui/map'
-import { MockBuilder } from 'ng-mocks'
+import { MockBuilder, MockProvider } from 'ng-mocks'
 import { ExternalViewerButtonComponent } from '../external-viewer-button/external-viewer-button.component'
 import { LoadingMaskComponent } from '@geonetwork-ui/ui/widgets'
+import { FetchError } from '@geonetwork-ui/data-fetcher'
 
 jest.mock('@geonetwork-ui/ui/map', () => ({
   ...jest.requireActual('@geonetwork-ui/ui/map'),
@@ -101,6 +106,11 @@ class DataServiceMock {
       ? throwError(() => new Error('data loading error'))
       : of(SAMPLE_GEOJSON).pipe(delay(100))
   )
+  getGeodataLinksFromTms = jest.fn((mapLink) => {
+    return mapLink.url.toString().indexOf('error') > -1
+      ? Promise.reject([mapLink])
+      : Promise.resolve([mapLink])
+  })
 }
 
 class OpenLayersMapMock {
@@ -161,9 +171,17 @@ describe('MapViewComponent', () => {
           provide: DataService,
           useClass: DataServiceMock,
         },
+        MockProvider(TranslateService, {
+          instant: jest.fn((key: string) => key),
+        }),
       ],
-      imports: [TranslateModule.forRoot(), MapLegendComponent],
-    }).compileComponents()
+    })
+      .overrideComponent(MapViewComponent, {
+        set: {
+          changeDetection: ChangeDetectionStrategy.Default,
+        },
+      })
+      .compileComponents()
     mdViewFacade = TestBed.inject(MdViewFacade)
   })
 
@@ -275,7 +293,7 @@ describe('MapViewComponent', () => {
     })
 
     describe('with links compatible with MAP_API and GEODATA usage', () => {
-      beforeEach(() => {
+      beforeEach(fakeAsync(() => {
         mdViewFacade.mapApiLinks$.next([
           {
             url: new URL('http://abcd.com/'),
@@ -303,8 +321,9 @@ describe('MapViewComponent', () => {
             accessServiceProtocol: 'ogcFeatures',
           },
         ])
+        tick()
         fixture.detectChanges()
-      })
+      }))
       it('provides a list of links to the dropdown', () => {
         expect(dropdownComponent.choices).toEqual([
           {
@@ -336,8 +355,8 @@ describe('MapViewComponent', () => {
     })
 
     describe('excludeWfs = true: with links compatible with MAP_API and GEODATA usage', () => {
-      beforeEach(() => {
-        component.excludeWfs = true
+      beforeEach(fakeAsync(() => {
+        component.excludeWfs$.next(true)
         mdViewFacade.mapApiLinks$.next([
           {
             url: new URL('http://abcd.com/'),
@@ -365,9 +384,9 @@ describe('MapViewComponent', () => {
             accessServiceProtocol: 'ogcFeatures',
           },
         ])
-        fixture.detectChanges()
-      })
+      }))
       it('provides a list of links to the dropdown (including the WFS layer)', () => {
+        fixture.detectChanges()
         expect(dropdownComponent.choices).toEqual([
           {
             value: 0,
@@ -388,10 +407,12 @@ describe('MapViewComponent', () => {
         ])
       })
       describe('when selecting the WFS layer (excludeWfs)', () => {
-        beforeEach(() => {
+        beforeEach(fakeAsync(() => {
           dropdownComponent.selectValue.emit(1)
           component.excludeWfs$.next(true)
-        })
+          tick()
+          fixture.detectChanges()
+        }))
         it('set hidePreview to true', () => {
           expect(component.hidePreview).toEqual(true)
         })
@@ -459,6 +480,92 @@ describe('MapViewComponent', () => {
       })
     })
 
+    describe('with a link using TMS protocol', () => {
+      describe('points to a maplibre-style json', () => {
+        beforeEach(fakeAsync(() => {
+          mdViewFacade.mapApiLinks$.next([
+            {
+              url: new URL('http://abcd.com/tms/style.json'),
+              name: 'orthophoto',
+              type: 'service',
+              accessServiceProtocol: 'maplibre-style',
+            },
+          ])
+          mdViewFacade.geoDataLinksWithGeometry$.next([])
+          tick(200)
+          fixture.detectChanges()
+        }))
+        it('emits a map context using maplibre-style with styleUrl', () => {
+          expect(mapComponent.context).toEqual({
+            layers: [
+              {
+                name: 'orthophoto',
+                type: 'maplibre-style',
+                styleUrl: 'http://abcd.com/tms/style.json',
+              },
+            ],
+            view: expect.any(Object),
+          })
+        })
+      })
+      describe('containing NO style', () => {
+        beforeEach(fakeAsync(() => {
+          mdViewFacade.mapApiLinks$.next([
+            {
+              url: new URL('http://abcd.com/tms'),
+              name: 'orthophoto',
+              type: 'service',
+              accessServiceProtocol: 'tms',
+            },
+          ])
+          mdViewFacade.geoDataLinksWithGeometry$.next([])
+          tick(200)
+          fixture.detectChanges()
+        }))
+        it('emits a map context using mvt tile format with root url', () => {
+          expect(mapComponent.context).toEqual({
+            layers: [
+              {
+                name: 'orthophoto',
+                type: 'xyz',
+                tileFormat: 'application/vnd.mapbox-vector-tile',
+                url: 'http://abcd.com/tms/{z}/{x}/{y}.pbf',
+              },
+            ],
+            view: expect.any(Object),
+          })
+        })
+      })
+      describe('when endpoint is in error', () => {
+        beforeEach(fakeAsync(() => {
+          mdViewFacade.mapApiLinks$.next([
+            {
+              url: new URL('http://error.com/tms'),
+              name: 'tmserror',
+              type: 'service',
+              accessServiceProtocol: 'tms',
+            },
+          ])
+          mdViewFacade.geoDataLinksWithGeometry$.next([])
+          tick(200)
+          fixture.detectChanges()
+        }))
+        it('still emits a map context using mvt tile format with root url', () => {
+          expect(mapComponent.context).toEqual({
+            layers: [
+              {
+                name: 'tmserror',
+                type: 'xyz',
+                tileFormat: 'application/vnd.mapbox-vector-tile',
+                url: 'http://error.com/tms/{z}/{x}/{y}.pbf',
+              },
+            ],
+            view: expect.any(Object),
+          })
+        })
+      })
+    })
+
     describe('with a link using ESRI:REST protocol', () => {
       beforeEach(fakeAsync(() => {
         mdViewFacade.mapApiLinks$.next([])
@@ -475,7 +582,7 @@ describe('MapViewComponent', () => {
         tick(200)
         fixture.detectChanges()
       }))
-      it('emits a map context with the the downloaded data from the ESRI REST API', () => {
+      it('emits a map context with the downloaded data from the ESRI REST API', () => {
         expect(mapComponent.context).toEqual({
           layers: [
             {
@@ -502,7 +609,7 @@ describe('MapViewComponent', () => {
         tick(200)
         fixture.detectChanges()
       }))
-      it('emits a map context with the the downloaded data from the ESRI REST API', () => {
+      it('emits a map context with the downloaded data from the OGC Features API', () => {
         expect(mapComponent.context).toEqual({
           layers: [
             {
@@ -517,6 +624,7 @@ describe('MapViewComponent', () => {
 
     describe('with a link using WFS which returns an error', () => {
       beforeEach(() => {
+        jest.spyOn(component, 'handleError')
         mdViewFacade.mapApiLinks$.next([])
         mdViewFacade.geoDataLinksWithGeometry$.next([
           {
@@ -530,11 +638,17 @@ describe('MapViewComponent', () => {
       it('shows an error', () => {
         expect(component.error).toEqual('data loading error')
       })
+      it('sets loading to false', () => {
+        expect(component.loading).toEqual(false)
+      })
+      it('calls handleError', () => {
+        expect(component.handleError).toHaveBeenCalled()
+      })
     })
 
     describe('with a link using DOWNLOAD protocol', () => {
       describe('during download', () => {
-        beforeEach(fakeAsync(() => {
+        beforeEach(() => {
           mdViewFacade.mapApiLinks$.next([])
           mdViewFacade.geoDataLinksWithGeometry$.next([
             {
@@ -543,10 +657,10 @@ describe('MapViewComponent', () => {
               type: 'download',
             },
           ])
+        })
+        beforeEach(() => {
           fixture.detectChanges()
-          tick(50)
-          discardPeriodicTasks()
-        }))
+        })
         it('emit an empty map context', () => {
           expect(mapComponent.context).toEqual(emptyMapContext)
         })
@@ -566,11 +680,10 @@ describe('MapViewComponent', () => {
               type: 'download',
             },
           ])
-          fixture.detectChanges()
           tick(200)
+          fixture.detectChanges()
         }))
         it('emits a map context after loading with the downloaded data', () => {
-          fixture.detectChanges()
           expect(mapComponent.context).toEqual({
             layers: [
               {
@@ -582,7 +695,6 @@ describe('MapViewComponent', () => {
           })
         })
         it('does not show a loading indicator', () => {
-          fixture.detectChanges()
           expect(
             fixture.debugElement.query(By.directive(LoadingMaskComponent))
           ).toBeFalsy()
@@ -657,6 +769,12 @@ describe('MapViewComponent', () => {
             name: 'layer2',
             type: 'service',
             accessServiceProtocol: 'wms',
+          },
+          {
+            url: new URL('http://abcd.com/'),
+            name: 'layer3',
+            type: 'service',
+            accessRestricted: true,
           },
         ])
         mdViewFacade.geoDataLinksWithGeometry$.next([])
@@ -772,6 +890,16 @@ describe('MapViewComponent', () => {
           ])
         })
       })
+      describe('When link is restricted', () => {
+        beforeEach(fakeAsync(() => {
+          dropdownComponent.selectValue.emit(2)
+          tick()
+          fixture.detectChanges()
+        }))
+        it('shows an error message', () => {
+          expect(component.error).toEqual('dataset.error.restrictedAccess')
+        })
+      })
     })
   })
 
@@ -881,5 +1009,229 @@ describe('MapViewComponent', () => {
         })
       })
     })
+  })
+
+  describe('#onSourceLoadError', () => {
+    it('should set error message for 403 status', () => {
+      const error = { httpStatus: 403 } as geoSdkCore.SourceLoadErrorEvent
+      component.onSourceLoadError(error)
+      expect(component.error).toBe('dataset.error.forbidden')
+    })
+
+    it('should set error message for 401 status', () => {
+      const error = { httpStatus: 401 } as geoSdkCore.SourceLoadErrorEvent
+      component.onSourceLoadError(error)
+      expect(component.error).toBe('dataset.error.forbidden')
+    })
+
+    it('should set error message for other statuses', () => {
+      const error = { httpStatus: 500 } as geoSdkCore.SourceLoadErrorEvent
+      component.onSourceLoadError(error)
+      expect(component.error).toBe('dataset.error.http')
+    })
+  })
+
+  describe('#handleError', () => {
+    it('should set error message for FetchError', () => {
+      const error = new FetchError('forbidden', 'info')
+      component.handleError(error)
+      expect(component.error).toBe('dataset.error.forbidden')
+    })
+
+    it('should set error message for Error instance', () => {
+      const error = new Error('error.message')
+      component.handleError(error)
+      expect(component.error).toBe('error.message')
+    })
+
+    it('should set error message for string error', () => {
+      const error = 'string error'
+      component.handleError(error)
+      expect(component.error).toBe('string error')
+    })
+  })
+  describe('style selector with TMS', () => {
+    it('handles error when TMS endpoint is in error', fakeAsync(() => {
+      const dataService = TestBed.inject(
+        DataService
+      ) as unknown as DataServiceMock
+      dataService.getGeodataLinksFromTms.mockImplementation((link) =>
+        Promise.reject(new Error('Endpoint is in error'))
+      )
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/tms'),
+          name: 'orthophoto',
+          type: 'service',
+          accessServiceProtocol: 'tms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+      tick(200)
+      fixture.detectChanges()
+      const dropdowns = fixture.debugElement.queryAll(
+        By.directive(DropdownSelectorComponent)
+      )
+      const styleDropdown = dropdowns[1]
+        .componentInstance as DropdownSelectorComponent
+      expect(styleDropdown.disabled).toBeTruthy()
+      expect(styleDropdown.choices).toEqual([
+        {
+          label: '\u00A0\u00A0\u00A0\u00A0',
+          value: 0,
+        },
+      ])
+    }))
+    it('enables and populates styles for selected TMS', fakeAsync(() => {
+      const dataService = TestBed.inject(
+        DataService
+      ) as unknown as DataServiceMock
+      dataService.getGeodataLinksFromTms.mockImplementation((link) =>
+        Promise.resolve([
+          link,
+          {
+            ...link,
+            accessServiceProtocol: 'maplibre-style',
+            url: new URL('http://abcd.com/tms/style/a.json'),
+            name: 'style-A',
+          },
+          {
+            ...link,
+            accessServiceProtocol: 'maplibre-style',
+            url: new URL('http://abcd.com/tms/style/b.json'),
+            name: 'style-B',
+          },
+        ])
+      )
+
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/tms'),
+          name: 'orthophoto',
+          type: 'service',
+          accessServiceProtocol: 'tms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+
+      tick(200)
+      fixture.detectChanges()
+
+      const dropdowns = fixture.debugElement.queryAll(
+        By.directive(DropdownSelectorComponent)
+      )
+      const styleDropdown = dropdowns[1]
+        .componentInstance as DropdownSelectorComponent
+
+      expect(styleDropdown.disabled).toBeFalsy()
+      expect(styleDropdown.choices.map((c) => c.label)).toEqual([
+        'style-A',
+        'style-B',
+      ])
+    }))
+    it('resets style selection when switching away and back', fakeAsync(() => {
+      const ds = TestBed.inject(DataService) as unknown as DataServiceMock
+      ds.getGeodataLinksFromTms.mockImplementation((link) =>
+        Promise.resolve([
+          link,
+          {
+            ...link,
+            accessServiceProtocol: 'maplibre-style',
+            url: new URL('http://abcd.com/tms/style/a.json'),
+            name: 'style-A',
+          },
+          {
+            ...link,
+            accessServiceProtocol: 'maplibre-style',
+            url: new URL('http://abcd.com/tms/style/b.json'),
+            name: 'style-B',
+          },
+        ])
+      )
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/tms'),
+          name: 'orthophoto',
+          type: 'service',
+          accessServiceProtocol: 'tms',
+        },
+        {
+          url: new URL('http://abcd.com/wms'),
+          name: 'layer-wms',
+          type: 'service',
+          accessServiceProtocol: 'wms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+
+      tick(200)
+      fixture.detectChanges()
+
+      let dropdowns = fixture.debugElement.queryAll(
+        By.directive(DropdownSelectorComponent)
+      )
+      const srcDropdown = dropdowns[0]
+        .componentInstance as DropdownSelectorComponent
+      let styleDropdown = dropdowns[1]
+        .componentInstance as DropdownSelectorComponent
+
+      styleDropdown.selectValue.emit(1)
+      tick()
+      fixture.detectChanges()
+      expect(mapComponent.context.layers[0].styleUrl).toBe(
+        'http://abcd.com/tms/style/b.json'
+      )
+
+      srcDropdown.selectValue.emit(1)
+      tick()
+      fixture.detectChanges()
+
+      dropdowns = fixture.debugElement.queryAll(
+        By.directive(DropdownSelectorComponent)
+      )
+      styleDropdown = dropdowns[1]
+        .componentInstance as DropdownSelectorComponent
+      expect(styleDropdown.disabled).toBeTruthy()
+
+      srcDropdown.selectValue.emit(0)
+      tick()
+      fixture.detectChanges()
+
+      dropdowns = fixture.debugElement.queryAll(
+        By.directive(DropdownSelectorComponent)
+      )
+      styleDropdown = dropdowns[1]
+        .componentInstance as DropdownSelectorComponent
+
+      expect(styleDropdown.disabled).toBeFalsy()
+      expect(styleDropdown.choices[0].label).toBe('style-A')
+      expect(mapComponent.context.layers[0].styleUrl).toBe(
+        'http://abcd.com/tms/style/a.json'
+      )
+    }))
+
+    it('disables style dropdown when no TMS is present', fakeAsync(() => {
+      mdViewFacade.mapApiLinks$.next([
+        {
+          url: new URL('http://abcd.com/wms'),
+          name: 'layer-wms',
+          type: 'service',
+          accessServiceProtocol: 'wms',
+        },
+      ])
+      mdViewFacade.geoDataLinksWithGeometry$.next([])
+
+      tick(200)
+      fixture.detectChanges()
+
+      const dropdowns = fixture.debugElement.queryAll(
+        By.directive(DropdownSelectorComponent)
+      )
+      const styleDropdown = dropdowns[1]
+        .componentInstance as DropdownSelectorComponent
+
+      expect(styleDropdown.disabled).toBeTruthy()
+      expect(styleDropdown.choices.length).toBe(1)
+    }))
   })
 })

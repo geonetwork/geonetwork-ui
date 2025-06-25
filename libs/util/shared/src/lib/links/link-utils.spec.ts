@@ -9,8 +9,43 @@ import {
   getLinkLabel,
   getLinkPriority,
   mimeTypeToFormat,
+  wmsLayerFlatten,
 } from './link-utils'
 import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/record'
+
+const mockWmsLayer = [
+  {
+    name: 'wms-layer-1',
+    title: 'WMS layer 1',
+    abstract: 'WMS layer 1',
+    children: [
+      {
+        name: 'wms-layer-1-1',
+        title: 'WMS layer 1 - 1',
+        abstract: 'WMS layer 1 - 1',
+      },
+    ],
+  },
+  {
+    name: 'wms-layer-2',
+    title: 'WMS layer 2',
+    abstract: 'WMS layer 2',
+  },
+]
+const mockWfsFeatureType = [
+  {
+    name: 'ft1',
+    title: 'Feature Type 1',
+  },
+  {
+    name: 'ft2',
+    title: 'Feature Type 2',
+  },
+  {
+    name: 'ft3',
+    title: 'Feature Type 3',
+  },
+]
 
 jest.mock('@camptocamp/ogc-client', () => ({
   WfsEndpoint: class {
@@ -19,20 +54,15 @@ jest.mock('@camptocamp/ogc-client', () => ({
       return Promise.resolve(this)
     }
     getFeatureTypes() {
-      return [
-        {
-          name: 'ft1',
-          title: 'Feature Type 1',
-        },
-        {
-          name: 'ft2',
-          title: 'Feature Type 2',
-        },
-        {
-          name: 'ft3',
-          title: 'Feature Type 3',
-        },
-      ]
+      return mockWfsFeatureType
+    }
+    getFeatureTypeFull(name: string) {
+      return Promise.resolve({
+        name,
+        title: mockWfsFeatureType.find((layer) => layer.name === name)?.title,
+        abstract: mockWfsFeatureType.find((layer) => layer.name === name)
+          ?.title,
+      })
     }
   },
   OgcApiEndpoint: class {
@@ -56,25 +86,18 @@ jest.mock('@camptocamp/ogc-client', () => ({
       return Promise.resolve(this)
     }
     getLayers() {
-      return [
-        {
-          name: 'wms-layer-1',
-          title: 'WMS layer 1',
-          abstract: 'WMS layer 1',
-          children: [
-            {
-              name: 'wms-layer-1-1',
-              title: 'WMS layer 1 - 1',
-              abstract: 'WMS layer 1 - 1',
-            },
-          ],
-        },
-        {
-          name: 'wms-layer-2',
-          title: 'WMS layer 2',
-          abstract: 'WMS layer 2',
-        },
-      ]
+      return mockWmsLayer
+    }
+    getLayerByName(name: string) {
+      const flattenWmsLayer = mockWmsLayer
+        .flatMap(wmsLayerFlatten)
+        .filter((l) => l.name)
+      return {
+        name,
+        title: flattenWmsLayer.find((layer) => layer.name === name)?.title,
+        abstract: flattenWmsLayer.find((layer) => layer.name === name)
+          ?.abstract,
+      }
     }
   },
   WmtsEndpoint: class {
@@ -292,11 +315,11 @@ describe('link utils', () => {
   })
 
   describe('#getBadgeColor for format', () => {
-    it('returns #b3cde8', () => {
-      expect(getBadgeColor('json')).toEqual('#b3cde8')
+    it('returns #84D0F0', () => {
+      expect(getBadgeColor('json')).toEqual('#84D0F0')
     })
-    it('returns #a6d6c0', () => {
-      expect(getBadgeColor('csv')).toEqual('#a6d6c0')
+    it('returns #F6A924', () => {
+      expect(getBadgeColor('csv')).toEqual('#F6A924')
     })
   })
   describe('#sortPriority from formats object', () => {
@@ -451,14 +474,17 @@ describe('link utils', () => {
         {
           name: 'ft1',
           title: 'Feature Type 1',
+          abstract: 'Feature Type 1',
         },
         {
           name: 'ft2',
           title: 'Feature Type 2',
+          abstract: 'Feature Type 2',
         },
         {
           name: 'ft3',
           title: 'Feature Type 3',
+          abstract: 'Feature Type 3',
         },
       ])
     })

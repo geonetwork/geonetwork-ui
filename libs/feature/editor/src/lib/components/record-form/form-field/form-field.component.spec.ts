@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { TranslateModule } from '@ngx-translate/core'
 import { MockBuilder } from 'ng-mocks'
 import { FormFieldLicenseComponent } from './form-field-license/form-field-license.component'
 import { FormFieldOverviewsComponent } from './form-field-overviews/form-field-overviews.component'
@@ -11,6 +10,7 @@ import { FormFieldTemporalExtentsComponent } from './form-field-temporal-extents
 import { FormFieldUpdateFrequencyComponent } from './form-field-update-frequency/form-field-update-frequency.component'
 import { FormFieldComponent } from './form-field.component'
 import { FormFieldOnlineLinkResourcesComponent } from './form-field-online-link-resources/form-field-online-link-resources.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('FormFieldComponent', () => {
   let component: FormFieldComponent
@@ -22,7 +22,7 @@ describe('FormFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormFieldComponent, TranslateModule.forRoot()],
+      providers: [provideI18n()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(FormFieldComponent)

@@ -4,6 +4,8 @@ export const ROUTER_STATE_KEY = 'router'
 
 export const ROUTER_ROUTE_SEARCH = 'search'
 export const ROUTER_ROUTE_DATASET = 'dataset'
+export const ROUTER_ROUTE_SERVICE = 'service'
+export const ROUTER_ROUTE_REUSE = 'reuse'
 export const ROUTER_ROUTE_ORGANIZATION = 'organization'
 
 export enum ROUTE_PARAMS {

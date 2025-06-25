@@ -3,8 +3,12 @@ import { FavoriteStarComponent } from './favorite-star.component'
 import { BehaviorSubject, of, throwError } from 'rxjs'
 import { StarToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { By } from '@angular/platform-browser'
-import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import {
+  ChangeDetectionStrategy,
+  EventEmitter,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core'
+import { TranslateService } from '@ngx-translate/core'
 import tippy from 'tippy.js'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { FavoritesService } from '@geonetwork-ui/api/repository'
@@ -24,11 +28,6 @@ class FavoritesServiceMock {
   addToFavorites = jest.fn(() => of(true))
 }
 
-class TranslateServiceMock {
-  currentLang = 'fr'
-  get = jest.fn(() => of('You can log in here'))
-}
-
 describe('FavoriteStarComponent', () => {
   let component: FavoriteStarComponent
   let fixture: ComponentFixture<FavoriteStarComponent>
@@ -39,11 +38,6 @@ describe('FavoriteStarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-        FavoriteStarComponent,
-        StarToggleComponent,
-      ],
       providers: [
         {
           provide: PlatformServiceInterface,
@@ -53,10 +47,14 @@ describe('FavoriteStarComponent', () => {
           provide: FavoritesService,
           useClass: FavoritesServiceMock,
         },
-        {
-          provide: TranslateService,
-          useClass: TranslateServiceMock,
-        },
+        MockProvider(TranslateService, {
+          currentLang: 'fr',
+          get: jest.fn(() => of('You can log in here')),
+          onLangChange: new EventEmitter<{
+            lang: string
+            translations: object
+          }>(),
+        }),
         MockProvider(Location, {
           path: () => '/',
         }),
@@ -141,7 +139,7 @@ describe('FavoriteStarComponent', () => {
             content: 'You can log in here',
             allowHTML: true,
             interactive: true,
-            zIndex: 40,
+            zIndex: 60,
             maxWidth: 250,
           })
         )

@@ -1,0 +1,110 @@
+<div style="height: 652px" id="preview" *ngIf="apiLinks.length > 0">
+  <div class="bg-primary-opacity-10 overflow-visible" style="height: 420px">
+    <div class="container-lg px-4 lg:mx-auto">
+      <div>
+        <div class="gn-ui-section-title mb-6" translate>
+          service.metadata.capabilities
+        </div>
+        <div
+          *ngIf="loading"
+          class="flex justify-center w-full h-[200px] items-center"
+        >
+          <gn-ui-spinning-loader></gn-ui-spinning-loader>
+        </div>
+        <div *ngIf="!loading">
+          <div class="flex flex-row gap-5">
+            <div class="h-14 md:w-2/5 w-full mb-4 flex flex-row relative">
+              <gn-ui-text-input
+                class="w-full"
+                [(value)]="searchQuery"
+                [extraClass]="getExtraInputClass()"
+                [placeholder]="'service.metadata.search' | translate"
+                (input)="onSearchChange($event)"
+                (keydown.enter)="onSearchEnter($event)"
+              >
+              </gn-ui-text-input>
+              <div
+                class="absolute right-14 h-14 w-14 flex items-center justify-center"
+              >
+                <button
+                  #inputBtn
+                  *ngIf="searchQuery"
+                  [aria-label]="'service.metadata.search.clear' | translate"
+                  (click)="clearSearch()"
+                  class="h-12 w-12 border-0 flex items-center justify-center"
+                >
+                  <ng-icon name="matClose"></ng-icon>
+                </button>
+              </div>
+              <div class="border-l absolute border-gray-200 right-0 h-14 w-14">
+                <gn-ui-button
+                  #inputBtn
+                  type="outline"
+                  extraClass="h-12 w-12 border-0 absolute right-1 top-1 bg-white"
+                  (buttonClick)="searchLayers()"
+                >
+                  <ng-icon name="iconoirSearch"></ng-icon>
+                </gn-ui-button>
+              </div>
+            </div>
+            <gn-ui-popover
+              [content]="popoverItems"
+              theme="light"
+              class="w-14 h-14 border border-gray-300 rounded-lg flex justify-center items-center"
+            >
+              <ng-icon name="matInfoOutline" class="w-6 h-6 pt-0.5"></ng-icon>
+            </gn-ui-popover>
+          </div>
+          <div
+            style="height: 500px"
+            class="bg-white shadow-xl rounded p-0 flex md:flex-row flex-col"
+          >
+            <div
+              class="flex flex-col gap-2 bg-gray-100 md:w-1/2 md:h-full w-full h-1/2 rounded-l overflow-y-auto py-5 pr-1 pl-3"
+              data-test="layer-list"
+            >
+              <gn-ui-button
+                *ngFor="let layerItem of filteredLayers"
+                type="outline"
+                [extraClass]="getExtraClass(layerItem)"
+                (buttonClick)="selectLayer(layerItem)"
+              >
+                {{ layerItem.title || layerItem.name }}
+              </gn-ui-button>
+              <span *ngIf="filteredLayers.length === 0" class="text-gray-800">
+                {{ 'service.metadata.filter.noLayers' | translate }}
+              </span>
+            </div>
+            <div
+              data-test="layer-information"
+              class="flex flex-col gap-4 md:h-full md:w-1/2 w-full h-1/2 py-5 px-10 overflow-y-auto"
+            >
+              <div
+                *ngFor="let item of layerInformation"
+                class="flex flex-row gap-4 border-b border-gray-200"
+              >
+                <span class="font-semibold w-24">{{ item.displayName }}</span>
+                <div *ngIf="isList(item.value)">
+                  <div
+                    *ngFor="let subItem of item.value"
+                    class="flex flex-row break-words max-w-72"
+                  >
+                    {{ subItem }}
+                  </div>
+                </div>
+                <div class="break-words max-w-72" *ngIf="!isList(item.value)">
+                  {{ item.value }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #popoverItems>
+  <div class="p-2 py-4">
+    <div translate>service.metadata.filter</div>
+  </div>
+</ng-template>

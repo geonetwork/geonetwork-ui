@@ -7,10 +7,6 @@ import {
   SearchFacade,
   SearchService,
 } from '@geonetwork-ui/feature/search'
-import { UiSearchModule } from '@geonetwork-ui/ui/search'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
-import { TranslateModule } from '@ngx-translate/core'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { Paginable, PaginationButtonsComponent } from '@geonetwork-ui/ui/layout'
 
 export const allSearchFields = [
@@ -23,6 +19,10 @@ export const allSearchFields = [
   'isPublishedToAll',
   'link',
   'owner',
+  'resourceType',
+  'mainLanguage',
+  'otherLanguage',
+  'isHarvested',
 ]
 @Component({
   selector: 'md-editor-records-list',
@@ -31,11 +31,7 @@ export const allSearchFields = [
   standalone: true,
   imports: [
     CommonModule,
-    UiSearchModule,
-    UiElementsModule,
-    TranslateModule,
     ResultsTableContainerComponent,
-    UiInputsModule,
     PaginationButtonsComponent,
   ],
 })

@@ -274,10 +274,10 @@ export const WALLONIE_SERVICE_NAPITSWALLONIA_RECORD: ServiceRecord = {
   onlineResources: [
     {
       type: 'endpoint',
-      endpointUrl: new URL(
+      url: new URL(
         'https://metawal.wallonie.be/geonetwork/api/collections/napits'
       ),
-      protocol: 'other',
+      accessServiceProtocol: 'other',
       description: "Point d'accès OGC API Records pour NAP-ITS-Wallonia.",
       translations: {},
     },

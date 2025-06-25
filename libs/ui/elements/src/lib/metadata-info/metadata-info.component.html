@@ -13,7 +13,7 @@
   </gn-ui-content-ghost>
 
   <p
-    class="mt-6 mb-3 font-medium text-primary text-sm"
+    class="mt-6 mb-3 font-medium text-black text-sm"
     translate
     *ngIf="!fieldReady('keywords') || metadata.keywords?.length"
   >
@@ -25,7 +25,7 @@
     [showContent]="fieldReady('keywords')"
   >
     <div *ngIf="metadata.keywords?.length">
-      <div class="sm:pb-4 flex flex-wrap gap-2">
+      <div class="metadata-info-keywords sm:pb-4 flex flex-wrap gap-2">
         <gn-ui-badge
           class="inline-block lowercase"
           (click)="onKeywordClick(keyword)"
@@ -46,6 +46,7 @@
     metadata.otherConstraints
   "
   [title]="'record.metadata.usage' | translate"
+  data-test="usage-panel"
 >
   <div class="flex flex-col gap-[10px] mr-4 py-[12px] rounded text-gray-900">
     <ng-container *ngFor="let license of licenses">
@@ -79,9 +80,12 @@
     </ng-container>
     <ng-container *ngIf="otherConstraints.length">
       <div gnUiLinkify *ngFor="let constraint of otherConstraints">
-        <h5 translate class="font-medium text-black text-sm mb-[2px] mt-[16px]">
+        <span
+          translate
+          class="font-medium text-black text-sm mb-[2px] mt-[16px]"
+        >
           record.metadata.otherConstraints
-        </h5>
+        </span>
         <div class="mb-6">
           <gn-ui-markdown-parser [textContent]="constraint">
           </gn-ui-markdown-parser>
@@ -96,12 +100,13 @@
 </gn-ui-expandable-panel>
 <gn-ui-expandable-panel
   *ngIf="
-    metadata.lineage ||
+    (metadata.kind === 'dataset' && metadata.lineage) ||
     metadata.resourceUpdated ||
     metadata.updateFrequency ||
-    metadata.status
+    (metadata.kind === 'dataset' && metadata.status)
   "
   [title]="'record.metadata.details' | translate"
+  data-test="details-panel"
 >
   <div *ngIf="metadata.lineage" class="text-gray-900 flex flex-col mt-4 gap-2">
     <p class="whitespace-pre-line break-words text-gray-900" gnUiLinkify>
@@ -226,8 +231,19 @@
   </div>
 </gn-ui-expandable-panel>
 <gn-ui-expandable-panel
+  *ngIf="metadata.kind !== 'dataset' && metadata.spatialExtents"
+  [title]="'service.metadata.spatialExtent' | translate"
+  data-test="spatial-extent-panel"
+>
+  <gn-ui-spatial-extent
+    class="flex h-[271px] w-full rounded-lg border border-gray-100 mt-3 mb-6"
+    [spatialExtents]="metadata.spatialExtents"
+  ></gn-ui-spatial-extent>
+</gn-ui-expandable-panel>
+<gn-ui-expandable-panel
   *ngIf="metadata.landingPage"
-  [title]="'record.metadata.technical' | translate"
+  [title]="'service.metadata.other' | translate"
+  data-test="other-panel"
 >
   <div class="flex flex-col gap-4 mr-4 py-5 rounded text-gray-700">
     <div *ngIf="metadata.recordUpdated">
@@ -267,6 +283,7 @@
       <p class="text-sm mb-1" translate>record.metadata.topics</p>
       <div class="sm:pb-4 sm:pr-16">
         <gn-ui-badge
+          [clickable]="false"
           class="inline-block mr-2 mb-2 lowercase"
           *ngFor="let topic of metadata.topics"
           >{{ topic }}</gn-ui-badge

@@ -1,0 +1,23 @@
+<div class="relative" id="feature-catalog">
+  <div
+    class="absolute top-0 left-0 w-full h-[450px] bg-primary-opacity-10 pointer-events-none"
+  ></div>
+  <div class="relative p-10 container-lg px-4 lg:mx-auto h-full">
+    <h2 class="text-[28px] text-title font-title mb-6" translate>
+      record.metadata.feature.catalog
+    </h2>
+    <div
+      class="bg-gray-100 rounded-lg shadow-md"
+      cdkOverlayOrigin
+      #trigger="cdkOverlayOrigin"
+    >
+      <gn-ui-search-feature-catalog
+        [featureCatalog]="metadataViewFacade.featureCatalog$ | async"
+        (filteredFeatureCatalogChange)="onFilteredFeatureCatalogChange($event)"
+      ></gn-ui-search-feature-catalog>
+      <gn-ui-feature-catalog-list
+        [filteredFeatureCatalog]="filteredFeatureCatalog"
+      ></gn-ui-feature-catalog-list>
+    </div>
+  </div>
+</div>

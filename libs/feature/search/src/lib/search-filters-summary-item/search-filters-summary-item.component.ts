@@ -9,7 +9,7 @@ import {
   switchMap,
 } from 'rxjs'
 import { BadgeComponent } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslateService } from '@ngx-translate/core'
 import { DateRange } from '@geonetwork-ui/api/repository'
 import { FieldType, FieldValue } from '../utils/service/fields'
 import { SearchFacade } from '../state/search.facade'
@@ -29,7 +29,7 @@ interface DisplayedValue {
 @Component({
   selector: 'gn-ui-search-filters-summary-item',
   standalone: true,
-  imports: [CommonModule, TranslateModule, BadgeComponent],
+  imports: [CommonModule, BadgeComponent],
   templateUrl: './search-filters-summary-item.component.html',
   styleUrls: ['./search-filters-summary-item.component.css'],
   providers: [DatePipe],

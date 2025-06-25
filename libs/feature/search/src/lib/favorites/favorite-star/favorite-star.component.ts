@@ -8,7 +8,13 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core'
-import { map, pairwise, withLatestFrom } from 'rxjs/operators'
+import {
+  map,
+  pairwise,
+  startWith,
+  switchMap,
+  withLatestFrom,
+} from 'rxjs/operators'
 import tippy from 'tippy.js'
 import { TranslateService } from '@ngx-translate/core'
 import { StarToggleComponent } from '@geonetwork-ui/ui/inputs'
@@ -27,6 +33,7 @@ import { CommonModule } from '@angular/common'
   imports: [CommonModule, StarToggleComponent],
 })
 export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
+  @Input() displayLabel? = false
   @Input() displayCount? = true
   @Input() set record(value) {
     this.record_ = value
@@ -46,11 +53,13 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   favoriteCount: number | null
   loading = false
   loginUrl = this.authService.loginUrl
-  loginMessage$: Observable<string> = this.translateService.get(
-    'favorite.not.authenticated.tooltip',
-    {
-      link: this.loginUrl,
-    }
+  loginMessage$: Observable<string> = this.translateService.onLangChange.pipe(
+    startWith(null), // make sure to wait for translations to be loaded with and without language change
+    switchMap(() =>
+      this.translateService.get('favorite.not.authenticated.tooltip', {
+        link: this.loginUrl,
+      })
+    )
   )
   @ViewChild(StarToggleComponent, { read: ElementRef })
   starToggleRef: ElementRef
@@ -79,7 +88,7 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
             content: loginMessage,
             allowHTML: true,
             interactive: true,
-            zIndex: 40,
+            zIndex: 60,
             maxWidth: 250,
           })
         }

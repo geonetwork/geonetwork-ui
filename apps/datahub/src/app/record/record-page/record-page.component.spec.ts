@@ -2,7 +2,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 
 import { RecordPageComponent } from './record-page.component'
-import { MockBuilder, MockProvider } from 'ng-mocks'
+import { MockBuilder } from 'ng-mocks'
+import { SAMPLE_RECORD } from '@geonetwork-ui/common/fixtures'
+import { BehaviorSubject } from 'rxjs'
+
+class MdViewFacadeMock {
+  metadata$ = new BehaviorSubject(SAMPLE_RECORD)
+}
 
 describe('RecordPageComponent', () => {
   let component: RecordPageComponent
@@ -12,7 +18,12 @@ describe('RecordPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [MockProvider(MdViewFacade)],
+      providers: [
+        {
+          provide: MdViewFacade,
+          useClass: MdViewFacadeMock,
+        },
+      ],
     }).compileComponents()
   })
 

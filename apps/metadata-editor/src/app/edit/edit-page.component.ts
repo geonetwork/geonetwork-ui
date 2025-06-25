@@ -12,6 +12,7 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
 import {
   EditorFacade,
+  MultilingualPanelComponent,
   RecordFormComponent,
 } from '@geonetwork-ui/feature/editor'
 import {
@@ -19,7 +20,11 @@ import {
   NotificationsService,
 } from '@geonetwork-ui/feature/notifications'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import {
+  TranslateDirective,
+  TranslatePipe,
+  TranslateService,
+} from '@ngx-translate/core'
 import { combineLatest, filter, firstValueFrom, Subscription, take } from 'rxjs'
 import { map, skip } from 'rxjs/operators'
 import { SidebarComponent } from '../dashboard/sidebar/sidebar.component'
@@ -47,11 +52,13 @@ marker('editor.record.form.bottomButtons.next')
     TopToolbarComponent,
     NotificationsContainerComponent,
     PageSelectorComponent,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     SidebarComponent,
     SpinningLoaderComponent,
     SearchHeaderComponent,
     PageErrorComponent,
+    MultilingualPanelComponent,
   ],
 })
 export class EditPageComponent implements OnInit, OnDestroy {
@@ -68,6 +75,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
 
   newRecord = false
   isLoading = true
+  translatePanelOpen = false
 
   @ViewChild('scrollContainer') scrollContainer: ElementRef<HTMLElement>
 

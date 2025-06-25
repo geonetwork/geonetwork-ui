@@ -1,7 +1,10 @@
-<div class="py-5 px-5 rounded bg-gray-100 text-black mb-6">
+<div
+  class="py-5 px-5 rounded bg-gray-100 text-black"
+  data-cy="metadata-organization"
+>
   <div class="grid gap-3 overflow-hidden">
     <div>
-      <p class="text-sm font-medium" translate>record.metadata.contact</p>
+      <p class="text-base font-medium" translate>record.metadata.contact</p>
     </div>
     <div
       *ngIf="shownOrganization?.logoUrl?.href"
@@ -13,12 +16,12 @@
         fit="contain"
       ></gn-ui-thumbnail>
     </div>
-    <div class="grid gap-1">
+    <div class="grid grid-cols-1 gap-1">
       <div class="flex">
         <div
-          class="text-primary font-title text-21 mr-2 cursor-pointer hover:underline"
+          class="font-title text-21 mr-2 cursor-pointer hover:underline"
           (click)="onOrganizationClick()"
-          data-cy="organization-name"
+          data-cy="organization-name-link"
         >
           {{ shownOrganization?.name }}
         </div>
@@ -27,7 +30,7 @@
         <a
           [href]="shownOrganization.website"
           target="_blank"
-          class="contact-website text-primary text-sm cursor-pointer hover:underline transition-all"
+          class="contact-website text-sm cursor-pointer hover:underline transition-all"
           >{{ shownOrganization.website }}
           <ng-icon
             class="!w-[12px] !h-[12px] opacity-75 shrink-0"
@@ -36,7 +39,7 @@
         </a>
       </div>
     </div>
-    <div class="grid gap-5 py-3 overflow-hidden">
+    <div class="grid grid-cols-1 gap-5 py-3 overflow-hidden">
       <div *ngIf="contacts[0]?.phone">
         <div class="flex">
           <ng-icon
@@ -49,7 +52,7 @@
         </div>
       </div>
       <div *ngIf="contacts[0]?.email">
-        <div class="flex">
+        <div class="flex gap-2">
           <ng-icon
             class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
             name="matMailOutline"
@@ -57,7 +60,7 @@
           <a
             *ngIf="contacts.length"
             [href]="'mailto:' + contacts[0].email"
-            class="text-sm hover:underline ml-2"
+            class="break-all text-sm hover:underline"
             target="_blank"
             data-cy="contact-email"
             >{{ contacts[0].email }}</a

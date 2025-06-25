@@ -185,6 +185,20 @@ export const aSetOfLinksFixture = () => ({
       url: new URL('https://my.ogc.server/wms'),
       accessServiceProtocol: 'wms',
     }) as DatasetServiceDistribution,
+  geodataTms: () =>
+    ({
+      name: 'mytmslayer',
+      type: 'service',
+      url: new URL('https://my.ogc.server/tms'),
+      accessServiceProtocol: 'tms',
+    }) as DatasetServiceDistribution,
+  geodataAsMaplibreStyle: () =>
+    ({
+      name: 'mytmslayerAsMaplibreJson',
+      type: 'service',
+      url: new URL('https://my.ogc.server/tms/layer/style.json'),
+      accessServiceProtocol: 'maplibre-style',
+    }) as DatasetServiceDistribution,
   geodataWfs2: () =>
     ({
       name: 'myotherlayer',
@@ -239,10 +253,10 @@ export const aSetOfLinksFixture = () => ({
     ({
       description:
         'https://services.geo.sg.ch/wss/service/SG00170_WMS/guest?request=GetCapabilities&service=WMS',
-      endpointUrl: new URL(
+      url: new URL(
         'https://services.geo.sg.ch/wss/service/SG00170_WMS/guest?request=GetCapabilities&service=WMS'
       ),
-      protocol: 'wms',
+      accessServiceProtocol: 'wms',
       type: 'endpoint',
     }) as ServiceEndpoint,
 })

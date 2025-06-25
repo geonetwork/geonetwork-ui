@@ -20,6 +20,7 @@ import {
   simpleDatasetRecordFixture,
   simpleDatasetRecordWithFcatsFixture,
   duplicateDatasetRecordAsXmlFixture,
+  simpleServiceRecordFixture,
 } from '@geonetwork-ui/common/fixtures'
 import {
   CatalogRecord,
@@ -34,6 +35,7 @@ import {
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
 import { TranslateService } from '@ngx-translate/core'
+import { Gn4SettingsService } from './settings/gn4-settings.service'
 
 class Gn4MetadataMapperMock {
   readRecords = jest.fn((records) =>
@@ -47,8 +49,8 @@ class ElasticsearchServiceMock {
     aggregations,
     size,
   }))
-  getMetadataByIdPayload = jest.fn((uuid) => ({
-    uuids: [uuid],
+  getMetadataByIdsPayload = jest.fn((uuid) => ({
+    uuids: uuid,
   }))
   getRelatedRecordPayload = jest.fn(() => ({}))
   buildAutocompletePayload = jest.fn(() => ({}))
@@ -102,10 +104,16 @@ class PlatformServiceInterfaceMock {
   getApiVersion = jest.fn(() => of('4.2.5'))
 }
 
+let allowEditHarvested = false
+class Gn4SettingsServiceMock {
+  allowEditHarvested$ = of(allowEditHarvested)
+}
+
 const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
   extras: {
     ownerInfo: 'Owner|SomeDetails',
+    isHarvested: false,
     edit: true,
   },
 }
@@ -120,6 +128,7 @@ describe('Gn4Repository', () => {
   let gn4SearchApi: SearchApiService
   let gn4RecordsApi: RecordsApiService
   let platformService: PlatformServiceInterface
+  let settingsService: Gn4SettingsService
   let httpTestingController: HttpTestingController
 
   beforeEach(() => {
@@ -148,6 +157,10 @@ describe('Gn4Repository', () => {
           useClass: PlatformServiceInterfaceMock,
         },
         {
+          provide: Gn4SettingsService,
+          useClass: Gn4SettingsServiceMock,
+        },
+        {
           provide: TranslateService,
           useValue: translateServiceMock,
         },
@@ -158,6 +171,7 @@ describe('Gn4Repository', () => {
     gn4SearchApi = TestBed.inject(SearchApiService)
     gn4RecordsApi = TestBed.inject(RecordsApiService)
     platformService = TestBed.inject(PlatformServiceInterface)
+    settingsService = TestBed.inject(Gn4SettingsService)
     httpTestingController = TestBed.inject(HttpTestingController)
   })
 
@@ -237,7 +251,9 @@ describe('Gn4Repository', () => {
       record = await lastValueFrom(repository.getRecord('1234-5678'))
     })
     it('builds a payload with the specified uuid', () => {
-      expect(gn4Helper.getMetadataByIdPayload).toHaveBeenCalledWith('1234-5678')
+      expect(gn4Helper.getMetadataByIdsPayload).toHaveBeenCalledWith([
+        '1234-5678',
+      ])
     })
     it('returns the given result as record', () => {
       expect(record).toStrictEqual(datasetRecordsFixture()[0])
@@ -254,6 +270,40 @@ describe('Gn4Repository', () => {
       })
       it('returns null', () => {
         expect(record).toBe(null)
+      })
+    })
+  })
+
+  describe('getMultipleRecords', () => {
+    let records: CatalogRecord[]
+    beforeEach(async () => {
+      records = await lastValueFrom(
+        repository.getMultipleRecords(['1234-5678', '1234-5679'])
+      )
+    })
+    it('builds a payload with the specified uuid', () => {
+      expect(gn4Helper.getMetadataByIdsPayload).toHaveBeenCalledWith([
+        '1234-5678',
+        '1234-5679',
+      ])
+    })
+    it('returns the given result as records', () => {
+      expect(records).toStrictEqual(datasetRecordsFixture())
+    })
+    describe('if records are not found', () => {
+      beforeEach(async () => {
+        ;(gn4SearchApi as any).search = () =>
+          of({
+            hits: {
+              hits: [],
+            },
+          })
+        records = await lastValueFrom(
+          repository.getMultipleRecords(['1234-5678', '1234-5679'])
+        )
+      })
+      it('returns null', () => {
+        expect(records).toBe(null)
       })
     })
   })
@@ -276,10 +326,60 @@ describe('Gn4Repository', () => {
 
       it('returns the feature catalog with mapped features', () => {
         expect(catalog).toEqual({
-          attributes: [
-            { name: 'OBJECTID', title: 'Object identifier' },
-            { name: 'Nom', title: 'Nom de la rue' },
-            { name: 'Rue', title: '' },
+          featureTypes: [
+            {
+              name: "Catalogue d'attributs N°1",
+              definition: 'Définition du catalogue d attributs N°1',
+              attributes: [
+                {
+                  code: 'OBJECTID',
+                  name: 'OBJECTID',
+                  definition: 'Object identifier',
+                  type: 'OID',
+                },
+                {
+                  code: 'NOM',
+                  name: 'Nom',
+                  definition: 'Nom de la rue',
+                  type: 'String (48)',
+                  values: [
+                    {
+                      code: 'Pomme',
+                      definition: undefined,
+                      label: 'Les Pommiers',
+                    },
+                    {
+                      code: 'Cotton',
+                      definition: undefined,
+                      label: 'Rue Cotton',
+                    },
+                    {
+                      code: "Passage de l'échiquier",
+                      definition: undefined,
+                      label: undefined,
+                    },
+                  ],
+                },
+                {
+                  code: 'RUE',
+                  name: 'Rue',
+                  definition: '',
+                  type: 'String (50)',
+                },
+              ],
+            },
+            {
+              name: "Catalogue d'attributs N°2",
+              definition: 'Définition du catalogue d attributs N°2',
+              attributes: [
+                {
+                  code: 'UniqueObject',
+                  name: 'unique object ',
+                  definition: 'this is the only object of this catalog',
+                  type: 'String (50)',
+                },
+              ],
+            },
           ],
         })
       })
@@ -300,17 +400,67 @@ describe('Gn4Repository', () => {
       it('calls the API with correct parameters', () => {
         expect(spySearch).toHaveBeenCalledWith(
           'bucket',
-          ['fcats'],
+          ['fcats', 'hassources'],
           '{"uuids":["feature-catalog-identifier"]}'
         )
       })
 
       it('returns the attributes coming from the linked feature catalog', () => {
         expect(catalog).toEqual({
-          attributes: [
-            { name: 'OBJECTID', title: 'Object identifier' },
-            { name: 'Nom', title: 'Nom de la rue' },
-            { name: 'Rue', title: '' },
+          featureTypes: [
+            {
+              name: "Catalogue d'attributs N°1",
+              definition: 'Définition du catalogue d attributs N°1',
+              attributes: [
+                {
+                  code: 'OBJECTID',
+                  name: 'OBJECTID',
+                  definition: 'Object identifier',
+                  type: 'OID',
+                },
+                {
+                  code: 'NOM',
+                  name: 'Nom',
+                  definition: 'Nom de la rue',
+                  type: 'String (48)',
+                  values: [
+                    {
+                      code: 'Pomme',
+                      definition: undefined,
+                      label: 'Les Pommiers',
+                    },
+                    {
+                      code: 'Cotton',
+                      definition: undefined,
+                      label: 'Rue Cotton',
+                    },
+                    {
+                      code: "Passage de l'échiquier",
+                      definition: undefined,
+                      label: undefined,
+                    },
+                  ],
+                },
+                {
+                  code: 'RUE',
+                  name: 'Rue',
+                  definition: '',
+                  type: 'String (50)',
+                },
+              ],
+            },
+            {
+              name: "Catalogue d'attributs N°2",
+              definition: 'Définition du catalogue d attributs N°2',
+              attributes: [
+                {
+                  code: 'UniqueObject',
+                  name: 'unique object ',
+                  definition: 'this is the only object of this catalog',
+                  type: 'String (50)',
+                },
+              ],
+            },
           ],
         })
       })
@@ -355,9 +505,7 @@ describe('Gn4Repository', () => {
     let results: CatalogRecord[]
     beforeEach(async () => {
       results = await lastValueFrom(
-        repository.getSimilarRecords(
-          datasetRecordsFixture()[0] as CatalogRecord
-        )
+        repository.getSimilarRecords(datasetRecordsFixture()[0])
       )
     })
     it('uses a related record ES payload', () => {
@@ -366,6 +514,75 @@ describe('Gn4Repository', () => {
     })
     it('returns the given results as records', () => {
       expect(results).toStrictEqual(datasetRecordsFixture())
+    })
+  })
+  describe('getSources', () => {
+    let sources: CatalogRecord[]
+    const mockRecord = {
+      ...SAMPLE_RECORD,
+      extras: {
+        sourcesIdentifiers: ['source-1', 'source-2'],
+      },
+    }
+
+    beforeEach(async () => {
+      repository.getMultipleRecords = jest
+        .fn()
+        .mockImplementation((ids) => of(ids.map((id) => ({ uuid: id }))))
+      sources = await lastValueFrom(repository.getSources(mockRecord))
+    })
+
+    it('calls getMultipleRecords for source identifiers', () => {
+      expect(repository.getMultipleRecords).toHaveBeenCalledWith([
+        'source-1',
+        'source-2',
+      ])
+    })
+
+    it('returns the sources as an array of CatalogRecord', () => {
+      expect(sources).toEqual([{ uuid: 'source-1' }, { uuid: 'source-2' }])
+    })
+
+    it('returns null if no sourcesIdentifiers are defined', async () => {
+      const recordWithoutSources = { ...mockRecord, extras: {} }
+      const result = await lastValueFrom(
+        repository.getSources(recordWithoutSources)
+      )
+      expect(result).toBeNull()
+    })
+  })
+  describe('getSourceOf', () => {
+    let sourceOf: CatalogRecord[]
+    const mockRecord = {
+      ...SAMPLE_RECORD,
+      extras: {
+        sourceOfIdentifiers: ['hasSource-1', 'hasSource-2'],
+      },
+    }
+    beforeEach(async () => {
+      repository.getMultipleRecords = jest
+        .fn()
+        .mockImplementation((ids) => of(ids.map((id) => ({ uuid: id }))))
+      sourceOf = await lastValueFrom(repository.getSourceOf(mockRecord))
+    })
+    it('calls getMultipleRecords for hasSource identifiers', () => {
+      expect(repository.getMultipleRecords).toHaveBeenCalledWith([
+        'hasSource-1',
+        'hasSource-2',
+      ])
+    })
+    it('returns the sourceOf as an array of CatalogRecord', () => {
+      expect(sourceOf).toEqual([
+        { uuid: 'hasSource-1' },
+        { uuid: 'hasSource-2' },
+      ])
+    })
+    it('returns null if no sourceOfIdentifiers are defined', async () => {
+      const recordWithoutSourceOf = { ...mockRecord, extras: {} }
+      const result = await lastValueFrom(
+        repository.getSourceOf(recordWithoutSourceOf)
+      )
+      expect(result).toBeNull()
     })
   })
   describe('aggregate', () => {
@@ -598,6 +815,73 @@ describe('Gn4Repository', () => {
     </gmd:fileIdentifier>`)
       })
     })
+  })
+  describe('duplicateExternalRecord', () => {
+    const recordDownloadUrl = 'https://example.com/record/xml'
+    const mockXml = simpleDatasetRecordAsXmlFixture()
+    const mockRecord = simpleDatasetRecordFixture()
+
+    beforeEach(() => {
+      jest.spyOn(repository, 'saveRecord').mockReturnValue(of('mock-uuid'))
+      jest
+        .spyOn(repository as any, 'getExternalRecordAsXml')
+        .mockReturnValue(of(mockXml))
+    })
+
+    it('fetches the external record as XML', async () => {
+      await lastValueFrom(repository.duplicateExternalRecord(recordDownloadUrl))
+      expect((repository as any).getExternalRecordAsXml).toHaveBeenCalledWith(
+        recordDownloadUrl
+      )
+    })
+
+    it('edits title and calls saveRecord with record and recordAsXml', async () => {
+      const result = await lastValueFrom(
+        repository.duplicateExternalRecord(recordDownloadUrl)
+      )
+      expect(repository.saveRecord).toHaveBeenCalledWith(
+        {
+          ...mockRecord,
+          title: mockRecord.title + ' (Copy)',
+          defaultLanguage: null,
+          recordUpdated: expect.any(Date),
+          resourceCreated: expect.any(Date),
+          resourceUpdated: expect.any(Date),
+        },
+        mockXml
+          .replace(
+            'A very interesting dataset (un jeu de données très intéressant)',
+            'A very interesting dataset (un jeu de données très intéressant) (Copy)'
+          )
+          .concat('\n'),
+        false
+      )
+      expect(result).toBe('mock-uuid')
+    })
+
+    it('handles errors when fetching the external record', fakeAsync(() => {
+      jest
+        .spyOn(repository as any, 'getExternalRecordAsXml')
+        .mockReturnValue(
+          throwError(
+            () =>
+              new HttpErrorResponse({ status: 404, statusText: 'Not Found' })
+          )
+        )
+
+      let errorResponse: any
+      repository.duplicateExternalRecord(recordDownloadUrl).subscribe({
+        error: (error) => {
+          errorResponse = error
+        },
+      })
+
+      tick()
+
+      expect(errorResponse).toBeDefined()
+      expect(errorResponse.status).toBe(404)
+      expect(errorResponse.statusText).toBe('Not Found')
+    }))
   })
   describe('record draft', () => {
     beforeEach(async () => {
@@ -949,11 +1233,51 @@ describe('Gn4Repository', () => {
         })
     })
   })
-  describe('canEditRecord', () => {
-    it('should return the editing rights', () => {
-      repository.canEditRecord('my-dataset-001').subscribe((canEdit) => {
+
+  describe('canEditIndexedRecord', () => {
+    it('should return true when the record can be edited', () => {
+      repository.canEditIndexedRecord(SAMPLE_RECORD).subscribe((canEdit) => {
         expect(canEdit).toEqual(true)
       })
+    })
+    it('should return false when the record is of the wrong type', () => {
+      repository
+        .canEditIndexedRecord(simpleServiceRecordFixture())
+        .subscribe((canEdit) => {
+          expect(canEdit).toEqual(false)
+        })
+    })
+    it("should return false when the record has been harvested and the settings don't allow edit on harvested records", () => {
+      repository
+        .canEditIndexedRecord({
+          ...SAMPLE_RECORD,
+          extras: { isHarvested: true },
+        })
+        .subscribe((canEdit) => {
+          expect(canEdit).toEqual(false)
+        })
+    })
+    describe('when the record is harvested and the settings allow edit on harvested records', () => {
+      beforeEach(() => {
+        allowEditHarvested = true
+      })
+      it('should return true', () => {
+        repository
+          .canEditIndexedRecord({
+            ...SAMPLE_RECORD,
+            extras: { isHarvested: true },
+          })
+          .subscribe((canEdit) => {
+            expect(canEdit).toEqual(true)
+          })
+      })
+    })
+    it('should return false when the record has edit rights set to false', () => {
+      repository
+        .canEditIndexedRecord({ ...SAMPLE_RECORD, extras: { edit: false } })
+        .subscribe((canEdit) => {
+          expect(canEdit).toEqual(false)
+        })
     })
   })
 })

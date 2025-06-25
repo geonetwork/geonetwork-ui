@@ -6,6 +6,7 @@ import {
   OgcApiRecord,
   WfsEndpoint,
   WfsVersion,
+  TmsEndpoint,
 } from '@camptocamp/ogc-client'
 import {
   BaseReader,
@@ -30,6 +31,7 @@ import {
 
 marker('wfs.unreachable.cors')
 marker('wfs.unreachable.http')
+marker('dataset.error.forbidden')
 marker('wfs.unreachable.unknown')
 marker('wfs.featuretype.notfound')
 marker('wfs.geojsongml.notsupported')
@@ -225,9 +227,47 @@ export class DataService {
           ? endpoint.getCollectionItem(collections[0], '1')
           : null
       })
-      .catch((error) => {
+      .catch(() => {
         throw new Error(`ogc.unreachable.unknown`)
       })
+  }
+
+  async getGeodataLinksFromTms(
+    tmsLink: DatasetServiceDistribution,
+    keepOriginalLink = false
+  ): Promise<DatasetServiceDistribution[]> {
+    const endpoint = new TmsEndpoint(tmsLink.url.toString())
+    const tileMaps = await endpoint.allTileMaps.catch(() => {
+      throw new Error(`ogc.unreachable.unknown`)
+    })
+    if (!tileMaps?.length) return null
+
+    // TODO: at some point use the identifierInService field if more that one layers in the TMS service
+    const tileMapInfo = await endpoint.getTileMapInfo(tileMaps[0].href)
+
+    // case 1: no styles; return a plain TMS link
+    if (!tileMapInfo?.metadata?.length) return [tmsLink]
+
+    // case 2: styles present; return each as a separate link
+    const styleLinks = tileMapInfo.metadata
+      .filter((meta) => meta.href)
+      .map((meta) => {
+        const fileName = meta.href.split('/').pop() || ''
+        const linkName =
+          tmsLink.description || ('name' in tmsLink ? tmsLink.name : '')
+        const styleName = fileName.split('.')[0]
+        const name = `${linkName} - ${styleName}`
+        return {
+          type: 'service',
+          url: new URL(meta.href),
+          name,
+          accessServiceProtocol: 'maplibre-style',
+        } as DatasetServiceDistribution
+      })
+    if (keepOriginalLink) {
+      styleLinks.unshift(tmsLink)
+    }
+    return styleLinks
   }
 
   getDownloadLinksFromEsriRest(

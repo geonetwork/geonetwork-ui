@@ -14,7 +14,7 @@ import {
 } from '@angular/core'
 import { MatSort, MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import { TranslatePipe, TranslateService } from '@ngx-translate/core'
 import { DataTableDataSource } from './data-table.data.source'
 import { BaseReader, FetchError } from '@geonetwork-ui/data-fetcher'
 import {
@@ -48,11 +48,11 @@ export interface TableItemModel {
     MatSortModule,
     MatPaginatorModule,
     ScrollingModule,
-    TranslateModule,
     CommonModule,
     LoadingMaskComponent,
     PopupAlertComponent,
     LetDirective,
+    TranslatePipe,
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }],
   selector: 'gn-ui-data-table',
@@ -61,13 +61,14 @@ export interface TableItemModel {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataTableComponent implements OnInit, AfterViewInit, OnChanges {
+  _featureAttributes = []
+  @Input() set featureAttributes(value: { value: string; label: string }[]) {
+    this._featureAttributes = value
+    this.properties$.next(value.map((attr) => attr.value))
+  }
   @Input() set dataset(value: BaseReader) {
-    this.properties$.next(null)
     this.dataset_ = value
     this.dataset_.load()
-    this.dataset_.properties.then((properties) =>
-      this.properties$.next(properties.map((p) => p.name))
-    )
     this.dataset_.info.then((info) => (this.count = info.itemsCount))
   }
   @Input() activeId: TableItemId

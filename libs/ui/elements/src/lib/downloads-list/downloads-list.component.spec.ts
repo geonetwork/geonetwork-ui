@@ -7,13 +7,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { LinkClassifierService } from '@geonetwork-ui/util/shared'
 import { aSetOfLinksFixture } from '@geonetwork-ui/common/fixtures'
-import { TranslateModule } from '@ngx-translate/core'
 import { DownloadsListComponent } from './downloads-list.component'
 import {
   DatasetDownloadDistribution,
   ServiceProtocol,
 } from '@geonetwork-ui/common/domain/model/record'
 import { DownloadItemComponent } from '../download-item/download-item.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('DownloadsListComponent', () => {
   let component: DownloadsListComponent
@@ -22,9 +22,8 @@ describe('DownloadsListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), DownloadsListComponent],
       schemas: [NO_ERRORS_SCHEMA],
-      providers: [LinkClassifierService],
+      providers: [LinkClassifierService, provideI18n()],
     })
       .overrideComponent(DownloadsListComponent, {
         set: {
@@ -59,7 +58,7 @@ describe('DownloadsListComponent', () => {
       items = de.queryAll(By.directive(DownloadItemComponent))
     })
     it('contains three links', () => {
-      expect(items.length).toBe(3)
+      expect(items.length).toBe(6) // 2 presentation (1 hidden) of 3 links
     })
   })
 
@@ -85,7 +84,7 @@ describe('DownloadsListComponent', () => {
       items = de.queryAll(By.directive(DownloadItemComponent))
     })
     it('contains one link in "others" section', () => {
-      expect(items.length).toBe(1)
+      expect(items.length).toBe(2) // 2 presentation (1 hidden) of 1 link
       expect(component.isLinkOfFormat(component.links[0], 'others')).toBe(true)
     })
   })
@@ -103,7 +102,7 @@ describe('DownloadsListComponent', () => {
       items = de.queryAll(By.directive(DownloadItemComponent))
     })
     it('contains one link and mime type is ignored', () => {
-      expect(items.length).toBe(1)
+      expect(items.length).toBe(2) // 2 presentation (1 hidden) of 1 link
       expect(component.isLinkOfFormat(component.links[0], 'json')).toBe(true)
     })
   })
@@ -116,7 +115,7 @@ describe('DownloadsListComponent', () => {
       items = de.queryAll(By.directive(DownloadItemComponent))
     })
     it('contains color, isAPI & format', () => {
-      expect(items.length).toBe(1)
+      expect(items.length).toBe(2) // 2 presentation (1 hidden) of 1 link
       expect(items[0].componentInstance.link).toEqual(
         aSetOfLinksFixture().geodataShpWithMimeType()
       )

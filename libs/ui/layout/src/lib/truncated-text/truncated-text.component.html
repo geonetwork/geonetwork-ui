@@ -1,0 +1,27 @@
+<gn-ui-cell-popin
+  #popinRef
+  [activePopin]="isTextTruncated"
+  [scrollContainer]="scrollContainer"
+  [cdkScrollContainer]="cdkScrollContainer"
+>
+  <div
+    cellContent
+    class="flex items-center justify-between w-full gap-2"
+    [class]="extraClass"
+  >
+    <span #textElement class="truncate py-3 px-2">
+      {{ text }}
+    </span>
+    <gn-ui-button
+      *ngIf="isTextTruncated"
+      type="outline"
+      extraClass="w-10 h-8 border rounded-lg mr-2"
+      (buttonClick)="popinRef.openOverlay()"
+    >
+      <ng-icon name="iconoirExpand" size="24"> </ng-icon>
+    </gn-ui-button>
+  </div>
+  <div popinContent class="sm:w-64 xs:w-32 py-4 pl-6 pr-9">
+    <p>{{ text }}</p>
+  </div>
+</gn-ui-cell-popin>

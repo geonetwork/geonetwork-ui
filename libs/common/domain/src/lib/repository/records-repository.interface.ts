@@ -6,7 +6,11 @@ import {
   SearchParams,
   SearchResults,
 } from '../model/search'
-import { CatalogRecord, DatasetFeatureCatalog } from '../model/record'
+import {
+  CatalogRecord,
+  DatasetFeatureCatalog,
+  LanguageCode,
+} from '../model/record'
 
 export abstract class RecordsRepositoryInterface {
   abstract search(params: SearchParams): Observable<SearchResults>
@@ -19,8 +23,13 @@ export abstract class RecordsRepositoryInterface {
   abstract getSimilarRecords(
     similarTo: CatalogRecord
   ): Observable<CatalogRecord[]>
+  abstract getSources(record: CatalogRecord): Observable<CatalogRecord[]>
+  abstract getSourceOf(record: CatalogRecord): Observable<CatalogRecord[]>
   abstract fuzzySearch(query: string): Observable<SearchResults>
+  abstract canDuplicate(record: CatalogRecord): boolean
+  abstract canDelete(record: CatalogRecord): Observable<boolean>
   abstract canEditRecord(uniqueIdentifier: string): Observable<boolean>
+  abstract canEditIndexedRecord(record: CatalogRecord): Observable<boolean>
   /**
    * This emits once:
    * - record object; if a draft exists, this will return it
@@ -95,4 +104,5 @@ export abstract class RecordsRepositoryInterface {
     localRecord: CatalogRecord
   ): Observable<{ user: string; date: Date }>
   abstract getRecordPublicationStatus(uuid: string): Observable<boolean>
+  abstract getApplicationLanguages(): Observable<LanguageCode[]>
 }

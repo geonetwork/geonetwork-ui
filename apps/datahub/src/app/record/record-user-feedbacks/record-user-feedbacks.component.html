@@ -1,8 +1,6 @@
 <div class="flex flex-row justify-between mb-11">
-  <p class="font-title text-[28px] text-title font-medium" translate>
-    record.metadata.userFeedbacks
-  </p>
-  <div>
+  <h2 class="gn-ui-section-title" translate>record.metadata.userFeedbacks</h2>
+  <div class="pt-9">
     <gn-ui-dropdown-selector
       *ngIf="userFeedbacksParents && userFeedbacksParents.length > 1"
       [title]="'record.metadata.userFeedbacks.sortSelector.label' | translate"

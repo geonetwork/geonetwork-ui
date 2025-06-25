@@ -1,23 +1,26 @@
-<div class="inline-block relative align-middle" style="line-height: 0.7em">
-  <button
-    type="button"
-    class="-m-[8px] p-[8px]"
-    (click)="toggle($event)"
+<div class="inline-block relative align-middle cursor-pointer">
+  <gn-ui-button
+    [type]="'outline'"
+    [disabled]="disabled"
+    (buttonClick)="toggle($event)"
     [ngClass]="{
       enabled: toggled,
-      'disabled opacity-45': !toggled,
+      disabled: !toggled || disabled,
       'transition hover:scale-125 will-change-transform': !disabled,
-      'cursor-default': disabled,
     }"
   >
     <ng-icon [name]="toggled ? 'matStar' : 'matStarBorder'"></ng-icon>
-  </button>
+    <span *ngIf="displayLabel" class="mx-2 text-[16px] content-center" translate
+      >favorite.starToggle.label</span
+    >
+  </gn-ui-button>
   <svg
     #starOverlay
     class="star-toggle-overlay"
     width="40px"
     height="40px"
     viewBox="-15 -15 30 30"
+    [style]="displayLabel ? 'left: 16px' : 'left: 50%'"
   >
     <g>
       <path d="M 0,13.229167 V 0" />

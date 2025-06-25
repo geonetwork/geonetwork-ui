@@ -1,0 +1,9 @@
+:host {
+  --gn-ui-badge-padding: 3px 8px;
+  --gn-ui-badge-opacity: 1;
+  --gn-ui-badge-text-size: 12px;
+  --gn-ui-button-rounded: 8px;
+  --gn-ui-button-height: 32px;
+  --gn-ui-button-bg-hover: var(--color-primary-lightest);
+  --gn-ui-button-padding: 4px;
+}

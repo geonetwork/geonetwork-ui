@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterLink } from '@angular/router'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { NgxDropzoneModule } from 'ngx-dropzone'
 import { FacetsModule } from './facets/facets.module'
 import { RecordMetricComponent } from './record-metric/record-metric.component'
@@ -11,6 +10,7 @@ import { RecordPreviewRowComponent } from './record-preview-row/record-preview-r
 import { RecordPreviewTextComponent } from './record-preview-text/record-preview-text.component'
 import { RecordPreviewTitleComponent } from './record-preview-title/record-preview-title.component'
 import { ResultsHitsNumberComponent } from './results-hits-number/results-hits-number.component'
+import { ResultsHitsSearchKindComponent } from './results-hits-search-kind/results-hits-search-kind.component'
 import {
   DEFAULT_RESULTS_LAYOUT_CONFIG,
   RESULTS_LAYOUT_CONFIG,
@@ -20,14 +20,15 @@ import { RecordPreviewComponent } from './record-preview/record-preview.componen
 import { TagInputModule } from 'ngx-chips'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ResultsListItemComponent } from './results-list-item/results-list-item.component'
-import { UiWidgetsModule } from '@geonetwork-ui/ui/widgets'
 import {
+  InternalLinkCardComponent,
+  KindBadgeComponent,
+  MarkdownParserComponent,
   MetadataQualityComponent,
-  UiElementsModule,
+  ThumbnailComponent,
 } from '@geonetwork-ui/ui/elements'
 import { RecordPreviewFeedComponent } from './record-preview-feed/record-preview-feed.component'
 import { CommonModule } from '@angular/common'
-import { UiInputsModule } from '@geonetwork-ui/ui/inputs'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { InteractiveTableComponent } from '@geonetwork-ui/ui/layout'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
@@ -37,6 +38,8 @@ import {
   matMapOutline,
 } from '@ng-icons/material-icons/outline'
 import { matFace } from '@ng-icons/material-icons/baseline'
+import { InlineFilterComponent } from '@geonetwork-ui/ui/inputs'
+import { ActionMenuComponent } from './results-table/action-menu/action-menu.component'
 
 @NgModule({
   declarations: [
@@ -48,22 +51,20 @@ import { matFace } from '@ng-icons/material-icons/baseline'
     RecordMetricComponent,
     ResultsListComponent,
     ResultsHitsNumberComponent,
+    ResultsHitsSearchKindComponent,
     ResultsListItemComponent,
     RecordPreviewFeedComponent,
     RecordPreviewRowComponent,
   ],
   imports: [
     CommonModule,
-    TranslateModule.forChild(),
+    TranslateDirective,
+    TranslatePipe,
     NgxDropzoneModule,
     FacetsModule,
     FormsModule,
     ReactiveFormsModule,
     TagInputModule,
-    UtilSharedModule,
-    UiWidgetsModule,
-    UiInputsModule,
-    UiElementsModule,
     MatCheckboxModule,
     RouterLink,
     InteractiveTableComponent,
@@ -74,7 +75,13 @@ import { matFace } from '@ng-icons/material-icons/baseline'
       matFace,
       matHomeWorkOutline,
     }),
+    KindBadgeComponent,
     MetadataQualityComponent,
+    InlineFilterComponent,
+    ThumbnailComponent,
+    MarkdownParserComponent,
+    InternalLinkCardComponent,
+    ActionMenuComponent,
   ],
   exports: [
     RecordPreviewListComponent,
@@ -86,8 +93,10 @@ import { matFace } from '@ng-icons/material-icons/baseline'
     FacetsModule,
     RecordPreviewComponent,
     ResultsHitsNumberComponent,
+    ResultsHitsSearchKindComponent,
     RecordPreviewFeedComponent,
     RecordPreviewRowComponent,
+    ActionMenuComponent,
   ],
   providers: [
     provideNgIconsConfig({

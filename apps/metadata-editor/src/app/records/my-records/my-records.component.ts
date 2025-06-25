@@ -8,7 +8,7 @@ import {
   ViewContainerRef,
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslateDirective } from '@ngx-translate/core'
 import { RecordsListComponent } from '../records-list.component'
 import {
   FeatureSearchModule,
@@ -17,9 +17,8 @@ import {
   SearchFacade,
 } from '@geonetwork-ui/feature/search'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { UiElementsModule } from '@geonetwork-ui/ui/elements'
 import { Router } from '@angular/router'
-import { Overlay, OverlayRef } from '@angular/cdk/overlay'
+import { Overlay, OverlayModule, OverlayRef } from '@angular/cdk/overlay'
 import { TemplatePortal } from '@angular/cdk/portal'
 import { RecordsCountComponent } from '../records-count/records-count.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
@@ -45,15 +44,15 @@ const FILTER_OWNER = 'owner'
   standalone: true,
   imports: [
     CommonModule,
-    TranslateModule,
+    TranslateDirective,
     RecordsListComponent,
-    UiElementsModule,
     RecordsCountComponent,
     ButtonComponent,
     ImportRecordComponent,
     FeatureSearchModule,
     SearchFiltersComponent,
     NgIconComponent,
+    OverlayModule,
   ],
   providers: [
     provideIcons({

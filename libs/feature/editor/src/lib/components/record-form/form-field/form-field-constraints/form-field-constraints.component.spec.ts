@@ -5,8 +5,7 @@ import { MockBuilder, MockInstance, MockProvider } from 'ng-mocks'
 import { EditorFacade } from '../../../../+state/editor.facade'
 import { BehaviorSubject, of } from 'rxjs'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { importProvidersFrom } from '@angular/core'
-import { TranslateModule } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 const mockLegalConstraints = [...datasetRecordsFixture()[0].legalConstraints]
 
@@ -36,11 +35,7 @@ describe('FormFieldConstraintsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FormFieldConstraintsComponent],
-      providers: [
-        MockProvider(EditorFacade),
-        importProvidersFrom(TranslateModule.forRoot()),
-      ],
+      providers: [MockProvider(EditorFacade), provideI18n()],
     })
     fixture = TestBed.createComponent(FormFieldConstraintsComponent)
     component = fixture.componentInstance

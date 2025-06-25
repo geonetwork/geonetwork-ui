@@ -152,6 +152,8 @@ export type ServiceProtocol =
   | 'esriRest'
   | 'ogcFeatures'
   | 'GPFDL'
+  | 'tms'
+  | 'maplibre-style'
   | 'other'
 
 export type OnlineResourceType = 'service' | 'download' | 'link' | 'endpoint'
@@ -164,6 +166,7 @@ export interface DatasetServiceDistribution {
   name?: string
   description?: string
   translations?: OnlineResourceTranslations
+  accessRestricted?: boolean
 }
 
 export interface DatasetDownloadDistribution {
@@ -178,6 +181,7 @@ export interface DatasetDownloadDistribution {
   description?: string
   accessServiceProtocol?: ServiceProtocol
   translations?: OnlineResourceTranslations
+  accessRestricted?: boolean
 }
 
 export interface OnlineLinkResource {
@@ -186,6 +190,8 @@ export interface OnlineLinkResource {
   name?: string
   description?: string
   translations?: OnlineResourceTranslations
+  mimeType?: string
+  accessRestricted?: boolean
 }
 
 export type DatasetOnlineResource = (
@@ -226,12 +232,10 @@ export interface DatasetRecord extends BaseRecord {
   temporalExtents: Array<DatasetTemporalExtent>
   spatialRepresentation?: SpatialRepresentationType
 }
-export type DatasetFeatureCatalog = {
-  attributes: Array<{ name: string; title: string }>
-}
+
 export interface ServiceEndpoint {
-  endpointUrl: URL
-  protocol: string
+  url: URL
+  accessServiceProtocol: ServiceProtocol
   type: 'endpoint'
   description?: string
   translations?: OnlineResourceTranslations
@@ -254,6 +258,34 @@ export interface ReuseRecord extends BaseRecord {
   reuseType: ReuseType
   spatialExtents: Array<DatasetSpatialExtent>
   temporalExtents: Array<DatasetTemporalExtent>
+}
+
+export type DatasetFeatureCatalog = {
+  featureTypes: Array<{
+    name: string
+    definition: string
+    attributes: DatasetFeatureAttribute[]
+  }>
+}
+export interface DatasetFeatureAttributeValue {
+  code?: string
+  definition?: string
+  label?: string
+}
+export interface DatasetFeatureAttribute {
+  name: string
+  definition: string
+  type: string
+  code: string
+  values?: Array<DatasetFeatureAttributeValue>
+}
+export interface DatasetFeatureType {
+  aliases: string
+  code: string
+  isAbstract: string
+  typeName: string
+  definition: string
+  attributeTable: Array<DatasetFeatureAttribute>
 }
 
 export type ReuseType = 'application' | 'map' | 'other'

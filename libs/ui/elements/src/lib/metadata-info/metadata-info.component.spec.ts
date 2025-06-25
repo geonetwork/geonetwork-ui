@@ -1,21 +1,29 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { UtilSharedModule } from '@geonetwork-ui/util/shared'
-import { TranslateModule } from '@ngx-translate/core'
 import { MetadataInfoComponent } from './metadata-info.component'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { TranslateTestingModule } from 'ngx-translate-testing'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
+import { By } from '@angular/platform-browser'
 
 describe('MetadataInfoComponent', () => {
   let component: MetadataInfoComponent
   let fixture: ComponentFixture<MetadataInfoComponent>
 
+  const expandPanel = (fixture: ComponentFixture<any>, dataTest: string) => {
+    const panel = fixture.debugElement.query(
+      By.css(`[data-test="${dataTest}"]`)
+    )
+    if (panel) {
+      const titleEl = panel.query(By.css('.title'))
+      titleEl.nativeElement.click()
+      fixture.detectChanges()
+    }
+  }
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        TranslateModule.forRoot(),
-        UtilSharedModule,
         TranslateTestingModule.withTranslations({
           en: {
             'domain.record.updateFrequency.notPlanned': 'Not planned',
@@ -46,6 +54,13 @@ describe('MetadataInfoComponent', () => {
         keywords: null,
       } as DatasetRecord
       fixture.detectChanges()
+      expandPanel(fixture, 'usage-panel')
+    })
+    it('should display the usage panel', () => {
+      const usagePanel = fixture.debugElement.query(
+        By.css('[data-test="usage-panel"]')
+      )
+      expect(usagePanel).toBeTruthy()
     })
     it('should display a message for no usage or constraints', () => {
       const displayedElement = fixture.nativeElement.querySelector('.noUsage')
@@ -73,17 +88,26 @@ describe('MetadataInfoComponent', () => {
       } as DatasetRecord
       fixture.detectChanges()
     })
+    it('should display the details panel', () => {
+      const detailsPanel = fixture.debugElement.query(
+        By.css('[data-test="details-panel"]')
+      )
+      expect(detailsPanel).toBeTruthy()
+    })
     it('should not display a message for no usage or constraints', () => {
+      expandPanel(fixture, 'details-panel')
       const displayedElement = fixture.nativeElement.querySelector('.noUsage')
       expect(displayedElement).toBeFalsy()
     })
     it('should display the abstract section', () => {
+      expandPanel(fixture, 'details-panel')
       const displayedElement = fixture.nativeElement.querySelector(
         'gn-ui-markdown-parser'
       )
       expect(displayedElement).toBeTruthy()
     })
   })
+
   describe('updateFrequency', () => {
     describe('updateFrequency is not defined', () => {
       beforeEach(() => {
@@ -110,6 +134,7 @@ describe('MetadataInfoComponent', () => {
           updateFrequency: 'notPlanned',
         } as DatasetRecord
         fixture.detectChanges()
+        expandPanel(fixture, 'details-panel')
       })
       it('should display the updateFrequency code correctly', () => {
         const displayedElement =
@@ -123,6 +148,7 @@ describe('MetadataInfoComponent', () => {
         component = fixture.componentInstance
         component.metadata = datasetRecordsFixture()[0] as DatasetRecord
         fixture.detectChanges()
+        expandPanel(fixture, 'details-panel')
       })
       it('should display the updateFrequency object correctly', () => {
         const displayedElement =

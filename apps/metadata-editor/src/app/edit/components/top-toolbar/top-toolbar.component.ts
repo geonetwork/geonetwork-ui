@@ -1,12 +1,21 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core'
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { LetDirective } from '@ngrx/component'
-import { TranslateModule, TranslateService } from '@ngx-translate/core'
+import {
+  TranslateDirective,
+  TranslatePipe,
+  TranslateService,
+} from '@ngx-translate/core'
 import { combineLatest, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { PublishButtonComponent } from '../publish-button/publish-button.component'
@@ -21,12 +30,14 @@ import {
   iconoirDownload,
   iconoirLightBulb,
   iconoirSidebarCollapse,
+  iconoirTranslate,
   iconoirUndoAction,
 } from '@ng-icons/iconoir'
 import {
   matHelpOutlineOutline,
   matPendingOutline,
 } from '@ng-icons/material-icons/outline'
+import { matCircle } from '@ng-icons/material-icons/baseline'
 
 @Component({
   selector: 'md-editor-top-toolbar',
@@ -38,7 +49,8 @@ import {
     LetDirective,
     MatTooltipModule,
     MatDialogModule,
-    TranslateModule,
+    TranslateDirective,
+    TranslatePipe,
     NgIconComponent,
   ],
   providers: [
@@ -51,6 +63,8 @@ import {
       iconoirUndoAction,
       iconoirBadgeCheck,
       matHelpOutlineOutline,
+      iconoirTranslate,
+      matCircle,
     }),
     provideNgIconsConfig({
       size: '1.5rem',
@@ -61,6 +75,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopToolbarComponent {
+  @Output() openTranslatePanel = new EventEmitter(false)
+  translatePanelOpen = false
   protected SaveStatus = [
     'record_not_published', // => when the record is not published yet but saved
     'record_up_to_date', // => when the record was just published (ie saved on the server)
@@ -83,6 +99,9 @@ export class TopToolbarComponent {
         return !isPublished ? 'record_not_published' : 'record_up_to_date'
       })
     )
+  isRecordMultilingual$ = this.editorFacade.record$.pipe(
+    map((record) => record.otherLanguages.length)
+  )
 
   constructor(
     public dialog: MatDialog,
@@ -114,5 +133,10 @@ export class TopToolbarComponent {
         this.editorFacade.undoRecordDraft()
       }
     })
+  }
+
+  toggleTranslatePanel() {
+    this.translatePanelOpen = !this.translatePanelOpen
+    this.openTranslatePanel.emit(this.translatePanelOpen)
   }
 }

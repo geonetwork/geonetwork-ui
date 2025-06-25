@@ -15,10 +15,13 @@ import {
   ProgressBarComponent,
 } from '@geonetwork-ui/ui/widgets'
 import { CommonModule } from '@angular/common'
-import { TranslateModule } from '@ngx-translate/core'
-import { NgIcon } from '@ng-icons/core'
+import { TranslateDirective } from '@ngx-translate/core'
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { matInfoOutline } from '@ng-icons/material-icons/outline'
-import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
+
+type QualityChecks = {
+  [key: string]: (metadata: Partial<CatalogRecord>) => boolean
+}
 
 @Component({
   selector: 'gn-ui-metadata-quality',
@@ -31,7 +34,7 @@ import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
     PopoverComponent,
     ProgressBarComponent,
     MetadataQualityItemComponent,
-    TranslateModule,
+    TranslateDirective,
     NgIcon,
   ],
   providers: [
@@ -69,18 +72,53 @@ export class MetadataQualityComponent implements OnChanges {
       this.items.push({ name, value })
     }
   }
+  hasGetCapabilities(url: string): boolean {
+    return url.toLowerCase().includes('capabilities')
+  }
+
+  private readonly COMMON_CHECKS: QualityChecks = {
+    title: (metadata) => !!metadata?.title,
+    description: (metadata) => !!metadata?.abstract,
+    keywords: (metadata) => (metadata?.keywords?.length ?? 0) > 0,
+    legalConstraints: (metadata) =>
+      (metadata?.legalConstraints?.length ?? 0) > 0,
+    contact: (metadata) => !!metadata?.contacts?.[0]?.email,
+  }
+
+  private readonly SPECIFIC_CHECKS: Record<string, QualityChecks> = {
+    dataset: {
+      updateFrequency: (metadata) => !!metadata?.updateFrequency,
+      topic: (metadata) => (metadata?.topics?.length ?? 0) > 0,
+      organisation: (metadata) => !!metadata?.contacts?.[0]?.organization?.name,
+    },
+    service: {
+      capabilities: (metadata) =>
+        (metadata?.onlineResources ?? []).some((resource) =>
+          this.hasGetCapabilities(resource?.url?.href ?? '')
+        ),
+    },
+    reuse: {
+      topic: (metadata) => (metadata?.topics?.length ?? 0) > 0,
+      organisation: (metadata) => !!metadata?.contacts?.[0]?.organization?.name,
+      source: (metadata) => !!metadata?.extras?.sourcesIdentifiers,
+    },
+  }
 
   initialize() {
-    const contact = this.metadata?.contacts?.[0]
     this.items = []
-    this.add('title', !!this.metadata?.title)
-    this.add('description', !!this.metadata?.abstract)
-    this.add('topic', this.metadata?.topics?.length > 0)
-    this.add('keywords', this.metadata?.keywords?.length > 0)
-    this.add('legalConstraints', this.metadata?.legalConstraints?.length > 0)
-    this.add('organisation', !!contact?.organization)
-    this.add('contact', !!contact?.email)
-    this.add('updateFrequency', !!this.metadata?.updateFrequency)
+
+    Object.entries(this.COMMON_CHECKS).forEach(([name, check]) => {
+      this.add(name, check(this.metadata))
+    })
+
+    const datasetType = this.metadata?.kind
+    if (datasetType && this.SPECIFIC_CHECKS[datasetType]) {
+      Object.entries(this.SPECIFIC_CHECKS[datasetType]).forEach(
+        ([name, check]) => {
+          this.add(name, check(this.metadata))
+        }
+      )
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -1,13 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordApisComponent } from './record-apis.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { BehaviorSubject } from 'rxjs'
 import { MockBuilder } from 'ng-mocks'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 class MdViewFacadeMock {
   selectedApiLink$ = new BehaviorSubject([])
+  apiLinks$ = new BehaviorSubject([])
 }
 
 const serviceDistributionMock = {
@@ -19,20 +20,21 @@ const serviceDistributionMock = {
 describe('RecordApisComponent', () => {
   let component: RecordApisComponent
   let fixture: ComponentFixture<RecordApisComponent>
+  let facade
 
   beforeEach(() => MockBuilder(RecordApisComponent))
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
       providers: [
+        provideI18n(),
         {
           provide: MdViewFacade,
           useClass: MdViewFacadeMock,
         },
       ],
     }).compileComponents()
-
+    facade = TestBed.inject(MdViewFacade)
     fixture = TestBed.createComponent(RecordApisComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
@@ -67,6 +69,28 @@ describe('RecordApisComponent', () => {
     })
     it('should update opacity for transition', () => {
       expect(component.opacity).toEqual(0)
+    })
+  })
+
+  describe('apiLinks$', () => {
+    beforeEach(() => {
+      const mockLinks = [
+        { accessServiceProtocol: 'ogcFeatures' },
+        { accessServiceProtocol: 'GPFDL' },
+        { accessServiceProtocol: 'wms' },
+      ] as DatasetServiceDistribution[]
+
+      facade.apiLinks$.next(mockLinks)
+    })
+    it('should sort links with GPFDL protocol first', (done) => {
+      component.apiLinks$.subscribe((sortedLinks) => {
+        expect(sortedLinks).toEqual([
+          { accessServiceProtocol: 'GPFDL' },
+          { accessServiceProtocol: 'ogcFeatures' },
+          { accessServiceProtocol: 'wms' },
+        ])
+        done()
+      })
     })
   })
 })

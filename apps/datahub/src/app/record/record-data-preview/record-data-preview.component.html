@@ -1,20 +1,14 @@
 <div
-  style="height: 652px"
+  class="h-[750px]"
   *ngIf="(displayMap$ | async) || (displayData$ | async)"
   id="preview"
 >
-  <div
-    class="bg-primary-opacity-10 pt-8 overflow-visible sm:pt-5"
-    style="height: 512px"
-  >
-    <div class="container-lg px-4 lg:mx-auto">
+  <div class="bg-primary-opacity-10 overflow-visible h-[480px]">
+    <div class="container-lg pb-4 px-4 lg:mx-auto">
       <div>
-        <div
-          class="text-[28px] text-title font-title transform sm:translate-y-10"
-          translate
-        >
+        <h2 class="gn-ui-section-title transform translate-y-11 pt-0" translate>
           record.metadata.preview
-        </div>
+        </h2>
         <mat-tab-group
           (selectedIndexChange)="onTabIndexChange($event)"
           [selectedIndex]="(displayMap$ | async) ? 0 : 1"
@@ -28,11 +22,13 @@
             </ng-template>
             <div
               class="block"
-              style="height: 500px"
+              style="height: 639px"
               *ngIf="displayMap$ | async"
             >
               <gn-ui-map-view
                 [exceedsLimit]="exceedsMaxFeatureCount$ | async"
+                (linkSelected)="onSelectedLinkChange($event)"
+                [selectedView]="selectedView$ | async"
               ></gn-ui-map-view>
             </div>
           </mat-tab>
@@ -43,6 +39,7 @@
             <div class="block" *ngIf="displayData$ | async">
               <gn-ui-data-view
                 [exceedsLimit]="exceedsMaxFeatureCount$ | async"
+                (linkSelected)="onSelectedLinkChange($event)"
                 mode="table"
               ></gn-ui-data-view>
             </div>
@@ -54,6 +51,8 @@
             <div class="block" *ngIf="displayData$ | async">
               <gn-ui-data-view
                 [exceedsLimit]="exceedsMaxFeatureCount$ | async"
+                (linkSelected)="onSelectedLinkChange($event)"
+                [selectedView]="selectedView$ | async"
                 mode="chart"
               ></gn-ui-data-view>
             </div>
@@ -63,9 +62,11 @@
     </div>
   </div>
 </div>
-<div class="container-lg lg:mx-auto">
+<div
+  class="container-lg lg:mx-auto mb-10 px-4"
+  *ngIf="displayViewShare$ | async"
+>
   <gn-ui-data-view-share
-    *ngIf="displayViewShare$ | async"
     [viewType]="selectedView$ | async"
   ></gn-ui-data-view-share>
 </div>

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { NgIcon, provideIcons } from '@ng-icons/core'
-import { TranslateModule } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 import { matCheck, matWarningAmber } from '@ng-icons/material-icons/baseline'
 
 marker('record.metadata.quality.title.success')
@@ -20,6 +20,10 @@ marker('record.metadata.quality.updateFrequency.success')
 marker('record.metadata.quality.updateFrequency.failed')
 marker('record.metadata.quality.organisation.success')
 marker('record.metadata.quality.organisation.failed')
+marker('record.metadata.quality.capabilities.success')
+marker('record.metadata.quality.capabilities.failed')
+marker('record.metadata.quality.source.success')
+marker('record.metadata.quality.source.failed')
 
 export interface MetadataQualityItem {
   name: string
@@ -31,7 +35,7 @@ export interface MetadataQualityItem {
   templateUrl: './metadata-quality-item.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [NgIcon, TranslateModule],
+  imports: [NgIcon, TranslatePipe],
   viewProviders: [provideIcons({ matCheck, matWarningAmber })],
 })
 export class MetadataQualityItemComponent implements MetadataQualityItem {

@@ -3,16 +3,17 @@
   <ng-container *ngSwitchCase="'light'">
     <div class="flex items-center relative">
       <div
-        class="flex-shrink-0 {{ color.text }} text-xs font-medium mr-2
+        class="flex-shrink-0 {{ color.text }} font-medium mr-2
              text-opacity-100 !text-slate-800"
+        data-cy="progressPercentage"
       >
         {{ progress }}%
       </div>
-      <div class="flex-grow h-[6px] w-full {{ color.outerBar }} rounded-full">
+      <div class="flex-grow h-[4px] w-[52px] {{ color.outerBar }} rounded-full">
         <div
           [style.width.%]="progress"
           class="{{ color.innerBar }} transition-width duration-500
-               ease-in-out rounded-full shadow-sm h-full"
+               ease-in-out rounded-full shadow-sm w-[52px] h-[4px]"
         ></div>
       </div>
     </div>
