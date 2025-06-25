@@ -1,0 +1,7 @@
+/*! @rgrove/parse-xml v4.0.1 | ISC License | Copyright Ryan Grove */
+
+/**
+ * @license Angular v16.2.12
+ * (c) 2010-2022 Google LLC. https://angular.io/
+ * License: MIT
+ */
