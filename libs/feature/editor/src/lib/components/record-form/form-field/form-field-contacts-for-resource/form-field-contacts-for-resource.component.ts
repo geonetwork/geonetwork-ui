@@ -24,7 +24,7 @@ import {
   ButtonComponent,
 } from '@geonetwork-ui/ui/inputs'
 import { createFuzzyFilter } from '@geonetwork-ui/util/shared'
-import { TranslatePipe } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import {
   debounceTime,
   distinctUntilChanged,
@@ -54,6 +54,7 @@ import { iconoirPlus } from '@ng-icons/iconoir'
     NgIconComponent,
     ButtonComponent,
     TranslatePipe,
+    TranslateDirective,
   ],
   providers: [
     provideIcons({ iconoirPlus }),
