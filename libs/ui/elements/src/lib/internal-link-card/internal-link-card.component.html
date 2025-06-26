@@ -11,7 +11,7 @@
       [fit]="'cover'"
     ></gn-ui-thumbnail>
   </div>
-  <div class="grow pt-1">
+  <div class="grow pt-1" [ngClass]="shouldShowThumbnail ? 'w-0' : ''">
     <div class="flex flex-col gap-2 h-full">
       <h4
         class="record-card__title"
@@ -20,7 +20,7 @@
       >
         {{ record.title }}
       </h4>
-      <div class="grow w-full break-all">
+      <div class="grow">
         <gn-ui-markdown-parser
           data-cy="recordAbstract"
           [textContent]="abstract"
@@ -29,11 +29,14 @@
           [title]="abstract"
         ></gn-ui-markdown-parser>
       </div>
-      <div class="record-card__footer">
+      <div
+        class="record-card__footer"
+        [ngClass]="isOrgShown ? ' gap-2' : 'gap-3'"
+      >
         <div
           data-cy="recordOrg"
           *ngIf="record.ownerOrganization?.name"
-          class="grow flex flex-nowrap gap-1 items-center text-primary-lighter"
+          class="flex flex-nowrap gap-1 items-center text-primary-lighter flex-1 min-w-0"
         >
           <ng-icon
             name="iconoirBank"
@@ -46,8 +49,14 @@
             >{{ record.ownerOrganization.name }}</span
           >
         </div>
-        <div class="record-card__footer__other">
-          <div class="xs:border-r last:border-r-0 flex grow gap-4 last:pr-0">
+        <div
+          class="record-card__footer__other"
+          [ngClass]="isOrgShown ? '' : 'gap-3'"
+        >
+          <div
+            class="xs:border-r last:border-r-0 flex last:pr-0"
+            [ngClass]="isOrgShown ? 'gap-2 pl-2' : 'grown gap-4 px-4'"
+          >
             <gn-ui-kind-badge
               [extraClass]="'text-[1.2em]'"
               [styling]="'gray'"
@@ -65,7 +74,11 @@
               [metadataQualityDisplay]="metadataQualityDisplay"
             ></gn-ui-metadata-quality>
           </div>
-          <div class="flex justify-center" data-cy="recordFav">
+          <div
+            class="flex justify-center"
+            data-cy="recordFav"
+            [ngClass]="isOrgShown ? 'pl-2' : 'px-4'"
+          >
             <ng-container
               [ngTemplateOutlet]="favoriteTemplate"
               *ngIf="size !== 'XS'"
