@@ -27,7 +27,7 @@ const mockRecord = {
   ],
 } as unknown as CatalogRecord
 
-describe('LinkCardComponent', () => {
+describe('ExternalLinkCardComponent', () => {
   let component: GeoDataBadgeComponent
   let fixture: ComponentFixture<GeoDataBadgeComponent>
 

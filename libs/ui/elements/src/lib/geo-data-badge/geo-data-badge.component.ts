@@ -38,7 +38,7 @@ export class GeoDataBadgeComponent {
 
   get badgeClasses(): string {
     const baseClasses =
-      'flex shrink-0 items-center badge-btn text-xs px-2 h-6 min-h-6'
+      'flex shrink-0 items-center badge-btn badge-btn text-xs px-2 h-6 min-h-6'
 
     switch (this.styling) {
       case 'light':

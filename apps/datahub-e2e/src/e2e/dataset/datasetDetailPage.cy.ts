@@ -680,7 +680,7 @@ describe('dataset pages', () => {
     // Test on mobile
     cy.viewport(375, 667)
     cy.get('@otherLinks')
-      .find('gn-ui-link-card')
+      .find('gn-ui-external-link-card')
       .first()
       .find('a')
       .should('have.attr', 'href')
@@ -689,7 +689,7 @@ describe('dataset pages', () => {
     //Test on desktop
     cy.viewport(1200, 800)
     cy.get('@otherLinks')
-      .find('gn-ui-link-card')
+      .find('gn-ui-external-link-card')
       .first()
       .find('a')
       .should('have.attr', 'href')
@@ -697,7 +697,7 @@ describe('dataset pages', () => {
 
     // it should have external, API and internal links with one option
     cy.get('datahub-record-otherlinks')
-      .find('gn-ui-link-card')
+      .find('gn-ui-external-link-card')
       .should('have.length.gt', 0)
     cy.get('datahub-record-apis')
       .find('gn-ui-api-card')
@@ -713,7 +713,7 @@ describe('dataset pages', () => {
 
     // it goes to external link on click
     cy.get('datahub-record-otherlinks')
-      .find('gn-ui-link-card')
+      .find('gn-ui-external-link-card')
       .first()
       .children('a')
       .as('proviLink')

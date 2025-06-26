@@ -1,11 +1,11 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { LinkCardComponent } from './link-card.component'
+import { ExternalLinkCardComponent } from './external-link-card.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
-describe('LinkCardComponent', () => {
-  let component: LinkCardComponent
-  let fixture: ComponentFixture<LinkCardComponent>
+describe('ExternalLinkCardComponent', () => {
+  let component: ExternalLinkCardComponent
+  let fixture: ComponentFixture<ExternalLinkCardComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -15,7 +15,7 @@ describe('LinkCardComponent', () => {
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LinkCardComponent)
+    fixture = TestBed.createComponent(ExternalLinkCardComponent)
     component = fixture.componentInstance
     component.link = {
       name: 'Consulter sur Géoclip',

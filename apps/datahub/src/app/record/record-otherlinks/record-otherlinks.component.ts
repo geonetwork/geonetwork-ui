@@ -12,7 +12,7 @@ import {
   PreviousNextButtonsComponent,
 } from '@geonetwork-ui/ui/layout'
 import { CommonModule } from '@angular/common'
-import { LinkCardComponent } from '@geonetwork-ui/ui/elements'
+import { ExternalLinkCardComponent } from '@geonetwork-ui/ui/elements'
 import { LetDirective } from '@ngrx/component'
 import { TranslateDirective } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
@@ -27,7 +27,7 @@ import { map } from 'rxjs/operators'
     CommonModule,
     PreviousNextButtonsComponent,
     BlockListComponent,
-    LinkCardComponent,
+    ExternalLinkCardComponent,
     CarouselComponent,
     LetDirective,
     TranslateDirective,
