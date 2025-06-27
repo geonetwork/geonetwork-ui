@@ -11,7 +11,7 @@
       [fit]="'cover'"
     ></gn-ui-thumbnail>
   </div>
-  <div class="grow pt-1">
+  <div class="grow pt-1" [ngClass]="shouldShowThumbnail ? 'w-0' : ''">
     <div class="flex flex-col gap-2 h-full">
       <h4
         class="record-card__title"
@@ -20,7 +20,7 @@
       >
         {{ record.title }}
       </h4>
-      <div class="grow w-full break-all">
+      <div class="grow">
         <gn-ui-markdown-parser
           data-cy="recordAbstract"
           [textContent]="abstract"
@@ -29,11 +29,19 @@
           [title]="abstract"
         ></gn-ui-markdown-parser>
       </div>
-      <div class="record-card__footer">
+      <div
+        class="record-card__footer"
+        [ngClass]="
+          alternativeM
+            ? 'flex-row flex-wrap gap-1 items-stretch'
+            : 'flex-col flex-nowrap gap-3 justify-end'
+        "
+      >
         <div
           data-cy="recordOrg"
           *ngIf="record.ownerOrganization?.name"
           class="grow flex flex-nowrap gap-1 items-center text-primary-lighter"
+          [ngClass]="alternativeM ? 'px-4' : ''"
         >
           <ng-icon
             name="iconoirBank"
@@ -46,7 +54,10 @@
             >{{ record.ownerOrganization.name }}</span
           >
         </div>
-        <div class="record-card__footer__other">
+        <div
+          class="record-card__footer__other"
+          [ngClass]="alternativeM ? 'border-l-0' : 'xs:border-l'"
+        >
           <div class="xs:border-r last:border-r-0 flex grow gap-4 last:pr-0">
             <gn-ui-kind-badge
               [extraClass]="'text-[1.2em]'"

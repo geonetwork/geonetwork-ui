@@ -84,4 +84,12 @@ export class InternalLinkCardComponent implements OnInit {
   get shouldShowThumbnail(): boolean {
     return this.size === 'L' || this.size === 'M'
   }
+
+  get alternativeM() {
+    return (
+      this.record.ownerOrganization?.name &&
+      this.metadataQualityDisplay &&
+      this.size === 'M'
+    )
+  }
 }

@@ -82,15 +82,18 @@ export const RecordCard: StoryObj<InternalLinkCardComponentWithFavoriteTemplate>
         mdSelect: action('mdSelect'),
       },
       template: `
-    <div class="border border-gray-100 rounded-md w-auto inline-block card-shadow">
-      <gn-ui-internal-link-card     
-      class="w-auto"   
-        [record]="record"
-        [size]="size"
-        [metadataQualityDisplay]="metadataQualityDisplay"
-        [favoriteTemplate]="favoriteRef"
-        (mdSelect)="mdSelect($event)">
-      </gn-ui-internal-link-card>
+      <div class="border border-gray-100 rounded-md inline-block card-shadow" [ngClass]="{
+        'w-auto': size === 'XS' || size === 'S',
+        'w-[800px]': size === 'M',
+        'w-full': size === 'L'
+      }">
+        <gn-ui-internal-link-card
+          [record]="record"
+          [size]="size"
+          [metadataQualityDisplay]="metadataQualityDisplay"
+          [favoriteTemplate]="favoriteRef"
+          (mdSelect)="mdSelect($event)">
+        </gn-ui-internal-link-card>
       <ng-template #favoriteRef let-record>
         ${args.favoriteTemplateString}
       </ng-template>
@@ -284,4 +287,36 @@ export const MediumCardWithoutContact: StoryObj<InternalLinkCardComponentWithFav
       record: mockLongRecordWithoutContact,
     },
     render: RecordCard.render,
+  }
+
+export const MediumCardsSquashed: StoryObj<InternalLinkCardComponentWithFavoriteTemplate> =
+  {
+    args: {
+      ...RecordCard.args,
+    },
+    render: (args) => ({
+      props: {
+        ...args,
+        mdSelect: action('mdSelect'),
+        records: datasetRecordsFixture().slice(0, 3),
+      },
+      template: `
+      <div class="flex flex-col gap-4 w-[620px]">
+        <div class="w-[488px]" *ngFor="let rec of records">
+          <div class="border border-gray-100 rounded-md inline-block card-shadow w-full">
+            <gn-ui-internal-link-card
+              [record]="rec"
+              [size]="'M'"
+              [metadataQualityDisplay]="metadataQualityDisplay"
+              [favoriteTemplate]="favoriteRef"
+              (mdSelect)="mdSelect($event)">
+            </gn-ui-internal-link-card>
+          </div>
+        </div>
+      </div>
+      <ng-template #favoriteRef let-record>
+        ${args.favoriteTemplateString}
+      </ng-template>
+    `,
+    }),
   }
