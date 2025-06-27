@@ -350,7 +350,6 @@
   "map.wms.urlInput.hint": "Enter WMS service URL",
   "multiselect.filter.placeholder": "Search",
   "nav.back": "Back",
-  "navbar.mobile.menuTitle": "Quick access",
   "ogc.unreachable.unknown": "The service could not be reached",
   "organisation.filter.placeholder": "Filter results",
   "organisation.sort.sortBy": "Sort by:",

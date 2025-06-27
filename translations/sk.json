@@ -350,7 +350,6 @@
   "map.wms.urlInput.hint": "Zadajte URL adresu služby WMS",
   "multiselect.filter.placeholder": "Hľadať",
   "nav.back": "Späť",
-  "navbar.mobile.menuTitle": "",
   "ogc.unreachable.unknown": "So službou sa nedalo spojiť",
   "organisation.filter.placeholder": "Filtrovať výsledky",
   "organisation.sort.sortBy": "Zoradiť podľa:",
