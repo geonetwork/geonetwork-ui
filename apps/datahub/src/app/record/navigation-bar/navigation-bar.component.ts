@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
@@ -41,7 +49,15 @@ marker('record.metadata.userFeedbacks')
 })
 export class NavigationBarComponent {
   @Input() metadata: DatasetRecord
-  displayMobileMenu = false
+  @Input() set mobileNavBarOpen(value: boolean) {
+    this.displayMobileNavBar = value
+  }
+  @ViewChild('navBar') navBarTpl!: TemplateRef<any>
+  @Output() mobileNavBarToggled = new EventEmitter<
+    TemplateRef<any> | undefined
+  >()
+
+  displayMobileNavBar = false
   anchorLinks = [
     {
       anchor: 'about',
@@ -76,8 +92,13 @@ export class NavigationBarComponent {
 
   constructor(private searchService: SearchService) {}
 
-  toggleMobileMenu() {
-    this.displayMobileMenu = !this.displayMobileMenu
+  toggleMobileNavBar() {
+    this.displayMobileNavBar = !this.displayMobileNavBar
+    if (this.displayMobileNavBar) {
+      this.mobileNavBarToggled.emit(this.navBarTpl)
+    } else {
+      this.mobileNavBarToggled.emit(undefined)
+    }
   }
   back() {
     this.searchService.updateFilters({})

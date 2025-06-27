@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  TemplateRef,
+  ViewContainerRef,
+} from '@angular/core'
 import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import {
   DatasetRecord,
@@ -6,7 +12,7 @@ import {
   ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { combineLatest, fromEvent, map, startWith } from 'rxjs'
+import { combineLatest, fromEvent, map, startWith, Subscription } from 'rxjs'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
@@ -30,6 +36,8 @@ import {
 } from '@geonetwork-ui/feature/search'
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { StickyHeaderComponent } from '@geonetwork-ui/ui/layout'
+import { Overlay, OverlayRef } from '@angular/cdk/overlay'
+import { TemplatePortal } from '@angular/cdk/portal'
 
 const MOBILE_MAX_WIDTH = 640
 export const HEADER_HEIGHT_DEFAULT = 344
@@ -73,7 +81,11 @@ export class HeaderRecordComponent {
   foregroundColor = getThemeConfig().HEADER_FOREGROUND_COLOR || '#ffffff'
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
 
-  showOverlay = true
+  showThumbnailOverlay = true
+
+  mobileNavBarOverlayRef: OverlayRef | null = null
+  mobileNavBarOverlayOpen = false
+  mobileNavBarDetachSub: Subscription | null = null
 
   isMobile$ = fromEvent(window, 'resize').pipe(
     startWith(window.innerWidth),
@@ -101,7 +113,9 @@ export class HeaderRecordComponent {
   constructor(
     public facade: MdViewFacade,
     private dateService: DateService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private overlay: Overlay,
+    private vcr: ViewContainerRef
   ) {}
 
   reuseLinkUrl$ = this.facade.otherLinks$.pipe(
@@ -116,5 +130,28 @@ export class HeaderRecordComponent {
 
   back() {
     this.searchService.updateFilters({})
+  }
+
+  onMobileNavBarToggled(tpl: TemplateRef<any>) {
+    if (this.mobileNavBarOverlayRef) {
+      this.mobileNavBarOverlayRef.detach()
+    }
+    this.mobileNavBarOverlayRef = this.overlay.create({
+      positionStrategy: this.overlay.position().global().top('0px').left('0px'),
+      scrollStrategy: this.overlay.scrollStrategies.close(),
+      minWidth: '100%',
+    })
+    if (tpl) {
+      this.mobileNavBarOverlayRef.attach(new TemplatePortal(tpl, this.vcr))
+      this.mobileNavBarOverlayOpen = true
+      if (this.mobileNavBarDetachSub) {
+        this.mobileNavBarDetachSub.unsubscribe()
+      }
+      this.mobileNavBarDetachSub = this.mobileNavBarOverlayRef
+        .detachments()
+        .subscribe(() => {
+          this.mobileNavBarOverlayOpen = false
+        })
+    }
   }
 }
