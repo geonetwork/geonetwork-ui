@@ -89,11 +89,6 @@ export class NavigationBarComponent {
 
   constructor(private searchService: SearchService) {}
 
-  toggleMobileNavBarOnly(event: MouseEvent) {
-    event.preventDefault()
-    this.toggleMobileNavBar()
-  }
-
   toggleMobileNavBar() {
     this.displayMobileNavBar = !this.displayMobileNavBar
     if (this.displayMobileNavBar) {

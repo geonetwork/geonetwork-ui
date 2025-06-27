@@ -80,7 +80,8 @@
               gnUiAnchorLinkOutOfViewClass="hidden"
               class="h-[60px] px-3 py-3 rounded-md font-medium shrink text-wrap text-left"
               translate
-              (click)="toggleMobileNavBarOnly($event)"
+              (click)="$event.stopPropagation(); $event.preventDefault()"
+              style="pointer-events: none"
             >
               {{ l.label }}
             </button>
