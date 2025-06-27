@@ -45,4 +45,26 @@ describe('NavigationBarComponent', () => {
       expect(searchService.updateFilters).toHaveBeenCalledWith({})
     })
   })
+
+  describe('#toggleMobileNavBar', () => {
+    const tpl = {} as any
+    let emitSpy
+
+    beforeEach(() => {
+      component.navBarTpl = tpl
+      emitSpy = jest.spyOn(component.mobileNavBarToggled, 'emit')
+    })
+    it('should set displayMobileNavBar true and emit the template', () => {
+      component.displayMobileNavBar = false
+      component.toggleMobileNavBar()
+      expect(component.displayMobileNavBar).toBe(true)
+      expect(emitSpy).toHaveBeenCalledWith(tpl)
+    })
+    it('should set displayMobileNavBar false and emit undefined', () => {
+      component.displayMobileNavBar = true
+      component.toggleMobileNavBar()
+      expect(component.displayMobileNavBar).toBe(false)
+      expect(emitSpy).toHaveBeenCalledWith(undefined)
+    })
+  })
 })

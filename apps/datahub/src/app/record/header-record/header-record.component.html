@@ -131,6 +131,7 @@
         [style.pointer-events]="
           -1 + (1 - expandRatio) * 2 < 1 ? 'none' : 'auto'
         "
+        [mobileNavBarOpen]="mobileNavBarOverlayOpen"
         (mobileNavBarToggled)="onMobileNavBarToggled($event)"
       ></datahub-navigation-bar>
     </header>

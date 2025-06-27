@@ -12,7 +12,7 @@ import {
   ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { combineLatest, fromEvent, map, startWith } from 'rxjs'
+import { combineLatest, fromEvent, map, startWith, Subscription } from 'rxjs'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
@@ -84,6 +84,8 @@ export class HeaderRecordComponent {
   showThumbnailOverlay = true
 
   mobileNavBarOverlayRef: OverlayRef | null = null
+  mobileNavBarOverlayOpen = false
+  mobileNavBarDetachSub: Subscription | null = null
 
   isMobile$ = fromEvent(window, 'resize').pipe(
     startWith(window.innerWidth),
@@ -141,6 +143,15 @@ export class HeaderRecordComponent {
     })
     if (tpl) {
       this.mobileNavBarOverlayRef.attach(new TemplatePortal(tpl, this.vcr))
+      this.mobileNavBarOverlayOpen = true
+      if (this.mobileNavBarDetachSub) {
+        this.mobileNavBarDetachSub.unsubscribe()
+      }
+      this.mobileNavBarDetachSub = this.mobileNavBarOverlayRef
+        .detachments()
+        .subscribe(() => {
+          this.mobileNavBarOverlayOpen = false
+        })
     }
   }
 }

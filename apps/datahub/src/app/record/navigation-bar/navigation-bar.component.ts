@@ -49,7 +49,10 @@ marker('record.metadata.userFeedbacks')
 })
 export class NavigationBarComponent {
   @Input() metadata: DatasetRecord
-  @ViewChild('mobileNavBar') mobileMenuTpl!: TemplateRef<any>
+  @Input() set mobileNavBarOpen(value: boolean) {
+    this.displayMobileNavBar = value
+  }
+  @ViewChild('navBar') navBarTpl!: TemplateRef<any>
   @Output() mobileNavBarToggled = new EventEmitter<
     TemplateRef<any> | undefined
   >()
@@ -92,7 +95,7 @@ export class NavigationBarComponent {
   toggleMobileNavBar() {
     this.displayMobileNavBar = !this.displayMobileNavBar
     if (this.displayMobileNavBar) {
-      this.mobileNavBarToggled.emit(this.mobileMenuTpl)
+      this.mobileNavBarToggled.emit(this.navBarTpl)
     } else {
       this.mobileNavBarToggled.emit(undefined)
     }

@@ -1,5 +1,5 @@
-<ng-container *ngTemplateOutlet="mobileNavBar"></ng-container>
-<ng-template #mobileNavBar>
+<ng-container *ngTemplateOutlet="navBar"></ng-container>
+<ng-template #navBar>
   <nav
     class="block w-full text-xs text-black bg-primary-white shadow-[0px_0px_5.1px_0px] shadow-primary-darkest"
   >
@@ -48,6 +48,7 @@
         class="w-full flex justify-start items-start cursor-pointer sm:hidden"
       >
         <button
+          data-cy="navbar-mobile-toggle"
           type="button"
           class="h-[60px] inline-flex items-center justify-center p-2 rounded-md shrink-0 sm:hidden"
         >
@@ -59,6 +60,7 @@
         >
           <div *ngFor="let l of anchorLinks">
             <button
+              attr.data-cy="{{ l.anchor }}-mobile-menu"
               gnUiAnchorLink="{{ l.anchor }}"
               gnUiAnchorLinkDisabledClass="hidden"
               class="h-[60px] block px-3 py-3 hover:bg-primary-lightest font-medium w-full text-left text-wrap"
@@ -74,6 +76,7 @@
         >
           <div *ngFor="let l of anchorLinks">
             <button
+              attr.data-cy="{{ l.anchor }}-mobile-title"
               gnUiAnchorLink="{{ l.anchor }}"
               gnUiAnchorLinkDisabledClass="hidden"
               gnUiAnchorLinkInViewClass="block"
