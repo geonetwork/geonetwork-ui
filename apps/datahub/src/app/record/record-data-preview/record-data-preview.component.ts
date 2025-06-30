@@ -4,6 +4,8 @@ import {
   Component,
   Inject,
   InjectionToken,
+  Input,
+  OnDestroy,
   Optional,
 } from '@angular/core'
 import { MatTabsModule } from '@angular/material/tabs'
@@ -16,6 +18,7 @@ import {
   MapViewComponent,
   MdViewFacade,
 } from '@geonetwork-ui/feature/record'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateDirective } from '@ngx-translate/core'
 import {
   BehaviorSubject,
@@ -23,8 +26,10 @@ import {
   map,
   of,
   startWith,
+  Subscription,
   switchMap,
   tap,
+  take,
 } from 'rxjs'
 
 export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
@@ -42,9 +47,12 @@ export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
     DataViewShareComponent,
     DataViewComponent,
     MapViewComponent,
+    ButtonComponent,
   ],
 })
-export class RecordDataPreviewComponent {
+export class RecordDataPreviewComponent implements OnDestroy {
+  @Input() recordUuid: string
+  sub = new Subscription()
   displayMap$ = combineLatest([
     this.metadataViewFacade.mapApiLinks$,
     this.metadataViewFacade.geoDataLinksWithGeometry$,
@@ -116,8 +124,41 @@ export class RecordDataPreviewComponent {
     private dataService: DataService,
     @Inject(MAX_FEATURE_COUNT)
     @Optional()
-    protected maxFeatureCount: number
+    protected maxFeatureCount: number,
+    private platformServiceInterface: PlatformServiceInterface
   ) {}
+
+  ngOnDestroy() {
+    this.sub.unsubscribe()
+  }
+
+  saveDatavizConfig() {
+    this.sub.add(
+      combineLatest([
+        this.selectedView$,
+        this.selectedLink$,
+        this.metadataViewFacade.chartConfig$,
+      ])
+        .pipe(
+          take(1),
+          map(([selectedView, selectedLink, chartConfig]) => {
+            return this.dataService.writeConfigAsJSON({
+              view: selectedView,
+              source: selectedLink,
+              chartConfig: selectedView === 'chart' ? chartConfig : null,
+            })
+          }),
+          switchMap((config) =>
+            this.platformServiceInterface.attachFileToRecord(
+              this.recordUuid,
+              config,
+              true
+            )
+          )
+        )
+        .subscribe()
+    )
+  }
 
   onTabIndexChange(index: number): void {
     let view
