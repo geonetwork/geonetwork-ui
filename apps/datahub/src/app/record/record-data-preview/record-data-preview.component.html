@@ -6,9 +6,21 @@
   <div class="bg-primary-opacity-10 overflow-visible h-[480px]">
     <div class="container-lg pb-4 px-4 lg:mx-auto">
       <div>
-        <h2 class="gn-ui-section-title transform translate-y-11 pt-0" translate>
-          record.metadata.preview
-        </h2>
+        <div class="flex flex-row justify-between align-middle">
+          <h2
+            class="gn-ui-section-title transform translate-y-11 pt-0"
+            translate
+          >
+            record.metadata.preview
+          </h2>
+          <gn-ui-button
+            class="pr-72 transform translate-y-12 pt-0"
+            type="primary"
+            (buttonClick)="saveDatavizConfig()"
+          >
+            <span translate>record.metadata.preview.config</span>
+          </gn-ui-button>
+        </div>
         <mat-tab-group
           (selectedIndexChange)="onTabIndexChange($event)"
           [selectedIndex]="(displayMap$ | async) ? 0 : 1"
