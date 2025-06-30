@@ -52,6 +52,7 @@ export abstract class PlatformServiceInterface {
   abstract cleanRecordAttachments(recordUuid: CatalogRecord): Observable<void>
   abstract attachFileToRecord(
     recordUuid: string,
-    file: File
+    file: File,
+    removeDuplicate?: boolean
   ): Observable<UploadEvent>
 }
