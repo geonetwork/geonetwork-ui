@@ -436,6 +436,7 @@
   "record.metadata.otherConstraints": "Additional Conditions",
   "record.metadata.owner": "Catalog of origin",
   "record.metadata.preview": "Preview",
+  "record.metadata.preview.config": "Save this configuration",
   "record.metadata.producer": "Data producer",
   "record.metadata.publication": "Date of publication",
   "record.metadata.publications": "{count, plural, =0{publication} one{publication} other{publications}}",

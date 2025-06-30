@@ -436,6 +436,7 @@
   "record.metadata.otherConstraints": "Limitations d'usage",
   "record.metadata.owner": "Catalogue d'origine",
   "record.metadata.preview": "Aperçu",
+  "record.metadata.preview.config": "Sauvegarder cette configuration",
   "record.metadata.producer": "Producteur de la donnée",
   "record.metadata.publication": "Date de publication",
   "record.metadata.publications": "{count, plural, =0{donnée} one{donnée} other{données}}",
