@@ -183,7 +183,7 @@ export class AutocompleteComponent
       switchMap((value) => this.action(value)),
       tap((suggestions) => {
         // forcing the panel to open if there are suggestions
-        if (suggestions.length > 0 && !this.isSearchActive) {
+        if (suggestions.length > 0 && !this.searchActive) {
           this.triggerRef?.openPanel()
         }
       }),
