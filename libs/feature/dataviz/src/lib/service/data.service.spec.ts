@@ -5,6 +5,7 @@ import { PROXY_PATH } from '@geonetwork-ui/util/shared'
 import { lastValueFrom } from 'rxjs'
 import { MockProvider } from 'ng-mocks'
 import { Location } from '@angular/common'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 
 const newEndpointCall = jest.fn()
 
@@ -851,6 +852,24 @@ describe('DataService', () => {
         } catch (e) {
           expect((e as Error).message).toBe('ogc.unreachable.unknown')
         }
+      })
+    })
+    describe('writeConfigAsJSON', () => {
+      it('should return a File object for the config', async () => {
+        const config = {
+          view: 'map',
+          source: {
+            url: new URL('http://example.com'),
+            type: 'link',
+            name: 'test',
+          } as DatasetOnlineResource,
+          chartConfig: null,
+        }
+        const file = await service.writeConfigAsJSON(config)
+
+        expect(file).toBeInstanceOf(File)
+        expect(file.name).toBe('datavizConfig.json')
+        expect(file.type).toBe('application/json')
       })
     })
   })
