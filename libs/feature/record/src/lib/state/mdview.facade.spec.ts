@@ -11,7 +11,7 @@ import {
   datasetRecordsFixture,
   userFeedbackFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
 import { TestScheduler } from 'rxjs/testing'
 import { firstValueFrom } from 'rxjs'
@@ -39,7 +39,7 @@ describe('MdViewFacade', () => {
   let store: MockStore
   let facade: MdViewFacade
 
-  const chartConfigMock: DatavizConfigurationModel = {
+  const chartConfigMock: DatavizChartConfigModel = {
     aggregation: 'sum',
     xProperty: 'anneeappro',
     yProperty: 'nbre_com',

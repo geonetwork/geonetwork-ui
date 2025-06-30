@@ -1,4 +1,4 @@
-import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import { createAction, props } from '@ngrx/store'
 import {
   CatalogRecord,
@@ -69,7 +69,7 @@ export const setSourceOf = createAction(
  */
 export const setChartConfig = createAction(
   '[Metadata view] Set chart config',
-  props<{ chartConfig: DatavizConfigurationModel }>()
+  props<{ chartConfig: DatavizChartConfigModel }>()
 )
 
 /*

@@ -1,3 +1,5 @@
+import { DatasetOnlineResource } from '../record'
+
 export type AggregationTypes = 'count' | 'sum' | 'min' | 'max' | 'average'
 
 export const CHART_TYPE_VALUES = [
@@ -11,9 +13,15 @@ export const CHART_TYPE_VALUES = [
 
 export type InputChartType = (typeof CHART_TYPE_VALUES)[number]
 
-export interface DatavizConfigurationModel {
+export interface DatavizChartConfigModel {
   xProperty: string
   yProperty: string
   aggregation: AggregationTypes
   chartType: InputChartType
+}
+
+export interface DatavizConfigModel {
+  view: string
+  source: DatasetOnlineResource
+  chartConfig?: DatavizChartConfigModel
 }
