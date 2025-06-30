@@ -9,7 +9,7 @@ import { getLinkLabel, getLinkPriority } from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
-import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import {
   DatasetOnlineResource,
   DatasetServiceDistribution,
@@ -45,12 +45,14 @@ export class DataViewComponent {
   @Input() set exceedsLimit(value: boolean) {
     this.excludeWfs$.next(value)
   }
+  _selectedView = ''
   @Input() set selectedView(value: string) {
+    this._selectedView = value
     if (value !== 'map') {
       this.linkSelected.emit(this.selectedLink$.value)
     }
   }
-  @Output() chartConfig$ = new BehaviorSubject<DatavizConfigurationModel>(null)
+  @Output() chartConfig$ = new BehaviorSubject<DatavizChartConfigModel>(null)
   @Output() linkSelected = new EventEmitter<DatasetOnlineResource>()
   cacheActive$ = this.mdViewFacade.isHighUpdateFrequency$.pipe(
     map((highF) => !highF)
@@ -87,13 +89,15 @@ export class DataViewComponent {
 
   constructor(private mdViewFacade: MdViewFacade) {}
 
-  setChartConfig(event: DatavizConfigurationModel) {
+  setChartConfig(event: DatavizChartConfigModel) {
     this.mdViewFacade.setChartConfig(event)
   }
 
   selectLink(linkAsString: string) {
     const link: DatasetOnlineResource = JSON.parse(linkAsString)
-    this.linkSelected.emit(link)
+    if (this._selectedView && this._selectedView !== 'map') {
+      this.linkSelected.emit(link)
+    }
     link.url = new URL(link.url)
     this.selectedLink$.next(link)
   }
