@@ -126,4 +126,29 @@ describe('dataset: header', () => {
     cy.get('[data-cy="resources"]').click({ force: true })
     cy.window().its('scrollY').should('be.gt', 0)
   })
+  // NAVIGATION BAR on mobile
+  it('should display the navigation bar on mobile', () => {
+    cy.intercept('GET', '/assets/configuration/default.toml', {
+      fixture: 'config-with-languages.toml',
+    })
+    cy.viewport(375, 667)
+    cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
+
+    // wait for the page to load before scrolling
+    cy.get('datahub-record-data-preview').should('exist')
+
+    // it should NOT be visible before scrolling down
+    cy.get('datahub-record-page')
+      .find('datahub-navigation-bar')
+      .should('not.be.visible')
+    cy.get('#data-preview').scrollIntoView()
+
+    //it should display only the (active) data-preview section anchor
+    cy.get('datahub-navigation-bar')
+      .find('[data-cy="data-preview-mobile-title"]')
+      .should('be.visible')
+    cy.get('datahub-navigation-bar')
+      .find('[data-cy="resources-mobile-menu"]')
+      .should('not.be.visible')
+  })
 })
