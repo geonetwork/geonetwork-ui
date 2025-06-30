@@ -14,6 +14,7 @@
             record.metadata.preview
           </h2>
           <gn-ui-button
+            *ngIf="displayDatavizConfig$ | async"
             class="pr-72 transform translate-y-12 pt-0"
             type="primary"
             (buttonClick)="saveDatavizConfig()"

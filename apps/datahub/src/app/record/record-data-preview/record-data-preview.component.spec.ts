@@ -59,8 +59,6 @@ describe('RecordDataPreviewComponent', () => {
               sizeBytes: 123,
             })
           ),
-        }),
-        MockProvider(PlatformServiceInterface, {
           getMe: jest.fn(),
         }),
         {
