@@ -14,6 +14,8 @@ import { iconoirMenu } from '@ng-icons/iconoir'
 import { matArrowBack } from '@ng-icons/material-icons/baseline'
 import { TranslateDirective } from '@ngx-translate/core'
 import { AnchorLinkDirective } from '@geonetwork-ui/ui/layout'
+import { HostListener } from '@angular/core'
+import { ElementRef, ViewChild } from '@angular/core'
 
 marker('record.metadata.about')
 marker('record.metadata.capabilities')
@@ -41,6 +43,7 @@ marker('record.metadata.userFeedbacks')
 })
 export class NavigationBarComponent {
   @Input() metadata: DatasetRecord
+  @ViewChild('navBar', { static: false }) mobileMenuRef: ElementRef
   displayMobileMenu = false
   anchorLinks = [
     {
@@ -76,6 +79,21 @@ export class NavigationBarComponent {
 
   constructor(private searchService: SearchService) {}
 
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.displayMobileMenu = false
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (
+      this.displayMobileMenu &&
+      this.mobileMenuRef &&
+      !this.mobileMenuRef.nativeElement.contains(event.target)
+    ) {
+      this.displayMobileMenu = false
+    }
+  }
   toggleMobileMenu() {
     this.displayMobileMenu = !this.displayMobileMenu
   }
