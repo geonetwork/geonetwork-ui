@@ -126,9 +126,9 @@
       <datahub-navigation-bar
         *ngIf="(facade.isMetadataLoading$ | async) === false"
         [metadata]="metadata"
-        [style.opacity]="-1 + (1 - expandRatio) * 2"
+        [style.display]="-1 + (1 - expandRatio) * 2 < 1 ? 'none' : 'block'"
         [style.pointer-events]="
-          -1 + (1 - expandRatio) * 2 <= 0 ? 'none' : 'auto'
+          -1 + (1 - expandRatio) * 2 < 1 ? 'none' : 'auto'
         "
       ></datahub-navigation-bar>
     </header>

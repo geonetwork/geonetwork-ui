@@ -1,4 +1,5 @@
 <nav
+  #navBar
   class="z-[1002] absolute block h-[60px] w-full bottom-0 text-xs text-black bg-primary-white shadow-[0px_0px_5.1px_0px] shadow-primary-darkest"
 >
   <div
@@ -10,10 +11,15 @@
     "
   >
     <div
-      class="h-[60px] flex min-w-[60px] items-center justify-center lg:justify-end lg:pr-4 text-sm"
+      class="h-[60px] z-50 flex min-w-[60px] items-center justify-center lg:justify-end lg:pr-4 text-sm"
       [class]="displayMobileMenu ? 'border-r-2 border-gray-300' : ''"
     >
-      <gn-ui-button data-cy="backButton" (buttonClick)="back()" type="outline">
+      <gn-ui-button
+        class="z-50"
+        data-cy="backButton"
+        (buttonClick)="back()"
+        type="outline"
+      >
         <ng-icon name="matArrowBack"></ng-icon>
       </gn-ui-button>
     </div>
@@ -36,34 +42,41 @@
     >
       <button
         type="button"
-        class="h-[60px] inline-flex items-center justify-center p-2 rounded-md shrink-0 sm:hidden"
+        class="h-[60px] z-50 inline-flex items-center justify-center p-2 rounded-md shrink-0 sm:hidden"
       >
         <ng-icon name="iconoirMenu" size="24px"></ng-icon>
       </button>
       <div
-        class="shrink truncate"
+        class="-ml-[60px] absolute shrink truncate bg-primary-white w-screen shadow-[0px_0px_5.1px_0px] shadow-primary-darkest"
         [class]="displayMobileMenu ? 'block' : 'hidden'"
       >
-        <div *ngFor="let l of anchorLinks">
-          <button
-            gnUiAnchorLink="{{ l.anchor }}"
-            gnUiAnchorLinkDisabledClass="hidden"
-            class="h-[60px] block px-3 py-3 hover:bg-primary-lightest font-medium w-full text-left text-wrap"
-            translate
-          >
-            {{ l.label }}
-          </button>
+        <div *ngFor="let l of anchorLinks; let i = index">
+          <div class="pl-[100px]">
+            <button
+              attr.data-cy="{{ l.anchor }}-mobile-menu"
+              gnUiAnchorLink="{{ l.anchor }}"
+              gnUiAnchorLinkDisabledClass="hidden"
+              class="h-[60px] block px-3 py-3 hover:bg-primary-lightest font-medium text-left text-wrap"
+              translate
+              [ngClass]="{ 'z-10': i === 0 }"
+            >
+              {{ l.label }}
+            </button>
+          </div>
         </div>
       </div>
       <div class="h-[60px]" [class]="displayMobileMenu ? 'hidden' : 'block'">
         <div *ngFor="let l of anchorLinks">
           <button
+            attr.data-cy="{{ l.anchor }}-mobile-title"
             gnUiAnchorLink="{{ l.anchor }}"
             gnUiAnchorLinkDisabledClass="hidden"
             gnUiAnchorLinkInViewClass="block"
             gnUiAnchorLinkOutOfViewClass="hidden"
             class="h-[60px] px-3 py-3 rounded-md font-medium shrink text-wrap text-left"
             translate
+            (click)="$event.stopPropagation(); $event.preventDefault()"
+            style="pointer-events: none"
           >
             {{ l.label }}
           </button>
@@ -78,7 +91,7 @@
       </div>
     </div>
     <div
-      class="h-[60px] flex flex-row gap-3 justify-center items-center px-4 lg:pl-4 lg:justify-end text-sm"
+      class="h-[60px] z-50 flex flex-row gap-3 justify-center items-center px-4 lg:pl-4 lg:justify-end text-sm"
       [class]="displayMobileMenu ? 'border-l-2 border-gray-300' : ''"
     >
       <gn-ui-favorite-star
