@@ -15,9 +15,18 @@
           animationDuration="200ms"
           mat-stretch-tabs="false"
           mat-align-tabs="start"
+          disableRipple
         >
           <mat-tab [disabled]="(displayMap$ | async) === false">
             <ng-template mat-tab-label>
+              <gn-ui-button
+                *ngIf="displayDatavizConfig$ | async"
+                class="pr-4 md:pr-10"
+                type="primary"
+                (buttonClick)="saveDatavizConfig()"
+              >
+                <span translate>record.metadata.preview.config</span>
+              </gn-ui-button>
               <span class="tab-header-label" translate>record.tab.map</span>
             </ng-template>
             <div
@@ -47,14 +56,6 @@
           <mat-tab [disabled]="(displayData$ | async) === false">
             <ng-template mat-tab-label>
               <span class="tab-header-label" translate>record.tab.chart</span>
-              <gn-ui-button
-                *ngIf="displayDatavizConfig$ | async"
-                class="pl-10"
-                type="primary"
-                (buttonClick)="saveDatavizConfig()"
-              >
-                <span translate>record.metadata.preview.config</span>
-              </gn-ui-button>
             </ng-template>
             <div class="block" *ngIf="displayData$ | async">
               <gn-ui-data-view
