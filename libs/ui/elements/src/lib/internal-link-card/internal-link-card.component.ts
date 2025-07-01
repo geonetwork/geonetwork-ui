@@ -85,11 +85,14 @@ export class InternalLinkCardComponent implements OnInit {
     return this.size === 'L' || this.size === 'M'
   }
 
-  get alternativeM() {
+  get displayContactIconOnly() {
+    const cardWidth =
+      this.elementRef.nativeElement.getBoundingClientRect().width
     return (
       this.record.ownerOrganization?.name &&
       this.metadataQualityDisplay &&
-      this.size === 'M'
+      this.size === 'M' &&
+      cardWidth <= 490
     )
   }
 }

@@ -1,20 +1,20 @@
 .record-card {
-  @apply rounded-md bg-white hover:cursor-pointer hover:bg-slate-50 overflow-hidden items-stretch flex flex-row md:gap-0 justify-between py-3 pl-3 pr-5;
+  @apply rounded-md bg-white hover:cursor-pointer hover:bg-slate-50 overflow-hidden items-stretch flex md:flex-row flex-col md:gap-0 justify-between py-3 pl-3 pr-5;
 
   &.size-L {
-    @apply w-full min-h-[208px] md:h-[208px] gap-5;
+    @apply w-full md:h-[208px] gap-5;
   }
 
   &.size-M {
-    @apply max-w-[940px] min-h-[231px] md:h-[231px] gap-4;
+    @apply max-w-[940px] md:h-[231px] gap-4;
   }
 
   &.size-S {
-    @apply max-w-[572px] min-h-[315px] md:h-[315px] gap-4;
+    @apply max-w-[572px] md:h-[315px] gap-4;
   }
 
   &.size-XS {
-    @apply max-w-[280px] min-h-[315px] md:h-[315px] gap-4;
+    @apply max-w-[280px] md:h-[315px] gap-4;
   }
 }
 
@@ -77,7 +77,7 @@
 }
 
 .record-card__footer {
-  @apply flex xs:flex-row items-center w-full border-t pt-1;
+  @apply flex sm:flex-row flex-col flex-nowrap gap-3 justify-end items-center w-full border-t pt-1 overflow-hidden;
 
   .size-S & {
     @media (max-width: 450px) {
@@ -91,10 +91,10 @@
 }
 
 .record-card__footer__other {
-  @apply flex flex-col xs:flex-row flex-nowrap gap-3 first:border-l-0;
+  @apply flex flex-col xs:flex-row flex-nowrap gap-3 xs:border-l first:border-l-0;
 
   &>div {
-    @apply px-4 py-1;
+    @apply py-1;
   }
 
   .size-S &,

@@ -29,36 +29,30 @@
           [title]="abstract"
         ></gn-ui-markdown-parser>
       </div>
-      <div
-        class="record-card__footer"
-        [ngClass]="
-          alternativeM
-            ? 'flex-row flex-wrap gap-1 items-stretch'
-            : 'flex-col flex-nowrap gap-3 justify-end'
-        "
-      >
+      <div class="record-card__footer">
         <div
           data-cy="recordOrg"
           *ngIf="record.ownerOrganization?.name"
-          class="grow flex flex-nowrap gap-1 items-center text-primary-lighter"
-          [ngClass]="alternativeM ? 'px-4' : ''"
+          class="grow flex flex-row gap-1 items-center text-primary-lighter"
+          [ngClass]="displayContactIconOnly ? 'justify-center' : ''"
         >
           <ng-icon
             name="iconoirBank"
             class="text-primary -translate-y-[0.5px] shrink-0"
+            [title]="record.ownerOrganization.name"
           ></ng-icon>
           <span
+            *ngIf="!displayContactIconOnly"
             data-cy="recordOrgName"
             class="line-clamp-1"
             [title]="record.ownerOrganization.name"
             >{{ record.ownerOrganization.name }}</span
           >
         </div>
-        <div
-          class="record-card__footer__other"
-          [ngClass]="alternativeM ? 'border-l-0' : 'xs:border-l'"
-        >
-          <div class="xs:border-r last:border-r-0 flex grow gap-4 last:pr-0">
+        <div class="record-card__footer__other">
+          <div
+            class="xs:border-r last:border-r-0 flex grow gap-4 px-4 last:pr-0"
+          >
             <gn-ui-kind-badge
               [extraClass]="'text-[1.2em]'"
               [styling]="'gray'"
@@ -76,10 +70,13 @@
               [metadataQualityDisplay]="metadataQualityDisplay"
             ></gn-ui-metadata-quality>
           </div>
-          <div class="flex justify-center" data-cy="recordFav">
+          <div
+            class="flex justify-center"
+            data-cy="recordFav"
+            [ngClass]="displayContactIconOnly ? 'px-1' : 'px-4'"
+          >
             <ng-container
               [ngTemplateOutlet]="favoriteTemplate"
-              *ngIf="size !== 'XS'"
               [ngTemplateOutletContext]="{ $implicit: record }"
             ></ng-container>
           </div>
