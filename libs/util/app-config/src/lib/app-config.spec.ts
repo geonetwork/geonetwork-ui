@@ -159,6 +159,7 @@ describe('app config utils', () => {
     describe('getOptionalSearchConfig', () => {
       it('returns the search config', () => {
         expect(getOptionalSearchConfig()).toEqual({
+          RECORD_KIND_QUICK_FILTER: false,
           FILTER_GEOMETRY_URL: 'https://my.domain.org/geom.json',
           SEARCH_PRESET: [
             {

@@ -7,7 +7,7 @@ import {
   startWith,
   switchMap,
 } from 'rxjs'
-import { Component, OnInit } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { SearchFacade } from '../state/search.facade'
 import { FieldAvailableValue, FieldValue } from '../utils/service/fields'
@@ -25,6 +25,7 @@ marker('search.filters.recordKind.reuse')
   styleUrls: ['./results-hits.container.component.css'],
 })
 export class ResultsHitsContainerComponent implements OnInit {
+  @Input() displayRecordKindFilter = true
   fieldName = 'recordKind'
   filterChoices$: Observable<FieldAvailableValue[]>
   selected$: Observable<FieldValue[]>

@@ -8,6 +8,9 @@ import { FieldsService } from '../utils/service/fields.service'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { By } from '@angular/platform-browser'
+import { ResultsHitsSearchKindComponent } from '@geonetwork-ui/ui/search'
+import { MockComponent } from 'ng-mocks'
 
 describe('ResultsHitsContainerComponent', () => {
   let component: ResultsHitsContainerComponent
@@ -40,7 +43,10 @@ describe('ResultsHitsContainerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ResultsHitsContainerComponent],
+      declarations: [
+        ResultsHitsContainerComponent,
+        MockComponent(ResultsHitsSearchKindComponent),
+      ],
       providers: [
         provideI18n(),
         { provide: SearchFacade, useValue: searchFacadeMock },
@@ -82,6 +88,21 @@ describe('ResultsHitsContainerComponent', () => {
 
     expect(searchServiceMock.updateFilters).toHaveBeenCalledWith({
       recordKind: ['dataset'],
+    })
+  })
+  describe('displayRecordKindFilter', () => {
+    it('should display ResultsHitsSearchKindComponent by default', () => {
+      expect(
+        fixture.debugElement.query(By.directive(ResultsHitsSearchKindComponent))
+      ).toBeTruthy()
+    })
+
+    it('should not display ResultsHitsSearchKindComponent when RECORD_KIND_QUICK_FILTER is false in searchConfig', () => {
+      component.displayRecordKindFilter = false
+      fixture.detectChanges()
+      expect(
+        fixture.debugElement.query(By.directive(ResultsHitsSearchKindComponent))
+      ).toBeFalsy()
     })
   })
 })
