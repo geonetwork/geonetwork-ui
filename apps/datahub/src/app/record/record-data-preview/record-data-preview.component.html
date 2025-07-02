@@ -11,7 +11,7 @@
         </h2>
         <mat-tab-group
           (selectedIndexChange)="onTabIndexChange($event)"
-          [selectedIndex]="(displayMap$ | async) ? 0 : 1"
+          [selectedIndex]="selectedIndex$ | async"
           animationDuration="200ms"
           mat-stretch-tabs="false"
           mat-align-tabs="start"

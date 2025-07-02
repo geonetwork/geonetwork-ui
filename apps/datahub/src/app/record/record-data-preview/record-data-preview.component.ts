@@ -93,7 +93,28 @@ export class RecordDataPreviewComponent implements OnDestroy {
     })
   )
 
-  selectedView$ = new BehaviorSubject('map')
+  selectedView$ = new BehaviorSubject(null)
+  selectedChartConfig$ = new BehaviorSubject(null)
+
+  selectedIndex$ = combineLatest([this.selectedView$, this.displayMap$]).pipe(
+    map(([selectedView, displayMap]) => {
+      if (selectedView) {
+        switch (selectedView) {
+          case 'map':
+            return 0
+          case 'table':
+            return 1
+          case 'chart':
+            return 2
+          default:
+            return 1
+        }
+      }
+      const initialView = displayMap ? 'map' : 'table'
+      this.selectedView$.next(initialView)
+      return displayMap ? 0 : 1
+    })
+  )
 
   displayViewShare$ = combineLatest([
     this.displayMap$,
