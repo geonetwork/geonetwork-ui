@@ -10,10 +10,7 @@ import { BehaviorSubject, combineLatest } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
 import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
-import {
-  DatasetOnlineResource,
-  DatasetServiceDistribution,
-} from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import {
   ChartViewComponent,
@@ -52,6 +49,7 @@ export class DataViewComponent {
       this.linkSelected.emit(this.selectedLink$.value)
     }
   }
+  @Input() userChartConfig: DatavizChartConfigModel
   @Output() chartConfig$ = new BehaviorSubject<DatavizChartConfigModel>(null)
   @Output() linkSelected = new EventEmitter<DatasetOnlineResource>()
   cacheActive$ = this.mdViewFacade.isHighUpdateFrequency$.pipe(
