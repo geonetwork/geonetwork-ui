@@ -3,6 +3,7 @@ import type { UserModel } from './model/user/user.model'
 import type { Organization } from './model/record/organization.model'
 import { CatalogRecord, Keyword, UserFeedback } from './model/record'
 import { KeywordType } from './model/thesaurus'
+import { DatavizConfigModel } from './model/dataviz/dataviz-configuration.model'
 
 export interface RecordAttachment {
   url: URL
@@ -52,6 +53,8 @@ export abstract class PlatformServiceInterface {
   abstract cleanRecordAttachments(recordUuid: CatalogRecord): Observable<void>
   abstract attachFileToRecord(
     recordUuid: string,
-    file: File
+    file: File,
+    removeDuplicate?: boolean
   ): Observable<UploadEvent>
+  abstract getFileContent(url: URL): Observable<DatavizConfigModel>
 }

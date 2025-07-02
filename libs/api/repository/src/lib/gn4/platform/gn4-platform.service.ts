@@ -46,6 +46,7 @@ import {
 } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n'
+import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 
 const minApiVersion = '4.2.2'
 
@@ -349,56 +350,74 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     )
   }
 
-  attachFileToRecord(recordUuid: string, file: File): Observable<UploadEvent> {
+  private uploadFile(recordUuid: string, file: File): Observable<UploadEvent> {
     let sizeBytes = -1
+    return this.recordsApiService
+      .putResource(recordUuid, file, 'public', undefined, 'events', true)
+      .pipe(
+        map((event) => {
+          if (event.type === HttpEventType.UploadProgress) {
+            sizeBytes = event.total
+            return {
+              type: 'progress',
+              progress: event.total
+                ? Math.round((100 * event.loaded) / event.total)
+                : 0,
+            } as UploadEvent
+          }
+          if (event.type === HttpEventType.Response) {
+            return {
+              type: 'success',
+              attachment: {
+                url: new URL(event.body.url),
+                fileName: event.body.filename,
+              },
+              sizeBytes,
+            } as UploadEvent
+          }
+          return undefined
+        }),
+        filter((event) => !!event),
+        catchError((error) => {
+          return throwError(
+            () => new Error(error.error?.message ?? error.message)
+          )
+        })
+      )
+  }
 
-    // Check if the resource already exists on the server and rename it if that's the case
+  getFileContent(url: URL | string): Observable<DatavizConfigModel> {
+    return this.httpClient.get(url.toString(), { responseType: 'text' }).pipe(
+      map((text) => {
+        const base64String = JSON.parse(text) // ton API renvoie du "..." en JSON
+        const decodedJsonText = atob(base64String)
+        return JSON.parse(decodedJsonText)
+      })
+    )
+  }
+
+  attachFileToRecord(
+    recordUuid: string,
+    file: File,
+    removeDuplicate = false
+  ): Observable<UploadEvent> {
     return this.getRecordAttachments(recordUuid).pipe(
-      map((recordAttachement) => recordAttachement.map((r) => r.fileName)),
+      map((recordAttachments) => recordAttachments.map((r) => r.fileName)),
       switchMap((fileNames) => {
-        const fileName = noDuplicateFileName(file.name, fileNames)
+        const fileName = file.name
 
-        const fileCopy = new File([file], fileName, { type: file.type })
-
-        return this.recordsApiService
-          .putResource(
-            recordUuid,
-            fileCopy,
-            'public',
-            undefined,
-            'events',
-            true
+        if (removeDuplicate && fileNames.includes(file.name)) {
+          return this.recordsApiService.delResource(recordUuid, fileName).pipe(
+            switchMap(() => {
+              const fileCopy = new File([file], fileName, { type: file.type })
+              return this.uploadFile(recordUuid, fileCopy)
+            })
           )
-          .pipe(
-            map((event) => {
-              if (event.type === HttpEventType.UploadProgress) {
-                sizeBytes = event.total
-                return {
-                  type: 'progress',
-                  progress: event.total
-                    ? Math.round((100 * event.loaded) / event.total)
-                    : 0,
-                } as UploadEvent
-              }
-              if (event.type === HttpEventType.Response) {
-                return {
-                  type: 'success',
-                  attachment: {
-                    url: new URL(event.body.url),
-                    fileName: event.body.filename,
-                  },
-                  sizeBytes,
-                } as UploadEvent
-              }
-              return undefined
-            }),
-            filter((event) => !!event)
-          )
-      }),
-      catchError((error) => {
-        return throwError(
-          () => new Error(error.error?.message ?? error.message)
-        )
+        } else {
+          const finalFileName = noDuplicateFileName(fileName, fileNames)
+          const fileCopy = new File([file], finalFileName, { type: file.type })
+          return this.uploadFile(recordUuid, fileCopy)
+        }
       })
     )
   }

@@ -28,7 +28,10 @@ import {
   tap,
 } from 'rxjs/operators'
 import { DataService } from '../service/data.service'
-import { InputChartType } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import {
+  DatavizChartConfigModel,
+  InputChartType,
+} from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import {
   DatasetFeatureCatalog,
   DatasetOnlineResource,
@@ -104,6 +107,12 @@ export class ChartViewComponent {
   }
   chartType$ = new BehaviorSubject<InputChartType>('bar')
 
+  @Input() set userChartConfig(config: DatavizChartConfigModel) {
+    this.aggregation$.next(config.aggregation)
+    this.xProperty$.next(config.xProperty)
+    this.yProperty$.next(config.yProperty)
+    this.chartType$.next(config.chartType)
+  }
   @Output() chartConfig$ = combineLatest([
     this.xProperty$.pipe(filter((value) => value !== undefined)),
     this.yProperty$.pipe(filter((value) => value !== undefined)),

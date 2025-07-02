@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
-import { DatavizConfigModel } from '../dataviz.model'
+import { DatavizChartModel } from '../dataviz.model'
 
 @Entity()
 export class Dataviz {
@@ -35,5 +35,5 @@ export class Dataviz {
     },
     description: 'Configuration of default dataviz for the metadata',
   })
-  config: DatavizConfigModel
+  config: DatavizChartModel
 }

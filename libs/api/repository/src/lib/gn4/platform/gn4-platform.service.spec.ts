@@ -906,5 +906,36 @@ describe('Gn4PlatformService', () => {
         sizeBytes: 10,
       })
     })
+    it('removes the duplicate file if removeDuplicate is true', (done) => {
+      file = new File([''], 'datavizConfig.json')
+      ;(recordsApiService.getAllResources as jest.Mock).mockReturnValue(
+        of([
+          {
+            filename: 'datavizConfig.json',
+            url: 'http://example.com/file.json',
+          },
+        ])
+      )
+      ;(recordsApiService.delResource as jest.Mock).mockReturnValue(
+        of(undefined)
+      )
+      ;(recordsApiService.putResource as jest.Mock).mockReturnValue(
+        of({
+          type: 4,
+          body: { url: 'http://example.com', filename: 'datavizConfig.json' },
+        })
+      )
+
+      service.attachFileToRecord('12345', file, true).subscribe({
+        next: () => {
+          expect(recordsApiService.delResource).toHaveBeenCalledWith(
+            '12345',
+            'datavizConfig.json'
+          )
+          done()
+        },
+        error: done.fail,
+      })
+    })
   })
 })
