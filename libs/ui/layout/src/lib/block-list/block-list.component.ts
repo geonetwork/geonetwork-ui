@@ -33,7 +33,6 @@ export class BlockListComponent implements AfterViewInit, Paginable {
     ElementRef<HTMLElement>
   >
   @ViewChild('blockContainer') blockContainer: ElementRef<HTMLElement>
-  protected minHeight = 0
   @Output() listChanges = new EventEmitter<BlockListComponent>()
   subComponentSize: ComponentSize = 'M'
 
@@ -73,9 +72,6 @@ export class BlockListComponent implements AfterViewInit, Paginable {
     })
     this.updateSizes()
     this.refreshBlocksVisibility()
-
-    // we store the first height as the min-height of the list container
-    this.minHeight = this.blockContainer.nativeElement.clientHeight
     this.changeDetector.detectChanges()
     this.listChanges.emit(this)
   }
@@ -97,7 +93,6 @@ export class BlockListComponent implements AfterViewInit, Paginable {
 
   protected computeResponsiveSize(): ComponentSize {
     if (window.innerWidth < 768) {
-      this.minHeight = 0
       return 'XS'
     }
     return this.computeSubComponentSize()

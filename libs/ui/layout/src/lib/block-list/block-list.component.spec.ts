@@ -120,29 +120,5 @@ describe('BlockListComponent', () => {
         expect(component.isLastPage).toBe(false)
       })
     })
-
-    describe('set initial height as min height, keeps value when height changes', () => {
-      beforeEach(() => {
-        Object.defineProperties(component.blockContainer.nativeElement, {
-          clientHeight: {
-            configurable: true,
-            value: 150,
-          },
-        })
-        fixture.detectChanges()
-        component.ngAfterViewInit()
-        Object.defineProperties(component.blockContainer.nativeElement, {
-          clientHeight: {
-            value: 50,
-          },
-        })
-        fixture.detectChanges()
-      })
-      it('sets the min height of the container according to its initial content', () => {
-        expect(component.blockContainer.nativeElement.style.minHeight).toBe(
-          '150px'
-        )
-      })
-    })
   })
 })
