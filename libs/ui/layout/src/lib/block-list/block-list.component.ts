@@ -6,6 +6,7 @@ import {
   ContentChildren,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   Output,
   QueryList,
@@ -56,6 +57,12 @@ export class BlockListComponent implements AfterViewInit, Paginable {
 
   constructor(private changeDetector: ChangeDetectorRef) {}
 
+  @HostListener('window:resize')
+  onResize() {
+    this.updateSizes()
+    this.refreshBlocksVisibility()
+  }
+
   ngAfterViewInit() {
     this.blocks.changes.subscribe(() => {
       this.updateSizes()
@@ -84,8 +91,16 @@ export class BlockListComponent implements AfterViewInit, Paginable {
   }
 
   protected updateSizes() {
-    this.subComponentSize = this.computeSubComponentSize()
+    this.subComponentSize = this.computeResponsiveSize()
     this.pageSize = this.computePageSize()
+  }
+
+  protected computeResponsiveSize(): ComponentSize {
+    if (window.innerWidth < 768) {
+      this.minHeight = 0
+      return 'XS'
+    }
+    return this.computeSubComponentSize()
   }
 
   protected computeSubComponentSize(): ComponentSize {
