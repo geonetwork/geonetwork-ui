@@ -185,7 +185,7 @@
 
   /* TODO: replace by gn-ui-badge class above */
   .badge-btn {
-    @apply flex items-center justify-center px-4 py-1 text-white rounded backdrop-blur;
+    @apply flex items-center justify-center px-4 py-1 rounded backdrop-blur;
   }
 
   /* GENERIC TEXT INPUT (textarea, text field, url input...) */

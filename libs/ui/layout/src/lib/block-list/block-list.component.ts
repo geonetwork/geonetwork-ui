@@ -6,6 +6,7 @@ import {
   ContentChildren,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   Output,
   QueryList,
@@ -32,7 +33,6 @@ export class BlockListComponent implements AfterViewInit, Paginable {
     ElementRef<HTMLElement>
   >
   @ViewChild('blockContainer') blockContainer: ElementRef<HTMLElement>
-  protected minHeight = 0
   @Output() listChanges = new EventEmitter<BlockListComponent>()
   subComponentSize: ComponentSize = 'M'
 
@@ -56,6 +56,12 @@ export class BlockListComponent implements AfterViewInit, Paginable {
 
   constructor(private changeDetector: ChangeDetectorRef) {}
 
+  @HostListener('window:resize')
+  onResize() {
+    this.updateSizes()
+    this.refreshBlocksVisibility()
+  }
+
   ngAfterViewInit() {
     this.blocks.changes.subscribe(() => {
       this.updateSizes()
@@ -66,9 +72,6 @@ export class BlockListComponent implements AfterViewInit, Paginable {
     })
     this.updateSizes()
     this.refreshBlocksVisibility()
-
-    // we store the first height as the min-height of the list container
-    this.minHeight = this.blockContainer.nativeElement.clientHeight
     this.changeDetector.detectChanges()
     this.listChanges.emit(this)
   }
@@ -84,8 +87,15 @@ export class BlockListComponent implements AfterViewInit, Paginable {
   }
 
   protected updateSizes() {
-    this.subComponentSize = this.computeSubComponentSize()
+    this.subComponentSize = this.computeResponsiveSize()
     this.pageSize = this.computePageSize()
+  }
+
+  protected computeResponsiveSize(): ComponentSize {
+    if (window.innerWidth < 768) {
+      return 'XS'
+    }
+    return this.computeSubComponentSize()
   }
 
   protected computeSubComponentSize(): ComponentSize {

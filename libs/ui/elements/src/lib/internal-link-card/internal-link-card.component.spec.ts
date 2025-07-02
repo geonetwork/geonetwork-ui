@@ -59,13 +59,6 @@ const mockRecord = {
   resourcePublished: new Date(),
 } as unknown as CatalogRecord
 
-const mockRecordWithoutContact = {
-  ...mockRecord,
-  ownerOrganization: null,
-  contactsForResource: [],
-  contacts: [],
-} as unknown as CatalogRecord
-
 // Mock template component for favoriteTemplate
 @Component({
   template: `<ng-template #favoriteTemplate let-record>
@@ -125,29 +118,25 @@ describe('InternalLinkCardComponent', () => {
     it('should set cardClass and thumbnailContainerClass for size L', () => {
       component.size = 'L'
       fixture.detectChanges()
-      expect(component.cardClass).toContain('min-h-[190px]')
-      expect(component.thumbnailContainerClass).toContain('w-[190px]')
+      expect(component.cardClass).toBe('size-L')
     })
 
     it('should set cardClass and thumbnailContainerClass for size M', () => {
       component.size = 'M'
       fixture.detectChanges()
-      expect(component.cardClass).toContain('min-h-[140px]')
-      expect(component.thumbnailContainerClass).toContain('w-[110px]')
+      expect(component.cardClass).toBe('size-M')
     })
 
     it('should set cardClass and hide thumbnail for size S', () => {
       component.size = 'S'
       fixture.detectChanges()
-      expect(component.cardClass).toContain('min-h-[220px]')
-      expect(component.thumbnailContainerClass).toBe('hidden')
+      expect(component.cardClass).toBe('size-S')
     })
 
     it('should set cardClass and hide thumbnail for size XS', () => {
       component.size = 'XS'
       fixture.detectChanges()
-      expect(component.cardClass).toContain('min-h-[108px]')
-      expect(component.thumbnailContainerClass).toBe('hidden')
+      expect(component.cardClass).toContain('size-XS')
     })
   })
 
@@ -157,20 +146,14 @@ describe('InternalLinkCardComponent', () => {
     })
 
     it('should display record title', () => {
-      const titleElement = fixture.debugElement.query(
-        By.css(
-          '.font-title, h1, h2, h3, h4, [class*="title"], [data-test="title"]'
-        )
-      )
+      const titleElement = fixture.debugElement.query(By.css('h4'))
       expect(titleElement).toBeTruthy()
       expect(titleElement.nativeElement.textContent).toContain('Test Record')
     })
 
     it('should display record abstract', () => {
       const abstractElement = fixture.debugElement.query(
-        By.css(
-          'gn-ui-markdown-parser, p, [class*="abstract"], [data-test="abstract"]'
-        )
+        By.css('gn-ui-markdown-parser')
       )
       expect(abstractElement).toBeTruthy()
       expect(component.abstract).toEqual(
@@ -222,70 +205,6 @@ describe('InternalLinkCardComponent', () => {
       const cardElement = fixture.debugElement.nativeElement
       cardElement.click()
       expect(mdSelectSpy).toHaveBeenCalledWith(mockRecord)
-    })
-  })
-
-  describe('getAbstractClass with owner organization', () => {
-    beforeEach(() => {
-      component.record = mockRecord
-    })
-
-    it('returns the right line-clamp for L size ', () => {
-      component.size = 'L'
-      expect(component.getAbstractClass()).toBe('line-clamp-2')
-    })
-  })
-
-  describe('getAbstractClass without owner organization', () => {
-    beforeEach(() => {
-      component.record = mockRecordWithoutContact
-    })
-
-    it('returns the right line-clamp for each size', () => {
-      component.size = 'L'
-      expect(component.getAbstractClass()).toBe('line-clamp-6')
-      component.size = 'M'
-      expect(component.getAbstractClass()).toBe('line-clamp-2')
-      component.size = 'S'
-      expect(component.getAbstractClass()).toBe('line-clamp-2 ml-2')
-    })
-  })
-
-  describe('displayAbstract with owner organization', () => {
-    beforeEach(() => {
-      component.record = mockRecord
-    })
-
-    it('returns true for size L', () => {
-      component.size = 'L'
-      expect(component.displayAbstract()).toBe(true)
-    })
-
-    it('returns false for all other size M', () => {
-      component.size = 'M'
-      expect(component.displayAbstract()).toBe(false)
-      component.size = 'S'
-      expect(component.displayAbstract()).toBe(false)
-      component.size = 'XS'
-      expect(component.displayAbstract()).toBe(false)
-    })
-  })
-
-  describe('displayAbstract without owner organization', () => {
-    beforeEach(() => {
-      component.record = mockRecordWithoutContact
-    })
-    it('returns false for size XS', () => {
-      component.size = 'XS'
-      expect(component.displayAbstract()).toBe(false)
-    })
-    it('returns true for all other size', () => {
-      component.size = 'L'
-      expect(component.displayAbstract()).toBe(true)
-      component.size = 'M'
-      expect(component.displayAbstract()).toBe(true)
-      component.size = 'S'
-      expect(component.displayAbstract()).toBe(true)
     })
   })
 })
