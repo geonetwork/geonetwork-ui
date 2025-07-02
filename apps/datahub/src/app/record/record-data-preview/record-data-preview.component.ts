@@ -3,10 +3,12 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  HostListener,
   Inject,
   InjectionToken,
   Input,
   OnDestroy,
+  OnInit,
   Optional,
 } from '@angular/core'
 import { MatTabsModule } from '@angular/material/tabs'
@@ -50,7 +52,7 @@ export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
     ButtonComponent,
   ],
 })
-export class RecordDataPreviewComponent implements OnDestroy {
+export class RecordDataPreviewComponent implements OnDestroy, OnInit {
   @Input() recordUuid: string
   sub = new Subscription()
   isSavingConfig = false
@@ -151,6 +153,30 @@ export class RecordDataPreviewComponent implements OnDestroy {
     private platformServiceInterface: PlatformServiceInterface,
     private cdr: ChangeDetectorRef
   ) {}
+
+  ngOnInit(): void {
+    this.platformServiceInterface
+      .getRecordAttachments(this.recordUuid)
+      .pipe(
+        map((attachments) =>
+          attachments.find((att) => att.fileName === 'datavizConfig.json')
+        ),
+        switchMap((configAttachment) => {
+          return configAttachment
+            ? this.platformServiceInterface.getFileContent(configAttachment.url)
+            : of(null)
+        })
+      )
+      .subscribe((config) => {
+        if (config) {
+          const view =
+            window.innerWidth > 640 && config.view === 'chart' ? 'chart' : 'map'
+          this.selectedChartConfig$.next(config.chartConfig)
+          this.selectedView$.next(view)
+          this.selectedLink$.next(config.source)
+        }
+      })
+  }
 
   ngOnDestroy() {
     this.sub.unsubscribe()
