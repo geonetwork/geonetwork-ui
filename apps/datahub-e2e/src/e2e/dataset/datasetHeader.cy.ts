@@ -115,7 +115,7 @@ describe('dataset: header', () => {
     cy.get('#data-preview').should('be.visible').scrollIntoView()
     cy.get('[data-cy="data-preview"]').should(
       'have.class',
-      '!border-b-primary border-b-4'
+      '!border-b-primary border-b-[3px]'
     )
 
     // it should scroll down when clicking on anchor title

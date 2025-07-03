@@ -1,18 +1,18 @@
 <nav
   #navBar
-  class="z-[1002] absolute block h-[60px] w-full bottom-0 text-xs text-black bg-primary-white shadow-[0px_0px_5.1px_0px] shadow-primary-darkest"
+  class="bg-nav-bar-blured z-[1002] absolute block h-[60px] w-full bottom-0 text-xs text-slate-700 border-b-2 border-b-slate-200"
 >
   <div
     class="h-full container-lg mx-auto flex justify-between overflow-hidden"
     [class]="
       displayMobileMenu
         ? 'items-start'
-        : 'items-center divide-x-2 divide-gray-300'
+        : 'items-center divide-x-2 divide-slate-200'
     "
   >
     <div
       class="h-[60px] z-50 flex min-w-[60px] items-center justify-center lg:justify-end lg:pr-4 text-sm"
-      [class]="displayMobileMenu ? 'border-r-2 border-gray-300' : ''"
+      [class]="displayMobileMenu ? 'border-r-2 border-slate-200' : ''"
     >
       <gn-ui-button
         class="z-50"
@@ -29,9 +29,9 @@
       [attr.data-cy]="l.anchor"
       gnUiAnchorLink="{{ l.anchor }}"
       gnUiAnchorLinkDisabledClass="sm:hidden"
-      gnUiAnchorLinkInViewClass="!border-b-primary border-b-4 pb-0"
+      gnUiAnchorLinkInViewClass="!border-b-primary border-b-[3px] pb-0"
       gnUiAnchorLinkOutOfViewClass="pb-1"
-      class="font-medium hidden sm:block hover:bg-primary-lightest h-[60px] w-full px-2 items-center text-left"
+      class="font-medium hidden sm:block hover:bg-slate-50 h-[60px] w-full px-2 items-center text-center uppercase"
       translate
     >
       {{ l.label }}
@@ -47,7 +47,7 @@
         <ng-icon name="iconoirMenu" size="24px"></ng-icon>
       </button>
       <div
-        class="-ml-[60px] absolute shrink truncate bg-primary-white w-screen shadow-[0px_0px_5.1px_0px] shadow-primary-darkest"
+        class="bg-nav-bar-color -ml-[60px] absolute shrink truncate w-screen border-b-2 border-b-slate-200"
         [class]="displayMobileMenu ? 'block' : 'hidden'"
       >
         <div *ngFor="let l of anchorLinks; let i = index">
@@ -56,7 +56,7 @@
               attr.data-cy="{{ l.anchor }}-mobile-menu"
               gnUiAnchorLink="{{ l.anchor }}"
               gnUiAnchorLinkDisabledClass="hidden"
-              class="h-[60px] block px-3 py-3 hover:bg-primary-lightest font-medium text-left text-wrap"
+              class="h-[60px] block px-3 py-3 hover:bg-slate-50 font-medium text-left text-wrap uppercase"
               translate
               [ngClass]="{ 'z-10': i === 0 }"
             >
@@ -73,7 +73,7 @@
             gnUiAnchorLinkDisabledClass="hidden"
             gnUiAnchorLinkInViewClass="block"
             gnUiAnchorLinkOutOfViewClass="hidden"
-            class="h-[60px] px-3 py-3 rounded-md font-medium shrink text-wrap text-left"
+            class="h-[60px] px-3 py-3 rounded-md font-medium shrink text-wrap text-left uppercase"
             translate
             (click)="$event.stopPropagation(); $event.preventDefault()"
             style="pointer-events: none"
@@ -82,7 +82,7 @@
           </button>
         </div>
         <button
-          class="h-[60px] block px-3 py-3 rounded-md font-medium shrink text-wrap text-left sm:hidden"
+          class="h-[60px] block px-3 py-3 rounded-md font-medium shrink text-wrap text-left sm:hidden uppercase"
           [class]="displayMobileMenu ? 'hidden' : 'block'"
           translate
         >
@@ -92,7 +92,7 @@
     </div>
     <div
       class="h-[60px] z-50 flex flex-row gap-3 justify-center items-center px-4 lg:pl-4 lg:justify-end text-sm"
-      [class]="displayMobileMenu ? 'border-l-2 border-gray-300' : ''"
+      [class]="displayMobileMenu ? 'border-l-2 border-slate-200' : ''"
     >
       <gn-ui-favorite-star
         *ngIf="metadata?.uniqueIdentifier"

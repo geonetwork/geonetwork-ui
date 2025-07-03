@@ -2,12 +2,17 @@
   --gn-ui-button-rounded: 8px;
   --gn-ui-button-height: 32px;
   --gn-ui-button-width: 40px;
-  --gn-ui-button-color: black;
-  --gn-ui-button-background: var(--color-primary-white);
-  --gn-ui-button-bg-hover: var(--color-primary-lightest);
+  --gn-ui-button-color: var(--color-slate-700);
+  --gn-ui-button-background: rgba(245, 245, 245, 0.75);
+  --gn-ui-button-bg-hover: var(--color-slate-50);
   --gn-ui-button-padding: 4px;
-  --gn-ui-button-background: var(--color-primary-white);
-  --gn-ui-button-bg-hover: var(--color-primary-lightest);
   --star-toggle-enabled-color: black;
   --star-toggle-disabled-color: black;
+}
+.bg-nav-bar-blured {
+  background-color: rgba(245, 245, 245, 0.75);
+  backdrop-filter: blur(30px);
+}
+.bg-nav-bar-color {
+  background-color: rgb(245, 245, 245);
 }
