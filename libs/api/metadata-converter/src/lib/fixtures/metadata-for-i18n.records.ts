@@ -5,8 +5,8 @@ export const METADATA_FOR_I18N_DATASET_RECORD: DatasetRecord = {
   kind: 'dataset',
   otherLanguages: ['it', 'en', 'de'],
   defaultLanguage: 'fr',
-  recordUpdated: '2025-06-17T13:11:46.081Z',
-  resourceCreated: '2022-01-27T00:00:00.000Z',
+  recordUpdated: new Date('2025-06-17T13:11:46.081Z'),
+  resourceCreated: new Date('2022-01-27T00:00:00.000Z'),
   title:
     'Metadata for E2E testing purpose. (this title is too long and should be cut, this title is too long and should be cut, this title is too long and should be cut, this title is too long and should be cut, this title is too long and should be cut)',
   abstract: 'This is the description of the metadata...',
@@ -61,7 +61,9 @@ export const METADATA_FOR_I18N_DATASET_RECORD: DatasetRecord = {
       thesaurus: {
         id: 'geonetwork.thesaurus.local.theme.geocat.ch',
         name: 'geocat.ch',
-        url: 'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
       },
       label: 'opendata.swiss',
       type: 'theme',
@@ -77,7 +79,9 @@ export const METADATA_FOR_I18N_DATASET_RECORD: DatasetRecord = {
       thesaurus: {
         id: 'geonetwork.thesaurus.external.theme.gemet',
         name: 'GEMET',
-        url: 'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
+        ),
       },
       label: 'abri',
       type: 'theme',
@@ -89,7 +93,9 @@ export const METADATA_FOR_I18N_DATASET_RECORD: DatasetRecord = {
       thesaurus: {
         id: 'geonetwork.thesaurus.external.theme.gemet-theme',
         name: 'GEMET themes',
-        url: 'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet-theme',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet-theme'
+        ),
       },
       label: 'administration',
       type: 'theme',
@@ -106,7 +112,7 @@ export const METADATA_FOR_I18N_DATASET_RECORD: DatasetRecord = {
   licenses: [],
   legalConstraints: [
     {
-      url: 'https://opendata.swiss/en/terms-of-use/#terms_by',
+      url: new URL('https://opendata.swiss/en/terms-of-use/#terms_by'),
       text: 'Opendata BY: Utilisation libre. Obligation d’indiquer la source.',
       translations: {
         text: {
@@ -121,7 +127,9 @@ export const METADATA_FOR_I18N_DATASET_RECORD: DatasetRecord = {
   otherConstraints: [],
   overviews: [
     {
-      url: 'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/records/9e1ea778-d0ce-4b49-90b7-37bc0e448300/attachments/test.png',
+      url: new URL(
+        'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/records/9e1ea778-d0ce-4b49-90b7-37bc0e448300/attachments/test.png'
+      ),
     },
   ],
   spatialExtents: [
@@ -2010,7 +2018,9 @@ export const METADATA_FOR_I18N_DATASET_RECORD: DatasetRecord = {
   onlineResources: [
     {
       type: 'link',
-      url: 'https://www.swisstopo.admin.ch/en/geodata/images/ortho/swissimage10.html',
+      url: new URL(
+        'https://www.swisstopo.admin.ch/en/geodata/images/ortho/swissimage10.html'
+      ),
       name: 'Website Link',
       description: 'This is simple link',
       translations: {
@@ -2024,7 +2034,9 @@ export const METADATA_FOR_I18N_DATASET_RECORD: DatasetRecord = {
     },
     {
       type: 'download',
-      url: 'https://data.geo.admin.ch/ch.swisstopo.swissboundaries3d/swissboundaries3d_2022-05/swissboundaries3d_2022-05_2056_5728.shp.zip',
+      url: new URL(
+        'https://data.geo.admin.ch/ch.swisstopo.swissboundaries3d/swissboundaries3d_2022-05/swissboundaries3d_2022-05_2056_5728.shp.zip'
+      ),
       name: 'Download Link (zip file)',
       description: 'This is a link to download a file',
       mimeType: 'OGC Webservice (WFS)',
@@ -2043,7 +2055,9 @@ export const METADATA_FOR_I18N_DATASET_RECORD: DatasetRecord = {
     },
     {
       type: 'service',
-      url: 'https://wmts.geo.admin.ch/EPSG/3857/1.0.0/WMTSCapabilities.xml',
+      url: new URL(
+        'https://wmts.geo.admin.ch/EPSG/3857/1.0.0/WMTSCapabilities.xml'
+      ),
       accessServiceProtocol: 'wmts',
       identifierInService: 'ch.swisstopo.swissalti3d-reliefschattierung',
       name: 'ch.swisstopo.swissalti3d-reliefschattierung',
@@ -2058,7 +2072,9 @@ export const METADATA_FOR_I18N_DATASET_RECORD: DatasetRecord = {
     },
     {
       type: 'service',
-      url: 'https://wms.geo.admin.ch/?SERVICE=WMS&REQUEST=GetCapabilities',
+      url: new URL(
+        'https://wms.geo.admin.ch/?SERVICE=WMS&REQUEST=GetCapabilities'
+      ),
       accessServiceProtocol: 'wms',
       identifierInService: 'ch.swisstopo.swissimage',
       name: 'ch.swisstopo.swissimage',
@@ -2073,7 +2089,9 @@ export const METADATA_FOR_I18N_DATASET_RECORD: DatasetRecord = {
     },
     {
       type: 'service',
-      url: 'https://wms.geo.admin.ch/?SERVICE=WMS&REQUEST=GetCapabilities',
+      url: new URL(
+        'https://wms.geo.admin.ch/?SERVICE=WMS&REQUEST=GetCapabilities'
+      ),
       accessServiceProtocol: 'wms',
       identifierInService: 'ch.swisstopo.images-swissimage',
       name: 'ch.swisstopo.images-swissimage',
@@ -2088,7 +2106,9 @@ export const METADATA_FOR_I18N_DATASET_RECORD: DatasetRecord = {
     },
     {
       type: 'service',
-      url: 'https://api3.geo.admin.ch/rest/services/api/MapServer/ch.swisstopo.fixpunkte-hfp2',
+      url: new URL(
+        'https://api3.geo.admin.ch/rest/services/api/MapServer/ch.swisstopo.fixpunkte-hfp2'
+      ),
       accessServiceProtocol: 'esriRest',
       identifierInService: 'Restful API map.geo.admin',
       name: 'Restful API map.geo.admin',
@@ -2102,7 +2122,7 @@ export const METADATA_FOR_I18N_DATASET_RECORD: DatasetRecord = {
     },
     {
       type: 'download',
-      url: 'https://www.swisstopo.admin.ch/fr/geodata.html',
+      url: new URL('https://www.swisstopo.admin.ch/fr/geodata.html'),
       name: 'swissopo online shop',
       description:
         'This is a link to an online shop with protocole download-app',
@@ -2122,7 +2142,9 @@ export const METADATA_FOR_I18N_DATASET_RECORD: DatasetRecord = {
     },
     {
       type: 'link',
-      url: 'https://map.geo.admin.ch/?lang=en&bgLayer=ch.swisstopo.pixelkarte-farbe&layers=ch.swisstopo.swissimage-product&layers_timestamp=current&topic=ech',
+      url: new URL(
+        'https://map.geo.admin.ch/?lang=en&bgLayer=ch.swisstopo.pixelkarte-farbe&layers=ch.swisstopo.swissimage-product&layers_timestamp=current&topic=ech'
+      ),
       name: 'Map preview',
       translations: {
         name: { it: 'Map preview', en: 'Map preview', de: 'Map preview' },
@@ -2158,8 +2180,8 @@ export const METADATA_FOR_I18N_NO_OTHERLANGUAGE: DatasetRecord = {
   kind: 'dataset',
   otherLanguages: [],
   defaultLanguage: 'fr',
-  recordUpdated: '2023-12-21T13:59:44.020Z',
-  resourceCreated: '2022-01-27T00:00:00.000Z',
+  recordUpdated: new Date('2023-12-21T13:59:44.020Z'),
+  resourceCreated: new Date('2022-01-27T00:00:00.000Z'),
   title:
     'Metadata for E2E testing purpose. (this title is too long and should be cut, this title is too long and should be cut, this title is too long and should be cut, this title is too long and should be cut, this title is too long and should be cut)',
   abstract: 'This is the description of the metadata...',
@@ -2196,7 +2218,9 @@ export const METADATA_FOR_I18N_NO_OTHERLANGUAGE: DatasetRecord = {
       thesaurus: {
         id: 'geonetwork.thesaurus.local.theme.geocat.ch',
         name: 'geocat.ch',
-        url: 'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/local.theme.geocat.ch'
+        ),
       },
       label: 'opendata.swiss',
       type: 'theme',
@@ -2207,7 +2231,9 @@ export const METADATA_FOR_I18N_NO_OTHERLANGUAGE: DatasetRecord = {
       thesaurus: {
         id: 'geonetwork.thesaurus.external.theme.gemet',
         name: 'GEMET',
-        url: 'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet'
+        ),
       },
       label: 'abri',
       type: 'theme',
@@ -2218,7 +2244,9 @@ export const METADATA_FOR_I18N_NO_OTHERLANGUAGE: DatasetRecord = {
       thesaurus: {
         id: 'geonetwork.thesaurus.external.theme.gemet-theme',
         name: 'GEMET themes',
-        url: 'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet-theme',
+        url: new URL(
+          'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/registries/vocabularies/external.theme.gemet-theme'
+        ),
       },
       label: 'administration',
       type: 'theme',
@@ -2230,7 +2258,7 @@ export const METADATA_FOR_I18N_NO_OTHERLANGUAGE: DatasetRecord = {
   licenses: [],
   legalConstraints: [
     {
-      url: 'https://opendata.swiss/en/terms-of-use/#terms_by',
+      url: new URL('https://opendata.swiss/en/terms-of-use/#terms_by'),
       text: 'Opendata BY: Utilisation libre. Obligation d’indiquer la source.',
       translations: { text: {} },
     },
@@ -2239,7 +2267,9 @@ export const METADATA_FOR_I18N_NO_OTHERLANGUAGE: DatasetRecord = {
   otherConstraints: [],
   overviews: [
     {
-      url: 'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/records/9e1ea778-d0ce-4b49-90b7-37bc0e448300/attachments/test.png',
+      url: new URL(
+        'https://geocat-dev.dev.bgdi.ch/geonetwork/srv/api/records/9e1ea778-d0ce-4b49-90b7-37bc0e448300/attachments/test.png'
+      ),
     },
   ],
   spatialExtents: [
@@ -4121,14 +4151,18 @@ export const METADATA_FOR_I18N_NO_OTHERLANGUAGE: DatasetRecord = {
   onlineResources: [
     {
       type: 'link',
-      url: 'https://www.swisstopo.admin.ch/en/geodata/images/ortho/swissimage10.html',
+      url: new URL(
+        'https://www.swisstopo.admin.ch/en/geodata/images/ortho/swissimage10.html'
+      ),
       name: 'Website Link',
       description: 'This is simple link',
       translations: { name: {}, description: {} },
     },
     {
       type: 'download',
-      url: 'https://data.geo.admin.ch/ch.swisstopo.swissboundaries3d/swissboundaries3d_2022-05/swissboundaries3d_2022-05_2056_5728.shp.zip',
+      url: new URL(
+        'https://data.geo.admin.ch/ch.swisstopo.swissboundaries3d/swissboundaries3d_2022-05/swissboundaries3d_2022-05_2056_5728.shp.zip'
+      ),
       name: 'Download Link (zip file)',
       description: 'This is a link to download a file',
       mimeType: 'OGC Webservice (WFS)',
@@ -4136,7 +4170,9 @@ export const METADATA_FOR_I18N_NO_OTHERLANGUAGE: DatasetRecord = {
     },
     {
       type: 'service',
-      url: 'https://wmts.geo.admin.ch/EPSG/3857/1.0.0/WMTSCapabilities.xml',
+      url: new URL(
+        'https://wmts.geo.admin.ch/EPSG/3857/1.0.0/WMTSCapabilities.xml'
+      ),
       accessServiceProtocol: 'wmts',
       identifierInService: 'ch.swisstopo.swissalti3d-reliefschattierung',
       name: 'ch.swisstopo.swissalti3d-reliefschattierung',
@@ -4145,7 +4181,9 @@ export const METADATA_FOR_I18N_NO_OTHERLANGUAGE: DatasetRecord = {
     },
     {
       type: 'service',
-      url: 'https://wms.geo.admin.ch/?SERVICE=WMS&REQUEST=GetCapabilities',
+      url: new URL(
+        'https://wms.geo.admin.ch/?SERVICE=WMS&REQUEST=GetCapabilities'
+      ),
       accessServiceProtocol: 'wms',
       identifierInService: 'ch.swisstopo.swissimage',
       name: 'ch.swisstopo.swissimage',
@@ -4154,7 +4192,9 @@ export const METADATA_FOR_I18N_NO_OTHERLANGUAGE: DatasetRecord = {
     },
     {
       type: 'service',
-      url: 'https://wms.geo.admin.ch/?SERVICE=WMS&REQUEST=GetCapabilities',
+      url: new URL(
+        'https://wms.geo.admin.ch/?SERVICE=WMS&REQUEST=GetCapabilities'
+      ),
       accessServiceProtocol: 'wms',
       identifierInService: 'ch.swisstopo.images-swissimage',
       name: 'ch.swisstopo.images-swissimage',
@@ -4163,7 +4203,9 @@ export const METADATA_FOR_I18N_NO_OTHERLANGUAGE: DatasetRecord = {
     },
     {
       type: 'service',
-      url: 'https://api3.geo.admin.ch/rest/services/api/MapServer/ch.swisstopo.fixpunkte-hfp2',
+      url: new URL(
+        'https://api3.geo.admin.ch/rest/services/api/MapServer/ch.swisstopo.fixpunkte-hfp2'
+      ),
       accessServiceProtocol: 'esriRest',
       identifierInService: 'Restful API map.geo.admin',
       name: 'Restful API map.geo.admin',
@@ -4172,7 +4214,7 @@ export const METADATA_FOR_I18N_NO_OTHERLANGUAGE: DatasetRecord = {
     },
     {
       type: 'download',
-      url: 'https://www.swisstopo.admin.ch/fr/geodata.html',
+      url: new URL('https://www.swisstopo.admin.ch/fr/geodata.html'),
       name: 'swissopo online shop',
       description:
         'This is a link to an online shop with protocole download-app',
@@ -4181,7 +4223,9 @@ export const METADATA_FOR_I18N_NO_OTHERLANGUAGE: DatasetRecord = {
     },
     {
       type: 'link',
-      url: 'https://map.geo.admin.ch/?lang=en&bgLayer=ch.swisstopo.pixelkarte-farbe&layers=ch.swisstopo.swissimage-product&layers_timestamp=current&topic=ech',
+      url: new URL(
+        'https://map.geo.admin.ch/?lang=en&bgLayer=ch.swisstopo.pixelkarte-farbe&layers=ch.swisstopo.swissimage-product&layers_timestamp=current&topic=ech'
+      ),
       name: 'Map preview',
       translations: { name: {}, description: {} },
       description: '',
