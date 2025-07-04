@@ -5,9 +5,9 @@ import {
   someUserFeedbacksFixture,
   userFeedbackFixture,
 } from '@geonetwork-ui/common/fixtures'
-import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 
-const chartConfigMock: DatavizConfigurationModel = {
+const chartConfigMock: DatavizChartConfigModel = {
   aggregation: 'sum',
   xProperty: 'anneeappro',
   yProperty: 'nbre_com',

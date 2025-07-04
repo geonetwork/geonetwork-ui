@@ -13,7 +13,7 @@ import {
 import * as MdViewActions from './mdview.actions'
 import * as MdViewSelectors from './mdview.selectors'
 import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
-import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import {
   CatalogRecord,
   UserFeedback,
@@ -202,7 +202,7 @@ export class MdViewFacade {
     this.store.dispatch(MdViewActions.closeMetadata())
   }
 
-  setChartConfig(chartConfig: DatavizConfigurationModel) {
+  setChartConfig(chartConfig: DatavizChartConfigModel) {
     this.store.dispatch(MdViewActions.setChartConfig({ chartConfig }))
   }
 

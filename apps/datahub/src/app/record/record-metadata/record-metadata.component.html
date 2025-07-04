@@ -69,7 +69,9 @@
     class="mb-6"
     *ngIf="(displayMap$ | async) || (displayData$ | async)"
   >
-    <datahub-record-data-preview></datahub-record-data-preview>
+    <datahub-record-data-preview
+      [recordUuid]="metadataUuid$ | async"
+    ></datahub-record-data-preview>
   </section>
 
   <section id="capabilities" class="mb-16" *ngIf="displayCapabilities$ | async">
