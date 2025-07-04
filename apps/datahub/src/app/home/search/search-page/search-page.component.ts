@@ -7,7 +7,9 @@ import {
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
   getMetadataQualityConfig,
+  getOptionalSearchConfig,
   MetadataQualityConfig,
+  SearchConfig,
 } from '@geonetwork-ui/util/app-config'
 import { SearchFiltersComponent } from '../search-filters/search-filters.component'
 
@@ -21,6 +23,7 @@ import { SearchFiltersComponent } from '../search-filters/search-filters.compone
 })
 export class SearchPageComponent implements OnInit {
   metadataQualityDisplay: boolean
+  displayRecordKindFilter
 
   constructor(
     private searchRouter: RouterFacade,
@@ -30,9 +33,13 @@ export class SearchPageComponent implements OnInit {
   ngOnInit() {
     this.searchFacade.setResultsLayout('ROW')
 
-    const cfg: MetadataQualityConfig =
+    const metadataQualityConfig: MetadataQualityConfig =
       getMetadataQualityConfig() || ({} as MetadataQualityConfig)
-    this.metadataQualityDisplay = cfg.ENABLED
+    this.metadataQualityDisplay = metadataQualityConfig.ENABLED
+
+    const searchConfig: SearchConfig = getOptionalSearchConfig()
+    this.displayRecordKindFilter =
+      searchConfig?.RECORD_KIND_QUICK_FILTER !== false
   }
 
   onMetadataSelection(metadata: CatalogRecord): void {

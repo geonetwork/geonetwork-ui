@@ -57,4 +57,21 @@ describe('SearchPageComponent', () => {
       )
     })
   })
+  it('should display record kind filter by default (without searchConfig)', () => {
+    expect(component.displayRecordKindFilter).toBe(true)
+  })
+  it('should display record kind filter when RECORD_KIND_QUICK_FILTER is true', () => {
+    const searchConfig = {
+      RECORD_KIND_QUICK_FILTER: true,
+    }
+    component.displayRecordKindFilter = searchConfig.RECORD_KIND_QUICK_FILTER
+    expect(component.displayRecordKindFilter).toBe(true)
+  })
+  it('should not display record kind filter when RECORD_KIND_QUICK_FILTER is false', () => {
+    const searchConfig = {
+      RECORD_KIND_QUICK_FILTER: false,
+    }
+    component.displayRecordKindFilter = searchConfig.RECORD_KIND_QUICK_FILTER
+    expect(component.displayRecordKindFilter).toBe(false)
+  })
 })

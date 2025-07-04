@@ -224,6 +224,7 @@ export function loadAppConfig() {
         'search',
         [],
         [
+          'record_kind_quick_filter',
           'filter_geometry_data',
           'filter_geometry_url',
           'search_preset',
@@ -244,6 +245,8 @@ export function loadAppConfig() {
         parsedSearchSection === null
           ? null
           : ({
+              RECORD_KIND_QUICK_FILTER:
+                parsedSearchSection.record_kind_quick_filter,
               FILTER_GEOMETRY_DATA: parsedSearchSection.filter_geometry_data,
               FILTER_GEOMETRY_URL: parsedSearchSection.filter_geometry_url,
               SEARCH_PRESET: parsedSearchParams.map((param) => ({

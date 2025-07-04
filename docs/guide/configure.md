@@ -139,6 +139,10 @@ All parameters in this section are expressed using CSS formats; references:
 
 #### `[search]`
 
+- `record_kind_quick_filter` (optional)
+
+Indicates whether the quick filter (by record kind dataset, service or reuse) below the search filters is displayed or not. Defaults to `true`.
+
 - `filter_geometry_url` or `filter_geometry_data` (optional)
 
 Specify a GeoJSON object to be used as filter: all records contained inside the geometry will be **boosted on top**, all records which do not intersect with the geometry will be **shown with lower priority**.

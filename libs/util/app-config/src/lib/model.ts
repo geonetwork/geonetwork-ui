@@ -54,6 +54,7 @@ export interface SearchPreset {
 }
 
 export interface SearchConfig {
+  RECORD_KIND_QUICK_FILTER?: boolean
   FILTER_GEOMETRY_URL?: string
   FILTER_GEOMETRY_DATA?: string
   SEARCH_PRESET?: SearchPreset[]
