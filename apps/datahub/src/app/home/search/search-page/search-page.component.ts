@@ -39,7 +39,7 @@ export class SearchPageComponent implements OnInit {
 
     const searchConfig: SearchConfig = getOptionalSearchConfig()
     this.displayRecordKindFilter =
-      searchConfig?.RECORD_KIND_QUICK_FILTER === false ? false : true
+      searchConfig?.RECORD_KIND_QUICK_FILTER !== false
   }
 
   onMetadataSelection(metadata: CatalogRecord): void {
