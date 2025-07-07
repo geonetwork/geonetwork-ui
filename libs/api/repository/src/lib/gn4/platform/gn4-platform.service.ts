@@ -46,6 +46,7 @@ import {
 } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n'
+import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 
 const minApiVersion = '4.2.2'
 
@@ -383,6 +384,16 @@ export class Gn4PlatformService implements PlatformServiceInterface {
           )
         })
       )
+  }
+
+  getFileContent(url: URL | string): Observable<DatavizConfigModel> {
+    return this.httpClient.get(url.toString(), { responseType: 'text' }).pipe(
+      map((text) => {
+        const base64String = JSON.parse(text) // ton API renvoie du "..." en JSON
+        const decodedJsonText = atob(base64String)
+        return JSON.parse(decodedJsonText)
+      })
+    )
   }
 
   attachFileToRecord(
