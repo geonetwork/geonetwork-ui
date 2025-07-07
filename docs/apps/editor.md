@@ -53,6 +53,15 @@ When a record is created it uses the preferred schema, currently ISO 19115-3.
 
 The Metadata Editor relies on the GeoNetwork CRUD (create/read/update/delete) API for manipulating records. The records XML is read and modified fully in the browser to allow for a reactive experience as well as offering more possibilities for supported schemas.
 
+### Needed permissions
+
+To view and edit records in the Metadata Editor, a user needs to have EDITOR rights on the group where the records are created.
+
+The REVIEWER rights are also needed for the publication step.
+
+- EDITOR
+- REVIEWER
+
 ## Multilingual support
 
 > Still under development

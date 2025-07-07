@@ -17,7 +17,7 @@ in the [corresponding section](../apps/datahub.html).
 
 ## Community
 
-GeoNetwork-UI is an open-source project just like GeoNetwork core, and is licensed under GPL-2.0. It is developed by a community of contributors from various organizations, mny of them also involved in the development of the GeoNetwork core project.
+GeoNetwork-UI is an open-source project just like GeoNetwork core, and is licensed under GPL-2.0. It is developed by a community of contributors from various organizations, many of them also involved in the development of the GeoNetwork core project.
 
 ### Contribution
 
