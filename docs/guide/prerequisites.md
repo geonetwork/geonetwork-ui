@@ -52,7 +52,7 @@ index 1d7e499af7..78e682e3db 100644
 
 ## ElasticSearch
 
-ElasticSearch is the search engine used by GeoNetwork and is relied on heavily by GeoNetwork-UI applications to provide an outstanding search experience..
+ElasticSearch is the search engine used by GeoNetwork and is relied on heavily by GeoNetwork-UI applications to provide an outstanding search experience.
 
 GeoNetwork-UI applications require **a running instance of ElasticSearch version 7.11 or above** alongside GeoNetwork.
 

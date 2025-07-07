@@ -96,7 +96,7 @@ See the [configuration guide](./configure.md).
 
 ## Run an application in development mode
 
-> For the following instructions, make sure you are using Node v18+ and that you ran `npm install` before anything else.
+> For the following instructions, make sure you are using Node v20+ and that you ran `npm install` before anything else.
 
 Executing:
 
