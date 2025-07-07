@@ -53,7 +53,6 @@ export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
 export class RecordDataPreviewComponent implements OnDestroy {
   @Input() recordUuid: string
   sub = new Subscription()
-  isSavingConfig = false
   savingStatus: 'idle' | 'saving' | 'saved' | 'error' = 'idle'
   displayMap$ = combineLatest([
     this.metadataViewFacade.mapApiLinks$,
@@ -137,7 +136,6 @@ export class RecordDataPreviewComponent implements OnDestroy {
 
   saveDatavizConfig() {
     this.savingStatus = 'saving'
-    this.isSavingConfig = true
     this.sub.add(
       combineLatest([
         this.selectedView$,
@@ -163,7 +161,6 @@ export class RecordDataPreviewComponent implements OnDestroy {
         )
         .subscribe({
           next: () => {
-            this.isSavingConfig = false
             this.savingStatus = 'saved'
             this.cdr.detectChanges()
             setTimeout(() => {
@@ -172,7 +169,6 @@ export class RecordDataPreviewComponent implements OnDestroy {
             }, 2000)
           },
           error: () => {
-            this.isSavingConfig = false
             this.savingStatus = 'error'
             this.cdr.detectChanges()
             setTimeout(() => {

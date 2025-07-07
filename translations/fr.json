@@ -437,7 +437,7 @@
   "record.metadata.owner": "Catalogue d'origine",
   "record.metadata.preview": "Aperçu",
   "record.metadata.preview.config.error": "Erreur lors de la sauvegarde",
-  "record.metadata.preview.config.idle": "Sauvegarder la configuration",
+  "record.metadata.preview.config.idle": "Définir l'aperçu par défaut",
   "record.metadata.preview.config.saved": "Sauvegardé !",
   "record.metadata.preview.config.saving": "Sauvegarde...",
   "record.metadata.producer": "Producteur de la donnée",
