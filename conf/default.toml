@@ -189,6 +189,7 @@ background_color = "#fdfbff"
 ### TRANSLATIONS
 
 # To override translations in a specific language, use a 'translations.xx' section where 'xx' is a language code.
+# Add ?debugTranslations=true to datahub URLs to get a nice display of translation keys.
 # Language codes are expressed in ISO 639-1 codes, see https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 # Example:
 #
