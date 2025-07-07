@@ -15,9 +15,33 @@
           animationDuration="200ms"
           mat-stretch-tabs="false"
           mat-align-tabs="start"
+          disableRipple
         >
           <mat-tab [disabled]="(displayMap$ | async) === false">
             <ng-template mat-tab-label>
+              <gn-ui-button
+                *ngIf="displayDatavizConfig$ | async"
+                class="pr-4 md:pr-10"
+                type="primary"
+                [class.opacity-50]="savingStatus === 'saved'"
+                (buttonClick)="saveDatavizConfig()"
+                [disabled]="savingStatus === 'saving'"
+              >
+                <ng-container [ngSwitch]="savingStatus">
+                  <span *ngSwitchCase="'idle'" translate>
+                    record.metadata.preview.config.idle
+                  </span>
+                  <span *ngSwitchCase="'saving'" translate>
+                    record.metadata.preview.config.saving
+                  </span>
+                  <span *ngSwitchCase="'saved'" translate>
+                    record.metadata.preview.config.saved
+                  </span>
+                  <span *ngSwitchCase="'error'" translate>
+                    record.metadata.preview.config.error
+                  </span>
+                </ng-container>
+              </gn-ui-button>
               <span class="tab-header-label" translate>record.tab.map</span>
             </ng-template>
             <div

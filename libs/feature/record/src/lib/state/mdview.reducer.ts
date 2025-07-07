@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store'
 import * as MetadataViewActions from './mdview.actions'
-import { DatavizConfigurationModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import {
   CatalogRecord,
   DatasetFeatureCatalog,
@@ -19,7 +19,7 @@ export interface MetadataViewState {
   userFeedbacks?: UserFeedback[]
   allUserFeedbacksLoading: boolean
   addUserFeedbackLoading: boolean
-  chartConfig?: DatavizConfigurationModel
+  chartConfig?: DatavizChartConfigModel
   featureCatalog?: DatasetFeatureCatalog
   featureCatalogLoading: boolean
   featureCatalogError: string | null

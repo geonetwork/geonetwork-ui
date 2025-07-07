@@ -23,7 +23,6 @@
 }
 
 ::ng-deep .mat-mdc-tab.mdc-tab {
-  padding-left: 5px;
   padding-right: 5px;
 }
 
@@ -34,7 +33,7 @@
   }
 
   ::ng-deep .mat-mdc-tab.mdc-tab {
-    padding: 0px !important;
+    padding-right: 2px !important;
     margin-right: 0;
     justify-content: left !important;
     min-width: 60px;

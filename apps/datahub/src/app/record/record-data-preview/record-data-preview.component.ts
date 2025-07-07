@@ -1,13 +1,17 @@
 import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Inject,
   InjectionToken,
+  Input,
+  OnDestroy,
   Optional,
 } from '@angular/core'
-import { MatInkBar, MatTabsModule } from '@angular/material/tabs'
+import { MatTabsModule } from '@angular/material/tabs'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import {
   DataViewComponent,
@@ -15,6 +19,7 @@ import {
   MapViewComponent,
   MdViewFacade,
 } from '@geonetwork-ui/feature/record'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateDirective } from '@ngx-translate/core'
 import {
   BehaviorSubject,
@@ -22,7 +27,9 @@ import {
   map,
   of,
   startWith,
+  Subscription,
   switchMap,
+  take,
 } from 'rxjs'
 
 export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
@@ -40,9 +47,13 @@ export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
     DataViewShareComponent,
     DataViewComponent,
     MapViewComponent,
+    ButtonComponent,
   ],
 })
-export class RecordDataPreviewComponent {
+export class RecordDataPreviewComponent implements OnDestroy {
+  @Input() recordUuid: string
+  sub = new Subscription()
+  savingStatus: 'idle' | 'saving' | 'saved' | 'error' = 'idle'
   displayMap$ = combineLatest([
     this.metadataViewFacade.mapApiLinks$,
     this.metadataViewFacade.geoDataLinksWithGeometry$,
@@ -96,13 +107,78 @@ export class RecordDataPreviewComponent {
     )
   )
 
+  displayDatavizConfig$ = combineLatest([
+    this.platformService.getMe(),
+    this.metadataViewFacade.metadata$,
+  ]).pipe(
+    map(
+      ([userInfo, metadata]) =>
+        userInfo?.profile === 'Administrator' ||
+        userInfo?.username ===
+          (metadata?.extras?.ownerInfo as string).split('|')[0]
+    )
+  )
+
   constructor(
     public metadataViewFacade: MdViewFacade,
+    private platformService: PlatformServiceInterface,
     private dataService: DataService,
     @Inject(MAX_FEATURE_COUNT)
     @Optional()
-    protected maxFeatureCount: number
+    protected maxFeatureCount: number,
+    private platformServiceInterface: PlatformServiceInterface,
+    private cdr: ChangeDetectorRef
   ) {}
+
+  ngOnDestroy() {
+    this.sub.unsubscribe()
+  }
+
+  saveDatavizConfig() {
+    this.savingStatus = 'saving'
+    this.sub.add(
+      combineLatest([
+        this.selectedView$,
+        this.selectedLink$,
+        this.metadataViewFacade.chartConfig$,
+      ])
+        .pipe(
+          take(1),
+          map(([selectedView, selectedLink, chartConfig]) => {
+            return this.dataService.writeConfigAsJSON({
+              view: selectedView,
+              source: selectedLink,
+              chartConfig: selectedView === 'chart' ? chartConfig : null,
+            })
+          }),
+          switchMap((config) =>
+            this.platformServiceInterface.attachFileToRecord(
+              this.recordUuid,
+              config,
+              true
+            )
+          )
+        )
+        .subscribe({
+          next: () => {
+            this.savingStatus = 'saved'
+            this.cdr.detectChanges()
+            setTimeout(() => {
+              this.savingStatus = 'idle'
+              this.cdr.detectChanges()
+            }, 2000)
+          },
+          error: () => {
+            this.savingStatus = 'error'
+            this.cdr.detectChanges()
+            setTimeout(() => {
+              this.savingStatus = 'idle'
+              this.cdr.detectChanges()
+            }, 3000)
+          },
+        })
+    )
+  }
 
   onTabIndexChange(index: number): void {
     let view

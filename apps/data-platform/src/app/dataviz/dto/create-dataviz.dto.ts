@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { DatavizConfigModel } from '../dataviz.model'
+import { DatavizChartModel } from '../dataviz.model'
 
 export class CreateDatavizDto {
   @ApiProperty({
@@ -17,5 +17,5 @@ export class CreateDatavizDto {
     },
     description: 'Configuration of default dataviz for the metadata',
   })
-  config: DatavizConfigModel
+  config: DatavizChartModel
 }

@@ -28,6 +28,7 @@ import {
   DatasetOnlineResource,
   DatasetServiceDistribution,
 } from '@geonetwork-ui/common/domain/model/record'
+import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 
 marker('wfs.unreachable.cors')
 marker('wfs.unreachable.http')
@@ -293,6 +294,14 @@ export class DataService {
         features,
       }))
     )
+  }
+
+  writeConfigAsJSON(config: DatavizConfigModel): File {
+    const jsonContent = JSON.stringify(config, null, 2)
+    const blob = new Blob([jsonContent], { type: 'application/json' })
+    return new File([blob], 'datavizConfig.json', {
+      type: 'application/json',
+    })
   }
 
   getDataset(
