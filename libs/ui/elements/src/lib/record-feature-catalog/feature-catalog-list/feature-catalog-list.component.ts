@@ -54,9 +54,8 @@ export class FeatureCatalogListComponent {
   panelComponent: ExpandablePanelComponent
 
   readonly COLUMNS_DEFAULT: ColumnDefinition[] = [
-    { key: 'type', width: '17%' },
-    { key: 'name', width: '32%' },
-    { key: 'code', width: '17%' },
+    { key: 'type', width: '25%' },
+    { key: 'name', width: '40%' },
     { key: 'definition', width: 'minmax(0px, 1fr)' },
   ]
 

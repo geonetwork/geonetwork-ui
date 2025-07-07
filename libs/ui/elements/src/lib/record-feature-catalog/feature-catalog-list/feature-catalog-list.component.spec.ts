@@ -32,7 +32,7 @@ describe('FeatureCatalogListComponent', () => {
       ]
       expect(
         component.getColumnsDefinition(attributes).map((c) => c.key)
-      ).toStrictEqual(['type', 'name', 'code', 'definition'])
+      ).toStrictEqual(['type', 'name', 'definition'])
     })
 
     it('returns the right column definition with "values" column', () => {
@@ -47,7 +47,7 @@ describe('FeatureCatalogListComponent', () => {
       ]
       expect(
         component.getColumnsDefinition(attributesWithValues).map((c) => c.key)
-      ).toStrictEqual(['type', 'name', 'code', 'definition', 'values'])
+      ).toStrictEqual(['type', 'name', 'definition', 'values'])
     })
   })
 
@@ -62,7 +62,7 @@ describe('FeatureCatalogListComponent', () => {
         },
       ]
       expect(component.getGridTemplateColumns(attributes)).toBe(
-        '17% 32% 17% minmax(0px, 1fr)'
+        '25% 40% minmax(0px, 1fr)'
       )
     })
     it('returns the right grid template with "values" column', () => {
@@ -76,7 +76,7 @@ describe('FeatureCatalogListComponent', () => {
         },
       ]
       expect(component.getGridTemplateColumns(attributesWithValues)).toBe(
-        '17% 32% 17% minmax(0px, 1fr) 73px'
+        '25% 40% minmax(0px, 1fr) 73px'
       )
     })
   })
