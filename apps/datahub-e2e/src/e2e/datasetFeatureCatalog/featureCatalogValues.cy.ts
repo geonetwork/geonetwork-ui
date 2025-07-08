@@ -42,7 +42,7 @@ describe('dataset feature catalog - Single feature type', () => {
     // Check that there are the right count of cells content
     cy.get('@firstExpandableFeatType')
       .find('[data-test="cell-content"]')
-      .should('have.length', 44)
+      .should('have.length', 33)
 
     // Close first panel
     cy.get('@firstExpandableFeatType')
@@ -73,13 +73,13 @@ describe('dataset feature catalog - Single feature type', () => {
       .should('have.text', ' Description ')
     cy.get('@secondExpandableFeatType')
       .find('[data-test="column-label"]')
-      .eq(4)
+      .eq(3)
       .should('have.text', ' Values ')
 
     // Check that there are the right count of cells content
     cy.get('@secondExpandableFeatType')
       .find('[data-test="cell-content"]')
-      .should('have.length', 50)
+      .should('have.length', 40)
 
     // Open the popin
     cy.get('@secondExpandableFeatType')
