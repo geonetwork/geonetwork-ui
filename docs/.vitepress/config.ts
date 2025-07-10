@@ -8,7 +8,7 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Guide', link: '/guide/introduction', activeMatch: '/guide/' },
+      { text: 'Guides', link: '/guide/introduction', activeMatch: '/guide/' },
       {
         text: 'For Developers',
         link: '/developers/architecture-overview',
@@ -26,7 +26,7 @@ export default defineConfig({
     ],
 
     sidebar: {
-      '/guide/': sidebarGuide(),
+      '/guide/': sidebarGuides(),
       '/developers/': sidebarForDevelopers(),
       '/apps/': sidebarApps(),
     },
@@ -48,10 +48,10 @@ export default defineConfig({
   ignoreDeadLinks: 'localhostLinks',
 })
 
-function sidebarGuide() {
+function sidebarGuides() {
   return [
     {
-      text: 'Guide',
+      text: 'Guides',
       items: [
         { text: 'Introduction', link: '/guide/introduction' },
         { text: 'Prerequisites', link: '/guide/prerequisites' },
@@ -59,6 +59,11 @@ function sidebarGuide() {
         { text: 'Deploy', link: '/guide/deploy' },
         { text: 'Configure', link: '/guide/configure' },
         { text: 'Theming', link: '/guide/theming' },
+        { text: 'Metadata quality', link: '/guide/metadata-quality' },
+        {
+          text: 'Source restriction',
+          link: '/guide/online-resource-restricted',
+        },
         { text: 'Web components', link: '/guide/webcomponents' },
         { text: 'Standalone Search', link: '/guide/standalone-search' },
         { text: 'Custom Applications', link: '/guide/custom-app' },
@@ -135,7 +140,11 @@ function sidebarApps() {
     {
       text: 'Applications',
       items: [
-        { text: 'Datahub', link: '/apps/datahub' },
+        { text: 'Datahub - overview', link: '/apps/datahub' },
+        {
+          text: 'Datahub - sections and fields',
+          link: '/apps/datahub-sections-fields',
+        },
         { text: 'Metadata Editor', link: '/apps/editor' },
       ],
     },

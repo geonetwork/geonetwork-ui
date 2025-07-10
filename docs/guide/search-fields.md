@@ -40,7 +40,7 @@ This field targets the organization producing the record. The exact meaning of a
 
 > Field id: `format`
 
-This field targets the formats of the distributions present in a record. To have human-readable formats with a GeoNetwork 4 backend, see [this section of the documentation](../guide/deploy.md#enabling-improved-search-fields).
+This field targets the formats of the distributions present in a record. To have human-readable formats with a GeoNetwork 4 backend, see [this section of the documentation](../guide/deploy.md#improved-search-fields).
 
 ### Publication year
 

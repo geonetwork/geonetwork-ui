@@ -91,7 +91,7 @@ Some additional notes:
 
 - `datahub_url` (optional)
 
-  (WIP)
+  deprecated - not used anymore
 
 #### `[theme]`
 
@@ -107,7 +107,7 @@ All parameters in this section are expressed using CSS formats; references:
 
   These colors constitute the building blocks of the visual theme of an application. Color scales will be derived from them automatically to offer relevant contrasts and engaging visuals.
 
-  Note that `main_color` is the all-purpose text color, usually very close to black. `background_color` is the general page background, usually very cloe to white.
+  Note that `main_color` is the all-purpose text color, usually very close to black. `background_color` is the general page background, usually very close to white.
 
 * `header_background` and `header_foreground_color` (optional)
 
@@ -200,10 +200,10 @@ advanced_filters = ['organization', 'inspireKeyword', 'keyword', 'topic']
 
 #### `[metadata-quality]`
 
-This section contains settings related to the Metadata Quality system.
+This section contains settings related to the [Metadata Quality](../guide/metadata-quality.md) system.
 
 ::: info How to enable the Metadata Quality system
-To show Metadata Quality scores on records and allow sorting, enabling the setting below is not enough. An ElasticSearch pipeline also has to be registered; please refer to [this section](../guide/deploy.md#enabling-improved-search-fields) for more information.
+To show Metadata Quality scores on records and allow sorting, enabling the setting below is not enough. An ElasticSearch pipeline also has to be registered; please refer to [this section](../guide/deploy.md#improved-search-fields) for more information.
 :::
 
 - `enabled` (optional)
