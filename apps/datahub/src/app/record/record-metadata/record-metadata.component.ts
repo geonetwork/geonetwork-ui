@@ -16,7 +16,7 @@ import {
   MetadataQualityComponent,
   ServiceCapabilitiesComponent,
 } from '@geonetwork-ui/ui/elements'
-import { combineLatest } from 'rxjs'
+import { combineLatest, Observable } from 'rxjs'
 import { filter, map, mergeMap, startWith } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
@@ -35,9 +35,12 @@ import { RecordDataPreviewComponent } from '../record-data-preview/record-data-p
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matChatOutline } from '@ng-icons/material-icons/outline'
+import { iconoirAppWindow } from '@ng-icons/iconoir'
 import { RecordFeatureCatalogComponent } from '../record-feature-catalog/record-feature-catalog.component'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -67,7 +70,7 @@ import { RecordLinkedRecordsComponent } from '../record-linked-records/record-li
     TranslateDirective,
     TranslatePipe,
   ],
-  viewProviders: [provideIcons({ matChatOutline })],
+  viewProviders: [provideIcons({ matChatOutline, iconoirAppWindow })],
 })
 export class RecordMetadataComponent {
   @Input() metadataQualityDisplay: boolean
@@ -86,6 +89,7 @@ export class RecordMetadataComponent {
       capabilities: (links) => links?.length > 0,
     },
   }
+  activeUser$: Observable<UserModel>
 
   private getDisplayCondition(
     kind: 'dataset' | 'service' | 'reuse',
@@ -211,8 +215,11 @@ export class RecordMetadataComponent {
     public metadataViewFacade: MdViewFacade,
     private searchService: SearchService,
     private sourceService: SourcesService,
-    private orgsService: OrganizationsServiceInterface
-  ) {}
+    private orgsService: OrganizationsServiceInterface,
+    private readonly platformServiceInterface: PlatformServiceInterface
+  ) {
+    this.activeUser$ = this.platformServiceInterface.getMe()
+  }
 
   onInfoKeywordClick(keyword: Keyword) {
     this.searchService.updateFilters({ any: keyword.label })

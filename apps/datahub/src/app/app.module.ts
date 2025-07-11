@@ -87,7 +87,10 @@ import {
   matWarningAmberOutline,
 } from '@ng-icons/material-icons/outline'
 import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
-import { MAX_FEATURE_COUNT } from './record/record-data-preview/record-data-preview.component'
+import {
+  MAX_FEATURE_COUNT,
+  REUSE_FORM_URL,
+} from './record/record-data-preview/record-data-preview.component'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { FigureComponent } from '@geonetwork-ui/ui/dataviz'
@@ -257,6 +260,10 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     {
       provide: EXTERNAL_VIEWER_OPEN_NEW_TAB,
       useFactory: () => getOptionalMapConfig()?.EXTERNAL_VIEWER_OPEN_NEW_TAB,
+    },
+    {
+      provide: REUSE_FORM_URL,
+      useFactory: () => getGlobalConfig().REUSE_FORM_URL,
     },
   ],
   bootstrap: [AppComponent],

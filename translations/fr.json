@@ -579,6 +579,7 @@
   "service.metadata.filter.noLayers": "Aucune couche ne correspond à votre recherche",
   "service.metadata.other": "Autres informations",
   "service.metadata.question": "Poser une question",
+  "service.metadata.reuse": "Déclarer une réutilisation",
   "service.metadata.search": "Rechercher dans la liste des couches",
   "service.metadata.search.clear": "Effacer la recherche des couches",
   "service.metadata.spatialExtent": "Etendue spatiale",

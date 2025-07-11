@@ -39,6 +39,10 @@ proxy_path = ""
 # Enables displaying a "contact block" wherever relevant in applications
 # contact_email = "opendata@mycompany.com"
 
+# Enable declare a specific reuse configuration in datahub
+reuse_form_url = "http://path.to.reuseform.fr/"
+
+
 ### VISUAL THEME
 
 # All parameters are expressed in CSS format, see:
