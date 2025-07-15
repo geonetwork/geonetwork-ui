@@ -42,7 +42,6 @@ proxy_path = ""
 # Enable declare a specific reuse configuration in datahub
 reuse_form_url = "http://path.to.reuseform.fr/"
 
-
 ### VISUAL THEME
 
 # All parameters are expressed in CSS format, see:

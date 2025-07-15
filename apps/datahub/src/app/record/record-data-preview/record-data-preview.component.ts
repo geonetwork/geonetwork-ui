@@ -125,12 +125,16 @@ export class RecordDataPreviewComponent implements OnDestroy {
     private platformService: PlatformServiceInterface,
     private dataService: DataService,
     @Inject(MAX_FEATURE_COUNT)
-    @Inject(REUSE_FORM_URL)
     @Optional()
     protected maxFeatureCount: number,
+    @Inject(REUSE_FORM_URL)
+    @Optional()
+    public reuseFormUrl: string,
     private platformServiceInterface: PlatformServiceInterface,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) {
+    console.log('reuseFormUrl', reuseFormUrl)
+  }
 
   ngOnDestroy() {
     this.sub.unsubscribe()

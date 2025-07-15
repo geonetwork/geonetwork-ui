@@ -2,7 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  Inject,
+  InjectionToken,
   Input,
+  Optional,
   ViewChild,
 } from '@angular/core'
 import { SourcesService } from '@geonetwork-ui/feature/catalog'
@@ -31,7 +34,10 @@ import { RecordDownloadsComponent } from '../record-downloads/record-downloads.c
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlinks.component'
 import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
-import { RecordDataPreviewComponent } from '../record-data-preview/record-data-preview.component'
+import {
+  RecordDataPreviewComponent,
+  REUSE_FORM_URL,
+} from '../record-data-preview/record-data-preview.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matChatOutline } from '@ng-icons/material-icons/outline'
@@ -216,8 +222,12 @@ export class RecordMetadataComponent {
     private searchService: SearchService,
     private sourceService: SourcesService,
     private orgsService: OrganizationsServiceInterface,
-    private readonly platformServiceInterface: PlatformServiceInterface
+    private readonly platformServiceInterface: PlatformServiceInterface,
+    @Inject(REUSE_FORM_URL)
+    @Optional()
+    public reuseFormUrl: string
   ) {
+    console.log('reuseFormUrl', reuseFormUrl)
     this.activeUser$ = this.platformServiceInterface.getMe()
   }
 
