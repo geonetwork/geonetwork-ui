@@ -133,13 +133,13 @@ Lastly, even if authenticated requests were cleared regarding CORS rules, it wou
 
 :::
 
-## Enabling improved search fields
+## Improved search fields
 
 ElasticSearch offers the possibility to preprocess the records of a catalog, and this can be leveraged to **improve the search experience in GeoNetwork-UI**. This is done by registering so-called [ingest pipelines](https://www.elastic.co/guide/en/elasticsearch/reference/7.17/ingest.html).
 
 GeoNetwork-UI provides several pipelines, for instance:
 
-- Enable the Metadata Quality Score
+- [Metadata Quality](../guide/metadata-quality.md) score
 - Show better, human-readable data formats
 
 The two options for registering the pipelines are explained below.
