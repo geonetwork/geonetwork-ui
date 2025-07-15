@@ -132,9 +132,7 @@ export class RecordDataPreviewComponent implements OnDestroy {
     public reuseFormUrl: string,
     private platformServiceInterface: PlatformServiceInterface,
     private cdr: ChangeDetectorRef
-  ) {
-    console.log('reuseFormUrl', reuseFormUrl)
-  }
+  ) {}
 
   ngOnDestroy() {
     this.sub.unsubscribe()

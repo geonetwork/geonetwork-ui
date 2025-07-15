@@ -227,7 +227,6 @@ export class RecordMetadataComponent {
     @Optional()
     public reuseFormUrl: string
   ) {
-    console.log('reuseFormUrl', reuseFormUrl)
     this.activeUser$ = this.platformServiceInterface.getMe()
   }
 
