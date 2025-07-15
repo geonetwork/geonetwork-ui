@@ -19,7 +19,7 @@ import {
   MetadataQualityComponent,
   ServiceCapabilitiesComponent,
 } from '@geonetwork-ui/ui/elements'
-import { combineLatest, Observable } from 'rxjs'
+import { combineLatest, Observable, of } from 'rxjs'
 import { filter, map, mergeMap, startWith } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
@@ -247,6 +247,26 @@ export class RecordMetadataComponent {
         behavior: 'smooth',
       })
     }
+  }
+
+  showReuseButton(): Observable<boolean> {
+    if (!this.activeUser$) {
+      return of(false)
+    }
+
+    if (!this.kind$) {
+      return of(false)
+    }
+
+    return combineLatest([
+      this.activeUser$.pipe(startWith(null)),
+      this.kind$.pipe(startWith(null)),
+    ]).pipe(
+      map(([activeUser, kind]) => {
+        return activeUser?.id && this.reuseFormUrl && kind === 'dataset'
+      }),
+      startWith(false)
+    )
   }
 
   navigateToReuseForm() {
