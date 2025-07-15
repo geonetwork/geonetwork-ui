@@ -60,7 +60,11 @@
             ></ng-icon>
           </gn-ui-button>
           <gn-ui-button
-            *ngIf="(activeUser$ | async)?.id && reuseFormUrl"
+            *ngIf="
+              (activeUser$ | async)?.id &&
+              reuseFormUrl &&
+              (kind$ | async) === 'dataset'
+            "
             type="outline"
             extraClass="w-full flex flex-row justify-between bg-white"
             [style.--gn-ui-button-rounded]="'10px'"
