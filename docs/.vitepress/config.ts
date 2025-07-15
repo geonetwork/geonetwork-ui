@@ -54,6 +54,7 @@ function sidebarGuides() {
       text: 'Guides',
       items: [
         { text: 'Introduction', link: '/guide/introduction' },
+        { text: 'Live examples', link: '/guide/live-examples' },
         { text: 'Prerequisites', link: '/guide/prerequisites' },
         { text: 'Run', link: '/guide/run' },
         { text: 'Deploy', link: '/guide/deploy' },
