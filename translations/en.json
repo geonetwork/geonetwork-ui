@@ -340,6 +340,7 @@
   "map.layer.add": "Add",
   "map.layers.available": "Available Layers",
   "map.layers.list": "Layers",
+  "map.legend.title": "Legend",
   "map.loading.data": "Loading map data...",
   "map.loading.service": "Loading service...",
   "map.navigation.message": "Please use CTRL + mouse (or two fingers on mobile) to navigate the map",

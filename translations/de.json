@@ -340,6 +340,7 @@
   "map.layer.add": "Hinzufügen",
   "map.layers.available": "Verfügbare Layer",
   "map.layers.list": "Ebenen",
+  "map.legend.title": "",
   "map.loading.data": "Kartendaten werden geladen...",
   "map.loading.service": "Dienst wird geladen...",
   "map.navigation.message": "Bitte verwenden Sie STRG + Maus (oder zwei Finger auf einem Mobilgerät), um die Karte zu navigieren",
