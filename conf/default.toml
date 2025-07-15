@@ -40,7 +40,7 @@ proxy_path = ""
 # contact_email = "opendata@mycompany.com"
 
 # Enable declare a specific reuse configuration in datahub
-reuse_form_url = "http://path.to.reuseform.fr"
+# reuse_form_url = "http://path.to.reuseform.fr"
 
 ### VISUAL THEME
 
