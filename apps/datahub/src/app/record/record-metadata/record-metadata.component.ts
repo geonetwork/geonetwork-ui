@@ -248,4 +248,12 @@ export class RecordMetadataComponent {
       })
     }
   }
+
+  navigateToReuseForm() {
+    this.metadataUuid$.subscribe((uuid) => {
+      if (uuid && this.reuseFormUrl) {
+        window.location.href = `${this.reuseFormUrl}/${uuid}`
+      }
+    })
+  }
 }
