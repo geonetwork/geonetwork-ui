@@ -27,7 +27,7 @@ export class MapLegendComponent implements OnChanges {
   async ngOnChanges(changes: SimpleChanges) {
     if ('context' in changes) {
       const mapContext = changes['context'].currentValue
-      if (mapContext.layers && mapContext.layers.length > 0) {
+      if (mapContext?.layers && mapContext.layers.length > 0) {
         const mapContextLayer = mapContext.layers[0]
         this.legendHTML = await createLegendFromLayer(mapContextLayer)
         if (this.legendHTML) {
