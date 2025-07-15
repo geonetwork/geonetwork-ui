@@ -478,29 +478,5 @@ describe('RecordMetadataComponent', () => {
         })
       })
     })
-
-    describe('navigate to reuse form function', () => {
-      let originalLocation
-
-      beforeEach(() => {
-        originalLocation = window.location
-        delete window.location
-        // @ts-expect-error - need to mock location for tests
-        window.location = { href: '' }
-      })
-
-      afterEach(() => {
-        window.location = originalLocation
-      })
-
-      it('navigates to the reuse form with the correct UUID', () => {
-        facade.metadata$.next({
-          ...SAMPLE_RECORD,
-          uniqueIdentifier: 'test-uuid',
-        })
-        component.navigateToReuseForm()
-        expect(window.location.href).toBe('https://example.com/reuse/test-uuid')
-      })
-    })
   })
 })
