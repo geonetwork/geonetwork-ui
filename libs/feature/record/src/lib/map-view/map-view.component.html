@@ -85,7 +85,9 @@
         [hidden]="!showLegend || !legendExists"
       >
         <div class="flex justify-between items-center mb-2">
-          <div class="text-primary font-bold">Legend</div>
+          <div class="text-primary font-bold">
+            {{ 'map.legend.title' | translate }}
+          </div>
           <gn-ui-button
             type="light"
             (buttonClick)="toggleLegend()"
@@ -111,7 +113,7 @@
         (buttonClick)="toggleLegend()"
         extraClass="absolute top-[1em] right-[1em] rounded p-1 text-xs bg-white"
       >
-        Legend
+        {{ 'map.legend.title' | translate }}
       </gn-ui-button>
 
       <gn-ui-loading-mask
