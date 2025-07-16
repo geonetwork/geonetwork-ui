@@ -249,14 +249,6 @@ export class RecordMetadataComponent {
   }
 
   showReuseButton(): Observable<boolean> {
-    if (!this.activeUser$) {
-      return of(false)
-    }
-
-    if (!this.kind$) {
-      return of(false)
-    }
-
     return combineLatest([
       this.activeUser$.pipe(startWith(null)),
       this.kind$.pipe(startWith(null)),
@@ -271,7 +263,7 @@ export class RecordMetadataComponent {
   navigateToReuseForm() {
     this.metadataUuid$.subscribe((uuid) => {
       if (uuid && this.reuseFormUrl) {
-        window.location.href = `${this.reuseFormUrl}/${uuid}`
+        window.open(`${this.reuseFormUrl}/${uuid}`, '_blank')
       }
     })
   }
