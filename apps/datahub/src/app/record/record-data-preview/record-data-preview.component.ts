@@ -111,12 +111,14 @@ export class RecordDataPreviewComponent implements OnDestroy {
     this.platformService.getMe(),
     this.metadataViewFacade.metadata$,
   ]).pipe(
-    map(
-      ([userInfo, metadata]) =>
+    map(([userInfo, metadata]) => {
+      const isAdmin =
         userInfo?.profile === 'Administrator' ||
         userInfo?.username ===
           (metadata?.extras?.ownerInfo as string).split('|')[0]
-    )
+      const isPublished = metadata?.extras?.isPublishedToAll
+      return isAdmin && isPublished
+    })
   )
 
   constructor(
