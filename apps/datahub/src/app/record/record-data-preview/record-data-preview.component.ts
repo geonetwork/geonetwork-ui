@@ -224,14 +224,16 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
         this.selectedView$,
         this.selectedLink$,
         this.metadataViewFacade.chartConfig$,
+        this.selectedTMSStyle$,
       ])
         .pipe(
           take(1),
-          map(([selectedView, selectedLink, chartConfig]) => {
+          map(([selectedView, selectedLink, chartConfig, selectedTMSStyle]) => {
             return this.dataService.writeConfigAsJSON({
               view: selectedView,
               source: selectedLink,
               chartConfig: selectedView === 'chart' ? chartConfig : null,
+              styleTMSIndex: selectedView === 'map' ? selectedTMSStyle : null,
             })
           }),
           switchMap((config) =>
@@ -283,5 +285,8 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
   }
   onSelectedLinkChange(link: DatasetOnlineResource) {
     this.selectedLink$.next(link)
+  }
+  onSelectedTMSStyleChange(index: number) {
+    this.selectedTMSStyle$.next(index)
   }
 }

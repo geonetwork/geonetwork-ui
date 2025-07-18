@@ -24,4 +24,5 @@ export interface DatavizConfigModel {
   view: string
   source: DatasetOnlineResource
   chartConfig?: DatavizChartConfigModel
+  styleTMSIndex: number
 }
