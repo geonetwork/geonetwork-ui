@@ -5,15 +5,16 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { getLinkLabel, getLinkPriority } from '@geonetwork-ui/util/shared'
+import {
+  getLinkId,
+  getLinkLabel,
+  getLinkPriority,
+} from '@geonetwork-ui/util/shared'
 import { BehaviorSubject, combineLatest } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 import { MdViewFacade } from '../state'
 import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
-import {
-  DatasetOnlineResource,
-  DatasetServiceDistribution,
-} from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 import {
   ChartViewComponent,
@@ -45,11 +46,26 @@ export class DataViewComponent {
   @Input() set exceedsLimit(value: boolean) {
     this.excludeWfs$.next(value)
   }
+  linkMap: Map<string, DatasetOnlineResource> = new Map()
   _selectedView = ''
+  _chartConfig = null
+  _selectedChoice = null
   @Input() set selectedView(value: string) {
     this._selectedView = value
-    if (value !== 'map') {
+    if (this.mode === value) {
       this.linkSelected.emit(this.selectedLink$.value)
+    }
+  }
+  @Input() set datavizConfig(value: any) {
+    this._selectedView = value.view
+    if (this.mode === value.view) {
+      if (!value.source) {
+        this.linkSelected.emit(this.selectedLink$.value)
+      } else {
+        this._chartConfig = value.chartConfig
+        this._selectedChoice = getLinkId(value.source)
+        this.selectedLink$.next(value.source)
+      }
     }
   }
   @Output() chartConfig$ = new BehaviorSubject<DatavizChartConfigModel>(null)
@@ -69,15 +85,19 @@ export class DataViewComponent {
     })
   )
   dropdownChoices$ = this.compatibleDataLinks$.pipe(
-    tap((links) => {
-      if (links.indexOf(this.selectedLink$.value) === -1) {
-        this.selectLink(JSON.stringify(links[0]))
+    tap((links: DatasetOnlineResource[]) => {
+      this.linkMap.clear()
+      links.forEach((link: DatasetOnlineResource) =>
+        this.linkMap.set(getLinkId(link), link)
+      )
+      if (!links.some((l) => l.url === this.selectedLink$.value?.url)) {
+        this.selectLink(getLinkId(links[0]))
       }
     }),
     map((links) =>
-      links.map((link) => ({
+      links.map((link: DatasetOnlineResource) => ({
         label: getLinkLabel(link),
-        value: JSON.stringify(link),
+        value: getLinkId(link),
       }))
     )
   )
@@ -93,12 +113,11 @@ export class DataViewComponent {
     this.mdViewFacade.setChartConfig(event)
   }
 
-  selectLink(linkAsString: string) {
-    const link: DatasetOnlineResource = JSON.parse(linkAsString)
-    if (this._selectedView && this._selectedView !== 'map') {
+  selectLink(linkId: string) {
+    const link = this.linkMap.get(linkId)
+    if (this._selectedView && this._selectedView === this.mode) {
       this.linkSelected.emit(link)
     }
-    link.url = new URL(link.url)
     this.selectedLink$.next(link)
   }
 }
