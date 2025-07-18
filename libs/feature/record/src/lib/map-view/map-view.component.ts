@@ -109,7 +109,6 @@ export class MapViewComponent implements AfterViewInit {
     this.selectedView$.next(value)
   }
   @Input() set datavizConfig(value: any) {
-    console.log(value)
     if (value.view === 'map') {
       this.selectedView$.next(value.view)
       if (value.styleTMSIndex) {

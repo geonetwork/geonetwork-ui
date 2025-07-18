@@ -816,7 +816,7 @@ it('record with file distributions', () => {
   cy.get('@previewSection')
     .find('.mat-mdc-tab-labels')
     .children('div')
-    .eq(1)
+    .eq(2)
     .click()
 
   // it should display the onlineResources by priority
