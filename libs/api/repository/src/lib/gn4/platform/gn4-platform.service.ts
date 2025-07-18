@@ -46,6 +46,7 @@ import {
 } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n'
+import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 
 const minApiVersion = '4.2.2'
 
@@ -323,10 +324,15 @@ export class Gn4PlatformService implements PlatformServiceInterface {
           ...(Array.isArray(onlines) ? onlines : []),
           ...(Array.isArray(thumbnails) ? thumbnails : []),
         ].map((resource) => Object.values(resource.url)[0])
-
-        const fileToDelete = attachments
-          .filter((attachment) => !urlsToKeep.includes(attachment.url))
-          .map((attachment) => attachment.filename)
+        const fileToDelete = attachments.reduce<string[]>((acc, attachment) => {
+          if (
+            !urlsToKeep.includes(attachment.url) &&
+            attachment.filename !== 'datavizConfig.json'
+          ) {
+            acc.push(attachment.filename)
+          }
+          return acc
+        }, [])
 
         return fileToDelete
       }),
@@ -383,6 +389,16 @@ export class Gn4PlatformService implements PlatformServiceInterface {
           )
         })
       )
+  }
+
+  getFileContent(url: URL | string): Observable<any> {
+    return this.httpClient.get(url.toString(), { responseType: 'text' }).pipe(
+      map((text) => {
+        const base64String = JSON.parse(text)
+        const decodedJsonText = atob(base64String)
+        return JSON.parse(decodedJsonText)
+      })
+    )
   }
 
   attachFileToRecord(
