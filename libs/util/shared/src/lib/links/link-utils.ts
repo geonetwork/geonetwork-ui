@@ -230,6 +230,15 @@ export function getBadgeColor(linkFormat: FileFormat): string {
   return 'var(--color-gray-700)' // Default color ?
 }
 
+export function getLinkId(link: DatasetOnlineResource): string {
+  const href = link.url.href ?? link.url
+  return `${getLinkLabel(link)
+    .replace(/Ã©/g, 'e')
+    .replace(/Ã¨/g, 'e')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')}-${href}`
+}
+
 export function getLinkLabel(
   link: DatasetOnlineResource | ServiceOnlineResource
 ): string {

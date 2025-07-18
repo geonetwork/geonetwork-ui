@@ -193,6 +193,7 @@ describe('MapViewComponent', () => {
     mapComponent = fixture.debugElement.query(
       By.directive(MockMapContainerComponent)
     ).componentInstance
+    component.selectedView$.next('map')
   })
 
   it('should create', () => {
@@ -231,7 +232,7 @@ describe('MapViewComponent', () => {
       it('provides a placeholder value to the dropdown', () => {
         expect(dropdownComponent.choices).toEqual([
           {
-            value: 0,
+            value: '',
             label: expect.any(String),
           },
         ])
@@ -239,56 +240,92 @@ describe('MapViewComponent', () => {
     })
 
     describe('with several links compatible with MAP_API usage', () => {
-      beforeEach(fakeAsync(() => {
-        mdViewFacade.mapApiLinks$.next([
-          {
+      describe('selectedView is map', () => {
+        beforeEach(fakeAsync(() => {
+          mdViewFacade.mapApiLinks$.next([
+            {
+              url: new URL('http://abcd.com/'),
+              name: 'layer1',
+              type: 'service',
+              accessServiceProtocol: 'wms',
+            },
+            {
+              url: new URL('http://abcd.com/'),
+              name: 'layer2',
+              type: 'service',
+              accessServiceProtocol: 'wms',
+            },
+          ])
+          mdViewFacade.geoDataLinksWithGeometry$.next([])
+          tick()
+          fixture.detectChanges()
+        }))
+        it('no config - emits a map context with the first compatible link', () => {
+          expect(mapComponent.context).toEqual({
+            layers: [
+              {
+                url: 'http://abcd.com/',
+                name: 'layer1',
+                type: 'wms',
+              },
+            ],
+            view: expect.any(Object),
+          })
+        })
+        it('with config - emits a map context with the config link', fakeAsync(() => {
+          component.datavizConfig = {
+            view: 'map',
+            source: {
+              url: new URL('http://abcd.com/'),
+              name: 'layer2',
+              type: 'service',
+              accessServiceProtocol: 'wms',
+            },
+          }
+          tick()
+          fixture.detectChanges()
+          expect(mapComponent.context).toEqual({
+            layers: [
+              {
+                url: 'http://abcd.com/',
+                name: 'layer2',
+                type: 'wms',
+              },
+            ],
+            view: expect.any(Object),
+          })
+        }))
+        it('provides a list of links to the dropdown', () => {
+          expect(dropdownComponent.choices).toEqual([
+            {
+              value: 'layer1 (WMS)-http://abcd.com/',
+              label: 'layer1 (WMS)',
+            },
+            {
+              value: 'layer2 (WMS)-http://abcd.com/',
+              label: 'layer2 (WMS)',
+            },
+          ])
+        })
+        it('provides first (selected) link to the external viewer component', () => {
+          expect(externalViewerButtonComponent.link).toEqual({
             url: new URL('http://abcd.com/'),
             name: 'layer1',
             type: 'service',
             accessServiceProtocol: 'wms',
-          },
-          {
-            url: new URL('http://abcd.com/'),
-            name: 'layer2',
-            type: 'service',
-            accessServiceProtocol: 'wms',
-          },
-        ])
-        mdViewFacade.geoDataLinksWithGeometry$.next([])
-        tick()
-        fixture.detectChanges()
-      }))
-      it('emits a map context with the first compatible link', () => {
-        expect(mapComponent.context).toEqual({
-          layers: [
-            {
-              url: 'http://abcd.com/',
-              name: 'layer1',
-              type: 'wms',
-            },
-          ],
-          view: expect.any(Object),
+          })
         })
       })
-      it('provides a list of links to the dropdown', () => {
-        expect(dropdownComponent.choices).toEqual([
-          {
-            value: 0,
-            label: 'layer1 (WMS)',
-          },
-          {
-            value: 1,
-            label: 'layer2 (WMS)',
-          },
-        ])
-      })
-      it('provides first (selected) link to the external viewer component', () => {
-        expect(externalViewerButtonComponent.link).toEqual({
-          url: new URL('http://abcd.com/'),
-          name: 'layer1',
-          type: 'service',
-          accessServiceProtocol: 'wms',
-        })
+      describe('selectedView is NOT map', () => {
+        it('doesnt set a mapContext if selectedView is not map', fakeAsync(() => {
+          component.selectedView = 'table'
+          tick()
+          fixture.detectChanges()
+          expect(mapComponent.context).toEqual({
+            layers: [],
+            view: expect.any(Object),
+          })
+        }))
       })
     })
 
@@ -327,19 +364,19 @@ describe('MapViewComponent', () => {
       it('provides a list of links to the dropdown', () => {
         expect(dropdownComponent.choices).toEqual([
           {
-            value: 0,
+            value: 'layer1 (WMS)-http://abcd.com/',
             label: 'layer1 (WMS)',
           },
           {
-            value: 1,
+            value: 'featuretype (WFS)-http://abcd.com/wfs',
             label: 'featuretype (WFS)',
           },
           {
-            value: 2,
+            value: 'data.geojson (geojson)-http://abcd.com/data.geojson',
             label: 'data.geojson (geojson)',
           },
           {
-            value: 3,
+            value: 'ogc api-http://abcd.com/data/ogcapi',
             label: 'ogc api',
           },
         ])
@@ -389,27 +426,29 @@ describe('MapViewComponent', () => {
         fixture.detectChanges()
         expect(dropdownComponent.choices).toEqual([
           {
-            value: 0,
+            value: 'layer1 (WMS)-http://abcd.com/',
             label: 'layer1 (WMS)',
           },
           {
-            value: 1,
+            value: 'featuretype (WFS)-http://abcd.com/wfs',
             label: 'featuretype (WFS)',
           },
           {
-            value: 2,
+            value: 'data.geojson (geojson)-http://abcd.com/data.geojson',
             label: 'data.geojson (geojson)',
           },
           {
-            value: 3,
+            value: 'ogc api-http://abcd.com/data/ogcapi',
             label: 'ogc api',
           },
         ])
       })
       describe('when selecting the WFS layer (excludeWfs)', () => {
         beforeEach(fakeAsync(() => {
-          dropdownComponent.selectValue.emit(1)
           component.excludeWfs$.next(true)
+          dropdownComponent.selectValue.emit(
+            'featuretype (WFS)-http://abcd.com/wfs'
+          )
           tick()
           fixture.detectChanges()
         }))
@@ -562,6 +601,57 @@ describe('MapViewComponent', () => {
             ],
             view: expect.any(Object),
           })
+        })
+      })
+      describe('With a config containg TMS style', () => {
+        beforeEach(fakeAsync(() => {
+          mdViewFacade.mapApiLinks$.next([
+            {
+              url: new URL('http://abcd.com/tms'),
+              name: 'orthophoto',
+              type: 'service',
+              accessServiceProtocol: 'tms',
+            },
+            {
+              url: new URL('http://abcd.com/tms/style.json'),
+              name: 'orthophoto',
+              type: 'service',
+              accessServiceProtocol: 'maplibre-style',
+            },
+            {
+              url: new URL('http://abcd.com/tms/anotherstyle.json'),
+              name: 'orthophoto copy',
+              type: 'service',
+              accessServiceProtocol: 'maplibre-style',
+            },
+          ])
+          mdViewFacade.geoDataLinksWithGeometry$.next([])
+          tick(200)
+          fixture.detectChanges()
+        }))
+        it('uses the TMS layer and style from config', () => {
+          component.datavizConfig = {
+            view: 'map',
+            source: {
+              url: new URL('http://abcd.com/tms'),
+              name: 'orthophoto',
+              type: 'service',
+              accessServiceProtocol: 'tms',
+            },
+            styleTMSIndex: 2,
+          }
+          fixture.detectChanges()
+          expect(component._styleFromConfig).toBe(2)
+          expect(dropdownComponent.selected).toEqual(
+            'orthophoto (TMS)-http://abcd.com/tms'
+          )
+        })
+      })
+      describe('Style change', () => {
+        it('should emit the new style for config saving', () => {
+          const emitSpy = jest.spyOn(component.styleSelected, 'emit')
+          component.selectStyleToDisplay(2)
+          expect(emitSpy).toHaveBeenCalledWith(2)
         })
       })
     })
@@ -739,7 +829,7 @@ describe('MapViewComponent', () => {
       it('provides a list of links to the dropdown', () => {
         expect(dropdownComponent.choices).toEqual([
           {
-            value: 0,
+            value: 'layer (WMS)-http://abcd.com/',
             label: 'layer (WMS)',
           },
         ])
@@ -778,7 +868,7 @@ describe('MapViewComponent', () => {
           },
         ])
         mdViewFacade.geoDataLinksWithGeometry$.next([])
-        dropdownComponent.selectValue.emit(1)
+        dropdownComponent.selectValue.emit('layer2 (WMS)-http://abcd.com/')
         tick()
         fixture.detectChanges()
       }))
@@ -876,7 +966,7 @@ describe('MapViewComponent', () => {
         beforeEach(fakeAsync(() => {
           geoSdkCore.resolve({ extent: recordMapExtent })
           tick()
-          dropdownComponent.selectValue.emit(0)
+          dropdownComponent.selectValue.emit('layer1 (WMS)-http://abcd.com/')
           tick()
           fixture.detectChanges()
         }))
@@ -892,7 +982,7 @@ describe('MapViewComponent', () => {
       })
       describe('When link is restricted', () => {
         beforeEach(fakeAsync(() => {
-          dropdownComponent.selectValue.emit(2)
+          dropdownComponent.selectValue.emit('layer3-http://abcd.com/')
           tick()
           fixture.detectChanges()
         }))

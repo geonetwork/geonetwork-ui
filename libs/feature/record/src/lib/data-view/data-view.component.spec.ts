@@ -20,6 +20,7 @@ import {
 } from '@geonetwork-ui/feature/dataviz'
 import { hot } from 'jasmine-marbles'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { getLinkId } from '@geonetwork-ui/util/shared'
 
 class MdViewFacadeMock {
   isHighUpdateFrequency$ = new Subject()
@@ -84,42 +85,88 @@ describe('DataViewComponent', () => {
       ).componentInstance
     }))
     describe('when component is rendered', () => {
-      it('shows the dropdown with the same number of entries', () => {
-        expect(dropdownComponent.choices).toEqual([
-          {
-            label: 'CSV file (csv)',
-            value: JSON.stringify(someDataLinksFixture()[1]),
-          },
-          {
-            label: 'Data in XLS format (excel)',
-            value: JSON.stringify(someDataLinksFixture()[0]),
-          },
-          {
-            label: 'Geojson file (geojson)',
-            value: JSON.stringify(someGeoDatalinksFixture()[0]),
-          },
-          {
-            label: 'Service WFS (WFS)',
-            value: JSON.stringify(someGeoDatalinksFixture()[1]),
-          },
-        ])
+      describe('Selected view is table or chart', () => {
+        it('shows the dropdown with the same number of entries', () => {
+          expect(dropdownComponent.choices).toEqual([
+            {
+              label: 'CSV file (csv)',
+              value: getLinkId(someDataLinksFixture()[1]),
+            },
+            {
+              label: 'Data in XLS format (excel)',
+              value: getLinkId(someDataLinksFixture()[0]),
+            },
+            {
+              label: 'Geojson file (geojson)',
+              value: getLinkId(someGeoDatalinksFixture()[0]),
+            },
+            {
+              label: 'Service WFS (WFS)',
+              value: getLinkId(someGeoDatalinksFixture()[1]),
+            },
+          ])
+        })
+        it('no config - displays the first link of the table', () => {
+          expect(tableViewComponent.link).toEqual(someDataLinksFixture()[1])
+        })
+        it('config - displays the config link and selects the right option for the table', () => {
+          component.datavizConfig = {
+            view: 'table',
+            source: someDataLinksFixture()[0],
+          }
+          fixture.detectChanges()
+          expect(tableViewComponent.link).toEqual(
+            component.linkMap.get(getLinkId(someDataLinksFixture()[0]))
+          )
+          expect(dropdownComponent.selected).toEqual(
+            getLinkId(someDataLinksFixture()[0])
+          )
+        })
+        it('config - sets the chartConfig for chart view', () => {
+          component.mode = 'chart'
+          component.datavizConfig = {
+            view: 'chart',
+            source: someDataLinksFixture()[0],
+            chartConfig: chartConfigMock,
+          }
+          fixture.detectChanges()
+          expect(component._chartConfig).toEqual(chartConfigMock)
+        })
       })
-      it('displays link in the table', () => {
-        expect(tableViewComponent.link).toEqual(someDataLinksFixture()[1])
+      describe('Selected view is map', () => {
+        beforeEach(() => {
+          component.selectedView = 'map'
+          fixture.detectChanges()
+        })
+        it('config - should not take the config into account', () => {
+          component.datavizConfig = {
+            view: 'map',
+            source: someGeoDatalinksFixture()[0],
+          }
+          fixture.detectChanges()
+          const emitSpy = jest.spyOn(component.linkSelected, 'emit')
+          expect(emitSpy).toHaveBeenCalledTimes(0)
+          expect(component._chartConfig).toBe(null)
+          expect(component._selectedChoice).toBe(null)
+        })
+        it('no config - should not emit the first link', () => {
+          const emitSpy = jest.spyOn(component.linkSelected, 'emit')
+          expect(emitSpy).toHaveBeenCalledTimes(0)
+        })
       })
     })
 
     describe('when switching data link', () => {
       beforeEach(fakeAsync(() => {
         dropdownComponent.selectValue.emit(
-          JSON.stringify(someGeoDatalinksFixture()[1])
+          getLinkId(someGeoDatalinksFixture()[1])
         )
         flushMicrotasks()
         fixture.detectChanges()
       }))
       it('displays link in the table', () => {
-        expect(tableViewComponent.link.description).toEqual(
-          someGeoDatalinksFixture()[1].description
+        expect(tableViewComponent.link).toEqual(
+          component.linkMap.get(getLinkId(someGeoDatalinksFixture()[1]))
         )
       })
     })

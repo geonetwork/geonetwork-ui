@@ -8,6 +8,7 @@
       extraBtnClass="font-sans font-bold"
       [title]="'map.select.layer' | translate"
       [choices]="dropdownChoices$ | async"
+      [selected]="_selectedChoice"
       (selectValue)="selectLinkToDisplay($event)"
     ></gn-ui-dropdown-selector>
 
@@ -17,6 +18,7 @@
         extraBtnClass="font-sans font-bold"
         [title]="'map.select.style' | translate"
         [choices]="styleDropdownChoices$ | async"
+        [selected]="_styleFromConfig"
         (selectValue)="selectStyleToDisplay($event)"
       ></gn-ui-dropdown-selector>
     </ng-container>

@@ -135,29 +135,45 @@ describe('ChartViewComponent', () => {
         true
       )
     })
-    it('choses the first string property for X', () => {
-      expect(chartComponent.labelProperty).toBe('distinct(propStr1)')
+    describe('No userChartConfig', () => {
+      it('choses the first string property for X', () => {
+        expect(chartComponent.labelProperty).toBe('distinct(propStr1)')
+      })
+      it('choses the first numeric property for Y', () => {
+        expect(chartComponent.valueProperty).toBe('sum(propNum1)')
+      })
+      it('reads dataset using sum aggregation, grouped by distinct X values', () => {
+        expect(DatasetReaderMock.instance.groupBy).toHaveBeenCalledWith([
+          'distinct',
+          'propStr1',
+        ])
+        expect(DatasetReaderMock.instance.aggregate).toHaveBeenCalledWith([
+          'sum',
+          'propNum1',
+        ])
+        expect(DatasetReaderMock.instance.read).toHaveBeenCalledTimes(1)
+      })
+      it('renders bar chart', () => {
+        expect(chartComponent.type).toBe('bar')
+        expect(chartComponent.data).toEqual(SAMPLE_CHART_DATA)
+      })
+      it('does not stay in loading state', () => {
+        expect(component.loading).toBe(false)
+      })
     })
-    it('choses the first numeric property for Y', () => {
-      expect(chartComponent.valueProperty).toBe('sum(propNum1)')
-    })
-    it('reads dataset using sum aggregation, grouped by distinct X values', () => {
-      expect(DatasetReaderMock.instance.groupBy).toHaveBeenCalledWith([
-        'distinct',
-        'propStr1',
-      ])
-      expect(DatasetReaderMock.instance.aggregate).toHaveBeenCalledWith([
-        'sum',
-        'propNum1',
-      ])
-      expect(DatasetReaderMock.instance.read).toHaveBeenCalledTimes(1)
-    })
-    it('renders bar chart', () => {
-      expect(chartComponent.type).toBe('bar')
-      expect(chartComponent.data).toEqual(SAMPLE_CHART_DATA)
-    })
-    it('does not stay in loading state', () => {
-      expect(component.loading).toBe(false)
+    describe('presence of userChartConfig', () => {
+      it('should set the props accordingly to the user config', () => {
+        component.userChartConfig = {
+          xProperty: 'propStr2',
+          yProperty: 'propDate1',
+          aggregation: 'average',
+          chartType: 'line-interpolated',
+        }
+        fixture.detectChanges()
+        expect(chartComponent.labelProperty).toBe('distinct(propStr2)')
+        expect(chartComponent.valueProperty).toBe('average(propDate1)')
+        expect(chartComponent.type).toBe('line-interpolated')
+      })
     })
   })
 

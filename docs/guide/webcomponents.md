@@ -34,7 +34,7 @@ The Web Components script also includes the [Standalone Search](./standalone-sea
 Web Components support the following attributes for handling internationalization:
 
 - `text-language`: the language to use for labels; can be either be `browser` (will use the browser language) or a 2-char code (e.g. `en`); defaults to `browser`
-- `metadata-anguage`: identical to the [`metadata_language` configuration option](./configure.md#global)
+- `metadata-language`: identical to the [`metadata_language` configuration option](./configure.md#global)
 
 ## Publication and Versioning
 

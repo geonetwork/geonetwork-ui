@@ -11,17 +11,16 @@
         </h2>
         <mat-tab-group
           (selectedIndexChange)="onTabIndexChange($event)"
-          [selectedIndex]="(displayMap$ | async) ? 0 : 1"
+          [selectedIndex]="selectedIndex$ | async"
           animationDuration="200ms"
           mat-stretch-tabs="false"
           mat-align-tabs="start"
           disableRipple
         >
-          <mat-tab [disabled]="(displayMap$ | async) === false">
+          <mat-tab>
             <ng-template mat-tab-label>
               <gn-ui-button
                 *ngIf="displayDatavizConfig$ | async"
-                class="pr-4 md:pr-10"
                 type="primary"
                 [class.opacity-50]="savingStatus === 'saved'"
                 (buttonClick)="saveDatavizConfig()"
@@ -42,6 +41,10 @@
                   </span>
                 </ng-container>
               </gn-ui-button>
+            </ng-template>
+          </mat-tab>
+          <mat-tab [disabled]="(displayMap$ | async) === false">
+            <ng-template mat-tab-label>
               <span class="tab-header-label" translate>record.tab.map</span>
             </ng-template>
             <div
@@ -52,6 +55,8 @@
               <gn-ui-map-view
                 [exceedsLimit]="exceedsMaxFeatureCount$ | async"
                 (linkSelected)="onSelectedLinkChange($event)"
+                (styleSelected)="onSelectedTMSStyleChange($event)"
+                [datavizConfig]="datavizConfig"
                 [selectedView]="selectedView$ | async"
               ></gn-ui-map-view>
             </div>
@@ -64,6 +69,8 @@
               <gn-ui-data-view
                 [exceedsLimit]="exceedsMaxFeatureCount$ | async"
                 (linkSelected)="onSelectedLinkChange($event)"
+                [datavizConfig]="datavizConfig"
+                [selectedView]="selectedView$ | async"
                 mode="table"
               ></gn-ui-data-view>
             </div>
@@ -76,6 +83,7 @@
               <gn-ui-data-view
                 [exceedsLimit]="exceedsMaxFeatureCount$ | async"
                 (linkSelected)="onSelectedLinkChange($event)"
+                [datavizConfig]="datavizConfig"
                 [selectedView]="selectedView$ | async"
                 mode="chart"
               ></gn-ui-data-view>

@@ -9,6 +9,7 @@
       class="h-[44px] w-full"
       extraBtnClass="font-sans font-bold"
       [choices]="choices"
+      [selected]="_selectedChoice"
       (selectValue)="selectLink($event)"
     ></gn-ui-dropdown-selector>
   </div>
@@ -35,6 +36,7 @@
         [cacheActive]="cacheActive$ | async"
         [link]="selectedLink$ | async"
         [featureCatalog]="mdViewFacade.featureCatalog$ | async"
+        [userChartConfig]="_chartConfig"
       ></gn-ui-chart-view>
     </div>
   </ng-template>
