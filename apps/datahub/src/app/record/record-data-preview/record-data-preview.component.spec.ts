@@ -358,7 +358,7 @@ describe('RecordDataPreviewComponent', () => {
       component = fixture.componentInstance
       facade.metadata$.next({
         ...SAMPLE_RECORD,
-        extras: { ownerInfo: 'someone|other' },
+        extras: { ownerInfo: 'someone|other', isPublishedToAll: true },
       })
       fixture.detectChanges()
       component.displayDatavizConfig$.subscribe((result) => {
@@ -375,7 +375,7 @@ describe('RecordDataPreviewComponent', () => {
       component = fixture.componentInstance
       facade.metadata$.next({
         ...SAMPLE_RECORD,
-        extras: { ownerInfo: 'owner|other' },
+        extras: { ownerInfo: 'owner|other', isPublishedToAll: true },
       })
       fixture.detectChanges()
       component.displayDatavizConfig$.subscribe((result) => {
@@ -392,7 +392,23 @@ describe('RecordDataPreviewComponent', () => {
       component = fixture.componentInstance
       facade.metadata$.next({
         ...SAMPLE_RECORD,
-        extras: { ownerInfo: 'owner|other' },
+        extras: { ownerInfo: 'owner|other', isPublishedToAll: true },
+      })
+      fixture.detectChanges()
+      component.displayDatavizConfig$.subscribe((result) => {
+        expect(result).toBe(false)
+        done()
+      })
+    })
+    it('should emit false if record is not published', (done) => {
+      ;(platformServiceInterface.getMe as jest.Mock).mockReturnValue(
+        of({ profile: 'Administrator', username: 'admin' })
+      )
+      fixture = TestBed.createComponent(RecordDataPreviewComponent)
+      component = fixture.componentInstance
+      facade.metadata$.next({
+        ...SAMPLE_RECORD,
+        extras: { ownerInfo: 'someone|other', isPublishedToAll: false },
       })
       fixture.detectChanges()
       component.displayDatavizConfig$.subscribe((result) => {
