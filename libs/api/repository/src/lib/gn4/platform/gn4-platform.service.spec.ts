@@ -799,7 +799,7 @@ describe('Gn4PlatformService', () => {
         record.uniqueIdentifier
       )
     })
-    it('should clean record attachments no longer used', (done) => {
+    it('should clean record attachments no longer used and not remove datavizConfig', (done) => {
       const record = { uniqueIdentifier: '123' } as CatalogRecord
       const associatedResources = {
         onlines: [{ title: { en: 'doge.jpg' }, url: 'http://doge.jpg' }],
@@ -818,6 +818,7 @@ describe('Gn4PlatformService', () => {
           { filename: 'doge.jpg', url: 'http://doge.jpg' },
           { filename: 'flower.jpg', url: 'http://flower.jpg' },
           { filename: 'remove1.jpg', url: 'http://remove1.jpg' },
+          { fileName: 'datavizConfig.json', url: new URL('http://test.com') },
         ])
       )
       ;(recordsApiService.delResource as jest.Mock).mockReturnValue(
@@ -932,6 +933,24 @@ describe('Gn4PlatformService', () => {
             '12345',
             'datavizConfig.json'
           )
+          done()
+        },
+        error: done.fail,
+      })
+    })
+  })
+  describe('getFileContent', () => {
+    it('should return the parsed DatavizConfigModel from base64 encoded JSON', (done) => {
+      const config = { foo: 'bar' }
+      const encoded = btoa(JSON.stringify(config))
+      const response = JSON.stringify(encoded)
+
+      const httpClient = TestBed.inject(HttpClient) as any
+      httpClient.get = jest.fn(() => of(response))
+
+      service.getFileContent('http://example.com/config.json').subscribe({
+        next: (result) => {
+          expect(result).toEqual(config)
           done()
         },
         error: done.fail,
