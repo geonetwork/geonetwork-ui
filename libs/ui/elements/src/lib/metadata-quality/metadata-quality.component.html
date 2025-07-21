@@ -10,6 +10,7 @@
     class="flex-grow"
   ></gn-ui-progress-bar>
   <gn-ui-popover
+    *ngIf="popoverDisplay"
     [content]="popoverItems"
     theme="light-border"
     [class]="smaller ? 'ml-2' : 'ml-2 mt-1'"

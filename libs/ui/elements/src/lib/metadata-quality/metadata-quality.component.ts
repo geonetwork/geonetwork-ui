@@ -51,6 +51,7 @@ export class MetadataQualityComponent implements OnChanges {
   @Input() metadata: Partial<CatalogRecord>
   @Input() smaller = false
   @Input() metadataQualityDisplay: boolean
+  @Input() popoverDisplay = true
 
   items: MetadataQualityItem[] = []
 
@@ -62,6 +63,8 @@ export class MetadataQualityComponent implements OnChanges {
   }
 
   get calculatedQualityScore(): number {
+    console.log("calculatedQualityScore === this.items", this.items)
+
     return Math.round(
       (this.items.filter(({ value }) => value).length * 100) / this.items.length
     )
@@ -87,7 +90,7 @@ export class MetadataQualityComponent implements OnChanges {
 
   private readonly SPECIFIC_CHECKS: Record<string, QualityChecks> = {
     dataset: {
-      updateFrequency: (metadata) => !!metadata?.updateFrequency,
+      updateFrequency: (metadata) => { console.log(metadata?.updateFrequency); return !!metadata?.updateFrequency },
       topic: (metadata) => (metadata?.topics?.length ?? 0) > 0,
       organisation: (metadata) => !!metadata?.contacts?.[0]?.organization?.name,
     },

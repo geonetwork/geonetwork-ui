@@ -8,7 +8,10 @@ import {
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
-import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
+import {
+  ConfirmationDialogComponent,
+  MetadataQualityComponent,
+} from '@geonetwork-ui/ui/elements'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { LetDirective } from '@ngrx/component'
 import {
@@ -49,6 +52,7 @@ import { matCircle } from '@ng-icons/material-icons/baseline'
     LetDirective,
     MatTooltipModule,
     MatDialogModule,
+    MetadataQualityComponent,
     TranslateDirective,
     TranslatePipe,
     NgIconComponent,
@@ -102,6 +106,7 @@ export class TopToolbarComponent {
   isRecordMultilingual$ = this.editorFacade.record$.pipe(
     map((record) => record.otherLanguages.length)
   )
+  record$ = this.editorFacade.record$
 
   constructor(
     public dialog: MatDialog,
