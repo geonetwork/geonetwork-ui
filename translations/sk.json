@@ -340,6 +340,7 @@
   "map.layer.add": "Pridať",
   "map.layers.available": "Dostupné vrsty",
   "map.layers.list": "Vrstvy",
+  "map.legend.title": "",
   "map.loading.data": "Načítavanie dát mapy...",
   "map.loading.service": "Načítavanie služieb...",
   "map.navigation.message": "Použite prosím CTRL + myš (alebo dva prsty na mobilnom zariadení) na navigáciu po mape",
