@@ -189,7 +189,13 @@ export class MapViewComponent implements AfterViewInit {
     }),
     map(([compatibleLinks, configLink, id, view]) => {
       if (view === 'map') {
-        if (configLink && !id) {
+        if (
+          configLink &&
+          !id &&
+          compatibleLinks.some(
+            (link) => getLinkId(link) === getLinkId(configLink)
+          )
+        ) {
           this._selectedChoice = getLinkId(configLink)
           this.linkSelected.emit(configLink)
           return configLink
