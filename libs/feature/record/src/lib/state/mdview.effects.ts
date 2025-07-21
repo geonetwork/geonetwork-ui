@@ -25,7 +25,7 @@ export class MdViewEffects {
       map((record) => {
         if (
           record === null ||
-          (this.router.url !== '/' && // Hot-fix: special case for WC, TODO: find a better way
+          (this.router.url !== '/' && // FIXME: special case for WC, find a better way
             !this.router.url.includes(record.kind))
         ) {
           return MdViewActions.loadFullMetadataFailure({ notFound: true })
