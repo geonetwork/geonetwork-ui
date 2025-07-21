@@ -50,7 +50,7 @@ program
 
 program.parse(process.argv)
 
-const VERSION = 102 // increment on changes
+const VERSION = 103 // increment on changes
 
 const GEONETWORK_UI_PIPELINE = {
   description: 'GeoNetwork-UI pipeline',
@@ -66,21 +66,14 @@ int totalDataset=8;
 int totalService=6;
 int totalReuse=8;
 int ok=0;
-boolean isDataset=false;
-boolean isService=false;
-boolean isReuse=false;
+def type='dataset';
 if (ctx.resourceType != null && ctx.resourceType.size() > 0) {
-  if (ctx.resourceType[0]=='dataset'||ctx.resourceType[0]=='series'||ctx.resourceType[0]=='featureCatalog') {
-    isDataset = true;
-  }
   if (ctx.resourceType[0]=='service') {
-    isService = true;
+    type = 'service';
   }
   if (ctx.resourceType[0]=='interactiveMap'||ctx.resourceType[0]=='map'||ctx.resourceType[0]=='map/static'||ctx.resourceType[0]=='map/interactive'||ctx.resourceType[0]=='map-interactive'||ctx.resourceType[0]=='map-static'||ctx.resourceType[0]=='mapDigital'||ctx.resourceType[0]=='staticMap') {
-    isReuse = true;
+    type = 'reuse';
   }
-} else {
- isDataset=true;
 }
 if(ctx.resourceTitleObject != null && ctx.resourceTitleObject.default != null && ctx.resourceTitleObject.default != '') {
   ok++
@@ -89,7 +82,7 @@ if(ctx.resourceAbstractObject != null && ctx.resourceAbstractObject.default != n
   ok++
 }
 // Check for both 4.2.2 and 4.2.3+ versions
-if (!isService && ctx.contact != null && ctx.contact.length > 0) {
+if (type != 'service' && ctx.contact != null && ctx.contact.length > 0) {
   def firstContact = ctx.contact[0];
   
   def hasOrgName = firstContact.organisation != null &&
@@ -107,7 +100,7 @@ if (!isService && ctx.contact != null && ctx.contact.length > 0) {
 if(ctx.contact != null && ctx.contact.length > 0 && ctx.contact[0].email != null && ctx.contact[0].email != '') {
   ok++
 }
-if(!isService && ctx.cl_topic != null && ctx.cl_topic.length > 0) {
+if(type != 'service' && ctx.cl_topic != null && ctx.cl_topic.length > 0) {
   ok++
 }
 if (ctx.allKeywords != null && !ctx.allKeywords.isEmpty()) {
@@ -120,14 +113,14 @@ if (ctx.allKeywords != null && !ctx.allKeywords.isEmpty()) {
     }
   }
 }
-if(isDataset && ctx.cl_maintenanceAndUpdateFrequency != null && ctx.cl_maintenanceAndUpdateFrequency.length > 0) {
+if(type == 'dataset' && ctx.cl_maintenanceAndUpdateFrequency != null && ctx.cl_maintenanceAndUpdateFrequency.length > 0) {
   ok++
 }
 if((ctx.MD_LegalConstraintsUseLimitationObject != null && ctx.MD_LegalConstraintsUseLimitationObject.length > 0) ||
    (ctx.MD_LegalConstraintsOtherConstraintsObject != null && ctx.MD_LegalConstraintsOtherConstraintsObject.length > 0)) {
   ok++
 }
-if(isService && ctx.link != null){
+if(type == 'service' && ctx.link != null){
   for (link in ctx.link) {
     if (
       link != null &&
@@ -140,7 +133,7 @@ if(isService && ctx.link != null){
     }
   }
 }
-if(isReuse && ctx.recordLink != null){
+if(type == 'reuse' && ctx.recordLink != null){
   for (link in ctx.recordLink) {
     if (
       link != null &&
@@ -156,13 +149,13 @@ if(isReuse && ctx.recordLink != null){
     }
   }
 }
-if(isDataset) {
+if(type == 'dataset') {
   total=totalDataset;
 }
-if(isService) {
+if(type == 'service') {
   total=totalService;
 }
-if(isReuse) {
+if(type == 'reuse') {
   total=totalReuse;
 }
 ctx.qualityScore = ok * 100 / total;`,
