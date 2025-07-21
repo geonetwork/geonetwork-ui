@@ -1,5 +1,4 @@
 import 'cypress-real-events'
-import path from 'path'
 
 beforeEach(() => {
   // GEOSERVER stubs
@@ -69,37 +68,6 @@ beforeEach(() => {
       fixture: 'population-millesimee-communes-francaises.csv',
     }
   )
-
-  // OGC API stubs
-  cy.intercept(
-    'GET',
-    '/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix/items?f=json',
-    {
-      fixture: 'liste-des-jardins-familiaux-et-partages-de-roubaix_items.json',
-    }
-  )
-  cy.intercept('GET', '/data/ogcapi/collections/covoit-mel/items?f=json', {
-    fixture: 'covoit-mel_items.json',
-  })
-  cy.intercept(
-    'GET',
-    '/data/ogcapi/collections/liste-des-jardins-familiaux-et-partages-de-roubaix?f=json',
-    {
-      fixture: 'liste-des-jardins-familiaux-et-partages-de-roubaix.json',
-    }
-  )
-  cy.intercept('GET', '/data/ogcapi/collections/covoit-mel?f=json', {
-    fixture: 'covoit-mel.json',
-  })
-  cy.intercept('GET', '/data/ogcapi/collections?f=json', {
-    fixture: 'ogcapi_collections.json',
-  })
-  cy.intercept('GET', '/data/ogcapi/conformance?f=json', {
-    fixture: 'ogcapi_conformance.json',
-  })
-  cy.intercept('GET', '/data/ogcapi/?f=json', {
-    fixture: 'ogcapi.json',
-  })
 })
 
 describe('Preview section', () => {
@@ -320,7 +288,7 @@ describe('Preview section', () => {
   })
   describe('Dataviz configuration', () => {
     beforeEach(() => {
-      cy.visit('/dataset/ee965118-2416-4d48-b07e-bbc696f002c2')
+      cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
       cy.get('datahub-record-metadata')
         .find('[id="preview"]')
         .first()
@@ -352,7 +320,7 @@ describe('Preview section', () => {
     describe('Logged in as admin', () => {
       beforeEach(() => {
         cy.login()
-        cy.visit('/dataset/ee965118-2416-4d48-b07e-bbc696f002c2')
+        cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
       })
       it('should show the config saving btn', () => {
         cy.get('@configTab')
@@ -390,32 +358,12 @@ describe('Preview section', () => {
       })
       it('should save and use a table config', () => {
         cy.get('@tableTab').click()
-        cy.get('@previewSection')
-          .find('gn-ui-dropdown-selector')
-          .eq(0)
-          .selectDropdownOption(
-            'scot remplace (WFS)-https://qgisserver.hautsdefrance.fr/cgi-bin/qgis_mapserv.fcgi?MAP=/var/www/data/qgis/applications/limites_admin.qgz'
-          )
         cy.get('@configTab').find('gn-ui-button').click()
-        cy.visit('/dataset/ee965118-2416-4d48-b07e-bbc696f002c2')
-        // table view and chart view need waiting for data to load
-        // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.wait(1000)
+        cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
         cy.get('@tableTab').invoke('attr', 'aria-selected').should('eq', 'true')
-        cy.get('@previewSection')
-          .find('gn-ui-dropdown-selector')
-          .eq(0)
-          .invoke('attr', 'ng-reflect-selected')
-          .should('include', 'scot remplace (WFS)')
       })
       it('should save and use a chart config with custom props', () => {
         cy.get('@chartTab').click()
-        cy.get('@previewSection')
-          .find('gn-ui-dropdown-selector')
-          .eq(0)
-          .selectDropdownOption(
-            'scot approuve et opposable (WFS)-https://qgisserver.hautsdefrance.fr/cgi-bin/qgis_mapserv.fcgi?MAP=/var/www/data/qgis/applications/limites_admin.qgz'
-          )
         // everytime a dropdown option is selected the tab goes back to table view in e2e tests
         cy.get('@chartTab').click()
         cy.get('@previewSection')
@@ -423,27 +371,44 @@ describe('Preview section', () => {
           .find('gn-ui-dropdown-selector')
           .filter(':visible')
           .as('drop')
-        cy.get('@drop').eq(0).selectDropdownOption('line')
-        cy.get('@chartTab').click()
-        cy.get('@drop').eq(1).selectDropdownOption('datappro')
-        cy.get('@chartTab').click()
-        cy.get('@drop').eq(2).selectDropdownOption('pop')
-        cy.get('@chartTab').click()
+        cy.get('@drop').eq(0).selectDropdownOption('pie')
+        cy.get('@drop').eq(2).selectDropdownOption('men')
         cy.get('@drop').eq(3).selectDropdownOption('average')
-        cy.get('@chartTab').click()
         cy.get('@configTab').find('gn-ui-button').click()
-        cy.visit('/dataset/ee965118-2416-4d48-b07e-bbc696f002c2')
-        // eslint-disable-next-line cypress/no-unnecessary-waiting
-        cy.wait(1000)
+        cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
         cy.get('@chartTab').invoke('attr', 'aria-selected').should('eq', 'true')
         cy.get('@previewSection')
           .find('gn-ui-chart')
           .invoke('attr', 'ng-reflect-type')
-          .should('include', 'line')
+          .should('include', 'pie')
         cy.get('@previewSection')
           .find('gn-ui-chart')
           .invoke('attr', 'ng-reflect-value-property')
-          .should('include', 'average(pop)')
+          .should('include', 'average(men)')
+      })
+      describe('When config points to map layer but layer has been removed', () => {
+        beforeEach(() => {
+          cy.intercept(
+            'POST',
+            '/geonetwork/srv/api/search/records/_search?bucket=bucket&relatedType=fcats&relatedType=hassources',
+            {
+              fixture: 'tms-record-source-removed.json',
+            }
+          )
+          cy.visit('/dataset/zzz_nl_test_wfs_syth_la_ciotat')
+        })
+        it('should ignore the config and select the first link of view', () => {
+          cy.get('@previewSection')
+            .find('gn-ui-dropdown-selector')
+            .eq(0)
+            .invoke('text')
+            .should('include', 'la_ciotat')
+          cy.get('@previewSection')
+            .find('gn-ui-dropdown-selector')
+            .eq(1)
+            .should('exist')
+            .should('have.attr', 'ng-reflect-disabled', 'true')
+        })
       })
     })
   })

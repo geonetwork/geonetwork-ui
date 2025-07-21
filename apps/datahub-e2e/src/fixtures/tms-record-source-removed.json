@@ -1,0 +1,317 @@
+{
+  "took": 2,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 1,
+      "relation": "eq"
+    },
+    "max_score": 1.0,
+    "hits": [
+      {
+        "_index": "gn-records",
+        "_type": "_doc",
+        "_id": "zzz_nl_test_wfs_syth_la_ciotat",
+        "_score": 1.0,
+        "_source": {
+          "contactForResource": [
+            {
+              "website": "",
+              "role": "",
+              "address": "",
+              "individual": "",
+              "phone": "",
+              "logo": "",
+              "position": "",
+              "organisationObject": {
+                "default": "Moi même",
+                "langfre": "Moi même"
+              },
+              "email": "nicolas.leclerc@ign.fr"
+            }
+          ],
+          "rating": "0",
+          "cl_characterSet": [
+            {
+              "default": "Utf8",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_CharacterSetCode",
+              "key": "utf8",
+              "langfre": "Utf8"
+            }
+          ],
+          "geom": {
+            "coordinates": [
+              [
+                [5.053164, 43.152705],
+                [5.680723, 43.152705],
+                [5.680723, 43.340776],
+                [5.053164, 43.340776],
+                [5.053164, 43.152705]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "uuid": "zzz_nl_test_wfs_syth_la_ciotat",
+          "lineageObject": {},
+          "cl_type": [
+            {
+              "default": "Thème",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode",
+              "key": "theme",
+              "langfre": "Thème"
+            }
+          ],
+          "isPublishedToAll": "true",
+          "record": "record",
+          "draft": "n",
+          "linkUrl": ["https://data.geopf.fr/tms/"],
+          "changeDate": "2020-06-05T12:54:06.241Z",
+          "logo": "/images/logos/3bef299d-cf82-4033-871b-875f6936b2e2.png",
+          "tag": [
+            {
+              "default": "bdtopo",
+              "langfre": "bdtopo"
+            },
+            {
+              "default": "laCiotat",
+              "langfre": "laCiotat"
+            },
+            {
+              "default": "Adresse",
+              "langfre": "Adresse"
+            },
+            {
+              "default": "Dénomination de voie",
+              "langfre": "Dénomination de voie"
+            }
+          ],
+          "id": "753",
+          "indexingError": "true",
+          "recordGroup": "zzz_nl_test_wfs_syth_la_ciotat",
+          "metadataIdentifier": "zzz_nl_test_wfs_syth_la_ciotat",
+          "isPublishedToIntranet": "false",
+          "hasxlinks": "false",
+          "tagNumber": "4",
+          "featureOfRecord": "record",
+          "cl_topic": [
+            {
+              "default": "Limites politiques et administratives",
+              "key": "boundaries",
+              "langfre": "Limites politiques et administratives"
+            }
+          ],
+          "linkUrlProtocol": "https://viglino.github.io/ol-ext/examples/layer/map.layer.gppvtile.html",
+          "isPublishedToGuest": "false",
+          "documentStandard": "iso19115-3.2018",
+          "dateStamp": "2025-06-03T16:55:28.779Z",
+          "creationYearForResource": "2025",
+          "resourceAbstractObject": {
+            "default": "Sélection de couches issus de la BDTopo pour proposer une fond carto de bas sur al commune de la Ciotat",
+            "langfre": "Sélection de couches issus de la BDTopo pour proposer une fond carto de bas sur al commune de la Ciotat"
+          },
+          "spatialRepresentationType": "vector",
+          "isTemplate": "n",
+          "feedbackCount": "0",
+          "isHarvested": "false",
+          "creationMonthForResource": "2025-04",
+          "th_httpinspireeceuropaeutheme-themeNumber": "2",
+          "OrgForResourceObject": [
+            {
+              "default": "Moi même",
+              "langfre": "Moi même"
+            },
+            {
+              "default": "Moi même",
+              "langfre": "Moi même"
+            }
+          ],
+          "recordOwner": "admin admin",
+          "isOpenData": "false",
+          "document": "",
+          "resourceTemporalDateRange": [
+            {
+              "gte": "2025-04-23T00:00:00.000Z",
+              "lte": "2025-04-23T00:00:00.000Z"
+            }
+          ],
+          "th_otherKeywords-theme": [
+            {
+              "default": "bdtopo",
+              "langfre": "bdtopo"
+            },
+            {
+              "default": "laCiotat",
+              "langfre": "laCiotat"
+            }
+          ],
+          "cl_maintenanceAndUpdateFrequency": [
+            {
+              "default": "Inconnue",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_MaintenanceFrequencyCode",
+              "key": "unknown",
+              "langfre": "Inconnue"
+            }
+          ],
+          "link": [
+            {
+              "protocol": "TMS",
+              "function": "",
+              "applicationProfile": "",
+              "mimeType": "",
+              "urlObject": {
+                "default": "https://data.geopf.fr/tms/",
+                "langfre": "https://data.geopf.fr/tms/"
+              },
+              "nameObject": {
+                "default": "la_ciotat_gpkg_21-05-2025_tms",
+                "langfre": "la_ciotat_gpkg_21-05-2025_tms"
+              },
+              "group": 0
+            }
+          ],
+          "displayOrder": "0",
+          "mainLanguage": "fre",
+          "cl_function": [
+            {
+              "default": "Métadonnées intégrales",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode",
+              "key": "completeMetadata",
+              "langfre": "Métadonnées intégrales"
+            }
+          ],
+          "valid": "-1",
+          "groupPublishedId": ["2", "1"],
+          "indexingDate": "2025-07-21T07:56:47Z",
+          "resourceDate": [
+            {
+              "date": "2025-04-23T00:00:00.000Z",
+              "type": "creation"
+            }
+          ],
+          "sourceCatalogue": "3bef299d-cf82-4033-871b-875f6936b2e2",
+          "groupPublished": ["sample", "all"],
+          "popularity": "3",
+          "extra": "null",
+          "qualityScore": 62,
+          "cl_spatialRepresentationType": [
+            {
+              "default": "Vecteur",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_SpatialRepresentationTypeCode",
+              "key": "vector",
+              "langfre": "Vecteur"
+            }
+          ],
+          "featureTypes": [],
+          "th_httpinspireeceuropaeutheme-theme": [
+            {
+              "default": "Adresse",
+              "langfre": "Adresse"
+            },
+            {
+              "default": "Dénomination de voie",
+              "langfre": "Dénomination de voie"
+            }
+          ],
+          "hasOverview": "false",
+          "userinfo": "admin|admin|admin|Administrator",
+          "createDate": "2020-06-05T12:54:06.241Z",
+          "allKeywords": {
+            "th_otherKeywords-theme": {
+              "keywords": [
+                {
+                  "default": "bdtopo",
+                  "langfre": "bdtopo"
+                },
+                {
+                  "default": "laCiotat",
+                  "langfre": "laCiotat"
+                }
+              ],
+              "theme": "theme",
+              "title": "otherKeywords-theme"
+            },
+            "th_httpinspireeceuropaeutheme-theme": {
+              "keywords": [
+                {
+                  "default": "Adresse",
+                  "langfre": "Adresse"
+                },
+                {
+                  "default": "Dénomination de voie",
+                  "langfre": "Dénomination de voie"
+                }
+              ],
+              "theme": "",
+              "id": "geonetwork.thesaurus.external.theme.httpinspireeceuropaeutheme-theme",
+              "title": "GEMET - INSPIRE themes, version 1.0"
+            }
+          },
+          "owner": "1",
+          "indexingErrorMsg": [
+            "Warning / Keyword Adresse not found in geonetwork.thesaurus.external.theme.httpinspireeceuropaeutheme-theme.",
+            "Warning / Keyword Dénomination de voie not found in geonetwork.thesaurus.external.theme.httpinspireeceuropaeutheme-theme."
+          ],
+          "groupOwner": "2",
+          "docType": "metadata",
+          "creationDateForResource": ["2025-04-23T00:00:00.000Z"],
+          "resourceTypeNameObject": {
+            "default": "Jeu de données",
+            "langfre": "Jeu de données"
+          },
+          "resourceTitleObject": {
+            "default": "Service TMS synthétique commune de la Ciotat",
+            "langfre": "Service TMS synthétique commune de la Ciotat"
+          },
+          "th_otherKeywords-themeNumber": "2",
+          "cl_resourceScope": [
+            {
+              "default": "Jeu de données",
+              "link": "http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode",
+              "key": "dataset",
+              "langfre": "Jeu de données"
+            }
+          ],
+          "standardNameObject": {
+            "default": "ISO 19115-3",
+            "langfre": "ISO 19115-3"
+          },
+          "linkUrlProtocolTMS": "https://data.geopf.fr/tms/",
+          "location": "43.2467405,5.3669435",
+          "keywordType-theme": [
+            {
+              "default": "bdtopo",
+              "langfre": "bdtopo"
+            },
+            {
+              "default": "laCiotat",
+              "langfre": "laCiotat"
+            }
+          ],
+          "userSavedCount": "0",
+          "resourceType": ["dataset"],
+          "linkProtocol": ["TMS", "OGC:TMS"]
+        },
+        "ownerId": 1,
+        "edit": true,
+        "canReview": true,
+        "owner": true,
+        "isPublishedToAll": true,
+        "view": true,
+        "notify": true,
+        "download": true,
+        "dynamic": true,
+        "featured": true,
+        "selected": false,
+        "related": {
+          "hassources": []
+        }
+      }
+    ]
+  }
+}
