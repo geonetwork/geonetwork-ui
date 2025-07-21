@@ -394,9 +394,14 @@ export class Gn4PlatformService implements PlatformServiceInterface {
   getFileContent(url: URL | string): Observable<any> {
     return this.httpClient.get(url.toString(), { responseType: 'text' }).pipe(
       map((text) => {
-        const base64String = JSON.parse(text)
-        const decodedJsonText = atob(base64String)
-        return JSON.parse(decodedJsonText)
+        const parsed = JSON.parse(text)
+
+        if (typeof parsed === 'object') {
+          return parsed
+        }
+
+        const decoded = atob(parsed)
+        return JSON.parse(decoded)
       })
     )
   }
