@@ -62,6 +62,7 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
   sub = new Subscription()
   hasConfig = false
   savingStatus: 'idle' | 'saving' | 'saved' | 'error' = 'idle'
+  views = ['map', 'table', 'chart']
   displayMap$ = combineLatest([
     this.metadataViewFacade.mapApiLinks$,
     this.metadataViewFacade.geoDataLinksWithGeometry$,
@@ -184,18 +185,7 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
             view = 'table'
           }
 
-          let tab
-          switch (view) {
-            case 'map':
-              tab = 1
-              break
-            case 'table':
-              tab = 2
-              break
-            case 'chart':
-            default:
-              tab = 3
-          }
+          const tab = this.views.indexOf(view) + 1 || 3
 
           this.datavizConfig = {
             ...config,
@@ -266,18 +256,7 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
   }
 
   onTabIndexChange(index: number): void {
-    let view
-    switch (index) {
-      case 1:
-        view = 'map'
-        break
-      case 2:
-        view = 'table'
-        break
-      case 3:
-      default:
-        view = 'chart'
-    }
+    const view = this.views[index - 1] ?? 'chart'
     this.selectedView$.next(view)
     setTimeout(() => {
       window.dispatchEvent(new Event('resize'))
