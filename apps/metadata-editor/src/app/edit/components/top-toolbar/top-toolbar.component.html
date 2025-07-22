@@ -64,8 +64,10 @@
   </gn-ui-button> -->
   <gn-ui-button
     [title]="'editor.record.form.multilingual.open' | translate"
-    [extraClass]="translatePanelOpen ? 'bg-neutral-200 border-0' : 'bg-white'"
-    (buttonClick)="toggleTranslatePanel()"
+    [extraClass]="
+      sidePanelOpen === 'multilingual' ? 'bg-neutral-200 border-0' : 'bg-white'
+    "
+    (buttonClick)="toggleSidePanel('multilingual')"
     type="light"
   >
     <div class="relative inline-block">
@@ -78,17 +80,22 @@
       <ng-icon name="iconoirTranslate"></ng-icon>
     </div>
   </gn-ui-button>
-
+  <gn-ui-button
+    [title]="'editor.record.form.metadataQuality.open' | translate"
+    [extraClass]="
+      sidePanelOpen === 'metadataQuality'
+        ? 'bg-neutral-200 border-0'
+        : 'bg-white'
+    "
+    (buttonClick)="toggleSidePanel('metadataQuality')"
+    type="light"
+  >
+    <div class="relative inline-block">
+      <ng-icon name="iconoirBadgeCheck"></ng-icon>
+    </div>
+  </gn-ui-button>
   <md-editor-metadata-quality
     class="text-xs mx-5 w-28"
   ></md-editor-metadata-quality>
-
-  <!-- <gn-ui-button
-    type="light"
-    disabled="true"
-    [title]="'editor.temporary.disabled' | translate"
-  >
-    <ng-icon name="iconoirBadgeCheck"></ng-icon>
-  </gn-ui-button> -->
   <md-editor-publish-button></md-editor-publish-button>
 </div>

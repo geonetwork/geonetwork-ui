@@ -191,6 +191,8 @@
   "editor.record.form.license.odc-by": "Open Data Commons ODC-By",
   "editor.record.form.license.pddl": "Open Data Commons PDDL",
   "editor.record.form.license.unknown": "Inconnue ou absente",
+  "editor.record.form.metadataQuality.open": "Ouvrir le menu de qualité des métadonnées",
+  "editor.record.form.metadataQuality.title": "Complétion",
   "editor.record.form.multilingual.activate": "Activez les langues",
   "editor.record.form.multilingual.default": "Par défaut",
   "editor.record.form.multilingual.enable": "Mode Multilingue",

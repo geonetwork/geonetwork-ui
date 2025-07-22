@@ -12,6 +12,7 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { PublicationVersionError } from '@geonetwork-ui/common/domain/model/error'
 import {
   EditorFacade,
+  MetadataQualityPanelComponent,
   MultilingualPanelComponent,
   RecordFormComponent,
 } from '@geonetwork-ui/feature/editor'
@@ -59,6 +60,7 @@ marker('editor.record.form.bottomButtons.next')
     SearchHeaderComponent,
     PageErrorComponent,
     MultilingualPanelComponent,
+    MetadataQualityPanelComponent,
   ],
 })
 export class EditPageComponent implements OnInit, OnDestroy {
@@ -75,7 +77,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
 
   newRecord = false
   isLoading = true
-  translatePanelOpen = false
+  sidePanelOpen: 'multilingual' | 'metadataQuality' | null = null
 
   @ViewChild('scrollContainer') scrollContainer: ElementRef<HTMLElement>
 
