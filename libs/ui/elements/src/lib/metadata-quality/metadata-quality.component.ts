@@ -14,14 +14,15 @@ import {
   PopoverComponent,
   ProgressBarComponent,
 } from '@geonetwork-ui/ui/widgets'
+import {
+  getQualityValidators,
+  getAllKeysValidator,
+  type ValidatorMapperKeys,
+} from '@geonetwork-ui/util/shared'
 import { CommonModule } from '@angular/common'
 import { TranslateDirective } from '@ngx-translate/core'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { matInfoOutline } from '@ng-icons/material-icons/outline'
-
-type QualityChecks = {
-  [key: string]: (metadata: Partial<CatalogRecord>) => boolean
-}
 
 @Component({
   selector: 'gn-ui-metadata-quality',
@@ -48,10 +49,11 @@ type QualityChecks = {
   ],
 })
 export class MetadataQualityComponent implements OnChanges {
-  @Input() metadata: Partial<CatalogRecord>
+  @Input() metadata: CatalogRecord
   @Input() smaller = false
   @Input() metadataQualityDisplay: boolean
   @Input() popoverDisplay = true
+  @Input() keysValidator?: ValidatorMapperKeys[]
 
   items: MetadataQualityItem[] = []
 
@@ -63,65 +65,23 @@ export class MetadataQualityComponent implements OnChanges {
   }
 
   get calculatedQualityScore(): number {
-    console.log("calculatedQualityScore === this.items", this.items)
-
     return Math.round(
       (this.items.filter(({ value }) => value).length * 100) / this.items.length
     )
   }
 
-  private add(name: string, value: boolean) {
-    if (this.metadataQualityDisplay?.[name] !== false) {
-      this.items.push({ name, value })
-    }
-  }
   hasGetCapabilities(url: string): boolean {
     return url.toLowerCase().includes('capabilities')
   }
 
-  private readonly COMMON_CHECKS: QualityChecks = {
-    title: (metadata) => !!metadata?.title,
-    description: (metadata) => !!metadata?.abstract,
-    keywords: (metadata) => (metadata?.keywords?.length ?? 0) > 0,
-    legalConstraints: (metadata) =>
-      (metadata?.legalConstraints?.length ?? 0) > 0,
-    contact: (metadata) => !!metadata?.contacts?.[0]?.email,
-  }
-
-  private readonly SPECIFIC_CHECKS: Record<string, QualityChecks> = {
-    dataset: {
-      updateFrequency: (metadata) => { console.log(metadata?.updateFrequency); return !!metadata?.updateFrequency },
-      topic: (metadata) => (metadata?.topics?.length ?? 0) > 0,
-      organisation: (metadata) => !!metadata?.contacts?.[0]?.organization?.name,
-    },
-    service: {
-      capabilities: (metadata) =>
-        (metadata?.onlineResources ?? []).some((resource) =>
-          this.hasGetCapabilities(resource?.url?.href ?? '')
-        ),
-    },
-    reuse: {
-      topic: (metadata) => (metadata?.topics?.length ?? 0) > 0,
-      organisation: (metadata) => !!metadata?.contacts?.[0]?.organization?.name,
-      source: (metadata) => !!metadata?.extras?.sourcesIdentifiers,
-    },
-  }
-
   initialize() {
-    this.items = []
-
-    Object.entries(this.COMMON_CHECKS).forEach(([name, check]) => {
-      this.add(name, check(this.metadata))
-    })
-
-    const datasetType = this.metadata?.kind
-    if (datasetType && this.SPECIFIC_CHECKS[datasetType]) {
-      Object.entries(this.SPECIFIC_CHECKS[datasetType]).forEach(
-        ([name, check]) => {
-          this.add(name, check(this.metadata))
-        }
-      )
+    if (!this.keysValidator) {
+      this.keysValidator = getAllKeysValidator()
     }
+
+    this.items = getQualityValidators(this.metadata, this.keysValidator).map(
+      ({ name, validator }) => ({ name, value: validator(this.metadata) })
+    )
   }
 
   ngOnChanges(changes: SimpleChanges): void {

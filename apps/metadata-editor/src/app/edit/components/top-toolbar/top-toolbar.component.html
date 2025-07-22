@@ -21,18 +21,27 @@
     <ng-icon name="iconoirDownload"></ng-icon>
   </gn-ui-button> -->
   <ng-container *ngrxLet="saveStatus$ as saveStatus">
-    <gn-ui-button type="light" (buttonClick)="confirmUndo()" [disabled]="saveStatus !== 'draft_changes_pending'"
+    <gn-ui-button
+      type="light"
+      (buttonClick)="confirmUndo()"
+      [disabled]="saveStatus !== 'draft_changes_pending'"
       [matTooltip]="
         (saveStatus === 'draft_changes_pending'
           ? 'editor.record.undo.tooltip.enabled'
           : 'editor.record.undo.tooltip.disabled'
         ) | translate
-      " data-cy="undo-button">
+      "
+      data-cy="undo-button"
+    >
       <ng-icon name="iconoirUndoAction"></ng-icon>
     </gn-ui-button>
   </ng-container>
-  <div class="grow flex flex-row items-center justify-center gap-1 text-[14px]" data-cy="save-status"
-    [attr.data-cy-value]="saveStatus$ | async" [ngSwitch]="saveStatus$ | async">
+  <div
+    class="grow flex flex-row items-center justify-center gap-1 text-[14px]"
+    data-cy="save-status"
+    [attr.data-cy-value]="saveStatus$ | async"
+    [ngSwitch]="saveStatus$ | async"
+  >
     <ng-container *ngSwitchCase="'record_not_published'">
       <ng-icon class="text-lime-400" name="iconoirCheckCircle"></ng-icon>
       <span translate>editor.record.saveStatus.recordNotPublished</span>
@@ -53,18 +62,29 @@
   >
     <ng-icon name="matHelpOutlineOutline"></ng-icon>
   </gn-ui-button> -->
-  <gn-ui-button [title]="'editor.record.form.multilingual.open' | translate"
-    [extraClass]="translatePanelOpen ? 'bg-neutral-200 border-0' : 'bg-white'" (buttonClick)="toggleTranslatePanel()"
-    type="light">
+  <gn-ui-button
+    [title]="'editor.record.form.multilingual.open' | translate"
+    [extraClass]="translatePanelOpen ? 'bg-neutral-200 border-0' : 'bg-white'"
+    (buttonClick)="toggleTranslatePanel()"
+    type="light"
+  >
     <div class="relative inline-block">
-      <ng-icon size="8px" name="matCircle" class="text-primary absolute top-0 right-0"
-        *ngIf="isRecordMultilingual$ | async"></ng-icon>
+      <ng-icon
+        size="8px"
+        name="matCircle"
+        class="text-primary absolute top-0 right-0"
+        *ngIf="isRecordMultilingual$ | async"
+      ></ng-icon>
       <ng-icon name="iconoirTranslate"></ng-icon>
     </div>
   </gn-ui-button>
 
-  <gn-ui-metadata-quality class="text-xs mx-5 w-28" [metadata]="record$ | async" [metadataQualityDisplay]="true"
-    [popoverDisplay]="false"></gn-ui-metadata-quality>
+  <gn-ui-metadata-quality
+    class="text-xs mx-5 w-28"
+    [metadata]="record$ | async"
+    [metadataQualityDisplay]="true"
+    [popoverDisplay]="false"
+  ></gn-ui-metadata-quality>
 
   <!-- <gn-ui-button
     type="light"
