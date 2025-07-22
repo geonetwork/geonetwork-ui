@@ -80,7 +80,7 @@ export class MetadataQualityComponent implements OnChanges {
     }
 
     this.items = getQualityValidators(this.metadata, this.keysValidator).map(
-      ({ name, validator }) => ({ name, value: validator(this.metadata) })
+      ({ name, validator }) => ({ name, value: validator() })
     )
   }
 

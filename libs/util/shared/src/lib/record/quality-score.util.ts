@@ -62,8 +62,8 @@ export function getQualityValidators(
     getMappersFromKind(record.kind).includes(prop)
   )
 
-  return filteredProps.map((prop) => ({
-    name: prop,
-    validator: ValidatorMapper[prop],
+  return filteredProps.map((name) => ({
+    name,
+    validator: () => ValidatorMapper[name](record),
   }))
 }
