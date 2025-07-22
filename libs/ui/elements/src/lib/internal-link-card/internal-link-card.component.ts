@@ -21,7 +21,11 @@ import { KindBadgeComponent } from '../kind-badge/kind-badge.component'
 import { MarkdownParserComponent } from '../markdown-parser/markdown-parser.component'
 import { MetadataQualityComponent } from '../metadata-quality/metadata-quality.component'
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
-import { removeWhitespace, stripHtml } from '@geonetwork-ui/util/shared'
+import {
+  removeWhitespace,
+  stripHtml,
+  type ValidatorMapperKeys,
+} from '@geonetwork-ui/util/shared'
 
 type CardSize = 'L' | 'M' | 'S' | 'XS'
 
@@ -68,6 +72,18 @@ export class InternalLinkCardComponent implements OnInit {
 
   abstract: string
   cardClass: string
+  propsToValidate: ValidatorMapperKeys[] = [
+    'title',
+    'description',
+    'keywords',
+    'legalConstraints',
+    'contact',
+    'updateFrequency',
+    'topic',
+    'organisation',
+    'capabilities',
+    'source',
+  ]
 
   private _size: CardSize = 'L'
 

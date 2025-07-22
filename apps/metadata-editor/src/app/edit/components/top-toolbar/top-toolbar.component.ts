@@ -8,10 +8,7 @@ import {
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
-import {
-  ConfirmationDialogComponent,
-  MetadataQualityComponent,
-} from '@geonetwork-ui/ui/elements'
+import { ConfirmationDialogComponent } from '@geonetwork-ui/ui/elements'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { LetDirective } from '@ngrx/component'
 import {
@@ -22,6 +19,7 @@ import {
 import { combineLatest, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { PublishButtonComponent } from '../publish-button/publish-button.component'
+import { MetadataQualityComponent } from '../metadata-quality/metadata-quality.component'
 import {
   NgIconComponent,
   provideIcons,

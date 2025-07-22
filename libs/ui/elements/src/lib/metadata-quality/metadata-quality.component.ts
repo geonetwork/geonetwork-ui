@@ -53,7 +53,7 @@ export class MetadataQualityComponent implements OnChanges {
   @Input() smaller = false
   @Input() metadataQualityDisplay: boolean
   @Input() popoverDisplay = true
-  @Input() keysValidator?: ValidatorMapperKeys[]
+  @Input() propsToValidate?: ValidatorMapperKeys[]
 
   items: MetadataQualityItem[] = []
 
@@ -75,11 +75,11 @@ export class MetadataQualityComponent implements OnChanges {
   }
 
   initialize() {
-    if (!this.keysValidator) {
-      this.keysValidator = getAllKeysValidator()
+    if (!this.propsToValidate) {
+      this.propsToValidate = getAllKeysValidator()
     }
 
-    this.items = getQualityValidators(this.metadata, this.keysValidator).map(
+    this.items = getQualityValidators(this.metadata, this.propsToValidate).map(
       ({ name, validator }) => ({ name, value: validator() })
     )
   }
