@@ -38,12 +38,13 @@ describe('MetadataQualityComponent', () => {
   it('should initialize with default propsToValidate', () => {
     expect(component.propsToValidate).toEqual([
       'title',
-      'description',
+      'abstract',
       'keywords',
       'legalConstraints',
-      'contact',
+      'contacts',
+      'organisation',
       'updateFrequency',
-      'topic',
+      'topics',
     ])
   })
 
