@@ -1,94 +1,59 @@
-// import { ComponentFixture, TestBed } from '@angular/core/testing'
-// import { TopToolbarComponent } from './top-toolbar.component'
-// import { Component } from '@angular/core'
-// import { PublishButtonComponent } from '../publish-button/publish-button.component'
-// import { BehaviorSubject } from 'rxjs'
-// import { EditorFacade } from '@geonetwork-ui/feature/editor'
-// import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { BehaviorSubject } from 'rxjs'
+import { By } from '@angular/platform-browser'
+import { MetadataQualityComponent } from './metadata-quality.component'
+import { EditorFacade } from '@geonetwork-ui/feature/editor'
 
-// class EditorFacadeMock {
-//   changedSinceSave$ = new BehaviorSubject(false)
-//   isPublished$ = new BehaviorSubject(false)
-//   record$ = new BehaviorSubject({
-//     otherLanguages: [],
-//   })
-// }
+class EditorFacadeMock {
+    record$ = new BehaviorSubject({
+        otherLanguages: [],
+    })
+}
 
-// @Component({
-//   selector: 'md-editor-publish-button',
-//   template: '',
-//   standalone: true,
-// })
-// class MockPublishButtonComponent {}
+describe('MetadataQualityComponent', () => {
+    let component: MetadataQualityComponent
+    let fixture: ComponentFixture<MetadataQualityComponent>
+    let editorFacade: EditorFacadeMock
 
-// describe('TopToolbarComponent', () => {
-//   let component: TopToolbarComponent
-//   let fixture: ComponentFixture<TopToolbarComponent>
-//   let editorFacade: EditorFacadeMock
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            providers: [
+                {
+                    provide: EditorFacade,
+                    useClass: EditorFacadeMock,
+                },
+            ],
+        }).compileComponents()
 
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       providers: [
-//         provideI18n(),
-//         {
-//           provide: EditorFacade,
-//           useClass: EditorFacadeMock,
-//         },
-//       ],
-//     })
-//       .overrideComponent(TopToolbarComponent, {
-//         add: {
-//           imports: [MockPublishButtonComponent],
-//         },
-//         remove: {
-//           imports: [PublishButtonComponent],
-//         },
-//       })
-//       .compileComponents()
+        fixture = TestBed.createComponent(MetadataQualityComponent)
+        component = fixture.componentInstance
+        editorFacade = TestBed.inject(EditorFacade) as any
+        fixture.detectChanges()
+    })
 
-//     fixture = TestBed.createComponent(TopToolbarComponent)
-//     component = fixture.componentInstance
-//     editorFacade = TestBed.inject(EditorFacade) as any
-//     fixture.detectChanges()
-//   })
+    it('should create', () => {
+        expect(component).toBeTruthy()
+    })
 
-//   it('should create', () => {
-//     expect(component).toBeTruthy()
-//   })
+    it('should initialize with default propsToValidate', () => {
+        expect(component.propsToValidate).toEqual([
+            'title',
+            'description',
+            'keywords',
+            'legalConstraints',
+            'contact',
+            'updateFrequency',
+            'topic',
+        ])
+    })
 
-//   describe('save status', () => {
-//     let saveStatus: string
-//     beforeEach(() => {
-//       component['saveStatus$'].subscribe((status) => {
-//         saveStatus = status
-//       })
-//     })
-//     describe('saved and not published', () => {
-//       beforeEach(() => {
-//         editorFacade.changedSinceSave$.next(false)
-//         editorFacade.isPublished$.next(false)
-//       })
-//       it('sets the correct status', () => {
-//         expect(saveStatus).toBe('record_not_published')
-//       })
-//     })
-//     describe('saved, published and up to date', () => {
-//       beforeEach(() => {
-//         editorFacade.changedSinceSave$.next(false)
-//         editorFacade.isPublished$.next(true)
-//       })
-//       it('sets the correct status', () => {
-//         expect(saveStatus).toBe('record_up_to_date')
-//       })
-//     })
-//     describe('saved, published, pending changes', () => {
-//       beforeEach(() => {
-//         editorFacade.changedSinceSave$.next(true)
-//         editorFacade.isPublished$.next(true)
-//       })
-//       it('sets the correct status', () => {
-//         expect(saveStatus).toBe('draft_changes_pending')
-//       })
-//     })
-//   })
-// })
+    it('should pass correct inputs to gn-ui-metadata-quality', () => {
+        const uiComponent = fixture.debugElement.query(
+            By.css('gn-ui-metadata-quality')
+        ).componentInstance
+
+        expect(uiComponent.metadataQualityDisplay).toBe(true)
+        expect(uiComponent.popoverDisplay).toBe(false)
+        expect(uiComponent.propsToValidate).toEqual(component.propsToValidate)
+    })
+})
