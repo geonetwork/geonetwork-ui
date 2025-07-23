@@ -11,7 +11,9 @@ export function getStatusFromStatusCode(statusCode: string): RecordStatus {
     case 'onGoing':
       return 'ongoing'
     case 'planned':
+      return 'planned'
     case 'required':
+      return 'required'
     case 'underDevelopment':
     default:
       return 'under_development'

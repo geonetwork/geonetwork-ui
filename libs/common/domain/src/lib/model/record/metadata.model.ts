@@ -69,6 +69,8 @@ marker('domain.record.status.ongoing')
 marker('domain.record.status.under_development')
 marker('domain.record.status.deprecated')
 marker('domain.record.status.removed')
+marker('domain.record.status.planned')
+marker('domain.record.status.required')
 
 export const RecordStatusValues = [
   'completed',
@@ -76,6 +78,8 @@ export const RecordStatusValues = [
   'under_development',
   'deprecated',
   'removed',
+  'planned',
+  'required',
 ]
 export type RecordStatus = (typeof RecordStatusValues)[number]
 
