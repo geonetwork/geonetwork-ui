@@ -11,6 +11,7 @@ import {
   MetadataInfoComponent,
 } from '@geonetwork-ui/ui/elements'
 import { BehaviorSubject, of } from 'rxjs'
+import { take } from 'rxjs/operators'
 import { RecordMetadataComponent } from './record-metadata.component'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
@@ -21,6 +22,8 @@ import { RecordOtherlinksComponent } from '../record-otherlinks/record-otherlink
 import { RecordApisComponent } from '../record-apis/record-apis.component'
 import { RecordInternalLinksComponent } from '../record-internal-links/record-internal-links.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { REUSE_FORM_URL } from '../record-data-preview/record-data-preview.component'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
@@ -56,12 +59,17 @@ class OrganisationsServiceMock {
   )
 }
 
+class PlatformServiceMock {
+  getMe = jest.fn(() => of(null))
+}
+
 describe('RecordMetadataComponent', () => {
   let component: RecordMetadataComponent
   let fixture: ComponentFixture<RecordMetadataComponent>
   let facade
   let searchService: SearchService
   let sourcesService: SourcesService
+  let platformService: PlatformServiceInterface
 
   beforeEach(() => MockBuilder(RecordMetadataComponent))
 
@@ -85,11 +93,20 @@ describe('RecordMetadataComponent', () => {
           provide: OrganizationsServiceInterface,
           useClass: OrganisationsServiceMock,
         },
+        {
+          provide: PlatformServiceInterface,
+          useClass: PlatformServiceMock,
+        },
+        {
+          provide: REUSE_FORM_URL,
+          useValue: 'https://example.com/reuse',
+        },
       ],
     }).compileComponents()
     facade = TestBed.inject(MdViewFacade)
     searchService = TestBed.inject(SearchService)
     sourcesService = TestBed.inject(SourcesService)
+    platformService = TestBed.inject(PlatformServiceInterface)
   })
 
   beforeEach(() => {
@@ -413,6 +430,51 @@ describe('RecordMetadataComponent', () => {
           expect(result.componentInstance.type).toBe(
             ErrorType.DATASET_HAS_NO_LINK
           )
+        })
+      })
+    })
+  })
+  describe('Reuse Button', () => {
+    describe('display rules for reuse button', () => {
+      beforeEach(() => {
+        component.reuseFormUrl = 'https://example.com/reuse'
+        ;(platformService.getMe as jest.Mock).mockReturnValue(of(null))
+        facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'dataset' } })
+        fixture.detectChanges()
+      })
+
+      it('do not display reuse button when user is not logged in', () => {
+        component.showReuseButton().subscribe((visible) => {
+          expect(visible).toBe(false)
+        })
+      })
+
+      it('do not display reuse button  when kind is not dataset', () => {
+        ;(platformService.getMe as jest.Mock).mockReturnValue(
+          of({ id: 'user1' })
+        )
+        facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'service' } })
+
+        component.showReuseButton().subscribe((visible) => {
+          expect(visible).toBe(false)
+        })
+      })
+
+      it('do not display reuse button  when reuseFormUrl is not defined', () => {
+        component.reuseFormUrl = null
+        ;(platformService.getMe as jest.Mock).mockReturnValue(
+          of({ id: 'user1' })
+        )
+        facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'dataset' } })
+
+        component.showReuseButton().subscribe((visible) => {
+          expect(visible).toBe(false)
+        })
+      })
+
+      it('display reuse button when all conditions are met', () => {
+        component.showReuseButton().subscribe((visible) => {
+          expect(visible).toBe(true)
         })
       })
     })

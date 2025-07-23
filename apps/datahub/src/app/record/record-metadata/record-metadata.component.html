@@ -59,6 +59,19 @@
               name="matChatOutline"
             ></ng-icon>
           </gn-ui-button>
+          <gn-ui-button
+            *ngIf="showReuseButton() | async"
+            type="outline"
+            extraClass="w-full flex flex-row justify-between bg-white"
+            [style.--gn-ui-button-rounded]="'10px'"
+            (buttonClick)="navigateToReuseForm()"
+          >
+            <span translate>service.metadata.reuse</span>
+            <ng-icon
+              class="mr-[5px] text-[1em]"
+              name="iconoirAppWindow"
+            ></ng-icon>
+          </gn-ui-button>
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@ export interface GlobalConfig {
   WEB_COMPONENT_EMBEDDER_URL?: string
   LANGUAGES?: string[]
   CONTACT_EMAIL?: string
+  REUSE_FORM_URL?: string
 }
 
 export interface LayerConfig {

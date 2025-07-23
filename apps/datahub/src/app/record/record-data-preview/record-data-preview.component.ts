@@ -33,6 +33,7 @@ import {
 } from 'rxjs'
 
 export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
+export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
 
 @Component({
   selector: 'datahub-record-data-preview',
@@ -126,6 +127,9 @@ export class RecordDataPreviewComponent implements OnDestroy {
     @Inject(MAX_FEATURE_COUNT)
     @Optional()
     protected maxFeatureCount: number,
+    @Inject(REUSE_FORM_URL)
+    @Optional()
+    public reuseFormUrl: string,
     private platformServiceInterface: PlatformServiceInterface,
     private cdr: ChangeDetectorRef
   ) {}
