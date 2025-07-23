@@ -142,6 +142,7 @@
   "editor.record.form.draft.updateAlert": "Da quando è stata creata questa bozza, questo dataset è stato modificato il { date } da { user }. La pubblicazione della sua versione potrebbe rimuovere le loro modifiche. Per evitarlo, puoi annullare le sue modifiche o pubblicare la sua versione consapevolmente.",
   "editor.record.form.field.abstract": "Riassunto",
   "editor.record.form.field.constraintsShortcuts": "",
+  "editor.record.form.field.contacts": "",
   "editor.record.form.field.contacts.noContact": "Inserisci almeno un punto di contatto.",
   "editor.record.form.field.contacts.placeholder": "Scegli un contatto",
   "editor.record.form.field.contactsForResource.noContact": "Inserisci almeno un punto di contatto responsabile dei dati.",

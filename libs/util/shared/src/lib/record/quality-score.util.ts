@@ -9,10 +9,10 @@ type TValidatorMapper = {
 
 const ValidatorMapper: TValidatorMapper = {
   title: (record) => !!record?.title,
-  description: (record) => !!record?.abstract,
+  abstract: (record) => !!record?.abstract,
   keywords: (record) => (record?.keywords?.length ?? 0) > 0,
   legalConstraints: (record) => (record?.legalConstraints?.length ?? 0) > 0,
-  contact: (record) => !!record?.contacts?.[0]?.email,
+  contacts: (record) => !!record?.contacts?.[0]?.email,
   updateFrequency: (record) => !!record?.updateFrequency,
   topic: (record) => (record?.topics?.length ?? 0) > 0,
   organisation: (record) => !!record?.contacts?.[0]?.organization?.name,
@@ -33,10 +33,10 @@ function getMappersFromKind(kind: RecordKind) {
   let kindKeys = <ValidatorMapperKeys[]>[]
   const commonsKeys = <ValidatorMapperKeys[]>[
     'title',
-    'description',
+    'abstract',
     'keywords',
     'legalConstraints',
-    'contact',
+    'contacts',
   ]
 
   switch (kind) {

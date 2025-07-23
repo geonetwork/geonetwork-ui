@@ -142,6 +142,7 @@
   "editor.record.form.draft.updateAlert": "Depuis la création de ce brouillon, ce jeu de données a été modifié le { date } par { user }. Publier votre version peut supprimer ses modifications. Pour éviter cela, vous pouvez annuler vos changements, ou publier votre version en connaissance de cause.",
   "editor.record.form.field.abstract": "Description",
   "editor.record.form.field.constraintsShortcuts": "",
+  "editor.record.form.field.contacts": "Point de contact",
   "editor.record.form.field.contacts.noContact": "Veuillez renseigner au moins un point de contact.",
   "editor.record.form.field.contacts.placeholder": "Choisissez un contact",
   "editor.record.form.field.contactsForResource.noContact": "Veuillez renseigner au moins un point de contact responsable de la donnée.",

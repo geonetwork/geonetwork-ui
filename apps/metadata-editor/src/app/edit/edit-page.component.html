@@ -70,6 +70,7 @@
       <gn-ui-metadata-quality-panel
         *ngIf="sidePanelOpen === 'metadataQuality'"
         [record]="facade.record$ | async"
+        [editorConfig]="facade.editorConfig$ | async"
       >
       </gn-ui-metadata-quality-panel>
     </div>

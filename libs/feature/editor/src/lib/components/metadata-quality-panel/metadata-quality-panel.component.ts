@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component, Input } from '@angular/core'
+import { Component, Input, OnInit } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import {
@@ -13,7 +13,11 @@ import {
 } from '@ng-icons/core'
 import { iconoirBadgeCheck, iconoirSystemShut } from '@ng-icons/iconoir'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
+import { EditorConfig } from '../../models'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
+//add translation since field only has section title
+marker('editor.record.form.field.contacts')
 @Component({
   selector: 'gn-ui-metadata-quality-panel',
   standalone: true,
@@ -36,27 +40,44 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
   templateUrl: './metadata-quality-panel.component.html',
   styleUrl: './metadata-quality-panel.component.css',
 })
-export class MetadataQualityPanelComponent {
+export class MetadataQualityPanelComponent implements OnInit {
   propsToValidate: ValidatorMapperKeys[] = [
     'title',
-    'description',
+    'abstract',
     'keywords',
-    'legalConstraints',
-    'contact',
     'updateFrequency',
-    'topic',
-    'organisation',
-    'capabilities',
-    'source',
+    'topics',
+    'legalConstraints',
+    'contacts',
   ]
-  properties: { label: string; value: boolean }[] = []
-  @Input() set record(value: CatalogRecord) {
-    this.properties = getQualityValidators(value, this.propsToValidate).map(
-      ({ name, validator }) => ({
-        label: `editor.record.form.field.${name}`, // use same translations as in fields.config.ts
-        value: validator(),
-      })
-    )
+  propertiesByPage: { label: string; value: boolean }[][] = []
+  @Input() editorConfig: EditorConfig
+  @Input() record: CatalogRecord
+
+  ngOnInit() {
+    if (this.editorConfig && this.record) {
+      const fieldsByPage = this.editorConfig.pages.map((page) =>
+        page.sections.flatMap((section) =>
+          section.fields
+            .filter(
+              (field) =>
+                this.propsToValidate.includes(field.model) && !field.hidden
+            )
+            .map((field) => field.model as ValidatorMapperKeys)
+        )
+      )
+      this.propertiesByPage = fieldsByPage
+        .map((fields) =>
+          getQualityValidators(
+            this.record,
+            fields as ValidatorMapperKeys[]
+          ).map(({ name, validator }) => ({
+            label: `editor.record.form.field.${name}`, // use same translations as in fields.config.ts
+            value: validator(),
+          }))
+        )
+        .filter((arr) => arr.length > 0)
+    }
   }
 
   getExtraClass(checked: boolean): string {

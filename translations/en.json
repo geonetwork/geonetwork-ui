@@ -142,6 +142,7 @@
   "editor.record.form.draft.updateAlert": "Since you created this draft, the dataset has been updated on { date } by { user }. Publishing your draft might erase their edits. To avoid this, you need to either cancel your changes or knowingly publish your own version.",
   "editor.record.form.field.abstract": "Abstract",
   "editor.record.form.field.constraintsShortcuts": "",
+  "editor.record.form.field.contacts": "Point of contact",
   "editor.record.form.field.contacts.noContact": "Please provide at least one point of contact.",
   "editor.record.form.field.contacts.placeholder": "Choose a contact",
   "editor.record.form.field.contactsForResource.noContact": "Please provide at least one point of contact responsible for the data.",

@@ -142,6 +142,7 @@
   "editor.record.form.draft.updateAlert": "",
   "editor.record.form.field.abstract": "Kurzbeschreibung",
   "editor.record.form.field.constraintsShortcuts": "",
+  "editor.record.form.field.contacts": "Ansprechpartner",
   "editor.record.form.field.contacts.noContact": "",
   "editor.record.form.field.contacts.placeholder": "",
   "editor.record.form.field.contactsForResource.noContact": "",
