@@ -14,7 +14,7 @@ const ValidatorMapper: TValidatorMapper = {
   legalConstraints: (record) => (record?.legalConstraints?.length ?? 0) > 0,
   contacts: (record) => !!record?.contacts?.[0]?.email,
   updateFrequency: (record) => !!record?.updateFrequency,
-  topic: (record) => (record?.topics?.length ?? 0) > 0,
+  topics: (record) => (record?.topics?.length ?? 0) > 0,
   organisation: (record) => !!record?.contacts?.[0]?.organization?.name,
   capabilities: (record) =>
     record?.onlineResources?.some((resource) =>
@@ -44,11 +44,11 @@ function getMappersFromKind(kind: RecordKind) {
       kindKeys = ['capabilities']
       break
     case 'reuse':
-      kindKeys = ['topic', 'organisation', 'source']
+      kindKeys = ['topics', 'organisation', 'source']
       break
     case 'dataset':
     default:
-      kindKeys = ['updateFrequency', 'topic', 'organisation']
+      kindKeys = ['updateFrequency', 'topics', 'organisation']
   }
 
   return [...commonsKeys, ...kindKeys]

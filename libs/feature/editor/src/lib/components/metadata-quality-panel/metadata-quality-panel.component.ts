@@ -16,8 +16,11 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { EditorConfig } from '../../models'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
-//add translation since field only has section title
+//forced translations that are not available in fields.config.ts
+marker('editor.record.form.field.keywords')
+marker('editor.record.form.field.topics')
 marker('editor.record.form.field.contacts')
+marker('editor.record.form.field.organisation')
 @Component({
   selector: 'gn-ui-metadata-quality-panel',
   standalone: true,
@@ -49,6 +52,7 @@ export class MetadataQualityPanelComponent implements OnInit {
     'topics',
     'legalConstraints',
     'contacts',
+    'organisation',
   ]
   propertiesByPage: { label: string; value: boolean }[][] = []
   @Input() editorConfig: EditorConfig
@@ -66,6 +70,12 @@ export class MetadataQualityPanelComponent implements OnInit {
             .map((field) => field.model as ValidatorMapperKeys)
         )
       )
+      // FIXME: temporarily add topics and organisation to the first and third page
+      // as long as they are not handled by the editor
+      if (fieldsByPage.length > 0) {
+        fieldsByPage[0].push('topics')
+        fieldsByPage[2].push('organisation')
+      }
       this.propertiesByPage = fieldsByPage
         .map((fields) =>
           getQualityValidators(
@@ -82,7 +92,7 @@ export class MetadataQualityPanelComponent implements OnInit {
 
   getExtraClass(checked: boolean): string {
     const baseClasses =
-      'flex flex-row justify-between rounded mb-1 h-[34px] w-full hover:border-none border-none hover:text-black text-black cursor-default'
+      'flex flex-row justify-between rounded mb-1 h-[34px] w-full focus:ring-0 hover:border-none border-none hover:text-black text-black cursor-default'
     return checked
       ? `${baseClasses} bg-neutral-100 hover:bg-neutral-100`
       : `${baseClasses} bg-transparent hover:bg-transparent`
