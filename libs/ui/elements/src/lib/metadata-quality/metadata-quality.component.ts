@@ -54,17 +54,21 @@ export class MetadataQualityComponent implements OnChanges {
   @Input() metadataQualityDisplay: boolean
   @Input() popoverDisplay = true
   @Input() propsToValidate?: ValidatorMapperKeys[]
+  @Input() forceComputeScore = false // Instead of returning es' quality score
 
   items: MetadataQualityItem[] = []
 
   get qualityScore() {
-    const qualityScore = this.metadata?.extras?.qualityScore
+    const qualityScore = !this.forceComputeScore
+      ? this.metadata?.extras?.qualityScore
+      : this.computedQualityScore
+
     return typeof qualityScore === 'number'
       ? qualityScore
-      : this.calculatedQualityScore
+      : this.computedQualityScore
   }
 
-  get calculatedQualityScore(): number {
+  get computedQualityScore(): number {
     return Math.round(
       (this.items.filter(({ value }) => value).length * 100) / this.items.length
     )
