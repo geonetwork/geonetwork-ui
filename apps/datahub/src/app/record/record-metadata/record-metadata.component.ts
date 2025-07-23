@@ -218,19 +218,6 @@ export class RecordMetadataComponent {
 
   errorTypes = ErrorType
 
-  propsToValidate: ValidatorMapperKeys[] = [
-    'title',
-    'description',
-    'keywords',
-    'legalConstraints',
-    'contact',
-    'updateFrequency',
-    'topic',
-    'organisation',
-    'capabilities',
-    'source',
-  ]
-
   constructor(
     public metadataViewFacade: MdViewFacade,
     private searchService: SearchService,

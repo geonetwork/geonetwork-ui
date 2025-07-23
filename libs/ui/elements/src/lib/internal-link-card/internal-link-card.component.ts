@@ -72,18 +72,6 @@ export class InternalLinkCardComponent implements OnInit {
 
   abstract: string
   cardClass: string
-  propsToValidate: ValidatorMapperKeys[] = [
-    'title',
-    'description',
-    'keywords',
-    'legalConstraints',
-    'contact',
-    'updateFrequency',
-    'topic',
-    'organisation',
-    'capabilities',
-    'source',
-  ]
 
   private _size: CardSize = 'L'
 
