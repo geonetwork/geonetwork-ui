@@ -66,7 +66,7 @@ describe('editor form', () => {
         .find('[data-cy=progressPercentage]')
         .invoke('text')
         .invoke('trim')
-        .should('eql', '88%')
+        .should('eql', '86%')
       cy.get('@abstractField').type('modified abstract')
       // Quality widget update
       cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
