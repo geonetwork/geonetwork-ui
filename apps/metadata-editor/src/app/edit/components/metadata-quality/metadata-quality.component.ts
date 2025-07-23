@@ -3,10 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { EditorFacade } from '@geonetwork-ui/feature/editor'
 import { type ValidatorMapperKeys } from '@geonetwork-ui/util/shared'
 import { MetadataQualityComponent as GnUiMetadataQualityComponent } from '@geonetwork-ui/ui/elements'
-import {
-  TranslateDirective,
-  TranslatePipe,
-} from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'md-editor-metadata-quality',
@@ -33,7 +30,5 @@ export class MetadataQualityComponent {
     'topic',
   ]
 
-  constructor(
-    private editorFacade: EditorFacade
-  ) { }
+  constructor(private editorFacade: EditorFacade) {}
 }
