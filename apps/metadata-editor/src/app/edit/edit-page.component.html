@@ -69,7 +69,9 @@
       </gn-ui-multilingual-panel>
       <gn-ui-metadata-quality-panel
         *ngIf="sidePanelOpen === 'metadataQuality'"
-      ></gn-ui-metadata-quality-panel>
+        [record]="facade.record$ | async"
+      >
+      </gn-ui-metadata-quality-panel>
     </div>
   </div>
   <div
