@@ -6,7 +6,6 @@ import { MetadataQualityComponent as GnUiMetadataQualityComponent } from '@geone
 import {
   TranslateDirective,
   TranslatePipe,
-  TranslateService,
 } from '@ngx-translate/core'
 
 @Component({
@@ -32,13 +31,9 @@ export class MetadataQualityComponent {
     'contact',
     'updateFrequency',
     'topic',
-    'organisation',
-    'capabilities',
-    'source',
   ]
 
   constructor(
-    private translateService: TranslateService,
     private editorFacade: EditorFacade
-  ) {}
+  ) { }
 }
