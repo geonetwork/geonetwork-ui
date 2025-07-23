@@ -6,6 +6,7 @@ import {
   getFileFormat,
   getFileFormatFromServiceOutput,
   getLayers,
+  getLinkId,
   getLinkLabel,
   getLinkPriority,
   mimeTypeToFormat,
@@ -446,6 +447,20 @@ describe('link utils', () => {
           type: 'download',
         })
       ).toEqual('Cities (geojson)')
+    })
+  })
+
+  describe('#getLinkId', () => {
+    it('returns an ID for any link', () => {
+      expect(
+        getLinkId({
+          description: 'A mapping service',
+          name: 'some_layer',
+          url: new URL('http://example.com/service'),
+          type: 'service',
+          accessServiceProtocol: 'wms',
+        })
+      ).toEqual('A mapping service (WMS)-http://example.com/service')
     })
   })
 

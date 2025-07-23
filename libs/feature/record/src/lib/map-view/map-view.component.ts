@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core'
 import { MapUtilsService } from '@geonetwork-ui/feature/map'
-import { getLinkLabel } from '@geonetwork-ui/util/shared'
+import { getLinkId, getLinkLabel } from '@geonetwork-ui/util/shared'
 import {
   BehaviorSubject,
   combineLatest,
@@ -100,15 +100,28 @@ export class MapViewComponent implements AfterViewInit {
   @Input() set exceedsLimit(value: boolean) {
     this.excludeWfs$.next(value)
   }
+  linkFromConfig$ = new BehaviorSubject(null)
+  _selectedChoice = null
+  _styleFromConfig = null
+
+  linkMap: Map<string, DatasetOnlineResource> = new Map()
   @Input() set selectedView(value: string) {
-    if (value === 'map') {
-      this.selectedLink$.pipe(take(1)).subscribe((link) => {
-        this.linkSelected.emit(link)
-      })
+    this.selectedView$.next(value)
+  }
+  @Input() set datavizConfig(value: any) {
+    if (value.view === 'map') {
+      this.selectedView$.next(value.view)
+      if (value.styleTMSIndex) {
+        this._styleFromConfig = value.styleTMSIndex
+      }
+      if (value.source) {
+        this.linkFromConfig$.next(value.source)
+      }
     }
   }
   @Input() displaySource = true
   @Output() linkSelected = new EventEmitter<DatasetOnlineResource>()
+  @Output() styleSelected = new EventEmitter<number>()
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
 
   excludeWfs$ = new BehaviorSubject(false)
@@ -119,12 +132,13 @@ export class MapViewComponent implements AfterViewInit {
   loading = false
   error = null
 
-  selectLinkToDisplay(i: number) {
-    this.selectedLinkIndex$.next(i)
+  selectLinkToDisplay(id: string) {
+    this.selectedLinkId$.next(id)
   }
 
   selectStyleToDisplay(i: number) {
-    this.selectedStyleIndex$.next(i)
+    this.selectedStyleId$.next(i)
+    this.styleSelected.emit(i)
   }
 
   toggleLegend() {
@@ -146,29 +160,54 @@ export class MapViewComponent implements AfterViewInit {
   )
 
   dropdownChoices$ = this.compatibleMapLinks$.pipe(
-    map((links) =>
-      links.length
-        ? links.map((link, index) => ({
+    map((links) => {
+      this.linkMap.clear()
+      links.forEach((link: DatasetOnlineResource) =>
+        this.linkMap.set(getLinkId(link), link)
+      )
+      return links.length
+        ? links.map((link) => ({
             label: getLinkLabel(link),
-            value: index,
+            value: getLinkId(link),
           }))
-        : [{ label: 'map.dropdown.placeholder', value: 0 }]
-    )
+        : [{ label: 'map.dropdown.placeholder', value: '' }]
+    })
   )
 
-  selectedLinkIndex$ = new BehaviorSubject(0)
-  private selectedStyleIndex$ = new BehaviorSubject(0)
+  selectedView$ = new BehaviorSubject(null)
+  selectedLinkId$ = new BehaviorSubject(null)
+  selectedStyleId$ = new BehaviorSubject(null)
 
   selectedSourceLink$ = combineLatest([
     this.compatibleMapLinks$,
-    this.selectedLinkIndex$.pipe(distinctUntilChanged()),
+    this.linkFromConfig$,
+    this.selectedLinkId$.pipe(distinctUntilChanged()),
+    this.selectedView$,
   ]).pipe(
     tap(() => {
       this.error = null
     }),
-    map(([links, index]) => {
-      this.linkSelected.emit(links[index])
-      return links[index]
+    map(([compatibleLinks, configLink, id, view]) => {
+      if (view === 'map') {
+        if (
+          configLink &&
+          !id &&
+          compatibleLinks.some(
+            (link) => getLinkId(link) === getLinkId(configLink)
+          )
+        ) {
+          this._selectedChoice = getLinkId(configLink)
+          this.linkSelected.emit(configLink)
+          return configLink
+        } else if (id) {
+          this._selectedChoice = id
+          this.linkSelected.emit(this.linkMap.get(id))
+          return this.linkMap.get(id)
+        } else {
+          this.linkSelected.emit(compatibleLinks[0])
+          return compatibleLinks[0]
+        }
+      }
     })
   )
 
@@ -205,7 +244,13 @@ export class MapViewComponent implements AfterViewInit {
       }
       return of([])
     }),
-    tap(() => this.selectedStyleIndex$.next(0)),
+    tap((styles) => {
+      if (this._styleFromConfig && this._styleFromConfig <= styles.length) {
+        this.selectedStyleId$.next(this._styleFromConfig)
+      } else {
+        this.selectedStyleId$.next(0)
+      }
+    }),
     shareReplay(1)
   )
 
@@ -228,7 +273,7 @@ export class MapViewComponent implements AfterViewInit {
   selectedLink$ = combineLatest([
     this.selectedSourceLink$,
     this.styleLinks$,
-    this.selectedStyleIndex$.pipe(distinctUntilChanged()),
+    this.selectedStyleId$.pipe(distinctUntilChanged()),
   ]).pipe(
     map(([src, styles, styleIdx]) => (styles.length ? styles[styleIdx] : src)),
     shareReplay(1)

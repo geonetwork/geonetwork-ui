@@ -14,7 +14,11 @@ import {
 } from '@angular/core'
 import { MatSort, MatSortModule } from '@angular/material/sort'
 import { MatTableModule } from '@angular/material/table'
-import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import {
+  TranslateDirective,
+  TranslatePipe,
+  TranslateService,
+} from '@ngx-translate/core'
 import { DataTableDataSource } from './data-table.data.source'
 import { BaseReader, FetchError } from '@geonetwork-ui/data-fetcher'
 import {
@@ -53,6 +57,7 @@ export interface TableItemModel {
     PopupAlertComponent,
     LetDirective,
     TranslatePipe,
+    TranslateDirective,
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }],
   selector: 'gn-ui-data-table',
