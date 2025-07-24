@@ -50,7 +50,7 @@ program
 
 program.parse(process.argv)
 
-const VERSION = 103 // increment on changes
+const VERSION = 104 // increment on changes
 
 const GEONETWORK_UI_PIPELINE = {
   description: 'GeoNetwork-UI pipeline',
@@ -82,11 +82,11 @@ if(ctx.resourceAbstractObject != null && ctx.resourceAbstractObject.default != n
   ok++
 }
 // this checks for single-language Organizations (GN 4.2.2)
-if(!isService && ctx.contact != null && ctx.contact.length > 0 && ctx.contact[0].organisation != null && ctx.contact[0].organisation != '') {
+if(type != 'service' && ctx.contact != null && ctx.contact.length > 0 && ctx.contact[0].organisation != null && ctx.contact[0].organisation != '') {
   ok++
 }
 // this checks for multilingual Organizations (GN 4.2.3+)
-if(!isService && ctx.contact != null && ctx.contact.length > 0 && ctx.contact[0].organisationObject != null && ctx.contact[0].organisationObject.default != null && ctx.contact[0].organisationObject.default != '') {
+if(type != 'service' && ctx.contact != null && ctx.contact.length > 0 && ctx.contact[0].organisationObject != null && ctx.contact[0].organisationObject.default != null && ctx.contact[0].organisationObject.default != '') {
   ok++
 }
 if(ctx.contact != null && ctx.contact.length > 0 && ctx.contact[0].email != null && ctx.contact[0].email != '') {
