@@ -112,6 +112,7 @@ if((ctx.MD_LegalConstraintsUseLimitationObject != null && ctx.MD_LegalConstraint
    (ctx.MD_LegalConstraintsOtherConstraintsObject != null && ctx.MD_LegalConstraintsOtherConstraintsObject.length > 0)) {
   ok++
 }
+// GN 4.2.3+
 if(type == 'service' && ctx.link != null){
   for (link in ctx.link) {
     if (
@@ -119,6 +120,19 @@ if(type == 'service' && ctx.link != null){
       link.urlObject != null &&
       link.urlObject.default != null &&
       link.urlObject.default.toLowerCase().contains('capabilities')
+    ) {
+      ok++;
+      break;
+    }
+  }
+}
+// GN 4.2.2 and earlier
+if(type == 'service' && ctx.link != null){
+  for (link in ctx.link) {
+    if (
+      link != null &&
+      link.url != null &&
+      link.url.toLowerCase().contains('capabilities')
     ) {
       ok++;
       break;

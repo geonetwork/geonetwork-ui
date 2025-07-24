@@ -89,4 +89,17 @@ describe('service pages', () => {
       cy.get('gn-ui-error').should('be.visible')
     })
   })
+  it('metadata quality widget enabled', () => {
+    cy.intercept('GET', '/assets/configuration/default.toml', {
+      fixture: 'config-with-metadata-quality.toml',
+    })
+    cy.visit('/service/00b22798-ec8e-4500-89e8-90eeeda45919')
+
+    cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
+      .eq(0)
+      .find('[data-cy=progressPercentage]')
+      .invoke('text')
+      .invoke('trim')
+      .should('eql', '100%')
+  })
 })
