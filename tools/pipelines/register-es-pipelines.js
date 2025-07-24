@@ -50,7 +50,7 @@ program
 
 program.parse(process.argv)
 
-const VERSION = 103 // increment on changes
+const VERSION = 104 // increment on changes
 
 const GEONETWORK_UI_PIPELINE = {
   description: 'GeoNetwork-UI pipeline',
@@ -81,21 +81,13 @@ if(ctx.resourceTitleObject != null && ctx.resourceTitleObject.default != null &&
 if(ctx.resourceAbstractObject != null && ctx.resourceAbstractObject.default != null && ctx.resourceAbstractObject.default != '') {
   ok++
 }
-// Check for both 4.2.2 and 4.2.3+ versions
-if (type != 'service' && ctx.contact != null && ctx.contact.length > 0) {
-  def firstContact = ctx.contact[0];
-  
-  def hasOrgName = firstContact.organisation != null &&
-                   firstContact.organisation.name != null &&
-                   firstContact.organisation.name != '';
-                   
-  def hasOrgObjDefault = firstContact.organisationObject != null &&
-                         firstContact.organisationObject.default != null &&
-                         firstContact.organisationObject.default != '';
-                         
-  if (hasOrgName || hasOrgObjDefault) {
-    ok++;
-  }
+// this checks for single-language Organizations (GN 4.2.2)
+if(type != 'service' && ctx.contact != null && ctx.contact.length > 0 && ctx.contact[0].organisation != null && ctx.contact[0].organisation != '') {
+  ok++
+}
+// this checks for multilingual Organizations (GN 4.2.3+)
+if(type != 'service' && ctx.contact != null && ctx.contact.length > 0 && ctx.contact[0].organisationObject != null && ctx.contact[0].organisationObject.default != null && ctx.contact[0].organisationObject.default != '') {
+  ok++
 }
 if(ctx.contact != null && ctx.contact.length > 0 && ctx.contact[0].email != null && ctx.contact[0].email != '') {
   ok++
@@ -120,6 +112,7 @@ if((ctx.MD_LegalConstraintsUseLimitationObject != null && ctx.MD_LegalConstraint
    (ctx.MD_LegalConstraintsOtherConstraintsObject != null && ctx.MD_LegalConstraintsOtherConstraintsObject.length > 0)) {
   ok++
 }
+// GN 4.2.3+
 if(type == 'service' && ctx.link != null){
   for (link in ctx.link) {
     if (
@@ -127,6 +120,19 @@ if(type == 'service' && ctx.link != null){
       link.urlObject != null &&
       link.urlObject.default != null &&
       link.urlObject.default.toLowerCase().contains('capabilities')
+    ) {
+      ok++;
+      break;
+    }
+  }
+}
+// GN 4.2.2 and earlier
+if(type == 'service' && ctx.link != null){
+  for (link in ctx.link) {
+    if (
+      link != null &&
+      link.url != null &&
+      link.url.toLowerCase().contains('capabilities')
     ) {
       ok++;
       break;
