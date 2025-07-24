@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input, OnChanges } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import {
@@ -43,7 +43,7 @@ marker('editor.record.form.field.organisation')
   templateUrl: './metadata-quality-panel.component.html',
   styleUrl: './metadata-quality-panel.component.css',
 })
-export class MetadataQualityPanelComponent implements OnInit {
+export class MetadataQualityPanelComponent implements OnChanges {
   propsToValidate: ValidatorMapperKeys[] = [
     'title',
     'abstract',
@@ -58,7 +58,7 @@ export class MetadataQualityPanelComponent implements OnInit {
   @Input() editorConfig: EditorConfig
   @Input() record: CatalogRecord
 
-  ngOnInit() {
+  ngOnChanges() {
     if (this.editorConfig && this.record) {
       const fieldsByPage = this.editorConfig.pages.map((page) =>
         page.sections.flatMap((section) =>

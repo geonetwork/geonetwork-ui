@@ -10,6 +10,10 @@ describe('metadata quality', () => {
   beforeEach(() => {
     cy.login('admin', 'admin', false)
     cy.visit(`/edit/${recordUuid}`)
+
+    cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
+      'abstractField'
+    )
   })
 
   it('should toggle the metadata quality panel', () => {
@@ -34,5 +38,25 @@ describe('metadata quality', () => {
     cy.get('md-editor-top-toolbar').find('gn-ui-button').eq(2).click()
     cy.get('gn-ui-metadata-quality-panel').should('be.visible')
     cy.get('gn-ui-multilingual-panel').should('not.exist')
+    cy.get('md-editor-top-toolbar').find('gn-ui-button').eq(2).click()
+    cy.get('gn-ui-metadata-quality-panel').should('not.exist')
+    cy.get('gn-ui-multilingual-panel').should('not.exist')
+
+    // it should display abstract property checked when present
+    cy.get('md-editor-top-toolbar').find('gn-ui-button').eq(2).click()
+    cy.get('gn-ui-metadata-quality-panel').should('be.visible')
+    cy.get('gn-ui-metadata-quality-panel')
+      .find('[data-cy="md-quality-btn-editor.record.form.field.abstract"]')
+      .as('abstractButton')
+    cy.get('@abstractButton').find('span').should('contain.text', 'Abstract')
+    cy.get('@abstractButton')
+      .find('ng-icon')
+      .should('have.attr', 'name', 'iconoirBadgeCheck')
+
+    // it should display abstract property as missing when empty
+    cy.get('@abstractField').clear()
+    cy.get('@abstractButton')
+      .find('ng-icon')
+      .should('have.attr', 'name', 'iconoirSystemShut')
   })
 })
