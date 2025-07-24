@@ -76,7 +76,7 @@ describe('MetadataQualityPanelComponent', () => {
     beforeEach(() => {
       component.editorConfig = EDITOR_CONFIG_MOCK
       component.record = RECORD_MOCK
-      component.ngOnInit()
+      component.ngOnChanges()
     })
     it('should initialize propertiesByPage corresponding to editorConfig and propsToValidate', () => {
       expect(component.propertiesByPage).toEqual([
@@ -101,7 +101,7 @@ describe('MetadataQualityPanelComponent', () => {
   it('should handle empty editorConfig and record', () => {
     component.editorConfig = undefined
     component.record = undefined
-    component.ngOnInit()
+    component.ngOnChanges()
     expect(component.propertiesByPage.length).toBe(0)
   })
 
