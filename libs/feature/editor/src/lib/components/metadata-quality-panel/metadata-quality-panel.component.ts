@@ -73,8 +73,9 @@ export class MetadataQualityPanelComponent implements OnInit {
       // FIXME: temporarily add topics and organisation to the first and third page
       // as long as they are not handled by the editor
       if (fieldsByPage.length > 0) {
-        fieldsByPage[0].push('topics')
-        fieldsByPage[2].push('organisation')
+        fieldsByPage[0].includes('topics') || fieldsByPage[0].push('topics')
+        fieldsByPage[2].includes('organisation') ||
+          fieldsByPage[2].push('organisation')
       }
       this.propertiesByPage = fieldsByPage
         .map((fields) =>
