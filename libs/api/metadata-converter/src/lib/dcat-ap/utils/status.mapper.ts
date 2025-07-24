@@ -15,6 +15,7 @@ export function getStatusFromStatusCode(statusCode: string): RecordStatus {
     case 'required':
       return 'required'
     case 'underDevelopment':
+      return 'under_development'
     default:
       return 'under_development'
   }
