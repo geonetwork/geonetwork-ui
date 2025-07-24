@@ -4,7 +4,7 @@ import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import {
-  DatasetRecord,
+  CatalogRecord,
   ReuseRecord,
   ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
@@ -54,12 +54,12 @@ describe('MetadataQualityComponent', () => {
       { name: 'organisation', value: true },
     ]
     expect(component.items).toEqual(expectedDatasetItems)
-    expect(component.calculatedQualityScore).toBe(100)
+    expect(component.computedQualityScore).toBe(100)
   })
 
   describe('When a dataset record is provided, the quality score and items must be correct', () => {
     it('should display correct quality score and items presence in a partial record', () => {
-      const partialMetadata: Partial<DatasetRecord> = {
+      const partialMetadata: Partial<CatalogRecord> = {
         kind: 'dataset',
         title: 'Test Title',
         abstract: 'Test Description',
@@ -88,11 +88,11 @@ describe('MetadataQualityComponent', () => {
         { name: 'organisation', value: false },
       ]
       expect(component.items).toEqual(expectedItems)
-      expect(component.calculatedQualityScore).toBe(25)
+      expect(component.computedQualityScore).toBe(25)
     })
 
     it('should display all items absent and quality score at 0 when nothing was given', () => {
-      const emptyMetadata: Partial<DatasetRecord> = {
+      const emptyMetadata: Partial<CatalogRecord> = {
         kind: 'dataset',
         title: '',
         abstract: undefined,
@@ -112,11 +112,11 @@ describe('MetadataQualityComponent', () => {
 
       expect(component.items.every((item) => item.value)).toBe(false)
       expect(component.items.length).toBe(8)
-      expect(component.calculatedQualityScore).toBe(0)
+      expect(component.computedQualityScore).toBe(0)
     })
 
     it('should show all items present and 100% quality score for a complete dataset (all needed field given)', () => {
-      const completeDatasetMetadata: Partial<DatasetRecord> = {
+      const completeDatasetMetadata: Partial<CatalogRecord> = {
         kind: 'dataset',
         title: 'Complete Dataset',
         abstract: 'Complete Dataset Description',
@@ -142,12 +142,12 @@ describe('MetadataQualityComponent', () => {
       fixture.detectChanges()
 
       expect(component.items.length).toBe(8)
-      expect(component.calculatedQualityScore).toBe(100)
+      expect(component.computedQualityScore).toBe(100)
       expect(component.items.every((item) => item.value)).toBe(true)
     })
 
     it('should verify specific Dataset items', () => {
-      const datasetWithTopicsAndContacts: Partial<DatasetRecord> = {
+      const datasetWithTopicsAndContacts: Partial<CatalogRecord> = {
         kind: 'dataset',
         title: '',
         abstract: '',
@@ -182,7 +182,7 @@ describe('MetadataQualityComponent', () => {
         { name: 'organisation', value: true },
       ]
       expect(component.items).toEqual(expectedItems)
-      expect(component.calculatedQualityScore).toBe(38)
+      expect(component.computedQualityScore).toBe(38)
     })
   })
   describe('When a service record is provided, the quality score and items must be correct', () => {
@@ -202,7 +202,7 @@ describe('MetadataQualityComponent', () => {
       fixture.detectChanges()
       expect(component.items.every((item) => item.value)).toBe(false)
       expect(component.items.length).toBe(6)
-      expect(component.calculatedQualityScore).toBe(0)
+      expect(component.computedQualityScore).toBe(0)
     })
   })
 
@@ -247,7 +247,7 @@ describe('MetadataQualityComponent', () => {
       { name: 'capabilities', value: true },
     ]
     expect(component.items).toEqual(expectedServiceItems)
-    expect(component.calculatedQualityScore).toBe(100)
+    expect(component.computedQualityScore).toBe(100)
   })
   describe('When a reuse record is provided, the quality score and items must be correct', () => {
     it('should show quality score at 0 and all items false when all fields empty for reuse record', () => {
@@ -272,7 +272,7 @@ describe('MetadataQualityComponent', () => {
       fixture.detectChanges()
       expect(component.items.every((item) => item.value)).toBe(false)
       expect(component.items.length).toBe(8)
-      expect(component.calculatedQualityScore).toBe(0)
+      expect(component.computedQualityScore).toBe(0)
     })
     it('should show quality score at 100 and all items true when all fields needed are given for reuse record', () => {
       const reuseMetadata: Partial<ReuseRecord> = {
@@ -316,7 +316,7 @@ describe('MetadataQualityComponent', () => {
         { name: 'source', value: true },
       ]
       expect(component.items).toEqual(expectedReuseItems)
-      expect(component.calculatedQualityScore).toBe(100)
+      expect(component.computedQualityScore).toBe(100)
     })
   })
 })
