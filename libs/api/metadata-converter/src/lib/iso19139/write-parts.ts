@@ -183,6 +183,10 @@ export function getProgressCode(status: RecordStatus): string {
       return 'removed'
     case 'under_development':
       return 'underDevelopment'
+    case 'planned':
+      return 'planned'
+    case 'required':
+      return 'required'
     default:
       throw new Error(
         `Could not determine progress code from status: ${status}`
