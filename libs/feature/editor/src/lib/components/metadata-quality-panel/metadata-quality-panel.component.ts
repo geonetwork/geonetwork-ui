@@ -3,6 +3,7 @@ import { Component, Input, OnChanges } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import {
+  getAllKeysValidator,
   getQualityValidators,
   ValidatorMapperKeys,
 } from '@geonetwork-ui/util/shared'
@@ -44,16 +45,7 @@ marker('editor.record.form.field.organisation')
   styleUrl: './metadata-quality-panel.component.css',
 })
 export class MetadataQualityPanelComponent implements OnChanges {
-  propsToValidate: ValidatorMapperKeys[] = [
-    'title',
-    'abstract',
-    'keywords',
-    'updateFrequency',
-    'topics',
-    'legalConstraints',
-    'contacts',
-    'organisation',
-  ]
+  propsToValidate: ValidatorMapperKeys[] = getAllKeysValidator()
   propertiesByPage: { label: string; value: boolean }[][] = []
   @Input() editorConfig: EditorConfig
   @Input() record: CatalogRecord
