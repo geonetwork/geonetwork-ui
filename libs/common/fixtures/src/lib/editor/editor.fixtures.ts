@@ -127,9 +127,6 @@ export const editorFieldSpatialExtentsFixture = () => ({
 export const editorFieldKeywordsFixture = () => ({
   model: 'keywords',
   hidden: false,
-  formFieldConfig: {
-    labelKey: 'editor.record.form.field.keywords',
-  },
 })
 
 export const editorFieldUniqueIdentifierFixture = () => ({
