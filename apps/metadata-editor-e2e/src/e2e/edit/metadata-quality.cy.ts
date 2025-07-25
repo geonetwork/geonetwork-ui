@@ -16,7 +16,7 @@ describe('metadata quality', () => {
     )
   })
 
-  it('should toggle the metadata quality panel', () => {
+  it('metadata quality widget & panel', () => {
     // it should toggle the metadata quality panel
     cy.get('md-editor-top-toolbar').find('gn-ui-button').eq(2).click()
     cy.get('gn-ui-metadata-quality-panel').should('be.visible')
@@ -53,10 +53,35 @@ describe('metadata quality', () => {
       .find('ng-icon')
       .should('have.attr', 'name', 'iconoirBadgeCheck')
 
+    // it should display quality widget correctly (100%)
+    cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
+      .eq(0)
+      .find('[data-cy=progressPercentage]')
+      .invoke('text')
+      .invoke('trim')
+      .should('eql', '100%')
+
     // it should display abstract property as missing when empty
     cy.get('@abstractField').clear()
     cy.get('@abstractButton')
       .find('ng-icon')
       .should('have.attr', 'name', 'iconoirSystemShut')
+
+    // it should update quality widget (88%)
+    cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
+      .eq(0)
+      .find('[data-cy=progressPercentage]')
+      .invoke('text')
+      .invoke('trim')
+      .should('eql', '88%')
+
+    // it should update quality widget (100%)
+    cy.get('@abstractField').type('modified abstract')
+    cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
+      .eq(0)
+      .find('[data-cy=progressPercentage]')
+      .invoke('text')
+      .invoke('trim')
+      .should('eql', '100%')
   })
 })
