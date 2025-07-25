@@ -16,8 +16,9 @@ export default {
 
 export const Primary: StoryObj<MetadataQualityComponent> = {
   args: {
+    popoverDisplay: true,
     smaller: false,
-    metadata: datasetRecordsFixture()[0] as Partial<CatalogRecord>,
     metadataQualityDisplay: true,
+    metadata: datasetRecordsFixture()[0] as CatalogRecord,
   },
 }

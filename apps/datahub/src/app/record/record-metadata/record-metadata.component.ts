@@ -47,6 +47,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
+import { type ValidatorMapperKeys } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'datahub-record-metadata',

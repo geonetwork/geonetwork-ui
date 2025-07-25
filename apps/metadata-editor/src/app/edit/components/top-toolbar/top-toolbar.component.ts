@@ -19,6 +19,7 @@ import {
 import { combineLatest, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { PublishButtonComponent } from '../publish-button/publish-button.component'
+import { MetadataQualityComponent } from '../metadata-quality/metadata-quality.component'
 import {
   NgIconComponent,
   provideIcons,
@@ -49,6 +50,7 @@ import { matCircle } from '@ng-icons/material-icons/baseline'
     LetDirective,
     MatTooltipModule,
     MatDialogModule,
+    MetadataQualityComponent,
     TranslateDirective,
     TranslatePipe,
     NgIconComponent,
@@ -102,6 +104,7 @@ export class TopToolbarComponent {
   isRecordMultilingual$ = this.editorFacade.record$.pipe(
     map((record) => record.otherLanguages.length)
   )
+  record$ = this.editorFacade.record$
 
   constructor(
     public dialog: MatDialog,
