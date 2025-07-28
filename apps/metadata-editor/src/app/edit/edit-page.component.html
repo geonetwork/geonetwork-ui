@@ -11,7 +11,7 @@
   >
     <div class="w-full h-auto shrink-0 relative">
       <md-editor-top-toolbar
-        (openTranslatePanel)="translatePanelOpen = $event"
+        (openSidePanel)="sidePanelOpen = $event"
       ></md-editor-top-toolbar>
       <div class="absolute top-full left-0 w-2/3 z-10 pointer-events-none">
         <gn-ui-notifications-container></gn-ui-notifications-container>
@@ -63,10 +63,16 @@
         </div>
       </div>
       <gn-ui-multilingual-panel
-        *ngIf="translatePanelOpen"
+        *ngIf="sidePanelOpen === 'multilingual'"
         [record]="facade.record$ | async"
       >
       </gn-ui-multilingual-panel>
+      <gn-ui-metadata-quality-panel
+        *ngIf="sidePanelOpen === 'metadataQuality'"
+        [record]="facade.record$ | async"
+        [editorConfig]="facade.editorConfig$ | async"
+      >
+      </gn-ui-metadata-quality-panel>
     </div>
   </div>
   <div

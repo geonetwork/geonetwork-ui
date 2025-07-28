@@ -45,12 +45,12 @@ describe('MetadataQualityComponent', () => {
 
     const expectedDatasetItems = [
       { name: 'title', value: true },
-      { name: 'description', value: true },
+      { name: 'abstract', value: true },
       { name: 'keywords', value: true },
       { name: 'legalConstraints', value: true },
-      { name: 'contact', value: true },
+      { name: 'contacts', value: true },
       { name: 'updateFrequency', value: true },
-      { name: 'topic', value: true },
+      { name: 'topics', value: true },
       { name: 'organisation', value: true },
     ]
     expect(component.items).toEqual(expectedDatasetItems)
@@ -79,12 +79,12 @@ describe('MetadataQualityComponent', () => {
 
       const expectedItems = [
         { name: 'title', value: true },
-        { name: 'description', value: true },
+        { name: 'abstract', value: true },
         { name: 'keywords', value: false },
         { name: 'legalConstraints', value: false },
-        { name: 'contact', value: false },
+        { name: 'contacts', value: false },
         { name: 'updateFrequency', value: false },
-        { name: 'topic', value: false },
+        { name: 'topics', value: false },
         { name: 'organisation', value: false },
       ]
       expect(component.items).toEqual(expectedItems)
@@ -173,12 +173,12 @@ describe('MetadataQualityComponent', () => {
 
       const expectedItems = [
         { name: 'title', value: false },
-        { name: 'description', value: false },
+        { name: 'abstract', value: false },
         { name: 'keywords', value: false },
         { name: 'legalConstraints', value: false },
-        { name: 'contact', value: false },
+        { name: 'contacts', value: false },
         { name: 'updateFrequency', value: true },
-        { name: 'topic', value: true },
+        { name: 'topics', value: true },
         { name: 'organisation', value: true },
       ]
       expect(component.items).toEqual(expectedItems)
@@ -240,10 +240,10 @@ describe('MetadataQualityComponent', () => {
 
     const expectedServiceItems = [
       { name: 'title', value: true },
-      { name: 'description', value: true },
+      { name: 'abstract', value: true },
       { name: 'keywords', value: true },
       { name: 'legalConstraints', value: true },
-      { name: 'contact', value: true },
+      { name: 'contacts', value: true },
       { name: 'capabilities', value: true },
     ]
     expect(component.items).toEqual(expectedServiceItems)
@@ -307,11 +307,11 @@ describe('MetadataQualityComponent', () => {
 
       const expectedReuseItems = [
         { name: 'title', value: true },
-        { name: 'description', value: true },
+        { name: 'abstract', value: true },
         { name: 'keywords', value: true },
         { name: 'legalConstraints', value: true },
-        { name: 'contact', value: true },
-        { name: 'topic', value: true },
+        { name: 'contacts', value: true },
+        { name: 'topics', value: true },
         { name: 'organisation', value: true },
         { name: 'source', value: true },
       ]

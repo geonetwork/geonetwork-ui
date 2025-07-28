@@ -43,38 +43,16 @@ describe('editor form', () => {
       cy.get('@abstractField').should('be.visible')
     })
 
-    it('form shows correctly, quality widget shows correctly', () => {
-      // Quality widget
-      cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
-        .eq(0)
-        .find('[data-cy=progressPercentage]')
-        .invoke('text')
-        .invoke('trim')
-        .should('eql', '100%')
-      // Form
+    it('form shows correctly', () => {
       cy.get('gn-ui-record-form').should('be.visible')
       cy.get('gn-ui-record-form gn-ui-form-field').should('have.length.gt', 0)
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
       cy.screenshot({ capture: 'fullPage' })
     })
 
-    it('keeps the draft record, updates the quality widget live', () => {
+    it('keeps the draft record', () => {
       cy.get('@abstractField').clear()
-      // Quality widget update
-      cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
-        .eq(0)
-        .find('[data-cy=progressPercentage]')
-        .invoke('text')
-        .invoke('trim')
-        .should('eql', '86%')
       cy.get('@abstractField').type('modified abstract')
-      // Quality widget update
-      cy.get('gn-ui-metadata-quality gn-ui-progress-bar')
-        .eq(0)
-        .find('[data-cy=progressPercentage]')
-        .invoke('text')
-        .invoke('trim')
-        .should('eql', '100%')
       cy.window()
         .its('localStorage')
         .invoke('getItem', `geonetwork-ui-draft-${recordUuid}`)

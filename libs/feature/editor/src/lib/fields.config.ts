@@ -63,8 +63,6 @@ export const RECORD_KEYWORDS_FIELD: EditorField = {
   model: 'keywords',
   formFieldConfig: {},
 }
-// keeping track of the label to not lose existing translation
-marker('editor.record.form.field.keywords')
 
 export const RECORD_RESOURCE_CREATED_FIELD: EditorField = {
   model: 'resourceCreated',
