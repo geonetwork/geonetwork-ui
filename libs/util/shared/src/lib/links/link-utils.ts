@@ -190,6 +190,7 @@ export function isFormatInQueryParam(
   alias: string
 ): boolean {
   const queryParams = link.url.searchParams
+  if (!queryParams) return false
   for (const [key, value] of queryParams.entries()) {
     if (key === 'format' || key === 'f') {
       return value === alias
@@ -232,11 +233,12 @@ export function getBadgeColor(linkFormat: FileFormat): string {
 
 export function getLinkId(link: DatasetOnlineResource): string {
   const href = link.url.href ?? link.url
-  return `${getLinkLabel(link)
+  const sanitized = `${getLinkLabel(link)
     .replace(/Ã©/g, 'e')
     .replace(/Ã¨/g, 'e')
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')}-${href}`
+  return sanitized
 }
 
 export function getLinkLabel(

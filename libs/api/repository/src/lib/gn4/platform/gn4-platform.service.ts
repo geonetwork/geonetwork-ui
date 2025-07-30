@@ -400,10 +400,21 @@ export class Gn4PlatformService implements PlatformServiceInterface {
           return parsed
         }
 
-        const decoded = atob(parsed)
+        const decoded = this.decodeBase64(parsed)
         return JSON.parse(decoded)
       })
     )
+  }
+
+  decodeBase64(base64) {
+    const text = atob(base64)
+    const length = text.length
+    const bytes = new Uint8Array(length)
+    for (let i = 0; i < length; i++) {
+      bytes[i] = text.charCodeAt(i)
+    }
+    const decoder = new TextDecoder() // default is utf-8
+    return decoder.decode(bytes)
   }
 
   attachFileToRecord(
