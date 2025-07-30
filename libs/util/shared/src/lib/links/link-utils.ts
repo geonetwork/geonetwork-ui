@@ -190,6 +190,7 @@ export function isFormatInQueryParam(
   alias: string
 ): boolean {
   const queryParams = link.url.searchParams
+  if (!queryParams) return false
   for (const [key, value] of queryParams.entries()) {
     if (key === 'format' || key === 'f') {
       return value === alias
