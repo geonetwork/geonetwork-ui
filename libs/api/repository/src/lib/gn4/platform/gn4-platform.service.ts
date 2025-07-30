@@ -420,15 +420,38 @@ export class Gn4PlatformService implements PlatformServiceInterface {
           return this.recordsApiService.delResource(recordUuid, fileName).pipe(
             switchMap(() => {
               const fileCopy = new File([file], fileName, { type: file.type })
+              fileCopy.text().then((text) => {
+                console.log('File content', text)
+              })
               return this.uploadFile(recordUuid, fileCopy)
             })
           )
         } else {
           const finalFileName = noDuplicateFileName(fileName, fileNames)
           const fileCopy = new File([file], finalFileName, { type: file.type })
+          fileCopy.text().then((text) => {
+            console.log('File content', text)
+          })
           return this.uploadFile(recordUuid, fileCopy)
         }
       })
     )
+  }
+
+  readConfigFromJSON(file: File): Promise<DatavizConfigModel> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => {
+        try {
+          const result = reader.result as string
+          const config = JSON.parse(result)
+          resolve(config as DatavizConfigModel)
+        } catch (e) {
+          reject(e)
+        }
+      }
+      reader.onerror = (e) => reject(e)
+      reader.readAsText(file)
+    })
   }
 }

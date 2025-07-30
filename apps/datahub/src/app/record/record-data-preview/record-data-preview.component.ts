@@ -223,12 +223,21 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
         .pipe(
           take(1),
           map(([selectedView, selectedLink, chartConfig, selectedTMSStyle]) => {
-            return this.dataService.writeConfigAsJSON({
+            const json = {
               view: selectedView,
               source: selectedLink,
               chartConfig: selectedView === 'chart' ? chartConfig : null,
               styleTMSIndex: selectedView === 'map' ? selectedTMSStyle : null,
+            }
+            console.log('Saving dataviz config', json)
+            const file = this.dataService.writeConfigAsJSON(json)
+            console.log('File to save', file)
+            // Pour lire le contenu du fichier et l'afficher en console, il faut le lire de façon asynchrone
+            file.text().then((text) => {
+              const config = this.dataService.readConfigFromJSONString(text)
+              console.log('File content', config)
             })
+            return file
           }),
           switchMap((config) =>
             this.platformServiceInterface.attachFileToRecord(

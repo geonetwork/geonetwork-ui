@@ -304,6 +304,52 @@ export class DataService {
     })
   }
 
+  /**
+   * Fonction inverse de writeConfigAsJSON : lit un fichier JSON et retourne un DatavizConfigModel
+   * @param file Fichier JSON à lire
+   * @returns Promise<DatavizConfigModel>
+   */
+  readConfigFromJSON(file: File): Promise<DatavizConfigModel> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => {
+        try {
+          const result = reader.result as string
+          const config = JSON.parse(result)
+          resolve(config as DatavizConfigModel)
+        } catch (e) {
+          reject(e)
+        }
+      }
+      reader.onerror = (e) => reject(e)
+      reader.readAsText(file)
+    })
+  }
+
+  /**
+   * Version synchrone : prend une chaîne JSON et retourne un DatavizConfigModel
+   * @param json Le texte JSON à parser
+   * @returns DatavizConfigModel
+   */
+  readConfigFromJSONString(json: string): DatavizConfigModel {
+    return JSON.parse(json) as DatavizConfigModel
+  }
+
+  /**
+   * Lit un File (datavizConfig.json) et retourne le DatavizConfigModel (synchroniquement si possible)
+   * @param file Fichier File à lire
+   * @returns DatavizConfigModel | null
+   */
+  readConfigFromFile(file: File): DatavizConfigModel | null {
+    // File.text() est asynchrone, mais pour un usage debug/console, on tente une lecture synchrone si possible
+    // Ici, on ne peut pas lire synchroniquement un File natif, donc on retourne null ou on log un warning
+    // Pour Node.js, on pourrait utiliser fs.readFileSync, mais ici ce n'est pas possible
+    console.warn(
+      'readConfigFromFile: Impossible de lire un File de façon synchrone côté navigateur. Utilisez readConfigFromJSON ou readConfigFromJSONString avec le contenu du fichier.'
+    )
+    return null
+  }
+
   getDataset(
     link: DatasetOnlineResource,
     cacheActive: boolean

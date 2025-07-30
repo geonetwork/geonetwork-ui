@@ -8430,6 +8430,17 @@ export class RecordsApiService {
     ) {
       responseType_ = 'text'
     }
+    if (file !== undefined) {
+      formParams = (formParams.append('file', <any>file) as any) || formParams
+      // Ajoute ce log pour inspecter le contenu
+      if (formParams instanceof FormData) {
+        for (const [key, value] of (formParams as any).entries()) {
+          console.log('FormData:', key, value)
+        }
+      } else {
+        console.log('HttpParams:', formParams.toString())
+      }
+    }
 
     return this.httpClient.post<MetadataResourceApiModel>(
       `${this.configuration.basePath}/records/${encodeURIComponent(
