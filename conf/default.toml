@@ -5,7 +5,7 @@
 
 [global]
 # This URL (relative or absolute) must point to the API endpoint of a GeoNetwork4 instance
-geonetwork4_api_url = "/geonetwork/srv/api"
+geonetwork4_api_url = "https://data-qua.priv.geopf.fr/catalog"
 # deprecated - not used anymore
 datahub_url = "/datahub"
 # This should point to a proxy to avoid CORS errors on some requests (data preview, OGC capabilities etc.)

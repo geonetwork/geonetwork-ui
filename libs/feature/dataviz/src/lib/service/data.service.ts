@@ -246,8 +246,22 @@ export class DataService {
     // TODO: at some point use the identifierInService field if more that one layers in the TMS service
     const tileMapInfo = await endpoint.getTileMapInfo(tileMaps[0].href)
 
+    // FIX to stay in case 1: exclude TMS with metadata other than styles
+    // => is exclusion bu mimeType sufficient?
+    //dataset/ia_gpkg_22-04-2024_wfs_050625 has the following tileMapInfo.metadata and enters in case 2 (with styles)
+    // [{
+    //     "type": "ISO19115:2003",
+    //     "mimeType": "application/xml",
+    //     "href": "https://geoservices.ign.fr/sites/default/files/2021-07/IGNF_BDORTHOr_2-0.xml"
+    // }]
+
     // case 1: no styles; return a plain TMS link
-    if (!tileMapInfo?.metadata?.length) return [tmsLink]
+    if (
+      !tileMapInfo?.metadata?.length ||
+      !tileMapInfo.metadata.some((meta) => meta.mimeType === 'application/json')
+    ) {
+      return [tmsLink]
+    }
 
     // case 2: styles present; return each as a separate link
     const styleLinks = tileMapInfo.metadata
