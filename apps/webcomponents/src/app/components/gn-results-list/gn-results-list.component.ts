@@ -25,7 +25,7 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 })
 export class GnResultsListComponent extends BaseComponent {
   @Input() layout = 'CARD'
-  @Input() size = '5' // will be converted to number later
+  @Input() size = '10' // will be converted to number later
   @Input() query: string
   @Input() filter: string
   @Input() catalogUrl: string

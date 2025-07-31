@@ -82,7 +82,7 @@ background_color = "#fdfbff"
 # record_kind_quick_filter = true
 
 # Optional; Indicates the number of element per page
-limit = 3
+# limit = 5
 
 # Optional; specify a GeoJSON object to be used as filter: all records contained inside the geometry will be boosted on top,
 # all records which do not intersect with the geometry will be shown with lower priority; can be specified as URL or inline

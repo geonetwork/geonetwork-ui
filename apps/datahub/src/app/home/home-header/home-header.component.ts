@@ -123,7 +123,6 @@ export class HomeHeaderComponent {
     if (customSearchParameters.sort) {
       const sortBy = sortByFromString(customSearchParameters.sort)
       this.searchService.setSortAndFilters(searchFilters, sortBy)
-      //this.searchService.setPage(customSearchParameters.limit || 10)
     } else {
       this.searchService.setFilters(searchFilters)
     }
