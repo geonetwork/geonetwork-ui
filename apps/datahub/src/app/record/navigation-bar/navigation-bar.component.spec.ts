@@ -11,6 +11,11 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
       LANGUAGES: ['en', 'es'],
     }
   },
+  getOptionalSearchConfig() {
+    return {
+      LIMIT: 10,
+    }
+  },
 }))
 
 describe('NavigationBarComponent', () => {

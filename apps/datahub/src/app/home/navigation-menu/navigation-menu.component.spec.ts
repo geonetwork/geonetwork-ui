@@ -17,6 +17,11 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
     HEADER_FOREGROUND_COLOR: 'white',
   }),
+  getOptionalSearchConfig() {
+    return {
+      LIMIT: 10,
+    }
+  },
 }))
 
 const routerFacadeMock = {
