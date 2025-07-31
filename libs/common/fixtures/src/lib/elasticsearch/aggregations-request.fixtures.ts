@@ -1,5 +1,5 @@
 export const elasticAggsRequestFixture = () => ({
-  'tag.default': { terms: { field: 'tag.default', include: '.*', size: 10 } },
+  'tag.default': { terms: { field: 'tag.default', include: '.*', size: 5 } },
   availableInServices: {
     filters: {
       filters: {

@@ -24,7 +24,7 @@ export class LastCreatedComponent implements OnInit {
   ngOnInit() {
     this.searchFacade
       .setConfigRequestFields([...FIELDS_BRIEF, 'createDate', 'changeDate'])
-      .setPageSize(10)
+      .setPageSize(5)
       .setSortBy(['desc', 'createDate'])
       .setResultsLayout('FEED')
   }
