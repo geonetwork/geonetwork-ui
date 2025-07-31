@@ -52,6 +52,7 @@ export interface SearchPreset {
   sort: string
   name: string
   filters: Record<string, string[] | string>
+  limit?: number
 }
 
 export interface SearchConfig {

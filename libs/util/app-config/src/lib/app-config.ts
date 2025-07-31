@@ -239,7 +239,7 @@ export function loadAppConfig() {
         parsed,
         'search_preset',
         ['name'],
-        ['sort', 'filters'],
+        ['sort', 'filters', 'limit'],
         warnings,
         errors
       )
@@ -255,6 +255,7 @@ export function loadAppConfig() {
                 sort: param.sort,
                 name: param.name,
                 filters: param.filters,
+                limit: param.limit,
               })),
               ADVANCED_FILTERS: parsedSearchSection.advanced_filters,
             } as SearchConfig)
