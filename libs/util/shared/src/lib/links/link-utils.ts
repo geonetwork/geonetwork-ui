@@ -23,8 +23,8 @@ export const FORMATS = {
   excel: {
     extensions: [
       'excel',
-      'xls',
       'xlsx',
+      'xls',
       'ms-excel',
       'openxmlformats-officedocument',
     ],
