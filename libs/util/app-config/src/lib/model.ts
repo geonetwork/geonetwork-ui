@@ -52,7 +52,6 @@ export interface SearchPreset {
   sort: string
   name: string
   filters: Record<string, string[] | string>
-  limit?: number
 }
 
 export interface SearchConfig {
@@ -61,6 +60,7 @@ export interface SearchConfig {
   FILTER_GEOMETRY_DATA?: string
   SEARCH_PRESET?: SearchPreset[]
   ADVANCED_FILTERS?: []
+  LIMIT?: number
 }
 
 export interface MetadataQualityConfig {

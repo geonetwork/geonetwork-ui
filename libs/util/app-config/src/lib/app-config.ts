@@ -231,6 +231,7 @@ export function loadAppConfig() {
           'filter_geometry_url',
           'search_preset',
           'advanced_filters',
+          'limit',
         ],
         warnings,
         errors
@@ -239,7 +240,7 @@ export function loadAppConfig() {
         parsed,
         'search_preset',
         ['name'],
-        ['sort', 'filters', 'limit'],
+        ['sort', 'filters'],
         warnings,
         errors
       )
@@ -255,9 +256,9 @@ export function loadAppConfig() {
                 sort: param.sort,
                 name: param.name,
                 filters: param.filters,
-                limit: param.limit,
               })),
               ADVANCED_FILTERS: parsedSearchSection.advanced_filters,
+              LIMIT: parsedSearchSection.limit,
             } as SearchConfig)
 
       const parsedMetadataQualitySection = parseConfigSection(
