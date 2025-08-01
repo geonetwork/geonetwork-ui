@@ -16,7 +16,6 @@ const EDITOR_CONFIG_MOCK: EditorConfig = {
             { model: 'updateFrequency', hidden: false },
             { model: 'topics', hidden: false },
             { model: 'notInPropsToValidate', hidden: false },
-            { model: 'someHiddenField', hidden: true },
           ],
         },
       ],
@@ -24,7 +23,7 @@ const EDITOR_CONFIG_MOCK: EditorConfig = {
     {
       sections: [
         {
-          fields: [{ model: 'someOtherHiddenField', hidden: true }],
+          fields: [{ model: 'notEmptySection', hidden: false }],
         },
       ],
     },
@@ -32,7 +31,7 @@ const EDITOR_CONFIG_MOCK: EditorConfig = {
       sections: [
         {
           fields: [
-            { model: 'legalConstraints', hidden: false },
+            { model: 'legalConstraints', hidden: true },
             { model: 'organisation', hidden: false },
             { model: 'contacts', hidden: false },
           ],

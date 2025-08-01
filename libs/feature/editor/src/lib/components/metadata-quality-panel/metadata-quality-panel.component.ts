@@ -55,10 +55,7 @@ export class MetadataQualityPanelComponent implements OnChanges {
       const fieldsByPage = this.editorConfig.pages.map((page) =>
         page.sections.flatMap((section) =>
           section.fields
-            .filter(
-              (field) =>
-                this.propsToValidate.includes(field.model) && !field.hidden
-            )
+            .filter((field) => this.propsToValidate.includes(field.model))
             .map((field) => field.model as ValidatorMapperKeys)
         )
       )
