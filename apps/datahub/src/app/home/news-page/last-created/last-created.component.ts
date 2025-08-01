@@ -6,6 +6,7 @@ import {
   SearchFacade,
 } from '@geonetwork-ui/feature/search'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
 
 @Component({
   selector: 'datahub-last-created',
@@ -24,7 +25,7 @@ export class LastCreatedComponent implements OnInit {
   ngOnInit() {
     this.searchFacade
       .setConfigRequestFields([...FIELDS_BRIEF, 'createDate', 'changeDate'])
-      .setPageSize(10)
+      .setPageSize(getOptionalSearchConfig()?.LIMIT || 10)
       .setSortBy(['desc', 'createDate'])
       .setResultsLayout('FEED')
   }

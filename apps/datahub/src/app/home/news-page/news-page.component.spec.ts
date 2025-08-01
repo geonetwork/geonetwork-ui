@@ -6,10 +6,18 @@ import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-comp
 import { MockBuilder } from 'ng-mocks'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
-  getGlobalConfig: jest.fn(() => ({
-    CONTACT_EMAIL: 'mocked-email@example.com',
-  })),
+  getGlobalConfig() {
+    return {
+      CONTACT_EMAIL: 'mocked-email@example.com',
+    }
+  },
+  getOptionalSearchConfig() {
+    return {
+      LIMIT: 10,
+    }
+  },
 }))
+
 describe('NewsPageComponent', () => {
   let component: NewsPageComponent
   let fixture: ComponentFixture<NewsPageComponent>
