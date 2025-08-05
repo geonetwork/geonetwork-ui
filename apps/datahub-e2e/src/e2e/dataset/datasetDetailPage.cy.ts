@@ -102,8 +102,8 @@ beforeEach(() => {
   })
 })
 
-describe('dataset pages', () => {
-  it('ABOUT SECTION : display & functions', () => {
+describe('Sections', () => {
+  it('About section', () => {
     cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
 
     // it should display the description
@@ -250,7 +250,7 @@ describe('dataset pages', () => {
     cy.url().should('include', '/search?organization=')
   })
 
-  it('metadata quality widget enabled', () => {
+  it('Metadata quality widget', () => {
     // this will enable metadata quality widget
     cy.intercept('GET', '/assets/configuration/default.toml', {
       fixture: 'config-with-metadata-quality.toml',
@@ -339,7 +339,7 @@ describe('dataset pages', () => {
       .should('match', /^(100|83)%$/) // may be different on GN v4.2.2
   })
 
-  it('DOWNLOADS : display & functions', () => {
+  it('Downloads section', () => {
     cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
 
     // it should have a list of downloads based on the WFS capabilities
@@ -434,7 +434,7 @@ describe('dataset pages', () => {
       })
   })
 
-  it('LINKS & APIs : display & functions', () => {
+  it('Links section', () => {
     cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
     cy.get('datahub-record-otherlinks').as('otherLinks')
 
@@ -442,7 +442,7 @@ describe('dataset pages', () => {
     //it should display links in a grid layout
     cy.viewport(1200, 800)
     cy.get('@otherLinks').find('gn-ui-block-list').should('be.visible')
-    cy.get('@otherLinks').find('gn-ui-carousel').should('not.be.visible')
+    cy.get('@otherLinks').find('gn-ui-carousel').should('not.exist')
 
     //it should not show pagination when 4 links or less
     cy.viewport(1200, 800)
@@ -454,7 +454,7 @@ describe('dataset pages', () => {
     //it should display links in a carousel
     cy.viewport(375, 667)
     cy.get('@otherLinks').find('gn-ui-carousel').should('be.visible')
-    cy.get('@otherLinks').find('gn-ui-block-list').should('not.be.visible')
+    cy.get('@otherLinks').find('gn-ui-block-list').should('not.exist')
     //it should show pagination dots in carousel
     cy.get('@otherLinks')
       .find('gn-ui-carousel gn-ui-pagination-dots')
@@ -543,7 +543,7 @@ describe('dataset pages', () => {
     cy.get('gn-ui-record-api-form').should('not.be.visible')
   })
 
-  it('related records', () => {
+  it('Related records section', () => {
     cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
 
     // it should display the related records
