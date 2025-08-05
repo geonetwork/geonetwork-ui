@@ -6,7 +6,7 @@ import { DatasetFeatureCatalog } from '@geonetwork-ui/common/domain/model/record
 import { FormsModule } from '@angular/forms'
 import { of } from 'rxjs'
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators'
-import { createFuzzyFilter } from '@geonetwork-ui/util/shared'
+import { createFuzzyFilter, getIsMobile } from '@geonetwork-ui/util/shared'
 import { iconoirSearch } from '@ng-icons/iconoir'
 
 @Component({
@@ -38,6 +38,8 @@ export class SearchFeatureCatalogComponent {
   get featureCatalog(): DatasetFeatureCatalog {
     return this._featureCatalog
   }
+
+  isMobile$ = getIsMobile()
 
   @Output() filteredFeatureCatalogChange =
     new EventEmitter<DatasetFeatureCatalog>()

@@ -31,6 +31,7 @@ import {
   matMoreHorizOutline,
   matRemoveOutline,
 } from '@ng-icons/material-icons/outline'
+import { getIsMobile } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'datahub-search-filters',
@@ -77,6 +78,8 @@ export class SearchFiltersComponent implements OnInit {
           : !!fieldValues['owner']
       )
     )
+
+  isMobile$ = getIsMobile()
 
   constructor(
     public searchFacade: SearchFacade,
@@ -153,8 +156,6 @@ export class SearchFiltersComponent implements OnInit {
   }
 
   getClassForFilter(index: number) {
-    return (
-      (this.isOpen ? 'block' : 'hidden') + ' ' + (index < 2 ? 'sm:block' : '')
-    )
+    return this.isOpen || index < 2 ? 'block' : 'hidden'
   }
 }
