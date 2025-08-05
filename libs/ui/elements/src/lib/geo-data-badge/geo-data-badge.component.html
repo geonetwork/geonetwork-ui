@@ -7,7 +7,10 @@
     class="shrink-0 text-[0.75em]"
     name="matLocationSearchingOutline"
   ></ng-icon>
-  <span class="ml-1 hidden sm:inline-block shrink-0" *ngIf="showLabel" translate
+  <span
+    class="ml-1 inline-block shrink-0"
+    *ngIf="(isMobile$ | async) === false && showLabel"
+    translate
     >record.metadata.isGeographical</span
   >
 </div>

@@ -4,7 +4,11 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { CommonModule } from '@angular/common'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { NgIcon, provideIcons } from '@ng-icons/core'
-import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
+import {
+  getIsMobile,
+  LinkClassifierService,
+  LinkUsage,
+} from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-geo-data-badge',
@@ -23,6 +27,8 @@ export class GeoDataBadgeComponent {
   @Input() showLabel = true
   @Input() styling = 'default'
   @Input() record: CatalogRecord
+
+  isMobile$ = getIsMobile()
 
   isGeodata() {
     const links =
