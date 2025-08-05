@@ -24,6 +24,7 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { map } from 'rxjs'
 import { shareReplay, switchMap } from 'rxjs/operators'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
+import { getIsMobile } from '@geonetwork-ui/util/shared'
 
 marker('record.metadata.api.form.title.gpf')
 marker('record.metadata.api.form.title')
@@ -93,6 +94,8 @@ export class RecordApisComponent implements OnInit {
   get apiLinksCount$() {
     return this.apiLinks$?.pipe(map((links) => links.length))
   }
+
+  isMobile$ = getIsMobile()
 
   constructor(
     private facade: MdViewFacade,

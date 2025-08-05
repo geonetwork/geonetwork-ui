@@ -16,6 +16,7 @@ import { ExternalLinkCardComponent } from '@geonetwork-ui/ui/elements'
 import { LetDirective } from '@ngrx/component'
 import { TranslateDirective } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
+import { getIsMobile } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'datahub-record-otherlinks',
@@ -35,6 +36,8 @@ import { map } from 'rxjs/operators'
 })
 export class RecordOtherlinksComponent implements AfterViewInit {
   otherLinks$ = this.facade.otherLinks$
+
+  isMobile$ = getIsMobile()
 
   get linksCount$() {
     return this.otherLinks$?.pipe(map((links) => links.length))
