@@ -19,6 +19,7 @@ import {
 } from '@ng-icons/core'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { matMenuOutline } from '@ng-icons/material-icons/outline'
+import { getIsMobile } from '@geonetwork-ui/util/shared'
 
 marker('datahub.header.news')
 marker('datahub.header.datasets')
@@ -72,6 +73,8 @@ export class NavigationMenuComponent {
         }
     )
   )
+
+  isMobile$ = getIsMobile()
 
   constructor(private routerFacade: RouterFacade) {}
 
