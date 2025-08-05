@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  HostListener,
   Inject,
   InjectionToken,
   Input,
@@ -13,10 +12,7 @@ import {
 } from '@angular/core'
 import { MatTabsModule } from '@angular/material/tabs'
 import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
-import {
-  DatasetOnlineResource,
-  DatasetServiceDistribution,
-} from '@geonetwork-ui/common/domain/model/record'
+import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import {
@@ -26,6 +22,7 @@ import {
   MdViewFacade,
 } from '@geonetwork-ui/feature/record'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { getIsMobile } from '@geonetwork-ui/util/shared'
 import { TranslateDirective } from '@ngx-translate/core'
 import {
   BehaviorSubject,
@@ -88,6 +85,8 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
     )
   )
 
+  displayChart$ = getIsMobile().pipe(map((isMobile) => !isMobile))
+
   selectedLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
 
   exceedsMaxFeatureCount$ = combineLatest([
@@ -126,7 +125,7 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
   )
 
   displayDatavizConfig$ = combineLatest([
-    this.platformService.getMe(),
+    this.platformServiceInterface.getMe(),
     this.metadataViewFacade.metadata$,
   ]).pipe(
     map(([userInfo, metadata]) => {
@@ -141,7 +140,6 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
 
   constructor(
     public metadataViewFacade: MdViewFacade,
-    private platformService: PlatformServiceInterface,
     private dataService: DataService,
     @Inject(MAX_FEATURE_COUNT)
     @Optional()

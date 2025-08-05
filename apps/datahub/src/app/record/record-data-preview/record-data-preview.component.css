@@ -38,11 +38,6 @@
     justify-content: left !important;
     min-width: 60px;
   }
-
-  /*hide chart tab on mobile*/
-  ::ng-deep .mat-mdc-tab.mdc-tab:nth-child(3) {
-    display: none;
-  }
 }
 
 .tab-header-label {
