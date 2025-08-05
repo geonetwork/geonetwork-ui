@@ -9,18 +9,16 @@
     <span class="px-3">({{ apiLinksCount$ | async }})</span>
   </div>
   <gn-ui-previous-next-buttons
-    class="block md:hidden"
-    *ngIf="carousel?.pagesCount > 1"
+    *ngIf="(isMobile$ | async) === true && carousel?.pagesCount > 1"
     [listComponent]="carousel"
   ></gn-ui-previous-next-buttons>
   <gn-ui-previous-next-buttons
-    class="hidden md:block"
-    *ngIf="list?.pagesCount > 1"
+    *ngIf="(isMobile$ | async) === false && list?.pagesCount > 1"
     [listComponent]="list"
   ></gn-ui-previous-next-buttons>
 </div>
 <gn-ui-carousel
-  class="block md:hidden"
+  *ngIf="(isMobile$ | async) === true"
   (currentStepChange)="updateView()"
   containerClass="gap-4 pt-5 pb-7"
   #carousel
@@ -37,7 +35,7 @@
 </gn-ui-carousel>
 <gn-ui-block-list
   #blockList
-  class="hidden md:block"
+  *ngIf="(isMobile$ | async) === false"
   containerClass="gap-4 pt-5 pb-7"
 >
   <gn-ui-api-card

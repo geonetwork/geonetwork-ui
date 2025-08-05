@@ -149,6 +149,6 @@ describe('dataset: header', () => {
       .should('be.visible')
     cy.get('datahub-navigation-bar')
       .find('[data-cy="resources-mobile-menu"]')
-      .should('not.be.visible')
+      .should('not.exist')
   })
 })

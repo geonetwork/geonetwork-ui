@@ -75,7 +75,10 @@
               ></gn-ui-data-view>
             </div>
           </mat-tab>
-          <mat-tab [disabled]="(displayData$ | async) === false">
+          <mat-tab
+            *ngIf="(displayChart$ | async) === true"
+            [disabled]="(displayData$ | async) === false"
+          >
             <ng-template mat-tab-label>
               <span class="tab-header-label" translate>record.tab.chart</span>
             </ng-template>

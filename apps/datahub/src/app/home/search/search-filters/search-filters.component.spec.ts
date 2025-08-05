@@ -196,19 +196,19 @@ describe('SearchFiltersComponent', () => {
       it('does show up', () => {
         expect(getMoreButton()).toBeTruthy()
       })
-      it('first filter dropdown shows up (on desktop)', () => {
+      it('first filter dropdown shows up', () => {
         expect(
-          getFilterButtons()[0].nativeElement.classList.entries('sm:block')
+          getFilterButtons()[0].nativeElement.classList.entries('block')
         ).toBeTruthy()
       })
-      it('second filter dropdown shows up (on desktop)', () => {
+      it('second filter dropdown shows up', () => {
         expect(
-          getFilterButtons()[1].nativeElement.classList.contains('sm:block')
+          getFilterButtons()[1].nativeElement.classList.contains('block')
         ).toBeTruthy()
       })
-      it('third filter dropdown does not show up (on desktop)', () => {
+      it('third filter dropdown does not show up', () => {
         expect(
-          getFilterButtons()[2].nativeElement.classList.contains('sm:block')
+          getFilterButtons()[2].nativeElement.classList.contains('block')
         ).toBeFalsy()
       })
     })

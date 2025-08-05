@@ -16,6 +16,7 @@ import { TranslateDirective } from '@ngx-translate/core'
 import { AnchorLinkDirective } from '@geonetwork-ui/ui/layout'
 import { HostListener } from '@angular/core'
 import { ElementRef, ViewChild } from '@angular/core'
+import { getIsMobile } from '@geonetwork-ui/util/shared'
 
 marker('record.metadata.about')
 marker('record.metadata.capabilities')
@@ -76,6 +77,7 @@ export class NavigationBarComponent {
     },
   ]
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
+  isMobile$ = getIsMobile()
 
   constructor(private searchService: SearchService) {}
 

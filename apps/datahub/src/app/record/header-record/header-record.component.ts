@@ -11,7 +11,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matArrowBack, matCreditCard } from '@ng-icons/material-icons/baseline'
-import { DateService } from '@geonetwork-ui/util/shared'
+import { DateService, getIsMobile } from '@geonetwork-ui/util/shared'
 import {
   iconoirAppleShortcuts,
   iconoirCode,
@@ -31,7 +31,6 @@ import {
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { StickyHeaderComponent } from '@geonetwork-ui/ui/layout'
 
-const MOBILE_MAX_WIDTH = 640
 export const HEADER_HEIGHT_DEFAULT = 344
 export const HEADER_HEIGHT_MOBILE_THUMBNAIL = 554
 
@@ -75,10 +74,7 @@ export class HeaderRecordComponent {
 
   showOverlay = true
 
-  isMobile$ = fromEvent(window, 'resize').pipe(
-    startWith(window.innerWidth),
-    map(() => window.innerWidth < MOBILE_MAX_WIDTH)
-  )
+  isMobile$ = getIsMobile()
 
   thumbnailUrl$ = this.facade.metadata$.pipe(
     map((metadata) => {

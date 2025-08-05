@@ -6,7 +6,11 @@ import {
 } from '@angular/core'
 import { TranslateDirective, TranslateService } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
-import { getBadgeColor, getFileFormat } from '@geonetwork-ui/util/shared'
+import {
+  getBadgeColor,
+  getFileFormat,
+  getIsMobile,
+} from '@geonetwork-ui/util/shared'
 import { DatasetDownloadDistribution } from '@geonetwork-ui/common/domain/model/record'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
@@ -49,6 +53,8 @@ export class DownloadsListComponent {
   get linksCount(): number {
     return this.filteredLinks?.length || 0
   }
+
+  isMobile$ = getIsMobile()
 
   activeFilterFormats: FilterFormat[] = ['all']
 

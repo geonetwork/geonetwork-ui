@@ -1,20 +1,23 @@
-<button
-  *ngFor="let l of tabLinks"
-  [routerLink]="l.link"
-  [ngClass]="
-    (activeLink$ | async).link === l.link
-      ? 'decoration-primary'
-      : 'decoration-transparent hover:decoration-primary transition-colors'
-  "
-  class="hidden sm:block sm:py-4 uppercase truncate underline decoration-4 underline-offset-[19px]"
-  [style.color]="foregroundColor"
-  translate
->
-  {{ l.label }}
-</button>
+<ng-container *ngIf="(isMobile$ | async) === false">
+  <button
+    *ngFor="let l of tabLinks"
+    [routerLink]="l.link"
+    [ngClass]="
+      (activeLink$ | async).link === l.link
+        ? 'decoration-primary'
+        : 'decoration-transparent hover:decoration-primary transition-colors'
+    "
+    class="sm:py-4 uppercase truncate underline decoration-4 underline-offset-[19px]"
+    [style.color]="foregroundColor"
+    translate
+  >
+    {{ l.label }}
+  </button>
+</ng-container>
 <button
   (click)="toggleMobileMenu()"
-  class="uppercase truncate text-white bg-primary w-full flex justify-start cursor-pointer z-50 sm:hidden"
+  *ngIf="(isMobile$ | async) === true"
+  class="uppercase truncate text-white bg-primary w-full flex justify-start cursor-pointer z-50"
 >
   <button
     type="button"
@@ -22,7 +25,7 @@
   >
     <ng-icon class="align-middle" name="matMenuOutline"></ng-icon>
   </button>
-  <div class="shrink truncate" [class]="displayMobileMenu ? 'block' : 'hidden'">
+  <div class="shrink truncate" *ngIf="displayMobileMenu">
     <div *ngFor="let l of tabLinks">
       <button
         [routerLink]="l.link"
@@ -35,7 +38,7 @@
   </div>
   <button
     class="block pl-5 pr-3 py-3 rounded-md text-[18px] font-medium uppercase tracking-wider shrink truncate"
-    [class]="displayMobileMenu ? 'hidden' : 'block'"
+    *ngIf="!displayMobileMenu"
   >
     {{ (activeLink$ | async).label | translate }}
   </button>

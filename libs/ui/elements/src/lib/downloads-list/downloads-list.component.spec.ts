@@ -58,7 +58,7 @@ describe('DownloadsListComponent', () => {
       items = de.queryAll(By.directive(DownloadItemComponent))
     })
     it('contains three links', () => {
-      expect(items.length).toBe(6) // 2 presentation (1 hidden) of 3 links
+      expect(items.length).toBe(3)
     })
   })
 
@@ -84,7 +84,7 @@ describe('DownloadsListComponent', () => {
       items = de.queryAll(By.directive(DownloadItemComponent))
     })
     it('contains one link in "others" section', () => {
-      expect(items.length).toBe(2) // 2 presentation (1 hidden) of 1 link
+      expect(items.length).toBe(1)
       expect(component.isLinkOfFormat(component.links[0], 'others')).toBe(true)
     })
   })
@@ -102,7 +102,7 @@ describe('DownloadsListComponent', () => {
       items = de.queryAll(By.directive(DownloadItemComponent))
     })
     it('contains one link and mime type is ignored', () => {
-      expect(items.length).toBe(2) // 2 presentation (1 hidden) of 1 link
+      expect(items.length).toBe(1)
       expect(component.isLinkOfFormat(component.links[0], 'json')).toBe(true)
     })
   })
@@ -115,7 +115,7 @@ describe('DownloadsListComponent', () => {
       items = de.queryAll(By.directive(DownloadItemComponent))
     })
     it('contains color, isAPI & format', () => {
-      expect(items.length).toBe(2) // 2 presentation (1 hidden) of 1 link
+      expect(items.length).toBe(1)
       expect(items[0].componentInstance.link).toEqual(
         aSetOfLinksFixture().geodataShpWithMimeType()
       )

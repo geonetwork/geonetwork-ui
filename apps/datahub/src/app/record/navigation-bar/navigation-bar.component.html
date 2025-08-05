@@ -23,32 +23,36 @@
         <ng-icon name="matArrowBack"></ng-icon>
       </gn-ui-button>
     </div>
-    <button
-      type="button"
-      *ngFor="let l of anchorLinks"
-      [attr.data-cy]="l.anchor"
-      gnUiAnchorLink="{{ l.anchor }}"
-      gnUiAnchorLinkDisabledClass="sm:hidden"
-      gnUiAnchorLinkInViewClass="!border-b-primary border-b-[3px] pb-0"
-      gnUiAnchorLinkOutOfViewClass="pb-1"
-      class="font-medium hidden sm:block hover:bg-slate-50 h-[60px] w-full px-2 items-center text-center uppercase"
-      translate
-    >
-      {{ l.label }}
-    </button>
+    <ng-container *ngIf="(isMobile$ | async) === false">
+      <button
+        type="button"
+        *ngFor="let l of anchorLinks"
+        [attr.data-cy]="l.anchor"
+        gnUiAnchorLink="{{ l.anchor }}"
+        gnUiAnchorLinkDisabledClass="sm:hidden"
+        gnUiAnchorLinkInViewClass="!border-b-primary border-b-[3px] pb-0"
+        gnUiAnchorLinkOutOfViewClass="pb-1"
+        class="font-medium hover:bg-slate-50 h-[60px] w-full px-2 items-center text-center uppercase"
+        translate
+      >
+        {{ l.label }}
+      </button>
+    </ng-container>
     <div
       (click)="toggleMobileMenu()"
-      class="w-full flex justify-start items-start cursor-pointer sm:hidden"
+      *ngIf="(isMobile$ | async) === true"
+      class="w-full flex justify-start items-start cursor-pointer"
     >
       <button
         type="button"
-        class="h-[60px] z-50 inline-flex items-center justify-center p-2 rounded-md shrink-0 sm:hidden"
+        *ngIf="(isMobile$ | async) === true"
+        class="h-[60px] z-50 inline-flex items-center justify-center p-2 rounded-md shrink-0"
       >
         <ng-icon name="iconoirMenu" size="24px"></ng-icon>
       </button>
       <div
         class="bg-nav-bar-color -ml-[60px] absolute shrink truncate w-screen border-b-2 border-b-slate-200"
-        [class]="displayMobileMenu ? 'block' : 'hidden'"
+        *ngIf="displayMobileMenu"
       >
         <div *ngFor="let l of anchorLinks; let i = index">
           <div class="pl-[100px]">
@@ -65,7 +69,7 @@
           </div>
         </div>
       </div>
-      <div class="h-[60px]" [class]="displayMobileMenu ? 'hidden' : 'block'">
+      <div class="h-[60px]" *ngIf="!displayMobileMenu">
         <div *ngFor="let l of anchorLinks">
           <button
             attr.data-cy="{{ l.anchor }}-mobile-title"
@@ -82,8 +86,8 @@
           </button>
         </div>
         <button
-          class="h-[60px] block px-3 py-3 rounded-md font-medium shrink text-wrap text-left sm:hidden uppercase"
-          [class]="displayMobileMenu ? 'hidden' : 'block'"
+          class="h-[60px] block px-3 py-3 rounded-md font-medium shrink text-wrap text-left uppercase"
+          *ngIf="(isMobile$ | async) === true && !displayMobileMenu"
           translate
         >
           navbar.mobile.menuTitle
