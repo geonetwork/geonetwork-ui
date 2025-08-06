@@ -939,14 +939,34 @@ describe('Gn4PlatformService', () => {
       })
     })
   })
+  describe('decodeBase64', () => {
+    it('should properly decode base64 content with accents', () => {
+      // "Café crème et dessert à l'érable" encoded in base64
+      const base64WithAccents =
+        'Q2Fmw6kgY3LDqG1lIGV0IGRlc3NlcnQgw6AgbCfDqXJhYmxl'
+      const decoded = service.decodeBase64(base64WithAccents)
+      expect(decoded).toEqual("Café crème et dessert à l'érable")
+
+      // TODO : delete , just for the review :
+      const wrongDecoded = atob(base64WithAccents)
+      expect(wrongDecoded).not.toEqual("Café crème et dessert à l'érable")
+      expect(wrongDecoded).toEqual("CafÃ© crÃ¨me et dessert Ã  l'Ã©rable")
+    })
+  })
+
   describe('getFileContent', () => {
+    let httpClient: HttpClient
+
+    beforeEach(() => {
+      httpClient = TestBed.inject(HttpClient) as any
+    })
+
     it('should return the parsed DatavizConfigModel from base64 encoded JSON', (done) => {
       const config = { foo: 'bar' }
       const encoded = btoa(JSON.stringify(config))
       const response = JSON.stringify(encoded)
 
-      const httpClient = TestBed.inject(HttpClient) as any
-      httpClient.get = jest.fn(() => of(response))
+      jest.spyOn(httpClient, 'get').mockReturnValue(of(response))
 
       service.getFileContent('http://example.com/config.json').subscribe({
         next: (result) => {
@@ -955,6 +975,51 @@ describe('Gn4PlatformService', () => {
         },
         error: done.fail,
       })
+    })
+
+    it('should directly return parsed JSON when response is already an object', (done) => {
+      const directJsonResponse = { name: 'Test Config', values: [1, 2, 3] }
+
+      jest
+        .spyOn(httpClient, 'get')
+        .mockReturnValue(of(JSON.stringify(directJsonResponse)))
+
+      service
+        .getFileContent('http://example.com/direct-config.json')
+        .subscribe({
+          next: (result) => {
+            expect(result).toEqual(directJsonResponse)
+            done()
+          },
+          error: done.fail,
+        })
+    })
+
+    it('should handle content with accents when decoding base64', (done) => {
+      const configWithAccents = {
+        view: 'table',
+        source: {
+          name: 'Télécharger les données au format XLSX',
+          description:
+            'Obtenez un classeur excel contenant les dernières données "Commune (2024)"',
+        },
+      }
+      // btoa doesn't handle UTF-8 properly
+      const encoded =
+        'eyJ2aWV3IjoidGFibGUiLCJzb3VyY2UiOnsibmFtZSI6IlTDqWzDqWNoYXJnZXIgbGVzIGRvbm7DqWVzIGF1IGZvcm1hdCBYTFNYIiwiZGVzY3JpcHRpb24iOiJPYnRlbmV6IHVuIGNsYXNzZXVyIGV4Y2VsIGNvbnRlbmFudCBsZXMgZGVybmnDqHJlcyBkb25uw6llcyBcIkNvbW11bmUgKDIwMjQpXCIifX0='
+      const response = JSON.stringify(encoded)
+
+      jest.spyOn(httpClient, 'get').mockReturnValue(of(response))
+
+      service
+        .getFileContent('http://example.com/accents-config.json')
+        .subscribe({
+          next: (result) => {
+            expect(result).toEqual(configWithAccents)
+            done()
+          },
+          error: done.fail,
+        })
     })
   })
 })
