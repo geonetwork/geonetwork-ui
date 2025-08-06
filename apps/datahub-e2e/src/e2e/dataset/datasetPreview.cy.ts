@@ -333,7 +333,7 @@ describe('Preview section', () => {
           .find('gn-ui-dropdown-selector')
           .eq(0)
           .selectDropdownOption(
-            'Plan IGN Tuiles vectorielles (TMS)-https://data.geopf.fr/tms/1.0.0/PLAN.IGN'
+            'Plan IGN Tuiles vectorielles (TMS)-https://data.geopf.fr/tms/1.0.0'
           )
         // TMS styles need time to load
         // eslint-disable-next-line cypress/no-unnecessary-waiting

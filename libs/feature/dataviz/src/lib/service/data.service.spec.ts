@@ -814,6 +814,22 @@ describe('DataService', () => {
         accessServiceProtocol: 'tms',
       } as const
 
+      it('creates a TMS endpoint including the layer name', () => {
+        service.getGeodataLinksFromTms(tmsLink)
+        expect(newEndpointCall).toHaveBeenCalledWith(
+          'https://my.tms.server/tms/LayerName'
+        )
+      })
+      it('creates a TMS endpoint including the layer name (for base url with trailing slash)', () => {
+        const tmsLinkWithSlash = {
+          ...tmsLink,
+          url: new URL('https://my.tms.server/tms/'),
+        }
+        service.getGeodataLinksFromTms(tmsLinkWithSlash)
+        expect(newEndpointCall).toHaveBeenCalledWith(
+          'https://my.tms.server/tms/LayerName'
+        )
+      })
       it('returns style links as DatasetServiceDistribution objects', async () => {
         const styles = await service.getGeodataLinksFromTms(tmsLink)
         expect(styles).toEqual([
