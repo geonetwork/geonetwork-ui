@@ -960,42 +960,40 @@ describe('Gn4PlatformService', () => {
     beforeEach(() => {
       httpClient = TestBed.inject(HttpClient) as any
     })
+    describe('When GN version is lower or equal to 4.2.5', () => {
+      it('should return the parsed DatavizConfigModel from base64 encoded JSON', async () => {
+        const config = { foo: 'bar' }
+        const encoded = btoa(JSON.stringify(config))
+        const response = JSON.stringify(encoded)
 
-    it('should return the parsed DatavizConfigModel from base64 encoded JSON', (done) => {
-      const config = { foo: 'bar' }
-      const encoded = btoa(JSON.stringify(config))
-      const response = JSON.stringify(encoded)
+        jest.spyOn(httpClient, 'get').mockReturnValue(of(response))
+        jest.spyOn(service, 'getApiVersion').mockReturnValue(of('4.2.2'))
 
-      jest.spyOn(httpClient, 'get').mockReturnValue(of(response))
+        const result = await firstValueFrom(
+          service.getFileContent('http://example.com/config.json')
+        )
+        expect(result).toEqual(config)
+      })
+    })
+    describe('When GN version is higher than 4.2.5', () => {
+      it('should directly return parsed JSON', async () => {
+        const directJsonResponse = { name: 'Test Config', values: [1, 2, 3] }
 
-      service.getFileContent('http://example.com/config.json').subscribe({
-        next: (result) => {
-          expect(result).toEqual(config)
-          done()
-        },
-        error: done.fail,
+        jest
+          .spyOn(httpClient, 'get')
+          .mockReturnValue(of(JSON.stringify(directJsonResponse)))
+
+        jest.spyOn(service, 'getApiVersion').mockReturnValue(of('4.3.0'))
+
+        const result = await firstValueFrom(
+          service.getFileContent('http://example.com/direct-config.json')
+        )
+
+        expect(result).toEqual(directJsonResponse)
       })
     })
 
-    it('should directly return parsed JSON when response is already an object', (done) => {
-      const directJsonResponse = { name: 'Test Config', values: [1, 2, 3] }
-
-      jest
-        .spyOn(httpClient, 'get')
-        .mockReturnValue(of(JSON.stringify(directJsonResponse)))
-
-      service
-        .getFileContent('http://example.com/direct-config.json')
-        .subscribe({
-          next: (result) => {
-            expect(result).toEqual(directJsonResponse)
-            done()
-          },
-          error: done.fail,
-        })
-    })
-
-    it('should handle content with accents when decoding base64', (done) => {
+    it('should handle content with accents when decoding base64', async () => {
       const configWithAccents = {
         view: 'table',
         source: {
@@ -1004,22 +1002,20 @@ describe('Gn4PlatformService', () => {
             'Obtenez un classeur excel contenant les dernières données "Commune (2024)"',
         },
       }
-      // btoa doesn't handle UTF-8 properly
+
       const encoded =
         'eyJ2aWV3IjoidGFibGUiLCJzb3VyY2UiOnsibmFtZSI6IlTDqWzDqWNoYXJnZXIgbGVzIGRvbm7DqWVzIGF1IGZvcm1hdCBYTFNYIiwiZGVzY3JpcHRpb24iOiJPYnRlbmV6IHVuIGNsYXNzZXVyIGV4Y2VsIGNvbnRlbmFudCBsZXMgZGVybmnDqHJlcyBkb25uw6llcyBcIkNvbW11bmUgKDIwMjQpXCIifX0='
+
       const response = JSON.stringify(encoded)
 
       jest.spyOn(httpClient, 'get').mockReturnValue(of(response))
+      jest.spyOn(service, 'getApiVersion').mockReturnValue(of('4.2.0'))
 
-      service
-        .getFileContent('http://example.com/accents-config.json')
-        .subscribe({
-          next: (result) => {
-            expect(result).toEqual(configWithAccents)
-            done()
-          },
-          error: done.fail,
-        })
+      const result = await firstValueFrom(
+        service.getFileContent('http://example.com/accents-config.json')
+      )
+
+      expect(result).toEqual(configWithAccents)
     })
   })
 })
