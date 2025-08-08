@@ -946,11 +946,6 @@ describe('Gn4PlatformService', () => {
         'Q2Fmw6kgY3LDqG1lIGV0IGRlc3NlcnQgw6AgbCfDqXJhYmxl'
       const decoded = service.decodeBase64(base64WithAccents)
       expect(decoded).toEqual("Café crème et dessert à l'érable")
-
-      // TODO : delete , just for the review :
-      const wrongDecoded = atob(base64WithAccents)
-      expect(wrongDecoded).not.toEqual("Café crème et dessert à l'érable")
-      expect(wrongDecoded).toEqual("CafÃ© crÃ¨me et dessert Ã  l'Ã©rable")
     })
   })
 
