@@ -46,7 +46,6 @@ import {
 } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n'
-import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 
 const minApiVersion = '4.2.2'
 
@@ -56,6 +55,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
   private readonly me$: Observable<UserModel>
   private readonly users$: Observable<UserModel[]>
   private readonly isUserAnonymous$: Observable<boolean>
+  private readonly gnParseVersion = '4.2.5'
 
   private keyTranslations$ = this.toolsApiService
     .getTranslationsPackage1('gnui')
@@ -390,13 +390,15 @@ export class Gn4PlatformService implements PlatformServiceInterface {
         })
       )
   }
-
   getFileContent(url: URL | string): Observable<any> {
-    return this.httpClient.get(url.toString(), { responseType: 'text' }).pipe(
-      map((text) => {
+    return combineLatest([
+      this.httpClient.get(url.toString(), { responseType: 'text' }),
+      this.getApiVersion(),
+    ]).pipe(
+      map(([text, version]) => {
         const parsed = JSON.parse(text)
 
-        if (typeof parsed === 'object') {
+        if (version > this.gnParseVersion) {
           return parsed
         }
 

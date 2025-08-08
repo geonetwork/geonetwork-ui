@@ -939,22 +939,78 @@ describe('Gn4PlatformService', () => {
       })
     })
   })
+  describe('decodeBase64', () => {
+    it('should properly decode base64 content with accents', () => {
+      // "Café crème et dessert à l'érable" encoded in base64
+      const base64WithAccents =
+        'Q2Fmw6kgY3LDqG1lIGV0IGRlc3NlcnQgw6AgbCfDqXJhYmxl'
+      const decoded = service.decodeBase64(base64WithAccents)
+      expect(decoded).toEqual("Café crème et dessert à l'érable")
+    })
+  })
+
   describe('getFileContent', () => {
-    it('should return the parsed DatavizConfigModel from base64 encoded JSON', (done) => {
-      const config = { foo: 'bar' }
-      const encoded = btoa(JSON.stringify(config))
+    let httpClient: HttpClient
+
+    beforeEach(() => {
+      httpClient = TestBed.inject(HttpClient) as any
+    })
+    describe('When GN version is lower or equal to 4.2.5', () => {
+      it('should return the parsed DatavizConfigModel from base64 encoded JSON', async () => {
+        const config = { foo: 'bar' }
+        const encoded = btoa(JSON.stringify(config))
+        const response = JSON.stringify(encoded)
+
+        jest.spyOn(httpClient, 'get').mockReturnValue(of(response))
+        jest.spyOn(service, 'getApiVersion').mockReturnValue(of('4.2.2'))
+
+        const result = await firstValueFrom(
+          service.getFileContent('http://example.com/config.json')
+        )
+        expect(result).toEqual(config)
+      })
+    })
+    describe('When GN version is higher than 4.2.5', () => {
+      it('should directly return parsed JSON', async () => {
+        const directJsonResponse = { name: 'Test Config', values: [1, 2, 3] }
+
+        jest
+          .spyOn(httpClient, 'get')
+          .mockReturnValue(of(JSON.stringify(directJsonResponse)))
+
+        jest.spyOn(service, 'getApiVersion').mockReturnValue(of('4.3.0'))
+
+        const result = await firstValueFrom(
+          service.getFileContent('http://example.com/direct-config.json')
+        )
+
+        expect(result).toEqual(directJsonResponse)
+      })
+    })
+
+    it('should handle content with accents when decoding base64', async () => {
+      const configWithAccents = {
+        view: 'table',
+        source: {
+          name: 'Télécharger les données au format XLSX',
+          description:
+            'Obtenez un classeur excel contenant les dernières données "Commune (2024)"',
+        },
+      }
+
+      const encoded =
+        'eyJ2aWV3IjoidGFibGUiLCJzb3VyY2UiOnsibmFtZSI6IlTDqWzDqWNoYXJnZXIgbGVzIGRvbm7DqWVzIGF1IGZvcm1hdCBYTFNYIiwiZGVzY3JpcHRpb24iOiJPYnRlbmV6IHVuIGNsYXNzZXVyIGV4Y2VsIGNvbnRlbmFudCBsZXMgZGVybmnDqHJlcyBkb25uw6llcyBcIkNvbW11bmUgKDIwMjQpXCIifX0='
+
       const response = JSON.stringify(encoded)
 
-      const httpClient = TestBed.inject(HttpClient) as any
-      httpClient.get = jest.fn(() => of(response))
+      jest.spyOn(httpClient, 'get').mockReturnValue(of(response))
+      jest.spyOn(service, 'getApiVersion').mockReturnValue(of('4.2.0'))
 
-      service.getFileContent('http://example.com/config.json').subscribe({
-        next: (result) => {
-          expect(result).toEqual(config)
-          done()
-        },
-        error: done.fail,
-      })
+      const result = await firstValueFrom(
+        service.getFileContent('http://example.com/accents-config.json')
+      )
+
+      expect(result).toEqual(configWithAccents)
     })
   })
 })
