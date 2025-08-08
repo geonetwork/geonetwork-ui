@@ -93,10 +93,6 @@ Some additional notes:
 
   deprecated - not used anymore
 
-- `limit` (optional)
-
-Indicates the number of elements displayed per page (e.g., on DataHub news, search, and organization pages). A high value may lead to performance issues and a lower EcoIndex score. The default is 10; a value of 5 is recommended for better EcoIndex performance.
-
 #### `[theme]`
 
 ::: tip
@@ -146,6 +142,10 @@ All parameters in this section are expressed using CSS formats; references:
 - `record_kind_quick_filter` (optional)
 
 Indicates whether the quick filter (by record kind dataset, service or reuse) below the search filters is displayed or not. Defaults to `true`.
+
+- `limit` (optional)
+
+Indicates the number of elements displayed per page (e.g., on DataHub news, search, and organization pages). A high value may lead to performance issues and a lower EcoIndex score. The default is 10; a value of 5 is recommended for better EcoIndex performance.
 
 - `filter_geometry_url` or `filter_geometry_data` (optional)
 
