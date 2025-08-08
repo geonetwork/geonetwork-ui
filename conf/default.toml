@@ -81,6 +81,9 @@ background_color = "#fdfbff"
 # Optional; Indicates whether the quick filter (by record kind dataset, service or reuse) below the search filters is displayed or not. Defaults to `true`.
 # record_kind_quick_filter = true
 
+# Optional; Indicates the number of elements per page ( datahub news, search, organization pages)
+# limit = 5
+
 # Optional; specify a GeoJSON object to be used as filter: all records contained inside the geometry will be boosted on top,
 # all records which do not intersect with the geometry will be shown with lower priority; can be specified as URL or inline
 # Note: if the GeoJSON object contains multiple features, only the geometry of the first one will be kept!

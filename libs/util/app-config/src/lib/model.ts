@@ -60,6 +60,7 @@ export interface SearchConfig {
   FILTER_GEOMETRY_DATA?: string
   SEARCH_PRESET?: SearchPreset[]
   ADVANCED_FILTERS?: []
+  LIMIT?: number
 }
 
 export interface MetadataQualityConfig {

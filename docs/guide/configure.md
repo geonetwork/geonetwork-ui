@@ -93,6 +93,10 @@ Some additional notes:
 
   deprecated - not used anymore
 
+- `limit` (optional)
+
+Indicates the number of elements displayed per page (e.g., on DataHub news, search, and organization pages). A high value may lead to performance issues and a lower EcoIndex score. The default is 10; a value of 5 is recommended for better EcoIndex performance.
+
 #### `[theme]`
 
 ::: tip
