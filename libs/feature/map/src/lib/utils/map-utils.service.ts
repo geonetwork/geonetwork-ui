@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core'
-import { extend, Extent } from 'ol/extent'
-import GeoJSON from 'ol/format/GeoJSON'
+import { extend } from 'ol/extent'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-
-const GEOJSON = new GeoJSON()
+import { BoundingBox, getGeometryBoundingBox } from '@geonetwork-ui/util/shared'
 
 @Injectable({
   providedIn: 'root',
 })
 export class MapUtilsService {
-  getRecordExtent(record: Partial<CatalogRecord>): Extent {
+  getRecordExtent(record: Partial<CatalogRecord>): BoundingBox {
     if (!('spatialExtents' in record) || record.spatialExtents.length === 0) {
       return null
     }
     // extend all the spatial extents into an including bbox
     return record.spatialExtents.reduce(
       (prev, curr) => {
-        if ('bbox' in curr) return extend(prev, curr.bbox)
+        if ('bbox' in curr) return extend(prev, curr.bbox) as BoundingBox
         else if ('geometry' in curr) {
-          const geom = GEOJSON.readGeometry(curr.geometry)
-          return extend(prev, geom.getExtent())
+          return extend(
+            prev,
+            getGeometryBoundingBox(curr.geometry)
+          ) as BoundingBox
         }
         return prev
       },

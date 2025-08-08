@@ -45,7 +45,7 @@ describe('MapUtilsService', () => {
           },
         ],
       }
-      expect(service.getRecordExtent(record)).toEqual([...[1, 3], ...[8, 8]])
+      expect(service.getRecordExtent(record)).toEqual([1, 3, 8, 8])
     })
   })
 })
