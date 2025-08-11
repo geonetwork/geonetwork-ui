@@ -615,7 +615,7 @@ describe('ElasticsearchService', () => {
                     shape: geojsonPolygon,
                     relation: 'within',
                   },
-                  boost: 10.0,
+                  boost: 5.0,
                 },
               },
               {
@@ -624,7 +624,15 @@ describe('ElasticsearchService', () => {
                     shape: geojsonPolygon,
                     relation: 'intersects',
                   },
-                  boost: 7.0,
+                  boost: 2.0,
+                },
+              },
+              {
+                distance_feature: {
+                  boost: 5,
+                  field: 'location',
+                  origin: [3.063904886799392, 50.635541344891436],
+                  pivot: '2848m',
                 },
               },
             ],

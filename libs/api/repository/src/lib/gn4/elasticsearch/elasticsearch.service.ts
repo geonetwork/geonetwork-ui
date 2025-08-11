@@ -1,5 +1,5 @@
 import { Injectable, Injector } from '@angular/core'
-import { Geometry } from 'geojson'
+import type { Geometry } from 'geojson'
 import {
   ES_QUERY_FIELDS_PRIORITY,
   ES_SOURCE_SUMMARY,
@@ -30,6 +30,9 @@ import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n'
 import { formatDate, isDateRange } from './date-range.utils'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateService } from '@ngx-translate/core'
+import { getGeometryBoundingBox } from '@geonetwork-ui/util/shared'
+import { getLength as getGeodesicLength } from 'ol/sphere'
+import { LineString } from 'ol/geom'
 
 export type DateRange = { start?: Date; end?: Date }
 
@@ -351,6 +354,11 @@ export class ElasticsearchService {
       })
     }
     if (geometry) {
+      // boosts applied using the filter geometry:
+      // * records completely within the geometry receive a boost of 5
+      // * records intersecting the geometry receive a boost of 2
+      // * records close to the geometry center receive a boost of 5 (based on the `location` field)
+      // * records on the outskirt of the geometry receive a boost of 2.5
       should.push(
         {
           geo_shape: {
@@ -358,7 +366,7 @@ export class ElasticsearchService {
               shape: geometry,
               relation: 'within',
             },
-            boost: 10.0,
+            boost: 5.0,
           },
         },
         {
@@ -367,10 +375,49 @@ export class ElasticsearchService {
               shape: geometry,
               relation: 'intersects',
             },
-            boost: 7.0,
+            boost: 2.0,
           },
         }
       )
+
+      // this will boost the results variably depending on their distance from the given geometry
+      // note: this takes into account the `location` field of a record; this is generally the center of all spatial extents
+      // combined, and thus the actual size/coverage of the record spatial extent isn't relevant here
+      const bbox = getGeometryBoundingBox(geometry)
+      const center = [(bbox[0] + bbox[2]) / 2, (bbox[1] + bbox[3]) / 2]
+      const northToCenter = new LineString([
+        [center[0], bbox[3]],
+        center,
+      ]).transform('EPSG:4326', 'EPSG:3857')
+      const southToCenter = new LineString([
+        [center[0], bbox[1]],
+        center,
+      ]).transform('EPSG:4326', 'EPSG:3857')
+      const westToCenter = new LineString([
+        [bbox[0], center[1]],
+        center,
+      ]).transform('EPSG:4326', 'EPSG:3857')
+      const eastToCenter = new LineString([
+        [bbox[2], center[1]],
+        center,
+      ]).transform('EPSG:4326', 'EPSG:3857')
+      // cutoff distance is the distance from where the boost will only be half of the max value
+      // it is an average of the "size" of the bounding box in every direction, in meters
+      const cutoffDistance =
+        (getGeodesicLength(northToCenter) +
+          getGeodesicLength(southToCenter) +
+          getGeodesicLength(westToCenter) +
+          getGeodesicLength(eastToCenter)) /
+        4
+
+      should.push({
+        distance_feature: {
+          field: 'location',
+          pivot: `${Math.round(cutoffDistance).toFixed(0)}m`,
+          origin: center,
+          boost: 5.0,
+        },
+      })
     }
 
     return {

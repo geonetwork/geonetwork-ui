@@ -149,11 +149,33 @@ Indicates the number of elements displayed per page (e.g., on DataHub news, sear
 
 - `filter_geometry_url` or `filter_geometry_data` (optional)
 
-Specify a GeoJSON object to be used as filter: all records contained inside the geometry will be **boosted on top**, all records which do not intersect with the geometry will be **shown with lower priority**.
+Specifies a GeoJSON geometry to be used as filter. The GeoJSON geometry can be specified either as URL or inline data.
 
-The GeoJSON geometry can be specified either as URL or inline data.
+The filter geometry does not actually exclude results from the search; instead, it simply "boosts" the relevancy of results in that geometry.
 
-Note: if the GeoJSON object contains multiple features, only the geometry of the first one will be kept!
+::: tip
+
+This parameter has no effect if results are not sorted by relevancy!
+
+:::
+
+The following logic is applied when a filter geometry is provided:
+
+| Location of the record relative to the filter geometry                | Relative boost |
+| --------------------------------------------------------------------- | -------------- |
+| **within the geometry** and **close to the geometry center**          | `+1`           |
+| **within the geometry** but **on the outskirt** of the geometry       | `+0.75`        |
+| **intersecting the geometry** and **on the outskirt** of the geometry | `+0.5`         |
+| **intersecting the geometry** but slightly further from the geometry  | `0`            |
+| not intersecting but **close to the geometry**                        | `-0.5`         |
+| **intersecting** but **located very far away**                        | `-0.75`        |
+| not intersecting and far away                                         | `-1`           |
+
+::: info
+
+If the GeoJSON object contains multiple features, only the geometry of the first one will be kept.
+
+:::
 
 - `advanced_filters` (optional)
 
