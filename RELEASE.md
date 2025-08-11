@@ -96,7 +96,7 @@ Once the branch is created:
   - put the `dev-2.5.x` tag instead of `dev` (Publish NPM package)
   - NOT put the `latest` tag on release (Publish NPM package)
 - adapt `tools/print-dev-version.sh` to detect `2.5.x` instead of `main`
-- adapt `apps/datahub/src/environments/environment.ts` (dev and prod) to return `2.5.x` instead of `main`
+- adapt `libs/util/shared/src/lib/gn-ui-version.ts` (and spec) to return `2.5.x` instead of `main`
 
 Then set the version to the next dev version:
 
