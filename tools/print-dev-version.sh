@@ -16,8 +16,8 @@ if [ -n "${gitTag}" ]; then
   exit 0
 fi
 
-# main branch
-if [ "${gitBranch}" == "main" ]; then
+# 2.6.x branch
+if [ "${gitBranch}" == "2.6.x" ]; then
   echo "${npmVersion}.${gitRef}"
   exit 0
 fi

@@ -80,40 +80,40 @@ The patch branch keeps the same major and minor numbers, but the patch number is
 
 ### Creating and preparing the patch branch
 
-For the examples, we'll use the `2.5.x` branched from `v2.5.0`.
+For the examples, we'll use the `2.6.x` branched from `v2.6.0`.
 
 First, create the branch and check it out:
 
 ```shell
-git checkout -b 2.5.x v2.5.0
+git checkout -b 2.6.x v2.6.0
 ```
 
 Once the branch is created:
 
-- the `.github/workflows` should be adapted to run on push to the `2.5.x` branch instead of `main`
+- the `.github/workflows` should be adapted to run on push to the `2.6.x` branch instead of `main`
 - adapt the `artifacts.yml` to
-  - tag the docker image as `2.5.x` instead of `latest` (Tag all docker images on 2.5.x also as 2.5.x)
-  - put the `dev-2.5.x` tag instead of `dev` (Publish NPM package)
+  - tag the docker image as `2.6.x` instead of `latest` (Tag all docker images on 2.6.x also as 2.6.x)
+  - put the `dev-2.6.x` tag instead of `dev` (Publish NPM package)
   - NOT put the `latest` tag on release (Publish NPM package)
-- adapt `tools/print-dev-version.sh` to detect `2.5.x` instead of `main`
-- adapt `apps/datahub/src/environments/environment.ts` (dev and prod) to return `2.5.x` instead of `main`
+- adapt `tools/print-dev-version.sh` to detect `2.6.x` instead of `main`
+- adapt `libs/util/shared/src/lib/gn-ui-version.ts` (and spec) to return `2.6.x` instead of `main`
 
 Then set the version to the next dev version:
 
 ```shell
-npm version 2.5.1-dev --no-git-tag-version
+npm version 2.6.1-dev --no-git-tag-version
 git add .
-git commit -m "2.5.1-dev"
-git push upstream 2.5.x # replace "upstream" with your remote repo name
+git commit -m "2.6.1-dev"
+git push upstream 2.6.x # replace "upstream" with your remote repo name
 ```
 
 ### How to backport a bug fix
 
 #### With the backport bot
 
-On a PR that needs to be backported, (create and) add the ``backport-to-2.5.x` label (replace `2.5.x` with the wanted patch branch name).
+On a PR that needs to be backported, (create and) add the `backport-to-2.6.x` label (replace `2.6.x` with the wanted patch branch name).
 
-A new PR should automatically be created on the `2.5.x` branch, with the commits cherry-picked, or an indication of commits that couldn't be cherry-picked.
+A new PR should automatically be created on the `2.6.x` branch, with the commits cherry-picked, or an indication of commits that couldn't be cherry-picked.
 
 #### Manually
 
