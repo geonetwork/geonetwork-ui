@@ -354,15 +354,11 @@ export class ElasticsearchService {
       })
     }
     if (geometry) {
-      // boosting will happen like so when a geometry is provided:
-      // * records completely within the geometry and close to the center will have a maximum boost of 10
-      // * records within the geometry but on the outskirt will have a boost of ~8
-      // * records intersecting the geometry and on the outskirt will have a boost of ~7
-      // * records intersecting the geometry but slightly further from the geometry will have a boost of ~4
-      // * records not intersecting but close to the geometry will have a boost of ~2
-      // * records intersecting but located very far away will have a boost of ~2
-      // * records not intersecting and far away will have a boost of ~0
-
+      // boosts applied using the filter geometry:
+      // * records completely within the geometry receive a boost of 5
+      // * records intersecting the geometry receive a boost of 2
+      // * records close to the geometry center receive a boost of 5 (based on the `location` field)
+      // * records on the outskirt of the geometry receive a boost of 2.5
       should.push(
         {
           geo_shape: {
