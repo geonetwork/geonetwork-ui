@@ -9,10 +9,13 @@ hero:
   actions:
     - theme: brand
       text: Why?
-      link: guide/why
+      link: guide/introduction.html#why-geonetwork-ui
     - theme: alt
       text: Getting started
       link: guide/getting-started
+    - theme: alt
+      text: Live examples
+      link: guide/live-examples
 
 features:
   - icon: 💡
