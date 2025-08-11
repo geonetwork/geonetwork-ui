@@ -156,6 +156,17 @@ export type ServiceProtocol =
   | 'maplibre-style'
   | 'other'
 
+marker('record.metadata.api.accessServiceProtocol.wms')
+marker('record.metadata.api.accessServiceProtocol.wfs')
+marker('record.metadata.api.accessServiceProtocol.wps')
+marker('record.metadata.api.accessServiceProtocol.wmts')
+marker('record.metadata.api.accessServiceProtocol.esriRest')
+marker('record.metadata.api.accessServiceProtocol.ogcFeatures')
+marker('record.metadata.api.accessServiceProtocol.GPFDL')
+marker('record.metadata.api.accessServiceProtocol.tms')
+marker('record.metadata.api.accessServiceProtocol.maplibre-style')
+marker('record.metadata.api.accessServiceProtocol.other')
+
 export type OnlineResourceType = 'service' | 'download' | 'link' | 'endpoint'
 
 export interface DatasetServiceDistribution {
