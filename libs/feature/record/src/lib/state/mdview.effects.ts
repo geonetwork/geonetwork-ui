@@ -23,7 +23,11 @@ export class MdViewEffects {
       ofType(MdViewActions.loadFullMetadata),
       switchMap(({ uuid }) => this.recordsRepository.getRecord(uuid)),
       map((record) => {
-        if (record === null || !this.router.url.includes(record.kind)) {
+        if (
+          record === null ||
+          (this.router.url !== '/' && // FIXME: special case for WC, find a better way
+            !this.router.url.includes(record.kind))
+        ) {
           return MdViewActions.loadFullMetadataFailure({ notFound: true })
         }
         return MdViewActions.loadFullMetadataSuccess({ full: record })
