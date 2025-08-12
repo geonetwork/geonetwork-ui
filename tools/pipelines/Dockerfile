@@ -1,4 +1,4 @@
-https://github.com/geonetwork/geonetwork-ui/blob/main/tools/pipelines/register-es-pipelines.js#L12-L13FROM node:lts-alpine
+FROM node:lts-alpine
 
 RUN mkdir /app
 WORKDIR /app
