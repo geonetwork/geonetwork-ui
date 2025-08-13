@@ -522,14 +522,14 @@ describe('MapViewComponent', () => {
           tick(200)
           fixture.detectChanges()
         }))
-        it('emits a map context using mvt tile format with root url', () => {
+        it('emits a map context using mvt tile format with url including the layer name', () => {
           expect(mapComponent.context).toEqual({
             layers: [
               {
                 name: 'orthophoto',
                 type: 'xyz',
                 tileFormat: 'application/vnd.mapbox-vector-tile',
-                url: 'http://abcd.com/tms/{z}/{x}/{y}.pbf',
+                url: 'http://abcd.com/tms/orthophoto/{z}/{x}/{y}.pbf',
               },
             ],
             view: expect.any(Object),
@@ -550,14 +550,14 @@ describe('MapViewComponent', () => {
           tick(200)
           fixture.detectChanges()
         }))
-        it('still emits a map context using mvt tile format with root url', () => {
+        it('still emits a map context using mvt tile format with url including the layer name', () => {
           expect(mapComponent.context).toEqual({
             layers: [
               {
                 name: 'tmserror',
                 type: 'xyz',
                 tileFormat: 'application/vnd.mapbox-vector-tile',
-                url: 'http://error.com/tms/{z}/{x}/{y}.pbf',
+                url: 'http://error.com/tms/tmserror/{z}/{x}/{y}.pbf',
               },
             ],
             view: expect.any(Object),
