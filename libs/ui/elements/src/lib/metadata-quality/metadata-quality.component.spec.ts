@@ -244,7 +244,6 @@ describe('MetadataQualityComponent', () => {
       { name: 'keywords', value: true },
       { name: 'legalConstraints', value: true },
       { name: 'contacts', value: true },
-      { name: 'capabilities', value: true },
     ]
     expect(component.items).toEqual(expectedServiceItems)
     expect(component.computedQualityScore).toBe(100)

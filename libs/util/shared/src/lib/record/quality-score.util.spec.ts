@@ -56,7 +56,6 @@ describe('Metadata Validators', () => {
         'updateFrequency',
         'topics',
         'organisation',
-        'capabilities',
         'source',
       ])
       expect(result.every((key) => typeof key === 'string')).toBe(true)
@@ -73,7 +72,6 @@ describe('Metadata Validators', () => {
       'updateFrequency',
       'topics',
       'organisation',
-      'capabilities',
       'source',
     ]
 
@@ -185,7 +183,6 @@ describe('Metadata Validators', () => {
       expect(result[2].name).toBe('keywords')
       expect(result[3].name).toBe('legalConstraints')
       expect(result[4].name).toBe('contacts')
-      expect(result[5].name).toBe('capabilities')
       expect(result[0].validator()).toBe(true)
       expect(result[1].validator()).toBe(true)
       expect(result[2].validator()).toBe(true)
@@ -204,7 +201,6 @@ describe('Metadata Validators', () => {
       expect(resultFailedValidation[2].name).toBe('keywords')
       expect(resultFailedValidation[3].name).toBe('legalConstraints')
       expect(resultFailedValidation[4].name).toBe('contacts')
-      expect(resultFailedValidation[5].name).toBe('capabilities')
       expect(resultFailedValidation[0].validator()).toBe(false)
       expect(resultFailedValidation[1].validator()).toBe(false)
       expect(resultFailedValidation[2].validator()).toBe(false)
