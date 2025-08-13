@@ -63,7 +63,7 @@ const GEONETWORK_UI_PIPELINE = {
         source: `
 int total=8;
 int totalDataset=8;
-int totalService=6;
+int totalService=5;
 int totalReuse=8;
 int ok=0;
 def type='dataset';
@@ -111,33 +111,6 @@ if(type == 'dataset' && ctx.cl_maintenanceAndUpdateFrequency != null && ctx.cl_m
 if((ctx.MD_LegalConstraintsUseLimitationObject != null && ctx.MD_LegalConstraintsUseLimitationObject.length > 0) ||
    (ctx.MD_LegalConstraintsOtherConstraintsObject != null && ctx.MD_LegalConstraintsOtherConstraintsObject.length > 0)) {
   ok++
-}
-// GN 4.2.3+
-if(type == 'service' && ctx.link != null){
-  for (link in ctx.link) {
-    if (
-      link != null &&
-      link.urlObject != null &&
-      link.urlObject.default != null &&
-      link.urlObject.default.toLowerCase().contains('capabilities')
-    ) {
-      ok++;
-      break;
-    }
-  }
-}
-// GN 4.2.2 and earlier
-if(type == 'service' && ctx.link != null){
-  for (link in ctx.link) {
-    if (
-      link != null &&
-      link.url != null &&
-      link.url.toLowerCase().contains('capabilities')
-    ) {
-      ok++;
-      break;
-    }
-  }
 }
 if(type == 'reuse' && ctx.recordLink != null){
   for (link in ctx.recordLink) {
