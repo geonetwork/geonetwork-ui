@@ -201,7 +201,7 @@ describe('MetadataQualityComponent', () => {
       component.initialize()
       fixture.detectChanges()
       expect(component.items.every((item) => item.value)).toBe(false)
-      expect(component.items.length).toBe(6)
+      expect(component.items.length).toBe(5)
       expect(component.computedQualityScore).toBe(0)
     })
   })

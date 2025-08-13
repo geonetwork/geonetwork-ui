@@ -177,7 +177,7 @@ describe('Metadata Validators', () => {
         propsToValidate
       )
 
-      expect(result.length).toBe(6)
+      expect(result.length).toBe(5)
       expect(result[0].name).toBe('title')
       expect(result[1].name).toBe('abstract')
       expect(result[2].name).toBe('keywords')
@@ -188,14 +188,13 @@ describe('Metadata Validators', () => {
       expect(result[2].validator()).toBe(true)
       expect(result[3].validator()).toBe(true)
       expect(result[4].validator()).toBe(true)
-      expect(result[5].validator()).toBe(true)
 
       const resultFailedValidation = getQualityValidators(
         { ...mockRecordInvalid, kind: 'service' },
         propsToValidate
       )
 
-      expect(resultFailedValidation.length).toBe(6)
+      expect(resultFailedValidation.length).toBe(5)
       expect(resultFailedValidation[0].name).toBe('title')
       expect(resultFailedValidation[1].name).toBe('abstract')
       expect(resultFailedValidation[2].name).toBe('keywords')
@@ -206,7 +205,6 @@ describe('Metadata Validators', () => {
       expect(resultFailedValidation[2].validator()).toBe(false)
       expect(resultFailedValidation[3].validator()).toBe(false)
       expect(resultFailedValidation[4].validator()).toBe(false)
-      expect(resultFailedValidation[5].validator()).toBe(false)
     })
   })
 })

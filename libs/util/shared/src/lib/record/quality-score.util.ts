@@ -40,8 +40,11 @@ function getMappersFromKind(kind: RecordKind) {
       kindKeys = ['topics', 'organisation', 'source']
       break
     case 'dataset':
-    default:
       kindKeys = ['updateFrequency', 'topics', 'organisation']
+      break
+    case 'service':
+    default:
+      kindKeys = []
   }
 
   return [...commonsKeys, ...kindKeys]
