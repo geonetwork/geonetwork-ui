@@ -67,7 +67,10 @@
         [ngClass]="{
           '!bg-primary': currentlyActive,
         }"
-        >{{ link.accessServiceProtocol }}</span
+        translate
+        >record.metadata.api.accessServiceProtocol.{{
+          link.accessServiceProtocol
+        }}</span
       >
       <span
         *ngIf="link.accessServiceProtocol === 'GPFDL'"
