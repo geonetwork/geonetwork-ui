@@ -50,7 +50,7 @@ program
 
 program.parse(process.argv)
 
-const VERSION = 104 // increment on changes
+const VERSION = 105 // increment on changes
 
 const GEONETWORK_UI_PIPELINE = {
   description: 'GeoNetwork-UI pipeline',
