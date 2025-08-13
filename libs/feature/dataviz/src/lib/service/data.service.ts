@@ -237,7 +237,9 @@ export class DataService {
     tmsLink: DatasetServiceDistribution,
     keepOriginalLink = false
   ): Promise<DatasetServiceDistribution[]> {
-    const endpoint = new TmsEndpoint(tmsLink.url.toString())
+    const endpoint = new TmsEndpoint(
+      tmsLink.url.toString().replace(/\/?$/, `/${tmsLink.name}`)
+    )
     const tileMaps = await endpoint.allTileMaps.catch(() => {
       throw new Error(`ogc.unreachable.unknown`)
     })
