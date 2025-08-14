@@ -37,12 +37,7 @@ Look for 'GeoNetwork-UI pipeline' in `tools/pipelines/register-es-pipelines.js`
 | organisation     | X       |         | X     |
 | contact          | X       | X       | X     |
 | updateFrequency  | X       |         |       |
-| capabilities     |         | X       |       |
 | sources          |         |         | X     |
-
-### capabilities
-
-The service must have at least one link containing the text `capabilities` to be considered valid.
 
 ### sources
 

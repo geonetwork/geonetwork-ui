@@ -72,9 +72,6 @@ export class MetadataQualityComponent implements OnChanges {
       this.items.push({ name, value })
     }
   }
-  hasGetCapabilities(url: string): boolean {
-    return url.toLowerCase().includes('capabilities')
-  }
 
   private readonly COMMON_CHECKS: QualityChecks = {
     title: (metadata) => !!metadata?.title,
@@ -91,12 +88,7 @@ export class MetadataQualityComponent implements OnChanges {
       topic: (metadata) => (metadata?.topics?.length ?? 0) > 0,
       organisation: (metadata) => !!metadata?.contacts?.[0]?.organization?.name,
     },
-    service: {
-      capabilities: (metadata) =>
-        (metadata?.onlineResources ?? []).some((resource) =>
-          this.hasGetCapabilities(resource?.url?.href ?? '')
-        ),
-    },
+    service: {},
     reuse: {
       topic: (metadata) => (metadata?.topics?.length ?? 0) > 0,
       organisation: (metadata) => !!metadata?.contacts?.[0]?.organization?.name,
