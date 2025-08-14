@@ -40,7 +40,8 @@ export class OrganizationPageComponent implements OnInit {
       filter(([pathParams, _]) => Object.keys(pathParams).length > 0),
       switchMap(([pathParams, organizations]) => {
         const organization = organizations.find(
-          (organization) => organization.name === pathParams['name']
+          (organization) =>
+            organization.name.replace('/', '') === pathParams['name']
         )
         return of(organization)
       })
