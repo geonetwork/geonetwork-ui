@@ -201,7 +201,7 @@ describe('MetadataQualityComponent', () => {
       component.initialize()
       fixture.detectChanges()
       expect(component.items.every((item) => item.value)).toBe(false)
-      expect(component.items.length).toBe(6)
+      expect(component.items.length).toBe(5)
       expect(component.calculatedQualityScore).toBe(0)
     })
   })
@@ -244,7 +244,6 @@ describe('MetadataQualityComponent', () => {
       { name: 'keywords', value: true },
       { name: 'legalConstraints', value: true },
       { name: 'contact', value: true },
-      { name: 'capabilities', value: true },
     ]
     expect(component.items).toEqual(expectedServiceItems)
     expect(component.calculatedQualityScore).toBe(100)
