@@ -344,7 +344,9 @@ export class MapViewComponent implements AfterViewInit {
     ) {
       // FIXME: here we're assuming that the TMS serves vector tiles only; should be checked with ogc-client first
       return of({
-        url: link.url.toString().replace(/\/?$/, '/{z}/{x}/{y}.pbf'),
+        url: link.url
+          .toString()
+          .replace(/\/?$/, `/${link.name}/{z}/{x}/{y}.pbf`),
         type: 'xyz',
         tileFormat: 'application/vnd.mapbox-vector-tile',
         name: link.name,
