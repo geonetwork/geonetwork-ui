@@ -15,7 +15,7 @@ import {
   FiltersAggregationParams,
   SortByField,
 } from '@geonetwork-ui/common/domain/model/search'
-import { METADATA_LANGUAGE } from '../../metadata-language'
+import { METADATA_LANGUAGE } from '../../metadata-language.token'
 import {
   AggregationResult,
   EsSearchParams,
@@ -28,7 +28,10 @@ import {
 } from '@geonetwork-ui/api/metadata-converter'
 import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n'
 import { formatDate, isDateRange } from './date-range.utils'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  LanguageCode,
+} from '@geonetwork-ui/common/domain/model/record'
 import { TranslateService } from '@ngx-translate/core'
 import { getGeometryBoundingBox } from '@geonetwork-ui/util/shared'
 import { getLength as getGeodesicLength } from 'ol/sphere'
@@ -48,8 +51,9 @@ export class ElasticsearchService {
   private get lang3() {
     return getLang3FromLang2(this.translateService.currentLang)
   }
-  private get metadataLang() {
-    return this.injector.get(METADATA_LANGUAGE, null)
+  private get metadataLang(): LanguageCode {
+    const mdLangValue = this.injector.get(METADATA_LANGUAGE, null)
+    return typeof mdLangValue === 'function' ? mdLangValue() : mdLangValue
   }
 
   constructor(
