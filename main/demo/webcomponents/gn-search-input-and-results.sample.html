@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Search input and results list</title>
+    <base href="./" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Inter:wght@200;300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      body {
+        margin: 0;
+        overflow-y: scroll;
+        font-family: var(--font-family-main);
+      }
+      header {
+        height: 200px;
+        background-color: var(--color-secondary);
+      }
+      .container {
+        max-width: 750px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <script src="gn-wc.js"></script>
+        <gn-search-input
+          api-url="https://www.geo2france.fr/geonetwork/srv/api"
+        ></gn-search-input>
+      </div>
+    </header>
+    <main class="container">
+      <gn-results-list
+        size="10"
+        api-url="https://www.geo2france.fr/geonetwork/srv/api"
+        catalog-url="https://www.geo2france.fr/datahub/dataset/{uuid}"
+        layout="ROW"
+        primary-color="#251"
+        secondary-color="#c40"
+        main-color="#555"
+        background-color="#fdfbff"
+        main-font="'Inter', sans-serif"
+        title-font="'DM Serif Display', serif"
+        show-more="auto"
+        filter='{"OrgForResourceObject.default": { "Géo2France": true } }'
+      ></gn-results-list>
+    </main>
+  </body>
+</html>

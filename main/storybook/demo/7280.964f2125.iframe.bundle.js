@@ -1,0 +1,131 @@
+/*! For license information please see 7280.964f2125.iframe.bundle.js.LICENSE.txt */
+"use strict";(self.webpackChunkgeonetwork_ui=self.webpackChunkgeonetwork_ui||[]).push([[7280],{"./node_modules/@ltd/j-toml/index.mjs":(__unused_webpack_module,__webpack_exports__,__webpack_require__)=>{__webpack_require__("./node_modules/@babel/runtime/helpers/esm/defineProperty.js");let _Symbol$1$toPrimitive;const SyntaxError$1=SyntaxError,TypeError$1=(RangeError,TypeError),RegExp$1=(Error,"undefined"==typeof BigInt||BigInt,RegExp),WeakMap$1=WeakMap,get=WeakMap.prototype.get,set=WeakMap.prototype.set,create$1=Object.create,freeze=(Number.isSafeInteger,Object.getOwnPropertyNames,Object.freeze),NULL=(Object.prototype.isPrototypeOf,Object.seal?Object.preventExtensions(Object.create(null)):null),bind=Function.prototype.bind,test=RegExp.prototype.test,exec=RegExp.prototype.exec,apply$1=Reflect.apply,Proxy$1=Proxy,assign$1=("undefined"==typeof Symbol||Symbol.toStringTag,Object.defineProperty,Object.assign),Object$1=Object,fromCharCode=(Math.floor,Array.isArray,String.fromCharCode),Array$1=Array,hasOwnProperty=Object.prototype.hasOwnProperty,propertyIsEnumerable=Object.prototype.propertyIsEnumerable;Function.prototype.apply;var isEnum=propertyIsEnumerable.call.bind(propertyIsEnumerable),hasOwn=Object$1.hasOwn||function(){return hasOwnProperty.bind?hasOwnProperty.call.bind(hasOwnProperty):function hasOwn(object,key){return hasOwnProperty.call(object,key)}}(),create=Object$1.create;function Descriptor(source){var target=create(NULL);return hasOwn(source,"value")&&(target.value=source.value),hasOwn(source,"writable")&&(target.writable=source.writable),hasOwn(source,"get")&&(target.get=source.get),hasOwn(source,"set")&&(target.set=source.set),hasOwn(source,"enumerable")&&(target.enumerable=source.enumerable),hasOwn(source,"configurable")&&(target.configurable=source.configurable),target}var Test=bind?bind.bind(test):function(re){return function(string){return test.call(re,string)}},Exec=bind?bind.bind(exec):function(re){return function(string){return exec.call(re,string)}};function __PURE__(re){var test=re.test=Test(re),exec=re.exec=Exec(re),source=test.source=exec.source=re.source;return test.unicode=exec.unicode=re.unicode,test.ignoreCase=exec.ignoreCase=re.ignoreCase,test.multiline=exec.multiline=source.indexOf("^")<0&&source.indexOf("$")<0?null:re.multiline,test.dotAll=exec.dotAll=source.indexOf(".")<0?null:re.dotAll,re}function theRegExp(re){return __PURE__(re)}var NT=/[\n\t]+/g,ESCAPE=/\\./g;function graveAccentReplacer($$){return"\\`"===$$?"`":$$}var includes="".includes?function(that,searchString){return that.includes(searchString)}:function(that,searchString){return that.indexOf(searchString)>-1};function RE(template){for(var U=this.U,I=this.I,M=this.M,S=this.S,raw=template.raw,source=raw[0].replace(NT,""),index=1,length=arguments.length;index!==length;){var value=arguments[index];if("string"==typeof value)source+=value;else{var value_source=value.source;if("string"!=typeof value_source)throw TypeError$1("source");if(value.unicode===U)throw SyntaxError$1("unicode");if(value.ignoreCase===I)throw SyntaxError$1("ignoreCase");if(value.multiline===M&&(includes(value_source,"^")||includes(value_source,"$")))throw SyntaxError$1("multiline");if(value.dotAll===S&&includes(value_source,"."))throw SyntaxError$1("dotAll");source+=value_source}source+=raw[index++].replace(NT,"")}var re=RegExp$1(U?source=source.replace(ESCAPE,graveAccentReplacer):source,this.flags),test=re.test=Test(re),exec=re.exec=Exec(re);return test.source=exec.source=source,test.unicode=exec.unicode=!U,test.ignoreCase=exec.ignoreCase=!I,test.multiline=exec.multiline=includes(source,"^")||includes(source,"$")?!M:null,test.dotAll=exec.dotAll=includes(source,".")?!S:null,re}var RE_bind=bind&&bind.bind(RE);function Context(flags){return{U:!includes(flags,"u"),I:!includes(flags,"i"),M:!includes(flags,"m"),S:!includes(flags,"s"),flags}}var CONTEXT=Context(""),newRegExp=Proxy$1?new Proxy$1(RE,{apply:function(RE,thisArg,args){return apply$1(RE,CONTEXT,args)},get:function(RE,flags){return RE_bind(Context(flags))},defineProperty:function(){return!1},preventExtensions:function(){return!1}}):function(){RE.apply=RE.apply;for(var newRegExp=function(){return RE.apply(CONTEXT,arguments)},flags=63;flags--;)!function(context){newRegExp[context.flags]=function(){return RE.apply(context,arguments)}}(Context((1&flags?"":"d")+(2&flags?"":"g")+(4&flags?"":"i")+(8&flags?"":"m")+(8&flags?"":"s")+(16&flags?"":"u")+(32&flags?"":"y")));return freeze?freeze(newRegExp):newRegExp}();const WeakSet$1=WeakSet,keys=(WeakSet.prototype.has,WeakSet.prototype.add,WeakSet.prototype.delete,Object.keys),getOwnPropertySymbols=Object.getOwnPropertySymbols,Null$1=function(){var assign=Object.assign||function assign(target,source){var keys$1,index,key;for(keys$1=keys(source),index=0;index<keys$1.length;++index)target[key=keys$1[index]]=source[key];if(getOwnPropertySymbols)for(keys$1=getOwnPropertySymbols(source),index=0;index<keys$1.length;++index)key=keys$1[index],isEnum(source,key)&&(target[key]=source[key]);return target};function Nullify(constructor){return delete constructor.prototype.constructor,freeze(constructor.prototype),constructor}function Null(origin){return undefined===origin?this:"function"==typeof origin?Nullify(origin):assign(create(NULL),origin)}return delete Null.name,Null.prototype=null,freeze(Null),Null}(),is=Object.is,Object_defineProperties=Object.defineProperties,fromEntries=Object.fromEntries,Reflect_construct=Reflect.construct,Reflect_defineProperty=Reflect.defineProperty,Reflect_deleteProperty=Reflect.deleteProperty,ownKeys=Reflect.ownKeys,newWeakMap=()=>{const weakMap=new WeakMap$1;return weakMap.has=weakMap.has,weakMap.get=weakMap.get,weakMap.set=weakMap.set,weakMap},target2keeper=newWeakMap(),proxy2target=newWeakMap(),target2proxy=newWeakMap(),handlers=assign$1(create$1(NULL),{defineProperty:(target,key,descriptor)=>{if(hasOwn(target,key))return Reflect_defineProperty(target,key,assign$1(create$1(NULL),descriptor));if(Reflect_defineProperty(target,key,assign$1(create$1(NULL),descriptor))){const keeper=target2keeper.get(target);return keeper[keeper.length]=key,!0}return!1},deleteProperty:(target,key)=>{if(Reflect_deleteProperty(target,key)){const keeper=target2keeper.get(target),index=keeper.indexOf(key);return index<0||--keeper.copyWithin(index,index+1).length,!0}return!1},ownKeys:target=>target2keeper.get(target),construct:(target,args,newTarget)=>orderify(Reflect_construct(target,args,newTarget)),apply:(target,thisArg,args)=>orderify(apply$1(target,thisArg,args))}),newProxy=(target,keeper)=>{target2keeper.set(target,keeper);const proxy=new Proxy$1(target,handlers);return proxy2target.set(proxy,target),proxy},orderify=object=>{if(proxy2target.has(object))return object;let proxy=target2proxy.get(object);return proxy||(proxy=newProxy(object,assign$1([],ownKeys(object))),target2proxy.set(object,proxy),proxy)},NONE=(WeakMap.prototype.has,WeakMap.prototype.delete,new WeakMap$1,new WeakSet$1,new WeakSet$1,new WeakSet$1,new WeakSet$1,[]);let sourcePath="",sourceLines=NONE,lineIndex=-1;const throws=error=>{throw error};const where=(pre,rowIndex=lineIndex,columnNumber=0)=>sourceLines===NONE?"":sourcePath?`\n    at (${sourcePath}:${rowIndex+1}:${columnNumber})`:`${pre}line ${rowIndex+1}: ${sourceLines[rowIndex]}`,Whitespace=/[ \t]/,{exec:VALUE_REST_exec}=newRegExp.s`
+	^
+	(
+		(?:\d\d\d\d-\d\d-\d\d \d)?
+		[\w\-+.:]+
+	)
+	${Whitespace}*
+	(.*)
+	$`.valueOf(),{exec:LITERAL_STRING_exec}=newRegExp.s`
+	^
+	'([^']*)'
+	${Whitespace}*
+	(.*)`.valueOf(),{exec:MULTI_LINE_LITERAL_STRING_0_1_2}=newRegExp.s`
+	^
+	(.*?)
+	'''('{0,2})
+	${Whitespace}*
+	(.*)`.valueOf(),{exec:MULTI_LINE_LITERAL_STRING_0}=newRegExp.s`
+	^
+	(.*?)
+	'''()
+	${Whitespace}*
+	(.*)`.valueOf();const Tag=/[^\x00-\x1F"#'()<>[\\\]`{}\x7F]+/,{exec:KEY_VALUE_PAIR_exec}=newRegExp.s`
+	^
+	${Whitespace}*
+	=
+	${Whitespace}*
+	(?:
+		<(${Tag})>
+		${Whitespace}*
+	)?
+	(.*)
+	$`.valueOf(),{exec:_VALUE_PAIR_exec}=newRegExp.s`
+	^
+	<(${Tag})>
+	${Whitespace}*
+	(.*)
+	$`.valueOf(),{exec:TAG_REST_exec}=newRegExp.s`
+	^
+	<(${Tag})>
+	${Whitespace}*
+	(.*)
+	$`.valueOf();theRegExp(/[^\\"]+|\\.?|"(?!"")"?/sy);theRegExp(/[^\\"\x00-\x08\x0B-\x1F\x7F]+|\\(?:[btnfr"\\]|u[\dA-Fa-f]{4}|U[\dA-Fa-f]{8})/y),theRegExp(/[^\\"\x00-\x08\x0B-\x1F\x7F]+|\\(?:[btnfr"\\]|u[\dA-Fa-f]{4}|U[\dA-Fa-f]{8})/y),theRegExp(/[^\\"\x00-\x08\x0B-\x1F]+|\\(?:[btnfr"\\]|u[\dA-Fa-f]{4}|U[\dA-Fa-f]{8})/y),theRegExp(/[^\\"\x00-\x08\x0B-\x1F]+|\\(?:[btnfr"\\/]|u[\dA-Fa-f]{4}|U[\dA-Fa-f]{8})/y);const{test:IS_DOT_KEY}=theRegExp(/^[ \t]*\./),{exec:BARE_KEY_STRICT}=theRegExp(/^[\w-]+/),{exec:BARE_KEY_FREE}=theRegExp(/^[^ \t#=[\]'".]+(?:[ \t]+[^ \t#=[\]'".]+)*/);const{exec:LITERAL_KEY____}=theRegExp(/^'[^'\x00-\x08\x0B-\x1F\x7F]*'/),{exec:LITERAL_KEY_DEL}=theRegExp(/^'[^'\x00-\x08\x0B-\x1F]*'/);const{test:CONTROL_CHARACTER_EXCLUDE_TAB____}=theRegExp(/[\x00-\x08\x0B-\x1F\x7F]/),{test:CONTROL_CHARACTER_EXCLUDE_TAB_DEL}=theRegExp(/[\x00-\x08\x0B-\x1F]/);const NUM=newRegExp`
+	(?:
+		0
+		(?:
+			b[01][_01]*
+		|
+			o[0-7][_0-7]*
+		|
+			x[\dA-Fa-f][_\dA-Fa-f]*
+		|
+			(?:\.\d[_\d]*)?(?:[Ee]-?\d[_\d]*)?
+		)
+	|
+		[1-9][_\d]*
+		(?:\.\d[_\d]*)?(?:[Ee]-?\d[_\d]*)?
+	|
+		inf
+	|
+		nan
+	)
+`.valueOf(),{test:IS_AMAZING}=newRegExp`
+	^(?:
+		-?${NUM}
+		(?:-${NUM})*
+	|
+		true
+	|
+		false
+	)$
+`.valueOf(),{test:BAD_DXOB}=newRegExp`_(?![\dA-Fa-f])`.valueOf();const arrayTypes=new WeakMap$1,arrayTypes_get=get.bind(arrayTypes),arrayTypes_set=set.bind(arrayTypes),As=()=>{const as=array=>{const got=arrayTypes_get(array);return got?got===as||throws(TypeError$1("Types in Array must be same"+where(". Check "))):arrayTypes_set(array,as),array};return as};As(),As(),As(),As(),As(),As(),As(),As(),As(),As(),As();ArrayBuffer.isView;const TextDecoder$1=TextDecoder,Symbol$1=Symbol,NativeDate=(Symbol$1("previous"),Symbol$1("_literal"),new WeakSet$1,new WeakSet$1,Date),getOwnPropertyDescriptors=(Date.parse,Object.preventExtensions,Object.getOwnPropertyDescriptors),defineProperties=function defineProperties(object,descriptorMap){for(var created=create$1(NULL),names=keys(descriptorMap),length=names.length,index=0;index<length;++index){var name=names[index];created[name]=Descriptor(descriptorMap[name])}if(getOwnPropertySymbols){var symbols=getOwnPropertySymbols(descriptorMap);for(length=symbols.length,index=0;index<length;++index){var symbol=symbols[index];isEnum(descriptorMap,symbol)&&(created[symbol]=Descriptor(descriptorMap[symbol]))}}return Object_defineProperties(object,created)},_30_=/(?:0[1-9]|[12]\d|30)/,_31_=/(?:0[1-9]|[12]\d|3[01])/,_23_=/(?:[01]\d|2[0-3])/,_59_=/[0-5]\d/,YMD=newRegExp`
+	\d\d\d\d-
+	(?:
+		0
+		(?:
+			[13578]-${_31_}
+			|
+			[469]-${_30_}
+			|
+			2-${/(?:0[1-9]|1\d|2\d)/}
+		)
+		|
+		1
+		(?:
+			[02]-${_31_}
+			|
+			1-${_30_}
+		)
+	)
+`.valueOf(),HMS=newRegExp`
+	${_23_}:${_59_}:${_59_}
+`.valueOf(),{exec:Z_exec}=theRegExp(/(([+-])\d\d):(\d\d)$/),{exec:OFFSET_DATETIME_exec}=newRegExp`
+	^
+	${YMD}
+	[Tt ]
+	${HMS}
+	(?:\.\d{1,3}(\d*?)0*)?
+	(?:[Zz]|[+-]${_23_}:${_59_})
+	$`.valueOf(),{exec:OFFSET_DATETIME_ZERO_exec}=newRegExp`
+	^
+	${YMD}
+	[Tt ]
+	${HMS}
+	()
+	[Zz]
+	$`.valueOf(),{test:IS_LOCAL_DATETIME}=newRegExp`
+	^
+	${YMD}
+	[Tt ]
+	${HMS}
+	(?:\.\d+)?
+	$`.valueOf(),{test:IS_LOCAL_DATE}=newRegExp`
+	^
+	${YMD}
+	$`.valueOf(),{test:IS_LOCAL_TIME}=newRegExp`
+	^
+	${HMS}
+	(?:\.\d+)?
+	$`.valueOf(),{test:VALIDATE_LEAP}=newRegExp.s`^.....(?:06.30|12.31).23:59:59`.valueOf(),INTEGER_D=(new NativeDate(0),NativeDate.prototype,Symbol$1("OffsetDateTime_ISOString"),Symbol$1("OffsetDateTime_value"),Symbol$1("LocalDateTime_ISOString"),Symbol$1("LocalDateTime_value"),Symbol$1("LocalDate_ISOString"),Symbol$1("LocalDate_value"),Symbol$1("LocalTime_ISOString"),Symbol$1("LocalTime_value"),parseInt,String.fromCodePoint,/[-+]?(?:0|[1-9][_\d]*)/),{test:BAD_D}=newRegExp`_(?!\d)`.valueOf(),{test:IS_D_INTEGER}=newRegExp`^${INTEGER_D}$`.valueOf(),{test:IS_XOB_INTEGER}=theRegExp(/^0(?:x[\dA-Fa-f][_\dA-Fa-f]*|o[0-7][_0-7]*|b[01][_01]*)$/),{test:BAD_XOB}=newRegExp`_(?![\dA-Fa-f])`.valueOf(),{test:IS_FLOAT}=(isFinite,newRegExp`
+	^
+	${INTEGER_D}
+	(?:
+		\.\d[_\d]*
+		(?:[eE][-+]?\d[_\d]*)?
+	|
+		[eE][-+]?\d[_\d]*
+	)
+	$`.valueOf()),{test:IS_ZERO}=theRegExp(/^[-+]?0(?:\.0+)?(?:[eE][-+]?0+)?$/),{exec:NORMALIZED}=theRegExp(/^[-0]?(\d*)(?:\.(\d+))?(?:e\+?(-?\d+))?$/),{exec:ORIGINAL}=theRegExp(/^[-+]?0?(\d*)(?:\.(\d*?)0*)?(?:[eE]\+?(-?\d+))?$/),{test:includesNewline}=(Symbol$1("this"),theRegExp(/\r?\n/g)),{test:IS_OFFSET$}=theRegExp(/(?:[Zz]|[+-]\d\d:\d\d)$/),{test:IS_EMPTY}=theRegExp(/^\[[\t ]*]/),{test:NEED_BASIC}=(Number.MAX_SAFE_INTEGER,Date.prototype,String.prototype.valueOf,Number.prototype.valueOf,BigInt.prototype.valueOf,theRegExp(/[\x00-\x08\x0A-\x1F'\x7F]/)),{test:NEED_ESCAPE}=theRegExp(/^[\x00-\x08\x0A-\x1F"\\\x7F]/),{test:NEED_MULTILINE_BASIC}=theRegExp(/[\x00-\x08\x0A-\x1F\x7F]|'''/),{test:multilineNeedBasic}=theRegExp(/[\x00-\x08\x0B-\x1F\x7F]|'''/),{test:REAL_MULTILINE_ESCAPE}=theRegExp(/[\x00-\x08\x0A-\x1F\\\x7F]|"""/),{test:NEED_MULTILINE_ESCAPE}=theRegExp(/^(?:[\x00-\x08\x0A-\x1F\\\x7F]|""")/),Float64Array$1=Float64Array,Uint8Array$1=Uint8Array,{test:INTEGER_LIKE}=theRegExp(/^-?\d+$/),ensureFloat=literal=>INTEGER_LIKE(literal)?literal+".0":literal,float64Array=new Float64Array$1([NaN]),uint8Array=new Uint8Array$1(float64Array.buffer),NaN_7=uint8Array[7],{test:BARE}=(new Uint8Array$1(new Float64Array$1([NaN]).buffer)[7],theRegExp(/^[\w-]+$/));_Symbol$1$toPrimitive=Symbol$1.toPrimitive;const{test:IS_INDENT}=theRegExp(/^[\t ]*$/);new WeakSet$1,Null$1({fatal:!0,ignoreBOM:!1});const{test:includesNonScalar}=theRegExp(/[\uD800-\uDFFF]/u)},"./node_modules/@babel/runtime/helpers/esm/defineProperty.js":(__unused_webpack_module,__webpack_exports__,__webpack_require__)=>{__webpack_require__.d(__webpack_exports__,{Z:()=>_defineProperty});var _toPropertyKey_js__WEBPACK_IMPORTED_MODULE_0__=__webpack_require__("./node_modules/@babel/runtime/helpers/esm/toPropertyKey.js");function _defineProperty(obj,key,value){return(key=(0,_toPropertyKey_js__WEBPACK_IMPORTED_MODULE_0__.Z)(key))in obj?Object.defineProperty(obj,key,{value,enumerable:!0,configurable:!0,writable:!0}):obj[key]=value,obj}},"./node_modules/@babel/runtime/helpers/esm/toPropertyKey.js":(__unused_webpack_module,__webpack_exports__,__webpack_require__)=>{__webpack_require__.d(__webpack_exports__,{Z:()=>_toPropertyKey});var esm_typeof=__webpack_require__("./node_modules/@babel/runtime/helpers/esm/typeof.js");function _toPropertyKey(arg){var key=function _toPrimitive(input,hint){if("object"!==(0,esm_typeof.Z)(input)||null===input)return input;var prim=input[Symbol.toPrimitive];if(void 0!==prim){var res=prim.call(input,hint||"default");if("object"!==(0,esm_typeof.Z)(res))return res;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===hint?String:Number)(input)}(arg,"string");return"symbol"===(0,esm_typeof.Z)(key)?key:String(key)}},"./node_modules/@babel/runtime/helpers/esm/typeof.js":(__unused_webpack_module,__webpack_exports__,__webpack_require__)=>{function _typeof(obj){return _typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(obj){return typeof obj}:function(obj){return obj&&"function"==typeof Symbol&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj},_typeof(obj)}__webpack_require__.d(__webpack_exports__,{Z:()=>_typeof})}}]);
+//# sourceMappingURL=7280.964f2125.iframe.bundle.js.map
