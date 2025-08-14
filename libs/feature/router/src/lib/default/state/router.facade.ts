@@ -63,7 +63,8 @@ export class RouterFacade {
   }
 
   goToOrganization(organizationName: string) {
-    const path = `${this.routerService.getOrganizationPageRoute()}/${organizationName}`
+    const safeOrgName = organizationName.replace('/', '')
+    const path = `${this.routerService.getOrganizationPageRoute()}/${safeOrgName}`
     this.go({
       path,
       queryParamsHandling: '',
