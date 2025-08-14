@@ -74,10 +74,6 @@ export class MetadataQualityComponent implements OnChanges {
     )
   }
 
-  hasGetCapabilities(url: string): boolean {
-    return url.toLowerCase().includes('capabilities')
-  }
-
   initialize() {
     if (!this.propsToValidate) {
       this.propsToValidate = getAllKeysValidator()
