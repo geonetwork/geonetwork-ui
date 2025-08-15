@@ -7,7 +7,7 @@ import {
 import { forkJoin, Observable, of } from 'rxjs'
 import { map, shareReplay } from 'rxjs/operators'
 import { TranslateService } from '@ngx-translate/core'
-import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n'
+import { toLang3 } from '@geonetwork-ui/util/i18n'
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import {
   CatalogRecord,
@@ -52,7 +52,7 @@ export class OrganizationsFromGroupsService
   organisationsCount$ = this.organisations$.pipe(map((orgs) => orgs.length))
 
   private get lang3() {
-    return getLang3FromLang2(this.translateService.currentLang)
+    return toLang3(this.translateService.currentLang)
   }
 
   constructor(

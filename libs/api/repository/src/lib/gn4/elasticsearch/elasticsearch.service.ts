@@ -26,7 +26,7 @@ import {
   SortParams,
   TermsAggregationResult,
 } from '@geonetwork-ui/api/metadata-converter'
-import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n'
+import { toLang3 } from '@geonetwork-ui/util/i18n'
 import { formatDate, isDateRange } from './date-range.utils'
 import {
   CatalogRecord,
@@ -48,9 +48,6 @@ export class ElasticsearchService {
   private runtimeFields: Record<string, string> = {}
 
   // we're using getters in case the defined languages change over time
-  private get lang3() {
-    return getLang3FromLang2(this.translateService.currentLang)
-  }
   private get metadataLang(): LanguageCode {
     const mdLangValue = this.injector.get(METADATA_LANGUAGE, null)
     return typeof mdLangValue === 'function' ? mdLangValue() : mdLangValue
@@ -237,9 +234,12 @@ export class ElasticsearchService {
 
   private getQueryLang(): string {
     if (this.metadataLang) {
-      return this.isCurrentSearchLang()
-        ? `lang${this.lang3}`
-        : `lang${this.metadataLang}`
+      const lang3 = toLang3(
+        this.isCurrentSearchLang()
+          ? this.translateService.currentLang
+          : this.metadataLang
+      )
+      return `lang${lang3}`
     } else return '*'
   }
   private isCurrentSearchLang() {

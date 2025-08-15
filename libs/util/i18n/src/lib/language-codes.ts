@@ -4,6 +4,7 @@ const LANG_3_TO_2_MAPPER = {
   eng: 'en',
   dut: 'nl',
   fre: 'fr',
+  deu: 'de',
   ger: 'de',
   kor: 'ko',
   spa: 'es',
@@ -28,7 +29,7 @@ const LANG_3_TO_2_MAPPER = {
   geo: 'ka',
   ukr: 'uk',
   wel: 'cy',
-}
+} as const
 
 export const LANGUAGE_NAMES = {
   en: 'English',
@@ -58,26 +59,63 @@ export const LANGUAGE_NAMES = {
   ka: 'ქართული',
   uk: 'українська',
   wel: 'Cymraeg',
-}
+} as const
+
+export type LanguageCode2 = keyof typeof LANG_3_TO_2_MAPPER
+export type LanguageCode3 = (typeof LANG_3_TO_2_MAPPER)[LanguageCode2]
 
 export const LANG_2_TO_3_MAPPER = Object.entries(LANG_3_TO_2_MAPPER).reduce(
   (mapperObject, langEntry) => {
     return { ...mapperObject, [langEntry[1]]: langEntry[0] }
   },
   {}
-)
+) as Record<LanguageCode2, LanguageCode3>
 
-export function getLang3FromLang2(lang2: string): string {
-  return LANG_2_TO_3_MAPPER[lang2] ?? lang2
+/**
+ * This can be:
+ * - an ISO 639-2 language code in 3 characters (e.g. 'eng', 'fre', 'ger')
+ * - an ISO 639-1 language code in 2 characters (e.g. 'en', 'fr', 'de')
+ * - a 2-character language code with locale (e.g. 'fr_FR', 'fr_CA')
+ */
+export type LanguageCodeLike = LanguageCode2 | LanguageCode3 | string
+
+/**
+ * Converts a language code in any format to the ISO 639-2 format (3 characters)
+ * Returns the given string if the corresponding language code could not be recognized
+ */
+export function toLang3(lang: LanguageCodeLike): LanguageCode3 | string {
+  if (!lang) {
+    // also handle falsy values just in case
+    return lang
+  }
+  if (lang.length === 3) {
+    return LANG_2_TO_3_MAPPER[LANG_3_TO_2_MAPPER[lang.toLowerCase()]] ?? lang
+  }
+  const lang2 = lang.toLowerCase().substring(0, 2)
+  return LANG_2_TO_3_MAPPER[lang2] ?? lang
 }
 
-export function getLang2FromLang3(lang3: string): string {
-  return LANG_3_TO_2_MAPPER[lang3] ?? lang3
-}
-
-export function getLocalizedIndexKey(lang2: string): string {
-  const lang3 = getLang3FromLang2(lang2)
-  return lang3 ? `lang${lang3}` : null
+/**
+ * Converts a language code in any format to the ISO 639-1 format (2 characters)
+ * Returns the given string if the corresponding language code could not be recognized
+ */
+export function toLang2(lang: LanguageCodeLike): LanguageCode2 | string {
+  if (!lang) {
+    // also handle falsy values just in case
+    return lang
+  }
+  if (lang.length === 3) {
+    return LANG_3_TO_2_MAPPER[lang.toLowerCase()] ?? lang
+  }
+  const lang2 = lang.toLowerCase().substring(0, 2)
+  if (lang2 in LANG_2_TO_3_MAPPER) {
+    return lang2
+  }
+  if (lang.match(/[a-z]{2}_[A-Z]{2}/)) {
+    // remove locale code even if the language code is not known
+    return lang2
+  }
+  return lang
 }
 
 marker('language.en')

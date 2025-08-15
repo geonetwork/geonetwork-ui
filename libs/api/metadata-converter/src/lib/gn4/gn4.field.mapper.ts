@@ -28,10 +28,7 @@ import { matchProtocol } from '../common/distribution.mapper'
 import { Thesaurus } from './types'
 import { getResourceType, getReuseType } from '../common/resource-types'
 import { TranslateService } from '@ngx-translate/core'
-import {
-  getLang2FromLang3,
-  getLocalizedIndexKey,
-} from '@geonetwork-ui/util/i18n'
+import { toLang2, toLang3 } from '@geonetwork-ui/util/i18n'
 
 type ESResponseSource = SourceWithUnknownProps
 
@@ -49,8 +46,8 @@ export class Gn4FieldMapper {
     private translateService: TranslateService
   ) {}
 
-  private get lang3() {
-    return getLocalizedIndexKey(this.translateService.currentLang)
+  private get getLocalizedIndexKey() {
+    return `lang${toLang3(this.translateService.currentLang)}`
   }
 
   protected fields: Record<string, EsFieldMapperFn> = {
@@ -69,14 +66,22 @@ export class Gn4FieldMapper {
     resourceTitleObject: (output, source) => ({
       ...output,
       title: selectFallback(
-        selectTranslatedField(source, 'resourceTitleObject', this.lang3),
+        selectTranslatedField(
+          source,
+          'resourceTitleObject',
+          this.getLocalizedIndexKey
+        ),
         'no title'
       ),
     }),
     resourceAbstractObject: (output, source) => ({
       ...output,
       abstract: selectFallback(
-        selectTranslatedField(source, 'resourceAbstractObject', this.lang3),
+        selectTranslatedField(
+          source,
+          'resourceAbstractObject',
+          this.getLocalizedIndexKey
+        ),
         'no title'
       ),
     }),
@@ -84,7 +89,7 @@ export class Gn4FieldMapper {
       const firstOverview = getFirstValue(selectField(source, 'overview'))
       const description = selectTranslatedValue<string>(
         selectField(firstOverview, 'text'),
-        this.lang3
+        this.getLocalizedIndexKey
       )
       return {
         ...output,
@@ -102,7 +107,9 @@ export class Gn4FieldMapper {
         ...(output.topics || []),
         ...getAsArray(
           selectField<SourceWithUnknownProps[]>(source, 'cl_topic')
-        ).map((topic) => selectTranslatedValue<string>(topic, this.lang3)),
+        ).map((topic) =>
+          selectTranslatedValue<string>(topic, this.getLocalizedIndexKey)
+        ),
       ],
     }),
     cl_status: (output, source) => ({
@@ -156,7 +163,7 @@ export class Gn4FieldMapper {
       const langList = getAsArray(
         selectField<string>(source, 'resourceLanguage')
       )
-      const languages = langList.map(getLang2FromLang3)
+      const languages = langList.map(toLang2)
       const defaultLanguage = output.defaultLanguage ?? languages[0] ?? null // set the first language as main one as fallback
 
       return {
@@ -166,7 +173,7 @@ export class Gn4FieldMapper {
     },
     otherLanguage: (output, source) => {
       const langList = getAsArray(selectField<string>(source, 'otherLanguage'))
-      const languages = langList.map(getLang2FromLang3)
+      const languages = langList.map(toLang2)
       const defaultLanguage = output.defaultLanguage ?? languages[0] ?? null
       const otherLanguages = languages.filter(
         (lang) => lang !== defaultLanguage
@@ -181,7 +188,7 @@ export class Gn4FieldMapper {
       const language = selectField<string>(source, 'mainLanguage')
       return {
         ...output,
-        defaultLanguage: language ? getLang2FromLang3(language) : null,
+        defaultLanguage: language ? toLang2(language) : null,
       }
     },
     link: (output, source) => {
@@ -199,7 +206,10 @@ export class Gn4FieldMapper {
     contact: (output, source) => ({
       ...output,
       contacts: [
-        mapContact(getFirstValue(selectField(source, 'contact')), this.lang3),
+        mapContact(
+          getFirstValue(selectField(source, 'contact')),
+          this.getLocalizedIndexKey
+        ),
       ],
     }),
     contactForResource: (output, source) => ({
@@ -210,7 +220,7 @@ export class Gn4FieldMapper {
           ? output.contactsForResource
           : []),
         ...getAsArray(selectField(source, 'contactForResource')).map(
-          (contact) => mapContact(contact, this.lang3)
+          (contact) => mapContact(contact, this.getLocalizedIndexKey)
         ),
       ],
     }),
@@ -229,7 +239,7 @@ export class Gn4FieldMapper {
       ...output,
       keywords: mapKeywords(
         selectField<Thesaurus[]>(source, 'allKeywords'),
-        this.lang3
+        this.getLocalizedIndexKey
       ),
     }),
     inspireTheme: (output, source) => ({
@@ -277,7 +287,11 @@ export class Gn4FieldMapper {
       ),
     lineageObject: (output, source) => ({
       ...output,
-      lineage: selectTranslatedField(source, 'lineageObject', this.lang3),
+      lineage: selectTranslatedField(
+        source,
+        'lineageObject',
+        this.getLocalizedIndexKey
+      ),
     }),
     userSavedCount: (output, source) =>
       this.addExtra(
@@ -410,7 +424,7 @@ export class Gn4FieldMapper {
           ...geoms.map((geom, index) => {
             const description = selectTranslatedValue(
               getArrayItem(extentDescriptions, index),
-              this.lang3
+              this.getLocalizedIndexKey
             )
             const geometry = shapes[index] ?? geom
             return {
@@ -465,7 +479,10 @@ export class Gn4FieldMapper {
       outputField in output ? output[outputField] : []
     outputArray.push(
       ...constraintArray.map((item) => {
-        const text = selectTranslatedValue(item, this.lang3) as string
+        const text = selectTranslatedValue(
+          item,
+          this.getLocalizedIndexKey
+        ) as string
         const url = getAsUrl(selectField(item, 'link'))
         return {
           text,
@@ -508,19 +525,27 @@ export class Gn4FieldMapper {
   mapLink = (sourceLink: SourceWithUnknownProps): OnlineResource | null => {
     const url = getAsUrl(
       selectFallback(
-        selectTranslatedField<string>(sourceLink, 'urlObject', this.lang3),
+        selectTranslatedField<string>(
+          sourceLink,
+          'urlObject',
+          this.getLocalizedIndexKey
+        ),
         selectField<string>(sourceLink, 'url')
       )
     )
     const name = selectFallback(
-      selectTranslatedField<string>(sourceLink, 'nameObject', this.lang3),
+      selectTranslatedField<string>(
+        sourceLink,
+        'nameObject',
+        this.getLocalizedIndexKey
+      ),
       selectField<string>(sourceLink, 'name')
     )
     const description = selectFallback(
       selectTranslatedField<string>(
         sourceLink,
         'descriptionObject',
-        this.lang3
+        this.getLocalizedIndexKey
       ),
       selectField<string>(sourceLink, 'description')
     )
