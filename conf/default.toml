@@ -13,7 +13,7 @@ datahub_url = "/datahub"
 # This is an optional parameter: leave empty to disable proxy usage
 proxy_path = ""
 # This optional parameter defines, in which language metadata should be queried in elasticsearch.
-# Use ISO 639-2/B (https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format to indicate the language of the metadata.
+# Use ISO 639-1 (https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format in 2 characters to indicate the language of the metadata.
 # Setting to "current" will use the current language of the User Interface.
 # If not indicated, a wildcard is used and no language preference is applied for the search.
 # metadata_language = "current"

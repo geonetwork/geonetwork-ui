@@ -16,7 +16,7 @@ This file uses the [TOML format](https://toml.io/en/), which is an easy-to-read 
 
 Some additional notes:
 
-- Languages in the configuration are specified using [two-letters ISO 639-1 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) unless noted otherwise
+- Languages in the configuration should be specified using [two-letters ISO 639-1 codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes); 3-character codes might work but using them is not recommended
 - Tokens in URL templates are specified using the `${token_name}` syntax
 
 ### Sections
