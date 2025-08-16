@@ -15,7 +15,7 @@ import {
   FiltersAggregationParams,
   SortByField,
 } from '@geonetwork-ui/common/domain/model/search'
-import { METADATA_LANGUAGE } from '../../metadata-language'
+import { METADATA_LANGUAGE } from '../../metadata-language.token'
 import {
   AggregationResult,
   EsSearchParams,
@@ -26,9 +26,12 @@ import {
   SortParams,
   TermsAggregationResult,
 } from '@geonetwork-ui/api/metadata-converter'
-import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n'
+import { toLang3 } from '@geonetwork-ui/util/i18n'
 import { formatDate, isDateRange } from './date-range.utils'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  CatalogRecord,
+  LanguageCode,
+} from '@geonetwork-ui/common/domain/model/record'
 import { TranslateService } from '@ngx-translate/core'
 import { getGeometryBoundingBox } from '@geonetwork-ui/util/shared'
 import { getLength as getGeodesicLength } from 'ol/sphere'
@@ -45,11 +48,9 @@ export class ElasticsearchService {
   private runtimeFields: Record<string, string> = {}
 
   // we're using getters in case the defined languages change over time
-  private get lang3() {
-    return getLang3FromLang2(this.translateService.currentLang)
-  }
-  private get metadataLang() {
-    return this.injector.get(METADATA_LANGUAGE, null)
+  private get metadataLang(): LanguageCode {
+    const mdLangValue = this.injector.get(METADATA_LANGUAGE, null)
+    return typeof mdLangValue === 'function' ? mdLangValue() : mdLangValue
   }
 
   constructor(
@@ -233,9 +234,12 @@ export class ElasticsearchService {
 
   private getQueryLang(): string {
     if (this.metadataLang) {
-      return this.isCurrentSearchLang()
-        ? `lang${this.lang3}`
-        : `lang${this.metadataLang}`
+      const lang3 = toLang3(
+        this.isCurrentSearchLang()
+          ? this.translateService.currentLang
+          : this.metadataLang
+      )
+      return `lang${lang3}`
     } else return '*'
   }
   private isCurrentSearchLang() {

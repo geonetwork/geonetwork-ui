@@ -4,7 +4,7 @@ import { Observable } from 'rxjs'
 import { filter, map, shareReplay } from 'rxjs/operators'
 import { CatalogSource } from './sources.model'
 import { TranslateService } from '@ngx-translate/core'
-import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n'
+import { toLang3 } from '@geonetwork-ui/util/i18n'
 
 @Injectable({
   providedIn: 'root',
@@ -23,10 +23,7 @@ export class SourcesService {
     return this.sources$.pipe(
       map((sources) => sources.filter((source) => source.uuid === uuid)[0]),
       filter((source) => !!source),
-      map(
-        (source) =>
-          source.label[getLang3FromLang2(this.translateService.currentLang)]
-      )
+      map((source) => source.label[toLang3(this.translateService.currentLang)])
     )
   }
 }

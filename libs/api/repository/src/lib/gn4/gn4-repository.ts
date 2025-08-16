@@ -48,7 +48,7 @@ import {
 import { catchError, map, tap } from 'rxjs/operators'
 import { lt } from 'semver'
 import { ElasticsearchService } from './elasticsearch'
-import { getLang2FromLang3 } from '@geonetwork-ui/util/i18n'
+import { toLang2 } from '@geonetwork-ui/util/i18n'
 import { Gn4SettingsService } from './settings/gn4-settings.service'
 
 const minPublicationApiVersion = '4.2.5'
@@ -562,7 +562,7 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       .pipe(
         map((languages) =>
           languages
-            .map((lang) => getLang2FromLang3(lang.id))
+            .map((lang) => toLang2(lang.id))
             .filter((code): code is string => !!code)
         )
       )

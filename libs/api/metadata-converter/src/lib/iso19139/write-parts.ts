@@ -53,7 +53,7 @@ import {
 import { readKind } from './read-parts'
 import { writeGeometry } from './utils/geometry'
 import { namePartsToFull } from './utils/individual-name'
-import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n/language-codes'
+import { toLang3 } from '@geonetwork-ui/util/i18n/language-codes'
 import { kindToCodeListValue } from '../common/resource-types'
 
 function writeLocalizedElement(
@@ -1476,7 +1476,7 @@ export function writeLanguages(record: DatasetRecord, rootEl: XmlElement) {
       writeAttribute('id', lang.toUpperCase()),
       createNestedChild('gmd:languageCode', 'gmd:LanguageCode'),
       writeAttribute('codeList', 'http://www.loc.gov/standards/iso639-2/'),
-      writeAttribute('codeListValue', getLang3FromLang2(lang) ?? lang)
+      writeAttribute('codeListValue', toLang3(lang) ?? lang)
     )
 
   // add new languages (only if other than default one)
@@ -1490,7 +1490,7 @@ export function writeDefaultLanguage(
   record: DatasetRecord,
   rootEl: XmlElement
 ) {
-  const lang3 = getLang3FromLang2(record.defaultLanguage.toLowerCase())
+  const lang3 = toLang3(record.defaultLanguage.toLowerCase())
   return pipe(
     findNestedChildOrCreate('gmd:language', 'gmd:LanguageCode'),
     writeAttribute('codeList', 'http://www.loc.gov/standards/iso639-2/'),

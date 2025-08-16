@@ -1,4 +1,4 @@
-import { LANGUAGE_CODES_ISO_3 } from './constants'
+import { toLang2 } from '@geonetwork-ui/util/i18n'
 
 const flatten = (
   base: string,
@@ -129,13 +129,10 @@ export function checkMetadataLanguage(
   parsedConfigSection: any,
   outWarnings: string[]
 ) {
-  if (
-    LANGUAGE_CODES_ISO_3.indexOf(
-      parsedConfigSection.metadata_language.toLowerCase()
-    ) === -1
-  ) {
+  const lang2 = toLang2(parsedConfigSection.metadata_language.toLowerCase())
+  if (lang2?.length !== 2) {
     outWarnings.push(
-      `In the [global] section: metadata_language = "${parsedConfigSection.metadata_language}" is not in ISO 639-2/B format`
+      `In the [global] section: metadata_language = "${parsedConfigSection.metadata_language}" is not a recognized ISO 639 language code`
     )
   }
   return parsedConfigSection

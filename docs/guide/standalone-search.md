@@ -15,7 +15,7 @@ To use the Standalone Search, you have to:
 - import the Standalone Search script exported by Angular (available via jsdelivr)
 - call `GNUI.init(options)` with the following options:
   - `apiUrl`: the URL of the GeoNetwork API to use
-  - `textLanguage`: the language to use for labels; can be either `localStorage` (will read the language from local storage as described in [this section](../developers/i18n.md#how-the-user-interface-language-is-detected)), `browser` (will use the browser language) or a 2-char code (e.g. `en`)
+  - `textLanguage`: the language to use for labels; can be either `localStorage` (will read the language from local storage as described in [this section](../developers/i18n.md#how-the-user-interface-language-is-detected)), `browser` (will use the browser language) or an ISO 639 language code (e.g. `en`)
   - `metadataLanguage`: identical to the [`metadata_language` configuration option](./configure.md#global)
 
 ```html

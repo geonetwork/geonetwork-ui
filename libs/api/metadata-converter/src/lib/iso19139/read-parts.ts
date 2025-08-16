@@ -55,7 +55,7 @@ import { getKeywordTypeFromKeywordTypeCode } from './utils/keyword.mapper'
 import { getRoleFromRoleCode } from './utils/role.mapper'
 import { getStatusFromStatusCode } from './utils/status.mapper'
 import { getUpdateFrequencyFromFrequencyCode } from './utils/update-frequency.mapper'
-import { getLang2FromLang3 } from '@geonetwork-ui/util/i18n/language-codes'
+import { toLang2 } from '@geonetwork-ui/util/i18n/language-codes'
 import { getResourceType, getReuseType } from '../common/resource-types'
 
 export function extractCharacterString(): ChainableFunction<
@@ -1164,7 +1164,7 @@ export function readOtherLanguages(rootEl: XmlElement): LanguageCode[] {
       pipe(
         findChildElement('lan:LanguageCode'),
         readAttribute('codeListValue'),
-        map((lang) => getLang2FromLang3(lang?.toLowerCase()) ?? lang)
+        map((lang) => toLang2(lang?.toLowerCase()) ?? lang)
       )
     ),
     map((languages) =>
@@ -1179,7 +1179,7 @@ export function readDefaultLanguage(rootEl: XmlElement): LanguageCode {
     findChildElement('gmd:language', false),
     findChildElement('lan:LanguageCode'),
     readAttribute('codeListValue'),
-    map((lang) => (lang ? getLang2FromLang3(lang.toLowerCase()) : null))
+    map((lang) => (lang ? toLang2(lang.toLowerCase()) : null))
   )(rootEl)
 }
 

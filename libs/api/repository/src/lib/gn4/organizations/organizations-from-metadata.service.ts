@@ -33,7 +33,7 @@ import {
   tap,
   withLatestFrom,
 } from 'rxjs/operators'
-import { getLocalizedIndexKey } from '@geonetwork-ui/util/i18n'
+import { toLang3 } from '@geonetwork-ui/util/i18n'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { coerce, satisfies, valid } from 'semver'
 import { TranslateService } from '@ngx-translate/core'
@@ -126,7 +126,7 @@ export class OrganizationsFromMetadataService
   ) {}
 
   private get langIndex() {
-    return getLocalizedIndexKey(this.translateService.currentLang)
+    return `lang${toLang3(this.translateService.currentLang)}`
   }
 
   equalsNormalizedStrings(
