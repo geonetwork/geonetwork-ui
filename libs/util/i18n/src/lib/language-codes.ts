@@ -1,21 +1,32 @@
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
+/**
+ * Taken from https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes
+ * Note: some languages have multiple 3-char codes, like 'fre' and 'fra'; in that case, the one to be used
+ * in priority is the one defined last
+ */
 const LANG_3_TO_2_MAPPER = {
   eng: 'en',
+  nld: 'nl', // duplicate for "dut"
   dut: 'nl',
+  fra: 'fr', // "duplicate for "fre"
   fre: 'fr',
-  deu: 'de',
+  deu: 'de', // duplicate for "ger"
   ger: 'de',
   kor: 'ko',
   spa: 'es',
+  ces: 'cs', // duplicate for "cze"
   cze: 'cs',
   cat: 'ca',
   fin: 'fi',
+  isl: 'is', // duplicate for "ice"
   ice: 'is',
   ita: 'it',
   por: 'pt',
   rus: 'ru',
+  zho: 'zh', // duplicate for "chi"
   chi: 'zh',
+  slk: 'sk', // duplicate for "slo"
   slo: 'sk',
   roh: 'rm',
   ara: 'ar',
@@ -26,8 +37,10 @@ const LANG_3_TO_2_MAPPER = {
   tur: 'tr',
   arm: 'hy',
   aze: 'az',
+  kat: 'ka', // duplicate for "geo"
   geo: 'ka',
   ukr: 'uk',
+  cym: 'cy', // duplicate for "wel"
   wel: 'cy',
 } as const
 

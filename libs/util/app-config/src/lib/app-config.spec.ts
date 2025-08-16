@@ -85,7 +85,7 @@ describe('app config utils', () => {
     describe('loadAppConfig', () => {
       it('logs a warning', () => {
         expect(console.warn).toHaveBeenCalledWith(
-          expect.stringMatching(/(?=.*metadata_language = "fra")/)
+          expect.stringMatching(/(?=.*metadata_language = "abc")/)
         )
       })
     })
@@ -94,7 +94,7 @@ describe('app config utils', () => {
         expect(getGlobalConfig()).toEqual({
           GN4_API_URL: '/geonetwork/srv/api',
           PROXY_PATH: '/proxy/?url=',
-          METADATA_LANGUAGE: 'fra',
+          METADATA_LANGUAGE: 'abc',
         })
       })
     })

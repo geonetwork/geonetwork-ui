@@ -124,7 +124,7 @@ export const wrongLanguageCodeConfigFixture = () => `
 [global]
 geonetwork4_api_url = "/geonetwork/srv/api"
 proxy_path = "/proxy/?url="
-metadata_language = "fra"
+metadata_language = "abc"
 
 [map]
 
