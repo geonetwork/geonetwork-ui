@@ -37,7 +37,7 @@ Some additional notes:
 
   This optional parameter defines the languages that will be provided in the UI language switcher. Available languages are listed [in this file](https://github.com/geonetwork/geonetwork-ui/blob/1533e02e24258814ef19f21e991a45e01fd06f36/libs/util/i18n/src/lib/i18n.constants.ts#L25).
 
-  Languages should be provided as an array, for instance:
+  Languages should be provided as ISO 639 codes in an array, for instance:
 
   ```toml
   languages = ['en', 'fr', 'de']
@@ -49,7 +49,7 @@ Some additional notes:
 
   This optional parameter lets you specify which language to use when searching in the catalog connected to GeoNetwork-UI. This might improve the search experience by showing results relevant to your users' language.
 
-  Use [ISO three-letter codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) to indicate the language used in the search (e.g. "fre" or "ger"). Alternatively, setting to "current" will use the current language of the User Interface.
+  Use [ISO 639 language codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) to indicate the language used in the search (e.g. `fr` or `de`). Alternatively, a value of `current` will use the current language of the User Interface.
 
   If not indicated, the search will be done across all localized values for each record, potentially showing more results that expected or unrelated results.
 
@@ -65,9 +65,9 @@ Some additional notes:
 
   The following three placeholders can be part of this URL:
 
-  - `${current_url}`: indicates where the current location should be injected in the constructed login URL
+  - `${current_url}`: replaced by the current browser URL
 
-  - `${lang2}`, `${lang3}`: indicates if and where the current language should be part of the login URL in 2- or 3-letters ISO format
+  - `${lang2}`, `${lang3}`: replaced by the SIO-639 code of the current language, respectively in in 2- or 3-characters format
 
   Example for a platform relying on CAS:
 
