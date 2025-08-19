@@ -4,12 +4,47 @@ outline: deep
 
 # How to run GeoNetwork-UI applications
 
-The following GeoNetwork-UI applications are available as docker images or ZIP archives:
+The following GeoNetwork-UI applications are available as docker images or ZIP archives, it can be installed as a plugin to GeoNetwork or run as a stand alone application using the GeoNetwork v4.x API:
 
 - [Datahub](../apps/datahub)
 - [Metadata Editor](../apps/editor)
 
-## With docker
+## As a Plugin to GeoNetwork
+
+GeoNetwork documentation recommends installing [GeoNetwork-UI as a plugin](https://docs.geonetwork-opensource.org/4.4/install-guide/plugins/), this can be achieved using Docker. 
+
+Example Dockerfile for v4.4.8 below: 
+
+```
+# Use the official GeoNetwork v4.4.8 image as the base
+FROM geonetwork:4.4.8
+# Set arguments for plugin version for easy updates
+ARG GEONETWORK_VERSION=4.4.8
+ARG PLUGIN_VERSION=${GEONETWORK_VERSION}
+ARG PLUGIN_DOWNLOAD_URL="https://sourceforge.net/projects/geonetwork/files/GeoNetwork_opensource/v${GEONETWORK_VERSION}/gn-datahub-integration-${PLUGIN_VERSION}-0.zip/download"
+# Switch to root user temporarily to install packages
+USER root
+# Install necessary tools: wget for downloading and unzip for extracting
+# The base image already installs curl and unzip, but wget is still useful for direct downloads
+# We'll re-run apt-get to be safe, but it will mostly verify existing packages.
+RUN apt-get update && \
+    apt-get install -y \
+    wget \
+    unzip && \
+    rm -rf /var/lib/apt/lists/*
+# Switch back to the 'jetty' user as that's how the base image operates GeoNetwork
+USER jetty
+# # Set the working directory to the GeoNetwork installation directory
+# # This is where the geonetwork.war was unzipped in the base image.
+# WORKDIR /opt/geonetwork
+# Download, unzip, copy only the plugin JAR, and clean up—all in one layer
+RUN wget -O /tmp/gn-plugin-datahub-integration.zip ${PLUGIN_DOWNLOAD_URL} \
+    && unzip /tmp/gn-plugin-datahub-integration.zip -d /tmp/plugin \
+    && cp /tmp/plugin/gn-datahub-integration-${PLUGIN_VERSION}-0/lib/*.jar /opt/geonetwork/WEB-INF/lib/ \
+    && rm -rf /tmp/plugin /tmp/gn-plugin-datahub-integration.zip
+```
+
+## Standalone Docker Image
 
 All docker images are named similarly: `geonetwork/geonetwork-ui-<application>`, and stored on Docker Hub: https://hub.docker.com/u/geonetwork
 
