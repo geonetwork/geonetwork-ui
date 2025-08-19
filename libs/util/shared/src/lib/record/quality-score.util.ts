@@ -13,7 +13,8 @@ const ValidatorMapper: TValidatorMapper = {
   keywords: (record) => (record?.keywords?.length ?? 0) > 0,
   legalConstraints: (record) => (record?.legalConstraints?.length ?? 0) > 0,
   contacts: (record) => !!record?.contacts?.[0]?.email,
-  updateFrequency: (record) => !!record?.updateFrequency,
+  updateFrequency: (record) =>
+    !!record?.updateFrequency && record.updateFrequency !== 'unknown',
   topics: (record) => (record?.topics?.length ?? 0) > 0,
   organisation: (record) => !!record?.contacts?.[0]?.organization?.name,
   source: (record) => !!record?.extras?.sourcesIdentifiers,
