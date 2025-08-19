@@ -159,7 +159,7 @@ export function extractIndividual(
     combine(getPosition, getNameParts, getEmail, getAddress, getPhone),
     map(([position, [firstName, lastName], email, address, phone]) => ({
       ...defaultIndividual,
-      email: email || defaultIndividual.email,
+      email: email || defaultIndividual.email || 'missing@missing.com',
       role,
       organization: organization || defaultOrg,
       ...(position && { position }),
