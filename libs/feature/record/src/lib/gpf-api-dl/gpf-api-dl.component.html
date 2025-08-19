@@ -12,48 +12,75 @@
     </h2>
     <button
       (click)="resetUrl()"
-      class="bg-primary-opacity-50 inline-flex items-center justify-center px-4 py-2 text-white rounded hover:bg-primary transition"
-      [attr.title]="'record.metadata.api.form.resetTooltip' | translate"
-      [attr.aria-label]="'record.metadata.api.form.resetTooltip' | translate"
+      class="bg-red-500 inline-flex items-center justify-center px-4 py-2 text-white rounded hover:bg-red-700 transition"
     >
       <span translate>record.metadata.api.form.reset</span>
     </button>
   </div>
 
-  <!-- Dropdown Selectors -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    <gn-ui-dropdown-selector
-      #zone
-      [title]="'record.metadata.api.form.zoneTitle' | translate"
-      [choices]="bucketPromisesZone"
-      (selectValue)="setZone($event)"
-      [selected]="zone$ | async"
-      class="w-full"
-      [attr.title]="'record.metadata.api.form.zoneTooltip' | translate"
-      [attr.aria-label]="'record.metadata.api.form.zoneTooltip' | translate"
-    ></gn-ui-dropdown-selector>
+  <!-- Filters Section -->
+  <div class="bg-gray-100 p-4 rounded-lg shadow-md">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <!-- Dropdown filters -->
+      <gn-ui-dropdown-selector
+        #zone
+        [title]="'record.metadata.api.form.zoneTitle' | translate"
+        [choices]="bucketPromisesZone"
+        (selectValue)="setZone($event)"
+        [selected]="zone$ | async"
+        class="w-full"
+        [attr.title]="'record.metadata.api.form.zoneTooltip' | translate"
+        [attr.aria-label]="'record.metadata.api.form.zoneTooltip' | translate"
+      ></gn-ui-dropdown-selector>
 
-    <gn-ui-dropdown-selector
-      #format
-      [title]="'record.metadata.api.form.formatTitle' | translate"
-      [choices]="bucketPromisesFormat"
-      (selectValue)="setFormat($event)"
-      [selected]="format$ | async"
-      class="w-full"
-      [attr.title]="'record.metadata.api.form.formatTooltip' | translate"
-      [attr.aria-label]="'record.metadata.api.form.formatTooltip' | translate"
-    ></gn-ui-dropdown-selector>
+      <gn-ui-dropdown-selector
+        #format
+        [title]="'record.metadata.api.form.formatTitle' | translate"
+        [choices]="bucketPromisesFormat"
+        (selectValue)="setFormat($event)"
+        [selected]="format$ | async"
+        class="w-full"
+        [attr.title]="'record.metadata.api.form.formatTooltip' | translate"
+        [attr.aria-label]="'record.metadata.api.form.formatTooltip' | translate"
+      ></gn-ui-dropdown-selector>
 
-    <gn-ui-dropdown-selector
-      #crs
-      [title]="'record.metadata.api.form.crsTitle' | translate"
-      [choices]="bucketPromisesCrs"
-      (selectValue)="setCrs($event)"
-      [selected]="crs$ | async"
-      class="w-full"
-      [attr.title]="'record.metadata.api.form.crsTooltip' | translate"
-      [attr.aria-label]="'record.metadata.api.form.crsTooltip' | translate"
-    ></gn-ui-dropdown-selector>
+      <gn-ui-dropdown-selector
+        #crs
+        [title]="'record.metadata.api.form.crsTitle' | translate"
+        [choices]="bucketPromisesCrs"
+        (selectValue)="setCrs($event)"
+        [selected]="crs$ | async"
+        class="w-full"
+        [attr.title]="'record.metadata.api.form.crsTooltip' | translate"
+        [attr.aria-label]="'record.metadata.api.form.crsTooltip' | translate"
+      ></gn-ui-dropdown-selector>
+
+      <!-- Date filters -->
+      <div class="flex flex-col">
+        <label for="editionDateFrom" class="font-medium"
+          >Édité depuis le :</label
+        >
+        <input
+          id="editionDateFrom"
+          type="date"
+          [value]="editionDateFrom$ | async"
+          (change)="setEditionDateFrom($event.target.value)"
+          class="w-full px-2 py-2 border rounded"
+          placeholder="Sélectionnez une date"
+        />
+      </div>
+      <div class="flex flex-col">
+        <label for="editionDateTo" class="font-medium">Édité avant le :</label>
+        <input
+          id="editionDateTo"
+          type="date"
+          [value]="editionDateTo$ | async"
+          (change)="setEditionDateTo($event.target.value)"
+          class="w-full px-2 py-2 border rounded"
+          placeholder="Sélectionnez une date"
+        />
+      </div>
+    </div>
   </div>
 
   <!-- Filtered Items Section -->
@@ -68,23 +95,19 @@
       record.metadata.api.form.items
     </h3>
     <div
-      class="overflow-auto max-h-60"
+      class="overflow-auto max-h-80"
       [attr.title]="'record.metadata.api.form.itemsTooltip' | translate"
       [attr.aria-label]="'record.metadata.api.form.itemsTooltip' | translate"
     >
       <div
         *ngFor="let link of listFilteredProduct$ | async"
-        class="mb-2 sm:mb-3"
+        class="mb-2 sm:mb-3 p-2 border rounded hover:bg-gray-200 transition"
       >
         <gn-ui-gpf-api-dl-list-item
           [link]="link"
           color="rgb(124 45 18)"
           [format]="getLinkFormat(link)"
           [isFromWfs]="true"
-          [attr.title]="'record.metadata.api.form.productTooltip' | translate"
-          [attr.aria-label]="
-            'record.metadata.api.form.productTooltip' | translate
-          "
         ></gn-ui-gpf-api-dl-list-item>
       </div>
     </div>
@@ -100,6 +123,7 @@
           ? 'bg-gray-400 cursor-not-allowed  '
           : 'bg-primary-opacity-50  hover:bg-primary')
       "
+      [disabled]="(page$ | async) <= 1"
       [attr.title]="'record.metadata.api.form.previousPageTooltip' | translate"
       [attr.aria-label]="
         'record.metadata.api.form.previousPageTooltip' | translate
@@ -118,11 +142,12 @@
     <button
       (click)="moreResult()"
       [class]="
-        'bg-primary-opacity-50 px-4 py-2 text-white rounded transition ' +
+        'px-4 py-2 text-white rounded transition ' +
         ((page$ | async) >= (pageMax$ | async)
           ? 'bg-gray-400 cursor-not-allowed  '
           : 'bg-primary-opacity-50  hover:bg-primary')
       "
+      [disabled]="(page$ | async) >= (pageMax$ | async)"
       [attr.title]="'record.metadata.api.form.nextPageTooltip' | translate"
       [attr.aria-label]="'record.metadata.api.form.nextPageTooltip' | translate"
     >
