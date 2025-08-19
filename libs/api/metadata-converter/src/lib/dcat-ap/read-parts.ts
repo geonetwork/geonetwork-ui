@@ -92,9 +92,7 @@ function mapContactFromStatement(
   }
   const role = dataStore.the(contactNode, VCARD('role'), null)
   const email = dataStore.the(contactNode, VCARD('hasEmail'), null)
-  const emailValue = email
-    ? email.value.replace(/^mailto:/, '')
-    : 'missing@missing.com'
+  const emailValue = email ? email.value.replace(/^mailto:/, '') : ''
   return {
     role: role?.value ?? 'point_of_contact',
     email: emailValue,

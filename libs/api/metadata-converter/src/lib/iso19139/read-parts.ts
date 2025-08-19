@@ -224,7 +224,7 @@ export function extractIndividual(): ChainableFunction<XmlElement, Individual> {
     getContactRoot,
     findChildElement('gmd:electronicMailAddress'),
     extractCharacterString(),
-    map((email) => (email === null ? 'missing@missing.com' : email))
+    map((email) => (email === null ? '' : email))
   )
   const getAddress = pipe(
     getContactRoot,
