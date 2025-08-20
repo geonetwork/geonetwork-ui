@@ -108,6 +108,11 @@ export interface Keyword {
   translations?: KeywordTranslations
 }
 
+export interface INSPIRE_theme {
+  value: string
+  label: string
+}
+
 export interface BaseRecord {
   uniqueIdentifier: Uuid
   ownerOrganization: Organization
