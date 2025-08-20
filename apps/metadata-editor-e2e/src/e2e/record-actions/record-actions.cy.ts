@@ -86,7 +86,7 @@ describe('record-actions', () => {
         .children()
         .eq(0)
         .children()
-        .should('have.length', 4)
+        .should('have.length', 5)
 
       cy.get('[data-test="previousNextPageButtons"]')
         .children()

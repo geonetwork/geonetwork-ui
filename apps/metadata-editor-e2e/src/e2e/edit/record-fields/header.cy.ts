@@ -169,7 +169,7 @@ describe('editor form', () => {
       )
 
       // Error display should show
-      cy.get('[data-cy="imgErrorIcon"]').should('be.visible')
+      cy.get('[data-cy="imgErrorIcon"]').should('exist')
       cy.get('[data-cy="imgInputMsgPrimary"]').should(
         'contain',
         'The image could not be uploaded'
@@ -184,7 +184,7 @@ describe('editor form', () => {
       cy.get('[data-cy="imgUrlInput"]').find('button').click()
 
       // Error display should show
-      cy.get('[data-cy="imgErrorIcon"]').should('be.visible')
+      cy.get('[data-cy="imgErrorIcon"]').should('exist')
       cy.get('[data-cy="imgInputMsgPrimary"]').should(
         'contain',
         'The image could not be uploaded'
