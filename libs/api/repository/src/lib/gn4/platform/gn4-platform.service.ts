@@ -45,7 +45,7 @@ import {
   throwError,
 } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
-import { getLang3FromLang2 } from '@geonetwork-ui/util/i18n'
+import { toLang3 } from '@geonetwork-ui/util/i18n'
 
 const minApiVersion = '4.2.2'
 
@@ -98,7 +98,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
   private keywordsByThesauri: Record<string, Observable<Keyword[]>> = {}
 
   private get lang3() {
-    return getLang3FromLang2(this.translateService.currentLang)
+    return toLang3(this.translateService.currentLang)
   }
 
   constructor(

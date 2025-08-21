@@ -41,7 +41,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchMimeType } from '../common/distribution.mapper'
 import { fullNameToParts } from '../iso19139/utils/individual-name'
-import { getLang2FromLang3 } from '@geonetwork-ui/util/i18n/language-codes'
+import { toLang2 } from '@geonetwork-ui/util/i18n/language-codes'
 import { getResourceType, getReuseType } from '../common/resource-types'
 
 export function readKind(rootEl: XmlElement): RecordKind {
@@ -370,7 +370,7 @@ export function readLocaleElement(): ChainableFunction<
   return pipe(
     findChildElement('lan:LanguageCode'),
     readAttribute('codeListValue'),
-    map((lang) => getLang2FromLang3(lang?.toLowerCase()) ?? lang)
+    map((lang) => toLang2(lang?.toLowerCase()) ?? lang)
   )
 }
 

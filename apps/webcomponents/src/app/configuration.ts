@@ -13,4 +13,5 @@ export const standaloneConfigurationObject = {
   apiConfiguration: new Configuration(),
   textLanguage: 'browser',
   metadataLanguage: null,
+  metadataLanguageFactory: () => standaloneConfigurationObject.metadataLanguage,
 }
