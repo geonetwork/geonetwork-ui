@@ -31,7 +31,7 @@ import {
   providers: [
     {
       provide: METADATA_LANGUAGE,
-      useFactory: () => standaloneConfigurationObject.metadataLanguageFactory,
+      useValue: standaloneConfigurationObject.metadataLanguageFactory,
     },
     provideHttpClient(),
     {

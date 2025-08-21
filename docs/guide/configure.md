@@ -67,7 +67,7 @@ Some additional notes:
 
   - `${current_url}`: replaced by the current browser URL
 
-  - `${lang2}`, `${lang3}`: replaced by the SIO-639 code of the current language, respectively in in 2- or 3-characters format
+  - `${lang2}`, `${lang3}`: replaced by the ISO-639 code of the current language, respectively in 2- or 3-characters format
 
   Example for a platform relying on CAS:
 

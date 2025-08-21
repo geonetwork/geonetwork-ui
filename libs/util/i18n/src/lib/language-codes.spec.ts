@@ -31,7 +31,7 @@ describe('Language codes utils', () => {
       expect(toLang2('eng')).toBe('en')
       expect(toLang2('unknown')).toBe('unknown')
       expect(toLang2('unk')).toBe('unk')
-      expect(toLang2('unk')).toBe('unk')
+      expect(toLang2('un')).toBe('un')
       expect(toLang2(null)).toBe(null)
     })
   })

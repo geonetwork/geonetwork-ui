@@ -9,7 +9,7 @@ const LANG_3_TO_2_MAPPER = {
   eng: 'en',
   nld: 'nl', // duplicate for "dut"
   dut: 'nl',
-  fra: 'fr', // "duplicate for "fre"
+  fra: 'fr', // duplicate for "fre"
   fre: 'fr',
   deu: 'de', // duplicate for "ger"
   ger: 'de',
@@ -74,8 +74,8 @@ export const LANGUAGE_NAMES = {
   wel: 'Cymraeg',
 } as const
 
-export type LanguageCode2 = keyof typeof LANG_3_TO_2_MAPPER
-export type LanguageCode3 = (typeof LANG_3_TO_2_MAPPER)[LanguageCode2]
+export type LanguageCode3 = keyof typeof LANG_3_TO_2_MAPPER
+export type LanguageCode2 = (typeof LANG_3_TO_2_MAPPER)[LanguageCode3]
 
 export const LANG_2_TO_3_MAPPER = Object.entries(LANG_3_TO_2_MAPPER).reduce(
   (mapperObject, langEntry) => {
