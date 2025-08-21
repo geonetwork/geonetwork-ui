@@ -109,6 +109,12 @@
         (valueChange)="valueChange.emit($event)"
       ></gn-ui-form-field-keywords>
     </ng-container>
+    <ng-container *ngSwitchCase="'topics'">
+      <gn-ui-form-field-inspire-theme
+        [value]="valueAsInspireTheme"
+        (valueChange)="valueChange.emit($event)"
+      ></gn-ui-form-field-inspire-theme>
+    </ng-container>
     <ng-container *ngSwitchCase="'licenses'">
       <gn-ui-form-field-license
         [label]="config.labelKey! | translate"

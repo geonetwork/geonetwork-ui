@@ -4,7 +4,10 @@ import {
   EditorField,
   EditorSection,
 } from './models/editor-config.model'
-import { Keyword } from '@geonetwork-ui/common/domain/model/record'
+import {
+  INSPIRE_theme,
+  Keyword,
+} from '@geonetwork-ui/common/domain/model/record'
 
 /**
  * This file contains the configuration of the fields that will be displayed in the editor.
@@ -61,6 +64,11 @@ export const RECORD_LICENSE_FIELD: EditorField = {
 
 export const RECORD_KEYWORDS_FIELD: EditorField = {
   model: 'keywords',
+  formFieldConfig: {},
+}
+
+export const RECORD_TOPICS_FIELD: EditorField = {
+  model: 'topics',
   formFieldConfig: {},
 }
 
@@ -235,6 +243,13 @@ export const CLASSIFICATION_SECTION: EditorSection = {
   fields: [RECORD_KEYWORDS_FIELD],
 }
 
+export const INSPIRE_SECTION: EditorSection = {
+  labelKey: marker('editor.record.form.section.inspire.label'),
+  descriptionKey: marker('editor.record.form.section.inspire.description'),
+  hidden: false,
+  fields: [RECORD_TOPICS_FIELD],
+}
+
 export const USE_AND_ACCESS_CONDITIONS_SECTION: EditorSection = {
   labelKey: marker('editor.record.form.section.useAndAccessConditions.label'),
   hidden: false,
@@ -274,6 +289,7 @@ export const DEFAULT_CONFIGURATION: EditorConfig = {
       sections: [
         TITLE_SECTION,
         CLASSIFICATION_SECTION,
+        INSPIRE_SECTION,
         ABOUT_SECTION,
         GEOGRAPHICAL_COVERAGE_SECTION,
       ],
@@ -341,3 +357,71 @@ export const SPATIAL_SCOPES: Keyword[] = [
     type: 'theme',
   },
 ]
+
+/************************************************************
+ ***************           INSPIRE THEMES            **************
+ ************************************************************
+ */
+
+export const INSPIRE_THEMES: INSPIRE_theme[] = [
+  { value: 'biota', label: 'editor.record.form.inspire.biota' },
+  { value: 'boundaries', label: 'editor.record.form.inspire.boundaries' },
+  {
+    value: 'climatologyMeteorologyAtmosphere',
+    label: 'editor.record.form.inspire.climatology',
+  },
+  { value: 'economy', label: 'editor.record.form.inspire.economy' },
+  { value: 'elevation', label: 'editor.record.form.inspire.elevation' },
+  { value: 'environment', label: 'editor.record.form.inspire.environnement' },
+  { value: 'farming', label: 'editor.record.form.inspire.farming' },
+  {
+    value: 'geoscientific information',
+    label: 'editor.record.form.inspire.geoscientific',
+  },
+  { value: 'health', label: 'editor.record.form.inspire.health' },
+  {
+    value: 'imageryBaseMapsEarthCover',
+    label: 'editor.record.form.inspire.imagery',
+  },
+  {
+    value: 'intelligenceMilitary',
+    label: 'editor.record.form.inspire.intelligence',
+  },
+  { value: 'Location', label: 'editor.record.form.inspire.location' },
+  { value: 'Oceans', label: 'editor.record.form.inspire.oceans' },
+  {
+    value: 'planningCadastre',
+    label: 'editor.record.form.inspire.planning',
+  },
+  { value: 'Society', label: 'editor.record.form.inspire.society' },
+  { value: 'Structure', label: 'editor.record.form.inspire.structure' },
+  {
+    value: 'Transportation',
+    label: 'editor.record.form.inspire.transportation',
+  },
+  {
+    value: 'utilitiesCommunication',
+    label: 'editor.record.form.inspire.utilities',
+  },
+  { value: 'inlandWaters', label: 'editor.record.form.inspire.waters' },
+]
+
+marker('editor.record.form.inspire.biota')
+marker('editor.record.form.inspire.boundaries')
+marker('editor.record.form.inspire.climatology')
+marker('editor.record.form.inspire.economy')
+marker('editor.record.form.inspire.elevation')
+marker('editor.record.form.inspire.environnement')
+marker('editor.record.form.inspire.farming')
+marker('editor.record.form.inspire.geoscientific')
+marker('editor.record.form.inspire.health')
+marker('editor.record.form.inspire.imagery')
+marker('editor.record.form.inspire.intelligence')
+marker('editor.record.form.inspire.location')
+marker('editor.record.form.inspire.oceans')
+marker('editor.record.form.inspire.planning')
+marker('editor.record.form.inspire.society')
+marker('editor.record.form.inspire.structure')
+marker('editor.record.form.inspire.transportation')
+marker('editor.record.form.inspire.utilities')
+marker('editor.record.form.inspire.waters')

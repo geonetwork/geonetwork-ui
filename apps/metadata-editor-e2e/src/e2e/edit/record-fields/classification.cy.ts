@@ -21,10 +21,6 @@ describe('editor form', () => {
     cy.get('[data-cy=save-status]')
       .invoke('attr', 'data-cy-value')
       .as('saveStatus')
-    cy.get('[data-test=pageSelectorButtons]')
-      .find('gn-ui-button')
-      .eq(2)
-      .as('accessContactPageBtn')
   })
 
   describe('record fields', () => {

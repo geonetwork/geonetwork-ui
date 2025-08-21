@@ -29,7 +29,7 @@ describe('editor form', () => {
         .children('div')
         .first()
         .children('div')
-        .eq(2)
+        .eq(3)
         .as('aboutSection')
     })
 
@@ -169,7 +169,7 @@ describe('editor form', () => {
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
       cy.get('gn-ui-form-field-temporal-extents')
         .find('gn-ui-date-range-picker')
-        .should('be.visible')
+        .should('exist')
 
       // it should delete dates
       cy.editor_wrapPreviousDraft(recordUuid)

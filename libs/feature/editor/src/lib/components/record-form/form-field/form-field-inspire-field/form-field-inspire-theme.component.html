@@ -1,0 +1,20 @@
+<div class="flex flex-col gap-3">
+  <div class="flex flex-col gap-4">
+    <gn-ui-autocomplete
+      [placeholder]="'editor.record.form.inspire.placeholder' | translate"
+      [displayWithFn]="displayWithFn"
+      [action]="autoCompleteAction"
+      (itemSelected)="handleItemSelection($event)"
+      [minCharacterCount]="1"
+      [clearOnSelection]="true"
+    ></gn-ui-autocomplete>
+    <div class="flex gap-2 flex-wrap">
+      <gn-ui-badge
+        *ngFor="let theme of themes"
+        [removable]="true"
+        (badgeRemoveClicked)="removeTheme(theme)"
+        >{{ getTranslatedTheme(theme) }}
+      </gn-ui-badge>
+    </div>
+  </div>
+</div>

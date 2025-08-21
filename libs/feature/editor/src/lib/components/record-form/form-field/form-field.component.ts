@@ -45,6 +45,7 @@ import { FormFieldConstraintsShortcutsComponent } from './form-field-constraints
 import { FormFieldConstraintsComponent } from './form-field-constraints/form-field-constraints.component'
 import { TextFieldModule } from '@angular/cdk/text-field'
 import { FormFieldSpatialToggleComponent } from './form-field-spatial-toggle/form-field-spatial-toggle.component'
+import { FormFieldInspireThemeComponent } from './form-field-inspire-field/form-field-inspire-theme.component'
 
 @Component({
   selector: 'gn-ui-form-field',
@@ -73,6 +74,7 @@ import { FormFieldSpatialToggleComponent } from './form-field-spatial-toggle/for
     FormFieldConstraintsComponent,
     FormFieldConstraintsShortcutsComponent,
     FormFieldSpatialToggleComponent,
+    FormFieldInspireThemeComponent,
     TextFieldModule,
   ],
 })
@@ -127,6 +129,9 @@ export class FormFieldComponent {
   }
   get valueAsKeywords() {
     return this.value as Array<Keyword>
+  }
+  get valueAsInspireTheme() {
+    return this.value as Array<string>
   }
   get valueAsConstraints() {
     return this.value as Array<Constraint>
