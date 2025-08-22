@@ -119,9 +119,10 @@ describe('Sections', () => {
     cy.get('datahub-record-metadata')
       .find('[id="about"]')
       .find('gn-ui-max-lines')
+      .first()
       .as('maxLines')
     cy.get('@maxLines').find('.ease-out').should('exist')
-    cy.get('[data-cy=readMoreButton]').click()
+    cy.get('[data-cy=readMoreButton]').first().click()
     cy.get('@maxLines').find('.ease-in').should('exist')
     cy.go('back')
 
