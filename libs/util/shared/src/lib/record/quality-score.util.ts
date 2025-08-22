@@ -11,7 +11,11 @@ const ValidatorMapper: TValidatorMapper = {
   title: (record) => !!record?.title,
   abstract: (record) => !!record?.abstract,
   keywords: (record) => (record?.keywords?.length ?? 0) > 0,
-  legalConstraints: (record) => (record?.legalConstraints?.length ?? 0) > 0,
+  legalConstraints: (record) =>
+    !!(
+      record?.legalConstraints?.length &&
+      record.legalConstraints.some((c) => c?.text?.trim().length > 0)
+    ),
   contacts: (record) =>
     !!record?.contacts?.[0]?.email &&
     record.contacts[0].email !== 'missing@missing.com',

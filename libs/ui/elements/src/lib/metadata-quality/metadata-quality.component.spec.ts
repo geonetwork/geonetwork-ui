@@ -146,6 +146,36 @@ describe('MetadataQualityComponent', () => {
       expect(component.items.every((item) => item.value)).toBe(true)
     })
 
+    it('should intepret empty text for legalConstraints as absent constraints', () => {
+      const uncompletedDataset: Partial<CatalogRecord> = {
+        kind: 'dataset',
+        title: 'Uncomplete Dataset',
+        abstract: 'Uncomplete Dataset Description',
+        keywords: [{ label: 'test', type: 'theme' }],
+        contacts: [
+          {
+            email: 'test@test.com',
+            organization: { name: 'Test Organization' },
+            role: 'pointOfContact',
+          },
+        ],
+        topics: ['environment'],
+        legalConstraints: [{ text: null }],
+        updateFrequency: 'daily',
+        status: '',
+        lineage: '',
+        onlineResources: [],
+        spatialExtents: [],
+        temporalExtents: [],
+      }
+      component.metadata = uncompletedDataset
+      component.initialize()
+      fixture.detectChanges()
+
+      expect(component.items.length).toBe(8)
+      expect(component.computedQualityScore).toBe(88)
+    })
+
     it('should verify specific Dataset items', () => {
       const datasetWithTopicsAndContacts: Partial<CatalogRecord> = {
         kind: 'dataset',

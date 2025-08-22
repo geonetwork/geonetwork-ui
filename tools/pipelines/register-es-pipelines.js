@@ -50,7 +50,7 @@ program
 
 program.parse(process.argv)
 
-const VERSION = 105 // increment on changes
+const VERSION = 106 // increment on changes
 
 const GEONETWORK_UI_PIPELINE = {
   description: 'GeoNetwork-UI pipeline',
@@ -108,8 +108,8 @@ if (ctx.allKeywords != null && !ctx.allKeywords.isEmpty()) {
 if(type == 'dataset' && ctx.cl_maintenanceAndUpdateFrequency != null && ctx.cl_maintenanceAndUpdateFrequency.length > 0) {
   ok++
 }
-if((ctx.MD_LegalConstraintsUseLimitationObject != null && ctx.MD_LegalConstraintsUseLimitationObject.length > 0) ||
-   (ctx.MD_LegalConstraintsOtherConstraintsObject != null && ctx.MD_LegalConstraintsOtherConstraintsObject.length > 0)) {
+if((ctx.MD_LegalConstraintsUseLimitationObject != null && ctx.MD_LegalConstraintsUseLimitationObject.length > 0 && ctx.MD_LegalConstraintsUseLimitationObject[0].default != null && ctx.MD_LegalConstraintsUseLimitationObject[0].default != '') ||
+   (ctx.MD_LegalConstraintsOtherConstraintsObject != null && ctx.MD_LegalConstraintsOtherConstraintsObject.length > 0 && ctx.MD_LegalConstraintsOtherConstraintsObject[0].default != null && ctx.MD_LegalConstraintsOtherConstraintsObject[0].default != '')) {
   ok++
 }
 if(type == 'reuse' && ctx.recordLink != null){
