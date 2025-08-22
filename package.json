@@ -79,7 +79,7 @@
     "@ngrx/operators": "^18.0.0",
     "@ngx-translate/core": "~16.0.4",
     "@ngx-translate/http-loader": "~16.0.1",
-    "@nx/angular": "20.3.4",
+    "@nx/angular": "21.4.0",
     "@rgrove/parse-xml": "4.2.0",
     "@storybook/addon-interactions": "^8.2.8",
     "alasql": "4.6.0",
