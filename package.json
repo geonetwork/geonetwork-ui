@@ -87,6 +87,7 @@
     "basiclightbox": "^5.0.4",
     "chart.js": "4.4.7",
     "chroma-js": "3.1.2",
+    "cypress-parallel": "^0.15.0",
     "date-fns": "4.1.0",
     "document-register-element": "^1.14.10",
     "duration-relativetimeformat": "^2.0.4",
