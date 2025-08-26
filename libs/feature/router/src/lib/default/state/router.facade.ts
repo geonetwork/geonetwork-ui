@@ -63,7 +63,7 @@ export class RouterFacade {
   }
 
   goToOrganization(organizationName: string) {
-    const safeOrgName = organizationName.replace(/\//g, '')
+    const safeOrgName = organizationName.replace('/', '')
     const path = `${this.routerService.getOrganizationPageRoute()}/${safeOrgName}`
     this.go({
       path,

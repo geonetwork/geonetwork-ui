@@ -82,24 +82,5 @@ describe('OrganizationPageComponent', () => {
         expect(org).toEqual(orgWithSlash)
       })
     })
-
-    it('should match orgs with multiple slash', () => {
-      const orgWithSlash = {
-        ...expectedOrganization,
-        name: 'org/with/multiples/slash',
-      }
-
-      const orgService = TestBed.inject(OrganizationsServiceInterface) as any
-      orgService.organisations$ = of([orgWithSlash])
-
-      const router = TestBed.inject(RouterFacade) as any
-      router.pathParams$ = of({ name: 'orgwithmultiplesslash' })
-
-      component.ngOnInit()
-
-      component.organization$.subscribe((org) => {
-        expect(org).toEqual(orgWithSlash)
-      })
-    })
   })
 })
