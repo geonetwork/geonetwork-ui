@@ -14,11 +14,7 @@ export function flattenQueryParams(
       Array.isArray(flattened[key]) &&
       (flattened[key] as string[]).length > 0
     ) {
-      // Encode commas in values to prevent splitting issues
-      const encoded = (flattened[key] as string[]).map((value) =>
-        typeof value === 'string' ? value.replace(/,/g, '%2C') : value
-      )
-      flattened[key] = [encoded.join(',')]
+      flattened[key] = [(flattened[key] as string[]).join(',')]
     } else if (isDateRange(flattened[key] as DateRange)) {
       const start = (flattened[key] as DateRange).start
       const end = (flattened[key] as DateRange).end
@@ -52,8 +48,7 @@ export function expandQueryParams(
           ...(end && { end: new Date(`${end}T00:00:00`) }),
         }
       } else {
-        // Decode the encoded commas in values
-        expanded[key] = value.split(',').map((v) => v.replace(/%2C/g, ','))
+        expanded[key] = value.split(',')
       }
     }
   }
