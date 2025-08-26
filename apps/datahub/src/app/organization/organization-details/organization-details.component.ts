@@ -118,4 +118,8 @@ export class OrganizationDetailsComponent implements OnInit, OnDestroy {
   }
 
   protected readonly errorTypes = ErrorType
+
+  sanitizeOrgName(name: string): string {
+    return name ? name.replace(/,/g, '%2C') : name
+  }
 }
