@@ -90,7 +90,7 @@ describe('ServiceCapabilitiesComponent', () => {
       expect(component.selectedLayer).toBe(layer)
     })
 
-    it('should deselect a layer if the same layer is selected again', () => {
+    it('should not deselect a layer if the same layer is selected again', () => {
       const layer = {
         title: 'Sample Layer',
         abstract: 'This is a sample layer.',
@@ -101,8 +101,8 @@ describe('ServiceCapabilitiesComponent', () => {
       expect(component.layerInformation.length).toBeGreaterThan(0)
 
       component.selectLayer(layer)
-      expect(component.selectedLayer).toBeNull()
-      expect(component.layerInformation.length).toBe(0)
+      expect(component.selectedLayer).toBe(layer)
+      expect(component.layerInformation.length).toBeGreaterThan(0)
     })
   })
 })

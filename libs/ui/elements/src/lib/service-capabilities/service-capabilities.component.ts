@@ -136,12 +136,6 @@ export class ServiceCapabilitiesComponent implements OnInit {
   }
 
   selectLayer(layer: WfsFeatureTypeFull | WmsLayerFull | WmtsLayer) {
-    if (layer === this.selectedLayer) {
-      this.selectedLayer = null
-      this.layerInformation = []
-      return
-    }
-
     this.selectedLayer = layer
     const filteredInfo = []
     Object.keys(layer).map((key) => {
