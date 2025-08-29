@@ -41,7 +41,7 @@ export class OrganizationPageComponent implements OnInit {
       switchMap(([pathParams, organizations]) => {
         const organization = organizations.find(
           (organization) =>
-            organization.name.replace('/', '') === pathParams['name']
+            organization.name.replaceAll('/', '') === pathParams['name']
         )
         return of(organization)
       })
