@@ -24,6 +24,15 @@ describe('query params utilities', () => {
         emptyParam: [],
       })
     })
+
+    it('correctly encodes organization names with commas', () => {
+      const params = flattenQueryParams({
+        organization: ['Société, Inc., Main Branch', 'Other Org'],
+      })
+      expect(params).toEqual({
+        organization: ['Société%2C Inc.%2C Main Branch,Other Org'],
+      })
+    })
   })
   describe('expandQueryParams', () => {
     it('restores full route parameters from serialized query params in arrays', () => {
@@ -53,6 +62,14 @@ describe('query params utilities', () => {
         changeDate: {
           end: new Date('2008-08-14T00:00:00'),
         },
+      })
+    })
+    it('correctly handles organization names with commas', () => {
+      const params = expandQueryParams({
+        organization: ['Société%2C Inc.%2C Main Branch,Other Org'],
+      })
+      expect(params).toEqual({
+        organization: ['Société, Inc., Main Branch', 'Other Org'],
       })
     })
   })
