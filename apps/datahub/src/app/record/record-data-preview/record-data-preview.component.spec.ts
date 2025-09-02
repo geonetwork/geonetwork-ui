@@ -207,10 +207,10 @@ describe('RecordDataPreviewComponent', () => {
       it('renders preview, chart tab is enabled', () => {
         expect(chartTab.componentInstance.disabled).toBe(false)
       })
-      it('renders two data view components (for table and chart tabs)', () => {
+      it('renders the table component only (the first tab)', () => {
         expect(
           fixture.debugElement.queryAll(By.directive(DataViewComponent)).length
-        ).toEqual(2)
+        ).toEqual(1)
       })
       it('does render the permalink component', () => {
         expect(
@@ -242,10 +242,10 @@ describe('RecordDataPreviewComponent', () => {
       it('renders preview, chart tab is enabled', () => {
         expect(chartTab.componentInstance.disabled).toBe(false)
       })
-      it('renders two data view components (for table and chart tabs)', () => {
+      it('renders the table component only (the first tab)', () => {
         expect(
           fixture.debugElement.queryAll(By.directive(DataViewComponent)).length
-        ).toEqual(2)
+        ).toEqual(1)
       })
     })
   })

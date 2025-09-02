@@ -26,20 +26,9 @@
                 (buttonClick)="saveDatavizConfig()"
                 [disabled]="savingStatus === 'saving'"
               >
-                <ng-container [ngSwitch]="savingStatus">
-                  <span *ngSwitchCase="'idle'" translate>
-                    record.metadata.preview.config.idle
-                  </span>
-                  <span *ngSwitchCase="'saving'" translate>
-                    record.metadata.preview.config.saving
-                  </span>
-                  <span *ngSwitchCase="'saved'" translate>
-                    record.metadata.preview.config.saved
-                  </span>
-                  <span *ngSwitchCase="'error'" translate>
-                    record.metadata.preview.config.error
-                  </span>
-                </ng-container>
+                <span
+                  [translate]="'record.metadata.preview.config.' + savingStatus"
+                ></span>
               </gn-ui-button>
             </ng-template>
           </mat-tab>
@@ -50,7 +39,7 @@
             <div
               class="block"
               style="height: 639px"
-              *ngIf="displayMap$ | async"
+              *ngIf="(displayMap$ | async) && (selectedView$ | async) === 'map'"
             >
               <gn-ui-map-view
                 [exceedsLimit]="exceedsMaxFeatureCount$ | async"
@@ -65,7 +54,12 @@
             <ng-template mat-tab-label>
               <span class="tab-header-label" translate>record.tab.data</span>
             </ng-template>
-            <div class="block" *ngIf="displayData$ | async">
+            <div
+              class="block"
+              *ngIf="
+                (displayData$ | async) && (selectedView$ | async) === 'table'
+              "
+            >
               <gn-ui-data-view
                 [exceedsLimit]="exceedsMaxFeatureCount$ | async"
                 (linkSelected)="onSelectedLinkChange($event)"
@@ -82,7 +76,12 @@
             <ng-template mat-tab-label>
               <span class="tab-header-label" translate>record.tab.chart</span>
             </ng-template>
-            <div class="block" *ngIf="displayData$ | async">
+            <div
+              class="block"
+              *ngIf="
+                (displayData$ | async) && (selectedView$ | async) === 'chart'
+              "
+            >
               <gn-ui-data-view
                 [exceedsLimit]="exceedsMaxFeatureCount$ | async"
                 (linkSelected)="onSelectedLinkChange($event)"
