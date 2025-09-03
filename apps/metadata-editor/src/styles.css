@@ -1,6 +1,7 @@
 html,
 body {
   height: 100%;
+  margin: 0;
   color: var(--color-main);
 
   --gn-ui-button-rounded: 8px;
@@ -48,4 +49,11 @@ body {
 .mdc-menu-surface .mat-mdc-option {
   @apply !font-sans;
   min-height: 28px;
+}
+md-editor-all-records,
+md-editor-my-records-state-wrapper,
+md-editor-my-draft {
+  flex: 1 1 auto;
+  min-height: 0; /* needed for scroll inside flexbox */
+  overflow-y: auto;
 }
