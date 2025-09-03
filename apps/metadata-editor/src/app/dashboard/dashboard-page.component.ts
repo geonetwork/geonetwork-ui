@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
 import { SidebarComponent } from './sidebar/sidebar.component'
 import { SearchHeaderComponent } from './search-header/search-header.component'
@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common'
   templateUrl: './dashboard-page.component.html',
   styleUrls: ['./dashboard-page.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'w-full' },
   imports: [
     RouterOutlet,
     SidebarComponent,

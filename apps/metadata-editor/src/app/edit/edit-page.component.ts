@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common'
 import {
   Component,
   ElementRef,
+  HostBinding,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -44,6 +45,7 @@ marker('editor.record.form.bottomButtons.next')
   selector: 'md-editor-edit',
   templateUrl: './edit-page.component.html',
   styleUrls: ['./edit-page.component.css'],
+  host: { class: 'w-full' },
   standalone: true,
   imports: [
     RecordFormComponent,
@@ -78,6 +80,8 @@ export class EditPageComponent implements OnInit, OnDestroy {
   newRecord = false
   isLoading = true
   sidePanelOpen: 'multilingual' | 'metadataQuality' | null = null
+
+  @HostBinding('class.w-full') true
 
   @ViewChild('scrollContainer') scrollContainer: ElementRef<HTMLElement>
 
