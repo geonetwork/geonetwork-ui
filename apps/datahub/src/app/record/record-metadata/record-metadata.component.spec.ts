@@ -24,6 +24,7 @@ import { RecordInternalLinksComponent } from '../record-internal-links/record-in
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { REUSE_FORM_URL } from '../record-data-preview/record-data-preview.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
@@ -59,9 +60,12 @@ class OrganisationsServiceMock {
   )
 }
 
+class RecordsRepositoryInterfaceMock {
+  getFeedbacksAllowed = jest.fn(() => of(true))
+}
+
 class PlatformServiceMock {
   getMe = jest.fn(() => of(null))
-  getFeedbacksAllowed = jest.fn(() => of(true))
 }
 
 describe('RecordMetadataComponent', () => {
@@ -71,6 +75,7 @@ describe('RecordMetadataComponent', () => {
   let searchService: SearchService
   let sourcesService: SourcesService
   let platformService: PlatformServiceInterface
+  let recordRepository: RecordsRepositoryInterface
 
   beforeEach(() => MockBuilder(RecordMetadataComponent))
 
@@ -99,6 +104,10 @@ describe('RecordMetadataComponent', () => {
           useClass: PlatformServiceMock,
         },
         {
+          provide: RecordsRepositoryInterface,
+          useClass: RecordsRepositoryInterfaceMock,
+        },
+        {
           provide: REUSE_FORM_URL,
           useValue: 'https://example.com/reuse',
         },
@@ -108,6 +117,7 @@ describe('RecordMetadataComponent', () => {
     searchService = TestBed.inject(SearchService)
     sourcesService = TestBed.inject(SourcesService)
     platformService = TestBed.inject(PlatformServiceInterface)
+    recordRepository = TestBed.inject(RecordsRepositoryInterface)
   })
 
   beforeEach(() => {

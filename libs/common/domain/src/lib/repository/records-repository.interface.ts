@@ -105,4 +105,5 @@ export abstract class RecordsRepositoryInterface {
   ): Observable<{ user: string; date: Date }>
   abstract getRecordPublicationStatus(uuid: string): Observable<boolean>
   abstract getApplicationLanguages(): Observable<LanguageCode[]>
+  abstract getFeedbacksAllowed(): Observable<boolean>
 }

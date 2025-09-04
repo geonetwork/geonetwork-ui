@@ -57,5 +57,4 @@ export abstract class PlatformServiceInterface {
     removeDuplicate?: boolean
   ): Observable<UploadEvent>
   abstract getFileContent(url: URL): Observable<any>
-  abstract getFeedbacksAllowed(): Observable<boolean>
 }
