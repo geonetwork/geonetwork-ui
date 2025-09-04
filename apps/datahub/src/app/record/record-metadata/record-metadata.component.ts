@@ -220,7 +220,7 @@ export class RecordMetadataComponent {
     mergeMap((uuid) => this.sourceService.getSourceLabel(uuid))
   )
 
-  feedbacksAllowed$ = this.platformServiceInterface.getFeedbacksAllowed()
+  feedbacksAllowed$ = this.recordsRepositoryInterface.getFeedbacksAllowed()
 
   errorTypes = ErrorType
 
@@ -230,6 +230,7 @@ export class RecordMetadataComponent {
     private sourceService: SourcesService,
     private orgsService: OrganizationsServiceInterface,
     private readonly platformServiceInterface: PlatformServiceInterface,
+    private readonly recordsRepositoryInterface: RecordsRepositoryInterface,
     @Inject(REUSE_FORM_URL)
     @Optional()
     public reuseFormUrl: string
