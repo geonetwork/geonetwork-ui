@@ -153,7 +153,10 @@
   <section
     id="user-feedbacks"
     #userFeedbacks
-    *ngIf="(metadataViewFacade.isPresent$ | async) === true"
+    *ngIf="
+      (metadataViewFacade.isPresent$ | async) === true &&
+      (feedbacksAllowed$ | async) === true
+    "
     class="pb-10"
   >
     <div *ngIf="(metadataViewFacade.isPresent$ | async) === true">
