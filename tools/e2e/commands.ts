@@ -33,6 +33,7 @@ declare namespace Cypress {
     addTranslationKey(): void
     removeTranslationKey(): void
     editor_addLanguages(uuid: string): void
+    disableUserFeedbacks(): void
 
     // interaction with gn-ui-dropdown-selector
     openDropdown(): Chainable<JQuery<HTMLElement>>
@@ -408,6 +409,12 @@ Cypress.Commands.add('removeTranslationKey', () => {
         headers: { accept: 'application/json', 'X-XSRF-TOKEN': token },
       })
     })
+})
+
+Cypress.Commands.add('disableUserFeedbacks', () => {
+  cy.visit('/geonetwork/srv/eng/admin.console#/settings')
+  cy.get('[id="system/userFeedback/enable"]').click()
+  cy.get('[id="gn-btn-settings-save"]').click()
 })
 
 // -- This is a parent command --
