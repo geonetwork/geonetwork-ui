@@ -6327,7 +6327,7 @@ system/csw/capabilityRecordUuid	0	y	n	y	1220	-1
 system/csw/metadataPublic	2	y	n	y	1310	false
 system/csw/transactionUpdateCreateXPath	2	y	n	y	1320	true
 system/userSelfRegistration/enable	2	y	n	n	1910	false
-system/userFeedback/enable	2	y	n	n	1911	false
+system/userFeedback/enable	2	y	n	n	1911	true
 system/clickablehyperlinks/enable	2	y	n	y	2010	true
 system/localrating/enable	0	y	n	n	2110	advanced
 system/localrating/notificationLevel	0	y	n	n	2111	catalogueAdministrator
