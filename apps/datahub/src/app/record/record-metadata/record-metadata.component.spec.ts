@@ -60,6 +60,7 @@ class OrganisationsServiceMock {
 
 class PlatformServiceMock {
   getMe = jest.fn(() => of(null))
+  getFeedbacksAllowed = jest.fn(() => of(true))
 }
 
 describe('RecordMetadataComponent', () => {
