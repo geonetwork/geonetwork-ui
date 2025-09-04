@@ -48,6 +48,7 @@ import { RecordLinkedRecordsComponent } from '../record-linked-records/record-li
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
 import { type ValidatorMapperKeys } from '@geonetwork-ui/util/shared'
+import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -216,6 +217,8 @@ export class RecordMetadataComponent {
     mergeMap((uuid) => this.sourceService.getSourceLabel(uuid))
   )
 
+  feedbacksAllowed$ = this.recordsRepositoryInterface.getFeedbacksAllowed()
+
   errorTypes = ErrorType
 
   constructor(
@@ -224,6 +227,7 @@ export class RecordMetadataComponent {
     private sourceService: SourcesService,
     private orgsService: OrganizationsServiceInterface,
     private readonly platformServiceInterface: PlatformServiceInterface,
+    private readonly recordsRepositoryInterface: RecordsRepositoryInterface,
     @Inject(REUSE_FORM_URL)
     @Optional()
     public reuseFormUrl: string
