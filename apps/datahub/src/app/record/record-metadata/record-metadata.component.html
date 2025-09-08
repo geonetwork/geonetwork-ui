@@ -49,6 +49,7 @@
             </gn-ui-metadata-catalog>
           </div>
           <gn-ui-button
+            *ngIf="(feedbacksAllowed$ | async) === true"
             type="outline"
             extraClass="w-full flex flex-row justify-between bg-white"
             [style.--gn-ui-button-rounded]="'10px'"
