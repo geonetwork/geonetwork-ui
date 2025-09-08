@@ -46,6 +46,7 @@ import {
 } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { toLang3 } from '@geonetwork-ui/util/i18n'
+import { Gn4SettingsService } from '../settings/gn4-settings.service'
 
 const minApiVersion = '4.2.2'
 
@@ -112,6 +113,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     private userfeedbackApiService: UserfeedbackApiService,
     private httpClient: HttpClient,
     private recordsApiService: RecordsApiService
+    private settingsService: Gn4SettingsService
   ) {
     this.me$ = this.meApi.getMe().pipe(
       switchMap((apiUser) => this.mapper.userFromMeApi(apiUser)),
@@ -128,6 +130,9 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     )
   }
 
+  getFeedbacksAllowed(): Observable<boolean> {
+    return this.settingsService.allowFeedbacks$
+  }
   getType(): string {
     return this.type
   }

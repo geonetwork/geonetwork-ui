@@ -3,7 +3,6 @@ import {
   Component,
   ElementRef,
   Inject,
-  InjectionToken,
   Input,
   Optional,
   ViewChild,
@@ -19,7 +18,7 @@ import {
   MetadataQualityComponent,
   ServiceCapabilitiesComponent,
 } from '@geonetwork-ui/ui/elements'
-import { combineLatest, Observable, of } from 'rxjs'
+import { combineLatest, Observable } from 'rxjs'
 import { filter, map, mergeMap, startWith } from 'rxjs/operators'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import {
@@ -47,9 +46,6 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
-import { type ValidatorMapperKeys } from '@geonetwork-ui/util/shared'
-import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-
 @Component({
   selector: 'datahub-record-metadata',
   templateUrl: './record-metadata.component.html',
@@ -217,7 +213,7 @@ export class RecordMetadataComponent {
     mergeMap((uuid) => this.sourceService.getSourceLabel(uuid))
   )
 
-  feedbacksAllowed$ = this.recordsRepositoryInterface.getFeedbacksAllowed()
+  feedbacksAllowed$ = this.platformServiceInterface.getFeedbacksAllowed()
 
   errorTypes = ErrorType
 
@@ -227,7 +223,6 @@ export class RecordMetadataComponent {
     private sourceService: SourcesService,
     private orgsService: OrganizationsServiceInterface,
     private readonly platformServiceInterface: PlatformServiceInterface,
-    private readonly recordsRepositoryInterface: RecordsRepositoryInterface,
     @Inject(REUSE_FORM_URL)
     @Optional()
     public reuseFormUrl: string
