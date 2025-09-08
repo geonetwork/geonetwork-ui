@@ -325,7 +325,7 @@ describe('Preview section', () => {
       it('should show the config saving btn', () => {
         cy.get('@configTab')
           .find('gn-ui-button')
-          .should('have.text', ' Set as default preview ')
+          .should('have.text', 'Set as default preview')
       })
       it('should save and use a map config with TMS styles', () => {
         cy.visit('/dataset/zzz_nl_test_wfs_syth_la_ciotat')
