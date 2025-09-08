@@ -238,10 +238,6 @@ export class Gn4Repository implements RecordsRepositoryInterface {
       )
   }
 
-  getFeedbacksAllowed(): Observable<boolean> {
-    return this.settingsService.allowFeedbacks$
-  }
-
   getSources(record: CatalogRecord): Observable<CatalogRecord[]> {
     const sourcesIdentifiers = record.extras?.['sourcesIdentifiers'] as string[]
     if (sourcesIdentifiers && sourcesIdentifiers.length > 0) {
