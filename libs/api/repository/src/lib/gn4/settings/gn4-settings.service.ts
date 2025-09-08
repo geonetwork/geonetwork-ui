@@ -18,6 +18,10 @@ export class Gn4SettingsService {
     'system/userFeedback/enable'
   )
 
+  public apiVersion$: Observable<string> = this.getSettingsSetValueByKey(
+    'system/platform/version'
+  )
+
   constructor(private siteApiService: SiteApiService) {}
 
   private getSettingsSetValueByKey(key: string) {
