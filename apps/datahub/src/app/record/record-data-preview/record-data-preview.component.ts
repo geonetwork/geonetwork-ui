@@ -68,8 +68,10 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
     map(([mapApiLinks, geoDataLinksWithGeometry]) => {
       const display =
         mapApiLinks?.length > 0 || geoDataLinksWithGeometry?.length > 0
-      this.selectedIndex$.next(display ? 1 : 2)
-      this.selectedView$.next(display ? 'map' : 'table')
+      if (!this.datavizConfig) {
+        this.selectedIndex$.next(display ? 1 : 2)
+        this.selectedView$.next(display ? 'map' : 'table')
+      }
       return display
     }),
     startWith(false)
