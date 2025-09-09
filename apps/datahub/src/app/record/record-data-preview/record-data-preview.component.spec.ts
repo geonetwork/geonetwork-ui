@@ -537,5 +537,33 @@ describe('RecordDataPreviewComponent', () => {
         expect(component.selectedView$.value).toBe('table')
       }))
     })
+    describe('Map takes a while to load but config view is table', () => {
+      beforeEach(() => {
+        jest.clearAllMocks()
+        platformServiceInterface.getFileContent.mockReturnValue(
+          of({
+            view: 'table',
+            source: {
+              url: new URL('http://abcd.com/'),
+              name: 'layer2',
+              type: 'service',
+              accessServiceProtocol: 'wms',
+            },
+            chartConfig: null,
+            styleTMSIndex: 0,
+          })
+        )
+      })
+      it('should ignore the map resolving and display table', fakeAsync(() => {
+        facade.mapApiLinks$.next(['link'])
+        fixture.detectChanges()
+        tick(3000)
+
+        component.ngOnInit()
+
+        expect(component.selectedIndex$.value).toBe(2)
+        expect(component.selectedView$.value).toBe('table')
+      }))
+    })
   })
 })
