@@ -11,7 +11,6 @@ import {
   MetadataInfoComponent,
 } from '@geonetwork-ui/ui/elements'
 import { BehaviorSubject, of } from 'rxjs'
-import { take } from 'rxjs/operators'
 import { RecordMetadataComponent } from './record-metadata.component'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
@@ -220,7 +219,7 @@ describe('RecordMetadataComponent', () => {
         expect(downloadsComponent).toBeTruthy()
       })
     })
-    describe('when DOWNLOAD link and kind is other than dataset', () => {
+    describe('when DOWNLOAD link and kind is service', () => {
       beforeEach(() => {
         facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'service' } })
         facade.downloadLinks$.next(['link'])
@@ -231,6 +230,19 @@ describe('RecordMetadataComponent', () => {
       })
       it('download component does not render', () => {
         expect(downloadsComponent).toBeFalsy()
+      })
+    })
+    describe('when DOWNLOAD link and kind is reuse', () => {
+      beforeEach(() => {
+        facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'reuse' } })
+        facade.downloadLinks$.next(['link'])
+        fixture.detectChanges()
+        downloadsComponent = fixture.debugElement.query(
+          By.directive(RecordDownloadsComponent)
+        )
+      })
+      it('download component renders', () => {
+        expect(downloadsComponent).toBeTruthy()
       })
     })
   })
@@ -286,9 +298,9 @@ describe('RecordMetadataComponent', () => {
         expect(apiComponent).toBeTruthy()
       })
     })
-    describe('when API link and kind is other than dataset', () => {
+    describe('when API link and kind is service', () => {
       beforeEach(() => {
-        facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'reuse' } })
+        facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'service' } })
         facade.apiLinks$.next(['link'])
         fixture.detectChanges()
         apiComponent = fixture.debugElement.query(
@@ -297,6 +309,19 @@ describe('RecordMetadataComponent', () => {
       })
       it('API component does not render', () => {
         expect(apiComponent).toBeFalsy()
+      })
+    })
+    describe('when API link and kind is reuse', () => {
+      beforeEach(() => {
+        facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'reuse' } })
+        facade.apiLinks$.next(['link'])
+        fixture.detectChanges()
+        apiComponent = fixture.debugElement.query(
+          By.directive(RecordApisComponent)
+        )
+      })
+      it('API component renders', () => {
+        expect(apiComponent).toBeTruthy()
       })
     })
   })

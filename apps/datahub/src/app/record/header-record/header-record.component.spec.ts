@@ -48,6 +48,7 @@ describe('HeaderRecordComponent', () => {
         MockProvider(MdViewFacade, {
           isPresent$: new BehaviorSubject(false),
           metadata$: new BehaviorSubject(SAMPLE_RECORD),
+          allLinks$: new BehaviorSubject([]),
           downloadLinks$: new BehaviorSubject([]),
           apiLinks$: new BehaviorSubject([]),
           otherLinks$: new BehaviorSubject([]),
@@ -198,14 +199,14 @@ describe('HeaderRecordComponent', () => {
   describe('reuseLinkUrl$', () => {
     it('should emit the first url if links are present', (done) => {
       const links = [{ url: 'http://test1' }, { url: 'http://test2' }]
-      facade.otherLinks$.next(links)
+      facade.allLinks$.next(links)
       component.reuseLinkUrl$.subscribe((url) => {
         expect(url).toBe('http://test1')
         done()
       })
     })
     it('should emit null if no links are present', (done) => {
-      facade.otherLinks$.next([])
+      facade.allLinks$.next([])
       component.reuseLinkUrl$.subscribe((url) => {
         expect(url).toBeNull()
         done()

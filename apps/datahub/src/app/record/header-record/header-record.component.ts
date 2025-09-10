@@ -6,7 +6,7 @@ import {
   ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { combineLatest, fromEvent, map, startWith } from 'rxjs'
+import { combineLatest, map } from 'rxjs'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
@@ -100,7 +100,7 @@ export class HeaderRecordComponent {
     private searchService: SearchService
   ) {}
 
-  reuseLinkUrl$ = this.facade.otherLinks$.pipe(
+  reuseLinkUrl$ = this.facade.allLinks$.pipe(
     map((links) => {
       return links.length ? links[0].url : null
     })
