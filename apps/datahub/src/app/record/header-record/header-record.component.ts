@@ -104,7 +104,7 @@ export class HeaderRecordComponent {
     private searchService: SearchService
   ) {}
 
-  reuseLinkUrl$ = this.facade.otherLinks$.pipe(
+  reuseLinkUrl$ = this.facade.allLinks$.pipe(
     map((links) => {
       return links.length ? links[0].url : null
     })

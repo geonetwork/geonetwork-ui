@@ -85,6 +85,10 @@ export class RecordMetadataComponent {
     service: {
       capabilities: (links) => links?.length > 0,
     },
+    reuse: {
+      download: (links) => links?.length > 0,
+      api: (links) => links?.length > 0,
+    },
   }
 
   private getDisplayCondition(
