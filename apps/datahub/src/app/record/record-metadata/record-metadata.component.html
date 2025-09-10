@@ -98,7 +98,7 @@
     id="resources"
     *ngIf="
       (displayDownload$ | async) ||
-      (displayOtherLinks | async) ||
+      (displayOtherLinks$ | async) ||
       (displayApi$ | async)
     "
     class="overflow-x-hidden"
@@ -111,7 +111,7 @@
         <datahub-record-downloads class="block"></datahub-record-downloads>
       </div>
 
-      <div *ngIf="displayOtherLinks | async" id="otherlinks" class="pb-7">
+      <div *ngIf="displayOtherLinks$ | async" id="otherlinks" class="pb-7">
         <datahub-record-otherlinks class="block"></datahub-record-otherlinks>
       </div>
 

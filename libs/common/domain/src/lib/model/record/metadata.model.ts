@@ -274,7 +274,7 @@ export interface ServiceRecord extends BaseRecord {
 export interface ReuseRecord extends BaseRecord {
   kind: 'reuse'
   lineage: string // Explanation of the origin of this record (e.g: how, why)"
-  onlineResources: Array<OnlineLinkResource>
+  onlineResources: Array<DatasetOnlineResource>
   reuseType: ReuseType
   spatialExtents: Array<DatasetSpatialExtent>
   temporalExtents: Array<DatasetTemporalExtent>
