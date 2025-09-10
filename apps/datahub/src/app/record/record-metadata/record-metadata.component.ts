@@ -160,7 +160,7 @@ export class RecordMetadataComponent {
     )
   )
 
-  displayOtherLinks = this.metadataViewFacade.otherLinks$.pipe(
+  displayOtherLinks$ = this.metadataViewFacade.otherLinks$.pipe(
     map((links) => links?.length > 0)
   )
   displayRelated$ = this.metadataViewFacade.related$.pipe(
@@ -189,7 +189,7 @@ export class RecordMetadataComponent {
     this.metadataViewFacade.isMetadataLoading$,
     this.displayDownload$,
     this.displayApi$,
-    this.displayOtherLinks,
+    this.displayOtherLinks$,
   ]).pipe(
     map(
       ([isMetadataLoading, displayDownload, displayApi, displayOtherLinks]) =>
