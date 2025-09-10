@@ -1,6 +1,6 @@
 import { importProvidersFrom, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import { RouterModule } from '@angular/router'
+import { Event, Router, RouterModule, Scroll } from '@angular/router'
 import {
   ORGANIZATION_PAGE_URL_TOKEN,
   ORGANIZATION_URL_TOKEN,
@@ -72,6 +72,8 @@ import {
 } from './record/record-data-preview/record-data-preview.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
+import { ViewportScroller } from '@angular/common'
+import { filter, pairwise } from 'rxjs'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -82,7 +84,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     BrowserModule,
     RouterModule.forRoot([], {
       initialNavigation: 'enabledBlocking',
-      scrollPositionRestoration: 'enabled',
     }),
     StoreModule.forRoot(
       {},
@@ -219,7 +220,14 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor() {
+  constructor(
+    private router: Router,
+    private viewportScroller: ViewportScroller
+  ) {
+    // Disable automatic scroll restoration to avoid race conditions
+    this.viewportScroller.setHistoryScrollRestoration('manual')
+    this.handleScrollOnNavigation()
+
     ThemeService.applyCssVariables(
       getThemeConfig().PRIMARY_COLOR,
       getThemeConfig().SECONDARY_COLOR,
@@ -234,5 +242,51 @@ export class AppModule {
       getThemeConfig().PRIMARY_COLOR,
       [10, 25, 50, 75, 100]
     )
+  }
+
+  /**
+   * When route is changed, Angular interprets a simple query params change as "forward navigation" too.
+   * Using the pairwise function allows us to have both the previous and current router events, which we can
+   * use to effectively compare the two navigation events and see if they actually change route, or only
+   * the route parameters (i.e. selections stored in query params).
+   *
+   * Related to: https://github.com/angular/angular/issues/26744
+   */
+  private handleScrollOnNavigation(): void {
+    this.router.events
+      .pipe(
+        filter((e: Event): e is Scroll => e instanceof Scroll),
+        pairwise()
+      )
+      .subscribe((e: Scroll[]) => {
+        const previous = e[0]
+        const current = e[1]
+        if (current.position) {
+          // Backward navigation
+          this.viewportScroller.scrollToPosition(current.position)
+        } else if (current.anchor) {
+          // Anchor navigation
+          this.viewportScroller.scrollToAnchor(current.anchor)
+        } else {
+          // Check if routes match, or if it is only a query param change
+          if (
+            this.getBaseRoute(
+              (previous.routerEvent as any).urlAfterRedirects ?? ''
+            ) !==
+            this.getBaseRoute(
+              (current.routerEvent as any).urlAfterRedirects ?? ''
+            )
+          ) {
+            // Routes don't match, this is actual forward navigation
+            // Default behavior: scroll to top
+            this.viewportScroller.scrollToPosition([0, 0])
+          }
+        }
+      })
+  }
+
+  private getBaseRoute(url: string): string {
+    // return url without query params
+    return url.split('?')[0]
   }
 }
