@@ -1,6 +1,18 @@
+import { ViewportScroller } from '@angular/common'
 import { importProvidersFrom, NgModule } from '@angular/core'
+import { FormsModule } from '@angular/forms'
+import { MatButtonToggleModule } from '@angular/material/button-toggle'
+import { MatTabsModule } from '@angular/material/tabs'
 import { BrowserModule } from '@angular/platform-browser'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { Event, Router, RouterModule, Scroll } from '@angular/router'
+import {
+  LOGIN_URL,
+  METADATA_LANGUAGE,
+  provideGn4,
+  provideRepositoryUrl,
+} from '@geonetwork-ui/api/repository'
+import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import {
   FeatureCatalogModule,
   OrganisationsComponent,
@@ -31,8 +43,19 @@ import {
   RECORD_REUSE_URL_TOKEN,
   RECORD_SERVICE_URL_TOKEN,
 } from '@geonetwork-ui/feature/search'
+import {
+  LANGUAGES_LIST,
+  LanguageSwitcherComponent,
+} from '@geonetwork-ui/ui/catalog'
+import { FigureComponent } from '@geonetwork-ui/ui/dataviz'
 import { THUMBNAIL_PLACEHOLDER } from '@geonetwork-ui/ui/elements'
+import { ButtonComponent, CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
 import { StickyHeaderComponent } from '@geonetwork-ui/ui/layout'
+import {
+  BASEMAP_LAYERS,
+  DO_NOT_USE_DEFAULT_BASEMAP,
+  MAP_VIEW_CONSTRAINTS,
+} from '@geonetwork-ui/ui/map'
 import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import {
   getGlobalConfig,
@@ -42,41 +65,13 @@ import {
   getThemeConfig,
   TRANSLATE_WITH_OVERRIDES_CONFIG,
 } from '@geonetwork-ui/util/app-config'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
   getGeometryFromGeoJSON,
   PROXY_PATH,
   ThemeService,
 } from '@geonetwork-ui/util/shared'
-import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
-import { EffectsModule } from '@ngrx/effects'
-import { MetaReducer, StoreModule } from '@ngrx/store'
-import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { environment } from '../environments/environment'
-import { AppComponent } from './app.component'
-import { SearchPageComponent } from './home/search/search-page/search-page.component'
-import { RecordPageComponent } from './record/record-page/record-page.component'
-import { DatahubRouterService } from './router/datahub-router.service'
-import { FormsModule } from '@angular/forms'
-import {
-  LANGUAGES_LIST,
-  LanguageSwitcherComponent,
-} from '@geonetwork-ui/ui/catalog'
-import {
-  LOGIN_URL,
-  METADATA_LANGUAGE,
-  provideGn4,
-  provideRepositoryUrl,
-} from '@geonetwork-ui/api/repository'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MatTabsModule } from '@angular/material/tabs'
-import { LetDirective } from '@ngrx/component'
-import { OrganizationPageComponent } from './organization/organization-page/organization-page.component'
-
-import {
-  BASEMAP_LAYERS,
-  DO_NOT_USE_DEFAULT_BASEMAP,
-  MAP_VIEW_CONSTRAINTS,
-} from '@geonetwork-ui/ui/map'
+import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
 import {
   matAddOutline,
   matExpandMoreOutline,
@@ -86,18 +81,22 @@ import {
   matStarOutline,
   matWarningAmberOutline,
 } from '@ng-icons/material-icons/outline'
-import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
+import { LetDirective } from '@ngrx/component'
+import { EffectsModule } from '@ngrx/effects'
+import { MetaReducer, StoreModule } from '@ngrx/store'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { filter, pairwise } from 'rxjs'
+import { environment } from '../environments/environment'
+import { AppComponent } from './app.component'
+import { KeyFiguresComponent } from './home/news-page/key-figures/key-figures.component'
+import { SearchPageComponent } from './home/search/search-page/search-page.component'
+import { OrganizationPageComponent } from './organization/organization-page/organization-page.component'
 import {
   MAX_FEATURE_COUNT,
   REUSE_FORM_URL,
 } from './record/record-data-preview/record-data-preview.component'
-import { MatButtonToggleModule } from '@angular/material/button-toggle'
-import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { FigureComponent } from '@geonetwork-ui/ui/dataviz'
-import { ButtonComponent, CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
-import { KeyFiguresComponent } from './home/news-page/key-figures/key-figures.component'
-import { ViewportScroller } from '@angular/common'
-import { filter, pairwise } from 'rxjs'
+import { RecordPageComponent } from './record/record-page/record-page.component'
+import { DatahubRouterService } from './router/datahub-router.service'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
