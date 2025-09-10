@@ -1,6 +1,6 @@
 import { importProvidersFrom, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import { RouterModule } from '@angular/router'
+import { Router, RouterModule } from '@angular/router'
 import {
   ORGANIZATION_PAGE_URL_TOKEN,
   ORGANIZATION_URL_TOKEN,
@@ -40,6 +40,7 @@ import {
 } from '@geonetwork-ui/util/app-config'
 import {
   getGeometryFromGeoJSON,
+  handleScrollOnNavigation,
   PROXY_PATH,
   ThemeService,
 } from '@geonetwork-ui/util/shared'
@@ -72,6 +73,7 @@ import {
 } from './record/record-data-preview/record-data-preview.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
+import { ViewportScroller } from '@angular/common'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -82,7 +84,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     BrowserModule,
     RouterModule.forRoot([], {
       initialNavigation: 'enabledBlocking',
-      scrollPositionRestoration: 'enabled',
+      scrollPositionRestoration: 'disabled',
     }),
     StoreModule.forRoot(
       {},
@@ -219,7 +221,14 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor() {
+  constructor(
+    private router: Router,
+    private viewportScroller: ViewportScroller
+  ) {
+    // Disable automatic scroll restoration to avoid race conditions
+    this.viewportScroller.setHistoryScrollRestoration('manual')
+    handleScrollOnNavigation(this.router, this.viewportScroller)
+
     ThemeService.applyCssVariables(
       getThemeConfig().PRIMARY_COLOR,
       getThemeConfig().SECONDARY_COLOR,
