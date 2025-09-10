@@ -1300,7 +1300,7 @@ export function createOnlineResource(onlineResource: ServiceOnlineResource) {
 }
 
 export function appendDatasetOnlineResources(
-  record: DatasetRecord,
+  record: DatasetRecord | ReuseRecord,
   rootEl: XmlElement
 ) {
   appendChildren(
@@ -1319,7 +1319,7 @@ export function appendDatasetOnlineResources(
 }
 
 export function appendServiceOnlineResources(
-  record: ServiceRecord | ReuseRecord,
+  record: ServiceRecord,
   rootEl: XmlElement
 ) {
   appendChildren(...record.onlineResources.map(createOnlineResource))(rootEl)
@@ -1331,7 +1331,7 @@ export function writeOnlineResources(
 ) {
   removeOnlineResources()(rootEl)
 
-  if (record.kind === 'dataset') {
+  if (record.kind === 'dataset' || record.kind === 'reuse') {
     appendDatasetOnlineResources(record, rootEl)
     return
   }
