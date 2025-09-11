@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { RecordsMetricsComponent } from './records-metrics.component'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { SAMPLE_AGGREGATIONS_RESULTS } from '@geonetwork-ui/common/fixtures'
@@ -17,8 +16,7 @@ describe('RecordsMetricsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecordsMetricsComponent],
-      imports: [UiSearchModule, TranslateDirective, TranslatePipe],
+      imports: [TranslateDirective, TranslatePipe],
       providers: [
         provideI18n(),
         {

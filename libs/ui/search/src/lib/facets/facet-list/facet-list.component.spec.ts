@@ -1,9 +1,10 @@
 import { DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { FacetBlockStubComponent } from '../facet-block/facet-block.component'
+import { FacetBlockComponent } from '../facet-block/facet-block.component'
 import { blockModelFixture } from '../fixtures'
 import { FacetListComponent } from './facet-list.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('FacetListComponent', () => {
   let component: FacetListComponent
@@ -14,7 +15,7 @@ describe('FacetListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FacetListComponent, FacetBlockStubComponent],
+      imports: [FacetBlockComponent, TranslateModule.forRoot()],
     }).compileComponents()
   })
 
@@ -41,11 +42,11 @@ describe('FacetListComponent', () => {
         [blockModelFixture().key, 'Estonia'],
       ]
       fixture.detectChanges()
-      block = de.queryAll(By.directive(FacetBlockStubComponent))[0]
+      block = de.queryAll(By.directive(FacetBlockComponent))[0]
     })
     it('filters only the facets for the block', () => {
       expect(
-        (block.componentInstance as FacetBlockStubComponent).selectedPaths
+        (block.componentInstance as FacetBlockComponent).selectedPaths
       ).toEqual([
         [blockModelFixture().key, 'Austria'],
         [blockModelFixture().key, 'Estonia'],

@@ -14,7 +14,6 @@ describe('CatalogTitleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SiteTitleComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
