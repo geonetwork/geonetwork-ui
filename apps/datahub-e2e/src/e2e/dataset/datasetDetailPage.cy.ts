@@ -97,7 +97,7 @@ beforeEach(() => {
   cy.intercept('GET', '/data/ogcapi/conformance?f=json', {
     fixture: 'ogcapi_conformance.json',
   })
-  cy.intercept('GET', '/data/ogcapi/?f=json', {
+  cy.intercept('GET', '/data/ogcapi?f=json', {
     fixture: 'ogcapi.json',
   })
 })
