@@ -18,7 +18,7 @@ export default {
   component: LoadingMaskComponent,
   decorators: [
     moduleMetadata({
-      declarations: [MatProgressSpinner],
+      imports: [MatProgressSpinner],
     }),
     applicationConfig({
       providers: [importProvidersFrom(BrowserAnimationsModule)],
