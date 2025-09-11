@@ -12,6 +12,7 @@ import {
   FilterDropdownComponent,
   SearchFacade,
   SearchService,
+  SortByComponent,
 } from '@geonetwork-ui/feature/search'
 import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
 import { Observable, switchMap } from 'rxjs'
@@ -47,6 +48,8 @@ import { getIsMobile } from '@geonetwork-ui/util/shared'
     CheckToggleComponent,
     TranslatePipe,
     TranslateDirective,
+    FilterDropdownComponent,
+    SortByComponent,
   ],
   providers: [
     provideIcons({
