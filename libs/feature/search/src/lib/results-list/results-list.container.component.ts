@@ -11,11 +11,12 @@ import { combineLatest, Observable, tap } from 'rxjs'
 import { filter, map } from 'rxjs/operators'
 import { SearchFacade } from '../state/search.facade'
 import { SearchError } from '../state/reducer'
-import { ErrorType } from '@geonetwork-ui/ui/elements'
+import { ErrorComponent, ErrorType } from '@geonetwork-ui/ui/elements'
 import {
   RESULTS_LAYOUT_CONFIG,
   ResultsLayoutConfigItem,
   ResultsLayoutConfigModel,
+  ResultsListComponent,
 } from '@geonetwork-ui/ui/search'
 import {
   RECORD_DATASET_URL_TOKEN,
@@ -23,6 +24,14 @@ import {
   RECORD_REUSE_URL_TOKEN,
 } from '../record-url.token'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import {
+  ButtonComponent,
+  ViewportIntersectorComponent,
+} from '@geonetwork-ui/ui/inputs'
+import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
+import { FavoriteStarComponent } from '../favorites/favorite-star/favorite-star.component'
+import { CommonModule } from '@angular/common'
+import { TranslateDirective } from '@ngx-translate/core'
 
 export type ResultsListShowMoreStrategy = 'auto' | 'button' | 'none'
 
@@ -30,6 +39,17 @@ export type ResultsListShowMoreStrategy = 'auto' | 'button' | 'none'
   selector: 'gn-ui-results-list-container',
   templateUrl: './results-list.container.component.html',
   styleUrls: ['./results-list.container.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ResultsListComponent,
+    ButtonComponent,
+    ViewportIntersectorComponent,
+    SpinningLoaderComponent,
+    ErrorComponent,
+    FavoriteStarComponent,
+    TranslateDirective,
+  ],
 })
 export class ResultsListContainerComponent implements OnInit {
   @Input() metadataQualityDisplay: boolean

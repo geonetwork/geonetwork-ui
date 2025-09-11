@@ -13,6 +13,11 @@ import { SearchFacade } from '../state/search.facade'
 import { FieldAvailableValue, FieldValue } from '../utils/service/fields'
 import { SearchService } from '../utils/service/search.service'
 import { FieldsService } from '../utils/service/fields.service'
+import {
+  ResultsHitsNumberComponent,
+  ResultsHitsSearchKindComponent,
+} from '@geonetwork-ui/ui/search'
+import { CommonModule } from '@angular/common'
 
 marker('search.filters.recordKind.all')
 marker('search.filters.recordKind.dataset')
@@ -23,6 +28,12 @@ marker('search.filters.recordKind.reuse')
   selector: 'gn-ui-results-hits',
   templateUrl: './results-hits.container.component.html',
   styleUrls: ['./results-hits.container.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ResultsHitsNumberComponent,
+    ResultsHitsSearchKindComponent,
+  ],
 })
 export class ResultsHitsContainerComponent implements OnInit {
   @Input() displayRecordKindFilter = true
