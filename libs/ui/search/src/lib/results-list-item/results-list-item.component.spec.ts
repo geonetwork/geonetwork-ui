@@ -5,6 +5,7 @@ import { RecordPreviewTextComponent } from '../record-preview-text/record-previe
 import { DEFAULT_RESULTS_LAYOUT_CONFIG } from '../results-list/results-layout.config'
 
 import { ResultsListItemComponent } from './results-list-item.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('ResultsListItemComponent', () => {
   let component: ResultsListItemComponent
@@ -12,7 +13,7 @@ describe('ResultsListItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ResultsListItemComponent],
+      imports: [TranslateModule.forRoot()],
     }).compileComponents()
   })
 

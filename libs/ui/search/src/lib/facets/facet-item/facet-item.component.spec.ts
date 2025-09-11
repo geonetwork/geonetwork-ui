@@ -13,7 +13,6 @@ describe('FacetItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FacetItemComponent],
       imports: [FormsModule, TranslateModule.forRoot()],
     }).compileComponents()
   })

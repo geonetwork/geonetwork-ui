@@ -12,7 +12,6 @@ describe('RecordPreviewFeedComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecordPreviewFeedComponent],
       imports: [TranslateDirective, TranslatePipe],
       providers: [provideI18n()],
       schemas: [NO_ERRORS_SCHEMA],

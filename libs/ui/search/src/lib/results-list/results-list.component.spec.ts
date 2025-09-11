@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { RecordPreviewCardComponent } from '../record-preview-card/record-preview-card.component'
 
 import { ResultsListComponent } from './results-list.component'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
@@ -10,7 +9,7 @@ describe('ResultsListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ResultsListComponent, RecordPreviewCardComponent],
+      imports: [ResultsListComponent],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   })

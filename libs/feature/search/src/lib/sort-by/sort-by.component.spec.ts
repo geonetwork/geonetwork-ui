@@ -1,4 +1,4 @@
-import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core'
+import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { SearchFacade } from '../state/search.facade'
@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs'
 import { SearchService } from '../utils/service/search.service'
 import { SortByComponent } from './sort-by.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 
 const sortBySubject = new BehaviorSubject(['asc', 'title'])
 class FacadeMock {
@@ -19,15 +20,6 @@ class SearchServiceMock {
   setSortBy = jest.fn()
 }
 
-@Component({
-  selector: 'gn-ui-dropdown-selector',
-  template: '<div></div>',
-})
-export class MockDropdownSelectorComponent {
-  @Input() choices: unknown[]
-  @Input() selected: any
-}
-
 describe('SortByComponent', () => {
   let component: SortByComponent
   let fixture: ComponentFixture<SortByComponent>
@@ -35,8 +27,7 @@ describe('SortByComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SortByComponent, MockDropdownSelectorComponent],
-      imports: [TranslateDirective, TranslatePipe],
+      imports: [DropdownSelectorComponent, TranslateDirective, TranslatePipe],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         provideI18n(),
@@ -63,10 +54,10 @@ describe('SortByComponent', () => {
     expect(component).toBeTruthy()
   })
   describe('dropwdown value', () => {
-    let dropDownComponent: MockDropdownSelectorComponent
+    let dropDownComponent: DropdownSelectorComponent
     beforeEach(() => {
       dropDownComponent = fixture.debugElement.query(
-        By.directive(MockDropdownSelectorComponent)
+        By.directive(DropdownSelectorComponent)
       ).componentInstance
     })
     it('choices from component', () => {

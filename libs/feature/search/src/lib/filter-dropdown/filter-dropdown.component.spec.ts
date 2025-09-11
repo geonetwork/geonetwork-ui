@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  NO_ERRORS_SCHEMA,
-  Output,
-} from '@angular/core'
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core'
 import {
   ComponentFixture,
   fakeAsync,
@@ -18,6 +11,10 @@ import { SearchFacade } from '../state/search.facade'
 import { FieldsService } from '../utils/service/fields.service'
 import { SearchService } from '../utils/service/search.service'
 import { FilterDropdownComponent } from './filter-dropdown.component'
+import {
+  DateRangeDropdownComponent,
+  DropdownMultiselectComponent,
+} from '@geonetwork-ui/ui/inputs'
 
 class SearchFacadeMock {
   searchFilters$ = new BehaviorSubject<any>({})
@@ -47,45 +44,21 @@ class FieldsServiceMock {
   getFieldType = jest.fn(() => 'values')
 }
 
-@Component({
-  selector: 'gn-ui-dropdown-multiselect',
-  template: '<div></div>',
-})
-export class MockDropdownComponent {
-  @Input() title: string
-  @Input() ariaName: string
-  @Input() choices: {
-    value: unknown
-    label: string
-  }[]
-  @Input() selected: unknown[]
-  @Output() selectValues = new EventEmitter<unknown[]>()
-}
-@Component({
-  selector: 'gn-ui-date-range-dropdown',
-  template: '<div></div>',
-})
-export class MockDateRangeDropdownComponent {
-  @Input() title: string
-  @Output() startDateChange = new EventEmitter<Date>()
-  @Output() endDateChange = new EventEmitter<Date>()
-}
-
 describe('FilterDropdownComponent', () => {
   let facade: SearchFacadeMock
   let component: FilterDropdownComponent
-  let dropdown: MockDropdownComponent
-  let dateRangeDropdown: MockDateRangeDropdownComponent
+  let dropdown: DropdownMultiselectComponent
+  let dateRangeDropdown: DateRangeDropdownComponent
   let searchService: SearchService
   let fieldsService: FieldsService
   let fixture: ComponentFixture<FilterDropdownComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         FilterDropdownComponent,
-        MockDropdownComponent,
-        MockDateRangeDropdownComponent,
+        DropdownMultiselectComponent,
+        DateRangeDropdownComponent,
       ],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
@@ -119,7 +92,7 @@ describe('FilterDropdownComponent', () => {
     component.fieldName = 'Org'
     fixture.detectChanges()
     dropdown = fixture.debugElement.query(
-      By.directive(MockDropdownComponent)
+      By.directive(DropdownMultiselectComponent)
     ).componentInstance
   })
 
@@ -130,20 +103,20 @@ describe('FilterDropdownComponent', () => {
   describe('displays dropdown component based on fieldtype', () => {
     it('displays dropdown-multiselect for fields of type values', () => {
       expect(
-        fixture.debugElement.query(By.directive(MockDropdownComponent))
+        fixture.debugElement.query(By.directive(DropdownMultiselectComponent))
       ).toBeTruthy()
       expect(
-        fixture.debugElement.query(By.directive(MockDateRangeDropdownComponent))
+        fixture.debugElement.query(By.directive(DateRangeDropdownComponent))
       ).toBeFalsy()
     })
     it('displays daterange-dropdown for fields of type dateRange', () => {
       component.fieldType = 'dateRange'
       fixture.detectChanges()
       expect(
-        fixture.debugElement.query(By.directive(MockDropdownComponent))
+        fixture.debugElement.query(By.directive(DropdownMultiselectComponent))
       ).toBeFalsy()
       expect(
-        fixture.debugElement.query(By.directive(MockDateRangeDropdownComponent))
+        fixture.debugElement.query(By.directive(DateRangeDropdownComponent))
       ).toBeTruthy()
     })
   })
@@ -278,7 +251,7 @@ describe('FilterDropdownComponent', () => {
       component.fieldName = 'someDateField'
       fixture.detectChanges()
       dateRangeDropdown = fixture.debugElement.query(
-        By.directive(MockDateRangeDropdownComponent)
+        By.directive(DateRangeDropdownComponent)
       ).componentInstance
     })
     it('updates the start date', () => {

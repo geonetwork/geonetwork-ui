@@ -12,7 +12,6 @@ describe('ResultsHitsNumberComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ResultsHitsNumberComponent],
       imports: [
         TranslateTestingModule.withTranslations({
           en: {
