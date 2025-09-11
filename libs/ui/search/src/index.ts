@@ -1,4 +1,3 @@
-export { FacetsModule as UiFacetsModule } from './lib/facets/facets.module'
 export * from './lib/facets/facets.model'
 export * from './lib/facets/fixtures'
 export * from './lib/facets/facet-block/facet-block.component'
