@@ -7,6 +7,9 @@ import {
 import { SearchFacade } from '../state/search.facade'
 import { SearchService } from '../utils/service/search.service'
 import { filter, map } from 'rxjs/operators'
+import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
+import { CommonModule } from '@angular/common'
+import { TranslatePipe } from '@ngx-translate/core'
 
 interface SortChoice {
   label: string
@@ -16,6 +19,8 @@ interface SortChoice {
 @Component({
   selector: 'gn-ui-sort-by',
   templateUrl: './sort-by.component.html',
+  standalone: true,
+  imports: [CommonModule, DropdownSelectorComponent, TranslatePipe],
 })
 export class SortByComponent implements OnInit {
   @Input() isQualitySortable: boolean
