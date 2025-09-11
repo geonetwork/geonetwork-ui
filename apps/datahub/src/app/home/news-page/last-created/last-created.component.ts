@@ -3,17 +3,19 @@ import { RouterFacade } from '@geonetwork-ui/feature/router'
 import {
   FeatureSearchModule,
   FIELDS_BRIEF,
+  ResultsListContainerComponent,
   SearchFacade,
 } from '@geonetwork-ui/feature/search'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
+import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'datahub-last-created',
   templateUrl: './last-created.component.html',
   styleUrls: ['./last-created.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FeatureSearchModule],
+  imports: [CommonModule, FeatureSearchModule, ResultsListContainerComponent],
   standalone: true,
 })
 export class LastCreatedComponent implements OnInit {

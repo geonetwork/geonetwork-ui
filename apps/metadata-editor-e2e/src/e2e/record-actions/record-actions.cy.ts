@@ -51,7 +51,7 @@ describe('record-actions', () => {
       // Delete the record from my-records page
       cy.visit('/my-space/my-records')
       cy.get('gn-ui-pagination-buttons').find('button').eq(2).click()
-      cy.get('[data-test="record-menu-button"]').last().click()
+      cy.get('[data-test="record-menu-button"]').first().click()
       cy.get('[data-test="record-menu-delete-button"]').click()
       cy.get('[data-cy="confirm-button"]').click()
       cy.get('[data-cy="table-row"]')

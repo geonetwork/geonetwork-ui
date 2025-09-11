@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
 import {
   FeatureCatalogModule,
-  OrganisationsComponent,
   ORGANIZATION_PAGE_URL_TOKEN,
   ORGANIZATION_URL_TOKEN,
 } from '@geonetwork-ui/feature/catalog'
@@ -11,7 +10,6 @@ import {
   EXTERNAL_VIEWER_OPEN_NEW_TAB,
   EXTERNAL_VIEWER_URL_TEMPLATE,
   FeatureRecordModule,
-  RecordMetaComponent,
   WEB_COMPONENT_EMBEDDER_URL,
 } from '@geonetwork-ui/feature/record'
 import {
@@ -32,8 +30,6 @@ import {
   RECORD_SERVICE_URL_TOKEN,
 } from '@geonetwork-ui/feature/search'
 import { THUMBNAIL_PLACEHOLDER } from '@geonetwork-ui/ui/elements'
-import { StickyHeaderComponent } from '@geonetwork-ui/ui/layout'
-import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import {
   getGlobalConfig,
   getMapContextLayerFromConfig,
@@ -57,10 +53,7 @@ import { SearchPageComponent } from './home/search/search-page/search-page.compo
 import { RecordPageComponent } from './record/record-page/record-page.component'
 import { DatahubRouterService } from './router/datahub-router.service'
 import { FormsModule } from '@angular/forms'
-import {
-  LANGUAGES_LIST,
-  LanguageSwitcherComponent,
-} from '@geonetwork-ui/ui/catalog'
+import { LANGUAGES_LIST } from '@geonetwork-ui/ui/catalog'
 import {
   LOGIN_URL,
   METADATA_LANGUAGE,
@@ -78,24 +71,11 @@ import {
   MAP_VIEW_CONSTRAINTS,
 } from '@geonetwork-ui/ui/map'
 import {
-  matAddOutline,
-  matExpandMoreOutline,
-  matMenuOutline,
-  matMoreHorizOutline,
-  matRemoveOutline,
-  matStarOutline,
-  matWarningAmberOutline,
-} from '@ng-icons/material-icons/outline'
-import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
-import {
   MAX_FEATURE_COUNT,
   REUSE_FORM_URL,
 } from './record/record-data-preview/record-data-preview.component'
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { FigureComponent } from '@geonetwork-ui/ui/dataviz'
-import { ButtonComponent, CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
-import { KeyFiguresComponent } from './home/news-page/key-figures/key-figures.component'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -134,35 +114,13 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     }),
     FeatureRecordModule,
     FeatureCatalogModule,
-    UiSearchModule,
     FormsModule,
     MatTabsModule,
-    RecordMetaComponent,
     LetDirective,
-    // FIXME: these imports are required by non-standalone components and should be removed once all components have been made standalone
-    NgIconsModule.withIcons({
-      matMenuOutline,
-      matRemoveOutline,
-      matMoreHorizOutline,
-      matAddOutline,
-      matExpandMoreOutline,
-      matStarOutline,
-      matWarningAmberOutline,
-    }),
-    OrganisationsComponent,
-    LanguageSwitcherComponent,
     MatButtonToggleModule,
-    FigureComponent,
-    StickyHeaderComponent,
-    CheckToggleComponent,
-    ButtonComponent,
-    KeyFiguresComponent,
   ],
   providers: [
     provideI18n(TRANSLATE_WITH_OVERRIDES_CONFIG),
-    provideNgIconsConfig({
-      size: '1.5em',
-    }),
     importProvidersFrom(FeatureAuthModule),
     provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
     provideGn4(),

@@ -1,12 +1,21 @@
 import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
+import {
+  FeatureCatalogModule,
+  SiteTitleComponent,
+} from '@geonetwork-ui/feature/catalog'
 import { FeatureMapModule } from '@geonetwork-ui/feature/map'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
+  FacetsContainerComponent,
   FeatureSearchModule,
   FuzzySearchComponent,
+  RecordsMetricsComponent,
+  ResultsHitsContainerComponent,
+  ResultsLayoutComponent,
+  ResultsListContainerComponent,
+  SortByComponent,
 } from '@geonetwork-ui/feature/search'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
@@ -39,6 +48,13 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     EffectsModule.forRoot(),
     NoopAnimationsModule,
     FuzzySearchComponent,
+    SiteTitleComponent,
+    RecordsMetricsComponent,
+    SortByComponent,
+    ResultsLayoutComponent,
+    FacetsContainerComponent,
+    ResultsListContainerComponent,
+    ResultsHitsContainerComponent,
   ],
   providers: [provideRepositoryUrl(environment.API_BASE_PATH), provideI18n()],
   bootstrap: [AppComponent],
