@@ -50,9 +50,6 @@ const organizationsServiceFactory = (
       )
 
 @NgModule({
-  declarations: [SiteTitleComponent, SourceLabelComponent],
-  imports: [CommonModule, OrganisationsFilterComponent, CatalogTitleComponent],
-  exports: [SiteTitleComponent, SourceLabelComponent],
   providers: [
     {
       provide: OrganizationsServiceInterface,
