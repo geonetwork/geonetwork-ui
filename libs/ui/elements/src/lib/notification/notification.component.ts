@@ -7,7 +7,11 @@ import {
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { NgIconComponent, provideIcons } from '@ng-icons/core'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
 import { matCheckCircleOutline } from '@ng-icons/material-icons/baseline'
 import {
   matErrorOutlineOutline,
@@ -27,6 +31,9 @@ import {
       matWarningAmberOutline,
       matInfoOutline,
       matCloseOutline,
+    }),
+    provideNgIconsConfig({
+      size: '1.5em',
     }),
   ],
   templateUrl: './notification.component.html',
