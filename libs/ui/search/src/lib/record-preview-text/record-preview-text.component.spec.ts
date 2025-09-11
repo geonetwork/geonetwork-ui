@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordPreviewTextComponent } from './record-preview-text.component'
 import { NO_ERRORS_SCHEMA } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { TranslateModule } from '@ngx-translate/core'
 
 describe('RecordPreviewTextComponent', () => {
   let component: RecordPreviewTextComponent
@@ -9,7 +10,7 @@ describe('RecordPreviewTextComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecordPreviewTextComponent],
+      imports: [TranslateModule.forRoot()],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   })

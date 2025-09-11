@@ -12,10 +12,12 @@ import {
   MapViewComponent,
 } from '@geonetwork-ui/feature/record'
 import {
+  FacetsContainerComponent,
   FeatureSearchModule,
   FuzzySearchComponent,
+  RecordsMetricsComponent,
+  ResultsListContainerComponent,
 } from '@geonetwork-ui/feature/search'
-import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
@@ -75,7 +77,6 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   ],
   imports: [
     BrowserAnimationsModule,
-    UiSearchModule,
     FeatureSearchModule,
     FeatureRecordModule,
     FeatureMapModule,
@@ -88,6 +89,11 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     ButtonComponent,
     FigureComponent,
     FuzzySearchComponent,
+    RecordsMetricsComponent,
+    ResultsListContainerComponent,
+    FacetsContainerComponent,
+    LayersPanelComponent,
+    FigureComponent,
   ],
   providers: [
     importProvidersFrom(

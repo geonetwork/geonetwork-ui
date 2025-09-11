@@ -10,7 +10,6 @@ describe('RecordPreviewCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecordPreviewCardComponent],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   })

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, DebugElement } from '@angular/core'
+import { DebugElement } from '@angular/core'
 import {
   ComponentFixture,
   fakeAsync,
@@ -8,7 +8,7 @@ import {
 import { FormsModule } from '@angular/forms'
 import { By } from '@angular/platform-browser'
 import { TranslateModule } from '@ngx-translate/core'
-import { FacetItemStubComponent } from '../facet-item/facet-item.component'
+import { FacetItemComponent } from '../facet-item/facet-item.component'
 import { blockModelFixture, emptyBlockModelFixture } from '../fixtures'
 import { FacetBlockComponent } from './facet-block.component'
 
@@ -19,13 +19,13 @@ describe('FacetBlockComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FacetBlockComponent, FacetItemStubComponent],
-      imports: [FormsModule, TranslateModule.forRoot()],
-    })
-      .overrideComponent(FacetBlockComponent, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
-      })
-      .compileComponents()
+      imports: [
+        FacetBlockComponent,
+        FacetItemComponent,
+        FormsModule,
+        TranslateModule.forRoot(),
+      ],
+    }).compileComponents()
   })
 
   beforeEach(() => {
@@ -130,19 +130,19 @@ describe('FacetBlockComponent', () => {
         [blockModelFixture().key, 'Austria'],
       ]
       fixture.detectChanges()
-      items = de.queryAll(By.directive(FacetItemStubComponent))
+      items = de.queryAll(By.directive(FacetItemComponent))
     })
     it('selects only the items matching the selected facets', () => {
       const selectedItems = items.filter((item) => {
-        const stub = item.componentInstance as FacetItemStubComponent
+        const stub = item.componentInstance as FacetItemComponent
         return stub.selected
       })
       expect(selectedItems.length).toBe(2)
       expect(
-        (selectedItems[0].componentInstance as FacetItemStubComponent).label
+        (selectedItems[0].componentInstance as FacetItemComponent).label
       ).toBe('Austria')
       expect(
-        (selectedItems[1].componentInstance as FacetItemStubComponent).label
+        (selectedItems[1].componentInstance as FacetItemComponent).label
       ).toBe('Romania')
     })
   })
@@ -155,7 +155,6 @@ describe('EmptyFacetBlockComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FacetBlockComponent, FacetItemStubComponent],
       imports: [FormsModule, TranslateModule.forRoot()],
     }).compileComponents()
   })

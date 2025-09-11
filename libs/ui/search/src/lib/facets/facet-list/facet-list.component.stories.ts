@@ -16,8 +16,7 @@ export default {
   component: FacetListComponent,
   decorators: [
     moduleMetadata({
-      declarations: [FacetItemComponent, FacetBlockComponent],
-      imports: [FormsModule],
+      imports: [FacetItemComponent, FacetBlockComponent, FormsModule],
     }),
     applicationConfig({
       providers: [provideI18n()],

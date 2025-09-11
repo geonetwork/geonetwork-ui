@@ -19,7 +19,6 @@ import {
   MarkdownParserComponent,
   ThumbnailComponent,
 } from '@geonetwork-ui/ui/elements'
-import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { SearchFacade } from '@geonetwork-ui/feature/search'
 import {
   BehaviorSubject,
@@ -49,7 +48,6 @@ import { tablerFolderOpen } from '@ng-icons/tabler-icons'
     CommonModule,
     TranslateDirective,
     LetDirective,
-    UiSearchModule,
     MaxLinesComponent,
     RouterLink,
     ErrorComponent,

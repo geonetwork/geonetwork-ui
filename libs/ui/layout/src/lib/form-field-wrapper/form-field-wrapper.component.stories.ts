@@ -1,12 +1,13 @@
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular'
 import { FormFieldWrapperComponent } from './form-field-wrapper.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 export default {
   title: 'Layout/FormFieldWrapperComponent',
   component: FormFieldWrapperComponent,
   decorators: [
     moduleMetadata({
-      imports: [FormFieldWrapperComponent],
+      imports: [FormFieldWrapperComponent, TranslateModule.forRoot()],
     }),
   ],
 } as Meta<FormFieldWrapperComponent>
