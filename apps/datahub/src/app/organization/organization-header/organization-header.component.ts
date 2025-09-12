@@ -1,22 +1,22 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
-import { TranslateDirective } from '@ngx-translate/core'
-import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { CommonModule, Location } from '@angular/common'
-import { ErrorType } from '@geonetwork-ui/ui/elements'
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { Router } from '@angular/router'
+import { Organization } from '@geonetwork-ui/common/domain/model/record'
+import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
+import { ErrorType } from '@geonetwork-ui/ui/elements'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import {
   NgIconComponent,
   provideIcons,
   provideNgIconsConfig,
 } from '@ng-icons/core'
+import { matArrowBack } from '@ng-icons/material-icons/baseline'
 import {
   matFolderOutline,
   matOpenInNewOutline,
 } from '@ng-icons/material-icons/outline'
-import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
-import { matArrowBack } from '@ng-icons/material-icons/baseline'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { TranslateDirective } from '@ngx-translate/core'
 
 @Component({
   selector: 'datahub-organization-header',
@@ -48,12 +48,12 @@ export class OrganizationHeaderComponent {
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
 
   constructor(
-    private location: Location,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {}
 
   back() {
-    this.organization
+    this.router.lastSuccessfulNavigation.previousNavigation
       ? this.location.back()
       : this.router.navigateByUrl('/organisations')
   }
