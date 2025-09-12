@@ -1,22 +1,25 @@
-import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { CommonModule, Location } from '@angular/common'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  ViewChild,
+} from '@angular/core'
+import { Router } from '@angular/router'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
-import {
-  FavoriteStarComponent,
-  SearchService,
-} from '@geonetwork-ui/feature/search'
+import { FavoriteStarComponent } from '@geonetwork-ui/feature/search'
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { AnchorLinkDirective } from '@geonetwork-ui/ui/layout'
 import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
+import { getIsMobile } from '@geonetwork-ui/util/shared'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { iconoirMenu } from '@ng-icons/iconoir'
 import { matArrowBack } from '@ng-icons/material-icons/baseline'
 import { TranslateDirective } from '@ngx-translate/core'
-import { AnchorLinkDirective } from '@geonetwork-ui/ui/layout'
-import { HostListener } from '@angular/core'
-import { ElementRef, ViewChild } from '@angular/core'
-import { getIsMobile } from '@geonetwork-ui/util/shared'
 
 marker('record.metadata.about')
 marker('record.metadata.capabilities')
@@ -84,7 +87,10 @@ export class NavigationBarComponent {
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
   isMobile$ = getIsMobile()
 
-  constructor(private searchService: SearchService) {}
+  constructor(
+    private router: Router,
+    private location: Location
+  ) {}
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -105,6 +111,8 @@ export class NavigationBarComponent {
     this.displayMobileMenu = !this.displayMobileMenu
   }
   back() {
-    this.searchService.updateFilters({})
+    this.router.lastSuccessfulNavigation.previousNavigation
+      ? this.location.back()
+      : this.router.navigateByUrl('/search')
   }
 }

@@ -1,21 +1,21 @@
+import { Location } from '@angular/common'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { Router } from '@angular/router'
+import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
   datasetRecordsFixture,
   SAMPLE_RECORD,
 } from '@geonetwork-ui/common/fixtures'
-
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { DateService } from '@geonetwork-ui/util/shared'
+import { MockBuilder, MockProvider } from 'ng-mocks'
+import { BehaviorSubject } from 'rxjs'
 import {
   HEADER_HEIGHT_DEFAULT,
   HEADER_HEIGHT_MOBILE_THUMBNAIL,
   HeaderRecordComponent,
 } from './header-record.component'
-import { MockBuilder, MockProvider } from 'ng-mocks'
-import { DatasetRecord } from '@geonetwork-ui/common/domain/model/record'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { BehaviorSubject } from 'rxjs'
-import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { SearchService } from '@geonetwork-ui/feature/search'
-import { DateService } from '@geonetwork-ui/util/shared'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
@@ -34,10 +34,21 @@ jest.mock('@geonetwork-ui/util/app-config', () => ({
   },
 }))
 
+const routerMock: Partial<Router> = {
+  lastSuccessfulNavigation: {
+    previousNavigation: null,
+  } as any,
+  navigateByUrl: jest.fn(),
+}
+const locationMock: Partial<Location> = {
+  back: jest.fn(),
+}
+
 describe('HeaderRecordComponent', () => {
   let component: HeaderRecordComponent
   let fixture: ComponentFixture<HeaderRecordComponent>
   let facade
+  let router: Router
 
   beforeEach(() => MockBuilder(HeaderRecordComponent))
 
@@ -56,15 +67,21 @@ describe('HeaderRecordComponent', () => {
           error$: new BehaviorSubject(null),
           isMetadataLoading$: new BehaviorSubject(false),
         }),
-        MockProvider(SearchService, {
-          updateFilters: jest.fn(),
-        }),
         MockProvider(DateService, {
           formatDate: jest.fn(),
         }),
+        {
+          provide: Router,
+          useValue: routerMock,
+        },
+        {
+          provide: Location,
+          useValue: locationMock,
+        },
       ],
     }).compileComponents()
     facade = TestBed.inject(MdViewFacade)
+    router = TestBed.inject(Router)
   })
 
   beforeEach(() => {
@@ -226,11 +243,16 @@ describe('HeaderRecordComponent', () => {
   })
 
   describe('back()', () => {
-    it('should call searchService.updateFilters with empty object', () => {
-      const searchService = TestBed.inject(SearchService)
-      const spy = jest.spyOn(searchService, 'updateFilters')
+    it('should call the back function of Location if previous navigation', () => {
+      router.lastSuccessfulNavigation.previousNavigation = {} as any
       component.back()
-      expect(spy).toHaveBeenCalledWith({})
+      expect(locationMock.back).toHaveBeenCalled()
+    })
+
+    it('should call the navigateByUrl function of Router to /search if no previous navigation', () => {
+      router.lastSuccessfulNavigation.previousNavigation = null
+      component.back()
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/search')
     })
   })
 })
