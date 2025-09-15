@@ -35,7 +35,9 @@
             <a
               data-test="organizationDatasetCount"
               [routerLink]="['/', ROUTER_ROUTE_SEARCH]"
-              [queryParams]="{ organization: organization.name }"
+              [queryParams]="{
+                organization: sanitizeOrgName(organization.name),
+              }"
             >
               <gn-ui-figure
                 class="py-[37px] pl-[47px] rounded-lg border bg-white mb-5 card-shadow cursor-pointer"
@@ -78,7 +80,9 @@
               [records]="lastPublishedDatasets"
               [routerLinkButton]="{
                 routerLink: ['/', ROUTER_ROUTE_SEARCH],
-                queryParams: { organization: organization.name },
+                queryParams: {
+                  organization: sanitizeOrgName(organization.name),
+                },
                 label:
                   'organization.details.lastPublishedDatasets.searchAllButton'
                   | translate,
