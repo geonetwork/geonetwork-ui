@@ -2,7 +2,6 @@ import {
   MeApiService,
   RecordsApiService,
   RegistriesApiService,
-  SiteApiService,
   ToolsApiService,
   UserfeedbackApiService,
   UserFeedbackDTOApiModel,
@@ -22,6 +21,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { HttpClient, HttpEventType } from '@angular/common/http'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { TranslateService } from '@ngx-translate/core'
+import { Gn4SettingsService } from '../settings/gn4-settings.service'
 
 let geonetworkVersion: string
 
@@ -54,13 +54,10 @@ class AvatarServiceInterfaceMock {
   getProfileIcon = (hash: string) => of(`http://icon_service.com/${hash}`)
 }
 
-class SiteApiServiceMock {
-  getSiteOrPortalDescription = jest.fn(() =>
-    of({
-      'system/platform/version': geonetworkVersion,
-      'system/harvester/enableEditing': false,
-    })
-  )
+class Gn4SettingsServiceMock {
+  allowFeedbacks$ = of(true)
+  allowEditHarvested$ = of(false)
+  apiVersion$ = of(geonetworkVersion)
 }
 
 class UsersApiServiceMock {
@@ -213,6 +210,7 @@ describe('Gn4PlatformService', () => {
   let registriesApiService: RegistriesApiService
   let userFeedbackApiService: UserfeedbackApiServiceMock
   let recordsApiService: RecordsApiService
+  let settingsService: Gn4SettingsService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -220,8 +218,8 @@ describe('Gn4PlatformService', () => {
         Gn4PlatformService,
         Gn4PlatformMapper,
         {
-          provide: SiteApiService,
-          useClass: SiteApiServiceMock,
+          provide: Gn4SettingsService,
+          useClass: Gn4SettingsServiceMock,
         },
         {
           provide: UsersApiService,
@@ -268,6 +266,7 @@ describe('Gn4PlatformService', () => {
     registriesApiService = TestBed.inject(RegistriesApiService)
     userFeedbackApiService = TestBed.inject(UserfeedbackApiService as any)
     recordsApiService = TestBed.inject(RecordsApiService)
+    settingsService = TestBed.inject(Gn4SettingsService)
   })
 
   it('creates', () => {
@@ -278,6 +277,7 @@ describe('Gn4PlatformService', () => {
     describe('when version is lower than 4.2.2', () => {
       beforeEach(() => {
         geonetworkVersion = '4.2.0'
+        settingsService.apiVersion$ = of(geonetworkVersion)
       })
       it('throws an error', async () => {
         let error
@@ -292,6 +292,7 @@ describe('Gn4PlatformService', () => {
     describe('when version is equal or greater than 4.2.2', () => {
       beforeEach(() => {
         geonetworkVersion = '4.2.2'
+        settingsService.apiVersion$ = of(geonetworkVersion)
       })
       it('fetches version from settings', async () => {
         const version = await firstValueFrom(service.getApiVersion())

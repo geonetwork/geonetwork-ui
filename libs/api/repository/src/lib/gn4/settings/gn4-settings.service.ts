@@ -14,6 +14,14 @@ export class Gn4SettingsService {
   public allowEditHarvested$: Observable<boolean> =
     this.getSettingsSetValueByKey('system/harvester/enableEditing')
 
+  public allowFeedbacks$: Observable<boolean> = this.getSettingsSetValueByKey(
+    'system/userFeedback/enable'
+  )
+
+  public apiVersion$: Observable<string> = this.getSettingsSetValueByKey(
+    'system/platform/version'
+  )
+
   constructor(private siteApiService: SiteApiService) {}
 
   private getSettingsSetValueByKey(key: string) {

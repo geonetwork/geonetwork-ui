@@ -11,7 +11,6 @@ import {
   MeApiService,
   RecordsApiService,
   RegistriesApiService,
-  SiteApiService,
   ToolsApiService,
   UserfeedbackApiService,
   UsersApiService,
@@ -46,6 +45,7 @@ import {
 } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { toLang3 } from '@geonetwork-ui/util/i18n'
+import { Gn4SettingsService } from '../settings/gn4-settings.service'
 
 const minApiVersion = '4.2.2'
 
@@ -66,31 +66,6 @@ export class Gn4PlatformService implements PlatformServiceInterface {
       }),
       shareReplay(1)
     )
-
-  private settings$ = of(true).pipe(
-    switchMap(() => this.siteApiService.getSiteOrPortalDescription()),
-    shareReplay(1)
-  )
-
-  private readonly apiVersion$ = this.settings$.pipe(
-    map((info) => info['system/platform/version'] as string),
-    tap((version) => {
-      if (ltr(version, minApiVersion)) {
-        throw new Error(
-          `Gn4 API version is not compatible.\nMinimum: ${minApiVersion}\nYour version: ${version}`
-        )
-      }
-    }),
-    shareReplay(1)
-  )
-
-  private readonly allowEditHarvestedMd$ = this.settings$.pipe(
-    map((info) => {
-      return info['system/harvester/enableEditing'] as boolean
-    }),
-    shareReplay(1)
-  )
-
   /**
    * A map of already loaded thesauri (groups of keywords); the key is a URI
    * @private
@@ -102,7 +77,6 @@ export class Gn4PlatformService implements PlatformServiceInterface {
   }
 
   constructor(
-    private siteApiService: SiteApiService,
     private meApi: MeApiService,
     private usersApi: UsersApiService,
     private mapper: Gn4PlatformMapper,
@@ -111,7 +85,8 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     private translateService: TranslateService,
     private userfeedbackApiService: UserfeedbackApiService,
     private httpClient: HttpClient,
-    private recordsApiService: RecordsApiService
+    private recordsApiService: RecordsApiService,
+    private settingsService: Gn4SettingsService
   ) {
     this.me$ = this.meApi.getMe().pipe(
       switchMap((apiUser) => this.mapper.userFromMeApi(apiUser)),
@@ -128,16 +103,28 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     )
   }
 
+  getFeedbacksAllowed(): Observable<boolean> {
+    return this.settingsService.allowFeedbacks$
+  }
+
+  getAllowEditHarvestedMd(): Observable<boolean> {
+    return this.settingsService.allowEditHarvested$
+  }
+
   getType(): string {
     return this.type
   }
 
   getApiVersion(): Observable<string> {
-    return this.apiVersion$
-  }
-
-  getAllowEditHarvestedMd(): Observable<boolean> {
-    return this.allowEditHarvestedMd$
+    return this.settingsService.apiVersion$.pipe(
+      tap((version) => {
+        if (ltr(version, minApiVersion)) {
+          throw new Error(
+            `Gn4 API version is not compatible.\nMinimum: ${minApiVersion}\nYour version: ${version}`
+          )
+        }
+      })
+    )
   }
 
   getMe(): Observable<UserModel> {
