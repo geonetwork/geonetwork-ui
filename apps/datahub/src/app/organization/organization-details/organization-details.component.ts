@@ -35,7 +35,7 @@ import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 import { map, startWith } from 'rxjs/operators'
 import { RecordInternalLinksComponent } from '../../record/record-internal-links/record-internal-links.component'
 import { FigureComponent } from '@geonetwork-ui/ui/dataviz'
-import { provideIcons } from '@ng-icons/core'
+import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { tablerFolderOpen } from '@ng-icons/tabler-icons'
 
 @Component({
@@ -61,6 +61,9 @@ import { tablerFolderOpen } from '@ng-icons/tabler-icons'
   viewProviders: [
     provideIcons({
       tablerFolderOpen,
+    }),
+    provideNgIconsConfig({
+      size: '1.5em',
     }),
   ],
 })

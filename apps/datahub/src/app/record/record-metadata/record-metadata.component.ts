@@ -38,7 +38,7 @@ import {
   REUSE_FORM_URL,
 } from '../record-data-preview/record-data-preview.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { NgIcon, provideIcons } from '@ng-icons/core'
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { matChatOutline } from '@ng-icons/material-icons/outline'
 import { iconoirAppWindow } from '@ng-icons/iconoir'
 import { RecordFeatureCatalogComponent } from '../record-feature-catalog/record-feature-catalog.component'
@@ -74,7 +74,12 @@ import { UserModel } from '@geonetwork-ui/common/domain/model/user'
     TranslateDirective,
     TranslatePipe,
   ],
-  viewProviders: [provideIcons({ matChatOutline, iconoirAppWindow })],
+  viewProviders: [
+    provideIcons({ matChatOutline, iconoirAppWindow }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
+  ],
 })
 export class RecordMetadataComponent {
   @Input() metadataQualityDisplay: boolean

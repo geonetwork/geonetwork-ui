@@ -9,7 +9,7 @@ import {
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
-import { NgIcon, provideIcons } from '@ng-icons/core'
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { iconoirMenu } from '@ng-icons/iconoir'
 import { matArrowBack } from '@ng-icons/material-icons/baseline'
 import { TranslateDirective } from '@ngx-translate/core'
@@ -40,7 +40,12 @@ marker('record.metadata.userFeedbacks')
     FavoriteStarComponent,
     AnchorLinkDirective,
   ],
-  viewProviders: [provideIcons({ iconoirMenu, matArrowBack })],
+  viewProviders: [
+    provideIcons({ iconoirMenu, matArrowBack }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
+  ],
 })
 export class NavigationBarComponent {
   @Input() metadata: DatasetRecord
