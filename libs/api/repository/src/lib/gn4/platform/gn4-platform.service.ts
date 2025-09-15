@@ -123,8 +123,7 @@ export class Gn4PlatformService implements PlatformServiceInterface {
             `Gn4 API version is not compatible.\nMinimum: ${minApiVersion}\nYour version: ${version}`
           )
         }
-      }),
-      shareReplay(1)
+      })
     )
   }
 
