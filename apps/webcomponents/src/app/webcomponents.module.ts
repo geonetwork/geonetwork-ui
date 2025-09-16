@@ -36,7 +36,6 @@ import {
   MapStateContainerComponent,
 } from '@geonetwork-ui/feature/map'
 import { GnDatasetViewChartComponent } from './components/gn-dataset-view-chart/gn-dataset-view-chart.component'
-import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { GnFigureDatasetsComponent } from './components/gn-figure-datasets/gn-figure-datasets.component'
 import { GnDatasetViewMapComponent } from './components/gn-dataset-view-map/gn-dataset-view-map.component'
@@ -80,7 +79,6 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     FeatureSearchModule,
     FeatureRecordModule,
     FeatureMapModule,
-    FeatureAuthModule,
     MapStateContainerComponent,
     LayersPanelComponent,
     TableViewComponent,

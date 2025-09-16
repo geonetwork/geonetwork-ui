@@ -15,7 +15,6 @@ import { ThemeService } from '@geonetwork-ui/util/shared'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { AppComponent } from './app.component'
 import { appRoutes } from './app.routes'
-import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { BrowserModule } from '@angular/platform-browser'
 import { provideAnimations } from '@angular/platform-browser/animations'
 import { extModules } from './build-specifics'
@@ -57,7 +56,6 @@ import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
   ],
   providers: [
     { provide: RouterService, useClass: EditorRouterService },
-    importProvidersFrom(FeatureAuthModule),
     importProvidersFrom(FeatureSearchModule),
     importProvidersFrom(FeatureCatalogModule),
     importProvidersFrom(FeatureRecordModule),

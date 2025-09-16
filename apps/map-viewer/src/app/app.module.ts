@@ -1,4 +1,4 @@
-import { importProvidersFrom, NgModule } from '@angular/core'
+import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 
 import { AppComponent } from './app.component'
@@ -16,7 +16,6 @@ import { storeFreeze } from 'ngrx-store-freeze'
 import { environment } from '../environments/environment'
 import { provideGn4, provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
@@ -40,7 +39,6 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
   ],
   providers: [
     provideI18n(),
-    importProvidersFrom(FeatureAuthModule),
     provideRepositoryUrl('/geonetwork/srv/api'),
     provideGn4(),
   ],

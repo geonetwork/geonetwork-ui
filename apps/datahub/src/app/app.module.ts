@@ -44,7 +44,6 @@ import {
   PROXY_PATH,
   ThemeService,
 } from '@geonetwork-ui/util/shared'
-import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
@@ -111,7 +110,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   ],
   providers: [
     { provide: RouterService, useClass: DatahubRouterService },
-    importProvidersFrom(FeatureAuthModule),
     importProvidersFrom(FeatureSearchModule),
     importProvidersFrom(FeatureCatalogModule),
     importProvidersFrom(FeatureRecordModule),

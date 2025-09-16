@@ -21,7 +21,6 @@ import { GEONETWORK_UI_VERSION } from '@geonetwork-ui/util/shared'
 import { BrowserModule } from '@angular/platform-browser'
 import { provideHttpClient } from '@angular/common/http'
 import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
-import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import {
   StandaloneConfiguration,
   standaloneConfigurationObject,
@@ -53,8 +52,7 @@ import {
     importProvidersFrom(
       BrowserModule,
       // theses shouldn't be needed; we rely on them for the Org service and Avatar service which should both be provided by `providedGn4`
-      FeatureCatalogModule,
-      FeatureAuthModule
+      FeatureCatalogModule
     ),
   ],
 })
