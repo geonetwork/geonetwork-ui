@@ -16,22 +16,18 @@ import {
   RECORD_SERVICE_URL_TOKEN,
   RECORD_REUSE_URL_TOKEN,
 } from '../record-url.token'
-import { AuthUtilsService } from '@geonetwork-ui/feature/auth'
 
-class AuthUtilsServiceMock {
-  isAuthDisabled = jest.fn(() => false)
-}
-
-jest.mock('@geonetwork-ui/feature/auth', () => ({
-  AuthUtilsService: jest.fn().mockImplementation(() => ({
-    isAuthDisabled: jest.fn(() => false),
-  })),
-}))
-jest.mock('@geonetwork-ui/util/app-config', () => ({
-  getGlobalConfig: jest.fn(() => ({
-    DISABLE_AUTH: false,
-  })),
-}))
+jest.mock('@geonetwork-ui/util/app-config', () => {
+  let _disableAuth = false
+  return {
+    getGlobalConfig: () => ({
+      DISABLE_AUTH: _disableAuth,
+    }),
+    _setDisableAuth: (value) => {
+      _disableAuth = value
+    },
+  }
+})
 
 @Component({
   selector: 'gn-ui-results-list',
@@ -94,10 +90,6 @@ describe('ResultsListContainerComponent', () => {
         {
           provide: RECORD_REUSE_URL_TOKEN,
           useValue: '/my/reuse/${uuid}/open',
-        },
-        {
-          provide: AuthUtilsService,
-          useClass: AuthUtilsServiceMock,
         },
       ],
     }).compileComponents()
@@ -218,34 +210,47 @@ describe('ResultsListContainerComponent', () => {
   })
 
   describe('auth disable functionality', () => {
-    let authUtilsService: AuthUtilsServiceMock
-
     beforeEach(() => {
       component.layout = 'CARD'
-      authUtilsService = TestBed.inject(
-        AuthUtilsService
-      ) as AuthUtilsServiceMock
+    })
+
+    afterEach(() => {
+      // Reset DISABLE_AUTH to default state
+      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
+      mockAppConfig._setDisableAuth(false)
     })
 
     it('should show favorites when auth is enabled', () => {
-      authUtilsService.isAuthDisabled.mockReturnValue(false)
+      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
+      mockAppConfig._setDisableAuth(false)
 
+      fixture = TestBed.createComponent(ResultsListContainerComponent)
+      component = fixture.componentInstance
+      component.layout = 'CARD'
       fixture.detectChanges()
 
       expect(component.shouldShowFavorites).toBe(true)
     })
 
     it('should hide favorites when auth is disabled', () => {
-      authUtilsService.isAuthDisabled.mockReturnValue(true)
+      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
+      mockAppConfig._setDisableAuth(true)
 
+      fixture = TestBed.createComponent(ResultsListContainerComponent)
+      component = fixture.componentInstance
+      component.layout = 'CARD'
       fixture.detectChanges()
 
       expect(component.shouldShowFavorites).toBe(false)
     })
 
     it('should pass showFavorites property to results list component', () => {
-      authUtilsService.isAuthDisabled.mockReturnValue(true)
+      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
+      mockAppConfig._setDisableAuth(true)
 
+      fixture = TestBed.createComponent(ResultsListContainerComponent)
+      component = fixture.componentInstance
+      component.layout = 'CARD'
       fixture.detectChanges()
 
       const resultsList = fixture.debugElement.query(

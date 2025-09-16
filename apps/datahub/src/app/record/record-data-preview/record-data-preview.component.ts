@@ -24,6 +24,7 @@ import {
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { getIsMobile } from '@geonetwork-ui/util/shared'
 import { TranslateDirective } from '@ngx-translate/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   BehaviorSubject,
   combineLatest,
@@ -35,6 +36,11 @@ import {
   switchMap,
   take,
 } from 'rxjs'
+
+marker('record.metadata.preview.config.idle')
+marker('record.metadata.preview.config.saving')
+marker('record.metadata.preview.config.saved')
+marker('record.metadata.preview.config.error')
 
 export const MAX_FEATURE_COUNT = new InjectionToken<string>('maxFeatureCount')
 export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')

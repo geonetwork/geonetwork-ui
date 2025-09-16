@@ -23,7 +23,6 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { AuthService, FavoritesService } from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { CommonModule } from '@angular/common'
-import { AuthUtilsService } from '@geonetwork-ui/feature/auth'
 
 @Component({
   selector: 'gn-ui-favorite-star',
@@ -67,14 +66,6 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   subscription: Subscription
   countSubscription: Subscription
 
-  get isAuthDisabled(): boolean {
-    return this.authUtilsService.isAuthDisabled()
-  }
-
-  get shouldShowComponent(): boolean {
-    return !this.isAuthDisabled
-  }
-
   get hasFavoriteCount() {
     return this.favoriteCount !== null
   }
@@ -84,12 +75,11 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
     private platformService: PlatformServiceInterface,
     private changeDetector: ChangeDetectorRef,
     private authService: AuthService,
-    private translateService: TranslateService,
-    private authUtilsService: AuthUtilsService
+    private translateService: TranslateService
   ) {}
 
   ngAfterViewInit(): void {
-    if (!this.shouldShowComponent || !this.starToggleRef) {
+    if (!this.starToggleRef) {
       return
     }
 

@@ -80,13 +80,9 @@
   </ng-container>
 
   <ng-container *ngIf="!showAuthUI">
-    <div
-      class="flex flex-row items-center gap-3 w-full h-auto px-6 py-3 bg-gray-100 rounded mb-4"
-    >
-      <ng-icon class="grow-0 text-gray-500" name="matEditOutline"></ng-icon>
-      <span class="text-gray-600" translate
-        >record.metadata.userFeedbacks.authDisabled</span
-      >
+    <div class="flex flex-row items-center gap-3 w-full h-auto px-6">
+      <ng-icon class="grow-0" name="matEditOffOutline"></ng-icon>
+      <span translate>record.metadata.userFeedbacks.authDisabled</span>
     </div>
   </ng-container>
 
@@ -100,9 +96,8 @@
         [userFeedBacksAnswers]="
           userFeedBacksAnswers.get(userFeedbackParent.uuid)
         "
-        [activeUser]="showAuthUI ? activeUser : null"
+        [activeUser]="activeUser"
         [isAddUserFeedbackLoading]="isAddUserFeedbackLoading"
-        [showAuthUI]="showAuthUI"
         (newUserFeedbackAnswer)="onNewUserFeedbackAnswer($event)"
       ></gn-ui-user-feedback-item>
     </div>

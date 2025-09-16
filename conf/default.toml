@@ -43,9 +43,9 @@ proxy_path = ""
 # Enable declare a specific reuse configuration in datahub
 # reuse_form_url = "http://path.to.reuseform.fr"
 
-# When set to true, disables all authentication-related functions in the Datahub application.
-# This removes login buttons, user menus, and authentication guards, allowing the app to function in a read-only mode.
-# disable_auth = false
+# When set to true. this removes login buttons, user menus, authentication guards, favorite star functionality, 
+# user feedbacks, and other user-specific features, allowing the app to function in a read-only mode.
+# disable_auth = true
 
 ### VISUAL THEME
 

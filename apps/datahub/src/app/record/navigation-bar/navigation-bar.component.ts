@@ -79,6 +79,10 @@ export class NavigationBarComponent {
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
   isMobile$ = getIsMobile()
 
+  get isAuthDisabled(): boolean {
+    return getGlobalConfig().DISABLE_AUTH
+  }
+
   constructor(private searchService: SearchService) {}
 
   @HostListener('window:scroll', [])

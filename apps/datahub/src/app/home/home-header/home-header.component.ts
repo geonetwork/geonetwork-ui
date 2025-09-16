@@ -36,7 +36,6 @@ import { NavigationMenuComponent } from '../navigation-menu/navigation-menu.comp
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { matStarOutline } from '@ng-icons/material-icons/outline'
-import { AuthUtilsService } from '@geonetwork-ui/feature/auth'
 
 marker('datahub.header.myfavorites')
 marker('datahub.header.lastRecords')
@@ -88,8 +87,7 @@ export class HomeHeaderComponent {
     public searchFacade: SearchFacade,
     private searchService: SearchService,
     private platformService: PlatformServiceInterface,
-    private fieldsService: FieldsService,
-    private authUtilsService: AuthUtilsService
+    private fieldsService: FieldsService
   ) {}
 
   displaySortBadges$ = this.routerFacade.currentRoute$.pipe(
@@ -104,9 +102,8 @@ export class HomeHeaderComponent {
     .isAnonymous()
     .pipe(map((isAnonymous) => !isAnonymous))
 
-  showFavoritesButton$ = this.authUtilsService.isAuthDisabled()
-    ? of(false)
-    : this.isAuthenticated$
+  showFavoritesButton$ =
+    getGlobalConfig().DISABLE_AUTH === true ? of(false) : this.isAuthenticated$
 
   onFuzzySearchSelection(record: CatalogRecord) {
     this.routerFacade.goToMetadata(record)

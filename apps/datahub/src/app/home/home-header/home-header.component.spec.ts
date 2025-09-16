@@ -17,11 +17,11 @@ import { _setLanguages } from '@geonetwork-ui/util/app-config'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { MockBuilder } from 'ng-mocks'
-import { AuthUtilsService } from '@geonetwork-ui/feature/auth'
 import resetAllMocks = jest.resetAllMocks
 
 jest.mock('@geonetwork-ui/util/app-config', () => {
   let _languages = ['pt', 'de']
+  let _disableAuth = false
   return {
     getThemeConfig: () => ({
       HEADER_BACKGROUND: 'red',
@@ -42,11 +42,16 @@ jest.mock('@geonetwork-ui/util/app-config', () => {
     getGlobalConfig() {
       return {
         LANGUAGES: _languages,
+        DISABLE_AUTH: _disableAuth,
       }
     },
 
     _setLanguages(lang) {
       _languages = lang
+    },
+
+    _setDisableAuth(value) {
+      _disableAuth = value
     },
   }
 })
@@ -79,10 +84,6 @@ class PlatformServiceMock {
 
 class FieldsServiceMock {
   buildFiltersFromFieldValues = jest.fn(() => of({ thisIs: 'a fake filter' }))
-}
-
-class AuthUtilsServiceMock {
-  isAuthDisabled = jest.fn(() => false)
 }
 
 describe('HomeHeaderComponent', () => {
@@ -121,10 +122,6 @@ describe('HomeHeaderComponent', () => {
           provide: FieldsService,
           useClass: FieldsServiceMock,
         },
-        {
-          provide: AuthUtilsService,
-          useClass: AuthUtilsServiceMock,
-        },
       ],
     }).compileComponents()
     searchService = TestBed.inject(SearchService)
@@ -141,6 +138,8 @@ describe('HomeHeaderComponent', () => {
   })
   afterEach(() => {
     resetAllMocks()
+    const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
+    mockAppConfig._setDisableAuth(false)
   })
 
   it('should create', () => {
@@ -312,8 +311,8 @@ describe('HomeHeaderComponent', () => {
 
   describe('auth disable functionality', () => {
     it('should hide favorites button when auth is disabled', async () => {
-      const authUtilsService = TestBed.inject(AuthUtilsService)
-      authUtilsService.isAuthDisabled = jest.fn(() => true)
+      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
+      mockAppConfig._setDisableAuth(true)
 
       fixture = TestBed.createComponent(HomeHeaderComponent)
       component = fixture.componentInstance
@@ -325,8 +324,8 @@ describe('HomeHeaderComponent', () => {
     })
 
     it('should show favorites button when auth is enabled and user is authenticated', async () => {
-      const authUtilsService = TestBed.inject(AuthUtilsService)
-      authUtilsService.isAuthDisabled = jest.fn(() => false)
+      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
+      mockAppConfig._setDisableAuth(false)
 
       platformMock._isAnonymous$.next(false)
 

@@ -31,12 +31,13 @@ import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import {
   matAccountBoxOutline,
+  matEditOffOutline,
   matEditOutline,
   matSendOutline,
 } from '@ng-icons/material-icons/outline'
 import { CommonModule } from '@angular/common'
 import { UserFeedbackItemComponent } from '@geonetwork-ui/ui/elements'
-import { AuthUtilsService } from '@geonetwork-ui/feature/auth'
+import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 
 type UserFeedbackSortingFunction = (
   userFeedbackA: UserFeedback,
@@ -62,6 +63,7 @@ type UserFeedbackSortingFunction = (
   ],
   viewProviders: [
     provideIcons({
+      matEditOffOutline,
       matEditOutline,
       matSendOutline,
       matAccountBoxOutline,
@@ -88,10 +90,10 @@ export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
   loginUrl = this.authService.loginUrl
 
   get showAuthUI(): boolean {
-    return !this.authUtilsService.isAuthDisabled()
+    return !getGlobalConfig().DISABLE_AUTH
   }
 
-  isUserAuthenticated$ = this.authUtilsService.isAuthDisabled()
+  isUserAuthenticated$ = getGlobalConfig().DISABLE_AUTH
     ? of(false)
     : this.platformServiceInterface
         .isAnonymous()
@@ -125,10 +127,9 @@ export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
     private readonly metadataViewFacade: MdViewFacade,
     private readonly cdr: ChangeDetectorRef,
     private readonly mapper: Gn4PlatformMapper,
-    private readonly platformServiceInterface: PlatformServiceInterface,
-    private readonly authUtilsService: AuthUtilsService
+    private readonly platformServiceInterface: PlatformServiceInterface
   ) {
-    this.activeUser$ = this.authUtilsService.isAuthDisabled()
+    this.activeUser$ = getGlobalConfig().DISABLE_AUTH
       ? of(null)
       : this.platformServiceInterface.getMe()
   }

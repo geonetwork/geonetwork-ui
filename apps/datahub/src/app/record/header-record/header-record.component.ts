@@ -74,6 +74,10 @@ export class HeaderRecordComponent {
 
   showOverlay = true
 
+  get isAuthDisabled(): boolean {
+    return getGlobalConfig().DISABLE_AUTH
+  }
+
   isMobile$ = getIsMobile()
 
   thumbnailUrl$ = this.facade.metadata$.pipe(

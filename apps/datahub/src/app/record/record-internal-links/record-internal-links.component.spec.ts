@@ -1,27 +1,41 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { RecordInternalLinksComponent } from './record-internal-links.component'
 import { MockBuilder } from 'ng-mocks'
-import { AuthUtilsService } from '@geonetwork-ui/feature/auth'
+
+jest.mock('@geonetwork-ui/util/app-config', () => {
+  let _disableAuth = false
+  return {
+    getMetadataQualityConfig: () => ({ ENABLED: false }),
+    getOptionalSearchConfig: () => ({
+      LIMIT: 20,
+    }),
+    getGlobalConfig: () => ({
+      DISABLE_AUTH: _disableAuth,
+    }),
+    _setDisableAuth: (value) => {
+      _disableAuth = value
+    },
+  }
+})
 
 describe('RecordInternalLinksComponent', () => {
   let component: RecordInternalLinksComponent
   let fixture: ComponentFixture<RecordInternalLinksComponent>
-  let authUtilsService: AuthUtilsService
 
   beforeEach(() => MockBuilder(RecordInternalLinksComponent))
 
   beforeEach(async () => {
-    const authUtilsServiceSpy = {
-      isAuthDisabled: jest.fn().mockReturnValue(false),
-    }
-
     await TestBed.configureTestingModule({
-      providers: [{ provide: AuthUtilsService, useValue: authUtilsServiceSpy }],
+      providers: [],
     }).compileComponents()
 
     fixture = TestBed.createComponent(RecordInternalLinksComponent)
     component = fixture.componentInstance
-    authUtilsService = TestBed.inject(AuthUtilsService)
+  })
+
+  afterEach(() => {
+    const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
+    mockAppConfig._setDisableAuth(false)
   })
 
   it('should create', () => {
@@ -29,17 +43,23 @@ describe('RecordInternalLinksComponent', () => {
   })
 
   describe('auth disable functionality', () => {
-    it('should return false for isAuthDisabled when auth is enabled', () => {
-      jest.spyOn(authUtilsService, 'isAuthDisabled').mockReturnValue(false)
+    it('should enable the favorite toggle when auth is enabled', () => {
+      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
+      mockAppConfig._setDisableAuth(false)
 
-      expect(component.isAuthDisabled).toBe(false)
+      fixture = TestBed.createComponent(RecordInternalLinksComponent)
+      component = fixture.componentInstance
+
       expect(component.shouldShowFavorites).toBe(true)
     })
 
-    it('should return true for isAuthDisabled when auth is disabled', () => {
-      jest.spyOn(authUtilsService, 'isAuthDisabled').mockReturnValue(true)
+    it('should disable the favorite toggle when auth is disabled', () => {
+      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
+      mockAppConfig._setDisableAuth(true)
 
-      expect(component.isAuthDisabled).toBe(true)
+      fixture = TestBed.createComponent(RecordInternalLinksComponent)
+      component = fixture.componentInstance
+
       expect(component.shouldShowFavorites).toBe(false)
     })
   })

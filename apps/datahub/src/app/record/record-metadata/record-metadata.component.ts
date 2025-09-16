@@ -46,7 +46,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
-import { AuthUtilsService } from '@geonetwork-ui/feature/auth'
+import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -229,12 +229,15 @@ export class RecordMetadataComponent {
     private sourceService: SourcesService,
     private orgsService: OrganizationsServiceInterface,
     private readonly platformServiceInterface: PlatformServiceInterface,
-    public readonly authUtilsService: AuthUtilsService,
     @Inject(REUSE_FORM_URL)
     @Optional()
     public reuseFormUrl: string
   ) {
     this.activeUser$ = this.platformServiceInterface.getMe()
+  }
+
+  get isAuthDisabled(): boolean {
+    return getGlobalConfig().DISABLE_AUTH
   }
 
   onInfoKeywordClick(keyword: Keyword) {

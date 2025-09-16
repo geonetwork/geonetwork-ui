@@ -35,7 +35,7 @@
             </gn-ui-button>
             <div class="flex flex-row content-center gap-3">
               <gn-ui-favorite-star
-                *ngIf="metadata?.uniqueIdentifier"
+                *ngIf="metadata?.uniqueIdentifier && !isAuthDisabled"
                 [record]="metadata"
                 [displayLabel]="(isMobile$ | async) ? false : true"
                 [displayCount]="false"
