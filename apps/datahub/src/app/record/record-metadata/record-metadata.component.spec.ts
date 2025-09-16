@@ -516,14 +516,23 @@ describe('RecordMetadataComponent', () => {
   })
 
   describe('auth disable functionality', () => {
-    it('should set showQuestionButton$ to false when auth is disabled', () => {
+    beforeEach(() => {
+      facade.isPresent$.next(true)
+      facade.metadata$.next({ ...SAMPLE_RECORD, kind: 'dataset' })
+    })
+
+    it('should hide question button when auth is disabled', () => {
       const authUtilsService = TestBed.inject(AuthUtilsService)
       authUtilsService.isAuthDisabled = jest.fn(() => true)
+      platformService.getFeedbacksAllowed = jest.fn(() => of(true))
 
       fixture = TestBed.createComponent(RecordMetadataComponent)
       component = fixture.componentInstance
-
-      expect(component.showQuestionButton$).toBe(false)
+      fixture.detectChanges()
+      const questionButton = fixture.debugElement.query(
+        By.css('span[translate="service.metadata.question"]')
+      )
+      expect(questionButton).toBeFalsy()
     })
   })
 })

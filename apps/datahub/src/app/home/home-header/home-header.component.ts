@@ -106,7 +106,7 @@ export class HomeHeaderComponent {
 
   showFavoritesButton$ = this.authUtilsService.isAuthDisabled()
     ? of(false)
-    : of(true)
+    : this.isAuthenticated$
 
   onFuzzySearchSelection(record: CatalogRecord) {
     this.routerFacade.goToMetadata(record)
