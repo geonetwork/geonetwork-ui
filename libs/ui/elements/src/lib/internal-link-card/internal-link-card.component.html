@@ -72,6 +72,7 @@
             ></gn-ui-metadata-quality>
           </div>
           <div
+            *ngIf="shouldShowFavoriteContainer"
             class="flex justify-center"
             data-cy="recordFav"
             [ngClass]="displayContactIconOnly ? 'px-1' : 'px-4'"

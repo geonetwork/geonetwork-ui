@@ -16,6 +16,22 @@ import {
   RECORD_SERVICE_URL_TOKEN,
   RECORD_REUSE_URL_TOKEN,
 } from '../record-url.token'
+import { AuthUtilsService } from '@geonetwork-ui/feature/auth'
+
+class AuthUtilsServiceMock {
+  isAuthDisabled = jest.fn(() => false)
+}
+
+jest.mock('@geonetwork-ui/feature/auth', () => ({
+  AuthUtilsService: jest.fn().mockImplementation(() => ({
+    isAuthDisabled: jest.fn(() => false),
+  })),
+}))
+jest.mock('@geonetwork-ui/util/app-config', () => ({
+  getGlobalConfig: jest.fn(() => ({
+    DISABLE_AUTH: false,
+  })),
+}))
 
 @Component({
   selector: 'gn-ui-results-list',
@@ -25,6 +41,7 @@ class ResultsListMockComponent {
   @Input() records: CatalogRecord[]
   @Input() loading: boolean
   @Input() layout = 'CARD'
+  @Input() showFavorites = true
 }
 @Component({
   selector: 'gn-ui-viewport-intersector',
@@ -78,11 +95,15 @@ describe('ResultsListContainerComponent', () => {
           provide: RECORD_REUSE_URL_TOKEN,
           useValue: '/my/reuse/${uuid}/open',
         },
+        {
+          provide: AuthUtilsService,
+          useClass: AuthUtilsServiceMock,
+        },
       ],
     }).compileComponents()
     fixture = TestBed.createComponent(ResultsListContainerComponent)
     component = fixture.componentInstance
-    searchFacade = TestBed.inject(SearchFacade) as any
+    searchFacade = TestBed.inject(SearchFacade) as SearchFacadeMock
   })
 
   describe('default init', () => {
@@ -193,6 +214,44 @@ describe('ResultsListContainerComponent', () => {
           '/my/record/my-dataset-001/open'
         )
       })
+    })
+  })
+
+  describe('auth disable functionality', () => {
+    let authUtilsService: AuthUtilsServiceMock
+
+    beforeEach(() => {
+      component.layout = 'CARD'
+      authUtilsService = TestBed.inject(
+        AuthUtilsService
+      ) as AuthUtilsServiceMock
+    })
+
+    it('should show favorites when auth is enabled', () => {
+      authUtilsService.isAuthDisabled.mockReturnValue(false)
+
+      fixture.detectChanges()
+
+      expect(component.shouldShowFavorites).toBe(true)
+    })
+
+    it('should hide favorites when auth is disabled', () => {
+      authUtilsService.isAuthDisabled.mockReturnValue(true)
+
+      fixture.detectChanges()
+
+      expect(component.shouldShowFavorites).toBe(false)
+    })
+
+    it('should pass showFavorites property to results list component', () => {
+      authUtilsService.isAuthDisabled.mockReturnValue(true)
+
+      fixture.detectChanges()
+
+      const resultsList = fixture.debugElement.query(
+        By.directive(ResultsListMockComponent)
+      )
+      expect(resultsList.componentInstance.showFavorites).toBe(false)
     })
   })
 })

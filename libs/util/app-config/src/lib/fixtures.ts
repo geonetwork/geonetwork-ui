@@ -9,6 +9,7 @@ login_url = "/cas/login?service="
 logout_url = "/geonetwork/signout"
 settings_url = "/geonetwork/settings"
 web_component_embedder_url = "/datahub/wc-embedder.html"
+disable_auth = false
 
 [map]
 max_zoom = 10

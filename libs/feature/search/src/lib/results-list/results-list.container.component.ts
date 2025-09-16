@@ -23,6 +23,7 @@ import {
   RECORD_REUSE_URL_TOKEN,
 } from '../record-url.token'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
+import { AuthUtilsService } from '@geonetwork-ui/feature/auth'
 
 export type ResultsListShowMoreStrategy = 'auto' | 'button' | 'none'
 
@@ -48,8 +49,17 @@ export class ResultsListContainerComponent implements OnInit {
   errorTypes = ErrorType
   recordUrlGetter = this.getRecordUrl.bind(this)
 
+  get isAuthDisabled(): boolean {
+    return this.authUtilsService.isAuthDisabled()
+  }
+
+  get shouldShowFavorites(): boolean {
+    return !this.isAuthDisabled
+  }
+
   constructor(
     public facade: SearchFacade,
+    private authUtilsService: AuthUtilsService,
     @Inject(RESULTS_LAYOUT_CONFIG)
     private resultsLayoutConfig: ResultsLayoutConfigModel,
     @Optional()

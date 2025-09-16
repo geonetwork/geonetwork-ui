@@ -21,6 +21,7 @@ import {
 import { Gn4PlatformMapper } from '@geonetwork-ui/api/repository'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { AuthUtilsService } from '@geonetwork-ui/feature/auth'
 
 describe('RecordUserFeedbacksComponent', () => {
   const allUserFeedbacks = someUserFeedbacksFixture()
@@ -48,6 +49,11 @@ describe('RecordUserFeedbacksComponent', () => {
   const platformServiceInterfaceMock: Partial<PlatformServiceInterface> = {
     getUserFeedbacks: jest.fn(),
     getMe: jest.fn(() => new BehaviorSubject(activeUser)),
+    isAnonymous: jest.fn(() => new BehaviorSubject(false)),
+  }
+
+  const authUtilsServiceMock: Partial<AuthUtilsService> = {
+    isAuthDisabled: jest.fn(() => false),
   }
 
   let component: RecordUserFeedbacksComponent
@@ -64,6 +70,7 @@ describe('RecordUserFeedbacksComponent', () => {
         MockProvider(MdViewFacade, mdViewFacadeMock),
         MockProvider(PlatformServiceInterface, platformServiceInterfaceMock),
         MockProvider(Gn4PlatformMapper, gn4PlatformMapperMock),
+        MockProvider(AuthUtilsService, authUtilsServiceMock),
       ],
     })
       .overrideComponent(RecordUserFeedbacksComponent, {
@@ -136,6 +143,19 @@ describe('RecordUserFeedbacksComponent', () => {
       expect(mdViewFacadeMock.addUserFeedback).toHaveBeenCalledWith(
         expectedNewUserFeedback
       )
+    })
+  })
+
+  describe('auth disable functionality', () => {
+    it('should set showAuthUI to false when auth is disabled', () => {
+      const authUtilsService = TestBed.inject(AuthUtilsService)
+      authUtilsService.isAuthDisabled = jest.fn(() => true)
+
+      fixture = TestBed.createComponent(RecordUserFeedbacksComponent)
+      component = fixture.componentInstance
+      component.metadataUuid = datasetRecordsFixture()[0].uniqueIdentifier
+
+      expect(component.showAuthUI).toBe(false)
     })
   })
 })

@@ -46,6 +46,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
+import { AuthUtilsService } from '@geonetwork-ui/feature/auth'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -220,12 +221,15 @@ export class RecordMetadataComponent {
 
   errorTypes = ErrorType
 
+  showQuestionButton$ = !this.authUtilsService.isAuthDisabled()
+
   constructor(
     public metadataViewFacade: MdViewFacade,
     private searchService: SearchService,
     private sourceService: SourcesService,
     private orgsService: OrganizationsServiceInterface,
     private readonly platformServiceInterface: PlatformServiceInterface,
+    private readonly authUtilsService: AuthUtilsService,
     @Inject(REUSE_FORM_URL)
     @Optional()
     public reuseFormUrl: string

@@ -136,6 +136,7 @@ describe('app config utils', () => {
           LOGOUT_URL: '/geonetwork/signout',
           SETTINGS_URL: '/geonetwork/settings',
           WEB_COMPONENT_EMBEDDER_URL: '/datahub/wc-embedder.html',
+          DISABLE_AUTH: false,
         })
       })
     })

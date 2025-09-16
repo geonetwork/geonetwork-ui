@@ -25,5 +25,6 @@ export class ResultsListComponent {
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
   @Input() recordUrlGetter: (record: CatalogRecord) => string
   @Input() metadataQualityDisplay: boolean
+  @Input() showFavorites = true
   @Output() mdSelect = new EventEmitter<CatalogRecord>()
 }

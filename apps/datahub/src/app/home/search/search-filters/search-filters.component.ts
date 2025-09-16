@@ -32,6 +32,7 @@ import {
   matRemoveOutline,
 } from '@ng-icons/material-icons/outline'
 import { getIsMobile } from '@geonetwork-ui/util/shared'
+import { AuthUtilsService } from '@geonetwork-ui/feature/auth'
 
 @Component({
   selector: 'datahub-search-filters',
@@ -85,11 +86,16 @@ export class SearchFiltersComponent implements OnInit {
     public searchFacade: SearchFacade,
     private searchService: SearchService,
     private fieldsService: FieldsService,
-    private platformService: PlatformServiceInterface
+    private platformService: PlatformServiceInterface,
+    private authUtilsService: AuthUtilsService
   ) {}
 
+  showAuthRelatedFeatures = !this.authUtilsService.isAuthDisabled()
+
   ngOnInit(): void {
-    this.platformService.getMe().subscribe((user) => (this.userId = user?.id))
+    if (!this.authUtilsService.isAuthDisabled()) {
+      this.platformService.getMe().subscribe((user) => (this.userId = user?.id))
+    }
     this.searchConfig = (
       getOptionalSearchConfig().ADVANCED_FILTERS || [
         'organization',

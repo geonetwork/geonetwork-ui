@@ -17,6 +17,7 @@ import { _setLanguages } from '@geonetwork-ui/util/app-config'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { MockBuilder } from 'ng-mocks'
+import { AuthUtilsService } from '@geonetwork-ui/feature/auth'
 import resetAllMocks = jest.resetAllMocks
 
 jest.mock('@geonetwork-ui/util/app-config', () => {
@@ -80,6 +81,10 @@ class FieldsServiceMock {
   buildFiltersFromFieldValues = jest.fn(() => of({ thisIs: 'a fake filter' }))
 }
 
+class AuthUtilsServiceMock {
+  isAuthDisabled = jest.fn(() => false)
+}
+
 describe('HomeHeaderComponent', () => {
   let component: HomeHeaderComponent
   let fixture: ComponentFixture<HomeHeaderComponent>
@@ -87,6 +92,7 @@ describe('HomeHeaderComponent', () => {
   let searchFacade: SearchFacade
   let routerFacade: RouterFacade
   let platform: PlatformServiceInterface
+  let platformMock: PlatformServiceMock
 
   beforeEach(() => MockBuilder(HomeHeaderComponent))
 
@@ -115,12 +121,17 @@ describe('HomeHeaderComponent', () => {
           provide: FieldsService,
           useClass: FieldsServiceMock,
         },
+        {
+          provide: AuthUtilsService,
+          useClass: AuthUtilsServiceMock,
+        },
       ],
     }).compileComponents()
     searchService = TestBed.inject(SearchService)
     searchFacade = TestBed.inject(SearchFacade)
     routerFacade = TestBed.inject(RouterFacade)
     platform = TestBed.inject(PlatformServiceInterface)
+    platformMock = platform as any
   })
 
   beforeEach(() => {
@@ -296,6 +307,36 @@ describe('HomeHeaderComponent', () => {
           })
         })
       })
+    })
+  })
+
+  describe('auth disable functionality', () => {
+    it('should hide favorites button when auth is disabled', async () => {
+      const authUtilsService = TestBed.inject(AuthUtilsService)
+      authUtilsService.isAuthDisabled = jest.fn(() => true)
+
+      fixture = TestBed.createComponent(HomeHeaderComponent)
+      component = fixture.componentInstance
+
+      const showFavoritesButton = await firstValueFrom(
+        component.showFavoritesButton$
+      )
+      expect(showFavoritesButton).toBe(false)
+    })
+
+    it('should show favorites button when auth is enabled and user is authenticated', async () => {
+      const authUtilsService = TestBed.inject(AuthUtilsService)
+      authUtilsService.isAuthDisabled = jest.fn(() => false)
+
+      platformMock._isAnonymous$.next(false)
+
+      fixture = TestBed.createComponent(HomeHeaderComponent)
+      component = fixture.componentInstance
+
+      const showFavoritesButton = await firstValueFrom(
+        component.showFavoritesButton$
+      )
+      expect(showFavoritesButton).toBe(true)
     })
   })
 })

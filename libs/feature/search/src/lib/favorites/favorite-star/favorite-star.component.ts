@@ -23,6 +23,7 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { AuthService, FavoritesService } from '@geonetwork-ui/api/repository'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { CommonModule } from '@angular/common'
+import { AuthUtilsService } from '@geonetwork-ui/feature/auth'
 
 @Component({
   selector: 'gn-ui-favorite-star',
@@ -66,6 +67,14 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   subscription: Subscription
   countSubscription: Subscription
 
+  get isAuthDisabled(): boolean {
+    return this.authUtilsService.isAuthDisabled()
+  }
+
+  get shouldShowComponent(): boolean {
+    return !this.isAuthDisabled
+  }
+
   get hasFavoriteCount() {
     return this.favoriteCount !== null
   }
@@ -75,14 +84,19 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
     private platformService: PlatformServiceInterface,
     private changeDetector: ChangeDetectorRef,
     private authService: AuthService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private authUtilsService: AuthUtilsService
   ) {}
 
   ngAfterViewInit(): void {
+    if (!this.shouldShowComponent || !this.starToggleRef) {
+      return
+    }
+
     this.subscription = this.isAnonymous$
       .pipe(withLatestFrom(this.loginMessage$))
       .subscribe(([anonymous, loginMessage]) => {
-        if (anonymous) {
+        if (anonymous && this.starToggleRef?.nativeElement) {
           tippy(this.starToggleRef.nativeElement, {
             appendTo: () => document.body,
             content: loginMessage,
@@ -115,8 +129,8 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe()
-    this.countSubscription.unsubscribe()
+    this.subscription?.unsubscribe()
+    this.countSubscription?.unsubscribe()
   }
 
   toggleFavorite(isFavorite) {

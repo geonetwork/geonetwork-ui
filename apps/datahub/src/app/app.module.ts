@@ -173,7 +173,10 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     },
     {
       provide: LOGIN_URL,
-      useFactory: () => getGlobalConfig().LOGIN_URL,
+      useFactory: () => {
+        const config = getGlobalConfig()
+        return config.DISABLE_AUTH ? null : config.LOGIN_URL
+      },
     },
     {
       provide: WEB_COMPONENT_EMBEDDER_URL,

@@ -60,6 +60,7 @@ export class InternalLinkCardComponent implements OnInit {
   @Input() linkHref: string = null
   @Input() metadataQualityDisplay: boolean
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
+  @Input() showFavorites = true
   @Input() set size(value: CardSize) {
     this._size = value
     this.cardClass = `size-${value}`
@@ -87,6 +88,10 @@ export class InternalLinkCardComponent implements OnInit {
   }
   get shouldShowThumbnail(): boolean {
     return this.size === 'L' || this.size === 'M'
+  }
+
+  get shouldShowFavoriteContainer(): boolean {
+    return this.favoriteTemplate && this.showFavorites
   }
 
   get displayContactIconOnly() {

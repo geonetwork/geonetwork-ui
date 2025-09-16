@@ -12,6 +12,7 @@ export interface GlobalConfig {
   LANGUAGES?: string[]
   CONTACT_EMAIL?: string
   REUSE_FORM_URL?: string
+  DISABLE_AUTH?: boolean
 }
 
 export interface LayerConfig {

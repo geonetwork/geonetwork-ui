@@ -31,6 +31,7 @@ export class RecordPreviewComponent implements OnInit, OnDestroy {
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
   @Input() linkHref: string = null
   @Input() metadataQualityDisplay: boolean
+  @Input() showFavorites = true
   @Output() mdSelect = new EventEmitter<CatalogRecord>()
   subscription = new Subscription()
   abstract: string

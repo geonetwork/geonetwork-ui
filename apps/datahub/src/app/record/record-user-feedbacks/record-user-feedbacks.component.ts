@@ -6,7 +6,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core'
-import { catchError, filter, switchMap, takeUntil } from 'rxjs/operators'
+import { catchError, filter, switchMap, takeUntil, map } from 'rxjs/operators'
 import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs'
 import {
   UserFeedback,
@@ -36,6 +36,7 @@ import {
 } from '@ng-icons/material-icons/outline'
 import { CommonModule } from '@angular/common'
 import { UserFeedbackItemComponent } from '@geonetwork-ui/ui/elements'
+import { AuthUtilsService } from '@geonetwork-ui/feature/auth'
 
 type UserFeedbackSortingFunction = (
   userFeedbackA: UserFeedback,
@@ -86,6 +87,13 @@ export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
 
   loginUrl = this.authService.loginUrl
 
+  showAuthUI = !this.authUtilsService.isAuthDisabled()
+  isUserAuthenticated$ = this.authUtilsService.isAuthDisabled()
+    ? of(false)
+    : this.platformServiceInterface
+        .isAnonymous()
+        .pipe(map((anonymous) => !anonymous))
+
   sortingStrategyList: Array<DropdownChoice> = [
     {
       value: this.sortByDateFromNewestToOldest,
@@ -114,9 +122,12 @@ export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
     private readonly metadataViewFacade: MdViewFacade,
     private readonly cdr: ChangeDetectorRef,
     private readonly mapper: Gn4PlatformMapper,
-    private readonly platformServiceInterface: PlatformServiceInterface
+    private readonly platformServiceInterface: PlatformServiceInterface,
+    private readonly authUtilsService: AuthUtilsService
   ) {
-    this.activeUser$ = this.platformServiceInterface.getMe()
+    this.activeUser$ = this.authUtilsService.isAuthDisabled()
+      ? of(null)
+      : this.platformServiceInterface.getMe()
   }
 
   ngOnInit(): void {

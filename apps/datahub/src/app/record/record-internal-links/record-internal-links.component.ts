@@ -24,6 +24,7 @@ import {
   getMetadataQualityConfig,
   MetadataQualityConfig,
 } from '@geonetwork-ui/util/app-config'
+import { AuthUtilsService } from '@geonetwork-ui/feature/auth'
 
 @Component({
   selector: 'datahub-record-internal-links',
@@ -53,7 +54,16 @@ export class RecordInternalLinksComponent {
   metadataQualityDisplay: boolean
   recordUrlGetter = this.getRecordUrl.bind(this)
 
+  get isAuthDisabled(): boolean {
+    return this.authUtilsService.isAuthDisabled()
+  }
+
+  get shouldShowFavorites(): boolean {
+    return !this.isAuthDisabled
+  }
+
   constructor(
+    private authUtilsService: AuthUtilsService,
     @Optional()
     @Inject(RECORD_DATASET_URL_TOKEN)
     private recordDatasetUrlTemplate: string,

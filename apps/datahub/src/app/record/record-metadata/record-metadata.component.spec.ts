@@ -23,6 +23,7 @@ import { RecordInternalLinksComponent } from '../record-internal-links/record-in
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { REUSE_FORM_URL } from '../record-data-preview/record-data-preview.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { AuthUtilsService } from '@geonetwork-ui/feature/auth'
 
 const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
@@ -62,6 +63,10 @@ class PlatformServiceMock {
   getMe = jest.fn(() => of(null))
 }
 
+class AuthUtilsServiceMock {
+  isAuthDisabled = jest.fn(() => false)
+}
+
 describe('RecordMetadataComponent', () => {
   let component: RecordMetadataComponent
   let fixture: ComponentFixture<RecordMetadataComponent>
@@ -99,6 +104,10 @@ describe('RecordMetadataComponent', () => {
         {
           provide: REUSE_FORM_URL,
           useValue: 'https://example.com/reuse',
+        },
+        {
+          provide: AuthUtilsService,
+          useClass: AuthUtilsServiceMock,
         },
       ],
     }).compileComponents()
@@ -502,6 +511,18 @@ describe('RecordMetadataComponent', () => {
           expect(visible).toBe(true)
         })
       })
+    })
+  })
+
+  describe('auth disable functionality', () => {
+    it('should set showQuestionButton$ to false when auth is disabled', () => {
+      const authUtilsService = TestBed.inject(AuthUtilsService)
+      authUtilsService.isAuthDisabled = jest.fn(() => true)
+
+      fixture = TestBed.createComponent(RecordMetadataComponent)
+      component = fixture.componentInstance
+
+      expect(component.showQuestionButton$).toBe(false)
     })
   })
 })

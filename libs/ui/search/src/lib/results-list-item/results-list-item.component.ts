@@ -27,6 +27,7 @@ export class ResultsListItemComponent implements OnChanges, AfterViewInit {
   @Input() favoriteTemplate: TemplateRef<{ $implicit: CatalogRecord }>
   @Input() metadataQualityDisplay: boolean
   @Input() linkHref: string
+  @Input() showFavorites = true
   @Output() mdSelect = new EventEmitter<CatalogRecord>()
   initialized = false
 
@@ -55,6 +56,7 @@ export class ResultsListItemComponent implements OnChanges, AfterViewInit {
       this.metadataQualityDisplay
     componentFactory.instance.record = this.record
     componentFactory.instance.favoriteTemplate = this.favoriteTemplate
+    componentFactory.instance.showFavorites = this.showFavorites
     componentFactory.instance.mdSelect.subscribe((record) =>
       this.mdSelect.emit(record)
     )
