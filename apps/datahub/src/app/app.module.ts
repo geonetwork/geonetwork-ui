@@ -52,7 +52,6 @@ import { AppComponent } from './app.component'
 import { SearchPageComponent } from './home/search/search-page/search-page.component'
 import { RecordPageComponent } from './record/record-page/record-page.component'
 import { DatahubRouterService } from './router/datahub-router.service'
-import { FormsModule } from '@angular/forms'
 import { LANGUAGES_LIST } from '@geonetwork-ui/ui/catalog'
 import {
   LOGIN_URL,
@@ -60,9 +59,7 @@ import {
   provideGn4,
   provideRepositoryUrl,
 } from '@geonetwork-ui/api/repository'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MatTabsModule } from '@angular/material/tabs'
-import { LetDirective } from '@ngrx/component'
+import { provideAnimations } from '@angular/platform-browser/animations'
 import { OrganizationPageComponent } from './organization/organization-page/organization-page.component'
 
 import {
@@ -74,8 +71,8 @@ import {
   MAX_FEATURE_COUNT,
   REUSE_FORM_URL,
 } from './record/record-data-preview/record-data-preview.component'
-import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -84,7 +81,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     RouterModule.forRoot([], {
       initialNavigation: 'enabledBlocking',
       scrollPositionRestoration: 'enabled',
@@ -102,8 +98,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     !environment.production
       ? StoreDevtoolsModule.instrument({ connectInZone: true })
       : [],
-    EffectsModule.forRoot(),
-    FeatureSearchModule,
     DefaultRouterModule.forRoot({
       searchStateId: 'mainSearch',
       searchRouteComponent: SearchPageComponent,
@@ -112,19 +106,19 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
       reuseRouteComponent: RecordPageComponent,
       organizationRouteComponent: OrganizationPageComponent,
     }),
-    FeatureRecordModule,
-    FeatureCatalogModule,
-    FormsModule,
-    MatTabsModule,
-    LetDirective,
-    MatButtonToggleModule,
   ],
   providers: [
-    provideI18n(TRANSLATE_WITH_OVERRIDES_CONFIG),
-    importProvidersFrom(FeatureAuthModule),
-    provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
-    provideGn4(),
     { provide: RouterService, useClass: DatahubRouterService },
+    importProvidersFrom(FeatureAuthModule),
+    importProvidersFrom(FeatureSearchModule),
+    importProvidersFrom(FeatureCatalogModule),
+    importProvidersFrom(FeatureRecordModule),
+    importProvidersFrom(FeatureEditorModule),
+    provideI18n(TRANSLATE_WITH_OVERRIDES_CONFIG),
+    provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
+    importProvidersFrom(EffectsModule.forRoot()),
+    provideGn4(),
+    provideAnimations(),
     {
       provide: PROXY_PATH,
       useFactory: () => getGlobalConfig().PROXY_PATH,
