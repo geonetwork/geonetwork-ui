@@ -154,9 +154,7 @@
   <section
     id="user-feedbacks"
     #userFeedbacks
-    *ngIf="
-      (metadataViewFacade.isPresent$ | async) === true && showQuestionButton$
-    "
+    *ngIf="(metadataViewFacade.isPresent$ | async) === true"
     class="pb-10"
   >
     <div *ngIf="(metadataViewFacade.isPresent$ | async) === true">

@@ -87,7 +87,10 @@ export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
 
   loginUrl = this.authService.loginUrl
 
-  showAuthUI = !this.authUtilsService.isAuthDisabled()
+  get showAuthUI(): boolean {
+    return !this.authUtilsService.isAuthDisabled()
+  }
+
   isUserAuthenticated$ = this.authUtilsService.isAuthDisabled()
     ? of(false)
     : this.platformServiceInterface
