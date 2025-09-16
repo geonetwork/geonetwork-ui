@@ -8,6 +8,7 @@ import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import {
   DefaultRouterModule,
   RouterService,
+  SearchRouterContainerDirective,
 } from '@geonetwork-ui/feature/router'
 import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { ThemeService } from '@geonetwork-ui/util/shared'
@@ -52,6 +53,7 @@ import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
       organizationRouteComponent: null,
     }),
     ...extModules,
+    SearchRouterContainerDirective,
   ],
   providers: [
     { provide: RouterService, useClass: EditorRouterService },

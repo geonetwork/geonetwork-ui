@@ -21,6 +21,7 @@ import {
   ROUTER_ROUTE_SEARCH,
   ROUTER_ROUTE_SERVICE,
   RouterService,
+  SearchRouterContainerDirective,
 } from '@geonetwork-ui/feature/router'
 import {
   FeatureSearchModule,
@@ -106,6 +107,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
       reuseRouteComponent: RecordPageComponent,
       organizationRouteComponent: OrganizationPageComponent,
     }),
+    SearchRouterContainerDirective,
   ],
   providers: [
     { provide: RouterService, useClass: DatahubRouterService },

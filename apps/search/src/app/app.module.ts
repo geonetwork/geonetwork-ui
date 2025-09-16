@@ -15,6 +15,7 @@ import {
   ResultsHitsContainerComponent,
   ResultsLayoutComponent,
   ResultsListContainerComponent,
+  SearchStateContainerDirective,
   SortByComponent,
 } from '@geonetwork-ui/feature/search'
 import { EffectsModule } from '@ngrx/effects'
@@ -55,6 +56,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     FacetsContainerComponent,
     ResultsListContainerComponent,
     ResultsHitsContainerComponent,
+    SearchStateContainerDirective,
   ],
   providers: [provideRepositoryUrl(environment.API_BASE_PATH), provideI18n()],
   bootstrap: [AppComponent],
