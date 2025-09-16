@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import {
   DEFAULT_RESULTS_LAYOUT_CONFIG,
-  RESULTS_LAYOUT_CONFIG,
   ResultsListComponent,
 } from '@geonetwork-ui/ui/search'
 import { BehaviorSubject, of } from 'rxjs'
@@ -16,8 +15,8 @@ import {
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
 import {
   RECORD_DATASET_URL_TOKEN,
-  RECORD_SERVICE_URL_TOKEN,
   RECORD_REUSE_URL_TOKEN,
+  RECORD_SERVICE_URL_TOKEN,
 } from '../record-url.token'
 import { ErrorComponent } from '@geonetwork-ui/ui/elements'
 import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
@@ -71,10 +70,6 @@ describe('ResultsListContainerComponent', () => {
         {
           provide: SearchFacade,
           useClass: SearchFacadeMock,
-        },
-        {
-          provide: RESULTS_LAYOUT_CONFIG,
-          useValue: DEFAULT_RESULTS_LAYOUT_CONFIG,
         },
         {
           provide: RECORD_DATASET_URL_TOKEN,

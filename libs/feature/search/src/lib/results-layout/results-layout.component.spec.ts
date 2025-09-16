@@ -1,17 +1,6 @@
-import {
-  Component,
-  DebugElement,
-  EventEmitter,
-  Input,
-  NO_ERRORS_SCHEMA,
-  Output,
-} from '@angular/core'
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import {
-  DEFAULT_RESULTS_LAYOUT_CONFIG,
-  RESULTS_LAYOUT_CONFIG,
-} from '@geonetwork-ui/ui/search'
 import { SearchFacade } from '../state/search.facade'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { of } from 'rxjs'
@@ -39,10 +28,6 @@ describe('ResultsLayoutComponent', () => {
         {
           provide: SearchFacade,
           useValue: searchFacadeMock,
-        },
-        {
-          provide: RESULTS_LAYOUT_CONFIG,
-          useValue: DEFAULT_RESULTS_LAYOUT_CONFIG,
         },
       ],
     }).compileComponents()

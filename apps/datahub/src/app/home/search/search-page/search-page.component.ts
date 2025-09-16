@@ -15,8 +15,8 @@ import {
 } from '@geonetwork-ui/util/app-config'
 import { SearchFiltersComponent } from '../search-filters/search-filters.component'
 import {
-  RESULTS_LAYOUT_CONFIG,
   DEFAULT_RESULTS_LAYOUT_CONFIG,
+  RESULTS_LAYOUT_CONFIG,
 } from '@geonetwork-ui/ui/search'
 
 @Component({
