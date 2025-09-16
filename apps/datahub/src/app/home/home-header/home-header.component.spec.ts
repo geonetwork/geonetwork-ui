@@ -74,6 +74,7 @@ class PlatformServiceMock {
   isAnonymous = jest.fn(() => this._isAnonymous$)
   _isAnonymous$ = new BehaviorSubject(true)
   translateKey = jest.fn()
+  supportsAuthentication = jest.fn(() => true)
 }
 
 class FieldsServiceMock {
@@ -87,6 +88,7 @@ describe('HomeHeaderComponent', () => {
   let searchFacade: SearchFacade
   let routerFacade: RouterFacade
   let platform: PlatformServiceInterface
+  let platformMock: PlatformServiceMock
 
   beforeEach(() => MockBuilder(HomeHeaderComponent))
 
@@ -121,6 +123,7 @@ describe('HomeHeaderComponent', () => {
     searchFacade = TestBed.inject(SearchFacade)
     routerFacade = TestBed.inject(RouterFacade)
     platform = TestBed.inject(PlatformServiceInterface)
+    platformMock = platform as any
   })
 
   beforeEach(() => {
@@ -296,6 +299,33 @@ describe('HomeHeaderComponent', () => {
           })
         })
       })
+    })
+  })
+
+  describe('auth disable functionality', () => {
+    it('should hide favorites button when auth is disabled', async () => {
+      platformMock.supportsAuthentication.mockReturnValue(false)
+
+      fixture = TestBed.createComponent(HomeHeaderComponent)
+      component = fixture.componentInstance
+
+      const showFavoritesButton = await firstValueFrom(
+        component.showFavoritesButton$
+      )
+      expect(showFavoritesButton).toBe(false)
+    })
+
+    it('should show favorites button when auth is enabled and user is authenticated', async () => {
+      platformMock.supportsAuthentication.mockReturnValue(true)
+      platformMock._isAnonymous$.next(false)
+
+      fixture = TestBed.createComponent(HomeHeaderComponent)
+      component = fixture.componentInstance
+
+      const showFavoritesButton = await firstValueFrom(
+        component.showFavoritesButton$
+      )
+      expect(showFavoritesButton).toBe(true)
     })
   })
 })

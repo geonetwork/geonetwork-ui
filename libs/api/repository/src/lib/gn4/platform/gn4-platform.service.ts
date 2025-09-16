@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Inject, Injectable, InjectionToken, Optional } from '@angular/core'
 import {
   catchError,
   filter,
@@ -49,6 +49,10 @@ import { Gn4SettingsService } from '../settings/gn4-settings.service'
 
 const minApiVersion = '4.2.2'
 
+export const DISABLE_AUTH = new InjectionToken<boolean>('gnDisableAuth', {
+  factory: () => false,
+})
+
 @Injectable()
 export class Gn4PlatformService implements PlatformServiceInterface {
   private readonly type = 'GeoNetwork'
@@ -86,12 +90,15 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     private userfeedbackApiService: UserfeedbackApiService,
     private httpClient: HttpClient,
     private recordsApiService: RecordsApiService,
-    private settingsService: Gn4SettingsService
+    private settingsService: Gn4SettingsService,
+    @Inject(DISABLE_AUTH) @Optional() private disableAuth: boolean
   ) {
-    this.me$ = this.meApi.getMe().pipe(
-      switchMap((apiUser) => this.mapper.userFromMeApi(apiUser)),
-      shareReplay({ bufferSize: 1, refCount: true })
-    )
+    this.me$ = this.disableAuth
+      ? of(null)
+      : this.meApi.getMe().pipe(
+          switchMap((apiUser) => this.mapper.userFromMeApi(apiUser)),
+          shareReplay({ bufferSize: 1, refCount: true })
+        )
 
     this.isUserAnonymous$ = this.me$.pipe(
       map((user) => !user || !('id' in user))
@@ -430,5 +437,9 @@ export class Gn4PlatformService implements PlatformServiceInterface {
         }
       })
     )
+  }
+
+  supportsAuthentication() {
+    return !this.disableAuth
   }
 }

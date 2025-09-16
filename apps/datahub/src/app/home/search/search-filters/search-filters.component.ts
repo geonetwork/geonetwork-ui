@@ -91,8 +91,25 @@ export class SearchFiltersComponent implements OnInit {
     private platformService: PlatformServiceInterface
   ) {}
 
+  showAuthRelatedFeatures = this.platformService.supportsAuthentication()
+
+  get shouldShowMyRecordsToggle(): boolean {
+    return this.showAuthRelatedFeatures && !!this.userId && this.isOpen
+  }
+
+  get shouldShowOtherRecordsButton(): Observable<boolean> {
+    return this.myRecordsFilterEnabled$.pipe(
+      map(
+        (enabled) =>
+          this.showAuthRelatedFeatures && !this.userId && enabled && this.isOpen
+      )
+    )
+  }
+
   ngOnInit(): void {
-    this.platformService.getMe().subscribe((user) => (this.userId = user?.id))
+    if (this.platformService.supportsAuthentication()) {
+      this.platformService.getMe().subscribe((user) => (this.userId = user?.id))
+    }
     this.searchConfig = (
       getOptionalSearchConfig().ADVANCED_FILTERS || [
         'organization',

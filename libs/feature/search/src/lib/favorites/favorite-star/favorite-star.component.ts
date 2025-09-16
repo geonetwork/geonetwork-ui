@@ -48,6 +48,7 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   isFavorite$ = this.favoritesService.myFavoritesUuid$.pipe(
     map((favorites) => favorites.indexOf(this.record.uniqueIdentifier) > -1)
   )
+  supportsAuthentication = this.platformService.supportsAuthentication()
   isAnonymous$ = this.platformService.isAnonymous()
   record_: Partial<CatalogRecord>
   favoriteCount: number | null
@@ -79,20 +80,22 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   ) {}
 
   ngAfterViewInit(): void {
-    this.subscription = this.isAnonymous$
-      .pipe(withLatestFrom(this.loginMessage$))
-      .subscribe(([anonymous, loginMessage]) => {
-        if (anonymous) {
-          tippy(this.starToggleRef.nativeElement, {
-            appendTo: () => document.body,
-            content: loginMessage,
-            allowHTML: true,
-            interactive: true,
-            zIndex: 60,
-            maxWidth: 250,
-          })
-        }
-      })
+    if (this.supportsAuthentication) {
+      this.subscription = this.isAnonymous$
+        .pipe(withLatestFrom(this.loginMessage$))
+        .subscribe(([anonymous, loginMessage]) => {
+          if (anonymous) {
+            tippy(this.starToggleRef.nativeElement, {
+              appendTo: () => document.body,
+              content: loginMessage,
+              allowHTML: true,
+              interactive: true,
+              zIndex: 60,
+              maxWidth: 250,
+            })
+          }
+        })
+    }
     this.countSubscription = this.favoritesService.myFavoritesUuid$
       .pipe(pairwise())
       .subscribe(([oldFavs, newFavs]) => {
@@ -115,8 +118,12 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe()
-    this.countSubscription.unsubscribe()
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
+    if (this.countSubscription) {
+      this.countSubscription.unsubscribe()
+    }
   }
 
   toggleFavorite(isFavorite) {

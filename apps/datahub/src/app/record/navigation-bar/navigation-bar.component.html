@@ -99,7 +99,7 @@
       [class]="displayMobileMenu ? 'border-l-2 border-slate-200' : ''"
     >
       <gn-ui-favorite-star
-        *ngIf="metadata?.uniqueIdentifier"
+        *ngIf="metadata?.uniqueIdentifier && !isAuthDisabled"
         [record]="metadata"
         [buttonType]="'outline'"
         [displayCount]="false"

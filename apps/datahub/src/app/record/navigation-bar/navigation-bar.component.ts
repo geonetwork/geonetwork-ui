@@ -16,6 +16,7 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { AnchorLinkDirective } from '@geonetwork-ui/ui/layout'
 import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 import { getIsMobile } from '@geonetwork-ui/util/shared'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { iconoirMenu } from '@ng-icons/iconoir'
 import { matArrowBack } from '@ng-icons/material-icons/baseline'
@@ -87,9 +88,14 @@ export class NavigationBarComponent {
   showLanguageSwitcher = getGlobalConfig().LANGUAGES?.length > 0
   isMobile$ = getIsMobile()
 
+  get isAuthDisabled(): boolean {
+    return !this.platformServiceInterface.supportsAuthentication()
+  }
+
   constructor(
     private router: Router,
-    private location: Location
+    private location: Location,
+    private platformServiceInterface: PlatformServiceInterface
   ) {}
 
   @HostListener('window:scroll', [])

@@ -522,6 +522,7 @@
   "record.metadata.usage": "Nutzung und Einschränkungen",
   "record.metadata.userFeedbacks": "",
   "record.metadata.userFeedbacks.anonymousUser": "",
+  "record.metadata.userFeedbacks.authDisabled": "",
   "record.metadata.userFeedbacks.newAnswer.buttonTitle": "",
   "record.metadata.userFeedbacks.newAnswer.placeholder": "",
   "record.metadata.userFeedbacks.newComment.placeholder": "",
