@@ -219,9 +219,9 @@ export class RecordMetadataComponent {
     mergeMap((uuid) => this.sourceService.getSourceLabel(uuid))
   )
 
-  errorTypes = ErrorType
+  feedbacksAllowed$ = this.platformServiceInterface.getFeedbacksAllowed()
 
-  showQuestionButton$ = !this.authUtilsService.isAuthDisabled()
+  errorTypes = ErrorType
 
   constructor(
     public metadataViewFacade: MdViewFacade,
@@ -229,7 +229,7 @@ export class RecordMetadataComponent {
     private sourceService: SourcesService,
     private orgsService: OrganizationsServiceInterface,
     private readonly platformServiceInterface: PlatformServiceInterface,
-    private readonly authUtilsService: AuthUtilsService,
+    public readonly authUtilsService: AuthUtilsService,
     @Inject(REUSE_FORM_URL)
     @Optional()
     public reuseFormUrl: string

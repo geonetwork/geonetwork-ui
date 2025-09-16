@@ -383,6 +383,7 @@ export const INSPIRE_THEMES: INSPIRE_theme[] = [
     value: 'imageryBaseMapsEarthCover',
     label: 'editor.record.form.inspire.imagery',
   },
+  { value: 'inlandWaters', label: 'editor.record.form.inspire.waters' },
   {
     value: 'intelligenceMilitary',
     label: 'editor.record.form.inspire.intelligence',
@@ -403,7 +404,6 @@ export const INSPIRE_THEMES: INSPIRE_theme[] = [
     value: 'utilitiesCommunication',
     label: 'editor.record.form.inspire.utilities',
   },
-  { value: 'inlandWaters', label: 'editor.record.form.inspire.waters' },
 ]
 
 marker('editor.record.form.inspire.biota')

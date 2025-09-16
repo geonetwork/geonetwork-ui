@@ -49,7 +49,7 @@
             </gn-ui-metadata-catalog>
           </div>
           <gn-ui-button
-            *ngIf="showQuestionButton$"
+            *ngIf="(feedbacksAllowed$ | async) === true && !authUtilsService.isAuthDisabled()"
             type="outline"
             extraClass="w-full flex flex-row justify-between bg-white"
             [style.--gn-ui-button-rounded]="'10px'"
@@ -154,7 +154,7 @@
   <section
     id="user-feedbacks"
     #userFeedbacks
-    *ngIf="(metadataViewFacade.isPresent$ | async) === true"
+    *ngIf="(metadataViewFacade.isPresent$ | async) === true && (feedbacksAllowed$ | async) === true"
     class="pb-10"
   >
     <div *ngIf="(metadataViewFacade.isPresent$ | async) === true">

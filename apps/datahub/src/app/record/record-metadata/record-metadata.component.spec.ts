@@ -61,6 +61,7 @@ class OrganisationsServiceMock {
 
 class PlatformServiceMock {
   getMe = jest.fn(() => of(null))
+  getFeedbacksAllowed = jest.fn(() => of(true))
 }
 
 class AuthUtilsServiceMock {
