@@ -8,14 +8,12 @@ import {
   METADATA_VIEW_FEATURE_STATE_KEY,
   reducer,
 } from './state/mdview.reducer'
-import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 
 @NgModule({
   imports: [
     StoreModule.forFeature(METADATA_VIEW_FEATURE_STATE_KEY, reducer),
     EffectsModule.forFeature([MdViewEffects]),
     FeatureMapModule,
-    FeatureCatalogModule,
   ],
   providers: [MdViewFacade],
 })

@@ -16,7 +16,6 @@ import { storeFreeze } from 'ngrx-store-freeze'
 import { environment } from '../environments/environment'
 import { provideGn4, provideRepositoryUrl } from '@geonetwork-ui/api/repository'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 export const metaReducers: MetaReducer<any>[] = !environment.production
@@ -32,7 +31,6 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     StoreModule.forRoot({}, { metaReducers }),
     StoreDevtoolsModule.instrument({ connectInZone: true }),
     EffectsModule.forRoot(),
-    FeatureCatalogModule,
     LayersPanelComponent,
     MapStateContainerComponent,
     GeocodingComponent,

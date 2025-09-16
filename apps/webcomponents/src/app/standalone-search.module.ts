@@ -20,7 +20,6 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { GEONETWORK_UI_VERSION } from '@geonetwork-ui/util/shared'
 import { BrowserModule } from '@angular/platform-browser'
 import { provideHttpClient } from '@angular/common/http'
-import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import {
   StandaloneConfiguration,
   standaloneConfigurationObject,
@@ -47,13 +46,9 @@ import {
         },
         defaultLanguage: DEFAULT_LANG,
       },
-      false
-    ), // do not load language from localStorage
-    importProvidersFrom(
-      BrowserModule,
-      // theses shouldn't be needed; we rely on them for the Org service and Avatar service which should both be provided by `providedGn4`
-      FeatureCatalogModule
+      false // do not load language from localStorage
     ),
+    importProvidersFrom(BrowserModule),
   ],
 })
 export class StandaloneSearchModule implements DoBootstrap {

@@ -1,10 +1,7 @@
 import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import {
-  FeatureCatalogModule,
-  SiteTitleComponent,
-} from '@geonetwork-ui/feature/catalog'
+import { SiteTitleComponent } from '@geonetwork-ui/feature/catalog'
 import { FeatureMapModule } from '@geonetwork-ui/feature/map'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
@@ -40,7 +37,6 @@ export const metaReducers: MetaReducer<any>[] = !environment.production
     AppRoutingModule,
     HttpClientModule,
     FeatureSearchModule,
-    FeatureCatalogModule,
     FeatureMapModule,
     StoreModule.forRoot({}, { metaReducers }),
     !environment.production

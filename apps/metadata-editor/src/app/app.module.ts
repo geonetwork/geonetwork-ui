@@ -4,7 +4,6 @@ import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
-import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import {
   DefaultRouterModule,
   RouterService,
@@ -57,7 +56,6 @@ import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
   providers: [
     { provide: RouterService, useClass: EditorRouterService },
     importProvidersFrom(FeatureSearchModule),
-    importProvidersFrom(FeatureCatalogModule),
     importProvidersFrom(FeatureRecordModule),
     importProvidersFrom(FeatureEditorModule),
     provideI18n(),

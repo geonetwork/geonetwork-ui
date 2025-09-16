@@ -2,7 +2,6 @@ import { importProvidersFrom, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
 import {
-  FeatureCatalogModule,
   ORGANIZATION_PAGE_URL_TOKEN,
   ORGANIZATION_URL_TOKEN,
 } from '@geonetwork-ui/feature/catalog'
@@ -111,7 +110,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   providers: [
     { provide: RouterService, useClass: DatahubRouterService },
     importProvidersFrom(FeatureSearchModule),
-    importProvidersFrom(FeatureCatalogModule),
     importProvidersFrom(FeatureRecordModule),
     importProvidersFrom(FeatureEditorModule),
     provideI18n(TRANSLATE_WITH_OVERRIDES_CONFIG),
