@@ -12,7 +12,7 @@ beforeEach(() => {
   )
   cy.intercept(
     'GET',
-    '/geoserver/insee/ows?SERVICE=WMS&REQUEST=GetCapabilities',
+    '/geoserver/insee/ows?SERVICE=WFS&REQUEST=GetCapabilities',
     {
       fixture: 'insee-wfs-getcapabilities.xml',
     }
