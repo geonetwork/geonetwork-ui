@@ -129,9 +129,7 @@ export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
     private readonly mapper: Gn4PlatformMapper,
     private readonly platformServiceInterface: PlatformServiceInterface
   ) {
-    this.activeUser$ = getGlobalConfig().DISABLE_AUTH
-      ? of(null)
-      : this.platformServiceInterface.getMe()
+    this.activeUser$ = this.platformServiceInterface.getMe()
   }
 
   ngOnInit(): void {
