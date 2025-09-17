@@ -79,14 +79,10 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   ) {}
 
   ngAfterViewInit(): void {
-    if (!this.starToggleRef) {
-      return
-    }
-
     this.subscription = this.isAnonymous$
       .pipe(withLatestFrom(this.loginMessage$))
       .subscribe(([anonymous, loginMessage]) => {
-        if (anonymous && this.starToggleRef?.nativeElement) {
+        if (anonymous) {
           tippy(this.starToggleRef.nativeElement, {
             appendTo: () => document.body,
             content: loginMessage,
@@ -119,8 +115,8 @@ export class FavoriteStarComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe()
-    this.countSubscription?.unsubscribe()
+    this.subscription.unsubscribe()
+    this.countSubscription.unsubscribe()
   }
 
   toggleFavorite(isFavorite) {
