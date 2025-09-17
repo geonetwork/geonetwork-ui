@@ -143,13 +143,6 @@ describe('RecordDownloadsComponent', () => {
           },
         ])
       }))
-      // disable error handling in UI
-      it.skip('shows an error', () => {
-        const popup = fixture.debugElement.query(
-          By.directive(PopupAlertComponent)
-        )
-        expect(popup).toBeTruthy()
-      })
     })
 
     describe('with no link compatible with DOWNLOAD usage', () => {
