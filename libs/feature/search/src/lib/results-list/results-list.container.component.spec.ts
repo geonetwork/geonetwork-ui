@@ -16,18 +16,7 @@ import {
   RECORD_SERVICE_URL_TOKEN,
   RECORD_REUSE_URL_TOKEN,
 } from '../record-url.token'
-
-jest.mock('@geonetwork-ui/util/app-config', () => {
-  let _disableAuth = false
-  return {
-    getGlobalConfig: () => ({
-      DISABLE_AUTH: _disableAuth,
-    }),
-    _setDisableAuth: (value) => {
-      _disableAuth = value
-    },
-  }
-})
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Component({
   selector: 'gn-ui-results-list',
@@ -56,10 +45,15 @@ class SearchFacadeMock {
   error$ = of(null)
 }
 
+class PlatformServiceMock {
+  supportsAuthentication = jest.fn(() => true)
+}
+
 describe('ResultsListContainerComponent', () => {
   let component: ResultsListContainerComponent
   let fixture: ComponentFixture<ResultsListContainerComponent>
   let searchFacade: SearchFacadeMock
+  let platformMock: PlatformServiceMock
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -91,11 +85,16 @@ describe('ResultsListContainerComponent', () => {
           provide: RECORD_REUSE_URL_TOKEN,
           useValue: '/my/reuse/${uuid}/open',
         },
+        {
+          provide: PlatformServiceInterface,
+          useClass: PlatformServiceMock,
+        },
       ],
     }).compileComponents()
     fixture = TestBed.createComponent(ResultsListContainerComponent)
     component = fixture.componentInstance
-    searchFacade = TestBed.inject(SearchFacade) as SearchFacadeMock
+    searchFacade = TestBed.inject(SearchFacade) as any
+    platformMock = TestBed.inject(PlatformServiceInterface) as any
   })
 
   describe('default init', () => {
@@ -214,15 +213,8 @@ describe('ResultsListContainerComponent', () => {
       component.layout = 'CARD'
     })
 
-    afterEach(() => {
-      // Reset DISABLE_AUTH to default state
-      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
-      mockAppConfig._setDisableAuth(false)
-    })
-
     it('should show favorites when auth is enabled', () => {
-      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
-      mockAppConfig._setDisableAuth(false)
+      platformMock.supportsAuthentication.mockReturnValue(true)
 
       fixture = TestBed.createComponent(ResultsListContainerComponent)
       component = fixture.componentInstance
@@ -233,8 +225,7 @@ describe('ResultsListContainerComponent', () => {
     })
 
     it('should hide favorites when auth is disabled', () => {
-      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
-      mockAppConfig._setDisableAuth(true)
+      platformMock.supportsAuthentication.mockReturnValue(false)
 
       fixture = TestBed.createComponent(ResultsListContainerComponent)
       component = fixture.componentInstance
@@ -245,8 +236,7 @@ describe('ResultsListContainerComponent', () => {
     })
 
     it('should pass showFavorites property to results list component', () => {
-      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
-      mockAppConfig._setDisableAuth(true)
+      platformMock.supportsAuthentication.mockReturnValue(false)
 
       fixture = TestBed.createComponent(ResultsListContainerComponent)
       component = fixture.componentInstance
