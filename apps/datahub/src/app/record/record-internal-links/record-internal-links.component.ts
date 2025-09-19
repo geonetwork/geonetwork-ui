@@ -23,8 +23,8 @@ import { RouterLink } from '@angular/router'
 import {
   getMetadataQualityConfig,
   MetadataQualityConfig,
-  getGlobalConfig,
 } from '@geonetwork-ui/util/app-config'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Component({
   selector: 'datahub-record-internal-links',
@@ -55,7 +55,7 @@ export class RecordInternalLinksComponent {
   recordUrlGetter = this.getRecordUrl.bind(this)
 
   get shouldShowFavorites(): boolean {
-    return !getGlobalConfig().DISABLE_AUTH
+    return this.platformServiceInterface.supportsAuthentication()
   }
 
   constructor(
@@ -67,7 +67,8 @@ export class RecordInternalLinksComponent {
     private recordServiceUrlTemplate: string,
     @Optional()
     @Inject(RECORD_REUSE_URL_TOKEN)
-    private recordReuseUrlTemplate: string
+    private recordReuseUrlTemplate: string,
+    private platformServiceInterface: PlatformServiceInterface
   ) {
     const cfg: MetadataQualityConfig =
       getMetadataQualityConfig() || ({} as MetadataQualityConfig)

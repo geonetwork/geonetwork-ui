@@ -22,21 +22,6 @@ import { Gn4PlatformMapper } from '@geonetwork-ui/api/repository'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
-jest.mock('@geonetwork-ui/util/app-config', () => {
-  let _disableAuth = false
-  return {
-    getOptionalSearchConfig: () => ({
-      LIMIT: 20,
-    }),
-    getGlobalConfig: () => ({
-      DISABLE_AUTH: _disableAuth,
-    }),
-    _setDisableAuth: (value) => {
-      _disableAuth = value
-    },
-  }
-})
-
 describe('RecordUserFeedbacksComponent', () => {
   const allUserFeedbacks = someUserFeedbacksFixture()
   let mockDestroy$: Subject<void>
@@ -64,6 +49,7 @@ describe('RecordUserFeedbacksComponent', () => {
     getUserFeedbacks: jest.fn(),
     getMe: jest.fn(() => new BehaviorSubject(activeUser)),
     isAnonymous: jest.fn(() => new BehaviorSubject(false)),
+    supportsAuthentication: jest.fn(() => true),
   }
 
   let component: RecordUserFeedbacksComponent
@@ -101,9 +87,6 @@ describe('RecordUserFeedbacksComponent', () => {
   afterEach(() => {
     mockDestroy$.next()
     mockDestroy$.complete()
-    // Reset DISABLE_AUTH to default state
-    const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
-    mockAppConfig._setDisableAuth(false)
   })
 
   it('should create', () => {
@@ -160,8 +143,9 @@ describe('RecordUserFeedbacksComponent', () => {
 
   describe('feedback login UI visibility', () => {
     it('should hide feedback login UI when auth is disabled', () => {
-      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
-      mockAppConfig._setDisableAuth(true)
+      jest
+        .spyOn(platformServiceInterfaceMock, 'supportsAuthentication')
+        .mockReturnValue(false)
 
       fixture = TestBed.createComponent(RecordUserFeedbacksComponent)
       component = fixture.componentInstance
@@ -171,8 +155,9 @@ describe('RecordUserFeedbacksComponent', () => {
     })
 
     it('should show feedback login UI when auth is enabled', () => {
-      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
-      mockAppConfig._setDisableAuth(false)
+      jest
+        .spyOn(platformServiceInterfaceMock, 'supportsAuthentication')
+        .mockReturnValue(true)
 
       fixture = TestBed.createComponent(RecordUserFeedbacksComponent)
       component = fixture.componentInstance

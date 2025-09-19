@@ -102,8 +102,9 @@ export class HomeHeaderComponent {
     .isAnonymous()
     .pipe(map((isAnonymous) => !isAnonymous))
 
-  showFavoritesButton$ =
-    getGlobalConfig().DISABLE_AUTH === true ? of(false) : this.isAuthenticated$
+  showFavoritesButton$ = this.platformService.supportsAuthentication()
+    ? this.isAuthenticated$
+    : of(false)
 
   onFuzzySearchSelection(record: CatalogRecord) {
     this.routerFacade.goToMetadata(record)

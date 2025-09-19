@@ -16,29 +16,20 @@ import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { MockBuilder } from 'ng-mocks'
 import { CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
 
-jest.mock('@geonetwork-ui/util/app-config', () => {
-  let _disableAuth = false
-  return {
-    getOptionalSearchConfig: () => ({
-      ADVANCED_FILTERS: [
-        'publisherOrg',
-        'format',
-        'isSpatial',
-        'documentStandard',
-        'inspireKeyword',
-        'license',
-        'topic',
-        'publicationYear',
-      ],
-    }),
-    getGlobalConfig: () => ({
-      DISABLE_AUTH: _disableAuth,
-    }),
-    _setDisableAuth: (value) => {
-      _disableAuth = value
-    },
-  }
-})
+jest.mock('@geonetwork-ui/util/app-config', () => ({
+  getOptionalSearchConfig: () => ({
+    ADVANCED_FILTERS: [
+      'publisherOrg',
+      'format',
+      'isSpatial',
+      'documentStandard',
+      'inspireKeyword',
+      'license',
+      'topic',
+      'publicationYear',
+    ],
+  }),
+}))
 
 const state = { OrgForResource: { mel: true } } as FieldFilters
 const user = barbieUserFixture()
@@ -82,6 +73,7 @@ class FieldsServiceMock {
 
 class PlatformServiceMock {
   getMe = jest.fn(() => new BehaviorSubject(user))
+  supportsAuthentication = jest.fn(() => true)
 }
 
 describe('SearchFiltersComponent', () => {
@@ -89,6 +81,7 @@ describe('SearchFiltersComponent', () => {
   let fixture: ComponentFixture<SearchFiltersComponent>
   let searchFacade
   let searchService
+  let platformMock: PlatformServiceMock
 
   beforeEach(() => MockBuilder(SearchFiltersComponent))
 
@@ -125,13 +118,11 @@ describe('SearchFiltersComponent', () => {
   beforeEach(() => {
     searchFacade = TestBed.inject(SearchFacade)
     searchService = TestBed.inject(SearchService)
+    platformMock = TestBed.inject(
+      PlatformServiceInterface
+    ) as unknown as PlatformServiceMock
     fixture = TestBed.createComponent(SearchFiltersComponent)
     component = fixture.componentInstance
-  })
-
-  afterEach(() => {
-    const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
-    mockAppConfig._setDisableAuth(false)
   })
 
   it('should create', () => {
@@ -281,8 +272,7 @@ describe('SearchFiltersComponent', () => {
 
   describe('auth disable functionality', () => {
     it('should set showAuthRelatedFeatures to false when auth is disabled', () => {
-      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
-      mockAppConfig._setDisableAuth(true)
+      platformMock.supportsAuthentication.mockReturnValue(false)
 
       fixture = TestBed.createComponent(SearchFiltersComponent)
       component = fixture.componentInstance
@@ -291,8 +281,7 @@ describe('SearchFiltersComponent', () => {
     })
 
     it('should set showAuthRelatedFeatures to true when auth is enabled', () => {
-      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
-      mockAppConfig._setDisableAuth(false)
+      platformMock.supportsAuthentication.mockReturnValue(true)
 
       fixture = TestBed.createComponent(SearchFiltersComponent)
       component = fixture.componentInstance

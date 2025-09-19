@@ -30,6 +30,7 @@ import {
 } from '@geonetwork-ui/feature/search'
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { StickyHeaderComponent } from '@geonetwork-ui/ui/layout'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 export const HEADER_HEIGHT_DEFAULT = 344
 export const HEADER_HEIGHT_MOBILE_THUMBNAIL = 554
@@ -75,7 +76,7 @@ export class HeaderRecordComponent {
   showOverlay = true
 
   get isAuthDisabled(): boolean {
-    return getGlobalConfig().DISABLE_AUTH
+    return !this.platformServiceInterface.supportsAuthentication()
   }
 
   isMobile$ = getIsMobile()
@@ -101,7 +102,8 @@ export class HeaderRecordComponent {
   constructor(
     public facade: MdViewFacade,
     private dateService: DateService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private platformServiceInterface: PlatformServiceInterface
   ) {}
 
   reuseLinkUrl$ = this.facade.allLinks$.pipe(

@@ -24,22 +24,6 @@ import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { REUSE_FORM_URL } from '../record-data-preview/record-data-preview.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
-jest.mock('@geonetwork-ui/util/app-config', () => {
-  let _disableAuth = false
-  return {
-    getMetadataQualityConfig: () => ({ ENABLED: false }),
-    getOptionalSearchConfig: () => ({
-      LIMIT: 20,
-    }),
-    getGlobalConfig: () => ({
-      DISABLE_AUTH: _disableAuth,
-    }),
-    _setDisableAuth: (value) => {
-      _disableAuth = value
-    },
-  }
-})
-
 const SAMPLE_RECORD = {
   ...datasetRecordsFixture()[0],
   extras: {
@@ -77,6 +61,7 @@ class OrganisationsServiceMock {
 class PlatformServiceMock {
   getMe = jest.fn(() => of(null))
   getFeedbacksAllowed = jest.fn(() => of(true))
+  supportsAuthentication = jest.fn(() => true)
 }
 
 describe('RecordMetadataComponent', () => {
@@ -129,12 +114,6 @@ describe('RecordMetadataComponent', () => {
     fixture = TestBed.createComponent(RecordMetadataComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
-  })
-
-  afterEach(() => {
-    // Reset DISABLE_AUTH to default state
-    const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
-    mockAppConfig._setDisableAuth(false)
   })
 
   it('should create', () => {
@@ -530,21 +509,17 @@ describe('RecordMetadataComponent', () => {
 
   describe('auth disable functionality', () => {
     it('should hide question button when auth is disabled', () => {
-      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
-      mockAppConfig._setDisableAuth(true)
-
-      fixture = TestBed.createComponent(RecordMetadataComponent)
-      component = fixture.componentInstance
+      jest
+        .spyOn(platformService, 'supportsAuthentication')
+        .mockReturnValue(false)
 
       expect(component.isAuthDisabled).toBe(true)
     })
 
     it('should show question button when auth is enabled', () => {
-      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
-      mockAppConfig._setDisableAuth(false)
-
-      fixture = TestBed.createComponent(RecordMetadataComponent)
-      component = fixture.componentInstance
+      jest
+        .spyOn(platformService, 'supportsAuthentication')
+        .mockReturnValue(true)
 
       expect(component.isAuthDisabled).toBe(false)
     })

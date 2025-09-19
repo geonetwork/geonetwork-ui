@@ -9,6 +9,7 @@ import {
 import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { iconoirMenu } from '@ng-icons/iconoir'
 import { matArrowBack } from '@ng-icons/material-icons/baseline'
@@ -80,10 +81,13 @@ export class NavigationBarComponent {
   isMobile$ = getIsMobile()
 
   get isAuthDisabled(): boolean {
-    return getGlobalConfig().DISABLE_AUTH
+    return !this.platformServiceInterface.supportsAuthentication()
   }
 
-  constructor(private searchService: SearchService) {}
+  constructor(
+    private searchService: SearchService,
+    private platformServiceInterface: PlatformServiceInterface
+  ) {}
 
   @HostListener('window:scroll', [])
   onWindowScroll() {

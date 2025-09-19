@@ -21,7 +21,6 @@ import resetAllMocks = jest.resetAllMocks
 
 jest.mock('@geonetwork-ui/util/app-config', () => {
   let _languages = ['pt', 'de']
-  let _disableAuth = false
   return {
     getThemeConfig: () => ({
       HEADER_BACKGROUND: 'red',
@@ -42,16 +41,11 @@ jest.mock('@geonetwork-ui/util/app-config', () => {
     getGlobalConfig() {
       return {
         LANGUAGES: _languages,
-        DISABLE_AUTH: _disableAuth,
       }
     },
 
     _setLanguages(lang) {
       _languages = lang
-    },
-
-    _setDisableAuth(value) {
-      _disableAuth = value
     },
   }
 })
@@ -80,6 +74,7 @@ class PlatformServiceMock {
   isAnonymous = jest.fn(() => this._isAnonymous$)
   _isAnonymous$ = new BehaviorSubject(true)
   translateKey = jest.fn()
+  supportsAuthentication = jest.fn(() => true)
 }
 
 class FieldsServiceMock {
@@ -138,8 +133,6 @@ describe('HomeHeaderComponent', () => {
   })
   afterEach(() => {
     resetAllMocks()
-    const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
-    mockAppConfig._setDisableAuth(false)
   })
 
   it('should create', () => {
@@ -311,8 +304,7 @@ describe('HomeHeaderComponent', () => {
 
   describe('auth disable functionality', () => {
     it('should hide favorites button when auth is disabled', async () => {
-      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
-      mockAppConfig._setDisableAuth(true)
+      platformMock.supportsAuthentication.mockReturnValue(false)
 
       fixture = TestBed.createComponent(HomeHeaderComponent)
       component = fixture.componentInstance
@@ -324,9 +316,7 @@ describe('HomeHeaderComponent', () => {
     })
 
     it('should show favorites button when auth is enabled and user is authenticated', async () => {
-      const mockAppConfig = jest.requireMock('@geonetwork-ui/util/app-config')
-      mockAppConfig._setDisableAuth(false)
-
+      platformMock.supportsAuthentication.mockReturnValue(true)
       platformMock._isAnonymous$.next(false)
 
       fixture = TestBed.createComponent(HomeHeaderComponent)

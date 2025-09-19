@@ -134,7 +134,6 @@ export function loadAppConfig() {
               LANGUAGES: parsedGlobalSection.languages,
               CONTACT_EMAIL: parsedGlobalSection.contact_email,
               REUSE_FORM_URL: parsedGlobalSection.reuse_form_url,
-              DISABLE_AUTH: parsedGlobalSection.disable_auth,
             } as GlobalConfig)
 
       const parsedLayersSections = parseMultiConfigSection(
