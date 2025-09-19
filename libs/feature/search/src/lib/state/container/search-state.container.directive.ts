@@ -5,6 +5,7 @@ import { SearchFacade } from '../search.facade'
 @Directive({
   selector: '[gnUiSearchStateContainer]',
   providers: [SearchFacade, SearchService],
+  standalone: true,
 })
 export class SearchStateContainerDirective implements OnInit {
   @Input('gnUiSearchStateContainer') searchId: string

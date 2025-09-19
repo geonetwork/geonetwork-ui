@@ -22,7 +22,12 @@ import { matErrorOutlineOutline } from '@ng-icons/material-icons/outline'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, NgIconComponent],
-  providers: [provideIcons({ matErrorOutlineOutline })],
+  providers: [
+    provideIcons({ matErrorOutlineOutline }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
+  ],
 })
 export class PopupAlertComponent implements OnInit {
   @Input() icon: string

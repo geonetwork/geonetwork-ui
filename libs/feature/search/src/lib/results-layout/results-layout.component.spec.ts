@@ -1,38 +1,12 @@
-import {
-  Component,
-  DebugElement,
-  EventEmitter,
-  Input,
-  NO_ERRORS_SCHEMA,
-  Output,
-} from '@angular/core'
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import {
-  DEFAULT_RESULTS_LAYOUT_CONFIG,
-  RESULTS_LAYOUT_CONFIG,
-} from '@geonetwork-ui/ui/search'
 import { SearchFacade } from '../state/search.facade'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { of } from 'rxjs'
 import { ResultsLayoutComponent } from './results-layout.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-
-@Component({
-  selector: 'gn-ui-dropdown-selector',
-  template: '',
-})
-class DropdownSelectorMockComponent {
-  @Input() title: string
-  @Input() showTitle = true
-  @Input() ariaName: string
-  @Input() choices: {
-    value: unknown
-    label: string
-  }[]
-  @Input() selected: unknown
-  @Output() selectValue = new EventEmitter<unknown>()
-}
+import { DropdownSelectorComponent } from '@geonetwork-ui/ui/inputs'
 
 const searchFacadeMock = {
   layout$: of('CARD'),
@@ -47,18 +21,13 @@ describe('ResultsLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ResultsLayoutComponent, DropdownSelectorMockComponent],
-      imports: [TranslateDirective, TranslatePipe],
+      imports: [DropdownSelectorComponent, TranslateDirective, TranslatePipe],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         provideI18n(),
         {
           provide: SearchFacade,
           useValue: searchFacadeMock,
-        },
-        {
-          provide: RESULTS_LAYOUT_CONFIG,
-          useValue: DEFAULT_RESULTS_LAYOUT_CONFIG,
         },
       ],
     }).compileComponents()
@@ -68,7 +37,7 @@ describe('ResultsLayoutComponent', () => {
     fixture = TestBed.createComponent(ResultsLayoutComponent)
     component = fixture.componentInstance
     de = fixture.debugElement
-    items = de.queryAll(By.directive(DropdownSelectorMockComponent))
+    items = de.queryAll(By.directive(DropdownSelectorComponent))
     fixture.detectChanges()
   })
 

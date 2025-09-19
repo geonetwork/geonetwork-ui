@@ -11,14 +11,14 @@ import {
   selectRecordSource,
 } from './editor.selectors'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
-import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Injectable()
 export class EditorEffects {
   private actions$ = inject(Actions)
   private editorService = inject(EditorService)
   private recordsRepository = inject(RecordsRepositoryInterface)
-  private gn4PlateformService = inject(Gn4PlatformService)
+  private plateformService = inject(PlatformServiceInterface)
   private store = inject(Store)
 
   saveRecord$ = createEffect(() =>
@@ -64,7 +64,7 @@ export class EditorEffects {
         withLatestFrom(this.store.select(selectRecord)),
         switchMap(([_, record]) => {
           if (record.uniqueIdentifier !== null) {
-            this.gn4PlateformService.cleanRecordAttachments(record).subscribe({
+            this.plateformService.cleanRecordAttachments(record).subscribe({
               next: (_) => undefined,
               error: (err) => {
                 console.error(err)

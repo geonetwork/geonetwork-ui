@@ -2,8 +2,6 @@ import { importProvidersFrom, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
 import {
-  FeatureCatalogModule,
-  OrganisationsComponent,
   ORGANIZATION_PAGE_URL_TOKEN,
   ORGANIZATION_URL_TOKEN,
 } from '@geonetwork-ui/feature/catalog'
@@ -11,7 +9,6 @@ import {
   EXTERNAL_VIEWER_OPEN_NEW_TAB,
   EXTERNAL_VIEWER_URL_TEMPLATE,
   FeatureRecordModule,
-  RecordMetaComponent,
   WEB_COMPONENT_EMBEDDER_URL,
 } from '@geonetwork-ui/feature/record'
 import {
@@ -23,6 +20,7 @@ import {
   ROUTER_ROUTE_SEARCH,
   ROUTER_ROUTE_SERVICE,
   RouterService,
+  SearchRouterContainerDirective,
 } from '@geonetwork-ui/feature/router'
 import {
   FeatureSearchModule,
@@ -32,8 +30,6 @@ import {
   RECORD_SERVICE_URL_TOKEN,
 } from '@geonetwork-ui/feature/search'
 import { THUMBNAIL_PLACEHOLDER } from '@geonetwork-ui/ui/elements'
-import { StickyHeaderComponent } from '@geonetwork-ui/ui/layout'
-import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import {
   getGlobalConfig,
   getMapContextLayerFromConfig,
@@ -47,7 +43,6 @@ import {
   PROXY_PATH,
   ThemeService,
 } from '@geonetwork-ui/util/shared'
-import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
@@ -56,20 +51,14 @@ import { AppComponent } from './app.component'
 import { SearchPageComponent } from './home/search/search-page/search-page.component'
 import { RecordPageComponent } from './record/record-page/record-page.component'
 import { DatahubRouterService } from './router/datahub-router.service'
-import { FormsModule } from '@angular/forms'
-import {
-  LANGUAGES_LIST,
-  LanguageSwitcherComponent,
-} from '@geonetwork-ui/ui/catalog'
+import { LANGUAGES_LIST } from '@geonetwork-ui/ui/catalog'
 import {
   LOGIN_URL,
   METADATA_LANGUAGE,
   provideGn4,
   provideRepositoryUrl,
 } from '@geonetwork-ui/api/repository'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MatTabsModule } from '@angular/material/tabs'
-import { LetDirective } from '@ngrx/component'
+import { provideAnimations } from '@angular/platform-browser/animations'
 import { OrganizationPageComponent } from './organization/organization-page/organization-page.component'
 
 import {
@@ -78,24 +67,11 @@ import {
   MAP_VIEW_CONSTRAINTS,
 } from '@geonetwork-ui/ui/map'
 import {
-  matAddOutline,
-  matExpandMoreOutline,
-  matMenuOutline,
-  matMoreHorizOutline,
-  matRemoveOutline,
-  matStarOutline,
-  matWarningAmberOutline,
-} from '@ng-icons/material-icons/outline'
-import { NgIconsModule, provideNgIconsConfig } from '@ng-icons/core'
-import {
   MAX_FEATURE_COUNT,
   REUSE_FORM_URL,
 } from './record/record-data-preview/record-data-preview.component'
-import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { FigureComponent } from '@geonetwork-ui/ui/dataviz'
-import { ButtonComponent, CheckToggleComponent } from '@geonetwork-ui/ui/inputs'
-import { KeyFiguresComponent } from './home/news-page/key-figures/key-figures.component'
+import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -104,7 +80,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     RouterModule.forRoot([], {
       initialNavigation: 'enabledBlocking',
       scrollPositionRestoration: 'enabled',
@@ -122,8 +97,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     !environment.production
       ? StoreDevtoolsModule.instrument({ connectInZone: true })
       : [],
-    EffectsModule.forRoot(),
-    FeatureSearchModule,
     DefaultRouterModule.forRoot({
       searchStateId: 'mainSearch',
       searchRouteComponent: SearchPageComponent,
@@ -132,41 +105,18 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
       reuseRouteComponent: RecordPageComponent,
       organizationRouteComponent: OrganizationPageComponent,
     }),
-    FeatureRecordModule,
-    FeatureCatalogModule,
-    UiSearchModule,
-    FormsModule,
-    MatTabsModule,
-    RecordMetaComponent,
-    LetDirective,
-    // FIXME: these imports are required by non-standalone components and should be removed once all components have been made standalone
-    NgIconsModule.withIcons({
-      matMenuOutline,
-      matRemoveOutline,
-      matMoreHorizOutline,
-      matAddOutline,
-      matExpandMoreOutline,
-      matStarOutline,
-      matWarningAmberOutline,
-    }),
-    OrganisationsComponent,
-    LanguageSwitcherComponent,
-    MatButtonToggleModule,
-    FigureComponent,
-    StickyHeaderComponent,
-    CheckToggleComponent,
-    ButtonComponent,
-    KeyFiguresComponent,
+    SearchRouterContainerDirective,
   ],
   providers: [
-    provideI18n(TRANSLATE_WITH_OVERRIDES_CONFIG),
-    provideNgIconsConfig({
-      size: '1.5em',
-    }),
-    importProvidersFrom(FeatureAuthModule),
-    provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
-    provideGn4(),
     { provide: RouterService, useClass: DatahubRouterService },
+    importProvidersFrom(FeatureSearchModule),
+    importProvidersFrom(FeatureRecordModule),
+    importProvidersFrom(FeatureEditorModule),
+    provideI18n(TRANSLATE_WITH_OVERRIDES_CONFIG),
+    provideRepositoryUrl(() => getGlobalConfig().GN4_API_URL),
+    importProvidersFrom(EffectsModule.forRoot()),
+    provideGn4(),
+    provideAnimations(),
     {
       provide: PROXY_PATH,
       useFactory: () => getGlobalConfig().PROXY_PATH,

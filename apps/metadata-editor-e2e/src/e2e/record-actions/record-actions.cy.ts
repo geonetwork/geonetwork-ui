@@ -3,6 +3,7 @@ import { importDatasetRecordAsXmlFixture } from '@geonetwork-ui/common/fixtures'
 
 describe('record-actions', () => {
   beforeEach(() => {
+    cy.clearRecordDrafts()
     cy.login('admin', 'admin', false)
     cy.visit('/catalog/search')
 

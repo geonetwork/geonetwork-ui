@@ -49,7 +49,11 @@ import {
   prioritizePageScroll,
 } from '@geonetwork-ui/ui/map'
 import { Feature } from 'geojson'
-import { NgIconComponent, provideIcons } from '@ng-icons/core'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
 import { matClose } from '@ng-icons/material-icons/baseline'
 import { CommonModule } from '@angular/common'
 import {
@@ -94,7 +98,12 @@ marker('map.select.style')
     ButtonComponent,
     MapLegendComponent,
   ],
-  viewProviders: [provideIcons({ matClose })],
+  viewProviders: [
+    provideIcons({ matClose }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
+  ],
 })
 export class MapViewComponent implements AfterViewInit {
   @Input() set exceedsLimit(value: boolean) {
@@ -109,7 +118,7 @@ export class MapViewComponent implements AfterViewInit {
     this.selectedView$.next(value)
   }
   @Input() set datavizConfig(value: any) {
-    if (value.view === 'map') {
+    if (value && value.view === 'map') {
       this.selectedView$.next(value.view)
       if (value.styleTMSIndex) {
         this._styleFromConfig = value.styleTMSIndex

@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing'
 import { provideMockActions } from '@ngrx/effects/testing'
 import { Action } from '@ngrx/store'
-import { MockStore, provideMockStore } from '@ngrx/store/testing'
+import { provideMockStore } from '@ngrx/store/testing'
 import { getTestScheduler, hot } from 'jasmine-marbles'
-import { firstValueFrom, Observable, of, throwError } from 'rxjs'
+import { Observable, of, throwError } from 'rxjs'
 import * as EditorActions from './editor.actions'
 import { EditorEffects } from './editor.effects'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
@@ -11,7 +11,7 @@ import { EditorService } from '../services/editor.service'
 import { RecordsRepositoryInterface } from '@geonetwork-ui/common/domain/repository/records-repository.interface'
 import { EditorPartialState } from './editor.reducer'
 import { MockProvider } from 'ng-mocks'
-import { Gn4PlatformService } from '@geonetwork-ui/api/repository'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 class EditorServiceMock {
   saveRecord = jest.fn((record) =>
@@ -65,7 +65,7 @@ describe('EditorEffects', () => {
           provide: RecordsRepositoryInterface,
           useClass: RecordsRepositoryMock,
         },
-        MockProvider(Gn4PlatformService, {
+        MockProvider(PlatformServiceInterface, {
           cleanRecordAttachments: jest.fn(() => of(undefined)),
         }),
       ],

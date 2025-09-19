@@ -18,7 +18,7 @@ describe('ResultsHitsSearchKindComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ResultsHitsSearchKindComponent, MockInlineFilterComponent],
+      declarations: [MockInlineFilterComponent],
     }).compileComponents()
   })
 

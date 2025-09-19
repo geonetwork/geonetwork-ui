@@ -38,8 +38,6 @@ describe('FacetsContainerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FacetsContainerComponent],
-      imports: [],
       providers: [
         {
           provide: SearchFacade,

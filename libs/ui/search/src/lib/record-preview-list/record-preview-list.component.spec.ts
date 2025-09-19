@@ -9,7 +9,6 @@ describe('RecordPreviewListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecordPreviewListComponent],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   })

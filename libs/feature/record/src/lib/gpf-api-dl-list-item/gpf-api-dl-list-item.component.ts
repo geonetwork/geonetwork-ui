@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { HttpClient } from '@angular/common/http'
 import { Component, Input, OnInit } from '@angular/core'
-import { NgIconsModule, provideIcons } from '@ng-icons/core'
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { map, mergeMap, Observable } from 'rxjs'
 import { matCloudDownloadOutline } from '@ng-icons/material-icons/outline'
@@ -11,10 +11,13 @@ import { matCloudDownloadOutline } from '@ng-icons/material-icons/outline'
   templateUrl: './gpf-api-dl-list-item.component.html',
   styleUrls: ['./gpf-api-dl-list-item.component.css'],
   standalone: true,
-  imports: [CommonModule, TranslateDirective, TranslatePipe, NgIconsModule],
+  imports: [CommonModule, TranslateDirective, TranslatePipe, NgIcon],
   providers: [
     provideIcons({
       matCloudDownloadOutline,
+    }),
+    provideNgIconsConfig({
+      size: '1.5em',
     }),
   ],
 })

@@ -9,7 +9,6 @@ describe('RecordPreviewDatahubComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecordPreviewRowComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents()
   })

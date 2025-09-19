@@ -3,6 +3,7 @@ import {
   FeatureSearchModule,
   FIELDS_BRIEF,
   FuzzySearchComponent,
+  ResultsListContainerComponent,
   SearchFacade,
   SearchService,
 } from '@geonetwork-ui/feature/search'
@@ -11,6 +12,7 @@ import {
   ResultsLayoutConfigItem,
 } from '@geonetwork-ui/ui/search'
 import { AddLayerRecordPreviewComponent } from './add-layer-record-preview/add-layer-record-preview.component'
+import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'gn-ui-add-layer-from-catalog',
@@ -33,7 +35,12 @@ import { AddLayerRecordPreviewComponent } from './add-layer-record-preview/add-l
       },
     },
   ],
-  imports: [FeatureSearchModule, FuzzySearchComponent],
+  imports: [
+    CommonModule,
+    FeatureSearchModule,
+    FuzzySearchComponent,
+    ResultsListContainerComponent,
+  ],
 })
 export class AddLayerFromCatalogComponent implements OnInit {
   constructor(private searchFacade: SearchFacade) {}

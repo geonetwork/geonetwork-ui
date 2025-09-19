@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core'
-import { FacetSelectEvent, ModelBlock } from '@geonetwork-ui/ui/search'
+import {
+  FacetListComponent,
+  FacetSelectEvent,
+  ModelBlock,
+} from '@geonetwork-ui/ui/search'
 import { combineLatest, Observable } from 'rxjs'
 import { map, take } from 'rxjs/operators'
 import { SearchFacade } from '../../state/search.facade'
@@ -7,6 +11,8 @@ import { FacetsService } from '../facets.service'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import { EsRequestAggTerm } from '@geonetwork-ui/api/metadata-converter'
+import { CommonModule } from '@angular/common'
+import { TranslateModule } from '@ngx-translate/core'
 
 marker('facets.block.title.OrgForResource')
 marker('facets.block.title.availableInServices')
@@ -24,6 +30,13 @@ marker('facets.block.title.th_regions_tree.default')
   selector: 'gn-ui-facets-container',
   templateUrl: './facets-container.component.html',
   styleUrls: ['./facets-container.component.css'],
+  standalone: true,
+  imports: [
+    FacetListComponent,
+    CommonModule,
+    TranslateModule,
+    FacetListComponent,
+  ],
 })
 export class FacetsContainerComponent implements OnInit {
   selectedPaths$: Observable<string[][]>

@@ -1,42 +1,38 @@
-import { Component, DebugElement, Input, NO_ERRORS_SCHEMA } from '@angular/core'
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import {
   DEFAULT_RESULTS_LAYOUT_CONFIG,
-  RESULTS_LAYOUT_CONFIG,
+  ResultsListComponent,
 } from '@geonetwork-ui/ui/search'
 import { BehaviorSubject, of } from 'rxjs'
 import { SearchFacade } from '../state/search.facade'
 import { ResultsListContainerComponent } from './results-list.container.component'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  ButtonComponent,
+  ViewportIntersectorComponent,
+} from '@geonetwork-ui/ui/inputs'
 import { datasetRecordsFixture } from '@geonetwork-ui/common/fixtures'
-import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import {
   RECORD_DATASET_URL_TOKEN,
-  RECORD_SERVICE_URL_TOKEN,
   RECORD_REUSE_URL_TOKEN,
+  RECORD_SERVICE_URL_TOKEN,
 } from '../record-url.token'
-
-@Component({
-  selector: 'gn-ui-results-list',
-  template: '',
-})
-class ResultsListMockComponent {
-  @Input() records: CatalogRecord[]
-  @Input() loading: boolean
-  @Input() layout = 'CARD'
-}
-@Component({
-  selector: 'gn-ui-viewport-intersector',
-  template: '',
-})
-class ViewportIntersectorMockComponent {}
+import { ErrorComponent } from '@geonetwork-ui/ui/elements'
+import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
+import { FavoriteStarComponent } from '../favorites/favorite-star/favorite-star.component'
+import { TranslateModule } from '@ngx-translate/core'
 
 class SearchFacadeMock {
   isLoading$ = new BehaviorSubject(false)
   currentPage$ = new BehaviorSubject(3)
   totalPages$ = new BehaviorSubject(5)
-  results$ = of(['one'])
+  results$ = of([
+    {
+      kind: 'dataset',
+      uniqueIdentifier: 'my-dataset-001',
+    },
+  ])
   layout$ = of('CARD')
   setResultsLayout = jest.fn()
   scroll = jest.fn()
@@ -47,24 +43,33 @@ describe('ResultsListContainerComponent', () => {
   let component: ResultsListContainerComponent
   let fixture: ComponentFixture<ResultsListContainerComponent>
   let searchFacade: SearchFacadeMock
+  let intersectionObserverMock: any
+
+  beforeAll(() => {
+    intersectionObserverMock = jest.fn()
+    intersectionObserverMock.mockReturnValue({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+    })
+    window.IntersectionObserver = intersectionObserverMock
+  })
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        ResultsListContainerComponent,
-        ResultsListMockComponent,
-        ViewportIntersectorMockComponent,
+      imports: [
+        ButtonComponent,
+        ResultsListComponent,
+        ViewportIntersectorComponent,
+        SpinningLoaderComponent,
+        ErrorComponent,
+        FavoriteStarComponent,
+        TranslateModule.forRoot(),
       ],
-      imports: [ButtonComponent],
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         {
           provide: SearchFacade,
           useClass: SearchFacadeMock,
-        },
-        {
-          provide: RESULTS_LAYOUT_CONFIG,
-          useValue: DEFAULT_RESULTS_LAYOUT_CONFIG,
         },
         {
           provide: RECORD_DATASET_URL_TOKEN,
@@ -80,6 +85,7 @@ describe('ResultsListContainerComponent', () => {
         },
       ],
     }).compileComponents()
+
     fixture = TestBed.createComponent(ResultsListContainerComponent)
     component = fixture.componentInstance
     searchFacade = TestBed.inject(SearchFacade) as any
@@ -91,8 +97,11 @@ describe('ResultsListContainerComponent', () => {
       component.layout = 'CARD'
       fixture.detectChanges()
       resultsList = fixture.debugElement.query(
-        By.directive(ResultsListMockComponent)
+        By.directive(ResultsListComponent)
       )
+      resultsList.componentInstance.layout =
+        DEFAULT_RESULTS_LAYOUT_CONFIG['CARD']
+      fixture.detectChanges()
     })
 
     it('should create', () => {
@@ -103,8 +112,15 @@ describe('ResultsListContainerComponent', () => {
       expect(resultsList).toBeTruthy()
       expect(searchFacade.setResultsLayout).toHaveBeenCalledWith('CARD')
 
-      expect(resultsList.componentInstance.layout).toBe('CARD')
-      expect(resultsList.componentInstance.records).toEqual(['one'])
+      expect(resultsList.componentInstance.layout).toEqual(
+        DEFAULT_RESULTS_LAYOUT_CONFIG['CARD']
+      )
+      expect(resultsList.componentInstance.records).toEqual([
+        {
+          kind: 'dataset',
+          uniqueIdentifier: 'my-dataset-001',
+        },
+      ])
     })
 
     it('triggering showMore asks for new results on facade', () => {
@@ -123,7 +139,7 @@ describe('ResultsListContainerComponent', () => {
       })
       it('show-more element is a viewport intersector', () => {
         const intersector = getShowMoreEl().query(
-          By.directive(ViewportIntersectorMockComponent)
+          By.directive(ViewportIntersectorComponent)
         )
         expect(intersector).toBeTruthy()
       })

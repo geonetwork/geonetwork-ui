@@ -2,9 +2,16 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { getGlobalConfig } from '@geonetwork-ui/util/app-config'
 import { KeyFiguresComponent } from './key-figures/key-figures.component'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
-import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import {
+  FeatureSearchModule,
+  SearchStateContainerDirective,
+} from '@geonetwork-ui/feature/search'
 import { CommonModule } from '@angular/common'
 import { LastCreatedComponent } from './last-created/last-created.component'
+import {
+  DEFAULT_RESULTS_LAYOUT_CONFIG,
+  RESULTS_LAYOUT_CONFIG,
+} from '@geonetwork-ui/ui/search'
 
 @Component({
   selector: 'datahub-news-page',
@@ -19,6 +26,10 @@ import { LastCreatedComponent } from './last-created/last-created.component'
     TranslateDirective,
     FeatureSearchModule,
     LastCreatedComponent,
+    SearchStateContainerDirective,
+  ],
+  providers: [
+    { provide: RESULTS_LAYOUT_CONFIG, useValue: DEFAULT_RESULTS_LAYOUT_CONFIG },
   ],
 })
 export class NewsPageComponent {

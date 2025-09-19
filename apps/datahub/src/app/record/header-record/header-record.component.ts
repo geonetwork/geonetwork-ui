@@ -9,7 +9,7 @@ import { MdViewFacade } from '@geonetwork-ui/feature/record'
 import { combineLatest, map } from 'rxjs'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { CommonModule } from '@angular/common'
-import { NgIcon, provideIcons } from '@ng-icons/core'
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { matArrowBack, matCreditCard } from '@ng-icons/material-icons/baseline'
 import { DateService, getIsMobile } from '@geonetwork-ui/util/shared'
 import {
@@ -61,6 +61,9 @@ export const HEADER_HEIGHT_MOBILE_THUMBNAIL = 554
       matCreditCard,
       iconoirAppleShortcuts,
       iconoirOpenNewWindow,
+    }),
+    provideNgIconsConfig({
+      size: '1.5em',
     }),
   ],
 })

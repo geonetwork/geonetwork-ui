@@ -57,7 +57,9 @@ export class DataViewComponent {
     }
   }
   @Input() set datavizConfig(value: any) {
-    this._selectedView = value.view
+    if ((value && value.view === 'table') || value.view === 'chart') {
+      this._selectedView = value.view
+    }
     if (this.mode === value.view) {
       if (!value.source) {
         this.linkSelected.emit(this.selectedLink$.value)

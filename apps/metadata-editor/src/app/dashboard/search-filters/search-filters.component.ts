@@ -9,6 +9,7 @@ import {
 import { iconoirFilterAlt } from '@ng-icons/iconoir'
 import {
   FeatureSearchModule,
+  FilterDropdownComponent,
   SearchFiltersSummaryComponent,
 } from '@geonetwork-ui/feature/search'
 
@@ -21,6 +22,7 @@ import {
     FeatureSearchModule,
     NgIconComponent,
     SearchFiltersSummaryComponent,
+    FilterDropdownComponent,
   ],
   providers: [
     provideIcons({

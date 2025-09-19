@@ -20,7 +20,7 @@ export default {
   component: ResultsListComponent,
   decorators: [
     moduleMetadata({
-      declarations: [
+      imports: [
         RecordPreviewListComponent,
         RecordPreviewCardComponent,
         RecordPreviewTextComponent,
@@ -53,6 +53,8 @@ export const Primary: StoryObj<ResultsListComponentWithKey> = {
     props: {
       ...args,
       layoutConfig: DEFAULT_RESULTS_LAYOUT_CONFIG[args.layoutConfigKey],
+      recordUrlGetter: (record: CatalogRecord) =>
+        `/my/record/${record.uniqueIdentifier}/open`,
     },
   }),
 }

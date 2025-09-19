@@ -19,7 +19,6 @@ describe('SourceLabelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SourceLabelComponent],
       providers: [
         provideI18n(),
         {

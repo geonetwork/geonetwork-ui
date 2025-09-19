@@ -3,7 +3,7 @@ import * as basicLightbox from 'basiclightbox'
 import { ContentGhostComponent } from '../content-ghost/content-ghost.component'
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { NgIcon, provideIcons } from '@ng-icons/core'
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { matZoomOutMap } from '@ng-icons/material-icons/baseline'
 import { CommonModule } from '@angular/common'
 
@@ -19,7 +19,12 @@ import { CommonModule } from '@angular/common'
     ButtonComponent,
     NgIcon,
   ],
-  viewProviders: [provideIcons({ matZoomOutMap })],
+  viewProviders: [
+    provideIcons({ matZoomOutMap }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
+  ],
 })
 export class ImageOverlayPreviewComponent {
   @Input() imageUrl: string

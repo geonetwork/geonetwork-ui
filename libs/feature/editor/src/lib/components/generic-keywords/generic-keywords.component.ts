@@ -12,7 +12,11 @@ import { map } from 'rxjs'
 import { Keyword } from '@geonetwork-ui/common/domain/model/record'
 import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
 import { TranslatePipe } from '@ngx-translate/core'
-import { NgIconComponent, provideIcons } from '@ng-icons/core'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
 import { matWarningAmberOutline } from '@ng-icons/material-icons/outline'
 
 type AutocompleteItem = { title: string; value: Keyword }
@@ -33,6 +37,9 @@ type AutocompleteItem = { title: string; value: Keyword }
   providers: [
     provideIcons({
       matWarningAmberOutline,
+    }),
+    provideNgIconsConfig({
+      size: '1.5em',
     }),
   ],
 })

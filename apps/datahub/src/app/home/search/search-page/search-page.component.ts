@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { RouterFacade } from '@geonetwork-ui/feature/router'
 import {
   FeatureSearchModule,
+  ResultsHitsContainerComponent,
+  ResultsListContainerComponent,
   SearchFacade,
 } from '@geonetwork-ui/feature/search'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -12,6 +14,10 @@ import {
   SearchConfig,
 } from '@geonetwork-ui/util/app-config'
 import { SearchFiltersComponent } from '../search-filters/search-filters.component'
+import {
+  DEFAULT_RESULTS_LAYOUT_CONFIG,
+  RESULTS_LAYOUT_CONFIG,
+} from '@geonetwork-ui/ui/search'
 
 @Component({
   selector: 'datahub-search-page',
@@ -19,7 +25,15 @@ import { SearchFiltersComponent } from '../search-filters/search-filters.compone
   styleUrls: ['./search-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FeatureSearchModule, SearchFiltersComponent],
+  imports: [
+    FeatureSearchModule,
+    SearchFiltersComponent,
+    ResultsHitsContainerComponent,
+    ResultsListContainerComponent,
+  ],
+  providers: [
+    { provide: RESULTS_LAYOUT_CONFIG, useValue: DEFAULT_RESULTS_LAYOUT_CONFIG },
+  ],
 })
 export class SearchPageComponent implements OnInit {
   metadataQualityDisplay: boolean
