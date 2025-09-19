@@ -139,8 +139,10 @@ export class MdViewFacade {
               return from(
                 this.dataService.getItemsFromOgcApi(link.url.href)
               ).pipe(
-                map((collectionRecords: OgcApiRecord) => {
-                  return collectionRecords && collectionRecords.geometry
+                map((collectionRecords: OgcApiRecord[]) => {
+                  return collectionRecords &&
+                    collectionRecords[0] &&
+                    collectionRecords[0].geometry
                     ? link
                     : null
                 }),

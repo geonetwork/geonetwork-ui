@@ -379,17 +379,19 @@ describe('MdViewFacade', () => {
       })
     })
     it('should return OGC links that have geometry', fakeAsync(() => {
-      jest.spyOn(facade.dataService, 'getItemsFromOgcApi').mockResolvedValue({
-        id: '123',
-        type: 'Feature',
-        time: null,
-        properties: {
-          type: '',
-          title: '',
+      jest.spyOn(facade.dataService, 'getItemsFromOgcApi').mockResolvedValue([
+        {
+          id: '123',
+          type: 'Feature',
+          time: null,
+          properties: {
+            type: '',
+            title: '',
+          },
+          links: [],
+          geometry: { type: 'MultiPolygon', coordinates: [] },
         },
-        links: [],
-        geometry: { type: 'MultiPolygon', coordinates: [] },
-      })
+      ])
       let result
       facade.geoDataLinksWithGeometry$.subscribe((v) => (result = v))
       tick()
@@ -424,17 +426,19 @@ describe('MdViewFacade', () => {
           },
         ],
       }
-      jest.spyOn(facade.dataService, 'getItemsFromOgcApi').mockResolvedValue({
-        id: '123',
-        type: 'Feature',
-        time: null,
-        properties: {
-          type: '',
-          title: '',
+      jest.spyOn(facade.dataService, 'getItemsFromOgcApi').mockResolvedValue([
+        {
+          id: '123',
+          type: 'Feature',
+          time: null,
+          properties: {
+            type: '',
+            title: '',
+          },
+          links: [],
+          geometry: null,
         },
-        links: [],
-        geometry: null,
-      })
+      ])
       let result
       facade.geoDataLinksWithGeometry$.subscribe((v) => (result = v))
       tick()
@@ -463,17 +467,19 @@ describe('MdViewFacade', () => {
             },
           ],
         }
-        jest.spyOn(facade.dataService, 'getItemsFromOgcApi').mockResolvedValue({
-          id: '123',
-          type: 'Feature',
-          time: null,
-          properties: {
-            type: '',
-            title: '',
+        jest.spyOn(facade.dataService, 'getItemsFromOgcApi').mockResolvedValue([
+          {
+            id: '123',
+            type: 'Feature',
+            time: null,
+            properties: {
+              type: '',
+              title: '',
+            },
+            links: [],
+            geometry: { type: 'MultiPolygon', coordinates: [] },
           },
-          links: [],
-          geometry: { type: 'MultiPolygon', coordinates: [] },
-        })
+        ])
         let result
         facade.geoDataLinksWithGeometry$.subscribe((v) => (result = v))
         tick()
