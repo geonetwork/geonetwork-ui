@@ -75,10 +75,17 @@ export const FORMATS = {
     mimeTypes: ['application/geopackage+sqlite3'],
   },
   zip: {
-    extensions: ['zip', 'tar.gz'],
+    extensions: ['zip', 'tar.gz', 'gz', '7z', '7zip'],
     priority: 8,
     color: '#B0CB52',
-    mimeTypes: ['application/zip', 'application/x-zip'],
+    mimeTypes: [
+      'application/zip',
+      'application/x-zip',
+      'application/x-compressed',
+      'application/x-7z-compressed',
+      'application/gzip',
+      'application/x-gzip',
+    ],
   },
   pdf: {
     extensions: ['pdf'],
@@ -92,38 +99,56 @@ export const FORMATS = {
     color: '#C4A98F',
     mimeTypes: ['image/jpg'],
   },
+  png: {
+    extensions: ['png'],
+    priority: 10,
+    color: '#8B5A3C',
+    mimeTypes: ['image/png'],
+  },
+  tiff: {
+    extensions: ['tiff', 'tif', 'geotiff', 'geotif'],
+    priority: 11,
+    color: '#6B4423',
+    mimeTypes: ['image/tiff'],
+  },
   svg: {
     extensions: ['svg'],
-    priority: 10,
+    priority: 12,
     color: '#EB6D82',
     mimeTypes: ['image/svg+xml'],
   },
   dxf: {
     extensions: ['dxf'],
-    priority: 11,
+    priority: 13,
     color: '#DCCD00',
     mimeTypes: ['application/x-dxf', 'image/x-dxf'],
   },
   html: {
     extensions: ['html', 'htm'],
-    priority: 12,
+    priority: 14,
     color: '#C0C9B6',
     mimeTypes: ['text/html'],
   },
   fgb: {
     extensions: ['fgb', 'flatgeobuf'],
-    priority: 13,
+    priority: 15,
     color: '#A8111C',
     mimeTypes: ['application/flatgeobuf'],
   },
   jsonfg: {
     extensions: ['jsonfg', 'jsonfgc'],
-    priority: 14,
+    priority: 16,
     color: '#009EE0',
     mimeTypes: [
       'application/vnd.ogc.fg+json',
       'application/vnd.ogc.fg+json;compatibility=geojson',
     ],
+  },
+  webp: {
+    extensions: ['webp'],
+    priority: 17,
+    color: '#5A9E6F',
+    mimeTypes: ['image/webp'],
   },
 } as const
 
