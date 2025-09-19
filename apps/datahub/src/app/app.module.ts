@@ -1,10 +1,19 @@
+import { ViewportScroller } from '@angular/common'
 import { importProvidersFrom, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import { RouterModule } from '@angular/router'
+import { provideAnimations } from '@angular/platform-browser/animations'
+import { Event, Router, RouterModule, Scroll } from '@angular/router'
+import {
+  LOGIN_URL,
+  METADATA_LANGUAGE,
+  provideGn4,
+  provideRepositoryUrl,
+} from '@geonetwork-ui/api/repository'
 import {
   ORGANIZATION_PAGE_URL_TOKEN,
   ORGANIZATION_URL_TOKEN,
 } from '@geonetwork-ui/feature/catalog'
+import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
 import {
   EXTERNAL_VIEWER_OPEN_NEW_TAB,
   EXTERNAL_VIEWER_URL_TEMPLATE,
@@ -29,7 +38,13 @@ import {
   RECORD_REUSE_URL_TOKEN,
   RECORD_SERVICE_URL_TOKEN,
 } from '@geonetwork-ui/feature/search'
+import { LANGUAGES_LIST } from '@geonetwork-ui/ui/catalog'
 import { THUMBNAIL_PLACEHOLDER } from '@geonetwork-ui/ui/elements'
+import {
+  BASEMAP_LAYERS,
+  DO_NOT_USE_DEFAULT_BASEMAP,
+  MAP_VIEW_CONSTRAINTS,
+} from '@geonetwork-ui/ui/map'
 import {
   getGlobalConfig,
   getMapContextLayerFromConfig,
@@ -38,6 +53,7 @@ import {
   getThemeConfig,
   TRANSLATE_WITH_OVERRIDES_CONFIG,
 } from '@geonetwork-ui/util/app-config'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
   getGeometryFromGeoJSON,
   PROXY_PATH,
@@ -46,32 +62,17 @@ import {
 import { EffectsModule } from '@ngrx/effects'
 import { MetaReducer, StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { filter, pairwise } from 'rxjs'
 import { environment } from '../environments/environment'
 import { AppComponent } from './app.component'
 import { SearchPageComponent } from './home/search/search-page/search-page.component'
-import { RecordPageComponent } from './record/record-page/record-page.component'
-import { DatahubRouterService } from './router/datahub-router.service'
-import { LANGUAGES_LIST } from '@geonetwork-ui/ui/catalog'
-import {
-  LOGIN_URL,
-  METADATA_LANGUAGE,
-  provideGn4,
-  provideRepositoryUrl,
-} from '@geonetwork-ui/api/repository'
-import { provideAnimations } from '@angular/platform-browser/animations'
 import { OrganizationPageComponent } from './organization/organization-page/organization-page.component'
-
-import {
-  BASEMAP_LAYERS,
-  DO_NOT_USE_DEFAULT_BASEMAP,
-  MAP_VIEW_CONSTRAINTS,
-} from '@geonetwork-ui/ui/map'
 import {
   MAX_FEATURE_COUNT,
   REUSE_FORM_URL,
 } from './record/record-data-preview/record-data-preview.component'
-import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
+import { RecordPageComponent } from './record/record-page/record-page.component'
+import { DatahubRouterService } from './router/datahub-router.service'
 
 export const metaReducers: MetaReducer[] = !environment.production ? [] : []
 
@@ -82,7 +83,6 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     BrowserModule,
     RouterModule.forRoot([], {
       initialNavigation: 'enabledBlocking',
-      scrollPositionRestoration: 'enabled',
     }),
     StoreModule.forRoot(
       {},
@@ -219,7 +219,14 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor() {
+  constructor(
+    private router: Router,
+    private viewportScroller: ViewportScroller
+  ) {
+    // Disable automatic scroll restoration to avoid race conditions
+    this.viewportScroller.setHistoryScrollRestoration('manual')
+    this.handleScrollOnNavigation()
+
     ThemeService.applyCssVariables(
       getThemeConfig().PRIMARY_COLOR,
       getThemeConfig().SECONDARY_COLOR,
@@ -234,5 +241,51 @@ export class AppModule {
       getThemeConfig().PRIMARY_COLOR,
       [10, 25, 50, 75, 100]
     )
+  }
+
+  /**
+   * When route is changed, Angular interprets a simple query params change as "forward navigation" too.
+   * Using the pairwise function allows us to have both the previous and current router events, which we can
+   * use to effectively compare the two navigation events and see if they actually change route, or only
+   * the route parameters (i.e. selections stored in query params).
+   *
+   * Related to: https://github.com/angular/angular/issues/26744
+   */
+  private handleScrollOnNavigation(): void {
+    this.router.events
+      .pipe(
+        filter((e: Event): e is Scroll => e instanceof Scroll),
+        pairwise()
+      )
+      .subscribe((e: Scroll[]) => {
+        const previous = e[0]
+        const current = e[1]
+        if (current.position) {
+          // Backward navigation
+          this.viewportScroller.scrollToPosition(current.position)
+        } else if (current.anchor) {
+          // Anchor navigation
+          this.viewportScroller.scrollToAnchor(current.anchor)
+        } else {
+          // Check if routes match, or if it is only a query param change
+          if (
+            this.getBaseRoute(
+              (previous.routerEvent as any).urlAfterRedirects ?? ''
+            ) !==
+            this.getBaseRoute(
+              (current.routerEvent as any).urlAfterRedirects ?? ''
+            )
+          ) {
+            // Routes don't match, this is actual forward navigation
+            // Default behavior: scroll to top
+            this.viewportScroller.scrollToPosition([0, 0])
+          }
+        }
+      })
+  }
+
+  private getBaseRoute(url: string): string {
+    // return url without query params
+    return url.split('?')[0]
   }
 }
