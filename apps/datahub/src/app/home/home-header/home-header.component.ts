@@ -23,7 +23,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/search'
 import { map } from 'rxjs/operators'
 import { ROUTER_ROUTE_NEWS } from '../../router/constants'
-import { lastValueFrom } from 'rxjs'
+import { lastValueFrom, of } from 'rxjs'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { sortByFromString } from '@geonetwork-ui/util/shared'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
@@ -101,6 +101,10 @@ export class HomeHeaderComponent {
   isAuthenticated$ = this.platformService
     .isAnonymous()
     .pipe(map((isAnonymous) => !isAnonymous))
+
+  showFavoritesButton$ = this.platformService.supportsAuthentication()
+    ? this.isAuthenticated$
+    : of(false)
 
   onFuzzySearchSelection(record: CatalogRecord) {
     this.routerFacade.goToMetadata(record)

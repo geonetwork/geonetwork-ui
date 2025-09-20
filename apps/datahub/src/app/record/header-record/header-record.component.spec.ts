@@ -16,6 +16,7 @@ import { BehaviorSubject } from 'rxjs'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { SearchService } from '@geonetwork-ui/feature/search'
 import { DateService } from '@geonetwork-ui/util/shared'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
@@ -61,6 +62,9 @@ describe('HeaderRecordComponent', () => {
         }),
         MockProvider(DateService, {
           formatDate: jest.fn(),
+        }),
+        MockProvider(PlatformServiceInterface, {
+          supportsAuthentication: jest.fn().mockReturnValue(false),
         }),
       ],
     }).compileComponents()

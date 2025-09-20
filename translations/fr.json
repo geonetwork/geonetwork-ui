@@ -522,6 +522,7 @@
   "record.metadata.usage": "Licences et conditions d'utilisation",
   "record.metadata.userFeedbacks": "Questions / Réponses",
   "record.metadata.userFeedbacks.anonymousUser": "Pour rédiger un commentaire, veuillez vous identifier.",
+  "record.metadata.userFeedbacks.authDisabled": "Les commentaires sont désactivés.",
   "record.metadata.userFeedbacks.newAnswer.buttonTitle": "Publier",
   "record.metadata.userFeedbacks.newAnswer.placeholder": "Répondre...",
   "record.metadata.userFeedbacks.newComment.placeholder": "Rédigez votre commentaire ici...",

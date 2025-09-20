@@ -73,6 +73,7 @@ class FieldsServiceMock {
 
 class PlatformServiceMock {
   getMe = jest.fn(() => new BehaviorSubject(user))
+  supportsAuthentication = jest.fn(() => true)
 }
 
 describe('SearchFiltersComponent', () => {
@@ -80,6 +81,7 @@ describe('SearchFiltersComponent', () => {
   let fixture: ComponentFixture<SearchFiltersComponent>
   let searchFacade
   let searchService
+  let platformMock: PlatformServiceMock
 
   beforeEach(() => MockBuilder(SearchFiltersComponent))
 
@@ -116,6 +118,9 @@ describe('SearchFiltersComponent', () => {
   beforeEach(() => {
     searchFacade = TestBed.inject(SearchFacade)
     searchService = TestBed.inject(SearchService)
+    platformMock = TestBed.inject(
+      PlatformServiceInterface
+    ) as unknown as PlatformServiceMock
     fixture = TestBed.createComponent(SearchFiltersComponent)
     component = fixture.componentInstance
   })
@@ -262,6 +267,26 @@ describe('SearchFiltersComponent', () => {
           filter_inspireKeyword: {},
         })
       })
+    })
+  })
+
+  describe('auth disable functionality', () => {
+    it('should set showAuthRelatedFeatures to false when auth is disabled', () => {
+      platformMock.supportsAuthentication.mockReturnValue(false)
+
+      fixture = TestBed.createComponent(SearchFiltersComponent)
+      component = fixture.componentInstance
+
+      expect(component.showAuthRelatedFeatures).toBe(false)
+    })
+
+    it('should set showAuthRelatedFeatures to true when auth is enabled', () => {
+      platformMock.supportsAuthentication.mockReturnValue(true)
+
+      fixture = TestBed.createComponent(SearchFiltersComponent)
+      component = fixture.componentInstance
+
+      expect(component.showAuthRelatedFeatures).toBe(true)
     })
   })
 })

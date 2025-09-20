@@ -61,6 +61,7 @@ class OrganisationsServiceMock {
 class PlatformServiceMock {
   getMe = jest.fn(() => of(null))
   getFeedbacksAllowed = jest.fn(() => of(true))
+  supportsAuthentication = jest.fn(() => true)
 }
 
 describe('RecordMetadataComponent', () => {
@@ -503,6 +504,24 @@ describe('RecordMetadataComponent', () => {
           expect(visible).toBe(true)
         })
       })
+    })
+  })
+
+  describe('auth disable functionality', () => {
+    it('should hide question button when auth is disabled', () => {
+      jest
+        .spyOn(platformService, 'supportsAuthentication')
+        .mockReturnValue(false)
+
+      expect(component.isAuthDisabled).toBe(true)
+    })
+
+    it('should show question button when auth is enabled', () => {
+      jest
+        .spyOn(platformService, 'supportsAuthentication')
+        .mockReturnValue(true)
+
+      expect(component.isAuthDisabled).toBe(false)
     })
   })
 })

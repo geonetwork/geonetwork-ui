@@ -6,7 +6,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core'
-import { catchError, filter, switchMap, takeUntil } from 'rxjs/operators'
+import { catchError, filter, switchMap, takeUntil, map } from 'rxjs/operators'
 import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs'
 import {
   UserFeedback,
@@ -31,6 +31,7 @@ import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import {
   matAccountBoxOutline,
+  matEditOffOutline,
   matEditOutline,
   matSendOutline,
 } from '@ng-icons/material-icons/outline'
@@ -61,6 +62,7 @@ type UserFeedbackSortingFunction = (
   ],
   viewProviders: [
     provideIcons({
+      matEditOffOutline,
       matEditOutline,
       matSendOutline,
       matAccountBoxOutline,
@@ -85,6 +87,10 @@ export class RecordUserFeedbacksComponent implements OnInit, OnDestroy {
   isActiveUserMetadaEditor = false
 
   loginUrl = this.authService.loginUrl
+
+  get showAuthUI(): boolean {
+    return this.platformServiceInterface.supportsAuthentication()
+  }
 
   sortingStrategyList: Array<DropdownChoice> = [
     {

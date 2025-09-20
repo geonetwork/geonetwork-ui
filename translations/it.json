@@ -522,6 +522,7 @@
   "record.metadata.usage": "Licenze e limiti di utilizzo",
   "record.metadata.userFeedbacks": "Domande / Risposte",
   "record.metadata.userFeedbacks.anonymousUser": "Per pubblicare un commento, effettua il login.",
+  "record.metadata.userFeedbacks.authDisabled": "",
   "record.metadata.userFeedbacks.newAnswer.buttonTitle": "Pubblica",
   "record.metadata.userFeedbacks.newAnswer.placeholder": "Risponde...",
   "record.metadata.userFeedbacks.newComment.placeholder": "Scrive qui il suo commento...",

@@ -48,6 +48,8 @@ describe('RecordUserFeedbacksComponent', () => {
   const platformServiceInterfaceMock: Partial<PlatformServiceInterface> = {
     getUserFeedbacks: jest.fn(),
     getMe: jest.fn(() => new BehaviorSubject(activeUser)),
+    isAnonymous: jest.fn(() => new BehaviorSubject(false)),
+    supportsAuthentication: jest.fn(() => true),
   }
 
   let component: RecordUserFeedbacksComponent
@@ -136,6 +138,32 @@ describe('RecordUserFeedbacksComponent', () => {
       expect(mdViewFacadeMock.addUserFeedback).toHaveBeenCalledWith(
         expectedNewUserFeedback
       )
+    })
+  })
+
+  describe('feedback login UI visibility', () => {
+    it('should hide feedback login UI when auth is disabled', () => {
+      jest
+        .spyOn(platformServiceInterfaceMock, 'supportsAuthentication')
+        .mockReturnValue(false)
+
+      fixture = TestBed.createComponent(RecordUserFeedbacksComponent)
+      component = fixture.componentInstance
+      component.metadataUuid = datasetRecordsFixture()[0].uniqueIdentifier
+
+      expect(component.showAuthUI).toBe(false)
+    })
+
+    it('should show feedback login UI when auth is enabled', () => {
+      jest
+        .spyOn(platformServiceInterfaceMock, 'supportsAuthentication')
+        .mockReturnValue(true)
+
+      fixture = TestBed.createComponent(RecordUserFeedbacksComponent)
+      component = fixture.componentInstance
+      component.metadataUuid = datasetRecordsFixture()[0].uniqueIdentifier
+
+      expect(component.showAuthUI).toBe(true)
     })
   })
 })

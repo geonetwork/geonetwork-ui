@@ -24,6 +24,7 @@ export abstract class PlatformServiceInterface {
   abstract getType(): string
   abstract getApiVersion(): Observable<string>
 
+  abstract supportsAuthentication(): boolean
   abstract getMe(): Observable<UserModel>
   abstract isAnonymous(): Observable<boolean>
   abstract getUsers(): Observable<UserModel[]>

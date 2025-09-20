@@ -26,9 +26,9 @@
                 (buttonClick)="saveDatavizConfig()"
                 [disabled]="savingStatus === 'saving'"
               >
-                <span
-                  [translate]="'record.metadata.preview.config.' + savingStatus"
-                ></span>
+                <span>{{
+                  'record.metadata.preview.config.' + savingStatus | translate
+                }}</span>
               </gn-ui-button>
             </ng-template>
           </mat-tab>

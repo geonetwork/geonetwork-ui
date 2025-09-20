@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { NavigationBarComponent } from './navigation-bar.component'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { SearchService } from '@geonetwork-ui/feature/search'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { ElementRef } from '@angular/core'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
@@ -29,6 +30,9 @@ describe('NavigationBarComponent', () => {
       providers: [
         MockProvider(SearchService, {
           updateFilters: jest.fn(),
+        }),
+        MockProvider(PlatformServiceInterface, {
+          supportsAuthentication: jest.fn(() => true),
         }),
       ],
     }).compileComponents()

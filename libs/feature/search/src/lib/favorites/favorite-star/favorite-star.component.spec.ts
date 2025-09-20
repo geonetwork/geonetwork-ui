@@ -20,6 +20,7 @@ tippy = jest.fn()
 const isAnonymous$ = new BehaviorSubject(false)
 class PlatformServiceMock {
   isAnonymous = jest.fn(() => isAnonymous$)
+  supportsAuthentication = jest.fn(() => true)
 }
 
 class FavoritesServiceMock {
@@ -267,6 +268,41 @@ describe('FavoriteStarComponent', () => {
     })
     it('unsubscribes', () => {
       expect(unsubscribeSpy).toHaveBeenCalled()
+    })
+  })
+  describe('when authentication is not supported', () => {
+    beforeEach(() => {
+      jest.clearAllMocks()
+
+      jest
+        .spyOn(platformService, 'supportsAuthentication')
+        .mockReturnValue(false)
+
+      const localAnonymous$ = new BehaviorSubject(true)
+      jest
+        .spyOn(platformService, 'isAnonymous')
+        .mockReturnValue(localAnonymous$)
+
+      fixture = TestBed.createComponent(FavoriteStarComponent)
+      component = fixture.componentInstance
+      component.displayCount = true
+      component.record = {
+        ...datasetRecordsFixture[0],
+        extras: { favoriteCount: 42 },
+      }
+      fixture.detectChanges()
+
+      starToggle = fixture.debugElement.query(
+        By.directive(StarToggleComponent)
+      ).componentInstance
+    })
+
+    it('star toggle is disabled because user is anonymous', () => {
+      expect(starToggle.disabled).toBe(true)
+    })
+
+    it('does not create tippy tooltip', () => {
+      expect(tippy).not.toHaveBeenCalled()
     })
   })
 })
