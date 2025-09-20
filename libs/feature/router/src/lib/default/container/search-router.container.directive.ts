@@ -11,6 +11,7 @@ import { RouterSearchService } from '../services/router-search.service'
       useClass: RouterSearchService,
     },
   ],
+  standalone: true,
 })
 export class SearchRouterContainerDirective implements OnInit {
   @Input('gnUiSearchRouterContainer') searchId: string

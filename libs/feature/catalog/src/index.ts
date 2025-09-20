@@ -1,4 +1,3 @@
-export * from './lib/feature-catalog.module'
 export * from './lib/organization-url.token'
 export * from './lib/sources/sources.service'
 export * from './lib/sources/sources.model'

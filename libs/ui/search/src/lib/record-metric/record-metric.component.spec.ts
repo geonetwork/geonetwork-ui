@@ -12,7 +12,6 @@ describe('RecordMetricComponent', () => {
     await TestBed.configureTestingModule({
       imports: [TranslateDirective, TranslatePipe],
       providers: [provideI18n()],
-      declarations: [RecordMetricComponent],
     }).compileComponents()
   })
 

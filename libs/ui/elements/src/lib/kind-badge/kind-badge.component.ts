@@ -5,7 +5,11 @@ import {
   Input,
   TemplateRef,
 } from '@angular/core'
-import { NgIconComponent, provideIcons } from '@ng-icons/core'
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core'
 import {
   iconoirDatabase,
   iconoirAppleWallet,
@@ -36,6 +40,9 @@ enum KindConfig {
       iconoirDatabase,
       iconoirCode,
       iconoirAppWindow,
+    }),
+    provideNgIconsConfig({
+      size: '1.5em',
     }),
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

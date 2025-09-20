@@ -125,6 +125,15 @@ describe('RecordDownloadsComponent', () => {
             type: 'service',
             accessServiceProtocol: 'wfs',
           },
+          {
+            name: 'Surveillance littorale OGC',
+            description: 'OGC API service',
+            url: newUrl(
+              'https://demo.ldproxy.net/zoomstack/collections/airports/items'
+            ),
+            type: 'service',
+            accessServiceProtocol: 'ogcFeatures',
+          },
         ])
         fixture.detectChanges()
       })
@@ -141,15 +150,95 @@ describe('RecordDownloadsComponent', () => {
             url: newUrl('https://www.ifremer.fr/surval_parametre_point.csv'),
             type: 'download',
           },
+          {
+            description: 'OGC API service',
+            mimeType: 'application/geo+json',
+            name: 'Surveillance littorale OGC',
+            title: 'collection1',
+            url: newUrl(
+              'https://demo.ldproxy.net/zoomstack/collections/airports/items'
+            ),
+            type: 'service',
+            accessServiceProtocol: 'ogcFeatures',
+          },
+          {
+            description: 'OGC API service',
+            mimeType: 'application/json',
+            name: 'Surveillance littorale OGC',
+            title: 'collection2',
+            url: newUrl(
+              'https://demo.ldproxy.net/zoomstack/collections/airports/items'
+            ),
+            type: 'service',
+            accessServiceProtocol: 'ogcFeatures',
+          },
         ])
       }))
-      // disable error handling in UI
-      it.skip('shows an error', () => {
-        const popup = fixture.debugElement.query(
-          By.directive(PopupAlertComponent)
-        )
-        expect(popup).toBeTruthy()
+    })
+
+    describe('when the OGC API service fails', () => {
+      beforeEach(() => {
+        facade.downloadLinks$.next([
+          {
+            description: 'Lieu de surveillance (point)',
+            name: 'surval_parametre_point.csv',
+            url: newUrl('https://www.ifremer.fr/surval_parametre_point.csv'),
+            type: 'download',
+          },
+          {
+            description: 'Lieu de surveillance (ligne)',
+            name: 'surval_parametre_ligne',
+            url: newUrl(
+              'https://www.ifremer.fr/services/wfs/surveillance_littorale'
+            ),
+            type: 'service',
+            accessServiceProtocol: 'wfs',
+          },
+          {
+            name: 'Some erroneous OGC API service',
+            description: 'OGC API service',
+            url: newUrl('https://error.org/collections/airports/items'),
+            type: 'service',
+            accessServiceProtocol: 'ogcFeatures',
+          },
+        ])
+        fixture.detectChanges()
       })
+      it('emits the other links', fakeAsync(() => {
+        let downloadLinks = []
+        component.links$.subscribe((links: DatasetOnlineResource[]) => {
+          downloadLinks = links
+        })
+        tick(200)
+        expect(downloadLinks).toEqual([
+          {
+            description: 'Lieu de surveillance (point)',
+            name: 'surval_parametre_point.csv',
+            url: newUrl('https://www.ifremer.fr/surval_parametre_point.csv'),
+            type: 'download',
+          },
+          {
+            description: 'Lieu de surveillance (ligne)',
+            mimeType: 'text/csv',
+            name: 'surval_parametre_ligne',
+            url: newUrl(
+              'https://www.ifremer.fr/services/wfs/surveillance_littorale'
+            ),
+            type: 'service',
+            accessServiceProtocol: 'wfs',
+          },
+          {
+            description: 'Lieu de surveillance (ligne)',
+            name: 'surval_parametre_ligne',
+            mimeType: 'application/geo+json',
+            url: newUrl(
+              'https://www.ifremer.fr/services/wfs/surveillance_littorale'
+            ),
+            type: 'service',
+            accessServiceProtocol: 'wfs',
+          },
+        ])
+      }))
     })
 
     describe('with no link compatible with DOWNLOAD usage', () => {

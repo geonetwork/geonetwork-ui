@@ -4,17 +4,16 @@ import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 import { FeatureRecordModule } from '@geonetwork-ui/feature/record'
-import { FeatureCatalogModule } from '@geonetwork-ui/feature/catalog'
 import {
   DefaultRouterModule,
   RouterService,
+  SearchRouterContainerDirective,
 } from '@geonetwork-ui/feature/router'
 import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
 import { ThemeService } from '@geonetwork-ui/util/shared'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { AppComponent } from './app.component'
 import { appRoutes } from './app.routes'
-import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { BrowserModule } from '@angular/platform-browser'
 import { provideAnimations } from '@angular/platform-browser/animations'
 import { extModules } from './build-specifics'
@@ -52,12 +51,11 @@ import { FeatureEditorModule } from '@geonetwork-ui/feature/editor'
       organizationRouteComponent: null,
     }),
     ...extModules,
+    SearchRouterContainerDirective,
   ],
   providers: [
     { provide: RouterService, useClass: EditorRouterService },
-    importProvidersFrom(FeatureAuthModule),
     importProvidersFrom(FeatureSearchModule),
-    importProvidersFrom(FeatureCatalogModule),
     importProvidersFrom(FeatureRecordModule),
     importProvidersFrom(FeatureEditorModule),
     provideI18n(),

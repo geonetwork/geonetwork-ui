@@ -12,10 +12,12 @@ import {
   MapViewComponent,
 } from '@geonetwork-ui/feature/record'
 import {
+  FacetsContainerComponent,
   FeatureSearchModule,
   FuzzySearchComponent,
+  RecordsMetricsComponent,
+  ResultsListContainerComponent,
 } from '@geonetwork-ui/feature/search'
-import { UiSearchModule } from '@geonetwork-ui/ui/search'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
@@ -34,7 +36,6 @@ import {
   MapStateContainerComponent,
 } from '@geonetwork-ui/feature/map'
 import { GnDatasetViewChartComponent } from './components/gn-dataset-view-chart/gn-dataset-view-chart.component'
-import { FeatureAuthModule } from '@geonetwork-ui/feature/auth'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { GnFigureDatasetsComponent } from './components/gn-figure-datasets/gn-figure-datasets.component'
 import { GnDatasetViewMapComponent } from './components/gn-dataset-view-map/gn-dataset-view-map.component'
@@ -75,11 +76,9 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   ],
   imports: [
     BrowserAnimationsModule,
-    UiSearchModule,
     FeatureSearchModule,
     FeatureRecordModule,
     FeatureMapModule,
-    FeatureAuthModule,
     MapStateContainerComponent,
     LayersPanelComponent,
     TableViewComponent,
@@ -88,6 +87,11 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     ButtonComponent,
     FigureComponent,
     FuzzySearchComponent,
+    RecordsMetricsComponent,
+    ResultsListContainerComponent,
+    FacetsContainerComponent,
+    LayersPanelComponent,
+    FigureComponent,
   ],
   providers: [
     importProvidersFrom(

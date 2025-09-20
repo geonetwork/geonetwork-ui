@@ -8,7 +8,10 @@ import { filter } from 'rxjs/operators'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { OrganizationsServiceInterface } from '@geonetwork-ui/common/domain/organizations.service.interface'
 import { LetDirective } from '@ngrx/component'
-import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import {
+  FeatureSearchModule,
+  SearchStateContainerDirective,
+} from '@geonetwork-ui/feature/search'
 
 @Component({
   selector: 'datahub-organization-page',
@@ -22,6 +25,7 @@ import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
     OrganizationDetailsComponent,
     LetDirective,
     FeatureSearchModule,
+    SearchStateContainerDirective,
   ],
 })
 export class OrganizationPageComponent implements OnInit {

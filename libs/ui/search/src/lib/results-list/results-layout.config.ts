@@ -20,9 +20,6 @@ export class ResultsLayoutConfigItem {
 }
 export type ResultsLayoutConfigModel = Record<string, ResultsLayoutConfigItem>
 
-export const RESULTS_LAYOUT_CONFIG =
-  new InjectionToken<ResultsLayoutConfigModel>('results-layout.config')
-
 export const DEFAULT_RESULTS_LAYOUT_CONFIG: ResultsLayoutConfigModel = {
   CARD: new ResultsLayoutConfigItem(
     RecordPreviewCardComponent,
@@ -46,3 +43,8 @@ export const DEFAULT_RESULTS_LAYOUT_CONFIG: ResultsLayoutConfigModel = {
   TEXT: new ResultsLayoutConfigItem(RecordPreviewTextComponent),
   TITLE: new ResultsLayoutConfigItem(RecordPreviewTitleComponent),
 }
+
+export const RESULTS_LAYOUT_CONFIG =
+  new InjectionToken<ResultsLayoutConfigModel>('results-layout.config', {
+    factory: () => DEFAULT_RESULTS_LAYOUT_CONFIG,
+  })

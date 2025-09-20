@@ -46,7 +46,6 @@ The libraries are organized as follows:
 
 2. Libraries providing business or data logic and state management are in the `feature` folder and are categorized by their intended use:
 
-   - `feature-auth` for logic and components related to authentication
    - `feature-catalog` for logic and components related to general catalog topics (title, logo, etc.)
    - `feature-dataviz` for logic and components related to data visualization
    - `feature-record` for logic and components related to displaying a catalog record's information (metadata, data preview, exports, APIs...)

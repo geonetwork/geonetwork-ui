@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { MyRecordsComponent } from './my-records.component'
-import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
+import {
+  FeatureSearchModule,
+  SearchStateContainerDirective,
+} from '@geonetwork-ui/feature/search'
 import { CommonModule } from '@angular/common'
 
 @Component({
@@ -8,7 +11,12 @@ import { CommonModule } from '@angular/common'
   templateUrl: './my-records-state-wrapper.component.html',
   styles: [],
   standalone: true,
-  imports: [CommonModule, FeatureSearchModule, MyRecordsComponent],
+  imports: [
+    CommonModule,
+    FeatureSearchModule,
+    MyRecordsComponent,
+    SearchStateContainerDirective,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyRecordsStateWrapperComponent {}

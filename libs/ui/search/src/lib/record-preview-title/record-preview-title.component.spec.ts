@@ -9,7 +9,6 @@ describe('RecordPreviewTextComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecordPreviewTitleComponent],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents()
   })

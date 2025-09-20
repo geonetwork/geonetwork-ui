@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core'
 import { propagateToDocumentOnly } from '@geonetwork-ui/util/shared'
-import { NgIcon, provideIcons } from '@ng-icons/core'
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { CommonModule } from '@angular/common'
 import { matStar, matStarBorder } from '@ng-icons/material-icons/baseline'
 import { ButtonComponent } from '../button/button.component'
@@ -21,7 +21,12 @@ import { TranslateDirective } from '@ngx-translate/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule, NgIcon, ButtonComponent, TranslateDirective],
-  viewProviders: [provideIcons({ matStar, matStarBorder })],
+  viewProviders: [
+    provideIcons({ matStar, matStarBorder }),
+    provideNgIconsConfig({
+      size: '1.5em',
+    }),
+  ],
 })
 export class StarToggleComponent {
   @Input() toggled!: boolean

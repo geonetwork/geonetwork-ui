@@ -83,7 +83,7 @@
     "@rgrove/parse-xml": "4.2.0",
     "@storybook/addon-interactions": "^8.2.8",
     "alasql": "4.6.0",
-    "axios": "1.8.4",
+    "axios": "1.12.0",
     "basiclightbox": "^5.0.4",
     "chart.js": "4.4.7",
     "chroma-js": "3.1.2",

@@ -13,7 +13,7 @@ import { combineLatest, Observable } from 'rxjs'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { RouterLink } from '@angular/router'
-import { NgIcon, provideIcons } from '@ng-icons/core'
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { iconoirSystemShut } from '@ng-icons/iconoir'
 import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
 
@@ -37,6 +37,9 @@ import { FeatureSearchModule } from '@geonetwork-ui/feature/search'
   providers: [
     provideIcons({
       iconoirSystemShut,
+    }),
+    provideNgIconsConfig({
+      size: '1.5em',
     }),
   ],
 })
