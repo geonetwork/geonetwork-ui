@@ -188,30 +188,6 @@ describe('InternalLinkCardComponent', () => {
     })
   })
 
-  describe('favorite template handling', () => {
-    it('should not show favorite container when favoriteTemplate is null', () => {
-      component.favoriteTemplate = null
-      fixture.detectChanges()
-
-      const favoriteContainer = fixture.debugElement.query(
-        By.css('[data-cy="recordFav"]')
-      )
-      expect(favoriteContainer).toBeFalsy()
-    })
-
-    it('should not show favorite container when showFavorites is false', () => {
-      component.favoriteTemplate =
-        {} as unknown as typeof component.favoriteTemplate
-      component.showFavorites = false
-      fixture.detectChanges()
-
-      const favoriteContainer = fixture.debugElement.query(
-        By.css('[data-cy="recordFav"]')
-      )
-      expect(favoriteContainer).toBeFalsy()
-    })
-  })
-
   describe('event handlers', () => {
     let openSpy: jest.SpyInstance
 

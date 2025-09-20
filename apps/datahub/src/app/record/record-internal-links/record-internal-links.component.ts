@@ -24,7 +24,6 @@ import {
   getMetadataQualityConfig,
   MetadataQualityConfig,
 } from '@geonetwork-ui/util/app-config'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Component({
   selector: 'datahub-record-internal-links',
@@ -54,10 +53,6 @@ export class RecordInternalLinksComponent {
   metadataQualityDisplay: boolean
   recordUrlGetter = this.getRecordUrl.bind(this)
 
-  get shouldShowFavorites(): boolean {
-    return this.platformServiceInterface.supportsAuthentication()
-  }
-
   constructor(
     @Optional()
     @Inject(RECORD_DATASET_URL_TOKEN)
@@ -67,8 +62,7 @@ export class RecordInternalLinksComponent {
     private recordServiceUrlTemplate: string,
     @Optional()
     @Inject(RECORD_REUSE_URL_TOKEN)
-    private recordReuseUrlTemplate: string,
-    private platformServiceInterface: PlatformServiceInterface
+    private recordReuseUrlTemplate: string
   ) {
     const cfg: MetadataQualityConfig =
       getMetadataQualityConfig() || ({} as MetadataQualityConfig)

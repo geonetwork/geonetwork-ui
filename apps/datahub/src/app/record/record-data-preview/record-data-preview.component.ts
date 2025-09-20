@@ -23,7 +23,7 @@ import {
 } from '@geonetwork-ui/feature/record'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { getIsMobile } from '@geonetwork-ui/util/shared'
-import { TranslateDirective } from '@ngx-translate/core'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   BehaviorSubject,
@@ -59,6 +59,7 @@ export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
     DataViewComponent,
     MapViewComponent,
     ButtonComponent,
+    TranslatePipe,
   ],
 })
 export class RecordDataPreviewComponent implements OnDestroy, OnInit {

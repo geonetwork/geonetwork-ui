@@ -475,7 +475,6 @@
   "record.metadata.otherConstraints": "Additional Conditions",
   "record.metadata.owner": "Catalog of origin",
   "record.metadata.preview": "Preview",
-  "record.metadata.preview.config.": "",
   "record.metadata.preview.config.error": "Error saving the configuration",
   "record.metadata.preview.config.idle": "Set as default preview",
   "record.metadata.preview.config.saved": "Saved !",

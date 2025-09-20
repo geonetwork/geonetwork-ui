@@ -16,7 +16,6 @@ import {
   RECORD_SERVICE_URL_TOKEN,
   RECORD_REUSE_URL_TOKEN,
 } from '../record-url.token'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 @Component({
   selector: 'gn-ui-results-list',
@@ -26,7 +25,6 @@ class ResultsListMockComponent {
   @Input() records: CatalogRecord[]
   @Input() loading: boolean
   @Input() layout = 'CARD'
-  @Input() showFavorites = true
 }
 @Component({
   selector: 'gn-ui-viewport-intersector',
@@ -45,15 +43,10 @@ class SearchFacadeMock {
   error$ = of(null)
 }
 
-class PlatformServiceMock {
-  supportsAuthentication = jest.fn(() => true)
-}
-
 describe('ResultsListContainerComponent', () => {
   let component: ResultsListContainerComponent
   let fixture: ComponentFixture<ResultsListContainerComponent>
   let searchFacade: SearchFacadeMock
-  let platformMock: PlatformServiceMock
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -85,16 +78,11 @@ describe('ResultsListContainerComponent', () => {
           provide: RECORD_REUSE_URL_TOKEN,
           useValue: '/my/reuse/${uuid}/open',
         },
-        {
-          provide: PlatformServiceInterface,
-          useClass: PlatformServiceMock,
-        },
       ],
     }).compileComponents()
     fixture = TestBed.createComponent(ResultsListContainerComponent)
     component = fixture.componentInstance
     searchFacade = TestBed.inject(SearchFacade) as any
-    platformMock = TestBed.inject(PlatformServiceInterface) as any
   })
 
   describe('default init', () => {
@@ -205,48 +193,6 @@ describe('ResultsListContainerComponent', () => {
           '/my/record/my-dataset-001/open'
         )
       })
-    })
-  })
-
-  describe('auth disable functionality', () => {
-    beforeEach(() => {
-      component.layout = 'CARD'
-    })
-
-    it('should show favorites when auth is enabled', () => {
-      platformMock.supportsAuthentication.mockReturnValue(true)
-
-      fixture = TestBed.createComponent(ResultsListContainerComponent)
-      component = fixture.componentInstance
-      component.layout = 'CARD'
-      fixture.detectChanges()
-
-      expect(component.shouldShowFavorites).toBe(true)
-    })
-
-    it('should hide favorites when auth is disabled', () => {
-      platformMock.supportsAuthentication.mockReturnValue(false)
-
-      fixture = TestBed.createComponent(ResultsListContainerComponent)
-      component = fixture.componentInstance
-      component.layout = 'CARD'
-      fixture.detectChanges()
-
-      expect(component.shouldShowFavorites).toBe(false)
-    })
-
-    it('should pass showFavorites property to results list component', () => {
-      platformMock.supportsAuthentication.mockReturnValue(false)
-
-      fixture = TestBed.createComponent(ResultsListContainerComponent)
-      component = fixture.componentInstance
-      component.layout = 'CARD'
-      fixture.detectChanges()
-
-      const resultsList = fixture.debugElement.query(
-        By.directive(ResultsListMockComponent)
-      )
-      expect(resultsList.componentInstance.showFavorites).toBe(false)
     })
   })
 })

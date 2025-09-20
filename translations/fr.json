@@ -475,7 +475,6 @@
   "record.metadata.otherConstraints": "Limitations d'usage",
   "record.metadata.owner": "Catalogue d'origine",
   "record.metadata.preview": "Aperçu",
-  "record.metadata.preview.config.": "",
   "record.metadata.preview.config.error": "Erreur lors de la sauvegarde",
   "record.metadata.preview.config.idle": "Définir l'aperçu par défaut",
   "record.metadata.preview.config.saved": "Sauvegardé !",

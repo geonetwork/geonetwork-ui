@@ -23,7 +23,6 @@ import {
   RECORD_REUSE_URL_TOKEN,
 } from '../record-url.token'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 export type ResultsListShowMoreStrategy = 'auto' | 'button' | 'none'
 
@@ -49,14 +48,6 @@ export class ResultsListContainerComponent implements OnInit {
   errorTypes = ErrorType
   recordUrlGetter = this.getRecordUrl.bind(this)
 
-  get isAuthDisabled(): boolean {
-    return !this.platformServiceInterface.supportsAuthentication()
-  }
-
-  get shouldShowFavorites(): boolean {
-    return !this.isAuthDisabled
-  }
-
   constructor(
     public facade: SearchFacade,
     @Inject(RESULTS_LAYOUT_CONFIG)
@@ -69,8 +60,7 @@ export class ResultsListContainerComponent implements OnInit {
     private recordServiceUrlTemplate: string,
     @Optional()
     @Inject(RECORD_REUSE_URL_TOKEN)
-    private recordReuseUrlTemplate: string,
-    private platformServiceInterface: PlatformServiceInterface
+    private recordReuseUrlTemplate: string
   ) {}
 
   ngOnInit(): void {

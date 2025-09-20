@@ -7,7 +7,6 @@
     "
     [favoriteTemplate]="favoriteToggle"
     [recordUrlGetter]="recordUrlGetter"
-    [showFavorites]="shouldShowFavorites"
     (mdSelect)="onMetadataSelection($event)"
   ></gn-ui-results-list>
   <ng-container *ngIf="allowShowMore$ | async">

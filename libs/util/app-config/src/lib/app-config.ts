@@ -103,7 +103,6 @@ export function loadAppConfig() {
           'languages',
           'contact_email',
           'reuse_form_url',
-          'disable_auth',
         ],
         warnings,
         errors
