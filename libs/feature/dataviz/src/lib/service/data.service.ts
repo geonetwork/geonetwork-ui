@@ -211,21 +211,21 @@ export class DataService {
 
   async getDownloadUrlsFromOgcApi(url: string): Promise<OgcApiCollectionInfo> {
     const endpoint = new OgcApiEndpoint(url)
-    return await endpoint.allCollections
+    return await endpoint.featureCollections
       .then((collections) => {
-        return endpoint.getCollectionInfo(collections[0].name)
+        return endpoint.getCollectionInfo(collections[0])
       })
       .catch((error) => {
         throw new Error(`ogc.unreachable.unknown`)
       })
   }
 
-  async getItemsFromOgcApi(url: string): Promise<OgcApiRecord> {
+  async getItemsFromOgcApi(url: string): Promise<OgcApiRecord[]> {
     const endpoint = new OgcApiEndpoint(url)
     return await endpoint.featureCollections
       .then((collections) => {
         return collections.length
-          ? endpoint.getCollectionItem(collections[0], '1')
+          ? endpoint.getCollectionItems(collections[0])
           : null
       })
       .catch(() => {

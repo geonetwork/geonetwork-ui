@@ -132,16 +132,12 @@ jest.mock('@camptocamp/ogc-client', () => ({
         bulkDownloadLinks: { json: 'http://json', csv: 'http://csv' },
       })
     }
-    allCollections = Promise.resolve([
-      { name: 'collection1' },
-      { name: 'collection2' },
-    ])
     featureCollections =
       this.url.indexOf('error.http') > -1
         ? Promise.reject(new Error())
         : Promise.resolve(['collection1', 'collection2'])
-    getCollectionItem(_collection: string, _id: string) {
-      return Promise.resolve('item1')
+    getCollectionItems(_collection: string) {
+      return Promise.resolve(['item1'])
     }
   },
 }))
@@ -990,11 +986,11 @@ describe('DataService', () => {
     })
     describe('#getItemsFromOgcApi', () => {
       describe('calling getItemsFromOgcApi() with a valid URL', () => {
-        it('returns the first collection item when collections array is not empty', async () => {
+        it('returns the first collection items when collections array is not empty', async () => {
           const item = await service.getItemsFromOgcApi(
             'https://my.ogc.api/features'
           )
-          expect(item).toBe('item1')
+          expect(item).toEqual(['item1'])
         })
       })
 
