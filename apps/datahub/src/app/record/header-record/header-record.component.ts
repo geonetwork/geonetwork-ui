@@ -1,35 +1,33 @@
+import { CommonModule, Location } from '@angular/common'
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
-import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
+import { Router } from '@angular/router'
 import {
   DatasetRecord,
   ReuseRecord,
   ServiceRecord,
 } from '@geonetwork-ui/common/domain/model/record'
 import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { combineLatest, map } from 'rxjs'
-import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
-import { CommonModule } from '@angular/common'
-import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
-import { matArrowBack, matCreditCard } from '@ng-icons/material-icons/baseline'
-import { DateService, getIsMobile } from '@geonetwork-ui/util/shared'
-import {
-  iconoirAppleShortcuts,
-  iconoirCode,
-  iconoirOpenNewWindow,
-} from '@ng-icons/iconoir'
+import { FavoriteStarComponent } from '@geonetwork-ui/feature/search'
+import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import {
   GeoDataBadgeComponent,
   ImageOverlayPreviewComponent,
   KindBadgeComponent,
 } from '@geonetwork-ui/ui/elements'
-import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import {
-  FavoriteStarComponent,
-  SearchService,
-} from '@geonetwork-ui/feature/search'
-import { LanguageSwitcherComponent } from '@geonetwork-ui/ui/catalog'
 import { StickyHeaderComponent } from '@geonetwork-ui/ui/layout'
+import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
+import { DateService, getIsMobile } from '@geonetwork-ui/util/shared'
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
+import {
+  iconoirAppleShortcuts,
+  iconoirCode,
+  iconoirOpenNewWindow,
+} from '@ng-icons/iconoir'
+import { matArrowBack, matCreditCard } from '@ng-icons/material-icons/baseline'
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
+import { combineLatest, map } from 'rxjs'
+import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component'
 
 export const HEADER_HEIGHT_DEFAULT = 344
 export const HEADER_HEIGHT_MOBILE_THUMBNAIL = 554
@@ -100,7 +98,8 @@ export class HeaderRecordComponent {
   constructor(
     public facade: MdViewFacade,
     private dateService: DateService,
-    private searchService: SearchService
+    private router: Router,
+    private location: Location
   ) {}
 
   reuseLinkUrl$ = this.facade.allLinks$.pipe(
@@ -114,6 +113,8 @@ export class HeaderRecordComponent {
   }
 
   back() {
-    this.searchService.updateFilters({})
+    this.router.lastSuccessfulNavigation.previousNavigation
+      ? this.location.back()
+      : this.router.navigateByUrl('/search')
   }
 }
