@@ -132,10 +132,6 @@ jest.mock('@camptocamp/ogc-client', () => ({
         bulkDownloadLinks: { json: 'http://json', csv: 'http://csv' },
       })
     }
-    allCollections = Promise.resolve([
-      { name: 'collection1' },
-      { name: 'collection2' },
-    ])
     featureCollections =
       this.url.indexOf('error.http') > -1
         ? Promise.reject(new Error())
