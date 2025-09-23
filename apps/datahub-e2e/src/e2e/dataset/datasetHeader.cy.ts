@@ -3,10 +3,8 @@ describe('dataset: header', () => {
     cy.intercept('GET', '/assets/configuration/default.toml', {
       fixture: 'config-with-languages.toml',
     })
-    // no-link-error block
-    // it shouldn't be there if there are links
+
     cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
-    cy.get('[data-test=dataset-has-no-link-block]').should('not.exist')
 
     // HEADER
     // it should display back button and return to the dataset list

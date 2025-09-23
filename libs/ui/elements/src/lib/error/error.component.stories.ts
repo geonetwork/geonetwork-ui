@@ -35,7 +35,6 @@ export const Primary: StoryObj<ErrorComponent> = {
         ErrorType.RECEIVED_ERROR,
         ErrorType.COULD_NOT_REACH_API,
         ErrorType.RECORD_NOT_FOUND,
-        ErrorType.DATASET_HAS_NO_LINK,
         ErrorType.ORGANIZATION_HAS_NO_DATASET,
         ErrorType.ORGANIZATION_NOT_FOUND,
       ],

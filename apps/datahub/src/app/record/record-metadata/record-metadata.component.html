@@ -122,15 +122,6 @@
     </div>
   </section>
 
-  <ng-container *ngIf="displayDatasetHasNoLinkBlock$ | async">
-    <div class="py-10">
-      <gn-ui-error
-        data-test="dataset-has-no-link-block"
-        [type]="errorTypes.DATASET_HAS_NO_LINK"
-      ></gn-ui-error>
-    </div>
-  </ng-container>
-
   <section
     id="feature-catalog"
     class="mb-6"

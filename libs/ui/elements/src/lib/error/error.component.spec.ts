@@ -69,19 +69,5 @@ describe('ErrorComponent', () => {
         expect(errorBlock).toBeTruthy()
       })
     })
-
-    describe('ErrorType.NO_LINK', () => {
-      beforeEach(() => {
-        component.type = ErrorType.DATASET_HAS_NO_LINK
-        fixture.detectChanges()
-      })
-
-      it('NO_LINK block is displayed.', () => {
-        const errorBlock = compiled.query(
-          By.css('[data-test="dataset-has-no-link-error"]')
-        )
-        expect(errorBlock).toBeTruthy()
-      })
-    })
   })
 })

@@ -552,7 +552,6 @@
   "search.error.organizationHasNoDataset": "This organization has no records yet.",
   "search.error.organizationNotFound": "This organization could not be found.",
   "search.error.receivedError": "An error was received",
-  "search.error.recordHasnolink": "This record currently has no link yet, please come back later.",
   "search.error.recordNotFound": "The record with identifier \"{ id }\" could not be found.",
   "search.field.any.placeholder": "Search in the catalog ...",
   "search.field.sortBy": "Sort by:",

@@ -552,7 +552,6 @@
   "search.error.organizationHasNoDataset": "",
   "search.error.organizationNotFound": "",
   "search.error.receivedError": "Ein Fehler ist aufgetreten",
-  "search.error.recordHasnolink": "",
   "search.error.recordNotFound": "Die Ressource mit der Kennung \"{ id }\" konnte nicht gefunden werden.",
   "search.field.any.placeholder": "Suche im katalog ...",
   "search.field.sortBy": "Sortieren nach:",

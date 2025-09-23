@@ -577,17 +577,6 @@ describe('Sections', () => {
           .click()
         cy.url().should('include', targetLink)
       })
-
-    // When there is no link
-    cy.visit('/dataset/a3774ef6-809d-4dd1-984f-9254f49cbd0a')
-
-    // it does not display the no-link-error warning initially, only after loading
-    // wait for metadata info to show up
-    cy.get('gn-ui-metadata-info').should('exist')
-    // first, the block is not visible
-    cy.get('[data-test="dataset-has-no-link-block"]').should('not.exist')
-    // then the block shows up
-    cy.get('[data-test="dataset-has-no-link-block"]').should('exist')
   })
 })
 

@@ -422,44 +422,6 @@ describe('RecordMetadataComponent', () => {
         expect(result.componentInstance.error).toBe('This is an Error!')
       })
     })
-
-    describe('When there are no link (download, api or other links)', () => {
-      describe('When the metadata is not fully loaded', () => {
-        beforeEach(() => {
-          facade.isMetadataLoading$.next(true)
-          facade.apiLinks$.next([])
-          facade.downloadLinks$.next([])
-          facade.otherLinks$.next([])
-          fixture.detectChanges()
-        })
-        it("doesn' show the no link error block", () => {
-          const result = fixture.debugElement.query(
-            By.css('[data-test="dataset-has-no-link-block"]')
-          )
-          expect(result).toBeFalsy()
-        })
-      })
-
-      describe('When the metadata is not fully loaded', () => {
-        beforeEach(() => {
-          facade.metadata$.next({ ...SAMPLE_RECORD, ...{ kind: 'dataset' } })
-          facade.isMetadataLoading$.next(false)
-          facade.apiLinks$.next([])
-          facade.downloadLinks$.next([])
-          facade.otherLinks$.next([])
-          fixture.detectChanges()
-        })
-        it('shows the no link error block', () => {
-          const result = fixture.debugElement.query(
-            By.css('[data-test="dataset-has-no-link-block"]')
-          )
-          expect(result).toBeTruthy()
-          expect(result.componentInstance.type).toBe(
-            ErrorType.DATASET_HAS_NO_LINK
-          )
-        })
-      })
-    })
   })
   describe('Reuse Button', () => {
     describe('display rules for reuse button', () => {

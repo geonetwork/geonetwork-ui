@@ -552,7 +552,6 @@
   "search.error.organizationHasNoDataset": "Questa organizzazione non ha ancora records.",
   "search.error.organizationNotFound": "Impossibile trovare l'organizzazione.",
   "search.error.receivedError": "Errore restituito",
-  "search.error.recordHasnolink": "Questo record non ha ancora alcun collegamento, riprova più tardi.",
   "search.error.recordNotFound": "Impossibile trovare questi record.",
   "search.field.any.placeholder": "Cerca del catalogo...",
   "search.field.sortBy": "Ordina per:",

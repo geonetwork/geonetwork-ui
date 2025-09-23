@@ -552,7 +552,6 @@
   "search.error.organizationHasNoDataset": "",
   "search.error.organizationNotFound": "",
   "search.error.receivedError": "Bola zaznamenaná chyba",
-  "search.error.recordHasnolink": "",
   "search.error.recordNotFound": "Záznam s identifikátorom \"{ id }\" sa nepodarilo nájsť.",
   "search.field.any.placeholder": "Hľadať datasety ...",
   "search.field.sortBy": "Zoradiť podľa:",

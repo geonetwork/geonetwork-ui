@@ -192,21 +192,6 @@ export class RecordMetadataComponent {
     )
   )
 
-  displayDatasetHasNoLinkBlock$ = combineLatest([
-    this.metadataViewFacade.isMetadataLoading$,
-    this.displayDownload$,
-    this.displayApi$,
-    this.displayOtherLinks$,
-  ]).pipe(
-    map(
-      ([isMetadataLoading, displayDownload, displayApi, displayOtherLinks]) =>
-        !isMetadataLoading &&
-        !displayDownload &&
-        !displayApi &&
-        !displayOtherLinks
-    )
-  )
-
   organisationName$ = this.metadataViewFacade.metadata$.pipe(
     map((record) => record?.ownerOrganization?.name),
     filter(Boolean)
