@@ -39,7 +39,7 @@
       >
         <datahub-header-badge-button
           [routerLink]="ROUTE_SEARCH"
-          *ngIf="isAuthenticated$ | async"
+          *ngIf="showFavoritesButton$ | async"
           icon="matStarOutline"
           label="datahub.header.myfavorites"
           [toggled]="searchFacade.favoritesOnly$ | async"

@@ -46,6 +46,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
+
 @Component({
   selector: 'datahub-record-metadata',
   templateUrl: './record-metadata.component.html',
@@ -237,6 +238,10 @@ export class RecordMetadataComponent {
     public reuseFormUrl: string
   ) {
     this.activeUser$ = this.platformServiceInterface.getMe()
+  }
+
+  get isAuthDisabled(): boolean {
+    return !this.platformServiceInterface.supportsAuthentication()
   }
 
   onInfoKeywordClick(keyword: Keyword) {

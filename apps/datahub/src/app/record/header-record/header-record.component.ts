@@ -28,6 +28,7 @@ import { matArrowBack, matCreditCard } from '@ng-icons/material-icons/baseline'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { combineLatest, map } from 'rxjs'
 import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 export const HEADER_HEIGHT_DEFAULT = 344
 export const HEADER_HEIGHT_MOBILE_THUMBNAIL = 554
@@ -75,6 +76,10 @@ export class HeaderRecordComponent {
 
   showOverlay = true
 
+  get isAuthDisabled(): boolean {
+    return !this.platformServiceInterface.supportsAuthentication()
+  }
+
   isMobile$ = getIsMobile()
 
   thumbnailUrl$ = this.facade.metadata$.pipe(
@@ -99,7 +104,8 @@ export class HeaderRecordComponent {
     public facade: MdViewFacade,
     private dateService: DateService,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private platformServiceInterface: PlatformServiceInterface
   ) {}
 
   reuseLinkUrl$ = this.facade.allLinks$.pipe(

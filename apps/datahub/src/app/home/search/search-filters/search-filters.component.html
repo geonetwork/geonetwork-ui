@@ -71,7 +71,7 @@
         (toggled)="toggleSpatialFilter($event)"
       ></gn-ui-check-toggle>
     </div>
-    <div class="sm:col-span-2" *ngIf="userId && isOpen">
+    <div class="sm:col-span-2" *ngIf="shouldShowMyRecordsToggle">
       <gn-ui-check-toggle
         [title]="'search.filters.myRecordsHelp' | translate"
         [label]="'search.filters.myRecords' | translate"
@@ -80,10 +80,7 @@
         (toggled)="toggleMyRecordsFilter($event)"
       ></gn-ui-check-toggle>
     </div>
-    <div
-      class="sm:col-span-2"
-      *ngIf="!userId && (myRecordsFilterEnabled$ | async) && isOpen"
-    >
+    <div class="sm:col-span-2" *ngIf="shouldShowOtherRecordsButton | async">
       <gn-ui-button
         type="light"
         extraClass="text-sm align-middle"

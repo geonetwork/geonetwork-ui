@@ -6,16 +6,17 @@ import {
   datasetRecordsFixture,
   SAMPLE_RECORD,
 } from '@geonetwork-ui/common/fixtures'
-import { MdViewFacade } from '@geonetwork-ui/feature/record'
-import { provideI18n } from '@geonetwork-ui/util/i18n'
-import { DateService } from '@geonetwork-ui/util/shared'
-import { MockBuilder, MockProvider } from 'ng-mocks'
-import { BehaviorSubject } from 'rxjs'
 import {
   HEADER_HEIGHT_DEFAULT,
   HEADER_HEIGHT_MOBILE_THUMBNAIL,
   HeaderRecordComponent,
 } from './header-record.component'
+import { MockBuilder, MockProvider } from 'ng-mocks'
+import { MdViewFacade } from '@geonetwork-ui/feature/record'
+import { BehaviorSubject } from 'rxjs'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
+import { DateService } from '@geonetwork-ui/util/shared'
+import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 
 jest.mock('@geonetwork-ui/util/app-config', () => ({
   getThemeConfig: () => ({
@@ -69,6 +70,9 @@ describe('HeaderRecordComponent', () => {
         }),
         MockProvider(DateService, {
           formatDate: jest.fn(),
+        }),
+        MockProvider(PlatformServiceInterface, {
+          supportsAuthentication: jest.fn().mockReturnValue(false),
         }),
         {
           provide: Router,

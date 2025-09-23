@@ -522,6 +522,7 @@
   "record.metadata.usage": "License and Conditions",
   "record.metadata.userFeedbacks": "Questions / Answers",
   "record.metadata.userFeedbacks.anonymousUser": "In order to leave a comment, please log in.",
+  "record.metadata.userFeedbacks.authDisabled": "User comments are disabled.",
   "record.metadata.userFeedbacks.newAnswer.buttonTitle": "Publish",
   "record.metadata.userFeedbacks.newAnswer.placeholder": "Answer...",
   "record.metadata.userFeedbacks.newComment.placeholder": "Write your comment here...",

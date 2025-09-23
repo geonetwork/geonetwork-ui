@@ -62,11 +62,22 @@
       </div>
     </div>
   </ng-container>
+
   <ng-template #anonymousUser>
     <div class="flex flex-row items-center gap-3 w-full h-auto px-6">
-      <ng-icon class="grow-0" name="matEditOutline"></ng-icon>
-      <span translate>record.metadata.userFeedbacks.anonymousUser</span>
+      <ng-icon
+        class="grow-0"
+        [name]="showAuthUI ? 'matEditOutline' : 'matEditOffOutline'"
+      ></ng-icon>
+      <span
+        [translate]="
+          showAuthUI
+            ? 'record.metadata.userFeedbacks.anonymousUser'
+            : 'record.metadata.userFeedbacks.authDisabled'
+        "
+      ></span>
       <a
+        *ngIf="showAuthUI"
         [href]="loginUrl"
         class="gn-ui-btn-primary uppercase flex flex-row items-center gap-2 ml-auto"
         translate
