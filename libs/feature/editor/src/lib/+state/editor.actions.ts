@@ -68,3 +68,8 @@ export const canEditRecord = createAction(
   '[Editor] User can edit record',
   props<{ canEditRecord: boolean }>()
 )
+
+export const currentLanguage = createAction(
+  '[Editor] Current eidtion fields language changes',
+  props<{ currentLanguage: string | null }>()
+)
