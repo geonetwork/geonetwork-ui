@@ -552,7 +552,7 @@
   "search.error.organizationHasNoDataset": "Cette organisation n'a pas encore de ressources.",
   "search.error.organizationNotFound": "L'organisation n'a pas pu être trouvée.",
   "search.error.receivedError": "Erreur retournée",
-  "search.error.recordHasnolink": "Cette ressource n'a pas encore de lien, réessayez plus tard s'il vous plaît.",
+  "search.error.recordHasnolink": "Cette ressource n'a actuellement aucun lien.",
   "search.error.recordNotFound": "La ressource dont l'identifiant est \"{ id }\" n'a pas pu être trouvée.",
   "search.field.any.placeholder": "Rechercher dans le catalogue...",
   "search.field.sortBy": "Trier par :",

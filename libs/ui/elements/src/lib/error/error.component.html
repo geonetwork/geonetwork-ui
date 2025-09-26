@@ -1,5 +1,9 @@
 <div
-  class="p-[1.7em] bg-red-50 text-red-800 text-[1.5em] text-center rounded-lg"
+  class="p-[1.7em] text-[1.5em] text-center rounded-lg"
+  [ngClass]="{
+    'bg-red-50 text-red-800': type !== types.DATASET_HAS_NO_LINK,
+    'bg-gray-100 text-black': type === types.DATASET_HAS_NO_LINK,
+  }"
 >
   <div
     *ngIf="type === types.COULD_NOT_REACH_API"
