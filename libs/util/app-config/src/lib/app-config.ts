@@ -28,6 +28,7 @@ Note: make sure that you have called \`loadAppConfig\` from '@geonetwork-ui/util
 let globalConfig: GlobalConfig = null
 
 export function getGlobalConfig(): GlobalConfig {
+  console.log('getGlobalConfig', globalConfig)
   if (globalConfig === null) throw new Error(MISSING_CONFIG_ERROR)
   return globalConfig
 }
@@ -70,8 +71,11 @@ export function getCustomTranslations(langCode: string): CustomTranslations {
 
 let appConfigLoaded = false
 
-export function loadAppConfig() {
-  return fetch('assets/configuration/default.toml')
+export function loadAppConfig(configUrl = 'assets/configuration/default.toml') {
+  console.log(
+    `[geonetwork-ui] Loading application configuration from ${configUrl}`
+  )
+  return fetch(configUrl)
     .then((resp) => {
       if (!resp.ok) throw new Error('Configuration file could not be loaded')
       return resp.text()

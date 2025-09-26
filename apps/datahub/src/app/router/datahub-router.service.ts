@@ -26,6 +26,7 @@ export class DatahubRouterService {
   constructor(private router: Router) {}
 
   initRoutes() {
+    console.log('DatahubRouterService initRoutes')
     this.router.resetConfig(this.buildRoutes())
   }
 
