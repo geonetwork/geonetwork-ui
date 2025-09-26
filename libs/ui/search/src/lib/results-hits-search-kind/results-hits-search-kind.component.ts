@@ -48,7 +48,11 @@ export class ResultsHitsSearchKindComponent implements OnChanges {
   }
 
   onSelectedValues(values: string[]) {
-    const selectedValues = values.includes('all') ? [] : values
+    const selectedValues = values.includes('all')
+      ? []
+      : values.length > 1
+        ? [values[values.length - 1]]
+        : values
 
     this.selectionChanged.emit(selectedValues)
   }
