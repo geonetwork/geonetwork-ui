@@ -19,6 +19,7 @@ export class RouterService {
   ) {}
 
   initRoutes() {
+    console.log('RouterService initRoutes')
     this.router.resetConfig(this.buildRoutes())
   }
 
