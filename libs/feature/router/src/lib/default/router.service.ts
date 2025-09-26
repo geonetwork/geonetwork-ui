@@ -21,6 +21,7 @@ export class RouterService {
   private router = inject(Router)
 
   initRoutes() {
+    console.log('RouterService initRoutes')
     this.router.resetConfig(this.buildRoutes())
   }
 

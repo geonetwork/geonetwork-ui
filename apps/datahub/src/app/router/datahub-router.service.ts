@@ -35,6 +35,7 @@ export class DatahubRouterService {
   private router = inject(Router)
 
   initRoutes() {
+    console.log('DatahubRouterService initRoutes')
     this.router.resetConfig(this.buildRoutes())
   }
 

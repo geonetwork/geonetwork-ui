@@ -35,6 +35,7 @@ export class DefaultRouterModule {
   private routerService = inject(RouterService)
 
   constructor() {
+     console.log('DefaultRouterModule constructor')
     this.routerService.initRoutes()
   }
 
