@@ -15,10 +15,7 @@
       }"
     >
       <ng-template #customTemplate>
-        {{ 'search.filters.recordKind.' + choice.value | translate
-        }}<span class="ml-1" *ngIf="isSelectedChoice(choice.value)"
-          >({{ choice.count }})</span
-        >
+        {{ 'search.filters.recordKind.' + choice.value | translate }}
       </ng-template>
     </gn-ui-kind-badge>
   </ng-template>
