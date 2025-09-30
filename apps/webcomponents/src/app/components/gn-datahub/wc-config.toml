@@ -1,0 +1,213 @@
+# GeoNetwork-UI configuration
+# Note: this file's syntax is TOML (https://toml.io/)
+
+### GLOBAL SETTINGS
+
+[global]
+# This URL (relative or absolute) must point to the API endpoint of a GeoNetwork4 instance
+geonetwork4_api_url = "/geonetwork/srv/api"
+# deprecated - not used anymore
+datahub_url = "/datahub"
+# This should point to a proxy to avoid CORS errors on some requests (data preview, OGC capabilities etc.)
+# The actual URL will be appended after this path, e.g. : https://my.proxy/?url=http%3A%2F%2Fencoded.url%2Fows`
+# This is an optional parameter: leave empty to disable proxy usage
+proxy_path = ""
+# This optional parameter defines, in which language metadata should be queried in elasticsearch.
+# Use ISO 639-1 (https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format in 2 characters to indicate the language of the metadata.
+# Setting to "current" will use the current language of the User Interface.
+# If not indicated, a wildcard is used and no language preference is applied for the search.
+# metadata_language = "current"
+# This optional URL should point to the login page that allows authentication to the datahub.
+# If not indicated, the default geonetwork login page is used.
+# The following three placeholders can be part of this URL:
+#  - ${current_url}: indicates where the current location should be injected in the constructed login URL (eg. start, end)
+#  - ${lang2}, ${lang3}: indicates if and where the current language should be part of the login URL in language 2 or 3 letter code
+# Example to use the georchestra login page:
+# login_url = "/cas/login?service=${current_url}"
+# logout_url = "/geonetwork/signout"
+# settings_url = "/geonetwork/srv/\${lang3}/admin.console#/organization/users?userOrGroup="
+# This optional URL should point to the static html page wc-embedder.html which allows to display a web component (like chart and table) via a permalink.
+# URLs can be indicated from the root of the same server starting with a "/" or as an external URL. Be conscious of potential CORS issues when using an external URL.
+# The default location in the dockerized datahub app for example is "/datahub/wc-embedder.html".
+# If the URL is not indicated, no permalinks will show up in the UI.
+# web_component_embedder_url = "/datahub/wc-embedder.html"
+
+# This optional parameter defines the languages that will be provided in a dropdown for the user to translate the UI.
+# Available languages are listed here: (https://github.com/geonetwork/geonetwork-ui/blob/main/libs/util/i18n/src/lib/i18n.constants.ts).
+# More information about the translation can be found in the docs (https://geonetwork.github.io/geonetwork-ui/main/docs/reference/i18n.html)
+# languages = ['en', 'fr', 'de']
+
+# Enables displaying a "contact block" wherever relevant in applications
+# contact_email = "opendata@mycompany.com"
+
+# Enable declare a specific reuse configuration in datahub
+# reuse_form_url = "http://path.to.reuseform.fr"
+
+### VISUAL THEME
+
+# All parameters are expressed in CSS format, see:
+#  - for color: https://developer.mozilla.org/en-US/docs/Web/CSS/color
+#  - for font families: https://developer.mozilla.org/en-US/docs/Web/CSS/font-family
+#  - for background: https://developer.mozilla.org/en-US/docs/Web/CSS/background
+[theme]
+primary_color = "#c82850"
+secondary_color = "#001638"
+main_color = "#555"          # All-purpose text color
+background_color = "#fdfbff"
+
+# These optional parameters indicate which background should be used for the main header and the text color used
+# on top of the background. The color should be chosen to contrast well with the background (defaults to white).
+# Note: The search header does not use the header_foreground_color as it allows futher customisation via HTML.
+# header_background = "center /cover url('assets/img/header_bg.webp')" or "var(--color-gray-500)"
+# header_foreground_color = 'white'
+
+# This optional parameter allows to override the fallback image that should be used for thumbnails,
+# if the metadata record has no thumbnail image url or it is broken.
+# thumbnail_placeholder = 'assets/img/my_custom_placeholder.png'
+
+# These optional parameters allow changing fonts used in the app
+# main_font = "'My Custom Font', fallback-font"
+# title_font = "'My Custom Title Font', fallback-font-title"
+# fonts_stylesheet_url = "https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Permanent+Marker&display=swap"
+
+# Use it to set custom location for the favicon; by default, the path `/favicon.ico` will be used
+# favicon = "assets/favicon.ico"
+
+### SEARCH SETTINGS
+
+# This section contains settings used for fine-tuning the search experience
+[search]
+
+# Optional; Indicates whether the quick filter (by record kind dataset, service or reuse) below the search filters is displayed or not. Defaults to `true`.
+# record_kind_quick_filter = true
+
+# Optional; Indicates the number of elements per page ( datahub news, search, organization pages)
+# limit = 5
+
+# Optional; specify a GeoJSON object to be used as filter: all records contained inside the geometry will be boosted on top,
+# all records which do not intersect with the geometry will be shown with lower priority; can be specified as URL or inline
+# Note: if the GeoJSON object contains multiple features, only the geometry of the first one will be kept!
+# filter_geometry_url = "https://my.domain.org/assets/boundary.geojson"
+# filter_geometry_data = '{ "coordinates": [...], "type": "Polygon" }'
+
+# The advanced search filters available to the user can be customized with this setting.
+# The following fields can be used for filtering: 'organization', 'format', 'publicationYear', 'standard', 'inspireKeyword', 'keyword', 'topic', 'isSpatial', 'license', 'resourceType', 'representationType', 'producerOrg', 'publisherOrg'
+# If not configured, the default values are 'organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license'
+# Note that some links in the datahub app set an 'organization' filter. So this field is needed to allow unsetting such filters.
+# WARNING: 'resourceType' filter has been deprecated, please use 'recordKind' instead. Breaking change: 'resourceType' filter won't retrieve featureCatalog anymore.
+# advanced_filters = ['organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license']
+
+# One or several search presets can be defined here; every search preset is composed of:
+# - a name (which can be a translation key)
+# - a sort criteria: either `createDate`, `userSavedCount` or `_score` (prepend with `-` for descending sort) (optionnal)
+# - filters which can be expressed like so:
+# [[search_preset]]
+#     name = 'filterByName'
+#     filters.q = 'Full text search'
+#     filters.organization = ['Org 1', 'Org 2']
+#     filters.format = ['format 1', 'format 2']
+#     filters.documentStandard = ['iso19115-3.2018']
+#     filters.inspireKeyword = ['keyword 1', 'keyword 2']
+#     filters.topic = ['boundaries']
+#     filters.publicationYear = ['2023', '2022']
+#     filters.isSpatial = ['yes']
+#     filters.license = ['unknown']
+#     sort = 'createDate'
+# [[search_preset]]
+#     name = 'otherFilterName'
+#     filters.q = 'Other Full text search'
+# ...
+
+# Search presets will be advertised to the user along the main search field.
+
+
+### METADATA QUALITY SETTINGS
+
+# This section contains settings used for fine-tuning the metadata quality experience
+[metadata-quality]
+# By default the widget is not activated to enable it, just add this parameter.
+# enabled = true
+# If u want to use metadata quality widget this configuration is required
+
+### MAP SETTINGS
+
+# The map section allows to customize how maps are configured.
+[map]
+# Optional; Will limit the possibility to zoom in past a certain zoom level
+# max_zoom = 10
+
+# Optional; will limit the possibility to pan or zoom out outside of an extent
+# Expressed in the map view projection (EPSG:3857)
+# max_extent = [-418263.418776, 5251529.591305, 961272.067714, 6706890.609855]
+
+# Optional; Will remove WFS from map layers if its features exceed the indicated number.
+# Data preview chart and table will be hidden in this case.
+# max_feature_count = 5000
+
+# Optional; URL template enabling to open map layers in an external viewer; if set, displays a button next to the map's layer drop down
+# The template must include the following placeholders, which allow the datahub to inject the correct values when adding a layer to a viewer:
+# ${service_url}: URL of the OWS or geojson file
+# ${service_type}: Type of the OWS or geojson file; currently supported WMS, WFS, GEOJSON
+# ${layer_name}: Name of the layer
+# Be careful to use englobing single quotes, if your template syntax includes JSON (with double quotes)
+# Examples:
+# mapfishapp template:
+# external_viewer_url_template = 'https://dev.geo2france.fr/mapfishapp/?owsurl=${service_url}&layername=${layer_name}&owstype=${service_type}Layer'
+# mapstore template
+# external_viewer_url_template = 'https://dev.geo2france.fr/mapstore/#/?actions=[{"type":"CATALOG:ADD_LAYERS_FROM_CATALOGS","layers":["${layer_name}"],"sources":[{"url":"${service_url}","type":"${service_type}"}]}]'
+
+# Optional; if true, opens external viewer in new tab (default false)
+# external_viewer_open_new_tab = false
+
+# Optional; Will not tile WMS. False by default.
+# do_not_tile_wms = false
+
+# Optional; if true, the default basemap will not be added to the map.
+# Use [[map_layer]] sections to define your own custom layers (see below)
+# do_not_use_default_basemap = false
+
+# One or several layers (as background or overlay) can be added to the map with the following properties:
+# - type (mandatory): Indicates the layer type. Possible values are 'xyz', 'wms', 'wfs', 'geojson'.
+# - url (mandatory for 'xyz', 'wms' and 'wfs' types): Layer endpoint URL.
+# - name (mandatory for 'wms' and 'wfs' types): indicates the layer name or feature type.
+# - data (for 'geojson' type only): inline GeoJSON data as string
+# Layer order in the config is the same as in the map, the first one being the bottom one.
+# Each layer is defined in its own [[map_layer]] section.
+# Example:
+# [[map_layer]]
+# type = "maplibre-style"
+# styleUrl = "https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/gris.json"
+# [[map_layer]]
+# type = "xyz"
+# url = "https://{a-c}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
+# [[map_layer]]
+# type = "wfs"
+# url = "https://www.geo2france.fr/geoserver/cr_hdf/ows"
+# name = "masque_hdf_ign_carto_latin1"
+# [[map_layer]]
+# type = "geojson"
+# data = """
+# {
+#   "type": "FeatureCollection",
+#   "features": [{"type": "Feature", "geometry": {"type": "Point", "coordinates": [125.6, 10.1]}}]
+# }
+# """
+
+### TRANSLATIONS
+
+# To override translations in a specific language, use a 'translations.xx' section where 'xx' is a language code.
+# Add ?debugTranslations=true to datahub URLs to get a nice display of translation keys.
+# Language codes are expressed in ISO 639-1 codes, see https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+# Example:
+#
+# [translations.en]
+# results.sortBy.dateStamp = "Last time someone changed something"
+# [translations.fr]
+# results.sortBy.dateStamp = "Dernière fois que quelqu'un a modifié quelque chose"
+#
+# Note:
+#   translation keys ending with ".html" _can_ contain HTML markup, including inline CSS:
+#     catalog.welcome.html = """
+#     Welcome to <span class="text-primary">Organization</span>'s<br>
+#     wonderful <span style="font-size: 1.2em;">data catalogue</span>
+#     """

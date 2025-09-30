@@ -33,6 +33,7 @@ import { ROUTER_CONFIG, RouterConfigModel } from './router.config'
 })
 export class DefaultRouterModule {
   constructor(private routerService: RouterService) {
+    console.log('DefaultRouterModule constructor')
     this.routerService.initRoutes()
   }
 

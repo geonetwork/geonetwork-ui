@@ -19,8 +19,8 @@ cat ${DIST_WC_PATH}/*.js > "${DIST_WC_PATH}gn-wc.js"
 find "${DIST_WC_PATH}" -name "*.js" ! -name "gn-wc.js" -exec rm -f {} +
 rm -f ${DIST_WC_PATH}styles.css
 
-find apps/webcomponents/src/app -name "*.html" -type f | while read c; do
-  echo "-- Copying HTML file:" $(basename "$c")
+find apps/webcomponents/src/app -name "*.sample.html" -type f | while read c; do
+  echo "-- Copying sample HTML file:" $(basename "$c")
   cp "$c" $DIST_WC_PATH
 done
 
