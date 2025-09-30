@@ -10,9 +10,10 @@
     }"
   >
     <ng-icon [name]="toggled ? 'matStar' : 'matStarBorder'"></ng-icon>
-    <span *ngIf="displayLabel" class="mx-2 text-[16px] content-center" translate
-      >favorite.starToggle.label</span
-    >
+    <span *ngIf="displayLabel" class="mx-2 text-[16px] content-center">{{
+      (toggled ? 'favorite.starToggle.remove' : 'favorite.starToggle.add')
+        | translate
+    }}</span>
   </gn-ui-button>
   <svg
     #starOverlay

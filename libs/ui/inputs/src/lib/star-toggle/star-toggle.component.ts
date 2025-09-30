@@ -12,7 +12,7 @@ import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import { CommonModule } from '@angular/common'
 import { matStar, matStarBorder } from '@ng-icons/material-icons/baseline'
 import { ButtonComponent } from '../button/button.component'
-import { TranslateDirective } from '@ngx-translate/core'
+import { TranslatePipe } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-star-toggle',
@@ -20,7 +20,7 @@ import { TranslateDirective } from '@ngx-translate/core'
   styleUrls: ['./star-toggle.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, NgIcon, ButtonComponent, TranslateDirective],
+  imports: [CommonModule, NgIcon, ButtonComponent, TranslatePipe],
   viewProviders: [
     provideIcons({ matStar, matStarBorder }),
     provideNgIconsConfig({
