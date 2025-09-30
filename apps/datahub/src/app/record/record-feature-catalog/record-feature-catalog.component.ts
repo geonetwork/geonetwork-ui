@@ -24,8 +24,6 @@ import { ConnectedPosition, OverlayModule } from '@angular/cdk/overlay'
   ],
 })
 export class RecordFeatureCatalogComponent implements OnInit {
-  @Input() metadata: CatalogRecord
-  featureCatalog$: Observable<DatasetFeatureCatalog>
   filteredFeatureCatalog: DatasetFeatureCatalog
 
   protected overlayPositions: ConnectedPosition[] = [
