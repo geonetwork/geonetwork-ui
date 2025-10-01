@@ -24,38 +24,38 @@ describe('editor form', () => {
   })
 
   describe('record fields', () => {
-    describe('INSPIRE themes', () => {
-      it('should show the current themes', () => {
-        cy.get('gn-ui-form-field-inspire-theme')
+    describe('topics', () => {
+      it('should show the current topics', () => {
+        cy.get('gn-ui-form-field-topics')
           .find('gn-ui-badge')
           .should('have.length', 1)
       })
-      it('should add a theme', () => {
+      it('should add a topic', () => {
         cy.editor_wrapPreviousDraft(recordUuid)
-        cy.get('gn-ui-form-field-inspire-theme')
+        cy.get('gn-ui-form-field-topics')
           .find('gn-ui-dropdown-multiselect')
           .click()
         cy.get('label').eq(4).click()
         cy.clickOnBody()
         cy.editor_publishAndReload(recordUuid)
         cy.get('@saveStatus').should('eq', 'record_up_to_date')
-        cy.get('gn-ui-form-field-inspire-theme')
+        cy.get('gn-ui-form-field-topics')
           .find('gn-ui-badge')
           .should('have.length', 2)
           .last()
           .find('span')
           .should('have.text', 'Economy ')
       })
-      it('should delete a theme', () => {
+      it('should delete a topic', () => {
         cy.editor_wrapPreviousDraft(recordUuid)
-        cy.get('gn-ui-form-field-inspire-theme')
+        cy.get('gn-ui-form-field-topics')
           .find('gn-ui-badge')
           .last()
           .find('gn-ui-button')
           .click()
         cy.editor_publishAndReload(recordUuid)
         cy.get('@saveStatus').should('eq', 'record_up_to_date')
-        cy.get('gn-ui-form-field-inspire-theme')
+        cy.get('gn-ui-form-field-topics')
           .find('gn-ui-badge')
           .should('have.length', 1)
       })

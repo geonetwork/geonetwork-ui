@@ -108,7 +108,7 @@ export interface Keyword {
   translations?: KeywordTranslations
 }
 
-export interface INSPIRE_theme {
+export interface INSPIRE_topic {
   value: string
   label: string
 }
