@@ -188,4 +188,23 @@ describe('MetadataInfoComponent', () => {
       expect(component.legalConstraints).toEqual([])
     })
   })
+  describe('spatialExtent', () => {
+    describe('spatialExtent is defined but empty', () => {
+      beforeEach(() => {
+        fixture = TestBed.createComponent(MetadataInfoComponent)
+        component = fixture.componentInstance
+        component.metadata = {
+          ...datasetRecordsFixture()[0],
+          spatialExtents: [],
+        } as DatasetRecord
+        fixture.detectChanges()
+      })
+      it('should not display the spatialExtent section', () => {
+        const displayedElement = fixture.nativeElement.querySelector(
+          '.spatial-extent-panel'
+        )
+        expect(displayedElement).toBeFalsy()
+      })
+    })
+  })
 })
