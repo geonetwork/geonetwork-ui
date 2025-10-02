@@ -19,6 +19,13 @@ beforeEach(() => {
   )
   cy.intercept(
     'GET',
+    '/geoserver/insee/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&RESULTTYPE=hits&COUNT=1',
+    {
+      fixture: 'insee-wfs-table-hits.xml',
+    }
+  )
+  cy.intercept(
+    'GET',
     '/geoserver/insee/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&OUTPUTFORMAT=application%2Fjson&PROPERTYNAME=oid%2Cidk%2Cmen%2Cmen_occ5%2Cpt_men_occ5&COUNT=10&SRSNAME=EPSG%3A4326',
     {
       fixture: 'insee-wfs-table-data.json',
