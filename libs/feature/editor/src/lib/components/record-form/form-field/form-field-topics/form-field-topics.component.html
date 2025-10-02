@@ -2,20 +2,20 @@
   <div class="flex flex-col gap-4">
     <gn-ui-dropdown-multiselect
       class="w-full"
-      [title]="'editor.record.form.inspire.placeholder' | translate"
+      [title]="'editor.record.form.topics.placeholder' | translate"
       [maxRows]="6"
-      [selected]="themes"
-      [choices]="availableThemes || []"
+      [selected]="topics"
+      [choices]="availableTopics || []"
       [allowSearch]="true"
       (selectValues)="handleItemSelection($event)"
     >
     </gn-ui-dropdown-multiselect>
     <div class="flex gap-2 flex-wrap">
       <gn-ui-badge
-        *ngFor="let theme of themes"
+        *ngFor="let topic of topics"
         [removable]="true"
-        (badgeRemoveClicked)="removeTheme(theme)"
-        >{{ getTranslatedTheme(theme) }}
+        (badgeRemoveClicked)="removeTopic(topic)"
+        >{{ getTranslatedTopic(topic) }}
       </gn-ui-badge>
     </div>
   </div>

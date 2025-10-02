@@ -110,10 +110,10 @@
       ></gn-ui-form-field-keywords>
     </ng-container>
     <ng-container *ngSwitchCase="'topics'">
-      <gn-ui-form-field-inspire-theme
-        [value]="valueAsInspireTheme"
+      <gn-ui-form-field-topics
+        [value]="valueAsTopics"
         (valueChange)="valueChange.emit($event)"
-      ></gn-ui-form-field-inspire-theme>
+      ></gn-ui-form-field-topics>
     </ng-container>
     <ng-container *ngSwitchCase="'licenses'">
       <gn-ui-form-field-license
