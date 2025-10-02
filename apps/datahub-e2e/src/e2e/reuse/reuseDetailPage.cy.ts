@@ -50,7 +50,7 @@ describe('reuse pages', () => {
     })
   })
   describe('Routing', () => {
-    it('should display an error message if a service is accessed throught another path', () => {
+    it('should display an error message if a reuse is accessed through another path', () => {
       cy.visit('/service/7eb795c2-d612-4b5e-b15e-d985b0f4e697')
       cy.get('gn-ui-error').should('be.visible')
     })
