@@ -247,7 +247,7 @@
   "editor.record.form.topics.inspire.transportation": "Transport",
   "editor.record.form.topics.inspire.utilities": "Services d’utilité publique/Communication",
   "editor.record.form.topics.inspire.waters": "Eaux intérieures",
-  "editor.record.form.topics.placeholder": "Sélectionnez un ou plusieurs thème",
+  "editor.record.form.topics.placeholder": "Sélectionnez un ou plusieurs thèmes",
   "editor.record.form.updateFrequency.planned": "Ce jeu de données est mis à jour régulièrement",
   "editor.record.importFromExternalFile.failure.body": "Une erreur est survenue pendant l'import du jeu de données : ",
   "editor.record.importFromExternalFile.failure.title": "Erreur",
