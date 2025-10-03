@@ -1,23 +1,17 @@
 import 'cypress-real-events'
 
-describe('service pages with fixture', () => {
-  beforeEach(() => {
-    cy.intercept(
-      'POST',
-      '/geonetwork/srv/api/search/records/_search?bucket=bucket&relatedType=fcats&relatedType=hassources',
-      {
-        fixture: 'eaufrance-service-eaux-usees.json',
-      }
-    )
+beforeEach(() => {
+  cy.intercept(
+    'GET',
+    '/arcgis/services/AGRICULTURE/SIGEC_PARC_AGRI_ANON__2020/MapServer/WMSServer?SERVICE=WMS&REQUEST=GetCapabilities',
+    {
+      fixture: 'wallonie-wms-capabilities.xml',
+    }
+  )
+})
 
-    cy.intercept(
-      'GET',
-      'https://geoservices.wallonie.be/arcgis/services/AGRICULTURE/SIGEC_PARC_AGRI_ANON__2020/MapServer/WMSServer?SERVICE=WMS&REQUEST=GetCapabilities',
-      {
-        fixture: 'eaufrance-odp-capabilities.xml',
-      }
-    )
-    // Replace wallonie service by eau de france as the server is down
+describe('service pages', () => {
+  beforeEach(() => {
     cy.visit('/service/01ec6ec7-6454-4504-ac95-befb16bacb0e')
   })
   it('should display the service detail page', () => {
@@ -46,7 +40,7 @@ describe('service pages with fixture', () => {
 
     // About
     // it should display the spatial extent
-    cy.get('gn-ui-expandable-panel').eq(1).click()
+    cy.get('gn-ui-expandable-panel').eq(2).click()
     cy.get('gn-ui-map-container').should('be.visible')
 
     // Technical information
@@ -60,14 +54,14 @@ describe('service pages with fixture', () => {
       .eq(1)
       .should('contain', 'Title')
 
-    //    it should filter the layer list
+    // it should filter the layer list
     cy.get('gn-ui-service-capabilities')
       .find('[data-test="layer-list"]')
       .find('gn-ui-button')
-      .should('have.length', 12)
+      .should('have.length', 3)
     cy.get('gn-ui-service-capabilities')
       .find('gn-ui-text-input')
-      .type('guy{enter}')
+      .type('catég{enter}')
     cy.get('gn-ui-service-capabilities')
       .find('[data-test="layer-list"]')
       .find('gn-ui-button')
@@ -78,12 +72,12 @@ describe('service pages with fixture', () => {
     cy.get('datahub-record-apis').should('not.exist')
 
     // Routing
-    // it should display an error message if a service is accessed throught the dataset path
+    // it should display an error message if a service is accessed through the dataset path
     cy.visit('/dataset/01ec6ec7-6454-4504-ac95-befb16bacb0e')
     cy.get('gn-ui-error').should('be.visible')
   })
 })
-describe('service pages without fixture', () => {
+describe('service pages - metadata quality', () => {
   it('display metadata quality widget enabled', () => {
     cy.intercept('GET', '/assets/configuration/default.toml', {
       fixture: 'config-with-metadata-quality.toml',

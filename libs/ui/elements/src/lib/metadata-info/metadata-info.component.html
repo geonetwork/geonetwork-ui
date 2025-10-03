@@ -231,7 +231,11 @@
   </div>
 </gn-ui-expandable-panel>
 <gn-ui-expandable-panel
-  *ngIf="metadata.kind !== 'dataset' && metadata.spatialExtents"
+  *ngIf="
+    metadata.kind !== 'dataset' &&
+    metadata.spatialExtents &&
+    metadata.spatialExtents.length
+  "
   [title]="'service.metadata.spatialExtent' | translate"
   data-test="spatial-extent-panel"
 >
