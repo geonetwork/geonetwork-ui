@@ -10,15 +10,15 @@ env:
 on:
   push:
     branches:
-      - main
+      - 2.7.x
   pull_request:
     types: [opened, synchronize, ready_for_review]
 
-# Only allow concurrent checks on the main branch to keep history
+# Only allow concurrent checks on the 2.7.x branch to keep history
 # on QA checks
 concurrency:
   group: checks-${{ github.ref }}
-  cancel-in-progress: ${{ github.ref_name != 'main' }}
+  cancel-in-progress: ${{ github.ref_name != '2.7.x' }}
 
 jobs:
   format-lint-test:
@@ -65,7 +65,7 @@ jobs:
         with:
           allow-empty: true
 
-  #      - name: Archive Code Coverage Results (on main)
+  #      - name: Archive Code Coverage Results (on 2.7.x)
   #        if: github.event_name != 'pull_request'
   #        uses: actions/upload-artifact@v2
   #        with:

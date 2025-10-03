@@ -1,11 +1,11 @@
 name: Web Components
 run-name: 🧩 Build Web Components for ${{ github.event_name == 'issue_comment' && 'PR' || (github.event_name == 'release' && '🏷' || '🌱') }} ${{github.event_name == 'issue_comment' && github.event.issue.number || github.ref_name}}
 
-# This workflow runs whenever a commit is pushed on main or a release is published
+# This workflow runs whenever a commit is pushed on 2.7.x or a release is published
 on:
   push:
     branches:
-      - main
+      - 2.7.x
     tags:
       - 'v*.*.*'
   release:
