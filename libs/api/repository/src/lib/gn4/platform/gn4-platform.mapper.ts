@@ -43,18 +43,26 @@ export class Gn4PlatformMapper {
   userFromApi(apiUser: UserApiModel): UserModel {
     if (!apiUser) return null
     const {
-      enabled,
+      addresses,
       emailAddresses,
-      organization,
+      enabled,
+      id,
       kind,
       lastLoginDate,
+      security,
+      primaryAddress,
+      authorities,
       accountNonExpired,
       accountNonLocked,
-      id,
       credentialsNonExpired,
       ...user
     } = apiUser
-    return { ...apiUser, id: id.toString() } as UserModel
+
+    return {
+      ...user,
+      id: id.toString(),
+      email: emailAddresses ? emailAddresses[0] || '' : '',
+    } as UserModel
   }
 
   keywordsFromApi(
