@@ -235,13 +235,13 @@ describe('HeaderRecordComponent', () => {
     })
   })
 
-  describe('lastUpdate getter', () => {
-    it('should format the recordUpdated date using DateService', () => {
+  describe('resourceDate getter', () => {
+    it('should format the dateToDisplay date using DateService', () => {
       const dateService = TestBed.inject(DateService)
       const spy = jest
         .spyOn(dateService, 'formatDate')
         .mockReturnValue('formatted-date')
-      expect(component.lastUpdate).toBe('formatted-date')
+      expect(component.resourceDate).toBe('formatted-date')
       expect(spy).toHaveBeenCalledWith(datasetRecordsFixture()[0].recordUpdated)
     })
   })
