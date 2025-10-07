@@ -13,7 +13,7 @@ import { TranslatePipe } from '@ngx-translate/core'
 
 interface SortChoice {
   label: string
-  value: string
+  value: SortByField
 }
 
 @Component({
@@ -27,24 +27,20 @@ export class SortByComponent implements OnInit {
   choices: SortChoice[] = [
     {
       label: marker('results.sortBy.relevancy'),
-      value: SortByEnum.RELEVANCY.join(','),
+      value: SortByEnum.RELEVANCY,
     },
     {
       label: marker('results.sortBy.dateStamp'),
-      value: SortByEnum.CREATE_DATE.join(','),
-    },
-    {
-      label: marker('results.sortBy.changeDate'),
-      value: SortByEnum.CHANGE_DATE.join(','),
+      value: SortByEnum.RESOURCE_DATES,
     },
     {
       label: marker('results.sortBy.popularity'),
-      value: SortByEnum.POPULARITY.join(','),
+      value: SortByEnum.POPULARITY,
     },
   ]
   currentSortBy$ = this.facade.sortBy$.pipe(
     filter((sortBy) => !!sortBy),
-    map((sortBy) => sortBy.join(','))
+    map((sortBy) => sortBy)
   )
 
   constructor(
@@ -56,12 +52,12 @@ export class SortByComponent implements OnInit {
     if (this.isQualitySortable) {
       this.choices.push({
         label: marker('results.sortBy.qualityScore'),
-        value: SortByEnum.QUALITY_SCORE.join(','),
+        value: SortByEnum.QUALITY_SCORE,
       })
     }
   }
 
-  changeSortBy(criteriaAsString: string) {
-    this.searchService.setSortBy(criteriaAsString.split(',') as SortByField)
+  changeSortBy(criteria: SortByField): void {
+    this.searchService.setSortBy(criteria)
   }
 }

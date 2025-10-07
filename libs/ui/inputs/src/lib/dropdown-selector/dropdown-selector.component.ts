@@ -90,8 +90,10 @@ export class DropdownSelectorComponent implements OnInit {
 
   get selectedChoice(): DropdownChoice {
     return (
-      this.choices.find((choice) => choice.value === this.selected) ??
-      this.choices[0]
+      this.choices.find(
+        (choice) =>
+          JSON.stringify(choice.value) === JSON.stringify(this.selected)
+      ) ?? this.choices[0]
     )
   }
 
