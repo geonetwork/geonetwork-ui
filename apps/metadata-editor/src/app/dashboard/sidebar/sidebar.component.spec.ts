@@ -8,11 +8,16 @@ import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.
 import { MockBuilder, MockProvider, MockProviders } from 'ng-mocks'
 import { SidebarComponent } from './sidebar.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
+import fetchMock from 'fetch-mock-jest'
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent
   let fixture: ComponentFixture<SidebarComponent>
   let service: AuthService
+
+  beforeEach(() => {
+    fetchMock.reset()
+  })
 
   beforeEach(() => {
     return MockBuilder(SidebarComponent)
@@ -49,17 +54,15 @@ describe('SidebarComponent', () => {
 
   describe('logOut', () => {
     it('should log out', async () => {
-      jest.spyOn(window, 'fetch').mockResolvedValue({
+      fetchMock.get('http://logout.com/bla?', () => ({
         ok: true,
-      } as Response)
+      }))
 
       const originalUrl = window.origin
 
       await component.logOut()
 
-      expect(window.fetch).toHaveBeenCalledWith(service.logoutUrl, {
-        method: 'GET',
-      })
+      expect(fetchMock.called('http://logout.com/bla?')).toBe(true)
       expect(window.location.href.slice(0, -1)).toBe(originalUrl)
     })
   })
