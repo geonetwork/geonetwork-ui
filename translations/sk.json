@@ -545,7 +545,6 @@
   "results.records.hits.found": "{hits, plural, =0{Žiadne dokumenty nezodpovedajú zadanému vyhľadávaniu.} one{1 záznam nájdený.} other{{hits} záznamov nájdených.}}",
   "results.records.hits.selected": "{ amount } označených",
   "results.showMore": "Zobraziť viac výsledkov...",
-  "results.sortBy.changeDate": "",
   "results.sortBy.dateStamp": "Najnovšie",
   "results.sortBy.popularity": "Popularita",
   "results.sortBy.qualityScore": "Indikátor dokončenia",
