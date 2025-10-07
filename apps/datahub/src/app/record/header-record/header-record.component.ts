@@ -114,8 +114,18 @@ export class HeaderRecordComponent {
     })
   )
 
-  get lastUpdate() {
-    return this.dateService.formatDate(this.metadata.recordUpdated)
+  get resourceDate() {
+    let dateToDisplay = null
+    if (this.metadata.resourceUpdated) {
+      dateToDisplay = this.dateService.formatDate(this.metadata.resourceUpdated)
+    } else if (this.metadata.resourcePublished) {
+      dateToDisplay = this.dateService.formatDate(
+        this.metadata.resourcePublished
+      )
+    } else if (this.metadata.resourceCreated) {
+      dateToDisplay = this.dateService.formatDate(this.metadata.resourceCreated)
+    }
+    return dateToDisplay
   }
 
   back() {
