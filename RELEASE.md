@@ -26,22 +26,42 @@ Whenever a release is made, the version number is increased according to the fol
 Use the following commands to upgrade to a stable (non development) version:
 
 ```shell
-npm version 1.3.6 --no-git-tag-version
+npm version 2.7.0 --no-git-tag-version
 git add .
-git commit -m "1.3.6"
-git tag v1.3.6
-git push upstream main v1.3.6 # replace "upstream" with your remote repo name
+git commit -m "2.7.0"
+git tag v2.7.0
+git push upstream main v2.7.0 # replace "upstream" with your remote repo name
 ```
 
 This will update all `package.json` files in the repository, create a commit changing the version and an associated tag, and push both
 to the remote repository.
 
+The following command is needed to update the latest tag on NPM:
+
+```shell
+npm dist-tag add geonetwork-ui@2.7.0 latest
+```
+
+Check the following links for the correct deployment of artifacts:
+
+- https://hub.docker.com/r/geonetwork/geonetwork-ui-datahub/tags
+- https://hub.docker.com/r/geonetwork/geonetwork-ui-metadata-editor/tags
+- https://hub.docker.com/r/geonetwork/geonetwork-ui-tools-pipelines/tags
+- https://www.npmjs.com/package/geonetwork-ui?activeTab=versions
+- https://cdn.jsdelivr.net/gh/geonetwork/geonetwork-ui@wc-dist-v2.7.0/gn-wc.js
+
+Check the following links for the correct deployment of documentation and demonstration:
+
+- https://geonetwork.github.io/geonetwork-ui/main/docs/
+- https://geonetwork.github.io/geonetwork-ui/main/demo/
+- https://geonetwork.github.io/geonetwork-ui/main/storybook/demo/
+
 Once the version commit and tag are done and pushed, run the following commands to upgrade to an intermediary dev version:
 
 ```shell
-npm version 1.4.0-dev --no-git-tag-version # dev versions are a minor version above stable ones
+npm version 2.8.0-dev --no-git-tag-version # dev versions are a minor version above stable ones
 git add .
-git commit -m "1.4.0-dev"
+git commit -m "2.8.0-dev"
 git push upstream main
 ```
 
@@ -56,9 +76,9 @@ git push upstream main
 Releases are made periodically when needed. Each release includes:
 
 - An archive of each application, named like so: `geonetwork-ui-{application-name}-{version}.zip`  
-  Example: `geonetwork-ui-datahub-1.2.5.zip`
+  Example: `geonetwork-ui-datahub-2.7.0.zip`
 - A docker image of each application, tagged like so: `geonetwork/geonetwork-ui-{application-name}:{version}`
-  Example: `geonetwork/geonetwork-ui-datahub:1.2.5`
+  Example: `geonetwork/geonetwork-ui-datahub:2.7.0`
 
 > Note that the latest development version of each application is also available by replacing the version with
 > the branch name, for example:
@@ -72,6 +92,11 @@ are then either attached to the release (archives) or pushed to Dockerhub (docke
 To trigger this, simply push a git tag and then create a release from it as described here:
 https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository#creating-a-release
 
+Not auto-generated but valuable information:
+
+- changes in the default.toml
+- changes in translation keys
+
 ## Patch branch
 
 In order to clearly make a distinction between critical bug fixes and evolutions, a new patch branch should be created each time a bug fix needs to be backported to a previously released major/minor version.
@@ -80,40 +105,40 @@ The patch branch keeps the same major and minor numbers, but the patch number is
 
 ### Creating and preparing the patch branch
 
-For the examples, we'll use the `2.5.x` branched from `v2.5.0`.
+For the examples, we'll use the `2.7.x` branched from `v2.7.0`.
 
 First, create the branch and check it out:
 
 ```shell
-git checkout -b 2.5.x v2.5.0
+git checkout -b 2.7.x v2.7.0
 ```
 
 Once the branch is created:
 
-- the `.github/workflows` should be adapted to run on push to the `2.5.x` branch instead of `main`
+- the `.github/workflows` should be adapted to run on push to the `2.7.x` branch instead of `main`
 - adapt the `artifacts.yml` to
-  - tag the docker image as `2.5.x` instead of `latest` (Tag all docker images on 2.5.x also as 2.5.x)
-  - put the `dev-2.5.x` tag instead of `dev` (Publish NPM package)
-  - NOT put the `latest` tag on release (Publish NPM package)
-- adapt `tools/print-dev-version.sh` to detect `2.5.x` instead of `main`
-- adapt `libs/util/shared/src/lib/gn-ui-version.ts` (and spec) to return `2.5.x` instead of `main`
+  - tag the docker image as `2.7.x` instead of `latest` (Tag all docker images on 2.7.x also as 2.7.x)
+  - put the `dev-2.7.x` tag instead of `dev` (Publish NPM package with @dev-2.7.x tag)
+  - NOT Set the latest tag on the released version
+- adapt `tools/print-dev-version.sh` to detect `2.7.x` instead of `main`
+- adapt `libs/util/shared/src/lib/gn-ui-version.ts` (and spec) to return `2.7.x` instead of `main`
 
 Then set the version to the next dev version:
 
 ```shell
-npm version 2.5.1-dev --no-git-tag-version
+npm version 2.7.1-dev --no-git-tag-version
 git add .
-git commit -m "2.5.1-dev"
-git push upstream 2.5.x # replace "upstream" with your remote repo name
+git commit -m "2.7.1-dev"
+git push upstream 2.7.x # replace "upstream" with your remote repo name
 ```
 
 ### How to backport a bug fix
 
 #### With the backport bot
 
-On a PR that needs to be backported, (create and) add the ``backport-to-2.5.x` label (replace `2.5.x` with the wanted patch branch name).
+On a PR that needs to be backported, (create and) add the ``backport-to-2.7.x` label (replace `2.7.x` with the wanted patch branch name).
 
-A new PR should automatically be created on the `2.5.x` branch, with the commits cherry-picked, or an indication of commits that couldn't be cherry-picked.
+A new PR should automatically be created on the `2.7.x` branch, with the commits cherry-picked, or an indication of commits that couldn't be cherry-picked.
 
 #### Manually
 
