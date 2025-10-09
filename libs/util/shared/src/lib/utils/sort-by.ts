@@ -10,9 +10,11 @@ export function sortByToString(sortBy: SortByField): string {
 }
 
 export function sortByFromString(sortByString: string): SortByField {
-  const fields = sortByString.split(',')
-  return fields.map((field) => [
-    field.startsWith('-') ? 'desc' : 'asc',
-    field.startsWith('-') ? field.substring(1) : field,
-  ]) as SortByField
+  const fields = sortByString
+    .split(',')
+    .map((field) => [
+      field.startsWith('-') ? 'desc' : 'asc',
+      field.startsWith('-') ? field.substring(1) : field,
+    ]) as SortByField
+  return fields.length > 1 ? fields : (fields[0] as SortByField)
 }

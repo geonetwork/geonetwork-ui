@@ -85,12 +85,13 @@ describe('RouterSearchService', () => {
           Org: true,
         },
       }
-      const sort = SortByEnum.CREATE_DATE
+      const sort = SortByEnum.RESOURCE_DATES
       service.setSortAndFilters(filters, sort)
       expect(routerFacade.setSearch).toHaveBeenCalledWith({
         q: ['any'],
         publisher: ['Org'],
-        _sort: '-createDate',
+        _sort:
+          '-revisionDateForResource,-publicationDateForResource,-creationDateForResource',
       })
     })
   })
