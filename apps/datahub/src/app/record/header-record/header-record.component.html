@@ -94,7 +94,7 @@
                     [styling]="'default'"
                     [record]="metadata"
                   ></gn-ui-geo-data-badge>
-                  <div *ngIf="resourceDate">
+                  <div *ngIf="resourceDate && metadata.kind !== 'service'">
                     <p
                       translate
                       [translateParams]="{ date: resourceDate }"
