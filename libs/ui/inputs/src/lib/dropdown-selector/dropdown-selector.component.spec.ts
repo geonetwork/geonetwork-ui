@@ -20,6 +20,18 @@ describe('DropdownSelectorComponent', () => {
       { label: 'A', value: 'a' },
       { label: 'B', value: 'b' },
       { label: 'C', value: 'c' },
+      {
+        label: 'results.sortBy.popularity',
+        value: ['desc', 'userSavedCount'],
+      },
+      {
+        label: 'results.sortBy.dateStamp',
+        value: [
+          ['desc', 'revisionDateForResource'],
+          ['desc', 'publicationDateForResource'],
+          ['desc', 'creationDateForResource'],
+        ],
+      },
     ]
     fixture.detectChanges()
   })
@@ -48,6 +60,38 @@ describe('DropdownSelectorComponent', () => {
       })
       it('selects the corresponding choice', () => {
         expect(component.selectedChoice).toEqual({ label: 'B', value: 'b' })
+      })
+    })
+
+    describe('when the provided value is an array', () => {
+      beforeEach(() => {
+        component.selected = ['desc', 'userSavedCount']
+      })
+      it('selects the corresponding choice', () => {
+        expect(component.selectedChoice).toEqual({
+          label: 'results.sortBy.popularity',
+          value: ['desc', 'userSavedCount'],
+        })
+      })
+    })
+
+    describe('when the provided value is a nested array', () => {
+      beforeEach(() => {
+        component.selected = [
+          ['desc', 'revisionDateForResource'],
+          ['desc', 'publicationDateForResource'],
+          ['desc', 'creationDateForResource'],
+        ]
+      })
+      it('selects the corresponding choice', () => {
+        expect(component.selectedChoice).toEqual({
+          label: 'results.sortBy.dateStamp',
+          value: [
+            ['desc', 'revisionDateForResource'],
+            ['desc', 'publicationDateForResource'],
+            ['desc', 'creationDateForResource'],
+          ],
+        })
       })
     })
 

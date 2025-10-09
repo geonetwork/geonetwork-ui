@@ -24,13 +24,23 @@ describe('sortBy utils', () => {
           ['asc', 'hello'],
           ['desc', 'bla'],
         ])
-      ).toEqual('hello')
+      ).toEqual('hello,-bla')
     })
   })
   describe('sortByFromString', () => {
     it('single sort by', () => {
       expect(sortByFromString('-hello')).toEqual(['desc', 'hello'])
       expect(sortByFromString('bla')).toEqual(['asc', 'bla'])
+    })
+    it('multi sort by', () => {
+      expect(sortByFromString('-hello,-world')).toEqual([
+        ['desc', 'hello'],
+        ['desc', 'world'],
+      ])
+      expect(sortByFromString('bla,foo')).toEqual([
+        ['asc', 'bla'],
+        ['asc', 'foo'],
+      ])
     })
   })
 })
