@@ -1,0 +1,23 @@
+<div class="relative">
+  <div
+    class="absolute h-full left-0 right-0 transform bg-background duration-200 ease-in-out transition-all"
+    [ngStyle]="{
+      top: !!activeFilter ? '-100px' : '0',
+      opacity: !!activeFilter ? '0' : '1',
+      visibility: !!activeFilter ? 'hidden' : 'visible'
+    }"
+  >
+    <gn-ui-records-metrics
+      [field]="aggregationField"
+      [count]="aggregationMaxCount"
+      [attr.queryString]="aggregationQueryString || undefined"
+      (metricSelect)="setFilter($event.value)"
+    ></gn-ui-records-metrics>
+  </div>
+  <div>
+    <gn-ui-button type="secondary" (buttonClick)="clearFilter()" translate
+      >nav.back</gn-ui-button
+    >
+    <gn-ui-results-list-container></gn-ui-results-list-container>
+  </div>
+</div>
