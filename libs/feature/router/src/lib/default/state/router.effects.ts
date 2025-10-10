@@ -9,10 +9,7 @@ import {
   SetFilters,
   SetSortBy,
 } from '@geonetwork-ui/feature/search'
-import {
-  FieldFilters,
-  SortByEnum,
-} from '@geonetwork-ui/common/domain/model/search'
+import { FieldFilters } from '@geonetwork-ui/common/domain/model/search'
 import { Actions, createEffect, ofType } from '@ngrx/effects'
 import { navigation } from '@ngrx/router-store/data-persistence'
 import { of, pairwise, startWith } from 'rxjs'
@@ -22,6 +19,7 @@ import { RouterFacade } from './router.facade'
 import { ROUTE_PARAMS } from '../constants'
 import { sortByFromString } from '@geonetwork-ui/util/shared'
 import { ROUTER_CONFIG, RouterConfigModel } from '../router.config'
+import { RouterService } from '../router.service'
 
 @Injectable()
 export class RouterEffects {
@@ -31,7 +29,8 @@ export class RouterEffects {
     private _location: Location,
     private facade: RouterFacade,
     @Inject(ROUTER_CONFIG) private routerConfig: RouterConfigModel,
-    private fieldsService: FieldsService
+    private fieldsService: FieldsService,
+    private routerService: RouterService
   ) {}
 
   navigate$ = createEffect(
@@ -61,7 +60,7 @@ export class RouterEffects {
         let sortBy =
           ROUTE_PARAMS.SORT in newParams
             ? sortByFromString(newParams[ROUTE_PARAMS.SORT])
-            : SortByEnum.CHANGE_DATE
+            : this.routerService.getDefaultSort()
         let pageNumber =
           ROUTE_PARAMS.PAGE in newParams
             ? parseInt(newParams[ROUTE_PARAMS.PAGE])
@@ -70,7 +69,7 @@ export class RouterEffects {
           const oldSort =
             ROUTE_PARAMS.SORT in oldParams
               ? sortByFromString(oldParams[ROUTE_PARAMS.SORT])
-              : SortByEnum.CHANGE_DATE
+              : this.routerService.getDefaultSort()
           if (JSON.stringify(sortBy) === JSON.stringify(oldSort)) {
             sortBy = null
           }

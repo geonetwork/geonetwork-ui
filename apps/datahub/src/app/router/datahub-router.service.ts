@@ -18,6 +18,10 @@ import {
   ROUTER_ROUTE_ORGANIZATIONS,
 } from './constants'
 import { OrganizationPageComponent } from '../organization/organization-page/organization-page.component'
+import {
+  SortByEnum,
+  SortByField,
+} from '@geonetwork-ui/common/domain/model/search'
 
 @Injectable({
   providedIn: 'root',
@@ -100,5 +104,9 @@ export class DatahubRouterService {
 
   getOrganizationPageRoute(): string {
     return ROUTER_ROUTE_ORGANIZATION
+  }
+
+  getDefaultSort(): SortByField {
+    return SortByEnum.RESOURCE_DATES
   }
 }
