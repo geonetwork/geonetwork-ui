@@ -97,9 +97,9 @@ background_color = "#fdfbff"
 # WARNING: 'resourceType' filter has been deprecated, please use 'recordKind' instead. Breaking change: 'resourceType' filter won't retrieve featureCatalog anymore.
 # advanced_filters = ['organization', 'format', 'publicationYear', 'topic', 'isSpatial', 'license']
 
-# One or several search presets can be defined here; every search preset is composed of:
+# One or several search presets visible in form of badges can be defined here; every search preset is composed of:
 # - a name (which can be a translation key)
-# - a sort criteria: either `createDate`, `userSavedCount` or `_score` (prepend with `-` for descending sort) (optionnal)
+# - a sort criteria: either `revisionDateForResource,publicationDateForResource,creationDateForResource`, `userSavedCount` or `_score` (prepend each with `-` for descending sort) (optionnal)
 # - filters which can be expressed like so:
 # [[search_preset]]
 #     name = 'filterByName'
@@ -112,7 +112,7 @@ background_color = "#fdfbff"
 #     filters.publicationYear = ['2023', '2022']
 #     filters.isSpatial = ['yes']
 #     filters.license = ['unknown']
-#     sort = 'createDate'
+#     sort = '-revisionDateForResource,-publicationDateForResource,-creationDateForResource'
 # [[search_preset]]
 #     name = 'otherFilterName'
 #     filters.q = 'Other Full text search'
