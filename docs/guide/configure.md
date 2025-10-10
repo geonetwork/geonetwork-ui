@@ -194,12 +194,12 @@ advanced_filters = ['organization', 'inspireKeyword', 'keyword', 'topic']
 
 - `[[search_preset]]` (multiple, optional)
 
-  Search presets are shown in a prominent way to the user and can be used to showcase certain records in the catalog or offer shortcuts to frequent search criteria.
+  Search presets are shown in a prominent way in badges to the user and can be used to showcase certain records in the catalog or offer shortcuts to frequent search criteria.
 
   Every search preset is composed of:
 
   - a name for the preset, which can be a translation key (mandatory)
-  - a sort criteria: either `createDate`, `userSavedCount` or `_score` (prepend with `-` for descending sort) (optional)
+  - a sort criteria: either `revisionDateForResource,publicationDateForResource,creationDateForResource`, `userSavedCount` or `_score` (prepend each with `-` for descending sort) (optional)
   - a set of filters, each of them being a key-value pair where the key is a [known search field](../guide/search-fields.md) and the value is an array of strings (optional)
   - additionally, `filters.q` can be used to specify a full text search query
 
@@ -217,7 +217,7 @@ advanced_filters = ['organization', 'inspireKeyword', 'keyword', 'topic']
   filters.publicationYear = ['2023', '2022']
   filters.isSpatial = ['yes']
   filters.license = ['unknown']
-  sort = 'createDate'
+  sort = '-revisionDateForResource,-publicationDateForResource,-creationDateForResource'
 
   [[search_preset]]
   name = 'otherFilter'
