@@ -242,7 +242,9 @@ describe('HeaderRecordComponent', () => {
         .spyOn(dateService, 'formatDate')
         .mockReturnValue('formatted-date')
       expect(component.resourceDate).toBe('formatted-date')
-      expect(spy).toHaveBeenCalledWith(datasetRecordsFixture()[0].recordUpdated)
+      expect(spy).toHaveBeenCalledWith(
+        datasetRecordsFixture()[0].resourceUpdated
+      )
     })
   })
 

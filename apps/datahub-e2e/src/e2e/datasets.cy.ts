@@ -6,7 +6,7 @@ describe('datasets', () => {
 
     // aliases
     cy.get('gn-ui-results-list-item').as('results')
-    cy.get('[data-cy="9e1ea778-d0ce-4b49-90b7-37bc0e448300"]').as(
+    cy.get('[data-cy="ed34db28-5dd4-480f-bf29-dc08f0086131"]').as(
       'sampleResult'
     )
     cy.get('@results')
@@ -45,16 +45,19 @@ describe('datasets', () => {
         .should('have.length', 1)
       cy.screenshot({ capture: 'viewport' })
     })
-    it('should sort by change date initially', () => {
+    it('should sort by resource dates initially', () => {
       cy.get('@sortBy')
         .getActiveDropdownOption()
         .invoke('attr', 'data-cy-value')
-        .should('equal', 'desc,changeDate')
+        .should(
+          'equal',
+          'desc,revisionDateForResource,desc,publicationDateForResource,desc,creationDateForResource'
+        )
     })
   })
 
   describe('display of dataset previews', () => {
-    it('should display a logo for first and a placeholder for second result', () => {
+    it('should display a placeholder for sampleResult and a logo for second results item', () => {
       cy.get('@sortBy').selectDropdownOption(
         'desc,revisionDateForResource,desc,publicationDateForResource,desc,creationDateForResource'
       ) // this makes the order reliable
@@ -70,13 +73,13 @@ describe('datasets', () => {
         .find('gn-ui-thumbnail')
         .children('div')
         .invoke('attr', 'data-cy-is-placeholder')
-        .should('equal', 'false')
+        .should('equal', 'true')
       cy.get('@results')
-        .first()
+        .eq(1)
         .find('gn-ui-thumbnail')
         .children('div')
         .invoke('attr', 'data-cy-is-placeholder')
-        .should('equal', 'true')
+        .should('equal', 'false')
     })
     it('should display the title', () => {
       cy.get('@sampleResult')
@@ -510,7 +513,7 @@ describe('datasets', () => {
         cy.get('.cdk-overlay-container')
           .find('[role=listbox]')
           .find('button')
-          .should('have.length', 4)
+          .should('have.length', 3)
       })
     })
 
@@ -528,7 +531,7 @@ describe('datasets', () => {
           'desc,revisionDateForResource,desc,publicationDateForResource,desc,creationDateForResource'
         )
         cy.get(
-          '[data-cy="9e1ea778-d0ce-4b49-90b7-37bc0e448300"] gn-ui-progress-bar'
+          '[data-cy="ed34db28-5dd4-480f-bf29-dc08f0086131"] gn-ui-progress-bar'
         ).should('have.attr', 'ng-reflect-value', 100)
       })
 
