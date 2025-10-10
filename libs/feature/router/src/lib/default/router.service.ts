@@ -8,6 +8,10 @@ import {
 } from '.'
 import { Router, Routes } from '@angular/router'
 import { ROUTER_CONFIG, RouterConfigModel } from './router.config'
+import {
+  SortByEnum,
+  SortByField,
+} from '@geonetwork-ui/common/domain/model/search'
 
 @Injectable({
   providedIn: 'root',
@@ -57,5 +61,9 @@ export class RouterService {
 
   getOrganizationPageRoute(): string {
     return ROUTER_ROUTE_ORGANIZATION
+  }
+
+  getDefaultSort(): SortByField {
+    return SortByEnum.RESOURCE_DATES
   }
 }
