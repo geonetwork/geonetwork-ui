@@ -200,7 +200,7 @@ describe('HomeHeaderComponent', () => {
         expect(displaySortBadges).toEqual(true)
       })
 
-      describe('enable sort on CREATE_DATE', () => {
+      describe('enable sort on RESOURCE_DATES', () => {
         beforeEach(() => {
           const latestBadge = fixture.debugElement.queryAll(
             By.css('.badge-btn')
@@ -210,7 +210,7 @@ describe('HomeHeaderComponent', () => {
         it('resets filters and sort', () => {
           expect(searchService.setSortAndFilters).toHaveBeenCalledWith(
             {},
-            SortByEnum.CREATE_DATE
+            SortByEnum.RESOURCE_DATES
           )
         })
       })
