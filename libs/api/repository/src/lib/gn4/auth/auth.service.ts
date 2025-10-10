@@ -23,7 +23,6 @@ export class AuthService {
   get loginUrl() {
     let baseUrl = this.baseLoginUrl
     const locationHasQueryParams = !!new URL(
-      this.location.path(),
       window.location.href
     ).search
     // this is specific to georchestra login URL based on a ?login query param
@@ -33,7 +32,7 @@ export class AuthService {
     return baseUrl
       .replace(
         '${current_url}',
-        new URL(this.location.path(), window.location.href).toString()
+        new URL(window.location.href).toString()
       )
       .replace('${lang2}', toLang2(this.translateService.currentLang))
       .replace('${lang3}', toLang3(this.translateService.currentLang))
@@ -54,7 +53,6 @@ export class AuthService {
     @Optional() @Inject(LOGIN_URL) private baseLoginUrlToken: string,
     @Optional() @Inject(LOGOUT_URL) private baseLogoutUrlToken: string,
     @Optional() @Inject(SETTINGS_URL) private baseSettingsUrlToken: string,
-    private translateService: TranslateService,
-    private location: Location
+    private translateService: TranslateService
   ) {}
 }

@@ -8,8 +8,7 @@ export const PROXY_PATH = new InjectionToken<string>('proxyPath')
 })
 export class ProxyService {
   constructor(
-    @Optional() @Inject(PROXY_PATH) private proxyPath: string,
-    private location: Location
+    @Optional() @Inject(PROXY_PATH) private proxyPath: string
   ) {}
 
   /**
@@ -20,7 +19,7 @@ export class ProxyService {
   getProxiedUrl(url: string): string {
     if (!this.proxyPath) return url
     const urlObj = new URL(url)
-    const current = new URL(this.location.path(), window.location.href)
+    const current = new URL(window.location.href)
     const proxyUrl = new URL(this.proxyPath, current.toString()).toString()
     if (
       current.hostname === urlObj.hostname &&
