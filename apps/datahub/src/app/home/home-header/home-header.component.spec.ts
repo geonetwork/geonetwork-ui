@@ -244,7 +244,7 @@ describe('HomeHeaderComponent', () => {
           it('should redirect correctly', () => {
             expect(searchService.setSortAndFilters).toHaveBeenCalledWith(
               { thisIs: 'a fake filter' },
-              SortByEnum.RESOURCE_DATES
+              SortByEnum.CREATE_DATE
             )
           })
         })
