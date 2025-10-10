@@ -65,12 +65,12 @@ class UsersApiServiceMock {
     return of([
       {
         username: 'ken',
-        email: 'ken@sf2.com',
+        emailAddresses: ['ken@sf2.com'],
         id: 1,
       },
       {
         username: 'ryu',
-        email: 'ryu@sf2.com',
+        emailAddresses: ['ryu@sf2.com'],
         id: 2,
       },
     ])
