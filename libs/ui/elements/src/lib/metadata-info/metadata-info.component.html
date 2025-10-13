@@ -24,7 +24,7 @@
     ghostClass="h-[31px] w-3/4"
     [showContent]="fieldReady('keywords')"
   >
-    <div *ngIf="metadata.keywords?.length">
+    <gn-ui-max-lines [maxLines]="7" *ngIf="metadata.keywords?.length">
       <div class="metadata-info-keywords sm:pb-4 flex flex-wrap gap-2">
         <gn-ui-badge
           class="inline-block lowercase"
@@ -34,7 +34,7 @@
           >{{ keyword.label }}</gn-ui-badge
         >
       </div>
-    </div>
+    </gn-ui-max-lines>
   </gn-ui-content-ghost>
 </div>
 
