@@ -105,3 +105,24 @@ export const SizeL: StoryObj<ExternalLinkCardComponent> = {
     </div>`,
   }),
 }
+
+export const NotClickable: StoryObj<ExternalLinkCardComponent> = {
+  args: {
+    size: 'M',
+    link: {
+      type: 'service',
+      accessServiceProtocol: 'postgis',
+      name: 'France_Regions',
+      description:
+        'Boundaries for the administrative regions of metropolitan France.',
+      url: new URL('http://geo.local:5432/france_demo'),
+    },
+  },
+  render: (args) => ({
+    props: args,
+    template: `
+    <div class='border border-black inline-block rounded'>
+      <gn-ui-external-link-card [link]="link" size="M"></gn-ui-external-link-card>
+    </div>`,
+  }),
+}

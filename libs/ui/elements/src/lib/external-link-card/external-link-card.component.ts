@@ -37,7 +37,7 @@ export class ExternalLinkCardComponent {
 
   @Input() set size(value: CardSize) {
     this._size = value
-    this.cardClass = this.sizeClassMap[value]
+    this.cardClass = `group flex flex-row justify-between card-shadow rounded overflow-hidden ${this.sizeClassMap[value]}`
   }
   get size(): CardSize {
     return this._size
@@ -51,11 +51,21 @@ export class ExternalLinkCardComponent {
     return this.link.name || this.link.description || ''
   }
 
-  getLinkFormat(link: any) {
+  get isClickable(): boolean {
+    if (
+      this.link.type === 'service' &&
+      this.link.accessServiceProtocol === 'postgis'
+    ) {
+      return false
+    }
+    return true
+  }
+
+  getLinkFormat(link: DatasetOnlineResource): string {
     return getFileFormat(link)
   }
 
-  getLinkColor(link: any) {
+  getLinkColor(link: DatasetOnlineResource): string {
     return getBadgeColor(getFileFormat(link))
   }
 }

@@ -512,6 +512,7 @@ export class Gn4FieldMapper {
       /^OGC:WMTS/.test(protocol) ||
       /TMS/i.test(protocol) ||
       /ogc\W*api\W*features/i.test(protocol) ||
+      /^DB:POSTGIS/i.test(protocol) ||
       (/^WWW:DOWNLOAD-/.test(protocol) && /data.geopf.fr/.test(url)) // TO DO : change with the good protocol when decided
     ) {
       return 'service'

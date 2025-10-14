@@ -150,6 +150,12 @@ export const FORMATS = {
     color: '#5A9E6F',
     mimeTypes: ['image/webp'],
   },
+  postgis: {
+    extensions: ['postgis'],
+    priority: 18,
+    color: '#336791',
+    mimeTypes: [],
+  },
 } as const
 
 export type FileFormat = keyof typeof FORMATS
@@ -195,6 +201,11 @@ export function getFileFormatFromServiceOutput(
 export function getFileFormat(
   link: DatasetOnlineResource | ServiceOnlineResource
 ): FileFormat {
+  if ('accessServiceProtocol' in link) {
+    if (link.accessServiceProtocol in FORMATS) {
+      return link.accessServiceProtocol as FileFormat
+    }
+  }
   if ('mimeType' in link) {
     const mimeTypeFormat = mimeTypeToFormat(link.mimeType)
     if (mimeTypeFormat !== null) {

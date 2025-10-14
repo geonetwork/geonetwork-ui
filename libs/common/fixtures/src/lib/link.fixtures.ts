@@ -259,4 +259,13 @@ export const aSetOfLinksFixture = () => ({
       accessServiceProtocol: 'wms',
       type: 'endpoint',
     }) as ServiceEndpoint,
+  postgisLink: () =>
+    ({
+      name: 'France_Regions',
+      description:
+        'Boundaries for the administrative regions of metropolitan France.',
+      url: new URL('http://geo.local:5432/france_demo'),
+      type: 'service',
+      accessServiceProtocol: 'postgis',
+    }) as DatasetServiceDistribution,
 })
