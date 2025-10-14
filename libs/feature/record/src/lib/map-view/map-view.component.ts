@@ -114,6 +114,7 @@ export class MapViewComponent implements AfterViewInit {
   _styleFromConfig = null
 
   linkMap: Map<string, DatasetOnlineResource> = new Map()
+  // FIXME the map view component should not need a selectedView
   @Input() set selectedView(value: string) {
     this.selectedView$.next(value)
   }
