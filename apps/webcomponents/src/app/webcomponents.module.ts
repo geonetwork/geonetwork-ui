@@ -7,6 +7,16 @@ import {
   NgModule,
 } from '@angular/core'
 import { createCustomElement } from '@angular/elements'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import {
+  ChartViewComponent,
+  TableViewComponent,
+} from '@geonetwork-ui/feature/dataviz'
+import {
+  FeatureMapModule,
+  LayersPanelComponent,
+  MapStateContainerComponent,
+} from '@geonetwork-ui/feature/map'
 import {
   FeatureRecordModule,
   MapViewComponent,
@@ -18,35 +28,25 @@ import {
   RecordsMetricsComponent,
   ResultsListContainerComponent,
 } from '@geonetwork-ui/feature/search'
+import { FigureComponent } from '@geonetwork-ui/ui/dataviz'
+import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
+import { GEONETWORK_UI_VERSION } from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { AppComponent } from './app.component'
-import { WebcomponentOverlayContainer } from './webcomponent-overlay-container'
 import { BaseComponent } from './components/base.component'
 import { GnAggregatedRecordsComponent } from './components/gn-aggregated-records/gn-aggregated-records.component'
+import { GnDatasetViewChartComponent } from './components/gn-dataset-view-chart/gn-dataset-view-chart.component'
+import { GnDatasetViewMapComponent } from './components/gn-dataset-view-map/gn-dataset-view-map.component'
+import { GnDatasetViewTableComponent } from './components/gn-dataset-view-table/gn-dataset-view-table.component'
 import { GnFacetsComponent } from './components/gn-facets/gn-facets.component'
+import { GnFigureDatasetsComponent } from './components/gn-figure-datasets/gn-figure-datasets.component'
+import { GnMapViewerComponent } from './components/gn-map-viewer/gn-map-viewer.component'
 import { GnResultsListComponent } from './components/gn-results-list/gn-results-list.component'
 import { GnSearchInputComponent } from './components/gn-search-input/gn-search-input.component'
-import { GnDatasetViewTableComponent } from './components/gn-dataset-view-table/gn-dataset-view-table.component'
-import { GnMapViewerComponent } from './components/gn-map-viewer/gn-map-viewer.component'
-import {
-  FeatureMapModule,
-  LayersPanelComponent,
-  MapStateContainerComponent,
-} from '@geonetwork-ui/feature/map'
-import { GnDatasetViewChartComponent } from './components/gn-dataset-view-chart/gn-dataset-view-chart.component'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { GnFigureDatasetsComponent } from './components/gn-figure-datasets/gn-figure-datasets.component'
-import { GnDatasetViewMapComponent } from './components/gn-dataset-view-map/gn-dataset-view-map.component'
-import {
-  ChartViewComponent,
-  TableViewComponent,
-} from '@geonetwork-ui/feature/dataviz'
 import { StandaloneSearchModule } from './standalone-search.module'
-import { GEONETWORK_UI_VERSION } from '@geonetwork-ui/util/shared'
-import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { FigureComponent } from '@geonetwork-ui/ui/dataviz'
+import { WebcomponentOverlayContainer } from './webcomponent-overlay-container'
 
 const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
   [GnFacetsComponent, 'gn-facets'],
