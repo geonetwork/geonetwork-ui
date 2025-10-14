@@ -29,6 +29,12 @@ Web Components are made to be easily included in any context. To do so, you have
 The Web Components script also includes the [Standalone Search](./standalone-search.md).
 :::
 
+## Proxy
+
+Web Components support the following attribute for handling proxification of URLs:
+
+- `proxy-path`: identical to the [`proxy_path` configuration option](./configure.md#global)
+
 ## Internationalization
 
 Web Components support the following attributes for handling internationalization:

@@ -30,7 +30,7 @@ import {
 } from '@geonetwork-ui/feature/search'
 import { FigureComponent } from '@geonetwork-ui/ui/dataviz'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { GEONETWORK_UI_VERSION } from '@geonetwork-ui/util/shared'
+import { GEONETWORK_UI_VERSION, PROXY_PATH } from '@geonetwork-ui/util/shared'
 import { EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
@@ -45,6 +45,7 @@ import { GnFigureDatasetsComponent } from './components/gn-figure-datasets/gn-fi
 import { GnMapViewerComponent } from './components/gn-map-viewer/gn-map-viewer.component'
 import { GnResultsListComponent } from './components/gn-results-list/gn-results-list.component'
 import { GnSearchInputComponent } from './components/gn-search-input/gn-search-input.component'
+import { standaloneConfigurationObject } from './configuration'
 import { StandaloneSearchModule } from './standalone-search.module'
 import { WebcomponentOverlayContainer } from './webcomponent-overlay-container'
 
@@ -103,6 +104,10 @@ const CUSTOM_ELEMENTS: [new (...args) => BaseComponent, string][] = [
     {
       provide: OverlayContainer,
       useClass: WebcomponentOverlayContainer,
+    },
+    {
+      provide: PROXY_PATH,
+      useFactory: standaloneConfigurationObject.proxyPathFactory,
     },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

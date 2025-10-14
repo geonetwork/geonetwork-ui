@@ -5,12 +5,15 @@ export type MetadataLanguage = 'current' | null | string // can be a hardcoded l
 
 export interface StandaloneConfiguration {
   apiUrl?: string
+  proxyPath?: string
   textLanguage?: TextLanguage
   metadataLanguage?: MetadataLanguage
 }
 
 export const standaloneConfigurationObject = {
   apiConfiguration: new Configuration(),
+  proxyPath: null,
+  proxyPathFactory: () => standaloneConfigurationObject.proxyPath,
   textLanguage: 'browser',
   metadataLanguage: null,
   metadataLanguageFactory: () => standaloneConfigurationObject.metadataLanguage,
