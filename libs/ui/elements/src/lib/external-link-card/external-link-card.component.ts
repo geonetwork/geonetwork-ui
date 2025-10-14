@@ -51,6 +51,10 @@ export class ExternalLinkCardComponent {
     return this.link.name || this.link.description || ''
   }
 
+  get isLocal() {
+    return this.link.type === 'local'
+  }
+
   getLinkFormat(link: any) {
     return getFileFormat(link)
   }

@@ -519,6 +519,9 @@ export class Gn4FieldMapper {
     if (/^WWW:DOWNLOAD/.test(protocol)) {
       return 'download'
     }
+    if (/^DB:/.test(protocol) || /^FILE:/.test(protocol)) {
+      return 'local'
+    }
     return 'link'
   }
 

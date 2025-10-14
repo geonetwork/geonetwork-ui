@@ -176,7 +176,12 @@ marker('record.metadata.api.accessServiceProtocol.tms')
 marker('record.metadata.api.accessServiceProtocol.maplibre-style')
 marker('record.metadata.api.accessServiceProtocol.other')
 
-export type OnlineResourceType = 'service' | 'download' | 'link' | 'endpoint'
+export type OnlineResourceType =
+  | 'service'
+  | 'download'
+  | 'link'
+  | 'endpoint'
+  | 'local'
 
 export interface DatasetServiceDistribution {
   type: 'service'
@@ -214,10 +219,21 @@ export interface OnlineLinkResource {
   accessRestricted?: boolean
 }
 
+export interface LocalLinkResource {
+  type: 'local'
+  url?: URL
+  name?: string
+  description?: string
+  translations?: OnlineResourceTranslations
+  mimeType?: string
+  accessRestricted?: boolean
+}
+
 export type DatasetOnlineResource = (
   | DatasetServiceDistribution
   | DatasetDownloadDistribution
   | OnlineLinkResource
+  | LocalLinkResource
 ) & {
   type: OnlineResourceType
 }
