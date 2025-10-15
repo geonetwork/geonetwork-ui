@@ -1,12 +1,21 @@
+import { HttpClient, HttpEventType } from '@angular/common/http'
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core'
 import {
-  catchError,
-  filter,
-  map,
-  mergeMap,
-  shareReplay,
-  tap,
-} from 'rxjs/operators'
+  KeywordApiResponse,
+  ThesaurusApiResponse,
+} from '@geonetwork-ui/api/metadata-converter'
+import {
+  CatalogRecord,
+  Keyword,
+  Organization,
+  UserFeedback,
+} from '@geonetwork-ui/common/domain/model/record'
+import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
+import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
+import {
+  PlatformServiceInterface,
+  UploadEvent,
+} from '@geonetwork-ui/common/domain/platform.service.interface'
 import {
   MeApiService,
   RecordsApiService,
@@ -15,26 +24,9 @@ import {
   UserfeedbackApiService,
   UsersApiService,
 } from '@geonetwork-ui/data-access/gn4'
-import {
-  PlatformServiceInterface,
-  UploadEvent,
-} from '@geonetwork-ui/common/domain/platform.service.interface'
-import { UserModel } from '@geonetwork-ui/common/domain/model/user/user.model'
-import {
-  CatalogRecord,
-  Keyword,
-  Organization,
-  UserFeedback,
-} from '@geonetwork-ui/common/domain/model/record'
-import { Gn4PlatformMapper } from './gn4-platform.mapper'
-import { ltr } from 'semver'
-import { HttpClient, HttpEventType } from '@angular/common/http'
-import {
-  KeywordApiResponse,
-  ThesaurusApiResponse,
-} from '@geonetwork-ui/api/metadata-converter'
-import { KeywordType } from '@geonetwork-ui/common/domain/model/thesaurus'
+import { toLang3 } from '@geonetwork-ui/util/i18n'
 import { noDuplicateFileName } from '@geonetwork-ui/util/shared'
+import { TranslateService } from '@ngx-translate/core'
 import {
   combineLatest,
   forkJoin,
@@ -43,9 +35,17 @@ import {
   switchMap,
   throwError,
 } from 'rxjs'
-import { TranslateService } from '@ngx-translate/core'
-import { toLang3 } from '@geonetwork-ui/util/i18n'
+import {
+  catchError,
+  filter,
+  map,
+  mergeMap,
+  shareReplay,
+  tap,
+} from 'rxjs/operators'
+import { ltr } from 'semver'
 import { Gn4SettingsService } from '../settings/gn4-settings.service'
+import { Gn4PlatformMapper } from './gn4-platform.mapper'
 
 const minApiVersion = '4.2.2'
 
@@ -56,7 +56,6 @@ export const DISABLE_AUTH = new InjectionToken<boolean>('gnDisableAuth', {
 @Injectable()
 export class Gn4PlatformService implements PlatformServiceInterface {
   private readonly type = 'GeoNetwork'
-  private readonly me$: Observable<UserModel>
   private readonly users$: Observable<UserModel[]>
   private readonly isUserAnonymous$: Observable<boolean>
   private readonly gnParseVersion = '4.2.5'
@@ -70,6 +69,15 @@ export class Gn4PlatformService implements PlatformServiceInterface {
       }),
       shareReplay(1)
     )
+
+  private me$ = this.disableAuth
+    ? of(null)
+    : of(true).pipe(
+        switchMap(() => this.meApi.getMe()),
+        switchMap((apiUser) => this.mapper.userFromMeApi(apiUser)),
+        shareReplay({ bufferSize: 1, refCount: true })
+      )
+
   /**
    * A map of already loaded thesauri (groups of keywords); the key is a URI
    * @private
@@ -93,13 +101,6 @@ export class Gn4PlatformService implements PlatformServiceInterface {
     private settingsService: Gn4SettingsService,
     @Inject(DISABLE_AUTH) @Optional() private disableAuth: boolean
   ) {
-    this.me$ = this.disableAuth
-      ? of(null)
-      : this.meApi.getMe().pipe(
-          switchMap((apiUser) => this.mapper.userFromMeApi(apiUser)),
-          shareReplay({ bufferSize: 1, refCount: true })
-        )
-
     this.isUserAnonymous$ = this.me$.pipe(
       map((user) => !user || !('id' in user))
     )
