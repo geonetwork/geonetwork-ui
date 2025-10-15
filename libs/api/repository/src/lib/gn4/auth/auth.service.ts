@@ -33,7 +33,10 @@ export class AuthService {
     return baseUrl
       .replace(
         '${current_url}',
-        new URL(this.location.path(), window.location.href).toString()
+        new URL(
+          this.location.prepareExternalUrl(this.location.path()),
+          window.location.href
+        ).toString()
       )
       .replace('${lang2}', toLang2(this.translateService.currentLang))
       .replace('${lang3}', toLang3(this.translateService.currentLang))

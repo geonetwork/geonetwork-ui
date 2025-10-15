@@ -10,12 +10,14 @@ const translateServiceMock = {
   currentLang: 'fr',
 }
 
-let windowLocation
+let mockAppBaseHref
+let mockLocationPath
 
 describe('AuthService', () => {
   let service: AuthService
   beforeEach(() => {
-    windowLocation = 'http://localhost'
+    mockAppBaseHref = ''
+    mockLocationPath = '/'
 
     TestBed.configureTestingModule({
       providers: [
@@ -28,7 +30,8 @@ describe('AuthService', () => {
           useValue: translateServiceMock,
         },
         MockProvider(Location, {
-          path: () => windowLocation,
+          prepareExternalUrl: (url: string) => `${mockAppBaseHref}${url}`,
+          path: () => mockLocationPath,
         }),
       ],
       imports: [HttpClientTestingModule],
@@ -71,7 +74,8 @@ describe('AuthService', () => {
   })
   describe('login URL from config (special georchestra case, appending a query param with existing query params)', () => {
     beforeEach(() => {
-      windowLocation = '/datahub/?org=Abcd&keywords=bla;bla&location'
+      mockAppBaseHref = '/datahub'
+      mockLocationPath = '/?org=Abcd&keywords=bla;bla&location'
       loginUrlTokenMock = '${current_url}?login&something=else'
       service = TestBed.inject(AuthService)
     })
