@@ -99,7 +99,12 @@ background_color = "#fdfbff"
 
 # One or several search presets visible in form of badges can be defined here; every search preset is composed of:
 # - a name (which can be a translation key)
-# - a sort criteria: either `revisionDateForResource,publicationDateForResource,creationDateForResource`, `userSavedCount` or `_score` (prepend each with `-` for descending sort) (optionnal)
+# - a sort criteria (prepend the field name with - to do a descending sort):
+#   - `-revisionDateForResource,-publicationDateForResource,-creationDateForResource` (resource dates)
+#   - `-userSavedcount`
+#   - `-qualityScore`
+#   - `-_score`
+#     Note: Other fields of the records can be used as a sort criteria, but the sort drop-down will not display their entries.
 # - filters which can be expressed like so:
 # [[search_preset]]
 #     name = 'filterByName'

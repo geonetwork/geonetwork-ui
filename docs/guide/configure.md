@@ -199,7 +199,15 @@ advanced_filters = ['organization', 'inspireKeyword', 'keyword', 'topic']
   Every search preset is composed of:
 
   - a name for the preset, which can be a translation key (mandatory)
-  - a sort criteria: either `revisionDateForResource,publicationDateForResource,creationDateForResource`, `userSavedCount` or `_score` (prepend each with `-` for descending sort) (optional)
+  - a sort criteria (prepend the field name with - to do a descending sort):
+
+    - `-revisionDateForResource,-publicationDateForResource,-creationDateForResource` (resource dates)
+    - `-userSavedcount`
+    - `-qualityScore`
+    - `-_score`
+
+      Note: Other fields of the records can be used as a sort criteria, but the sort drop-down will not display their entries.
+
   - a set of filters, each of them being a key-value pair where the key is a [known search field](../guide/search-fields.md) and the value is an array of strings (optional)
   - additionally, `filters.q` can be used to specify a full text search query
 
