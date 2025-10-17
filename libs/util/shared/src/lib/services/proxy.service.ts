@@ -1,4 +1,4 @@
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core'
+import { Injectable, InjectionToken, Injector } from '@angular/core'
 import { Location } from '@angular/common'
 
 export const PROXY_PATH = new InjectionToken<string>('proxyPath')
@@ -7,8 +7,12 @@ export const PROXY_PATH = new InjectionToken<string>('proxyPath')
   providedIn: 'root',
 })
 export class ProxyService {
+  private get proxyPath(): string | null {
+    return this.injector.get(PROXY_PATH, null)
+  }
+
   constructor(
-    @Optional() @Inject(PROXY_PATH) private proxyPath: string,
+    private injector: Injector,
     private location: Location
   ) {}
 
