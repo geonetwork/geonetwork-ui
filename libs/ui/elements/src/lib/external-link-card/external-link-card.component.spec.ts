@@ -44,7 +44,7 @@ describe('ExternalLinkCardComponent', () => {
     })
 
     it('should identify PostGIS links correctly', () => {
-      expect(postgisComponent.isClickable).toBe(false)
+      expect(postgisComponent.isDatabase).toBe(true)
     })
 
     it('should render as non-clickable for PostGIS links', () => {
@@ -55,7 +55,7 @@ describe('ExternalLinkCardComponent', () => {
 
   describe('Regular links', () => {
     it('should not identify regular links as PostGIS', () => {
-      expect(component.isClickable).toBe(true)
+      expect(component.isDatabase).toBe(false)
     })
 
     it('should render as clickable for regular links', () => {

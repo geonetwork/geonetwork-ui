@@ -469,6 +469,7 @@
   "record.metadata.languages": "Languages",
   "record.metadata.lastUpdate": "Last updated on {date}",
   "record.metadata.link.postgis.table": "table :",
+  "record.metadata.link.postgis.tooltip": "Local resource",
   "record.metadata.linked.datasets": "Associated datasets",
   "record.metadata.linked.records": "Associated content",
   "record.metadata.linked.reuses": "Associated reuses",

@@ -7,6 +7,7 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { matOpenInNew } from '@ng-icons/material-icons/baseline'
+import { iconoirDatabase } from '@ng-icons/iconoir'
 import { getBadgeColor, getFileFormat } from '@geonetwork-ui/util/shared'
 import { TranslatePipe } from '@ngx-translate/core'
 
@@ -21,6 +22,7 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
   providers: [
     provideIcons({
       matOpenInNew,
+      iconoirDatabase,
     }),
     provideNgIconsConfig({ size: '1.5em' }),
   ],
@@ -51,14 +53,11 @@ export class ExternalLinkCardComponent {
     return this.link.name || this.link.description || ''
   }
 
-  get isClickable(): boolean {
-    if (
+  get isDatabase(): boolean {
+    return (
       this.link.type === 'service' &&
       this.link.accessServiceProtocol === 'postgis'
-    ) {
-      return false
-    }
-    return true
+    )
   }
 
   getLinkFormat(link: DatasetOnlineResource): string {

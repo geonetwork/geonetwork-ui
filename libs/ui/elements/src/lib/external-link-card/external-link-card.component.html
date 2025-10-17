@@ -1,6 +1,20 @@
-<ng-container *ngIf="!isClickable; else clickableLink">
+<ng-container *ngIf="isDatabase; else clickableLink">
   <div [ngClass]="cardClass" [title]="title">
     <ng-container *ngTemplateOutlet="cardContent"></ng-container>
+    <div
+      class="flex min-w-[32px]"
+      [ngClass]="size === 'S' ? 'items-end' : 'items-center'"
+    >
+      <div
+        class="gn-ui-card-icon"
+        [title]="'record.metadata.link.postgis.tooltip' | translate"
+      >
+        <ng-icon
+          class="inline-block card-icon align-middle"
+          name="iconoirDatabase"
+        ></ng-icon>
+      </div>
+    </div>
   </div>
 </ng-container>
 
@@ -26,7 +40,7 @@
       {{ link.description || link.name }}
     </div>
     <div class="gn-ui-card-detail">
-      <ng-container *ngIf="!isClickable">
+      <ng-container *ngIf="isDatabase">
         {{ 'record.metadata.link.postgis.table' | translate }}
       </ng-container>
       {{ link.name }}

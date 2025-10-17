@@ -468,6 +468,7 @@
   "record.metadata.languages": "Sprachen",
   "record.metadata.lastUpdate": "Zuletzt aktualisiert am {date}",
   "record.metadata.link.postgis.table": "",
+  "record.metadata.link.postgis.tooltip": "",
   "record.metadata.linked.datasets": "Verknüpfte Datensätze",
   "record.metadata.linked.records": "Verknüpfte Inhalte",
   "record.metadata.linked.reuses": "Verknüpfte Wiederverwendungen",
