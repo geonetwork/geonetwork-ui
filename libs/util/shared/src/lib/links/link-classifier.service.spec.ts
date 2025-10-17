@@ -126,5 +126,12 @@ describe('LinkClassifierService', () => {
         ).toEqual([LinkUsage.GEODATA])
       })
     })
+    describe('for a PostGIS link', () => {
+      it('returns UNKNOWN usage (appears in other links)', () => {
+        expect(
+          service.getUsagesForLink(aSetOfLinksFixture().postgisLink())
+        ).toEqual([LinkUsage.UNKNOWN])
+      })
+    })
   })
 })

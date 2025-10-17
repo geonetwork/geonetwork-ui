@@ -9,6 +9,7 @@ export function matchProtocol(protocol: string): ServiceProtocol {
   if (/ogc\W*api\W*features/i.test(protocol)) return 'ogcFeatures'
   if (/esri/i.test(protocol)) return 'esriRest'
   if (/DOWNLOAD-1/i.test(protocol)) return 'GPFDL'
+  if (/DB:POSTGIS/i.test(protocol)) return 'postgis'
   return 'other'
 }
 
