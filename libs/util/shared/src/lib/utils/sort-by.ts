@@ -6,12 +6,15 @@ export function sortByToStrings(sortBy: SortByField): string[] {
 }
 
 export function sortByToString(sortBy: SortByField): string {
-  return sortByToStrings(sortBy)[0]
+  return sortByToStrings(sortBy).join(',')
 }
 
 export function sortByFromString(sortByString: string): SortByField {
-  return [
-    sortByString.startsWith('-') ? 'desc' : 'asc',
-    sortByString.startsWith('-') ? sortByString.substring(1) : sortByString,
-  ]
+  const fields = sortByString
+    .split(',')
+    .map((field) => [
+      field.startsWith('-') ? 'desc' : 'asc',
+      field.startsWith('-') ? field.substring(1) : field,
+    ]) as SortByField
+  return fields.length > 1 ? fields : (fields[0] as SortByField)
 }

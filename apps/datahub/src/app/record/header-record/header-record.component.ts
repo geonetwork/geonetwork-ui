@@ -29,9 +29,14 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { combineLatest, map } from 'rxjs'
 import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 
 export const HEADER_HEIGHT_DEFAULT = 344
 export const HEADER_HEIGHT_MOBILE_THUMBNAIL = 554
+
+marker('record.metadata.resourceUpdated')
+marker('record.metadata.resourcePublished')
+marker('record.metadata.resourceCreated')
 
 @Component({
   selector: 'datahub-header-record',
@@ -114,8 +119,25 @@ export class HeaderRecordComponent {
     })
   )
 
-  get lastUpdate() {
-    return this.dateService.formatDate(this.metadata.recordUpdated)
+  get resourceDate(): { date: string; label: string } | null {
+    let dateToDisplay = null
+    if (this.metadata.resourceUpdated) {
+      dateToDisplay = {
+        date: this.dateService.formatDate(this.metadata.resourceUpdated),
+        label: 'record.metadata.resourceUpdated',
+      }
+    } else if (this.metadata.resourcePublished) {
+      dateToDisplay = {
+        date: this.dateService.formatDate(this.metadata.resourcePublished),
+        label: 'record.metadata.resourcePublished',
+      }
+    } else if (this.metadata.resourceCreated) {
+      dateToDisplay = {
+        date: this.dateService.formatDate(this.metadata.resourceCreated),
+        label: 'record.metadata.resourceCreated',
+      }
+    }
+    return dateToDisplay
   }
 
   back() {

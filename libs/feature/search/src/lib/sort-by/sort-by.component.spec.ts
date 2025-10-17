@@ -64,19 +64,19 @@ describe('SortByComponent', () => {
       expect(dropDownComponent.choices).toEqual(component.choices)
     })
     it('initialized with state value (stringified)', () => {
-      expect(dropDownComponent.selected).toEqual('asc,title')
+      expect(dropDownComponent.selected).toEqual(['asc', 'title'])
     })
     it('updated from state', () => {
       sortBySubject.next(['desc', '_score'])
       fixture.detectChanges()
-      expect(dropDownComponent.selected).toEqual('desc,_score')
+      expect(dropDownComponent.selected).toEqual(['desc', '_score'])
     })
   })
   describe('#changeSortBy', () => {
     let sort
     beforeEach(() => {
       sort = ['desc', '_score']
-      component.changeSortBy('desc,_score') // criteria is stringified when going through the dropdown component
+      component.changeSortBy(['desc', '_score']) // criteria is stringified when going through the dropdown component
     })
     it('dispatch search action', () => {
       expect(searchService.setSortBy).toHaveBeenCalledWith(sort)

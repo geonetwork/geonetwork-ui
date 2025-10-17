@@ -94,13 +94,19 @@
                     [styling]="'default'"
                     [record]="metadata"
                   ></gn-ui-geo-data-badge>
-                  <div *ngIf="metadata.recordUpdated">
+                  <div
+                    *ngIf="
+                      resourceDate &&
+                      resourceDate.date &&
+                      metadata.kind !== 'service'
+                    "
+                  >
                     <p
                       translate
-                      [translateParams]="{ date: lastUpdate }"
+                      [translateParams]="{ date: resourceDate.date }"
                       class="text-sm"
                     >
-                      record.metadata.lastUpdate
+                      {{ resourceDate.label }}
                     </p>
                   </div>
                   <div

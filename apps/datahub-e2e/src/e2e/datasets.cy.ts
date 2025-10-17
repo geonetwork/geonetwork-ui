@@ -6,7 +6,7 @@ describe('datasets', () => {
 
     // aliases
     cy.get('gn-ui-results-list-item').as('results')
-    cy.get('[data-cy="9e1ea778-d0ce-4b49-90b7-37bc0e448300"]').as(
+    cy.get('[data-cy="ed34db28-5dd4-480f-bf29-dc08f0086131"]').as(
       'sampleResult'
     )
     cy.get('@results')
@@ -45,22 +45,22 @@ describe('datasets', () => {
         .should('have.length', 1)
       cy.screenshot({ capture: 'viewport' })
     })
-    it('should sort by change date initially', () => {
+    it('should sort by resource dates initially', () => {
       cy.get('@sortBy')
         .getActiveDropdownOption()
         .invoke('attr', 'data-cy-value')
-        .should('equal', 'desc,changeDate')
+        .should(
+          'equal',
+          'desc,revisionDateForResource,desc,publicationDateForResource,desc,creationDateForResource'
+        )
     })
   })
 
   describe('display of dataset previews', () => {
-    it('should display a logo for first and a placeholder for second result', () => {
-      cy.get('@sortBy').selectDropdownOption('desc,createDate') // this makes the order reliable
-      cy.get('@sampleResult')
-        .find('gn-ui-thumbnail')
-        .children('div')
-        .invoke('attr', 'data-cy-is-placeholder')
-        .should('equal', 'false')
+    it('should display a placeholder for sampleResult and a logo for second results item', () => {
+      cy.get('@sortBy').selectDropdownOption(
+        'desc,revisionDateForResource,desc,publicationDateForResource,desc,creationDateForResource'
+      ) // this makes the order reliable
       cy.get('@sampleResult')
         .find('gn-ui-thumbnail')
         .find('img')
@@ -69,12 +69,17 @@ describe('datasets', () => {
           'eql',
           'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH5gkNDCUFYjA1nwAAA1pJREFUeNrtnW2TmjAURh8CLlTdrmun///3tZ22+zLuYlehH7jsMGogwRiiec4MM44K6D3x3hAwAIQQQgghhJDYSM5cPwNQAMgBpACUg22GTg2gArAD8A9AKY+9CsgALAF8YRsGALwDeAWw9yGgALCKoKWP+WU8iwxjUsudLBj83sZciIiPSwhoWz7pJ5dUZFQXlEXOZ/DNeTBt3JnhBpc9aacGsOn0BuoIUk3b+5trGnEC4B7Ak4sUlInRU+wB/JbgVxG18KrTBc01EmYmcTFJQUVPy/9zTh/4BthLDOqeenB2DdBtZBN58LsSNpcUoEtTJWM/GIvMhQDde9j6h2OhXAjo6/2Q/lgkLgSQC0IBFEABZEKyiaQv5AAv7fSlS+lPVxRwOXTnEtoTPAs04yfRHGMoz8F/HOiaJfKeggLc78dmOHsVS33y9SUXsDuLlsg6FOAw/fhYhwI0pJ7WoQASpoC9p3UoQEPpaR0K0LCB3fB1e6KfAhxRweAKgQ5PsQxJ+CzCJYC/A7+EWt4TzVCE77GgEsBPHA/G7QBswcE4b+noVRZ2QxkCCqAAQgEUQCiAAggFUAChAAogFEABhAJcfT9FAdOxQuB/ML9lAfdo/qWYy2MK8EiO5mrrliUCvdIudAEzWWzQzWuxwjRnAK9WwAzAWhZTCe3l7cryNQrQBL/txZhKGGrlwc36ogIPfvdzfhuQsDDM80EVZXUFwe+mEJ2EOwBfLfYTTFFWVxL8Qwl3nedSye1jjhEyCjAPflfCWiScU1iDKMrqyoJ/KOFxRDf1sCg/xCxgTPC7EnIHn6GYsiirKw2+ayYryorBn7YoKwb/qCgntywg1OBPdqSsGPyTRXnp07gvPgD8AAl6KIICCAVQAAlLwOg5MSNi9NyqJgKqAHpQoZNZxs5KgG7SDN7AZzgWOxcCtprn5/wVfLb+uWXsrASUPXlvHbmETGKQjBVgMitVJTuaaQS2t/GoEMeE3onEor2jlK4RvwN4G1u9T4n6zp6PMTWAXzCYdCq12OCOhdeYZzT3mIErAW1Fr+HmNOAt82KSesYIAJoRzR2aIVumo+Ms8WwT/HOOZlM0Y+Zzxv2zp/gCTzfzPOyGtdfgp7LEcDvbvSxbWXg/HUIIIYQQQogx/wHLoX7NoCMFPwAAAABJRU5ErkJggg=='
         )
-      cy.get('@results')
-        .first()
+      cy.get('@sampleResult')
         .find('gn-ui-thumbnail')
         .children('div')
         .invoke('attr', 'data-cy-is-placeholder')
         .should('equal', 'true')
+      cy.get('@results')
+        .eq(1)
+        .find('gn-ui-thumbnail')
+        .children('div')
+        .invoke('attr', 'data-cy-is-placeholder')
+        .should('equal', 'false')
     })
     it('should display the title', () => {
       cy.get('@sampleResult')
@@ -508,7 +513,7 @@ describe('datasets', () => {
         cy.get('.cdk-overlay-container')
           .find('[role=listbox]')
           .find('button')
-          .should('have.length', 4)
+          .should('have.length', 3)
       })
     })
 
@@ -522,9 +527,11 @@ describe('datasets', () => {
       })
 
       it('should display quality widget', () => {
-        cy.get('@sortBy').selectDropdownOption('desc,createDate')
+        cy.get('@sortBy').selectDropdownOption(
+          'desc,revisionDateForResource,desc,publicationDateForResource,desc,creationDateForResource'
+        )
         cy.get(
-          '[data-cy="9e1ea778-d0ce-4b49-90b7-37bc0e448300"] gn-ui-progress-bar'
+          '[data-cy="ed34db28-5dd4-480f-bf29-dc08f0086131"] gn-ui-progress-bar'
         ).should('have.attr', 'ng-reflect-value', 100)
       })
 
