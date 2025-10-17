@@ -241,7 +241,10 @@ describe('HeaderRecordComponent', () => {
       const spy = jest
         .spyOn(dateService, 'formatDate')
         .mockReturnValue('formatted-date')
-      expect(component.resourceDate).toBe('formatted-date')
+      expect(component.resourceDate).toStrictEqual({
+        date: 'formatted-date',
+        label: 'record.metadata.resourceUpdated',
+      })
       expect(spy).toHaveBeenCalledWith(
         datasetRecordsFixture()[0].resourceUpdated
       )
