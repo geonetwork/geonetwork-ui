@@ -133,5 +133,12 @@ describe('LinkClassifierService', () => {
         ).toEqual([LinkUsage.UNKNOWN])
       })
     })
+    describe('for a STAC link', () => {
+      it('returns API usage', () => {
+        expect(
+          service.getUsagesForLink(aSetOfLinksFixture().stacLink())
+        ).toEqual([LinkUsage.API])
+      })
+    })
   })
 })
