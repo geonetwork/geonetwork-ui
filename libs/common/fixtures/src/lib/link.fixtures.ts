@@ -273,7 +273,7 @@ export const aSetOfLinksFixture = () => ({
       name: 'Lidar HD point cloud (COPC)',
       description: 'Lidar HD classified point clouds from IGN',
       url: new URL(
-        'https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/lidarhd'
+        'https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/lidarhd/items'
       ),
       type: 'service',
       accessServiceProtocol: 'stac',
