@@ -20,7 +20,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
 import { OgcApiRecord } from '@camptocamp/ogc-client'
-import { from, of, Observable } from 'rxjs'
+import { from, of } from 'rxjs'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 @Injectable()
@@ -100,6 +100,16 @@ export class MdViewFacade {
     map((links) =>
       links.filter((link) =>
         this.linkClassifier.hasUsage(link, LinkUsage.MAP_API)
+      )
+    ),
+    shareReplay(1)
+  )
+
+  stacLinks$ = this.allLinks$.pipe(
+    map((links) =>
+      links.filter(
+        (link) =>
+          link.type === 'service' && link.accessServiceProtocol === 'stac'
       )
     ),
     shareReplay(1)
