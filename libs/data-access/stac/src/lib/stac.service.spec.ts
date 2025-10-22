@@ -189,59 +189,22 @@ describe('StacService', () => {
       )
       req.flush('Not found', { status: 404, statusText: 'Not Found' })
     })
-  })
 
-  describe('fetchNextPage', () => {
-    it('should fetch next page using provided URL', (done) => {
+    it('should handle pagination using next/prev URLs directly', (done) => {
       const nextUrl =
         'https://api.stac.example.com/collections/test/items?page=2'
 
-      service.fetchNextPage(nextUrl).subscribe((response: StacQueryResponse) => {
+      service.queryItems(nextUrl).subscribe((response: StacQueryResponse) => {
         expect(response.items.length).toBe(2)
+        expect(response.totalMatched).toBe(100)
         done()
       })
 
-      const req = httpMock.expectOne(nextUrl)
+      const req = httpMock.expectOne(
+        (request) => request.url === nextUrl && request.params.has('limit')
+      )
       expect(req.request.method).toBe('GET')
       req.flush(mockStacCollection)
-    })
-
-    it('should throw error when no URL is provided', (done) => {
-      service.fetchNextPage('').subscribe({
-        next: () => fail('should have failed'),
-        error: (error: Error) => {
-          expect(error.message).toBe('No next page URL provided')
-          done()
-        },
-      })
-    })
-  })
-
-  describe('fetchPreviousPage', () => {
-    it('should fetch previous page using provided URL', (done) => {
-      const prevUrl =
-        'https://api.stac.example.com/collections/test/items?page=1'
-
-      service
-        .fetchPreviousPage(prevUrl)
-        .subscribe((response: StacQueryResponse) => {
-          expect(response.items.length).toBe(2)
-          done()
-        })
-
-      const req = httpMock.expectOne(prevUrl)
-      expect(req.request.method).toBe('GET')
-      req.flush(mockStacCollection)
-    })
-
-    it('should throw error when no URL is provided', (done) => {
-      service.fetchPreviousPage('').subscribe({
-        next: () => fail('should have failed'),
-        error: (error: Error) => {
-          expect(error.message).toBe('No previous page URL provided')
-          done()
-        },
-      })
     })
   })
 })

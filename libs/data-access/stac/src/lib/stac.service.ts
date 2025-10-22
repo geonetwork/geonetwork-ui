@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http'
-import { Observable, throwError, Subject, of } from 'rxjs'
+import { Observable, throwError, of } from 'rxjs'
 import {
   catchError,
   debounceTime,
@@ -20,7 +20,7 @@ import {
  *
  * This service provides methods to:
  * - Query STAC collections with spatial (bbox) and temporal (datetime) filters
- * - Handle pagination with next/previous links
+ * - Handle pagination by using URLs from response.links.next/prev
  * - Debounce requests to avoid excessive API calls
  */
 @Injectable({
@@ -30,22 +30,20 @@ export class StacService {
   private readonly DEFAULT_LIMIT = 12
   private readonly DEBOUNCE_TIME = 500 // milliseconds
 
-  private querySubject = new Subject<{
-    url: string
-    params: StacQueryParams
-  }>()
-
   constructor(private http: HttpClient) {}
 
   /**
    * Query a STAC Items collection with optional spatial and temporal filters
    *
-   * @param collectionUrl - The URL to the STAC Items collection endpoint
-   * @param params - Query parameters (bbox, datetime, limit)
+   * Can also be used for pagination by passing the URL from response.links.next or response.links.prev
+   *
+   * @param collectionUrl - The URL to the STAC Items collection endpoint (or pagination URL)
+   * @param params - Query parameters (bbox, datetime, limit). Omit when using pagination URLs.
    * @returns Observable of StacQueryResponse containing items and pagination links
    *
    * @example
    * ```typescript
+   * // Initial query with filters
    * stacService.queryItems(
    *   'https://api.stac.example.com/collections/my-collection/items',
    *   {
@@ -55,7 +53,13 @@ export class StacService {
    *   }
    * ).subscribe(response => {
    *   console.log('Items:', response.items);
-   *   console.log('Next page:', response.links.next);
+   *
+   *   // Fetch next page using the link from the response
+   *   if (response.links.next) {
+   *     stacService.queryItems(response.links.next).subscribe(nextPage => {
+   *       console.log('Next page items:', nextPage.items);
+   *     });
+   *   }
    * });
    * ```
    */
@@ -64,13 +68,7 @@ export class StacService {
     params: StacQueryParams = {}
   ): Observable<StacQueryResponse> {
     const httpParams = this.buildHttpParams(params)
-
-    return this.http
-      .get<StacItemCollection>(collectionUrl, { params: httpParams })
-      .pipe(
-        map((collection) => this.transformResponse(collection)),
-        catchError((error) => this.handleError(error))
-      )
+    return this.fetchFromUrl(collectionUrl, httpParams)
   }
 
   /**
@@ -98,34 +96,18 @@ export class StacService {
   }
 
   /**
-   * Fetch the next page of results using the 'next' link from a previous response
+   * Fetch STAC ItemCollection from a URL and transform the response
+   * This is the core method used by all public query methods
    *
-   * @param nextUrl - The URL from response.links.next
+   * @param url - The URL to fetch from
+   * @param params - Optional HTTP parameters
    * @returns Observable of StacQueryResponse
    */
-  fetchNextPage(nextUrl: string): Observable<StacQueryResponse> {
-    if (!nextUrl) {
-      return throwError(() => new Error('No next page URL provided'))
-    }
-
-    return this.http.get<StacItemCollection>(nextUrl).pipe(
-      map((collection) => this.transformResponse(collection)),
-      catchError((error) => this.handleError(error))
-    )
-  }
-
-  /**
-   * Fetch the previous page of results using the 'prev' link from a previous response
-   *
-   * @param prevUrl - The URL from response.links.prev
-   * @returns Observable of StacQueryResponse
-   */
-  fetchPreviousPage(prevUrl: string): Observable<StacQueryResponse> {
-    if (!prevUrl) {
-      return throwError(() => new Error('No previous page URL provided'))
-    }
-
-    return this.http.get<StacItemCollection>(prevUrl).pipe(
+  private fetchFromUrl(
+    url: string,
+    params?: HttpParams
+  ): Observable<StacQueryResponse> {
+    return this.http.get<StacItemCollection>(url, { params }).pipe(
       map((collection) => this.transformResponse(collection)),
       catchError((error) => this.handleError(error))
     )
@@ -157,18 +139,12 @@ export class StacService {
   /**
    * Transform STAC ItemCollection response to StacQueryResponse
    */
-  private transformResponse(
-    collection: StacItemCollection
-  ): StacQueryResponse {
+  private transformResponse(collection: StacItemCollection): StacQueryResponse {
     const links = this.extractLinks(collection.links)
 
     return {
       items: collection.features,
-      links: {
-        next: links.next,
-        prev: links.prev,
-        self: links.self,
-      },
+      links,
       totalMatched:
         collection.context?.matched || collection.numberMatched || undefined,
       totalReturned:
