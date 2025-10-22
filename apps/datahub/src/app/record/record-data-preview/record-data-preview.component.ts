@@ -14,7 +14,7 @@ import { MatTabsModule } from '@angular/material/tabs'
 import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
-import { DataService } from '@geonetwork-ui/feature/dataviz'
+import { DataService, StacViewComponent } from '@geonetwork-ui/feature/dataviz'
 import {
   DataViewComponent,
   DataViewShareComponent,
@@ -58,6 +58,7 @@ export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
     DataViewShareComponent,
     DataViewComponent,
     MapViewComponent,
+    StacViewComponent,
     ButtonComponent,
     TranslatePipe,
   ],
@@ -67,7 +68,7 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
   sub = new Subscription()
   hasConfig = false
   savingStatus: 'idle' | 'saving' | 'saved' | 'error' = 'idle'
-  views = ['map', 'table', 'chart']
+  views = ['map', 'table', 'chart', 'stac']
   displayMap$ = combineLatest([
     this.metadataViewFacade.mapApiLinks$,
     this.metadataViewFacade.geoDataLinksWithGeometry$,
@@ -92,6 +93,10 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
       ([dataLinks, geoDataLinks]) =>
         dataLinks?.length > 0 || geoDataLinks?.length > 0
     )
+  )
+
+  displayStac$ = combineLatest([this.metadataViewFacade.stacLinks$]).pipe(
+    map(([stacLinks]) => stacLinks?.length > 0)
   )
 
   displayChart$ = getIsMobile().pipe(map((isMobile) => !isMobile))
@@ -123,12 +128,19 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
   displayViewShare$ = combineLatest([
     this.displayMap$,
     this.displayData$,
+    this.displayStac$,
     this.selectedView$,
     this.exceedsMaxFeatureCount$,
   ]).pipe(
     map(
-      ([displayMap, displayData, selectedView, exceedsMaxFeatureCount]) =>
-        (displayData || displayMap) &&
+      ([
+        displayMap,
+        displayData,
+        displayStac,
+        selectedView,
+        exceedsMaxFeatureCount,
+      ]) =>
+        (displayData || displayMap || displayStac) &&
         !(selectedView === 'chart' && exceedsMaxFeatureCount)
     )
   )
