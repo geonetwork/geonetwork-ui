@@ -164,6 +164,7 @@ export type ServiceProtocol =
   | 'tms'
   | 'maplibre-style'
   | 'postgis'
+  | 'stac'
   | 'other'
 
 marker('record.metadata.api.accessServiceProtocol.wms')
@@ -176,6 +177,7 @@ marker('record.metadata.api.accessServiceProtocol.GPFDL')
 marker('record.metadata.api.accessServiceProtocol.tms')
 marker('record.metadata.api.accessServiceProtocol.maplibre-style')
 marker('record.metadata.api.accessServiceProtocol.postgis')
+marker('record.metadata.api.accessServiceProtocol.stac')
 marker('record.metadata.api.accessServiceProtocol.other')
 
 export type OnlineResourceType = 'service' | 'download' | 'link' | 'endpoint'

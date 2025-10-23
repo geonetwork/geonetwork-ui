@@ -419,6 +419,7 @@
   "record.metadata.api.accessServiceProtocol.ogcFeatures": "",
   "record.metadata.api.accessServiceProtocol.other": "",
   "record.metadata.api.accessServiceProtocol.postgis": "",
+  "record.metadata.api.accessServiceProtocol.stac": "",
   "record.metadata.api.accessServiceProtocol.tms": "",
   "record.metadata.api.accessServiceProtocol.wfs": "",
   "record.metadata.api.accessServiceProtocol.wms": "",

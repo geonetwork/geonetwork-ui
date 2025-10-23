@@ -10,6 +10,7 @@ export function matchProtocol(protocol: string): ServiceProtocol {
   if (/esri/i.test(protocol)) return 'esriRest'
   if (/DOWNLOAD-1/i.test(protocol)) return 'GPFDL'
   if (/DB:POSTGIS/i.test(protocol)) return 'postgis'
+  if (/stac/i.test(protocol)) return 'stac'
   return 'other'
 }
 
