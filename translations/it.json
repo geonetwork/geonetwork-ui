@@ -540,6 +540,7 @@
   "record.tab.chart": "Grafico",
   "record.tab.data": "Tabella",
   "record.tab.map": "Mappa",
+  "record.tab.stac": "",
   "record.was.created.time": "ha creato questi dati {time}",
   "records": "record",
   "results.layout.selectOne": "Mostra risultati",

@@ -540,6 +540,7 @@
   "record.tab.chart": "Diagramm",
   "record.tab.data": "Tabelle",
   "record.tab.map": "Karte",
+  "record.tab.stac": "",
   "record.was.created.time": "erstellte diesen Ressource {time}",
   "records": "Datensätze",
   "results.layout.selectOne": "Layout auswählen",

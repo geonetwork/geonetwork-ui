@@ -540,6 +540,7 @@
   "record.tab.chart": "Chart",
   "record.tab.data": "Table",
   "record.tab.map": "Map",
+  "record.tab.stac": "STAC",
   "record.was.created.time": "created this record {time}",
   "records": "datasets",
   "results.layout.selectOne": "Results layout",
