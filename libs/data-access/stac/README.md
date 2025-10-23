@@ -32,7 +32,7 @@ import { StacService, StacQueryResponse } from '@geonetwork-ui/data-access/stac'
 
 @Component({
   selector: 'app-stac-viewer',
-  template: `...`
+  template: `...`,
 })
 export class StacViewerComponent implements OnInit {
   constructor(private stacService: StacService) {}
@@ -46,7 +46,7 @@ export class StacViewerComponent implements OnInit {
         console.log('Items:', response.items)
         console.log('Total matched:', response.totalMatched)
       },
-      error: (error) => console.error('Error:', error)
+      error: (error) => console.error('Error:', error),
     })
   }
 }
@@ -57,14 +57,13 @@ export class StacViewerComponent implements OnInit {
 Filter items by geographic extent using a bounding box `[minLon, minLat, maxLon, maxLat]`:
 
 ```typescript
-this.stacService.queryItems(
-  'https://api.stac.teledetection.fr/collections/lidarhd/items',
-  {
-    bbox: [-10, 40, 10, 50] // France bounding box (approximately)
-  }
-).subscribe(response => {
-  console.log('Items in bounding box:', response.items)
-})
+this.stacService
+  .queryItems('https://api.stac.teledetection.fr/collections/lidarhd/items', {
+    bbox: [-10, 40, 10, 50], // France bounding box (approximately)
+  })
+  .subscribe((response) => {
+    console.log('Items in bounding box:', response.items)
+  })
 ```
 
 ### Temporal Filtering (Datetime)
@@ -72,33 +71,40 @@ this.stacService.queryItems(
 Filter items by acquisition date using RFC 3339 datetime format:
 
 **Single datetime:**
+
 ```typescript
-this.stacService.queryItems(collectionUrl, {
-  datetime: '2024-01-15T00:00:00Z'
-}).subscribe(response => {
-  console.log('Items from specific date:', response.items)
-})
+this.stacService
+  .queryItems(collectionUrl, {
+    datetime: '2024-01-15T00:00:00Z',
+  })
+  .subscribe((response) => {
+    console.log('Items from specific date:', response.items)
+  })
 ```
 
 **Date interval:**
+
 ```typescript
-this.stacService.queryItems(collectionUrl, {
-  datetime: '2024-01-01T00:00:00Z/2024-12-31T23:59:59Z'
-}).subscribe(response => {
-  console.log('Items from 2024:', response.items)
-})
+this.stacService
+  .queryItems(collectionUrl, {
+    datetime: '2024-01-01T00:00:00Z/2024-12-31T23:59:59Z',
+  })
+  .subscribe((response) => {
+    console.log('Items from 2024:', response.items)
+  })
 ```
 
 **Open-ended intervals:**
+
 ```typescript
 // All items after a date
 this.stacService.queryItems(collectionUrl, {
-  datetime: '2024-01-01T00:00:00Z/..'
+  datetime: '2024-01-01T00:00:00Z/..',
 })
 
 // All items before a date
 this.stacService.queryItems(collectionUrl, {
-  datetime: '../2024-12-31T23:59:59Z'
+  datetime: '../2024-12-31T23:59:59Z',
 })
 ```
 
@@ -107,17 +113,16 @@ this.stacService.queryItems(collectionUrl, {
 Combine spatial and temporal filters:
 
 ```typescript
-this.stacService.queryItems(
-  'https://api.stac.teledetection.fr/collections/lidarhd/items',
-  {
+this.stacService
+  .queryItems('https://api.stac.teledetection.fr/collections/lidarhd/items', {
     bbox: [-10, 40, 10, 50],
     datetime: '2024-01-01T00:00:00Z/2024-12-31T23:59:59Z',
-    limit: 20
-  }
-).subscribe(response => {
-  console.log('Filtered items:', response.items)
-  console.log('Total matched:', response.totalMatched)
-})
+    limit: 20,
+  })
+  .subscribe((response) => {
+    console.log('Filtered items:', response.items)
+    console.log('Total matched:', response.totalMatched)
+  })
 ```
 
 ### Pagination
@@ -133,36 +138,33 @@ export class PaginatedStacViewerComponent {
   constructor(private stacService: StacService) {}
 
   loadFirstPage() {
-    this.stacService.queryItems(collectionUrl, { limit: 12 })
-      .subscribe(response => {
-        this.items = response.items
-        this.nextPageUrl = response.links.next
-        this.prevPageUrl = response.links.prev
-      })
+    this.stacService.queryItems(collectionUrl, { limit: 12 }).subscribe((response) => {
+      this.items = response.items
+      this.nextPageUrl = response.links.next
+      this.prevPageUrl = response.links.prev
+    })
   }
 
   loadNextPage() {
     if (!this.nextPageUrl) return
 
     // Simply pass the next page URL to queryItems
-    this.stacService.queryItems(this.nextPageUrl)
-      .subscribe(response => {
-        this.items = response.items
-        this.nextPageUrl = response.links.next
-        this.prevPageUrl = response.links.prev
-      })
+    this.stacService.queryItems(this.nextPageUrl).subscribe((response) => {
+      this.items = response.items
+      this.nextPageUrl = response.links.next
+      this.prevPageUrl = response.links.prev
+    })
   }
 
   loadPreviousPage() {
     if (!this.prevPageUrl) return
 
     // Simply pass the previous page URL to queryItems
-    this.stacService.queryItems(this.prevPageUrl)
-      .subscribe(response => {
-        this.items = response.items
-        this.nextPageUrl = response.links.next
-        this.prevPageUrl = response.links.prev
-      })
+    this.stacService.queryItems(this.prevPageUrl).subscribe((response) => {
+      this.items = response.items
+      this.nextPageUrl = response.links.next
+      this.prevPageUrl = response.links.prev
+    })
   }
 }
 ```
@@ -182,16 +184,18 @@ export class StacSearchComponent implements OnInit, OnDestroy {
   constructor(private stacService: StacService) {}
 
   ngOnInit() {
-    this.searchSubject.pipe(
-      switchMap(searchTerm => {
-        // In a real scenario, you might use searchTerm to modify bbox or datetime
-        return this.stacService.queryItemsDebounced(collectionUrl, {
-          datetime: `${searchTerm}/..`
+    this.searchSubject
+      .pipe(
+        switchMap((searchTerm) => {
+          // In a real scenario, you might use searchTerm to modify bbox or datetime
+          return this.stacService.queryItemsDebounced(collectionUrl, {
+            datetime: `${searchTerm}/..`,
+          })
         })
+      )
+      .subscribe((response) => {
+        this.items = response.items
       })
-    ).subscribe(response => {
-      this.items = response.items
-    })
   }
 
   onSearchChange(searchTerm: string) {
@@ -213,6 +217,7 @@ export class StacSearchComponent implements OnInit, OnDestroy {
 Query a STAC Items collection with optional filters. Can also be used for pagination by passing the URL from `response.links.next` or `response.links.prev`.
 
 **Parameters:**
+
 - `collectionUrl`: URL to the STAC Items collection endpoint (or pagination URL from response.links)
 - `params`: Optional query parameters (omit when using pagination URLs)
   - `bbox`: Bounding box `[minLon, minLat, maxLon, maxLat]`
@@ -222,6 +227,7 @@ Query a STAC Items collection with optional filters. Can also be used for pagina
 **Returns:** Observable of `StacQueryResponse`
 
 **Examples:**
+
 ```typescript
 // Initial query
 stacService.queryItems(url, { bbox: [1, 2, 3, 4], limit: 12 })
@@ -298,10 +304,9 @@ this.stacService.queryItems(collectionUrl, params).subscribe({
     // - "STAC API server error" (500)
     // - "Network error: ..." (client-side/network errors)
     console.error('Error:', error.message)
-  }
+  },
 })
 ```
-
 
 ## Testing
 

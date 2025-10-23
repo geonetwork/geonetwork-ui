@@ -31,6 +31,7 @@
       "@geonetwork-ui/common/domain/*": ["libs/common/domain/src/lib/*"],
       "@geonetwork-ui/common/fixtures": ["libs/common/fixtures/src/index.ts"],
       "@geonetwork-ui/data-access/gn4": ["libs/data-access/gn4/src/index.ts"],
+      "@geonetwork-ui/data-access/stac": ["libs/data-access/stac/src/index.ts"],
       "@geonetwork-ui/data-fetcher": ["libs/util/data-fetcher/src/index.ts"],
       "@geonetwork-ui/feature/catalog": ["libs/feature/catalog/src/index.ts"],
       "@geonetwork-ui/feature/dataviz": ["libs/feature/dataviz/src/index.ts"],
@@ -58,8 +59,7 @@
       "@geonetwork-ui/util/i18n/language-codes": [
         "libs/util/i18n/src/lib/language-codes.ts"
       ],
-      "@geonetwork-ui/util/shared": ["libs/util/shared/src/index.ts"],
-      "@geonetwork-ui/data-access/stac": ["libs/data-access/stac/src/index.ts"]
+      "@geonetwork-ui/util/shared": ["libs/util/shared/src/index.ts"]
     },
     "allowJs": true,
     "outDir": "/"

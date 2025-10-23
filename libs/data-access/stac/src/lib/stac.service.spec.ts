@@ -92,8 +92,7 @@ describe('StacService', () => {
       })
 
       const req = httpMock.expectOne(
-        (request) =>
-          request.url === url && request.params.get('limit') === '12'
+        (request) => request.url === url && request.params.get('limit') === '12'
       )
       expect(req.request.method).toBe('GET')
       req.flush(mockStacCollection)
@@ -144,8 +143,7 @@ describe('StacService', () => {
       })
 
       const req = httpMock.expectOne(
-        (request) =>
-          request.url === url && request.params.get('limit') === '50'
+        (request) => request.url === url && request.params.get('limit') === '50'
       )
       expect(req.request.method).toBe('GET')
       req.flush(mockStacCollection)
