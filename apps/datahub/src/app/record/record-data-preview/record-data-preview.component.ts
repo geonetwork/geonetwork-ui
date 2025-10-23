@@ -6,8 +6,8 @@ import {
   Inject,
   InjectionToken,
   Input,
-  OnDestroy,
   OnInit,
+  OnDestroy,
   Optional,
 } from '@angular/core'
 import { MatTabsModule } from '@angular/material/tabs'
@@ -28,8 +28,10 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   BehaviorSubject,
   combineLatest,
+  filter,
   map,
   of,
+  pipe,
   skip,
   startWith,
   Subscription,
@@ -64,7 +66,12 @@ export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
   ],
 })
 export class RecordDataPreviewComponent implements OnDestroy, OnInit {
-  @Input() recordUuid: string
+  @Input()
+  set recordUuid(value: string) {
+    this.recordUuid$.next(value)
+  }
+  private recordUuid$ = new BehaviorSubject<string>(null)
+
   sub = new Subscription()
   hasConfig = false
   savingStatus: 'idle' | 'saving' | 'saved' | 'error' = 'idle'
@@ -73,15 +80,10 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
     this.metadataViewFacade.mapApiLinks$,
     this.metadataViewFacade.geoDataLinksWithGeometry$,
   ]).pipe(
-    map(([mapApiLinks, geoDataLinksWithGeometry]) => {
-      const display =
+    map(
+      ([mapApiLinks, geoDataLinksWithGeometry]) =>
         mapApiLinks?.length > 0 || geoDataLinksWithGeometry?.length > 0
-      if (!this.datavizConfig) {
-        this.selectedIndex$.next(display ? 1 : 2)
-        this.selectedView$.next(display ? 'map' : 'table')
-      }
-      return display
-    }),
+    ),
     startWith(false)
   )
 
@@ -99,7 +101,7 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
     map(([stacLinks]) => stacLinks?.length > 0)
   )
 
-  displayChart$ = getIsMobile().pipe(map((isMobile) => !isMobile))
+  isMobile$ = getIsMobile().pipe(map((isMobile) => !isMobile))
 
   selectedLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
 
@@ -119,11 +121,29 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
     })
   )
 
-  selectedView$ = new BehaviorSubject(null)
   datavizConfig = null
 
+  selectedView$ = new BehaviorSubject(null)
   selectedIndex$ = new BehaviorSubject(0)
   selectedTMSStyle$ = new BehaviorSubject(0)
+
+  config$ = this.recordUuid$.pipe(
+    switchMap((uuid) => {
+      if (!uuid) return of(null)
+
+      return this.platformServiceInterface.getRecordAttachments(uuid).pipe(
+        map((attachments) =>
+          attachments.find((att) => att.fileName === 'datavizConfig.json')
+        ),
+        switchMap((configAttachment) =>
+          (configAttachment
+            ? this.platformServiceInterface.getFileContent(configAttachment.url)
+            : of(null)
+          ).pipe(map((config: DatavizConfigModel) => config))
+        )
+      )
+    })
+  )
 
   displayViewShare$ = combineLatest([
     this.displayMap$,
@@ -173,60 +193,108 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.platformServiceInterface
-      .getRecordAttachments(this.recordUuid)
-      .pipe(
-        map((attachments) =>
-          attachments.find((att) => att.fileName === 'datavizConfig.json')
-        ),
-        switchMap((configAttachment) =>
-          (configAttachment
-            ? this.platformServiceInterface.getFileContent(configAttachment.url)
-            : of(null)
-          ).pipe(
-            switchMap((config: DatavizConfigModel) =>
-              this.displayMap$.pipe(
-                skip(1),
-                take(1),
-                map((displayMap) => ({ config, displayMap }))
-              )
-            )
-          )
+    this.sub.add(
+      combineLatest([
+        this.displayMap$,
+        this.displayData$,
+        this.displayStac$,
+        this.config$,
+        this.isMobile$,
+      ])
+        .pipe(
+          take(1),
+          map(([displayMap, displayData, displayStac, config, isMobile]) => {
+            if (config) {
+              let view = config.view
+
+              if (view === 'chart' && isMobile) {
+                view = 'table'
+              }
+
+              // Check if the configured view can actually be displayed
+              // If not, fallback to the natural order: map -> table -> stac -> null
+              let canDisplayView = false
+              let tabIndex = 0
+
+              if (view === 'map' && displayMap) {
+                canDisplayView = true
+                tabIndex = 1
+              } else if (view === 'table' && displayData) {
+                canDisplayView = true
+                tabIndex = 2
+              } else if (view === 'chart' && displayData) {
+                canDisplayView = true
+                tabIndex = 3
+              } else if (view === 'stac' && displayStac) {
+                canDisplayView = true
+                tabIndex = 4
+              }
+
+              // If the config view cannot be displayed, fallback to natural order
+              if (!canDisplayView) {
+                if (displayMap) {
+                  view = 'map'
+                  tabIndex = 1
+                } else if (displayData) {
+                  view = 'table'
+                  tabIndex = 2
+                } else if (displayStac) {
+                  view = 'stac'
+                  tabIndex = 4
+                } else {
+                  view = null
+                  tabIndex = 0
+                }
+              }
+
+              this.datavizConfig = {
+                ...config,
+                view,
+              }
+
+              this.selectedView$.next(view)
+              this.selectedLink$.next(config.source)
+              this.selectedIndex$.next(tabIndex)
+            } else {
+              // No config: use natural fallback order
+              if (displayMap) {
+                this.selectedView$.next('map')
+                this.datavizConfig = {
+                  link: this.selectedLink$.value,
+                  view: this.selectedView$.value,
+                }
+                this.selectedIndex$.next(1)
+              } else if (displayData) {
+                this.selectedView$.next('table')
+                this.datavizConfig = {
+                  link: this.selectedLink$.value,
+                  view: this.selectedView$.value,
+                }
+                this.selectedIndex$.next(2)
+              } else if (displayStac) {
+                this.selectedView$.next('stac')
+                this.datavizConfig = {
+                  link: this.selectedLink$.value,
+                  view: this.selectedView$.value,
+                }
+                this.selectedIndex$.next(4)
+              } else {
+                // Preview and tabgroup not displayed if no data
+                this.selectedView$.next(null)
+                this.datavizConfig = {
+                  link: this.selectedLink$.value,
+                  view: this.selectedView$.value,
+                }
+                this.selectedIndex$.next(0)
+              }
+            }
+          })
         )
-      )
-      .subscribe(({ config, displayMap }) => {
-        let view
-        if (config) {
-          view =
-            window.innerWidth < 640
-              ? config.view === 'chart'
-                ? 'chart'
-                : 'map'
-              : config.view
-
-          if (!displayMap && view === 'map') {
-            view = 'table'
-          }
-
-          const tab = this.views.indexOf(view) + 1 || 3
-
-          this.datavizConfig = {
-            ...config,
-            view,
-          }
-          this.selectedIndex$.next(tab)
-          this.selectedView$.next(view)
-          this.selectedLink$.next(config.source)
-        } else {
-          this.datavizConfig = {
-            link: this.selectedLink$.value,
-            view: this.selectedView$.value,
-          }
-        }
-      })
+        .subscribe()
+    )
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub.unsubscribe()
   }
 

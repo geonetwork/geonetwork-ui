@@ -72,7 +72,7 @@
             </div>
           </mat-tab>
           <mat-tab
-            *ngIf="(displayChart$ | async) === true"
+            *ngIf="(isMobile$ | async) === true"
             [disabled]="(displayData$ | async) === false"
           >
             <ng-template mat-tab-label>
