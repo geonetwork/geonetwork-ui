@@ -18,7 +18,7 @@ import {
 } from '@geonetwork-ui/feature/record'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { MatTab, MatTabGroup } from '@angular/material/tabs'
-import { DataService } from '@geonetwork-ui/feature/dataviz'
+import { DataService, StacViewComponent } from '@geonetwork-ui/feature/dataviz'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { SAMPLE_RECORD } from '@geonetwork-ui/common/fixtures'
@@ -47,6 +47,7 @@ describe('RecordDataPreviewComponent', () => {
           dataLinks$: new BehaviorSubject([]),
           geoDataLinks$: new BehaviorSubject([]),
           geoDataLinksWithGeometry$: new BehaviorSubject([]),
+          stacLinks$: new BehaviorSubject([]),
           chartConfig$: new BehaviorSubject(null),
         }),
         MockProvider(DataService, {
@@ -246,6 +247,49 @@ describe('RecordDataPreviewComponent', () => {
         expect(
           fixture.debugElement.queryAll(By.directive(DataViewComponent)).length
         ).toEqual(1)
+      })
+    })
+  })
+  describe('STAC view', () => {
+    let mapTab
+    let tableTab
+    let chartTab
+    let stacTab
+    let tabGroup
+    describe('when only a GEODATA link present', () => {
+      beforeEach(() => {
+        facade.geoDataLinks$.next(['link'])
+        facade.dataLinks$.next(null)
+        facade.mapApiLinks$.next(null)
+        facade.stacLinks$.next(null)
+
+        fixture.detectChanges()
+
+        stacTab = fixture.debugElement.queryAll(By.directive(MatTab))[4]
+      })
+      it('renders STAC tab and is disabled', () => {
+        expect(stacTab).toBeDefined()
+        expect(stacTab.componentInstance.disabled).toBe(true)
+      })
+    })
+    describe('when only a STAC link present', () => {
+      beforeEach(() => {
+        facade.stacLinks$.next(['link'])
+        fixture.detectChanges()
+        stacTab = fixture.debugElement.queryAll(By.directive(MatTab))[4]
+        tabGroup = fixture.debugElement.queryAll(By.directive(MatTabGroup))[0]
+      })
+      it('renders STAC tab and is enabled', () => {
+        expect(stacTab).toBeDefined()
+        expect(stacTab.componentInstance.disabled).toBe(false)
+      })
+      it('stac tab is selected', () => {
+        expect(tabGroup.componentInstance.selectedIndex).toBe(4)
+      })
+      it('renders the STAC view component', () => {
+        expect(
+          fixture.debugElement.query(By.directive(StacViewComponent))
+        ).toBeTruthy()
       })
     })
   })
