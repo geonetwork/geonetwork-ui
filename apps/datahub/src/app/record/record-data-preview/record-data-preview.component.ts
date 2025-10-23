@@ -76,6 +76,17 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
   hasConfig = false
   savingStatus: 'idle' | 'saving' | 'saved' | 'error' = 'idle'
   views = ['map', 'table', 'chart', 'stac']
+
+  private readonly TAB_INDICES = {
+    none: 0,
+    map: 1,
+    table: 2,
+    chart: 3,
+    stac: 4,
+  } as const
+
+  private readonly VIEW_PRIORITY = ['map', 'table', 'stac'] as const
+
   displayMap$ = combineLatest([
     this.metadataViewFacade.mapApiLinks$,
     this.metadataViewFacade.geoDataLinksWithGeometry$,
@@ -204,94 +215,89 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
         .pipe(
           take(1),
           map(([displayMap, displayData, displayStac, config, isMobile]) => {
-            if (config) {
-              let view = config.view
-
-              if (view === 'chart' && isMobile) {
-                view = 'table'
-              }
-
-              // Check if the configured view can actually be displayed
-              // If not, fallback to the natural order: map -> table -> stac -> null
-              let canDisplayView = false
-              let tabIndex = 0
-
-              if (view === 'map' && displayMap) {
-                canDisplayView = true
-                tabIndex = 1
-              } else if (view === 'table' && displayData) {
-                canDisplayView = true
-                tabIndex = 2
-              } else if (view === 'chart' && displayData) {
-                canDisplayView = true
-                tabIndex = 3
-              } else if (view === 'stac' && displayStac) {
-                canDisplayView = true
-                tabIndex = 4
-              }
-
-              // If the config view cannot be displayed, fallback to natural order
-              if (!canDisplayView) {
-                if (displayMap) {
-                  view = 'map'
-                  tabIndex = 1
-                } else if (displayData) {
-                  view = 'table'
-                  tabIndex = 2
-                } else if (displayStac) {
-                  view = 'stac'
-                  tabIndex = 4
-                } else {
-                  view = null
-                  tabIndex = 0
-                }
-              }
-
-              this.datavizConfig = {
-                ...config,
-                view,
-              }
-
-              this.selectedView$.next(view)
-              this.selectedLink$.next(config.source)
-              this.selectedIndex$.next(tabIndex)
-            } else {
-              // No config: use natural fallback order
-              if (displayMap) {
-                this.selectedView$.next('map')
-                this.datavizConfig = {
-                  link: this.selectedLink$.value,
-                  view: this.selectedView$.value,
-                }
-                this.selectedIndex$.next(1)
-              } else if (displayData) {
-                this.selectedView$.next('table')
-                this.datavizConfig = {
-                  link: this.selectedLink$.value,
-                  view: this.selectedView$.value,
-                }
-                this.selectedIndex$.next(2)
-              } else if (displayStac) {
-                this.selectedView$.next('stac')
-                this.datavizConfig = {
-                  link: this.selectedLink$.value,
-                  view: this.selectedView$.value,
-                }
-                this.selectedIndex$.next(4)
-              } else {
-                // Preview and tabgroup not displayed if no data
-                this.selectedView$.next(null)
-                this.datavizConfig = {
-                  link: this.selectedLink$.value,
-                  view: this.selectedView$.value,
-                }
-                this.selectedIndex$.next(0)
-              }
-            }
+            const availableViews = this.getAvailableViews(
+              displayMap,
+              displayData,
+              displayStac
+            )
+            const selectedView = this.determineView(
+              config,
+              isMobile,
+              availableViews
+            )
+            return { selectedView, config }
           })
         )
-        .subscribe()
+        .subscribe(({ selectedView, config }) => {
+          this.applyViewConfiguration(selectedView, config)
+        })
     )
+  }
+
+  private getAvailableViews(
+    displayMap: boolean,
+    displayData: boolean,
+    displayStac: boolean
+  ): Set<string> {
+    const views = new Set<string>()
+    if (displayMap) views.add('map')
+    if (displayData) {
+      views.add('table')
+      views.add('chart')
+    }
+    if (displayStac) views.add('stac')
+    return views
+  }
+
+  private determineView(
+    config: DatavizConfigModel | null,
+    isMobile: boolean,
+    availableViews: Set<string>
+  ): string | null {
+    if (!config) {
+      return this.getDefaultView(availableViews)
+    }
+
+    let desiredView = config.view
+
+    // Mobile devices cannot display charts
+    if (desiredView === 'chart' && isMobile) {
+      desiredView = 'table'
+    }
+
+    // Check if desired view is available, otherwise fallback
+    return availableViews.has(desiredView)
+      ? desiredView
+      : this.getDefaultView(availableViews)
+  }
+
+  private getDefaultView(availableViews: Set<string>): string | null {
+    for (const view of this.VIEW_PRIORITY) {
+      if (availableViews.has(view)) {
+        return view
+      }
+    }
+    return null
+  }
+
+  private applyViewConfiguration(
+    view: string | null,
+    config: DatavizConfigModel | null
+  ): void {
+    const tabIndex = view ? this.TAB_INDICES[view] : this.TAB_INDICES.none
+
+    this.selectedView$.next(view)
+    this.selectedIndex$.next(tabIndex)
+
+    if (config) {
+      this.selectedLink$.next(config.source)
+      this.datavizConfig = { ...config, view }
+    } else {
+      this.datavizConfig = {
+        link: this.selectedLink$.value,
+        view: view,
+      }
+    }
   }
 
   ngOnDestroy(): void {
