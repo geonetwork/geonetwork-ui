@@ -216,13 +216,10 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
             const availableViews = this.getAvailableViews(
               displayMap,
               displayData,
-              displayStac
+              displayStac,
+              isMobile
             )
-            const selectedView = this.determineView(
-              config,
-              isMobile,
-              availableViews
-            )
+            const selectedView = this.determineView(config, availableViews)
             return { selectedView, config }
           })
         )
@@ -235,13 +232,14 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
   private getAvailableViews(
     displayMap: boolean,
     displayData: boolean,
-    displayStac: boolean
+    displayStac: boolean,
+    isMobile: boolean
   ): Set<string> {
     const views = new Set<string>()
     if (displayMap) views.add('map')
     if (displayData) {
       views.add('table')
-      views.add('chart')
+      if (!isMobile) views.add('chart')
     }
     if (displayStac) views.add('stac')
     return views
@@ -249,24 +247,13 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
 
   private determineView(
     config: DatavizConfigModel | null,
-    isMobile: boolean,
     availableViews: Set<string>
   ): string | null {
-    if (!config) {
+    if (config && availableViews.has(config.view)) {
+      return config.view
+    } else {
       return this.getDefaultView(availableViews)
     }
-
-    let desiredView = config.view
-
-    // Mobile devices cannot display charts
-    if (desiredView === 'chart' && isMobile) {
-      desiredView = 'table'
-    }
-
-    // Check if desired view is available, otherwise fallback
-    return availableViews.has(desiredView)
-      ? desiredView
-      : this.getDefaultView(availableViews)
   }
 
   private getDefaultView(availableViews: Set<string>): string | null {
