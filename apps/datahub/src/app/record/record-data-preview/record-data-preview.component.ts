@@ -112,7 +112,7 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
     map(([stacLinks]) => stacLinks?.length > 0)
   )
 
-  isMobile$ = getIsMobile().pipe(map((isMobile) => !isMobile))
+  isMobile$ = getIsMobile()
 
   selectedLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
 
