@@ -28,11 +28,8 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   BehaviorSubject,
   combineLatest,
-  filter,
   map,
   of,
-  pipe,
-  skip,
   startWith,
   Subscription,
   switchMap,
@@ -69,6 +66,9 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
   @Input()
   set recordUuid(value: string) {
     this.recordUuid$.next(value)
+  }
+  get recordUuid(): string {
+    return this.recordUuid$.value
   }
   private recordUuid$ = new BehaviorSubject<string>(null)
 
