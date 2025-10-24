@@ -97,12 +97,20 @@ export class DataService {
         if (!featureType) {
           throw new Error('wfs.featuretype.notfound')
         }
+
+        const wfsVersion = endpoint.getVersion()
+        const isWfs2Plus = wfsVersion === '2.0.0' || wfsVersion.startsWith('2.')
+        const defaultCrs = featureType.defaultCrs
+
+        const shouldAddOutputCrs = isWfs2Plus && defaultCrs
+
         return {
           all: featureType.outputFormats.reduce(
             (prev, curr) => ({
               ...prev,
               [curr]: endpoint.getFeatureUrl(featureType.name, {
                 outputFormat: curr,
+                ...(shouldAddOutputCrs && { outputCrs: defaultCrs }),
               }),
             }),
             {}
