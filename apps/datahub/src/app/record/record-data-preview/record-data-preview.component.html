@@ -19,7 +19,7 @@
           mat-align-tabs="start"
           disableRipple
         >
-          <mat-tab>
+          <mat-tab [disabled]="(displayDatavizConfig$ | async) === false">
             <ng-template mat-tab-label>
               <gn-ui-button
                 *ngIf="displayDatavizConfig$ | async"
