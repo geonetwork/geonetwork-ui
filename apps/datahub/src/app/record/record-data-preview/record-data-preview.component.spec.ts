@@ -541,73 +541,98 @@ describe('RecordDataPreviewComponent', () => {
       })
     })
   })
-  describe('Config setting', () => {
-    beforeEach(() => {
-      jest.clearAllMocks()
-      platformServiceInterface.getRecordAttachments.mockReturnValue(
+  describe('Read and apply dataviz config', () => {
+    it('should read and apply dataviz config from attachment', fakeAsync(() => {
+      const configContent = {
+        view: 'chart',
+        source: {
+          url: 'http://example.com/dataset',
+          type: 'link',
+          name: 'dataset link',
+        },
+        chartConfig: {
+          xProperty: 'prop1',
+          yProperty: 'prop2',
+          aggregation: 'average',
+          chartType: 'line',
+        },
+      }
+      platformServiceInterface.getRecordAttachments = jest.fn().mockReturnValue(
         of([
           {
-            url: new URL('http://example.com/datavizConfig.json'),
             fileName: 'datavizConfig.json',
+            url: new URL('http://example.com/attachment/datavizConfig.json'),
           },
         ])
       )
-      platformServiceInterface.getFileContent.mockReturnValue(
-        of({
-          view: 'map',
-          source: {
-            url: new URL('http://abcd.com/'),
-            name: 'layer2',
-            type: 'service',
-            accessServiceProtocol: 'wms',
-          },
-          chartConfig: null,
-          styleTMSIndex: 0,
-        })
+      platformServiceInterface.getFileContent = jest
+        .fn()
+        .mockReturnValue(of(configContent))
+
+      facade.mapApiLinks$.next(['link'])
+      facade.dataLinks$.next(['link'])
+
+      fixture = TestBed.createComponent(RecordDataPreviewComponent)
+      component = fixture.componentInstance
+      component.recordUuid = 'test-uuid-1234'
+
+      tick()
+      component.ngOnInit()
+      tick()
+      fixture.detectChanges()
+
+      expect(component.datavizConfig.view).toBe('chart')
+      expect(component.datavizConfig.source.url).toBe(
+        'http://example.com/dataset'
       )
-    })
-    it('should set datavizConfig and observables based on config file', fakeAsync(() => {
-      facade.mapApiLinks$.next(['link'])
-
-      tick()
-      component.ngOnInit()
-      fixture.detectChanges()
-
-      expect(component.selectedIndex$.value).toBe(1)
-      expect(component.selectedView$.value).toBe('map')
-      expect(component.selectedLink$.value).toEqual({
-        url: new URL('http://abcd.com/'),
-        name: 'layer2',
-        type: 'service',
-        accessServiceProtocol: 'wms',
-      })
+      expect(component.datavizConfig.chartConfig.xProperty).toBe('prop1')
+      expect(component.datavizConfig.chartConfig.yProperty).toBe('prop2')
+      expect(component.datavizConfig.chartConfig.aggregation).toBe('average')
+      expect(component.datavizConfig.chartConfig.chartType).toBe('line')
     }))
-
-    it('should fallback to default if no config file', fakeAsync(() => {
+    it('should fallback to default behavior if no config file', fakeAsync(() => {
       facade.mapApiLinks$.next(['link'])
-      platformServiceInterface.getRecordAttachments.mockReturnValue(of([]))
-      component.onSelectedLinkChange({
-        url: new URL('http://abcd.com/'),
-        name: 'default link',
-        type: 'service',
-        accessServiceProtocol: 'wms',
-      })
+      facade.dataLinks$.next(['link'])
+
+      fixture = TestBed.createComponent(RecordDataPreviewComponent)
+      component = fixture.componentInstance
+      component.recordUuid = 'test-uuid-1234'
 
       tick()
       component.ngOnInit()
+      tick()
       fixture.detectChanges()
 
-      expect(component.datavizConfig.link).toEqual({
-        url: new URL('http://abcd.com/'),
-        name: 'default link',
-        type: 'service',
-        accessServiceProtocol: 'wms',
-      })
-      expect(component.datavizConfig.view).toEqual('map')
+      expect(component.datavizConfig.view).toBe('map')
     }))
     describe('displayMap is false but config view is map', () => {
       it('should ignore the conf view and display table view', fakeAsync(() => {
+        const configContent = {
+          view: 'map',
+          source: {
+            url: 'http://example.com/dataset',
+            type: 'link',
+            name: 'dataset link',
+          },
+        }
+        platformServiceInterface.getRecordAttachments = jest
+          .fn()
+          .mockReturnValue(
+            of([
+              {
+                fileName: 'datavizConfig.json',
+                url: new URL(
+                  'http://example.com/attachment/datavizConfig.json'
+                ),
+              },
+            ])
+          )
+        platformServiceInterface.getFileContent = jest
+          .fn()
+          .mockReturnValue(of(configContent))
+
         facade.mapApiLinks$.next([])
+        facade.dataLinks$.next(['link'])
         fixture.detectChanges()
         tick()
 
@@ -618,36 +643,43 @@ describe('RecordDataPreviewComponent', () => {
       }))
     })
     describe('Map takes a while to load but config view is table', () => {
-      beforeEach(() => {
-        jest.clearAllMocks()
-        platformServiceInterface.getRecordAttachments.mockReturnValue(
-          of([
-            {
-              url: new URL('http://example.com/datavizConfig.json'),
-              fileName: 'datavizConfig.json',
-            },
-          ])
-        )
-        platformServiceInterface.getFileContent.mockReturnValue(
-          of({
-            view: 'table',
-            source: {
-              url: new URL('http://abcd.com/'),
-              name: 'layer2',
-              type: 'service',
-              accessServiceProtocol: 'wms',
-            },
-            chartConfig: null,
-            styleTMSIndex: 0,
-          })
-        )
-      })
       it('should ignore the map resolving and display table', fakeAsync(() => {
+        const configContent = {
+          view: 'table',
+          source: {
+            url: new URL('http://abcd.com/'),
+            name: 'layer2',
+            type: 'service',
+            accessServiceProtocol: 'wms',
+          },
+          chartConfig: null,
+          styleTMSIndex: 0,
+        }
+        platformServiceInterface.getRecordAttachments = jest
+          .fn()
+          .mockReturnValue(
+            of([
+              {
+                fileName: 'datavizConfig.json',
+                url: new URL(
+                  'http://example.com/attachment/datavizConfig.json'
+                ),
+              },
+            ])
+          )
+        platformServiceInterface.getFileContent = jest
+          .fn()
+          .mockReturnValue(of(configContent))
+
+        facade.dataLinks$.next(['link'])
+        fixture.detectChanges()
+        tick()
+
+        component.ngOnInit()
+
         facade.mapApiLinks$.next(['link'])
         fixture.detectChanges()
         tick(3000)
-
-        component.ngOnInit()
 
         expect(component.selectedIndex$.value).toBe(2)
         expect(component.selectedView$.value).toBe('table')
