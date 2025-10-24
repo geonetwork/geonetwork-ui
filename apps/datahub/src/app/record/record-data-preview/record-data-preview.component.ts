@@ -76,6 +76,7 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
   hasConfig = false
   savingStatus: 'idle' | 'saving' | 'saved' | 'error' = 'idle'
   views = ['map', 'table', 'chart', 'stac']
+  datavizConfig: DatavizConfigModel = null
 
   private readonly TAB_INDICES = {
     none: 0,
@@ -86,6 +87,11 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
   } as const
 
   private readonly VIEW_PRIORITY = ['map', 'table', 'stac'] as const
+
+  selectedLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
+  selectedView$ = new BehaviorSubject(null)
+  selectedIndex$ = new BehaviorSubject(0)
+  selectedTMSStyle$ = new BehaviorSubject(0)
 
   displayMap$ = combineLatest([
     this.metadataViewFacade.mapApiLinks$,
@@ -114,8 +120,6 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
 
   isMobile$ = getIsMobile()
 
-  selectedLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
-
   exceedsMaxFeatureCount$ = combineLatest([
     this.metadataViewFacade.geoDataLinksWithGeometry$,
     this.selectedLink$,
@@ -131,12 +135,6 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
         : of(false)
     })
   )
-
-  datavizConfig = null
-
-  selectedView$ = new BehaviorSubject(null)
-  selectedIndex$ = new BehaviorSubject(0)
-  selectedTMSStyle$ = new BehaviorSubject(0)
 
   config$ = this.recordUuid$.pipe(
     switchMap((uuid) => {
@@ -294,7 +292,7 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
       this.datavizConfig = { ...config, view }
     } else {
       this.datavizConfig = {
-        link: this.selectedLink$.value,
+        source: this.selectedLink$.value,
         view: view,
       }
     }
