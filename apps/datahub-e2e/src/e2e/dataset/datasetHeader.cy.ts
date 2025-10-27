@@ -67,6 +67,11 @@ describe('dataset: header', () => {
     cy.get('datahub-record-page')
       .find('datahub-navigation-bar')
       .should('not.be.visible')
+
+    // call wait to yield control to browser and let pending operations complete
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(0)
+
     cy.scrollTo(0, 1000)
 
     // it should display the back button (in navigation bar and hide in header)
