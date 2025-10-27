@@ -136,6 +136,12 @@ describe('ChartViewComponent', () => {
       )
     })
     describe('No userChartConfig', () => {
+      beforeEach(() => {
+        jest.spyOn(component.aggregation$, 'next')
+        jest.spyOn(component.xProperty$, 'next')
+        jest.spyOn(component.yProperty$, 'next')
+        jest.spyOn(component.chartType$, 'next')
+      })
       it('choses the first string property for X', () => {
         expect(chartComponent.labelProperty).toBe('distinct(propStr1)')
       })
@@ -159,6 +165,12 @@ describe('ChartViewComponent', () => {
       })
       it('does not stay in loading state', () => {
         expect(component.loading).toBe(false)
+      })
+      it('does not try to set chart properties', () => {
+        expect(component.aggregation$.next).not.toHaveBeenCalled()
+        expect(component.xProperty$.next).not.toHaveBeenCalled()
+        expect(component.yProperty$.next).not.toHaveBeenCalled()
+        expect(component.chartType$.next).not.toHaveBeenCalled()
       })
     })
     describe('presence of userChartConfig', () => {
