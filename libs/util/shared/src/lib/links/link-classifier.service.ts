@@ -11,6 +11,7 @@ export enum LinkUsage {
   DOWNLOAD = 'download',
   DATA = 'data',
   GEODATA = 'geodata',
+  STAC = 'stac',
   LANDING_PAGE = 'landingpage',
   UNKNOWN = 'unknown',
 }
@@ -42,7 +43,7 @@ export class LinkClassifierService {
           case 'postgis':
             return [LinkUsage.UNKNOWN]
           case 'stac':
-            return [LinkUsage.API]
+            return [LinkUsage.API, LinkUsage.STAC]
           default:
             return [LinkUsage.UNKNOWN]
         }
