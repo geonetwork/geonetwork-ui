@@ -155,7 +155,7 @@ export const elasticLinkFixture = (): Record<string, unknown> => ({
     url: 'https://my.tms.server/MapServer',
   },
   stacItems: {
-    accessServiceProtocol: 'STAC',
+    accessServiceProtocol: 'STAC:Items',
     name: 'stac layer',
     url: '  https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/lidarhd/items',
   },
