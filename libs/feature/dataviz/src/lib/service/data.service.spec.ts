@@ -111,7 +111,9 @@ jest.mock('@camptocamp/ogc-client', () => ({
     }
 
     getVersion(): '1.0.0' | '1.1.0' | '2.0.0' {
-      return this.url.indexOf('wfs11') > -1 ? '1.1.0' : '2.0.0'
+      if (this.url.indexOf('wfs10') > -1) return '1.0.0'
+      if (this.url.indexOf('wfs11') > -1) return '1.1.0'
+      return '2.0.0'
     }
   },
   OgcApiEndpoint: class {
@@ -474,8 +476,21 @@ describe('DataService', () => {
           })
         })
       })
-      describe('WFS 1.1.0 (version below 2.0)', () => {
-        it('should not add SRSNAME parameter for WFS 1.x', async () => {
+      describe('WFS 1.0.0', () => {
+        it('should not add SRSNAME parameter for WFS 1.0.0', async () => {
+          const urls = await lastValueFrom(
+            service.getDownloadLinksFromWfs({
+              ...link,
+              url: new URL('http://wfs10/wfs'),
+            })
+          )
+          const csvLink = urls.find((u) => u.url.href.includes('format=csv'))
+          expect(csvLink.url.href).not.toContain('SRSNAME')
+          expect(csvLink.url.href).toContain('format=csv')
+        })
+      })
+      describe('WFS 1.1.0 with default CRS', () => {
+        it('should add SRSNAME parameter for WFS 1.1.0', async () => {
           const urls = await lastValueFrom(
             service.getDownloadLinksFromWfs({
               ...link,
@@ -483,8 +498,7 @@ describe('DataService', () => {
             })
           )
           const csvLink = urls.find((u) => u.url.href.includes('format=csv'))
-          expect(csvLink.url.href).not.toContain('SRSNAME')
-          expect(csvLink.url.href).toContain('format=csv')
+          expect(csvLink.url.href).toContain('SRSNAME=EPSG:2154')
         })
       })
       describe('WFS 2.0+ with default CRS', () => {

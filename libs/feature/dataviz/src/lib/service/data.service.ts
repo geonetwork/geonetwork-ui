@@ -99,10 +99,10 @@ export class DataService {
         }
 
         const wfsVersion = endpoint.getVersion()
-        const isWfs2Plus = wfsVersion === '2.0.0' || wfsVersion.startsWith('2.')
+        const addSrsName = wfsVersion === '1.1.0' || wfsVersion === '2.0.0'
         const defaultCrs = featureType.defaultCrs
 
-        const shouldAddOutputCrs = isWfs2Plus && defaultCrs
+        const shouldAddOutputCrs = addSrsName && defaultCrs
 
         return {
           all: featureType.outputFormats.reduce(
