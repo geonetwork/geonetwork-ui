@@ -45,6 +45,7 @@ export abstract class PlatformServiceInterface {
     thesaurusId: string
   ): Observable<Keyword[]>
 
+  abstract getFeedbacksAllowed(): Observable<boolean>
   abstract getUserFeedbacks(recordUuid: string): Observable<UserFeedback[]>
   abstract postUserFeedbacks(recordUuid: UserFeedback): Observable<void>
 
@@ -58,5 +59,4 @@ export abstract class PlatformServiceInterface {
     removeDuplicate?: boolean
   ): Observable<UploadEvent>
   abstract getFileContent(url: URL): Observable<any>
-  abstract getFeedbacksAllowed(): Observable<boolean>
 }
