@@ -167,6 +167,10 @@ export class RecordMetadataComponent {
     )
   )
 
+  displayStac$ = this.metadataViewFacade.stacLinks$.pipe(
+    map((stacLinks) => stacLinks?.length > 0)
+  )
+
   displayOtherLinks$ = this.metadataViewFacade.otherLinks$.pipe(
     map((links) => links?.length > 0)
   )
