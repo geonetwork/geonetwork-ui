@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { StacViewComponent } from './stac-view.component'
-import { TranslatePipe } from '@ngx-translate/core'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('StacViewComponent', () => {
   let component: StacViewComponent
@@ -9,12 +9,7 @@ describe('StacViewComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [StacViewComponent],
-      providers: [
-        {
-          provide: TranslatePipe,
-          useValue: { transform: (key: string) => key },
-        },
-      ],
+      providers: [provideI18n()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(StacViewComponent)
