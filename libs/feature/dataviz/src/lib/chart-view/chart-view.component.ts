@@ -108,6 +108,7 @@ export class ChartViewComponent {
   chartType$ = new BehaviorSubject<InputChartType>('bar')
 
   @Input() set userChartConfig(config: DatavizChartConfigModel) {
+    if (!config) return
     this.aggregation$.next(config.aggregation)
     this.xProperty$.next(config.xProperty)
     this.yProperty$.next(config.yProperty)
