@@ -82,7 +82,9 @@
   <section
     id="data-preview"
     class="mb-6"
-    *ngIf="(displayMap$ | async) || (displayData$ | async)"
+    *ngIf="
+      (displayMap$ | async) || (displayData$ | async) || (displayStac$ | async)
+    "
   >
     <datahub-record-data-preview
       [recordUuid]="metadataUuid$ | async"

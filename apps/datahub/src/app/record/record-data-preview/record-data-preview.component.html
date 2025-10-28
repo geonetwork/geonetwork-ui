@@ -1,6 +1,8 @@
 <div
   class="h-[750px]"
-  *ngIf="(displayMap$ | async) || (displayData$ | async)"
+  *ngIf="
+    (displayMap$ | async) || (displayData$ | async) || (displayStac$ | async)
+  "
   id="preview"
 >
   <div class="bg-primary-opacity-10 overflow-visible h-[480px]">
@@ -17,7 +19,7 @@
           mat-align-tabs="start"
           disableRipple
         >
-          <mat-tab>
+          <mat-tab [disabled]="(displayDatavizConfig$ | async) === false">
             <ng-template mat-tab-label>
               <gn-ui-button
                 *ngIf="displayDatavizConfig$ | async"
@@ -70,7 +72,7 @@
             </div>
           </mat-tab>
           <mat-tab
-            *ngIf="(displayChart$ | async) === true"
+            *ngIf="(isMobile$ | async) === false"
             [disabled]="(displayData$ | async) === false"
           >
             <ng-template mat-tab-label>
@@ -89,6 +91,22 @@
                 [selectedView]="selectedView$ | async"
                 mode="chart"
               ></gn-ui-data-view>
+            </div>
+          </mat-tab>
+          <mat-tab [disabled]="(displayStac$ | async) === false">
+            <ng-template mat-tab-label>
+              <span class="tab-header-label" translate>record.tab.stac</span>
+            </ng-template>
+            <div
+              class="block"
+              style="height: 639px"
+              *ngIf="
+                (displayStac$ | async) && (selectedView$ | async) === 'stac'
+              "
+            >
+              <gn-ui-stac-view
+                [link]="(metadataViewFacade.stacLinks$ | async)?.[0]"
+              ></gn-ui-stac-view>
             </div>
           </mat-tab>
         </mat-tab-group>

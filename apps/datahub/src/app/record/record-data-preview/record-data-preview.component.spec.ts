@@ -18,7 +18,7 @@ import {
 } from '@geonetwork-ui/feature/record'
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { MatTab, MatTabGroup } from '@angular/material/tabs'
-import { DataService } from '@geonetwork-ui/feature/dataviz'
+import { DataService, StacViewComponent } from '@geonetwork-ui/feature/dataviz'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { SAMPLE_RECORD } from '@geonetwork-ui/common/fixtures'
@@ -47,6 +47,7 @@ describe('RecordDataPreviewComponent', () => {
           dataLinks$: new BehaviorSubject([]),
           geoDataLinks$: new BehaviorSubject([]),
           geoDataLinksWithGeometry$: new BehaviorSubject([]),
+          stacLinks$: new BehaviorSubject([]),
           chartConfig$: new BehaviorSubject(null),
         }),
         MockProvider(DataService, {
@@ -65,14 +66,7 @@ describe('RecordDataPreviewComponent', () => {
             })
           ),
           getMe: jest.fn(),
-          getRecordAttachments: jest.fn().mockReturnValue(
-            of([
-              {
-                fileName: 'datavizConfig.json',
-                url: new URL('http://record.com/datavizConfig.json'),
-              },
-            ])
-          ),
+          getRecordAttachments: jest.fn().mockReturnValue(of([])),
           getFileContent: jest.fn(),
         }),
         {
@@ -89,6 +83,7 @@ describe('RecordDataPreviewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RecordDataPreviewComponent)
     component = fixture.componentInstance
+    component.recordUuid = 'test-uuid-1234'
     fixture.detectChanges()
   })
 
@@ -110,12 +105,16 @@ describe('RecordDataPreviewComponent', () => {
     let mapTab
     let tabGroup
     describe('when DATA link, but no MAPAPI and no GEODATA link', () => {
-      beforeEach(() => {
+      beforeEach(fakeAsync(() => {
         facade.dataLinks$.next(['link'])
+
+        tick()
+        component.ngOnInit()
         fixture.detectChanges()
+
         mapTab = fixture.debugElement.queryAll(By.directive(MatTab))[1]
         tabGroup = fixture.debugElement.queryAll(By.directive(MatTabGroup))[0]
-      })
+      }))
       it('renders preview, map tab is disabled', () => {
         expect(mapTab.componentInstance.disabled).toBe(true)
       })
@@ -129,11 +128,15 @@ describe('RecordDataPreviewComponent', () => {
       })
     })
     describe('when a MAPAPI link present', () => {
-      beforeEach(() => {
+      beforeEach(fakeAsync(() => {
         facade.mapApiLinks$.next(['link'])
+
+        tick()
+        component.ngOnInit()
         fixture.detectChanges()
+
         mapTab = fixture.debugElement.queryAll(By.directive(MatTab))[1]
-      })
+      }))
       it('renders preview, map tab is enabled', () => {
         expect(mapTab.componentInstance.disabled).toBe(false)
       })
@@ -144,12 +147,16 @@ describe('RecordDataPreviewComponent', () => {
       })
     })
     describe('when a GEODATA link present', () => {
-      beforeEach(() => {
+      beforeEach(fakeAsync(() => {
         facade.geoDataLinksWithGeometry$.next(['link'])
         facade.geoDataLinks$.next(['link'])
+
+        tick()
+        component.ngOnInit()
         fixture.detectChanges()
+
         mapTab = fixture.debugElement.queryAll(By.directive(MatTab))[1]
-      })
+      }))
       it('renders preview, map tab is enabled', () => {
         expect(mapTab.componentInstance.disabled).toBe(false)
       })
@@ -165,15 +172,19 @@ describe('RecordDataPreviewComponent', () => {
     let chartTab
     let tabGroup
     describe('when MAPAPI link, but no DATA and no GEODATA link', () => {
-      beforeEach(() => {
+      beforeEach(fakeAsync(() => {
         facade.mapApiLinks$.next(['link'])
-        facade.dataLinks$.next(null)
-        facade.geoDataLinksWithGeometry$.next(null)
+        facade.dataLinks$.next([])
+        facade.geoDataLinksWithGeometry$.next([])
+
+        tick()
+        component.ngOnInit()
         fixture.detectChanges()
+
         tableTab = fixture.debugElement.queryAll(By.directive(MatTab))[2]
         chartTab = fixture.debugElement.queryAll(By.directive(MatTab))[3]
         tabGroup = fixture.debugElement.queryAll(By.directive(MatTabGroup))[0]
-      })
+      }))
       it('renders preview, table tab is disabled', () => {
         expect(tableTab.componentInstance.disabled).toBe(true)
       })
@@ -195,12 +206,16 @@ describe('RecordDataPreviewComponent', () => {
       })
     })
     describe('when a DATA link present', () => {
-      beforeEach(() => {
+      beforeEach(fakeAsync(() => {
         facade.dataLinks$.next(['link'])
+
+        tick()
+        component.ngOnInit()
         fixture.detectChanges()
+
         tableTab = fixture.debugElement.queryAll(By.directive(MatTab))[2]
         chartTab = fixture.debugElement.queryAll(By.directive(MatTab))[3]
-      })
+      }))
       it('renders preview, table tab is enabled', () => {
         expect(tableTab.componentInstance.disabled).toBe(false)
       })
@@ -218,10 +233,13 @@ describe('RecordDataPreviewComponent', () => {
         ).toBeTruthy()
       })
       describe('when selectedView$ is chart', () => {
-        beforeEach(() => {
+        beforeEach(fakeAsync(() => {
           component.selectedView$.next('chart')
+
+          tick()
+          component.ngOnInit()
           fixture.detectChanges()
-        })
+        }))
         it('renders the permalink component', () => {
           expect(
             fixture.debugElement.query(By.directive(DataViewShareComponent))
@@ -230,12 +248,16 @@ describe('RecordDataPreviewComponent', () => {
       })
     })
     describe('when a GEODATA link present', () => {
-      beforeEach(() => {
+      beforeEach(fakeAsync(() => {
         facade.geoDataLinks$.next(['link'])
+
+        tick()
+        component.ngOnInit()
         fixture.detectChanges()
+
         tableTab = fixture.debugElement.queryAll(By.directive(MatTab))[2]
         chartTab = fixture.debugElement.queryAll(By.directive(MatTab))[3]
-      })
+      }))
       it('renders preview, table tab is enabled', () => {
         expect(tableTab.componentInstance.disabled).toBe(false)
       })
@@ -249,9 +271,59 @@ describe('RecordDataPreviewComponent', () => {
       })
     })
   })
+  describe('STAC view', () => {
+    let mapTab
+    let tableTab
+    let chartTab
+    let stacTab
+    let tabGroup
+    describe('when only a GEODATA link present', () => {
+      beforeEach(fakeAsync(() => {
+        facade.geoDataLinks$.next(['link'])
+        facade.dataLinks$.next(null)
+        facade.mapApiLinks$.next(null)
+        facade.stacLinks$.next(null)
+
+        tick()
+        component.ngOnInit()
+        fixture.detectChanges()
+
+        stacTab = fixture.debugElement.queryAll(By.directive(MatTab))[4]
+      }))
+      it('renders STAC tab and is disabled', () => {
+        expect(stacTab).toBeDefined()
+        expect(stacTab.componentInstance.disabled).toBe(true)
+      })
+    })
+    describe('when only a STAC link present', () => {
+      beforeEach(fakeAsync(() => {
+        facade.stacLinks$.next(['link'])
+
+        tick()
+        component.ngOnInit()
+        fixture.detectChanges()
+
+        stacTab = fixture.debugElement.queryAll(By.directive(MatTab))[4]
+        tabGroup = fixture.debugElement.queryAll(By.directive(MatTabGroup))[0]
+      }))
+      it('renders STAC tab and is enabled', () => {
+        expect(stacTab).toBeDefined()
+        expect(stacTab.componentInstance.disabled).toBe(false)
+      })
+      it('stac tab is selected', () => {
+        expect(tabGroup.componentInstance.selectedIndex).toBe(4)
+      })
+      it('renders the STAC view component', () => {
+        expect(
+          fixture.debugElement.query(By.directive(StacViewComponent))
+        ).toBeTruthy()
+      })
+    })
+  })
   describe('exceedsMaxFeatureCount$', () => {
     it('should return false when no WFS link is present', (done) => {
       facade.geoDataLinksWithGeometry$.next([])
+
       component.exceedsMaxFeatureCount$.subscribe((result) => {
         expect(result).toBe(false)
         done()
@@ -469,65 +541,98 @@ describe('RecordDataPreviewComponent', () => {
       })
     })
   })
-  describe('Config setting', () => {
-    beforeEach(() => {
-      jest.clearAllMocks()
-      platformServiceInterface.getFileContent.mockReturnValue(
-        of({
-          view: 'map',
-          source: {
-            url: new URL('http://abcd.com/'),
-            name: 'layer2',
-            type: 'service',
-            accessServiceProtocol: 'wms',
+  describe('Read and apply dataviz config', () => {
+    it('should read and apply dataviz config from attachment', fakeAsync(() => {
+      const configContent = {
+        view: 'chart',
+        source: {
+          url: 'http://example.com/dataset',
+          type: 'link',
+          name: 'dataset link',
+        },
+        chartConfig: {
+          xProperty: 'prop1',
+          yProperty: 'prop2',
+          aggregation: 'average',
+          chartType: 'line',
+        },
+      }
+      platformServiceInterface.getRecordAttachments = jest.fn().mockReturnValue(
+        of([
+          {
+            fileName: 'datavizConfig.json',
+            url: new URL('http://example.com/attachment/datavizConfig.json'),
           },
-          chartConfig: null,
-          styleTMSIndex: 0,
-        })
+        ])
       )
-    })
-    it('should set datavizConfig and observables based on config file', fakeAsync(() => {
+      platformServiceInterface.getFileContent = jest
+        .fn()
+        .mockReturnValue(of(configContent))
+
       facade.mapApiLinks$.next(['link'])
-      fixture.detectChanges()
+      facade.dataLinks$.next(['link'])
+
+      fixture = TestBed.createComponent(RecordDataPreviewComponent)
+      component = fixture.componentInstance
+      component.recordUuid = 'test-uuid-1234'
+
       tick()
-
       component.ngOnInit()
+      tick()
+      fixture.detectChanges()
 
-      expect(component.selectedIndex$.value).toBe(1)
-      expect(component.selectedView$.value).toBe('map')
-      expect(component.selectedLink$.value).toEqual({
-        url: new URL('http://abcd.com/'),
-        name: 'layer2',
-        type: 'service',
-        accessServiceProtocol: 'wms',
-      })
+      expect(component.datavizConfig.view).toBe('chart')
+      expect(component.datavizConfig.source.url).toBe(
+        'http://example.com/dataset'
+      )
+      expect(component.datavizConfig.chartConfig.xProperty).toBe('prop1')
+      expect(component.datavizConfig.chartConfig.yProperty).toBe('prop2')
+      expect(component.datavizConfig.chartConfig.aggregation).toBe('average')
+      expect(component.datavizConfig.chartConfig.chartType).toBe('line')
     }))
-
-    it('should fallback to default if no config file', fakeAsync(() => {
+    it('should fallback to default behavior if no config file', fakeAsync(() => {
       facade.mapApiLinks$.next(['link'])
-      platformServiceInterface.getRecordAttachments.mockReturnValue(of([]))
-      component.onSelectedLinkChange({
-        url: new URL('http://abcd.com/'),
-        name: 'default link',
-        type: 'service',
-        accessServiceProtocol: 'wms',
-      })
-      fixture.detectChanges()
+      facade.dataLinks$.next(['link'])
+
+      fixture = TestBed.createComponent(RecordDataPreviewComponent)
+      component = fixture.componentInstance
+      component.recordUuid = 'test-uuid-1234'
+
       tick()
-
       component.ngOnInit()
+      tick()
+      fixture.detectChanges()
 
-      expect(component.datavizConfig.link).toEqual({
-        url: new URL('http://abcd.com/'),
-        name: 'default link',
-        type: 'service',
-        accessServiceProtocol: 'wms',
-      })
-      expect(component.datavizConfig.view).toEqual('map')
+      expect(component.datavizConfig.view).toBe('map')
     }))
     describe('displayMap is false but config view is map', () => {
       it('should ignore the conf view and display table view', fakeAsync(() => {
+        const configContent = {
+          view: 'map',
+          source: {
+            url: 'http://example.com/dataset',
+            type: 'link',
+            name: 'dataset link',
+          },
+        }
+        platformServiceInterface.getRecordAttachments = jest
+          .fn()
+          .mockReturnValue(
+            of([
+              {
+                fileName: 'datavizConfig.json',
+                url: new URL(
+                  'http://example.com/attachment/datavizConfig.json'
+                ),
+              },
+            ])
+          )
+        platformServiceInterface.getFileContent = jest
+          .fn()
+          .mockReturnValue(of(configContent))
+
         facade.mapApiLinks$.next([])
+        facade.dataLinks$.next(['link'])
         fixture.detectChanges()
         tick()
 
@@ -538,28 +643,43 @@ describe('RecordDataPreviewComponent', () => {
       }))
     })
     describe('Map takes a while to load but config view is table', () => {
-      beforeEach(() => {
-        jest.clearAllMocks()
-        platformServiceInterface.getFileContent.mockReturnValue(
-          of({
-            view: 'table',
-            source: {
-              url: new URL('http://abcd.com/'),
-              name: 'layer2',
-              type: 'service',
-              accessServiceProtocol: 'wms',
-            },
-            chartConfig: null,
-            styleTMSIndex: 0,
-          })
-        )
-      })
       it('should ignore the map resolving and display table', fakeAsync(() => {
+        const configContent = {
+          view: 'table',
+          source: {
+            url: new URL('http://abcd.com/'),
+            name: 'layer2',
+            type: 'service',
+            accessServiceProtocol: 'wms',
+          },
+          chartConfig: null,
+          styleTMSIndex: 0,
+        }
+        platformServiceInterface.getRecordAttachments = jest
+          .fn()
+          .mockReturnValue(
+            of([
+              {
+                fileName: 'datavizConfig.json',
+                url: new URL(
+                  'http://example.com/attachment/datavizConfig.json'
+                ),
+              },
+            ])
+          )
+        platformServiceInterface.getFileContent = jest
+          .fn()
+          .mockReturnValue(of(configContent))
+
+        facade.dataLinks$.next(['link'])
+        fixture.detectChanges()
+        tick()
+
+        component.ngOnInit()
+
         facade.mapApiLinks$.next(['link'])
         fixture.detectChanges()
         tick(3000)
-
-        component.ngOnInit()
 
         expect(component.selectedIndex$.value).toBe(2)
         expect(component.selectedView$.value).toBe('table')

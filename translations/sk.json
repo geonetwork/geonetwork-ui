@@ -540,6 +540,7 @@
   "record.tab.chart": "Graf",
   "record.tab.data": "Tabuľka",
   "record.tab.map": "Mapa",
+  "record.tab.stac": "",
   "record.was.created.time": "vytvoril tento dataset o {time}",
   "records": "záznamy",
   "results.layout.selectOne": "Rozmiestnenie výsledkov",
