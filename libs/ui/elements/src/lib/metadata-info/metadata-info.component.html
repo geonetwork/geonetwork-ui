@@ -3,7 +3,11 @@
     ghostClass="h-[178px]"
     [showContent]="fieldReady('abstract')"
   >
-    <gn-ui-max-lines [maxLines]="6" *ngIf="metadata.abstract">
+    <gn-ui-max-lines
+      [maxLines]="6"
+      *ngIf="metadata.abstract"
+      data-test="metadata-info-abstract"
+    >
       <div class="mb-6">
         <gn-ui-markdown-parser
           [textContent]="metadata.abstract"
@@ -101,19 +105,31 @@
 <gn-ui-expandable-panel
   *ngIf="
     (metadata.kind === 'dataset' && metadata.lineage) ||
+    resourceContact ||
+    metadata.resourceCreated ||
+    metadata.resourcePublished ||
     metadata.resourceUpdated ||
-    metadata.updateFrequency ||
-    (metadata.kind === 'dataset' && metadata.status)
+    (metadata.kind === 'dataset' && metadata.updateFrequency) ||
+    metadata.otherLanguages?.length ||
+    (metadata.kind === 'dataset' && temporalExtent)
   "
   [title]="'record.metadata.details' | translate"
   data-test="details-panel"
 >
-  <div *ngIf="metadata.lineage" class="text-gray-900 flex flex-col mt-4 gap-2">
+  <div
+    *ngIf="metadata.kind === 'dataset' && metadata.lineage"
+    class="text-gray-900 flex flex-col mt-4 gap-2"
+    data-test="details-panel-lineage"
+  >
     <p class="whitespace-pre-line break-words text-gray-900" gnUiLinkify>
       {{ metadata.lineage }}
     </p>
   </div>
-  <div class="flex flex-row gap-6 mt-5 mb-8" *ngIf="resourceContact">
+  <div
+    class="flex flex-row gap-6 mt-5 mb-8 resource-contact"
+    *ngIf="resourceContact"
+    data-test="details-panel-resource-contact"
+  >
     <div
       *ngIf="resourceContact.organization?.logoUrl?.href"
       class="flex items-center justify-center border-solid border border-gray-300 rounded-md bg-white h-32 overflow-hidden"
@@ -165,19 +181,37 @@
   <div
     class="py-6 px-6 rounded bg-gray-100 grid grid-cols-2 gap-y-6 gap-x-[20px] text-gray-700"
   >
-    <div *ngIf="metadata.resourceCreated">
+    <div
+      *ngIf="metadata.resourceCreated"
+      data-test="details-panel-resource-created"
+    >
       <p class="text-sm" translate>record.metadata.creation</p>
-      <p class="text-primary font-medium mt-1">
+      <p class="text-primary font-medium mt-1 resource-created">
         {{ formatDate(metadata.resourceCreated) }}
       </p>
     </div>
-    <div *ngIf="metadata.resourcePublished">
+    <div
+      *ngIf="metadata.resourcePublished"
+      data-test="details-panel-resource-published"
+    >
       <p class="text-sm" translate>record.metadata.publication</p>
-      <p class="text-primary font-medium mt-1">
+      <p class="text-primary font-medium mt-1 resource-published">
         {{ formatDate(metadata.resourcePublished) }}
       </p>
     </div>
-    <div *ngIf="updateFrequency">
+    <div
+      *ngIf="metadata.resourceUpdated"
+      data-test="details-panel-resource-updated"
+    >
+      <p class="text-sm" translate>record.metadata.update</p>
+      <p class="text-primary font-medium mt-1 resource-updated">
+        {{ formatDate(metadata.resourceUpdated) }}
+      </p>
+    </div>
+    <div
+      *ngIf="metadata.kind === 'dataset' && metadata.updateFrequency"
+      data-test="details-panel-update-frequency"
+    >
       <p class="text-sm" translate>record.metadata.updateFrequency</p>
       <p
         class="text-primary font-medium mt-1 updateFrequency"
@@ -187,11 +221,14 @@
         {{ updateFrequency }}
       </p>
     </div>
-    <div *ngIf="metadata.otherLanguages?.length">
+    <div
+      *ngIf="metadata.otherLanguages?.length"
+      data-test="details-panel-other-languages"
+    >
       <p class="text-sm mb-1" translate>record.metadata.languages</p>
       <div class="flex flex-row gap-1 flex-wrap">
         <p
-          class="text-primary font-medium"
+          class="text-primary font-medium other-languages"
           translate
           *ngFor="let language of metadata.otherLanguages"
         >
@@ -199,9 +236,14 @@
         </p>
       </div>
     </div>
-    <div *ngIf="temporalExtent">
+    <div
+      *ngIf="metadata.kind === 'dataset' && temporalExtent"
+      data-test="details-panel-temporal-extent"
+    >
       <p class="text-sm" translate>record.metadata.temporalExtent</p>
-      <div class="flex flex-row gap-1 mb-1 text-primary font-medium">
+      <div
+        class="flex flex-row gap-1 mb-1 text-primary font-medium temporal-extent"
+      >
         <p
           *ngIf="temporalExtent.start && temporalExtent.end"
           translate

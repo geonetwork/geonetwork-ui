@@ -37,7 +37,7 @@ describe('reuse pages', () => {
   })
   describe('About', () => {
     it('should display the spatial extent', () => {
-      cy.get('gn-ui-expandable-panel').eq(1).click()
+      cy.get('gn-ui-expandable-panel').eq(2).click()
       cy.get('gn-ui-map-container').should('be.visible')
     })
   })
