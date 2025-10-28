@@ -16,10 +16,7 @@
       />
     </div>
 
-    <div
-      class="mt-auto mb-8 mx-8"
-      *ngIf="isCurrentTemporalExtentModifiedFromInitial$ | async"
-    >
+    <div class="mt-auto mb-8 mx-8" *ngIf="isTemporalFilterModified$ | async">
       <button
         type="button"
         class="flex items-center"

@@ -31,24 +31,14 @@ export class StacViewComponent implements OnInit, OnDestroy {
 
   initialTemporalExtent$ = new BehaviorSubject<DatasetTemporalExtent>(null)
   currentTemporalExtent$ = new BehaviorSubject<DatasetTemporalExtent>(null)
-
-  isCurrentTemporalExtentModifiedFromInitial$ = combineLatest([
-    this.initialTemporalExtent$,
-    this.currentTemporalExtent$,
-  ]).pipe(
-    map(([initial, current]) => {
-      return (
-        initial?.start?.getTime() !== current?.start?.getTime() ||
-        initial?.end?.getTime() !== current?.end?.getTime()
-      )
-    })
-  )
+  isTemporalFilterModified$ = new BehaviorSubject<boolean>(false)
 
   onStartDateChange(date: Date) {
     this.currentTemporalExtent$.next({
       start: date,
       end: this.currentTemporalExtent$.value?.end,
     })
+    this.isTemporalFilterModified$.next(true)
   }
 
   onEndDateChange(date: Date) {
@@ -56,10 +46,12 @@ export class StacViewComponent implements OnInit, OnDestroy {
       start: this.currentTemporalExtent$.value?.start,
       end: date,
     })
+    this.isTemporalFilterModified$.next(true)
   }
 
   onResetFilters() {
     this.currentTemporalExtent$.next(this.initialTemporalExtent$.value)
+    this.isTemporalFilterModified$.next(false)
   }
 
   ngOnInit() {
