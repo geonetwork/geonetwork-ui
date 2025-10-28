@@ -323,7 +323,7 @@ describe('DataService', () => {
               mimeType: 'application/json',
               name: 'surval_parametre_ligne',
               url: new URL(
-                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=json&SRSNAME=EPSG:2154'
+                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=json'
               ),
               type: 'download',
               accessServiceProtocol: 'wfs',
@@ -429,7 +429,7 @@ describe('DataService', () => {
               mimeType: 'application/json',
               name: '',
               url: new URL(
-                'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=json&SRSNAME=EPSG:2154'
+                'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=json'
               ),
 
               type: 'download',

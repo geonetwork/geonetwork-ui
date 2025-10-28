@@ -105,16 +105,19 @@ export class DataService {
         const shouldAddOutputCrs = addSrsName && defaultCrs
 
         return {
-          all: featureType.outputFormats.reduce(
-            (prev, curr) => ({
+          all: featureType.outputFormats.reduce((prev, curr) => {
+            const isJsonFormat = curr.toLowerCase().includes('json')
+            return {
               ...prev,
               [curr]: endpoint.getFeatureUrl(featureType.name, {
                 outputFormat: curr,
-                ...(shouldAddOutputCrs && { outputCrs: defaultCrs }),
+                ...(shouldAddOutputCrs &&
+                  !isJsonFormat && {
+                    outputCrs: defaultCrs,
+                  }),
               }),
-            }),
-            {}
-          ),
+            }
+          }, {}),
           geojson: endpoint.supportsJson(featureType.name)
             ? endpoint.getFeatureUrl(featureType.name, {
                 asJson: true,
@@ -193,6 +196,7 @@ export class DataService {
             ),
           })
         )
+        console.log(resources)
         return resources
       })
     )
