@@ -202,7 +202,7 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
     private cdr: ChangeDetectorRef
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.sub.add(
       combineLatest([
         this.displayMap$,
@@ -286,7 +286,7 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
     }
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.sub.unsubscribe()
   }
 
