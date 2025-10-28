@@ -6,17 +6,17 @@
       <p class="mb-4">Choix de la période</p>
       <p>Du</p>
       <gn-ui-date-picker
-        [date]="(currentTemporalExtent$ | async)?.start"
+        [date]="currentTemporalExtent?.start"
         (dateChange)="onStartDateChange($event)"
       />
       <p class="mt-4">Au</p>
       <gn-ui-date-picker
-        [date]="(currentTemporalExtent$ | async)?.end"
+        [date]="currentTemporalExtent?.end"
         (dateChange)="onEndDateChange($event)"
       />
     </div>
 
-    <div class="mt-auto mb-8 mx-8" *ngIf="isTemporalFilterModified$ | async">
+    <div class="mt-auto mb-8 mx-8" *ngIf="isTemporalFilterModified">
       <button
         type="button"
         class="flex items-center"
