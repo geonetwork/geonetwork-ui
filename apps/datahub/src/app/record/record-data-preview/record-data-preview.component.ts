@@ -115,8 +115,8 @@ export class RecordDataPreviewComponent implements OnDestroy, OnInit {
     )
   )
 
-  displayStac$ = combineLatest([this.metadataViewFacade.stacLinks$]).pipe(
-    map(([stacLinks]) => stacLinks?.length > 0)
+  displayStac$ = this.metadataViewFacade.stacLinks$.pipe(
+    map((stacLinks) => stacLinks?.length > 0)
   )
 
   isMobile$ = getIsMobile()
