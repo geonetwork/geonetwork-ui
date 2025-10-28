@@ -107,7 +107,10 @@ export class MdViewFacade {
 
   stacLinks$ = this.allLinks$.pipe(
     map((links) =>
-      links.filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.STAC))
+      links.filter(
+        (link) =>
+          link.type === 'service' && link.accessServiceProtocol === 'stac'
+      )
     ),
     shareReplay(1)
   )
