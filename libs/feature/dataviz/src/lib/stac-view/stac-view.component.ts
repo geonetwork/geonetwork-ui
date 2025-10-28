@@ -3,18 +3,16 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
-  OnDestroy,
   OnInit,
 } from '@angular/core'
 import {
   DatasetServiceDistribution,
   DatasetTemporalExtent,
 } from '@geonetwork-ui/common/domain/model/record'
-import { BehaviorSubject, combineLatest, map, Subscription } from 'rxjs'
+import { BehaviorSubject } from 'rxjs'
 import { DatePickerComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matDeleteOutline } from '@ng-icons/material-icons/outline'
-import { MatTooltip } from '@angular/material/tooltip'
 
 @Component({
   selector: 'gn-ui-stac-view',
@@ -22,12 +20,11 @@ import { MatTooltip } from '@angular/material/tooltip'
   styleUrls: ['./stac-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, DatePickerComponent, NgIconComponent, MatTooltip],
+  imports: [CommonModule, DatePickerComponent, NgIconComponent],
   viewProviders: [provideIcons({ matDeleteOutline })],
 })
-export class StacViewComponent implements OnInit, OnDestroy {
+export class StacViewComponent implements OnInit {
   @Input() link: DatasetServiceDistribution
-  private subscription = new Subscription()
 
   initialTemporalExtent$ = new BehaviorSubject<DatasetTemporalExtent>(null)
   currentTemporalExtent$ = new BehaviorSubject<DatasetTemporalExtent>(null)
@@ -64,9 +61,5 @@ export class StacViewComponent implements OnInit, OnDestroy {
 
     this.initialTemporalExtent$.next(initialExtent)
     this.currentTemporalExtent$.next(initialExtent)
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe()
   }
 }
