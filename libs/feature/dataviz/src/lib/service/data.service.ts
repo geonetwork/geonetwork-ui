@@ -196,7 +196,6 @@ export class DataService {
             ),
           })
         )
-        console.log(resources)
         return resources
       })
     )
