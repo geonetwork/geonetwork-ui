@@ -3,13 +3,13 @@
 >
   <div class="flex-1 flex flex-col">
     <div class="m-8">
-      <p class="mb-4">Choix de la période</p>
-      <p>Du</p>
+      <p class="mb-4" translate>stac.filter.period</p>
+      <p translate>stac.filter.from</p>
       <gn-ui-date-picker
         [date]="currentTemporalExtent?.start"
         (dateChange)="onStartDateChange($event)"
       />
-      <p class="mt-4">Au</p>
+      <p class="mt-4" translate>stac.filter.to</p>
       <gn-ui-date-picker
         [date]="currentTemporalExtent?.end"
         (dateChange)="onEndDateChange($event)"
@@ -22,7 +22,7 @@
         class="flex items-center"
         (click)="onResetFilters()"
       >
-        Réinitialiser les filtres
+        <span translate>stac.filter.reset</span>
         <ng-icon
           name="matDeleteOutline"
           class="pointer-events-none ml-2"

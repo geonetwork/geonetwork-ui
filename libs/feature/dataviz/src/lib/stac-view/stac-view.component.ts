@@ -12,6 +12,13 @@ import {
 import { DatePickerComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matDeleteOutline } from '@ng-icons/material-icons/outline'
+import { TranslateDirective } from '@ngx-translate/core'
+import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+
+marker('stac.filter.period')
+marker('stac.filter.from')
+marker('stac.filter.to')
+marker('stac.filter.reset')
 
 @Component({
   selector: 'gn-ui-stac-view',
@@ -19,7 +26,12 @@ import { matDeleteOutline } from '@ng-icons/material-icons/outline'
   styleUrls: ['./stac-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, DatePickerComponent, NgIconComponent],
+  imports: [
+    CommonModule,
+    DatePickerComponent,
+    NgIconComponent,
+    TranslateDirective,
+  ],
   viewProviders: [provideIcons({ matDeleteOutline })],
 })
 export class StacViewComponent implements OnInit {
