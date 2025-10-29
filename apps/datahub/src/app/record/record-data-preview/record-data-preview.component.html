@@ -106,6 +106,7 @@
             >
               <gn-ui-stac-view
                 [link]="(metadataViewFacade.stacLinks$ | async)?.[0]"
+                [initialTemporalExtent]="firstTemporalExtent | async"
               ></gn-ui-stac-view>
             </div>
           </mat-tab>

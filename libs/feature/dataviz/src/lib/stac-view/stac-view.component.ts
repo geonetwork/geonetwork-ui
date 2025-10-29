@@ -24,8 +24,8 @@ import { matDeleteOutline } from '@ng-icons/material-icons/outline'
 })
 export class StacViewComponent implements OnInit {
   @Input() link: DatasetServiceDistribution
+  @Input() initialTemporalExtent: DatasetTemporalExtent | null
 
-  initialTemporalExtent: DatasetTemporalExtent | null = null
   currentTemporalExtent: DatasetTemporalExtent | null = null
   isTemporalFilterModified = false
 
@@ -51,14 +51,6 @@ export class StacViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    // TODO: initialExtent pré-saisis sur l'étendue temporelle de la collection
-    // si la collection n'a pas d'étendue temporelle, les champs ne sont pas pré-saisis.
-    const initialExtent: DatasetTemporalExtent = {
-      start: null,
-      end: null,
-    }
-
-    this.initialTemporalExtent = initialExtent
-    this.currentTemporalExtent = initialExtent
+    this.currentTemporalExtent = this.initialTemporalExtent
   }
 }
