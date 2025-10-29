@@ -212,7 +212,7 @@ background_color = "#fdfbff"
 #
 # Note:
 #   translation keys ending with ".html" _can_ contain HTML markup, including inline CSS:
-#     catalog.welcome.html = """
+#     datahub.header.title.html = """
 #     Welcome to <span class="text-primary">Organization</span>'s<br>
 #     wonderful <span style="font-size: 1.2em;">data catalogue</span>
 #     """
