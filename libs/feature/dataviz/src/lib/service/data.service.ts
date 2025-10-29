@@ -97,16 +97,27 @@ export class DataService {
         if (!featureType) {
           throw new Error('wfs.featuretype.notfound')
         }
+
+        const wfsVersion = endpoint.getVersion()
+        const addSrsName = wfsVersion === '1.1.0' || wfsVersion === '2.0.0'
+        const defaultCrs = featureType.defaultCrs
+
+        const shouldAddOutputCrs = addSrsName && defaultCrs
+
         return {
-          all: featureType.outputFormats.reduce(
-            (prev, curr) => ({
+          all: featureType.outputFormats.reduce((prev, curr) => {
+            const isJsonFormat = curr.toLowerCase().includes('json')
+            return {
               ...prev,
               [curr]: endpoint.getFeatureUrl(featureType.name, {
                 outputFormat: curr,
+                ...(shouldAddOutputCrs &&
+                  !isJsonFormat && {
+                    outputCrs: defaultCrs,
+                  }),
               }),
-            }),
-            {}
-          ),
+            }
+          }, {}),
           geojson: endpoint.supportsJson(featureType.name)
             ? endpoint.getFeatureUrl(featureType.name, {
                 asJson: true,

@@ -57,10 +57,14 @@ jest.mock('@camptocamp/ogc-client', () => ({
       }
       return Promise.resolve(this)
     }
-    getFeatureUrl(featureType, { outputFormat, asJson }) {
-      return `${this.url}?GetFeature&FeatureType=${featureType}&format=${
+    getFeatureUrl(featureType, { outputFormat, asJson, outputCrs }) {
+      let url = `${this.url}?GetFeature&FeatureType=${featureType}&format=${
         asJson ? 'geojson' : outputFormat || 'unspecified'
       }`
+      if (outputCrs) {
+        url += `&SRSNAME=${outputCrs}`
+      }
+      return url
     }
     supportsJson(name) {
       return name.indexOf('nojson') === -1
@@ -70,6 +74,7 @@ jest.mock('@camptocamp/ogc-client', () => ({
         ? null
         : {
             name,
+            defaultCrs: 'EPSG:2154',
             otherCrs: ['EPSG:4326'],
             outputFormats:
               name.indexOf('nojson') > -1
@@ -106,6 +111,8 @@ jest.mock('@camptocamp/ogc-client', () => ({
     }
 
     getVersion(): '1.0.0' | '1.1.0' | '2.0.0' {
+      if (this.url.indexOf('wfs10') > -1) return '1.0.0'
+      if (this.url.indexOf('wfs11') > -1) return '1.1.0'
       return '2.0.0'
     }
   },
@@ -296,7 +303,7 @@ describe('DataService', () => {
               mimeType: 'text/csv',
               name: 'surval_parametre_ligne',
               url: new URL(
-                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=csv'
+                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=csv&SRSNAME=EPSG:2154'
               ),
               type: 'download',
               accessServiceProtocol: 'wfs',
@@ -306,7 +313,7 @@ describe('DataService', () => {
               mimeType: 'application/vnd.ms-excel',
               name: 'surval_parametre_ligne',
               url: new URL(
-                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=xls'
+                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=xls&SRSNAME=EPSG:2154'
               ),
               type: 'download',
               accessServiceProtocol: 'wfs',
@@ -326,7 +333,7 @@ describe('DataService', () => {
               mimeType: 'application/gml+xml',
               name: 'surval_parametre_ligne',
               url: new URL(
-                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=gml'
+                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=gml&SRSNAME=EPSG:2154'
               ),
               type: 'download',
               accessServiceProtocol: 'wfs',
@@ -338,7 +345,7 @@ describe('DataService', () => {
               name: 'surval_parametre_ligne',
               type: 'download',
               url: new URL(
-                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=json'
+                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=geojson&SRSNAME=EPSG:4326'
               ),
             },
           ])
@@ -359,7 +366,7 @@ describe('DataService', () => {
               mimeType: 'text/csv',
               name: 'nojson_type',
               url: new URL(
-                'http://local/wfs?GetFeature&FeatureType=nojson_type&format=csv'
+                'http://local/wfs?GetFeature&FeatureType=nojson_type&format=csv&SRSNAME=EPSG:2154'
               ),
               type: 'download',
               accessServiceProtocol: 'wfs',
@@ -369,7 +376,7 @@ describe('DataService', () => {
               mimeType: 'application/vnd.ms-excel',
               name: 'nojson_type',
               url: new URL(
-                'http://local/wfs?GetFeature&FeatureType=nojson_type&format=xls'
+                'http://local/wfs?GetFeature&FeatureType=nojson_type&format=xls&SRSNAME=EPSG:2154'
               ),
               type: 'download',
               accessServiceProtocol: 'wfs',
@@ -379,7 +386,7 @@ describe('DataService', () => {
               mimeType: 'application/gml+xml',
               name: 'nojson_type',
               url: new URL(
-                'http://local/wfs?GetFeature&FeatureType=nojson_type&format=gml'
+                'http://local/wfs?GetFeature&FeatureType=nojson_type&format=gml&SRSNAME=EPSG:2154'
               ),
               type: 'download',
               accessServiceProtocol: 'wfs',
@@ -402,7 +409,7 @@ describe('DataService', () => {
               mimeType: 'text/csv',
               name: '',
               url: new URL(
-                'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=csv'
+                'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=csv&SRSNAME=EPSG:2154'
               ),
               type: 'download',
               accessServiceProtocol: 'wfs',
@@ -412,7 +419,7 @@ describe('DataService', () => {
               mimeType: 'application/vnd.ms-excel',
               name: '',
               url: new URL(
-                'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=xls'
+                'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=xls&SRSNAME=EPSG:2154'
               ),
               type: 'download',
               accessServiceProtocol: 'wfs',
@@ -433,7 +440,7 @@ describe('DataService', () => {
               mimeType: 'application/gml+xml',
               name: '',
               url: new URL(
-                'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=gml'
+                'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=gml&SRSNAME=EPSG:2154'
               ),
               type: 'download',
               accessServiceProtocol: 'wfs',
@@ -445,7 +452,7 @@ describe('DataService', () => {
               name: '',
               type: 'download',
               url: new URL(
-                'http://local/wfs?GetFeature&FeatureType=surval_parametre_ligne&format=json'
+                'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=geojson&SRSNAME=EPSG:4326'
               ),
             },
           ])
@@ -467,6 +474,55 @@ describe('DataService', () => {
           urls.forEach((url) => {
             expect(url.name).toBe('collection_name_forced')
           })
+        })
+      })
+      describe('WFS 1.0.0', () => {
+        it('should not add SRSNAME parameter for WFS 1.0.0', async () => {
+          const urls = await lastValueFrom(
+            service.getDownloadLinksFromWfs({
+              ...link,
+              url: new URL('http://wfs10/wfs'),
+            })
+          )
+          const csvLink = urls.find((u) => u.url.href.includes('format=csv'))
+          expect(csvLink.url.href).not.toContain('SRSNAME')
+          expect(csvLink.url.href).toContain('format=csv')
+        })
+      })
+      describe('WFS 1.1.0 with default CRS', () => {
+        it('should add SRSNAME parameter for WFS 1.1.0', async () => {
+          const urls = await lastValueFrom(
+            service.getDownloadLinksFromWfs({
+              ...link,
+              url: new URL('http://wfs11/wfs'),
+            })
+          )
+          const csvLink = urls.find((u) => u.url.href.includes('format=csv'))
+          expect(csvLink.url.href).toContain('SRSNAME=EPSG:2154')
+        })
+      })
+      describe('WFS 2.0+ with default CRS', () => {
+        it('should add SRSNAME parameter with default CRS for WFS 2.0+', async () => {
+          const urls = await lastValueFrom(
+            service.getDownloadLinksFromWfs({
+              ...link,
+              url: new URL('http://local/wfs'),
+            })
+          )
+          const csvLink = urls.find((u) => u.url.href.includes('format=csv'))
+          expect(csvLink.url.href).toContain('SRSNAME=EPSG:2154')
+        })
+        it('should add SRSNAME for geojson format with EPSG:4326', async () => {
+          const urls = await lastValueFrom(
+            service.getDownloadLinksFromWfs({
+              ...link,
+              url: new URL('http://local/wfs'),
+            })
+          )
+          const geojsonLink = urls.find((u) =>
+            u.url.href.includes('format=geojson')
+          )
+          expect(geojsonLink.url.href).toContain('SRSNAME=EPSG:4326')
         })
       })
     })
@@ -537,7 +593,7 @@ describe('DataService', () => {
             service.getDownloadUrlsFromWfs('http://local/wfs', 'abcd')
           ).then((urls) => urls.geojson)
           expect(url).toEqual(
-            'http://local/wfs?GetFeature&FeatureType=abcd&format=geojson'
+            'http://local/wfs?GetFeature&FeatureType=abcd&format=geojson&SRSNAME=EPSG:4326'
           )
         })
       })
@@ -558,7 +614,7 @@ describe('DataService', () => {
             service.getDownloadUrlsFromWfs('http://unique-feature-type/wfs', '')
           ).then((urls) => urls.geojson)
           expect(url).toEqual(
-            'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=geojson'
+            'http://unique-feature-type/wfs?GetFeature&FeatureType=myOnlyOne&format=geojson&SRSNAME=EPSG:4326'
           )
         })
       })
@@ -914,7 +970,7 @@ describe('DataService', () => {
           service.getDownloadUrlsFromWfs('http://local/wfs', 'abcd')
         ).then((urls) => urls.geojson)
         expect(url).toEqual(
-          'http://proxy.local/?url=http%3A%2F%2Flocal%2Fwfs?GetFeature&FeatureType=abcd&format=geojson'
+          'http://proxy.local/?url=http%3A%2F%2Flocal%2Fwfs?GetFeature&FeatureType=abcd&format=geojson&SRSNAME=EPSG:4326'
         )
       })
     })
