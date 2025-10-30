@@ -18,7 +18,7 @@
       />
     </div>
 
-    <div class="mt-auto mb-8 mx-8" *ngIf="isTemporalFilterModified">
+    <div class="mt-auto mb-8 mx-8" *ngIf="areFiltersModified">
       <button
         id="reset-filters-button"
         type="button"
@@ -34,7 +34,10 @@
     </div>
   </div>
 
-  <div class="w-[655px] flex-shrink-0 flex items-center justify-center">
-    <span>Map...</span>
+  <div class="w-[655px] flex-shrink-0">
+    <gn-ui-map-container
+      class="h-full w-full"
+      [context]="mapContext"
+    ></gn-ui-map-container>
   </div>
 </div>

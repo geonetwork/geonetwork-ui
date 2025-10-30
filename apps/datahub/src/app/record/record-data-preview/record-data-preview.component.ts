@@ -206,6 +206,9 @@ export class RecordDataPreviewComponent implements OnInit {
     })
   )
 
+  // TODO: retrieve spatial extent from ogc-client via the stac items link
+  spatialExtent: [number, number, number, number] = [-180, -90, 180, 90]
+
   constructor(
     public metadataViewFacade: MdViewFacade,
     private dataService: DataService,
