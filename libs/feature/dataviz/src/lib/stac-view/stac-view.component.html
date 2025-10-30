@@ -6,11 +6,13 @@
       <p class="mb-4" translate>stac.filter.period</p>
       <p translate>stac.filter.from</p>
       <gn-ui-date-picker
+        id="start-date-picker"
         [date]="currentTemporalExtent?.start"
         (dateChange)="onStartDateChange($event)"
       />
       <p class="mt-4" translate>stac.filter.to</p>
       <gn-ui-date-picker
+        id="end-date-picker"
         [date]="currentTemporalExtent?.end"
         (dateChange)="onEndDateChange($event)"
       />
@@ -18,6 +20,7 @@
 
     <div class="mt-auto mb-8 mx-8" *ngIf="isTemporalFilterModified">
       <button
+        id="reset-filters-button"
         type="button"
         class="flex items-center"
         (click)="onResetFilters()"

@@ -265,6 +265,63 @@ describe('Preview section', () => {
     cy.get('gn-ui-data-view-share').should('be.visible')
   })
 
+  it('STAC tab with temporal extent metadata', () => {
+    // Visit a dataset with STAC links and temporal extents
+    cy.visit('/dataset/sentinel2-l2a-sen2cor')
+
+    cy.get('datahub-record-metadata')
+      .find('[id="preview"]')
+      .first()
+      .as('previewSection')
+    cy.get('@previewSection')
+      .find('.mat-mdc-tab-labels')
+      .children('div')
+      .eq(4)
+      .as('stacTab')
+
+    // Click on STAC tab
+    cy.get('@stacTab').click()
+
+    // it should display the STAC view component
+    cy.get('@previewSection').find('gn-ui-stac-view').should('be.visible')
+
+    // it should have date pickers for start and end dates
+    cy.get('@previewSection')
+      .find('gn-ui-stac-view')
+      .find('gn-ui-date-picker')
+      .should('have.length', 2)
+
+    // it should not show reset button initially (no modifications yet)
+    cy.get('@previewSection')
+      .find('gn-ui-stac-view')
+      .should('not.contain', '[id="reset-filters-button"]')
+
+    // Modify the start date
+    cy.get('@previewSection')
+      .find('gn-ui-stac-view')
+      .find('#start-date-picker')
+      .find('input')
+      .clear()
+      .type('2020-01-01{enter}')
+
+    // it should show the reset button after modification
+    cy.get('@previewSection')
+      .find('gn-ui-stac-view')
+      .find('#reset-filters-button')
+      .should('be.visible')
+
+    // Click reset button
+    cy.get('@previewSection')
+      .find('gn-ui-stac-view')
+      .find('#reset-filters-button')
+      .click()
+
+    // it should hide the reset button after reset
+    cy.get('@previewSection')
+      .find('gn-ui-stac-view')
+      .should('not.contain', '#reset-filters-button')
+  })
+
   // skip for now as modifying dump on my side breaks all tests on GN 4.2.2
   it.skip('restricted access', () => {
     cy.visit('dataset/e27e7006-fdf9-4004-b6c5-af2a5a5c025c')
