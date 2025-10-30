@@ -3,11 +3,16 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
-  OnDestroy,
+  OnInit,
 } from '@angular/core'
-import { DatasetServiceDistribution } from '@geonetwork-ui/common/domain/model/record'
-import { TranslatePipe } from '@ngx-translate/core'
-import { Subscription } from 'rxjs'
+import {
+  DatasetServiceDistribution,
+  DatasetTemporalExtent,
+} from '@geonetwork-ui/common/domain/model/record'
+import { DatePickerComponent } from '@geonetwork-ui/ui/inputs'
+import { NgIconComponent, provideIcons } from '@ng-icons/core'
+import { matDeleteOutline } from '@ng-icons/material-icons/outline'
+import { TranslateDirective } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-stac-view',
@@ -15,13 +20,43 @@ import { Subscription } from 'rxjs'
   styleUrls: ['./stac-view.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, TranslatePipe],
+  imports: [
+    CommonModule,
+    DatePickerComponent,
+    NgIconComponent,
+    TranslateDirective,
+  ],
+  viewProviders: [provideIcons({ matDeleteOutline })],
 })
-export class StacViewComponent implements OnDestroy {
+export class StacViewComponent implements OnInit {
   @Input() link: DatasetServiceDistribution
-  private subscription = new Subscription()
+  @Input() initialTemporalExtent: DatasetTemporalExtent | null
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe()
+  currentTemporalExtent: DatasetTemporalExtent | null = null
+  isTemporalFilterModified = false
+
+  onStartDateChange(date: Date) {
+    this.currentTemporalExtent = {
+      ...this.currentTemporalExtent,
+      start: date,
+    }
+    this.isTemporalFilterModified = true
+  }
+
+  onEndDateChange(date: Date) {
+    this.currentTemporalExtent = {
+      ...this.currentTemporalExtent,
+      end: date,
+    }
+    this.isTemporalFilterModified = true
+  }
+
+  onResetFilters() {
+    this.currentTemporalExtent = this.initialTemporalExtent
+    this.isTemporalFilterModified = false
+  }
+
+  ngOnInit() {
+    this.currentTemporalExtent = this.initialTemporalExtent
   }
 }

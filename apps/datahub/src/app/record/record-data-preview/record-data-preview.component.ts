@@ -11,7 +11,11 @@ import {
 } from '@angular/core'
 import { MatTabsModule } from '@angular/material/tabs'
 import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
-import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record'
+import {
+  DatasetOnlineResource,
+  DatasetRecord,
+  DatasetTemporalExtent,
+} from '@geonetwork-ui/common/domain/model/record'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import { StacViewComponent } from '@geonetwork-ui/feature/dataviz'
@@ -183,6 +187,22 @@ export class RecordDataPreviewComponent implements OnInit {
           (metadata?.extras?.ownerInfo as string).split('|')[0]
       const isPublished = metadata?.extras?.isPublishedToAll
       return isAdmin && isPublished
+    })
+  )
+
+  firstTemporalExtent$ = this.metadataViewFacade.metadata$.pipe(
+    map((metadata) => {
+      const temporalExtents =
+        metadata?.kind === 'dataset'
+          ? (metadata as DatasetRecord).temporalExtents
+          : []
+
+      return temporalExtents.length > 0
+        ? temporalExtents[0]
+        : ({
+            start: null,
+            end: null,
+          } as DatasetTemporalExtent)
     })
   )
 
