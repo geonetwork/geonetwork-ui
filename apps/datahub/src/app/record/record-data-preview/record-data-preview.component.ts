@@ -190,7 +190,7 @@ export class RecordDataPreviewComponent implements OnInit {
     })
   )
 
-  firstTemporalExtent = this.metadataViewFacade.metadata$.pipe(
+  firstTemporalExtent$ = this.metadataViewFacade.metadata$.pipe(
     map((metadata) => {
       const temporalExtents =
         metadata?.kind === 'dataset'
