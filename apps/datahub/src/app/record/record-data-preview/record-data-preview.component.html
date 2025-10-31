@@ -1,11 +1,11 @@
 <div
-  class="h-[750px]"
   *ngIf="
     (displayMap$ | async) || (displayData$ | async) || (displayStac$ | async)
   "
   id="preview"
 >
-  <div class="bg-primary-opacity-10 overflow-visible h-[480px]">
+  <div class="absolute bg-primary-opacity-10 w-full h-[480px]"></div>
+  <div class="overflow-visible">
     <div class="container-lg pb-4 px-4 lg:mx-auto">
       <div>
         <h2 class="gn-ui-section-title transform translate-y-11 pt-0" translate>
@@ -99,7 +99,6 @@
             </ng-template>
             <div
               class="block"
-              style="height: 639px"
               *ngIf="
                 (displayStac$ | async) && (selectedView$ | async) === 'stac'
               "

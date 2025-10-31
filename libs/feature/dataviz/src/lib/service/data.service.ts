@@ -7,6 +7,9 @@ import {
   WfsEndpoint,
   WfsVersion,
   TmsEndpoint,
+  StacEndpoint,
+  StacItem,
+  GetCollectionItemsOptions,
 } from '@camptocamp/ogc-client'
 import {
   BaseReader,
@@ -29,6 +32,8 @@ import {
   DatasetServiceDistribution,
 } from '@geonetwork-ui/common/domain/model/record'
 import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import { Data } from 'ol/DataTile'
+import { ITEMS_FIXTURE } from './items-fixture'
 
 marker('wfs.unreachable.cors')
 marker('wfs.unreachable.http')
@@ -242,6 +247,21 @@ export class DataService {
       .catch(() => {
         throw new Error(`ogc.unreachable.unknown`)
       })
+  }
+
+  async getItemsFromStacApi(
+    link: DatasetServiceDistribution,
+    options: GetCollectionItemsOptions
+  ): Promise<StacItem[]> {
+    // const endpoint = new StacEndpoint(link.url.href)
+    // return await endpoint.getCollectionItems('sentinel2-l2a-sen2cor', {
+    //   bbox: options.bbox,
+    //   datetime: options.datetime,
+    //   limit: options.limit,
+    // })
+    return new Promise((resolve) => {
+      resolve(ITEMS_FIXTURE as any[])
+    })
   }
 
   async getGeodataLinksFromTms(
