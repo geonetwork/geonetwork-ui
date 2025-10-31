@@ -9,10 +9,14 @@ import {
   DatasetServiceDistribution,
   DatasetTemporalExtent,
 } from '@geonetwork-ui/common/domain/model/record'
+import { StacItemsResultGridComponent } from '@geonetwork-ui/ui/dataviz'
 import { DatePickerComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matDeleteOutline } from '@ng-icons/material-icons/outline'
 import { TranslateDirective } from '@ngx-translate/core'
+import { DataService } from '../service/data.service'
+import { from, Observable } from 'rxjs'
+import { GetCollectionItemsOptions, StacItem } from '@camptocamp/ogc-client'
 
 @Component({
   selector: 'gn-ui-stac-view',
@@ -25,6 +29,7 @@ import { TranslateDirective } from '@ngx-translate/core'
     DatePickerComponent,
     NgIconComponent,
     TranslateDirective,
+    StacItemsResultGridComponent,
   ],
   viewProviders: [provideIcons({ matDeleteOutline })],
 })
@@ -34,6 +39,10 @@ export class StacViewComponent implements OnInit {
 
   currentTemporalExtent: DatasetTemporalExtent | null = null
   isTemporalFilterModified = false
+
+  items$: Observable<StacItem[]>
+
+  constructor(private dataService: DataService) {}
 
   onStartDateChange(date: Date) {
     this.currentTemporalExtent = {
@@ -58,5 +67,17 @@ export class StacViewComponent implements OnInit {
 
   ngOnInit() {
     this.currentTemporalExtent = this.initialTemporalExtent
+    const options: GetCollectionItemsOptions = {}
+    if (this.currentTemporalExtent) {
+      options.datetime = {
+        ...(this.currentTemporalExtent.start && {
+          start: this.currentTemporalExtent.start,
+        }),
+        ...(this.currentTemporalExtent.end && {
+          end: this.currentTemporalExtent.end,
+        }),
+      }
+    }
+    this.items$ = from(this.dataService.getItemsFromStacApi(this.link, options))
   }
 }
