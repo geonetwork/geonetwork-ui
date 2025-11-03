@@ -461,6 +461,8 @@
   "record.metadata.contact": "Contatto",
   "record.metadata.creation": "Data di creazione",
   "record.metadata.details": "A proposito del dati",
+  "record.metadata.doi.copy": "",
+  "record.metadata.doi.open": "",
   "record.metadata.download": "Download",
   "record.metadata.feature.catalog": "Catalogo dei oggetti",
   "record.metadata.formats": "Formati",

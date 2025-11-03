@@ -451,6 +451,28 @@ export class Gn4FieldMapper {
         }),
       }
     },
+    resourceIdentifier: (output, source) => {
+      const identifiers = getAsArray(selectField(source, 'resourceIdentifier'))
+
+      const doiIdentifier = identifiers.find((id) =>
+        selectField<string>(id, 'codeSpace')?.toLowerCase().includes('doi')
+      )
+
+      if (!doiIdentifier) return output
+
+      const code = selectField<string>(doiIdentifier, 'code')
+      const link = selectField<string>(doiIdentifier, 'link')
+
+      if (!code) return output
+
+      return {
+        ...output,
+        resourceDoi: {
+          code,
+          ...(link && { url: getAsUrl(link) }),
+        },
+      }
+    },
   }
 
   private genericField = (output) => output

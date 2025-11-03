@@ -89,6 +89,17 @@ export class MdViewFacade {
     shareReplay(1)
   )
 
+  resourceDoi$ = this.metadata$.pipe(
+    map((record) => {
+      if (!record?.resourceDoi) return null
+      return {
+        code: record.resourceDoi.code,
+        url: record.resourceDoi.url?.href || null,
+      }
+    }),
+    shareReplay(1)
+  )
+
   apiLinks$ = this.allLinks$.pipe(
     map((links) =>
       links.filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.API))

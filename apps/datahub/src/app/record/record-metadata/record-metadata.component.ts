@@ -46,6 +46,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { RecordLinkedRecordsComponent } from '../record-linked-records/record-linked-records.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
+import { MetadataDoiComponent } from '@geonetwork-ui/ui/elements'
 
 @Component({
   selector: 'datahub-record-metadata',
@@ -74,6 +75,7 @@ import { UserModel } from '@geonetwork-ui/common/domain/model/user'
     RecordLinkedRecordsComponent,
     TranslateDirective,
     TranslatePipe,
+    MetadataDoiComponent,
   ],
   viewProviders: [
     provideIcons({ matChatOutline, iconoirAppWindow }),
@@ -222,7 +224,10 @@ export class RecordMetadataComponent {
   )
 
   sourceLabel$ = this.metadataViewFacade.metadata$.pipe(
-    map((record) => record?.extras?.catalogUuid as string),
+    map((record) => {
+      console.log(record)
+      return record?.extras?.catalogUuid as string
+    }),
     filter((uuid) => !!uuid),
     mergeMap((uuid) => this.sourceService.getSourceLabel(uuid))
   )

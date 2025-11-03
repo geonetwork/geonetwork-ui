@@ -93,6 +93,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     recordCreated: () => undefined, // not supported in ISO19139
     recordPublished: () => undefined, // not supported in ISO19139
     resourceIdentifier: readResourceIdentifier,
+    resourceDoi: () => undefined,
     resourceUpdated: readResourceUpdated,
     resourceCreated: readResourceCreated,
     resourcePublished: readResourcePublished,
@@ -134,6 +135,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     recordCreated: () => undefined, // not supported in ISO19139
     recordPublished: () => undefined, // not supported in ISO19139
     resourceIdentifier: writeResourceIdentifier,
+    resourceDoi: () => undefined,
     resourceUpdated: writeResourceUpdated,
     resourceCreated: writeResourceCreated,
     resourcePublished: writeResourcePublished,

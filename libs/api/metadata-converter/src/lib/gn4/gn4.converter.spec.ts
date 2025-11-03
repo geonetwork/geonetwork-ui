@@ -399,6 +399,51 @@ describe('Gn4Converter', () => {
           })
         })
       })
+      describe('resource identifiers', () => {
+        it('extracts DOI from resourceIdentifier with doi codeSpace', async () => {
+          const record = await service.readRecord({
+            ...hit,
+            _source: {
+              ...hit._source,
+              resourceIdentifier: [
+                {
+                  code: '10.1234/abcd',
+                  codeSpace: 'doi.org',
+                  link: 'https://doi.org/10.1234/abcd',
+                },
+                {
+                  code: '8764cd51-ec30-4290-97f7-92c503de3730',
+                  codeSpace: 'urn:uuid',
+                  link: '',
+                },
+              ],
+            },
+          })
+
+          expect(record.resourceDoi).toEqual({
+            code: '10.1234/abcd',
+            url: new URL('https://doi.org/10.1234/abcd'),
+          })
+        })
+
+        it('returns record without resourceDoi when no DOI found', async () => {
+          const record = await service.readRecord({
+            ...hit,
+            _source: {
+              ...hit._source,
+              resourceIdentifier: [
+                {
+                  code: '8764cd51-ec30-4290-97f7-92c503de3730',
+                  codeSpace: 'urn:uuid',
+                  link: '',
+                },
+              ],
+            },
+          })
+
+          expect(record.resourceDoi).toBeUndefined()
+        })
+      })
 
       describe('spatial and temporal extents', () => {
         describe('only one bounding box, no bounding geometry', () => {

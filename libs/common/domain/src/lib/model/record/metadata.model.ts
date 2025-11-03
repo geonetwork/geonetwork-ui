@@ -136,6 +136,7 @@ export interface BaseRecord {
 
   // information related to the resource (dataset, service)
   resourceIdentifier?: string
+  resourceDoi?: { code: string; url?: URL }
   contactsForResource: Array<Individual>
   resourceCreated?: Date
   resourcePublished?: Date

@@ -300,6 +300,90 @@ describe('Gn4FieldMapper', () => {
           },
         })
       })
+      it('resourceIdentifier - should extract DOI when codeSpace contains doi', () => {
+        const fieldName = 'resourceIdentifier'
+        const mappingFn = service.getMappingFn(fieldName)
+        const output = {}
+        const source = {
+          resourceIdentifier: [
+            {
+              code: '10.1234/example.doi',
+              codeSpace: 'doi.org',
+              link: 'https://doi.org/10.1234/example.doi',
+            },
+          ],
+        }
+        const result = mappingFn(output, source)
+        expect(result).toEqual({
+          resourceDoi: {
+            code: '10.1234/example.doi',
+            url: new URL('https://doi.org/10.1234/example.doi'),
+          },
+        })
+      })
+      it('resourceIdentifier - should extract DOI without link', () => {
+        const fieldName = 'resourceIdentifier'
+        const mappingFn = service.getMappingFn(fieldName)
+        const output = {}
+        const source = {
+          resourceIdentifier: [
+            {
+              code: '10.1234/example.doi',
+              codeSpace: 'DOI',
+            },
+          ],
+        }
+        const result = mappingFn(output, source)
+        expect(result).toEqual({
+          resourceDoi: {
+            code: '10.1234/example.doi',
+          },
+        })
+      })
+      it('resourceIdentifier - should return output unchanged when no DOI found', () => {
+        const fieldName = 'resourceIdentifier'
+        const mappingFn = service.getMappingFn(fieldName)
+        const output = {}
+        const source = {
+          resourceIdentifier: [
+            {
+              code: 'some-other-identifier',
+              codeSpace: 'ISBN',
+            },
+          ],
+        }
+        const result = mappingFn(output, source)
+        expect(result).toEqual({})
+      })
+      it('resourceIdentifier - should return output unchanged when resourceIdentifier is empty', () => {
+        const fieldName = 'resourceIdentifier'
+        const mappingFn = service.getMappingFn(fieldName)
+        const output = {}
+        const source = {
+          resourceIdentifier: [],
+        }
+        const result = mappingFn(output, source)
+        expect(result).toEqual({})
+      })
+      it('resourceIdentifier - should match DOI case-insensitively', () => {
+        const fieldName = 'resourceIdentifier'
+        const mappingFn = service.getMappingFn(fieldName)
+        const output = {}
+        const source = {
+          resourceIdentifier: [
+            {
+              code: '10.1234/example',
+              codeSpace: 'DoI.OrG',
+            },
+          ],
+        }
+        const result = mappingFn(output, source)
+        expect(result).toEqual({
+          resourceDoi: {
+            code: '10.1234/example',
+          },
+        })
+      })
     })
   })
 })
