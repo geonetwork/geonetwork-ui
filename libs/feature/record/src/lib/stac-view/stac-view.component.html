@@ -22,8 +22,12 @@
       </div>
     </div>
 
-    <div class="w-[655px] flex-shrink-0 flex items-center justify-center">
-      <span>Map...</span>
+    <div class="w-[655px] flex-shrink-0">
+      <gn-ui-filter-map
+        [mapContext]="mapContext"
+        [filterLabel]="'Activer le filtre dynamique sur l’emprise spatiale'"
+        class="w-full h-full"
+      ></gn-ui-filter-map>
     </div>
   </div>
   <gn-ui-results-grid [items]="items$ | async"></gn-ui-results-grid>

@@ -6,6 +6,8 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { ResultsGridComponent } from '@geonetwork-ui/ui/elements'
 import { DateRangeInputsComponent } from '@geonetwork-ui/ui/inputs'
+import { MapFilterComponent } from '@geonetwork-ui/ui/map'
+import { MapContext } from '@geospatial-sdk/core/dist/model'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matDeleteOutline } from '@ng-icons/material-icons/outline'
 import { TranslateDirective } from '@ngx-translate/core'
@@ -37,6 +39,7 @@ const STAC_ITEMS_PER_PAGE = 12
     TranslateDirective,
     ResultsGridComponent,
     DateRangeInputsComponent,
+    MapFilterComponent,
   ],
   viewProviders: [provideIcons({ matDeleteOutline })],
 })
@@ -47,6 +50,19 @@ export class StacViewComponent implements OnInit {
   currentTemporalExtent$ = new BehaviorSubject<DatasetTemporalExtent | null>(
     null
   )
+  mapContext: MapContext = {
+    layers: [
+      {
+        type: 'xyz',
+        url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        attributions: '<a href="https://www.openstreetmap.org/copyright">',
+      },
+    ],
+    view: {
+      center: [0, 0],
+      zoom: 2,
+    },
+  }
 
   previousPageUrl: string
   nextPageUrl: string
