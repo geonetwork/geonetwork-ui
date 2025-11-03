@@ -225,7 +225,6 @@ export class RecordMetadataComponent {
 
   sourceLabel$ = this.metadataViewFacade.metadata$.pipe(
     map((record) => {
-      console.log(record)
       return record?.extras?.catalogUuid as string
     }),
     filter((uuid) => !!uuid),

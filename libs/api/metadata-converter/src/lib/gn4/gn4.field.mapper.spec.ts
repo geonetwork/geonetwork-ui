@@ -329,7 +329,7 @@ describe('Gn4FieldMapper', () => {
           resourceIdentifier: [
             {
               code: '10.1234/example.doi',
-              codeSpace: 'DOI',
+              codeSpace: 'doi.org',
             },
           ],
         }

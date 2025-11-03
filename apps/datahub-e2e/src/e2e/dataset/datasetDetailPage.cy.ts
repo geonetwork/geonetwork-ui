@@ -256,9 +256,12 @@ describe('Sections', () => {
     // it should go to dataset search page when clicking on org name and filter by org
     cy.get('[data-cy="organization-name-link"]').eq(0).click()
     cy.url().should('include', '/search?organization=')
-  })
 
-  it('DOI section', () => {
+    cy.go('back')
+
+    // it should not display DOI when not available
+    cy.get('gn-ui-metadata-doi').should('not.exist')
+
     // it should display DOI when available
     cy.visit('/dataset/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
     cy.get('gn-ui-metadata-doi').should('be.visible')
@@ -281,10 +284,6 @@ describe('Sections', () => {
         expect(text).to.include('10.')
       })
     })
-
-    // it should not display DOI when not available
-    cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
-    cy.get('gn-ui-metadata-doi').should('not.exist')
   })
 
   it('Metadata quality widget', () => {

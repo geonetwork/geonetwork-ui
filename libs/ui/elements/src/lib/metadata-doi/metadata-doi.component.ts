@@ -4,11 +4,18 @@ import { NgIcon, provideIcons } from '@ng-icons/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { matContentCopy, matOpenInNew } from '@ng-icons/material-icons/baseline'
 import { TranslatePipe } from '@ngx-translate/core'
+import { CopyTextButtonComponent } from '@geonetwork-ui/ui/inputs'
 
 @Component({
   selector: 'gn-ui-metadata-doi',
   standalone: true,
-  imports: [CommonModule, MatTooltipModule, NgIcon, TranslatePipe],
+  imports: [
+    CommonModule,
+    MatTooltipModule,
+    NgIcon,
+    TranslatePipe,
+    CopyTextButtonComponent,
+  ],
   templateUrl: './metadata-doi.component.html',
   styleUrl: './metadata-doi.component.css',
   viewProviders: [

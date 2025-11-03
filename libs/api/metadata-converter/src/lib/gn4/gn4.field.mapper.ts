@@ -455,7 +455,7 @@ export class Gn4FieldMapper {
       const identifiers = getAsArray(selectField(source, 'resourceIdentifier'))
 
       const doiIdentifier = identifiers.find((id) =>
-        selectField<string>(id, 'codeSpace')?.toLowerCase().includes('doi')
+        selectField<string>(id, 'codeSpace')?.toLowerCase().includes('doi.org')
       )
 
       if (!doiIdentifier) return output
