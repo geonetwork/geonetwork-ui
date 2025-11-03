@@ -7,6 +7,9 @@ import {
   WfsEndpoint,
   WfsVersion,
   TmsEndpoint,
+  StacEndpoint,
+  StacItem,
+  GetCollectionItemsOptions,
 } from '@camptocamp/ogc-client'
 import {
   BaseReader,
@@ -239,6 +242,17 @@ export class DataService {
           ? endpoint.getCollectionItems(collections[0])
           : null
       })
+      .catch(() => {
+        throw new Error(`ogc.unreachable.unknown`)
+      })
+  }
+
+  async getItemsFromStacApi(
+    url: string,
+    options: GetCollectionItemsOptions
+  ): Promise<StacItem[]> {
+    return await StacEndpoint.getItemsFromUrl(url, options)
+      .then((response) => response.features)
       .catch(() => {
         throw new Error(`ogc.unreachable.unknown`)
       })

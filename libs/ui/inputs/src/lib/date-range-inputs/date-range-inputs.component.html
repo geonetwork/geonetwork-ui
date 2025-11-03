@@ -1,0 +1,15 @@
+<div class="m-8">
+  <p class="mb-4" translate>daterange.filter.period</p>
+  <p translate>daterange.filter.from</p>
+  <gn-ui-date-picker
+    id="start-date-picker"
+    [date]="temporalExtent?.start"
+    (dateChange)="onStartDateChange($event)"
+  ></gn-ui-date-picker>
+  <p class="mt-4" translate>daterange.filter.to</p>
+  <gn-ui-date-picker
+    id="end-date-picker"
+    [date]="temporalExtent?.end"
+    (dateChange)="onEndDateChange($event)"
+  ></gn-ui-date-picker>
+</div>

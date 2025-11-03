@@ -1,23 +1,12 @@
 <div class="mt-6 bg-white border border-gray-300 overflow-hidden rounded-lg">
   <div class="w-full h-[366px] flex flex-row border-b border-gray-300">
     <div class="flex-1 flex flex-col">
-      <div class="m-8">
-        <p class="mb-4" translate>stac.filter.period</p>
-        <p translate>stac.filter.from</p>
-        <gn-ui-date-picker
-          id="start-date-picker"
-          [date]="currentTemporalExtent?.start"
-          (dateChange)="onStartDateChange($event)"
-        />
-        <p class="mt-4" translate>stac.filter.to</p>
-        <gn-ui-date-picker
-          id="end-date-picker"
-          [date]="currentTemporalExtent?.end"
-          (dateChange)="onEndDateChange($event)"
-        />
-      </div>
+      <gn-ui-date-range-inputs
+        [temporalExtent]="currentTemporalExtent$ | async"
+        (temporalExtentChange)="onTemporalExtentChange($event)"
+      ></gn-ui-date-range-inputs>
 
-      <div class="mt-auto mb-8 mx-8" *ngIf="isTemporalFilterModified">
+      <div class="mt-auto mb-8 mx-8" *ngIf="isFilterModified">
         <button
           id="reset-filters-button"
           type="button"

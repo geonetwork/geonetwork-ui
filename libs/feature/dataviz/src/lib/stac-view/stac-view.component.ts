@@ -9,10 +9,16 @@ import {
   DatasetServiceDistribution,
   DatasetTemporalExtent,
 } from '@geonetwork-ui/common/domain/model/record'
-import { DatePickerComponent } from '@geonetwork-ui/ui/inputs'
+import { StacItemsResultGridComponent } from '@geonetwork-ui/ui/dataviz'
+import { DateRangeInputsComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matDeleteOutline } from '@ng-icons/material-icons/outline'
 import { TranslateDirective } from '@ngx-translate/core'
+import { DataService } from '../service/data.service'
+import { BehaviorSubject, from, Observable, switchMap } from 'rxjs'
+import { GetCollectionItemsOptions, StacItem } from '@camptocamp/ogc-client'
+
+const STAC_ITEMS_PER_PAGE = 12
 
 @Component({
   selector: 'gn-ui-stac-view',
@@ -22,9 +28,10 @@ import { TranslateDirective } from '@ngx-translate/core'
   standalone: true,
   imports: [
     CommonModule,
-    DatePickerComponent,
     NgIconComponent,
     TranslateDirective,
+    StacItemsResultGridComponent,
+    DateRangeInputsComponent,
   ],
   viewProviders: [provideIcons({ matDeleteOutline })],
 })
@@ -32,31 +39,41 @@ export class StacViewComponent implements OnInit {
   @Input() link: DatasetServiceDistribution
   @Input() initialTemporalExtent: DatasetTemporalExtent | null
 
-  currentTemporalExtent: DatasetTemporalExtent | null = null
-  isTemporalFilterModified = false
+  isFilterModified = false
 
-  onStartDateChange(date: Date) {
-    this.currentTemporalExtent = {
-      ...this.currentTemporalExtent,
-      start: date,
-    }
-    this.isTemporalFilterModified = true
+  items$: Observable<StacItem[]>
+  currentTemporalExtent$: BehaviorSubject<DatasetTemporalExtent | null> =
+    new BehaviorSubject<DatasetTemporalExtent | null>(null)
+
+  constructor(private dataService: DataService) {}
+
+  ngOnInit() {
+    this.currentTemporalExtent$.next(this.initialTemporalExtent)
+    this.items$ = this.currentTemporalExtent$.pipe(
+      switchMap((temporalExtent) => {
+        const options: GetCollectionItemsOptions = {
+          limit: STAC_ITEMS_PER_PAGE,
+        }
+        if (temporalExtent) {
+          options.datetime = {
+            ...(temporalExtent.start && { start: temporalExtent.start }),
+            ...(temporalExtent.end && { end: temporalExtent.end }),
+          }
+        }
+        return from(
+          this.dataService.getItemsFromStacApi(this.link.url.href, options)
+        )
+      })
+    )
   }
 
-  onEndDateChange(date: Date) {
-    this.currentTemporalExtent = {
-      ...this.currentTemporalExtent,
-      end: date,
-    }
-    this.isTemporalFilterModified = true
+  onTemporalExtentChange(extent: DatasetTemporalExtent | null) {
+    this.currentTemporalExtent$.next(extent)
+    this.isFilterModified = true
   }
 
   onResetFilters() {
-    this.currentTemporalExtent = this.initialTemporalExtent
-    this.isTemporalFilterModified = false
-  }
-
-  ngOnInit() {
-    this.currentTemporalExtent = this.initialTemporalExtent
+    this.currentTemporalExtent$.next(this.initialTemporalExtent)
+    this.isFilterModified = false
   }
 }
