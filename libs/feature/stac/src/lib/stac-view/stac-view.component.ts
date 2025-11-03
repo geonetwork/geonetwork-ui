@@ -14,7 +14,7 @@ import { DateRangeInputsComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matDeleteOutline } from '@ng-icons/material-icons/outline'
 import { TranslateDirective } from '@ngx-translate/core'
-import { DataService } from '../service/data.service'
+import { DataService } from '@geonetwork-ui/feature/dataviz'
 import { BehaviorSubject, from, map, Observable, switchMap } from 'rxjs'
 import { GetCollectionItemsOptions } from '@camptocamp/ogc-client'
 

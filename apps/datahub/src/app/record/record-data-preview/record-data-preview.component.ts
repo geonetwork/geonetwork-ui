@@ -18,7 +18,7 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
-import { StacViewComponent } from '@geonetwork-ui/feature/dataviz'
+import { StacViewComponent } from '@geonetwork-ui/feature/stac'
 import {
   DataViewComponent,
   DataViewShareComponent,
