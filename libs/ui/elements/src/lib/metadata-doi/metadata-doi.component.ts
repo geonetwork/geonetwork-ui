@@ -8,12 +8,7 @@ import { TranslatePipe } from '@ngx-translate/core'
 @Component({
   selector: 'gn-ui-metadata-doi',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatTooltipModule,
-    NgIcon,
-    TranslatePipe,
-  ],
+  imports: [CommonModule, MatTooltipModule, NgIcon, TranslatePipe],
   templateUrl: './metadata-doi.component.html',
   styleUrl: './metadata-doi.component.css',
   viewProviders: [

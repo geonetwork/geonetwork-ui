@@ -258,6 +258,35 @@ describe('Sections', () => {
     cy.url().should('include', '/search?organization=')
   })
 
+  it('DOI section', () => {
+    // it should display DOI when available
+    cy.visit('/dataset/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
+    cy.get('gn-ui-metadata-doi').should('be.visible')
+    cy.get('gn-ui-metadata-doi')
+      .find('p')
+      .eq(1)
+      .invoke('text')
+      .invoke('trim')
+      .should('not.be.empty')
+    cy.get('gn-ui-metadata-doi')
+      .find('a[target="_blank"]')
+      .should('exist')
+      .and('have.attr', 'href')
+      .and('include', 'doi.org')
+
+    // it should copy DOI to clipboard
+    cy.get('gn-ui-metadata-doi').find('button[type="button"]').realClick()
+    cy.window().then((win) => {
+      win.navigator.clipboard.readText().then((text) => {
+        expect(text).to.include('10.')
+      })
+    })
+
+    // it should not display DOI when not available
+    cy.visit('/dataset/04bcec79-5b25-4b16-b635-73115f7456e4')
+    cy.get('gn-ui-metadata-doi').should('not.exist')
+  })
+
   it('Metadata quality widget', () => {
     // this will enable metadata quality widget
     cy.intercept('GET', '/assets/configuration/default.toml', {
