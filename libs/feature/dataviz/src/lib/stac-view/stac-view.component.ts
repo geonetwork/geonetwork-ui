@@ -9,14 +9,14 @@ import {
   DatasetServiceDistribution,
   DatasetTemporalExtent,
 } from '@geonetwork-ui/common/domain/model/record'
-import { StacItemsResultGridComponent } from '@geonetwork-ui/ui/dataviz'
+import { ResultsGridComponent } from '@geonetwork-ui/ui/elements'
 import { DateRangeInputsComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matDeleteOutline } from '@ng-icons/material-icons/outline'
 import { TranslateDirective } from '@ngx-translate/core'
 import { DataService } from '../service/data.service'
-import { BehaviorSubject, from, Observable, switchMap } from 'rxjs'
-import { GetCollectionItemsOptions, StacItem } from '@camptocamp/ogc-client'
+import { BehaviorSubject, from, map, Observable, switchMap } from 'rxjs'
+import { GetCollectionItemsOptions } from '@camptocamp/ogc-client'
 
 const STAC_ITEMS_PER_PAGE = 12
 
@@ -30,7 +30,7 @@ const STAC_ITEMS_PER_PAGE = 12
     CommonModule,
     NgIconComponent,
     TranslateDirective,
-    StacItemsResultGridComponent,
+    ResultsGridComponent,
     DateRangeInputsComponent,
   ],
   viewProviders: [provideIcons({ matDeleteOutline })],
@@ -41,7 +41,7 @@ export class StacViewComponent implements OnInit {
 
   isFilterModified = false
 
-  items$: Observable<StacItem[]>
+  items$: Observable<{ id: string; datetime: string }[]>
   currentTemporalExtent$: BehaviorSubject<DatasetTemporalExtent | null> =
     new BehaviorSubject<DatasetTemporalExtent | null>(null)
 
@@ -62,6 +62,13 @@ export class StacViewComponent implements OnInit {
         }
         return from(
           this.dataService.getItemsFromStacApi(this.link.url.href, options)
+        ).pipe(
+          map((items) =>
+            items.map((item) => ({
+              id: item.id,
+              datetime: item.properties.datetime,
+            }))
+          )
         )
       })
     )
