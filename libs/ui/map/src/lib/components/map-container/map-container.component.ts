@@ -61,6 +61,11 @@ const DEFAULT_VIEW: MapContextView = {
   zoom: 2,
 }
 
+interface MapViewConstraints {
+  maxZoom?: number
+  maxExtent?: Extent
+}
+
 @Component({
   selector: 'gn-ui-map-container',
   templateUrl: './map-container.component.html',
@@ -78,8 +83,23 @@ const DEFAULT_VIEW: MapContextView = {
 export class MapContainerComponent implements AfterViewInit, OnChanges {
   @Input() context: MapContext | null
 
-  // these events only get registered on the map if they are used
+  @ViewChild('map') container: ElementRef
+
+  displayMessage$: Observable<boolean>
+
+  private olMap: OlMap
+  private olMapResolver: (value: OlMap) => void
+  
+  openlayersMap = new Promise<OlMap>((resolve) => {
+    this.olMapResolver = resolve
+  })
+
+  // These events only get registered on the map if they are used
   _featuresClick: EventEmitter<Feature[]>
+  _featuresHover: EventEmitter<Feature[]>
+  _mapClick: EventEmitter<[number, number]>
+  _sourceLoadError: EventEmitter<SourceLoadErrorEvent>
+
   @Output() get featuresClick() {
     if (!this._featuresClick) {
       this.openlayersMap.then((olMap) => {
@@ -94,7 +114,7 @@ export class MapContainerComponent implements AfterViewInit, OnChanges {
     }
     return this._featuresClick
   }
-  _featuresHover: EventEmitter<Feature[]>
+
   @Output() get featuresHover() {
     if (!this._featuresHover) {
       this.openlayersMap.then((olMap) => {
@@ -109,7 +129,7 @@ export class MapContainerComponent implements AfterViewInit, OnChanges {
     }
     return this._featuresHover
   }
-  _mapClick: EventEmitter<[number, number]>
+
   @Output() get mapClick() {
     if (!this._mapClick) {
       this.openlayersMap.then((olMap) => {
@@ -121,7 +141,7 @@ export class MapContainerComponent implements AfterViewInit, OnChanges {
     }
     return this._mapClick
   }
-  _sourceLoadError: EventEmitter<SourceLoadErrorEvent>
+
   @Output() get sourceLoadError() {
     if (!this._sourceLoadError) {
       this.openlayersMap.then((olMap) => {
@@ -134,24 +154,12 @@ export class MapContainerComponent implements AfterViewInit, OnChanges {
     return this._sourceLoadError
   }
 
-  @ViewChild('map') container: ElementRef
-  displayMessage$: Observable<boolean>
-  olMap: OlMap
-
   constructor(
     @Inject(DO_NOT_USE_DEFAULT_BASEMAP) private doNotUseDefaultBasemap: boolean,
     @Inject(BASEMAP_LAYERS) private basemapLayers: MapContextLayer[],
     @Inject(MAP_VIEW_CONSTRAINTS)
-    private mapViewConstraints: {
-      maxZoom?: number
-      maxExtent?: Extent
-    }
+    private mapViewConstraints: MapViewConstraints
   ) {}
-
-  private olMapResolver
-  openlayersMap = new Promise<OlMap>((resolve) => {
-    this.olMapResolver = resolve
-  })
 
   async ngAfterViewInit() {
     this.olMap = await createMapFromContext(
