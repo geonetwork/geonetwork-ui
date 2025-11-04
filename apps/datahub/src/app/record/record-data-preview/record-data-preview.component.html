@@ -103,10 +103,7 @@
                 (displayStac$ | async) && (selectedView$ | async) === 'stac'
               "
             >
-              <gn-ui-stac-view
-                [link]="(metadataViewFacade.stacLinks$ | async)?.[0]"
-                [initialTemporalExtent]="firstTemporalExtent$ | async"
-              ></gn-ui-stac-view>
+              <gn-ui-stac-view></gn-ui-stac-view>
             </div>
           </mat-tab>
         </mat-tab-group>

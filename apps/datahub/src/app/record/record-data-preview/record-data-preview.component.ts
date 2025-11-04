@@ -190,22 +190,6 @@ export class RecordDataPreviewComponent implements OnInit {
     })
   )
 
-  firstTemporalExtent$ = this.metadataViewFacade.metadata$.pipe(
-    map((metadata) => {
-      const temporalExtents =
-        metadata?.kind === 'dataset'
-          ? (metadata as DatasetRecord).temporalExtents
-          : []
-
-      return temporalExtents.length > 0
-        ? temporalExtents[0]
-        : ({
-            start: null,
-            end: null,
-          } as DatasetTemporalExtent)
-    })
-  )
-
   constructor(
     public metadataViewFacade: MdViewFacade,
     private dataService: DataService,

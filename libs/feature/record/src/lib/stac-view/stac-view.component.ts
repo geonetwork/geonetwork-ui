@@ -1,12 +1,7 @@
 import { CommonModule } from '@angular/common'
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core'
-import {
-  DatasetServiceDistribution,
+  DatasetRecord,
   DatasetTemporalExtent,
 } from '@geonetwork-ui/common/domain/model/record'
 import { ResultsGridComponent } from '@geonetwork-ui/ui/elements'
@@ -22,9 +17,11 @@ import {
   map,
   Observable,
   switchMap,
+  take,
   tap,
 } from 'rxjs'
 import { GetCollectionItemsOptions } from '@camptocamp/ogc-client'
+import { MdViewFacade } from '../state'
 
 const STAC_ITEMS_PER_PAGE = 12
 
@@ -44,57 +41,88 @@ const STAC_ITEMS_PER_PAGE = 12
   viewProviders: [provideIcons({ matDeleteOutline })],
 })
 export class StacViewComponent implements OnInit {
-  @Input() link: DatasetServiceDistribution
-  @Input() initialTemporalExtent: DatasetTemporalExtent | null
-
   isFilterModified = false
-  previousPageUrl: string
-  nextPageUrl: string
 
-  items$: Observable<{ id: string; datetime: string }[]>
+  initialTemporalExtent: DatasetTemporalExtent | null = null
   currentTemporalExtent$ = new BehaviorSubject<DatasetTemporalExtent | null>(
     null
   )
+
+  previousPageUrl: string
+  nextPageUrl: string
   currentPageUrl$ = new BehaviorSubject<string | null>(null)
 
-  constructor(private dataService: DataService) {}
+  items$: Observable<{ id: string; datetime: string }[]> = combineLatest([
+    this.currentPageUrl$,
+    this.currentTemporalExtent$,
+  ]).pipe(
+    switchMap(([currentPageUrl, temporalExtent]) => {
+      const options: GetCollectionItemsOptions = {
+        limit: STAC_ITEMS_PER_PAGE,
+      }
+      if (temporalExtent) {
+        options.datetime = {
+          ...(temporalExtent.start && { start: temporalExtent.start }),
+          ...(temporalExtent.end && { end: temporalExtent.end }),
+        }
+      }
+      return from(
+        this.dataService.getItemsFromStacApi(currentPageUrl, options)
+      ).pipe(
+        tap((stacDocument) => {
+          stacDocument.links.forEach((link) => {
+            this.previousPageUrl = link.rel === 'prev' ? link.href : null
+            this.nextPageUrl = link.rel === 'next' ? link.href : null
+          })
+        }),
+        map((stacDocument) =>
+          stacDocument.features.map((item) => ({
+            id: item.id,
+            datetime: item.properties.datetime,
+          }))
+        )
+      )
+    })
+  )
+
+  constructor(
+    private dataService: DataService,
+    private metadataViewFacade: MdViewFacade
+  ) {}
 
   ngOnInit() {
-    this.currentTemporalExtent$.next(this.initialTemporalExtent)
-    this.currentPageUrl$.next(this.link.url.href)
+    this.metadataViewFacade.metadata$
+      .pipe(
+        take(1),
+        map((metadata) => {
+          const temporalExtents =
+            metadata?.kind === 'dataset'
+              ? (metadata as DatasetRecord).temporalExtents
+              : []
 
-    this.items$ = combineLatest([
-      this.currentPageUrl$,
-      this.currentTemporalExtent$,
-    ]).pipe(
-      switchMap(([currentPageUrl, temporalExtent]) => {
-        const options: GetCollectionItemsOptions = {
-          limit: STAC_ITEMS_PER_PAGE,
-        }
-        if (temporalExtent) {
-          options.datetime = {
-            ...(temporalExtent.start && { start: temporalExtent.start }),
-            ...(temporalExtent.end && { end: temporalExtent.end }),
-          }
-        }
-        return from(
-          this.dataService.getItemsFromStacApi(currentPageUrl, options)
-        ).pipe(
-          tap((stacDocument) => {
-            stacDocument.links.forEach((link) => {
-              this.previousPageUrl = link.rel === 'prev' ? link.href : null
-              this.nextPageUrl = link.rel === 'next' ? link.href : null
-            })
-          }),
-          map((stacDocument) =>
-            stacDocument.features.map((item) => ({
-              id: item.id,
-              datetime: item.properties.datetime,
-            }))
-          )
-        )
+          return temporalExtents.length > 0
+            ? temporalExtents[0]
+            : ({
+                start: null,
+                end: null,
+              } as DatasetTemporalExtent)
+        })
+      )
+      .subscribe((extent) => {
+        this.initialTemporalExtent = extent
+        this.currentTemporalExtent$.next(extent)
       })
-    )
+
+    this.metadataViewFacade.stacLinks$
+      .pipe(
+        take(1),
+        map((links) => (links && links.length > 0 ? links[0] : null))
+      )
+      .subscribe((link) => {
+        if (link) {
+          this.currentPageUrl$.next(link.url.href)
+        }
+      })
   }
 
   onTemporalExtentChange(extent: DatasetTemporalExtent | null) {
