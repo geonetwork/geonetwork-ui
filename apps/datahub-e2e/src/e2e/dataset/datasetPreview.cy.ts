@@ -301,8 +301,7 @@ describe('Preview section', () => {
       .find('gn-ui-stac-view')
       .find('#start-date-picker')
       .find('input')
-      .clear()
-      .type('2020-01-01{enter}')
+      .type('{selectall}{del}2020-01-01{enter}')
 
     // it should show the reset button after modification
     cy.get('@previewSection')

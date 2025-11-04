@@ -1,0 +1,21 @@
+code_region;nom_de_la_region;code_departement;code_arrondissement;code_canton;code_commune;nom_de_la_commune;population_municipale;population_comptee_a_part;population_totale;annee_recensement;annee_utilisation;code_insee;superficie;statut;code_insee_commune;nom_com;nom_dep;nom_reg;epci;code_epci;libepci
+32;Hauts-de-France;59;5;13;163;Croix;20927;293;21220;2014;2017;59163;4.5;Commune;59163;Croix;NORD;HAUTS-DE-FRANCE;245900410;245900410;CU Lille Métropole
+31;Nord-Pas-de-Calais;59;5;04;173;Deûlémont;1685;20;1705;2013;2016;59173;9.96;Commune;59173;Deûlémont;NORD;HAUTS-DE-FRANCE;245900410;245900410;CU de Lille Métropole
+31;Nord-Pas-de-Calais;59;5;02;303;Herlies;2319;40;2359;2013;2016;59303;7.08;Commune;59303;Herlies;NORD;HAUTS-DE-FRANCE;245900410;245900410;CU de Lille Métropole
+31;Nord-Pas-de-Calais;59;5;22;356;Lompret;2305;55;2360;2013;2016;59356;3.13;Commune;59356;;;;245900410;245900410;CU de Lille Métropole
+31;Nord-Pas-de-Calais;59;5;57;011;Annoeullin;10335;110;10445;2012;2015;59011;8.94;Commune;59011;Annœullin;NORD;HAUTS-DE-FRANCE;245901061;245901061;CC de la Haute Deûle
+31;Nord-Pas-de-Calais;59;5;38;328;Lambersart;28435;347;28782;2012;2015;59328;6.07;Commune;59328;Lambersart;NORD;HAUTS-DE-FRANCE;245900410;245900410;CU de Lille Métropole
+31;Nord-Pas-de-Calais;59;5;37;410;Mons-en-Baroeul;21272;167;21439;2012;2015;59410;2.9;Commune;59410;Mons-en-Barœul;NORD;HAUTS-DE-FRANCE;245900410;245900410;CU de Lille Métropole
+32;Hauts-de-France;59;5;02;052;Bauvin;5279;57;5336;2015;2018;59052;3.9;Commune;59052;Bauvin;NORD;HAUTS-DE-FRANCE;245901061;245901061;CC de la Haute Deûle
+32;Hauts-de-France;59;5;04;088;Bois-Grenier;1589;22;1611;2015;2018;59088;7.47;Commune;59088;Bois-Grenier;NORD;HAUTS-DE-FRANCE;245900816;245900816;CC des Weppes
+32;Hauts-de-France;59;5;02;133;Carnin;975;19;994;2015;2018;59133;2.34;Commune;59133;Carnin;NORD;HAUTS-DE-FRANCE;245901061;245901061;CC de la Haute Deûle
+32;Hauts-de-France;59;5;37;426;Neuville-en-Ferrain;10434;67;10501;2015;2018;59426;6.2;Commune;59426;Neuville-en-Ferrain;NORD;HAUTS-DE-FRANCE;245900410;245900410;Métropole Européenne de Lille
+32;Hauts-de-France;59;5;18;609;Vendeville;1649;13;1662;2015;2018;59609;2.58;Commune;59609;Vendeville;NORD;HAUTS-DE-FRANCE;245900410;245900410;Métropole Européenne de Lille
+32;Hauts-de-France;59;5;04;202;Erquinghem-Lys;5081;40;5121;2016;2019;59202;9.2;Commune;59202;Erquinghem-Lys;NORD;HAUTS-DE-FRANCE;245900410;245900410;Métropole Européenne de Lille
+32;Hauts-de-France;59;5;18;316;Houplin-Ancoisne;3439;43;3482;2016;2019;59316;6.49;Commune;59316;Houplin-Ancoisne;NORD;HAUTS-DE-FRANCE;245900410;245900410;Métropole Européenne de Lille
+32;Hauts-de-France;59;5;18;193;Emmerin;3173;26;3199;2015;2018;59193;4.99;Commune;59193;Emmerin;NORD;HAUTS-DE-FRANCE;245900410;245900410;Métropole Européenne de Lille
+32;Hauts-de-France;59;5;22;611;Verlinghem;2445;56;2501;2016;2019;59611;10.15;Commune;59611;Verlinghem;NORD;HAUTS-DE-FRANCE;245900410;245900410;Métropole Européenne de Lille
+31;Nord-Pas-de-Calais;59;5;04;017;Armentières;25978;398;26376;2013;2016;59017;6.23;Commune;59017;Armentières;NORD;HAUTS-DE-FRANCE;245900410;245900410;CU de Lille Métropole
+31;Nord-Pas-de-Calais;59;5;02;025;Aubers;1536;38;1574;2013;2016;59025;10.09;Commune;59025;;;;245900816;245900816;CC des Weppes
+32;Hauts-de-France;59;5;02;011;Annœullin;10325;114;10439;2014;2017;59011;8.94;Commune;59011;Annœullin;NORD;HAUTS-DE-FRANCE;245901061;245901061;CC de la Haute Deûle
+32;Hauts-de-France;59;5;13;332;Lannoy;1778;9;1787;2014;2017;59332;0.17;Commune;59332;;;;245900410;245900410;CU Lille Métropole
