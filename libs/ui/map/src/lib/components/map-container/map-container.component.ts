@@ -7,12 +7,13 @@ import {
   Inject,
   Input,
   OnChanges,
+  OnDestroy,
   Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core'
-import { fromEvent, merge, Observable, of, timer } from 'rxjs'
-import { delay, map, startWith, switchMap } from 'rxjs/operators'
+import { fromEvent, merge, Observable, of, Subject, timer } from 'rxjs'
+import { delay, map, startWith, switchMap, takeUntil } from 'rxjs/operators'
 import { CommonModule } from '@angular/common'
 import { TranslateDirective } from '@ngx-translate/core'
 import {
@@ -80,12 +81,15 @@ interface MapViewConstraints {
     }),
   ],
 })
-export class MapContainerComponent implements AfterViewInit, OnChanges {
+export class MapContainerComponent
+  implements AfterViewInit, OnChanges, OnDestroy
+{
   @Input() context: MapContext | null
 
   @ViewChild('map') container: ElementRef
 
   displayMessage$: Observable<boolean>
+  private destroy$ = new Subject<void>()
 
   private olMap: OlMap
   private olMapResolver: (value: OlMap) => void
@@ -166,21 +170,7 @@ export class MapContainerComponent implements AfterViewInit, OnChanges {
       this.processContext(this.context),
       this.container.nativeElement
     )
-    this.displayMessage$ = merge(
-      fromEvent(this.olMap, 'mapmuted').pipe(map(() => true)),
-      fromEvent(this.olMap, 'movestart').pipe(map(() => false)),
-      fromEvent(this.olMap, 'singleclick').pipe(map(() => false))
-    ).pipe(
-      switchMap((muted) =>
-        muted
-          ? timer(2000).pipe(
-              map(() => false),
-              startWith(true),
-              delay(400)
-            )
-          : of(false)
-      )
-    )
+    this.setupDisplayMessageObservable()
     this.olMapResolver(this.olMap)
   }
 
@@ -194,17 +184,44 @@ export class MapContainerComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  // This will apply basemap layers & view constraints
-  processContext(context: MapContext): MapContext {
+  ngOnDestroy() {
+    this.destroy$.next()
+    this.destroy$.complete()
+  }
+
+  private setupDisplayMessageObservable() {
+    this.displayMessage$ = merge(
+      fromEvent(this.olMap, 'mapmuted').pipe(map(() => true)),
+      fromEvent(this.olMap, 'movestart').pipe(map(() => false)),
+      fromEvent(this.olMap, 'singleclick').pipe(map(() => false))
+    ).pipe(
+      switchMap((muted) =>
+        muted
+          ? timer(2000).pipe(
+              map(() => false),
+              startWith(true),
+              delay(400)
+            )
+          : of(false)
+      ),
+      takeUntil(this.destroy$)
+    )
+  }
+
+  private processContext(context: MapContext): MapContext {
     const processed = context
       ? { ...context, view: context.view ?? DEFAULT_VIEW }
       : { layers: [], view: DEFAULT_VIEW }
+
+    // Prepend with default basemap and basemap layers
     if (this.basemapLayers.length) {
       processed.layers = [...this.basemapLayers, ...processed.layers]
     }
     if (!this.doNotUseDefaultBasemap) {
       processed.layers = [DEFAULT_BASEMAP_LAYER, ...processed.layers]
     }
+
+    // Apply view constraints
     if (this.mapViewConstraints.maxZoom) {
       processed.view = {
         maxZoom: this.mapViewConstraints.maxZoom,
