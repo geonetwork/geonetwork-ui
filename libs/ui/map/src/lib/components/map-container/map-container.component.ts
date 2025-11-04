@@ -29,6 +29,7 @@ import {
   MapContextLayer,
   MapContextLayerXyz,
   MapContextView,
+  MapEventsByType,
   SourceLoadErrorEvent,
   SourceLoadErrorType,
 } from '@geospatial-sdk/core'
@@ -99,21 +100,19 @@ export class MapContainerComponent
   })
 
   // These events only get registered on the map if they are used
-  _featuresClick: EventEmitter<Feature[]>
-  _featuresHover: EventEmitter<Feature[]>
-  _mapClick: EventEmitter<[number, number]>
-  _sourceLoadError: EventEmitter<SourceLoadErrorEvent>
+  _featuresClick: EventEmitter<Feature[]> = null
+  _featuresHover: EventEmitter<Feature[]> = null
+  _mapClick: EventEmitter<[number, number]> = null
+  _sourceLoadError: EventEmitter<SourceLoadErrorEvent> = null
 
   @Output() get featuresClick() {
     if (!this._featuresClick) {
-      this.openlayersMap.then((olMap) => {
-        listen(
-          olMap,
-          FeaturesClickEventType,
-          ({ features }: FeaturesClickEvent) =>
-            this._featuresClick.emit(features)
-        )
-      })
+      this.setupEventListener(
+        FeaturesClickEventType,
+        (event: FeaturesClickEvent) => {
+          this._featuresClick.emit(event.features)
+        }
+      )
       this._featuresClick = new EventEmitter<Feature[]>()
     }
     return this._featuresClick
@@ -121,14 +120,12 @@ export class MapContainerComponent
 
   @Output() get featuresHover() {
     if (!this._featuresHover) {
-      this.openlayersMap.then((olMap) => {
-        listen(
-          olMap,
-          FeaturesHoverEventType,
-          ({ features }: FeaturesHoverEvent) =>
-            this._featuresHover.emit(features)
-        )
-      })
+      this.setupEventListener(
+        FeaturesHoverEventType,
+        (event: FeaturesHoverEvent) => {
+          this._featuresHover.emit(event.features)
+        }
+      )
       this._featuresHover = new EventEmitter<Feature[]>()
     }
     return this._featuresHover
@@ -136,10 +133,8 @@ export class MapContainerComponent
 
   @Output() get mapClick() {
     if (!this._mapClick) {
-      this.openlayersMap.then((olMap) => {
-        listen(olMap, MapClickEventType, ({ coordinate }: MapClickEvent) =>
-          this._mapClick.emit(coordinate)
-        )
+      this.setupEventListener(MapClickEventType, (event: MapClickEvent) => {
+        this._mapClick.emit(event.coordinate)
       })
       this._mapClick = new EventEmitter<[number, number]>()
     }
@@ -148,11 +143,12 @@ export class MapContainerComponent
 
   @Output() get sourceLoadError() {
     if (!this._sourceLoadError) {
-      this.openlayersMap.then((olMap) => {
-        listen(olMap, SourceLoadErrorType, (error: SourceLoadErrorEvent) =>
-          this._sourceLoadError.emit(error)
-        )
-      })
+      this.setupEventListener(
+        SourceLoadErrorType,
+        (event: SourceLoadErrorEvent) => {
+          this._sourceLoadError.emit(event)
+        }
+      )
       this._sourceLoadError = new EventEmitter<SourceLoadErrorEvent>()
     }
     return this._sourceLoadError
@@ -187,6 +183,15 @@ export class MapContainerComponent
   ngOnDestroy() {
     this.destroy$.next()
     this.destroy$.complete()
+  }
+
+  private setupEventListener(
+    eventType: keyof MapEventsByType,
+    handler: (event: MapEventsByType[typeof eventType]) => void
+  ) {
+    this.openlayersMap.then((olMap: OlMap) => {
+      listen(olMap, eventType, handler)
+    })
   }
 
   private setupDisplayMessageObservable() {
@@ -234,6 +239,8 @@ export class MapContainerComponent
         ...processed.view,
       }
     }
+
+    // Ensure valid view
     if (
       processed.view &&
       !('zoom' in processed.view) &&
