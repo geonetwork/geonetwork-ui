@@ -1,4 +1,6 @@
-<div class="h-full w-full" #map></div>
+<div class="relative h-full w-full" #map>
+  <ng-content></ng-content>
+</div>
 <div
   class="absolute inset-0 p-2 rounded z-40 transition-all flex flex-col justify-center items-center text-primary font-sans pointer-events-none"
   [ngClass]="

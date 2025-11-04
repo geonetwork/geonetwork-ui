@@ -1,7 +1,6 @@
-<div class="relative h-full w-full">
-  <gn-ui-map-container [context]="mapContext"></gn-ui-map-container>
+<gn-ui-map-container [context]="mapContext">
   <div
-    class="bg-white rounded-xl shadow-xl absolute left-1/2 transform -translate-x-1/2 bottom-0 mb-2.5 px-4 py-2"
+    class="bg-white rounded-xl shadow-xl absolute left-1/2 transform -translate-x-1/2 bottom-0 mb-2.5 px-4 py-2 z-50"
   >
     <gn-ui-check-toggle
       [label]="filterLabel"
@@ -9,4 +8,4 @@
       class="flex items-center"
     ></gn-ui-check-toggle>
   </div>
-</div>
+</gn-ui-map-container>
