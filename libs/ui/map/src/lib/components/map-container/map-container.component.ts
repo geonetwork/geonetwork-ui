@@ -25,6 +25,8 @@ import {
   FeaturesHoverEventType,
   MapClickEvent,
   MapClickEventType,
+  MapExtentChangeEvent,
+  MapExtentChangeEventType,
   MapContext,
   MapContextLayer,
   MapContextLayerXyz,
@@ -89,12 +91,11 @@ export class MapContainerComponent
 
   @ViewChild('map') container: ElementRef
 
-  displayMessage$: Observable<boolean>
   private destroy$ = new Subject<void>()
-
   private olMap: OlMap
   private olMapResolver: (value: OlMap) => void
-  
+
+  displayMessage$: Observable<boolean>
   openlayersMap = new Promise<OlMap>((resolve) => {
     this.olMapResolver = resolve
   })
@@ -103,6 +104,7 @@ export class MapContainerComponent
   _featuresClick: EventEmitter<Feature[]> = null
   _featuresHover: EventEmitter<Feature[]> = null
   _mapClick: EventEmitter<[number, number]> = null
+  _extentChange: EventEmitter<Extent> = null
   _sourceLoadError: EventEmitter<SourceLoadErrorEvent> = null
 
   @Output() get featuresClick() {
@@ -139,6 +141,19 @@ export class MapContainerComponent
       this._mapClick = new EventEmitter<[number, number]>()
     }
     return this._mapClick
+  }
+
+  @Output() get extentChange() {
+    if (!this._extentChange) {
+      this.setupEventListener(
+        MapExtentChangeEventType,
+        (event: MapExtentChangeEvent) => {
+          this._extentChange.emit(event.extent as Extent)
+        }
+      )
+      this._extentChange = new EventEmitter<Extent>()
+    }
+    return this._extentChange
   }
 
   @Output() get sourceLoadError() {
