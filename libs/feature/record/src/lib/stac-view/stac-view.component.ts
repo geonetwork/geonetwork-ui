@@ -22,6 +22,7 @@ import {
 } from 'rxjs'
 import { GetCollectionItemsOptions } from '@camptocamp/ogc-client'
 import { MdViewFacade } from '../state'
+import { PreviousNextButtonsComponent } from '@geonetwork-ui/ui/layout'
 
 const STAC_ITEMS_PER_PAGE = 12
 
@@ -37,6 +38,7 @@ const STAC_ITEMS_PER_PAGE = 12
     TranslateDirective,
     ResultsGridComponent,
     DateRangeInputsComponent,
+    PreviousNextButtonsComponent,
   ],
   viewProviders: [provideIcons({ matDeleteOutline })],
 })
@@ -70,10 +72,11 @@ export class StacViewComponent implements OnInit {
         this.dataService.getItemsFromStacApi(currentPageUrl, options)
       ).pipe(
         tap((stacDocument) => {
-          stacDocument.links.forEach((link) => {
-            this.previousPageUrl = link.rel === 'prev' ? link.href : null
-            this.nextPageUrl = link.rel === 'next' ? link.href : null
-          })
+          this.previousPageUrl =
+            stacDocument.links.find((link) => link.rel === 'previous')?.href ||
+            null
+          this.nextPageUrl =
+            stacDocument.links.find((link) => link.rel === 'next')?.href || null
         }),
         map((stacDocument) =>
           stacDocument.features.map((item) => ({
@@ -133,5 +136,19 @@ export class StacViewComponent implements OnInit {
   onResetFilters() {
     this.currentTemporalExtent$.next(this.initialTemporalExtent)
     this.isFilterModified = false
+  }
+
+  // Paginable API
+  get isFirstPage() {
+    return this.previousPageUrl == null
+  }
+  get isLastPage() {
+    return this.nextPageUrl == null
+  }
+  goToNextPage() {
+    this.currentPageUrl$.next(this.nextPageUrl)
+  }
+  goToPrevPage() {
+    this.currentPageUrl$.next(this.previousPageUrl)
   }
 }

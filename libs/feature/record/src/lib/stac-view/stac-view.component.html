@@ -26,5 +26,13 @@
       <span>Map...</span>
     </div>
   </div>
-  <gn-ui-results-grid [items]="items$ | async"></gn-ui-results-grid>
+  <div class="mx-5 my-[30px]">
+    <gn-ui-results-grid [items]="items$ | async"></gn-ui-results-grid>
+    <div class="mt-[20px] mx-auto flex justify-center">
+      <gn-ui-previous-next-buttons
+        [listComponent]="this"
+        [displayLabels]="true"
+      ></gn-ui-previous-next-buttons>
+    </div>
+  </div>
 </div>
