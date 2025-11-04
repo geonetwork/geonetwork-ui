@@ -113,6 +113,12 @@ export interface INSPIRE_topic {
   label: string
 }
 
+export interface ResourceIdentifier {
+  code: string
+  codeSpace?: string
+  url?: string
+}
+
 export interface BaseRecord {
   uniqueIdentifier: Uuid
   ownerOrganization: Organization
@@ -135,8 +141,8 @@ export interface BaseRecord {
   updateFrequency?: UpdateFrequency
 
   // information related to the resource (dataset, service)
-  resourceIdentifier?: string
-  resourceDoi?: { code: string; url?: URL }
+
+  resourceIdentifiers?: Array<ResourceIdentifier>
   contactsForResource: Array<Individual>
   resourceCreated?: Date
   resourcePublished?: Date

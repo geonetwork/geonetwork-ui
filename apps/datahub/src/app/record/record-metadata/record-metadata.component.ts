@@ -224,9 +224,7 @@ export class RecordMetadataComponent {
   )
 
   sourceLabel$ = this.metadataViewFacade.metadata$.pipe(
-    map((record) => {
-      return record?.extras?.catalogUuid as string
-    }),
+    map((record) => record?.extras?.catalogUuid as string),
     filter((uuid) => !!uuid),
     mergeMap((uuid) => this.sourceService.getSourceLabel(uuid))
   )

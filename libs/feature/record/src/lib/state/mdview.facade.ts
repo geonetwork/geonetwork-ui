@@ -91,10 +91,16 @@ export class MdViewFacade {
 
   resourceDoi$ = this.metadata$.pipe(
     map((record) => {
-      if (!record?.resourceDoi) return null
+      if (!record?.resourceIdentifiers?.length) return null
+      const doiIdentifier = record.resourceIdentifiers.find((id) =>
+        id.codeSpace?.toLowerCase().includes('doi.org')
+      )
+
+      if (!doiIdentifier) return null
+
       return {
-        code: record.resourceDoi.code,
-        url: record.resourceDoi.url?.href || null,
+        code: doiIdentifier.code,
+        url: doiIdentifier.url ? doiIdentifier.url : null,
       }
     }),
     shareReplay(1)

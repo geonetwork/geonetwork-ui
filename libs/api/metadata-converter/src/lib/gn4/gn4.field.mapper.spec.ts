@@ -300,7 +300,9 @@ describe('Gn4FieldMapper', () => {
           },
         })
       })
-      it('resourceIdentifier - should extract DOI when codeSpace contains doi', () => {
+    })
+    describe('resourceIdentifier mapper', () => {
+      it('should map all resource identifiers with code, codeSpace, and url', () => {
         const fieldName = 'resourceIdentifier'
         const mappingFn = service.getMappingFn(fieldName)
         const output = {}
@@ -311,17 +313,52 @@ describe('Gn4FieldMapper', () => {
               codeSpace: 'doi.org',
               link: 'https://doi.org/10.1234/example.doi',
             },
+            {
+              code: 'ISBN-123-456',
+              codeSpace: 'ISBN',
+              link: 'https://isbn.org/123-456',
+            },
           ],
         }
         const result = mappingFn(output, source)
         expect(result).toEqual({
-          resourceDoi: {
-            code: '10.1234/example.doi',
-            url: new URL('https://doi.org/10.1234/example.doi'),
-          },
+          resourceIdentifiers: [
+            {
+              code: '10.1234/example.doi',
+              codeSpace: 'doi.org',
+              url: 'https://doi.org/10.1234/example.doi',
+            },
+            {
+              code: 'ISBN-123-456',
+              codeSpace: 'ISBN',
+              url: 'https://isbn.org/123-456',
+            },
+          ],
         })
       })
-      it('resourceIdentifier - should extract DOI without link', () => {
+
+      it('should map identifier without codeSpace', () => {
+        const fieldName = 'resourceIdentifier'
+        const mappingFn = service.getMappingFn(fieldName)
+        const output = {}
+        const source = {
+          resourceIdentifier: [
+            {
+              code: 'simple-identifier',
+            },
+          ],
+        }
+        const result = mappingFn(output, source)
+        expect(result).toEqual({
+          resourceIdentifiers: [
+            {
+              code: 'simple-identifier',
+            },
+          ],
+        })
+      })
+
+      it('should map identifier without link', () => {
         const fieldName = 'resourceIdentifier'
         const mappingFn = service.getMappingFn(fieldName)
         const output = {}
@@ -335,53 +372,12 @@ describe('Gn4FieldMapper', () => {
         }
         const result = mappingFn(output, source)
         expect(result).toEqual({
-          resourceDoi: {
-            code: '10.1234/example.doi',
-          },
-        })
-      })
-      it('resourceIdentifier - should return output unchanged when no DOI found', () => {
-        const fieldName = 'resourceIdentifier'
-        const mappingFn = service.getMappingFn(fieldName)
-        const output = {}
-        const source = {
-          resourceIdentifier: [
+          resourceIdentifiers: [
             {
-              code: 'some-other-identifier',
-              codeSpace: 'ISBN',
+              code: '10.1234/example.doi',
+              codeSpace: 'doi.org',
             },
           ],
-        }
-        const result = mappingFn(output, source)
-        expect(result).toEqual({})
-      })
-      it('resourceIdentifier - should return output unchanged when resourceIdentifier is empty', () => {
-        const fieldName = 'resourceIdentifier'
-        const mappingFn = service.getMappingFn(fieldName)
-        const output = {}
-        const source = {
-          resourceIdentifier: [],
-        }
-        const result = mappingFn(output, source)
-        expect(result).toEqual({})
-      })
-      it('resourceIdentifier - should match DOI case-insensitively', () => {
-        const fieldName = 'resourceIdentifier'
-        const mappingFn = service.getMappingFn(fieldName)
-        const output = {}
-        const source = {
-          resourceIdentifier: [
-            {
-              code: '10.1234/example',
-              codeSpace: 'DoI.OrG',
-            },
-          ],
-        }
-        const result = mappingFn(output, source)
-        expect(result).toEqual({
-          resourceDoi: {
-            code: '10.1234/example',
-          },
         })
       })
     })

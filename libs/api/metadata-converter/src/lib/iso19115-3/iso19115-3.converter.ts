@@ -57,7 +57,6 @@ export class Iso191153Converter extends Iso19139Converter {
     this.readers['defaultLanguage'] = readDefaultLanguage
     this.readers['otherLanguages'] = readOtherLanguages
     this.readers['reuseType'] = readReuseType
-    this.readers['resourceDoi'] = () => undefined
 
     this.writers['uniqueIdentifier'] = writeUniqueIdentifier
     this.writers['kind'] = writeKind

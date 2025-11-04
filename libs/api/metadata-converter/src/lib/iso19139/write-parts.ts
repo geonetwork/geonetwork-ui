@@ -1502,14 +1502,16 @@ export function writeResourceIdentifier(
   record: DatasetRecord,
   rootEl: XmlElement
 ) {
+  const firstIdentifier = record.resourceIdentifiers?.[0]?.code
+
   pipe(
     findOrCreateIdentification(),
     findNestedChildOrCreate('gmd:citation', 'gmd:CI_Citation'),
     removeChildrenByName('gmd:identifier'),
-    record.resourceIdentifier
+    firstIdentifier
       ? pipe(
           createNestedChild('gmd:identifier', 'gmd:MD_Identifier', 'gmd:code'),
-          writeCharacterString(record.resourceIdentifier)
+          writeCharacterString(firstIdentifier)
         )
       : noop
   )(rootEl)

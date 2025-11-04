@@ -454,23 +454,29 @@ export class Gn4FieldMapper {
     resourceIdentifier: (output, source) => {
       const identifiers = getAsArray(selectField(source, 'resourceIdentifier'))
 
-      const doiIdentifier = identifiers.find((id) =>
-        selectField<string>(id, 'codeSpace')?.toLowerCase().includes('doi.org')
-      )
+      if (!identifiers.length) return output
 
-      if (!doiIdentifier) return output
+      const mappedIdentifiers = identifiers
+        .map((id) => {
+          const code = selectField<string>(id, 'code')
+          if (!code) return null
 
-      const code = selectField<string>(doiIdentifier, 'code')
-      const link = selectField<string>(doiIdentifier, 'link')
+          const codeSpace = selectField<string>(id, 'codeSpace')
+          const link = selectField<string>(id, 'link')
 
-      if (!code) return output
+          return {
+            code,
+            ...(codeSpace && { codeSpace }),
+            ...(link && { url: link }),
+          }
+        })
+        .filter((id) => id !== null)
+
+      if (!mappedIdentifiers.length) return output
 
       return {
         ...output,
-        resourceDoi: {
-          code,
-          ...(link && { url: getAsUrl(link) }),
-        },
+        resourceIdentifiers: mappedIdentifiers,
       }
     },
   }

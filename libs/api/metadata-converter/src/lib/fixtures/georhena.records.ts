@@ -2,7 +2,7 @@ import { ReuseRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export const GEORHENA_REUSE_SOLAIRE_RECORD: ReuseRecord = {
   uniqueIdentifier: '015e6d20-0d69-4ae7-adfe-85c588aac141',
-  resourceIdentifier: '04_2022_301',
+  resourceIdentifiers: [{ code: '04_2022_301' }],
   kind: 'reuse',
   otherLanguages: ['de', 'en'],
   defaultLanguage: 'fr',

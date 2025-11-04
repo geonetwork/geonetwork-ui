@@ -1183,8 +1183,10 @@ export function readDefaultLanguage(rootEl: XmlElement): LanguageCode {
   )(rootEl)
 }
 
-export function readResourceIdentifier(rootEl: XmlElement): string {
-  return pipe(
+export function readResourceIdentifier(
+  rootEl: XmlElement
+): Array<{ code: string; codeSpace?: string; url?: string }> {
+  const code = pipe(
     findIdentification(),
     findNestedElement(
       'gmd:citation',
@@ -1195,4 +1197,6 @@ export function readResourceIdentifier(rootEl: XmlElement): string {
     ),
     extractCharacterString()
   )(rootEl)
+
+  return code ? [{ code }] : []
 }
