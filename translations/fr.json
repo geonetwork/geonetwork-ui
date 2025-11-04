@@ -400,6 +400,7 @@
   "pagination.nextPage": "Page suivante",
   "pagination.page": "Page",
   "pagination.pageOf": "sur",
+  "pagination.previousPage": "Page précédente",
   "record.action.delete": "Supprimer",
   "record.action.download": "Télécharger",
   "record.action.duplicate": "Dupliquer",

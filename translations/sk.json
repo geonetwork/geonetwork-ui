@@ -400,6 +400,7 @@
   "pagination.nextPage": "Ďalšia stránka",
   "pagination.page": "strana",
   "pagination.pageOf": "z",
+  "pagination.previousPage": "",
   "record.action.delete": "",
   "record.action.download": "Stiahnuť",
   "record.action.duplicate": "",
