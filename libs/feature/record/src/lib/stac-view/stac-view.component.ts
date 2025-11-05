@@ -8,14 +8,16 @@ import { ResultsGridComponent } from '@geonetwork-ui/ui/elements'
 import { DateRangeInputsComponent } from '@geonetwork-ui/ui/inputs'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matDeleteOutline } from '@ng-icons/material-icons/outline'
-import { TranslateDirective } from '@ngx-translate/core'
+import { TranslateDirective, TranslateService } from '@ngx-translate/core'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import {
   BehaviorSubject,
+  catchError,
   combineLatest,
   from,
   map,
   Observable,
+  of,
   switchMap,
   take,
   tap,
@@ -23,6 +25,8 @@ import {
 import { GetCollectionItemsOptions } from '@camptocamp/ogc-client'
 import { MdViewFacade } from '../state'
 import { PreviousNextButtonsComponent } from '@geonetwork-ui/ui/layout'
+import { FetchError } from '@geonetwork-ui/data-fetcher'
+import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 
 const STAC_ITEMS_PER_PAGE = 12
 
@@ -39,11 +43,13 @@ const STAC_ITEMS_PER_PAGE = 12
     ResultsGridComponent,
     DateRangeInputsComponent,
     PreviousNextButtonsComponent,
+    PopupAlertComponent,
   ],
   viewProviders: [provideIcons({ matDeleteOutline })],
 })
 export class StacViewComponent implements OnInit {
   isFilterModified = false
+  error = null
 
   initialTemporalExtent: DatasetTemporalExtent | null = null
   currentTemporalExtent$ = new BehaviorSubject<DatasetTemporalExtent | null>(
@@ -59,6 +65,7 @@ export class StacViewComponent implements OnInit {
     this.currentTemporalExtent$,
   ]).pipe(
     switchMap(([currentPageUrl, temporalExtent]) => {
+      this.error = null
       const options: GetCollectionItemsOptions = {
         limit: STAC_ITEMS_PER_PAGE,
       }
@@ -83,14 +90,19 @@ export class StacViewComponent implements OnInit {
             id: item.id,
             datetime: item.properties.datetime,
           }))
-        )
+        ),
+        catchError((err) => {
+          this.handleError(err)
+          return of([])
+        })
       )
     })
   )
 
   constructor(
     private dataService: DataService,
-    private metadataViewFacade: MdViewFacade
+    private metadataViewFacade: MdViewFacade,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
@@ -136,6 +148,24 @@ export class StacViewComponent implements OnInit {
   onResetFilters() {
     this.currentTemporalExtent$.next(this.initialTemporalExtent)
     this.isFilterModified = false
+  }
+
+  handleError(error: FetchError | Error | string) {
+    if (error instanceof FetchError) {
+      this.error = this.translateService.instant(
+        `dataset.error.${error.type}`,
+        {
+          info: error.info,
+        }
+      )
+      console.warn(error.message)
+    } else if (error instanceof Error) {
+      this.error = this.translateService.instant(error.message)
+      console.warn(error.stack || error)
+    } else {
+      this.error = this.translateService.instant(error)
+      console.warn(error)
+    }
   }
 
   // Paginable API

@@ -26,13 +26,24 @@
       <span>Map...</span>
     </div>
   </div>
-  <div class="mx-5 my-[30px]">
+  <div class="mx-5 my-[30px] min-h-[274px]">
+    <!-- Keep grid outside ngIf to keep items$ observable alive -->
     <gn-ui-results-grid [items]="items$ | async"></gn-ui-results-grid>
-    <div class="mt-[20px] mx-auto flex justify-center">
-      <gn-ui-previous-next-buttons
-        [listComponent]="this"
-        [displayLabels]="true"
-      ></gn-ui-previous-next-buttons>
-    </div>
+    <gn-ui-popup-alert
+      *ngIf="error; else resultsContent"
+      type="warning"
+      icon="matErrorOutlineOutline"
+      class="block"
+    >
+      <span translate>{{ error }}</span>
+    </gn-ui-popup-alert>
+    <ng-template #resultsContent>
+      <div class="mt-[20px] mx-auto flex justify-center">
+        <gn-ui-previous-next-buttons
+          [listComponent]="this"
+          [displayLabels]="true"
+        ></gn-ui-previous-next-buttons>
+      </div>
+    </ng-template>
   </div>
 </div>
