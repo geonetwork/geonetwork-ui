@@ -119,21 +119,30 @@ export class HeaderRecordComponent {
     })
   )
 
-  get resourceDate(): { date: string; label: string } | null {
+  get resourceDate(): { date: string; tooltip: string; label: string } | null {
     let dateToDisplay = null
     if (this.metadata.resourceUpdated) {
       dateToDisplay = {
-        date: this.dateService.formatDate(this.metadata.resourceUpdated),
+        date: this.dateService.formatRelativeDateTime(
+          this.metadata.resourceUpdated
+        ),
+        tooltip: this.dateService.formatDate(this.metadata.resourceUpdated),
         label: 'record.metadata.resourceUpdated',
       }
     } else if (this.metadata.resourcePublished) {
       dateToDisplay = {
-        date: this.dateService.formatDate(this.metadata.resourcePublished),
+        date: this.dateService.formatRelativeDateTime(
+          this.metadata.resourcePublished
+        ),
+        tooltip: this.dateService.formatDate(this.metadata.resourcePublished),
         label: 'record.metadata.resourcePublished',
       }
     } else if (this.metadata.resourceCreated) {
       dateToDisplay = {
-        date: this.dateService.formatDate(this.metadata.resourceCreated),
+        date: this.dateService.formatRelativeDateTime(
+          this.metadata.resourceCreated
+        ),
+        tooltip: this.dateService.formatDate(this.metadata.resourceCreated),
         label: 'record.metadata.resourceCreated',
       }
     }

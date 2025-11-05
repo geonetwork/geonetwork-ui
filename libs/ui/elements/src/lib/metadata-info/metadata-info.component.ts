@@ -154,4 +154,8 @@ export class MetadataInfoComponent {
   formatDateTime(date: Date): string {
     return this.dateService.formatDateTime(date)
   }
+
+  formatRelativeDateTime(date: Date): string {
+    return this.dateService.formatRelativeDateTime(date)
+  }
 }

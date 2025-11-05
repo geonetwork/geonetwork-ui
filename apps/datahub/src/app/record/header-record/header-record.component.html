@@ -104,7 +104,8 @@
                     <p
                       translate
                       [translateParams]="{ date: resourceDate.date }"
-                      class="text-sm"
+                      class="text-sm cursor-default"
+                      [title]="resourceDate.tooltip"
                     >
                       {{ resourceDate.label }}
                     </p>

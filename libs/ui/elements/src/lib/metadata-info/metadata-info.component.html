@@ -186,8 +186,11 @@
       data-test="details-panel-resource-created"
     >
       <p class="text-sm" translate>record.metadata.creation</p>
-      <p class="text-primary font-medium mt-1 resource-created">
-        {{ formatDate(metadata.resourceCreated) }}
+      <p
+        class="text-primary font-medium mt-1 resource-created cursor-default"
+        [title]="formatDate(metadata.resourceCreated)"
+      >
+        {{ formatRelativeDateTime(metadata.resourceCreated) }}
       </p>
     </div>
     <div
@@ -195,8 +198,11 @@
       data-test="details-panel-resource-published"
     >
       <p class="text-sm" translate>record.metadata.publication</p>
-      <p class="text-primary font-medium mt-1 resource-published">
-        {{ formatDate(metadata.resourcePublished) }}
+      <p
+        class="text-primary font-medium mt-1 resource-published cursor-default"
+        [title]="formatDate(metadata.resourcePublished)"
+      >
+        {{ formatRelativeDateTime(metadata.resourcePublished) }}
       </p>
     </div>
     <div
@@ -204,8 +210,11 @@
       data-test="details-panel-resource-updated"
     >
       <p class="text-sm" translate>record.metadata.update</p>
-      <p class="text-primary font-medium mt-1 resource-updated">
-        {{ formatDate(metadata.resourceUpdated) }}
+      <p
+        class="text-primary font-medium mt-1 resource-updated cursor-default"
+        [title]="formatDate(metadata.resourceUpdated)"
+      >
+        {{ formatRelativeDateTime(metadata.resourceUpdated) }}
       </p>
     </div>
     <div
@@ -294,8 +303,14 @@
   <div class="flex flex-col gap-4 mr-4 py-5 rounded text-gray-700">
     <div *ngIf="metadata.recordUpdated">
       <p class="text-sm" translate>record.metadata.updatedOn</p>
-      <p class="text-primary font-medium">
-        {{ metadata.recordUpdated && formatDateTime(metadata.recordUpdated) }}
+      <p
+        class="text-primary font-medium cursor-default"
+        [title]="formatDateTime(metadata.recordUpdated)"
+      >
+        {{
+          metadata.recordUpdated &&
+            formatRelativeDateTime(metadata.recordUpdated)
+        }}
       </p>
     </div>
     <div *ngIf="metadata.landingPage">

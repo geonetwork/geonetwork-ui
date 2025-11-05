@@ -201,12 +201,16 @@ describe('Sections', () => {
       .eq(0)
       .children('p')
       .eq(1)
-      .should('contain.text', '9/22/2020')
+      .should('contain.text', '5 years ago')
+      .invoke('attr', 'title')
+      .should('contain', '9/22/2020')
     cy.get('@aboutContent')
       .eq(1)
       .children('p')
       .eq(1)
-      .should('contain.text', '3/17/2024')
+      .should('contain.text', '2 years ago')
+      .invoke('attr', 'title')
+      .should('contain', '3/17/2024')
 
     // it should not display the same text twice in the constraints
 
