@@ -1,6 +1,8 @@
 <div class="mt-6 bg-white border border-gray-300 overflow-hidden rounded-lg">
-  <div class="w-full h-[366px] flex flex-row border-b border-gray-300">
-    <div class="flex-1 flex flex-col">
+  <div
+    class="w-full min-h-[366px] flex md:flex-row flex-col border-b border-gray-300"
+  >
+    <div class="md:w-1/2 w-full flex-1 flex flex-col">
       <gn-ui-date-range-inputs
         [temporalExtent]="currentTemporalExtent$ | async"
         (temporalExtentChange)="onTemporalExtentChange($event)"
@@ -22,7 +24,7 @@
       </div>
     </div>
 
-    <div class="w-[655px] flex-shrink-0 flex items-center justify-center">
+    <div class="md:w-1/2 w-full min-h-[280px] flex items-center justify-center">
       <span>Map...</span>
     </div>
   </div>
