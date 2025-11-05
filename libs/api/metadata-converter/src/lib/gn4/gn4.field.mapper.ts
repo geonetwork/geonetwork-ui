@@ -459,8 +459,6 @@ export class Gn4FieldMapper {
       const mappedIdentifiers = identifiers
         .map((id) => {
           const code = selectField<string>(id, 'code')
-          if (!code) return null
-
           const codeSpace = selectField<string>(id, 'codeSpace')
           const link = selectField<string>(id, 'link')
 

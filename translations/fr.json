@@ -461,7 +461,7 @@
   "record.metadata.contact": "Contact",
   "record.metadata.creation": "Date de création",
   "record.metadata.details": "À propos de la donnée",
-  "record.metadata.doi.copy": "Copiare DOI",
+  "record.metadata.doi.copy": "Copier le DOI",
   "record.metadata.doi.open": "Ouvrir le lien DOI",
   "record.metadata.download": "Téléchargements",
   "record.metadata.feature.catalog": "Catalogue d'attributs",

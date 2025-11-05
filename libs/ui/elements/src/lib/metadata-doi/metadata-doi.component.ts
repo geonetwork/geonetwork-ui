@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { MatTooltipModule } from '@angular/material/tooltip'
-import { matContentCopy, matOpenInNew } from '@ng-icons/material-icons/baseline'
+import { matOpenInNew } from '@ng-icons/material-icons/baseline'
 import { TranslatePipe } from '@ngx-translate/core'
 import { CopyTextButtonComponent } from '@geonetwork-ui/ui/inputs'
 
@@ -20,7 +20,6 @@ import { CopyTextButtonComponent } from '@geonetwork-ui/ui/inputs'
   styleUrl: './metadata-doi.component.css',
   viewProviders: [
     provideIcons({
-      matContentCopy,
       matOpenInNew,
     }),
   ],
@@ -28,11 +27,4 @@ import { CopyTextButtonComponent } from '@geonetwork-ui/ui/inputs'
 export class MetadataDoiComponent {
   @Input() code!: string
   @Input() link?: string
-
-  copyToClipboard(event: MouseEvent) {
-    event.preventDefault()
-    if (this.code) {
-      navigator.clipboard.writeText(this.code)
-    }
-  }
 }
