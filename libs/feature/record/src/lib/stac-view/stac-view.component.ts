@@ -14,6 +14,7 @@ import {
   BehaviorSubject,
   catchError,
   combineLatest,
+  debounceTime,
   from,
   map,
   Observable,
@@ -29,6 +30,7 @@ import { FetchError } from '@geonetwork-ui/data-fetcher'
 import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 
 const STAC_ITEMS_PER_PAGE = 12
+const DEBOUNCE_TIME_MS = 500
 
 @Component({
   selector: 'gn-ui-stac-view',
@@ -64,6 +66,7 @@ export class StacViewComponent implements OnInit {
     this.currentPageUrl$,
     this.currentTemporalExtent$,
   ]).pipe(
+    debounceTime(DEBOUNCE_TIME_MS),
     switchMap(([currentPageUrl, temporalExtent]) => {
       this.error = null
       const options: GetCollectionItemsOptions = {
