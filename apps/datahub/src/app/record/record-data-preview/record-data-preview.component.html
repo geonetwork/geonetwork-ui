@@ -113,7 +113,7 @@
 </div>
 <div
   class="container-lg lg:mx-auto mb-10 px-4"
-  *ngIf="displayViewShare$ | async"
+  *ngIf="(displayViewShare$ | async) && (selectedView$ | async) !== 'stac'"
 >
   <gn-ui-data-view-share
     [viewType]="selectedView$ | async"
