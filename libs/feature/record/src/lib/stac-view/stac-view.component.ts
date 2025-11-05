@@ -5,9 +5,12 @@ import {
   DatasetTemporalExtent,
 } from '@geonetwork-ui/common/domain/model/record'
 import { ResultsGridComponent } from '@geonetwork-ui/ui/elements'
-import { DateRangeInputsComponent } from '@geonetwork-ui/ui/inputs'
-import { MapFilterComponent } from '@geonetwork-ui/ui/map'
-import { MapContext } from '@geospatial-sdk/core/dist/model'
+import {
+  DateRangeInputsComponent,
+  CheckToggleComponent,
+} from '@geonetwork-ui/ui/inputs'
+import { MapContainerComponent } from '@geonetwork-ui/ui/map'
+import { Extent, MapContext } from '@geospatial-sdk/core/dist/model'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matDeleteOutline } from '@ng-icons/material-icons/outline'
 import { TranslateDirective } from '@ngx-translate/core'
@@ -24,6 +27,7 @@ import {
 } from 'rxjs'
 import { GetCollectionItemsOptions } from '@camptocamp/ogc-client'
 import { MdViewFacade } from '../state'
+import { MapUtilsService } from '@geonetwork-ui/feature/map'
 
 const STAC_ITEMS_PER_PAGE = 12
 
@@ -39,7 +43,8 @@ const STAC_ITEMS_PER_PAGE = 12
     TranslateDirective,
     ResultsGridComponent,
     DateRangeInputsComponent,
-    MapFilterComponent,
+    MapContainerComponent,
+    CheckToggleComponent,
   ],
   viewProviders: [provideIcons({ matDeleteOutline })],
 })
@@ -50,6 +55,10 @@ export class StacViewComponent implements OnInit {
   currentTemporalExtent$ = new BehaviorSubject<DatasetTemporalExtent | null>(
     null
   )
+
+  initialSpatialExtent: Extent | null = null
+  currentSpatialExtent$ = new BehaviorSubject<Extent | null>(null)
+  isSpatialFilterEnabled$ = new BehaviorSubject<boolean>(true)
   mapContext: MapContext = {
     layers: [
       {
@@ -58,52 +67,70 @@ export class StacViewComponent implements OnInit {
         attributions: '<a href="https://www.openstreetmap.org/copyright">',
       },
     ],
-    view: {
-      center: [0, 0],
-      zoom: 2,
-    },
+    view: null,
   }
 
   previousPageUrl: string
   nextPageUrl: string
   currentPageUrl$ = new BehaviorSubject<string | null>(null)
 
-  items$: Observable<{ id: string; datetime: string }[]> = combineLatest([
+  items$: Observable<
+    {
+      id: string
+      datetime: string
+    }[]
+  > = combineLatest([
     this.currentPageUrl$,
     this.currentTemporalExtent$,
+    this.isSpatialFilterEnabled$,
+    this.currentSpatialExtent$,
   ]).pipe(
-    switchMap(([currentPageUrl, temporalExtent]) => {
-      const options: GetCollectionItemsOptions = {
-        limit: STAC_ITEMS_PER_PAGE,
-      }
-      if (temporalExtent) {
-        options.datetime = {
-          ...(temporalExtent.start && { start: temporalExtent.start }),
-          ...(temporalExtent.end && { end: temporalExtent.end }),
+    switchMap(
+      ([
+        currentPageUrl,
+        temporalExtent,
+        isSpatialFilterEnabled,
+        spatialExtent,
+      ]) => {
+        const options: GetCollectionItemsOptions = {
+          limit: STAC_ITEMS_PER_PAGE,
         }
-      }
-      return from(
-        this.dataService.getItemsFromStacApi(currentPageUrl, options)
-      ).pipe(
-        tap((stacDocument) => {
-          stacDocument.links.forEach((link) => {
-            this.previousPageUrl = link.rel === 'prev' ? link.href : null
-            this.nextPageUrl = link.rel === 'next' ? link.href : null
-          })
-        }),
-        map((stacDocument) =>
-          stacDocument.features.map((item) => ({
-            id: item.id,
-            datetime: item.properties.datetime,
-          }))
+
+        if (temporalExtent) {
+          options.datetime = {
+            ...(temporalExtent.start && { start: temporalExtent.start }),
+            ...(temporalExtent.end && { end: temporalExtent.end }),
+          }
+        }
+
+        if (isSpatialFilterEnabled) {
+          options.bbox = spatialExtent
+        }
+
+        return from(
+          this.dataService.getItemsFromStacApi(currentPageUrl, options)
+        ).pipe(
+          tap((stacDocument) => {
+            stacDocument.links.forEach((link) => {
+              this.previousPageUrl = link.rel === 'prev' ? link.href : null
+              this.nextPageUrl = link.rel === 'next' ? link.href : null
+            })
+          }),
+          map((stacDocument) =>
+            stacDocument.features.map((item) => ({
+              id: item.id,
+              datetime: item.properties.datetime,
+            }))
+          )
         )
-      )
-    })
+      }
+    )
   )
 
   constructor(
     private dataService: DataService,
-    private metadataViewFacade: MdViewFacade
+    private metadataViewFacade: MdViewFacade,
+    private mapUtils: MapUtilsService
   ) {}
 
   ngOnInit() {
@@ -116,17 +143,24 @@ export class StacViewComponent implements OnInit {
               ? (metadata as DatasetRecord).temporalExtents
               : []
 
-          return temporalExtents.length > 0
-            ? temporalExtents[0]
-            : ({
-                start: null,
-                end: null,
-              } as DatasetTemporalExtent)
+          const temporalExtent =
+            temporalExtents.length > 0
+              ? temporalExtents[0]
+              : ({
+                  start: null,
+                  end: null,
+                } as DatasetTemporalExtent)
+
+          const spatialExtent = this.mapUtils.getRecordExtent(metadata)
+          return { temporalExtent, spatialExtent }
         })
       )
-      .subscribe((extent) => {
-        this.initialTemporalExtent = extent
-        this.currentTemporalExtent$.next(extent)
+      .subscribe(({ temporalExtent, spatialExtent }) => {
+        this.initialTemporalExtent = temporalExtent
+        this.currentTemporalExtent$.next(temporalExtent)
+
+        this.initialSpatialExtent = spatialExtent
+        this.currentSpatialExtent$.next(spatialExtent)
       })
 
     this.metadataViewFacade.stacLinks$
@@ -146,8 +180,18 @@ export class StacViewComponent implements OnInit {
     this.isFilterModified = true
   }
 
+  onSpatialExtentChange(extent: Extent) {
+    this.currentSpatialExtent$.next(extent)
+    this.isFilterModified = true
+  }
+
+  onSpatialFilterToggle(enabled: boolean) {
+    this.isSpatialFilterEnabled$.next(enabled)
+  }
+
   onResetFilters() {
     this.currentTemporalExtent$.next(this.initialTemporalExtent)
+    this.currentSpatialExtent$.next(this.initialSpatialExtent)
     this.isFilterModified = false
   }
 }

@@ -23,11 +23,23 @@
     </div>
 
     <div class="w-[655px] flex-shrink-0">
-      <gn-ui-filter-map
-        [mapContext]="mapContext"
-        [filterLabel]="'Activer le filtre dynamique sur l’emprise spatiale'"
+      <gn-ui-map-container
+        [context]="mapContext"
+        (extentChange)="onSpatialExtentChange($event)"
         class="w-full h-full"
-      ></gn-ui-filter-map>
+      >
+        <div
+          class="bg-white rounded-xl shadow-xl absolute left-1/2 transform -translate-x-1/2 bottom-0 mb-2.5 px-4 py-2 z-50"
+        >
+          <gn-ui-check-toggle
+            [value]="isSpatialFilterEnabled$ | async"
+            (toggled)="onSpatialFilterToggle($event)"
+            [label]="'Activer le filtre dynamique sur l\'emprise spatiale'"
+            [color]="'primary'"
+            class="flex items-center"
+          ></gn-ui-check-toggle>
+        </div>
+      </gn-ui-map-container>
     </div>
   </div>
   <gn-ui-results-grid [items]="items$ | async"></gn-ui-results-grid>
