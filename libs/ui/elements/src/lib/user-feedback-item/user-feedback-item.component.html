@@ -13,7 +13,7 @@
     </div>
     <div class="p-4 flex flex-col">
       <span>{{ userFeedbackParent.authorName }}</span>
-      <span> {{ formatRelativeDateTime(userFeedbackParent.date) }}</span>
+      <span [gnUiHumanizeDate]="userFeedbackParent.date"></span>
     </div>
   </div>
   <div data-cy="commentText" class="mt-4 whitespace-pre-line">

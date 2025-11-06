@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
-import { de, enUS, es, fr, it, Locale, nl, pt, sk } from 'date-fns/locale'
+import { type Locale } from 'date-fns/locale'
 import { formatDistance } from 'date-fns/formatDistance'
 
 @Injectable({
   providedIn: 'root',
 })
 export class DateService {
+  dateLocales = import('date-fns/locale')
+
   constructor(private translateService: TranslateService) {}
 
   private getDateObject(date: Date | string): Date {
@@ -29,6 +31,13 @@ export class DateService {
     return { locale, dateObj }
   }
 
+  private async getDateLocale(): Promise<Locale> {
+    return this.dateLocales.then(
+      (locales) =>
+        locales[this.translateService.currentLang || 'en-US'] as Locale
+    )
+  }
+
   formatDate(
     date: Date | string,
     options?: Intl.DateTimeFormatOptions
@@ -45,39 +54,11 @@ export class DateService {
     return dateObj.toLocaleString(locale, options)
   }
 
-  formatRelativeDateTime(date: Date | string) {
+  async formatRelativeDateTime(date: Date | string): Promise<string> {
     const dateObj = this.getDateObject(date)
 
     const now = new Date()
-    let locale: Locale
-
-    switch (this.translateService.currentLang) {
-      case 'fr':
-        locale = fr
-        break
-      case 'de':
-        locale = de
-        break
-      case 'es':
-        locale = es
-        break
-      case 'it':
-        locale = it
-        break
-      case 'nl':
-        locale = nl
-        break
-      case 'pt':
-        locale = pt
-        break
-      case 'sk':
-        locale = sk
-        break
-      case 'en':
-      default:
-        locale = enUS
-        break
-    }
+    const locale = await this.getDateLocale()
 
     return formatDistance(dateObj, now, {
       addSuffix: true,

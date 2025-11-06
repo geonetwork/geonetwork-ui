@@ -70,7 +70,6 @@ describe('HeaderRecordComponent', () => {
         }),
         MockProvider(DateService, {
           formatDate: jest.fn(),
-          formatRelativeDateTime: jest.fn(),
         }),
         MockProvider(PlatformServiceInterface, {
           supportsAuthentication: jest.fn().mockReturnValue(false),
@@ -233,29 +232,6 @@ describe('HeaderRecordComponent', () => {
         expect(url).toBeNull()
         done()
       })
-    })
-  })
-
-  describe('resourceDate getter', () => {
-    it('should format the dateToDisplay date using DateService', () => {
-      const dateService = TestBed.inject(DateService)
-      const formatDateSpy = jest
-        .spyOn(dateService, 'formatDate')
-        .mockReturnValue('formatted-absolute-date')
-      const formatRelativeDateSpy = jest
-        .spyOn(dateService, 'formatRelativeDateTime')
-        .mockReturnValue('formatted-relative-date')
-      expect(component.resourceDate).toStrictEqual({
-        date: 'formatted-relative-date',
-        tooltip: 'formatted-absolute-date',
-        label: 'record.metadata.resourceUpdated',
-      })
-      expect(formatRelativeDateSpy).toHaveBeenCalledWith(
-        datasetRecordsFixture()[0].resourceUpdated
-      )
-      expect(formatDateSpy).toHaveBeenCalledWith(
-        datasetRecordsFixture()[0].resourceUpdated
-      )
     })
   })
 

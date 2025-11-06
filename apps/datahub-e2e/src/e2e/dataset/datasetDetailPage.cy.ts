@@ -208,7 +208,7 @@ describe('Sections', () => {
       .eq(1)
       .children('p')
       .eq(1)
-      .should('contain.text', '2 years ago')
+      .should('contain.text', 'over 1 year ago')
       .invoke('attr', 'title')
       .should('contain', '3/17/2024')
 

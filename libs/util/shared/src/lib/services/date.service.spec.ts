@@ -95,40 +95,40 @@ describe('DateService', () => {
   })
 
   describe('formatRelativeDateTime', () => {
-    it('should format a date 10 days in the future', () => {
+    it('should format a date 10 days in the future', async () => {
       const now = new Date()
       const futureDate = new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000)
-      const result = service.formatRelativeDateTime(futureDate)
+      const result = await service.formatRelativeDateTime(futureDate)
       expect(result).toBe('in 10 days')
     })
 
-    it('should format a date 5 years in the past', () => {
+    it('should format a date 5 years in the past', async () => {
       const now = new Date()
       const pastDate = new Date(now.getTime() - 5 * 365 * 24 * 60 * 60 * 1000)
-      const result = service.formatRelativeDateTime(pastDate)
+      const result = await service.formatRelativeDateTime(pastDate)
       expect(result).toBe('almost 5 years ago')
     })
 
-    it('should format a valid date string', () => {
+    it('should format a valid date string', async () => {
       const now = new Date()
       const futureDate = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000)
       const dateString = futureDate.toISOString()
-      const result = service.formatRelativeDateTime(dateString)
+      const result = await service.formatRelativeDateTime(dateString)
       expect(result).toBe('in 3 days')
     })
 
-    it('should throw an error for an invalid date string', () => {
+    it('should throw an error for an invalid date string', async () => {
       const invalidDate = 'invalid-date'
-      expect(() => service.formatRelativeDateTime(invalidDate)).toThrowError(
-        'Invalid date string'
-      )
+      await expect(
+        service.formatRelativeDateTime(invalidDate)
+      ).rejects.toThrowError('Invalid date string')
     })
 
-    it('should use the correct locale from TranslateService', () => {
+    it('should use the correct locale from TranslateService', async () => {
       translateService.currentLang = 'fr'
       const now = new Date()
       const futureDate = new Date(now.getTime() + 2 * 24 * 60 * 60 * 1000)
-      const result = service.formatRelativeDateTime(futureDate)
+      const result = await service.formatRelativeDateTime(futureDate)
       expect(result).toBe('dans 2 jours')
     })
   })

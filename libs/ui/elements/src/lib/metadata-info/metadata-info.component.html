@@ -187,11 +187,9 @@
     >
       <p class="text-sm" translate>record.metadata.creation</p>
       <p
-        class="text-primary font-medium mt-1 resource-created cursor-default"
-        [title]="formatDate(metadata.resourceCreated)"
-      >
-        {{ formatRelativeDateTime(metadata.resourceCreated) }}
-      </p>
+        class="text-primary font-medium mt-1 resource-created"
+        [gnUiHumanizeDate]="metadata.resourceCreated"
+      ></p>
     </div>
     <div
       *ngIf="metadata.resourcePublished"
@@ -199,11 +197,9 @@
     >
       <p class="text-sm" translate>record.metadata.publication</p>
       <p
-        class="text-primary font-medium mt-1 resource-published cursor-default"
-        [title]="formatDate(metadata.resourcePublished)"
-      >
-        {{ formatRelativeDateTime(metadata.resourcePublished) }}
-      </p>
+        class="text-primary font-medium mt-1 resource-published"
+        [gnUiHumanizeDate]="metadata.resourcePublished"
+      ></p>
     </div>
     <div
       *ngIf="metadata.resourceUpdated"
@@ -211,11 +207,9 @@
     >
       <p class="text-sm" translate>record.metadata.update</p>
       <p
-        class="text-primary font-medium mt-1 resource-updated cursor-default"
-        [title]="formatDate(metadata.resourceUpdated)"
-      >
-        {{ formatRelativeDateTime(metadata.resourceUpdated) }}
-      </p>
+        class="text-primary font-medium mt-1 resource-updated"
+        [gnUiHumanizeDate]="metadata.resourceUpdated"
+      ></p>
     </div>
     <div
       *ngIf="metadata.kind === 'dataset' && metadata.updateFrequency"
@@ -304,14 +298,9 @@
     <div *ngIf="metadata.recordUpdated">
       <p class="text-sm" translate>record.metadata.updatedOn</p>
       <p
-        class="text-primary font-medium cursor-default"
-        [title]="formatDateTime(metadata.recordUpdated)"
-      >
-        {{
-          metadata.recordUpdated &&
-            formatRelativeDateTime(metadata.recordUpdated)
-        }}
-      </p>
+        class="text-primary font-medium"
+        [gnUiHumanizeDate]="metadata.recordUpdated"
+      ></p>
     </div>
     <div *ngIf="metadata.landingPage">
       <p class="text-sm" translate>record.metadata.sheet</p>

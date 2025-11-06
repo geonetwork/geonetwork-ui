@@ -101,13 +101,9 @@
                       metadata.kind !== 'service'
                     "
                   >
-                    <p
-                      translate
-                      [translateParams]="{ date: resourceDate.date }"
-                      class="text-sm cursor-default"
-                      [title]="resourceDate.tooltip"
-                    >
-                      {{ resourceDate.label }}
+                    <p class="text-sm">
+                      <span translate>{{ resourceDate.label }}</span>
+                      <span [gnUiHumanizeDate]="resourceDate.date"></span>
                     </p>
                   </div>
                   <div

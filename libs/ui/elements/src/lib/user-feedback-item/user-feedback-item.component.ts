@@ -17,7 +17,7 @@ import { TranslatePipe } from '@ngx-translate/core'
 import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matSendOutline } from '@ng-icons/material-icons/outline'
-import { DateService } from '@geonetwork-ui/util/shared'
+import { GnUiHumanizeDateDirective } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-user-feedback-item',
@@ -31,6 +31,7 @@ import { DateService } from '@geonetwork-ui/util/shared'
     TranslatePipe,
     ButtonComponent,
     SpinningLoaderComponent,
+    GnUiHumanizeDateDirective,
     NgIcon,
   ],
   viewProviders: [
@@ -47,8 +48,6 @@ export class UserFeedbackItemComponent implements OnInit {
   @Input() isAddUserFeedbackLoading: boolean
 
   @Output() newUserFeedbackAnswer = new EventEmitter<UserFeedback>()
-
-  constructor(private dateService: DateService) {}
 
   isAnAnswer = false
   newAnswer = ''
@@ -81,9 +80,5 @@ export class UserFeedbackItemComponent implements OnInit {
 
     this.newAnswer = ''
     this.onNewAnswerValueChange()
-  }
-
-  formatRelativeDateTime(date: Date | string): string {
-    return this.dateService.formatRelativeDateTime(date)
   }
 }
