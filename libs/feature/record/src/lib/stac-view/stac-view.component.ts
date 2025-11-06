@@ -145,12 +145,22 @@ export class StacViewComponent implements OnInit {
 
   onTemporalExtentChange(extent: DatasetTemporalExtent | null) {
     this.currentTemporalExtent$.next(extent)
+    this.currentPageUrl$.next(
+      this.removePaginationToken(this.currentPageUrl$.value)
+    )
     this.isFilterModified = true
   }
 
   onResetFilters() {
     this.currentTemporalExtent$.next(this.initialTemporalExtent)
     this.isFilterModified = false
+  }
+
+  removePaginationToken(url: string): string {
+    if (!url) return url
+    const urlObj = new URL(url)
+    urlObj.searchParams.delete('token')
+    return urlObj.toString()
   }
 
   handleError(error: FetchError | Error | string) {
