@@ -11,13 +11,13 @@ import {
   UserFeedbackViewModel,
 } from '@geonetwork-ui/common/domain/model/record'
 import { UserModel } from '@geonetwork-ui/common/domain/model/user'
-import { TimeSincePipe } from './time-since.pipe'
 import { CommonModule } from '@angular/common'
 import { ButtonComponent, TextAreaComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslatePipe } from '@ngx-translate/core'
 import { SpinningLoaderComponent } from '@geonetwork-ui/ui/widgets'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { matSendOutline } from '@ng-icons/material-icons/outline'
+import { DateService } from '@geonetwork-ui/util/shared'
 
 @Component({
   selector: 'gn-ui-user-feedback-item',
@@ -27,7 +27,6 @@ import { matSendOutline } from '@ng-icons/material-icons/outline'
   standalone: true,
   imports: [
     CommonModule,
-    TimeSincePipe,
     TextAreaComponent,
     TranslatePipe,
     ButtonComponent,
@@ -48,6 +47,8 @@ export class UserFeedbackItemComponent implements OnInit {
   @Input() isAddUserFeedbackLoading: boolean
 
   @Output() newUserFeedbackAnswer = new EventEmitter<UserFeedback>()
+
+  constructor(private dateService: DateService) {}
 
   isAnAnswer = false
   newAnswer = ''
@@ -80,5 +81,9 @@ export class UserFeedbackItemComponent implements OnInit {
 
     this.newAnswer = ''
     this.onNewAnswerValueChange()
+  }
+
+  formatRelativeDateTime(date: Date | string): string {
+    return this.dateService.formatRelativeDateTime(date)
   }
 }

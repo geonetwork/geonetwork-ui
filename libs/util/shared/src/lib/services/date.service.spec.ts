@@ -99,14 +99,14 @@ describe('DateService', () => {
       const now = new Date()
       const futureDate = new Date(now.getTime() + 10 * 24 * 60 * 60 * 1000)
       const result = service.formatRelativeDateTime(futureDate)
-      expect(result).toBe('next week')
+      expect(result).toBe('in 10 days')
     })
 
     it('should format a date 5 years in the past', () => {
       const now = new Date()
       const pastDate = new Date(now.getTime() - 5 * 365 * 24 * 60 * 60 * 1000)
       const result = service.formatRelativeDateTime(pastDate)
-      expect(result).toBe('5 years ago')
+      expect(result).toBe('almost 5 years ago')
     })
 
     it('should format a valid date string', () => {
@@ -125,11 +125,11 @@ describe('DateService', () => {
     })
 
     it('should use the correct locale from TranslateService', () => {
-      translateService.currentLang = 'fr-FR'
+      translateService.currentLang = 'fr'
       const now = new Date()
       const futureDate = new Date(now.getTime() + 2 * 24 * 60 * 60 * 1000)
       const result = service.formatRelativeDateTime(futureDate)
-      expect(result).toBe('après-demain')
+      expect(result).toBe('dans 2 jours')
     })
   })
 })

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
+import { de, enUS, es, fr, it, Locale, nl, pt, sk } from 'date-fns/locale'
+import { formatDistance } from 'date-fns/formatDistance'
 
 @Injectable({
   providedIn: 'root',
@@ -43,32 +45,43 @@ export class DateService {
     return dateObj.toLocaleString(locale, options)
   }
 
-  formatRelativeDateTime(date: Date | string): string {
-    const { locale, dateObj } = this.getLocaleAndDate(date)
-    const now = Date.now()
-    const diffInMs = dateObj.getTime() - now
-    const diffInDays = diffInMs / (1000 * 60 * 60 * 24)
-    const absDiffInDays = Math.abs(diffInDays)
-    const relativeFormatter = new Intl.RelativeTimeFormat(locale, {
-      numeric: 'auto',
+  formatRelativeDateTime(date: Date | string) {
+    const dateObj = this.getDateObject(date)
+
+    const now = new Date()
+    let locale: Locale
+
+    switch (this.translateService.currentLang) {
+      case 'fr':
+        locale = fr
+        break
+      case 'de':
+        locale = de
+        break
+      case 'es':
+        locale = es
+        break
+      case 'it':
+        locale = it
+        break
+      case 'nl':
+        locale = nl
+        break
+      case 'pt':
+        locale = pt
+        break
+      case 'sk':
+        locale = sk
+        break
+      case 'en':
+      default:
+        locale = enUS
+        break
+    }
+
+    return formatDistance(dateObj, now, {
+      addSuffix: true,
+      locale: locale,
     })
-
-    if (absDiffInDays >= 365 || Math.abs(diffInDays / 30) >= 12) {
-      const years = Math.round(diffInDays / 365)
-      return relativeFormatter.format(years, 'year')
-    }
-
-    if (absDiffInDays >= 30) {
-      const months = Math.round(diffInDays / 30)
-      return relativeFormatter.format(months, 'month')
-    }
-
-    if (absDiffInDays >= 7) {
-      const weeks = Math.round(diffInDays / 7)
-      return relativeFormatter.format(weeks, 'week')
-    }
-
-    const days = Math.round(diffInDays)
-    return relativeFormatter.format(days, 'day')
   }
 }
