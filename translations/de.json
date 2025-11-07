@@ -638,6 +638,7 @@
   "share.tab.permalink": "Teilen",
   "share.tab.webComponent": "Integrieren",
   "stac.filter.reset": "",
+  "stac.results.noResults": "Ihre Suchfilter lieferten keine Ergebnisse",
   "table.loading.data": "Daten werden geladen...",
   "table.object.count": "Objekte in diesem Datensatz",
   "table.paginator.firstPage": "Erste Seite",

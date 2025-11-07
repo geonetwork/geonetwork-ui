@@ -187,6 +187,29 @@ describe('StacViewComponent', () => {
         done()
       })
     })
+
+    it('should display info message and show no-results button when no items are returned', (done) => {
+      const dataService = ngMocks.findInstance(DataService)
+      dataService.getItemsFromStacApi = jest.fn().mockReturnValue(
+        Promise.resolve({ features: [], links: [] } as {
+          features: Array<any>
+          links: Array<any>
+        })
+      )
+
+      component.currentPageUrl$.next('http://example.com/stac')
+      component.currentTemporalExtent$.next(null)
+
+      component.items$.subscribe((items) => {
+        expect(items).toEqual([])
+        expect(component.error).toBeNull()
+        fixture.detectChanges()
+        const noResultsButton =
+          fixture.nativeElement.querySelector('#no-results-button')
+        expect(noResultsButton).not.toBeNull()
+        done()
+      })
+    })
   })
 
   describe('onTemporalExtentChange', () => {

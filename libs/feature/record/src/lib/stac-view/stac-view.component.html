@@ -9,18 +9,14 @@
       ></gn-ui-date-range-inputs>
 
       <div class="mt-auto mb-8 mx-8" *ngIf="isFilterModified">
-        <button
+        <gn-ui-button
           id="reset-filters-button"
-          type="button"
-          class="flex items-center"
-          (click)="onResetFilters()"
+          type="light"
+          (buttonClick)="onResetFilters()"
         >
           <span translate>stac.filter.reset</span>
-          <ng-icon
-            name="matDeleteOutline"
-            class="pointer-events-none ml-2"
-          ></ng-icon>
-        </button>
+          <ng-icon name="matDeleteOutline" class="ml-2"></ng-icon>
+        </gn-ui-button>
       </div>
     </div>
 
@@ -28,18 +24,34 @@
       <span>Map...</span>
     </div>
   </div>
-  <div class="mx-5 my-[30px] min-h-[274px]">
+  <div
+    class="mx-5 my-[30px] min-h-[274px] flex items-center justify-center flex-col"
+  >
     <!-- Keep grid outside ngIf to keep items$ observable alive -->
     <gn-ui-results-grid [items]="items$ | async"></gn-ui-results-grid>
     <gn-ui-popup-alert
-      *ngIf="error; else resultsContent"
+      *ngIf="error"
       type="warning"
       icon="matErrorOutlineOutline"
       class="block"
     >
       <span translate>{{ error }}</span>
     </gn-ui-popup-alert>
-    <ng-template #resultsContent>
+    <div
+      *ngIf="(items$ | async)?.length === 0; else paginationButtons"
+      class="flex items-center justify-center flex-col h-full gap-[10px]"
+    >
+      <h2 class="text-center text-xl" translate>stac.results.noResults</h2>
+      <gn-ui-button
+        id="no-results-button"
+        type="secondary"
+        (buttonClick)="onResetFilters()"
+      >
+        <span translate>stac.filter.reset</span>
+        <ng-icon name="matDeleteOutline" class="ml-2"></ng-icon>
+      </gn-ui-button>
+    </div>
+    <ng-template #paginationButtons>
       <div class="mt-[20px] mx-auto flex justify-center">
         <gn-ui-previous-next-buttons
           [listComponent]="this"

@@ -5,7 +5,10 @@ import {
   DatasetTemporalExtent,
 } from '@geonetwork-ui/common/domain/model/record'
 import { ResultsGridComponent } from '@geonetwork-ui/ui/elements'
-import { DateRangeInputsComponent } from '@geonetwork-ui/ui/inputs'
+import {
+  ButtonComponent,
+  DateRangeInputsComponent,
+} from '@geonetwork-ui/ui/inputs'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matDeleteOutline } from '@ng-icons/material-icons/outline'
 import { TranslateDirective, TranslateService } from '@ngx-translate/core'
@@ -46,6 +49,7 @@ const DEBOUNCE_TIME_MS = 500
     DateRangeInputsComponent,
     PreviousNextButtonsComponent,
     PopupAlertComponent,
+    ButtonComponent,
   ],
   viewProviders: [provideIcons({ matDeleteOutline })],
 })

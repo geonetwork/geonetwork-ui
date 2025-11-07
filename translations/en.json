@@ -638,6 +638,7 @@
   "share.tab.permalink": "Share",
   "share.tab.webComponent": "Integrate",
   "stac.filter.reset": "Reset filters",
+  "stac.results.noResults": "Your search filters did not match any items",
   "table.loading.data": "Loading data...",
   "table.object.count": "Objects in this dataset",
   "table.paginator.firstPage": "First page",
