@@ -58,15 +58,4 @@ describe('GnUiHumanizeDateDirective', () => {
     const el = fixture.debugElement.query(By.css('p'))
     expect(el.nativeElement.textContent).toBe('5 days ago')
   })
-
-  it('should not update element when date is null', async () => {
-    fixture.detectChanges()
-    await fixture.whenStable()
-
-    const elements = fixture.debugElement.queryAll(By.css('p'))
-    const nullElement = elements[1]
-
-    expect(nullElement.nativeElement.getAttribute('title')).toBeFalsy()
-    expect(nullElement.nativeElement.textContent.trim()).toBe('')
-  })
 })

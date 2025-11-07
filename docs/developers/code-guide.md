@@ -42,45 +42,25 @@ Use the `formatRelativeDateTime` method for relative time formatting:
 const relativeDate = await this.dateService.formatRelativeDateTime(myDate)
 ```
 
-### Displaying humanized dates in templates
+### Displaying humanized dates
 
-For displaying dates in a user-friendly relative format (e.g., "2 days ago", "over 1 year ago") with automatic tooltips showing the exact datetime, use the `GnUiHumanizeDateDirective`.
-
-First, import the directive in your component:
+Use `GnUiHumanizeDateDirective` to show relative dates (e.g., "2 days ago") with tooltips for exact datetimes. Import the directive:
 
 ```ts
 import { GnUiHumanizeDateDirective } from '@geonetwork-ui/util/shared'
-
-@Component({
-  // ...
-  imports: [GnUiHumanizeDateDirective],
-  standalone: true,
-})
 ```
 
 Then use it in your template:
 
 ```html
-<!-- Displays humanized date with automatic tooltip -->
 <p [gnUiHumanizeDate]="metadata.resourceCreated"></p>
-
-<!-- Output: "2 days ago" or "over 1 year ago" -->
-<!-- Tooltip on hover: "11/4/2025, 10:30:00" -->
 ```
-
-The directive automatically:
-
-- Displays the date in relative format (e.g., "2 days ago", "3 months ago")
-- Adds a tooltip with the exact datetime on hover
-- Handles null/undefined values gracefully
 
 ### Best practices
 
 - Never use direct JavaScript Date formatting methods or third-party libraries for date formatting
 - Always use the DateService methods for consistency
-- Use `GnUiHumanizeDateDirective` in templates when you want to display humanized/relative dates
 - Consider time zones when working with dates, especially in global applications
-- Remember that `formatRelativeDateTime()` is asynchronous and returns a Promise
 - For date manipulation (not formatting), consider using the utility methods provided by the DateService
 
 ## Event handling

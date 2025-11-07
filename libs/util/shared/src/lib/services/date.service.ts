@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { type Locale } from 'date-fns/locale'
 import { formatDistance } from 'date-fns/formatDistance'
-import { DEFAULT_LANG } from '@geonetwork-ui/util/i18n'
+
+const DEFAULT_LANGUAGE = 'en'
 
 @Injectable({
   providedIn: 'root',
@@ -29,13 +30,13 @@ export class DateService {
     locale: string
     dateObj: Date
   } {
-    const locale = this.translateService.currentLang || DEFAULT_LANG
+    const locale = this.translateService.currentLang || DEFAULT_LANGUAGE
     const dateObj = this.getDateObject(date)
     return { locale, dateObj }
   }
 
   private async getDateLocale(): Promise<Locale> {
-    const lang = this.translateService.currentLang || DEFAULT_LANG
+    const lang = this.translateService.currentLang || DEFAULT_LANGUAGE
     const locales = await this.dateLocales
     return locales[lang]
   }

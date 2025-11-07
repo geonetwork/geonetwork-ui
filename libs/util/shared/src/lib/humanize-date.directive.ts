@@ -15,10 +15,6 @@ export class GnUiHumanizeDateDirective implements OnInit {
   ) {}
 
   async ngOnInit() {
-    if (!this.gnUiHumanizeDate) {
-      return
-    }
-
     await this.updateElement()
   }
 
