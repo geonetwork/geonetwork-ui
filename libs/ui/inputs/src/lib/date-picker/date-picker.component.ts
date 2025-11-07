@@ -5,7 +5,11 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { MatNativeDateModule } from '@angular/material/core'
+import {
+  DateAdapter,
+  MAT_DATE_LOCALE,
+  MatNativeDateModule,
+} from '@angular/material/core'
 import { MatDatepickerModule } from '@angular/material/datepicker'
 import { ButtonComponent } from '../button/button.component'
 import {
@@ -14,6 +18,7 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { iconoirCalendar } from '@ng-icons/iconoir'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'gn-ui-date-picker',
@@ -32,9 +37,20 @@ import { iconoirCalendar } from '@ng-icons/iconoir'
     provideNgIconsConfig({
       size: '1.5rem',
     }),
+    {
+      provide: MAT_DATE_LOCALE,
+      useFactory: (locale: string) => locale,
+    },
   ],
 })
 export class DatePickerComponent {
   @Input() date: Date
   @Output() dateChange = new EventEmitter<Date>()
+
+  constructor(
+    private dateAdapter: DateAdapter<Date>,
+    private translate: TranslateService
+  ) {
+    this.dateAdapter.setLocale(this.translate.currentLang)
+  }
 }
