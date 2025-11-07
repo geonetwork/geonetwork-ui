@@ -2,7 +2,7 @@ import { ServiceRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export const WALLONIE_SERVICE_NAPITSWALLONIA_RECORD: ServiceRecord = {
   uniqueIdentifier: 'fe1c1a3d-c75b-435c-a1d1-48426818f54d',
-  resourceIdentifier: 'fe1c1a3d-c75b-435c-a1d1-48426818f54d',
+  resourceIdentifiers: [{ code: 'fe1c1a3d-c75b-435c-a1d1-48426818f54d' }],
   kind: 'service',
   otherLanguages: [],
   defaultLanguage: 'fr',

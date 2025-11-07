@@ -92,7 +92,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     recordUpdated: readRecordUpdated,
     recordCreated: () => undefined, // not supported in ISO19139
     recordPublished: () => undefined, // not supported in ISO19139
-    resourceIdentifier: readResourceIdentifier,
+    resourceIdentifiers: readResourceIdentifier,
     resourceUpdated: readResourceUpdated,
     resourceCreated: readResourceCreated,
     resourcePublished: readResourcePublished,
@@ -133,7 +133,7 @@ export class Iso19139Converter extends BaseConverter<string> {
     recordUpdated: writeRecordUpdated,
     recordCreated: () => undefined, // not supported in ISO19139
     recordPublished: () => undefined, // not supported in ISO19139
-    resourceIdentifier: writeResourceIdentifier,
+    resourceIdentifiers: writeResourceIdentifier,
     resourceUpdated: writeResourceUpdated,
     resourceCreated: writeResourceCreated,
     resourcePublished: writeResourcePublished,
@@ -240,12 +240,19 @@ export class Iso19139Converter extends BaseConverter<string> {
     const onlineResources = this.readers['onlineResources'](rootEl, tr)
     const otherLanguages = this.readers['otherLanguages'](rootEl, tr)
     const defaultLanguage = this.readers['defaultLanguage'](rootEl, tr)
-    const resourceIdentifier = this.readers['resourceIdentifier'](rootEl, tr)
+    const resourceIdentifiers = this.readers['resourceIdentifiers'](
+      rootEl,
+      tr
+    ) as Array<{
+      code: string
+      codeSpace?: string
+      url?: string
+    }>
     const spatialExtents = this.readers['spatialExtents'](rootEl, tr)
 
     return {
       uniqueIdentifier,
-      ...(resourceIdentifier && { resourceIdentifier }),
+      ...(resourceIdentifiers?.length > 0 && { resourceIdentifiers }),
       kind,
       otherLanguages,
       defaultLanguage,
@@ -388,8 +395,8 @@ export class Iso19139Converter extends BaseConverter<string> {
       this.writers['otherConstraints'](record, rootEl)
     fieldChanged('onlineResources') &&
       this.writers['onlineResources'](record, rootEl)
-    fieldChanged('resourceIdentifier') &&
-      this.writers['resourceIdentifier'](record, rootEl)
+    fieldChanged('resourceIdentifiers') &&
+      this.writers['resourceIdentifiers'](record, rootEl)
 
     if (record.kind === 'dataset') {
       fieldChanged('status') && this.writers['status'](record, rootEl)

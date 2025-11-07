@@ -2,7 +2,7 @@ import { ServiceRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export const GEO2FRANCE_SERVICE_EAUXUSEES_RECORD: ServiceRecord = {
   uniqueIdentifier: 'be052079-f1f6-4f6f-a722-cbf11deb40eb',
-  resourceIdentifier: 'https://id.eaufrance.fr/meta/ODP_WFS',
+  resourceIdentifiers: [{ code: 'https://id.eaufrance.fr/meta/ODP_WFS' }],
   kind: 'service',
   otherLanguages: [],
   defaultLanguage: 'fr',

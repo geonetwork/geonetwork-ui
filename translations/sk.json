@@ -461,6 +461,8 @@
   "record.metadata.contact": "Kontakt",
   "record.metadata.creation": "",
   "record.metadata.details": "Detaily",
+  "record.metadata.doi.copy": "",
+  "record.metadata.doi.open": "",
   "record.metadata.download": "Sťahovania",
   "record.metadata.feature.catalog": "",
   "record.metadata.formats": "Formáty",

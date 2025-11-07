@@ -108,6 +108,11 @@ describe('Gn4Converter', () => {
             lineage: null,
             recordPublished: null,
             recordUpdated: null,
+            resourceIdentifiers: [
+              {
+                code: 'eea_v_3035_10_km_eea-ref-grid-de_2013',
+              },
+            ],
             onlineResources: [],
             licenses: [],
             legalConstraints: [],
@@ -158,6 +163,11 @@ describe('Gn4Converter', () => {
             lineage: null,
             recordPublished: null,
             recordUpdated: null,
+            resourceIdentifiers: [
+              {
+                code: 'eea_v_4258_100_m_uwwtd-sa-rivers_p_2013-2014_v05_r00',
+              },
+            ],
             onlineResources: [],
             contacts: [],
             contactsForResource: [],
@@ -397,6 +407,40 @@ describe('Gn4Converter', () => {
               },
             ])
           })
+        })
+      })
+      describe('resource identifiers', () => {
+        it('converts ES resourceIdentifier array to domain resourceIdentifiers array', async () => {
+          const record = await service.readRecord({
+            ...hit,
+            _source: {
+              ...hit._source,
+              resourceIdentifier: [
+                {
+                  code: '10.1234/abcd',
+                  codeSpace: 'doi.org',
+                  link: 'https://doi.org/10.1234/abcd',
+                },
+                {
+                  code: '8764cd51-ec30-4290-97f7-92c503de3730',
+                  codeSpace: 'urn:uuid',
+                  link: '',
+                },
+              ],
+            },
+          })
+
+          expect(record.resourceIdentifiers).toEqual([
+            {
+              code: '10.1234/abcd',
+              codeSpace: 'doi.org',
+              url: 'https://doi.org/10.1234/abcd',
+            },
+            {
+              code: '8764cd51-ec30-4290-97f7-92c503de3730',
+              codeSpace: 'urn:uuid',
+            },
+          ])
         })
       })
 
@@ -1701,6 +1745,11 @@ describe('Gn4Converter', () => {
             recordUpdated: new Date('2021-10-05T12:48:57.678Z'),
             recordPublished: new Date('2021-11-05T12:48:57.678Z'),
             resourceCreated: new Date('2012-01-01T00:00:00.000Z'),
+            resourceIdentifiers: [
+              {
+                code: 'DOI:10.12770/cf5048f6-5bbf-4e44-ba74-e6f429af51ea',
+              },
+            ],
             resourceUpdated: new Date('2021-12-13T00:00:00.000Z'),
             resourcePublished: new Date('2021-04-01T00:00:00.000Z'),
             status: 'ongoing',
@@ -2100,6 +2149,11 @@ describe('Gn4Converter', () => {
             recordCreated: new Date('2021-04-12T07:50:54.000Z'),
             recordUpdated: new Date('2022-12-16T16:16:01.912Z'),
             resourceCreated: new Date('1999-01-01T00:00:00.000Z'),
+            resourceIdentifiers: [
+              {
+                code: 'ch.are.alpenkonvention',
+              },
+            ],
             resourceUpdated: new Date('2009-01-01T00:00:00.000Z'),
             securityConstraints: [],
             spatialExtents: [
@@ -2145,6 +2199,12 @@ describe('Gn4Converter', () => {
             lineage: null,
             recordUpdated: new Date('2024-10-15T07:37:39.350Z'),
             recordPublished: null,
+            resourceIdentifiers: [
+              {
+                code: 'fe1c1a3d-c75b-435c-a1d1-48426818f54d',
+                codeSpace: 'http://geodata.wallonie.be/id/',
+              },
+            ],
             ownerOrganization: {
               name: 'My Organization',
               website: new URL('http://my.org/'),
@@ -2619,6 +2679,11 @@ describe('Gn4Converter', () => {
             },
             recordCreated: new Date('2021-12-14T15:02:50.000Z'),
             resourceCreated: new Date('2019-12-02T00:00:00.000Z'),
+            resourceIdentifiers: [
+              {
+                code: 'https://id.eaufrance.fr/meta/ODP_WFS',
+              },
+            ],
             uniqueIdentifier: 'be052079-f1f6-4f6f-a722-cbf11deb40eb',
             landingPage: new URL(
               'http://my.catalog.org/metadata/be052079-f1f6-4f6f-a722-cbf11deb40eb'
@@ -3039,6 +3104,12 @@ describe('Gn4Converter', () => {
             recordPublished: null,
             recordUpdated: new Date('2024-07-22T11:52:39.049Z'),
             resourceCreated: new Date('2017-05-31T22:00:00.000Z'),
+            resourceIdentifiers: [
+              {
+                code: '83809bcd-1763-4d28-b820-2b9828083ba5',
+                codeSpace: 'http://geodata.wallonie.be/id/',
+              },
+            ],
             resourcePublished: new Date('2018-03-31T22:00:00.000Z'),
             reuseType: 'application',
             securityConstraints: [],
