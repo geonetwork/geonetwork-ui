@@ -8,7 +8,9 @@ import { DEFAULT_LANG } from '@geonetwork-ui/util/i18n'
   providedIn: 'root',
 })
 export class DateService {
-  dateLocales = import('date-fns/locale')
+  dateLocales = import('@geonetwork-ui/util/i18n/date-locales').then(
+    (obj) => obj.default
+  )
 
   constructor(private translateService: TranslateService) {}
 
@@ -34,8 +36,8 @@ export class DateService {
 
   private async getDateLocale(): Promise<Locale> {
     const lang = this.translateService.currentLang || DEFAULT_LANG
-    const localeKey = lang === 'en' ? 'enUS' : lang
-    return this.dateLocales.then((locales) => locales[localeKey] as Locale)
+    const locales = await this.dateLocales
+    return locales[lang]
   }
 
   formatDate(
