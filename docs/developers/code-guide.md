@@ -34,6 +34,28 @@ Use the `formatDateTime` method when you need to include the time component:
 const formattedDateTime = this.dateService.formatDateTime(myDate)
 ```
 
+Use the `formatRelativeDateTime` method for relative time formatting:
+
+```ts
+// Formats to relative time (e.g., "2 days ago", "in 3 months")
+// Note: This method returns a Promise
+const relativeDate = await this.dateService.formatRelativeDateTime(myDate)
+```
+
+### Displaying humanized dates
+
+Use `GnUiHumanizeDateDirective` to show relative dates (e.g., "2 days ago") with tooltips for exact datetimes. Import the directive:
+
+```ts
+import { GnUiHumanizeDateDirective } from '@geonetwork-ui/util/shared'
+```
+
+Then use it in your template:
+
+```html
+<p [gnUiHumanizeDate]="metadata.resourceCreated"></p>
+```
+
 ### Best practices
 
 - Never use direct JavaScript Date formatting methods or third-party libraries for date formatting

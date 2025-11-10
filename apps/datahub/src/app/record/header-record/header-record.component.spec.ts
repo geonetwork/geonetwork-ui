@@ -235,22 +235,6 @@ describe('HeaderRecordComponent', () => {
     })
   })
 
-  describe('resourceDate getter', () => {
-    it('should format the dateToDisplay date using DateService', () => {
-      const dateService = TestBed.inject(DateService)
-      const spy = jest
-        .spyOn(dateService, 'formatDate')
-        .mockReturnValue('formatted-date')
-      expect(component.resourceDate).toStrictEqual({
-        date: 'formatted-date',
-        label: 'record.metadata.resourceUpdated',
-      })
-      expect(spy).toHaveBeenCalledWith(
-        datasetRecordsFixture()[0].resourceUpdated
-      )
-    })
-  })
-
   describe('back()', () => {
     it('should call the back function of Location if previous navigation', () => {
       router.lastSuccessfulNavigation.previousNavigation = {} as any

@@ -186,27 +186,30 @@
       data-test="details-panel-resource-created"
     >
       <p class="text-sm" translate>record.metadata.creation</p>
-      <p class="text-primary font-medium mt-1 resource-created">
-        {{ formatDate(metadata.resourceCreated) }}
-      </p>
+      <p
+        class="text-primary font-medium mt-1 resource-created"
+        [gnUiHumanizeDate]="metadata.resourceCreated"
+      ></p>
     </div>
     <div
       *ngIf="metadata.resourcePublished"
       data-test="details-panel-resource-published"
     >
       <p class="text-sm" translate>record.metadata.publication</p>
-      <p class="text-primary font-medium mt-1 resource-published">
-        {{ formatDate(metadata.resourcePublished) }}
-      </p>
+      <p
+        class="text-primary font-medium mt-1 resource-published"
+        [gnUiHumanizeDate]="metadata.resourcePublished"
+      ></p>
     </div>
     <div
       *ngIf="metadata.resourceUpdated"
       data-test="details-panel-resource-updated"
     >
       <p class="text-sm" translate>record.metadata.update</p>
-      <p class="text-primary font-medium mt-1 resource-updated">
-        {{ formatDate(metadata.resourceUpdated) }}
-      </p>
+      <p
+        class="text-primary font-medium mt-1 resource-updated"
+        [gnUiHumanizeDate]="metadata.resourceUpdated"
+      ></p>
     </div>
     <div
       *ngIf="metadata.kind === 'dataset' && metadata.updateFrequency"
@@ -294,9 +297,10 @@
   <div class="flex flex-col gap-4 mr-4 py-5 rounded text-gray-700">
     <div *ngIf="metadata.recordUpdated">
       <p class="text-sm" translate>record.metadata.updatedOn</p>
-      <p class="text-primary font-medium">
-        {{ metadata.recordUpdated && formatDateTime(metadata.recordUpdated) }}
-      </p>
+      <p
+        class="text-primary font-medium"
+        [gnUiHumanizeDate]="metadata.recordUpdated"
+      ></p>
     </div>
     <div *ngIf="metadata.landingPage">
       <p class="text-sm" translate>record.metadata.sheet</p>
