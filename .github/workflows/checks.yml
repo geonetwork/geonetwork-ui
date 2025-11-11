@@ -198,7 +198,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   e2e-run:
-    name: E2E tests / ${{ matrix.app }} / GN v${{ matrix.gn_version }}
+    name: E2E tests / ${{ matrix.app }} / GN v${{ matrix.geonetwork_versions.gn }}
     runs-on: ubuntu-latest
     needs:
       - compute-affected
@@ -206,12 +206,24 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gn_version: [4.2.2, 4.2.8, 4.4.0]
+        geonetwork_versions:
+          - gn: 4.2.2
+            es: 7.17.15
+          - gn: 4.2.8
+            es: 7.17.15
+          - gn: 4.2.14
+            es: 7.17.15
+          - gn: 4.4.0
+            es: 7.17.15
+          - gn: 4.4.8
+            es: 8.14.3
+            es_above_8: true
         app: [datahub, metadata-editor]
         skip_datahub: ${{ fromJSON(needs.compute-affected.outputs.skip_datahub) }}
         skip_editor: ${{ fromJSON(needs.compute-affected.outputs.skip_editor) }}
         exclude:
-          - gn_version: 4.2.2 # metadata-editor requires v4.2.5+
+          - geonetwork_versions: # metadata-editor requires v4.2.5+
+              gn: 4.2.2
             app: metadata-editor
           - skip_datahub: 'true' # skip datahub if not affected
             app: datahub
@@ -250,7 +262,10 @@ jobs:
 
       - name: Start up backend support services
         env:
-          GEONETWORK_VERSION: ${{ matrix.gn_version }}
+          GEONETWORK_VERSION: ${{ matrix.geonetwork_versions.gn }}
+          ELASTICSEARCH_VERSION: ${{ matrix.geonetwork_versions.es }}
+          # this is because the xpack.security. params should only be applied to ES v8 and above; using an uppercase prefix makes the params ignored
+          ES_XPACK_PARAMETER_PREFIX: ${{ !matrix.geonetwork_versions.es_above_8 && 'IGNORE_' || '' }}
         working-directory: support-services
         run: docker compose up --quiet-pull init
 
@@ -263,7 +278,7 @@ jobs:
         if: always()
         id: upload-screenshots
         with:
-          name: cypress-screenshots-app-${{ matrix.app }}-gn-${{ matrix.gn_version }}
+          name: cypress-screenshots-app-${{ matrix.app }}-gn-${{ matrix.geonetwork_versions.gn }}
           path: |
             apps/datahub-e2e/cypress/screenshots/**/*
             apps/metadata-editor-e2e/cypress/screenshots/**/*
