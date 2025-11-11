@@ -2,8 +2,6 @@
 -- PostgreSQL database dump
 --
 
-\restrict fK23po9FmtgqEspDD4bw83RKg9VRM2tM6xS0bZ99df9emTo9fGAfeaxbHdH2ulh
-
 -- Dumped from database version 15.14 (Debian 15.14-1.pgdg13+1)
 -- Dumped by pg_dump version 15.14 (Debian 15.14-1.pgdg13+1)
 
@@ -8021,6 +8019,3 @@ ALTER TABLE ONLY public.metadatastatus
 --
 -- PostgreSQL database dump complete
 --
-
-\unrestrict fK23po9FmtgqEspDD4bw83RKg9VRM2tM6xS0bZ99df9emTo9fGAfeaxbHdH2ulh
-
