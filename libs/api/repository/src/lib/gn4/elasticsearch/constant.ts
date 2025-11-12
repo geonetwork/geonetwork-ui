@@ -7,7 +7,6 @@ export const ES_SOURCE_SUMMARY = [
   'resourceAbstractObject',
   'overview',
   'logo',
-  'codelist_status_text',
   'link',
   'linkProtocol',
   'contactForResource*.organisation*',
