@@ -230,15 +230,15 @@ describe('StacViewComponent', () => {
   })
 
   describe('onTemporalExtentChange', () => {
-    it('should update current temporal extent, remove pagination token and set filter modified flag', () => {
+    it('should update current temporal extent, reset currentPageUrl$ and set filter modified flag', () => {
       const newExtent: DatasetTemporalExtent = {
         start: new Date('2024-01-01'),
         end: new Date('2024-12-31'),
       }
-      jest.spyOn(component, 'removePaginationToken')
+      component.initialPageUrl = 'http://example.com/stac'
       component.onTemporalExtentChange(newExtent)
       expect(component.currentTemporalExtent$.value).toEqual(newExtent)
-      expect(component.removePaginationToken).toHaveBeenCalled()
+      expect(component.currentPageUrl$.value).toEqual(component.initialPageUrl)
       expect(component.isFilterModified).toBe(true)
     })
   })
