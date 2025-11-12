@@ -97,14 +97,9 @@
             <ng-template mat-tab-label>
               <span class="tab-header-label" translate>record.tab.stac</span>
             </ng-template>
-            <div
-              class="block"
-              *ngIf="
-                (displayStac$ | async) && (selectedView$ | async) === 'stac'
-              "
-            >
+            <ng-template matTabContent>
               <gn-ui-stac-view></gn-ui-stac-view>
-            </div>
+            </ng-template>
           </mat-tab>
         </mat-tab-group>
       </div>
