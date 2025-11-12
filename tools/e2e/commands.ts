@@ -261,24 +261,8 @@ Cypress.Commands.add('editor_createRecordCopy', () => {
       cy.log('An existing copy of the test record was found and deleted.')
     })
 
-  // Duplicate & publish the Stations d'épuration record
-  cy.get('gn-ui-fuzzy-search input').type(
-    '{selectAll}{del}station épuration{enter}'
-  )
-  cy.get('[data-cy="table-row"]')
-    .first()
-    .should('contain.text', "Stations d'épuration")
-    .find('[data-test="record-menu-button"]')
-    .click()
-  cy.get('[data-test="record-menu-duplicate-button"]').click()
-  cy.url().should('include', '/duplicate/')
-  // because new records are saved by default, they are not drafts and can be published
-  cy.get('md-editor-publish-button').click()
-
-  // Open the copy
-  cy.visit('/catalog/search')
-  cy.get('gn-ui-fuzzy-search input').type('station épuration copy{enter}')
-  cy.get('[data-cy="table-row"]').first().children('div').eq(2).click()
+  // Duplicate the Stations d'épuration record
+  cy.visit('/duplicate/011963da-afc0-494c-a2cc-5cbd59e122e4')
   cy.url().should('include', '/edit/')
   return cy.editor_readFormUniqueIdentifier()
 })
