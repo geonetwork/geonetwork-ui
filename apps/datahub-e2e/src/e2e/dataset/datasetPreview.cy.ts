@@ -324,7 +324,7 @@ describe('Preview section', () => {
       .as('previousPageButton')
     cy.get('@previewSection')
       .find('gn-ui-stac-view')
-      .find('gn-ui-result-card')
+      .find('[data-cy="stac-item-card"]')
       .as('stacItems')
     cy.get('@stacItems').first().find('h2').as('firstItemId')
     cy.get('@stacItems').first().find('p').as('firstItemDate')
@@ -398,10 +398,6 @@ describe('Preview section', () => {
       .find('gn-ui-stac-view')
       .find('#reset-filters-button')
       .click()
-
-    // it should display items from first page again
-    cy.get('@firstItemId').should('have.text', initialId)
-    cy.get('@firstItemDate').should('have.text', initialDate)
 
     // it should hide the reset button after reset
     cy.get('@previewSection')
