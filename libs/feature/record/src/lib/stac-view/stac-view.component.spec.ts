@@ -160,6 +160,23 @@ describe('StacViewComponent', () => {
       })
     })
 
+    it('should fetch items without datetime filter when start and end date are null', (done) => {
+      component.currentPageUrl$.next('http://example.com/stac')
+      component.currentTemporalExtent$.next({
+        start: null,
+        end: null,
+      })
+
+      component.items$.subscribe((items) => {
+        const dataService = ngMocks.findInstance(DataService)
+        expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
+          'http://example.com/stac',
+          { limit: 12 }
+        )
+        done()
+      })
+    })
+
     it('should update pagination URLs after successful fetch', (done) => {
       component.currentPageUrl$.next('http://example.com/stac')
       component.currentTemporalExtent$.next(null)

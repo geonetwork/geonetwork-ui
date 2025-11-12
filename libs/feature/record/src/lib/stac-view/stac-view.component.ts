@@ -76,7 +76,7 @@ export class StacViewComponent implements OnInit {
       const options: GetCollectionItemsOptions = {
         limit: STAC_ITEMS_PER_PAGE,
       }
-      if (temporalExtent) {
+      if (temporalExtent && (temporalExtent.start || temporalExtent.end)) {
         options.datetime = {
           ...(temporalExtent.start && { start: temporalExtent.start }),
           ...(temporalExtent.end && { end: temporalExtent.end }),
