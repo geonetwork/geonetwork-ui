@@ -375,7 +375,7 @@ describe('Preview section', () => {
     cy.get('@firstItemId').should('have.text', initialId)
     cy.get('@firstItemDate').should('have.text', initialDate)
 
-    // Modify the start date
+    // Modify the end date
     cy.get('@previewSection')
       .find('gn-ui-stac-view')
       .find('#end-date-picker')
