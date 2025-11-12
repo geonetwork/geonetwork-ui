@@ -25,40 +25,43 @@
     </div>
   </div>
   <div
-    class="mx-5 my-[30px] min-h-[274px] flex items-center justify-center flex-col"
+    class="relative mx-5 my-[30px] min-h-[274px] flex items-center justify-center flex-col"
   >
     <!-- Keep grid outside ngIf to keep items$ observable alive -->
     <gn-ui-stac-items-result-grid
       [items]="items$ | async"
     ></gn-ui-stac-items-result-grid>
-    <gn-ui-popup-alert
-      *ngIf="error"
-      type="warning"
-      icon="matErrorOutlineOutline"
-      class="block"
-    >
-      <span translate>{{ error }}</span>
-    </gn-ui-popup-alert>
     <div
-      *ngIf="(items$ | async)?.length === 0; else paginationButtons"
-      class="flex items-center justify-center flex-col h-full gap-[10px]"
+      *ngIf="(items$ | async)?.length > 0; else noResultsOrError"
+      class="mt-[20px] mx-auto flex justify-center"
     >
-      <h2 class="text-center text-xl" translate>stac.results.noResults</h2>
-      <gn-ui-button
-        id="no-results-button"
-        type="secondary"
-        (buttonClick)="onResetFilters()"
-      >
-        <span translate>stac.filter.reset</span>
-        <ng-icon name="matDeleteOutline" class="ml-2"></ng-icon>
-      </gn-ui-button>
+      <gn-ui-previous-next-buttons
+        [listComponent]="this"
+        [displayLabels]="true"
+      ></gn-ui-previous-next-buttons>
     </div>
-    <ng-template #paginationButtons>
-      <div class="mt-[20px] mx-auto flex justify-center">
-        <gn-ui-previous-next-buttons
-          [listComponent]="this"
-          [displayLabels]="true"
-        ></gn-ui-previous-next-buttons>
+    <ng-template #noResultsOrError>
+      <gn-ui-popup-alert
+        *ngIf="error"
+        type="warning"
+        icon="matErrorOutlineOutline"
+        class="absolute left-0 top-0 w-full block"
+      >
+        <span translate>{{ error }}</span>
+      </gn-ui-popup-alert>
+      <div
+        *ngIf="!error"
+        class="flex items-center justify-center flex-col h-full gap-[10px]"
+      >
+        <h2 class="text-center text-xl" translate>stac.results.noResults</h2>
+        <gn-ui-button
+          id="no-results-button"
+          type="secondary"
+          (buttonClick)="onResetFilters()"
+        >
+          <span translate>stac.filter.reset</span>
+          <ng-icon name="matDeleteOutline" class="ml-2"></ng-icon>
+        </gn-ui-button>
       </div>
     </ng-template>
   </div>
