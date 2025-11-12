@@ -128,8 +128,8 @@ describe('StacViewComponent', () => {
 
       component.items$.subscribe((items) => {
         expect(items).toEqual([
-          { id: 'item1', datetime: '2023-01-01T00:00:00Z' },
-          { id: 'item2', datetime: '2023-01-02T00:00:00Z' },
+          { id: 'item1', properties: { datetime: '2023-01-01T00:00:00Z' } },
+          { id: 'item2', properties: { datetime: '2023-01-02T00:00:00Z' } },
         ])
         const dataService = ngMocks.findInstance(DataService)
         expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(

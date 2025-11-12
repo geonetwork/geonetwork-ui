@@ -28,7 +28,9 @@
     class="mx-5 my-[30px] min-h-[274px] flex items-center justify-center flex-col"
   >
     <!-- Keep grid outside ngIf to keep items$ observable alive -->
-    <gn-ui-results-grid [items]="items$ | async"></gn-ui-results-grid>
+    <gn-ui-stac-items-result-grid
+      [items]="items$ | async"
+    ></gn-ui-stac-items-result-grid>
     <gn-ui-popup-alert
       *ngIf="error"
       type="warning"

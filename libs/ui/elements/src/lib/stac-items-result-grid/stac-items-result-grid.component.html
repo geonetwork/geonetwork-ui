@@ -1,0 +1,12 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[10px]">
+  <div *ngFor="let item of items">
+    <div
+      class="h-[173px] flex flex-col justify-between gap-4 bg-white rounded-lg border border-gray-300 px-5 py-3 mx-auto"
+    >
+      <h2 class="text-xl text-black line-clamp-4 break-words">
+        {{ item.id }}
+      </h2>
+      <p class="truncate">{{ item.properties.datetime }}</p>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,7 @@ import {
   DatasetRecord,
   DatasetTemporalExtent,
 } from '@geonetwork-ui/common/domain/model/record'
-import { ResultsGridComponent } from '@geonetwork-ui/ui/elements'
+import { StacItemsResultGridComponent } from '@geonetwork-ui/ui/elements'
 import {
   ButtonComponent,
   DateRangeInputsComponent,
@@ -26,7 +26,7 @@ import {
   take,
   tap,
 } from 'rxjs'
-import { GetCollectionItemsOptions } from '@camptocamp/ogc-client'
+import { GetCollectionItemsOptions, StacItem } from '@camptocamp/ogc-client'
 import { MdViewFacade } from '../state'
 import { PreviousNextButtonsComponent } from '@geonetwork-ui/ui/layout'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
@@ -45,7 +45,7 @@ const DEBOUNCE_TIME_MS = 500
     CommonModule,
     NgIconComponent,
     TranslateDirective,
-    ResultsGridComponent,
+    StacItemsResultGridComponent,
     DateRangeInputsComponent,
     PreviousNextButtonsComponent,
     PopupAlertComponent,
@@ -66,7 +66,7 @@ export class StacViewComponent implements OnInit {
   nextPageUrl: string
   currentPageUrl$ = new BehaviorSubject<string | null>(null)
 
-  items$: Observable<{ id: string; datetime: string }[]> = combineLatest([
+  items$: Observable<StacItem[]> = combineLatest([
     this.currentPageUrl$,
     this.currentTemporalExtent$,
   ]).pipe(
@@ -92,12 +92,7 @@ export class StacViewComponent implements OnInit {
           this.nextPageUrl =
             stacDocument.links.find((link) => link.rel === 'next')?.href || null
         }),
-        map((stacDocument) =>
-          stacDocument.features.map((item) => ({
-            id: item.id,
-            datetime: item.properties.datetime,
-          }))
-        ),
+        map((stacDocument) => stacDocument.features),
         catchError((err) => {
           this.handleError(err)
           return of([])

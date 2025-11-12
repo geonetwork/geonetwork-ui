@@ -1,18 +1,18 @@
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { applicationConfig, Meta, StoryObj } from '@storybook/angular'
-import { ResultsGridComponent } from './results-grid.component'
+import { StacItemsResultGridComponent } from './stac-items-result-grid.component'
 
 export default {
-  title: 'Elements/ResultsGridComponent',
-  component: ResultsGridComponent,
+  title: 'Elements/StacItemsResultGridComponent',
+  component: StacItemsResultGridComponent,
   decorators: [
     applicationConfig({
       providers: [provideI18n()],
     }),
   ],
-} as Meta<ResultsGridComponent>
+} as Meta<StacItemsResultGridComponent>
 
-export const Default: StoryObj<ResultsGridComponent> = {
+export const Default: StoryObj<StacItemsResultGridComponent> = {
   args: {
     items: [
       {
@@ -31,13 +31,13 @@ export const Default: StoryObj<ResultsGridComponent> = {
   },
 }
 
-export const Empty: StoryObj<ResultsGridComponent> = {
+export const Empty: StoryObj<StacItemsResultGridComponent> = {
   args: {
     items: [],
   },
 }
 
-export const SingleItem: StoryObj<ResultsGridComponent> = {
+export const SingleItem: StoryObj<StacItemsResultGridComponent> = {
   args: {
     items: [
       {
@@ -48,7 +48,7 @@ export const SingleItem: StoryObj<ResultsGridComponent> = {
   },
 }
 
-export const ManyItems: StoryObj<ResultsGridComponent> = {
+export const ManyItems: StoryObj<StacItemsResultGridComponent> = {
   args: {
     items: [
       { id: 'item-001', datetime: '2023-01-01T00:00:00Z' },
@@ -67,7 +67,7 @@ export const ManyItems: StoryObj<ResultsGridComponent> = {
   },
 }
 
-export const WithLongIds: StoryObj<ResultsGridComponent> = {
+export const WithLongIds: StoryObj<StacItemsResultGridComponent> = {
   args: {
     items: [
       {
@@ -86,7 +86,7 @@ export const WithLongIds: StoryObj<ResultsGridComponent> = {
   },
 }
 
-export const WithMixedIdLengths: StoryObj<ResultsGridComponent> = {
+export const WithMixedIdLengths: StoryObj<StacItemsResultGridComponent> = {
   args: {
     items: [
       { id: 'x', datetime: '2023-05-01T00:00:00Z' },
@@ -105,7 +105,7 @@ export const WithMixedIdLengths: StoryObj<ResultsGridComponent> = {
   },
 }
 
-export const WithFourItems: StoryObj<ResultsGridComponent> = {
+export const WithFourItems: StoryObj<StacItemsResultGridComponent> = {
   args: {
     items: [
       { id: 'recent-1', datetime: '2024-11-06T10:30:00Z' },
