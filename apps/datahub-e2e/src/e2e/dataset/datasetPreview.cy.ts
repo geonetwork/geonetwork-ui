@@ -98,6 +98,13 @@ beforeEach(() => {
       fixture: 'stac-items-date-modified.json',
     }
   )
+  cy.intercept(
+    'GET',
+    'https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items?limit=12',
+    {
+      fixture: 'stac-items-no-date.json',
+    }
+  )
 })
 
 describe('Preview section', () => {
@@ -298,9 +305,13 @@ describe('Preview section', () => {
     const modifiedDateId = ' S2B_20191231T103339024Z_32ULV_0500_acd8ae09db '
     const modifiedDateDate = '2019-12-31T10:33:39.024000Z'
 
+    const noDateId = ' S2A_20251112T073151024000Z_37MCT_0511_06485b683a '
+    const noDateDate = '2025-11-12T07:31:51.024000Z'
+
     // Visit a dataset with STAC links and temporal extents
     cy.visit('/dataset/sentinel2-l2a-sen2cor')
 
+    // aliases
     cy.get('datahub-record-metadata')
       .find('[id="preview"]')
       .first()
@@ -328,6 +339,16 @@ describe('Preview section', () => {
       .as('stacItems')
     cy.get('@stacItems').first().find('h2').as('firstItemId')
     cy.get('@stacItems').first().find('p').as('firstItemDate')
+    cy.get('@previewSection')
+      .find('gn-ui-stac-view')
+      .find('#start-date-picker')
+      .find('input')
+      .as('startDatePicker')
+    cy.get('@previewSection')
+      .find('gn-ui-stac-view')
+      .find('#end-date-picker')
+      .find('input')
+      .as('endDatePicker')
 
     // Click on STAC tab
     cy.get('@stacTab').click()
@@ -403,6 +424,27 @@ describe('Preview section', () => {
     cy.get('@previewSection')
       .find('gn-ui-stac-view')
       .should('not.contain', '#reset-filters-button')
+
+    // Choose date span without results
+    cy.get('@startDatePicker').clear().type('1990-01-01{enter}')
+    cy.get('@endDatePicker').clear().type('1995-01-01{enter}')
+
+    // it should show a second reset button instead of results
+    cy.get('@previewSection')
+      .find('gn-ui-stac-view')
+      .find('#no-results-button')
+      .should('be.visible')
+
+    // Delete start and end dates
+    cy.get('@startDatePicker').clear().type('{enter}')
+    cy.get('@endDatePicker').clear().type('{enter}')
+
+    // it should display 12 items
+    cy.get('@stacItems').should('have.length', 12)
+
+    // it should display items corresponding to no new date range filter
+    cy.get('@firstItemId').should('have.text', noDateId)
+    cy.get('@firstItemDate').should('have.text', noDateDate)
   })
 
   // skip for now as modifying dump on my side breaks all tests on GN 4.2.2
