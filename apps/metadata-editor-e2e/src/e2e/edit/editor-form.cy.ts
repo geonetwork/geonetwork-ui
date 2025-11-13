@@ -224,7 +224,9 @@ describe('editor form', () => {
         method: 'GET',
         url: '**/attachments/sample.png',
       }).as('importUrlRequest')
-      cy.get('@importUrlRequest').its('response.statusCode').should('eq', 200)
+      cy.get('@importUrlRequest')
+        .its('response.statusCode')
+        .should('be.oneOf', [200, 304]) // the backend may respond with a "not changed" code
       cy.get('@saveStatus').should('eq', 'record_up_to_date')
       cy.get('gn-ui-image-input').find('img').should('have.length', 1)
 
