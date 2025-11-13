@@ -1,14 +1,17 @@
 <div
-  class="h-[750px]"
   *ngIf="
     (displayMap$ | async) || (displayData$ | async) || (displayStac$ | async)
   "
   id="preview"
 >
-  <div class="bg-primary-opacity-10 overflow-visible h-[480px]">
+  <div class="absolute bg-primary-opacity-10 w-full h-[480px]"></div>
+  <div class="overflow-visible">
     <div class="container-lg pb-4 px-4 lg:mx-auto">
       <div>
-        <h2 class="gn-ui-section-title transform translate-y-11 pt-0" translate>
+        <h2
+          class="gn-ui-section-title transform translate-y-1 sm:translate-y-11 py-4 sm:py-0"
+          translate
+        >
           record.metadata.preview
         </h2>
         <mat-tab-group
@@ -72,8 +75,9 @@
             </div>
           </mat-tab>
           <mat-tab
-            *ngIf="(isMobile$ | async) === false"
-            [disabled]="(displayData$ | async) === false"
+            [disabled]="
+              (displayData$ | async) === false || (isMobile$ | async) === true
+            "
           >
             <ng-template mat-tab-label>
               <span class="tab-header-label" translate>record.tab.chart</span>
@@ -99,15 +103,11 @@
             </ng-template>
             <div
               class="block"
-              style="height: 639px"
               *ngIf="
                 (displayStac$ | async) && (selectedView$ | async) === 'stac'
               "
             >
-              <gn-ui-stac-view
-                [link]="(metadataViewFacade.stacLinks$ | async)?.[0]"
-                [initialTemporalExtent]="firstTemporalExtent$ | async"
-              ></gn-ui-stac-view>
+              <gn-ui-stac-view></gn-ui-stac-view>
             </div>
           </mat-tab>
         </mat-tab-group>
@@ -117,7 +117,7 @@
 </div>
 <div
   class="container-lg lg:mx-auto mb-10 px-4"
-  *ngIf="displayViewShare$ | async"
+  *ngIf="(displayViewShare$ | async) && (selectedView$ | async) !== 'stac'"
 >
   <gn-ui-data-view-share
     [viewType]="selectedView$ | async"

@@ -6,9 +6,9 @@
 export interface Paginable {
   isFirstPage: boolean
   isLastPage: boolean
-  pagesCount: number
-  currentPage: number
-  goToPage(index: number): void
+  pagesCount?: number
+  currentPage?: number
+  goToPage?(index: number): void
   goToNextPage(): void
   goToPrevPage(): void
 }

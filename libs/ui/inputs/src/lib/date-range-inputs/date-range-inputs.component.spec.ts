@@ -1,18 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { DatePickerComponent } from './date-picker.component'
+
+import { DateRangeInputsComponent } from './date-range-inputs.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 
-describe('DatePickerComponent', () => {
-  let component: DatePickerComponent
-  let fixture: ComponentFixture<DatePickerComponent>
+describe('DateRangeInputsComponent', () => {
+  let component: DateRangeInputsComponent
+  let fixture: ComponentFixture<DateRangeInputsComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DatePickerComponent],
+      imports: [DateRangeInputsComponent],
       providers: [provideI18n()],
     }).compileComponents()
 
-    fixture = TestBed.createComponent(DatePickerComponent)
+    fixture = TestBed.createComponent(DateRangeInputsComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
