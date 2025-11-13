@@ -401,8 +401,7 @@ describe('Preview section', () => {
       .find('gn-ui-stac-view')
       .find('#end-date-picker')
       .find('input')
-      .clear()
-      .type('2020-01-01{enter}')
+      .type('{selectall}{del}2020-01-01{enter}')
 
     // it should display items corresponding to the new date range
     cy.get('@firstItemId').should('have.text', modifiedDateId)

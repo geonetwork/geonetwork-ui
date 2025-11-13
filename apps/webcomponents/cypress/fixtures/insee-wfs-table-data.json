@@ -1,0 +1,140 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--1b2dbd23_195385017a1_-1d1f",
+      "geometry": null,
+      "properties": {
+        "oid": 1,
+        "idk": "N14390E19203-N14394E19211",
+        "men": 19,
+        "men_occ5": 12,
+        "pt_men_occ5": 63.1578947368421
+      },
+      "bbox": [3.448819, 48.822945, 3.474431, 48.833334]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--1b2dbd23_195385017a1_-1d1e",
+      "geometry": null,
+      "properties": {
+        "oid": 2,
+        "idk": "N14396E19204-N14403E19207",
+        "men": 17,
+        "men_occ5": 13,
+        "pt_men_occ5": 76.47058823529412
+      },
+      "bbox": [3.449401, 48.83385, 3.462156, 48.848815]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--1b2dbd23_195385017a1_-1d1d",
+      "geometry": null,
+      "properties": {
+        "oid": 3,
+        "idk": "N14396E19212-N14401E19217",
+        "men": 14,
+        "men_occ5": 8,
+        "pt_men_occ5": 57.14285714285714
+      },
+      "bbox": [3.471598, 48.835125, 3.489303, 48.846825]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--1b2dbd23_195385017a1_-1d1c",
+      "geometry": null,
+      "properties": {
+        "oid": 4,
+        "idk": "N14404E19220-N14408E19222",
+        "men": 22,
+        "men_occ5": 11,
+        "pt_men_occ5": 50
+      },
+      "bbox": [3.491672, 48.850725, 3.500997, 48.860155]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--1b2dbd23_195385017a1_-1d1b",
+      "geometry": null,
+      "properties": {
+        "oid": 5,
+        "idk": "N14405E19197-N14408E19202",
+        "men": 18,
+        "men_occ5": 10,
+        "pt_men_occ5": 55.55555555555556
+      },
+      "bbox": [3.429205, 48.848848, 3.446449, 48.856972]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--1b2dbd23_195385017a1_-1d1a",
+      "geometry": null,
+      "properties": {
+        "oid": 6,
+        "idk": "N14408E19205-N14412E19210",
+        "men": 19,
+        "men_occ5": 11,
+        "pt_men_occ5": 57.89473684210527
+      },
+      "bbox": [3.449983, 48.8555, 3.467464, 48.865412]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--1b2dbd23_195385017a1_-1d19",
+      "geometry": null,
+      "properties": {
+        "oid": 7,
+        "idk": "N14410E19187-N14422E19194",
+        "men": 21,
+        "men_occ5": 13,
+        "pt_men_occ5": 61.904761904761905
+      },
+      "bbox": [3.398702, 48.856196, 3.423535, 48.880762]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--1b2dbd23_195385017a1_-1d18",
+      "geometry": null,
+      "properties": {
+        "oid": 8,
+        "idk": "N14410E19211-N14412E19216",
+        "men": 13,
+        "men_occ5": 7,
+        "pt_men_occ5": 53.84615384615385
+      },
+      "bbox": [3.466281, 48.860039, 3.483288, 48.866367]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--1b2dbd23_195385017a1_-1d17",
+      "geometry": null,
+      "properties": {
+        "oid": 9,
+        "idk": "N14411E19179-N14419E19181",
+        "men": 18,
+        "men_occ5": 9,
+        "pt_men_occ5": 50
+      },
+      "bbox": [3.377686, 48.856696, 3.387991, 48.873297]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--1b2dbd23_195385017a1_-1d16",
+      "geometry": null,
+      "properties": {
+        "oid": 10,
+        "idk": "N14413E19203-N14415E19209",
+        "men": 11,
+        "men_occ5": 9,
+        "pt_men_occ5": 81.81818181818183
+      },
+      "bbox": [3.443838, 48.864135, 3.463565, 48.870625]
+    }
+  ],
+  "totalFeatures": 63172,
+  "numberMatched": 63172,
+  "numberReturned": 10,
+  "timeStamp": "2025-02-24T14:25:50.188Z",
+  "crs": null
+}

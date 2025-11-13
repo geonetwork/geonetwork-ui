@@ -54,7 +54,7 @@ describe('header', () => {
       cy.get('gn-ui-fuzzy-search').type('velo')
       cy.get('mat-option').should('have.text', ' Accroches vélos MEL ')
     })
-    it('should lead to the dataset page when clicking on the autocomplete result', () => {
+    it('should go to the dataset page when clicking on the autocomplete result', () => {
       cy.get('gn-ui-fuzzy-search').type('velo')
       cy.get('mat-option').should('have.text', ' Accroches vélos MEL ').click()
       cy.url().should('include', '/dataset/')
@@ -82,12 +82,6 @@ describe('header', () => {
         .find('[data-cy="recordTitle"]')
         .first()
         .should('contain', 'Accroches vélos MEL')
-    })
-    it('should go to dataset page when click on the autocomplete result', () => {
-      cy.get('gn-ui-fuzzy-search').type('velo')
-      cy.get('mat-option').should('have.text', ' Accroches vélos MEL ')
-      cy.get('mat-option').click()
-      cy.url().should('include', '/dataset/')
     })
     it('should not display the feature catalog dataset', () => {
       cy.get('gn-ui-fuzzy-search').type('catalog')

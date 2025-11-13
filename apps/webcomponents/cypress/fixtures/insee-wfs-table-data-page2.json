@@ -1,0 +1,154 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--43bcf198_19538c12328_-7071",
+      "geometry": null,
+      "properties": {
+        "oid": 11,
+        "idk": "N14413E19210-N14422E19221",
+        "men": 36,
+        "men_occ5": 22,
+        "pt_men_occ5": 61.111111111111114
+      },
+      "bbox": [3.461197, 48.865253, 3.496162, 48.885071]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--43bcf198_19538c12328_-7070",
+      "geometry": null,
+      "properties": {
+        "oid": 12,
+        "idk": "N14414E19195-N14425E19202",
+        "men": 19,
+        "men_occ5": 9,
+        "pt_men_occ5": 47.368421052631575
+      },
+      "bbox": [3.419723, 48.864645, 3.444313, 48.887416]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--43bcf198_19538c12328_-706f",
+      "geometry": null,
+      "properties": {
+        "oid": 13,
+        "idk": "N14415E19182-N14419E19182",
+        "men": 14,
+        "men_occ5": 3,
+        "pt_men_occ5": 21.428571428571427
+      },
+      "bbox": [3.385836, 48.864343, 3.389749, 48.873458]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--43bcf198_19538c12328_-706e",
+      "geometry": null,
+      "properties": {
+        "oid": 14,
+        "idk": "N14415E19183-N14420E19185",
+        "men": 15,
+        "men_occ5": 2,
+        "pt_men_occ5": 13.333333333333334
+      },
+      "bbox": [3.388313, 48.864504, 3.397898, 48.875732]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--43bcf198_19538c12328_-706d",
+      "geometry": null,
+      "properties": {
+        "oid": 15,
+        "idk": "N14415E19223-N14418E19234",
+        "men": 20,
+        "men_occ5": 15,
+        "pt_men_occ5": 75
+      },
+      "bbox": [3.497466, 48.870901, 3.531011, 48.879965]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--43bcf198_19538c12328_-706c",
+      "geometry": null,
+      "properties": {
+        "oid": 16,
+        "idk": "N14416E19203-N14419E19204",
+        "men": 16,
+        "men_occ5": 11,
+        "pt_men_occ5": 68.75
+      },
+      "bbox": [3.442888, 48.869508, 3.449272, 48.876991]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--43bcf198_19538c12328_-706b",
+      "geometry": null,
+      "properties": {
+        "oid": 17,
+        "idk": "N14420E19235-N14431E19250",
+        "men": 31,
+        "men_occ5": 25,
+        "pt_men_occ5": 80.64516129032258
+      },
+      "bbox": [3.527025, 48.881756, 3.573321, 48.905765]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--43bcf198_19538c12328_-706a",
+      "geometry": null,
+      "properties": {
+        "oid": 18,
+        "idk": "N14421E19183-N14425E19183",
+        "men": 12,
+        "men_occ5": 8,
+        "pt_men_occ5": 66.66666666666666
+      },
+      "bbox": [3.387115, 48.875249, 3.39103, 48.884364]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--43bcf198_19538c12328_-7069",
+      "geometry": null,
+      "properties": {
+        "oid": 19,
+        "idk": "N14421E19222-N14422E19223",
+        "men": 20,
+        "men_occ5": 10,
+        "pt_men_occ5": 50
+      },
+      "bbox": [3.493806, 48.881489, 3.499713, 48.885388]
+    },
+    {
+      "type": "Feature",
+      "id": "rectangles_200m_menage_erbm.fid--43bcf198_19538c12328_-7068",
+      "geometry": null,
+      "properties": {
+        "oid": 20,
+        "idk": "N14421E19230-N14423E19234",
+        "men": 25,
+        "men_occ5": 20,
+        "pt_men_occ5": 80
+      },
+      "bbox": [3.515312, 48.882757, 3.529605, 48.88892]
+    }
+  ],
+  "totalFeatures": 63172,
+  "numberMatched": 63172,
+  "numberReturned": 10,
+  "timeStamp": "2025-02-24T16:28:27.050Z",
+  "links": [
+    {
+      "title": "previous page",
+      "type": "application/json",
+      "rel": "previous",
+      "href": "https://www.geo2france.fr/geoserver/insee/wfs?PROPERTYNAME=oid%2Cidk%2Cmen%2Cmen_occ5%2Cpt_men_occ5&REQUEST=GetFeature&SORTBY=oid%20A&SRSNAME=EPSG%3A4326&OUTPUTFORMAT=application%2Fjson&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&COUNT=10&SERVICE=WFS&STARTINDEX=0"
+    },
+    {
+      "title": "next page",
+      "type": "application/json",
+      "rel": "next",
+      "href": "https://www.geo2france.fr/geoserver/insee/wfs?PROPERTYNAME=oid%2Cidk%2Cmen%2Cmen_occ5%2Cpt_men_occ5&REQUEST=GetFeature&SORTBY=oid%20A&SRSNAME=EPSG%3A4326&OUTPUTFORMAT=application%2Fjson&VERSION=2.0.0&TYPENAMES=insee%3Arectangles_200m_menage_erbm&COUNT=10&SERVICE=WFS&STARTINDEX=20"
+    }
+  ],
+  "crs": null
+}

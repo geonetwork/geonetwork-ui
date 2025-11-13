@@ -276,6 +276,65 @@ jobs:
           pr_number: ${{ github.event.number }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  wc-e2e-run:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
+    name: Webcomponents e2e tests / GN v${{ matrix.gn_version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        gn_version: [4.2.2, 4.2.8, 4.4.0]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - id: npm-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+            .nx
+          key: ${{ runner.os }}-npm-nx-cypress-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-nx-cypress-${{ hashFiles('**/package-lock.json') }}
+            ${{ runner.os }}-npm-nx-cypress-
+
+      - run: npm ci
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+
+      - name: Start up backend support services
+        env:
+          GEONETWORK_VERSION: ${{ matrix.gn_version }}
+        working-directory: support-services
+        run: docker compose up --quiet-pull init
+
+      - name: Start webcomponents demo server and run webcomponents e2e tests
+        run: npm run webcomponents:e2e:ci
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        id: upload-screenshots-wc
+        with:
+          name: cypress-screenshots-wc-gn-${{ matrix.gn_version }}
+          path: apps/webcomponents/cypress/screenshots/**/*
+
+      - uses: thollander/actions-comment-pull-request@v2
+        if: always() && github.event_name == 'pull_request' && steps.upload-screenshots-wc.outputs.artifact-url
+        with:
+          message: '📷 Screenshots for webcomponents are [here](${{ steps.upload-screenshots-wc.outputs.artifact-url }})!'
+          comment_tag: screenshots-wc-url
+          pr_number: ${{ github.event.number }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build-npm-package:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
     name: Attempt to build the NPM package

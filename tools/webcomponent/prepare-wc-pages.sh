@@ -22,6 +22,15 @@ rm -f ${DIST_WC_PATH}styles.css
 find apps/webcomponents/src/app -name "*.html" -type f | while read c; do
   echo "-- Copying HTML file:" $(basename "$c")
   cp "$c" $DIST_WC_PATH
+  if [ ${2} ] && [ ${2} = "--local" ]
+  then
+    echo "-- Adapting to local HTML file:" $(basename "$c")
+    sed -i -e 's/https:\/\/www.geo2france.fr\/geonetwork/http:\/\/localhost:8080\/geonetwork/g' "${DIST_WC_PATH}/$(basename "$c")"
+    sed -i -e 's/https:\/\/www.geo2france.fr\/datahub/\/datahub/g' "${DIST_WC_PATH}/$(basename "$c")"
+    sed -i -e 's/9da51f58-15c6-4325-82b1-2cf6c8e75d0f/04bcec79-5b25-4b16-b635-73115f7456e4/g' "${DIST_WC_PATH}/$(basename "$c")"
+    sed -i -e 's/proxy-path="https:\/\/www.geo2france.fr\/mapstore\/proxy\/?url="/proxy-path=""/g' "${DIST_WC_PATH}/$(basename "$c")"
+    sed -i -e 's/Géo2France/Métropole Européenne de Lille/g' "${DIST_WC_PATH}/$(basename "$c")"
+  fi
 done
 
 echo "-- Copy demo pages"
