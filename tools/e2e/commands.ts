@@ -24,7 +24,10 @@ declare namespace Cypress {
     clearFavorites(): void
     clearRecordDrafts(): void
     deleteRecord(uuid: string): void
-    editor_createRecordCopy(): Chainable<string | number | string[]>
+    editor_createRecordCopy(
+      uuidToCopy?: string,
+      titleToCopy?: string
+    ): Chainable<string | number | string[]>
     editor_readFormUniqueIdentifier(): Chainable<string | number | string[]>
     editor_wrapPreviousDraft(uuid: string): void
     editor_wrapFirstDraft(uuid: string): void
@@ -239,15 +242,18 @@ Cypress.Commands.add('deleteRecord', (uuid: string) => {
     })
 })
 
-Cypress.Commands.add('editor_createRecordCopy', () => {
+Cypress.Commands.add('editor_createRecordCopy', (uuidToCopy, titleToCopy) => {
   cy.login('admin', 'admin', false)
   cy.viewport(1920, 2400)
 
   cy.clearRecordDrafts()
 
+  const recordTitle = titleToCopy ?? 'station épuration'
+  const recordUuid = uuidToCopy ?? '011963da-afc0-494c-a2cc-5cbd59e122e4'
+
   // Clear any existing copy of the test record
   cy.visit('/catalog/search')
-  cy.get('gn-ui-fuzzy-search input').type('station épuration{enter}')
+  cy.get('gn-ui-fuzzy-search input').type(`${recordTitle}{enter}`)
   cy.get('[data-cy="table-row"]')
     .should('have.length.lt', 10) // making sure the records were updated
     .then((rows$) => {
@@ -262,7 +268,7 @@ Cypress.Commands.add('editor_createRecordCopy', () => {
     })
 
   // Duplicate the Stations d'épuration record
-  cy.visit('/duplicate/011963da-afc0-494c-a2cc-5cbd59e122e4')
+  cy.visit(`/duplicate/${recordUuid}`)
   cy.url().should('include', '/edit/')
   return cy.editor_readFormUniqueIdentifier()
 })
