@@ -53,6 +53,7 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { matSwipeOutline } from '@ng-icons/material-icons/outline'
+import { transformExtent } from 'ol/proj'
 
 const DEFAULT_BASEMAP_LAYER: MapContextLayerXyz = {
   type: 'xyz',
@@ -88,6 +89,8 @@ export class MapContainerComponent
   implements AfterViewInit, OnChanges, OnDestroy
 {
   @Input() context: MapContext | null
+
+  @Output() resolvedExtentChange = new EventEmitter<Extent>()
 
   @ViewChild('map') container: ElementRef
 
@@ -176,11 +179,24 @@ export class MapContainerComponent
     private mapViewConstraints: MapViewConstraints
   ) {}
 
+  calculateCurrentMapExtent(): Extent {
+    const extent = this.olMap.getView().calculateExtent(this.olMap.getSize())
+    const reprojectedExtent = transformExtent(
+      extent,
+      this.olMap.getView().getProjection(),
+      'EPSG:4326'
+    )
+
+    return reprojectedExtent as Extent
+  }
+
   async ngAfterViewInit() {
     this.olMap = await createMapFromContext(
       this.processContext(this.context),
       this.container.nativeElement
     )
+    this.resolvedExtentChange.emit(this.calculateCurrentMapExtent())
+
     this.setupDisplayMessageObservable()
     this.olMapResolver(this.olMap)
   }
@@ -192,6 +208,10 @@ export class MapContainerComponent
         this.processContext(changes['context'].previousValue)
       )
       await applyContextDiffToMap(this.olMap, diff)
+
+      if (diff.viewChanges) {
+        this.resolvedExtentChange.emit(this.calculateCurrentMapExtent())
+      }
     }
   }
 
@@ -255,21 +275,28 @@ export class MapContainerComponent
       }
     }
 
-    // Ensure valid view
     if (
       processed.view &&
-      !('zoom' in processed.view) &&
-      !('center' in processed.view)
+      'zoom' in processed.view &&
+      'center' in processed.view
     ) {
-      if (this.mapViewConstraints.maxExtent) {
-        processed.view = {
-          extent: this.mapViewConstraints.maxExtent,
-          ...processed.view,
-        }
-      } else {
-        processed.view = { ...DEFAULT_VIEW, ...processed.view }
-      }
+      return processed
     }
+
+    if (processed.view && 'extent' in processed.view) {
+      return processed
+    }
+
+    // Ensure valid view
+    if (this.mapViewConstraints.maxExtent) {
+      processed.view = {
+        extent: this.mapViewConstraints.maxExtent,
+        ...processed.view,
+      }
+    } else {
+      processed.view = { ...DEFAULT_VIEW, ...processed.view }
+    }
+
     return processed
   }
 }

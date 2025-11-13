@@ -10,7 +10,11 @@ import {
   CheckToggleComponent,
 } from '@geonetwork-ui/ui/inputs'
 import { MapContainerComponent } from '@geonetwork-ui/ui/map'
-import { Extent, MapContext } from '@geospatial-sdk/core/dist/model'
+import {
+  Extent,
+  MapContext,
+  MapContextView,
+} from '@geospatial-sdk/core/dist/model'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matDeleteOutline } from '@ng-icons/material-icons/outline'
 import { TranslateDirective } from '@ngx-translate/core'
@@ -57,18 +61,13 @@ export class StacViewComponent implements OnInit {
   )
 
   initialSpatialExtent: Extent | null = null
+  resolvedInitialSpatialExtent: Extent | null = null
   currentSpatialExtent$ = new BehaviorSubject<Extent | null>(null)
   isSpatialFilterEnabled$ = new BehaviorSubject<boolean>(true)
-  mapContext: MapContext = {
-    layers: [
-      {
-        type: 'xyz',
-        url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        attributions: '<a href="https://www.openstreetmap.org/copyright">',
-      },
-    ],
+  mapContext$ = new BehaviorSubject<MapContext>({
+    layers: [],
     view: null,
-  }
+  })
 
   previousPageUrl: string
   nextPageUrl: string
@@ -103,7 +102,7 @@ export class StacViewComponent implements OnInit {
           }
         }
 
-        if (isSpatialFilterEnabled) {
+        if (isSpatialFilterEnabled && spatialExtent) {
           options.bbox = spatialExtent
         }
 
@@ -160,7 +159,12 @@ export class StacViewComponent implements OnInit {
         this.currentTemporalExtent$.next(temporalExtent)
 
         this.initialSpatialExtent = spatialExtent
-        this.currentSpatialExtent$.next(spatialExtent)
+        this.mapContext$.next({
+          ...this.mapContext$.value,
+          view: {
+            extent: spatialExtent,
+          },
+        })
       })
 
     this.metadataViewFacade.stacLinks$
@@ -182,7 +186,20 @@ export class StacViewComponent implements OnInit {
 
   onSpatialExtentChange(extent: Extent) {
     this.currentSpatialExtent$.next(extent)
-    this.isFilterModified = true
+
+    if (this.resolvedInitialSpatialExtent) {
+      this.isFilterModified =
+        extent[0] !== this.resolvedInitialSpatialExtent[0] ||
+        extent[1] !== this.resolvedInitialSpatialExtent[1] ||
+        extent[2] !== this.resolvedInitialSpatialExtent[2] ||
+        extent[3] !== this.resolvedInitialSpatialExtent[3]
+    } else {
+      this.isFilterModified = true
+    }
+  }
+
+  onResolvedMapExtentChange(extent: Extent) {
+    this.resolvedInitialSpatialExtent = extent
   }
 
   onSpatialFilterToggle(enabled: boolean) {
@@ -191,7 +208,14 @@ export class StacViewComponent implements OnInit {
 
   onResetFilters() {
     this.currentTemporalExtent$.next(this.initialTemporalExtent)
-    this.currentSpatialExtent$.next(this.initialSpatialExtent)
+    this.currentSpatialExtent$.next(null)
     this.isFilterModified = false
+
+    this.mapContext$.next({
+      ...this.mapContext$.value,
+      view: {
+        extent: this.initialSpatialExtent,
+      },
+    })
   }
 }

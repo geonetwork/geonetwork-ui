@@ -24,8 +24,9 @@
 
     <div class="w-[655px] flex-shrink-0">
       <gn-ui-map-container
-        [context]="mapContext"
+        [context]="mapContext$ | async"
         (extentChange)="onSpatialExtentChange($event)"
+        (resolvedExtentChange)="onResolvedMapExtentChange($event)"
         class="w-full h-full"
       >
         <div
