@@ -62,7 +62,6 @@ const DEBOUNCE_TIME_MS = 500
   viewProviders: [provideIcons({ matDeleteOutline })],
 })
 export class StacViewComponent implements OnInit {
-  isFilterModified = false
   error = null
 
   initialTemporalExtent: DatasetTemporalExtent | null = null
@@ -78,6 +77,34 @@ export class StacViewComponent implements OnInit {
     layers: [],
     view: null,
   })
+
+  isFilterModified$ = combineLatest([
+    this.currentTemporalExtent$,
+    this.currentSpatialExtent$,
+    this.isSpatialFilterEnabled$,
+  ]).pipe(
+    map(([temporalExtent, spatialExtent, isSpatialFilterEnabled]) => {
+      const isTemporalModified =
+        this.initialTemporalExtent?.start !== temporalExtent?.start ||
+        this.initialTemporalExtent?.end !== temporalExtent?.end
+
+      if (isTemporalModified) {
+        return true
+      }
+
+      if (isSpatialFilterEnabled === false) {
+        return false
+      }
+      
+      const isSpatialModified =
+        spatialExtent?.[0] !== this.resolvedInitialSpatialExtent?.[0] ||
+        spatialExtent?.[1] !== this.resolvedInitialSpatialExtent?.[1] ||
+        spatialExtent?.[2] !== this.resolvedInitialSpatialExtent?.[2] ||
+        spatialExtent?.[3] !== this.resolvedInitialSpatialExtent?.[3]
+
+      return isSpatialModified
+    })
+  )
 
   initialPageUrl: string
   previousPageUrl: string
@@ -219,21 +246,10 @@ export class StacViewComponent implements OnInit {
 
   onTemporalExtentChange(extent: DatasetTemporalExtent | null) {
     this.currentTemporalExtent$.next(extent)
-    this.isFilterModified = true
   }
 
   onSpatialExtentChange(extent: Extent) {
     this.currentSpatialExtent$.next(extent)
-
-    if (this.resolvedInitialSpatialExtent) {
-      this.isFilterModified =
-        extent[0] !== this.resolvedInitialSpatialExtent[0] ||
-        extent[1] !== this.resolvedInitialSpatialExtent[1] ||
-        extent[2] !== this.resolvedInitialSpatialExtent[2] ||
-        extent[3] !== this.resolvedInitialSpatialExtent[3]
-    } else {
-      this.isFilterModified = true
-    }
   }
 
   onResolvedMapExtentChange(extent: Extent) {
@@ -247,7 +263,6 @@ export class StacViewComponent implements OnInit {
   onResetFilters() {
     this.currentTemporalExtent$.next(this.initialTemporalExtent)
     this.currentSpatialExtent$.next(null)
-    this.isFilterModified = false
 
     this.mapContext$.next({
       ...this.mapContext$.value,

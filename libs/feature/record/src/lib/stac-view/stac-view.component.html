@@ -6,7 +6,7 @@
         (temporalExtentChange)="onTemporalExtentChange($event)"
       ></gn-ui-date-range-inputs>
 
-      <div class="mt-auto mb-8 mx-8" *ngIf="isFilterModified">
+      <div class="mt-auto mb-8 mx-8" *ngIf="isFilterModified$ | async">
         <gn-ui-button
           id="reset-filters-button"
           type="light"
