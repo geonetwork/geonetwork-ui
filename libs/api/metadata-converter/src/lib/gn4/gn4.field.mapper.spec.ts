@@ -300,6 +300,48 @@ describe('Gn4FieldMapper', () => {
           },
         })
       })
+      describe('resourceType mapper', () => {
+        it('resourceType - should return a function that correctly maps the field', () => {
+          const fieldName = 'resourceType'
+          const mappingFn = service.getMappingFn(fieldName)
+          const output = {}
+          const source = {
+            resourceType: ['map'],
+          }
+          const result = mappingFn(output, source)
+          expect(result).toEqual({
+            kind: 'reuse',
+            reuseType: 'map',
+          })
+        })
+        it('resourceType - should return reuse when document with mapDigital documentType', () => {
+          const fieldName = 'resourceType'
+          const mappingFn = service.getMappingFn(fieldName)
+          const output = {}
+          const source = {
+            resourceType: ['document'],
+            cl_presentationForm: [{ key: 'mapDigital' }],
+          }
+          const result = mappingFn(output, source)
+          expect(result).toEqual({
+            kind: 'reuse',
+            reuseType: 'map',
+          })
+        })
+        it('resourceType - should return dataset when document with unknown documentType', () => {
+          const fieldName = 'resourceType'
+          const mappingFn = service.getMappingFn(fieldName)
+          const output = {}
+          const source = {
+            resourceType: ['document'],
+            documentType: ['unknownType'],
+          }
+          const result = mappingFn(output, source)
+          expect(result).toEqual({
+            kind: 'dataset',
+          })
+        })
+      })
     })
     describe('resourceIdentifier mapper', () => {
       it('should map all resource identifiers with code, codeSpace, and url', () => {
