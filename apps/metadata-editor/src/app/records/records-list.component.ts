@@ -16,6 +16,7 @@ export const allSearchFields = [
   'changeDate',
   'userinfo',
   'cl_status',
+  'cl_presentationForm',
   'isPublishedToAll',
   'link',
   'owner',
