@@ -58,10 +58,8 @@
   "dataset.error.forbidden": "Access to this resource is restricted",
   "dataset.error.http": "The data could not be loaded because of an HTTP error: \"{ info }\"",
   "dataset.error.network": "The data could not be loaded because of a network error or CORS limitations: \"{ info }\"",
-  "dataset.error.parse": "The data was loaded but could not be parsed: \"{ info }\"",
   "dataset.error.restrictedAccess": "Access to this resource is restricted",
   "dataset.error.unknown": "The data cannot be displayed: \"{ info }\"",
-  "dataset.error.unsupportedType": "The following content type is unsupported: \"{ info }\"",
   "daterange.filter.from": "From",
   "daterange.filter.period": "Period",
   "daterange.filter.to": "To",
@@ -641,6 +639,7 @@
   "share.tab.webComponent": "Integrate",
   "stac.filter.reset": "Reset filters",
   "stac.results.noResults": "Your search filters did not match any items",
+  "stac.unreachable.unknown": "The service could not be reached",
   "table.loading.data": "Loading data...",
   "table.object.count": "Objects in this dataset",
   "table.paginator.firstPage": "First page",
@@ -650,6 +649,7 @@
   "table.paginator.previousPage": "Previous page",
   "table.paginator.rangeLabel": "{startIndex} - {endIndex} of {length}",
   "table.select.data": "Data source",
+  "tms.unreachable.unknown": "The service could not be reached",
   "tooltip.html.copy": "Copy HTML",
   "tooltip.id.copy": "Copy unique identifier",
   "tooltip.url.copy": "Copy URL",
@@ -660,5 +660,7 @@
   "wfs.geojsongml.notsupported": "This service does not support the GeoJSON or GML format",
   "wfs.unreachable.cors": "The service could not be reached due to CORS limitations",
   "wfs.unreachable.http": "The service returned an HTTP error",
-  "wfs.unreachable.unknown": "The service could not be reached"
+  "wfs.unreachable.parse": "The data was loaded but could not be parsed: \"{ info }\"",
+  "wfs.unreachable.unknown": "The service could not be reached",
+  "wfs.unreachable.unsupportedType": "The following content type is unsupported: \"{ info }\""
 }
