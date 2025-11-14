@@ -4,22 +4,14 @@ import {
   DatasetRecord,
   DatasetTemporalExtent,
 } from '@geonetwork-ui/common/domain/model/record'
-import { ResultsGridComponent } from '@geonetwork-ui/ui/elements'
 import {
+  ButtonComponent,
   DateRangeInputsComponent,
   CheckToggleComponent,
 } from '@geonetwork-ui/ui/inputs'
 import { MapContainerComponent } from '@geonetwork-ui/ui/map'
-import {
-  Extent,
-  MapContext,
-  MapContextView,
-} from '@geospatial-sdk/core/dist/model'
+import { Extent, MapContext } from '@geospatial-sdk/core/dist/model'
 import { StacItemsResultGridComponent } from '@geonetwork-ui/ui/elements'
-import {
-  ButtonComponent,
-  DateRangeInputsComponent,
-} from '@geonetwork-ui/ui/inputs'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matDeleteOutline } from '@ng-icons/material-icons/outline'
 import { TranslateDirective, TranslateService } from '@ngx-translate/core'
