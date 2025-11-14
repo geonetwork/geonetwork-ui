@@ -90,8 +90,6 @@ export class MapContainerComponent
 {
   @Input() context: MapContext | null
 
-  @Output() resolvedExtentChange = new EventEmitter<Extent>()
-
   @ViewChild('map') container: ElementRef
 
   private destroy$ = new Subject<void>()
@@ -109,6 +107,7 @@ export class MapContainerComponent
   _mapClick: EventEmitter<[number, number]> = null
   _extentChange: EventEmitter<Extent> = null
   _sourceLoadError: EventEmitter<SourceLoadErrorEvent> = null
+  _resolvedExtentChange: EventEmitter<Extent> = null
 
   @Output() get featuresClick() {
     if (!this._featuresClick) {
@@ -172,6 +171,13 @@ export class MapContainerComponent
     return this._sourceLoadError
   }
 
+  @Output() get resolvedExtentChange() {
+    if (!this._resolvedExtentChange) {
+      this._resolvedExtentChange = new EventEmitter<Extent>()
+    }
+    return this._resolvedExtentChange
+  }
+
   constructor(
     @Inject(DO_NOT_USE_DEFAULT_BASEMAP) private doNotUseDefaultBasemap: boolean,
     @Inject(BASEMAP_LAYERS) private basemapLayers: MapContextLayer[],
@@ -195,7 +201,9 @@ export class MapContainerComponent
       this.processContext(this.context),
       this.container.nativeElement
     )
-    this.resolvedExtentChange.emit(this.calculateCurrentMapExtent())
+    if (this._resolvedExtentChange) {
+      this._resolvedExtentChange.emit(this.calculateCurrentMapExtent())
+    }
 
     this.setupDisplayMessageObservable()
     this.olMapResolver(this.olMap)
@@ -209,8 +217,8 @@ export class MapContainerComponent
       )
       await applyContextDiffToMap(this.olMap, diff)
 
-      if (diff.viewChanges) {
-        this.resolvedExtentChange.emit(this.calculateCurrentMapExtent())
+      if (this._resolvedExtentChange && diff.viewChanges) {
+        this._resolvedExtentChange.emit(this.calculateCurrentMapExtent())
       }
     }
   }
