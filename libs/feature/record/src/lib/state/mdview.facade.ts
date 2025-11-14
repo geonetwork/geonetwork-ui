@@ -19,7 +19,6 @@ import {
   UserFeedback,
 } from '@geonetwork-ui/common/domain/model/record'
 import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
-import { OgcApiRecord } from '@camptocamp/ogc-client'
 import { from, of } from 'rxjs'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 
@@ -166,9 +165,9 @@ export class MdViewFacade {
               link.accessServiceProtocol === 'ogcFeatures'
             ) {
               return from(
-                this.dataService.getItemsFromOgcApi(link.url.href)
+                this.dataService.getItemsFromOgcApi(link.url.href, 1)
               ).pipe(
-                map((collectionRecords: OgcApiRecord[]) => {
+                map((collectionRecords) => {
                   return collectionRecords &&
                     collectionRecords[0] &&
                     collectionRecords[0].geometry
