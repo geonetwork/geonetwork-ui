@@ -27,6 +27,10 @@ jest.mock('@geospatial-sdk/openlayers', () => ({
   listen: jest.fn(),
 }))
 
+jest.mock('ol/proj', () => ({
+  transformExtent: jest.fn((extent) => extent),
+}))
+
 let mapmutedCallback
 let movestartCallback
 let singleclickCallback
@@ -38,6 +42,12 @@ class OpenLayersMapMock {
   }
   getSize() {
     return this._size
+  }
+  getView() {
+    return {
+      calculateExtent: jest.fn(() => [0, 0, 100, 100]),
+      getProjection: jest.fn(() => 'EPSG:3857'),
+    }
   }
   on(type, callback) {
     if (type === 'mapmuted') {
@@ -158,6 +168,33 @@ describe('MapContainerComponent', () => {
     it('creates a map', () => {
       expect(component.olMap).toBeInstanceOf(OpenLayersMapMock)
     })
+    describe('resolvedExtentChange emission', () => {
+      it('emits resolvedExtentChange on init if the output is subscribed to', async () => {
+        const emittedExtents: number[][] = []
+        const newFixture = TestBed.createComponent(MapContainerComponent)
+        const newComponent = newFixture.componentInstance
+        newComponent.resolvedExtentChange.subscribe((extent) =>
+          emittedExtents.push(extent)
+        )
+        newFixture.detectChanges()
+        // Wait for the async ngAfterViewInit to complete
+        await newFixture.whenStable()
+        expect(emittedExtents).toEqual([[0, 0, 100, 100]])
+      })
+      it('does not emit resolvedExtentChange on init if the output is not subscribed to', async () => {
+        const newFixture = TestBed.createComponent(MapContainerComponent)
+        const newComponent = newFixture.componentInstance
+        const emitSpy = jest.spyOn(
+          newComponent._resolvedExtentChange || {
+            emit: jest.fn(),
+          },
+          'emit'
+        )
+        newFixture.detectChanges()
+        await newFixture.whenStable()
+        expect(emitSpy).not.toHaveBeenCalled()
+      })
+    })
     describe('display message that map navigation has been muted', () => {
       let messageDisplayed
       beforeEach(() => {
@@ -222,6 +259,100 @@ describe('MapContainerComponent', () => {
       )
       expect(applyContextDiffToMap).toHaveBeenCalledWith(component.olMap, {
         'this is': 'a diff',
+      })
+    })
+    describe('resolvedExtentChange emission on view changes', () => {
+      it('emits resolvedExtentChange when viewChanges is true and output is subscribed to', async () => {
+        const emittedExtents: number[][] = []
+        const newFixture = TestBed.createComponent(MapContainerComponent)
+        const newComponent = newFixture.componentInstance
+        newComponent.resolvedExtentChange.subscribe((extent) =>
+          emittedExtents.push(extent)
+        )
+        newFixture.detectChanges()
+        await newFixture.whenStable()
+
+        // Mock the diff to include viewChanges
+        ;(computeMapContextDiff as jest.Mock).mockReturnValueOnce({
+          viewChanges: { zoom: 5 },
+        })
+
+        const newContext = {
+          ...mapCtxFixture(),
+          view: { ...mapCtxFixture().view, zoom: 5 },
+        }
+        await newComponent.ngOnChanges({
+          context: {
+            currentValue: newContext,
+            previousValue: mapCtxFixture(),
+            firstChange: false,
+            isFirstChange: () => false,
+          },
+        })
+
+        // Should have emitted twice: once on init, once on view change
+        expect(emittedExtents).toEqual([
+          [0, 0, 100, 100],
+          [0, 0, 100, 100],
+        ])
+      })
+      it('does not emit resolvedExtentChange when viewChanges is false', async () => {
+        const emittedExtents: number[][] = []
+        const newFixture = TestBed.createComponent(MapContainerComponent)
+        const newComponent = newFixture.componentInstance
+        newComponent.resolvedExtentChange.subscribe((extent) =>
+          emittedExtents.push(extent)
+        )
+        newFixture.detectChanges()
+        await newFixture.whenStable()
+
+        // Mock the diff with no viewChanges
+        ;(computeMapContextDiff as jest.Mock).mockReturnValueOnce({
+          layerChanges: [{ type: 'add' }],
+        })
+
+        const newContext = {
+          ...mapCtxFixture(),
+          layers: [mapCtxLayerWmsFixture()],
+        }
+        await newComponent.ngOnChanges({
+          context: {
+            currentValue: newContext,
+            previousValue: mapCtxFixture(),
+            firstChange: false,
+            isFirstChange: () => false,
+          },
+        })
+
+        // Should have emitted only once on init, not on layer change
+        expect(emittedExtents).toEqual([[0, 0, 100, 100]])
+      })
+      it('does not emit resolvedExtentChange when output is not subscribed to', async () => {
+        const newFixture = TestBed.createComponent(MapContainerComponent)
+        const newComponent = newFixture.componentInstance
+        newFixture.detectChanges()
+        await newFixture.whenStable()
+
+        // Mock the diff to include viewChanges
+        ;(computeMapContextDiff as jest.Mock).mockReturnValueOnce({
+          viewChanges: { zoom: 5 },
+        })
+
+        const newContext = {
+          ...mapCtxFixture(),
+          view: { ...mapCtxFixture().view, zoom: 5 },
+        }
+        await newComponent.ngOnChanges({
+          context: {
+            currentValue: newContext,
+            previousValue: mapCtxFixture(),
+            firstChange: false,
+            isFirstChange: () => false,
+          },
+        })
+
+        // Should not have created the emitter
+        expect(newComponent._resolvedExtentChange).toBeNull()
       })
     })
   })

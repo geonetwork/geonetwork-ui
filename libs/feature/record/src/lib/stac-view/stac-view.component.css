@@ -1,3 +1,8 @@
 :host {
   --gn-ui-button-padding: 7px 8px;
 }
+
+/* Ensure OpenLayers controls are above the custom toggle */
+::ng-deep .ol-overlaycontainer-stopevent {
+  z-index: 11 !important;
+}

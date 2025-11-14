@@ -1,4 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import {
+  ComponentFixture,
+  discardPeriodicTasks,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing'
 import { StacViewComponent } from './stac-view.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
@@ -11,6 +17,11 @@ import { MdViewFacade } from '../state'
 import { TranslateService } from '@ngx-translate/core'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
 import { MockBuilder, MockProvider, ngMocks } from 'ng-mocks'
+import { MapUtilsService } from '@geonetwork-ui/feature/map'
+import { Extent } from '@geospatial-sdk/core/dist/model'
+
+const DEBOUNCE_TIME_MS_PLUS_MARGIN = 500 + 100
+const STAC_ITEMS_PER_PAGE = 12
 
 describe('StacViewComponent', () => {
   let component: StacViewComponent
@@ -49,7 +60,9 @@ describe('StacViewComponent', () => {
     description: 'Mock STAC API link',
     type: 'stac-api',
     accessServiceProtocol: 'http',
-  } as any
+  } as unknown as never
+
+  const mockSpatialExtent = [1, 2, 3, 4] as [number, number, number, number]
 
   beforeEach(() => MockBuilder(StacViewComponent))
 
@@ -66,10 +79,11 @@ describe('StacViewComponent', () => {
           metadata$: of(mockDatasetRecord),
           stacLinks$: of([mockStacLink]),
         }),
+        MockProvider(MapUtilsService, {
+          getRecordExtent: jest.fn().mockReturnValue(mockSpatialExtent),
+        }),
         MockProvider(TranslateService, {
-          instant: jest
-            .fn()
-            .mockImplementation((key, params) => `translated:${key}`),
+          instant: jest.fn().mockImplementation((key) => `translated:${key}`),
         }),
       ],
     }).compileComponents()
@@ -87,6 +101,18 @@ describe('StacViewComponent', () => {
       component.ngOnInit()
       expect(component.initialTemporalExtent).toEqual(mockTemporalExtent)
       expect(component.currentTemporalExtent$.value).toEqual(mockTemporalExtent)
+    })
+
+    it('should initialize spatial extent from metadata and set map context', () => {
+      component.ngOnInit()
+
+      expect(component.initialSpatialExtent).toEqual(mockSpatialExtent)
+      expect(component.mapContext$.value).toEqual({
+        layers: [],
+        view: {
+          extent: mockSpatialExtent,
+        },
+      })
     })
 
     it('should initialize with default temporal extent when no temporal extents exist', () => {
@@ -135,7 +161,7 @@ describe('StacViewComponent', () => {
         expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
           'http://example.com/stac',
           {
-            limit: 12,
+            limit: STAC_ITEMS_PER_PAGE,
             datetime: {
               start: mockTemporalExtent.start,
               end: mockTemporalExtent.end,
@@ -146,110 +172,279 @@ describe('StacViewComponent', () => {
       })
     })
 
-    it('should fetch items without datetime filter when temporal extent is null', (done) => {
+    it('should fetch items with spatial filter when enabled', fakeAsync(() => {
+      let receivedItems = null
+      component.items$.subscribe((items) => {
+        receivedItems = items
+      })
+
       component.currentPageUrl$.next('http://example.com/stac')
       component.currentTemporalExtent$.next(null)
+      component.isSpatialFilterEnabled$.next(true)
+      component.currentSpatialExtent$.next(mockSpatialExtent)
 
+      tick(DEBOUNCE_TIME_MS_PLUS_MARGIN)
+
+      const dataService = ngMocks.findInstance(DataService)
+      expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
+        'http://example.com/stac',
+        {
+          limit: STAC_ITEMS_PER_PAGE,
+          bbox: mockSpatialExtent,
+        }
+      )
+      expect(receivedItems).toEqual(mockStacDocument.features)
+      discardPeriodicTasks()
+    }))
+
+    it('should not include bbox when spatial filter is disabled', fakeAsync(() => {
+      let receivedItems = null
       component.items$.subscribe((items) => {
-        const dataService = ngMocks.findInstance(DataService)
-        expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
-          'http://example.com/stac',
-          { limit: 12 }
-        )
-        done()
+        receivedItems = items
       })
-    })
 
-    it('should fetch items without datetime filter when start and end date are null', (done) => {
+      component.currentPageUrl$.next('http://example.com/stac')
+      component.currentTemporalExtent$.next(null)
+      component.isSpatialFilterEnabled$.next(false)
+      component.currentSpatialExtent$.next(mockSpatialExtent)
+
+      tick(DEBOUNCE_TIME_MS_PLUS_MARGIN)
+
+      const dataService = ngMocks.findInstance(DataService)
+      expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
+        'http://example.com/stac',
+        { limit: STAC_ITEMS_PER_PAGE }
+      )
+      expect(receivedItems).toEqual(mockStacDocument.features)
+      discardPeriodicTasks()
+    }))
+
+    it('should not include bbox when spatial extent is null', fakeAsync(() => {
+      let receivedItems = null
+      component.items$.subscribe((items) => {
+        receivedItems = items
+      })
+
+      component.currentPageUrl$.next('http://example.com/stac')
+      component.currentTemporalExtent$.next(null)
+      component.isSpatialFilterEnabled$.next(true)
+      component.currentSpatialExtent$.next(null)
+
+      tick(DEBOUNCE_TIME_MS_PLUS_MARGIN)
+
+      const dataService = ngMocks.findInstance(DataService)
+      expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
+        'http://example.com/stac',
+        { limit: STAC_ITEMS_PER_PAGE }
+      )
+      expect(receivedItems).toEqual(mockStacDocument.features)
+      discardPeriodicTasks()
+    }))
+
+    it('should fetch items without datetime filter when start and end date are null', fakeAsync(() => {
+      component.items$.subscribe(() => {
+        // Just subscribe to trigger the observable
+      })
+
       component.currentPageUrl$.next('http://example.com/stac')
       component.currentTemporalExtent$.next({
         start: null,
         end: null,
       })
 
-      component.items$.subscribe((items) => {
-        const dataService = ngMocks.findInstance(DataService)
-        expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
-          'http://example.com/stac',
-          { limit: 12 }
-        )
-        done()
-      })
-    })
+      tick(DEBOUNCE_TIME_MS_PLUS_MARGIN)
 
-    it('should update pagination URLs after successful fetch', (done) => {
+      const dataService = ngMocks.findInstance(DataService)
+      expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
+        'http://example.com/stac',
+        { limit: STAC_ITEMS_PER_PAGE }
+      )
+      discardPeriodicTasks()
+    }))
+
+    it('should update pagination URLs after successful fetch', fakeAsync(() => {
+      component.items$.subscribe(() => {
+        // Just subscribe to trigger the observable
+      })
+
       component.currentPageUrl$.next('http://example.com/stac')
       component.currentTemporalExtent$.next(null)
 
-      component.items$.subscribe(() => {
-        expect(component.previousPageUrl).toBe('http://example.com/page1')
-        expect(component.nextPageUrl).toBe('http://example.com/page3')
-        done()
-      })
+      tick(DEBOUNCE_TIME_MS_PLUS_MARGIN)
+
+      expect(component.previousPageUrl).toBe('http://example.com/page1')
+      expect(component.nextPageUrl).toBe('http://example.com/page3')
+      discardPeriodicTasks()
+    }))
+
+    it('should handle API errors gracefully', () => {
+      const error = new Error('dataset.error.message')
+      component.handleError(error)
+      expect(component.error).toBe('translated:dataset.error.message')
     })
 
-    it('should handle API errors gracefully', (done) => {
-      const error = new Error('dataset.error.message')
+    it('should display info message and show no-results button when no items are returned', fakeAsync(() => {
       const dataService = ngMocks.findInstance(DataService)
       dataService.getItemsFromStacApi = jest
         .fn()
-        .mockReturnValue(Promise.reject(error))
+        .mockReturnValue(
+          Promise.resolve({ features: [], links: [] } as unknown as never)
+        )
+
+      let receivedItems = null
+      component.items$.subscribe((items) => {
+        receivedItems = items
+      })
 
       component.currentPageUrl$.next('http://example.com/stac')
       component.currentTemporalExtent$.next(null)
 
-      component.items$.subscribe((items) => {
-        expect(items).toEqual([])
-        expect(component.error).toBe('translated:dataset.error.message')
-        done()
-      })
-    })
+      tick(DEBOUNCE_TIME_MS_PLUS_MARGIN)
 
-    it('should display info message and show no-results button when no items are returned', (done) => {
-      const dataService = ngMocks.findInstance(DataService)
-      dataService.getItemsFromStacApi = jest.fn().mockReturnValue(
-        Promise.resolve({ features: [], links: [] } as {
-          features: Array<any>
-          links: Array<any>
-        })
-      )
-
-      component.currentPageUrl$.next('http://example.com/stac')
-      component.currentTemporalExtent$.next(null)
-
-      component.items$.subscribe((items) => {
-        expect(items).toEqual([])
-        expect(component.error).toBeNull()
-        fixture.detectChanges()
-        const noResultsButton =
-          fixture.nativeElement.querySelector('#no-results-button')
-        expect(noResultsButton).not.toBeNull()
-        done()
-      })
-    })
+      expect(receivedItems).toEqual([])
+      expect(component.error).toBeNull()
+      fixture.detectChanges()
+      const noResultsButton =
+        fixture.nativeElement.querySelector('#no-results-button')
+      expect(noResultsButton).not.toBeNull()
+      discardPeriodicTasks()
+    }))
   })
 
   describe('onTemporalExtentChange', () => {
-    it('should update current temporal extent, reset currentPageUrl$ and set filter modified flag', () => {
+    it('should update current temporal extent', () => {
       const newExtent: DatasetTemporalExtent = {
         start: new Date('2024-01-01'),
         end: new Date('2024-12-31'),
       }
-      component.initialPageUrl = 'http://example.com/stac'
       component.onTemporalExtentChange(newExtent)
       expect(component.currentTemporalExtent$.value).toEqual(newExtent)
-      expect(component.currentPageUrl$.value).toEqual(component.initialPageUrl)
-      expect(component.isFilterModified).toBe(true)
+    })
+  })
+
+  describe('onSpatialExtentChange', () => {
+    it('should update current spatial extent', () => {
+      const newExtent = [5, 6, 7, 8] as [number, number, number, number]
+      component.onSpatialExtentChange(newExtent)
+      expect(component.currentSpatialExtent$.value).toEqual(newExtent)
+    })
+  })
+
+  describe('onResolvedMapExtentChange', () => {
+    it('should update resolved initial spatial extent', () => {
+      const resolvedExtent = [9, 10, 11, 12] as [number, number, number, number]
+      component.onResolvedMapExtentChange(resolvedExtent)
+      expect(component.resolvedInitialSpatialExtent).toEqual(resolvedExtent)
+    })
+  })
+
+  describe('onSpatialFilterToggle', () => {
+    it('should enable spatial filter', () => {
+      component.onSpatialFilterToggle(true)
+      expect(component.isSpatialFilterEnabled$.value).toBe(true)
+    })
+
+    it('should disable spatial filter', () => {
+      component.onSpatialFilterToggle(false)
+      expect(component.isSpatialFilterEnabled$.value).toBe(false)
+    })
+  })
+
+  describe('isFilterModified$', () => {
+    beforeEach(() => {
+      component.initialTemporalExtent = mockTemporalExtent
+      component.resolvedInitialSpatialExtent = mockSpatialExtent
+    })
+
+    it('should be true when temporal extent has changed', (done) => {
+      component.currentTemporalExtent$.next({
+        start: new Date('2024-01-01'),
+        end: new Date('2024-12-31'),
+      })
+      component.currentSpatialExtent$.next(mockSpatialExtent)
+      component.isSpatialFilterEnabled$.next(true)
+
+      component.isFilterModified$.subscribe((isModified) => {
+        expect(isModified).toBe(true)
+        done()
+      })
+    })
+
+    it('should be true when spatial extent has changed and filter is enabled', (done) => {
+      component.currentTemporalExtent$.next(mockTemporalExtent)
+      component.currentSpatialExtent$.next([5, 6, 7, 8] as Extent)
+      component.isSpatialFilterEnabled$.next(true)
+
+      component.isFilterModified$.subscribe((isModified) => {
+        expect(isModified).toBe(true)
+        done()
+      })
+    })
+
+    it('should be false when spatial filter is disabled and only spatial extent changed', (done) => {
+      component.currentTemporalExtent$.next(mockTemporalExtent)
+      component.currentSpatialExtent$.next([5, 6, 7, 8] as Extent)
+      component.isSpatialFilterEnabled$.next(false)
+
+      component.isFilterModified$.subscribe((isModified) => {
+        expect(isModified).toBe(false)
+        done()
+      })
+    })
+
+    it('should be false when extents match initial values', (done) => {
+      component.currentTemporalExtent$.next(mockTemporalExtent)
+      component.currentSpatialExtent$.next(mockSpatialExtent)
+      component.isSpatialFilterEnabled$.next(true)
+
+      component.isFilterModified$.subscribe((isModified) => {
+        expect(isModified).toBe(false)
+        done()
+      })
     })
   })
 
   describe('onResetFilters', () => {
-    it('should reset temporal extent to initial value and clear modified flag', () => {
+    beforeEach(() => {
       component.initialTemporalExtent = mockTemporalExtent
-      component.isFilterModified = true
+      component.initialSpatialExtent = mockSpatialExtent
+    })
+
+    it('should reset temporal extent to initial value', () => {
+      component.currentTemporalExtent$.next({
+        start: new Date('2024-01-01'),
+        end: new Date('2024-12-31'),
+      })
       component.onResetFilters()
       expect(component.currentTemporalExtent$.value).toEqual(mockTemporalExtent)
-      expect(component.isFilterModified).toBe(false)
+    })
+
+    it('should reset spatial extent and map context when spatial filter is enabled', () => {
+      component.isSpatialFilterEnabled$.next(true)
+      component.currentSpatialExtent$.next([5, 6, 7, 8] as Extent)
+      component.mapContext$.next({
+        layers: [],
+        view: { extent: [5, 6, 7, 8] as [number, number, number, number] },
+      })
+
+      component.onResetFilters()
+
+      expect(component.currentSpatialExtent$.value).toBeNull()
+      expect(component.mapContext$.value).toEqual({
+        layers: [],
+        view: {
+          extent: mockSpatialExtent,
+        },
+      })
+    })
+
+    it('should not reset spatial extent when spatial filter is disabled', () => {
+      component.isSpatialFilterEnabled$.next(false)
+      component.currentSpatialExtent$.next([5, 6, 7, 8] as Extent)
+
+      component.onResetFilters()
+
+      expect(component.currentSpatialExtent$.value).toEqual([5, 6, 7, 8])
     })
   })
 
@@ -283,16 +478,22 @@ describe('StacViewComponent', () => {
       expect(component.error).toBe('translated:String error message')
     })
 
-    it('should clear error when making a new API call', (done) => {
+    it('should clear error when making a new API call', fakeAsync(() => {
       component.error = 'Previous error'
       component.ngOnInit()
+
+      component.items$.subscribe(() => {
+        // Just subscribe to trigger the observable
+      })
+
       component.currentPageUrl$.next('http://example.com/stac')
       component.currentTemporalExtent$.next(null)
-      component.items$.subscribe(() => {
-        expect(component.error).toBe(null)
-        done()
-      })
-    })
+
+      tick(DEBOUNCE_TIME_MS_PLUS_MARGIN)
+
+      expect(component.error).toBe(null)
+      discardPeriodicTasks()
+    }))
   })
 
   describe('pagination', () => {

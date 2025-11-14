@@ -4,11 +4,14 @@ import {
   DatasetRecord,
   DatasetTemporalExtent,
 } from '@geonetwork-ui/common/domain/model/record'
-import { StacItemsResultGridComponent } from '@geonetwork-ui/ui/elements'
 import {
   ButtonComponent,
   DateRangeInputsComponent,
+  CheckToggleComponent,
 } from '@geonetwork-ui/ui/inputs'
+import { MapContainerComponent } from '@geonetwork-ui/ui/map'
+import { Extent, MapContext } from '@geospatial-sdk/core/dist/model'
+import { StacItemsResultGridComponent } from '@geonetwork-ui/ui/elements'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matDeleteOutline } from '@ng-icons/material-icons/outline'
 import { TranslateDirective, TranslateService } from '@ngx-translate/core'
@@ -22,12 +25,15 @@ import {
   map,
   Observable,
   of,
+  pairwise,
+  startWith,
   switchMap,
   take,
   tap,
 } from 'rxjs'
 import { GetCollectionItemsOptions, StacItem } from '@camptocamp/ogc-client'
 import { MdViewFacade } from '../state'
+import { MapUtilsService } from '@geonetwork-ui/feature/map'
 import { PreviousNextButtonsComponent } from '@geonetwork-ui/ui/layout'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
 import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
@@ -47,6 +53,8 @@ const DEBOUNCE_TIME_MS = 500
     TranslateDirective,
     StacItemsResultGridComponent,
     DateRangeInputsComponent,
+    MapContainerComponent,
+    CheckToggleComponent,
     PreviousNextButtonsComponent,
     PopupAlertComponent,
     ButtonComponent,
@@ -54,12 +62,48 @@ const DEBOUNCE_TIME_MS = 500
   viewProviders: [provideIcons({ matDeleteOutline })],
 })
 export class StacViewComponent implements OnInit {
-  isFilterModified = false
   error = null
 
   initialTemporalExtent: DatasetTemporalExtent | null = null
   currentTemporalExtent$ = new BehaviorSubject<DatasetTemporalExtent | null>(
     null
+  )
+
+  initialSpatialExtent: Extent | null = null
+  resolvedInitialSpatialExtent: Extent | null = null
+  currentSpatialExtent$ = new BehaviorSubject<Extent | null>(null)
+  isSpatialFilterEnabled$ = new BehaviorSubject<boolean>(true)
+  mapContext$ = new BehaviorSubject<MapContext>({
+    layers: [],
+    view: null,
+  })
+
+  isFilterModified$ = combineLatest([
+    this.currentTemporalExtent$,
+    this.currentSpatialExtent$,
+    this.isSpatialFilterEnabled$,
+  ]).pipe(
+    map(([temporalExtent, spatialExtent, isSpatialFilterEnabled]) => {
+      const isTemporalModified =
+        this.initialTemporalExtent?.start !== temporalExtent?.start ||
+        this.initialTemporalExtent?.end !== temporalExtent?.end
+
+      if (isTemporalModified) {
+        return true
+      }
+
+      if (isSpatialFilterEnabled === false) {
+        return false
+      }
+
+      const isSpatialModified =
+        spatialExtent?.[0] !== this.resolvedInitialSpatialExtent?.[0] ||
+        spatialExtent?.[1] !== this.resolvedInitialSpatialExtent?.[1] ||
+        spatialExtent?.[2] !== this.resolvedInitialSpatialExtent?.[2] ||
+        spatialExtent?.[3] !== this.resolvedInitialSpatialExtent?.[3]
+
+      return isSpatialModified
+    })
   )
 
   initialPageUrl: string
@@ -70,21 +114,64 @@ export class StacViewComponent implements OnInit {
   items$: Observable<StacItem[]> = combineLatest([
     this.currentPageUrl$,
     this.currentTemporalExtent$,
+    this.isSpatialFilterEnabled$,
+    this.currentSpatialExtent$,
   ]).pipe(
     debounceTime(DEBOUNCE_TIME_MS),
-    switchMap(([currentPageUrl, temporalExtent]) => {
+    startWith([null, null, false, null] as [
+      string | null,
+      DatasetTemporalExtent | null,
+      boolean,
+      Extent | null,
+    ]),
+    pairwise(),
+    switchMap(([previous, latest]) => {
       this.error = null
       const options: GetCollectionItemsOptions = {
         limit: STAC_ITEMS_PER_PAGE,
       }
-      if (temporalExtent && (temporalExtent.start || temporalExtent.end)) {
+
+      const [
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        _oldCurrentPageUrl,
+        oldTemporalExtent,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        _oldIsSpatialFilterEnabled,
+        oldSpatialExtent,
+      ] = previous
+      const [
+        newCurrentPageUrl,
+        newTemporalExtent,
+        newIsSpatialFilterEnabled,
+        newSpatialExtent,
+      ] = latest
+
+      if (
+        oldTemporalExtent !== newTemporalExtent ||
+        oldSpatialExtent?.[0] !== newSpatialExtent?.[0] ||
+        oldSpatialExtent?.[1] !== newSpatialExtent?.[1] ||
+        oldSpatialExtent?.[2] !== newSpatialExtent?.[2] ||
+        oldSpatialExtent?.[3] !== newSpatialExtent?.[3]
+      ) {
+        this.currentPageUrl$.next(this.initialPageUrl)
+      }
+
+      if (
+        newTemporalExtent &&
+        (newTemporalExtent.start || newTemporalExtent.end)
+      ) {
         options.datetime = {
-          ...(temporalExtent.start && { start: temporalExtent.start }),
-          ...(temporalExtent.end && { end: temporalExtent.end }),
+          ...(newTemporalExtent.start && { start: newTemporalExtent.start }),
+          ...(newTemporalExtent.end && { end: newTemporalExtent.end }),
         }
       }
+
+      if (newIsSpatialFilterEnabled && newSpatialExtent) {
+        options.bbox = newSpatialExtent
+      }
+
       return from(
-        this.dataService.getItemsFromStacApi(currentPageUrl, options)
+        this.dataService.getItemsFromStacApi(newCurrentPageUrl, options)
       ).pipe(
         tap((stacDocument) => {
           this.previousPageUrl =
@@ -105,6 +192,7 @@ export class StacViewComponent implements OnInit {
   constructor(
     private dataService: DataService,
     private metadataViewFacade: MdViewFacade,
+    private mapUtils: MapUtilsService,
     private translateService: TranslateService
   ) {}
 
@@ -118,17 +206,29 @@ export class StacViewComponent implements OnInit {
               ? (metadata as DatasetRecord).temporalExtents
               : []
 
-          return temporalExtents.length > 0
-            ? temporalExtents[0]
-            : ({
-                start: null,
-                end: null,
-              } as DatasetTemporalExtent)
+          const temporalExtent =
+            temporalExtents.length > 0
+              ? temporalExtents[0]
+              : ({
+                  start: null,
+                  end: null,
+                } as DatasetTemporalExtent)
+
+          const spatialExtent = this.mapUtils.getRecordExtent(metadata)
+          return { temporalExtent, spatialExtent }
         })
       )
-      .subscribe((extent) => {
-        this.initialTemporalExtent = extent
-        this.currentTemporalExtent$.next(extent)
+      .subscribe(({ temporalExtent, spatialExtent }) => {
+        this.initialTemporalExtent = temporalExtent
+        this.currentTemporalExtent$.next(temporalExtent)
+
+        this.initialSpatialExtent = spatialExtent
+        this.mapContext$.next({
+          ...this.mapContext$.value,
+          view: {
+            extent: spatialExtent,
+          },
+        })
       })
 
     this.metadataViewFacade.stacLinks$
@@ -146,14 +246,33 @@ export class StacViewComponent implements OnInit {
 
   onTemporalExtentChange(extent: DatasetTemporalExtent | null) {
     this.currentTemporalExtent$.next(extent)
-    // make sure to use url without pagination token when temporal filter changes
-    this.currentPageUrl$.next(this.initialPageUrl)
-    this.isFilterModified = true
+  }
+
+  onSpatialExtentChange(extent: Extent) {
+    this.currentSpatialExtent$.next(extent)
+  }
+
+  onResolvedMapExtentChange(extent: Extent) {
+    this.resolvedInitialSpatialExtent = extent
+  }
+
+  onSpatialFilterToggle(enabled: boolean) {
+    this.isSpatialFilterEnabled$.next(enabled)
   }
 
   onResetFilters() {
     this.currentTemporalExtent$.next(this.initialTemporalExtent)
-    this.isFilterModified = false
+
+    if (this.isSpatialFilterEnabled$.value) {
+      this.currentSpatialExtent$.next(null)
+
+      this.mapContext$.next({
+        ...this.mapContext$.value,
+        view: {
+          extent: this.initialSpatialExtent,
+        },
+      })
+    }
   }
 
   handleError(error: FetchError | Error | string) {
