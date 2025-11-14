@@ -40,6 +40,7 @@
         <div
           class="flex flex-col gap-2 w-full px-2"
           data-test="langAvailable"
+          [attr.data-test-lang]="lang"
           *ngFor="let lang of languages"
         >
           <gn-ui-button
