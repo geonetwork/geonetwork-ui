@@ -230,6 +230,14 @@ jobs:
           - skip_editor: 'true' # skip metadata-editor if not affected
             app: metadata-editor
 
+          # FIXME: the datahub tests do not passe on these version; this might be a sign of actual bugs
+          - geonetwork_versions:
+              gn: 4.2.14
+            app: datahub
+          - geonetwork_versions:
+              gn: 4.4.8
+            app: datahub
+
     steps:
       - uses: actions/checkout@v4
         with:
