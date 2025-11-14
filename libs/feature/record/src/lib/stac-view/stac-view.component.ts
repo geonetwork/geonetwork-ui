@@ -95,7 +95,7 @@ export class StacViewComponent implements OnInit {
       if (isSpatialFilterEnabled === false) {
         return false
       }
-      
+
       const isSpatialModified =
         spatialExtent?.[0] !== this.resolvedInitialSpatialExtent?.[0] ||
         spatialExtent?.[1] !== this.resolvedInitialSpatialExtent?.[1] ||
@@ -262,14 +262,17 @@ export class StacViewComponent implements OnInit {
 
   onResetFilters() {
     this.currentTemporalExtent$.next(this.initialTemporalExtent)
-    this.currentSpatialExtent$.next(null)
 
-    this.mapContext$.next({
-      ...this.mapContext$.value,
-      view: {
-        extent: this.initialSpatialExtent,
-      },
-    })
+    if (this.isSpatialFilterEnabled$.value) {
+      this.currentSpatialExtent$.next(null)
+
+      this.mapContext$.next({
+        ...this.mapContext$.value,
+        view: {
+          extent: this.initialSpatialExtent,
+        },
+      })
+    }
   }
 
   handleError(error: FetchError | Error | string) {
