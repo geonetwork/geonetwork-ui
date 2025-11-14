@@ -402,8 +402,11 @@ export class Gn4FieldMapper {
       ),
     resourceType: (output, source) => {
       const resourceType = getFirstValue(selectField(source, 'resourceType'))
-      const kind = getResourceType(resourceType)
-      const reuseType = getReuseType(resourceType)
+      const documentTypes = getAsArray(
+        selectField(source, 'cl_presentationForm')
+      ).map((documentType) => documentType.key) as string[]
+      const kind = getResourceType(resourceType, documentTypes)
+      const reuseType = getReuseType(resourceType, documentTypes)
       return {
         ...output,
         kind,
