@@ -17,7 +17,7 @@ import {
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 import { StickyHeaderComponent } from '@geonetwork-ui/ui/layout'
 import { getGlobalConfig, getThemeConfig } from '@geonetwork-ui/util/app-config'
-import { DateService, getIsMobile } from '@geonetwork-ui/util/shared'
+import { getIsMobile } from '@geonetwork-ui/util/shared'
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core'
 import {
   iconoirAppleShortcuts,
@@ -30,6 +30,7 @@ import { combineLatest, map } from 'rxjs'
 import { NavigationBarComponent } from '../navigation-bar/navigation-bar.component'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
+import { GnUiHumanizeDateDirective } from '@geonetwork-ui/util/shared'
 
 export const HEADER_HEIGHT_DEFAULT = 344
 export const HEADER_HEIGHT_MOBILE_THUMBNAIL = 554
@@ -57,6 +58,7 @@ marker('record.metadata.resourceCreated')
     FavoriteStarComponent,
     LanguageSwitcherComponent,
     StickyHeaderComponent,
+    GnUiHumanizeDateDirective,
   ],
   viewProviders: [
     provideIcons({
@@ -107,7 +109,6 @@ export class HeaderRecordComponent {
 
   constructor(
     public facade: MdViewFacade,
-    private dateService: DateService,
     private router: Router,
     private location: Location,
     private platformServiceInterface: PlatformServiceInterface
@@ -119,21 +120,21 @@ export class HeaderRecordComponent {
     })
   )
 
-  get resourceDate(): { date: string; label: string } | null {
+  get resourceDate(): { date: string; tooltip: string; label: string } | null {
     let dateToDisplay = null
     if (this.metadata.resourceUpdated) {
       dateToDisplay = {
-        date: this.dateService.formatDate(this.metadata.resourceUpdated),
+        date: this.metadata.resourceUpdated,
         label: 'record.metadata.resourceUpdated',
       }
     } else if (this.metadata.resourcePublished) {
       dateToDisplay = {
-        date: this.dateService.formatDate(this.metadata.resourcePublished),
+        date: this.metadata.resourcePublished,
         label: 'record.metadata.resourcePublished',
       }
     } else if (this.metadata.resourceCreated) {
       dateToDisplay = {
-        date: this.dateService.formatDate(this.metadata.resourceCreated),
+        date: this.metadata.resourceCreated,
         label: 'record.metadata.resourceCreated',
       }
     }

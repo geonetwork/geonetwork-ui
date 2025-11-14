@@ -451,6 +451,32 @@ export class Gn4FieldMapper {
         }),
       }
     },
+    resourceIdentifier: (output, source) => {
+      const identifiers = getAsArray(selectField(source, 'resourceIdentifier'))
+
+      if (!identifiers.length) return output
+
+      const mappedIdentifiers = identifiers
+        .map((id) => {
+          const code = selectField<string>(id, 'code')
+          const codeSpace = selectField<string>(id, 'codeSpace')
+          const link = selectField<string>(id, 'link')
+
+          return {
+            code,
+            ...(codeSpace && { codeSpace }),
+            ...(link && { url: link }),
+          }
+        })
+        .filter((id) => id !== null)
+
+      if (!mappedIdentifiers.length) return output
+
+      return {
+        ...output,
+        resourceIdentifiers: mappedIdentifiers,
+      }
+    },
   }
 
   private genericField = (output) => output

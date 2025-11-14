@@ -1,0 +1,1108 @@
+{
+  "type": "FeatureCollection",
+  "context": { "limit": 12, "returned": 12 },
+  "features": [
+    {
+      "id": "S2A_20251024T072221024000Z_38LNH_0511_c4fba6046c",
+      "bbox": [
+        44.99981272158049, -16.36924585985854, 46.02791140498133,
+        -15.374248072492415
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items/S2A_20251024T072221024000Z_38LNH_0511_c4fba6046c"
+        }
+      ],
+      "assets": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [44.99981272158049, -16.36924585985854],
+            [46.02791140498133, -16.36924585985854],
+            [46.02791140498133, -15.374248072492415],
+            [44.99981272158049, -15.374248072492415],
+            [44.99981272158049, -16.36924585985854]
+          ]
+        ]
+      },
+      "collection": "sentinel2-l2a-sen2cor",
+      "properties": {
+        "created": "2025-10-24T12:12:51.090839Z",
+        "datetime": "2025-10-24T07:22:21.024000Z",
+        "s2:mgrs_tile": "38LNH",
+        "eo:snow_cover": 0.0,
+        "eo:cloud_cover": 11.84,
+        "sat:orbit_state": "descending",
+        "processing:level": "L2",
+        "processing:version": "05.11",
+        "production:origins": {
+          "in_ts": {
+            "ids": [
+              "S2A_MSIL2A_20251024T072221_N0511_R063_T38LNH_20251024T083917"
+            ],
+            "endpoint": "https://stac.dataspace.copernicus.eu/v1",
+            "collection": "sentinel-2-l2a"
+          }
+        },
+        "production:version": "0.2.1",
+        "sat:absolute_orbit": 54000,
+        "sat:relative_orbit": 63,
+        "processing:datetime": "2025-10-24T08:39:17.000000Z",
+        "processing:facility": "ESA",
+        "processing:software": { "eometadatatool": "251021130925+dirty" },
+        "s2:water_percentage": 76.532811,
+        "s2:vegetation_percentage": 4.677089,
+        "s2:thin_cirrus_percentage": 0.0,
+        "s2:cloud_shadow_percentage": 0.0,
+        "s2:nodata_pixel_percentage": 65.060353,
+        "s2:unclassified_percentage": 0.075635,
+        "s2:high_proba_clouds_percentage": 0.039655,
+        "s2:medium_proba_clouds_percentage": 11.802319,
+        "sat:platform_international_designator": "2015-028A"
+      },
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
+        "https://stac-extensions.github.io/sentinel-2/v1.0.0/schema.json",
+        "https://forge.inrae.fr/teledec/stac-extensions/schemas/-/raw/main/production/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/classification/v2.0.0/schema.json"
+      ]
+    },
+    {
+      "id": "S2A_20251024T072221024000Z_38LNH_0511_4758d7e2b2",
+      "bbox": [
+        44.99981272158049, -16.36924585985854, 46.02791140498133,
+        -15.374248072492415
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items/S2A_20251024T072221024000Z_38LNH_0511_4758d7e2b2"
+        }
+      ],
+      "assets": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [44.99981272158049, -16.36924585985854],
+            [46.02791140498133, -16.36924585985854],
+            [46.02791140498133, -15.374248072492415],
+            [44.99981272158049, -15.374248072492415],
+            [44.99981272158049, -16.36924585985854]
+          ]
+        ]
+      },
+      "collection": "sentinel2-l2a-sen2cor",
+      "properties": {
+        "created": "2025-10-24T16:09:35.816982Z",
+        "datetime": "2025-10-24T07:22:21.024000Z",
+        "s2:mgrs_tile": "38LNH",
+        "eo:snow_cover": 0.0,
+        "eo:cloud_cover": 8.31,
+        "sat:orbit_state": "descending",
+        "processing:level": "L2",
+        "processing:version": "05.11",
+        "production:origins": {
+          "in_ts": {
+            "ids": [
+              "S2A_MSIL2A_20251024T072221_N0511_R063_T38LNH_20251024T095713"
+            ],
+            "endpoint": "https://stac.dataspace.copernicus.eu/v1",
+            "collection": "sentinel-2-l2a"
+          }
+        },
+        "production:version": "0.2.1",
+        "sat:absolute_orbit": 54000,
+        "sat:relative_orbit": 63,
+        "processing:datetime": "2025-10-24T09:57:13.000000Z",
+        "processing:facility": "ESA",
+        "processing:software": { "eometadatatool": "251021130925+dirty" },
+        "s2:water_percentage": 13.45796,
+        "s2:vegetation_percentage": 20.078814,
+        "s2:thin_cirrus_percentage": 0.0,
+        "s2:cloud_shadow_percentage": 0.0,
+        "s2:nodata_pixel_percentage": 85.231453,
+        "s2:unclassified_percentage": 0.251435,
+        "s2:high_proba_clouds_percentage": 0.087728,
+        "s2:medium_proba_clouds_percentage": 8.219167,
+        "sat:platform_international_designator": "2015-028A"
+      },
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
+        "https://stac-extensions.github.io/sentinel-2/v1.0.0/schema.json",
+        "https://forge.inrae.fr/teledec/stac-extensions/schemas/-/raw/main/production/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/classification/v2.0.0/schema.json"
+      ]
+    },
+    {
+      "id": "S2B_20251024T071209024000Z_38LQH_0511_3321697245",
+      "bbox": [
+        46.86291158102522, -16.36092517176475, 47.89922475984138,
+        -15.357911490883158
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items/S2B_20251024T071209024000Z_38LQH_0511_3321697245"
+        }
+      ],
+      "assets": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [46.86291158102522, -16.36092517176475],
+            [47.89922475984138, -16.36092517176475],
+            [47.89922475984138, -15.357911490883158],
+            [46.86291158102522, -15.357911490883158],
+            [46.86291158102522, -16.36092517176475]
+          ]
+        ]
+      },
+      "collection": "sentinel2-l2a-sen2cor",
+      "properties": {
+        "created": "2025-10-24T16:18:37.952348Z",
+        "datetime": "2025-10-24T07:12:09.024000Z",
+        "s2:mgrs_tile": "38LQH",
+        "eo:snow_cover": 0.0,
+        "eo:cloud_cover": 3.09,
+        "sat:orbit_state": "descending",
+        "processing:level": "L2",
+        "processing:version": "05.11",
+        "production:origins": {
+          "in_ts": {
+            "ids": [
+              "S2B_MSIL2A_20251024T071209_N0511_R020_T38LQH_20251024T085207"
+            ],
+            "endpoint": "https://stac.dataspace.copernicus.eu/v1",
+            "collection": "sentinel-2-l2a"
+          }
+        },
+        "production:version": "0.2.1",
+        "sat:absolute_orbit": 45091,
+        "sat:relative_orbit": 20,
+        "processing:datetime": "2025-10-24T08:52:07.000000Z",
+        "processing:facility": "ESA",
+        "processing:software": { "eometadatatool": "251021130925+dirty" },
+        "s2:water_percentage": 1.608467,
+        "s2:vegetation_percentage": 13.28427,
+        "s2:thin_cirrus_percentage": 0.025421,
+        "s2:cloud_shadow_percentage": 0.008817,
+        "s2:nodata_pixel_percentage": 0.470231,
+        "s2:unclassified_percentage": 0.591762,
+        "s2:high_proba_clouds_percentage": 1.085396,
+        "s2:medium_proba_clouds_percentage": 1.975171,
+        "sat:platform_international_designator": "2017-013A"
+      },
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
+        "https://stac-extensions.github.io/sentinel-2/v1.0.0/schema.json",
+        "https://forge.inrae.fr/teledec/stac-extensions/schemas/-/raw/main/production/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/classification/v2.0.0/schema.json"
+      ]
+    },
+    {
+      "id": "S2B_20251024T071209024000Z_38LPH_0511_badb671b26",
+      "bbox": [
+        45.93177460997931, -16.367164183137394, 46.96413305405615,
+        -15.36802063786074
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items/S2B_20251024T071209024000Z_38LPH_0511_badb671b26"
+        }
+      ],
+      "assets": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [45.93177460997931, -16.367164183137394],
+            [46.96413305405615, -16.367164183137394],
+            [46.96413305405615, -15.36802063786074],
+            [45.93177460997931, -15.36802063786074],
+            [45.93177460997931, -16.367164183137394]
+          ]
+        ]
+      },
+      "collection": "sentinel2-l2a-sen2cor",
+      "properties": {
+        "created": "2025-10-24T12:20:17.729415Z",
+        "datetime": "2025-10-24T07:12:09.024000Z",
+        "s2:mgrs_tile": "38LPH",
+        "eo:snow_cover": 0.0,
+        "eo:cloud_cover": 0.23,
+        "sat:orbit_state": "descending",
+        "processing:level": "L2",
+        "processing:version": "05.11",
+        "production:origins": {
+          "in_ts": {
+            "ids": [
+              "S2B_MSIL2A_20251024T071209_N0511_R020_T38LPH_20251024T085207"
+            ],
+            "endpoint": "https://stac.dataspace.copernicus.eu/v1",
+            "collection": "sentinel-2-l2a"
+          }
+        },
+        "production:version": "0.2.1",
+        "sat:absolute_orbit": 45091,
+        "sat:relative_orbit": 20,
+        "processing:datetime": "2025-10-24T08:52:07.000000Z",
+        "processing:facility": "ESA",
+        "processing:software": { "eometadatatool": "251021130925+dirty" },
+        "s2:water_percentage": 22.330576,
+        "s2:vegetation_percentage": 8.060703,
+        "s2:thin_cirrus_percentage": 0.000644,
+        "s2:cloud_shadow_percentage": 0.0,
+        "s2:nodata_pixel_percentage": 0.0,
+        "s2:unclassified_percentage": 0.3148,
+        "s2:high_proba_clouds_percentage": 0.009409,
+        "s2:medium_proba_clouds_percentage": 0.218065,
+        "sat:platform_international_designator": "2017-013A"
+      },
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
+        "https://stac-extensions.github.io/sentinel-2/v1.0.0/schema.json",
+        "https://forge.inrae.fr/teledec/stac-extensions/schemas/-/raw/main/production/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/classification/v2.0.0/schema.json"
+      ]
+    },
+    {
+      "id": "S2B_20251024T071209024000Z_38LNH_0511_bf7c5f404e",
+      "bbox": [
+        44.99981272158049, -16.36924585985854, 46.02791140498133,
+        -15.374248072492415
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items/S2B_20251024T071209024000Z_38LNH_0511_bf7c5f404e"
+        }
+      ],
+      "assets": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [44.99981272158049, -16.36924585985854],
+            [46.02791140498133, -16.36924585985854],
+            [46.02791140498133, -15.374248072492415],
+            [44.99981272158049, -15.374248072492415],
+            [44.99981272158049, -16.36924585985854]
+          ]
+        ]
+      },
+      "collection": "sentinel2-l2a-sen2cor",
+      "properties": {
+        "created": "2025-10-24T12:19:06.280323Z",
+        "datetime": "2025-10-24T07:12:09.024000Z",
+        "s2:mgrs_tile": "38LNH",
+        "eo:snow_cover": 0.0,
+        "eo:cloud_cover": 0.02,
+        "sat:orbit_state": "descending",
+        "processing:level": "L2",
+        "processing:version": "05.11",
+        "production:origins": {
+          "in_ts": {
+            "ids": [
+              "S2B_MSIL2A_20251024T071209_N0511_R020_T38LNH_20251024T085207"
+            ],
+            "endpoint": "https://stac.dataspace.copernicus.eu/v1",
+            "collection": "sentinel-2-l2a"
+          }
+        },
+        "production:version": "0.2.1",
+        "sat:absolute_orbit": 45091,
+        "sat:relative_orbit": 20,
+        "processing:datetime": "2025-10-24T08:52:07.000000Z",
+        "processing:facility": "ESA",
+        "processing:software": { "eometadatatool": "251021130925+dirty" },
+        "s2:water_percentage": 52.200943,
+        "s2:vegetation_percentage": 12.294573,
+        "s2:thin_cirrus_percentage": 0.000138,
+        "s2:cloud_shadow_percentage": 0.0,
+        "s2:nodata_pixel_percentage": 13.676491,
+        "s2:unclassified_percentage": 0.118049,
+        "s2:high_proba_clouds_percentage": 0.00025,
+        "s2:medium_proba_clouds_percentage": 0.016293,
+        "sat:platform_international_designator": "2017-013A"
+      },
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
+        "https://stac-extensions.github.io/sentinel-2/v1.0.0/schema.json",
+        "https://forge.inrae.fr/teledec/stac-extensions/schemas/-/raw/main/production/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/classification/v2.0.0/schema.json"
+      ]
+    },
+    {
+      "id": "S2A_20251023T073031024000Z_37MCT_0511_2e7fa20b80",
+      "bbox": [
+        37.20081091274068, -2.8023718310552685, 38.1890210486567,
+        -1.8083796234845473
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items/S2A_20251023T073031024000Z_37MCT_0511_2e7fa20b80"
+        }
+      ],
+      "assets": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [37.20081091274068, -2.8023718310552685],
+            [38.1890210486567, -2.8023718310552685],
+            [38.1890210486567, -1.8083796234845473],
+            [37.20081091274068, -1.8083796234845473],
+            [37.20081091274068, -2.8023718310552685]
+          ]
+        ]
+      },
+      "collection": "sentinel2-l2a-sen2cor",
+      "properties": {
+        "created": "2025-10-24T04:10:20.785694Z",
+        "datetime": "2025-10-23T07:30:31.024000Z",
+        "s2:mgrs_tile": "37MCT",
+        "eo:snow_cover": 0.0,
+        "eo:cloud_cover": 58.38,
+        "sat:orbit_state": "descending",
+        "processing:level": "L2",
+        "processing:version": "05.11",
+        "production:origins": {
+          "in_ts": {
+            "ids": [
+              "S2A_MSIL2A_20251023T073031_N0511_R049_T37MCT_20251023T110718"
+            ],
+            "endpoint": "https://stac.dataspace.copernicus.eu/v1",
+            "collection": "sentinel-2-l2a"
+          }
+        },
+        "production:version": "0.2.1",
+        "sat:absolute_orbit": 53986,
+        "sat:relative_orbit": 49,
+        "processing:datetime": "2025-10-23T11:07:18.000000Z",
+        "processing:facility": "ESA",
+        "processing:software": { "eometadatatool": "251021130925+dirty" },
+        "s2:water_percentage": 0.004442,
+        "s2:vegetation_percentage": 0.03818,
+        "s2:thin_cirrus_percentage": 0.0,
+        "s2:cloud_shadow_percentage": 5.482845,
+        "s2:nodata_pixel_percentage": 96.489209,
+        "s2:unclassified_percentage": 2.028436,
+        "s2:high_proba_clouds_percentage": 26.31278,
+        "s2:medium_proba_clouds_percentage": 32.068741,
+        "sat:platform_international_designator": "2015-028A"
+      },
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
+        "https://stac-extensions.github.io/sentinel-2/v1.0.0/schema.json",
+        "https://forge.inrae.fr/teledec/stac-extensions/schemas/-/raw/main/production/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/classification/v2.0.0/schema.json"
+      ]
+    },
+    {
+      "id": "S2C_20251022T072211025000Z_38LNH_0511_7655ad795f",
+      "bbox": [
+        44.99981272158049, -16.36924585985854, 46.02791140498133,
+        -15.374248072492415
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items/S2C_20251022T072211025000Z_38LNH_0511_7655ad795f"
+        }
+      ],
+      "assets": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [44.99981272158049, -16.36924585985854],
+            [46.02791140498133, -16.36924585985854],
+            [46.02791140498133, -15.374248072492415],
+            [44.99981272158049, -15.374248072492415],
+            [44.99981272158049, -16.36924585985854]
+          ]
+        ]
+      },
+      "collection": "sentinel2-l2a-sen2cor",
+      "properties": {
+        "created": "2025-10-23T08:18:51.325398Z",
+        "datetime": "2025-10-22T07:22:11.025000Z",
+        "s2:mgrs_tile": "38LNH",
+        "eo:snow_cover": 0.0,
+        "eo:cloud_cover": 38.32,
+        "sat:orbit_state": "descending",
+        "processing:level": "L2",
+        "processing:version": "05.11",
+        "production:origins": {
+          "in_ts": {
+            "ids": [
+              "S2C_MSIL2A_20251022T072211_N0511_R063_T38LNH_20251022T115524"
+            ],
+            "endpoint": "https://stac.dataspace.copernicus.eu/v1",
+            "collection": "sentinel-2-l2a"
+          }
+        },
+        "production:version": "0.2.1",
+        "sat:absolute_orbit": 5896,
+        "sat:relative_orbit": 63,
+        "processing:datetime": "2025-10-22T11:55:24.000000Z",
+        "processing:facility": "ESA",
+        "processing:software": { "eometadatatool": "251021130925+dirty" },
+        "s2:water_percentage": 36.279985,
+        "s2:vegetation_percentage": 4.987193,
+        "s2:thin_cirrus_percentage": 34.361538,
+        "s2:cloud_shadow_percentage": 0.0,
+        "s2:nodata_pixel_percentage": 56.598264,
+        "s2:unclassified_percentage": 0.070757,
+        "s2:high_proba_clouds_percentage": 0.002828,
+        "s2:medium_proba_clouds_percentage": 3.956961,
+        "sat:platform_international_designator": "2024-157A"
+      },
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
+        "https://stac-extensions.github.io/sentinel-2/v1.0.0/schema.json",
+        "https://forge.inrae.fr/teledec/stac-extensions/schemas/-/raw/main/production/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/classification/v2.0.0/schema.json"
+      ]
+    },
+    {
+      "id": "S2C_20251021T072951025000Z_37MCT_0511_285b9756a6",
+      "bbox": [
+        37.20081091274068, -2.8023718310552685, 38.1890210486567,
+        -1.8083796234845473
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items/S2C_20251021T072951025000Z_37MCT_0511_285b9756a6"
+        }
+      ],
+      "assets": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [37.20081091274068, -2.8023718310552685],
+            [38.1890210486567, -2.8023718310552685],
+            [38.1890210486567, -1.8083796234845473],
+            [37.20081091274068, -1.8083796234845473],
+            [37.20081091274068, -2.8023718310552685]
+          ]
+        ]
+      },
+      "collection": "sentinel2-l2a-sen2cor",
+      "properties": {
+        "created": "2025-10-21T16:10:03.109792Z",
+        "datetime": "2025-10-21T07:29:51.025000Z",
+        "s2:mgrs_tile": "37MCT",
+        "eo:snow_cover": 0.0,
+        "eo:cloud_cover": 0.01,
+        "sat:orbit_state": "descending",
+        "processing:level": "L2",
+        "processing:version": "05.11",
+        "production:origins": {
+          "in_ts": {
+            "ids": [
+              "S2C_MSIL2A_20251021T072951_N0511_R049_T37MCT_20251021T111618"
+            ],
+            "endpoint": "https://stac.dataspace.copernicus.eu/v1",
+            "collection": "sentinel-2-l2a"
+          }
+        },
+        "production:version": "0.2.1",
+        "sat:absolute_orbit": 5882,
+        "sat:relative_orbit": 49,
+        "processing:datetime": "2025-10-21T11:16:18.000000Z",
+        "processing:facility": "ESA",
+        "processing:software": { "eometadatatool": "251021130925+dirty" },
+        "s2:water_percentage": 0.003562,
+        "s2:vegetation_percentage": 0.534927,
+        "s2:thin_cirrus_percentage": 0.0,
+        "s2:cloud_shadow_percentage": 0.0,
+        "s2:nodata_pixel_percentage": 96.926081,
+        "s2:unclassified_percentage": 0.057961,
+        "s2:high_proba_clouds_percentage": 0.000648,
+        "s2:medium_proba_clouds_percentage": 0.012413,
+        "sat:platform_international_designator": "2024-157A"
+      },
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
+        "https://stac-extensions.github.io/sentinel-2/v1.0.0/schema.json",
+        "https://forge.inrae.fr/teledec/stac-extensions/schemas/-/raw/main/production/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/classification/v2.0.0/schema.json"
+      ]
+    },
+    {
+      "id": "S2C_20251021T072951025000Z_37MCS_0511_51b73214ae",
+      "bbox": [
+        37.19920595120899, -3.7071632150939333, 38.18851847180446,
+        -2.7128288679416928
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items/S2C_20251021T072951025000Z_37MCS_0511_51b73214ae"
+        }
+      ],
+      "assets": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [37.19920595120899, -3.7071632150939333],
+            [38.18851847180446, -3.7071632150939333],
+            [38.18851847180446, -2.7128288679416928],
+            [37.19920595120899, -2.7128288679416928],
+            [37.19920595120899, -3.7071632150939333]
+          ]
+        ]
+      },
+      "collection": "sentinel2-l2a-sen2cor",
+      "properties": {
+        "created": "2025-10-21T16:10:38.059694Z",
+        "datetime": "2025-10-21T07:29:51.025000Z",
+        "s2:mgrs_tile": "37MCS",
+        "eo:snow_cover": 0.0,
+        "eo:cloud_cover": 0.03,
+        "sat:orbit_state": "descending",
+        "processing:level": "L2",
+        "processing:version": "05.11",
+        "production:origins": {
+          "in_ts": {
+            "ids": [
+              "S2C_MSIL2A_20251021T072951_N0511_R049_T37MCS_20251021T111618"
+            ],
+            "endpoint": "https://stac.dataspace.copernicus.eu/v1",
+            "collection": "sentinel-2-l2a"
+          }
+        },
+        "production:version": "0.2.1",
+        "sat:absolute_orbit": 5882,
+        "sat:relative_orbit": 49,
+        "processing:datetime": "2025-10-21T11:16:18.000000Z",
+        "processing:facility": "ESA",
+        "processing:software": { "eometadatatool": "251021130925+dirty" },
+        "s2:water_percentage": 0.000032,
+        "s2:vegetation_percentage": 0.823637,
+        "s2:thin_cirrus_percentage": 0.0,
+        "s2:cloud_shadow_percentage": 0.057931,
+        "s2:nodata_pixel_percentage": 79.198784,
+        "s2:unclassified_percentage": 0.067725,
+        "s2:high_proba_clouds_percentage": 0.001499,
+        "s2:medium_proba_clouds_percentage": 0.025887,
+        "sat:platform_international_designator": "2024-157A"
+      },
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
+        "https://stac-extensions.github.io/sentinel-2/v1.0.0/schema.json",
+        "https://forge.inrae.fr/teledec/stac-extensions/schemas/-/raw/main/production/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/classification/v2.0.0/schema.json"
+      ]
+    },
+    {
+      "id": "S2B_20251017T072159024000Z_38LNH_0511_597ce7f5a1",
+      "bbox": [
+        44.99981272158049, -16.36924585985854, 46.02791140498133,
+        -15.374248072492415
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items/S2B_20251017T072159024000Z_38LNH_0511_597ce7f5a1"
+        }
+      ],
+      "assets": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [44.99981272158049, -16.36924585985854],
+            [46.02791140498133, -16.36924585985854],
+            [46.02791140498133, -15.374248072492415],
+            [44.99981272158049, -15.374248072492415],
+            [44.99981272158049, -16.36924585985854]
+          ]
+        ]
+      },
+      "collection": "sentinel2-l2a-sen2cor",
+      "properties": {
+        "created": "2025-10-17T12:12:40.641217Z",
+        "datetime": "2025-10-17T07:21:59.024000Z",
+        "s2:mgrs_tile": "38LNH",
+        "eo:snow_cover": 0.0,
+        "eo:cloud_cover": 4.29,
+        "sat:orbit_state": "descending",
+        "processing:level": "L2",
+        "processing:version": "05.11",
+        "production:origins": {
+          "in_ts": {
+            "ids": [
+              "S2B_MSIL2A_20251017T072159_N0511_R063_T38LNH_20251017T091717"
+            ],
+            "endpoint": "https://stac.dataspace.copernicus.eu/v1",
+            "collection": "sentinel-2-l2a"
+          }
+        },
+        "production:version": "0.2.1",
+        "sat:absolute_orbit": 44991,
+        "sat:relative_orbit": 63,
+        "processing:datetime": "2025-10-17T09:17:17.000000Z",
+        "processing:facility": "ESA",
+        "processing:software": { "eometadatatool": "251008160644+dirty" },
+        "s2:water_percentage": 68.396413,
+        "s2:vegetation_percentage": 4.806645,
+        "s2:thin_cirrus_percentage": 0.001079,
+        "s2:cloud_shadow_percentage": 0.508925,
+        "s2:nodata_pixel_percentage": 56.938696,
+        "s2:unclassified_percentage": 0.255017,
+        "s2:high_proba_clouds_percentage": 0.175626,
+        "s2:medium_proba_clouds_percentage": 4.117802,
+        "sat:platform_international_designator": "2017-013A"
+      },
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
+        "https://stac-extensions.github.io/sentinel-2/v1.0.0/schema.json",
+        "https://forge.inrae.fr/teledec/stac-extensions/schemas/-/raw/main/production/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/classification/v2.0.0/schema.json"
+      ]
+    },
+    {
+      "id": "S2A_20251016T075451024000Z_37MBT_0511_a6c095451a",
+      "bbox": [
+        36.301595907941675, -2.8013980816997632, 37.28994983349999,
+        -1.8072602246729041
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items/S2A_20251016T075451024000Z_37MBT_0511_a6c095451a"
+        }
+      ],
+      "assets": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [36.301595907941675, -2.8013980816997632],
+            [37.28994983349999, -2.8013980816997632],
+            [37.28994983349999, -1.8072602246729041],
+            [36.301595907941675, -1.8072602246729041],
+            [36.301595907941675, -2.8013980816997632]
+          ]
+        ]
+      },
+      "collection": "sentinel2-l2a-sen2cor",
+      "properties": {
+        "created": "2025-10-16T12:29:32.547865Z",
+        "datetime": "2025-10-16T07:54:51.024000Z",
+        "s2:mgrs_tile": "37MBT",
+        "eo:snow_cover": 0.0,
+        "eo:cloud_cover": 60.04,
+        "sat:orbit_state": "descending",
+        "processing:level": "L2",
+        "processing:version": "05.11",
+        "production:origins": {
+          "in_ts": {
+            "ids": [
+              "S2A_MSIL2A_20251016T075451_N0511_R092_T37MBT_20251016T103126"
+            ],
+            "endpoint": "https://stac.dataspace.copernicus.eu/v1",
+            "collection": "sentinel-2-l2a"
+          }
+        },
+        "production:version": "0.2.1",
+        "sat:absolute_orbit": 53886,
+        "sat:relative_orbit": 92,
+        "processing:datetime": "2025-10-16T10:31:26.000000Z",
+        "processing:facility": "ESA",
+        "processing:software": { "eometadatatool": "251008160644+dirty" },
+        "s2:water_percentage": 0.011556,
+        "s2:vegetation_percentage": 0.680831,
+        "s2:thin_cirrus_percentage": 4.234654,
+        "s2:cloud_shadow_percentage": 4.879941,
+        "s2:nodata_pixel_percentage": 0.0,
+        "s2:unclassified_percentage": 0.746607,
+        "s2:high_proba_clouds_percentage": 42.485976,
+        "s2:medium_proba_clouds_percentage": 13.321605,
+        "sat:platform_international_designator": "2015-028A"
+      },
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
+        "https://stac-extensions.github.io/sentinel-2/v1.0.0/schema.json",
+        "https://forge.inrae.fr/teledec/stac-extensions/schemas/-/raw/main/production/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/classification/v2.0.0/schema.json"
+      ]
+    },
+    {
+      "id": "S2C_20251016T070211025000Z_38LQH_0511_1c96d45d1b",
+      "bbox": [
+        46.86291158102522, -16.36092517176475, 47.89922475984138,
+        -15.357911490883158
+      ],
+      "type": "Feature",
+      "links": [
+        {
+          "rel": "collection",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "parent",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+        },
+        {
+          "rel": "root",
+          "type": "application/json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/"
+        },
+        {
+          "rel": "self",
+          "type": "application/geo+json",
+          "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items/S2C_20251016T070211025000Z_38LQH_0511_1c96d45d1b"
+        }
+      ],
+      "assets": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [46.86291158102522, -16.36092517176475],
+            [47.89922475984138, -16.36092517176475],
+            [47.89922475984138, -15.357911490883158],
+            [46.86291158102522, -15.357911490883158],
+            [46.86291158102522, -16.36092517176475]
+          ]
+        ]
+      },
+      "collection": "sentinel2-l2a-sen2cor",
+      "properties": {
+        "created": "2025-10-16T16:10:40.520388Z",
+        "datetime": "2025-10-16T07:02:11.025000Z",
+        "s2:mgrs_tile": "38LQH",
+        "eo:snow_cover": 0.0,
+        "eo:cloud_cover": 0.05,
+        "sat:orbit_state": "descending",
+        "processing:level": "L2",
+        "processing:version": "05.11",
+        "production:origins": {
+          "in_ts": {
+            "ids": [
+              "S2C_MSIL2A_20251016T070211_N0511_R120_T38LQH_20251016T113118"
+            ],
+            "endpoint": "https://stac.dataspace.copernicus.eu/v1",
+            "collection": "sentinel-2-l2a"
+          }
+        },
+        "production:version": "0.2.1",
+        "sat:absolute_orbit": 5810,
+        "sat:relative_orbit": 120,
+        "processing:datetime": "2025-10-16T11:31:18.000000Z",
+        "processing:facility": "ESA",
+        "processing:software": { "eometadatatool": "251008160644+dirty" },
+        "s2:water_percentage": 0.877604,
+        "s2:vegetation_percentage": 7.443795,
+        "s2:thin_cirrus_percentage": 0.001628,
+        "s2:cloud_shadow_percentage": 0.0,
+        "s2:nodata_pixel_percentage": 78.603894,
+        "s2:unclassified_percentage": 0.044442,
+        "s2:high_proba_clouds_percentage": 0.003923,
+        "s2:medium_proba_clouds_percentage": 0.042706,
+        "sat:platform_international_designator": "2024-157A"
+      },
+      "stac_version": "1.1.0",
+      "stac_extensions": [
+        "https://stac-extensions.github.io/eo/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/sat/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/processing/v1.2.0/schema.json",
+        "https://stac-extensions.github.io/sentinel-2/v1.0.0/schema.json",
+        "https://forge.inrae.fr/teledec/stac-extensions/schemas/-/raw/main/production/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/raster/v1.1.0/schema.json",
+        "https://stac-extensions.github.io/projection/v2.0.0/schema.json",
+        "https://stac-extensions.github.io/classification/v2.0.0/schema.json"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "rel": "collection",
+      "type": "application/json",
+      "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+    },
+    {
+      "rel": "parent",
+      "type": "application/json",
+      "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor"
+    },
+    {
+      "rel": "root",
+      "type": "application/json",
+      "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/"
+    },
+    {
+      "rel": "self",
+      "type": "application/geo+json",
+      "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items"
+    },
+    {
+      "rel": "next",
+      "type": "application/geo+json",
+      "method": "GET",
+      "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items?limit=12&datetime=2016-01-02T10:54:42.030Z/2025-10-29T07:12:21.025Z&token=next:sentinel2-l2a-sen2cor:S2C_20251016T070211025000Z_38LQH_0511_1c96d45d1b"
+    },
+    {
+      "rel": "previous",
+      "type": "application/geo+json",
+      "method": "GET",
+      "href": "https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items?limit=12&datetime=2016-01-02T10:54:42.030Z/2025-10-29T07:12:21.025Z&token=prev:sentinel2-l2a-sen2cor:S2A_20251024T072221024000Z_38LNH_0511_c4fba6046c"
+    }
+  ]
+}

@@ -70,7 +70,7 @@ export const GENERIC_DATASET_RECORD: DatasetRecord = {
   recordCreated: new Date('2021-11-15T09:00:00'),
   recordPublished: new Date('2022-01-01T10:00:00'),
   recordUpdated: new Date('2022-02-01T15:12:00'),
-  resourceIdentifier: '2d974612-70b1-4662-a9f4-c43cbe453773',
+  resourceIdentifiers: [{ code: '2d974612-70b1-4662-a9f4-c43cbe453773' }],
   resourceCreated: new Date('2022-09-01T14:18:19'),
   resourceUpdated: new Date('2022-12-04T15:12:00'),
   title: 'A very interesting dataset (un jeu de données très intéressant)',

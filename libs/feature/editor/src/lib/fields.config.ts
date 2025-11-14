@@ -81,7 +81,7 @@ export const RECORD_RESOURCE_CREATED_FIELD: EditorField = {
 }
 
 export const RESOURCE_IDENTIFIER_FIELD: EditorField = {
-  model: 'resourceIdentifier',
+  model: 'resourceIdentifiers',
   formFieldConfig: {
     labelKey: marker('editor.record.form.field.resourceIdentifier'),
   },

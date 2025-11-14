@@ -19,7 +19,7 @@ import {
 import { MockBuilder, MockProvider } from 'ng-mocks'
 import { MatTab, MatTabGroup } from '@angular/material/tabs'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
-import { StacViewComponent } from '@geonetwork-ui/feature/stac'
+import { StacViewComponent } from '@geonetwork-ui/feature/record'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import { PlatformServiceInterface } from '@geonetwork-ui/common/domain/platform.service.interface'
 import { SAMPLE_RECORD } from '@geonetwork-ui/common/fixtures'
@@ -273,9 +273,6 @@ describe('RecordDataPreviewComponent', () => {
     })
   })
   describe('STAC view', () => {
-    let mapTab
-    let tableTab
-    let chartTab
     let stacTab
     let tabGroup
     describe('when only a GEODATA link present', () => {
@@ -318,6 +315,11 @@ describe('RecordDataPreviewComponent', () => {
         expect(
           fixture.debugElement.query(By.directive(StacViewComponent))
         ).toBeTruthy()
+      })
+      it('does NOT render the permalink component', () => {
+        expect(
+          fixture.debugElement.query(By.directive(DataViewShareComponent))
+        ).toBeFalsy()
       })
     })
   })

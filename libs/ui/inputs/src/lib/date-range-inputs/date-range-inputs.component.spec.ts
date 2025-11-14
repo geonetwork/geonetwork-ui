@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { DateRangeInputsComponent } from './date-range-inputs.component'
+import { provideI18n } from '@geonetwork-ui/util/i18n'
 
 describe('DateRangeInputsComponent', () => {
   let component: DateRangeInputsComponent
@@ -9,6 +10,7 @@ describe('DateRangeInputsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DateRangeInputsComponent],
+      providers: [provideI18n()],
     }).compileComponents()
 
     fixture = TestBed.createComponent(DateRangeInputsComponent)

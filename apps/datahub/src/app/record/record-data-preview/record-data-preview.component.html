@@ -8,7 +8,10 @@
   <div class="overflow-visible">
     <div class="container-lg pb-4 px-4 lg:mx-auto">
       <div>
-        <h2 class="gn-ui-section-title transform translate-y-11 pt-0" translate>
+        <h2
+          class="gn-ui-section-title transform translate-y-1 sm:translate-y-11 py-4 sm:py-0"
+          translate
+        >
           record.metadata.preview
         </h2>
         <mat-tab-group
@@ -72,8 +75,9 @@
             </div>
           </mat-tab>
           <mat-tab
-            *ngIf="(isMobile$ | async) === false"
-            [disabled]="(displayData$ | async) === false"
+            [disabled]="
+              (displayData$ | async) === false || (isMobile$ | async) === true
+            "
           >
             <ng-template mat-tab-label>
               <span class="tab-header-label" translate>record.tab.chart</span>
@@ -108,7 +112,7 @@
 </div>
 <div
   class="container-lg lg:mx-auto mb-10 px-4"
-  *ngIf="displayViewShare$ | async"
+  *ngIf="(displayViewShare$ | async) && (selectedView$ | async) !== 'stac'"
 >
   <gn-ui-data-view-share
     [viewType]="selectedView$ | async"

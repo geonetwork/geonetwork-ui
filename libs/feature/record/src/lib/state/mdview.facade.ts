@@ -89,6 +89,25 @@ export class MdViewFacade {
     shareReplay(1)
   )
 
+  resourceDoi$ = this.metadata$.pipe(
+    map((record) => {
+      if (!record?.resourceIdentifiers?.length) return null
+      const doiIdentifier = record.resourceIdentifiers.find(
+        (id) =>
+          id.codeSpace?.toLowerCase().includes('doi.org') ||
+          id.code.startsWith('10.')
+      )
+
+      if (!doiIdentifier) return null
+
+      return {
+        code: doiIdentifier.code,
+        url: doiIdentifier.url ? doiIdentifier.url : null,
+      }
+    }),
+    shareReplay(1)
+  )
+
   apiLinks$ = this.allLinks$.pipe(
     map((links) =>
       links.filter((link) => this.linkClassifier.hasUsage(link, LinkUsage.API))

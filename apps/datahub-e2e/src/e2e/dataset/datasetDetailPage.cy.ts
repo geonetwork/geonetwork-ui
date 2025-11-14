@@ -201,12 +201,14 @@ describe('Sections', () => {
       .eq(0)
       .children('p')
       .eq(1)
-      .should('contain.text', '9/22/2020')
+      .invoke('attr', 'title')
+      .should('contain', '9/22/2020')
     cy.get('@aboutContent')
       .eq(1)
       .children('p')
       .eq(1)
-      .should('contain.text', '3/17/2024')
+      .invoke('attr', 'title')
+      .should('contain', '3/17/2024')
 
     // it should not display the same text twice in the constraints
 
@@ -256,6 +258,34 @@ describe('Sections', () => {
     // it should go to dataset search page when clicking on org name and filter by org
     cy.get('[data-cy="organization-name-link"]').eq(0).click()
     cy.url().should('include', '/search?organization=')
+
+    cy.go('back')
+
+    // it should not display DOI when not available
+    cy.get('gn-ui-metadata-doi').should('not.exist')
+
+    // it should display DOI when available
+    cy.visit('/dataset/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
+    cy.get('gn-ui-metadata-doi').should('be.visible')
+    cy.get('gn-ui-metadata-doi')
+      .find('p')
+      .eq(1)
+      .invoke('text')
+      .invoke('trim')
+      .should('not.be.empty')
+    cy.get('gn-ui-metadata-doi')
+      .find('a[target="_blank"]')
+      .should('exist')
+      .and('have.attr', 'href')
+      .and('include', 'doi.org')
+
+    // it should copy DOI to clipboard
+    cy.get('gn-ui-metadata-doi').find('button[type="button"]').realClick()
+    cy.window().then((win) => {
+      win.navigator.clipboard.readText().then((text) => {
+        expect(text).to.include('10.')
+      })
+    })
   })
 
   it('Metadata quality widget', () => {

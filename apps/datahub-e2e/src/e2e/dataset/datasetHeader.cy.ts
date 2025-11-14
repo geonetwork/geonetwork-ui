@@ -146,11 +146,11 @@ describe('dataset: header', () => {
     cy.get('datahub-record-page')
       .find('datahub-navigation-bar')
       .should('not.be.visible')
-    cy.get('#data-preview').scrollIntoView()
+    cy.get('#resources').scrollIntoView()
 
-    //it should display only the (active) data-preview section anchor
+    //it should display only the (active) resources section anchor and hide the mobile menu
     cy.get('datahub-navigation-bar')
-      .find('[data-cy="data-preview-mobile-title"]')
+      .find('[data-cy="resources-mobile-title"]')
       .should('be.visible')
     cy.get('datahub-navigation-bar')
       .find('[data-cy="resources-mobile-menu"]')

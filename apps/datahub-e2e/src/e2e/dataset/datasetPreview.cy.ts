@@ -75,6 +75,36 @@ beforeEach(() => {
       fixture: 'population-millesimee-communes-francaises.csv',
     }
   )
+
+  //STAC stubs
+  cy.intercept(
+    'GET',
+    'https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items?limit=12&datetime=2016-01-02T10%3A54%3A42.030Z%2F2025-10-29T07%3A12%3A21.025Z',
+    {
+      fixture: 'stac-items-page-1.json',
+    }
+  )
+  cy.intercept(
+    'GET',
+    'https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items?limit=12&datetime=2016-01-02T10%3A54%3A42.030Z%2F2025-10-29T07%3A12%3A21.025Z&token=next%3Asentinel2-l2a-sen2cor%3AS2C_20251024T074011025000Z_37MCT_0511_204a05c2af',
+    {
+      fixture: 'stac-items-page-2.json',
+    }
+  )
+  cy.intercept(
+    'GET',
+    'https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items?limit=12&datetime=2016-01-02T10%3A54%3A42.030Z%2F2019-12-31T23%3A00%3A00.000Z',
+    {
+      fixture: 'stac-items-date-modified.json',
+    }
+  )
+  cy.intercept(
+    'GET',
+    'https://stacapi-cdos.apps.okd.crocc.meso.umontpellier.fr/collections/sentinel2-l2a-sen2cor/items?limit=12',
+    {
+      fixture: 'stac-items-no-date.json',
+    }
+  )
 })
 
 describe('Preview section', () => {
@@ -266,9 +296,22 @@ describe('Preview section', () => {
   })
 
   it('STAC tab with temporal extent metadata', () => {
+    const initialId = ' S2C_20251029T071221025000Z_38LQH_0511_afbd406add '
+    const initialDate = '2025-10-29T07:12:21.025000Z'
+
+    const secondPageId = ' S2A_20251024T072221024000Z_38LNH_0511_c4fba6046c '
+    const secondPageDate = '2025-10-24T07:22:21.024000Z'
+
+    const modifiedDateId = ' S2B_20191231T103339024Z_32ULV_0500_acd8ae09db '
+    const modifiedDateDate = '2019-12-31T10:33:39.024000Z'
+
+    const noDateId = ' S2A_20251112T073151024000Z_37MCT_0511_06485b683a '
+    const noDateDate = '2025-11-12T07:31:51.024000Z'
+
     // Visit a dataset with STAC links and temporal extents
     cy.visit('/dataset/sentinel2-l2a-sen2cor')
 
+    // aliases
     cy.get('datahub-record-metadata')
       .find('[id="preview"]')
       .first()
@@ -278,6 +321,34 @@ describe('Preview section', () => {
       .children('div')
       .eq(4)
       .as('stacTab')
+    cy.get('@previewSection')
+      .find('gn-ui-stac-view')
+      .find('gn-ui-previous-next-buttons')
+      .find('button')
+      .eq(1)
+      .as('nextPageButton')
+    cy.get('@previewSection')
+      .find('gn-ui-stac-view')
+      .find('gn-ui-previous-next-buttons')
+      .find('button')
+      .eq(0)
+      .as('previousPageButton')
+    cy.get('@previewSection')
+      .find('gn-ui-stac-view')
+      .find('[data-cy="stac-item-card"]')
+      .as('stacItems')
+    cy.get('@stacItems').first().find('h2').as('firstItemId')
+    cy.get('@stacItems').first().find('p').as('firstItemDate')
+    cy.get('@previewSection')
+      .find('gn-ui-stac-view')
+      .find('#start-date-picker')
+      .find('input')
+      .as('startDatePicker')
+    cy.get('@previewSection')
+      .find('gn-ui-stac-view')
+      .find('#end-date-picker')
+      .find('input')
+      .as('endDatePicker')
 
     // Click on STAC tab
     cy.get('@stacTab').click()
@@ -296,13 +367,46 @@ describe('Preview section', () => {
       .find('gn-ui-stac-view')
       .should('not.contain', '[id="reset-filters-button"]')
 
-    // Modify the start date
+    // it should display initial 12 items
+    cy.get('@stacItems').should('have.length', 12)
+
+    cy.get('@firstItemId').should('have.text', initialId)
+    cy.get('@firstItemDate').should('have.text', initialDate)
+
+    // it should have previous button disabled on first page
+    cy.get('@previousPageButton').should('have.attr', 'disabled')
+
+    // Navigate to next page
+    cy.get('@nextPageButton').click()
+
+    // it should display 12 items on page 2
+    cy.get('@stacItems').should('have.length', 12)
+
+    // it should display items from second page
+    cy.get('@firstItemId').should('have.text', secondPageId)
+    cy.get('@firstItemDate').should('have.text', secondPageDate)
+
+    // Go back to page 1
+    cy.get('@previousPageButton').click()
+
+    // it should display 12 items on page 1
+    cy.get('@stacItems').should('have.length', 12)
+
+    // it should display items from first page again
+    cy.get('@firstItemId').should('have.text', initialId)
+    cy.get('@firstItemDate').should('have.text', initialDate)
+
+    // Modify the end date
     cy.get('@previewSection')
       .find('gn-ui-stac-view')
-      .find('#start-date-picker')
+      .find('#end-date-picker')
       .find('input')
       .clear()
       .type('2020-01-01{enter}')
+
+    // it should display items corresponding to the new date range
+    cy.get('@firstItemId').should('have.text', modifiedDateId)
+    cy.get('@firstItemDate').should('have.text', modifiedDateDate)
 
     // it should show the reset button after modification
     cy.get('@previewSection')
@@ -320,6 +424,27 @@ describe('Preview section', () => {
     cy.get('@previewSection')
       .find('gn-ui-stac-view')
       .should('not.contain', '#reset-filters-button')
+
+    // Choose date span without results
+    cy.get('@startDatePicker').clear().type('1990-01-01{enter}')
+    cy.get('@endDatePicker').clear().type('1995-01-01{enter}')
+
+    // it should show a second reset button instead of results
+    cy.get('@previewSection')
+      .find('gn-ui-stac-view')
+      .find('#no-results-button')
+      .should('be.visible')
+
+    // Delete start and end dates
+    cy.get('@startDatePicker').clear().type('{enter}')
+    cy.get('@endDatePicker').clear().type('{enter}')
+
+    // it should display 12 items
+    cy.get('@stacItems').should('have.length', 12)
+
+    // it should display items corresponding to no new date range filter
+    cy.get('@firstItemId').should('have.text', noDateId)
+    cy.get('@firstItemDate').should('have.text', noDateDate)
   })
 
   // skip for now as modifying dump on my side breaks all tests on GN 4.2.2

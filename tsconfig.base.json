@@ -58,6 +58,9 @@
       "@geonetwork-ui/util/i18n/language-codes": [
         "libs/util/i18n/src/lib/language-codes.ts"
       ],
+      "@geonetwork-ui/util/i18n/date-locales": [
+        "libs/util/i18n/src/lib/date-locales.ts"
+      ],
       "@geonetwork-ui/util/shared": ["libs/util/shared/src/index.ts"]
     },
     "allowJs": true,

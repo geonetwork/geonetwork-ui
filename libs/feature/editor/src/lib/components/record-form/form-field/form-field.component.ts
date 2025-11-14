@@ -142,4 +142,34 @@ export class FormFieldComponent {
   get valueAsOnlineResources() {
     return this.value as Array<OnlineResource>
   }
+  get valueAsResourceIdentifierCode() {
+    const identifiers = this.value as Array<{
+      code: string
+      codeSpace?: string
+      url?: string
+    }>
+    return identifiers?.[0]?.code || ''
+  }
+
+  handleResourceIdentifierChange(code: string) {
+    const identifiers = this.value as Array<{
+      code: string
+      codeSpace?: string
+      url?: string
+    }>
+
+    if (!code) {
+      this.valueChange.emit(identifiers?.slice(1) || [])
+      return
+    }
+
+    if (identifiers?.[0]) {
+      this.valueChange.emit([
+        { ...identifiers[0], code },
+        ...identifiers.slice(1),
+      ])
+    } else {
+      this.valueChange.emit([{ code }])
+    }
+  }
 }

@@ -26,7 +26,7 @@ import { matOpenInNew } from '@ng-icons/material-icons/baseline'
 import { matMailOutline } from '@ng-icons/material-icons/outline'
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 import { GnUiLinkifyDirective } from './linkify.directive'
-
+import { GnUiHumanizeDateDirective } from '@geonetwork-ui/util/shared'
 import { CommonModule } from '@angular/common'
 import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
 
@@ -49,6 +49,7 @@ import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
     CopyTextButtonComponent,
     NgIcon,
     GnUiLinkifyDirective,
+    GnUiHumanizeDateDirective,
     SpatialExtentComponent,
   ],
   viewProviders: [
@@ -145,13 +146,5 @@ export class MetadataInfoComponent {
 
   onKeywordClick(keyword: Keyword) {
     this.keyword.emit(keyword)
-  }
-
-  formatDate(date: Date): string {
-    return this.dateService.formatDate(date)
-  }
-
-  formatDateTime(date: Date): string {
-    return this.dateService.formatDateTime(date)
   }
 }

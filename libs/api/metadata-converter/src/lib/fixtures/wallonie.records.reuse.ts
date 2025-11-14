@@ -2,7 +2,7 @@ import { ReuseRecord } from '@geonetwork-ui/common/domain/model/record'
 
 export const WALLONIE_REUSE_SPW_RECORD: ReuseRecord = {
   uniqueIdentifier: '83809bcd-1763-4d28-b820-2b9828083ba5',
-  resourceIdentifier: '83809bcd-1763-4d28-b820-2b9828083ba5',
+  resourceIdentifiers: [{ code: '83809bcd-1763-4d28-b820-2b9828083ba5' }],
   kind: 'reuse',
   otherLanguages: [],
   defaultLanguage: 'fr',
