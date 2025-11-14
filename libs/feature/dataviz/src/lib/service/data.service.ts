@@ -2,12 +2,17 @@ import { Injectable } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   OgcApiCollectionInfo,
+  OgcApiCollectionItem,
   OgcApiEndpoint,
-  OgcApiRecord,
+  TmsEndpoint,
   WfsEndpoint,
   WfsVersion,
-  TmsEndpoint,
 } from '@camptocamp/ogc-client'
+import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import {
+  DatasetOnlineResource,
+  DatasetServiceDistribution,
+} from '@geonetwork-ui/common/domain/model/record'
 import {
   BaseReader,
   FetchError,
@@ -24,11 +29,6 @@ import {
 import type { FeatureCollection } from 'geojson'
 import { from, Observable, throwError } from 'rxjs'
 import { catchError, map, switchMap, tap } from 'rxjs/operators'
-import {
-  DatasetOnlineResource,
-  DatasetServiceDistribution,
-} from '@geonetwork-ui/common/domain/model/record'
-import { DatavizConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 
 marker('wfs.unreachable.cors')
 marker('wfs.unreachable.http')
@@ -211,21 +211,24 @@ export class DataService {
 
   async getDownloadUrlsFromOgcApi(url: string): Promise<OgcApiCollectionInfo> {
     const endpoint = new OgcApiEndpoint(url)
-    return await endpoint.featureCollections
+    return await endpoint.allCollections
       .then((collections) => {
-        return endpoint.getCollectionInfo(collections[0])
+        return endpoint.getCollectionInfo(collections[0].name)
       })
       .catch((error) => {
         throw new Error(`ogc.unreachable.unknown`)
       })
   }
 
-  async getItemsFromOgcApi(url: string): Promise<OgcApiRecord[]> {
+  async getItemsFromOgcApi(
+    url: string,
+    limit?: number
+  ): Promise<OgcApiCollectionItem[]> {
     const endpoint = new OgcApiEndpoint(url)
-    return await endpoint.featureCollections
+    return await endpoint.allCollections
       .then((collections) => {
         return collections.length
-          ? endpoint.getCollectionItems(collections[0])
+          ? endpoint.getCollectionItems(collections[0].name, limit)
           : null
       })
       .catch(() => {
