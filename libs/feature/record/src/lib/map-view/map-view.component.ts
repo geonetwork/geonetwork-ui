@@ -74,9 +74,13 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
 
 marker('map.dropdown.placeholder')
-marker('wfs.feature.limit')
-marker('dataset.error.restrictedAccess')
 marker('map.select.style')
+marker('wfs.feature.limit')
+marker('dataset.error.http')
+marker('dataset.error.forbidden')
+marker('dataset.error.restrictedAccess')
+marker('dataset.error.network')
+marker('dataset.error.unknown')
 
 @Component({
   selector: 'gn-ui-map-view',

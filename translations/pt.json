@@ -58,10 +58,8 @@
   "dataset.error.forbidden": "",
   "dataset.error.http": "",
   "dataset.error.network": "",
-  "dataset.error.parse": "",
   "dataset.error.restrictedAccess": "",
   "dataset.error.unknown": "",
-  "dataset.error.unsupportedType": "",
   "daterange.filter.from": "",
   "daterange.filter.period": "",
   "daterange.filter.to": "",
@@ -641,6 +639,7 @@
   "share.tab.webComponent": "",
   "stac.filter.reset": "",
   "stac.results.noResults": "",
+  "stac.unreachable.unknown": "",
   "table.loading.data": "",
   "table.object.count": "",
   "table.paginator.firstPage": "",
@@ -650,6 +649,7 @@
   "table.paginator.previousPage": "",
   "table.paginator.rangeLabel": "",
   "table.select.data": "",
+  "tms.unreachable.unknown": "",
   "tooltip.html.copy": "",
   "tooltip.id.copy": "",
   "tooltip.url.copy": "",
@@ -660,5 +660,7 @@
   "wfs.geojsongml.notsupported": "",
   "wfs.unreachable.cors": "",
   "wfs.unreachable.http": "",
-  "wfs.unreachable.unknown": ""
+  "wfs.unreachable.parse": "",
+  "wfs.unreachable.unknown": "",
+  "wfs.unreachable.unsupportedType": ""
 }

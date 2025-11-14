@@ -58,10 +58,8 @@
   "dataset.error.forbidden": "",
   "dataset.error.http": "Dáta sa nedajú načítať kvôli chybe HTTP: \"{ info }\"",
   "dataset.error.network": "Dáta sa nedajú načítať kvôli chybe v sieti alebo obmedzeniam CORS: \"{ info }\"",
-  "dataset.error.parse": "Dáta boli načítané, ale nedajú sa analyzovať: \"{ info }\"",
   "dataset.error.restrictedAccess": "",
   "dataset.error.unknown": "Dáta nie je možné zobraziť: \"{ info }\"",
-  "dataset.error.unsupportedType": "Nepodporovaný typ obsahu: \"{ info }\"",
   "daterange.filter.from": "",
   "daterange.filter.period": "",
   "daterange.filter.to": "",
@@ -641,6 +639,7 @@
   "share.tab.webComponent": "Integrovať",
   "stac.filter.reset": "",
   "stac.results.noResults": "",
+  "stac.unreachable.unknown": "So službou sa nedalo spojiť",
   "table.loading.data": "Načítanie údajov...",
   "table.object.count": "objekty v tomto súbore údajov",
   "table.paginator.firstPage": "",
@@ -650,6 +649,7 @@
   "table.paginator.previousPage": "",
   "table.paginator.rangeLabel": "",
   "table.select.data": "Zdroj údajov",
+  "tms.unreachable.unknown": "So službou sa nedalo spojiť",
   "tooltip.html.copy": "Kopírovať HTML",
   "tooltip.id.copy": "Kopírovať jedinečný identifikátor",
   "tooltip.url.copy": "Kopírovať URL",
@@ -660,5 +660,7 @@
   "wfs.geojsongml.notsupported": "Táto služba nepodporuje formát GeoJSON alebo GML",
   "wfs.unreachable.cors": "Službu nemožno dosiahnuť z dôvodu obmedzení CORS",
   "wfs.unreachable.http": "Služba vrátila chybu HTTP",
-  "wfs.unreachable.unknown": "So službou sa nedalo spojiť"
+  "wfs.unreachable.parse": "Dáta boli načítané, ale nedajú sa analyzovať: \"{ info }\"",
+  "wfs.unreachable.unknown": "So službou sa nedalo spojiť",
+  "wfs.unreachable.unsupportedType": "Nepodporovaný typ obsahu: \"{ info }\""
 }
