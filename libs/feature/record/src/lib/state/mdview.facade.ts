@@ -1,14 +1,5 @@
 import { Injectable } from '@angular/core'
-import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
-import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
-import {
-  CatalogRecord,
-  UserFeedback,
-} from '@geonetwork-ui/common/domain/model/record'
-import { DataService } from '@geonetwork-ui/feature/dataviz'
-import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
 import { select, Store } from '@ngrx/store'
-import { from, of } from 'rxjs'
 import {
   catchError,
   defaultIfEmpty,
@@ -21,6 +12,16 @@ import {
 } from 'rxjs/operators'
 import * as MdViewActions from './mdview.actions'
 import * as MdViewSelectors from './mdview.selectors'
+import { LinkClassifierService, LinkUsage } from '@geonetwork-ui/util/shared'
+import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
+import {
+  CatalogRecord,
+  UserFeedback,
+} from '@geonetwork-ui/common/domain/model/record'
+import { AvatarServiceInterface } from '@geonetwork-ui/api/repository'
+import { OgcApiRecord } from '@camptocamp/ogc-client'
+import { from, of, Observable } from 'rxjs'
+import { DataService } from '@geonetwork-ui/feature/dataviz'
 
 @Injectable()
 /**
@@ -136,9 +137,9 @@ export class MdViewFacade {
               link.accessServiceProtocol === 'ogcFeatures'
             ) {
               return from(
-                this.dataService.getItemsFromOgcApi(link.url.href, 1)
+                this.dataService.getItemsFromOgcApi(link.url.href)
               ).pipe(
-                map((collectionRecords) => {
+                map((collectionRecords: OgcApiRecord[]) => {
                   return collectionRecords &&
                     collectionRecords[0] &&
                     collectionRecords[0].geometry
