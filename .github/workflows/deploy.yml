@@ -2,7 +2,7 @@ name: Deploy
 run-name: 🚀 Deploy to GitHub Pages for ${{ github.event_name == 'issue_comment' && 'PR' || '🌱' }} ${{github.event_name == 'issue_comment' && github.event.issue.number || github.ref_name}}
 
 env:
-  NODE_VERSION: 20.18.1
+  NODE_VERSION: 20.19.0
 
 # This workflow runs whenever the "deploy affected apps" checkbox is checked (for PR)
 # or on every push to main
