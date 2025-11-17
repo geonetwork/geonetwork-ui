@@ -74,6 +74,5 @@
   },
   "parallel": 1,
   "useInferencePlugins": false,
-  "defaultBase": "remotes/origin/main",
-  "useLegacyCache": true
+  "defaultBase": "remotes/origin/main"
 }
