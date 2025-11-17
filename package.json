@@ -160,7 +160,7 @@
     "@types/node": "18.16.9",
     "@typescript-eslint/eslint-plugin": "8.46.4",
     "@typescript-eslint/parser": "8.46.4",
-    "autoprefixer": "^10.4.13",
+    "autoprefixer": "^10.4.22",
     "cypress": "14.5.4",
     "cypress-browser-permissions": "^1.1.0",
     "cypress-real-events": "^1.15.0",
