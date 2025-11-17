@@ -262,17 +262,14 @@ export class StacViewComponent implements OnInit {
 
   onResetFilters() {
     this.currentTemporalExtent$.next(this.initialTemporalExtent)
-
-    if (this.isSpatialFilterEnabled$.value) {
-      this.currentSpatialExtent$.next(null)
-
-      this.mapContext$.next({
-        ...this.mapContext$.value,
-        view: {
-          extent: this.initialSpatialExtent,
-        },
-      })
-    }
+    this.isSpatialFilterEnabled$.next(true)
+    this.currentSpatialExtent$.next(null)
+    this.mapContext$.next({
+      ...this.mapContext$.value,
+      view: {
+        extent: this.initialSpatialExtent,
+      },
+    })
   }
 
   handleError(error: FetchError | Error | string) {
