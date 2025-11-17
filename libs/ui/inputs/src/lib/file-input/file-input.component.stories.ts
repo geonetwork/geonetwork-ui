@@ -6,7 +6,7 @@ import {
   StoryObj,
 } from '@storybook/angular'
 import { FileInputComponent } from './file-input.component'
-import { action } from '@storybook/addon-actions'
+import { action } from 'storybook/actions'
 
 export default {
   title: 'Inputs/FileInputComponent',

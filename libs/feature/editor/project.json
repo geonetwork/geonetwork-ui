@@ -10,7 +10,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/feature/editor"],
       "options": {
-        "jestConfig": "libs/feature/editor/jest.config.ts"
+        "jestConfig": "libs/feature/editor/jest.config.ts",
+        "tsConfig": "libs/feature/editor/tsconfig.spec.json"
       }
     },
     "lint": {

@@ -98,7 +98,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/map-viewer"],
       "options": {
-        "jestConfig": "apps/map-viewer/jest.config.ts"
+        "jestConfig": "apps/map-viewer/jest.config.ts",
+        "tsConfig": "apps/map-viewer/tsconfig.spec.json"
       }
     }
   }
