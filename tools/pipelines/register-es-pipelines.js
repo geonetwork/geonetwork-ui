@@ -74,6 +74,14 @@ if (ctx.resourceType != null && ctx.resourceType.size() > 0) {
   if (ctx.resourceType[0]=='interactiveMap'||ctx.resourceType[0]=='map'||ctx.resourceType[0]=='map/static'||ctx.resourceType[0]=='map/interactive'||ctx.resourceType[0]=='map-interactive'||ctx.resourceType[0]=='map-static'||ctx.resourceType[0]=='mapDigital'||ctx.resourceType[0]=='staticMap') {
     type = 'reuse';
   }
+  if (ctx.resourceType[0]=='document' && ctx.cl_presentationForm != null && ctx.cl_presentationForm.length > 0) {
+    for (def form : ctx.cl_presentationForm) {
+      if (form != null && form.key != null && (form.key=='mapDigital'||form.key=='mapHardcopy')) {
+        type = 'reuse';
+        break;
+      }
+    }
+  }
 }
 if(ctx.resourceTitleObject != null && ctx.resourceTitleObject.default != null && ctx.resourceTitleObject.default != '') {
   ok++
