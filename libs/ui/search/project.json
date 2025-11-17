@@ -10,7 +10,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/ui/search"],
       "options": {
-        "jestConfig": "libs/ui/search/jest.config.ts"
+        "jestConfig": "libs/ui/search/jest.config.ts",
+        "tsConfig": "libs/ui/search/tsconfig.spec.json"
       }
     },
     "lint": {

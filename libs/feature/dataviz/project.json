@@ -10,7 +10,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/feature/dataviz"],
       "options": {
-        "jestConfig": "libs/feature/dataviz/jest.config.ts"
+        "jestConfig": "libs/feature/dataviz/jest.config.ts",
+        "tsConfig": "libs/feature/dataviz/tsconfig.spec.json"
       }
     },
     "lint": {

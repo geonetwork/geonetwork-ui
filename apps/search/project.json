@@ -90,7 +90,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/search"],
       "options": {
-        "jestConfig": "apps/search/jest.config.ts"
+        "jestConfig": "apps/search/jest.config.ts",
+        "tsConfig": "apps/search/tsconfig.spec.json"
       }
     }
   }
