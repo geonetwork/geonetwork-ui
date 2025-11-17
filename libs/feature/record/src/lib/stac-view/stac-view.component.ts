@@ -128,33 +128,20 @@ export class StacViewComponent implements OnInit, AfterViewInit {
   nextPageUrl: string
   currentPageUrl$ = new BehaviorSubject<string | null>(null)
 
-  items$: Observable<StacItem[]> = combineLatest([
+  effectiveCurrentPageUrl$ = combineLatest([
     this.currentPageUrl$,
     this.currentTemporalExtent$,
-    this.isSpatialFilterEnabled$,
     this.currentSpatialExtent$,
   ]).pipe(
-    startWith([null, null, false, null] as [
+    startWith([null, null, null] as [
       string | null,
       DatasetTemporalExtent | null,
-      boolean,
       Extent | null,
     ]),
     pairwise(),
-    debounceTime(DEBOUNCE_TIME_MS),
     switchMap(([previous, latest]) => {
-      this.error = null
-      const options: GetCollectionItemsOptions = {
-        limit: STAC_ITEMS_PER_PAGE,
-      }
-
-      const [, oldTemporalExtent, , oldSpatialExtent] = previous
-      const [
-        newCurrentPageUrl,
-        newTemporalExtent,
-        newIsSpatialFilterEnabled,
-        newSpatialExtent,
-      ] = latest
+      const [, oldTemporalExtent, oldSpatialExtent] = previous
+      const [newCurrentPageUrl, newTemporalExtent, newSpatialExtent] = latest
 
       if (
         this.hasFiltersChanged(
@@ -164,40 +151,69 @@ export class StacViewComponent implements OnInit, AfterViewInit {
           newSpatialExtent
         )
       ) {
-        this.currentPageUrl$.next(this.initialPageUrl)
+        return of(this.initialPageUrl)
       }
 
-      if (
-        newTemporalExtent &&
-        (newTemporalExtent.start || newTemporalExtent.end)
-      ) {
-        options.datetime = {
-          ...(newTemporalExtent.start && { start: newTemporalExtent.start }),
-          ...(newTemporalExtent.end && { end: newTemporalExtent.end }),
+      return of(newCurrentPageUrl)
+    })
+  )
+
+  items$: Observable<StacItem[]> = combineLatest([
+    this.effectiveCurrentPageUrl$,
+    this.currentTemporalExtent$,
+    this.isSpatialFilterEnabled$,
+    this.currentSpatialExtent$,
+  ]).pipe(
+    debounceTime(DEBOUNCE_TIME_MS),
+    switchMap(
+      ([
+        currentPageUrl,
+        currentTemporalExtent,
+        isSpatialFilterEnabled,
+        currentSpatialExtent,
+      ]) => {
+        this.error = null
+        const options: GetCollectionItemsOptions = {
+          limit: STAC_ITEMS_PER_PAGE,
         }
-      }
 
-      if (newIsSpatialFilterEnabled && newSpatialExtent) {
-        options.bbox = newSpatialExtent
-      }
+        if (
+          currentTemporalExtent &&
+          (currentTemporalExtent.start || currentTemporalExtent.end)
+        ) {
+          options.datetime = {
+            ...(currentTemporalExtent.start && {
+              start: currentTemporalExtent.start,
+            }),
+            ...(currentTemporalExtent.end && {
+              end: currentTemporalExtent.end,
+            }),
+          }
+        }
 
-      return from(
-        this.dataService.getItemsFromStacApi(newCurrentPageUrl, options)
-      ).pipe(
-        tap((stacDocument) => {
-          this.previousPageUrl =
-            stacDocument.links.find((link) => link.rel === 'previous')?.href ||
-            null
-          this.nextPageUrl =
-            stacDocument.links.find((link) => link.rel === 'next')?.href || null
-        }),
-        map((stacDocument) => stacDocument.features),
-        catchError((err) => {
-          this.handleError(err)
-          return of([])
-        })
-      )
-    }),
+        if (isSpatialFilterEnabled && currentSpatialExtent) {
+          options.bbox = currentSpatialExtent
+        }
+
+        return from(
+          this.dataService.getItemsFromStacApi(currentPageUrl, options)
+        ).pipe(
+          tap((stacDocument) => {
+            this.previousPageUrl =
+              stacDocument.links.find((link) => link.rel === 'previous')
+                ?.href || null
+            this.nextPageUrl =
+              stacDocument.links.find((link) => link.rel === 'next')?.href ||
+              null
+          }),
+          map((stacDocument) => stacDocument.features),
+          catchError((err) => {
+            this.handleError(err)
+            return of([])
+          })
+        )
+      }
+    ),
     shareReplay({ bufferSize: 1, refCount: true })
   )
 
