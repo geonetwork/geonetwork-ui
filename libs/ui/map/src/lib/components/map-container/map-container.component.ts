@@ -2,18 +2,20 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   Inject,
+  inject,
   Input,
   OnChanges,
-  OnDestroy,
   Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core'
-import { fromEvent, merge, Observable, of, Subject, timer } from 'rxjs'
-import { delay, map, startWith, switchMap, takeUntil } from 'rxjs/operators'
+import { fromEvent, merge, Observable, of, timer } from 'rxjs'
+import { delay, map, startWith, switchMap } from 'rxjs/operators'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { CommonModule } from '@angular/common'
 import { TranslateDirective } from '@ngx-translate/core'
 import {
@@ -85,16 +87,14 @@ interface MapViewConstraints {
     }),
   ],
 })
-export class MapContainerComponent
-  implements AfterViewInit, OnChanges, OnDestroy
-{
+export class MapContainerComponent implements AfterViewInit, OnChanges {
   @Input() context: MapContext | null
 
   @ViewChild('map') container: ElementRef
 
-  private destroy$ = new Subject<void>()
   private olMap: OlMap
   private olMapResolver: (value: OlMap) => void
+  private destroyRef: DestroyRef
 
   displayMessage$: Observable<boolean>
   openlayersMap = new Promise<OlMap>((resolve) => {
@@ -183,7 +183,9 @@ export class MapContainerComponent
     @Inject(BASEMAP_LAYERS) private basemapLayers: MapContextLayer[],
     @Inject(MAP_VIEW_CONSTRAINTS)
     private mapViewConstraints: MapViewConstraints
-  ) {}
+  ) {
+    this.destroyRef = inject(DestroyRef)
+  }
 
   calculateCurrentMapExtent(): Extent {
     const extent = this.olMap.getView().calculateExtent(this.olMap.getSize())
@@ -223,11 +225,6 @@ export class MapContainerComponent
     }
   }
 
-  ngOnDestroy() {
-    this.destroy$.next()
-    this.destroy$.complete()
-  }
-
   private setupEventListener(
     eventType: keyof MapEventsByType,
     handler: (event: MapEventsByType[typeof eventType]) => void
@@ -252,7 +249,7 @@ export class MapContainerComponent
             )
           : of(false)
       ),
-      takeUntil(this.destroy$)
+      takeUntilDestroyed(this.destroyRef)
     )
   }
 
