@@ -76,7 +76,7 @@ const DEBOUNCE_TIME_MS = 500
   viewProviders: [provideIcons({ matDeleteOutline })],
 })
 export class StacViewComponent implements OnInit, AfterViewInit {
-  @ViewChild(MapContainerComponent) mapContainer: MapContainerComponent
+  @ViewChild('mapContainer') mapContainer: MapContainerComponent
 
   error = null
 

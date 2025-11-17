@@ -19,9 +19,44 @@ import { FetchError } from '@geonetwork-ui/data-fetcher'
 import { MockBuilder, MockProvider, ngMocks } from 'ng-mocks'
 import { MapUtilsService } from '@geonetwork-ui/feature/map'
 import { Extent } from '@geospatial-sdk/core/dist/model'
+import { Component, Input } from '@angular/core'
+import { MapContext } from '@geospatial-sdk/core'
+import { MapContainerComponent } from '@geonetwork-ui/ui/map'
+import { Collection } from 'ol'
+import { Interaction } from 'ol/interaction'
 
 const DEBOUNCE_TIME_MS_PLUS_MARGIN = 500 + 100
 const STAC_ITEMS_PER_PAGE = 12
+
+jest.mock('@geonetwork-ui/ui/map', () => ({
+  ...jest.requireActual('@geonetwork-ui/ui/map'),
+  prioritizePageScroll: jest.fn(),
+}))
+
+class OpenLayersMapMock {
+  _size = undefined
+  updateSize() {
+    this._size = [100, 100]
+  }
+  getSize() {
+    return this._size
+  }
+  getInteractions() {
+    return new InteractionsMock()
+  }
+}
+
+class InteractionsMock extends Collection<Interaction> {}
+
+@Component({
+  selector: 'gn-ui-map-container',
+  template: '<div></div>',
+  standalone: true,
+})
+export class MockMapContainerComponent {
+  @Input() context: MapContext
+  openlayersMap = Promise.resolve(new OpenLayersMapMock())
+}
 
 describe('StacViewComponent', () => {
   let component: StacViewComponent
@@ -64,7 +99,12 @@ describe('StacViewComponent', () => {
 
   const mockSpatialExtent = [1, 2, 3, 4] as [number, number, number, number]
 
-  beforeEach(() => MockBuilder(StacViewComponent))
+  beforeEach(() =>
+    MockBuilder(StacViewComponent).replace(
+      MapContainerComponent,
+      MockMapContainerComponent
+    )
+  )
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -90,6 +130,7 @@ describe('StacViewComponent', () => {
 
     fixture = TestBed.createComponent(StacViewComponent)
     component = fixture.componentInstance
+    fixture.detectChanges()
   })
 
   it('should create', () => {
@@ -136,6 +177,7 @@ describe('StacViewComponent', () => {
     })
 
     it('should handle when no STAC links are available', () => {
+      component.currentPageUrl$.next(null) // Reset to initial state
       const facade = ngMocks.findInstance(MdViewFacade)
       facade.stacLinks$ = of([])
       component.ngOnInit()
@@ -422,6 +464,7 @@ describe('StacViewComponent', () => {
     it('should reset spatial extent and map context when spatial filter is enabled', () => {
       component.isSpatialFilterEnabled$.next(true)
       component.currentSpatialExtent$.next([5, 6, 7, 8] as Extent)
+      component.resolvedInitialSpatialExtent = null
       component.mapContext$.next({
         layers: [],
         view: { extent: [5, 6, 7, 8] as [number, number, number, number] },
@@ -438,13 +481,15 @@ describe('StacViewComponent', () => {
       })
     })
 
-    it('should not reset spatial extent when spatial filter is disabled', () => {
+    it('should reset spatial extent and enable spatial filter even when it was disabled', () => {
       component.isSpatialFilterEnabled$.next(false)
       component.currentSpatialExtent$.next([5, 6, 7, 8] as Extent)
+      component.resolvedInitialSpatialExtent = mockSpatialExtent
 
       component.onResetFilters()
 
-      expect(component.currentSpatialExtent$.value).toEqual([5, 6, 7, 8])
+      expect(component.isSpatialFilterEnabled$.value).toBe(true)
+      expect(component.currentSpatialExtent$.value).toEqual(mockSpatialExtent)
     })
   })
 
