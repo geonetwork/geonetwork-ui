@@ -1,0 +1,47 @@
+{
+  "migrations": [
+    {
+      "version": "20.3.0-beta.1",
+      "description": "Update ESLint flat config to include .cjs, .mjs, .cts, and .mts files in overrides (if needed)",
+      "implementation": "./src/migrations/update-20-3-0/add-file-extensions-to-overrides",
+      "package": "@nx/eslint",
+      "name": "add-file-extensions-to-overrides"
+    },
+    {
+      "cli": "nx",
+      "version": "20.8.0-beta.0",
+      "requires": { "cypress": ">=14.0.0" },
+      "description": "Replaces the `experimentalSkipDomainInjection` configuration option with the new `injectDocumentDomain` configuration option.",
+      "implementation": "./src/migrations/update-20-8-0/set-inject-document-domain",
+      "package": "@nx/cypress",
+      "name": "set-inject-document-domain"
+    },
+    {
+      "cli": "nx",
+      "version": "20.8.0-beta.0",
+      "requires": { "cypress": ">=14.0.0" },
+      "description": "Removes the `experimentalFetchPolyfill` configuration option.",
+      "implementation": "./src/migrations/update-20-8-0/remove-experimental-fetch-polyfill",
+      "package": "@nx/cypress",
+      "name": "remove-experimental-fetch-polyfill"
+    },
+    {
+      "cli": "nx",
+      "version": "20.8.0-beta.0",
+      "requires": { "cypress": ">=14.0.0" },
+      "description": "Replaces the `experimentalJustInTimeCompile` configuration option with the new `justInTimeCompile` configuration option.",
+      "implementation": "./src/migrations/update-20-8-0/replace-experimental-just-in-time-compile",
+      "package": "@nx/cypress",
+      "name": "replace-experimental-just-in-time-compile"
+    },
+    {
+      "cli": "nx",
+      "version": "20.8.0-beta.0",
+      "requires": { "cypress": ">=14.0.0" },
+      "description": "Updates the module specifier for the Component Testing `mount` function.",
+      "implementation": "./src/migrations/update-20-8-0/update-component-testing-mount-imports",
+      "package": "@nx/cypress",
+      "name": "update-component-testing-mount-imports"
+    }
+  ]
+}
