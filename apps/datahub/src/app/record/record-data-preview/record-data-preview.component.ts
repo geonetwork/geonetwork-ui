@@ -27,6 +27,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import {
   BehaviorSubject,
+  catchError,
   combineLatest,
   map,
   of,
@@ -137,19 +138,18 @@ export class RecordDataPreviewComponent implements OnInit {
   config$ = this.recordUuid$.pipe(
     switchMap((uuid) => {
       if (!uuid) return of(null)
-
-      return this.platformServiceInterface.getRecordAttachments(uuid).pipe(
-        map((attachments) =>
-          attachments.find((att) => att.fileName === 'datavizConfig.json')
-        ),
-        switchMap((configAttachment) =>
-          (configAttachment
-            ? this.platformServiceInterface.getFileContent(configAttachment.url)
-            : of(null)
-          ).pipe(map((config: DatavizConfigModel) => config))
-        )
-      )
-    })
+      return this.platformServiceInterface.getRecordAttachments(uuid)
+    }),
+    map((attachments) => {
+      return attachments?.find((att) => att.fileName === 'datavizConfig.json')
+    }),
+    switchMap((configAttachment) => {
+      return configAttachment
+        ? this.platformServiceInterface.getFileContent(configAttachment.url)
+        : of(null)
+    }),
+    map((config: DatavizConfigModel) => config),
+    catchError(() => of(null))
   )
 
   displayViewShare$ = combineLatest([
