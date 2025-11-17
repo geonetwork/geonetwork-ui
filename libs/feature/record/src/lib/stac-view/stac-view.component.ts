@@ -142,14 +142,7 @@ export class StacViewComponent implements OnInit, AfterViewInit {
         limit: STAC_ITEMS_PER_PAGE,
       }
 
-      const [
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        _oldCurrentPageUrl,
-        oldTemporalExtent,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        _oldIsSpatialFilterEnabled,
-        oldSpatialExtent,
-      ] = previous
+      const [, oldTemporalExtent, , oldSpatialExtent] = previous
       const [
         newCurrentPageUrl,
         newTemporalExtent,
@@ -158,11 +151,12 @@ export class StacViewComponent implements OnInit, AfterViewInit {
       ] = latest
 
       if (
-        oldTemporalExtent !== newTemporalExtent ||
-        oldSpatialExtent?.[0] !== newSpatialExtent?.[0] ||
-        oldSpatialExtent?.[1] !== newSpatialExtent?.[1] ||
-        oldSpatialExtent?.[2] !== newSpatialExtent?.[2] ||
-        oldSpatialExtent?.[3] !== newSpatialExtent?.[3]
+        this.hasFiltersChanged(
+          oldTemporalExtent,
+          oldSpatialExtent,
+          newTemporalExtent,
+          newSpatialExtent
+        )
       ) {
         this.currentPageUrl$.next(this.initialPageUrl)
       }
@@ -286,6 +280,21 @@ export class StacViewComponent implements OnInit, AfterViewInit {
         extent: this.initialSpatialExtent,
       },
     })
+  }
+
+  private hasFiltersChanged(
+    oldTemporalExtent: DatasetTemporalExtent | null,
+    oldSpatialExtent: Extent | null,
+    newTemporalExtent: DatasetTemporalExtent | null,
+    newSpatialExtent: Extent | null
+  ): boolean {
+    return (
+      oldTemporalExtent !== newTemporalExtent ||
+      oldSpatialExtent?.[0] !== newSpatialExtent?.[0] ||
+      oldSpatialExtent?.[1] !== newSpatialExtent?.[1] ||
+      oldSpatialExtent?.[2] !== newSpatialExtent?.[2] ||
+      oldSpatialExtent?.[3] !== newSpatialExtent?.[3]
+    )
   }
 
   handleError(error: FetchError | Error | string) {
