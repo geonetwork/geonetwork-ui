@@ -42,7 +42,29 @@
           "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
           "node_modules/flag-icons/css/flag-icons.min.css"
         ],
-        "scripts": []
+        "scripts": [],
+        "allowedCommonJsDependencies": [
+          "@rgrove/parse-xml",
+          "semver",
+          "geojson-validation",
+          "basiclightbox",
+          "duration-relativetimeformat",
+          "alasql",
+          "papaparse",
+          "lodash.throttle",
+          "lru-cache",
+          "@messageformat/core",
+          "buffer",
+          "queue-microtask",
+          "readable-stream",
+          "pbf",
+          "rbush",
+          "@babel/runtime/regenerator",
+          "cross-fetch",
+          "@frogcat/ttl2jsonld",
+          "solid-namespace",
+          "@xmldom/xmldom"
+        ]
       },
       "configurations": {
         "production": {
