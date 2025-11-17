@@ -23,7 +23,11 @@ import { Extent, MapContext } from '@geospatial-sdk/core/dist/model'
 import { StacItemsResultGridComponent } from '@geonetwork-ui/ui/elements'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { matDeleteOutline } from '@ng-icons/material-icons/outline'
-import { TranslateDirective, TranslateService } from '@ngx-translate/core'
+import {
+  TranslateDirective,
+  TranslatePipe,
+  TranslateService,
+} from '@ngx-translate/core'
 import { DataService } from '@geonetwork-ui/feature/dataviz'
 import {
   BehaviorSubject,
@@ -60,6 +64,7 @@ const DEBOUNCE_TIME_MS = 500
     CommonModule,
     NgIconComponent,
     TranslateDirective,
+    TranslatePipe,
     StacItemsResultGridComponent,
     DateRangeInputsComponent,
     MapContainerComponent,
