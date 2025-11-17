@@ -39,6 +39,7 @@ import {
   Observable,
   of,
   pairwise,
+  shareReplay,
   startWith,
   switchMap,
   take,
@@ -133,7 +134,6 @@ export class StacViewComponent implements OnInit, AfterViewInit {
     this.isSpatialFilterEnabled$,
     this.currentSpatialExtent$,
   ]).pipe(
-    debounceTime(DEBOUNCE_TIME_MS),
     startWith([null, null, false, null] as [
       string | null,
       DatasetTemporalExtent | null,
@@ -141,6 +141,7 @@ export class StacViewComponent implements OnInit, AfterViewInit {
       Extent | null,
     ]),
     pairwise(),
+    debounceTime(DEBOUNCE_TIME_MS),
     switchMap(([previous, latest]) => {
       this.error = null
       const options: GetCollectionItemsOptions = {
@@ -196,7 +197,8 @@ export class StacViewComponent implements OnInit, AfterViewInit {
           return of([])
         })
       )
-    })
+    }),
+    shareReplay({ bufferSize: 1, refCount: true })
   )
 
   constructor(
