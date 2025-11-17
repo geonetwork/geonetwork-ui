@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  ViewChild,
+} from '@angular/core'
 import {
   DatasetRecord,
   DatasetTemporalExtent,
@@ -9,7 +15,10 @@ import {
   DateRangeInputsComponent,
   CheckToggleComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { MapContainerComponent } from '@geonetwork-ui/ui/map'
+import {
+  MapContainerComponent,
+  prioritizePageScroll,
+} from '@geonetwork-ui/ui/map'
 import { Extent, MapContext } from '@geospatial-sdk/core/dist/model'
 import { StacItemsResultGridComponent } from '@geonetwork-ui/ui/elements'
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
@@ -61,7 +70,9 @@ const DEBOUNCE_TIME_MS = 500
   ],
   viewProviders: [provideIcons({ matDeleteOutline })],
 })
-export class StacViewComponent implements OnInit {
+export class StacViewComponent implements OnInit, AfterViewInit {
+  @ViewChild(MapContainerComponent) mapContainer: MapContainerComponent
+
   error = null
 
   initialTemporalExtent: DatasetTemporalExtent | null = null
@@ -242,6 +253,11 @@ export class StacViewComponent implements OnInit {
           this.currentPageUrl$.next(link.url.href)
         }
       })
+  }
+
+  async ngAfterViewInit() {
+    const map = await this.mapContainer.openlayersMap
+    prioritizePageScroll(map.getInteractions())
   }
 
   onTemporalExtentChange(extent: DatasetTemporalExtent | null) {

@@ -22,6 +22,7 @@
 
     <div class="w-full md:w-7/12 h-[334px] md:h-[366px] flex flex-col">
       <gn-ui-map-container
+        #mapContainer
         [context]="mapContext$ | async"
         (extentChange)="onSpatialExtentChange($event)"
         (resolvedExtentChange)="onResolvedMapExtentChange($event)"
