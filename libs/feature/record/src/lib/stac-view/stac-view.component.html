@@ -29,14 +29,13 @@
         class="w-full h-full"
       >
         <div
-          class="bg-white rounded-xl shadow-xl absolute left-1/2 transform -translate-x-1/2 bottom-0 mb-2.5 px-4 py-2 z-10"
+          class="bg-white rounded-xl shadow-xl absolute left-1/2 transform -translate-x-1/2 bottom-0 mb-2.5 px-4 py-2 z-10 max-w-[90%] w-max"
         >
           <gn-ui-check-toggle
             [value]="isSpatialFilterEnabled$ | async"
             (toggled)="onSpatialFilterToggle($event)"
             [label]="'Activer le filtre dynamique sur l\'emprise spatiale'"
             [color]="'primary'"
-            class="flex items-center"
           ></gn-ui-check-toggle>
         </div>
       </gn-ui-map-container>
