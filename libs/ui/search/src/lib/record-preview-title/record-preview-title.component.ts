@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
-
+import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 
 @Component({
   selector: 'gn-ui-record-preview-title',
@@ -9,6 +8,6 @@ import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
   styleUrls: ['./record-preview-title.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [RecordPreviewComponent, ThumbnailComponent],
+  imports: [ThumbnailComponent],
 })
 export class RecordPreviewTitleComponent extends RecordPreviewComponent {}

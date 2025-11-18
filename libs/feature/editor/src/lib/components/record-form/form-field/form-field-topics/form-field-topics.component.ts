@@ -1,24 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 
 import {
-  AutocompleteComponent,
   BadgeComponent,
   DropdownMultiselectComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { NgIconComponent } from '@ng-icons/core'
-import { INSPIRE_TOPICS } from '../../../../fields.config'
 import { TranslatePipe, TranslateService } from '@ngx-translate/core'
+import { INSPIRE_TOPICS } from '../../../../fields.config'
 
 @Component({
   selector: 'gn-ui-form-field-topics',
   standalone: true,
-  imports: [
-    AutocompleteComponent,
-    NgIconComponent,
-    BadgeComponent,
-    TranslatePipe,
-    DropdownMultiselectComponent
-],
+  imports: [BadgeComponent, TranslatePipe, DropdownMultiselectComponent],
   templateUrl: './form-field-topics.component.html',
   styleUrl: './form-field-topics.component.css',
 })

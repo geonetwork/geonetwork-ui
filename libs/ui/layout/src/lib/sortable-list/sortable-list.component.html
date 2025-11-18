@@ -2,13 +2,13 @@
   cdkDropList
   class="sortable-list flex flex-col gap-3 p-2"
   (cdkDropListDropped)="drop($event)"
-  >
-  @for (item of items; track trackByFn(index, item); let index = $index) {
+>
+  @for (item of items; track trackByFn(index); let index = $index) {
     <div class="sortable-box bg-white flex items-center" cdkDrag>
       <span
         cdkDragHandle
         class="material-symbols-outlined mx-[10px] cursor-grab gn-ui-icon-medium flex-none"
-        >
+      >
         drag_handle
       </span>
       <div class="flex-1">
