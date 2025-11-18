@@ -1,9 +1,6 @@
 import {
   ComponentFixture,
-  discardPeriodicTasks,
-  fakeAsync,
   TestBed,
-  tick,
 } from '@angular/core/testing'
 import { StacViewComponent } from './stac-view.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
@@ -25,7 +22,6 @@ import { MapContainerComponent } from '@geonetwork-ui/ui/map'
 import { Collection } from 'ol'
 import { Interaction } from 'ol/interaction'
 
-const DEBOUNCE_TIME_MS_PLUS_MARGIN = 500 + 100
 const STAC_ITEMS_PER_PAGE = 12
 
 jest.mock('@geonetwork-ui/ui/map', () => ({
@@ -214,110 +210,87 @@ describe('StacViewComponent', () => {
       })
     })
 
-    it('should fetch items with spatial filter when enabled', fakeAsync(() => {
-      let receivedItems = null
-      component.items$.subscribe((items) => {
-        receivedItems = items
-      })
-
+    it('should fetch items with spatial filter when enabled', (done) => {
       component.currentPageUrl$.next('http://example.com/stac')
       component.currentTemporalExtent$.next(null)
       component.isSpatialFilterEnabled$.next(true)
       component.currentSpatialExtent$.next(mockSpatialExtent)
 
-      tick(DEBOUNCE_TIME_MS_PLUS_MARGIN)
-
-      const dataService = ngMocks.findInstance(DataService)
-      expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
-        'http://example.com/stac',
-        {
-          limit: STAC_ITEMS_PER_PAGE,
-          bbox: mockSpatialExtent,
-        }
-      )
-      expect(receivedItems).toEqual(mockStacDocument.features)
-      discardPeriodicTasks()
-    }))
-
-    it('should not include bbox when spatial filter is disabled', fakeAsync(() => {
-      let receivedItems = null
       component.items$.subscribe((items) => {
-        receivedItems = items
+        expect(items).toEqual(mockStacDocument.features)
+        const dataService = ngMocks.findInstance(DataService)
+        expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
+          'http://example.com/stac',
+          {
+            limit: STAC_ITEMS_PER_PAGE,
+            bbox: mockSpatialExtent,
+          }
+        )
+        done()
       })
+    })
 
+    it('should not include bbox when spatial filter is disabled', (done) => {
       component.currentPageUrl$.next('http://example.com/stac')
       component.currentTemporalExtent$.next(null)
       component.isSpatialFilterEnabled$.next(false)
       component.currentSpatialExtent$.next(mockSpatialExtent)
 
-      tick(DEBOUNCE_TIME_MS_PLUS_MARGIN)
-
-      const dataService = ngMocks.findInstance(DataService)
-      expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
-        'http://example.com/stac',
-        { limit: STAC_ITEMS_PER_PAGE }
-      )
-      expect(receivedItems).toEqual(mockStacDocument.features)
-      discardPeriodicTasks()
-    }))
-
-    it('should not include bbox when spatial extent is null', fakeAsync(() => {
-      let receivedItems = null
       component.items$.subscribe((items) => {
-        receivedItems = items
+        expect(items).toEqual(mockStacDocument.features)
+        const dataService = ngMocks.findInstance(DataService)
+        expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
+          'http://example.com/stac',
+          { limit: STAC_ITEMS_PER_PAGE }
+        )
+        done()
       })
+    })
 
+    it('should not include bbox when spatial extent is null', (done) => {
       component.currentPageUrl$.next('http://example.com/stac')
       component.currentTemporalExtent$.next(null)
       component.isSpatialFilterEnabled$.next(true)
       component.currentSpatialExtent$.next(null)
 
-      tick(DEBOUNCE_TIME_MS_PLUS_MARGIN)
-
-      const dataService = ngMocks.findInstance(DataService)
-      expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
-        'http://example.com/stac',
-        { limit: STAC_ITEMS_PER_PAGE }
-      )
-      expect(receivedItems).toEqual(mockStacDocument.features)
-      discardPeriodicTasks()
-    }))
-
-    it('should fetch items without datetime filter when start and end date are null', fakeAsync(() => {
-      component.items$.subscribe(() => {
-        // Just subscribe to trigger the observable
+      component.items$.subscribe((items) => {
+        expect(items).toEqual(mockStacDocument.features)
+        const dataService = ngMocks.findInstance(DataService)
+        expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
+          'http://example.com/stac',
+          { limit: STAC_ITEMS_PER_PAGE }
+        )
+        done()
       })
+    })
 
+    it('should fetch items without datetime filter when start and end date are null', (done) => {
       component.currentPageUrl$.next('http://example.com/stac')
       component.currentTemporalExtent$.next({
         start: null,
         end: null,
       })
 
-      tick(DEBOUNCE_TIME_MS_PLUS_MARGIN)
-
-      const dataService = ngMocks.findInstance(DataService)
-      expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
-        'http://example.com/stac',
-        { limit: STAC_ITEMS_PER_PAGE }
-      )
-      discardPeriodicTasks()
-    }))
-
-    it('should update pagination URLs after successful fetch', fakeAsync(() => {
       component.items$.subscribe(() => {
-        // Just subscribe to trigger the observable
+        const dataService = ngMocks.findInstance(DataService)
+        expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
+          'http://example.com/stac',
+          { limit: STAC_ITEMS_PER_PAGE }
+        )
+        done()
       })
+    })
 
+    it('should update pagination URLs after successful fetch', (done) => {
       component.currentPageUrl$.next('http://example.com/stac')
       component.currentTemporalExtent$.next(null)
 
-      tick(DEBOUNCE_TIME_MS_PLUS_MARGIN)
-
-      expect(component.previousPageUrl).toBe('http://example.com/page1')
-      expect(component.nextPageUrl).toBe('http://example.com/page3')
-      discardPeriodicTasks()
-    }))
+      component.items$.subscribe(() => {
+        expect(component.previousPageUrl).toBe('http://example.com/page1')
+        expect(component.nextPageUrl).toBe('http://example.com/page3')
+        done()
+      })
+    })
 
     it('should handle API errors gracefully', () => {
       const error = new Error('dataset.error.message')
@@ -325,7 +298,7 @@ describe('StacViewComponent', () => {
       expect(component.error).toBe('translated:dataset.error.message')
     })
 
-    it('should display info message and show no-results button when no items are returned', fakeAsync(() => {
+    it('should display info message and show no-results button when no items are returned', (done) => {
       const dataService = ngMocks.findInstance(DataService)
       dataService.getItemsFromStacApi = jest
         .fn()
@@ -333,24 +306,19 @@ describe('StacViewComponent', () => {
           Promise.resolve({ features: [], links: [] } as unknown as never)
         )
 
-      let receivedItems = null
-      component.items$.subscribe((items) => {
-        receivedItems = items
-      })
-
       component.currentPageUrl$.next('http://example.com/stac')
       component.currentTemporalExtent$.next(null)
 
-      tick(DEBOUNCE_TIME_MS_PLUS_MARGIN)
-
-      expect(receivedItems).toEqual([])
-      expect(component.error).toBeNull()
-      fixture.detectChanges()
-      const noResultsButton =
-        fixture.nativeElement.querySelector('#no-results-button')
-      expect(noResultsButton).not.toBeNull()
-      discardPeriodicTasks()
-    }))
+      component.items$.subscribe((items) => {
+        expect(items).toEqual([])
+        expect(component.error).toBeNull()
+        fixture.detectChanges()
+        const noResultsButton =
+          fixture.nativeElement.querySelector('#no-results-button')
+        expect(noResultsButton).not.toBeNull()
+        done()
+      })
+    })
   })
 
   describe('onTemporalExtentChange', () => {
@@ -523,22 +491,18 @@ describe('StacViewComponent', () => {
       expect(component.error).toBe('translated:String error message')
     })
 
-    it('should clear error when making a new API call', fakeAsync(() => {
+    it('should clear error when making a new API call', (done) => {
       component.error = 'Previous error'
       component.ngOnInit()
-
-      component.items$.subscribe(() => {
-        // Just subscribe to trigger the observable
-      })
 
       component.currentPageUrl$.next('http://example.com/stac')
       component.currentTemporalExtent$.next(null)
 
-      tick(DEBOUNCE_TIME_MS_PLUS_MARGIN)
-
-      expect(component.error).toBe(null)
-      discardPeriodicTasks()
-    }))
+      component.items$.subscribe(() => {
+        expect(component.error).toBe(null)
+        done()
+      })
+    })
   })
 
   describe('pagination', () => {
