@@ -1,33 +1,34 @@
 <gn-ui-record-field-group [label]="label">
   <div class="text-[0.9em]">
-    <div
-      *ngFor="let item of fieldValue; let i = index; trackBy: trackBy"
-      class="relative pr-[2.8em]"
-    >
-      <ng-container
-        [ngTemplateOutlet]="itemTemplate"
+    @for (item of fieldValue; track trackBy(i, item); let i = $index) {
+      <div
+        class="relative pr-[2.8em]"
+        >
+        <ng-container
+          [ngTemplateOutlet]="itemTemplate"
         [ngTemplateOutletContext]="{
           getValue: valueGetterByIndex(i),
           setValue: valueSetterByIndex(i),
         }"
-      >
-      </ng-container>
-      <gn-ui-button
-        class="absolute top-0 right-1"
-        [type]="'outline'"
-        (buttonClick)="removeItem(i)"
-        extraClass="!p-[0.5em]"
-        title="Delete this item"
-      >
-        <ng-icon name="matDeleteForeverSharp"></ng-icon>
-      </gn-ui-button>
-    </div>
+          >
+        </ng-container>
+        <gn-ui-button
+          class="absolute top-0 right-1"
+          [type]="'outline'"
+          (buttonClick)="removeItem(i)"
+          extraClass="!p-[0.5em]"
+          title="Delete this item"
+          >
+          <ng-icon name="matDeleteForeverSharp"></ng-icon>
+        </gn-ui-button>
+      </div>
+    }
     <div class="p-2">
       <gn-ui-button
         [type]="'primary'"
         (buttonClick)="addItem()"
         extraClass="py-[0.5em] px-[1em]"
-      >
+        >
         Add new item...
       </gn-ui-button>
     </div>

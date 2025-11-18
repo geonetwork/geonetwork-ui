@@ -3,21 +3,23 @@
   [target]="linkTarget"
   class="record-card"
   [ngClass]="cardClass"
->
-  <div *ngIf="shouldShowThumbnail" class="record-card__thumbnail">
-    <gn-ui-thumbnail
-      class="w-full h-full object-cover"
-      [thumbnailUrl]="record.overviews?.[0]?.url?.toString() || ''"
-      [fit]="'cover'"
-    ></gn-ui-thumbnail>
-  </div>
+  >
+  @if (shouldShowThumbnail) {
+    <div class="record-card__thumbnail">
+      <gn-ui-thumbnail
+        class="w-full h-full object-cover"
+        [thumbnailUrl]="record.overviews?.[0]?.url?.toString() || ''"
+        [fit]="'cover'"
+      ></gn-ui-thumbnail>
+    </div>
+  }
   <div class="grow pt-1" [ngClass]="shouldShowThumbnail ? 'sm:w-0' : ''">
     <div class="flex flex-col gap-2 h-full">
       <h4
         class="record-card__title"
         data-cy="recordTitle"
         [title]="record.title"
-      >
+        >
         {{ record.title }}
       </h4>
       <div class="grow">
@@ -30,59 +32,62 @@
         ></gn-ui-markdown-parser>
       </div>
       <div class="record-card__footer">
-        <div
-          data-cy="recordOrg"
-          *ngIf="record.ownerOrganization?.name"
-          class="grow flex flex-row gap-1 items-center text-primary-lighter"
-          [ngClass]="displayContactIconOnly ? 'justify-center' : ''"
-        >
-          <ng-icon
-            name="iconoirBank"
-            class="text-primary -translate-y-[0.5px] shrink-0"
-            [title]="record.ownerOrganization.name"
-          ></ng-icon>
-          <span
-            *ngIf="!displayContactIconOnly"
-            data-cy="recordOrgName"
-            class="line-clamp-1"
-            [title]="record.ownerOrganization.name"
-            >{{ record.ownerOrganization.name }}</span
-          >
-        </div>
-        <div class="record-card__footer__other">
+        @if (record.ownerOrganization?.name) {
           <div
-            class="xs:border-r last:border-r-0 flex grow gap-4 px-4 last:pr-0"
-          >
-            <gn-ui-kind-badge
-              [extraClass]="'text-[1.2em]'"
-              [styling]="'gray'"
-              [kind]="record?.kind"
-              [contentTemplate]="customTemplate"
-              class="pt-1"
+            data-cy="recordOrg"
+            class="grow flex flex-row gap-1 items-center text-primary-lighter"
+            [ngClass]="displayContactIconOnly ? 'justify-center' : ''"
             >
-              <ng-template #customTemplate></ng-template
-            ></gn-ui-kind-badge>
-            <gn-ui-metadata-quality
-              *ngIf="metadataQualityDisplay"
-              class="flex items-center min-w-[113px]"
-              [smaller]="true"
-              [metadata]="record"
-              [metadataQualityDisplay]="metadataQualityDisplay"
-              [popoverDisplay]="true"
-            ></gn-ui-metadata-quality>
-          </div>
-          <div
-            class="flex justify-center"
-            data-cy="recordFav"
-            [ngClass]="displayContactIconOnly ? 'px-1' : 'px-4'"
-          >
-            <ng-container
-              [ngTemplateOutlet]="favoriteTemplate"
-              [ngTemplateOutletContext]="{ $implicit: record }"
-            ></ng-container>
+            <ng-icon
+              name="iconoirBank"
+              class="text-primary -translate-y-[0.5px] shrink-0"
+              [title]="record.ownerOrganization.name"
+            ></ng-icon>
+            @if (!displayContactIconOnly) {
+              <span
+                data-cy="recordOrgName"
+                class="line-clamp-1"
+                [title]="record.ownerOrganization.name"
+                >{{ record.ownerOrganization.name }}</span
+                >
+              }
+            </div>
+          }
+          <div class="record-card__footer__other">
+            <div
+              class="xs:border-r last:border-r-0 flex grow gap-4 px-4 last:pr-0"
+              >
+              <gn-ui-kind-badge
+                [extraClass]="'text-[1.2em]'"
+                [styling]="'gray'"
+                [kind]="record?.kind"
+                [contentTemplate]="customTemplate"
+                class="pt-1"
+                >
+                <ng-template #customTemplate></ng-template
+                ></gn-ui-kind-badge>
+                @if (metadataQualityDisplay) {
+                  <gn-ui-metadata-quality
+                    class="flex items-center min-w-[113px]"
+                    [smaller]="true"
+                    [metadata]="record"
+                    [metadataQualityDisplay]="metadataQualityDisplay"
+                    [popoverDisplay]="true"
+                  ></gn-ui-metadata-quality>
+                }
+              </div>
+              <div
+                class="flex justify-center"
+                data-cy="recordFav"
+                [ngClass]="displayContactIconOnly ? 'px-1' : 'px-4'"
+                >
+                <ng-container
+                  [ngTemplateOutlet]="favoriteTemplate"
+                  [ngTemplateOutletContext]="{ $implicit: record }"
+                ></ng-container>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</a>
+    </a>

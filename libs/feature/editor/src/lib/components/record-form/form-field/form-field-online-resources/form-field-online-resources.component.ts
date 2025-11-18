@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common'
+
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -49,7 +49,6 @@ type OnlineNotLinkResource =
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
     SwitchToggleComponent,
     FileInputComponent,
     OnlineServiceResourceInputComponent,
@@ -58,8 +57,8 @@ type OnlineNotLinkResource =
     OnlineResourceCardComponent,
     TextInputComponent,
     TextAreaComponent,
-    TranslateDirective,
-  ],
+    TranslateDirective
+],
 })
 export class FormFieldOnlineResourcesComponent {
   @Input() metadataUuid: string

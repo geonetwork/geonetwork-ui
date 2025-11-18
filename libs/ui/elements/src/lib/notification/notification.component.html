@@ -1,6 +1,6 @@
 <div
   class="p-[16px] flex flex-row gap-[16px] items-start border border-gray-200 shadow-md rounded bg-background"
->
+  >
   <div
     role="alert"
     class="rounded-full text-white p-[6px] w-[32px] h-[32px] flex shrink-0"
@@ -10,7 +10,7 @@
       'bg-green-500': type === 'success',
       'bg-blue-500': type === 'info',
     }"
-  >
+    >
     <ng-icon
       class="!w-[20px] !h-[16px] text-[24px]"
       [name]="getIconName(type)"
@@ -18,19 +18,20 @@
   </div>
   <div
     class="flex flex-col items-start gap-[4px] pt-[3px] grow shrink overflow-hidden"
-  >
+    >
     <div class="font-bold text-[16px] text-gray-900">
       {{ title }}
     </div>
     <div class="text-[14px] text-gray-800 whitespace-pre-wrap">{{ text }}</div>
-    <a
-      href
-      *ngIf="closeMessage"
-      class="text-[14px] gn-ui-link"
-      (click)="handleClose($event)"
-    >
-      {{ closeMessage }}
-    </a>
+    @if (closeMessage) {
+      <a
+        href
+        class="text-[14px] gn-ui-link"
+        (click)="handleClose($event)"
+        >
+        {{ closeMessage }}
+      </a>
+    }
   </div>
   <gn-ui-button
     type="light"
@@ -39,7 +40,7 @@
     [style.--gn-ui-button-padding]="0"
     [style.--gn-ui-button-width]="'21px'"
     [style.--gn-ui-button-height]="'21px'"
-  >
+    >
     <ng-icon
       class="text-[22px] !w-[21px] !h-[21px]"
       name="matCloseOutline"

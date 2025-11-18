@@ -2,14 +2,6 @@
   "migrations": [
     {
       "version": "20.0.0",
-      "description": "Converts the entire application to block control flow syntax",
-      "factory": "./bundles/control-flow-migration.cjs#migrate",
-      "optional": true,
-      "package": "@angular/core",
-      "name": "control-flow-migration"
-    },
-    {
-      "version": "20.0.0",
       "description": "Moves imports of `DOCUMENT` from `@angular/common` to `@angular/core`",
       "factory": "./bundles/document-core.cjs#migrate",
       "package": "@angular/core",

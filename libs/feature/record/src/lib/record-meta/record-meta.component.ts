@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common'
+
 import {
   ChangeDetectionStrategy,
   Component,
@@ -14,7 +14,7 @@ import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
 })
 export class RecordMetaComponent implements OnDestroy, OnChanges {
   @Input() metadata: CatalogRecord

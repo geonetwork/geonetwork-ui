@@ -1,16 +1,17 @@
-<gn-ui-results-table
-  *ngIf="searchFacade.results$ | async as records"
-  [records]="records"
-  [hasDraft]="hasDraft"
-  [selectedRecordsIdentifiers]="selectedRecords$ | async"
-  [sortOrder]="sortBy$ | async"
-  [canDelete]="canDelete"
-  [canDuplicate]="canDuplicate"
-  [isDuplicating]="isDuplicating"
-  [canEdit]="canEdit"
-  (recordClick)="handleRecordClick($event)"
-  (duplicateRecord)="handleDuplicateRecord($event)"
-  (deleteRecord)="handleDeleteRecord($event)"
-  (recordsSelectedChange)="handleRecordsSelectedChange($event[0], $event[1])"
-  (sortByChange)="handleSortByChange($event[0], $event[1])"
-></gn-ui-results-table>
+@if (searchFacade.results$ | async; as records) {
+  <gn-ui-results-table
+    [records]="records"
+    [hasDraft]="hasDraft"
+    [selectedRecordsIdentifiers]="selectedRecords$ | async"
+    [sortOrder]="sortBy$ | async"
+    [canDelete]="canDelete"
+    [canDuplicate]="canDuplicate"
+    [isDuplicating]="isDuplicating"
+    [canEdit]="canEdit"
+    (recordClick)="handleRecordClick($event)"
+    (duplicateRecord)="handleDuplicateRecord($event)"
+    (deleteRecord)="handleDeleteRecord($event)"
+    (recordsSelectedChange)="handleRecordsSelectedChange($event[0], $event[1])"
+    (sortByChange)="handleSortByChange($event[0], $event[1])"
+  ></gn-ui-results-table>
+}

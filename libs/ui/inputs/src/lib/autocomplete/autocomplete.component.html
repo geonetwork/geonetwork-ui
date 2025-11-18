@@ -1,10 +1,11 @@
 <span class="w-full inline-block relative">
-  <div
-    class="absolute inset-y-[--icon-padding] left-[--icon-padding] w-[--icon-width] pointer-events-none"
-    *ngIf="!allowSubmit"
-  >
-    <ng-icon name="iconoirSearch" class="text-primary search"></ng-icon>
-  </div>
+  @if (!allowSubmit) {
+    <div
+      class="absolute inset-y-[--icon-padding] left-[--icon-padding] w-[--icon-width] pointer-events-none"
+      >
+      <ng-icon name="iconoirSearch" class="text-primary search"></ng-icon>
+    </div>
+  }
   <div class="flex flex-row">
     <input
       #searchInput
@@ -20,67 +21,72 @@
         'text-gray-900': !searchActive,
         'px-[--icon-width]': !allowSubmit,
       }"
-    />
-    <gn-ui-button
-      type="gray"
-      *ngIf="searchInput.value && displayEnterBtn"
-      extraClass="w-32 h-8 !opacity-100"
-      [ngStyle]="{ left: enterBtnPosition + 'px' }"
-      class="absolute"
-      disabled="true"
-    >
-      <ng-icon
-        name="iconoirLongArrowDownLeft"
-        class="!w-4 text-gray-900 font-bold"
-      ></ng-icon>
-      <span translate class="text-bold text-gray-900 font-bold">
-        Enter to search
-      </span>
-    </gn-ui-button>
+      />
+    @if (searchInput.value && displayEnterBtn) {
+      <gn-ui-button
+        type="gray"
+        extraClass="w-32 h-8 !opacity-100"
+        [ngStyle]="{ left: enterBtnPosition + 'px' }"
+        class="absolute"
+        disabled="true"
+        >
+        <ng-icon
+          name="iconoirLongArrowDownLeft"
+          class="!w-4 text-gray-900 font-bold"
+        ></ng-icon>
+        <span translate class="text-bold text-gray-900 font-bold">
+          Enter to search
+        </span>
+      </gn-ui-button>
+    }
   </div>
-  <gn-ui-button
-    type="primary"
-    [extraClass]="getExtraClass()"
-    data-test="clear-btn"
-    *ngIf="searchInput.value"
-    aria-label="Clear"
-    (buttonClick)="clear()"
-  >
-    <ng-icon class="text-white" name="matClose"></ng-icon>
-  </gn-ui-button>
-  <gn-ui-button
-    type="light"
-    extraClass="border-0 border-l-[1px] border-gray-300 hover:border-gray-500 text-primary hover:text-primary-darkest focus:text-primary-darkest absolute inset-y-[--icon-padding] right-[--icon-padding]"
-    aria-label="Trigger search"
-    *ngIf="allowSubmit"
-    data-test="autocomplete-submit-btn"
-    (buttonClick)="handleSearch()"
-  >
-    <ng-icon name="iconoirSearch"></ng-icon>
-  </gn-ui-button>
+  @if (searchInput.value) {
+    <gn-ui-button
+      type="primary"
+      [extraClass]="getExtraClass()"
+      data-test="clear-btn"
+      aria-label="Clear"
+      (buttonClick)="clear()"
+      >
+      <ng-icon class="text-white" name="matClose"></ng-icon>
+    </gn-ui-button>
+  }
+  @if (allowSubmit) {
+    <gn-ui-button
+      type="light"
+      extraClass="border-0 border-l-[1px] border-gray-300 hover:border-gray-500 text-primary hover:text-primary-darkest focus:text-primary-darkest absolute inset-y-[--icon-padding] right-[--icon-padding]"
+      aria-label="Trigger search"
+      data-test="autocomplete-submit-btn"
+      (buttonClick)="handleSearch()"
+      >
+      <ng-icon name="iconoirSearch"></ng-icon>
+    </gn-ui-button>
+  }
 
-  <gn-ui-popup-alert
-    *ngIf="error"
-    class="absolute mt-2 w-full top-[100%] left-0"
-    icon="matErrorOutlineOutline"
-    position="top"
-    type="warning"
-  >
-    <span translate>search.autocomplete.error</span>
-    {{ error }}
-  </gn-ui-popup-alert>
+  @if (error) {
+    <gn-ui-popup-alert
+      class="absolute mt-2 w-full top-[100%] left-0"
+      icon="matErrorOutlineOutline"
+      position="top"
+      type="warning"
+      >
+      <span translate>search.autocomplete.error</span>
+      {{ error }}
+    </gn-ui-popup-alert>
+  }
 </span>
 
 <mat-autocomplete
   #auto="matAutocomplete"
   (optionSelected)="handleSelection($event)"
   [displayWith]="displayWithFnInternal"
->
-  <mat-option
-    *ngFor="let suggestion of suggestions$ | async"
-    [value]="suggestion"
-    class="p-2 suggestion text-start"
   >
-    {{ displayWithFnInternal(suggestion) }}
-  </mat-option>
+  @for (suggestion of suggestions$ | async; track suggestion) {
+    <mat-option
+      [value]="suggestion"
+      class="p-2 suggestion text-start"
+      >
+      {{ displayWithFnInternal(suggestion) }}
+    </mat-option>
+  }
 </mat-autocomplete>

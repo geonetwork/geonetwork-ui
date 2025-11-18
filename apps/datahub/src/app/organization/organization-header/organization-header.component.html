@@ -1,7 +1,7 @@
 <header class="w-full h-[255px]" [style.background]="backgroundCss">
   <div
     class="h-full container-lg mx-auto px-[25px] flex flex-col justify-between"
-  >
+    >
     <div class="flex flex-row justify-between content-center mt-3">
       <div class="ml-4">
         <gn-ui-button
@@ -12,7 +12,7 @@
           [style.--gn-ui-button-color]="foregroundColor"
           [style.--gn-ui-button-height]="'32px'"
           [style.--color-gray-300]="foregroundColor"
-        >
+          >
           <ng-icon
             name="matArrowBack"
             size="20px"
@@ -20,49 +20,50 @@
           ></ng-icon>
           <span class="mx-2 mt-0.5 text-base content-center" translate
             >datahub.search.back</span
+            >
+          </gn-ui-button>
+        </div>
+        <div class="flex flex-row mr-6 content-center gap-3">
+          @if (showLanguageSwitcher) {
+            <gn-ui-language-switcher
+              [style.--color-main]="foregroundColor"
+              [style.--color-gray-300]="foregroundColor"
+            ></gn-ui-language-switcher>
+          }
+        </div>
+      </div>
+      @if (organization) {
+        <div
+          data-test="organizationHeaderName"
+          class="font-title text-[28px] max-w-screen-sm line-clamp-4 ml-4"
+          [style.color]="foregroundColor"
           >
-        </gn-ui-button>
-      </div>
-      <div class="flex flex-row mr-6 content-center gap-3">
-        <gn-ui-language-switcher
-          *ngIf="showLanguageSwitcher"
-          [style.--color-main]="foregroundColor"
-          [style.--color-gray-300]="foregroundColor"
-        ></gn-ui-language-switcher>
-      </div>
-    </div>
-    <ng-container *ngIf="organization">
-      <div
-        data-test="organizationHeaderName"
-        class="font-title text-[28px] max-w-screen-sm line-clamp-4 ml-4"
-        [style.color]="foregroundColor"
-      >
-        {{ organization.name }}
-      </div>
-      <div
-        class="flex flex-row flex-wrap gap-2 mb-4 ml-4 sm:mr-[332px]"
-        [style.color]="foregroundColor"
-      >
-        <ng-icon name="matFolderOutline"></ng-icon>
-        <p>
-          {{ organization.recordCount }}
-        </p>
-        <p translate [translateParams]="{ count: organization.recordCount }">
-          organization.header.recordCount
-        </p>
-        <ng-container *ngIf="organization.website">
-          <p>&bull;</p>
-          <a
-            data-test="organizationHeaderWebsiteLink"
-            class="flex flex-row items-center gap-1"
-            href="{{ organization.website.href }}"
-            target="_blank"
+          {{ organization.name }}
+        </div>
+        <div
+          class="flex flex-row flex-wrap gap-2 mb-4 ml-4 sm:mr-[332px]"
+          [style.color]="foregroundColor"
           >
-            {{ organization.website.href }}
-            <ng-icon name="matOpenInNewOutline"></ng-icon
-          ></a>
-        </ng-container>
+          <ng-icon name="matFolderOutline"></ng-icon>
+          <p>
+            {{ organization.recordCount }}
+          </p>
+          <p translate [translateParams]="{ count: organization.recordCount }">
+            organization.header.recordCount
+          </p>
+          @if (organization.website) {
+            <p>&bull;</p>
+            <a
+              data-test="organizationHeaderWebsiteLink"
+              class="flex flex-row items-center gap-1"
+              href="{{ organization.website.href }}"
+              target="_blank"
+              >
+              {{ organization.website.href }}
+              <ng-icon name="matOpenInNewOutline"></ng-icon
+              ></a>
+            }
+          </div>
+        }
       </div>
-    </ng-container>
-  </div>
-</header>
+    </header>

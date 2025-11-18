@@ -1,91 +1,100 @@
 <div
   class="mx-[18px] pl-[18px] pb-[18px] border-solid border-l-2 border-gray-100"
->
+  >
   <a
     class="record-container block rounded-lg bg-white border border-white card-shadow"
     [attr.href]="linkHref"
     [target]="linkTarget"
-  >
+    >
     <div
       class="record-header py-4 px-4 border-b border-gray-300 flex flex-row items-center relative transition duration-200"
-    >
+      >
       <div
         class="absolute w-3 h-3 bg-secondary rounded-full"
         style="right: calc(100% + 14px)"
       ></div>
       <div
         class="record-header-image border border-gray-300 bg-white rounded-full w-16 h-16 object-contain mr-4 overflow-hidden transition duration-200 shrink-0"
-      >
-        <ng-icon
-          *ngIf="!hasLogo"
-          class="text-gray-200"
-          name="{{ hasOnlyPerson ? 'matFace' : 'matHomeWorkOutline' }}"
-          style="width: 42px; height: 42px; font-size: 42px; margin: 10px"
-        ></ng-icon>
-        <gn-ui-thumbnail
-          *ngIf="hasLogo"
-          [thumbnailUrl]="record.ownerOrganization?.logoUrl?.toString()"
-          [fit]="'contain'"
-        ></gn-ui-thumbnail>
+        >
+        @if (!hasLogo) {
+          <ng-icon
+            class="text-gray-200"
+            name="{{ hasOnlyPerson ? 'matFace' : 'matHomeWorkOutline' }}"
+            style="width: 42px; height: 42px; font-size: 42px; margin: 10px"
+          ></ng-icon>
+        }
+        @if (hasLogo) {
+          <gn-ui-thumbnail
+            [thumbnailUrl]="record.ownerOrganization?.logoUrl?.toString()"
+            [fit]="'contain'"
+          ></gn-ui-thumbnail>
+        }
       </div>
       <div class="flex flex-col overflow-hidden items-start">
-        <span
-          *ngIf="hasOrganization"
-          class="font-bold transition duration-200 text-primary truncate max-w-full"
-        >
-          {{ record.ownerOrganization.name }}
-        </span>
-        <span
-          *ngIf="hasOnlyPerson"
-          class="font-bold transition duration-200 text-primary truncate max-w-full"
-        >
-          {{ contact.firstName }} {{ contact.lastName }}
-        </span>
+        @if (hasOrganization) {
+          <span
+            class="font-bold transition duration-200 text-primary truncate max-w-full"
+            >
+            {{ record.ownerOrganization.name }}
+          </span>
+        }
+        @if (hasOnlyPerson) {
+          <span
+            class="font-bold transition duration-200 text-primary truncate max-w-full"
+            >
+            {{ contact.firstName }} {{ contact.lastName }}
+          </span>
+        }
         <p class="">
           <span translate [translateParams]="{ time }"
             >record.was.created.time</span
+            >
+          </p>
+        </div>
+      </div>
+      <div class="pt-5 pb-5 px-10 relative">
+        <div class="absolute top-[0.85em] right-[0.85em]">
+          <ng-container
+            [ngTemplateOutlet]="favoriteTemplate"
+            [ngTemplateOutletContext]="{ $implicit: record }"
+          ></ng-container>
+        </div>
+        <h1
+          class="font-title text-black text-[21px] font-medium mb-3 pr-8"
+          data-cy="recordTitle"
           >
+          {{ record.title }}
+        </h1>
+        <p class="line-clamp-3">
+          <gn-ui-markdown-parser
+            [textContent]="abstract"
+            [whitoutStyles]="true"
+            />
         </p>
+        @if (record.overviews?.[0]) {
+          <gn-ui-thumbnail
+            class="block mt-3 w-full h-[136px] border border-gray-100 rounded-lg overflow-hidden"
+            [thumbnailUrl]="record.overviews?.[0]?.url.toString()"
+          ></gn-ui-thumbnail>
+        }
+        @if (isDownloadable || isViewable) {
+          <div class="flex flex-row mt-3">
+            @if (isDownloadable) {
+              <ng-icon
+                class="text-primary opacity-45 mr-3"
+                name="matCloudDownloadOutline"
+                >
+              </ng-icon>
+            }
+            @if (isViewable) {
+              <ng-icon
+                class="text-primary opacity-45 mr-3"
+                name="matMapOutline"
+                >
+              </ng-icon>
+            }
+          </div>
+        }
       </div>
-    </div>
-    <div class="pt-5 pb-5 px-10 relative">
-      <div class="absolute top-[0.85em] right-[0.85em]">
-        <ng-container
-          [ngTemplateOutlet]="favoriteTemplate"
-          [ngTemplateOutletContext]="{ $implicit: record }"
-        ></ng-container>
-      </div>
-      <h1
-        class="font-title text-black text-[21px] font-medium mb-3 pr-8"
-        data-cy="recordTitle"
-      >
-        {{ record.title }}
-      </h1>
-      <p class="line-clamp-3">
-        <gn-ui-markdown-parser
-          [textContent]="abstract"
-          [whitoutStyles]="true"
-        />
-      </p>
-      <gn-ui-thumbnail
-        *ngIf="record.overviews?.[0]"
-        class="block mt-3 w-full h-[136px] border border-gray-100 rounded-lg overflow-hidden"
-        [thumbnailUrl]="record.overviews?.[0]?.url.toString()"
-      ></gn-ui-thumbnail>
-      <div class="flex flex-row mt-3" *ngIf="isDownloadable || isViewable">
-        <ng-icon
-          *ngIf="isDownloadable"
-          class="text-primary opacity-45 mr-3"
-          name="matCloudDownloadOutline"
-        >
-        </ng-icon>
-        <ng-icon
-          *ngIf="isViewable"
-          class="text-primary opacity-45 mr-3"
-          name="matMapOutline"
-        >
-        </ng-icon>
-      </div>
-    </div>
-  </a>
-</div>
+    </a>
+  </div>

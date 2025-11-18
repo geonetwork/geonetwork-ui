@@ -1,27 +1,28 @@
 <gn-ui-content-ghost
   [showContent]="imageUrl !== undefined"
   ghostClass="h-full w-full"
->
-  <div
-    *ngIf="imageUrl"
-    data-cy="record-thumbnail"
-    class="shrink-0 rounded-lg overflow-hidden group-hover:shadow-xl group-hover:border-0 h-full w-full"
   >
-    <gn-ui-thumbnail
-      class="relative h-full w-full"
-      [thumbnailUrl]="imageUrl"
-      fit="cover"
-      (placeholderShown)="isPlaceholderShown.emit($event)"
-    ></gn-ui-thumbnail>
-    <div class="relative">
-      <gn-ui-button
-        class="absolute bottom-0 right-0 z-10 mr-2 mb-2"
-        [type]="'outline'"
-        [extraClass]="'!py-2 !px-0'"
-        (buttonClick)="openLightbox(imageUrl)"
+  @if (imageUrl) {
+    <div
+      data-cy="record-thumbnail"
+      class="shrink-0 rounded-lg overflow-hidden group-hover:shadow-xl group-hover:border-0 h-full w-full"
       >
-        <ng-icon name="matZoomOutMap"></ng-icon>
-      </gn-ui-button>
+      <gn-ui-thumbnail
+        class="relative h-full w-full"
+        [thumbnailUrl]="imageUrl"
+        fit="cover"
+        (placeholderShown)="isPlaceholderShown.emit($event)"
+      ></gn-ui-thumbnail>
+      <div class="relative">
+        <gn-ui-button
+          class="absolute bottom-0 right-0 z-10 mr-2 mb-2"
+          [type]="'outline'"
+          [extraClass]="'!py-2 !px-0'"
+          (buttonClick)="openLightbox(imageUrl)"
+          >
+          <ng-icon name="matZoomOutMap"></ng-icon>
+        </gn-ui-button>
+      </div>
     </div>
-  </div>
+  }
 </gn-ui-content-ghost>

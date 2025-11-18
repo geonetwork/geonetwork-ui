@@ -1,43 +1,45 @@
 <div class="w-full h-full flex flex-col gap-[13px]">
   <div
     class="w-full py-4 px-5 bg-white border border-color-border rounded-lg mt-6"
-  >
-    <gn-ui-dropdown-selector
-      *ngIf="dropdownChoices$ | async as choices"
-      [ngClass]="{ hidden: !displaySource }"
-      [title]="'table.select.data' | translate"
-      class="h-[44px] w-full"
-      extraBtnClass="font-sans font-bold"
-      [choices]="choices"
-      [selected]="_selectedChoice"
-      (selectValue)="selectLink($event)"
-    ></gn-ui-dropdown-selector>
+    >
+    @if (dropdownChoices$ | async; as choices) {
+      <gn-ui-dropdown-selector
+        [ngClass]="{ hidden: !displaySource }"
+        [title]="'table.select.data' | translate"
+        class="h-[44px] w-full"
+        extraBtnClass="font-sans font-bold"
+        [choices]="choices"
+        [selected]="_selectedChoice"
+        (selectValue)="selectLink($event)"
+      ></gn-ui-dropdown-selector>
+    }
   </div>
-  <ng-container *ngIf="hidePreview$ | async; else dataView">
+  @if (hidePreview$ | async) {
     <gn-ui-popup-alert
       type="warning"
       icon="matErrorOutlineOutline"
       class="block h-12 p-1"
-    >
+      >
       <span translate>record.feature.limit</span>
     </gn-ui-popup-alert>
-  </ng-container>
-  <ng-template #dataView>
+  } @else {
     <div class="relative h-[460px]">
-      <gn-ui-table-view
-        *ngIf="mode === 'table'"
-        [cacheActive]="cacheActive$ | async"
-        [link]="selectedLink$ | async"
-        [featureCatalog]="mdViewFacade.featureCatalog$ | async"
-      ></gn-ui-table-view>
-      <gn-ui-chart-view
-        *ngIf="mode === 'chart'"
-        (chartConfig$)="setChartConfig($event)"
-        [cacheActive]="cacheActive$ | async"
-        [link]="selectedLink$ | async"
-        [featureCatalog]="mdViewFacade.featureCatalog$ | async"
-        [userChartConfig]="_chartConfig"
-      ></gn-ui-chart-view>
+      @if (mode === 'table') {
+        <gn-ui-table-view
+          [cacheActive]="cacheActive$ | async"
+          [link]="selectedLink$ | async"
+          [featureCatalog]="mdViewFacade.featureCatalog$ | async"
+        ></gn-ui-table-view>
+      }
+      @if (mode === 'chart') {
+        <gn-ui-chart-view
+          (chartConfig$)="setChartConfig($event)"
+          [cacheActive]="cacheActive$ | async"
+          [link]="selectedLink$ | async"
+          [featureCatalog]="mdViewFacade.featureCatalog$ | async"
+          [userChartConfig]="_chartConfig"
+        ></gn-ui-chart-view>
+      }
     </div>
-  </ng-template>
+  }
 </div>

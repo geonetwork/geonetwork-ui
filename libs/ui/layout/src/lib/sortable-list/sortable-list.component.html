@@ -2,13 +2,13 @@
   cdkDropList
   class="sortable-list flex flex-col gap-3 p-2"
   (cdkDropListDropped)="drop($event)"
->
-  <ng-container *ngFor="let item of items; index as index; trackBy: trackByFn">
+  >
+  @for (item of items; track trackByFn(index, item); let index = $index) {
     <div class="sortable-box bg-white flex items-center" cdkDrag>
       <span
         cdkDragHandle
         class="material-symbols-outlined mx-[10px] cursor-grab gn-ui-icon-medium flex-none"
-      >
+        >
         drag_handle
       </span>
       <div class="flex-1">
@@ -19,7 +19,6 @@
           "
         ></ng-container>
       </div>
-
       <gn-ui-button
         type="light"
         style="
@@ -33,5 +32,5 @@
         ><span class="material-symbols-outlined gn-ui-icon-medium">close</span>
       </gn-ui-button>
     </div>
-  </ng-container>
+  }
 </div>

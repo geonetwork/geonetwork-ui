@@ -21,7 +21,7 @@ import {
   ModelItem,
 } from '../facets.model'
 import { FacetItemComponent } from '../facet-item/facet-item.component'
-import { CommonModule } from '@angular/common'
+
 import { FormsModule } from '@angular/forms'
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core'
 
@@ -33,11 +33,10 @@ import { TranslateModule, TranslatePipe } from '@ngx-translate/core'
   standalone: true,
   imports: [
     FacetItemComponent,
-    CommonModule,
     FormsModule,
     TranslateModule,
-    TranslatePipe,
-  ],
+    TranslatePipe
+],
 })
 export class FacetBlockComponent
   implements OnInit, AfterViewInit, OnDestroy, OnChanges

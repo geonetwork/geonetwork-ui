@@ -7,22 +7,25 @@
     (valueChange)="handleConstraintTextChange($event)"
   ></gn-ui-form-field-rich>
 
-  <div *ngIf="!showUrl" class="flex-none mt-1">
-    <gn-ui-button
-      (buttonClick)="showUrl = true"
-      type="gray"
-      data-cy="add-url-btn"
-    >
-      <ng-icon name="iconoirPlus" class="text-primary"></ng-icon>&nbsp;
-      <span translate>input.image.displayUrlInput</span>
-    </gn-ui-button>
-  </div>
-  <gn-ui-url-input
-    *ngIf="showUrl"
-    class="mt-3.5"
-    [value]="constraint_.url?.toString()"
-    (valueChange)="handleURLChange($event)"
-    [showValidateButton]="false"
-  >
-  </gn-ui-url-input>
+  @if (!showUrl) {
+    <div class="flex-none mt-1">
+      <gn-ui-button
+        (buttonClick)="showUrl = true"
+        type="gray"
+        data-cy="add-url-btn"
+        >
+        <ng-icon name="iconoirPlus" class="text-primary"></ng-icon>&nbsp;
+        <span translate>input.image.displayUrlInput</span>
+      </gn-ui-button>
+    </div>
+  }
+  @if (showUrl) {
+    <gn-ui-url-input
+      class="mt-3.5"
+      [value]="constraint_.url?.toString()"
+      (valueChange)="handleURLChange($event)"
+      [showValidateButton]="false"
+      >
+    </gn-ui-url-input>
+  }
 </div>

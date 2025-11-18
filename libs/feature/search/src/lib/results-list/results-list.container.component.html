@@ -1,55 +1,62 @@
-<div *ngIf="(error$ | async) === null" class="search-results relative">
-  <gn-ui-results-list
-    [records]="facade.results$ | async"
-    [layoutConfig]="layoutConfig$ | async"
+@if ((error$ | async) === null) {
+  <div class="search-results relative">
+    <gn-ui-results-list
+      [records]="facade.results$ | async"
+      [layoutConfig]="layoutConfig$ | async"
     [metadataQualityDisplay]="
       metadataQualityDisplay && (pipelineForQualityScoreActivated | async)
     "
-    [favoriteTemplate]="favoriteToggle"
-    [recordUrlGetter]="recordUrlGetter"
-    (mdSelect)="onMetadataSelection($event)"
-  ></gn-ui-results-list>
-  <ng-container *ngIf="allowShowMore$ | async">
-    <div class="show-more h-[100px] pt-[30px]" *ngIf="showMore === 'button'">
-      <gn-ui-button
-        data-cy="addMoreBtn"
-        type="secondary"
-        (buttonClick)="onShowMore()"
-        extraClass="m-auto !p-[22px]"
-        [style.--gn-ui-button-width]="!auto"
-      >
-        <span class="uppercase font-medium tracking-widest" translate
-          >results.showMore</span
+      [favoriteTemplate]="favoriteToggle"
+      [recordUrlGetter]="recordUrlGetter"
+      (mdSelect)="onMetadataSelection($event)"
+    ></gn-ui-results-list>
+    @if (allowShowMore$ | async) {
+      @if (showMore === 'button') {
+        <div class="show-more h-[100px] pt-[30px]">
+          <gn-ui-button
+            data-cy="addMoreBtn"
+            type="secondary"
+            (buttonClick)="onShowMore()"
+            extraClass="m-auto !p-[22px]"
+            [style.--gn-ui-button-width]="!auto"
+            >
+            <span class="uppercase font-medium tracking-widest" translate
+              >results.showMore</span
+              >
+            </gn-ui-button>
+          </div>
+        }
+        @if (showMore === 'auto') {
+          <div class="show-more h-[100px]">
+            <gn-ui-viewport-intersector
+              (entersViewport)="onShowMore()"
+            ></gn-ui-viewport-intersector>
+          </div>
+        }
+      }
+      @if ((facade.isLoading$ | async) === true) {
+        <div class="loading flex justify-center h-[100px] pt-[45px]">
+          <gn-ui-spinning-loader></gn-ui-spinning-loader>
+        </div>
+      }
+    </div>
+  }
+
+  <div class="p-4 max-w-[600px] m-auto text-[13px]">
+    @if ((errorCode$ | async) === 0) {
+      <gn-ui-error
+        [type]="errorTypes.COULD_NOT_REACH_API"
         >
-      </gn-ui-button>
-    </div>
-    <div class="show-more h-[100px]" *ngIf="showMore === 'auto'">
-      <gn-ui-viewport-intersector
-        (entersViewport)="onShowMore()"
-      ></gn-ui-viewport-intersector>
-    </div>
-  </ng-container>
+      </gn-ui-error>
+    }
+    @if ((error$ | async) !== null && (errorCode$ | async) !== 0) {
+      <gn-ui-error
+        [type]="errorTypes.RECEIVED_ERROR"
+        [error]="errorMessage$ | async"
+      ></gn-ui-error>
+    }
+  </div>
 
-  <ng-container *ngIf="(facade.isLoading$ | async) === true">
-    <div class="loading flex justify-center h-[100px] pt-[45px]">
-      <gn-ui-spinning-loader></gn-ui-spinning-loader>
-    </div>
-  </ng-container>
-</div>
-
-<div class="p-4 max-w-[600px] m-auto text-[13px]">
-  <gn-ui-error
-    *ngIf="(errorCode$ | async) === 0"
-    [type]="errorTypes.COULD_NOT_REACH_API"
-  >
-  </gn-ui-error>
-  <gn-ui-error
-    *ngIf="(error$ | async) !== null && (errorCode$ | async) !== 0"
-    [type]="errorTypes.RECEIVED_ERROR"
-    [error]="errorMessage$ | async"
-  ></gn-ui-error>
-</div>
-
-<ng-template #favoriteToggle let-record>
-  <gn-ui-favorite-star [record]="record"></gn-ui-favorite-star>
-</ng-template>
+  <ng-template #favoriteToggle let-record>
+    <gn-ui-favorite-star [record]="record"></gn-ui-favorite-star>
+  </ng-template>

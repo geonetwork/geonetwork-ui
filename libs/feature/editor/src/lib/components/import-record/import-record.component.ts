@@ -5,7 +5,7 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
+
 import { ButtonComponent, UrlInputComponent } from '@geonetwork-ui/ui/inputs'
 import {
   TranslateDirective,
@@ -43,13 +43,12 @@ type ImportMenuPage = 'mainMenu' | 'importExternalFile'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
     ButtonComponent,
     UrlInputComponent,
     TranslateDirective,
     TranslatePipe,
-    NgIconComponent,
-  ],
+    NgIconComponent
+],
   providers: [
     provideIcons({
       iconoirImport,

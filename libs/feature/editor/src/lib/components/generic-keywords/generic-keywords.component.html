@@ -10,18 +10,19 @@
     [clearOnSelection]="true"
   ></gn-ui-autocomplete>
   <div class="flex gap-2 flex-wrap">
-    <gn-ui-badge
-      *ngFor="let keyword of keywords"
-      [removable]="true"
-      (badgeRemoveClicked)="removeKeyword(keyword)"
-      >{{ keyword.label }}
-
-      <ng-icon
-        *ngIf="isPlaceWithoutExtent(keyword)"
-        [title]="'editor.record.form.keywords.place.withoutExtent' | translate"
-        class="badge-warning"
-        name="matWarningAmberOutline"
-      ></ng-icon>
-    </gn-ui-badge>
+    @for (keyword of keywords; track keyword) {
+      <gn-ui-badge
+        [removable]="true"
+        (badgeRemoveClicked)="removeKeyword(keyword)"
+        >{{ keyword.label }}
+        @if (isPlaceWithoutExtent(keyword)) {
+          <ng-icon
+            [title]="'editor.record.form.keywords.place.withoutExtent' | translate"
+            class="badge-warning"
+            name="matWarningAmberOutline"
+          ></ng-icon>
+        }
+      </gn-ui-badge>
+    }
   </div>
 </div>

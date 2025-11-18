@@ -1,19 +1,20 @@
 <div
   class="rounded bg-white shadow-md shadow-gray-300 border-[1px] border-gray-200 mx-[32px] my-[16px] text-sm"
->
+  >
   <div
     class="flex flex-row py-3 px-4 gap-4 overflow-hidden grow border-[1px] border-gray-200"
-  >
+    >
     <ng-icon class="mt-0.5" name="iconoirFilterAlt"></ng-icon>
-    <gn-ui-filter-dropdown
-      *ngFor="let filter of searchConfig; let i = index"
-      [fieldName]="filter.fieldName"
-      [title]="filter.title | translate"
-      [style.--gn-ui-button-height]="'32px'"
-      [style.--gn-ui-multiselect-counter-text-color]="'var(--color-primary)'"
-      [style.--gn-ui-multiselect-counter-background-color]="'white'"
-      [style.width.rem]="filter.fieldName === 'user' ? 15 : undefined"
-    ></gn-ui-filter-dropdown>
+    @for (filter of searchConfig; track filter; let i = $index) {
+      <gn-ui-filter-dropdown
+        [fieldName]="filter.fieldName"
+        [title]="filter.title | translate"
+        [style.--gn-ui-button-height]="'32px'"
+        [style.--gn-ui-multiselect-counter-text-color]="'var(--color-primary)'"
+        [style.--gn-ui-multiselect-counter-background-color]="'white'"
+        [style.width.rem]="filter.fieldName === 'user' ? 15 : undefined"
+      ></gn-ui-filter-dropdown>
+    }
   </div>
   <gn-ui-search-filters-summary
     [searchFields]="searchFields"

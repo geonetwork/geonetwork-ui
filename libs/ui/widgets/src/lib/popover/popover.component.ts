@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common'
+
 import {
   Component,
   AfterViewInit,
@@ -20,7 +20,7 @@ import tippy, { Instance } from 'tippy.js'
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.component.css'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
 })
 export class PopoverComponent implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('popoverContent', { static: false }) popoverContent: ElementRef
