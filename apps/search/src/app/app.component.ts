@@ -5,6 +5,7 @@ import { ThemeService } from '@geonetwork-ui/util/shared'
   selector: 'gn-ui-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
   title = 'search'

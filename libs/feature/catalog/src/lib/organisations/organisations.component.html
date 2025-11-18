@@ -12,13 +12,13 @@
 </div>
 <div
   class="grid grid-cols-1 mt-6 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3"
-  >
-  @for (organisation of organisations$ | async; track trackByIndex($index, organisation)) {
+>
+  @for (organisation of organisations$ | async; track trackByIndex($index)) {
     <gn-ui-content-ghost
       class="h-[300px]"
       ghostClass="h-full mb-36"
       [showContent]="!!organisation.name"
-      >
+    >
       <gn-ui-organisation-preview
         [organization]="organisation"
         [organisationUrl]="getOrganisationUrl(organisation)"
