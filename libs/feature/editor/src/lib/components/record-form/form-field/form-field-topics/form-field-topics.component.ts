@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { CommonModule } from '@angular/common'
+
 import {
   AutocompleteComponent,
   BadgeComponent,
@@ -13,13 +13,12 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core'
   selector: 'gn-ui-form-field-topics',
   standalone: true,
   imports: [
-    CommonModule,
     AutocompleteComponent,
     NgIconComponent,
     BadgeComponent,
     TranslatePipe,
-    DropdownMultiselectComponent,
-  ],
+    DropdownMultiselectComponent
+],
   templateUrl: './form-field-topics.component.html',
   styleUrl: './form-field-topics.component.css',
 })

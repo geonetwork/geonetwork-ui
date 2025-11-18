@@ -7,12 +7,12 @@ import {
   Output,
   TemplateRef,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
+
 
 @Component({
   selector: 'gn-ui-interactive-table-column',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './interactive-table-column.component.html',
   styleUrls: ['./interactive-table-column.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

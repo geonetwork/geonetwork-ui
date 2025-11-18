@@ -20,13 +20,13 @@ import {
   Individual,
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
-import { CommonModule } from '@angular/common'
+
 
 @Component({
   selector: 'gn-ui-record-preview',
   template: '',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
 })
 export class RecordPreviewComponent implements OnInit, OnDestroy {
   @Input() record: CatalogRecord

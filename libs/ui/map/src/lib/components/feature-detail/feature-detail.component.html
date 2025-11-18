@@ -1,6 +1,10 @@
-<div *ngIf="feature" class="root">
-  <div class="property" *ngFor="let prop of properties | keyvalue">
-    <div>{{ prop.key }}</div>
-    <div class="font-bold">{{ prop.value }}</div>
+@if (feature) {
+  <div class="root">
+    @for (prop of properties | keyvalue; track prop) {
+      <div class="property">
+        <div>{{ prop.key }}</div>
+        <div class="font-bold">{{ prop.value }}</div>
+      </div>
+    }
   </div>
-</div>
+}

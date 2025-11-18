@@ -1,54 +1,56 @@
 <div class="relative">
-  <div class="sm:absolute sm:inset-0" *ngIf="!hideButton">
-    <gn-ui-button
-      (buttonClick)="listComponent.goToNextPage()"
-      type="secondary"
-      [disabled]="listComponent.isLastPage"
-      extraClass="lg:m-auto !p-[22px]"
-    >
-      <span class="uppercase font-medium tracking-widest" translate
-        >pagination.nextPage</span
-      >
-    </gn-ui-button>
-  </div>
-  <div
-    class="relative pointer-events-none flex flex-row justify-start sm:justify-end"
-  >
-    <div class="pointer-events-auto flex flex-row items-center py-[13px]">
-      <span class="mr-3 capitalize text-sm text-gray-900" translate
-        >pagination.page</span
-      >
-      <input
-        type="number"
-        [ngModel]="listComponent.currentPage"
-        [min]="1"
-        [max]="listComponent.pagesCount"
-        (ngModelChange)="setPage($event)"
-        class="border border-gray-300 rounded w-[54px] h-[34px] pl-[12px] mr-3 text-center"
-      />
-      <span class="mr-3 text-sm text-gray-900"
-        ><span translate>pagination.pageOf</span>
-        {{ listComponent.pagesCount }}</span
-      >
-      <gn-ui-button
-        (buttonClick)="listComponent.goToPrevPage()"
-        class="mr-2"
-        [disabled]="listComponent.isFirstPage"
-        [type]="'light'"
-        extraClass="!px-[3px]"
-        data-cy="prev-page"
-      >
-        <ng-icon name="matChevronLeft"></ng-icon>
-      </gn-ui-button>
+  @if (!hideButton) {
+    <div class="sm:absolute sm:inset-0">
       <gn-ui-button
         (buttonClick)="listComponent.goToNextPage()"
+        type="secondary"
         [disabled]="listComponent.isLastPage"
-        [type]="'light'"
-        extraClass="!px-[3px]"
-        data-cy="next-page"
+        extraClass="lg:m-auto !p-[22px]"
+        >
+        <span class="uppercase font-medium tracking-widest" translate
+          >pagination.nextPage</span
+          >
+        </gn-ui-button>
+      </div>
+    }
+    <div
+      class="relative pointer-events-none flex flex-row justify-start sm:justify-end"
       >
-        <ng-icon name="matChevronRight"></ng-icon>
-      </gn-ui-button>
-    </div>
-  </div>
-</div>
+      <div class="pointer-events-auto flex flex-row items-center py-[13px]">
+        <span class="mr-3 capitalize text-sm text-gray-900" translate
+          >pagination.page</span
+          >
+          <input
+            type="number"
+            [ngModel]="listComponent.currentPage"
+            [min]="1"
+            [max]="listComponent.pagesCount"
+            (ngModelChange)="setPage($event)"
+            class="border border-gray-300 rounded w-[54px] h-[34px] pl-[12px] mr-3 text-center"
+            />
+          <span class="mr-3 text-sm text-gray-900"
+            ><span translate>pagination.pageOf</span>
+            {{ listComponent.pagesCount }}</span
+            >
+            <gn-ui-button
+              (buttonClick)="listComponent.goToPrevPage()"
+              class="mr-2"
+              [disabled]="listComponent.isFirstPage"
+              [type]="'light'"
+              extraClass="!px-[3px]"
+              data-cy="prev-page"
+              >
+              <ng-icon name="matChevronLeft"></ng-icon>
+            </gn-ui-button>
+            <gn-ui-button
+              (buttonClick)="listComponent.goToNextPage()"
+              [disabled]="listComponent.isLastPage"
+              [type]="'light'"
+              extraClass="!px-[3px]"
+              data-cy="next-page"
+              >
+              <ng-icon name="matChevronRight"></ng-icon>
+            </gn-ui-button>
+          </div>
+        </div>
+      </div>

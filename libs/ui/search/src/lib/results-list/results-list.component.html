@@ -1,20 +1,21 @@
 <ng-container>
   <div [ngClass]="layoutConfig.containerClass">
-    <div
-      [ngClass]="layoutConfig.itemClass"
-      [style]="layoutConfig.itemStyle"
-      *ngFor="let record of records"
-    >
-      <gn-ui-results-list-item
-        [attr.data-cy]="record.uniqueIdentifier"
-        [record]="record"
-        [layoutConfig]="layoutConfig"
-        [metadataQualityDisplay]="metadataQualityDisplay"
-        (mdSelect)="mdSelect.emit($event)"
-        [favoriteTemplate]="favoriteTemplate"
-        [linkHref]="recordUrlGetter(record)"
-      ></gn-ui-results-list-item>
-    </div>
+    @for (record of records; track record) {
+      <div
+        [ngClass]="layoutConfig.itemClass"
+        [style]="layoutConfig.itemStyle"
+        >
+        <gn-ui-results-list-item
+          [attr.data-cy]="record.uniqueIdentifier"
+          [record]="record"
+          [layoutConfig]="layoutConfig"
+          [metadataQualityDisplay]="metadataQualityDisplay"
+          (mdSelect)="mdSelect.emit($event)"
+          [favoriteTemplate]="favoriteTemplate"
+          [linkHref]="recordUrlGetter(record)"
+        ></gn-ui-results-list-item>
+      </div>
+    }
   </div>
 </ng-container>
 

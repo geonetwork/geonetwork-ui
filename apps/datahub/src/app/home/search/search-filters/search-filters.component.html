@@ -1,7 +1,7 @@
 <div
   class="bg-primary text-white p-5 shadow-xl rounded-lg grid grid-cols-6 gap-4 transition-[height] duration-100"
   [ngClass]="{ 'sm:bg-white sm:text-main': !isOpen }"
->
+  >
   <div
     class="sm:col-span-4 grid grid-cols-1 sm:grid-cols-2 gap-7 sm:gap-4 sm:grid-rows-auto"
     [ngClass]="
@@ -9,143 +9,157 @@
         ? 'col-span-6 mb-7 sm:mb-0'
         : 'col-span-4 sm:col-span-3 lg:col-span-4'
     "
-  >
-    <div
-      *ngIf="(isMobile$ | async) === true || isOpen"
-      class="sm:col-span-2"
-      [ngClass]="{ flex: isOpen }"
     >
-      <div class="w-full flex flex-row justify-between">
-        <div
-          class="flex flex-col sm:flex-row items-baseline justify-start gap-2"
+    @if ((isMobile$ | async) === true || isOpen) {
+      <div
+        class="sm:col-span-2"
+        [ngClass]="{ flex: isOpen }"
         >
-          <h2 class="text-xl mr-4 font-title" translate>
-            search.filters.title
-          </h2>
-          <button
-            type="button"
-            class="text-sm opacity-80 hover:opacity-100 transition-opacity clear-btn"
-            translate
-            (click)="clearFilters()"
-            data-cy="clearFilters"
-          >
-            search.filters.clear
-          </button>
-        </div>
-        <span *ngIf="(isMobile$ | async) === true" class="shrink-0">
-          <button
-            type="button"
-            *ngIf="isOpen"
-            class="text-white opacity-60 hover:opacity-90 border-0 bg-transparent flex"
-            (click)="close()"
-          >
-            <span class="text-sm pt-0.5" translate
-              >search.filters.minimize</span
+        <div class="w-full flex flex-row justify-between">
+          <div
+            class="flex flex-col sm:flex-row items-baseline justify-start gap-2"
             >
-            <ng-icon
-              class="ml-1 align-middle leading-none"
-              name="matRemoveOutline"
-            ></ng-icon>
-          </button>
-        </span>
-      </div>
+            <h2 class="text-xl mr-4 font-title" translate>
+              search.filters.title
+            </h2>
+            <button
+              type="button"
+              class="text-sm opacity-80 hover:opacity-100 transition-opacity clear-btn"
+              translate
+              (click)="clearFilters()"
+              data-cy="clearFilters"
+              >
+              search.filters.clear
+            </button>
+          </div>
+          @if ((isMobile$ | async) === true) {
+            <span class="shrink-0">
+              @if (isOpen) {
+                <button
+                  type="button"
+                  class="text-white opacity-60 hover:opacity-90 border-0 bg-transparent flex"
+                  (click)="close()"
+                  >
+                  <span class="text-sm pt-0.5" translate
+                    >search.filters.minimize</span
+                    >
+                    <ng-icon
+                      class="ml-1 align-middle leading-none"
+                      name="matRemoveOutline"
+                    ></ng-icon>
+                  </button>
+                }
+              </span>
+            }
+          </div>
+        </div>
+      }
+      @if ((isMobile$ | async) === false || isOpen) {
+        @for (filter of searchConfig; track filter; let i = $index) {
+          <gn-ui-filter-dropdown
+            class="w-full"
+            [ngClass]="getClassForFilter(i)"
+            [fieldName]="filter.fieldName"
+            [title]="filter.title | translate"
+          ></gn-ui-filter-dropdown>
+        }
+      }
+      @if (isOpen && (searchFacade.hasSpatialFilter$ | async)) {
+        <div
+          class="spatial-filter-toggle sm:col-span-2"
+          >
+          <gn-ui-check-toggle
+            [title]="'search.filters.useSpatialFilterHelp' | translate"
+            [label]="'search.filters.useSpatialFilter' | translate"
+            [color]="'secondary'"
+            [value]="searchFacade.spatialFilterEnabled$ | async"
+            (toggled)="toggleSpatialFilter($event)"
+          ></gn-ui-check-toggle>
+        </div>
+      }
+      @if (shouldShowMyRecordsToggle) {
+        <div class="sm:col-span-2">
+          <gn-ui-check-toggle
+            [title]="'search.filters.myRecordsHelp' | translate"
+            [label]="'search.filters.myRecords' | translate"
+            [color]="'secondary'"
+            [value]="myRecordsFilterEnabled$ | async"
+            (toggled)="toggleMyRecordsFilter($event)"
+          ></gn-ui-check-toggle>
+        </div>
+      }
+      @if (shouldShowOtherRecordsButton | async) {
+        <div class="sm:col-span-2">
+          <gn-ui-button
+            type="light"
+            extraClass="text-sm align-middle"
+            (buttonClick)="toggleMyRecordsFilter(false)"
+            >
+            <span>{{ 'search.filters.otherRecords' | translate }}</span>
+            <ng-icon class="ml-3 opacity-40" name="matCloseOutline"></ng-icon>
+          </gn-ui-button>
+        </div>
+      }
     </div>
-    <ng-container *ngIf="(isMobile$ | async) === false || isOpen">
-      <gn-ui-filter-dropdown
-        *ngFor="let filter of searchConfig; let i = index"
-        class="w-full"
-        [ngClass]="getClassForFilter(i)"
-        [fieldName]="filter.fieldName"
-        [title]="filter.title | translate"
-      ></gn-ui-filter-dropdown>
-    </ng-container>
     <div
-      class="spatial-filter-toggle sm:col-span-2"
-      *ngIf="isOpen && (searchFacade.hasSpatialFilter$ | async)"
-    >
-      <gn-ui-check-toggle
-        [title]="'search.filters.useSpatialFilterHelp' | translate"
-        [label]="'search.filters.useSpatialFilter' | translate"
-        [color]="'secondary'"
-        [value]="searchFacade.spatialFilterEnabled$ | async"
-        (toggled)="toggleSpatialFilter($event)"
-      ></gn-ui-check-toggle>
-    </div>
-    <div class="sm:col-span-2" *ngIf="shouldShowMyRecordsToggle">
-      <gn-ui-check-toggle
-        [title]="'search.filters.myRecordsHelp' | translate"
-        [label]="'search.filters.myRecords' | translate"
-        [color]="'secondary'"
-        [value]="myRecordsFilterEnabled$ | async"
-        (toggled)="toggleMyRecordsFilter($event)"
-      ></gn-ui-check-toggle>
-    </div>
-    <div class="sm:col-span-2" *ngIf="shouldShowOtherRecordsButton | async">
-      <gn-ui-button
-        type="light"
-        extraClass="text-sm align-middle"
-        (buttonClick)="toggleMyRecordsFilter(false)"
+      class="col-span-2 flex flex-col justify-between"
+      [ngClass]="{ 'sm:col-span-3 lg:col-span-2': !isOpen }"
       >
-        <span>{{ 'search.filters.otherRecords' | translate }}</span>
-        <ng-icon class="ml-3 opacity-40" name="matCloseOutline"></ng-icon>
-      </gn-ui-button>
-    </div>
-  </div>
-  <div
-    class="col-span-2 flex flex-col justify-between"
-    [ngClass]="{ 'sm:col-span-3 lg:col-span-2': !isOpen }"
-  >
-    <div
-      class="flex flex-row gap-7 sm:gap-4"
+      <div
+        class="flex flex-row gap-7 sm:gap-4"
       [ngClass]="
         isOpen
           ? 'justify-start sm:justify-end'
           : 'justify-end sm:justify-between'
       "
-    >
-      <gn-ui-button
-        *ngIf="(isMobile$ | async) === false && !isOpen"
-        (buttonClick)="open()"
-        type="outline"
-        extraClass="!px-[8px]"
-        data-cy="filters-expand"
-      >
-        <ng-icon name="matMoreHorizOutline"></ng-icon>
-      </gn-ui-button>
-      <button
-        type="button"
-        *ngIf="(isMobile$ | async) === true && !isOpen"
-        class="text-white opacity-60 hover:opacity-90 border-0 bg-transparent flex"
-        (click)="open()"
-        data-cy="filters-expand"
-      >
-        <span class="text-sm pt-0.5" translate>search.filters.maximize</span>
-        <ng-icon
-          class="ml-1 align-middle leading-none"
-          name="matAddOutline"
-        ></ng-icon>
-      </button>
-      <gn-ui-sort-by
-        class="overflow-hidden"
-        *ngIf="(isMobile$ | async) === false || isOpen"
-        [ngClass]="{ 'block text-white mb-1': isOpen }"
-        [isQualitySortable]="isQualitySortable"
-      ></gn-ui-sort-by>
-    </div>
-    <div class="flex justify-end">
-      <button
-        type="button"
-        *ngIf="(isMobile$ | async) === false && isOpen"
-        class="text-white opacity-60 hover:opacity-90 border-0 bg-transparent flex"
-        (click)="close()"
-        data-cy="filters-collapse"
-      >
-        <span class="text-sm pt-0.5" translate>search.filters.minimize</span>
-        <ng-icon
-          class="ml-1 align-middle leading-none"
-          name="matRemoveOutline"
-        ></ng-icon>
-      </button>
+        >
+        @if ((isMobile$ | async) === false && !isOpen) {
+          <gn-ui-button
+            (buttonClick)="open()"
+            type="outline"
+            extraClass="!px-[8px]"
+            data-cy="filters-expand"
+            >
+            <ng-icon name="matMoreHorizOutline"></ng-icon>
+          </gn-ui-button>
+        }
+        @if ((isMobile$ | async) === true && !isOpen) {
+          <button
+            type="button"
+            class="text-white opacity-60 hover:opacity-90 border-0 bg-transparent flex"
+            (click)="open()"
+            data-cy="filters-expand"
+            >
+            <span class="text-sm pt-0.5" translate>search.filters.maximize</span>
+            <ng-icon
+              class="ml-1 align-middle leading-none"
+              name="matAddOutline"
+            ></ng-icon>
+          </button>
+        }
+        @if ((isMobile$ | async) === false || isOpen) {
+          <gn-ui-sort-by
+            class="overflow-hidden"
+            [ngClass]="{ 'block text-white mb-1': isOpen }"
+            [isQualitySortable]="isQualitySortable"
+          ></gn-ui-sort-by>
+        }
+      </div>
+      <div class="flex justify-end">
+        @if ((isMobile$ | async) === false && isOpen) {
+          <button
+            type="button"
+            class="text-white opacity-60 hover:opacity-90 border-0 bg-transparent flex"
+            (click)="close()"
+            data-cy="filters-collapse"
+            >
+            <span class="text-sm pt-0.5" translate>search.filters.minimize</span>
+            <ng-icon
+              class="ml-1 align-middle leading-none"
+              name="matRemoveOutline"
+            ></ng-icon>
+          </button>
+        }
+      </div>
     </div>
   </div>
-</div>

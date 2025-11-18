@@ -8,7 +8,7 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
+
 import { NgIconComponent, provideIcons } from '@ng-icons/core'
 import { iconoirExpand } from '@ng-icons/iconoir'
 import { MatButtonModule } from '@angular/material/button'
@@ -20,13 +20,12 @@ import { CellPopinComponent } from '../cell-popin/cell-popin.component'
   selector: 'gn-ui-truncated-text',
   standalone: true,
   imports: [
-    CommonModule,
     MatButtonModule,
     OverlayModule,
     ButtonComponent,
     CellPopinComponent,
-    NgIconComponent,
-  ],
+    NgIconComponent
+],
   providers: [provideIcons({ iconoirExpand })],
   templateUrl: './truncated-text.component.html',
   styles: [],

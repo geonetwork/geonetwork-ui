@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common'
+
 import {
   ChangeDetectorRef,
   Component,
@@ -20,13 +20,12 @@ type ActionMenuPage = 'mainMenu' | 'deleteMenu' | 'rollbackMenu'
   styleUrls: ['./action-menu.component.css'],
   standalone: true,
   imports: [
-    CommonModule,
     ButtonComponent,
     MatMenuModule,
     MatDialogModule,
     TranslateDirective,
-    TranslatePipe,
-  ],
+    TranslatePipe
+],
 })
 export class ActionMenuComponent {
   @Input() canDuplicate = true

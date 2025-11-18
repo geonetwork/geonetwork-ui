@@ -3,16 +3,20 @@
   class="px-4 bg-primary hover:bg-primary-darker text-white flex flex-row w-full items-center font-bold text-lg pointer-events-auto"
   [style.height]="'55px'"
   (click)="toggle()"
->
+  >
   <ng-container [ngTemplateOutlet]="titleTemplate"></ng-container>
   <div class="ml-3 grow"></div>
-  <ng-icon *ngIf="collapsed" name="matExpandMore"></ng-icon>
-  <ng-icon name="matExpandLess" *ngIf="!collapsed"></ng-icon>
+  @if (collapsed) {
+    <ng-icon name="matExpandMore"></ng-icon>
+  }
+  @if (!collapsed) {
+    <ng-icon name="matExpandLess"></ng-icon>
+  }
 </button>
 <div
   class="content transition-all pointer-events-auto bg-white"
   [style.height]="collapsed ? '0px' : 'calc(100% - 55px)'"
   [ngClass]="collapsed ? 'overflow-hidden' : 'overflow-auto'"
->
+  >
   <ng-content></ng-content>
 </div>

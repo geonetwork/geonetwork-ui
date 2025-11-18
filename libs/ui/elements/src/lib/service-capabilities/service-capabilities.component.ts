@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core'
-import { CommonModule } from '@angular/common'
+
 import {
   TranslateDirective,
   TranslatePipe,
@@ -41,15 +41,14 @@ marker(`service.metadata.capabilities.attribution`)
   selector: 'gn-ui-service-capabilities',
   standalone: true,
   imports: [
-    CommonModule,
     TranslateDirective,
     TranslatePipe,
     ButtonComponent,
     TextInputComponent,
     NgIcon,
     PopoverComponent,
-    SpinningLoaderComponent,
-  ],
+    SpinningLoaderComponent
+],
   viewProviders: [
     provideIcons({
       iconoirSearch,

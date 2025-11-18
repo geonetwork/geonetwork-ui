@@ -8,14 +8,14 @@ import {
 } from '@geonetwork-ui/feature/search'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
-import { CommonModule } from '@angular/common'
+
 
 @Component({
   selector: 'datahub-last-created',
   templateUrl: './last-created.component.html',
   styleUrls: ['./last-created.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, FeatureSearchModule, ResultsListContainerComponent],
+  imports: [FeatureSearchModule, ResultsListContainerComponent],
   standalone: true,
 })
 export class LastCreatedComponent implements OnInit {

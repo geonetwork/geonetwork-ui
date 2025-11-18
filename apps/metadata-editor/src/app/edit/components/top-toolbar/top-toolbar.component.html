@@ -1,101 +1,103 @@
 <div class="flex flex-row items-center w-full border-b-[1px]">
   <!-- <gn-ui-button
-    type="light"
-    disabled="true"
-    [title]="'editor.temporary.disabled' | translate"
+  type="light"
+  disabled="true"
+  [title]="'editor.temporary.disabled' | translate"
   >
-    <ng-icon name="iconoirSidebarCollapse"></ng-icon>
-  </gn-ui-button>
+  <ng-icon name="iconoirSidebarCollapse"></ng-icon>
+</gn-ui-button>
+<gn-ui-button
+  type="light"
+  disabled="true"
+  [title]="'editor.temporary.disabled' | translate"
+  >
+  <ng-icon name="iconoirLightBulb"></ng-icon>
+</gn-ui-button>
+<gn-ui-button
+  type="light"
+  disabled="true"
+  [title]="'editor.temporary.disabled' | translate"
+  >
+  <ng-icon name="iconoirDownload"></ng-icon>
+</gn-ui-button> -->
+<ng-container *ngrxLet="saveStatus$ as saveStatus">
   <gn-ui-button
     type="light"
-    disabled="true"
-    [title]="'editor.temporary.disabled' | translate"
-  >
-    <ng-icon name="iconoirLightBulb"></ng-icon>
-  </gn-ui-button>
-  <gn-ui-button
-    type="light"
-    disabled="true"
-    [title]="'editor.temporary.disabled' | translate"
-  >
-    <ng-icon name="iconoirDownload"></ng-icon>
-  </gn-ui-button> -->
-  <ng-container *ngrxLet="saveStatus$ as saveStatus">
-    <gn-ui-button
-      type="light"
-      (buttonClick)="confirmUndo()"
-      [disabled]="saveStatus !== 'draft_changes_pending'"
+    (buttonClick)="confirmUndo()"
+    [disabled]="saveStatus !== 'draft_changes_pending'"
       [matTooltip]="
         (saveStatus === 'draft_changes_pending'
           ? 'editor.record.undo.tooltip.enabled'
           : 'editor.record.undo.tooltip.disabled'
         ) | translate
       "
-      data-cy="undo-button"
+    data-cy="undo-button"
     >
-      <ng-icon name="iconoirUndoAction"></ng-icon>
-    </gn-ui-button>
-  </ng-container>
-  <div
-    class="grow flex flex-row items-center justify-center gap-1 text-[14px]"
-    data-cy="save-status"
-    [attr.data-cy-value]="saveStatus$ | async"
-    [ngSwitch]="saveStatus$ | async"
+    <ng-icon name="iconoirUndoAction"></ng-icon>
+  </gn-ui-button>
+</ng-container>
+<div
+  class="grow flex flex-row items-center justify-center gap-1 text-[14px]"
+  data-cy="save-status"
+  [attr.data-cy-value]="saveStatus$ | async"
   >
-    <ng-container *ngSwitchCase="'record_not_published'">
+  @switch (saveStatus$ | async) {
+    @case ('record_not_published') {
       <ng-icon class="text-lime-400" name="iconoirCheckCircle"></ng-icon>
       <span translate>editor.record.saveStatus.recordNotPublished</span>
-    </ng-container>
-    <ng-container *ngSwitchCase="'record_up_to_date'">
+    }
+    @case ('record_up_to_date') {
       <ng-icon class="text-lime-400" name="iconoirCheckCircle"></ng-icon>
       <span translate>editor.record.saveStatus.recordUpToDate</span>
-    </ng-container>
-    <ng-container *ngSwitchCase="'draft_changes_pending'">
+    }
+    @case ('draft_changes_pending') {
       <ng-icon class="text-sky-300" name="matPendingOutline"></ng-icon>
       <span translate>editor.record.saveStatus.draftWithChangesPending</span>
-    </ng-container>
-  </div>
-  <!-- <gn-ui-button
-    type="light"
-    disabled="true"
-    [title]="'editor.temporary.disabled' | translate"
-  >
-    <ng-icon name="matHelpOutlineOutline"></ng-icon>
-  </gn-ui-button> -->
-  <gn-ui-button
-    [title]="'editor.record.form.multilingual.open' | translate"
+    }
+  }
+</div>
+<!-- <gn-ui-button
+type="light"
+disabled="true"
+[title]="'editor.temporary.disabled' | translate"
+>
+<ng-icon name="matHelpOutlineOutline"></ng-icon>
+</gn-ui-button> -->
+<gn-ui-button
+  [title]="'editor.record.form.multilingual.open' | translate"
     [extraClass]="
       sidePanelOpen === 'multilingual' ? 'bg-neutral-200 border-0' : 'bg-white'
     "
-    (buttonClick)="toggleSidePanel('multilingual')"
-    type="light"
+  (buttonClick)="toggleSidePanel('multilingual')"
+  type="light"
   >
-    <div class="relative inline-block">
+  <div class="relative inline-block">
+    @if (isRecordMultilingual$ | async) {
       <ng-icon
         size="8px"
         name="matCircle"
         class="text-primary absolute top-0 right-0"
-        *ngIf="isRecordMultilingual$ | async"
       ></ng-icon>
-      <ng-icon name="iconoirTranslate"></ng-icon>
-    </div>
-  </gn-ui-button>
-  <gn-ui-button
-    [title]="'editor.record.form.metadataQuality.open' | translate"
+    }
+    <ng-icon name="iconoirTranslate"></ng-icon>
+  </div>
+</gn-ui-button>
+<gn-ui-button
+  [title]="'editor.record.form.metadataQuality.open' | translate"
     [extraClass]="
       sidePanelOpen === 'metadataQuality'
         ? 'bg-neutral-200 border-0'
         : 'bg-white'
     "
-    (buttonClick)="toggleSidePanel('metadataQuality')"
-    type="light"
+  (buttonClick)="toggleSidePanel('metadataQuality')"
+  type="light"
   >
-    <div class="relative inline-block">
-      <ng-icon name="iconoirBadgeCheck"></ng-icon>
-    </div>
-  </gn-ui-button>
-  <md-editor-metadata-quality
-    class="text-xs mx-5 w-28"
-  ></md-editor-metadata-quality>
-  <md-editor-publish-button></md-editor-publish-button>
+  <div class="relative inline-block">
+    <ng-icon name="iconoirBadgeCheck"></ng-icon>
+  </div>
+</gn-ui-button>
+<md-editor-metadata-quality
+  class="text-xs mx-5 w-28"
+></md-editor-metadata-quality>
+<md-editor-publish-button></md-editor-publish-button>
 </div>

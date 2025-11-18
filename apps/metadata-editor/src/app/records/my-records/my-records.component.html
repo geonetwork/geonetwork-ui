@@ -1,17 +1,17 @@
 <main class="bg-white overflow-y-auto">
   <div class="flex flex-row items-baseline gap-[8px] px-[32px] py-[20px]">
-    <ng-container *ngIf="searchFacade.searchFilters$ | async">
+    @if (searchFacade.searchFilters$ | async) {
       <h1 class="text-[16px] text-main font-bold" translate>
         dashboard.records.myRecords
       </h1>
       <div class="text-[12px]">
         <md-editor-records-count></md-editor-records-count>
       </div>
-    </ng-container>
+    }
   </div>
   <div
     class="flex flex-row items-center mx-[32px] my-[16px] py-[8px] gap-[16px]"
-  >
+    >
     <div class="grow"></div>
     <gn-ui-button
       cdkOverlayOrigin
@@ -19,18 +19,20 @@
       (buttonClick)="duplicateExternalRecord()"
       type="gray"
       data-test="import-record"
-    >
+      >
       <span translate>dashboard.importRecord</span>
-      <ng-icon
-        *ngIf="!isImportMenuOpen"
-        class="text-primary"
-        name="iconoirNavArrowDown"
-      ></ng-icon>
-      <ng-icon
-        *ngIf="isImportMenuOpen"
-        class="text-primary"
-        name="iconoirNavArrowUp"
-      ></ng-icon>
+      @if (!isImportMenuOpen) {
+        <ng-icon
+          class="text-primary"
+          name="iconoirNavArrowDown"
+        ></ng-icon>
+      }
+      @if (isImportMenuOpen) {
+        <ng-icon
+          class="text-primary"
+          name="iconoirNavArrowUp"
+        ></ng-icon>
+      }
     </gn-ui-button>
     <ng-template #template>
       <gn-ui-import-record
@@ -41,7 +43,7 @@
       (buttonClick)="createRecord()"
       type="primary"
       data-cy="create-record"
-    >
+      >
       <ng-icon class="mr-2" name="iconoirPagePlus"></ng-icon>
       <span translate>dashboard.createRecord</span>
     </gn-ui-button>

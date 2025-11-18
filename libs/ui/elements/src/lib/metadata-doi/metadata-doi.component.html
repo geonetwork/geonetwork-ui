@@ -1,12 +1,12 @@
 <div
   class="border border-gray-300 rounded-lg py-4 px-5 text-black flex justify-between items-center gap-4"
->
+  >
   <div class="overflow-hidden flex-1">
     <p class="text-base font-medium mb-3">DOI</p>
     <p
       class="text-base font-medium overflow-hidden text-ellipsis whitespace-nowrap"
       [title]="code"
-    >
+      >
       {{ code }}
     </p>
   </div>
@@ -17,15 +17,16 @@
       [tooltipText]="'record.metadata.doi.copy' | translate"
       class="[&>div]:flex [&>div]:items-center [&>div]:justify-center [&_button]:w-[40px] [&_button]:h-[32px] [&_button]:flex [&_button]:items-center [&_button]:justify-center [&_button]:hover:bg-gray-100 [&_button]:rounded-lg [&_button]:transition-colors [&_button]:border [&_button]:border-gray-300 [&_button]:px-2 [&_button]:py-1 [&_ng-icon]:w-5 [&_ng-icon]:h-5"
     ></gn-ui-copy-text-button>
-    <a
-      *ngIf="link"
-      [href]="link"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="w-[40px] h-[32px] flex items-center justify-center hover:bg-gray-100 rounded-lg transition-colors border border-gray-300 px-2 py-1"
-      [matTooltip]="'record.metadata.doi.open' | translate"
-    >
-      <ng-icon name="matOpenInNew" size="20"></ng-icon>
-    </a>
+    @if (link) {
+      <a
+        [href]="link"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="w-[40px] h-[32px] flex items-center justify-center hover:bg-gray-100 rounded-lg transition-colors border border-gray-300 px-2 py-1"
+        [matTooltip]="'record.metadata.doi.open' | translate"
+        >
+        <ng-icon name="matOpenInNew" size="20"></ng-icon>
+      </a>
+    }
   </div>
 </div>

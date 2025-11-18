@@ -9,7 +9,7 @@ import {
 } from '@angular/core'
 import { MapContext } from '@geospatial-sdk/core'
 import { createLegendFromLayer } from '@geospatial-sdk/legend'
-import { NgIf } from '@angular/common'
+
 
 @Component({
   selector: 'gn-ui-map-legend',
@@ -17,7 +17,7 @@ import { NgIf } from '@angular/common'
   standalone: true,
   styleUrls: ['./map-legend.component.css'],
   encapsulation: ViewEncapsulation.None,
-  imports: [NgIf],
+  imports: [],
 })
 export class MapLegendComponent implements OnChanges {
   @Input() context: MapContext | null

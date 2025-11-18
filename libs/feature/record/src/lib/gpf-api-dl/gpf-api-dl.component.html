@@ -7,7 +7,7 @@
       [attr.aria-label]="
         'record.metadata.api.form.filterDescription' | translate
       "
-    >
+      >
       record.metadata.api.form.filter
     </h2>
     <button
@@ -15,7 +15,7 @@
       class="bg-primary-opacity-50 inline-flex items-center justify-center px-4 py-2 text-white rounded hover:bg-primary transition"
       [attr.title]="'record.metadata.api.form.resetTooltip' | translate"
       [attr.aria-label]="'record.metadata.api.form.resetTooltip' | translate"
-    >
+      >
       <span translate>record.metadata.api.form.reset</span>
     </button>
   </div>
@@ -64,29 +64,30 @@
       [attr.aria-label]="
         'record.metadata.api.form.itemsDescription' | translate
       "
-    >
+      >
       record.metadata.api.form.items
     </h3>
     <div
       class="overflow-auto max-h-60"
       [attr.title]="'record.metadata.api.form.itemsTooltip' | translate"
       [attr.aria-label]="'record.metadata.api.form.itemsTooltip' | translate"
-    >
-      <div
-        *ngFor="let link of listFilteredProduct$ | async"
-        class="mb-2 sm:mb-3"
       >
-        <gn-ui-gpf-api-dl-list-item
-          [link]="link"
-          color="rgb(124 45 18)"
-          [format]="getLinkFormat(link)"
-          [isFromWfs]="true"
-          [attr.title]="'record.metadata.api.form.productTooltip' | translate"
+      @for (link of listFilteredProduct$ | async; track link) {
+        <div
+          class="mb-2 sm:mb-3"
+          >
+          <gn-ui-gpf-api-dl-list-item
+            [link]="link"
+            color="rgb(124 45 18)"
+            [format]="getLinkFormat(link)"
+            [isFromWfs]="true"
+            [attr.title]="'record.metadata.api.form.productTooltip' | translate"
           [attr.aria-label]="
             'record.metadata.api.form.productTooltip' | translate
           "
-        ></gn-ui-gpf-api-dl-list-item>
-      </div>
+          ></gn-ui-gpf-api-dl-list-item>
+        </div>
+      }
     </div>
   </div>
 
@@ -104,7 +105,7 @@
       [attr.aria-label]="
         'record.metadata.api.form.previousPageTooltip' | translate
       "
-    >
+      >
       <span translate>record.metadata.api.form.previousPage</span>
     </button>
     <div
@@ -112,7 +113,7 @@
       [attr.aria-label]="
         'record.metadata.api.form.paginationDescription' | translate
       "
-    >
+      >
       {{ page$ | async }}/{{ pageMax$ | async }}
     </div>
     <button
@@ -125,7 +126,7 @@
       "
       [attr.title]="'record.metadata.api.form.nextPageTooltip' | translate"
       [attr.aria-label]="'record.metadata.api.form.nextPageTooltip' | translate"
-    >
+      >
       <span translate>record.metadata.api.form.nextPage</span>
     </button>
   </div>

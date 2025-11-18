@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common'
+
 import {
   ChangeDetectionStrategy,
   Component,
@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms'
   styleUrls: ['./form-field-simple.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
 })
 export class FormFieldSimpleComponent {
   @Input() type: 'text' | 'number'

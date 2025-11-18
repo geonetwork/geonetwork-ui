@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common'
+
 import {
   ChangeDetectionStrategy,
   Component,
@@ -47,15 +47,14 @@ import { iconoirPlus } from '@ng-icons/iconoir'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
     AutocompleteComponent,
     ContactCardComponent,
     SortableListComponent,
     NgIconComponent,
     ButtonComponent,
     TranslatePipe,
-    TranslateDirective,
-  ],
+    TranslateDirective
+],
   providers: [
     provideIcons({ iconoirPlus }),
     provideNgIconsConfig({

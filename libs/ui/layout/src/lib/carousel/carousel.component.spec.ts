@@ -35,8 +35,10 @@ jest.mock('embla-carousel', () => {
 
 @Component({
   template: `<gn-ui-carousel [ngStyle]="{ width: width + 'px' }">
-    <div *ngFor="let block of blocks" style="width: 50px"></div>
-  </gn-ui-carousel>`,
+      @for (block of blocks; track block) {
+        <div style="width: 50px"></div>
+      }
+    </gn-ui-carousel>`,
 })
 class CarouselWrapperComponent {
   @Input() blocks = [1, 2, 3]

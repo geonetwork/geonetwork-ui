@@ -7,27 +7,28 @@
       (matSortChange)="setSort($event)"
       [matSortDisableClear]="true"
       *ngrxLet="properties$ as properties"
-    >
-      <ng-container
-        *ngFor="let attr of _featureAttributes"
-        [matColumnDef]="attr.value"
       >
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header
-          class="text-sm text-black bg-white"
-        >
-          {{ attr.label }}
-        </th>
-        <td
-          mat-cell
-          *matCellDef="let element"
-          class="whitespace-nowrap pr-1 truncate"
-        >
-          {{ element[attr.value] }}
-        </td>
-      </ng-container>
+      @for (attr of _featureAttributes; track attr) {
+        <ng-container
+          [matColumnDef]="attr.value"
+          >
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="text-sm text-black bg-white"
+            >
+            {{ attr.label }}
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            class="whitespace-nowrap pr-1 truncate"
+            >
+            {{ element[attr.value] }}
+          </td>
+        </ng-container>
+      }
 
       <tr mat-header-row *matHeaderRowDef="properties; sticky: true"></tr>
       <tr
@@ -40,33 +41,35 @@
         "
       ></tr>
     </table>
-    <gn-ui-loading-mask
-      *ngIf="loading$ | async"
-      class="sticky inset-0"
-      [message]="'table.loading.data' | translate"
-    ></gn-ui-loading-mask>
-    <gn-ui-popup-alert
-      *ngIf="error"
-      type="warning"
-      icon="matErrorOutlineOutline"
-      class="absolute m-2 inset-0 z-[100]"
-    >
-      <span translate>{{ error }}</span>
-    </gn-ui-popup-alert>
+    @if (loading$ | async) {
+      <gn-ui-loading-mask
+        class="sticky inset-0"
+        [message]="'table.loading.data' | translate"
+      ></gn-ui-loading-mask>
+    }
+    @if (error) {
+      <gn-ui-popup-alert
+        type="warning"
+        icon="matErrorOutlineOutline"
+        class="absolute m-2 inset-0 z-[100]"
+        >
+        <span translate>{{ error }}</span>
+      </gn-ui-popup-alert>
+    }
   </div>
   <div class="flex justify-between items-center overflow-hidden">
     <div class="text-gray-900 px-4 py-2 text-sm">
       <span class="count font-extrabold text-primary">{{ count }}</span
-      >&nbsp;<span translate>table.object.count</span>.
-    </div>
+        >&nbsp;<span translate>table.object.count</span>.
+      </div>
 
-    <mat-paginator
-      class="my-[-16px]"
-      (page)="setPagination()"
-      [length]="count"
-      [pageSize]="10"
-      [showFirstLastButtons]="true"
-      [hidePageSize]="true"
-    ></mat-paginator>
+      <mat-paginator
+        class="my-[-16px]"
+        (page)="setPagination()"
+        [length]="count"
+        [pageSize]="10"
+        [showFirstLastButtons]="true"
+        [hidePageSize]="true"
+      ></mat-paginator>
+    </div>
   </div>
-</div>

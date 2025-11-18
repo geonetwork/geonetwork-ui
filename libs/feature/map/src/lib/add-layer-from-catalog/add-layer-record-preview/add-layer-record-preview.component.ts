@@ -14,7 +14,7 @@ import {
 import { MapContextLayer } from '@geospatial-sdk/core'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
-import { CommonModule } from '@angular/common'
+
 
 @Component({
   selector: 'gn-ui-add-layer-record-preview',
@@ -22,7 +22,7 @@ import { CommonModule } from '@angular/common'
   styleUrls: ['./add-layer-record-preview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [ThumbnailComponent, ButtonComponent, CommonModule],
+  imports: [ThumbnailComponent, ButtonComponent],
 })
 export class AddLayerRecordPreviewComponent extends RecordPreviewComponent {
   get mapLinks(): DatasetOnlineResource[] {

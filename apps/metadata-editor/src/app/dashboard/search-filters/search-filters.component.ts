@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { CommonModule } from '@angular/common'
+
 import { TranslatePipe } from '@ngx-translate/core'
 import {
   NgIconComponent,
@@ -17,13 +17,12 @@ import {
   selector: 'md-editor-search-filters',
   standalone: true,
   imports: [
-    CommonModule,
     TranslatePipe,
     FeatureSearchModule,
     NgIconComponent,
     SearchFiltersSummaryComponent,
-    FilterDropdownComponent,
-  ],
+    FilterDropdownComponent
+],
   providers: [
     provideIcons({
       iconoirFilterAlt,

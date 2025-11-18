@@ -10,7 +10,7 @@ import {
   WEB_COMPONENT_EMBEDDER_URL,
 } from '../data-view-permalink/data-view-permalink.component'
 import { MatTabsModule } from '@angular/material/tabs'
-import { CommonModule } from '@angular/common'
+
 import { DataViewWebComponentComponent } from '../data-view-web-component/data-view-web-component.component'
 import { TranslateDirective } from '@ngx-translate/core'
 
@@ -20,12 +20,11 @@ import { TranslateDirective } from '@ngx-translate/core'
   styleUrls: ['./data-view-share.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     MatTabsModule,
     DataViewPermalinkComponent,
     DataViewWebComponentComponent,
-    TranslateDirective,
-  ],
+    TranslateDirective
+],
   standalone: true,
 })
 export class DataViewShareComponent {

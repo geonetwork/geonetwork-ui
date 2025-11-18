@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common'
+
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -21,7 +21,7 @@ import { MAX_UPLOAD_SIZE_MB } from '../../../../fields.config'
   styleUrls: ['./form-field-overviews.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, ImageInputComponent],
+  imports: [ImageInputComponent],
 })
 export class FormFieldOverviewsComponent {
   @Input() metadataUuid: string

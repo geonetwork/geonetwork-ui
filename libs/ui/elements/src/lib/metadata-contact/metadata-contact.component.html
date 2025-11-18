@@ -1,99 +1,113 @@
 <div
   class="py-5 px-5 rounded bg-gray-100 text-black"
   data-cy="metadata-organization"
->
+  >
   <div class="grid gap-3 overflow-hidden">
     <div>
       <p class="text-base font-medium" translate>record.metadata.contact</p>
     </div>
-    <div
-      *ngIf="shownOrganization?.logoUrl?.href"
-      class="flex items-center justify-center border-solid border border-gray-300 rounded-md bg-white h-32 overflow-hidden"
-    >
-      <gn-ui-thumbnail
-        class="relative h-full w-full"
-        [thumbnailUrl]="shownOrganization.logoUrl.href"
-        fit="contain"
-      ></gn-ui-thumbnail>
-    </div>
+    @if (shownOrganization?.logoUrl?.href) {
+      <div
+        class="flex items-center justify-center border-solid border border-gray-300 rounded-md bg-white h-32 overflow-hidden"
+        >
+        <gn-ui-thumbnail
+          class="relative h-full w-full"
+          [thumbnailUrl]="shownOrganization.logoUrl.href"
+          fit="contain"
+        ></gn-ui-thumbnail>
+      </div>
+    }
     <div class="grid grid-cols-1 gap-1">
       <div class="flex">
         <div
           class="font-title text-21 mr-2 cursor-pointer hover:underline"
           (click)="onOrganizationClick()"
           data-cy="organization-name-link"
-        >
+          >
           {{ shownOrganization?.name }}
         </div>
       </div>
-      <div *ngIf="shownOrganization?.website">
-        <a
-          [href]="shownOrganization.website"
-          target="_blank"
-          class="contact-website text-sm cursor-pointer hover:underline transition-all"
-          >{{ shownOrganization.website }}
-          <ng-icon
-            class="!w-[12px] !h-[12px] opacity-75 shrink-0"
-            name="matOpenInNew"
-          ></ng-icon>
-        </a>
-      </div>
+      @if (shownOrganization?.website) {
+        <div>
+          <a
+            [href]="shownOrganization.website"
+            target="_blank"
+            class="contact-website text-sm cursor-pointer hover:underline transition-all"
+            >{{ shownOrganization.website }}
+            <ng-icon
+              class="!w-[12px] !h-[12px] opacity-75 shrink-0"
+              name="matOpenInNew"
+            ></ng-icon>
+          </a>
+        </div>
+      }
     </div>
     <div class="grid grid-cols-1 gap-5 py-3 overflow-hidden">
-      <div *ngIf="contacts[0]?.phone">
-        <div class="flex">
-          <ng-icon
-            class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
-            name="matCallOutline"
-          ></ng-icon>
-          <div class="flex flex-col ml-2">
-            <p class="text-sm">{{ contacts[0].phone }}</p>
+      @if (contacts[0]?.phone) {
+        <div>
+          <div class="flex">
+            <ng-icon
+              class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
+              name="matCallOutline"
+            ></ng-icon>
+            <div class="flex flex-col ml-2">
+              <p class="text-sm">{{ contacts[0].phone }}</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div *ngIf="contacts[0]?.email">
-        <div class="flex gap-2">
-          <ng-icon
-            class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
-            name="matMailOutline"
-          ></ng-icon>
-          <a
-            *ngIf="contacts.length"
-            [href]="'mailto:' + contacts[0].email"
-            class="break-all text-sm hover:underline"
-            target="_blank"
-            data-cy="contact-email"
-            >{{ contacts[0].email }}</a
-          >
-        </div>
-      </div>
-      <div *ngIf="contacts[0]?.firstName || contacts[0]?.lastName">
-        <div class="flex">
-          <ng-icon
-            class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
-            name="matPersonOutline"
-          ></ng-icon>
-          <div class="flex flex-col ml-2">
-            <p class="text-sm">
-              {{ contacts[0]?.firstName || '' }}
-              {{ contacts[0]?.lastName || '' }}
-            </p>
+      }
+      @if (contacts[0]?.email) {
+        <div>
+          <div class="flex gap-2">
+            <ng-icon
+              class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
+              name="matMailOutline"
+            ></ng-icon>
+            @if (contacts.length) {
+              <a
+                [href]="'mailto:' + contacts[0].email"
+                class="break-all text-sm hover:underline"
+                target="_blank"
+                data-cy="contact-email"
+                >{{ contacts[0].email }}</a
+                >
+              }
+            </div>
           </div>
-        </div>
-      </div>
-      <div *ngIf="contacts[0]?.address">
-        <div class="flex">
-          <ng-icon
-            class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
-            name="matLocationOnOutline"
-          ></ng-icon>
-          <div class="flex flex-col ml-2">
-            <p *ngFor="let addressPart of address" class="text-sm">
-              {{ addressPart }}
-            </p>
+        }
+        @if (contacts[0]?.firstName || contacts[0]?.lastName) {
+          <div>
+            <div class="flex">
+              <ng-icon
+                class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
+                name="matPersonOutline"
+              ></ng-icon>
+              <div class="flex flex-col ml-2">
+                <p class="text-sm">
+                  {{ contacts[0]?.firstName || '' }}
+                  {{ contacts[0]?.lastName || '' }}
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
+        }
+        @if (contacts[0]?.address) {
+          <div>
+            <div class="flex">
+              <ng-icon
+                class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
+                name="matLocationOnOutline"
+              ></ng-icon>
+              <div class="flex flex-col ml-2">
+                @for (addressPart of address; track addressPart) {
+                  <p class="text-sm">
+                    {{ addressPart }}
+                  </p>
+                }
+              </div>
+            </div>
+          </div>
+        }
       </div>
     </div>
   </div>
-</div>

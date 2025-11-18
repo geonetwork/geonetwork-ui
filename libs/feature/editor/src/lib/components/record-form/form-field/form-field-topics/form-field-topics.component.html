@@ -8,15 +8,16 @@
       [choices]="availableTopics || []"
       [allowSearch]="true"
       (selectValues)="handleItemSelection($event)"
-    >
+      >
     </gn-ui-dropdown-multiselect>
     <div class="flex gap-2 flex-wrap">
-      <gn-ui-badge
-        *ngFor="let topic of topics"
-        [removable]="true"
-        (badgeRemoveClicked)="removeTopic(topic)"
-        >{{ getTranslatedTopic(topic) }}
-      </gn-ui-badge>
+      @for (topic of topics; track topic) {
+        <gn-ui-badge
+          [removable]="true"
+          (badgeRemoveClicked)="removeTopic(topic)"
+          >{{ getTranslatedTopic(topic) }}
+        </gn-ui-badge>
+      }
     </div>
   </div>
 </div>

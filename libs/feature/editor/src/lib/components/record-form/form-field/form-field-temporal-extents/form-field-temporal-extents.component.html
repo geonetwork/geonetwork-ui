@@ -1,34 +1,39 @@
 <div class="flex gap-2 mb-2">
-  <gn-ui-button
-    type="gray"
-    *ngFor="let addOption of addOptions$ | async"
-    (buttonClick)="onAdd(addOption.eventName)"
-  >
-    <ng-icon name="iconoirPlus" class="text-primary"></ng-icon> &nbsp;{{
+  @for (addOption of addOptions$ | async; track addOption) {
+    <gn-ui-button
+      type="gray"
+      (buttonClick)="onAdd(addOption.eventName)"
+      >
+      <ng-icon name="iconoirPlus" class="text-primary"></ng-icon> &nbsp;{{
       addOption.buttonLabel
-    }}</gn-ui-button
-  >
-</div>
-<gn-ui-sortable-list
-  [items]="extents"
-  (itemsOrderChange)="onItemsOrderChange($event)"
-  [elementTemplate]="template"
-></gn-ui-sortable-list>
-<ng-template #template let-extent let-index="index">
-  <div class="border rounded-lg px-4 pb-4" *ngIf="extent.end === undefined">
-    <p class="my-2" translate>editor.record.form.temporalExtents.date</p>
-    <gn-ui-date-picker
-      [date]="extent.start"
-      (dateChange)="onExtentChange({ start: $event }, index)"
-    ></gn-ui-date-picker>
+      }}</gn-ui-button
+      >
+    }
   </div>
-  <div class="border rounded-lg px-4 pb-4" *ngIf="extent.end !== undefined">
-    <p class="my-2" translate>editor.record.form.temporalExtents.range</p>
-    <gn-ui-date-range-picker
-      [startDate]="extent.start"
-      [endDate]="extent.end"
-      (startDateChange)="onExtentChange({ start: $event }, index)"
-      (endDateChange)="onExtentChange({ end: $event }, index)"
-    ></gn-ui-date-range-picker>
-  </div>
-</ng-template>
+  <gn-ui-sortable-list
+    [items]="extents"
+    (itemsOrderChange)="onItemsOrderChange($event)"
+    [elementTemplate]="template"
+  ></gn-ui-sortable-list>
+  <ng-template #template let-extent let-index="index">
+    @if (extent.end === undefined) {
+      <div class="border rounded-lg px-4 pb-4">
+        <p class="my-2" translate>editor.record.form.temporalExtents.date</p>
+        <gn-ui-date-picker
+          [date]="extent.start"
+          (dateChange)="onExtentChange({ start: $event }, index)"
+        ></gn-ui-date-picker>
+      </div>
+    }
+    @if (extent.end !== undefined) {
+      <div class="border rounded-lg px-4 pb-4">
+        <p class="my-2" translate>editor.record.form.temporalExtents.range</p>
+        <gn-ui-date-range-picker
+          [startDate]="extent.start"
+          [endDate]="extent.end"
+          (startDateChange)="onExtentChange({ start: $event }, index)"
+          (endDateChange)="onExtentChange({ end: $event }, index)"
+        ></gn-ui-date-range-picker>
+      </div>
+    }
+  </ng-template>

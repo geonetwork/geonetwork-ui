@@ -6,7 +6,7 @@
       routerLink="/catalog/search"
       routerLinkActive="btn-active"
       #rlaAll="routerLinkActive"
-    >
+      >
       <ng-icon name="iconoirJournal"></ng-icon>
       <span class="text-sm" translate>dashboard.catalog.allRecords</span>
     </a>
@@ -19,7 +19,7 @@
       routerLink="/my-space/my-records"
       routerLinkActive="btn-active"
       #rlaMyRecords="routerLinkActive"
-    >
+      >
       <ng-icon name="iconoirJournalPage"></ng-icon>
       <span class="text-sm" translate>dashboard.records.myRecords</span>
     </a>
@@ -28,18 +28,19 @@
       routerLink="/my-space/my-draft"
       routerLinkActive="btn-active"
       #rlaMyDraft="routerLinkActive"
-    >
+      >
       <ng-icon name="iconoirPageEdit"></ng-icon>
       <span class="text-sm" translate>dashboard.records.myDraft</span>
-      <ng-container *ngIf="draftsCount$ | async as draftsCount">
-        <gn-ui-badge
-          [style.--gn-ui-badge-padding]="'0.375em 0.875em'"
-          [style.--gn-ui-badge-text-size]="'12px'"
-          *ngIf="draftsCount > 0"
-          data-cy="dashboard-drafts-count"
-          >{{ draftsCount }}</gn-ui-badge
-        >
-      </ng-container>
-    </a>
+      @if (draftsCount$ | async; as draftsCount) {
+        @if (draftsCount > 0) {
+          <gn-ui-badge
+            [style.--gn-ui-badge-padding]="'0.375em 0.875em'"
+            [style.--gn-ui-badge-text-size]="'12px'"
+            data-cy="dashboard-drafts-count"
+            >{{ draftsCount }}</gn-ui-badge
+            >
+          }
+        }
+      </a>
+    </div>
   </div>
-</div>

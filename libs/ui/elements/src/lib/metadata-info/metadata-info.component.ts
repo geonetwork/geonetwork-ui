@@ -27,7 +27,7 @@ import { matMailOutline } from '@ng-icons/material-icons/outline'
 import { ThumbnailComponent } from '../thumbnail/thumbnail.component'
 import { GnUiLinkifyDirective } from './linkify.directive'
 import { GnUiHumanizeDateDirective } from '@geonetwork-ui/util/shared'
-import { CommonModule } from '@angular/common'
+
 import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
 
 @Component({
@@ -37,7 +37,6 @@ import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
     TranslateDirective,
     TranslatePipe,
     MarkdownParserComponent,
@@ -50,8 +49,8 @@ import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
     NgIcon,
     GnUiLinkifyDirective,
     GnUiHumanizeDateDirective,
-    SpatialExtentComponent,
-  ],
+    SpatialExtentComponent
+],
   viewProviders: [
     provideIcons({
       matOpenInNew,

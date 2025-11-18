@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common'
+
 import {
   ChangeDetectionStrategy,
   Component,
@@ -28,12 +28,11 @@ type AutocompleteItem = { title: string; value: Keyword }
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    CommonModule,
     AutocompleteComponent,
     NgIconComponent,
     BadgeComponent,
-    TranslatePipe,
-  ],
+    TranslatePipe
+],
   providers: [
     provideIcons({
       matWarningAmberOutline,

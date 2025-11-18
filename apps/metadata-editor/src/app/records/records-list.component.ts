@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common'
+
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
@@ -31,10 +31,9 @@ export const allSearchFields = [
   styleUrls: ['./records-list.component.css'],
   standalone: true,
   imports: [
-    CommonModule,
     ResultsTableContainerComponent,
-    PaginationButtonsComponent,
-  ],
+    PaginationButtonsComponent
+],
 })
 export class RecordsListComponent implements OnInit, Paginable {
   constructor(

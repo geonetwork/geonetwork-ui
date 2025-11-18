@@ -14,7 +14,7 @@ import {
 import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 import { ResultsLayoutConfigItem } from '../results-list/results-layout.config'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
-import { CommonModule } from '@angular/common'
+
 
 @Component({
   selector: 'gn-ui-results-list-item',
@@ -22,7 +22,7 @@ import { CommonModule } from '@angular/common'
   styleUrls: ['./results-list-item.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RecordPreviewComponent],
+  imports: [RecordPreviewComponent],
 })
 export class ResultsListItemComponent implements OnChanges, AfterViewInit {
   @Input() layoutConfig: ResultsLayoutConfigItem

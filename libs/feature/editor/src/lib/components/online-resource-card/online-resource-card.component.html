@@ -1,35 +1,40 @@
 <div class="gn-ui-card">
   <div
     class="bg-gray-100 w-[56px] h-[56px] rounded-[4px] text-primary grid justify-center items-center shrink-0"
-  >
+    >
     <ng-icon name="iconoirAttachment"></ng-icon>
   </div>
   <div class="flex flex-col w-full items-start overflow-hidden leading-snug">
     <div class="text-[16px] font-bold text-main" data-test="card-title">
       {{ title }}
     </div>
-    <div
-      class="text-[14px] text-gray-900"
-      *ngIf="subtitle"
-      data-test="card-subtitle"
-    >
-      <span>{{ subtitle }}</span>
-      <span *ngIf="fileSize">
-        •
-        {{
-          'editor.record.form.field.onlineResource.fileSize'
+    @if (subtitle) {
+      <div
+        class="text-[14px] text-gray-900"
+        data-test="card-subtitle"
+        >
+        <span>{{ subtitle }}</span>
+        @if (fileSize) {
+          <span>
+            •
+            {{
+            'editor.record.form.field.onlineResource.fileSize'
             | translate: { sizeMB: fileSize }
-        }}</span
-      >
-      <span *ngIf="identifierInService"> • {{ identifierInService }}</span>
+            }}</span
+            >
+          }
+          @if (identifierInService) {
+            <span> • {{ identifierInService }}</span>
+          }
+        </div>
+      }
+      <button
+        class="gn-ui-link text-[14px]"
+        translate
+        (click)="modifyClick.emit(onlineResource)"
+        data-test="card-modify"
+        >
+        editor.record.form.field.onlineResource.modify
+      </button>
     </div>
-    <button
-      class="gn-ui-link text-[14px]"
-      translate
-      (click)="modifyClick.emit(onlineResource)"
-      data-test="card-modify"
-    >
-      editor.record.form.field.onlineResource.modify
-    </button>
   </div>
-</div>

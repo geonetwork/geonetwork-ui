@@ -15,7 +15,7 @@ import {
   DropdownSelectorComponent,
   TextInputComponent,
 } from '@geonetwork-ui/ui/inputs'
-import { CommonModule } from '@angular/common'
+
 import { MapContextLayer, MapContextLayerOgcApi } from '@geospatial-sdk/core'
 
 @Component({
@@ -24,12 +24,11 @@ import { MapContextLayer, MapContextLayerOgcApi } from '@geospatial-sdk/core'
   styleUrls: ['./add-layer-from-ogc-api.component.css'],
   standalone: true,
   imports: [
-    CommonModule,
     TextInputComponent,
     DropdownSelectorComponent,
     TranslatePipe,
-    ButtonComponent,
-  ],
+    ButtonComponent
+],
 })
 export class AddLayerFromOgcApiComponent implements OnInit {
   @Input() ogcUrl: string

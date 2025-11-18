@@ -7,7 +7,7 @@
       <button
         (click)="resetUrl()"
         class="bg-primary-opacity-50 inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded capitalize text-primary-lightest hover:bg-primary transition-colors"
-      >
+        >
         <p class="text-[13px] uppercase" translate>
           record.metadata.api.form.reset
         </p>
@@ -22,7 +22,7 @@
             (valueChange)="setLimit($event)"
             [value]="displayLimit$ | async"
             placeholder=""
-          >
+            >
           </gn-ui-text-input>
           <div class="flex items-center">
             <input
@@ -30,62 +30,63 @@
               type="checkbox"
               [checked]="noLimitChecked$ | async"
               (change)="setLimit('-1')"
-            />
+              />
             <span class="text-sm" translate
               >record.metadata.api.form.limit.all</span
-            >
+              >
+            </div>
           </div>
         </div>
-      </div>
-      <div class="flex flex-col gap-3 relative">
-        <p class="text-sm" [class.text-gray-600]="!supportOffset" translate>
-          record.metadata.api.form.offset
-        </p>
-        <div class="flex items-center">
-          <gn-ui-text-input
-            class="w-20"
-            [value]="offset$ | async"
-            [disabled]="!supportOffset"
-            (valueChange)="supportOffset ? setOffset($event) : null"
-            placeholder=""
-          >
-          </gn-ui-text-input>
-          <div
-            *ngIf="!supportOffset"
-            class="flex items-center gap-2 text-orange-500 z-10 ml-3"
-          >
-            <span
-              class="material-symbols-outlined"
-              matTooltip="Not supported on this service"
-            >
-              warning
-            </span>
+        <div class="flex flex-col gap-3 relative">
+          <p class="text-sm" [class.text-gray-600]="!supportOffset" translate>
+            record.metadata.api.form.offset
+          </p>
+          <div class="flex items-center">
+            <gn-ui-text-input
+              class="w-20"
+              [value]="offset$ | async"
+              [disabled]="!supportOffset"
+              (valueChange)="supportOffset ? setOffset($event) : null"
+              placeholder=""
+              >
+            </gn-ui-text-input>
+            @if (!supportOffset) {
+              <div
+                class="flex items-center gap-2 text-orange-500 z-10 ml-3"
+                >
+                <span
+                  class="material-symbols-outlined"
+                  matTooltip="Not supported on this service"
+                  >
+                  warning
+                </span>
+              </div>
+            }
           </div>
         </div>
+        <div class="flex flex-col gap-3">
+          <p class="text-sm" translate>record.metadata.api.form.type</p>
+          <gn-ui-dropdown-selector
+            #dropdown
+            [title]="''"
+            extraBtnClass="secondary min-w-full !w-40 !text-black"
+            [showTitle]="false"
+            class="text-black"
+            [choices]="outputFormats"
+            (selectValue)="setFormat($event)"
+            [selected]="format$ | async"
+          ></gn-ui-dropdown-selector>
+        </div>
       </div>
-      <div class="flex flex-col gap-3">
-        <p class="text-sm" translate>record.metadata.api.form.type</p>
-        <gn-ui-dropdown-selector
-          #dropdown
-          [title]="''"
-          extraBtnClass="secondary min-w-full !w-40 !text-black"
-          [showTitle]="false"
-          class="text-black"
-          [choices]="outputFormats"
-          (selectValue)="setFormat($event)"
-          [selected]="format$ | async"
-        ></gn-ui-dropdown-selector>
+    </div>
+    <div class="flex flex-col gap-3 mb-3">
+      <div class="text-sm text-black truncate font-title w-11/12" translate>
+        record.metadata.api.form.customUrl
+      </div>
+      <div class="bg-white rounded-lg">
+        <gn-ui-copy-text-button
+          [text]="apiQueryUrl$ | async"
+        ></gn-ui-copy-text-button>
       </div>
     </div>
   </div>
-  <div class="flex flex-col gap-3 mb-3">
-    <div class="text-sm text-black truncate font-title w-11/12" translate>
-      record.metadata.api.form.customUrl
-    </div>
-    <div class="bg-white rounded-lg">
-      <gn-ui-copy-text-button
-        [text]="apiQueryUrl$ | async"
-      ></gn-ui-copy-text-button>
-    </div>
-  </div>
-</div>

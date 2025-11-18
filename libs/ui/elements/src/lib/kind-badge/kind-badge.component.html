@@ -1,15 +1,14 @@
-<div
-  [class]="badgeClasses"
-  *ngIf="kind"
-  [title]="'record.kind.' + kind | translate"
->
-  <ng-icon [name]="iconKind" [ngClass]="extraClass"></ng-icon>
+@if (kind) {
+  <div
+    [class]="badgeClasses"
+    [title]="'record.kind.' + kind | translate"
+    >
+    <ng-icon [name]="iconKind" [ngClass]="extraClass"></ng-icon>
+    @if (contentTemplate) {
+      <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+    } @else {
+      {{ 'record.kind.' + kind | translate }}
+    }
+  </div>
+}
 
-  <ng-container *ngIf="contentTemplate; else defaultContent">
-    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-  </ng-container>
-</div>
-
-<ng-template #defaultContent>
-  {{ 'record.kind.' + kind | translate }}
-</ng-template>

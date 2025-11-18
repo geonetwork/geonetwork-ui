@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common'
+
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -39,14 +39,13 @@ import { OnlineResourceCardComponent } from '../../../online-resource-card/onlin
   standalone: true,
   imports: [
     FileInputComponent,
-    CommonModule,
     SortableListComponent,
     OnlineResourceCardComponent,
     TextInputComponent,
     TextAreaComponent,
     UrlInputComponent,
-    TranslateDirective,
-  ],
+    TranslateDirective
+],
 })
 export class FormFieldOnlineLinkResourcesComponent {
   @Input() metadataUuid: string

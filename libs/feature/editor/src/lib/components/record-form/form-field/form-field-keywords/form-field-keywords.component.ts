@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common'
+
 import {
   ChangeDetectionStrategy,
   Component,
@@ -20,7 +20,7 @@ import { SPATIAL_SCOPES } from '../../../../fields.config'
   styleUrls: ['./form-field-keywords.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, GenericKeywordsComponent, TranslatePipe],
+  imports: [GenericKeywordsComponent, TranslatePipe],
 })
 export class FormFieldKeywordsComponent {
   @Input() value: Keyword[]
