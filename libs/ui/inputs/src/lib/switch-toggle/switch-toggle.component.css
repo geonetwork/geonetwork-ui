@@ -1,5 +1,5 @@
 :host {
-  --mat-standard-button-toggle-height: 32px;
+  --mat-button-toggle-height: 32px;
 }
 
 .mat-button-toggle-group-appearance-standard {
