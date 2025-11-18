@@ -314,7 +314,7 @@ describe('Gn4FieldMapper', () => {
             reuseType: 'map',
           })
         })
-        it('resourceType - should return reuse when document with mapDigital documentType', () => {
+        it('resourceType - should return reuse when document with mapDigital cl_presentationForm', () => {
           const fieldName = 'resourceType'
           const mappingFn = service.getMappingFn(fieldName)
           const output = {}
@@ -328,13 +328,27 @@ describe('Gn4FieldMapper', () => {
             reuseType: 'map',
           })
         })
-        it('resourceType - should return dataset when document with unknown documentType', () => {
+        it('resourceType - should return reuse when dataset with mapDigital cl_presentationForm', () => {
+          const fieldName = 'resourceType'
+          const mappingFn = service.getMappingFn(fieldName)
+          const output = {}
+          const source = {
+            resourceType: ['dataset'],
+            cl_presentationForm: [{ key: 'mapDigital' }],
+          }
+          const result = mappingFn(output, source)
+          expect(result).toEqual({
+            kind: 'reuse',
+            reuseType: 'map',
+          })
+        })
+        it('resourceType - should return dataset when document with unknown cl_presentationForm', () => {
           const fieldName = 'resourceType'
           const mappingFn = service.getMappingFn(fieldName)
           const output = {}
           const source = {
             resourceType: ['document'],
-            documentType: ['unknownType'],
+            cl_presentationForm: ['unknownType'],
           }
           const result = mappingFn(output, source)
           expect(result).toEqual({

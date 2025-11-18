@@ -19,7 +19,7 @@ export const PossibleResourceTypes = {
   staticMap: 'reuse',
 } as const
 
-export const DocumentTypesForReuse = ['mapDigital', 'mapHardcopy'] as string[]
+export const ReusePresentationForms = ['mapDigital', 'mapHardcopy'] as string[]
 
 type KindType = keyof typeof PossibleResourceTypes
 type ResourceType = 'reuse' | 'dataset' | 'service'
@@ -36,9 +36,9 @@ export const PossibleResourceTypesDefinition = Object.entries(
 
 export function getResourceType(
   type: string,
-  documentTypes?: string[]
+  presentationForms?: string[]
 ): RecordKind {
-  if (isDocumentReuse(type, documentTypes)) {
+  if (isDocumentOrDatasetReuse(type, presentationForms)) {
     return 'reuse'
   }
   return (
@@ -49,7 +49,7 @@ export function getResourceType(
 
 export function getReuseType(
   type: string,
-  documentTypes?: string[]
+  presentationForms?: string[]
 ): ReuseType {
   const possibleReuseTypes = {
     application: 'application',
@@ -63,9 +63,9 @@ export function getReuseType(
     staticMap: 'map',
   } as const
 
-  const kind = getResourceType(type, documentTypes)
+  const kind = getResourceType(type, presentationForms)
 
-  if (isDocumentReuse(type, documentTypes)) {
+  if (isDocumentOrDatasetReuse(type, presentationForms)) {
     return 'map'
   }
 
@@ -74,14 +74,14 @@ export function getReuseType(
     : undefined
 }
 
-export function isDocumentReuse(
+export function isDocumentOrDatasetReuse(
   type: string,
-  documentTypes?: string[]
+  presentationForms?: string[]
 ): boolean {
   return (
-    type === 'document' &&
-    (documentTypes?.some((documentType) =>
-      DocumentTypesForReuse.includes(documentType)
+    (type === 'document' || type === 'dataset') &&
+    (presentationForms?.some((presentationForm) =>
+      ReusePresentationForms.includes(presentationForm)
     ) ??
       false)
   )
