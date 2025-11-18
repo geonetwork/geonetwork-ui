@@ -1,7 +1,4 @@
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { StacViewComponent } from './stac-view.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
