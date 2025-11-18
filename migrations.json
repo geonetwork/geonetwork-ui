@@ -2,13 +2,6 @@
   "migrations": [
     {
       "version": "20.0.0",
-      "description": "Replaces usages of the deprecated InjectFlags enum",
-      "factory": "./bundles/inject-flags.cjs#migrate",
-      "package": "@angular/core",
-      "name": "inject-flags"
-    },
-    {
-      "version": "20.0.0",
       "description": "Replaces usages of the deprecated TestBed.get method with TestBed.inject",
       "factory": "./bundles/test-bed-get.cjs#migrate",
       "package": "@angular/core",
