@@ -1,6 +1,6 @@
 {
   "extends": [
-    "../node_modules/ng-packagr/lib/ts/conf/tsconfig.ngc.json",
+    "../node_modules/ng-packagr/src/lib/ts/conf/tsconfig.ngc.json",
     "../tsconfig.base.json"
   ],
   "compilerOptions": {
