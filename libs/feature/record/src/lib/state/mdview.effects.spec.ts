@@ -9,6 +9,7 @@ import {
 
 import { provideMockActions } from '@ngrx/effects/testing'
 import { provideMockStore } from '@ngrx/store/testing'
+import { Action } from '@ngrx/store'
 
 import { Observable, of, throwError } from 'rxjs'
 
@@ -45,7 +46,7 @@ const RouterMock = {
 }
 
 describe('MdViewEffects', () => {
-  let actions: Observable<any>
+  let actions: Observable<Action>
   let effects: MdViewEffects
   let repository: RecordsRepositoryInterface
   let platform: PlatformServiceInterface

@@ -67,7 +67,7 @@
         <span translate>{{ error }}</span>
       </gn-ui-popup-alert>
       <div
-        *ngIf="!(error$ | async)"
+        *ngIf="(error$ | async) === null"
         class="flex items-center justify-center flex-col h-full gap-[10px]"
       >
         <h2 class="text-center text-xl" translate>stac.results.noResults</h2>

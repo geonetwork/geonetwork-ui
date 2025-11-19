@@ -425,8 +425,10 @@ describe('Preview section', () => {
       .should('not.contain', '#reset-filters-button')
 
     // Choose date span without results
-    cy.get('@startDatePicker').clear().type('1990-01-01{enter}')
-    cy.get('@endDatePicker').clear().type('1995-01-01{enter}')
+    cy.get('@startDatePicker').clear()
+    cy.get('@startDatePicker').type('1990-01-01{enter}')
+    cy.get('@endDatePicker').clear()
+    cy.get('@endDatePicker').type('1995-01-01{enter}')
 
     // it should show a second reset button instead of results
     cy.get('@previewSection')
@@ -435,8 +437,10 @@ describe('Preview section', () => {
       .should('be.visible')
 
     // Delete start and end dates
-    cy.get('@startDatePicker').clear().type('{enter}')
-    cy.get('@endDatePicker').clear().type('{enter}')
+    cy.get('@startDatePicker').clear()
+    cy.get('@startDatePicker').type('{enter}')
+    cy.get('@endDatePicker').clear()
+    cy.get('@endDatePicker').type('{enter}')
 
     // it should display 12 items
     cy.get('@stacItems').should('have.length', 12)

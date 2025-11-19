@@ -27,7 +27,6 @@ import {
   map,
   shareReplay,
   switchMap,
-  take,
   tap,
 } from 'rxjs/operators'
 import { MdViewFacade } from '../state/mdview.facade'
@@ -118,7 +117,11 @@ export class MapViewComponent implements AfterViewInit {
   @Input() set selectedView(value: string) {
     this.selectedView$.next(value)
   }
-  @Input() set datavizConfig(value: any) {
+  @Input() set datavizConfig(value: {
+    view?: string
+    styleTMSIndex?: number
+    source?: DatasetOnlineResource
+  }) {
     if (value && value.view === 'map') {
       this.selectedView$.next(value.view)
       if (value.styleTMSIndex) {
