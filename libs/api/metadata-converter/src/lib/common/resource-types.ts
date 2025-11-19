@@ -14,6 +14,7 @@ export const PossibleResourceTypes = {
   'map-interactive': 'reuse', // new index field since Oct 10, 2024
   'map-static': 'reuse', // new index field
   mapDigital: 'reuse',
+  mapHardcopy: 'reuse',
   series: 'dataset',
   service: 'service',
   staticMap: 'reuse',
@@ -34,23 +35,14 @@ export const PossibleResourceTypesDefinition = Object.entries(
   {}
 ) as PossibleResourceTypesGrouped
 
-export function getResourceType(
-  type: string,
-  presentationForms?: string[]
-): RecordKind {
-  if (isDocumentOrDatasetReuse(type, presentationForms)) {
-    return 'reuse'
-  }
+export function getResourceType(type: string): RecordKind {
   return (
     PossibleResourceTypes[type as keyof typeof PossibleResourceTypes] ||
     'dataset'
   )
 }
 
-export function getReuseType(
-  type: string,
-  presentationForms?: string[]
-): ReuseType {
+export function getReuseType(type: string): ReuseType {
   const possibleReuseTypes = {
     application: 'application',
     map: 'map',
@@ -63,29 +55,21 @@ export function getReuseType(
     staticMap: 'map',
   } as const
 
-  const kind = getResourceType(type, presentationForms)
-
-  if (isDocumentOrDatasetReuse(type, presentationForms)) {
-    return 'map'
-  }
+  const kind = getResourceType(type)
 
   return kind === 'reuse'
     ? possibleReuseTypes[type as keyof typeof possibleReuseTypes] || 'other'
     : undefined
 }
 
-export function isDocumentOrDatasetReuse(
-  type: string,
+export function getReusePresentationForm(
   presentationForms?: string[]
-): boolean {
-  return (
-    (type === 'document' || type === 'dataset') &&
-    (presentationForms?.some((presentationForm) =>
-      ReusePresentationForms.includes(presentationForm)
-    ) ??
-      false)
+): string | undefined {
+  return presentationForms?.find((presentationForm) =>
+    ReusePresentationForms.includes(presentationForm)
   )
 }
+
 export function kindToCodeListValue(record: CatalogRecord) {
   return record.kind === 'reuse' ? record.reuseType : record.kind
 }

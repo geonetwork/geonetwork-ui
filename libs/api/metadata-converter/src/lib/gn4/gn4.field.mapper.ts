@@ -26,7 +26,11 @@ import {
 } from '@geonetwork-ui/common/domain/model/record'
 import { matchProtocol } from '../common/distribution.mapper'
 import { Thesaurus } from './types'
-import { getResourceType, getReuseType } from '../common/resource-types'
+import {
+  getResourceType,
+  getReusePresentationForm,
+  getReuseType,
+} from '../common/resource-types'
 import { TranslateService } from '@ngx-translate/core'
 import { toLang2, toLang3 } from '@geonetwork-ui/util/i18n'
 
@@ -405,8 +409,9 @@ export class Gn4FieldMapper {
       const presentationForms = getAsArray(
         selectField(source, 'cl_presentationForm')
       ).map((presentationForm) => presentationForm.key) as string[]
-      const kind = getResourceType(resourceType, presentationForms)
-      const reuseType = getReuseType(resourceType, presentationForms)
+      const type = getReusePresentationForm(presentationForms) || resourceType
+      const kind = getResourceType(type)
+      const reuseType = getReuseType(type)
       return {
         ...output,
         kind,
