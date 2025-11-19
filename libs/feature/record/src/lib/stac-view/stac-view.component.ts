@@ -167,21 +167,14 @@ export class StacViewComponent implements OnInit, AfterViewInit {
 
   isFilterModified$ = this.filterState$.pipe(
     map((filterState) => {
-      // If initial spatial extent is not yet resolved or filter spatial extent is null,
-      // we consider that the filter is not modified for simplicity
-      if (
-        !this.resolvedInitialSpatialExtent ||
-        filterState.spatialExtent === null
-      ) {
-        return false
-      }
-
       const isTemporalModified = !areTemporalExtentsEqual(
         filterState.temporalExtent,
         this.initialTemporalExtent
       )
 
       const isSpatialModified =
+        this.resolvedInitialSpatialExtent &&
+        filterState.spatialExtent !== null &&
         filterState.isSpatialExtentFilterEnabled &&
         !areSpatialExtentsEqual(
           filterState.spatialExtent,
