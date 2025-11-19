@@ -5,15 +5,17 @@
     mat-stretch-tabs="false"
     mat-align-tabs="start"
     [disableRipple]="!wcEmbedderBaseUrl"
-  >
-    <mat-tab *ngIf="wcEmbedderBaseUrl">
-      <ng-template mat-tab-label>
-        <span class="tab-header-label-gray" translate>share.tab.permalink</span>
-      </ng-template>
-      <gn-ui-data-view-permalink
-        [viewType]="viewType"
-      ></gn-ui-data-view-permalink>
-    </mat-tab>
+    >
+    @if (wcEmbedderBaseUrl) {
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-header-label-gray" translate>share.tab.permalink</span>
+        </ng-template>
+        <gn-ui-data-view-permalink
+          [viewType]="viewType"
+        ></gn-ui-data-view-permalink>
+      </mat-tab>
+    }
     <mat-tab>
       <ng-template mat-tab-label>
         <span
@@ -24,11 +26,11 @@
           "
           translate
           >share.tab.webComponent</span
-        >
-      </ng-template>
-      <gn-ui-data-view-web-component
-        [viewType]="viewType"
-      ></gn-ui-data-view-web-component>
-    </mat-tab>
-  </mat-tab-group>
-</div>
+          >
+        </ng-template>
+        <gn-ui-data-view-web-component
+          [viewType]="viewType"
+        ></gn-ui-data-view-web-component>
+      </mat-tab>
+    </mat-tab-group>
+  </div>

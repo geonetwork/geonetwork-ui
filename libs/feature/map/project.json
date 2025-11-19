@@ -10,7 +10,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/feature/map"],
       "options": {
-        "jestConfig": "libs/feature/map/jest.config.ts"
+        "jestConfig": "libs/feature/map/jest.config.ts",
+        "tsConfig": "libs/feature/map/tsconfig.spec.json"
       }
     },
     "lint": {

@@ -223,5 +223,5 @@
 }
 
 html {
-  --mdc-typography-font-family: var(--font-family-main);
+  --mat-typography-font-family: var(--font-family-main);
 }

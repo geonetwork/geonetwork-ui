@@ -1,7 +1,7 @@
 <div class="flex h-full">
   <div
     class="h-full bg-black w-[50px] rounded-r-lg flex flex-col justify-between"
-  >
+    >
     <div class="flex flex-col justify-around h-24">
       <div class="flex justify-center items-center h-12">
         <img src="assets/editor-logo.svg" alt="Editor logo" />
@@ -13,56 +13,58 @@
       </div>
     </div>
 
-    <ng-container *ngIf="platformService.getMe() | async as user">
-      <div
-        *ngIf="user && user.name"
-        class="mb-3 gap-2 flex flex-col justify-center items-center"
-        [style.--gn-ui-button-height]="'40px'"
-        [style.--gn-ui-button-width]="'40px'"
-        [style.--gn-ui-button-rounded]="'40px'"
-      >
-        <a
-          [href]="settingsUrl"
-          target="_blank"
-          class="gn-ui-btn-black"
-          data-cy="account-link"
-        >
-          <gn-ui-user-preview
-            [user]="user"
-            [avatarPlaceholder]="placeholder$ | async"
-          ></gn-ui-user-preview>
-        </a>
-        <gn-ui-button
-          type="black"
-          class="flex justify-center items-center"
-          data-cy="logout-button"
-          (buttonClick)="logOut()"
-          [title]="'editor.sidebar.logout' | translate"
-        >
-          <ng-icon name="iconoirSystemShut" size="16px"></ng-icon>
-        </gn-ui-button>
-      </div>
-    </ng-container>
+    @if (platformService.getMe() | async; as user) {
+      @if (user && user.name) {
+        <div
+          class="mb-3 gap-2 flex flex-col justify-center items-center"
+          [style.--gn-ui-button-height]="'40px'"
+          [style.--gn-ui-button-width]="'40px'"
+          [style.--gn-ui-button-rounded]="'40px'"
+          >
+          <a
+            [href]="settingsUrl"
+            target="_blank"
+            class="gn-ui-btn-black"
+            data-cy="account-link"
+            >
+            <gn-ui-user-preview
+              [user]="user"
+              [avatarPlaceholder]="placeholder$ | async"
+            ></gn-ui-user-preview>
+          </a>
+          <gn-ui-button
+            type="black"
+            class="flex justify-center items-center"
+            data-cy="logout-button"
+            (buttonClick)="logOut()"
+            [title]="'editor.sidebar.logout' | translate"
+            >
+            <ng-icon name="iconoirSystemShut" size="16px"></ng-icon>
+          </gn-ui-button>
+        </div>
+      }
+    }
   </div>
 
   <div class="flex flex-col pt-9 px-5 gap-10 bg-neutral-100 h-full grow">
-    <ng-container *ngIf="organisations$ | async as organisations">
-      <ng-container *ngIf="organisations[0]?.name">
-        <gn-ui-button
-          *ngIf="organisations[0].logoUrl?.href"
-          type="default"
-          class="flex flex-col items-center gap-2"
-          [routerLink]="['/organizations', organisations[0].id]"
-        >
-          <img
-            [src]="organisations[0].logoUrl?.href"
-            alt="Organization logo"
-            class="w-12 h-12"
-          />
-          <span>{{ organisations[0].name }}</span>
-        </gn-ui-button>
-      </ng-container>
-    </ng-container>
+    @if (organisations$ | async; as organisations) {
+      @if (organisations[0]?.name) {
+        @if (organisations[0].logoUrl?.href) {
+          <gn-ui-button
+            type="default"
+            class="flex flex-col items-center gap-2"
+            [routerLink]="['/organizations', organisations[0].id]"
+            >
+            <img
+              [src]="organisations[0].logoUrl?.href"
+              alt="Organization logo"
+              class="w-12 h-12"
+              />
+            <span>{{ organisations[0].name }}</span>
+          </gn-ui-button>
+        }
+      }
+    }
     <md-editor-dashboard-menu></md-editor-dashboard-menu>
   </div>
 </div>

@@ -1,69 +1,75 @@
-<div
-  class="flex flex-wrap justify-between items-center pb-4"
-  *ngIf="links && links.length > 0"
->
-  <div class="flex flex-row items-center gap-x-4">
-    <div>
-      <h3
-        class="inline-block font-title text-xl text-title font-medium mr-4"
-        translate
-      >
-        record.metadata.download
-      </h3>
-      <span class="px-3">({{ linksCount }})</span>
-    </div>
-    <gn-ui-previous-next-buttons
-      *ngIf="(isMobile$ | async) === false && _list?.pagesCount > 1"
-      [listComponent]="_list"
-    ></gn-ui-previous-next-buttons>
-  </div>
-
+@if (links && links.length > 0) {
   <div
-    class="flex flex-wrap justify-start sm:justify-end"
-    data-cy="download-format-filters"
-  >
-    <gn-ui-button
-      class="m-1 format-filter"
+    class="flex flex-wrap justify-between items-center pb-4"
+    >
+    <div class="flex flex-row items-center gap-x-4">
+      <div>
+        <h3
+          class="inline-block font-title text-xl text-title font-medium mr-4"
+          translate
+          >
+          record.metadata.download
+        </h3>
+        <span class="px-3">({{ linksCount }})</span>
+      </div>
+      @if ((isMobile$ | async) === false && _list?.pagesCount > 1) {
+        <gn-ui-previous-next-buttons
+          [listComponent]="_list"
+        ></gn-ui-previous-next-buttons>
+      }
+    </div>
+    <div
+      class="flex flex-wrap justify-start sm:justify-end"
+      data-cy="download-format-filters"
+      >
+      @for (format of visibleFormats; track format) {
+        <gn-ui-button
+          class="m-1 format-filter"
       [extraClass]="
         '!px-[12px] !py-[8px] !text-[15px]' +
         (isFilterActive(format) ? ' opacity-100' : ' opacity-60')
       "
-      (buttonClick)="toggleFilterFormat(format)"
-      [attr.data-format]="format"
-      *ngFor="let format of visibleFormats"
-    >
-      {{ getFilterFormatTitle(format) }}
-    </gn-ui-button>
+          (buttonClick)="toggleFilterFormat(format)"
+          [attr.data-format]="format"
+          >
+          {{ getFilterFormatTitle(format) }}
+        </gn-ui-button>
+      }
+    </div>
   </div>
-</div>
+}
 
 <ng-container>
-  <gn-ui-block-list
-    *ngIf="(isMobile$ | async) === false"
-    #blockList
-    (listChanges)="updateList($event)"
-    containerClass="gap-4 pt-5 pb-7"
-  >
-    <gn-ui-download-item
-      #block
-      *ngFor="let link of filteredLinks"
-      [link]="link"
-      [color]="getLinkColor(link)"
-      [format]="getLinkFormat(link)"
-      [isFromApi]="isFromApi(link)"
-      [size]="blockList.subComponentSize"
-    ></gn-ui-download-item>
-  </gn-ui-block-list>
+  @if ((isMobile$ | async) === false) {
+    <gn-ui-block-list
+      #blockList
+      (listChanges)="updateList($event)"
+      containerClass="gap-4 pt-5 pb-7"
+      >
+      @for (link of filteredLinks; track link) {
+        <gn-ui-download-item
+          #block
+          [link]="link"
+          [color]="getLinkColor(link)"
+          [format]="getLinkFormat(link)"
+          [isFromApi]="isFromApi(link)"
+          [size]="blockList.subComponentSize"
+        ></gn-ui-download-item>
+      }
+    </gn-ui-block-list>
+  }
 </ng-container>
 
-<div class="mb-5" *ngFor="let link of filteredLinks">
-  <ng-container *ngIf="(isMobile$ | async) === true">
-    <gn-ui-download-item
-      size="M"
-      [link]="link"
-      [color]="getLinkColor(link)"
-      [format]="getLinkFormat(link)"
-      [isFromApi]="isFromApi(link)"
-    ></gn-ui-download-item>
-  </ng-container>
-</div>
+@for (link of filteredLinks; track link) {
+  <div class="mb-5">
+    @if ((isMobile$ | async) === true) {
+      <gn-ui-download-item
+        size="M"
+        [link]="link"
+        [color]="getLinkColor(link)"
+        [format]="getLinkFormat(link)"
+        [isFromApi]="isFromApi(link)"
+      ></gn-ui-download-item>
+    }
+  </div>
+}

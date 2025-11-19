@@ -2,12 +2,12 @@
   <div class="backdrop bg-gray-50"></div>
   <div
     class="relative pt-[44px] container-lg flex flex-col-reverse sm:flex-row px-auto -mx-5 sm:px-0 sm:mx-auto"
-  >
+    >
     <div class="pr-0 lg:pr-[61px] overflow-hidden grow mt-11 sm:mt-0">
       <h2
         class="text-2xl font-title text-primary leading-7 text-left mb-5 sm:mb-8 pl-5 sm:pl-0"
         translate
-      >
+        >
         datahub.news.feed
       </h2>
       <datahub-last-created></datahub-last-created>
@@ -16,32 +16,33 @@
       <h2
         class="text-2xl font-title text-primary leading-7 text-left mb-5 sm:mb-8"
         translate
-      >
+        >
         datahub.news.figures
       </h2>
       <datahub-key-figures></datahub-key-figures>
-      <div
-        *ngIf="!!getContactMail()"
-        class="py-[37px] px-6 rounded-lg bg-white border mt-5 card-shadow flex flex-col gap-3 border-secondary"
-      >
-        <h2
-          class="text-2xl font-title text-primary leading-7 text-left"
-          translate
-        >
-          datahub.news.contact.title
-        </h2>
+      @if (!!getContactMail()) {
         <div
-          class="flex flex-col gap-3"
-          [innerHtml]="'datahub.news.contact.html' | translate"
-        ></div>
-        <a
-          [href]="'mailto:' + getContactMail()"
-          class="gn-ui-btn-secondary uppercase justify-center"
-          translate
-        >
-          datahub.news.contact.contactus
-        </a>
-      </div>
+          class="py-[37px] px-6 rounded-lg bg-white border mt-5 card-shadow flex flex-col gap-3 border-secondary"
+          >
+          <h2
+            class="text-2xl font-title text-primary leading-7 text-left"
+            translate
+            >
+            datahub.news.contact.title
+          </h2>
+          <div
+            class="flex flex-col gap-3"
+            [innerHtml]="'datahub.news.contact.html' | translate"
+          ></div>
+          <a
+            [href]="'mailto:' + getContactMail()"
+            class="gn-ui-btn-secondary uppercase justify-center"
+            translate
+            >
+            datahub.news.contact.contactus
+          </a>
+        </div>
+      }
     </div>
   </div>
 </div>

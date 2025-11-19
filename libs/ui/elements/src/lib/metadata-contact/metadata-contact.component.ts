@@ -21,7 +21,7 @@ import {
   matCallOutline,
   matLocationOnOutline,
 } from '@ng-icons/material-icons/outline'
-import { CommonModule } from '@angular/common'
+
 import { TranslateDirective } from '@ngx-translate/core'
 
 @Component({
@@ -30,7 +30,7 @@ import { TranslateDirective } from '@ngx-translate/core'
   styleUrls: ['./metadata-contact.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, ThumbnailComponent, NgIcon, TranslateDirective],
+  imports: [ThumbnailComponent, NgIcon, TranslateDirective],
   viewProviders: [
     provideIcons({
       matOpenInNew,

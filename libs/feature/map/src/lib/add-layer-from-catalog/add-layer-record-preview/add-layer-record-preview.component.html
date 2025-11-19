@@ -8,16 +8,16 @@
     <h1 class="text-sm font-medium truncate">
       {{ record.title }}
     </h1>
-    <ng-container *ngFor="let link of mapLinks">
+    @for (link of mapLinks; track link) {
       <gn-ui-button
         [type]="'outline'"
         (buttonClick)="handleLinkClick(link)"
         extraClass="!py-[8px] !px-[12px]"
-      >
+        >
         <div class="text-left text-[12px] line-clamp-2">
           {{ getLinkLabel(link) }}
         </div>
       </gn-ui-button>
-    </ng-container>
+    }
   </div>
 </div>

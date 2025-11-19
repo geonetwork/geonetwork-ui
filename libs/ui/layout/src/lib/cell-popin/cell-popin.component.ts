@@ -9,7 +9,7 @@ import {
   Injector,
   ChangeDetectorRef,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
+
 import { provideIcons, NgIconComponent } from '@ng-icons/core'
 import { iconoirReduce } from '@ng-icons/iconoir'
 import { MatButtonModule } from '@angular/material/button'
@@ -26,12 +26,11 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
   selector: 'gn-ui-cell-popin',
   standalone: true,
   imports: [
-    CommonModule,
     MatButtonModule,
     OverlayModule,
     ButtonComponent,
-    NgIconComponent,
-  ],
+    NgIconComponent
+],
   providers: [provideIcons({ iconoirReduce })],
   templateUrl: './cell-popin.component.html',
   styleUrls: [],

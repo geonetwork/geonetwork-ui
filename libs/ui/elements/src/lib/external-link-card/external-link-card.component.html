@@ -1,14 +1,14 @@
-<ng-container *ngIf="isDatabase; else clickableLink">
+@if (isDatabase) {
   <div [ngClass]="cardClass" [title]="title">
     <ng-container *ngTemplateOutlet="cardContent"></ng-container>
     <div
       class="flex min-w-[32px]"
       [ngClass]="size === 'S' ? 'items-end' : 'items-center'"
-    >
+      >
       <div
         class="gn-ui-card-icon"
         [title]="'record.metadata.link.postgis.tooltip' | translate"
-      >
+        >
         <ng-icon
           class="inline-block card-icon align-middle"
           name="iconoirDatabase"
@@ -16,15 +16,13 @@
       </div>
     </div>
   </div>
-</ng-container>
-
-<ng-template #clickableLink>
+} @else {
   <a [href]="link.url" target="_blank" [ngClass]="cardClass" [title]="title">
     <ng-container *ngTemplateOutlet="cardContent"></ng-container>
     <div
       class="flex min-w-[32px]"
       [ngClass]="size === 'S' ? 'items-end' : 'items-center'"
-    >
+      >
       <div class="gn-ui-card-icon">
         <ng-icon
           class="inline-block card-icon align-middle"
@@ -33,27 +31,30 @@
       </div>
     </div>
   </a>
-</ng-template>
+}
+
 <ng-template #cardContent>
   <div class="flex flex-col justify-between flex-1 min-w-0">
     <div class="gn-ui-card-title">
       {{ link.description || link.name }}
     </div>
     <div class="gn-ui-card-detail">
-      <ng-container *ngIf="isDatabase">
+      @if (isDatabase) {
         {{ 'record.metadata.link.postgis.table' | translate }}
-      </ng-container>
+      }
       {{ link.name }}
     </div>
-    <p *ngIf="!link.name && !link.description" class="gn-ui-card-title">
-      {{ link.url }}
-    </p>
+    @if (!link.name && !link.description) {
+      <p class="gn-ui-card-title">
+        {{ link.url }}
+      </p>
+    }
     <div class="pt-1">
       <span
         class="inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded transition-opacity opacity-70 group-hover:opacity-100"
         [style.background-color]="getLinkColor(link)"
         data-cy="download-format"
-      >
+        >
         {{ getLinkFormat(link) || ('downloads.format.unknown' | translate) }}
       </span>
     </div>

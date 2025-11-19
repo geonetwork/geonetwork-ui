@@ -26,7 +26,7 @@ import { ButtonComponent } from '../button/button.component'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { FormsModule } from '@angular/forms'
 import { TranslatePipe } from '@ngx-translate/core'
-import { CommonModule } from '@angular/common'
+
 import {
   matClose,
   matExpandLess,
@@ -39,13 +39,12 @@ import {
   styleUrls: ['./dropdown-multiselect.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
     ButtonComponent,
     NgIcon,
     OverlayModule,
     FormsModule,
-    TranslatePipe,
-  ],
+    TranslatePipe
+],
   providers: [
     provideIcons({
       matClose,

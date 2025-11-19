@@ -1,69 +1,66 @@
 <div class="flex flex-col gap-3">
   <div class="flex flex-row flex-wrap gap-2" data-test="rolesToPick">
-    <ng-container *ngFor="let role of rolesToPick">
+    @for (role of rolesToPick; track role) {
       <gn-ui-button type="gray" (buttonClick)="addRoleToDisplay(role)">
         <ng-icon name="iconoirPlus" class="text-primary"></ng-icon>
         &nbsp;
         <span translate>{{ roleToLabel(role) }}</span>
       </gn-ui-button>
-    </ng-container>
+    }
   </div>
-  <div
-    class="mt-8"
-    *ngIf="
-      roleSectionsToDisplay && roleSectionsToDisplay.length > 0;
-      else noContact
-    "
-    data-test="displayedRoles"
-  >
+  @if (
+    roleSectionsToDisplay && roleSectionsToDisplay.length > 0) {
     <div
-      *ngFor="
-        let role of roleSectionsToDisplay;
-        let index = index;
-        let isLast = last
-      "
-      class="flex flex-col gap-4"
-    >
-      <div class="flex flex-row justify-between">
-        <span class="font-bold text-base" translate>{{
-          roleToLabel(role)
-        }}</span>
-      </div>
-
-      <gn-ui-autocomplete
-        *ngIf="role !== 'unspecified' && role !== 'other'"
+      class="mt-8"
+      data-test="displayedRoles"
+      >
+      @for (
+        role of roleSectionsToDisplay; track
+        role; let index = $index; let isLast = $last) {
+        <div
+          class="flex flex-col gap-4"
+          >
+          <div class="flex flex-row justify-between">
+            <span class="font-bold text-base" translate>{{
+              roleToLabel(role)
+            }}</span>
+          </div>
+          @if (role !== 'unspecified' && role !== 'other') {
+            <gn-ui-autocomplete
         [placeholder]="
           'editor.record.form.field.contactsForResource.placeholder' | translate
         "
-        [action]="autoCompleteAction"
-        (itemSelected)="addContact($event, role)"
-        [displayWithFn]="displayWithFn"
-        [minCharacterCount]="1"
-        [clearOnSelection]="true"
-        [allowSubmit]="false"
-      >
-      </gn-ui-autocomplete>
-
-      <ng-container *ngIf="contactsForRessourceByRole.get(role) as contacts">
-        <gn-ui-sortable-list
-          [items]="contacts"
-          (itemsOrderChange)="handleContactsChanged($event, role)"
-          [elementTemplate]="contactTemplate"
-        ></gn-ui-sortable-list>
-        <ng-template #contactTemplate let-contact>
-          <gn-ui-contact-card [contact]="contact"></gn-ui-contact-card>
-        </ng-template>
-      </ng-container>
-
-      <hr class="border-t-[#D6D3D1] mt-4 mb-6" *ngIf="!isLast" />
+              [action]="autoCompleteAction"
+              (itemSelected)="addContact($event, role)"
+              [displayWithFn]="displayWithFn"
+              [minCharacterCount]="1"
+              [clearOnSelection]="true"
+              [allowSubmit]="false"
+              >
+            </gn-ui-autocomplete>
+          }
+          @if (contactsForRessourceByRole.get(role); as contacts) {
+            <gn-ui-sortable-list
+              [items]="contacts"
+              (itemsOrderChange)="handleContactsChanged($event, role)"
+              [elementTemplate]="contactTemplate"
+            ></gn-ui-sortable-list>
+            <ng-template #contactTemplate let-contact>
+              <gn-ui-contact-card [contact]="contact"></gn-ui-contact-card>
+            </ng-template>
+          }
+          @if (!isLast) {
+            <hr class="border-t-[#D6D3D1] mt-4 mb-6" />
+          }
+        </div>
+      }
     </div>
-  </div>
-  <ng-template #noContact>
+  } @else {
     <div
       class="p-4 border border-primary bg-primary-lightest rounded-lg"
       translate
-    >
+      >
       editor.record.form.field.contactsForResource.noContact
     </div>
-  </ng-template>
+  }
 </div>

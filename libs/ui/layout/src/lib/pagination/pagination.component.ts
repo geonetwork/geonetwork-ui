@@ -6,7 +6,7 @@ import {
   matChevronLeft,
   matChevronRight,
 } from '@ng-icons/material-icons/baseline'
-import { CommonModule } from '@angular/common'
+
 import { TranslateDirective } from '@ngx-translate/core'
 import { Paginable } from '../paginable.interface'
 
@@ -16,12 +16,11 @@ import { Paginable } from '../paginable.interface'
   styleUrls: ['./pagination.component.css'],
   standalone: true,
   imports: [
-    CommonModule,
     ButtonComponent,
     NgIcon,
     FormsModule,
-    TranslateDirective,
-  ],
+    TranslateDirective
+],
   viewProviders: [
     provideIcons({
       matChevronLeft,

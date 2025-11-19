@@ -4,9 +4,8 @@ import {
   ElementRef,
   HostListener,
 } from '@angular/core'
-import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 import { InternalLinkCardComponent } from '@geonetwork-ui/ui/elements'
-import { CommonModule } from '@angular/common'
+import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 
 @Component({
   selector: 'gn-ui-record-preview-row',
@@ -14,7 +13,7 @@ import { CommonModule } from '@angular/common'
   styleUrls: ['./record-preview-row.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [CommonModule, RecordPreviewComponent, InternalLinkCardComponent],
+  imports: [InternalLinkCardComponent],
 })
 export class RecordPreviewRowComponent extends RecordPreviewComponent {
   size = 'L'

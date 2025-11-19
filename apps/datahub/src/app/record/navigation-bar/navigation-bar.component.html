@@ -1,7 +1,7 @@
 <nav
   #navBar
   class="bg-nav-bar-blured z-[1002] absolute block h-[60px] w-full bottom-0 text-xs text-slate-700 border-b-2 border-b-slate-200"
->
+  >
   <div
     class="h-full container-lg mx-auto flex justify-between overflow-hidden"
     [class]="
@@ -9,105 +9,118 @@
         ? 'items-start'
         : 'items-center divide-x-2 divide-slate-200'
     "
-  >
+    >
     <div
       class="h-[60px] z-50 flex min-w-[60px] items-center justify-center lg:justify-end lg:pr-4 text-sm"
       [class]="displayMobileMenu ? 'border-r-2 border-slate-200' : ''"
-    >
+      >
       <gn-ui-button
         class="z-50"
         data-cy="backButton"
         (buttonClick)="back()"
         type="outline"
-      >
+        >
         <ng-icon name="matArrowBack"></ng-icon>
       </gn-ui-button>
     </div>
-    <ng-container *ngIf="(isMobile$ | async) === false">
-      <button
-        type="button"
-        *ngFor="let l of anchorLinks"
-        [attr.data-cy]="l.anchor"
-        gnUiAnchorLink="{{ l.anchor }}"
-        gnUiAnchorLinkDisabledClass="sm:hidden"
-        gnUiAnchorLinkInViewClass="!border-b-primary border-b-[3px] pb-0"
-        gnUiAnchorLinkOutOfViewClass="pb-1"
-        class="font-medium hover:bg-slate-50 h-[60px] w-full px-2 items-center text-center uppercase"
-        translate
-      >
-        {{ l.label }}
-      </button>
-    </ng-container>
-    <div
-      (click)="toggleMobileMenu()"
-      *ngIf="(isMobile$ | async) === true"
-      class="w-full flex justify-start items-start cursor-pointer"
-    >
-      <button
-        type="button"
-        *ngIf="(isMobile$ | async) === true"
-        class="h-[60px] z-50 inline-flex items-center justify-center p-2 rounded-md shrink-0"
-      >
-        <ng-icon name="iconoirMenu" size="24px"></ng-icon>
-      </button>
-      <div
-        class="bg-nav-bar-color -ml-[60px] absolute shrink truncate w-screen border-b-2 border-b-slate-200"
-        *ngIf="displayMobileMenu"
-      >
-        <div *ngFor="let l of anchorLinks; let i = index">
-          <div class="pl-[100px]">
-            <button
-              attr.data-cy="{{ l.anchor }}-mobile-menu"
-              gnUiAnchorLink="{{ l.anchor }}"
-              gnUiAnchorLinkDisabledClass="hidden"
-              class="h-[60px] block px-3 py-3 hover:bg-slate-50 font-medium text-left text-wrap uppercase"
-              translate
-              [ngClass]="{ 'z-10': i === 0 }"
-            >
-              {{ l.label }}
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="h-[60px]" *ngIf="!displayMobileMenu">
-        <div *ngFor="let l of anchorLinks">
-          <button
-            attr.data-cy="{{ l.anchor }}-mobile-title"
-            gnUiAnchorLink="{{ l.anchor }}"
-            gnUiAnchorLinkDisabledClass="hidden"
-            gnUiAnchorLinkInViewClass="block"
-            gnUiAnchorLinkOutOfViewClass="hidden"
-            class="h-[60px] px-3 py-3 rounded-md font-medium shrink text-wrap text-left uppercase"
-            translate
-            (click)="$event.stopPropagation(); $event.preventDefault()"
-            style="pointer-events: none"
-          >
-            {{ l.label }}
-          </button>
-        </div>
+    @if ((isMobile$ | async) === false) {
+      @for (l of anchorLinks; track l) {
         <button
-          class="h-[60px] block px-3 py-3 rounded-md font-medium shrink text-wrap text-left uppercase"
-          *ngIf="(isMobile$ | async) === true && !displayMobileMenu"
+          type="button"
+          [attr.data-cy]="l.anchor"
+          gnUiAnchorLink="{{ l.anchor }}"
+          gnUiAnchorLinkDisabledClass="sm:hidden"
+          gnUiAnchorLinkInViewClass="!border-b-primary border-b-[3px] pb-0"
+          gnUiAnchorLinkOutOfViewClass="pb-1"
+          class="font-medium hover:bg-slate-50 h-[60px] w-full px-2 items-center text-center uppercase"
           translate
-        >
-          navbar.mobile.menuTitle
+          >
+          {{ l.label }}
         </button>
+      }
+    }
+    @if ((isMobile$ | async) === true) {
+      <div
+        (click)="toggleMobileMenu()"
+        class="w-full flex justify-start items-start cursor-pointer"
+        >
+        @if ((isMobile$ | async) === true) {
+          <button
+            type="button"
+            class="h-[60px] z-50 inline-flex items-center justify-center p-2 rounded-md shrink-0"
+            >
+            <ng-icon name="iconoirMenu" size="24px"></ng-icon>
+          </button>
+        }
+        @if (displayMobileMenu) {
+          <div
+            class="bg-nav-bar-color -ml-[60px] absolute shrink truncate w-screen border-b-2 border-b-slate-200"
+            >
+            @for (l of anchorLinks; track l; let i = $index) {
+              <div>
+                <div class="pl-[100px]">
+                  <button
+                    attr.data-cy="{{ l.anchor }}-mobile-menu"
+                    gnUiAnchorLink="{{ l.anchor }}"
+                    gnUiAnchorLinkDisabledClass="hidden"
+                    class="h-[60px] block px-3 py-3 hover:bg-slate-50 font-medium text-left text-wrap uppercase"
+                    translate
+                    [ngClass]="{ 'z-10': i === 0 }"
+                    >
+                    {{ l.label }}
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        }
+        @if (!displayMobileMenu) {
+          <div class="h-[60px]">
+            @for (l of anchorLinks; track l) {
+              <div>
+                <button
+                  attr.data-cy="{{ l.anchor }}-mobile-title"
+                  gnUiAnchorLink="{{ l.anchor }}"
+                  gnUiAnchorLinkDisabledClass="hidden"
+                  gnUiAnchorLinkInViewClass="block"
+                  gnUiAnchorLinkOutOfViewClass="hidden"
+                  class="h-[60px] px-3 py-3 rounded-md font-medium shrink text-wrap text-left uppercase"
+                  translate
+                  (click)="$event.stopPropagation(); $event.preventDefault()"
+                  style="pointer-events: none"
+                  >
+                  {{ l.label }}
+                </button>
+              </div>
+            }
+            @if ((isMobile$ | async) === true && !displayMobileMenu) {
+              <button
+                class="h-[60px] block px-3 py-3 rounded-md font-medium shrink text-wrap text-left uppercase"
+                translate
+                >
+                navbar.mobile.menuTitle
+              </button>
+            }
+          </div>
+        }
       </div>
-    </div>
+    }
     <div
       class="h-[60px] z-50 flex flex-row gap-3 justify-center items-center px-4 lg:pl-4 lg:justify-end text-sm"
       [class]="displayMobileMenu ? 'border-l-2 border-slate-200' : ''"
-    >
-      <gn-ui-favorite-star
-        *ngIf="metadata?.uniqueIdentifier && !isAuthDisabled"
-        [record]="metadata"
-        [buttonType]="'outline'"
-        [displayCount]="false"
-        class="flex text-background content-center"
-      ></gn-ui-favorite-star>
-      <gn-ui-language-switcher
-        *ngIf="showLanguageSwitcher"
-      ></gn-ui-language-switcher>
+      >
+      @if (metadata?.uniqueIdentifier && !isAuthDisabled) {
+        <gn-ui-favorite-star
+          [record]="metadata"
+          [buttonType]="'outline'"
+          [displayCount]="false"
+          class="flex text-background content-center"
+        ></gn-ui-favorite-star>
+      }
+      @if (showLanguageSwitcher) {
+        <gn-ui-language-switcher
+        ></gn-ui-language-switcher>
+      }
     </div>
   </div>
 </nav>

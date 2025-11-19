@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
-import { CommonModule } from '@angular/common'
 import { TranslateDirective } from '@ngx-translate/core'
+import { RecordPreviewComponent } from '../record-preview/record-preview.component'
 
 @Component({
   selector: 'gn-ui-record-preview-list',
@@ -10,11 +9,6 @@ import { TranslateDirective } from '@ngx-translate/core'
   styleUrls: ['./record-preview-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    CommonModule,
-    RecordPreviewComponent,
-    ThumbnailComponent,
-    TranslateDirective,
-  ],
+  imports: [ThumbnailComponent, TranslateDirective],
 })
 export class RecordPreviewListComponent extends RecordPreviewComponent {}

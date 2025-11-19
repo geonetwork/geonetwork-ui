@@ -1,47 +1,54 @@
 <div
   class="pt-0 flex items-center gap-6 text-black"
   [ngClass]="titleIsSectionTitle ? 'gn-ui-section-title' : 'text-[20px]'"
->
-  <h2 *ngIf="titleIsSectionTitle; else subtitle">
-    {{ title }}
-  </h2>
-  <ng-template #subtitle>
+  >
+  @if (titleIsSectionTitle) {
+    <h2>
+      {{ title }}
+    </h2>
+  } @else {
     <h3>{{ title }}</h3>
-  </ng-template>
-  <span *ngIf="!routerLinkButton">({{ records?.length }})</span>
-  <gn-ui-previous-next-buttons
-    *ngIf="list?.pagesCount > 1"
-    class="text-base"
-    [listComponent]="list"
-  ></gn-ui-previous-next-buttons>
-  <div *ngIf="routerLinkButton" class="ml-auto">
-    <a
-      [routerLink]="routerLinkButton.routerLink"
-      [queryParams]="routerLinkButton.queryParams"
-      class="gn-ui-btn-primary text-base h-fit w-fit rounded-lg"
-      [style.--gn-ui-button-padding]="'8px 16px'"
-      data-test="routerLinkButton"
-    >
-      {{ routerLinkButton.label }}
-    </a>
-  </div>
+  }
+  @if (!routerLinkButton) {
+    <span>({{ records?.length }})</span>
+  }
+  @if (list?.pagesCount > 1) {
+    <gn-ui-previous-next-buttons
+      class="text-base"
+      [listComponent]="list"
+    ></gn-ui-previous-next-buttons>
+  }
+  @if (routerLinkButton) {
+    <div class="ml-auto">
+      <a
+        [routerLink]="routerLinkButton.routerLink"
+        [queryParams]="routerLinkButton.queryParams"
+        class="gn-ui-btn-primary text-base h-fit w-fit rounded-lg"
+        [style.--gn-ui-button-padding]="'8px 16px'"
+        data-test="routerLinkButton"
+        >
+        {{ routerLinkButton.label }}
+      </a>
+    </div>
+  }
 </div>
 
 <gn-ui-block-list
   #blockList
   containerClass="mb-4 grid gap-4 w-full md:grid-cols-2 pt-5 pb-7"
->
-  <gn-ui-internal-link-card
-    #block
-    *ngFor="let record of records"
-    [linkHref]="recordUrlGetter(record)"
-    [linkTarget]="'_blank'"
-    [record]="record"
-    [favoriteTemplate]="favoriteTemplate"
-    [metadataQualityDisplay]="metadataQualityDisplay"
-    [size]="blockList.subComponentSize"
   >
-  </gn-ui-internal-link-card>
+  @for (record of records; track record) {
+    <gn-ui-internal-link-card
+      #block
+      [linkHref]="recordUrlGetter(record)"
+      [linkTarget]="'_blank'"
+      [record]="record"
+      [favoriteTemplate]="favoriteTemplate"
+      [metadataQualityDisplay]="metadataQualityDisplay"
+      [size]="blockList.subComponentSize"
+      >
+    </gn-ui-internal-link-card>
+  }
 </gn-ui-block-list>
 
 <ng-template #favoriteTemplate let-record>

@@ -3,27 +3,29 @@
   (filterBy)="setFilterBy($event)"
 ></gn-ui-organisations-filter>
 <div class="mt-6 rounded-lg text-gray-800 p-4 bg-slate-100">
-  <gn-ui-organisations-result
-    *ngIf="organisationsTotal$ | async"
-    [hits]="organisationResults"
-    [total]="organisationsTotal$ | async"
-  ></gn-ui-organisations-result>
+  @if (organisationsTotal$ | async) {
+    <gn-ui-organisations-result
+      [hits]="organisationResults"
+      [total]="organisationsTotal$ | async"
+    ></gn-ui-organisations-result>
+  }
 </div>
 <div
   class="grid grid-cols-1 mt-6 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3"
 >
-  <gn-ui-content-ghost
-    class="h-[300px]"
-    ghostClass="h-full mb-36"
-    *ngFor="let organisation of organisations$ | async; trackBy: trackByIndex"
-    [showContent]="!!organisation.name"
-  >
-    <gn-ui-organisation-preview
-      [organization]="organisation"
-      [organisationUrl]="getOrganisationUrl(organisation)"
-      (clickedOrganisation)="orgSelect.emit($event)"
-    ></gn-ui-organisation-preview>
-  </gn-ui-content-ghost>
+  @for (organisation of organisations$ | async; track trackByIndex($index)) {
+    <gn-ui-content-ghost
+      class="h-[300px]"
+      ghostClass="h-full mb-36"
+      [showContent]="!!organisation.name"
+    >
+      <gn-ui-organisation-preview
+        [organization]="organisation"
+        [organisationUrl]="getOrganisationUrl(organisation)"
+        (clickedOrganisation)="orgSelect.emit($event)"
+      ></gn-ui-organisation-preview>
+    </gn-ui-content-ghost>
+  }
 </div>
 <div class="py-20">
   <gn-ui-pagination [listComponent]="this"></gn-ui-pagination>

@@ -1,33 +1,36 @@
-<div
-  *ngIf="metadataQualityDisplay"
-  class="flex items-center metadata-quality min-w-0"
-  [ngClass]="{ 'text-xs leading-[8px] m-h-[120px]': smaller }"
->
-  <gn-ui-progress-bar
-    tabindex="0"
-    [value]="qualityScore"
-    [type]="'light'"
-    class="flex-grow"
-  ></gn-ui-progress-bar>
-  <gn-ui-popover
-    *ngIf="popoverDisplay"
-    [content]="popoverItems"
-    theme="light-border"
-    [class]="smaller ? 'ml-2' : 'ml-2 mt-1'"
-  >
-    <ng-icon
-      name="matInfoOutline"
-      class="flex-shrink-0 text-gray-600"
-    ></ng-icon>
-  </gn-ui-popover>
-</div>
+@if (metadataQualityDisplay) {
+  <div
+    class="flex items-center metadata-quality min-w-0"
+    [ngClass]="{ 'text-xs leading-[8px] m-h-[120px]': smaller }"
+    >
+    <gn-ui-progress-bar
+      tabindex="0"
+      [value]="qualityScore"
+      [type]="'light'"
+      class="flex-grow"
+    ></gn-ui-progress-bar>
+    @if (popoverDisplay) {
+      <gn-ui-popover
+        [content]="popoverItems"
+        theme="light-border"
+        [class]="smaller ? 'ml-2' : 'ml-2 mt-1'"
+        >
+        <ng-icon
+          name="matInfoOutline"
+          class="flex-shrink-0 text-gray-600"
+        ></ng-icon>
+      </gn-ui-popover>
+    }
+  </div>
+}
 <ng-template #popoverItems>
   <div class="p-2 py-4">
     <div class="mb-4 font-bold" translate>record.metadata.quality.details</div>
-    <gn-ui-metadata-quality-item
-      *ngFor="let e of items"
-      [name]="e.name"
-      [value]="e.value"
-    ></gn-ui-metadata-quality-item>
+    @for (e of items; track e) {
+      <gn-ui-metadata-quality-item
+        [name]="e.name"
+        [value]="e.value"
+      ></gn-ui-metadata-quality-item>
+    }
   </div>
 </ng-template>

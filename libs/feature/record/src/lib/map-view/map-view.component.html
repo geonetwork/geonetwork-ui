@@ -1,18 +1,19 @@
 <div class="w-full h-full flex flex-col gap-[13px]">
   <div
     class="flex flex-col md:flex-row gap-4 py-4 px-5 bg-white border border-color-border rounded-lg mt-6"
-  >
-    <gn-ui-dropdown-selector
-      *ngIf="displaySource"
-      class="w-full md:flex-1 md:min-w-0"
-      extraBtnClass="font-sans font-bold"
-      [title]="'map.select.layer' | translate"
-      [choices]="dropdownChoices$ | async"
-      [selected]="_selectedChoice"
-      (selectValue)="selectLinkToDisplay($event)"
-    ></gn-ui-dropdown-selector>
+    >
+    @if (displaySource) {
+      <gn-ui-dropdown-selector
+        class="w-full md:flex-1 md:min-w-0"
+        extraBtnClass="font-sans font-bold"
+        [title]="'map.select.layer' | translate"
+        [choices]="dropdownChoices$ | async"
+        [selected]="_selectedChoice"
+        (selectValue)="selectLinkToDisplay($event)"
+      ></gn-ui-dropdown-selector>
+    }
 
-    <ng-container *ngIf="(styleLinks$ | async)?.length > 0; else styleDisabled">
+    @if ((styleLinks$ | async)?.length > 0) {
       <gn-ui-dropdown-selector
         class="w-full md:flex-1 md:min-w-0"
         extraBtnClass="font-sans font-bold"
@@ -21,8 +22,7 @@
         [selected]="_styleFromConfig"
         (selectValue)="selectStyleToDisplay($event)"
       ></gn-ui-dropdown-selector>
-    </ng-container>
-    <ng-template #styleDisabled>
+    } @else {
       <gn-ui-dropdown-selector
         class="w-full md:flex-1 md:min-w-0 text-gray-400"
         extraBtnClass="font-sans font-bold text-gray-400"
@@ -30,29 +30,28 @@
         [choices]="styleDropdownChoices$ | async"
         [disabled]="true"
       ></gn-ui-dropdown-selector>
-    </ng-template>
+    }
 
     <div class="self-end md:ml-2">
       <gn-ui-external-viewer-button
         extraClass="w-[44px] h-[44px]"
         [link]="selectedLink$ | async"
-      >
+        >
       </gn-ui-external-viewer-button>
     </div>
   </div>
-  <ng-container *ngIf="hidePreview; else mapView">
+  @if (hidePreview) {
     <gn-ui-popup-alert
       type="warning"
       icon="matErrorOutlineOutline"
       class="block h-12 p-1"
-    >
+      >
       <span translate>record.feature.limit</span>
     </gn-ui-popup-alert>
-  </ng-container>
-  <ng-template #mapView>
+  } @else {
     <div
       class="relative w-full h-full bg-white border border-gray-300 rounded-lg overflow-hidden"
-    >
+      >
       <gn-ui-map-container
         #mapContainer
         [context]="mapContext$ | async"
@@ -62,7 +61,7 @@
       <div
         class="top-[1em] right-[1em] p-3 bg-white absolute overflow-y-auto overflow-x-hidden max-h-72 w-56"
         [class.hidden]="!selection"
-      >
+        >
         <gn-ui-button
           type="light"
           (buttonClick)="resetSelection()"
@@ -72,7 +71,7 @@
             --gn-ui-button-height: 24px;
           "
           extraClass="absolute right-[0.5em] ml-[8px] mr-[10px]"
-        >
+          >
           <ng-icon name="matClose" class="align-middle text-sm"></ng-icon>
         </gn-ui-button>
         <gn-ui-feature-detail
@@ -80,12 +79,11 @@
           [feature]="selection"
         ></gn-ui-feature-detail>
       </div>
-
       <div
         class="top-[1em] p-3 bg-white absolute overflow-y-auto overflow-x-hidden max-h-72 w-56"
         [ngClass]="{ 'right-[1em]': !selection, 'right-[16em]': selection }"
         [hidden]="!showLegend || !legendExists"
-      >
+        >
         <div class="flex justify-between items-center mb-2">
           <div class="text-primary font-bold" translate>map.legend.title</div>
           <gn-ui-button
@@ -97,7 +95,7 @@
               --gn-ui-button-height: 24px;
             "
             extraClass="ml-[8px] mr-[10px]"
-          >
+            >
             <ng-icon name="matClose" class="align-middle text-sm"></ng-icon>
           </gn-ui-button>
         </div>
@@ -106,30 +104,31 @@
           (legendStatusChange)="onLegendStatusChange($event)"
         ></gn-ui-map-legend>
       </div>
-
-      <gn-ui-button
-        *ngIf="!showLegend && legendExists && !selection"
-        type="outline"
-        (buttonClick)="toggleLegend()"
-        extraClass="absolute top-[1em] right-[1em] rounded p-1 text-xs bg-white"
-        translate
-      >
-        map.legend.title
-      </gn-ui-button>
-
-      <gn-ui-loading-mask
-        *ngIf="loading"
-        class="absolute inset-0"
-        [message]="'map.loading.data' | translate"
-      ></gn-ui-loading-mask>
-      <gn-ui-popup-alert
-        *ngIf="error"
-        type="warning"
-        icon="matErrorOutlineOutline"
-        class="absolute m-2 inset-0"
-      >
-        <span translate>{{ error }}</span>
-      </gn-ui-popup-alert>
+      @if (!showLegend && legendExists && !selection) {
+        <gn-ui-button
+          type="outline"
+          (buttonClick)="toggleLegend()"
+          extraClass="absolute top-[1em] right-[1em] rounded p-1 text-xs bg-white"
+          translate
+          >
+          map.legend.title
+        </gn-ui-button>
+      }
+      @if (loading) {
+        <gn-ui-loading-mask
+          class="absolute inset-0"
+          [message]="'map.loading.data' | translate"
+        ></gn-ui-loading-mask>
+      }
+      @if (error) {
+        <gn-ui-popup-alert
+          type="warning"
+          icon="matErrorOutlineOutline"
+          class="absolute m-2 inset-0"
+          >
+          <span translate>{{ error }}</span>
+        </gn-ui-popup-alert>
+      }
     </div>
-  </ng-template>
+  }
 </div>

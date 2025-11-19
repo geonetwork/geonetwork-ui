@@ -3,43 +3,49 @@
     <h3
       class="inline-block font-title text-xl font-medium text-title"
       translate
-    >
+      >
       record.metadata.links
     </h3>
     <span class="px-3">({{ linksCount$ | async }})</span>
   </div>
-  <gn-ui-previous-next-buttons
-    *ngIf="(isMobile$ | async) === true && carousel?.pagesCount > 1"
-    [listComponent]="carousel"
-  ></gn-ui-previous-next-buttons>
-  <gn-ui-previous-next-buttons
-    *ngIf="(isMobile$ | async) === false && list?.pagesCount > 1"
-    [listComponent]="list"
-  ></gn-ui-previous-next-buttons>
+  @if ((isMobile$ | async) === true && carousel?.pagesCount > 1) {
+    <gn-ui-previous-next-buttons
+      [listComponent]="carousel"
+    ></gn-ui-previous-next-buttons>
+  }
+  @if ((isMobile$ | async) === false && list?.pagesCount > 1) {
+    <gn-ui-previous-next-buttons
+      [listComponent]="list"
+    ></gn-ui-previous-next-buttons>
+  }
 </div>
 <ng-container *ngrxLet="otherLinks$ as otherLinks">
-  <gn-ui-carousel
-    *ngIf="(isMobile$ | async) === true"
-    containerClass="gap-4 pt-5 pb-7"
-    (currentStepChange)="updateView()"
-  >
-    <gn-ui-external-link-card
-      *ngFor="let otherLink of otherLinks"
-      [link]="otherLink"
-      class="w-80"
-      size="S"
-    ></gn-ui-external-link-card>
-  </gn-ui-carousel>
-  <gn-ui-block-list
-    #blockList
-    *ngIf="(isMobile$ | async) === false"
-    containerClass="gap-4 pt-5 pb-7"
-  >
-    <gn-ui-external-link-card
-      #block
-      *ngFor="let otherLink of otherLinks"
-      [link]="otherLink"
-      [size]="blockList.subComponentSize"
-    ></gn-ui-external-link-card>
-  </gn-ui-block-list>
+  @if ((isMobile$ | async) === true) {
+    <gn-ui-carousel
+      containerClass="gap-4 pt-5 pb-7"
+      (currentStepChange)="updateView()"
+      >
+      @for (otherLink of otherLinks; track otherLink) {
+        <gn-ui-external-link-card
+          [link]="otherLink"
+          class="w-80"
+          size="S"
+        ></gn-ui-external-link-card>
+      }
+    </gn-ui-carousel>
+  }
+  @if ((isMobile$ | async) === false) {
+    <gn-ui-block-list
+      #blockList
+      containerClass="gap-4 pt-5 pb-7"
+      >
+      @for (otherLink of otherLinks; track otherLink) {
+        <gn-ui-external-link-card
+          #block
+          [link]="otherLink"
+          [size]="blockList.subComponentSize"
+        ></gn-ui-external-link-card>
+      }
+    </gn-ui-block-list>
+  }
 </ng-container>

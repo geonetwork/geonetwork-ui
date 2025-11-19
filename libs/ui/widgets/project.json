@@ -10,7 +10,8 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/libs/ui/widgets"],
       "options": {
-        "jestConfig": "libs/ui/widgets/jest.config.ts"
+        "jestConfig": "libs/ui/widgets/jest.config.ts",
+        "tsConfig": "libs/ui/widgets/tsconfig.spec.json"
       }
     },
     "lint": {

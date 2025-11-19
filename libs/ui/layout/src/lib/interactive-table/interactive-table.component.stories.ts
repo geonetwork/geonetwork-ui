@@ -7,7 +7,7 @@ import {
 import { InteractiveTableComponent } from './interactive-table.component'
 import { InteractiveTableColumnComponent } from './interactive-table-column/interactive-table-column.component'
 import { CommonModule } from '@angular/common'
-import { action } from '@storybook/addon-actions'
+import { action } from 'storybook/actions'
 import { TranslateModule } from '@ngx-translate/core'
 import { CheckboxComponent } from '@geonetwork-ui/ui/inputs'
 

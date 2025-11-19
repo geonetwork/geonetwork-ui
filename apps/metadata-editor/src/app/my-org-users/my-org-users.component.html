@@ -1,35 +1,37 @@
-<main
-  class="grow bg-gray-100 p-12 flex flex-col justify-between gap-12"
-  *ngIf="orgData$ | async as orgData"
->
-  <div class="flex gap-8 justify-between">
-    <div class="flex content-start gap-5">
-      <div
-        *ngIf="orgData.logoUrl"
-        class="shrink-0 bg-gray-100 rounded-lg overflow-hidden border border-gray-300 h-20 w-20"
-      >
-        <gn-ui-thumbnail
-          class="relative"
-          [thumbnailUrl]="orgData.logoUrl"
-          [fit]="'contain'"
-        >
-        </gn-ui-thumbnail>
-      </div>
-      <div class="flex flex-row gap-3 items-center">
-        <h1 class="text-[56px] font-title grow">
-          {{ orgData.orgName }}
-        </h1>
-        <h1
-          class="text-[56px] font-title grow"
-          translate
-          [translateParams]="{ count: orgData.userList.length }"
-        >
-          dashboard.records.users
-        </h1>
+@if (orgData$ | async; as orgData) {
+  <main
+    class="grow bg-gray-100 p-12 flex flex-col justify-between gap-12"
+    >
+    <div class="flex gap-8 justify-between">
+      <div class="flex content-start gap-5">
+        @if (orgData.logoUrl) {
+          <div
+            class="shrink-0 bg-gray-100 rounded-lg overflow-hidden border border-gray-300 h-20 w-20"
+            >
+            <gn-ui-thumbnail
+              class="relative"
+              [thumbnailUrl]="orgData.logoUrl"
+              [fit]="'contain'"
+              >
+            </gn-ui-thumbnail>
+          </div>
+        }
+        <div class="flex flex-row gap-3 items-center">
+          <h1 class="text-[56px] font-title grow">
+            {{ orgData.orgName }}
+          </h1>
+          <h1
+            class="text-[56px] font-title grow"
+            translate
+            [translateParams]="{ count: orgData.userList.length }"
+            >
+            dashboard.records.users
+          </h1>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="shadow rounded bg-white grow">
-    <md-editor-users-list [users]="orgData.userList"> </md-editor-users-list>
-  </div>
-</main>
+    <div class="shadow rounded bg-white grow">
+      <md-editor-users-list [users]="orgData.userList"> </md-editor-users-list>
+    </div>
+  </main>
+}

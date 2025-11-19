@@ -1,29 +1,28 @@
 <main class="bg-white overflow-y-auto">
   <div class="flex flex-row items-baseline gap-[8px] px-[32px] py-[20px]">
-    <ng-container *ngIf="searchText$ | async as searchText; else allRecords">
+    @if (searchText$ | async; as searchText) {
       <h1
         class="text-[16px] text-main font-bold"
         translate
         [translateParams]="{ searchText: searchText }"
-      >
+        >
         dashboard.records.search
       </h1>
       <div class="text-[12px]">
         <md-editor-records-count></md-editor-records-count>
       </div>
-    </ng-container>
-    <ng-template #allRecords>
+    } @else {
       <h1 class="text-[16px] text-main font-bold" translate>
         dashboard.records.all
       </h1>
       <div class="text-[12px]">
         <md-editor-records-count></md-editor-records-count>
       </div>
-    </ng-template>
+    }
   </div>
   <div
     class="flex flex-row items-center mx-[32px] my-[16px] py-[8px] gap-[16px]"
-  >
+    >
     <div class="grow"></div>
     <gn-ui-button
       cdkOverlayOrigin
@@ -31,18 +30,20 @@
       (buttonClick)="duplicateExternalRecord()"
       type="gray"
       data-test="import-record"
-    >
+      >
       <span translate>dashboard.importRecord</span>
-      <ng-icon
-        *ngIf="!isImportMenuOpen"
-        class="text-primary"
-        name="iconoirNavArrowDown"
-      ></ng-icon>
-      <ng-icon
-        *ngIf="isImportMenuOpen"
-        class="text-primary"
-        name="iconoirNavArrowUp"
-      ></ng-icon>
+      @if (!isImportMenuOpen) {
+        <ng-icon
+          class="text-primary"
+          name="iconoirNavArrowDown"
+        ></ng-icon>
+      }
+      @if (isImportMenuOpen) {
+        <ng-icon
+          class="text-primary"
+          name="iconoirNavArrowUp"
+        ></ng-icon>
+      }
     </gn-ui-button>
     <ng-template #template>
       <gn-ui-import-record
@@ -53,7 +54,7 @@
       (buttonClick)="createRecord()"
       type="primary"
       data-cy="create-record"
-    >
+      >
       <ng-icon class="mr-2" name="iconoirPagePlus"></ng-icon>
       <span translate>dashboard.createRecord</span>
     </gn-ui-button>

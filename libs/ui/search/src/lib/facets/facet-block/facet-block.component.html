@@ -1,88 +1,96 @@
-<div
-  class="flex flex-row items-center group"
-  *ngIf="hasItems"
-  (click)="toggleCollapsed()"
->
-  <span
-    class="flex-initial truncate font-bold cursor-pointer group-hover:text-black span-title"
-    >{{ 'facets.block.title.' + title | translate }}</span
-  >
+@if (hasItems) {
   <div
-    *ngIf="!collapsed"
-    class="shrink-0 cursor-pointer group-hover:text-black icon-collapse"
-    style="min-width: 20px"
-  >
-    <!-- chevron-down svg -->
-    <svg
-      class="h-5 w-5"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
+    class="flex flex-row items-center group"
+    (click)="toggleCollapsed()"
     >
-      <path
-        fill-rule="evenodd"
-        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-        clip-rule="evenodd"
-      />
-    </svg>
-  </div>
-  <div
-    *ngIf="collapsed"
-    class="shrink-0 cursor-pointer group-hover:text-black icon-expand"
-    style="min-width: 20px"
-  >
-    <!-- chevron-right svg -->
-    <svg
-      class="h-5 w-5"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-    >
-      <path
-        fill-rule="evenodd"
-        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-        clip-rule="evenodd"
-      />
-    </svg>
-  </div>
-</div>
-<div [hidden]="collapsed || !hasItems" class="ml-4 collapsible-content">
-  <div *ngIf="canFilter" class="relative mt-2">
-    <input
-      type="text"
-      class="w-full rounded border border-1 border-gray-300 input-filter py-1 px-2 pl-8 focus:outline-none focus:border-blue-400"
-      #filterInput
-    />
-    <div
-      class="pointer-events-none absolute flex items-center px-2"
-      style="left: 0px; top: 0px"
-    >
-      <svg
-        class="h-4 w-4 my-2"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
+    <span
+      class="flex-initial truncate font-bold cursor-pointer group-hover:text-black span-title"
+      >{{ 'facets.block.title.' + title | translate }}</span
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
-        />
-      </svg>
+      @if (!collapsed) {
+        <div
+          class="shrink-0 cursor-pointer group-hover:text-black icon-collapse"
+          style="min-width: 20px"
+          >
+          <!-- chevron-down svg -->
+          <svg
+            class="h-5 w-5"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            >
+            <path
+              fill-rule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+              />
+          </svg>
+        </div>
+      }
+      @if (collapsed) {
+        <div
+          class="shrink-0 cursor-pointer group-hover:text-black icon-expand"
+          style="min-width: 20px"
+          >
+          <!-- chevron-right svg -->
+          <svg
+            class="h-5 w-5"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            >
+            <path
+              fill-rule="evenodd"
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+              clip-rule="evenodd"
+              />
+          </svg>
+        </div>
+      }
     </div>
-  </div>
-  <gn-ui-facet-item
-    class="mt-2"
-    *ngFor="let item of getItems()"
-    [label]="item.value"
-    [count]="item.count"
-    [selected]="isItemSelected(item)"
-    (selectedChange)="onItemSelectedChange($event, item)"
-    (invertedChange)="onItemInvertedChange($event, item)"
-  ></gn-ui-facet-item>
-  <a href *ngIf="canShowMore()" class="a-more" (click)="onMoreClick($event)"
-    >more</a
-  >
-</div>
+  }
+  <div [hidden]="collapsed || !hasItems" class="ml-4 collapsible-content">
+    @if (canFilter) {
+      <div class="relative mt-2">
+        <input
+          type="text"
+          class="w-full rounded border border-1 border-gray-300 input-filter py-1 px-2 pl-8 focus:outline-none focus:border-blue-400"
+          #filterInput
+          />
+        <div
+          class="pointer-events-none absolute flex items-center px-2"
+          style="left: 0px; top: 0px"
+          >
+          <svg
+            class="h-4 w-4 my-2"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+              />
+          </svg>
+        </div>
+      </div>
+    }
+    @for (item of getItems(); track item) {
+      <gn-ui-facet-item
+        class="mt-2"
+        [label]="item.value"
+        [count]="item.count"
+        [selected]="isItemSelected(item)"
+        (selectedChange)="onItemSelectedChange($event, item)"
+        (invertedChange)="onItemInvertedChange($event, item)"
+      ></gn-ui-facet-item>
+    }
+    @if (canShowMore()) {
+      <a href class="a-more" (click)="onMoreClick($event)"
+        >more</a
+        >
+      }
+    </div>

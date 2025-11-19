@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
-import { CommonModule } from '@angular/common'
+
 import {
   DatasetDownloadDistribution,
   OnlineLinkResource,
@@ -23,7 +23,7 @@ import { iconoirAttachment } from '@ng-icons/iconoir'
 @Component({
   selector: 'gn-ui-online-resource-card',
   standalone: true,
-  imports: [CommonModule, TranslateDirective, TranslatePipe, NgIconComponent],
+  imports: [TranslateDirective, TranslatePipe, NgIconComponent],
   providers: [
     provideIcons({
       iconoirAttachment,

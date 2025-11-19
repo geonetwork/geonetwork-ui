@@ -1,12 +1,13 @@
-<ng-container [ngSwitch]="type">
+
+@switch (type) {
   <!-- Light Theme -->
-  <ng-container *ngSwitchCase="'light'">
+  @case ('light') {
     <div class="flex items-center relative">
       <div
         class="flex-shrink-0 {{ color.text }} font-medium mr-2
              text-opacity-100 !text-slate-800"
         data-cy="progressPercentage"
-      >
+        >
         {{ progress }}%
       </div>
       <div class="flex-grow h-[4px] w-[52px] {{ color.outerBar }} rounded-full">
@@ -17,22 +18,21 @@
         ></div>
       </div>
     </div>
-  </ng-container>
-
+  }
   <!-- Default / Primary / Secondary Themes -->
-  <ng-container *ngSwitchDefault>
+  @default {
     <div class="flex h-full {{ color.outerBar }} rounded-t-lg rounded-b-lg">
       <div
         [style.width.%]="progress"
         class="flex {{ color.innerBar }} my-1 mx-1 transition-width
                duration-500 ease-in-out rounded-t-md rounded-b-md shadow-xl"
-      >
+        >
         <div
           class="flex items-center pl-2 py-1 {{ color.text }} font-bold text-4"
-        >
+          >
           {{ progress }}%
         </div>
       </div>
     </div>
-  </ng-container>
-</ng-container>
+  }
+}

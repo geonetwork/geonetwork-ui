@@ -1,39 +1,36 @@
-<ng-container *ngIf="previewUrl; then withImage; else withoutImage">
-</ng-container>
-
-<ng-template #withImage>
+@if (previewUrl) {
   <div class="w-80 h-full flex flex-col gap-2">
     <gn-ui-image-overlay-preview class="h-48" [imageUrl]="previewUrl">
     </gn-ui-image-overlay-preview>
-    <gn-ui-text-input
-      *ngIf="showAltTextInput"
-      [placeholder]="'input.image.altTextPlaceholder' | translate"
-      [value]="altText ?? ''"
-      (valueChange)="handleAltTextChange($event)"
-      extraClass="gn-ui-editor-textarea"
-    ></gn-ui-text-input>
+    @if (showAltTextInput) {
+      <gn-ui-text-input
+        [placeholder]="'input.image.altTextPlaceholder' | translate"
+        [value]="altText ?? ''"
+        (valueChange)="handleAltTextChange($event)"
+        extraClass="gn-ui-editor-textarea"
+      ></gn-ui-text-input>
+    }
     <div class="flex flex-row gap-2 mt-2">
       <gn-ui-button
         type="gray"
         (buttonClick)="handleDelete()"
         data-cy="delete-image"
-      >
+        >
         <ng-icon class="me-1 text-primary" name="iconoirBin"></ng-icon>
         {{ 'input.image.delete' | translate }}
       </gn-ui-button>
-      <gn-ui-button
-        *ngIf="!showAltTextInput"
-        type="gray"
-        (buttonClick)="toggleAltTextInput()"
-      >
-        <ng-icon name="iconoirPlus" class="me-1 text-primary"></ng-icon>
-        {{ 'input.image.displayAltTextInput' | translate }}
-      </gn-ui-button>
+      @if (!showAltTextInput) {
+        <gn-ui-button
+          type="gray"
+          (buttonClick)="toggleAltTextInput()"
+          >
+          <ng-icon name="iconoirPlus" class="me-1 text-primary"></ng-icon>
+          {{ 'input.image.displayAltTextInput' | translate }}
+        </gn-ui-button>
+      }
     </div>
   </div>
-</ng-template>
-
-<ng-template #withoutImage>
+} @else {
   <div class="w-full h-full flex flex-col gap-2">
     <label
       gnUiFilesDrop
@@ -48,54 +45,57 @@
       (keydown.enter)="fileInput.click()"
       (dragFilesOver)="handleDragFilesOver($event)"
       (dropFiles)="handleDropFiles($event)"
-    >
-      <div
-        class="w-14 h-14 rounded-md bg-gray-50 grid"
-        *ngIf="!isUploadInProgress && !imageFileError"
       >
-        <ng-icon
-          *ngIf="!dragFilesOver"
-          class="place-self-center text-primary"
-          name="iconoirMediaImage"
-        ></ng-icon>
-        <ng-icon
-          *ngIf="dragFilesOver"
-          class="place-self-center text-primary"
-          name="iconoirFramePlusIn"
-        ></ng-icon>
-      </div>
-
-      <div
-        *ngIf="isUploadInProgress && !imageFileError"
-        class="w-14 h-14 grid items-center justify-center relative"
-      >
-        <div class="text-gray-100 absolute">
-          <mat-progress-spinner
-            class="place-self-center"
-            [diameter]="56"
-            mode="determinate"
-            [value]="100"
-          ></mat-progress-spinner>
+      @if (!isUploadInProgress && !imageFileError) {
+        <div
+          class="w-14 h-14 rounded-md bg-gray-50 grid"
+          >
+          @if (!dragFilesOver) {
+            <ng-icon
+              class="place-self-center text-primary"
+              name="iconoirMediaImage"
+            ></ng-icon>
+          }
+          @if (dragFilesOver) {
+            <ng-icon
+              class="place-self-center text-primary"
+              name="iconoirFramePlusIn"
+            ></ng-icon>
+          }
         </div>
-        <div class="text-primary absolute">
-          <mat-progress-spinner
-            class="place-self-center"
-            [diameter]="56"
-            mode="determinate"
-            [value]="uploadProgress"
-          ></mat-progress-spinner>
+      }
+      @if (isUploadInProgress && !imageFileError) {
+        <div
+          class="w-14 h-14 grid items-center justify-center relative"
+          >
+          <div class="text-gray-100 absolute">
+            <mat-progress-spinner
+              class="place-self-center"
+              [diameter]="56"
+              mode="determinate"
+              [value]="100"
+            ></mat-progress-spinner>
+          </div>
+          <div class="text-primary absolute">
+            <mat-progress-spinner
+              class="place-self-center"
+              [diameter]="56"
+              mode="determinate"
+              [value]="uploadProgress"
+            ></mat-progress-spinner>
+          </div>
+          <span class="text-sm text-main font-bold">{{ uploadProgress }}%</span>
         </div>
-        <span class="text-sm text-main font-bold">{{ uploadProgress }}%</span>
-      </div>
-
-      <div class="w-14 h-14 rounded-md bg-gray-50 grid" *ngIf="imageFileError">
-        <ng-icon
-          name="iconoirMediaImageXmark"
-          class="place-self-center text-rose-500"
-          data-cy="imgErrorIcon"
-        ></ng-icon>
-      </div>
-
+      }
+      @if (imageFileError) {
+        <div class="w-14 h-14 rounded-md bg-gray-50 grid">
+          <ng-icon
+            name="iconoirMediaImageXmark"
+            class="place-self-center text-rose-500"
+            data-cy="imgErrorIcon"
+          ></ng-icon>
+        </div>
+      }
       <div class="flex flex-col items-center gap-1">
         <p class="font-medium" data-cy="imgInputMsgPrimary">
           {{ getPrimaryText() | translate }}
@@ -109,7 +109,7 @@
               : 'font-medium text-gray-500'
           "
           (click)="handleSecondaryTextClick($event)"
-        >
+          >
           {{ getSecondaryText() | translate }}
         </p>
       </div>
@@ -120,29 +120,32 @@
         class="hidden"
         (change)="handleFileInput($event)"
         [disabled]="isUploadInProgress || disabled"
-      />
+        />
     </label>
-
-    <div *ngIf="!showUrlInput" class="flex-none mt-2">
-      <gn-ui-button
-        data-cy="imgUrlBtn"
-        (buttonClick)="displayUrlInput()"
-        type="gray"
-        [disabled]="disabled"
-        [extraClass]="disabled && 'cursor-not-allowed'"
-      >
-        <ng-icon class="me-1 text-primary" name="iconoirLink"></ng-icon>
-        {{ 'input.image.displayUrlInput' | translate }}
-      </gn-ui-button>
-    </div>
-
-    <gn-ui-url-input
-      *ngIf="showUrlInput"
-      class="mt-3.5"
-      data-cy="imgUrlInput"
-      (uploadClick)="downloadUrl($event)"
-      [disabled]="isUploadInProgress || disabled"
-    >
-    </gn-ui-url-input>
+    @if (!showUrlInput) {
+      <div class="flex-none mt-2">
+        <gn-ui-button
+          data-cy="imgUrlBtn"
+          (buttonClick)="displayUrlInput()"
+          type="gray"
+          [disabled]="disabled"
+          [extraClass]="disabled && 'cursor-not-allowed'"
+          >
+          <ng-icon class="me-1 text-primary" name="iconoirLink"></ng-icon>
+          {{ 'input.image.displayUrlInput' | translate }}
+        </gn-ui-button>
+      </div>
+    }
+    @if (showUrlInput) {
+      <gn-ui-url-input
+        class="mt-3.5"
+        data-cy="imgUrlInput"
+        (uploadClick)="downloadUrl($event)"
+        [disabled]="isUploadInProgress || disabled"
+        >
+      </gn-ui-url-input>
+    }
   </div>
-</ng-template>
+}
+
+

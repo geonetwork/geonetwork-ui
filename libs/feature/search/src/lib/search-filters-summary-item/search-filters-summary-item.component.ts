@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { CommonModule, DatePipe } from '@angular/common'
+import { CommonModule, DatePipe } from '@angular/common';
 import {
   catchError,
   firstValueFrom,

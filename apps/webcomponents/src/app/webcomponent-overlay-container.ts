@@ -1,7 +1,7 @@
 import { OverlayContainer } from '@angular/cdk/overlay'
 import { Platform } from '@angular/cdk/platform'
-import { DOCUMENT } from '@angular/common'
-import { Inject, Injectable } from '@angular/core'
+
+import { Inject, Injectable, DOCUMENT } from '@angular/core'
 
 @Injectable()
 export class WebcomponentOverlayContainer extends OverlayContainer {
