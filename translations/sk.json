@@ -601,6 +601,7 @@
   "search.filters.producerOrg": "",
   "search.filters.publicationYear": "Rok zverejnenia",
   "search.filters.publisherOrg": "",
+  "search.filters.recordKind": "",
   "search.filters.recordKind.all": "Všetky",
   "search.filters.recordKind.dataset": "",
   "search.filters.recordKind.reuse": "",

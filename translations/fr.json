@@ -601,6 +601,7 @@
   "search.filters.producerOrg": "Producteur",
   "search.filters.publicationYear": "Année de publication",
   "search.filters.publisherOrg": "Distributeur",
+  "search.filters.recordKind": "Type",
   "search.filters.recordKind.all": "Tous",
   "search.filters.recordKind.dataset": "Jeux de données",
   "search.filters.recordKind.reuse": "Réutilisations",
