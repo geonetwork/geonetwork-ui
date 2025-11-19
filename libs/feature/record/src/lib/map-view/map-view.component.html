@@ -112,9 +112,8 @@
         type="outline"
         (buttonClick)="toggleLegend()"
         extraClass="absolute top-[1em] right-[1em] rounded p-1 text-xs bg-white"
-        translate
       >
-        map.legend.title
+        {{ 'map.legend.title' | translate }}
       </gn-ui-button>
 
       <gn-ui-loading-mask
