@@ -48,6 +48,12 @@ To test your Web Component in a real production context
 npm run demo
 ```
 
+To test your Web Component in a local context (needs the support services to run locally too)
+
+```shell script
+npm run demo:local
+```
+
 **Important:** The components are built in `production` mode.
 
 You can go on http://localhost:8001/ to visit GeoNetwork-UI Web Components demo pages.
@@ -60,6 +66,24 @@ This script show you how to deploy your Web Component in a real world, it builds
 
 - import the script exported by Angular
 - include your Web Component in the HTML content.
+
+## E2E
+
+It's possible de run the e2e tests locally in watch mode. For this, you first need to start the support services locally.
+
+Then, start the webcomponents demo page locally:
+
+```shell script
+npm run demo:local
+```
+
+The `local` script will adapt the deployed demo pages to a local environment (api urls, ids of records, filters...).
+
+Then start Cypress in watch mode, pointing to the correct project:
+
+```shell script
+npm run webcomponents:e2e
+```
 
 ## Create a new Web Component
 

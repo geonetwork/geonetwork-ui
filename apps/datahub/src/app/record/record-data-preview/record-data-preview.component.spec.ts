@@ -5,7 +5,7 @@ import {
   tick,
 } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
-import { BehaviorSubject, of } from 'rxjs'
+import { BehaviorSubject, of, throwError } from 'rxjs'
 import {
   MAX_FEATURE_COUNT,
   RecordDataPreviewComponent,
@@ -599,6 +599,52 @@ describe('RecordDataPreviewComponent', () => {
       expect(component.datavizConfig.chartConfig.chartType).toBe('line')
     }))
     it('should fallback to default behavior if no config file', fakeAsync(() => {
+      facade.mapApiLinks$.next(['link'])
+      facade.dataLinks$.next(['link'])
+
+      fixture = TestBed.createComponent(RecordDataPreviewComponent)
+      component = fixture.componentInstance
+      component.recordUuid = 'test-uuid-1234'
+
+      tick()
+      component.ngOnInit()
+      tick()
+      fixture.detectChanges()
+
+      expect(component.datavizConfig.view).toBe('map')
+    }))
+    it('should fallback to default behavior if an error occurs while reading the attachments', fakeAsync(() => {
+      platformServiceInterface.getRecordAttachments = jest
+        .fn()
+        .mockReturnValue(throwError(() => new Error('Attachment read error')))
+
+      facade.mapApiLinks$.next(['link'])
+      facade.dataLinks$.next(['link'])
+
+      fixture = TestBed.createComponent(RecordDataPreviewComponent)
+      component = fixture.componentInstance
+      component.recordUuid = 'test-uuid-1234'
+
+      tick()
+      component.ngOnInit()
+      tick()
+      fixture.detectChanges()
+
+      expect(component.datavizConfig.view).toBe('map')
+    }))
+    it('should fallback to default behavior if an error occurs while reading the config', fakeAsync(() => {
+      platformServiceInterface.getRecordAttachments = jest.fn().mockReturnValue(
+        of([
+          {
+            fileName: 'datavizConfig.json',
+            url: new URL('http://example.com/attachment/datavizConfig.json'),
+          },
+        ])
+      )
+      platformServiceInterface.getFileContent = jest
+        .fn()
+        .mockReturnValue(throwError(() => new Error('File read error')))
+
       facade.mapApiLinks$.next(['link'])
       facade.dataLinks$.next(['link'])
 

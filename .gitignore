@@ -49,3 +49,4 @@ docs/.vitepress/dist
 docs/.vitepress/cache
 
 apps/*-e2e/cypress/**
+apps/webcomponents/cypress/screenshots/**

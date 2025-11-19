@@ -65,7 +65,9 @@ describe('dataset feature catalog - Multiple feature types', () => {
     cy.get('[data-cy="total-objects"]').should('contain', '1')
     cy.get('[data-cy="total-attributes"]').should('contain', '9')
 
-    cy.get('#feature-catalog input[type="text"]').clear().type('Zone autre')
+    cy.get('#feature-catalog input[type="text"]').type(
+      '{selectall}{del}Zone autre'
+    )
     cy.get('#feature-catalog gn-ui-expandable-panel').should('have.length', 0)
     cy.get('[data-cy="total-objects"]').should('contain', '0')
     cy.get('[data-cy="total-attributes"]').should('contain', '0')
