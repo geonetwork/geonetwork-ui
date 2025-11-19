@@ -415,6 +415,7 @@ describe('StacViewComponent', () => {
     beforeEach(() => {
       component.initialTemporalExtent = mockTemporalExtent
       component.initialSpatialExtent = mockSpatialExtent
+      component.initialPageUrl = 'http://example.com/stac'
     })
 
     it('should reset temporal extent to initial value', () => {
@@ -424,6 +425,12 @@ describe('StacViewComponent', () => {
       })
       component.onResetFilters()
       expect(component.currentTemporalExtent$.value).toEqual(mockTemporalExtent)
+    })
+
+    it('should reset currentPageUrl to initial page URL', () => {
+      component.currentPageUrl$.next('http://example.com/stac?page=2')
+      component.onResetFilters()
+      expect(component.currentPageUrl$.value).toEqual('http://example.com/stac')
     })
 
     it('should reset spatial extent and map context when spatial filter is enabled', () => {
