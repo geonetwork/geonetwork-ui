@@ -1,5 +1,9 @@
 import { ViewportScroller } from '@angular/common'
-import { importProvidersFrom, NgModule } from '@angular/core'
+import {
+  importProvidersFrom,
+  NgModule,
+  provideNgReflectAttributes,
+} from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { provideAnimations } from '@angular/platform-browser/animations'
 import { Router, RouterModule } from '@angular/router'
@@ -109,6 +113,7 @@ export const metaReducers: MetaReducer[] = !environment.production ? [] : []
     SearchRouterContainerDirective,
   ],
   providers: [
+    provideNgReflectAttributes(),
     { provide: RouterService, useClass: DatahubRouterService },
     importProvidersFrom(FeatureSearchModule),
     importProvidersFrom(FeatureRecordModule),
