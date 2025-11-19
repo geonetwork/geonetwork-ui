@@ -32,15 +32,13 @@ import { DataService } from '@geonetwork-ui/feature/dataviz'
 import {
   BehaviorSubject,
   catchError,
-  combineLatest,
   debounceTime,
+  distinctUntilChanged,
   from,
   map,
   Observable,
   of,
-  pairwise,
   shareReplay,
-  startWith,
   switchMap,
   take,
   tap,
@@ -54,6 +52,67 @@ import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 
 const STAC_ITEMS_PER_PAGE = 12
 const DEBOUNCE_TIME_MS = 500
+
+interface StacFilterState {
+  temporalExtent: DatasetTemporalExtent | null
+  spatialExtent: Extent | null
+  isSpatialExtentFilterEnabled: boolean
+  pageUrl: string | null
+}
+
+function areTemporalExtentsEqual(
+  previous: DatasetTemporalExtent | null,
+  current: DatasetTemporalExtent | null
+): boolean {
+  const previousStartTime = previous?.start?.getTime() ?? null
+  const previousEndTime = previous?.end?.getTime() ?? null
+
+  const currentStartTime = current?.start?.getTime() ?? null
+  const currentEndTime = current?.end?.getTime() ?? null
+
+  return (
+    previousStartTime === currentStartTime && previousEndTime === currentEndTime
+  )
+}
+
+function areSpatialExtentsEqual(
+  previous: Extent | null,
+  current: Extent | null
+): boolean {
+  return (
+    previous?.[0] === current?.[0] &&
+    previous?.[1] === current?.[1] &&
+    previous?.[2] === current?.[2] &&
+    previous?.[3] === current?.[3]
+  )
+}
+
+function areFilterStatesEqual(
+  previous: StacFilterState,
+  current: StacFilterState
+): boolean {
+  const sameTemporalExtents = areTemporalExtentsEqual(
+    previous.temporalExtent,
+    current.temporalExtent
+  )
+
+  const sameSpatialExtents =
+    !current.isSpatialExtentFilterEnabled ||
+    areSpatialExtentsEqual(previous.spatialExtent, current.spatialExtent)
+
+  const sameIsSpatialExtentFilterEnabled =
+    previous.isSpatialExtentFilterEnabled ===
+    current.isSpatialExtentFilterEnabled
+
+  const samePageUrl = previous.pageUrl === current.pageUrl
+
+  return (
+    sameTemporalExtents &&
+    sameSpatialExtents &&
+    sameIsSpatialExtentFilterEnabled &&
+    samePageUrl
+  )
+}
 
 @Component({
   selector: 'gn-ui-stac-view',
@@ -79,142 +138,91 @@ const DEBOUNCE_TIME_MS = 500
 export class StacViewComponent implements OnInit, AfterViewInit {
   @ViewChild('mapContainer') mapContainer: MapContainerComponent
 
-  error = null
-
   initialTemporalExtent: DatasetTemporalExtent | null = null
-  currentTemporalExtent$ = new BehaviorSubject<DatasetTemporalExtent | null>(
-    null
-  )
-
   initialSpatialExtent: Extent | null = null
   resolvedInitialSpatialExtent: Extent | null = null
-  currentSpatialExtent$ = new BehaviorSubject<Extent | null>(null)
-  isSpatialFilterEnabled$ = new BehaviorSubject<boolean>(true)
+  initialPageUrl: string
+  previousPageUrl: string
+  nextPageUrl: string
+
+  error$ = new BehaviorSubject<string | null>(null)
   mapContext$ = new BehaviorSubject<MapContext>({
     layers: [],
     view: null,
   })
+  filterState$ = new BehaviorSubject<StacFilterState>({
+    temporalExtent: null,
+    spatialExtent: null,
+    isSpatialExtentFilterEnabled: true,
+    pageUrl: null,
+  })
 
-  isFilterModified$ = combineLatest([
-    this.currentTemporalExtent$,
-    this.currentSpatialExtent$,
-    this.isSpatialFilterEnabled$,
-  ]).pipe(
-    map(([temporalExtent, spatialExtent, isSpatialFilterEnabled]) => {
-      const isTemporalModified =
-        this.initialTemporalExtent?.start !== temporalExtent?.start ||
-        this.initialTemporalExtent?.end !== temporalExtent?.end
+  // Derived observables for template bindings
+  currentTemporalExtent$ = this.filterState$.pipe(
+    map((state) => state.temporalExtent)
+  )
+  isSpatialFilterEnabled$ = this.filterState$.pipe(
+    map((state) => state.isSpatialExtentFilterEnabled)
+  )
 
-      if (isTemporalModified) {
-        return true
-      }
-
-      if (isSpatialFilterEnabled === false) {
+  isFilterModified$ = this.filterState$.pipe(
+    map((filterState) => {
+      // If initial spatial extent is not yet resolved or filter spatial extent is null,
+      // we consider that the filter is not modified for simplicity
+      if (
+        !this.resolvedInitialSpatialExtent ||
+        filterState.spatialExtent === null
+      ) {
         return false
       }
 
+      const isTemporalModified = !areTemporalExtentsEqual(
+        filterState.temporalExtent,
+        this.initialTemporalExtent
+      )
+
       const isSpatialModified =
-        spatialExtent?.[0] !== this.resolvedInitialSpatialExtent?.[0] ||
-        spatialExtent?.[1] !== this.resolvedInitialSpatialExtent?.[1] ||
-        spatialExtent?.[2] !== this.resolvedInitialSpatialExtent?.[2] ||
-        spatialExtent?.[3] !== this.resolvedInitialSpatialExtent?.[3]
-
-      return isSpatialModified
-    })
-  )
-
-  initialPageUrl: string
-  previousPageUrl: string
-  nextPageUrl: string
-  currentPageUrl$ = new BehaviorSubject<string | null>(null)
-
-  effectiveCurrentPageUrl$ = combineLatest([
-    this.currentPageUrl$,
-    this.currentTemporalExtent$,
-    this.currentSpatialExtent$,
-  ]).pipe(
-    startWith([null, null, null] as [
-      string | null,
-      DatasetTemporalExtent | null,
-      Extent | null,
-    ]),
-    pairwise(),
-    switchMap(([previous, latest]) => {
-      const [, oldTemporalExtent, oldSpatialExtent] = previous
-      const [newCurrentPageUrl, newTemporalExtent, newSpatialExtent] = latest
-
-      if (
-        this.hasFiltersChanged(
-          oldTemporalExtent,
-          oldSpatialExtent,
-          newTemporalExtent,
-          newSpatialExtent
+        filterState.isSpatialExtentFilterEnabled &&
+        !areSpatialExtentsEqual(
+          filterState.spatialExtent,
+          this.resolvedInitialSpatialExtent
         )
-      ) {
-        return of(this.initialPageUrl)
-      }
 
-      return of(newCurrentPageUrl)
-    })
+      return isTemporalModified || isSpatialModified
+    }),
+    shareReplay({ bufferSize: 1, refCount: false })
   )
 
-  items$: Observable<StacItem[]> = combineLatest([
-    this.effectiveCurrentPageUrl$,
-    this.currentTemporalExtent$,
-    this.isSpatialFilterEnabled$,
-    this.currentSpatialExtent$,
-  ]).pipe(
+  items$: Observable<StacItem[]> = this.filterState$.pipe(
     debounceTime(DEBOUNCE_TIME_MS),
-    switchMap(
-      ([
-        currentPageUrl,
-        currentTemporalExtent,
-        isSpatialFilterEnabled,
-        currentSpatialExtent,
-      ]) => {
-        this.error = null
-        const options: GetCollectionItemsOptions = {
-          limit: STAC_ITEMS_PER_PAGE,
-        }
-
-        if (
-          currentTemporalExtent &&
-          (currentTemporalExtent.start || currentTemporalExtent.end)
-        ) {
-          options.datetime = {
-            ...(currentTemporalExtent.start && {
-              start: currentTemporalExtent.start,
-            }),
-            ...(currentTemporalExtent.end && {
-              end: currentTemporalExtent.end,
-            }),
-          }
-        }
-
-        if (isSpatialFilterEnabled && currentSpatialExtent) {
-          options.bbox = currentSpatialExtent
-        }
-
-        return from(
-          this.dataService.getItemsFromStacApi(currentPageUrl, options)
-        ).pipe(
-          tap((stacDocument) => {
-            this.previousPageUrl =
-              stacDocument.links.find((link) => link.rel === 'previous')
-                ?.href || null
-            this.nextPageUrl =
-              stacDocument.links.find((link) => link.rel === 'next')?.href ||
-              null
-          }),
-          map((stacDocument) => stacDocument.features),
-          catchError((err) => {
-            this.handleError(err)
-            return of([])
-          })
-        )
+    distinctUntilChanged((prev, curr) => areFilterStatesEqual(prev, curr)),
+    switchMap((filterState) => {
+      if (filterState.pageUrl === null) {
+        return of([])
       }
-    ),
-    shareReplay({ bufferSize: 1, refCount: true })
+
+      this.error$.next(null)
+      return from(
+        this.dataService.getItemsFromStacApi(
+          filterState.pageUrl,
+          this.buildRequestOptions(filterState)
+        )
+      ).pipe(
+        tap((stacDocument) => {
+          this.previousPageUrl =
+            stacDocument.links.find((link) => link.rel === 'previous')?.href ||
+            null
+          this.nextPageUrl =
+            stacDocument.links.find((link) => link.rel === 'next')?.href || null
+        }),
+        map((stacDocument) => stacDocument.features),
+        catchError((err) => {
+          this.handleError(err)
+          return of([])
+        })
+      )
+    }),
+    shareReplay({ bufferSize: 1, refCount: false })
   )
 
   constructor(
@@ -248,9 +256,14 @@ export class StacViewComponent implements OnInit, AfterViewInit {
       )
       .subscribe(({ temporalExtent, spatialExtent }) => {
         this.initialTemporalExtent = temporalExtent
-        this.currentTemporalExtent$.next(temporalExtent)
-
         this.initialSpatialExtent = spatialExtent
+
+        this.filterState$.next({
+          ...this.filterState$.value,
+          temporalExtent: this.initialTemporalExtent,
+          pageUrl: this.initialPageUrl,
+        })
+
         this.mapContext$.next({
           ...this.mapContext$.value,
           view: {
@@ -267,7 +280,10 @@ export class StacViewComponent implements OnInit, AfterViewInit {
       .subscribe((link) => {
         if (link) {
           this.initialPageUrl = link.url.href
-          this.currentPageUrl$.next(link.url.href)
+          this.filterState$.next({
+            ...this.filterState$.value,
+            pageUrl: link.url.href,
+          })
         }
       })
   }
@@ -278,11 +294,19 @@ export class StacViewComponent implements OnInit, AfterViewInit {
   }
 
   onTemporalExtentChange(extent: DatasetTemporalExtent | null) {
-    this.currentTemporalExtent$.next(extent)
+    this.filterState$.next({
+      ...this.filterState$.value,
+      temporalExtent: extent,
+      pageUrl: this.initialPageUrl,
+    })
   }
 
   onSpatialExtentChange(extent: Extent) {
-    this.currentSpatialExtent$.next(extent)
+    this.filterState$.next({
+      ...this.filterState$.value,
+      spatialExtent: extent,
+      pageUrl: this.initialPageUrl,
+    })
   }
 
   onResolvedMapExtentChange(extent: Extent) {
@@ -290,51 +314,70 @@ export class StacViewComponent implements OnInit, AfterViewInit {
   }
 
   onSpatialFilterToggle(enabled: boolean) {
-    this.isSpatialFilterEnabled$.next(enabled)
+    this.filterState$.next({
+      ...this.filterState$.value,
+      isSpatialExtentFilterEnabled: enabled,
+      pageUrl: this.initialPageUrl,
+    })
   }
 
   onResetFilters() {
-    this.currentTemporalExtent$.next(this.initialTemporalExtent)
-    this.isSpatialFilterEnabled$.next(true)
-    this.currentSpatialExtent$.next(this.resolvedInitialSpatialExtent)
-    this.currentPageUrl$.next(this.initialPageUrl)
     this.mapContext$.next({
       ...this.mapContext$.value,
       view: {
         extent: this.initialSpatialExtent,
       },
     })
+
+    this.filterState$.next({
+      temporalExtent: this.initialTemporalExtent,
+      spatialExtent: this.resolvedInitialSpatialExtent,
+      isSpatialExtentFilterEnabled: true,
+      pageUrl: this.initialPageUrl,
+    })
   }
 
-  private hasFiltersChanged(
-    oldTemporalExtent: DatasetTemporalExtent | null,
-    oldSpatialExtent: Extent | null,
-    newTemporalExtent: DatasetTemporalExtent | null,
-    newSpatialExtent: Extent | null
-  ): boolean {
-    return (
-      oldTemporalExtent !== newTemporalExtent ||
-      oldSpatialExtent?.[0] !== newSpatialExtent?.[0] ||
-      oldSpatialExtent?.[1] !== newSpatialExtent?.[1] ||
-      oldSpatialExtent?.[2] !== newSpatialExtent?.[2] ||
-      oldSpatialExtent?.[3] !== newSpatialExtent?.[3]
-    )
+  private buildRequestOptions(
+    filterState: StacFilterState
+  ): GetCollectionItemsOptions {
+    const options: GetCollectionItemsOptions = {
+      limit: STAC_ITEMS_PER_PAGE,
+    }
+
+    if (
+      filterState.temporalExtent &&
+      (filterState.temporalExtent.start || filterState.temporalExtent.end)
+    ) {
+      options.datetime = {
+        ...(filterState.temporalExtent.start && {
+          start: filterState.temporalExtent.start,
+        }),
+        ...(filterState.temporalExtent.end && {
+          end: filterState.temporalExtent.end,
+        }),
+      }
+    }
+
+    if (filterState.isSpatialExtentFilterEnabled && filterState.spatialExtent) {
+      options.bbox = filterState.spatialExtent
+    }
+
+    return options
   }
 
   handleError(error: FetchError | Error | string) {
     if (error instanceof FetchError) {
-      this.error = this.translateService.instant(
-        `dataset.error.${error.type}`,
-        {
+      this.error$.next(
+        this.translateService.instant(`dataset.error.${error.type}`, {
           info: error.info,
-        }
+        })
       )
       console.warn(error.message)
     } else if (error instanceof Error) {
-      this.error = this.translateService.instant(error.message)
+      this.error$.next(this.translateService.instant(error.message))
       console.warn(error.stack || error)
     } else {
-      this.error = this.translateService.instant(error)
+      this.error$.next(this.translateService.instant(error))
       console.warn(error)
     }
   }
@@ -347,9 +390,15 @@ export class StacViewComponent implements OnInit, AfterViewInit {
     return this.nextPageUrl == null
   }
   goToNextPage() {
-    this.currentPageUrl$.next(this.nextPageUrl)
+    this.filterState$.next({
+      ...this.filterState$.value,
+      pageUrl: this.nextPageUrl,
+    })
   }
   goToPrevPage() {
-    this.currentPageUrl$.next(this.previousPageUrl)
+    this.filterState$.next({
+      ...this.filterState$.value,
+      pageUrl: this.previousPageUrl,
+    })
   }
 }

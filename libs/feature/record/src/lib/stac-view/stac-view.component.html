@@ -59,7 +59,7 @@
     </div>
     <ng-template #noResultsOrError>
       <gn-ui-popup-alert
-        *ngIf="error"
+        *ngIf="error$ | async as error"
         type="warning"
         icon="matErrorOutlineOutline"
         class="absolute left-0 top-0 w-full block"
@@ -67,7 +67,7 @@
         <span translate>{{ error }}</span>
       </gn-ui-popup-alert>
       <div
-        *ngIf="!error"
+        *ngIf="!(error$ | async)"
         class="flex items-center justify-center flex-col h-full gap-[10px]"
       >
         <h2 class="text-center text-xl" translate>stac.results.noResults</h2>
