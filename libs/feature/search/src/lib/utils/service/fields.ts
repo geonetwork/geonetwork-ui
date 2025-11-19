@@ -521,34 +521,21 @@ export class RecordKindField extends SimpleSearchField {
   }
 
   getAvailableValues(): Observable<FieldAvailableValue[]> {
-    return this.repository.aggregate(this.getAggregations()).pipe(
-      map(
-        (response) =>
-          (response[this.esFieldName] as AggregationBuckets).buckets || []
-      ),
-      map((buckets: TermBucket[]) => {
-        const counts = buckets.reduce(
-          (acc, { term, count }) => {
-            const value = term.toString()
-            const key = this.TYPE_MAPPING.reuse.includes(value)
-              ? 'reuse'
-              : this.TYPE_MAPPING.dataset.includes(value)
-                ? 'dataset'
-                : value
-
-            acc[key] = (acc[key] || 0) + count
-            return acc
-          },
-          {} as Record<string, number>
-        )
-
-        return Object.keys(this.TYPE_MAPPING).map((type) => ({
-          label: type,
-          value: type,
-          count: counts[type] ?? 0,
-        }))
-      })
-    )
+    // simplified as available values now depend on 'resourceType' and 'cl_presentationForm' fields
+    return of([
+      {
+        label: 'dataset',
+        value: 'dataset',
+      },
+      {
+        label: 'service',
+        value: 'service',
+      },
+      {
+        label: 'reuse',
+        value: 'reuse',
+      },
+    ])
   }
 
   getFiltersForValues(values: FieldValue[]): Observable<FieldFilters> {
