@@ -338,7 +338,20 @@ describe('MdViewEffects', () => {
 
   describe('loadFeatureCatalog$', () => {
     const featureCatalog = {
-      attributes: [{ name: 'test', title: 'Test' }],
+      featureTypes: [
+        {
+          name: 'test',
+          definition: 'Test definition',
+          attributes: [
+            {
+              name: 'test',
+              definition: 'Test attribute',
+              type: 'string',
+              code: 'test_code',
+            },
+          ],
+        },
+      ],
     }
 
     describe('when api success and feature catalog found', () => {
