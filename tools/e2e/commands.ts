@@ -24,7 +24,10 @@ declare namespace Cypress {
     clearFavorites(): void
     clearRecordDrafts(): void
     deleteRecord(uuid: string): void
-    editor_createRecordCopy(): Chainable<string | number | string[]>
+    editor_createRecordCopy(
+      uuidToCopy?: string,
+      titleToCopy?: string
+    ): Chainable<string | number | string[]>
     editor_readFormUniqueIdentifier(): Chainable<string | number | string[]>
     editor_wrapPreviousDraft(uuid: string): void
     editor_wrapFirstDraft(uuid: string): void
@@ -239,15 +242,18 @@ Cypress.Commands.add('deleteRecord', (uuid: string) => {
     })
 })
 
-Cypress.Commands.add('editor_createRecordCopy', () => {
+Cypress.Commands.add('editor_createRecordCopy', (uuidToCopy, titleToCopy) => {
   cy.login('admin', 'admin', false)
   cy.viewport(1920, 2400)
 
   cy.clearRecordDrafts()
 
+  const recordTitle = titleToCopy ?? 'station épuration'
+  const recordUuid = uuidToCopy ?? '011963da-afc0-494c-a2cc-5cbd59e122e4'
+
   // Clear any existing copy of the test record
   cy.visit('/catalog/search')
-  cy.get('gn-ui-fuzzy-search input').type('station épuration{enter}')
+  cy.get('gn-ui-fuzzy-search input').type(`${recordTitle}{enter}`)
   cy.get('[data-cy="table-row"]')
     .should('have.length.lt', 10) // making sure the records were updated
     .then((rows$) => {
@@ -261,24 +267,8 @@ Cypress.Commands.add('editor_createRecordCopy', () => {
       cy.log('An existing copy of the test record was found and deleted.')
     })
 
-  // Duplicate & publish the Stations d'épuration record
-  cy.get('gn-ui-fuzzy-search input').type(
-    '{selectAll}{del}station épuration{enter}'
-  )
-  cy.get('[data-cy="table-row"]')
-    .first()
-    .should('contain.text', "Stations d'épuration")
-    .find('[data-test="record-menu-button"]')
-    .click()
-  cy.get('[data-test="record-menu-duplicate-button"]').click()
-  cy.url().should('include', '/duplicate/')
-  // because new records are saved by default, they are not drafts and can be published
-  cy.get('md-editor-publish-button').click()
-
-  // Open the copy
-  cy.visit('/catalog/search')
-  cy.get('gn-ui-fuzzy-search input').type('station épuration copy{enter}')
-  cy.get('[data-cy="table-row"]').first().children('div').eq(2).click()
+  // Duplicate the Stations d'épuration record
+  cy.visit(`/duplicate/${recordUuid}`)
   cy.url().should('include', '/edit/')
   return cy.editor_readFormUniqueIdentifier()
 })

@@ -52,7 +52,19 @@ describe('record-actions', () => {
       // Delete the record from my-records page
       cy.visit('/my-space/my-records')
       cy.get('gn-ui-pagination-buttons').find('button').eq(2).click()
-      cy.get('[data-test="record-menu-button"]').last().click()
+
+      // wait for the record to show up
+      cy.get('[data-cy="table-row"]')
+        .contains(recordId)
+        .should('have.length', 1)
+
+      // click on delete button for that row
+      cy.get('[data-cy="table-row"]')
+        .filter(`:contains(${recordId})`)
+        .first()
+        .find('[data-test="record-menu-button"]')
+        .last()
+        .click()
       cy.get('[data-test="record-menu-delete-button"]').click()
       cy.get('[data-cy="confirm-button"]').click()
       cy.get('[data-cy="table-row"]')
@@ -140,96 +152,82 @@ describe('record-actions', () => {
     })
   })
 
-  describe('undo action', () => {
-    beforeEach(() => {
-      // create a record
-      cy.get('[data-cy="create-record"]').click()
-      cy.url().should('include', '/edit')
-      cy.editor_readFormUniqueIdentifier().as('newRecordUuid')
+  it('undo action', () => {
+    // create a record
+    cy.get('[data-cy="create-record"]').click()
+    cy.url().should('include', '/edit')
+    cy.editor_readFormUniqueIdentifier().as('newRecordUuid')
+
+    // should restore the record and refresh the interface
+    cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
+      .as('abstractField')
+      .focus()
+    cy.get('@abstractField').should('have.value', '')
+    cy.get('@abstractField').type('record abstract')
+    cy.editor_findDraftInLocalStorage().then((value) => {
+      expect(value).to.not.equal('null')
     })
-    afterEach(() => {
-      // delete the new record
-      cy.get<string>('@newRecordUuid').then((uuid) => cy.deleteRecord(uuid))
+
+    cy.intercept({
+      method: 'PUT',
+      pathname: '**/records',
+    }).as('insertRecord')
+    cy.get('md-editor-publish-button').click()
+    cy.wait('@insertRecord')
+    cy.get('[data-cy="undo-button"] button').should('be.disabled')
+
+    cy.get('@abstractField').clear()
+    cy.get('@abstractField').focus()
+    cy.get('@abstractField').type('draft abstract')
+    cy.editor_findDraftInLocalStorage().then((value) => {
+      expect(value).to.contain('draft abstract')
     })
-    it('should restore the record and refresh the interface', () => {
-      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
-        .as('abstractField')
-        .focus()
-      cy.get('@abstractField').should('have.value', '')
-      cy.get('@abstractField').type('record abstract')
-      cy.editor_findDraftInLocalStorage().then((value) => {
-        expect(value).to.not.equal('null')
-      })
 
-      cy.intercept({
-        method: 'PUT',
-        pathname: '**/records',
-      }).as('insertRecord')
-      cy.get('md-editor-publish-button').click()
-      cy.wait('@insertRecord')
-      cy.get('[data-cy="undo-button"] button').should('be.disabled')
-
-      cy.get('@abstractField').clear()
-      cy.get('@abstractField').focus()
-      cy.get('@abstractField').type('draft abstract')
-      cy.editor_findDraftInLocalStorage().then((value) => {
-        expect(value).to.contain('draft abstract')
-      })
-
-      cy.get('[data-cy="undo-button"]').click()
-      cy.get('gn-ui-confirmation-dialog').find('gn-ui-button').eq(1).click()
-      cy.editor_findDraftInLocalStorage().then((value) => {
-        expect(value).to.not.equal('null')
-      })
-      cy.get('@abstractField').should('have.value', 'record abstract')
+    cy.get('[data-cy="undo-button"]').click()
+    cy.get('gn-ui-confirmation-dialog').find('gn-ui-button').eq(1).click()
+    cy.editor_findDraftInLocalStorage().then((value) => {
+      expect(value).to.not.equal('null')
     })
-    it('should restore from the draft dashboard', () => {
-      cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
-        .as('abstractField')
-        .focus()
-      cy.get('@abstractField').should('have.value', '')
-      cy.get('@abstractField').type('{selectAll}{backspace}record abstract')
-      cy.editor_findDraftInLocalStorage().then((value) => {
-        expect(value).to.not.equal('null')
-      })
+    cy.get('@abstractField').should('have.value', 'record abstract')
 
-      cy.intercept({
-        method: 'PUT',
-        pathname: '**/records',
-      }).as('insertRecord')
-      cy.get('md-editor-publish-button').click()
-      cy.wait('@insertRecord')
-      cy.get('[data-cy="undo-button"] button').should('be.disabled')
+    // make sure the record is published & up to date
+    cy.get('[data-cy="undo-button"] button').should('be.disabled')
 
-      cy.get('@abstractField').clear()
-      cy.get('@abstractField').focus()
-      cy.get('@abstractField').type('draft abstract')
-      cy.editor_findDraftInLocalStorage().then((value) => {
-        expect(value).to.contain('draft abstract')
-      })
-
-      // undo from the action-menu
-      cy.visit('/my-space/my-draft')
-      cy.get('[data-test="record-menu-button"]').click()
-      cy.get('[data-test="record-menu-delete-button"]').find('button').click()
-      cy.get('[data-test="rollbackMenuSection"]').should('be.visible')
-      cy.get('[data-test="rollbackMenuSection"]').find('button').first().click()
-      cy.get('[data-cy="table-row"]').should('have.length', 0)
-      // check that the rollback was effective
-      cy.visit('/catalog/search')
-      cy.get('[data-cy="resultItemTitle"]').first().click()
-
-      cy.get('@abstractField').should('have.value', 'record abstract')
+    // create modified abstract
+    cy.get('@abstractField').clear()
+    cy.get('@abstractField').focus()
+    cy.get('@abstractField').type('draft abstract')
+    cy.editor_findDraftInLocalStorage().then((value) => {
+      expect(value).to.contain('draft abstract')
     })
+
+    // undo from the action-menu in the dashboard should restore the record
+    cy.visit('/my-space/my-draft')
+    cy.get('[data-test="record-menu-button"]').click()
+    cy.get('[data-test="record-menu-delete-button"]').find('button').click()
+    cy.get('[data-test="rollbackMenuSection"]').should('be.visible')
+    cy.get('[data-test="rollbackMenuSection"]').find('button').first().click()
+    cy.get('[data-cy="table-row"]').should('have.length', 0)
+    // check that the rollback was effective
+    cy.visit('/catalog/search')
+    cy.get('[data-cy="resultItemTitle"]').first().click()
+
+    cy.get('@abstractField').should('have.value', 'record abstract')
+
+    // delete the new record
+    cy.get<string>('@newRecordUuid').then((uuid) => cy.deleteRecord(uuid))
   })
 
   it('duplicate action', () => {
     // it should duplicate the record
     cy.get('.table-header-cell').eq(1).click()
 
-    // wait for 500ms because the order might change
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(500)
+    // make sure the first record is the one we want
+    cy.get('gn-ui-results-table')
+      .find('[data-cy="resultItemTitle"]')
+      .first()
+      .invoke('text')
+      .should('eq', 'Accroches vélos MEL')
 
     cy.get('[data-cy="table-row"]')
       .first()
@@ -325,68 +323,61 @@ describe('record-actions', () => {
     )
   })
 
-  describe('drafting', () => {
-    describe('if a user edits the record in the meantime', () => {
-      beforeEach(() => {
-        cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
-        cy.editor_readFormUniqueIdentifier().as('recordUuid')
-        cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
-          'abstractField'
+  it('drafting', () => {
+    // if a user edits the record in the meantime
+    cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
+    cy.editor_readFormUniqueIdentifier().as('recordUuid')
+    cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
+      'abstractField'
+    )
+    cy.get('@abstractField').clear()
+    cy.get('@abstractField').type('modified abstract')
+    cy.editor_findDraftInLocalStorage().then((value) => {
+      expect(value).to.contain('modified abstract')
+    })
+    cy.get<string>('@recordUuid').then((uuid) => cy.editor_wrapFirstDraft(uuid))
+    cy.clearRecordDrafts()
+    cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
+    cy.get<string>('@recordUuid').then((uuid) =>
+      cy.editor_wrapPreviousDraft(uuid)
+    )
+    cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
+      'abstractField'
+    )
+    cy.get('@abstractField').clear()
+    cy.get('@abstractField').type('modified by someone else')
+    cy.get<string>('@recordUuid').then((uuid) =>
+      cy.editor_publishAndReload(uuid)
+    )
+    cy.window().then((win) => {
+      cy.get('@firstDraft').then(function (firstDraft) {
+        return win.localStorage.setItem(
+          `geonetwork-ui-draft-${this.recordUuid}`,
+          firstDraft.toString()
         )
-        cy.get('@abstractField').clear()
-        cy.get('@abstractField').type('modified abstract')
-        cy.editor_findDraftInLocalStorage().then((value) => {
-          expect(value).to.contain('modified abstract')
-        })
-        cy.get<string>('@recordUuid').then((uuid) =>
-          cy.editor_wrapFirstDraft(uuid)
-        )
-        cy.clearRecordDrafts()
-        cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
-        cy.get<string>('@recordUuid').then((uuid) =>
-          cy.editor_wrapPreviousDraft(uuid)
-        )
-        cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
-          'abstractField'
-        )
-        cy.get('@abstractField').clear()
-        cy.get('@abstractField').type('modified by someone else')
-        cy.get<string>('@recordUuid').then((uuid) =>
-          cy.editor_publishAndReload(uuid)
-        )
-        cy.window().then((win) => {
-          cy.get('@firstDraft').then(function (firstDraft) {
-            return win.localStorage.setItem(
-              `geonetwork-ui-draft-${this.recordUuid}`,
-              firstDraft.toString()
-            )
-          })
-        })
-        cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
-      })
-      it('should show the warning banner and the warning menu when publishing', () => {
-        cy.get('[data-test="draft-alert"]').should('be.visible')
-        cy.get('md-editor-publish-button').click()
-        cy.get('[data-test="publish-warning"]').should('be.visible')
       })
     })
-    describe('if nobody edits the record in the meantime', () => {
-      beforeEach(() => {
-        cy.clearRecordDrafts()
-        cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
-        cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
-          'abstractField'
-        )
-        cy.get('@abstractField').clear()
-        cy.get('@abstractField').type('modified abstract')
-        cy.visit('/catalog/search')
-      })
-      it('should not show any warning', () => {
-        cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
-        cy.get('[data-test="draft-alert"]').should('not.exist')
-        cy.get('md-editor-publish-button').click()
-        cy.get('[data-test="publish-warning"]').should('not.exist')
-      })
-    })
+    cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
+
+    // should show the warning banner and the warning menu when publishing
+    cy.get('[data-test="draft-alert"]').should('be.visible')
+    cy.get('md-editor-publish-button').click()
+    cy.get('[data-test="publish-warning"]').should('be.visible')
+
+    // if nobody edits the record in the meantime', () => {
+    cy.clearRecordDrafts()
+    cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
+    cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').as(
+      'abstractField'
+    )
+    cy.get('@abstractField').clear()
+    cy.get('@abstractField').type('modified abstract')
+    cy.visit('/catalog/search')
+
+    // should not show any warning
+    cy.visit('/edit/9e1ea778-d0ce-4b49-90b7-37bc0e448300')
+    cy.get('[data-test="draft-alert"]').should('not.exist')
+    cy.get('md-editor-publish-button').click()
+    cy.get('[data-test="publish-warning"]').should('not.exist')
   })
 })

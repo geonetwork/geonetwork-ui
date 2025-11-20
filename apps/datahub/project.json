@@ -43,13 +43,26 @@
         ],
         "scripts": [],
         "allowedCommonJsDependencies": [
-          "duration-relativetimeformat",
-          "papaparse",
-          "xlsx",
-          "chroma-js",
           "@rgrove/parse-xml",
+          "semver",
+          "geojson-validation",
+          "basiclightbox",
+          "duration-relativetimeformat",
+          "alasql",
+          "papaparse",
+          "lodash.throttle",
+          "lru-cache",
           "@messageformat/core",
-          "rbush"
+          "buffer",
+          "queue-microtask",
+          "readable-stream",
+          "pbf",
+          "rbush",
+          "@babel/runtime/regenerator",
+          "cross-fetch",
+          "@frogcat/ttl2jsonld",
+          "solid-namespace",
+          "@xmldom/xmldom"
         ]
       },
       "configurations": {

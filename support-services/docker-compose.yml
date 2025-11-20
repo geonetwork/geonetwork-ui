@@ -30,8 +30,12 @@ services:
         soft: 65536
         hard: 65536
     environment:
-      discovery.type: single-node
-      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - ${ES_XPACK_PARAMETER_PREFIX}xpack.security.enabled=false
+      - ${ES_XPACK_PARAMETER_PREFIX}xpack.security.enrollment.enabled=false
+      - ${ES_XPACK_PARAMETER_PREFIX}xpack.security.http.ssl.enabled=false
+      - ${ES_XPACK_PARAMETER_PREFIX}xpack.security.transport.ssl.enabled=false
     healthcheck:
       test:
         [

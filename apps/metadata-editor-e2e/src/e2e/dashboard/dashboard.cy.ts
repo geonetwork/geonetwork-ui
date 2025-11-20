@@ -67,39 +67,43 @@ describe('dashboard (landing page)', () => {
 
     // go to page 2 (url)
     cy.visit('/catalog/search?_page=2')
-    cy.get('gn-ui-results-table')
-      .find('.table-row-cell')
-      .eq(1)
-      .invoke('text')
-      .invoke('trim')
-      .then(function (text) {
-        expect(text).not.to.equal(this.pageOneFirstRecord)
-      })
+    cy.wrap(function () {
+      cy.get('gn-ui-results-table')
+        .find('.table-row-cell')
+        .eq(1)
+        .invoke('text')
+        .invoke('trim')
+        .should('equal', this.pageOneFirstRecord)
+    })
 
     // go back to page 1 (click)
     cy.get('gn-ui-pagination-buttons').find('gn-ui-button').first().click()
-    cy.get('gn-ui-results-table')
-      .find('.table-row-cell')
-      .eq(1)
-      .invoke('text')
-      .invoke('trim')
-      .then(function (text) {
-        expect(text).to.equal(this.pageOneFirstRecord)
-      })
+    cy.wrap(function () {
+      cy.get('gn-ui-results-table')
+        .find('.table-row-cell')
+        .eq(1)
+        .invoke('text')
+        .invoke('trim')
+        .should('equal', this.pageOneFirstRecord)
+    })
     // FIXME: this test should pass but it doesn't!
     // cy.url().should('include', '_page=1')
 
     // CHECKBOXES
 
+    // wait for results
+    cy.get('gn-ui-results-table')
+      .find('[data-cy="resultItemTitle"]')
+      .should('exist')
+
     // it should show the correct amount of selected records when they are selected
     cy.get('gn-ui-results-table')
       .find('.table-row-cell')
       .get('gn-ui-checkbox')
-      .each((checkbox, i) => {
-        if (i < 3) {
-          cy.wrap(checkbox).click()
-        }
-      })
+      .as('checkboxes')
+    cy.get('@checkboxes').eq(0).click()
+    cy.get('@checkboxes').eq(1).click()
+    cy.get('@checkboxes').eq(2).click()
     cy.get('[data-test=selected-count]').contains('3 selected')
 
     // clear selection
@@ -155,28 +159,45 @@ describe('dashboard (landing page)', () => {
   })
 
   it('author and publishing status', () => {
-    // create a draft record
+    // wait for results
+    cy.get('gn-ui-results-table')
+      .find('[data-cy="resultItemTitle"]')
+      .should('exist')
+
+    // create a draft record, modify the abstract
     cy.get('[data-cy="create-record"]').click()
-    cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').focus()
-    cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea').type(
-      'draft abstract'
-    )
     cy.editor_readFormUniqueIdentifier().as('newRecordUuid')
+    cy.get('gn-ui-form-field[ng-reflect-model=abstract] textarea')
+      .as('abstractField')
+      .focus()
+    cy.get('@abstractField').type('record abstract')
+    cy.editor_findDraftInLocalStorage()
+
     cy.go('back')
 
+    // wait for the record to show up
+    cy.get('gn-ui-results-table')
+      .find('[data-cy="table-row"]')
+      .first()
+      .as('record')
+    cy.get('@record')
+      .find('[data-cy="resultItemTitle"]')
+      .first()
+      .invoke('text')
+      .should('eq', 'My dataset')
+
     // it should display the right info for unpublished records
-    cy.get('gn-ui-results-table').find('[data-cy="table-row"]').as('records')
-    cy.get('@records')
+    cy.get('@record')
       .children('div')
       .eq(4)
       .find('span')
       .invoke('text')
       .should('eq', 'admin admin')
-    cy.get('@records')
+    cy.get('@record')
       .children('div')
       .eq(5)
       .should('include.text', 'Not published')
-    cy.get('@records').children('div').eq(6).should('contain', ' - ')
+    cy.get('@record').children('div').eq(6).should('contain', ' - ')
 
     // delete the new record to not leak to other tests
     cy.get<string>('@newRecordUuid').then((uuid) => cy.deleteRecord(uuid))
@@ -213,36 +234,39 @@ describe('dashboard (landing page)', () => {
       .should('contain', 'admin admin')
 
     // it should display the correct amount of records
-    cy.get('md-editor-dashboard-menu').find('a').eq(1).click()
     cy.get('gn-ui-results-table')
       .find('[data-cy="table-row"]')
       .should('have.length', '15')
 
-    // it should sort the records by title
-    cy.get('md-editor-dashboard-menu').find('a').eq(1).click()
     cy.get('gn-ui-results-table')
-      .find('[data-cy="table-row"]')
+      .find('[data-cy="resultItemTitle"]')
       .first()
       .invoke('text')
-      .then((firstRecord) => {
-        cy.get('gn-ui-results-table').find('.table-header-cell').eq(1).click()
-        cy.get('gn-ui-results-table')
-          .find('[data-cy="table-row"]')
-          .first()
-          .invoke('text')
-          .should('not.eq', firstRecord)
-      })
+      .as('firstRecordTitle')
+
+    // it should sort the records by title
+    cy.wrap(function () {
+      cy.get('gn-ui-results-table')
+        .find('[data-cy="resultItemTitle"]')
+        .first()
+        .invoke('text')
+        .should('not.eq', this.firstRecordTitle)
+    })
   })
 
   it('search', () => {
     function checkDashboardFiltered() {
-      cy.get('gn-ui-autocomplete').type('{selectall}{del}velo{enter}')
+      cy.get('gn-ui-fuzzy-search gn-ui-autocomplete').type(
+        '{selectall}{del}velo{enter}'
+      )
       cy.get('gn-ui-interactive-table')
         .find('[data-cy="table-row"]')
         .should('have.length', '1')
     }
     function checkAutocompleteSelected() {
-      cy.get('gn-ui-autocomplete').type('{selectall}{del}velo')
+      cy.get('gn-ui-fuzzy-search gn-ui-autocomplete').type(
+        '{selectall}{del}velo'
+      )
       cy.get('mat-option').first().click()
       cy.url().should('include', '/edit/accroche_velos')
       cy.go('back')
@@ -257,9 +281,9 @@ describe('dashboard (landing page)', () => {
     checkAutocompleteSelected()
 
     // it should clear the search input when navigating to my records
-    cy.get('gn-ui-autocomplete').type('velo')
+    cy.get('gn-ui-fuzzy-search gn-ui-autocomplete').type('velo')
     cy.get('md-editor-dashboard-menu').find('a').eq(2).click()
-    cy.get('gn-ui-autocomplete').should('have.value', '')
+    cy.get('gn-ui-fuzzy-search gn-ui-autocomplete').should('have.value', '')
 
     // myRecords search input
     cy.visit('/my-space/my-records')
@@ -271,12 +295,12 @@ describe('dashboard (landing page)', () => {
     checkAutocompleteSelected()
 
     // it should clear the search input when navigating to all records
-    cy.get('gn-ui-autocomplete').type('velo')
+    cy.get('gn-ui-fuzzy-search gn-ui-autocomplete').type('velo')
     cy.get('md-editor-dashboard-menu').find('a').first().click()
     cy.get('gn-ui-autocomplete').should('have.value', '')
 
     // it should allow to search in the entire catalog
-    cy.get('gn-ui-autocomplete').type('mat{enter}')
+    cy.get('gn-ui-fuzzy-search gn-ui-autocomplete').type('mat{enter}')
     cy.get('gn-ui-interactive-table')
       .find('[data-cy="table-row"]')
       .should('have.length', '1')
@@ -506,42 +530,51 @@ describe('editing restrictions as non admin', () => {
   })
 
   it('editing access restrictions', () => {
+    // sort by owner, inverted
+    cy.get('gn-ui-results-table').find('.table-header-cell').eq(3).click()
+    cy.get('gn-ui-results-table').find('.table-header-cell').eq(3).click()
+
     // it should not have edit rights on other organization records
     cy.get('gn-ui-results-table')
       .find('[data-cy="table-row"]')
-      .first()
-      .as('record')
-    cy.get('@record')
+      .eq(1)
+      .as('firstDatasetRecord')
+    cy.get('@firstDatasetRecord')
       .children('div')
       .eq(4)
       .find('span')
       .invoke('text')
       .should('eq', 'admin admin')
-    cy.get('@record').should(
+    cy.get('@firstDatasetRecord').should(
       'have.attr',
       'title',
       'You are not an editor of the allowed groups'
     )
-    cy.get('@record').children('div').eq(2).click()
+    cy.get('@firstDatasetRecord').children('div').eq(2).click()
     cy.url().should('include', '/catalog/')
-    cy.get('@record').find('[data-test="record-menu-button"]').click()
+    cy.get('@firstDatasetRecord')
+      .find('[data-test="record-menu-button"]')
+      .click()
     cy.get('[data-test="record-menu-delete-button"]')
       .find('button')
       .should('be.disabled')
     cy.get('body').click()
 
+    // sort by owner
+    cy.get('gn-ui-results-table').find('.table-header-cell').eq(3).click()
+
     // it should have edit rights on their organization records
     cy.get('gn-ui-results-table')
       .find('[data-cy="table-row"]')
-      .eq(5)
-      .as('record')
-    cy.get('@record')
+      .first()
+      .as('firstRecord')
+    cy.get('@firstRecord')
       .children('div')
       .eq(4)
       .find('span')
       .invoke('text')
       .should('eq', 'Barbara Roberts')
-    cy.get('@record').children('div').eq(2).click()
+    cy.get('@firstRecord').children('div').eq(2).click()
     cy.url().should('include', '/edit/')
 
     // it should not allow the user to directly access other organization records and let them go back to the catalog
