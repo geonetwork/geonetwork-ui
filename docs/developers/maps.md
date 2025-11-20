@@ -12,7 +12,14 @@ Two components are present in GeoNetwork-UI to render a map using a context.
 
 This component simply takes a map context as input and will render it. Everytime the map context changes, the map is updated accordingly.
 
-This component also offers the following events: `mapClick`, `featuresClicked`, `featuresHovered`.
+This component also offers the following events:
+
+- `mapClick`: emitted when the map is clicked, provides the clicked coordinate
+- `featuresClick`: emitted when features are clicked
+- `featuresHover`: emitted when features are hovered
+- `extentChange`: emitted when the map extent changes (e.g. when panning or zooming)
+- `resolvedExtentChange`: emitted when the view is initialized or changes via the given `context` input
+- `sourceLoadError`: emitted when a layer source fails to load
 
 ```ts
 import { MapContainerComponent } from '@geonetwork-ui/ui/map'

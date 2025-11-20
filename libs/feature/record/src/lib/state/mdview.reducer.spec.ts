@@ -5,6 +5,7 @@ import {
   someUserFeedbacksFixture,
   userFeedbackFixture,
 } from '@geonetwork-ui/common/fixtures'
+import { Action } from '@ngrx/store'
 import { DatavizChartConfigModel } from '@geonetwork-ui/common/domain/model/dataviz/dataviz-configuration.model'
 
 const chartConfigMock: DatavizChartConfigModel = {
@@ -17,7 +18,7 @@ const chartConfigMock: DatavizChartConfigModel = {
 describe('metadataViewReducer', () => {
   describe('undefined action', () => {
     it('should return the default state', () => {
-      const action = {} as any
+      const action = {} as Action
       const state = reducer(undefined, action)
 
       expect(state).toBe(initialMetadataViewState)

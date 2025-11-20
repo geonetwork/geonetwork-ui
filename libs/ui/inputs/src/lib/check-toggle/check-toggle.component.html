@@ -1,8 +1,8 @@
 <label
-  class="inline-flex relative items-start cursor-pointer"
+  class="flex relative items-center cursor-pointer w-full"
   [title]="title || label"
 >
-  <span class="shrink-0">
+  <span class="shrink-0 relative">
     <input
       type="checkbox"
       class="sr-only peer"
@@ -18,5 +18,5 @@
       "
     ></div>
   </span>
-  <span class="ml-3 mt-[2px] text-sm font-medium">{{ label }}</span>
+  <span class="ml-3 mt-[2px] text-sm font-medium flex-1">{{ label }}</span>
 </label>

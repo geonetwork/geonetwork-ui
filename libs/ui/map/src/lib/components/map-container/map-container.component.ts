@@ -2,9 +2,11 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   ElementRef,
   EventEmitter,
   Inject,
+  inject,
   Input,
   OnChanges,
   Output,
@@ -13,6 +15,7 @@ import {
 } from '@angular/core'
 import { fromEvent, merge, Observable, of, timer } from 'rxjs'
 import { delay, map, startWith, switchMap } from 'rxjs/operators'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { CommonModule } from '@angular/common'
 import { TranslateDirective } from '@ngx-translate/core'
 import {
@@ -24,10 +27,13 @@ import {
   FeaturesHoverEventType,
   MapClickEvent,
   MapClickEventType,
+  MapExtentChangeEvent,
+  MapExtentChangeEventType,
   MapContext,
   MapContextLayer,
   MapContextLayerXyz,
   MapContextView,
+  MapEventsByType,
   SourceLoadErrorEvent,
   SourceLoadErrorType,
 } from '@geospatial-sdk/core'
@@ -49,6 +55,7 @@ import {
   provideNgIconsConfig,
 } from '@ng-icons/core'
 import { matSwipeOutline } from '@ng-icons/material-icons/outline'
+import { transformExtent } from 'ol/proj'
 
 const DEFAULT_BASEMAP_LAYER: MapContextLayerXyz = {
   type: 'xyz',
@@ -59,6 +66,11 @@ const DEFAULT_BASEMAP_LAYER: MapContextLayerXyz = {
 const DEFAULT_VIEW: MapContextView = {
   center: [0, 15],
   zoom: 2,
+}
+
+interface MapViewConstraints {
+  maxZoom?: number
+  maxExtent?: Extent
 }
 
 @Component({
@@ -78,86 +90,151 @@ const DEFAULT_VIEW: MapContextView = {
 export class MapContainerComponent implements AfterViewInit, OnChanges {
   @Input() context: MapContext | null
 
-  // these events only get registered on the map if they are used
-  _featuresClick: EventEmitter<Feature[]>
+  @ViewChild('map') container: ElementRef
+
+  private olMap: OlMap
+  private olMapResolver: (value: OlMap) => void
+  private destroyRef: DestroyRef
+
+  displayMessage$: Observable<boolean>
+  openlayersMap = new Promise<OlMap>((resolve) => {
+    this.olMapResolver = resolve
+  })
+
+  // These events only get registered on the map if they are used
+  _featuresClick: EventEmitter<Feature[]> = null
+  _featuresHover: EventEmitter<Feature[]> = null
+  _mapClick: EventEmitter<[number, number]> = null
+  _extentChange: EventEmitter<Extent> = null
+  _sourceLoadError: EventEmitter<SourceLoadErrorEvent> = null
+  _resolvedExtentChange: EventEmitter<Extent> = null
+
   @Output() get featuresClick() {
     if (!this._featuresClick) {
-      this.openlayersMap.then((olMap) => {
-        listen(
-          olMap,
-          FeaturesClickEventType,
-          ({ features }: FeaturesClickEvent) =>
-            this._featuresClick.emit(features)
-        )
-      })
+      this.setupEventListener(
+        FeaturesClickEventType,
+        (event: FeaturesClickEvent) => {
+          this._featuresClick.emit(event.features)
+        }
+      )
       this._featuresClick = new EventEmitter<Feature[]>()
     }
     return this._featuresClick
   }
-  _featuresHover: EventEmitter<Feature[]>
+
   @Output() get featuresHover() {
     if (!this._featuresHover) {
-      this.openlayersMap.then((olMap) => {
-        listen(
-          olMap,
-          FeaturesHoverEventType,
-          ({ features }: FeaturesHoverEvent) =>
-            this._featuresHover.emit(features)
-        )
-      })
+      this.setupEventListener(
+        FeaturesHoverEventType,
+        (event: FeaturesHoverEvent) => {
+          this._featuresHover.emit(event.features)
+        }
+      )
       this._featuresHover = new EventEmitter<Feature[]>()
     }
     return this._featuresHover
   }
-  _mapClick: EventEmitter<[number, number]>
+
   @Output() get mapClick() {
     if (!this._mapClick) {
-      this.openlayersMap.then((olMap) => {
-        listen(olMap, MapClickEventType, ({ coordinate }: MapClickEvent) =>
-          this._mapClick.emit(coordinate)
-        )
+      this.setupEventListener(MapClickEventType, (event: MapClickEvent) => {
+        this._mapClick.emit(event.coordinate)
       })
       this._mapClick = new EventEmitter<[number, number]>()
     }
     return this._mapClick
   }
-  _sourceLoadError: EventEmitter<SourceLoadErrorEvent>
+
+  @Output() get extentChange() {
+    if (!this._extentChange) {
+      this.setupEventListener(
+        MapExtentChangeEventType,
+        (event: MapExtentChangeEvent) => {
+          this._extentChange.emit(event.extent as Extent)
+        }
+      )
+      this._extentChange = new EventEmitter<Extent>()
+    }
+    return this._extentChange
+  }
+
   @Output() get sourceLoadError() {
     if (!this._sourceLoadError) {
-      this.openlayersMap.then((olMap) => {
-        listen(olMap, SourceLoadErrorType, (error: SourceLoadErrorEvent) =>
-          this._sourceLoadError.emit(error)
-        )
-      })
+      this.setupEventListener(
+        SourceLoadErrorType,
+        (event: SourceLoadErrorEvent) => {
+          this._sourceLoadError.emit(event)
+        }
+      )
       this._sourceLoadError = new EventEmitter<SourceLoadErrorEvent>()
     }
     return this._sourceLoadError
   }
 
-  @ViewChild('map') container: ElementRef
-  displayMessage$: Observable<boolean>
-  olMap: OlMap
+  @Output() get resolvedExtentChange() {
+    if (!this._resolvedExtentChange) {
+      this._resolvedExtentChange = new EventEmitter<Extent>()
+    }
+    return this._resolvedExtentChange
+  }
 
   constructor(
     @Inject(DO_NOT_USE_DEFAULT_BASEMAP) private doNotUseDefaultBasemap: boolean,
     @Inject(BASEMAP_LAYERS) private basemapLayers: MapContextLayer[],
     @Inject(MAP_VIEW_CONSTRAINTS)
-    private mapViewConstraints: {
-      maxZoom?: number
-      maxExtent?: Extent
-    }
-  ) {}
+    private mapViewConstraints: MapViewConstraints
+  ) {
+    this.destroyRef = inject(DestroyRef)
+  }
 
-  private olMapResolver
-  openlayersMap = new Promise<OlMap>((resolve) => {
-    this.olMapResolver = resolve
-  })
+  calculateCurrentMapExtent(): Extent {
+    const extent = this.olMap.getView().calculateExtent(this.olMap.getSize())
+    const reprojectedExtent = transformExtent(
+      extent,
+      this.olMap.getView().getProjection(),
+      'EPSG:4326'
+    )
+
+    return reprojectedExtent as Extent
+  }
 
   async ngAfterViewInit() {
     this.olMap = await createMapFromContext(
       this.processContext(this.context),
       this.container.nativeElement
     )
+    if (this._resolvedExtentChange) {
+      this._resolvedExtentChange.emit(this.calculateCurrentMapExtent())
+    }
+
+    this.setupDisplayMessageObservable()
+    this.olMapResolver(this.olMap)
+  }
+
+  async ngOnChanges(changes: SimpleChanges) {
+    if ('context' in changes && !changes['context'].isFirstChange()) {
+      const diff = computeMapContextDiff(
+        this.processContext(changes['context'].currentValue),
+        this.processContext(changes['context'].previousValue)
+      )
+      await applyContextDiffToMap(this.olMap, diff)
+
+      if (this._resolvedExtentChange && diff.viewChanges) {
+        this._resolvedExtentChange.emit(this.calculateCurrentMapExtent())
+      }
+    }
+  }
+
+  private setupEventListener(
+    eventType: keyof MapEventsByType,
+    handler: (event: MapEventsByType[typeof eventType]) => void
+  ) {
+    this.openlayersMap.then((olMap: OlMap) => {
+      listen(olMap, eventType, handler)
+    })
+  }
+
+  private setupDisplayMessageObservable() {
     this.displayMessage$ = merge(
       fromEvent(this.olMap, 'mapmuted').pipe(map(() => true)),
       fromEvent(this.olMap, 'movestart').pipe(map(() => false)),
@@ -171,32 +248,25 @@ export class MapContainerComponent implements AfterViewInit, OnChanges {
               delay(400)
             )
           : of(false)
-      )
+      ),
+      takeUntilDestroyed(this.destroyRef)
     )
-    this.olMapResolver(this.olMap)
   }
 
-  async ngOnChanges(changes: SimpleChanges) {
-    if ('context' in changes && !changes['context'].isFirstChange()) {
-      const diff = computeMapContextDiff(
-        this.processContext(changes['context'].currentValue),
-        this.processContext(changes['context'].previousValue)
-      )
-      await applyContextDiffToMap(this.olMap, diff)
-    }
-  }
-
-  // This will apply basemap layers & view constraints
-  processContext(context: MapContext): MapContext {
+  private processContext(context: MapContext): MapContext {
     const processed = context
       ? { ...context, view: context.view ?? DEFAULT_VIEW }
       : { layers: [], view: DEFAULT_VIEW }
+
+    // Prepend with default basemap and basemap layers
     if (this.basemapLayers.length) {
       processed.layers = [...this.basemapLayers, ...processed.layers]
     }
     if (!this.doNotUseDefaultBasemap) {
       processed.layers = [DEFAULT_BASEMAP_LAYER, ...processed.layers]
     }
+
+    // Apply view constraints
     if (this.mapViewConstraints.maxZoom) {
       processed.view = {
         maxZoom: this.mapViewConstraints.maxZoom,
@@ -209,20 +279,29 @@ export class MapContainerComponent implements AfterViewInit, OnChanges {
         ...processed.view,
       }
     }
+
     if (
       processed.view &&
-      !('zoom' in processed.view) &&
-      !('center' in processed.view)
+      'zoom' in processed.view &&
+      'center' in processed.view
     ) {
-      if (this.mapViewConstraints.maxExtent) {
-        processed.view = {
-          extent: this.mapViewConstraints.maxExtent,
-          ...processed.view,
-        }
-      } else {
-        processed.view = { ...DEFAULT_VIEW, ...processed.view }
-      }
+      return processed
     }
+
+    if (processed.view && 'extent' in processed.view) {
+      return processed
+    }
+
+    // Ensure valid view
+    if (this.mapViewConstraints.maxExtent) {
+      processed.view = {
+        extent: this.mapViewConstraints.maxExtent,
+        ...processed.view,
+      }
+    } else {
+      processed.view = { ...DEFAULT_VIEW, ...processed.view }
+    }
+
     return processed
   }
 }

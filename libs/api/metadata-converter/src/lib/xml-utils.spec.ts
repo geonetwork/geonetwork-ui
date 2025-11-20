@@ -212,10 +212,13 @@ world</root>
       const xmlDoc = assertValidXml(validXml)
 
       expect(xmlDoc).toBeDefined()
-      expect(xmlDoc.querySelector('MD_Metadata')).toBeTruthy()
-      expect(xmlDoc.querySelector('CharacterString')?.textContent).toContain(
-        'my-dataset-001'
+      expect(xmlDoc.documentElement.localName).toBe('MD_Metadata')
+      const characterStrings = xmlDoc.getElementsByTagNameNS(
+        'http://standards.iso.org/iso/19115/-3/gco/1.0',
+        'CharacterString'
       )
+      expect(characterStrings.length).toBeGreaterThan(0)
+      expect(characterStrings[0]?.textContent).toContain('my-dataset-001')
     })
 
     it('should throw an error for invalid XML', () => {

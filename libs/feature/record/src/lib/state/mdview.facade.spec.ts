@@ -29,7 +29,7 @@ jest.mock('@camptocamp/ogc-client', () => ({
       this.url.indexOf('error.http') > -1
         ? Promise.reject(new Error())
         : Promise.resolve(['collection1', 'collection2'])
-    getCollectionItem(collection, id) {
+    getCollectionItem(_collection, _id) {
       return Promise.resolve('item1')
     }
   },

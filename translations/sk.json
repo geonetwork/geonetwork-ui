@@ -639,6 +639,7 @@
   "service.metadata.spatialExtent": "",
   "share.tab.permalink": "Zdieľať",
   "share.tab.webComponent": "Integrovať",
+  "stac.filter.enable": "",
   "stac.filter.reset": "",
   "stac.results.noResults": "",
   "table.loading.data": "Načítanie údajov...",

@@ -68,7 +68,7 @@ export class MdViewEffects {
       map((related) => {
         return MdViewActions.setRelated({ related })
       }),
-      catchError((error) => of(MdViewActions.setRelated({ related: null })))
+      catchError(() => of(MdViewActions.setRelated({ related: null })))
     )
   )
 

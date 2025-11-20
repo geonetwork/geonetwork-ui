@@ -639,6 +639,7 @@
   "service.metadata.spatialExtent": "",
   "share.tab.permalink": "",
   "share.tab.webComponent": "",
+  "stac.filter.enable": "",
   "stac.filter.reset": "",
   "stac.results.noResults": "",
   "table.loading.data": "",

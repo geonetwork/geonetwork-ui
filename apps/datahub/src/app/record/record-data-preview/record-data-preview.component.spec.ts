@@ -311,11 +311,16 @@ describe('RecordDataPreviewComponent', () => {
       it('stac tab is selected', () => {
         expect(tabGroup.componentInstance.selectedIndex).toBe(4)
       })
-      it('renders the STAC view component', () => {
-        expect(
-          fixture.debugElement.query(By.directive(StacViewComponent))
-        ).toBeTruthy()
-      })
+      it('renders the STAC view component', fakeAsync(() => {
+        // Wait for all async operations to complete (including lazy-loaded content)
+        fixture.whenStable().then(() => {
+          fixture.detectChanges()
+
+          expect(
+            fixture.debugElement.query(By.directive(StacViewComponent))
+          ).toBeTruthy()
+        })
+      }))
       it('does NOT render the permalink component', () => {
         expect(
           fixture.debugElement.query(By.directive(DataViewShareComponent))
