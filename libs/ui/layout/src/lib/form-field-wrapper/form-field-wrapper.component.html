@@ -1,27 +1,22 @@
-@if (label) {
-  <div class="h-full flex flex-col">
-    <div class="flex-none w-full flex flex-row items-center">
-      <span class="flex-none font-bold" translate="">{{ label }}</span>
-      <div class="flex-1 flex justify-end items-center">
-        <ng-content select="[form-field-interaction]"></ng-content>
-        @if (hint) {
-          <span
-            class="material-symbols-outlined m-2 gn-ui-icon-small"
-            [matTooltip]="hint"
-            matTooltipPosition="above"
-            >
-            help
-          </span>
-        }
-      </div>
-    </div>
-    <div class="flex-1 mt-2">
-      <ng-container *ngTemplateOutlet="onlyContent"> </ng-container>
+<div class="h-full flex flex-col" *ngIf="label; else onlyContent">
+  <div class="flex-none w-full flex flex-row items-center">
+    <span class="flex-none font-bold" translate="">{{ label }}</span>
+    <div class="flex-1 flex justify-end items-center">
+      <ng-content select="[form-field-interaction]"></ng-content>
+      <span
+        *ngIf="hint"
+        class="material-symbols-outlined m-2 gn-ui-icon-small"
+        [matTooltip]="hint"
+        matTooltipPosition="above"
+      >
+        help
+      </span>
     </div>
   </div>
-} @else {
-  <ng-content></ng-content>
-}
+  <div class="flex-1 mt-2">
+    <ng-container *ngTemplateOutlet="onlyContent"> </ng-container>
+  </div>
+</div>
 
 <ng-template #onlyContent>
   <ng-content></ng-content>
