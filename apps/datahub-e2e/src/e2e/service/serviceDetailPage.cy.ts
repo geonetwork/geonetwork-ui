@@ -75,10 +75,8 @@ describe('service pages', () => {
     // it should display an error message if a service is accessed through the dataset path
     cy.visit('/dataset/01ec6ec7-6454-4504-ac95-befb16bacb0e')
     cy.get('gn-ui-error').should('be.visible')
-  })
-})
-describe('service pages - metadata quality', () => {
-  it('display metadata quality widget enabled', () => {
+
+    //Metadata quality widget
     cy.intercept('GET', '/assets/configuration/default.toml', {
       fixture: 'config-with-metadata-quality.toml',
     })

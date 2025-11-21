@@ -219,12 +219,12 @@ describe('datasets', () => {
 
       describe('filter by one option', () => {
         beforeEach(() => {
-          cy.get('@options').eq(13).click()
+          cy.get('@options').eq(14).click()
           cy.get('@resultsCount').then((resultsCount) => {
             cy.get('@results').should('have.length.below', resultsCount) // wait for results change
           })
           cy.get('@options')
-            .eq(13)
+            .eq(14)
             .then((option) => {
               const optionText = option.text().trim()
               const matches = /^(.*) \((\d+)\)$/.exec(optionText)
@@ -251,7 +251,7 @@ describe('datasets', () => {
         })
 
         it('shows all results if another click on option', () => {
-          cy.get('@options').eq(13).click()
+          cy.get('@options').eq(14).click()
           cy.get('@resultsCount').then((resultsCount) => {
             cy.get('@results').should('have.length', resultsCount)
           })
@@ -294,6 +294,7 @@ describe('datasets', () => {
           'Bundesamt für Raumentwicklung (1)',
           "Canton du Valais - Service de l'environnement (SEN) - Protection des sols (1)",
           'Cellule informatique et géomatique (SPW - Intérieur et Action sociale - Direction fonctionnelle et d’appui) (1)',
+          'Cellule SIG (DATT) TEST (3)',
           'Coordination, Services et Informations Géographiques (COSIG), swisstopo (1)',
           "Direction de l'Action sociale (SPW - Intérieur et Action sociale - Département de l'Action sociale - Direction de l'Action sociale) (1)",
           "Direction de l'Intégration des géodonnées (SPW - Secrétariat général - SPW Digital - Département de la Géomatique - Direction de l'Intégration des géodonnées) (10)",

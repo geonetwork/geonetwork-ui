@@ -300,6 +300,98 @@ describe('Gn4FieldMapper', () => {
           },
         })
       })
+      describe('resourceType mapper - should return a function that correctly maps the field', () => {
+        it('resourceType - should return reuse for resourceType map', () => {
+          const fieldName = 'resourceType'
+          const mappingFn = service.getMappingFn(fieldName)
+          const output = {}
+          const source = {
+            resourceType: ['map'],
+          }
+          const result = mappingFn(output, source)
+          expect(result).toEqual({
+            kind: 'reuse',
+            reuseType: 'map',
+          })
+        })
+        it('resourceType - should return dataset for resourceType document', () => {
+          const fieldName = 'resourceType'
+          const mappingFn = service.getMappingFn(fieldName)
+          const output = {}
+          const source = {
+            resourceType: ['document'],
+          }
+          const result = mappingFn(output, source)
+          expect(result).toEqual({
+            kind: 'dataset',
+          })
+        })
+        it('resourceType - should return reuse for resourceType document with cl_presentationForm mapDigital', () => {
+          const fieldName = 'resourceType'
+          const mappingFn = service.getMappingFn(fieldName)
+          const output = {}
+          const source = {
+            resourceType: ['document'],
+            cl_presentationForm: [{}, { key: 'mapDigital' }],
+          }
+          const result = mappingFn(output, source)
+          expect(result).toEqual({
+            kind: 'reuse',
+            reuseType: 'map',
+          })
+        })
+        it('resourceType - should return dataset for resourceType dataset', () => {
+          const fieldName = 'resourceType'
+          const mappingFn = service.getMappingFn(fieldName)
+          const output = {}
+          const source = {
+            resourceType: ['dataset'],
+          }
+          const result = mappingFn(output, source)
+          expect(result).toEqual({
+            kind: 'dataset',
+          })
+        })
+        it('resourceType - should return reuse for resourceType dataset with cl_presentationForm mapDigital', () => {
+          const fieldName = 'resourceType'
+          const mappingFn = service.getMappingFn(fieldName)
+          const output = {}
+          const source = {
+            resourceType: ['dataset'],
+            cl_presentationForm: [{ key: 'mapDigital' }],
+          }
+          const result = mappingFn(output, source)
+          expect(result).toEqual({
+            kind: 'reuse',
+            reuseType: 'map',
+          })
+        })
+        it('resourceType - should return dataset for resourceType document with unknown cl_presentationForm', () => {
+          const fieldName = 'resourceType'
+          const mappingFn = service.getMappingFn(fieldName)
+          const output = {}
+          const source = {
+            resourceType: ['document'],
+            cl_presentationForm: ['unknownType'],
+          }
+          const result = mappingFn(output, source)
+          expect(result).toEqual({
+            kind: 'dataset',
+          })
+        })
+        it('resourceType - should return dataset for random resourceType', () => {
+          const fieldName = 'resourceType'
+          const mappingFn = service.getMappingFn(fieldName)
+          const output = {}
+          const source = {
+            resourceType: ['foo'],
+          }
+          const result = mappingFn(output, source)
+          expect(result).toEqual({
+            kind: 'dataset',
+          })
+        })
+      })
     })
     describe('resourceIdentifier mapper', () => {
       it('should map all resource identifiers with code, codeSpace, and url', () => {

@@ -797,6 +797,7 @@ describe('ElasticsearchService', () => {
           'userSavedCount',
           'cl_topic',
           'cl_maintenanceAndUpdateFrequency',
+          'cl_presentationForm',
           'MD_LegalConstraints*Object',
           'qualityScore',
           'allKeywords',

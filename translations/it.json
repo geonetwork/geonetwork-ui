@@ -601,6 +601,7 @@
   "search.filters.producerOrg": "Produttore",
   "search.filters.publicationYear": "Anno di pubblicazione",
   "search.filters.publisherOrg": "Distributore",
+  "search.filters.recordKind": "",
   "search.filters.recordKind.all": "Tutti",
   "search.filters.recordKind.dataset": "Dataset",
   "search.filters.recordKind.reuse": "Riutilizzi",
