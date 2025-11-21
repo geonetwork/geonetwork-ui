@@ -58,10 +58,8 @@
   "dataset.error.forbidden": "L’accès à cette ressource est restreint",
   "dataset.error.http": "Le chargement des données a échoué en raison d'une erreur HTTP: \"{ info }\"",
   "dataset.error.network": "Le chargement des données a échoué en raison d'une erreur réseau ou de limitations CORS: \"{ info }\"",
-  "dataset.error.parse": "Les données ont été chargées mais leur décodage a échoué: \"{ info }\"",
   "dataset.error.restrictedAccess": "L’accès à cette ressource est restreint",
   "dataset.error.unknown": "Les données ne peuvent être affichées: \"{ info }\"",
-  "dataset.error.unsupportedType": "Le type de contenu suivant n'est pas pris en charge: \"{ info }\"",
   "daterange.filter.from": "Du",
   "daterange.filter.period": "Choix de la période",
   "daterange.filter.to": "Au",
@@ -641,6 +639,7 @@
   "share.tab.webComponent": "Intégrer",
   "stac.filter.reset": "Réinitialiser les filtres",
   "stac.results.noResults": "Vos filtres ne permettent pas d’afficher de résultats",
+  "stac.unreachable.unknown": "Le service n'est pas accessible",
   "table.loading.data": "Chargement des données...",
   "table.object.count": "enregistrements dans ce jeu de données",
   "table.paginator.firstPage": "Première page",
@@ -650,6 +649,7 @@
   "table.paginator.previousPage": "Page précédente",
   "table.paginator.rangeLabel": "{startIndex} - {endIndex} sur {length}",
   "table.select.data": "Source de données",
+  "tms.unreachable.unknown": "Le service n'est pas accessible",
   "tooltip.html.copy": "Copier le HTML",
   "tooltip.id.copy": "Copier l'identifiant unique",
   "tooltip.url.copy": "Copier l'URL",
@@ -660,5 +660,7 @@
   "wfs.geojsongml.notsupported": "Le service ne supporte pas le format GeoJSON ou GML",
   "wfs.unreachable.cors": "Le service n'est pas accessible en raison de limitations CORS",
   "wfs.unreachable.http": "Le service a retourné une erreur HTTP",
-  "wfs.unreachable.unknown": "Le service n'est pas accessible"
+  "wfs.unreachable.parse": "Les données ont été chargées mais leur décodage a échoué: \"{ info }\"",
+  "wfs.unreachable.unknown": "Le service n'est pas accessible",
+  "wfs.unreachable.unsupportedType": "Le type de contenu suivant n'est pas pris en charge: \"{ info }\""
 }
