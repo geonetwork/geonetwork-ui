@@ -106,7 +106,7 @@
     "papaparse": "5.4.1",
     "pg": "^8.9.0",
     "proj4": "^2.9.2",
-    "rdflib": "^2.2.35",
+    "rdflib": "^2.3.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "7.8.1",
     "semver": "7.6.3",
