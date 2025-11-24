@@ -20,6 +20,7 @@ import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [SearchFacade],
+  standalone: false,
 })
 export class GnDatasetViewMapComponent extends BaseComponent implements OnInit {
   constructor(

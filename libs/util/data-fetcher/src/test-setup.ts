@@ -1,13 +1,7 @@
 /* eslint-disable */
 import fetch from 'fetch-mock-jest'
-import { TextDecoder, TextEncoder } from 'util'
 
 global.fetch = fetch as never
-
-// this is needed because jsdom does not include these as globals by default
-// see https://github.com/jsdom/jsdom/issues/2524
-global.TextEncoder = TextEncoder
-global.TextDecoder = TextDecoder
 
 global.Headers = class {
   _value = {}

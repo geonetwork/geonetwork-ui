@@ -28,6 +28,7 @@ import {
 @Component({
   selector: 'wc-base',
   template: `<div></div>`,
+  standalone: false,
 })
 export class BaseComponent implements OnChanges, OnInit {
   @Input() apiUrl = null

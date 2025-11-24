@@ -19,6 +19,7 @@ import { DatasetOnlineResource } from '@geonetwork-ui/common/domain/model/record
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [SearchFacade, SearchService],
+  standalone: false,
 })
 export class GnDatasetViewChartComponent
   extends BaseComponent

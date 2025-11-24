@@ -18,6 +18,7 @@ import { SearchFacade } from '@geonetwork-ui/feature/search'
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   providers: [SearchFacade],
+  standalone: false,
 })
 export class GnFigureDatasetsComponent extends BaseComponent {
   catalogRecords: RecordsService
