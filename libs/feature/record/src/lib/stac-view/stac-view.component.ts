@@ -108,14 +108,6 @@ export class StacViewComponent implements OnInit, AfterViewInit {
     pageUrl: null,
   })
 
-  // Derived observables for template bindings
-  currentTemporalExtent$ = this.filterState$.pipe(
-    map((state) => state.temporalExtent)
-  )
-  isSpatialFilterEnabled$ = this.filterState$.pipe(
-    map((state) => state.isSpatialExtentFilterEnabled)
-  )
-
   isFilterModified$ = this.filterState$.pipe(
     map((filterState) => {
       const isTemporalModified = !areTemporalExtentsEqual(

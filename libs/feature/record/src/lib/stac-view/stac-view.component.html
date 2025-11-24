@@ -2,9 +2,11 @@
   <div
     class="w-full h-[700px] md:h-[366px] flex md:flex-row flex-col border-b border-gray-300"
   >
+    @let filterState = filterState$ | async;
+
     <div class="w-full md:w-5/12 h-[366px] flex flex-col">
       <gn-ui-date-range-inputs
-        [temporalExtent]="currentTemporalExtent$ | async"
+        [temporalExtent]="filterState.temporalExtent"
         (temporalExtentChange)="onTemporalExtentChange($event)"
       ></gn-ui-date-range-inputs>
 
@@ -32,7 +34,7 @@
           class="bg-white rounded-xl shadow-xl absolute left-1/2 transform -translate-x-1/2 bottom-0 mb-2.5 px-4 py-2 z-10 max-w-[90%] w-max"
         >
           <gn-ui-check-toggle
-            [value]="isSpatialFilterEnabled$ | async"
+            [value]="filterState.isSpatialExtentFilterEnabled"
             (toggled)="onSpatialFilterToggle($event)"
             [label]="'stac.filter.enable' | translate"
             [color]="'primary'"
