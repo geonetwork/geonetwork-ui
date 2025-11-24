@@ -23,8 +23,8 @@ import { matExpandLess, matExpandMore } from '@ng-icons/material-icons/baseline'
     NgIconComponent,
     MatNativeDateModule,
     MatDatepickerModule,
-    ButtonComponent
-],
+    ButtonComponent,
+  ],
   providers: [
     provideIcons({
       matExpandMore,
@@ -55,8 +55,11 @@ export class DateRangeDropdownComponent implements AfterViewChecked {
 
   checkPickerOverlay() {
     const overlayContainerElement = this.overlayContainer.getContainerElement()
-    this.isPickerDisplayed =
-      overlayContainerElement.querySelector('.mat-datepicker-content') !== null
-    this.cdr.detectChanges()
+    setTimeout(() => {
+      this.isPickerDisplayed =
+        overlayContainerElement.querySelector('.mat-datepicker-content') !==
+        null
+      this.cdr.detectChanges()
+    }, 200) // FIXME: find a better way to deal with animation delay
   }
 }
