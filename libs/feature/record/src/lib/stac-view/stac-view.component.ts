@@ -45,6 +45,11 @@ import {
 } from 'rxjs'
 import { GetCollectionItemsOptions, StacItem } from '@camptocamp/ogc-client'
 import { MdViewFacade } from '../state'
+import {
+  areSpatialExtentsEqual,
+  areTemporalExtentsEqual,
+  areFilterStatesEqual,
+} from './utils'
 import { MapUtilsService } from '@geonetwork-ui/feature/map'
 import { PreviousNextButtonsComponent } from '@geonetwork-ui/ui/layout'
 import { FetchError } from '@geonetwork-ui/data-fetcher'
@@ -53,65 +58,11 @@ import { PopupAlertComponent } from '@geonetwork-ui/ui/widgets'
 const STAC_ITEMS_PER_PAGE = 12
 const DEBOUNCE_TIME_MS = 500
 
-interface StacFilterState {
+export interface StacFilterState {
   temporalExtent: DatasetTemporalExtent | null
   spatialExtent: Extent | null
   isSpatialExtentFilterEnabled: boolean
   pageUrl: string | null
-}
-
-function areTemporalExtentsEqual(
-  previous: DatasetTemporalExtent | null,
-  current: DatasetTemporalExtent | null
-): boolean {
-  const previousStartTime = previous?.start?.getTime() ?? null
-  const previousEndTime = previous?.end?.getTime() ?? null
-
-  const currentStartTime = current?.start?.getTime() ?? null
-  const currentEndTime = current?.end?.getTime() ?? null
-
-  return (
-    previousStartTime === currentStartTime && previousEndTime === currentEndTime
-  )
-}
-
-function areSpatialExtentsEqual(
-  previous: Extent | null,
-  current: Extent | null
-): boolean {
-  return (
-    previous?.[0] === current?.[0] &&
-    previous?.[1] === current?.[1] &&
-    previous?.[2] === current?.[2] &&
-    previous?.[3] === current?.[3]
-  )
-}
-
-function areFilterStatesEqual(
-  previous: StacFilterState,
-  current: StacFilterState
-): boolean {
-  const sameTemporalExtents = areTemporalExtentsEqual(
-    previous.temporalExtent,
-    current.temporalExtent
-  )
-
-  const sameSpatialExtents =
-    !current.isSpatialExtentFilterEnabled ||
-    areSpatialExtentsEqual(previous.spatialExtent, current.spatialExtent)
-
-  const sameIsSpatialExtentFilterEnabled =
-    previous.isSpatialExtentFilterEnabled ===
-    current.isSpatialExtentFilterEnabled
-
-  const samePageUrl = previous.pageUrl === current.pageUrl
-
-  return (
-    sameTemporalExtents &&
-    sameSpatialExtents &&
-    sameIsSpatialExtentFilterEnabled &&
-    samePageUrl
-  )
 }
 
 @Component({
