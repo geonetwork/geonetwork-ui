@@ -109,7 +109,12 @@ describe('StacViewComponent', () => {
     accessServiceProtocol: 'http',
   }
 
-  const mockSpatialExtent = [1, 2, 3, 4] as [number, number, number, number]
+  const mockInitialSpatialExtent = [1, 2, 3, 4] as [
+    number,
+    number,
+    number,
+    number,
+  ]
   const mockInitialResolvedSpatialExtent = [10, 20, 30, 40] as [
     number,
     number,
@@ -138,7 +143,7 @@ describe('StacViewComponent', () => {
           stacLinks$: of([mockStacLink]),
         }),
         MockProvider(MapUtilsService, {
-          getRecordExtent: jest.fn().mockReturnValue(mockSpatialExtent),
+          getRecordExtent: jest.fn().mockReturnValue(mockInitialSpatialExtent),
         }),
         MockProvider(TranslateService, {
           instant: jest.fn().mockImplementation((key) => `translated:${key}`),
@@ -167,11 +172,11 @@ describe('StacViewComponent', () => {
     it('should initialize spatial extent from metadata and set map context', () => {
       component.ngOnInit()
 
-      expect(component.initialSpatialExtent).toEqual(mockSpatialExtent)
+      expect(component.initialSpatialExtent).toEqual(mockInitialSpatialExtent)
       expect(component.mapContext$.value).toEqual({
         layers: [],
         view: {
-          extent: mockSpatialExtent,
+          extent: mockInitialSpatialExtent,
         },
       })
     })
@@ -250,7 +255,7 @@ describe('StacViewComponent', () => {
       })
       component.onTemporalExtentChange(null)
       component.onSpatialFilterToggle(true)
-      component.onSpatialExtentChange(mockSpatialExtent)
+      component.onSpatialExtentChange(mockInitialSpatialExtent)
 
       component.items$.subscribe((items) => {
         expect(items).toEqual(mockStacDocument.features)
@@ -259,7 +264,7 @@ describe('StacViewComponent', () => {
           'http://example.com/stac',
           {
             limit: STAC_ITEMS_PER_PAGE,
-            bbox: mockSpatialExtent,
+            bbox: mockInitialSpatialExtent,
           }
         )
         done()
@@ -273,7 +278,7 @@ describe('StacViewComponent', () => {
       })
       component.onTemporalExtentChange(null)
       component.onSpatialFilterToggle(false)
-      component.onSpatialExtentChange(mockSpatialExtent)
+      component.onSpatialExtentChange(mockInitialSpatialExtent)
 
       component.items$.subscribe((items) => {
         expect(items).toEqual(mockStacDocument.features)
@@ -471,13 +476,13 @@ describe('StacViewComponent', () => {
   describe('isFilterModified$', () => {
     beforeEach(() => {
       component.initialTemporalExtent = mockTemporalExtent
-      component.resolvedInitialSpatialExtent = mockSpatialExtent
+      component.resolvedInitialSpatialExtent = mockInitialSpatialExtent
     })
 
     it('should be false on initial component load before resolved extent is set', (done) => {
       component.initialTemporalExtent = mockTemporalExtent
       component.onTemporalExtentChange(mockTemporalExtent)
-      component.onSpatialExtentChange(mockSpatialExtent)
+      component.onSpatialExtentChange(mockInitialSpatialExtent)
       component.resolvedInitialSpatialExtent = null
 
       component.isFilterModified$.subscribe((isModified) => {
@@ -488,8 +493,8 @@ describe('StacViewComponent', () => {
 
     it('should be true when temporal filter start date is changed', (done) => {
       component.initialTemporalExtent = mockTemporalExtent
-      component.resolvedInitialSpatialExtent = mockSpatialExtent
-      component.onSpatialExtentChange(mockSpatialExtent)
+      component.resolvedInitialSpatialExtent = mockInitialSpatialExtent
+      component.onSpatialExtentChange(mockInitialSpatialExtent)
 
       const modifiedTemporalExtent = {
         start: new Date('2023-06-01'),
@@ -505,8 +510,8 @@ describe('StacViewComponent', () => {
 
     it('should be true when temporal filter end date is changed', (done) => {
       component.initialTemporalExtent = mockTemporalExtent
-      component.resolvedInitialSpatialExtent = mockSpatialExtent
-      component.onSpatialExtentChange(mockSpatialExtent)
+      component.resolvedInitialSpatialExtent = mockInitialSpatialExtent
+      component.onSpatialExtentChange(mockInitialSpatialExtent)
 
       const modifiedTemporalExtent = {
         start: mockTemporalExtent.start,
@@ -525,7 +530,7 @@ describe('StacViewComponent', () => {
         start: new Date('2024-01-01'),
         end: new Date('2024-12-31'),
       })
-      component.onSpatialExtentChange(mockSpatialExtent)
+      component.onSpatialExtentChange(mockInitialSpatialExtent)
       component.onSpatialFilterToggle(true)
 
       component.isFilterModified$.subscribe((isModified) => {
@@ -558,7 +563,7 @@ describe('StacViewComponent', () => {
 
     it('should be false when extents match initial values', (done) => {
       component.onTemporalExtentChange(mockTemporalExtent)
-      component.onSpatialExtentChange(mockSpatialExtent)
+      component.onSpatialExtentChange(mockInitialSpatialExtent)
       component.onSpatialFilterToggle(true)
 
       component.isFilterModified$.subscribe((isModified) => {
@@ -616,7 +621,7 @@ describe('StacViewComponent', () => {
       expect(component.mapContext$.value).toEqual({
         layers: [],
         view: {
-          extent: mockSpatialExtent,
+          extent: mockInitialSpatialExtent,
         },
       })
     })
@@ -767,7 +772,7 @@ describe('StacViewComponent', () => {
     beforeEach(() => {
       component.initialPageUrl = 'http://example.com/stac'
       component.initialTemporalExtent = mockTemporalExtent
-      component.resolvedInitialSpatialExtent = mockSpatialExtent
+      component.resolvedInitialSpatialExtent = mockInitialSpatialExtent
       component.filterState$.next({
         ...component.filterState$.value,
         pageUrl: 'http://example.com/page2',
