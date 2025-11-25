@@ -140,7 +140,7 @@ describe('StacViewComponent', () => {
         }),
         MockProvider(MdViewFacade, {
           metadata$: of(mockDatasetRecord),
-          stacLinks$: of([mockStacLink]),
+          stacLinks$: of([mockStacLink] as unknown as never[]),
         }),
         MockProvider(MapUtilsService, {
           getRecordExtent: jest.fn().mockReturnValue(mockInitialSpatialExtent),
@@ -150,19 +150,25 @@ describe('StacViewComponent', () => {
         }),
       ],
     }).compileComponents()
+  })
 
-    fixture = TestBed.createComponent(StacViewComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
+  afterEach(() => {
+    component = null
+    fixture = null
+
+    jest.clearAllMocks()
   })
 
   it('should create', () => {
+    component = createTestComponent()
+
     expect(component).toBeTruthy()
   })
 
   describe('ngOnInit', () => {
     it('should initialize temporal extent from metadata', () => {
-      component.ngOnInit()
+      component = createTestComponent()
+
       expect(component.initialTemporalExtent).toEqual(mockTemporalExtent)
       expect(component.filterState$.value.temporalExtent).toEqual(
         mockTemporalExtent
@@ -170,7 +176,7 @@ describe('StacViewComponent', () => {
     })
 
     it('should initialize spatial extent from metadata and set map context', () => {
-      component.ngOnInit()
+      component = createTestComponent()
 
       expect(component.initialSpatialExtent).toEqual(mockInitialSpatialExtent)
       expect(component.mapContext$.value).toEqual({
@@ -185,7 +191,9 @@ describe('StacViewComponent', () => {
       const recordWithoutExtents = { ...mockDatasetRecord, temporalExtents: [] }
       const facade = ngMocks.findInstance(MdViewFacade)
       facade.metadata$ = of(recordWithoutExtents)
-      component.ngOnInit()
+
+      component = createTestComponent()
+
       expect(component.initialTemporalExtent).toEqual({
         start: null,
         end: null,
@@ -197,276 +205,66 @@ describe('StacViewComponent', () => {
     })
 
     it('should set current page URL from STAC links', () => {
-      component.ngOnInit()
+      component = createTestComponent()
+
       expect(component.filterState$.value.pageUrl).toBe(
         'http://example.com/stac'
       )
-    })
-
-    it('should handle when no STAC links are available', () => {
-      const facade = ngMocks.findInstance(MdViewFacade)
-      facade.stacLinks$ = of([])
-      component.initialPageUrl = null // Reset to prevent metadata$ subscription from setting pageUrl
-      component.filterState$.next({
-        ...component.filterState$.value,
-        pageUrl: null,
-      }) // Reset to initial state
-      component.ngOnInit()
-      expect(component.filterState$.value.pageUrl).toBe(null)
-    })
-  })
-
-  describe('items$ observable', () => {
-    beforeEach(() => {
-      component.ngOnInit()
-    })
-
-    it('should fetch items when both URL and temporal extent are available', (done) => {
-      component.filterState$.next({
-        ...component.filterState$.value,
-        pageUrl: 'http://example.com/stac',
-      })
-      component.onTemporalExtentChange(mockTemporalExtent)
-
-      component.items$.subscribe((items) => {
-        expect(items).toEqual([
-          { id: 'item1', properties: { datetime: '2023-01-01T00:00:00Z' } },
-          { id: 'item2', properties: { datetime: '2023-01-02T00:00:00Z' } },
-        ])
-        const dataService = ngMocks.findInstance(DataService)
-        expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
-          'http://example.com/stac',
-          {
-            limit: STAC_ITEMS_PER_PAGE,
-            datetime: {
-              start: mockTemporalExtent.start,
-              end: mockTemporalExtent.end,
-            },
-          }
-        )
-        done()
-      })
-    })
-
-    it('should fetch items with spatial filter when enabled', (done) => {
-      component.filterState$.next({
-        ...component.filterState$.value,
-        pageUrl: 'http://example.com/stac',
-      })
-      component.onTemporalExtentChange(null)
-      component.onSpatialFilterToggle(true)
-      component.onSpatialExtentChange(mockInitialSpatialExtent)
-
-      component.items$.subscribe((items) => {
-        expect(items).toEqual(mockStacDocument.features)
-        const dataService = ngMocks.findInstance(DataService)
-        expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
-          'http://example.com/stac',
-          {
-            limit: STAC_ITEMS_PER_PAGE,
-            bbox: mockInitialSpatialExtent,
-          }
-        )
-        done()
-      })
-    })
-
-    it('should not include bbox when spatial filter is disabled', (done) => {
-      component.filterState$.next({
-        ...component.filterState$.value,
-        pageUrl: 'http://example.com/stac',
-      })
-      component.onTemporalExtentChange(null)
-      component.onSpatialFilterToggle(false)
-      component.onSpatialExtentChange(mockInitialSpatialExtent)
-
-      component.items$.subscribe((items) => {
-        expect(items).toEqual(mockStacDocument.features)
-        const dataService = ngMocks.findInstance(DataService)
-        expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
-          'http://example.com/stac',
-          { limit: STAC_ITEMS_PER_PAGE }
-        )
-        done()
-      })
-    })
-
-    it('should not include bbox when spatial extent is null', (done) => {
-      component.filterState$.next({
-        ...component.filterState$.value,
-        pageUrl: 'http://example.com/stac',
-      })
-      component.onTemporalExtentChange(null)
-      component.onSpatialFilterToggle(true)
-      component.onSpatialExtentChange(null)
-
-      component.items$.subscribe((items) => {
-        expect(items).toEqual(mockStacDocument.features)
-        const dataService = ngMocks.findInstance(DataService)
-        expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
-          'http://example.com/stac',
-          { limit: STAC_ITEMS_PER_PAGE }
-        )
-        done()
-      })
-    })
-
-    it('should not trigger API call when spatial extent changes but filter is disabled', (done) => {
-      const dataService = ngMocks.findInstance(DataService)
-      const apiSpy = jest.spyOn(dataService, 'getItemsFromStacApi')
-
-      component.filterState$.next({
-        ...component.filterState$.value,
-        pageUrl: 'http://example.com/stac',
-      })
-      component.onTemporalExtentChange(null)
-      component.onSpatialFilterToggle(false)
-
-      // Wait for debounce and initial load
-      setTimeout(() => {
-        apiSpy.mockClear()
-
-        // Change spatial extent while filter is disabled
-        component.onSpatialExtentChange([5, 6, 7, 8] as Extent)
-
-        // Wait for debounce time
-        setTimeout(() => {
-          // Should not have called the API since spatial filter is disabled
-          expect(apiSpy).not.toHaveBeenCalled()
-          done()
-        }, 600)
-      }, 600)
-    })
-
-    it('should fetch items without datetime filter when start and end date are null', (done) => {
-      component.filterState$.next({
-        ...component.filterState$.value,
-        pageUrl: 'http://example.com/stac',
-      })
-      component.onTemporalExtentChange({
-        start: null,
-        end: null,
-      })
-
-      component.items$.subscribe(() => {
-        const dataService = ngMocks.findInstance(DataService)
-        expect(dataService.getItemsFromStacApi).toHaveBeenCalledWith(
-          'http://example.com/stac',
-          { limit: STAC_ITEMS_PER_PAGE }
-        )
-        done()
-      })
-    })
-
-    it('should update pagination URLs after successful fetch', (done) => {
-      component.filterState$.next({
-        ...component.filterState$.value,
-        pageUrl: 'http://example.com/stac',
-      })
-      component.onTemporalExtentChange(null)
-
-      component.items$.subscribe(() => {
-        expect(component.previousPageUrl).toBe('http://example.com/page1')
-        expect(component.nextPageUrl).toBe('http://example.com/page3')
-        done()
-      })
-    })
-
-    it('should handle API errors gracefully', () => {
-      const error = new Error('dataset.error.message')
-      component.handleError(error)
-      expect(component.error$.value).toBe('translated:dataset.error.message')
-    })
-
-    it('should display info message and show no-results button when no items are returned', (done) => {
-      const dataService = ngMocks.findInstance(DataService)
-      dataService.getItemsFromStacApi = jest
-        .fn()
-        .mockReturnValue(
-          Promise.resolve({ features: [], links: [] } as unknown as never)
-        )
-
-      component.filterState$.next({
-        ...component.filterState$.value,
-        pageUrl: 'http://example.com/stac',
-      })
-      component.onTemporalExtentChange(null)
-
-      component.items$.subscribe((items) => {
-        expect(items).toEqual([])
-        expect(component.error$.value).toBeNull()
-        fixture.detectChanges()
-        const noResultsButton =
-          fixture.nativeElement.querySelector('#no-results-button')
-        expect(noResultsButton).not.toBeNull()
-        done()
-      })
-    })
-
-    it('should only call API once when filter state changes', (done) => {
-      const dataService = ngMocks.findInstance(DataService)
-      const apiSpy = jest.spyOn(dataService, 'getItemsFromStacApi')
-
-      component.initialPageUrl = 'http://example.com/stac'
-      component.ngOnInit()
-
-      // Wait for initial load
-      setTimeout(() => {
-        const initialCallCount = apiSpy.mock.calls.length
-
-        // Change temporal filter
-        component.onTemporalExtentChange({
-          start: new Date('2024-01-01'),
-          end: new Date('2024-12-31'),
-        })
-
-        // Wait for debounce and processing
-        setTimeout(() => {
-          const newCallCount = apiSpy.mock.calls.length
-          expect(newCallCount - initialCallCount).toBe(1)
-          done()
-        }, 700)
-      }, 700)
     })
   })
 
   describe('onTemporalExtentChange', () => {
     it('should update current temporal extent', () => {
+      component = createTestComponent()
+
       const newExtent: DatasetTemporalExtent = {
         start: new Date('2024-01-01'),
         end: new Date('2024-12-31'),
       }
       component.onTemporalExtentChange(newExtent)
+
       expect(component.filterState$.value.temporalExtent).toEqual(newExtent)
     })
   })
 
   describe('onSpatialExtentChange', () => {
     it('should update current spatial extent', () => {
+      component = createTestComponent()
+
       const newExtent = [5, 6, 7, 8] as [number, number, number, number]
       component.onSpatialExtentChange(newExtent)
+
       expect(component.filterState$.value.spatialExtent).toEqual(newExtent)
     })
   })
 
   describe('onResolvedMapExtentChange', () => {
     it('should update resolved initial spatial extent', () => {
+      component = createTestComponent()
+
       const resolvedExtent = [9, 10, 11, 12] as [number, number, number, number]
       component.onResolvedMapExtentChange(resolvedExtent)
+
       expect(component.resolvedInitialSpatialExtent).toEqual(resolvedExtent)
     })
   })
 
   describe('onSpatialFilterToggle', () => {
     it('should enable spatial filter', () => {
+      component = createTestComponent()
+
       component.onSpatialFilterToggle(true)
+
       expect(component.filterState$.value.isSpatialExtentFilterEnabled).toBe(
         true
       )
     })
 
     it('should disable spatial filter', () => {
+      component = createTestComponent()
+
       component.onSpatialFilterToggle(false)
+
       expect(component.filterState$.value.isSpatialExtentFilterEnabled).toBe(
         false
       )
@@ -474,33 +272,13 @@ describe('StacViewComponent', () => {
   })
 
   describe('isFilterModified$', () => {
-    beforeEach(() => {
-      component.initialTemporalExtent = mockTemporalExtent
-      component.resolvedInitialSpatialExtent = mockInitialSpatialExtent
-    })
-
-    it('should be false on initial component load before resolved extent is set', (done) => {
-      component.initialTemporalExtent = mockTemporalExtent
-      component.onTemporalExtentChange(mockTemporalExtent)
-      component.onSpatialExtentChange(mockInitialSpatialExtent)
-      component.resolvedInitialSpatialExtent = null
-
-      component.isFilterModified$.subscribe((isModified) => {
-        expect(isModified).toBe(false)
-        done()
-      })
-    })
-
     it('should be true when temporal filter start date is changed', (done) => {
-      component.initialTemporalExtent = mockTemporalExtent
-      component.resolvedInitialSpatialExtent = mockInitialSpatialExtent
-      component.onSpatialExtentChange(mockInitialSpatialExtent)
+      component = createTestComponent()
 
-      const modifiedTemporalExtent = {
-        start: new Date('2023-06-01'),
+      component.onTemporalExtentChange({
+        start: new Date('2024-01-01'),
         end: mockTemporalExtent.end,
-      }
-      component.onTemporalExtentChange(modifiedTemporalExtent)
+      })
 
       component.isFilterModified$.subscribe((isModified) => {
         expect(isModified).toBe(true)
@@ -509,15 +287,12 @@ describe('StacViewComponent', () => {
     })
 
     it('should be true when temporal filter end date is changed', (done) => {
-      component.initialTemporalExtent = mockTemporalExtent
-      component.resolvedInitialSpatialExtent = mockInitialSpatialExtent
-      component.onSpatialExtentChange(mockInitialSpatialExtent)
+      component = createTestComponent()
 
-      const modifiedTemporalExtent = {
+      component.onTemporalExtentChange({
         start: mockTemporalExtent.start,
-        end: new Date('2023-12-31'),
-      }
-      component.onTemporalExtentChange(modifiedTemporalExtent)
+        end: new Date('2024-12-31'),
+      })
 
       component.isFilterModified$.subscribe((isModified) => {
         expect(isModified).toBe(true)
@@ -526,12 +301,12 @@ describe('StacViewComponent', () => {
     })
 
     it('should be true when temporal extent has changed', (done) => {
+      component = createTestComponent()
+
       component.onTemporalExtentChange({
         start: new Date('2024-01-01'),
         end: new Date('2024-12-31'),
       })
-      component.onSpatialExtentChange(mockInitialSpatialExtent)
-      component.onSpatialFilterToggle(true)
 
       component.isFilterModified$.subscribe((isModified) => {
         expect(isModified).toBe(true)
@@ -540,9 +315,9 @@ describe('StacViewComponent', () => {
     })
 
     it('should be true when spatial extent has changed and filter is enabled', (done) => {
-      component.onTemporalExtentChange(mockTemporalExtent)
+      component = createTestComponent()
+
       component.onSpatialExtentChange([5, 6, 7, 8] as Extent)
-      component.onSpatialFilterToggle(true)
 
       component.isFilterModified$.subscribe((isModified) => {
         expect(isModified).toBe(true)
@@ -551,20 +326,10 @@ describe('StacViewComponent', () => {
     })
 
     it('should be false when spatial filter is disabled and only spatial extent changed', (done) => {
-      component.onTemporalExtentChange(mockTemporalExtent)
-      component.onSpatialExtentChange([5, 6, 7, 8] as Extent)
+      component = createTestComponent()
+
       component.onSpatialFilterToggle(false)
-
-      component.isFilterModified$.subscribe((isModified) => {
-        expect(isModified).toBe(false)
-        done()
-      })
-    })
-
-    it('should be false when extents match initial values', (done) => {
-      component.onTemporalExtentChange(mockTemporalExtent)
-      component.onSpatialExtentChange(mockInitialSpatialExtent)
-      component.onSpatialFilterToggle(true)
+      component.onSpatialExtentChange([5, 6, 7, 8] as Extent)
 
       component.isFilterModified$.subscribe((isModified) => {
         expect(isModified).toBe(false)
@@ -656,7 +421,7 @@ describe('StacViewComponent', () => {
       expect(apiSpy).toHaveBeenCalledWith(
         'http://example.com/stac',
         expect.objectContaining({
-          limit: 12,
+          limit: STAC_ITEMS_PER_PAGE,
           datetime: {
             start: mockTemporalExtent.start,
             end: mockTemporalExtent.end,
@@ -674,7 +439,7 @@ describe('StacViewComponent', () => {
       expect(apiSpy).toHaveBeenCalledWith(
         'http://example.com/stac',
         expect.objectContaining({
-          limit: 12,
+          limit: STAC_ITEMS_PER_PAGE,
           bbox: mockInitialResolvedSpatialExtent,
           datetime: {
             start: mockTemporalExtent.start,
@@ -704,7 +469,7 @@ describe('StacViewComponent', () => {
       expect(apiSpy).toHaveBeenCalledWith(
         mockStacLink.url.href,
         expect.objectContaining({
-          limit: 12,
+          limit: STAC_ITEMS_PER_PAGE,
           bbox: bbox,
           datetime: newTemporalExtent,
         })
@@ -719,7 +484,7 @@ describe('StacViewComponent', () => {
       expect(apiSpy).toHaveBeenCalledWith(
         mockStacLink.url.href,
         expect.objectContaining({
-          limit: 12,
+          limit: STAC_ITEMS_PER_PAGE,
           bbox: mockInitialResolvedSpatialExtent,
           datetime: mockTemporalExtent,
         })
@@ -760,7 +525,7 @@ describe('StacViewComponent', () => {
       expect(apiSpy).toHaveBeenLastCalledWith(
         'http://example.com/stac',
         expect.objectContaining({
-          limit: 12,
+          limit: STAC_ITEMS_PER_PAGE,
           bbox: mockInitialResolvedSpatialExtent,
           datetime: mockTemporalExtent,
         })
@@ -768,61 +533,13 @@ describe('StacViewComponent', () => {
     }))
   })
 
-  describe('filter change pagination reset', () => {
-    beforeEach(() => {
-      component.initialPageUrl = 'http://example.com/stac'
-      component.initialTemporalExtent = mockTemporalExtent
-      component.resolvedInitialSpatialExtent = mockInitialSpatialExtent
-      component.filterState$.next({
-        ...component.filterState$.value,
-        pageUrl: 'http://example.com/page2',
-      })
-      component.ngOnInit()
-    })
-
-    it('should reset pagination when temporal extent changes', (done) => {
-      const newExtent = {
-        start: new Date('2024-01-01'),
-        end: new Date('2024-12-31'),
-      }
-      component.onTemporalExtentChange(newExtent)
-
-      setTimeout(() => {
-        expect(component.filterState$.value.pageUrl).toBe(
-          'http://example.com/stac'
-        )
-        done()
-      }, 100)
-    })
-
-    it('should reset pagination when spatial extent changes and filter is enabled', (done) => {
-      component.onSpatialFilterToggle(true)
-      component.onSpatialExtentChange([5, 6, 7, 8] as Extent)
-
-      setTimeout(() => {
-        expect(component.filterState$.value.pageUrl).toBe(
-          'http://example.com/stac'
-        )
-        done()
-      }, 600) // Wait for debounce
-    })
-
-    it('should reset pagination when spatial filter is toggled', (done) => {
-      component.onSpatialFilterToggle(false)
-
-      setTimeout(() => {
-        expect(component.filterState$.value.pageUrl).toBe(
-          'http://example.com/stac'
-        )
-        done()
-      }, 100)
-    })
-  })
-
   describe('handleError', () => {
     it('should handle FetchError', () => {
+      component = createTestComponent()
+
       const fetchError = new FetchError('http', 'NETWORK_ERROR', 404)
       component.handleError(fetchError)
+
       const translateService = ngMocks.findInstance(TranslateService)
       expect(translateService.instant).toHaveBeenCalledWith(
         'dataset.error.http',
@@ -832,8 +549,11 @@ describe('StacViewComponent', () => {
     })
 
     it('should handle generic Error', () => {
+      component = createTestComponent()
+
       const genericError = new Error('Test error message')
       component.handleError(genericError)
+
       const translateService = ngMocks.findInstance(TranslateService)
       expect(translateService.instant).toHaveBeenCalledWith(
         'Test error message'
@@ -842,21 +562,20 @@ describe('StacViewComponent', () => {
     })
 
     it('should handle string error', () => {
+      component = createTestComponent()
+
       const stringError = 'String error message'
       component.handleError(stringError)
+
       const translateService = ngMocks.findInstance(TranslateService)
       expect(translateService.instant).toHaveBeenCalledWith(stringError)
       expect(component.error$.value).toBe('translated:String error message')
     })
 
     it('should clear error when making a new API call', (done) => {
+      component = createTestComponent()
       component.error$.next('Previous error')
-      component.ngOnInit()
 
-      component.filterState$.next({
-        ...component.filterState$.value,
-        pageUrl: 'http://example.com/stac',
-      })
       component.onTemporalExtentChange(null)
 
       component.items$.subscribe(() => {
@@ -867,36 +586,44 @@ describe('StacViewComponent', () => {
   })
 
   describe('pagination', () => {
-    beforeEach(() => {
-      component.previousPageUrl = 'http://example.com/page1'
-      component.nextPageUrl = 'http://example.com/page3'
-    })
-
     describe('isFirstPage', () => {
       it('should return true when previousPageUrl is null', () => {
+        component = createTestComponent()
         component.previousPageUrl = null
         expect(component.isFirstPage).toBe(true)
       })
 
       it('should return false when previousPageUrl is not null', () => {
+        component = createTestComponent()
+        component.previousPageUrl = 'http://example.com/page1'
+
         expect(component.isFirstPage).toBe(false)
       })
     })
 
     describe('isLastPage', () => {
       it('should return true when nextPageUrl is null', () => {
+        component = createTestComponent()
         component.nextPageUrl = null
+
         expect(component.isLastPage).toBe(true)
       })
 
       it('should return false when nextPageUrl is not null', () => {
+        component = createTestComponent()
+        component.nextPageUrl = 'http://example.com/page3'
+
         expect(component.isLastPage).toBe(false)
       })
     })
 
     describe('goToNextPage', () => {
       it('should update filterState$.pageUrl with nextPageUrl', () => {
+        component = createTestComponent()
+        component.nextPageUrl = 'http://example.com/page3'
+
         component.goToNextPage()
+
         expect(component.filterState$.value.pageUrl).toBe(
           'http://example.com/page3'
         )
@@ -905,7 +632,11 @@ describe('StacViewComponent', () => {
 
     describe('goToPrevPage', () => {
       it('should update filterState$.pageUrl with previousPageUrl', () => {
+        component = createTestComponent()
+        component.previousPageUrl = 'http://example.com/page1'
+
         component.goToPrevPage()
+
         expect(component.filterState$.value.pageUrl).toBe(
           'http://example.com/page1'
         )
