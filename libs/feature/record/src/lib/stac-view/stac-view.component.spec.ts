@@ -1,4 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing'
 import { StacViewComponent } from './stac-view.component'
 import { provideI18n } from '@geonetwork-ui/util/i18n'
 import {
@@ -55,6 +60,20 @@ describe('StacViewComponent', () => {
   let component: StacViewComponent
   let fixture: ComponentFixture<StacViewComponent>
 
+  function createTestComponent(): StacViewComponent {
+    fixture = TestBed.createComponent(StacViewComponent)
+    component = fixture.componentInstance
+
+    component.ngOnInit()
+    fixture.detectChanges()
+
+    component.onResolvedMapExtentChange(mockInitialResolvedSpatialExtent)
+
+    fixture.detectChanges()
+
+    return component
+  }
+
   const mockTemporalExtent: DatasetTemporalExtent = {
     start: new Date('2020-01-01T00:00:00Z'),
     end: new Date('2023-12-31T23:59:59Z'),
@@ -88,9 +107,15 @@ describe('StacViewComponent', () => {
     description: 'Mock STAC API link',
     type: 'stac-api',
     accessServiceProtocol: 'http',
-  } as unknown as never
+  }
 
   const mockSpatialExtent = [1, 2, 3, 4] as [number, number, number, number]
+  const mockInitialResolvedSpatialExtent = [10, 20, 30, 40] as [
+    number,
+    number,
+    number,
+    number,
+  ]
 
   beforeEach(() =>
     MockBuilder(StacViewComponent).replace(
@@ -544,47 +569,50 @@ describe('StacViewComponent', () => {
   })
 
   describe('onResetFilters', () => {
-    beforeEach(() => {
-      component.initialTemporalExtent = mockTemporalExtent
-      component.initialSpatialExtent = mockSpatialExtent
-      component.initialPageUrl = 'http://example.com/stac'
-    })
+    it('should reset temporal extent to initialPageUrl value', () => {
+      component = createTestComponent()
 
-    it('should reset temporal extent to initial value', () => {
       component.onTemporalExtentChange({
         start: new Date('2024-01-01'),
         end: new Date('2024-12-31'),
       })
+
       component.onResetFilters()
+
       expect(component.filterState$.value.temporalExtent).toEqual(
         mockTemporalExtent
       )
     })
 
     it('should reset pageUrl to initialPageUrl in filterState$', () => {
-      component.filterState$.next({
-        ...component.filterState$.value,
-        pageUrl: 'http://example.com/stac?page=2',
-      })
+      component = createTestComponent()
+
+      component.nextPageUrl = 'http://example.com/stac?page=2'
+
+      component.goToNextPage()
+      expect(component.filterState$.value.pageUrl).toBe(
+        'http://example.com/stac?page=2'
+      )
+
       component.onResetFilters()
-      // onResetFilters now directly sets pageUrl to initialPageUrl in filterState$
+
       expect(component.filterState$.value.pageUrl).toBe(
         component.initialPageUrl
       )
     })
 
     it('should reset spatial extent and map context when spatial filter is enabled', () => {
+      component = createTestComponent()
       component.onSpatialFilterToggle(true)
       component.onSpatialExtentChange([5, 6, 7, 8] as Extent)
-      component.resolvedInitialSpatialExtent = null
-      component.mapContext$.next({
-        layers: [],
-        view: { extent: [5, 6, 7, 8] as [number, number, number, number] },
-      })
 
       component.onResetFilters()
 
-      expect(component.filterState$.value.spatialExtent).toBeNull()
+      fixture.detectChanges()
+
+      expect(component.filterState$.value.spatialExtent).toEqual(
+        mockInitialResolvedSpatialExtent
+      )
       expect(component.mapContext$.value).toEqual({
         layers: [],
         view: {
@@ -594,9 +622,9 @@ describe('StacViewComponent', () => {
     })
 
     it('should reset spatial extent and enable spatial filter even when it was disabled', () => {
+      component = createTestComponent()
       component.onSpatialFilterToggle(false)
       component.onSpatialExtentChange([5, 6, 7, 8] as Extent)
-      component.resolvedInitialSpatialExtent = mockSpatialExtent
 
       component.onResetFilters()
 
@@ -604,173 +632,135 @@ describe('StacViewComponent', () => {
         true
       )
       expect(component.filterState$.value.spatialExtent).toEqual(
-        mockSpatialExtent
+        mockInitialResolvedSpatialExtent
       )
     })
 
-    it('should only trigger one API call when resetting from modified spatial extent', (done) => {
+    it('should only trigger one API call when resetting from modified spatial extent', fakeAsync(() => {
+      component = createTestComponent()
+
       const dataService = ngMocks.findInstance(DataService)
       const apiSpy = jest.spyOn(dataService, 'getItemsFromStacApi')
 
-      component.initialPageUrl = 'http://example.com/stac'
-      component.initialTemporalExtent = mockTemporalExtent
-      component.resolvedInitialSpatialExtent = mockSpatialExtent
-      component.filterState$.next({
-        ...component.filterState$.value,
-        pageUrl: 'http://example.com/stac',
-      })
-      component.ngOnInit()
+      // Modify spatial extent (zoom in)
+      const bbox = [5, 6, 7, 8] as Extent
+      component.onSpatialExtentChange(bbox)
+      tick(500)
 
-      // Wait for initial load
-      setTimeout(() => {
-        // Clear API calls from initial load
-        apiSpy.mockClear()
-
-        // Modify spatial extent (zoom in)
-        component.onSpatialExtentChange([5, 6, 7, 8] as Extent)
-
-        // Wait for the modified extent to be processed (debounce + API call)
-        setTimeout(() => {
-          // Clear API calls from the filter change
-          apiSpy.mockClear()
-
-          // Reset filters back to initial state
-          component.onResetFilters()
-
-          // Wait for debounce and processing (500ms debounce + API call time)
-          setTimeout(() => {
-            // Should only have been called once, not twice
-            expect(apiSpy).toHaveBeenCalledTimes(1)
-            expect(apiSpy).toHaveBeenCalledWith(
-              'http://example.com/stac',
-              expect.objectContaining({
-                limit: 12,
-                bbox: mockSpatialExtent,
-              })
-            )
-            done()
-          }, 700)
-        }, 700)
-      }, 100)
-    })
-
-    it('should only trigger one API call when resetting both temporal and spatial filters', (done) => {
-      const dataService = ngMocks.findInstance(DataService)
-      const apiSpy = jest.spyOn(dataService, 'getItemsFromStacApi')
-
-      component.initialPageUrl = 'http://example.com/stac'
-      component.initialTemporalExtent = mockTemporalExtent
-      component.resolvedInitialSpatialExtent = mockSpatialExtent
-      component.filterState$.next({
-        ...component.filterState$.value,
-        pageUrl: 'http://example.com/stac',
-      })
-      component.ngOnInit()
-
-      // Wait for initial load
-      setTimeout(() => {
-        // Clear API calls from initial load
-        apiSpy.mockClear()
-
-        // Modify both spatial extent (zoom in) and temporal extent
-        component.onSpatialExtentChange([5, 6, 7, 8] as Extent)
-        component.onTemporalExtentChange({
-          start: new Date('2024-01-01'),
-          end: new Date('2024-12-31'),
+      expect(apiSpy).toHaveBeenCalledTimes(1)
+      expect(apiSpy).toHaveBeenCalledWith(
+        'http://example.com/stac',
+        expect.objectContaining({
+          limit: 12,
+          datetime: {
+            start: mockTemporalExtent.start,
+            end: mockTemporalExtent.end,
+          },
+          bbox: bbox,
         })
+      )
 
-        // Wait for the modified filters to be processed (debounce + API call)
-        setTimeout(() => {
-          // Clear API calls from the filter changes
-          apiSpy.mockClear()
+      apiSpy.mockClear()
+      component.onResetFilters()
+      tick(500)
 
-          // Reset filters back to initial state
-          component.onResetFilters()
+      // Should only have been called once with initial resolved spatial extent
+      expect(apiSpy).toHaveBeenCalledTimes(1)
+      expect(apiSpy).toHaveBeenCalledWith(
+        'http://example.com/stac',
+        expect.objectContaining({
+          limit: 12,
+          bbox: mockInitialResolvedSpatialExtent,
+          datetime: {
+            start: mockTemporalExtent.start,
+            end: mockTemporalExtent.end,
+          },
+        })
+      )
+    }))
 
-          // Wait for debounce and processing (500ms debounce + API call time)
-          setTimeout(() => {
-            // Should only have been called once with both filters reset
-            expect(apiSpy).toHaveBeenCalledTimes(1)
-            expect(apiSpy).toHaveBeenCalledWith(
-              'http://example.com/stac',
-              expect.objectContaining({
-                limit: 12,
-                bbox: mockSpatialExtent,
-                datetime: {
-                  start: mockTemporalExtent.start,
-                  end: mockTemporalExtent.end,
-                },
-              })
-            )
-            done()
-          }, 700)
-        }, 700)
-      }, 100)
-    })
+    it('should only trigger one API call when resetting both temporal and spatial filters', fakeAsync(() => {
+      component = createTestComponent()
 
-    it('should only trigger one API call when resetting filters after changing temporal, spatial, and navigating to next page', (done) => {
       const dataService = ngMocks.findInstance(DataService)
       const apiSpy = jest.spyOn(dataService, 'getItemsFromStacApi')
 
-      component.initialPageUrl = 'http://example.com/stac'
-      component.initialTemporalExtent = mockTemporalExtent
-      component.resolvedInitialSpatialExtent = mockSpatialExtent
-      component.filterState$.next({
-        ...component.filterState$.value,
-        pageUrl: 'http://example.com/stac',
-      })
-      component.ngOnInit()
+      // Modify both spatial extent (zoom in) and temporal extent
+      const bbox = [5, 6, 7, 8] as Extent
+      const newTemporalExtent = {
+        start: new Date('2024-01-01'),
+        end: new Date('2024-12-31'),
+      }
+      component.onSpatialExtentChange(bbox)
+      component.onTemporalExtentChange(newTemporalExtent)
+      tick(500)
 
-      // Wait for initial load
-      setTimeout(() => {
-        // Clear API calls from initial load
-        apiSpy.mockClear()
-
-        // Step 1: Change temporal extent
-        component.onTemporalExtentChange({
-          start: new Date('2024-01-01'),
-          end: new Date('2024-12-31'),
+      expect(apiSpy).toHaveBeenCalledTimes(1)
+      expect(apiSpy).toHaveBeenCalledWith(
+        mockStacLink.url.href,
+        expect.objectContaining({
+          limit: 12,
+          bbox: bbox,
+          datetime: newTemporalExtent,
         })
+      )
 
-        // Step 2: Change spatial extent (zoom in)
-        component.onSpatialExtentChange([5, 6, 7, 8] as Extent)
+      apiSpy.mockClear()
+      component.onResetFilters()
+      tick(500)
 
-        // Wait for the filter changes to be processed
-        setTimeout(() => {
-          apiSpy.mockClear()
+      // Should only have been called once with both filters reset
+      expect(apiSpy).toHaveBeenCalledTimes(1)
+      expect(apiSpy).toHaveBeenCalledWith(
+        mockStacLink.url.href,
+        expect.objectContaining({
+          limit: 12,
+          bbox: mockInitialResolvedSpatialExtent,
+          datetime: mockTemporalExtent,
+        })
+      )
+    }))
 
-          // Step 3: Navigate to next page
-          component.nextPageUrl = 'http://example.com/stac?page=2'
-          component.goToNextPage()
+    it('should only trigger one API call when resetting filters after changing temporal, spatial, and navigating to next page', fakeAsync(() => {
+      component = createTestComponent()
 
-          // Wait for page change
-          setTimeout(() => {
-            apiSpy.mockClear()
+      const dataService = ngMocks.findInstance(DataService)
+      const apiSpy = jest.spyOn(dataService, 'getItemsFromStacApi')
 
-            // Step 4: Reset filters
-            component.onResetFilters()
+      // Step 1: Change temporal extent
+      component.onTemporalExtentChange({
+        start: new Date('2024-01-01'),
+        end: new Date('2024-12-31'),
+      })
 
-            // Wait for debounce and processing
-            setTimeout(() => {
-              // Should only have been called once, not twice
-              expect(apiSpy).toHaveBeenCalledTimes(1)
-              expect(apiSpy).toHaveBeenCalledWith(
-                'http://example.com/stac',
-                expect.objectContaining({
-                  limit: 12,
-                  bbox: mockSpatialExtent,
-                  datetime: {
-                    start: mockTemporalExtent.start,
-                    end: mockTemporalExtent.end,
-                  },
-                })
-              )
-              done()
-            }, 700)
-          }, 100)
-        }, 700)
-      }, 100)
-    })
+      // Step 2: Change spatial extent (zoom in)
+      component.onSpatialExtentChange([5, 6, 7, 8] as Extent)
+      tick(500)
+
+      expect(apiSpy).toHaveBeenCalledTimes(1)
+
+      // Step 3: Navigate to next page
+      component.nextPageUrl = 'http://example.com/stac?page=2'
+      component.goToNextPage()
+      tick(500)
+
+      expect(apiSpy).toHaveBeenCalledTimes(2)
+
+      // Step 4: Reset filters
+      component.onResetFilters()
+      tick(500)
+
+      // Should only have been called one more time, not twice
+      expect(apiSpy).toHaveBeenCalledTimes(3)
+      expect(apiSpy).toHaveBeenLastCalledWith(
+        'http://example.com/stac',
+        expect.objectContaining({
+          limit: 12,
+          bbox: mockInitialResolvedSpatialExtent,
+          datetime: mockTemporalExtent,
+        })
+      )
+    }))
   })
 
   describe('filter change pagination reset', () => {
