@@ -5,6 +5,7 @@ import {
   Component,
   InjectionToken,
   Input,
+  OnDestroy,
   OnInit,
   inject,
 } from '@angular/core'
@@ -31,6 +32,7 @@ import {
   map,
   of,
   startWith,
+  Subscription,
   switchMap,
   take,
 } from 'rxjs'
@@ -61,7 +63,7 @@ export const REUSE_FORM_URL = new InjectionToken<string>('reuseFormUrl')
     TranslatePipe,
   ],
 })
-export class RecordDataPreviewComponent implements OnInit {
+export class RecordDataPreviewComponent implements OnInit, OnDestroy {
   metadataViewFacade = inject(MdViewFacade)
   private dataService = inject(DataService)
   private maxFeatureCount = Number(
@@ -95,6 +97,7 @@ export class RecordDataPreviewComponent implements OnInit {
 
   private readonly VIEW_PRIORITY = ['map', 'table', 'stac'] as const
 
+  subscription: Subscription
   selectedLink$ = new BehaviorSubject<DatasetOnlineResource>(null)
   selectedView$ = new BehaviorSubject(null)
   selectedIndex$ = new BehaviorSubject(0)
@@ -188,7 +191,7 @@ export class RecordDataPreviewComponent implements OnInit {
   )
 
   ngOnInit() {
-    combineLatest([
+    this.subscription = combineLatest([
       this.displayMap$,
       this.displayData$,
       this.displayStac$,
@@ -196,7 +199,6 @@ export class RecordDataPreviewComponent implements OnInit {
       this.isMobile$,
     ])
       .pipe(
-        take(1),
         map(([displayMap, displayData, displayStac, config, isMobile]) => {
           const availableViews = this.getAvailableViews(
             displayMap,
@@ -211,6 +213,12 @@ export class RecordDataPreviewComponent implements OnInit {
       .subscribe(({ selectedView, config }) => {
         this.applyViewConfiguration(selectedView, config)
       })
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
   }
 
   private getAvailableViews(
@@ -318,9 +326,6 @@ export class RecordDataPreviewComponent implements OnInit {
   onTabIndexChange(index: number): void {
     const view = this.views[index - 1] ?? 'chart'
     this.selectedView$.next(view)
-    setTimeout(() => {
-      window.dispatchEvent(new Event('resize'))
-    }, 0)
   }
   onSelectedLinkChange(link: DatasetOnlineResource) {
     this.selectedLink$.next(link)
