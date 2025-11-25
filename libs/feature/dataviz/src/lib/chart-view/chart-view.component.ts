@@ -86,7 +86,7 @@ export class ChartViewComponent {
   @Input() cacheActive = true
   @Input() set link(value: DatasetOnlineResource) {
     this.currentLink$.next(value)
-    if (value) {
+    if (value && !this.aggregation$.value) {
       this.aggregation$.next('sum')
     }
   }
