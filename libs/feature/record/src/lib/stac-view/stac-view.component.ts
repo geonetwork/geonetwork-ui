@@ -197,7 +197,6 @@ export class StacViewComponent implements OnInit, AfterViewInit {
         this.filterState$.next({
           ...this.filterState$.value,
           temporalExtent: this.initialTemporalExtent,
-          pageUrl: this.initialPageUrl,
         })
 
         this.mapContext$.next({
