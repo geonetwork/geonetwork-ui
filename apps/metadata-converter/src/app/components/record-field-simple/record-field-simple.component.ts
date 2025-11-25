@@ -14,6 +14,7 @@ type ValueModel = string | URL | Date | number
   templateUrl: './record-field-simple.component.html',
   styleUrls: ['./record-field-simple.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class RecordFieldSimpleComponent {
   @Input() label: string

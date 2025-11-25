@@ -7,6 +7,7 @@ import { firstValueFrom, map } from 'rxjs'
   selector: 'gn-ui-main-search',
   templateUrl: './main-search.component.html',
   styleUrls: ['./main-search.component.scss'],
+  standalone: false,
 })
 export class MainSearchComponent implements OnInit {
   constructor(
