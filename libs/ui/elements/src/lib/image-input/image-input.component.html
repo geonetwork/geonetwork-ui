@@ -15,15 +15,12 @@
         type="gray"
         (buttonClick)="handleDelete()"
         data-cy="delete-image"
-        >
+      >
         <ng-icon class="me-1 text-primary" name="iconoirBin"></ng-icon>
         {{ 'input.image.delete' | translate }}
       </gn-ui-button>
       @if (!showAltTextInput) {
-        <gn-ui-button
-          type="gray"
-          (buttonClick)="toggleAltTextInput()"
-          >
+        <gn-ui-button type="gray" (buttonClick)="toggleAltTextInput()">
           <ng-icon name="iconoirPlus" class="me-1 text-primary"></ng-icon>
           {{ 'input.image.displayAltTextInput' | translate }}
         </gn-ui-button>
@@ -45,11 +42,9 @@
       (keydown.enter)="fileInput.click()"
       (dragFilesOver)="handleDragFilesOver($event)"
       (dropFiles)="handleDropFiles($event)"
-      >
+    >
       @if (!isUploadInProgress && !imageFileError) {
-        <div
-          class="w-14 h-14 rounded-md bg-gray-50 grid"
-          >
+        <div class="w-14 h-14 rounded-md bg-gray-50 grid">
           @if (!dragFilesOver) {
             <ng-icon
               class="place-self-center text-primary"
@@ -65,9 +60,7 @@
         </div>
       }
       @if (isUploadInProgress && !imageFileError) {
-        <div
-          class="w-14 h-14 grid items-center justify-center relative"
-          >
+        <div class="w-14 h-14 grid items-center justify-center relative">
           <div class="text-gray-100 absolute">
             <mat-progress-spinner
               class="place-self-center"
@@ -109,7 +102,7 @@
               : 'font-medium text-gray-500'
           "
           (click)="handleSecondaryTextClick($event)"
-          >
+        >
           {{ getSecondaryText() | translate }}
         </p>
       </div>
@@ -120,7 +113,7 @@
         class="hidden"
         (change)="handleFileInput($event)"
         [disabled]="isUploadInProgress || disabled"
-        />
+      />
     </label>
     @if (!showUrlInput) {
       <div class="flex-none mt-2">
@@ -130,7 +123,7 @@
           type="gray"
           [disabled]="disabled"
           [extraClass]="disabled && 'cursor-not-allowed'"
-          >
+        >
           <ng-icon class="me-1 text-primary" name="iconoirLink"></ng-icon>
           {{ 'input.image.displayUrlInput' | translate }}
         </gn-ui-button>
@@ -142,10 +135,8 @@
         data-cy="imgUrlInput"
         (uploadClick)="downloadUrl($event)"
         [disabled]="isUploadInProgress || disabled"
-        >
+      >
       </gn-ui-url-input>
     }
   </div>
 }
-
-

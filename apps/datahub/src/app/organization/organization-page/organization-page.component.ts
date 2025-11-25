@@ -24,8 +24,8 @@ import {
     OrganizationDetailsComponent,
     LetDirective,
     FeatureSearchModule,
-    SearchStateContainerDirective
-],
+    SearchStateContainerDirective,
+  ],
 })
 export class OrganizationPageComponent implements OnInit {
   organization$: Observable<Organization>

@@ -4,11 +4,11 @@
       <div class="relative pr-[2.8em]">
         <ng-container
           [ngTemplateOutlet]="itemTemplate"
-        [ngTemplateOutletContext]="{
-          getValue: valueGetter(),
-          setValue: valueSetter(),
-        }"
-          >
+          [ngTemplateOutletContext]="{
+            getValue: valueGetter(),
+            setValue: valueSetter(),
+          }"
+        >
         </ng-container>
         @if (optional) {
           <gn-ui-button
@@ -17,7 +17,7 @@
             (buttonClick)="deleteObject()"
             extraClass="!p-[0.5em]"
             title="Delete this item"
-            >
+          >
             <ng-icon name="matDeleteForeverSharp"></ng-icon>
           </gn-ui-button>
         }
@@ -29,7 +29,7 @@
           [type]="'primary'"
           (buttonClick)="createObject()"
           extraClass="py-[0.5em] px-[1em]"
-          >
+        >
           Create...
         </gn-ui-button>
       </div>

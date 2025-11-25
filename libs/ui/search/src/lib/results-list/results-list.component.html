@@ -1,10 +1,7 @@
 <ng-container>
   <div [ngClass]="layoutConfig.containerClass">
     @for (record of records; track record) {
-      <div
-        [ngClass]="layoutConfig.itemClass"
-        [style]="layoutConfig.itemStyle"
-        >
+      <div [ngClass]="layoutConfig.itemClass" [style]="layoutConfig.itemStyle">
         <gn-ui-results-list-item
           [attr.data-cy]="record.uniqueIdentifier"
           [record]="record"

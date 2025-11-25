@@ -5,7 +5,6 @@ import { firstValueFrom } from 'rxjs'
 import { DragAndDropFileInputComponent } from '@geonetwork-ui/ui/inputs'
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 
-
 const INVALID_FILE_FORMAT_ERROR_MESSAGE = 'Invalid file format'
 
 @Component({
@@ -13,11 +12,7 @@ const INVALID_FILE_FORMAT_ERROR_MESSAGE = 'Invalid file format'
   templateUrl: './add-layer-from-file.component.html',
   styleUrls: ['./add-layer-from-file.component.css'],
   standalone: true,
-  imports: [
-    TranslateDirective,
-    TranslatePipe,
-    DragAndDropFileInputComponent
-],
+  imports: [TranslateDirective, TranslatePipe, DragAndDropFileInputComponent],
 })
 export class AddLayerFromFileComponent {
   errorMessage: string | null = null

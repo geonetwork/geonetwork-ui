@@ -17,7 +17,9 @@
         >{{ keyword.label }}
         @if (isPlaceWithoutExtent(keyword)) {
           <ng-icon
-            [title]="'editor.record.form.keywords.place.withoutExtent' | translate"
+            [title]="
+              'editor.record.form.keywords.place.withoutExtent' | translate
+            "
             class="badge-warning"
             name="matWarningAmberOutline"
           ></ng-icon>

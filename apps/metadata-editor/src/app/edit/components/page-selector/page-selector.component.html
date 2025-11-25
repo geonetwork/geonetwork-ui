@@ -1,8 +1,13 @@
 <div
   class="w-full flex flex-row items-center gap-[8px]"
   data-test="pageSelectorButtons"
-  >
-  @for (page of pages$ | async; track page; let index = $index; let isLast = $last) {
+>
+  @for (
+    page of pages$ | async;
+    track page;
+    let index = $index;
+    let isLast = $last
+  ) {
     <gn-ui-button
       (buttonClick)="pageSectionClickHandler(index)"
       class="flex flex-row items-center"
@@ -10,26 +15,24 @@
       extraClass="bg-transparent border-none"
       style="--gn-ui-button-padding: 0 16px 0 0"
       *ngrxLet="isCurrentPage(index) as isCurrentPage"
-      >
+    >
       <div
         class="w-[40px] h-[40px] shrink-0 rounded-[8px] grid items-center font-bold transition-colors"
         data-test="page-number"
         [ngClass]="isCurrentPage ? 'bg-primary text-white' : 'bg-gray-200'"
-        >
+      >
         {{ index + 1 }}
       </div>
       <div
         class="ms-[16px] transition-colors"
         [ngClass]="isCurrentPage ? 'text-black font-bold' : 'text-gray-600'"
         translate
-        >
+      >
         {{ page.labelKey }}
       </div>
     </gn-ui-button>
     @if (!isLast) {
-      <div
-        class="w-10 mr-[8px] border-t-[2px] border-gray-500"
-      ></div>
+      <div class="w-10 mr-[8px] border-t-[2px] border-gray-500"></div>
     }
   }
 </div>

@@ -1,8 +1,5 @@
 @if (kind) {
-  <div
-    [class]="badgeClasses"
-    [title]="'record.kind.' + kind | translate"
-    >
+  <div [class]="badgeClasses" [title]="'record.kind.' + kind | translate">
     <ng-icon [name]="iconKind" [ngClass]="extraClass"></ng-icon>
     @if (contentTemplate) {
       <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
@@ -11,4 +8,3 @@
     }
   </div>
 }
-

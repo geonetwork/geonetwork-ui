@@ -1,31 +1,27 @@
 <div class="flex flex-col gap-6">
   @for (
-    section of facade.currentSections$ | async; track sectionTracker($index,
-    section)) {
+    section of facade.currentSections$ | async;
+    track sectionTracker($index, section)
+  ) {
     @if (!section.hidden) {
       <div class="flex flex-col gap-6 border p-8 rounded-[8px] shadow">
         <div class="flex flex-col gap-2">
           @if (section.labelKey) {
-            <div
-              class="text-2xl font-title text-black"
-              translate
-              >
+            <div class="text-2xl font-title text-black" translate>
               {{ section.labelKey }}
             </div>
           }
           @if (section.descriptionKey) {
-            <div
-              class="text-gray-800 text-sm"
-              translate
-              >
+            <div class="text-gray-800 text-sm" translate>
               {{ section.descriptionKey }}
             </div>
           }
         </div>
         <div class="grid auto-rows-auto grid-cols-2 gap-[32px]">
           @for (
-            field of section.fieldsWithValues; track fieldTracker($index,
-            field)) {
+            field of section.fieldsWithValues;
+            track fieldTracker($index, field)
+          ) {
             @if (!field.config.hidden) {
               <gn-ui-form-field
                 [ngClass]="

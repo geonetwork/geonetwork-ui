@@ -31,12 +31,7 @@ import { TranslateModule, TranslatePipe } from '@ngx-translate/core'
   styleUrls: ['./facet-block.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    FacetItemComponent,
-    FormsModule,
-    TranslateModule,
-    TranslatePipe
-],
+  imports: [FacetItemComponent, FormsModule, TranslateModule, TranslatePipe],
 })
 export class FacetBlockComponent
   implements OnInit, AfterViewInit, OnDestroy, OnChanges

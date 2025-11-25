@@ -7,20 +7,18 @@
             class="sm:block"
             [metadata]="{}"
             [incomplete]="true"
-            >
+          >
           </gn-ui-metadata-info>
         }
         @if ((metadataViewFacade.isPresent$ | async) === true) {
-          <div
-            class="grid gap-8 grid-cols-1 sm:gap-6 sm:grid-cols-3"
-            >
+          <div class="grid gap-8 grid-cols-1 sm:gap-6 sm:grid-cols-3">
             <div class="sm:col-span-2">
               <gn-ui-metadata-info
                 class="sm:block"
                 [metadata]="metadataViewFacade.metadata$ | async"
                 [incomplete]="metadataViewFacade.isIncomplete$ | async"
                 (keyword)="onInfoKeywordClick($event)"
-                >
+              >
               </gn-ui-metadata-info>
             </div>
             <div class="flex flex-col gap-5">
@@ -33,12 +31,10 @@
               <gn-ui-metadata-contact
                 (organizationClick)="onOrganizationClick($event)"
                 [metadata]="metadataViewFacade.metadata$ | async"
-                >
+              >
               </gn-ui-metadata-contact>
               @if (metadataQualityDisplay) {
-                <div
-                  class="border border-gray-300 rounded-lg py-4 px-5"
-                  >
+                <div class="border border-gray-300 rounded-lg py-4 px-5">
                   <p class="mb-3" translate>record.metadata.quality</p>
                   <gn-ui-metadata-quality
                     [metadata]="metadataViewFacade.metadata$ | async"
@@ -48,12 +44,10 @@
                 </div>
               }
               @if (
-                (kind$ | async) === 'dataset' && sourceLabel$
-                | async; as sourceLabel
-                ) {
-                <div
-                  class="border border-gray-300 rounded-lg py-4 px-5"
-                  >
+                (kind$ | async) === 'dataset' && sourceLabel$ | async;
+                as sourceLabel
+              ) {
+                <div class="border border-gray-300 rounded-lg py-4 px-5">
                   <gn-ui-metadata-catalog [sourceLabel]="sourceLabel">
                   </gn-ui-metadata-catalog>
                 </div>
@@ -64,7 +58,7 @@
                   extraClass="w-full flex flex-row justify-between bg-white"
                   [style.--gn-ui-button-rounded]="'10px'"
                   (buttonClick)="scrollToQuestions()"
-                  >
+                >
                   <span translate>service.metadata.question</span>
                   <ng-icon
                     class="mr-[5px] text-[1em]"
@@ -78,7 +72,7 @@
                   extraClass="w-full flex flex-row justify-between bg-white"
                   [style.--gn-ui-button-rounded]="'10px'"
                   (buttonClick)="navigateToReuseForm()"
-                  >
+                >
                   <span translate>service.metadata.reuse</span>
                   <ng-icon
                     class="mr-[5px] text-[1em]"
@@ -93,11 +87,8 @@
     </section>
     @if (
       (displayMap$ | async) || (displayData$ | async) || (displayStac$ | async)
-      ) {
-      <section
-        id="data-preview"
-        class="mb-6"
-        >
+    ) {
+      <section id="data-preview" class="mb-6">
         <datahub-record-data-preview
           [recordUuid]="metadataUuid$ | async"
         ></datahub-record-data-preview>
@@ -114,23 +105,24 @@
       (displayDownload$ | async) ||
       (displayOtherLinks$ | async) ||
       (displayApi$ | async)
-      ) {
-      <section
-        id="resources"
-        class="overflow-x-hidden"
-        >
+    ) {
+      <section id="resources" class="overflow-x-hidden">
         <h2 class="gn-ui-section-title container-lg px-4 lg:mx-auto" translate>
           record.metadata.ressources.and.links
         </h2>
         <div class="container-lg px-4 pb-10 lg:mx-auto mt-5">
           @if (displayDownload$ | async) {
             <div id="downloads" class="pb-7">
-              <datahub-record-downloads class="block"></datahub-record-downloads>
+              <datahub-record-downloads
+                class="block"
+              ></datahub-record-downloads>
             </div>
           }
           @if (displayOtherLinks$ | async) {
             <div id="otherlinks" class="pb-7">
-              <datahub-record-otherlinks class="block"></datahub-record-otherlinks>
+              <datahub-record-otherlinks
+                class="block"
+              ></datahub-record-otherlinks>
             </div>
           }
           @if (displayApi$ | async) {
@@ -150,18 +142,12 @@
       </div>
     }
     @if (displayFeatureCatalog$ | async) {
-      <section
-        id="feature-catalog"
-        class="mb-6"
-        >
+      <section id="feature-catalog" class="mb-6">
         <datahub-record-feature-catalog></datahub-record-feature-catalog>
       </section>
     }
     @if (displayLinked$ | async) {
-      <section
-        id="linked-records"
-        class="bg-primary-opacity-10 pb-3"
-        >
+      <section id="linked-records" class="bg-primary-opacity-10 pb-3">
         <div class="container-lg px-4 lg:mx-auto">
           <datahub-record-linked-records></datahub-record-linked-records>
         </div>
@@ -170,12 +156,8 @@
     @if (
       (metadataViewFacade.isPresent$ | async) === true &&
       (feedbacksAllowed$ | async) === true
-      ) {
-      <section
-        id="user-feedbacks"
-        #userFeedbacks
-        class="pb-10"
-        >
+    ) {
+      <section id="user-feedbacks" #userFeedbacks class="pb-10">
         @if ((metadataViewFacade.isPresent$ | async) === true) {
           <div>
             <div class="container-lg px-4 lg:mx-auto">
@@ -204,9 +186,7 @@
   </div>
 }
 @if (metadataViewFacade.error$ | async; as error) {
-  <div
-    class="mt-14 p-4 max-w-[600px] m-auto text-[13px]"
-    >
+  <div class="mt-14 p-4 max-w-[600px] m-auto text-[13px]">
     @if (error.notFound) {
       <gn-ui-error
         [type]="errorTypes.RECORD_NOT_FOUND"

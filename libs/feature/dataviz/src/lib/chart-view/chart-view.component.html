@@ -1,7 +1,7 @@
 <div class="w-full h-full flex flex-col">
   <div
     class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2 justify-between text-[13px]"
-    >
+  >
     <gn-ui-dropdown-selector
       class="basis-1/4"
       [choices]="typeChoices"
@@ -41,7 +41,7 @@
   </div>
   <div
     class="relative h-full mt-2 bg-white border border-gray-300 rounded-lg overflow-hidden"
-    >
+  >
     @if (!error) {
       <gn-ui-chart
         [data]="chartData$ | async"
@@ -62,7 +62,7 @@
         type="warning"
         icon="matErrorOutlineOutline"
         class="absolute m-2 inset-0"
-        >
+      >
         <span>{{ error }}</span>
       </gn-ui-popup-alert>
     }

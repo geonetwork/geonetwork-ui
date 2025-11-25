@@ -7,7 +7,7 @@
       class="material-symbols-outlined m-2 gn-ui-icon-small"
       [matTooltip]="protocolHint"
       matTooltipPosition="above"
-      >
+    >
       help
     </span>
   }
@@ -19,11 +19,9 @@
     [(ngModel)]="_service.accessServiceProtocol"
     [disabled]="disabled"
     (change)="resetAllFormFields()"
-    >
+  >
     @for (protocolOption of protocolOptions; track protocolOption) {
-      <mat-radio-button
-        [value]="protocolOption.value"
-        >
+      <mat-radio-button [value]="protocolOption.value">
         {{ protocolOption.label | translate }}
       </mat-radio-button>
     }
@@ -39,7 +37,7 @@
     [value]="_service.url?.toString()"
     [showValidateButton]="activeLayerSuggestion"
     [resetUrlOnChange]="resetUrlOnChange"
-    >
+  >
     @if (activeLayerSuggestion) {
       <ng-content>
         <ng-icon name="iconoirRefresh"></ng-icon>
@@ -57,7 +55,7 @@
     !activeLayerSuggestion ||
     (_service.url && errorMessage) ||
     (modifyMode && (layers$ | async).length === 0)
-    ) {
+  ) {
     <gn-ui-text-input
       class="grow border-b border-gray-300 pb-4"
       [(value)]="_service.identifierInService"
@@ -69,32 +67,32 @@
   @if (activeLayerSuggestion && (layers$ | async)?.length > 0) {
     <gn-ui-autocomplete
       class="border-b border-gray-300 pb-4"
-    [placeholder]="
-      'editor.record.form.field.onlineResource.edit.identifier.select.label'
-        | translate
-    "
+      [placeholder]="
+        'editor.record.form.field.onlineResource.edit.identifier.select.label'
+          | translate
+      "
       [action]="autoCompleteAction"
       (itemSelected)="handleSelectValue($event)"
       [displayWithFn]="displayWithFn"
       [minCharacterCount]="0"
       [clearOnSelection]="false"
-      >
+    >
     </gn-ui-autocomplete>
   }
   @if (
     !modifyMode &&
     ((activeLayerSuggestion && (layers$ | async)) ||
-    !activeLayerSuggestion ||
-    (_service.url && errorMessage))
-    ) {
+      !activeLayerSuggestion ||
+      (_service.url && errorMessage))
+  ) {
     <gn-ui-button
       (buttonClick)="submit()"
       [disabled]="disabled || !_service.identifierInService"
       type="primary"
-      >
+    >
       <span class="text-white font-bold" translate>
         editor.record.form.field.onlineResource.edit.identifier.submit</span
-        >
-      </gn-ui-button>
-    }
-  </div>
+      >
+    </gn-ui-button>
+  }
+</div>

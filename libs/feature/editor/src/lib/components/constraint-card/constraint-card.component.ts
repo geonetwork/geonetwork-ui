@@ -29,8 +29,8 @@ import { marker } from '@biesbjerg/ngx-translate-extract-marker'
     MatIconModule,
     TranslateDirective,
     TranslatePipe,
-    NgIconComponent
-],
+    NgIconComponent,
+  ],
   providers: [
     provideIcons({ iconoirPlus }),
     provideNgIconsConfig({

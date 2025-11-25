@@ -47,8 +47,8 @@ type ImportMenuPage = 'mainMenu' | 'importExternalFile'
     UrlInputComponent,
     TranslateDirective,
     TranslatePipe,
-    NgIconComponent
-],
+    NgIconComponent,
+  ],
   providers: [
     provideIcons({
       iconoirImport,

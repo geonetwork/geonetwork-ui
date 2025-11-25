@@ -3,13 +3,13 @@
     [label]="'editor.record.form.constraint.not.applicable' | translate"
     [value]="noApplicableConstraint$ | async"
     (toggled)="onToggleChange('noApplicableConstraint', $event)"
-    >
+  >
   </gn-ui-check-toggle>
   <gn-ui-check-toggle
     [label]="'editor.record.form.constraint.not.known' | translate"
     [value]="noKnownConstraint$ | async"
     (toggled)="onToggleChange('noKnownConstraint', $event)"
-    >
+  >
   </gn-ui-check-toggle>
 </div>
 
@@ -17,13 +17,13 @@
   <div
     class="flex flex-row flex-wrap gap-2"
     data-cy="constraints-shortcut-btns"
-    >
+  >
     @for (constraint of constraintButtonChoices; track constraint) {
       <gn-ui-button
         type="gray"
         (buttonClick)="addConstraintSectionToDisplay(constraint)"
         [disabled]="isConstraintButtonDisabled$(constraint) | async"
-        >
+      >
         <ng-icon name="iconoirPlus" class="text-primary"></ng-icon>
         &nbsp;
         <span>{{

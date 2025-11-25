@@ -10,14 +10,14 @@
     [placeholder]="placeholder"
     [attr.aria-label]="placeholder"
     [disabled]="disabled"
-    />
+  />
   <div
     class="absolute inset-y-[var(--side-padding)] left-[var(--2x-side-padding)] grid justify-center items-center pointer-events-none"
     [ngClass]="{
       'text-primary': !disabled,
       'text-primary-lightest': disabled,
     }"
-    >
+  >
     <ng-icon name="iconoirLink"></ng-icon>
   </div>
   @if (showValidateButton) {
@@ -26,7 +26,7 @@
       type="primary"
       [disabled]="disabled || input.value === '' || !isValidUrl(input.value)"
       (buttonClick)="handleUpload(input)"
-      >
+    >
       <ng-content>
         <ng-icon name="iconoirArrowUp"></ng-icon>
       </ng-content>

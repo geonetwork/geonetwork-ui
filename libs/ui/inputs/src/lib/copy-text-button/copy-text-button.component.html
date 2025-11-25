@@ -5,7 +5,7 @@
       class="grow py-2 px-4 bg-gray-200 opacity-50 rounded-l-md border border-gray-300 truncate"
       value="{{ text }}"
       readonly
-      />
+    />
   }
   @if (displayText && rows > 1) {
     <textarea
@@ -13,21 +13,21 @@
       class="grow py-2 px-4 bg-gray-200 opacity-50 rounded-l-md border border-gray-300 overflow-y-auto h-max"
       readonly
       >{{ text }}</textarea
-      >
-    }
-    <button
-      type="button"
-      (click)="copyText($event)"
+    >
+  }
+  <button
+    type="button"
+    (click)="copyText($event)"
     [ngClass]="{
       'py-2 px-4 rounded-r-md bg-gray-400 hover:bg-gray-600 focus:bg-gray-800 text-white':
         displayText,
     }"
-      [matTooltip]="tooltipText"
-      matTooltipPosition="above"
-      >
-      <ng-icon
-        name="matContentCopy"
-        class="pointer-events-none align-middle card-icon"
-      ></ng-icon>
-    </button>
-  </div>
+    [matTooltip]="tooltipText"
+    matTooltipPosition="above"
+  >
+    <ng-icon
+      name="matContentCopy"
+      class="pointer-events-none align-middle card-icon"
+    ></ng-icon>
+  </button>
+</div>

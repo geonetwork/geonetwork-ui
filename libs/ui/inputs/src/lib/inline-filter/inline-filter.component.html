@@ -3,10 +3,10 @@
     <li>
       <label
         class=""
-      [ngClass]="{
-        selected: isSelected(choice),
-      }"
-        >
+        [ngClass]="{
+          selected: isSelected(choice),
+        }"
+      >
         <input
           class="hidden"
           type="checkbox"
@@ -14,10 +14,10 @@
           [checked]="isSelected(choice)"
           (change)="select(choice, checkBox.checked)"
           [attr.data-cy]="'inlineFilter-' + choice.value"
-          />
+        />
         <ng-container
           *ngTemplateOutlet="itemTemplate; context: { $implicit: choice }"
-          >
+        >
         </ng-container>
       </label>
     </li>

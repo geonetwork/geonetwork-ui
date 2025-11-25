@@ -3,7 +3,7 @@
     <span
       class="tracking-wide text-sm mb-2 sm:mb-0 sm:mr-2 whitespace-nowrap"
       [attr.for]="id"
-      >
+    >
       {{ title }}
     </span>
   }
@@ -19,14 +19,14 @@
     #overlayOrigin="cdkOverlayOrigin"
     (keydown)="handleTriggerKeydown($event)"
     [disabled]="disabled"
-    >
+  >
     <div class="grow truncate py-1 mr-2 text-left">
       {{ getChoiceLabel() | translate }}
     </div>
     <ng-icon
       [name]="overlayOpen ? 'matExpandLess' : 'matExpandMore'"
       class="shrink-0 opacity-40"
-      >
+    >
     </ng-icon>
   </gn-ui-button>
 </div>
@@ -41,7 +41,7 @@
   [cdkConnectedOverlayFlexibleDimensions]="true"
   (overlayOutsideClick)="closeOverlay()"
   (detach)="closeOverlay()"
-  >
+>
   <div
     class="bg-white border border-gray-300 rounded shadow-lg py-2 w-full overflow-x-hidden overflow-y-auto overlay-container"
     [style.max-height]="overlayMaxHeight"
@@ -52,23 +52,23 @@
     [attr.aria-multiselectable]="true"
     [attr.aria-label]="title"
     (keydown)="handleOverlayKeydown($event)"
-    >
+  >
     @for (choice of choices; track choice) {
       <button
         #choiceInputs
         type="button"
         [title]="choice.label | translate"
         class="flex px-5 py-1 w-full text-start cursor-pointer transition-colors"
-      [ngClass]="
-        isSelected(choice)
-          ? 'text-white bg-primary hover:text-white hover:bg-primary-darker focus:text-white focus:bg-primary-darker'
-          : 'text-gray-900 hover:text-primary-darkest hover:bg-gray-50 focus:text-primary-darkest focus:bg-gray-50'
-      "
+        [ngClass]="
+          isSelected(choice)
+            ? 'text-white bg-primary hover:text-white hover:bg-primary-darker focus:text-white focus:bg-primary-darker'
+            : 'text-gray-900 hover:text-primary-darkest hover:bg-gray-50 focus:text-primary-darkest focus:bg-gray-50'
+        "
         (click)="onSelectValue(choice)"
         (keydown)="selectIfEnter($event, choice)"
         [attr.data-cy-value]="choice.value.toString()"
         [attr.data-cy-active]="isSelected(choice) ? 'true' : undefined"
-        >
+      >
         <span class="text-[14px]">
           {{ choice.label | translate }}
         </span>

@@ -2,17 +2,15 @@
   <div
     [class]="badgeClasses"
     [title]="'record.metadata.isGeographical' | translate"
-    >
+  >
     <ng-icon
       class="shrink-0 text-[0.75em]"
       name="matLocationSearchingOutline"
     ></ng-icon>
     @if ((isMobile$ | async) === false && showLabel) {
-      <span
-        class="ml-1 inline-block shrink-0"
-        translate
+      <span class="ml-1 inline-block shrink-0" translate
         >record.metadata.isGeographical</span
-        >
-      }
-    </div>
-  }
+      >
+    }
+  </div>
+}

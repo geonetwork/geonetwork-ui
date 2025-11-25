@@ -7,7 +7,7 @@
       displayed: (records$ | async).length,
       hits: (recordCount$ | async),
     }"
-    >
+  >
     results.records.hits.displayedOn
   </div>
   @if ((selectedRecords$ | async).length; as selectedRecordCount) {
@@ -16,7 +16,7 @@
       data-test="selected-count"
       translate
       [translateParams]="{ amount: selectedRecordCount }"
-      >
+    >
       results.records.hits.selected
     </div>
   }

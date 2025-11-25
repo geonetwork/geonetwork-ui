@@ -2,7 +2,7 @@
   @if (!allowSubmit) {
     <div
       class="absolute inset-y-[--icon-padding] left-[--icon-padding] w-[--icon-width] pointer-events-none"
-      >
+    >
       <ng-icon name="iconoirSearch" class="text-primary search"></ng-icon>
     </div>
   }
@@ -21,7 +21,7 @@
         'text-gray-900': !searchActive,
         'px-[--icon-width]': !allowSubmit,
       }"
-      />
+    />
     @if (searchInput.value && displayEnterBtn) {
       <gn-ui-button
         type="gray"
@@ -29,7 +29,7 @@
         [ngStyle]="{ left: enterBtnPosition + 'px' }"
         class="absolute"
         disabled="true"
-        >
+      >
         <ng-icon
           name="iconoirLongArrowDownLeft"
           class="!w-4 text-gray-900 font-bold"
@@ -47,7 +47,7 @@
       data-test="clear-btn"
       aria-label="Clear"
       (buttonClick)="clear()"
-      >
+    >
       <ng-icon class="text-white" name="matClose"></ng-icon>
     </gn-ui-button>
   }
@@ -58,7 +58,7 @@
       aria-label="Trigger search"
       data-test="autocomplete-submit-btn"
       (buttonClick)="handleSearch()"
-      >
+    >
       <ng-icon name="iconoirSearch"></ng-icon>
     </gn-ui-button>
   }
@@ -69,7 +69,7 @@
       icon="matErrorOutlineOutline"
       position="top"
       type="warning"
-      >
+    >
       <span translate>search.autocomplete.error</span>
       {{ error }}
     </gn-ui-popup-alert>
@@ -80,12 +80,9 @@
   #auto="matAutocomplete"
   (optionSelected)="handleSelection($event)"
   [displayWith]="displayWithFnInternal"
-  >
+>
   @for (suggestion of suggestions$ | async; track suggestion) {
-    <mat-option
-      [value]="suggestion"
-      class="p-2 suggestion text-start"
-      >
+    <mat-option [value]="suggestion" class="p-2 suggestion text-start">
       {{ displayWithFnInternal(suggestion) }}
     </mat-option>
   }

@@ -10,31 +10,27 @@
     "
     [disabled]="listComponent.isFirstPage"
     (buttonClick)="listComponent.goToPrevPage()"
-    >
+  >
     <ng-icon name="matArrowBackIos"></ng-icon>
     @if (displayLabels) {
-      <span class="ml-2" translate
-        >pagination.previousPage</span
-        >
-      }
-    </gn-ui-button>
-    <gn-ui-button
-      data-test="nextButton"
-      type="light"
+      <span class="ml-2" translate>pagination.previousPage</span>
+    }
+  </gn-ui-button>
+  <gn-ui-button
+    data-test="nextButton"
+    type="light"
     [extraClass]="
       'w-auto min-w-10 h-8 px-2 py-1 rounded-lg ' +
       (!listComponent.isLastPage
         ? 'border border-gray-300 text-main'
         : 'border border-gray-100 text-gray-300')
     "
-      [disabled]="listComponent.isLastPage"
-      (buttonClick)="listComponent.goToNextPage()"
-      >
-      @if (displayLabels) {
-        <span class="mr-2" translate
-          >pagination.nextPage</span
-          >
-        }
-        <ng-icon name="matArrowForwardIos"></ng-icon>
-      </gn-ui-button>
-    </div>
+    [disabled]="listComponent.isLastPage"
+    (buttonClick)="listComponent.goToNextPage()"
+  >
+    @if (displayLabels) {
+      <span class="mr-2" translate>pagination.nextPage</span>
+    }
+    <ng-icon name="matArrowForwardIos"></ng-icon>
+  </gn-ui-button>
+</div>

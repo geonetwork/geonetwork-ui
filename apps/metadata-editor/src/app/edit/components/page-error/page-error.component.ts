@@ -12,12 +12,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core'
 @Component({
   selector: 'md-editor-page-error',
   standalone: true,
-  imports: [
-    NgIconComponent,
-    RouterModule,
-    TranslateDirective,
-    TranslatePipe
-],
+  imports: [NgIconComponent, RouterModule, TranslateDirective, TranslatePipe],
   providers: [
     provideIcons({ iconoirEmojiPuzzled, iconoirJournal }),
     provideNgIconsConfig({

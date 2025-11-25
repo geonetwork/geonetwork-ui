@@ -21,8 +21,8 @@ import {
     FeatureSearchModule,
     NgIconComponent,
     SearchFiltersSummaryComponent,
-    FilterDropdownComponent
-],
+    FilterDropdownComponent,
+  ],
   providers: [
     provideIcons({
       iconoirFilterAlt,

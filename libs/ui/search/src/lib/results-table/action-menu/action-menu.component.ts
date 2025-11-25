@@ -1,4 +1,3 @@
-
 import {
   ChangeDetectorRef,
   Component,
@@ -24,8 +23,8 @@ type ActionMenuPage = 'mainMenu' | 'deleteMenu' | 'rollbackMenu'
     MatMenuModule,
     MatDialogModule,
     TranslateDirective,
-    TranslatePipe
-],
+    TranslatePipe,
+  ],
 })
 export class ActionMenuComponent {
   @Input() canDuplicate = true

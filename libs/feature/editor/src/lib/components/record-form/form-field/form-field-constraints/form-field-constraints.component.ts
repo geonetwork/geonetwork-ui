@@ -37,8 +37,8 @@ marker('editor.record.form.constraint.header.otherConstraints')
     ConstraintCardComponent,
     ButtonComponent,
     NgIconComponent,
-    TranslatePipe
-],
+    TranslatePipe,
+  ],
   providers: [
     provideIcons({ iconoirPlus }),
     provideNgIconsConfig({

@@ -1,7 +1,7 @@
 <div
   class="group flex justify-between rounded filter overflow-hidden card-shadow"
   [ngClass]="cardClass"
-  >
+>
   @if (size !== 'S') {
     <div class="flex-1 min-w-0">
       <ng-container *ngTemplateOutlet="content"></ng-container>
@@ -27,24 +27,24 @@
       <button
         type="button"
         class="gn-ui-card-icon"
-      [ngClass]="{
-        'py-2 px-4 rounded-r-md bg-gray-400 hover:bg-gray-600 focus:bg-gray-800 text-white':
-          displayText,
-      }"
-      [matTooltip]="
-        !currentlyActive
-          ? ('record.metadata.api.form.openForm' | translate)
-          : ('record.metadata.api.form.closeForm' | translate)
-      "
+        [ngClass]="{
+          'py-2 px-4 rounded-r-md bg-gray-400 hover:bg-gray-600 focus:bg-gray-800 text-white':
+            displayText,
+        }"
+        [matTooltip]="
+          !currentlyActive
+            ? ('record.metadata.api.form.openForm' | translate)
+            : ('record.metadata.api.form.closeForm' | translate)
+        "
         matTooltipPosition="above"
         (click)="openRecordApiFormPanel()"
-        >
+      >
         <ng-icon
           class="pointer-events-none align-middle card-icon"
           name="iconoirSettings"
-        [ngClass]="{
-          'text-secondary opacity-100': currentlyActive,
-        }"
+          [ngClass]="{
+            'text-secondary opacity-100': currentlyActive,
+          }"
         ></ng-icon>
       </button>
     }
@@ -65,31 +65,31 @@
       @if (link.accessServiceProtocol !== 'GPFDL') {
         <span
           class="bg-primary-opacity-50 uppercase inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded text-primary-lightest group-hover:bg-primary transition-colors"
-        [ngClass]="{
-          '!bg-primary': currentlyActive,
-        }"
+          [ngClass]="{
+            '!bg-primary': currentlyActive,
+          }"
           translate
           >record.metadata.api.accessServiceProtocol.{{
-          link.accessServiceProtocol
+            link.accessServiceProtocol
           }}</span
-          >
-        }
-        @if (link.accessServiceProtocol === 'GPFDL') {
-          <span
-            class="bg-primary-opacity-50 uppercase inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded text-primary-lightest group-hover:bg-primary transition-colors"
-        [ngClass]="{
-          '!bg-primary': currentlyActive,
-        }"
-            translate
-            >
-            record.metadata.api.gpfdl</span
-            >
-          }
-        </div>
-        @if (size === 'S') {
-          <div>
-            <ng-container *ngTemplateOutlet="buttons"></ng-container>
-          </div>
-        }
+        >
+      }
+      @if (link.accessServiceProtocol === 'GPFDL') {
+        <span
+          class="bg-primary-opacity-50 uppercase inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded text-primary-lightest group-hover:bg-primary transition-colors"
+          [ngClass]="{
+            '!bg-primary': currentlyActive,
+          }"
+          translate
+        >
+          record.metadata.api.gpfdl</span
+        >
+      }
+    </div>
+    @if (size === 'S') {
+      <div>
+        <ng-container *ngTemplateOutlet="buttons"></ng-container>
       </div>
-    </ng-template>
+    }
+  </div>
+</ng-template>

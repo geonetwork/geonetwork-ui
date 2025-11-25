@@ -35,7 +35,7 @@
         [type]="'outline'"
         (buttonClick)="addOwnerOrg()"
         extraClass="m-2 py-[0.5em] px-[1em]"
-        >
+      >
         <span class="opacity-70">Add a owner organization to this record</span>
       </gn-ui-button>
     }
@@ -78,7 +78,7 @@
       organization: { name: 'org' },
       role: 'unspecified',
     }"
-    >
+  >
   </gn-ui-record-field-array>
 </p>
 <p>
@@ -94,7 +94,7 @@
       organization: { name: 'org' },
       role: 'unspecified',
     }"
-    >
+  >
   </gn-ui-record-field-array>
 </p>
 <ng-template #contactTpl let-get="getValue" let-set="setValue">
@@ -209,7 +209,7 @@
     [itemTemplate]="topicTpl"
     (confirm)="emitChangedRecord()"
     [defaultItem]="'change me!'"
-    >
+  >
     <ng-template #topicTpl let-get="getValue" let-set="setValue">
       <gn-ui-record-field-simple
         label="Topic"
@@ -227,7 +227,7 @@
     [itemTemplate]="keywordTpl"
     (confirm)="emitChangedRecord()"
     [defaultItem]="{ label: 'change me!', type: 'other' }"
-    >
+  >
   </gn-ui-record-field-array>
 </p>
 
@@ -307,7 +307,7 @@
     [itemTemplate]="constraintTpl"
     (confirm)="emitChangedRecord()"
     [defaultItem]="{ text: 'change me!' }"
-    >
+  >
   </gn-ui-record-field-array>
 </p>
 <p>
@@ -317,7 +317,7 @@
     [itemTemplate]="constraintTpl"
     (confirm)="emitChangedRecord()"
     [defaultItem]="{ text: 'change me!' }"
-    >
+  >
   </gn-ui-record-field-array>
 </p>
 <p>
@@ -327,7 +327,7 @@
     [itemTemplate]="constraintTpl"
     (confirm)="emitChangedRecord()"
     [defaultItem]="{ text: 'change me!' }"
-    >
+  >
   </gn-ui-record-field-array>
 </p>
 <p>
@@ -337,7 +337,7 @@
     [itemTemplate]="constraintTpl"
     (confirm)="emitChangedRecord()"
     [defaultItem]="{ text: 'change me!' }"
-    >
+  >
   </gn-ui-record-field-array>
 </p>
 
@@ -377,7 +377,7 @@
         [itemTemplate]="distributionTpl"
         (confirm)="emitChangedRecord()"
         [defaultItem]="getOnlineResourceForType('download')"
-        >
+      >
         <ng-template #distributionTpl let-get="getValue" let-set="setValue">
           <gn-ui-record-field-group label="Distribution">
             <gn-ui-record-field-simple
@@ -479,7 +479,7 @@
         [itemTemplate]="endpointTpl"
         (confirm)="emitChangedRecord()"
         [defaultItem]="{ url: '', accessServiceProtocol: 'OGC:WMS' }"
-        >
+      >
         <ng-template #endpointTpl let-get="getValue" let-set="setValue">
           <gn-ui-record-field-group label="Online Resource">
             <gn-ui-record-field-simple

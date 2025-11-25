@@ -8,7 +8,7 @@
       [choices]="availableTopics || []"
       [allowSearch]="true"
       (selectValues)="handleItemSelection($event)"
-      >
+    >
     </gn-ui-dropdown-multiselect>
     <div class="flex gap-2 flex-wrap">
       @for (topic of topics; track topic) {

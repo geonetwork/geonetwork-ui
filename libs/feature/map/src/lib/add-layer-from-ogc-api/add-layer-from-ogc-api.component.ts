@@ -27,8 +27,8 @@ import { MapContextLayer, MapContextLayerOgcApi } from '@geospatial-sdk/core'
     TextInputComponent,
     DropdownSelectorComponent,
     TranslatePipe,
-    ButtonComponent
-],
+    ButtonComponent,
+  ],
 })
 export class AddLayerFromOgcApiComponent implements OnInit {
   @Input() ogcUrl: string

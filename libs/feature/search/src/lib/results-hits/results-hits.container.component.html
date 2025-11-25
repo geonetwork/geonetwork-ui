@@ -3,7 +3,7 @@
   [ngClass]="{
     'sm:items-center': (searchFacade.resultsHits$ | async) !== 0,
   }"
-  >
+>
   <gn-ui-results-hits-number
     [loading]="searchFacade.isLoading$ | async"
     [hits]="searchFacade.resultsHits$ | async"

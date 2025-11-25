@@ -1,4 +1,3 @@
-
 import {
   ChangeDetectionStrategy,
   Component,
@@ -31,8 +30,8 @@ type AutocompleteItem = { title: string; value: Keyword }
     AutocompleteComponent,
     NgIconComponent,
     BadgeComponent,
-    TranslatePipe
-],
+    TranslatePipe,
+  ],
   providers: [
     provideIcons({
       matWarningAmberOutline,

@@ -1,4 +1,3 @@
-
 import {
   ChangeDetectionStrategy,
   Component,
@@ -53,8 +52,8 @@ import { iconoirPlus } from '@ng-icons/iconoir'
     NgIconComponent,
     ButtonComponent,
     TranslatePipe,
-    TranslateDirective
-],
+    TranslateDirective,
+  ],
   providers: [
     provideIcons({ iconoirPlus }),
     provideNgIconsConfig({

@@ -8,12 +8,12 @@
       disabled: !toggled || disabled,
       'transition hover:scale-125 will-change-transform': !disabled,
     }"
-    >
+  >
     <ng-icon [name]="toggled ? 'matStar' : 'matStarBorder'"></ng-icon>
     @if (displayLabel) {
       <span class="mx-2 text-[16px] content-center">{{
         (toggled ? 'favorite.starToggle.remove' : 'favorite.starToggle.add')
-        | translate
+          | translate
       }}</span>
     }
   </gn-ui-button>
@@ -24,7 +24,7 @@
     height="40px"
     viewBox="-15 -15 30 30"
     [style]="displayLabel ? 'left: 16px' : 'left: 50%'"
-    >
+  >
     <g>
       <path d="M 0,13.229167 V 0" />
       <path d="M -12.484186,4.0880377 0,0" />

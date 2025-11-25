@@ -7,7 +7,7 @@ import {
   Output,
   TemplateRef,
 } from '@angular/core'
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common'
 import { fromEvent, Subscription } from 'rxjs'
 import { iconoirBank } from '@ng-icons/iconoir'
 import {
@@ -39,8 +39,8 @@ type CardSize = 'L' | 'M' | 'S' | 'XS'
     NgTemplateOutlet,
     KindBadgeComponent,
     MarkdownParserComponent,
-    ThumbnailComponent
-],
+    ThumbnailComponent,
+  ],
   providers: [
     provideIcons({
       iconoirBank,

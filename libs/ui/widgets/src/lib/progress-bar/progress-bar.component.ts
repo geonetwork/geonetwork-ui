@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core'
 
-
 interface ColorScheme {
   outerBar: string
   innerBar: string

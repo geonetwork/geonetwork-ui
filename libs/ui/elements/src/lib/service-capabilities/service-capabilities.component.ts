@@ -47,8 +47,8 @@ marker(`service.metadata.capabilities.attribution`)
     TextInputComponent,
     NgIcon,
     PopoverComponent,
-    SpinningLoaderComponent
-],
+    SpinningLoaderComponent,
+  ],
   viewProviders: [
     provideIcons({
       iconoirSearch,

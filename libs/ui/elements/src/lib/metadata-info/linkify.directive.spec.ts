@@ -3,7 +3,6 @@ import { Component, DebugElement } from '@angular/core'
 import { By } from '@angular/platform-browser'
 import { GnUiLinkifyDirective } from './linkify.directive'
 
-
 const testingUrls = [
   ['First link http://bla.org no slash', 'http://bla.org'],
 
@@ -75,16 +74,13 @@ const testWithHTML = {
 
 @Component({
   template: `@if (customInnerHTML) {
-  <div
-    [innerHTML]="customInnerHTML"
-    [gnUiLinkify]
-  ></div>
-}
-@if (!customInnerHTML) {
-  <div [gnUiLinkify]>
-    {{ text }}
-  </div>
-}`,
+      <div [innerHTML]="customInnerHTML" [gnUiLinkify]></div>
+    }
+    @if (!customInnerHTML) {
+      <div [gnUiLinkify]>
+        {{ text }}
+      </div>
+    }`,
   standalone: true,
   imports: [GnUiLinkifyDirective],
 })

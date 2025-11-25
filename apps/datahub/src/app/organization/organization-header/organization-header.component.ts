@@ -1,4 +1,4 @@
-import { Location } from '@angular/common';
+import { Location } from '@angular/common'
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { Router } from '@angular/router'
 import { Organization } from '@geonetwork-ui/common/domain/model/record'
@@ -28,8 +28,8 @@ import { TranslateDirective } from '@ngx-translate/core'
     TranslateDirective,
     NgIconComponent,
     LanguageSwitcherComponent,
-    ButtonComponent
-],
+    ButtonComponent,
+  ],
   providers: [
     provideIcons({ matFolderOutline, matOpenInNewOutline, matArrowBack }),
     provideNgIconsConfig({

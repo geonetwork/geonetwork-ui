@@ -3,7 +3,7 @@
   class="px-4 bg-primary hover:bg-primary-darker text-white flex flex-row w-full items-center font-bold text-lg pointer-events-auto"
   [style.height]="'55px'"
   (click)="toggle()"
-  >
+>
   <ng-container [ngTemplateOutlet]="titleTemplate"></ng-container>
   <div class="ml-3 grow"></div>
   @if (collapsed) {
@@ -17,6 +17,6 @@
   class="content transition-all pointer-events-auto bg-white"
   [style.height]="collapsed ? '0px' : 'calc(100% - 55px)'"
   [ngClass]="collapsed ? 'overflow-hidden' : 'overflow-auto'"
-  >
+>
   <ng-content></ng-content>
 </div>

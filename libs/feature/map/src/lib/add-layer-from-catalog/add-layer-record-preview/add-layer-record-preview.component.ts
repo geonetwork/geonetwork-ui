@@ -15,7 +15,6 @@ import { MapContextLayer } from '@geospatial-sdk/core'
 import { ThumbnailComponent } from '@geonetwork-ui/ui/elements'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 
-
 @Component({
   selector: 'gn-ui-add-layer-record-preview',
   templateUrl: './add-layer-record-preview.component.html',

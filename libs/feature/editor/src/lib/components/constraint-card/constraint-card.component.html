@@ -13,7 +13,7 @@
         (buttonClick)="showUrl = true"
         type="gray"
         data-cy="add-url-btn"
-        >
+      >
         <ng-icon name="iconoirPlus" class="text-primary"></ng-icon>&nbsp;
         <span translate>input.image.displayUrlInput</span>
       </gn-ui-button>
@@ -25,7 +25,7 @@
       [value]="constraint_.url?.toString()"
       (valueChange)="handleURLChange($event)"
       [showValidateButton]="false"
-      >
+    >
     </gn-ui-url-input>
   }
 </div>

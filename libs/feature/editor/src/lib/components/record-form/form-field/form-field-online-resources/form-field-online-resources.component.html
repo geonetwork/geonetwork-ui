@@ -18,7 +18,7 @@
   @if (selectedType === 'service') {
     <div
       class="w-full border-2 border-dashed rounded-lg p-6 flex flex-col gap-[16px]"
-      >
+    >
       <gn-ui-online-service-resource-input
         [service]="newService"
         (serviceChange)="handleServiceChange($event)"
@@ -30,7 +30,7 @@
     [items]="notLinkResources"
     (itemsOrderChange)="handleResourcesChange($event)"
     [elementTemplate]="template"
-    >
+  >
   </gn-ui-sortable-list>
   <ng-template #template let-onlineResource let-index="index">
     <gn-ui-online-resource-card

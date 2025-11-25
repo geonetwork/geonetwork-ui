@@ -7,10 +7,10 @@
     [placeholder]="placeholder"
     (change)="handleChange($event)"
     (input)="handleChange($event)"
-    />
+  />
   <div
     class="absolute inset-y-0 left-0 pl-2.5 flex items-center peer-hover:text-primary peer-focus:text-primary"
-    >
+  >
     <ng-icon name="matSearch"></ng-icon>
   </div>
   @if (rawChange | async) {
@@ -19,7 +19,7 @@
       class="text-primary-lightest hover:text-primary absolute transition-all duration-100 inset-y-0 right-0 pr-2.5"
       aria-label="Clear"
       (click)="clear()"
-      >
+    >
       <ng-icon name="matClose" class="align-middle"></ng-icon>
     </button>
   }

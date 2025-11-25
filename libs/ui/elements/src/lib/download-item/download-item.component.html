@@ -4,7 +4,7 @@
   class="group flex flex-row justify-between card-shadow cursor-pointer rounded overflow-hidden w-full"
   rel="noopener"
   [ngClass]="cardClass"
-  >
+>
   <div class="flex flex-col flex-1 justify-between min-w-0">
     <div class="gn-ui-card-title" [title]="link.description || link.name">
       {{ link.description || link.name }}
@@ -18,24 +18,24 @@
         [style.background-color]="color"
         data-cy="download-format"
         >{{ format || ('downloads.format.unknown' | translate) }}</span
+      >
+      @if (isFromApi) {
+        <span class="text-gray-800 text-xs" translate=""
+          >datahub.search.filter.generatedByAPI</span
         >
-        @if (isFromApi) {
-          <span class="text-gray-800 text-xs" translate=""
-            >datahub.search.filter.generatedByAPI</span
-            >
-          }
-        </div>
-      </div>
-      <div
-        class="flex min-w-[32px] flex-shrink-0"
-        [ngClass]="size === 'S' ? 'items-end' : 'items-center'"
-        >
-        <div class="gn-ui-card-icon">
-          <ng-icon
-            class="inline-block card-icon align-middle"
-            name="iconoirDownload"
-            >
-          </ng-icon>
-        </div>
-      </div>
-    </a>
+      }
+    </div>
+  </div>
+  <div
+    class="flex min-w-[32px] flex-shrink-0"
+    [ngClass]="size === 'S' ? 'items-end' : 'items-center'"
+  >
+    <div class="gn-ui-card-icon">
+      <ng-icon
+        class="inline-block card-icon align-middle"
+        name="iconoirDownload"
+      >
+      </ng-icon>
+    </div>
+  </div>
+</a>

@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { marker } from '@biesbjerg/ngx-translate-extract-marker'
 import { NgxDropzoneModule } from 'ngx-dropzone'
 
-
 export const placeholder = 'dropFile'
 marker('dropFile')
 

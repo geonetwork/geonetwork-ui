@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 
-
 @Component({
   selector: 'gn-ui-avatar',
   templateUrl: './avatar.component.html',

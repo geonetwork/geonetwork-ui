@@ -1,4 +1,3 @@
-
 import {
   ChangeDetectionStrategy,
   Component,
@@ -21,8 +20,8 @@ import { MatTooltipModule } from '@angular/material/tooltip'
     FormsModule,
     MatTooltipModule,
     TextAreaComponent,
-    MarkdownParserComponent
-],
+    MarkdownParserComponent,
+  ],
 })
 export class MarkdownEditorComponent {
   @Input() preview = false

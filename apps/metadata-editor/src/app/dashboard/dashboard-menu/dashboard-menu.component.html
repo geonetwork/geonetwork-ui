@@ -6,7 +6,7 @@
       routerLink="/catalog/search"
       routerLinkActive="btn-active"
       #rlaAll="routerLinkActive"
-      >
+    >
       <ng-icon name="iconoirJournal"></ng-icon>
       <span class="text-sm" translate>dashboard.catalog.allRecords</span>
     </a>
@@ -19,7 +19,7 @@
       routerLink="/my-space/my-records"
       routerLinkActive="btn-active"
       #rlaMyRecords="routerLinkActive"
-      >
+    >
       <ng-icon name="iconoirJournalPage"></ng-icon>
       <span class="text-sm" translate>dashboard.records.myRecords</span>
     </a>
@@ -28,7 +28,7 @@
       routerLink="/my-space/my-draft"
       routerLinkActive="btn-active"
       #rlaMyDraft="routerLinkActive"
-      >
+    >
       <ng-icon name="iconoirPageEdit"></ng-icon>
       <span class="text-sm" translate>dashboard.records.myDraft</span>
       @if (draftsCount$ | async; as draftsCount) {
@@ -38,9 +38,9 @@
             [style.--gn-ui-badge-text-size]="'12px'"
             data-cy="dashboard-drafts-count"
             >{{ draftsCount }}</gn-ui-badge
-            >
-          }
+          >
         }
-      </a>
-    </div>
+      }
+    </a>
   </div>
+</div>

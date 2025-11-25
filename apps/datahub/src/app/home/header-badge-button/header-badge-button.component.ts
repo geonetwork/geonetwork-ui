@@ -8,7 +8,6 @@ import {
 import { NgIconComponent } from '@ng-icons/core'
 import { TranslatePipe } from '@ngx-translate/core'
 
-
 @Component({
   selector: 'datahub-header-badge-button',
   templateUrl: './header-badge-button.component.html',

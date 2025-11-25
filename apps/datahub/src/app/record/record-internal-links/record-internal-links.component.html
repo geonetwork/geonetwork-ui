@@ -1,7 +1,7 @@
 <div
   class="pt-0 flex items-center gap-6 text-black"
   [ngClass]="titleIsSectionTitle ? 'gn-ui-section-title' : 'text-[20px]'"
-  >
+>
   @if (titleIsSectionTitle) {
     <h2>
       {{ title }}
@@ -26,7 +26,7 @@
         class="gn-ui-btn-primary text-base h-fit w-fit rounded-lg"
         [style.--gn-ui-button-padding]="'8px 16px'"
         data-test="routerLinkButton"
-        >
+      >
         {{ routerLinkButton.label }}
       </a>
     </div>
@@ -36,7 +36,7 @@
 <gn-ui-block-list
   #blockList
   containerClass="mb-4 grid gap-4 w-full md:grid-cols-2 pt-5 pb-7"
-  >
+>
   @for (record of records; track record) {
     <gn-ui-internal-link-card
       #block
@@ -46,7 +46,7 @@
       [favoriteTemplate]="favoriteTemplate"
       [metadataQualityDisplay]="metadataQualityDisplay"
       [size]="blockList.subComponentSize"
-      >
+    >
     </gn-ui-internal-link-card>
   }
 </gn-ui-block-list>

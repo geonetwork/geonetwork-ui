@@ -1,4 +1,3 @@
-
 import { Component, Input, OnChanges } from '@angular/core'
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
@@ -29,8 +28,8 @@ marker('editor.record.form.field.organisation')
     TranslateDirective,
     TranslatePipe,
     ButtonComponent,
-    NgIconComponent
-],
+    NgIconComponent,
+  ],
   providers: [
     provideIcons({
       iconoirSystemShut,

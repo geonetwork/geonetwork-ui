@@ -9,7 +9,6 @@ import {
 import { CatalogRecord } from '@geonetwork-ui/common/domain/model/record'
 import { getOptionalSearchConfig } from '@geonetwork-ui/util/app-config'
 
-
 @Component({
   selector: 'datahub-last-created',
   templateUrl: './last-created.component.html',

@@ -1,10 +1,9 @@
-
 @switch (sectionDisplayed) {
   @case ('mainMenu') {
     <div
       data-test="mainMenuSection"
       class="mt-2 border border-gray-100 p-2 flex items-center bg-white shadow-2xl rounded-2xl"
-      >
+    >
       <ul class="flex flex-col gap-2 w-full">
         @if (page === 'main') {
           <gn-ui-button
@@ -13,105 +12,102 @@
             (buttonClick)="duplicate.emit()"
             [disabled]="!canDuplicate"
             data-test="record-menu-duplicate-button"
-            >
+          >
             @if (isDuplicating) {
-              <span translate
-                >record.action.duplicating</span
-                >
-              } @else {
-                <span translate>record.action.duplicate</span>
-              }
-            </gn-ui-button>
-          }
-          @if (page === 'record') {
-            <gn-ui-button
-              type="light"
-              extraClass="flex flex-row items-center gap-2 w-full justify-start"
-              (buttonClick)="switch.emit()"
-              data-test="record-menu-switch-button"
-              ><span translate>record.action.switchLang</span></gn-ui-button
-              >
+              <span translate>record.action.duplicating</span>
+            } @else {
+              <span translate>record.action.duplicate</span>
             }
-            <gn-ui-button
-              type="light"
-              extraClass="flex flex-row items-center gap-2 w-full justify-start"
-              (buttonClick)="displayDeleteMenu()"
-              [disabled]="!canDelete"
-              data-test="record-menu-delete-button"
-              >@if (page !== 'draft') {
-              <span translate>record.action.delete</span>
-            }
-            @if (page === 'draft') {
-              <span translate
-                >record.action.rollback</span
-                >
-                }</gn-ui-button
-                >
-              </ul>
-            </div>
+          </gn-ui-button>
+        }
+        @if (page === 'record') {
+          <gn-ui-button
+            type="light"
+            extraClass="flex flex-row items-center gap-2 w-full justify-start"
+            (buttonClick)="switch.emit()"
+            data-test="record-menu-switch-button"
+            ><span translate>record.action.switchLang</span></gn-ui-button
+          >
+        }
+        <gn-ui-button
+          type="light"
+          extraClass="flex flex-row items-center gap-2 w-full justify-start"
+          (buttonClick)="displayDeleteMenu()"
+          [disabled]="!canDelete"
+          data-test="record-menu-delete-button"
+        >
+          @if (page !== 'draft') {
+            <span translate>record.action.delete</span>
           }
-          @case ('deleteMenu') {
-            <div
-              data-test="deleteMenuSection"
-              class="w-72 p-6 flex flex-col gap-3 mt-2 border border-gray-100 bg-white shadow-2xl rounded-2xl"
-              >
-              <span class="text-lg font-bold text-center">{{
-                'editor.record.delete.confirmation.title' | translate
-              }}</span>
-              <span class="text-center">{{
-                'editor.record.delete.confirmation.message' | translate
-              }}</span>
-              <div class="flex flex-row gap-8 justify-center">
-                <gn-ui-button
-                  (buttonClick)="delete.emit()"
-                  cdkFocusInitial
-                  type="primary"
-                  data-cy="confirm-button"
-                  [style.--gn-ui-button-width]="'100px'"
-                  >{{
-                  'editor.record.delete.confirmation.confirmText' | translate
-                  }}</gn-ui-button
-                  >
-                  <gn-ui-button
-                    [style.--gn-ui-button-width]="'100px'"
-                    (buttonClick)="closeActionMenu.emit()"
-                    >{{
-                    'editor.record.delete.confirmation.cancelText' | translate
-                    }}</gn-ui-button
-                    >
-                  </div>
-                </div>
-              }
-              @case ('rollbackMenu') {
-                <div
-                  data-test="rollbackMenuSection"
-                  class="w-80 p-6 flex flex-col gap-3 mt-2 border border-gray-100 bg-white shadow-2xl rounded-2xl"
-                  >
-                  <span class="text-lg font-bold text-center">{{
-                    'editor.record.undo.confirmation.title' | translate
-                  }}</span>
-                  <span class="text-center">{{
-                    'editor.record.undo.confirmation.message' | translate
-                  }}</span>
-                  <div class="flex flex-row gap-8 justify-center">
-                    <gn-ui-button
-                      (buttonClick)="rollback.emit()"
-                      cdkFocusInitial
-                      type="primary"
-                      data-cy="confirm-button"
-                      [style.--gn-ui-button-width]="'120px'"
-                      >{{
-                      'editor.record.undo.confirmation.confirmText' | translate
-                      }}</gn-ui-button
-                      >
-                      <gn-ui-button
-                        [style.--gn-ui-button-width]="'120px'"
-                        (buttonClick)="closeActionMenu.emit()"
-                        >{{
-                        'editor.record.undo.confirmation.cancelText' | translate
-                        }}</gn-ui-button
-                        >
-                      </div>
-                    </div>
-                  }
-                }
+          @if (page === 'draft') {
+            <span translate>record.action.rollback</span>
+          }
+        </gn-ui-button>
+      </ul>
+    </div>
+  }
+  @case ('deleteMenu') {
+    <div
+      data-test="deleteMenuSection"
+      class="w-72 p-6 flex flex-col gap-3 mt-2 border border-gray-100 bg-white shadow-2xl rounded-2xl"
+    >
+      <span class="text-lg font-bold text-center">{{
+        'editor.record.delete.confirmation.title' | translate
+      }}</span>
+      <span class="text-center">{{
+        'editor.record.delete.confirmation.message' | translate
+      }}</span>
+      <div class="flex flex-row gap-8 justify-center">
+        <gn-ui-button
+          (buttonClick)="delete.emit()"
+          cdkFocusInitial
+          type="primary"
+          data-cy="confirm-button"
+          [style.--gn-ui-button-width]="'100px'"
+          >{{
+            'editor.record.delete.confirmation.confirmText' | translate
+          }}</gn-ui-button
+        >
+        <gn-ui-button
+          [style.--gn-ui-button-width]="'100px'"
+          (buttonClick)="closeActionMenu.emit()"
+          >{{
+            'editor.record.delete.confirmation.cancelText' | translate
+          }}</gn-ui-button
+        >
+      </div>
+    </div>
+  }
+  @case ('rollbackMenu') {
+    <div
+      data-test="rollbackMenuSection"
+      class="w-80 p-6 flex flex-col gap-3 mt-2 border border-gray-100 bg-white shadow-2xl rounded-2xl"
+    >
+      <span class="text-lg font-bold text-center">{{
+        'editor.record.undo.confirmation.title' | translate
+      }}</span>
+      <span class="text-center">{{
+        'editor.record.undo.confirmation.message' | translate
+      }}</span>
+      <div class="flex flex-row gap-8 justify-center">
+        <gn-ui-button
+          (buttonClick)="rollback.emit()"
+          cdkFocusInitial
+          type="primary"
+          data-cy="confirm-button"
+          [style.--gn-ui-button-width]="'120px'"
+          >{{
+            'editor.record.undo.confirmation.confirmText' | translate
+          }}</gn-ui-button
+        >
+        <gn-ui-button
+          [style.--gn-ui-button-width]="'120px'"
+          (buttonClick)="closeActionMenu.emit()"
+          >{{
+            'editor.record.undo.confirmation.cancelText' | translate
+          }}</gn-ui-button
+        >
+      </div>
+    </div>
+  }
+}

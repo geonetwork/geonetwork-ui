@@ -23,8 +23,8 @@ import { TranslateDirective } from '@ngx-translate/core'
     MatTabsModule,
     DataViewPermalinkComponent,
     DataViewWebComponentComponent,
-    TranslateDirective
-],
+    TranslateDirective,
+  ],
   standalone: true,
 })
 export class DataViewShareComponent {

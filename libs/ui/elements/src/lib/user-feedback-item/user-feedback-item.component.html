@@ -2,14 +2,14 @@
   <div
     class="flex flex-col bg-white rounded w-full"
     [ngClass]="[isAnAnswer ? 'ps-4 ' : 'p-4']"
-    >
+  >
     <div class="flex flex-row">
       <div class="avatar">
         <img
           class="rounded-full"
           [src]="userFeedbackParent.avatarUrl"
           alt="avatar"
-          />
+        />
       </div>
       <div class="p-4 flex flex-col">
         <span>{{ userFeedbackParent.authorName }}</span>
@@ -19,10 +19,12 @@
     <div data-cy="commentText" class="mt-4 whitespace-pre-line">
       {{ userFeedbackParent.comment }}
     </div>
-    @for (userFeedBacksAnswer of userFeedBacksAnswers; track userFeedBacksAnswer; let last = $last) {
-      <div
-        class="w-full"
-        >
+    @for (
+      userFeedBacksAnswer of userFeedBacksAnswers;
+      track userFeedBacksAnswer;
+      let last = $last
+    ) {
+      <div class="w-full">
         <hr class="-mx-4 my-6" />
         <gn-ui-user-feedback-item
           [userFeedbackParent]="userFeedBacksAnswer"
@@ -36,15 +38,15 @@
         <div
           id="new-comment-buttons"
           class="flex flex-row gap-2 items-center justify-end"
-          >
+        >
           <gn-ui-text-area
             [disabled]="isAddUserFeedbackLoading"
             [(value)]="newAnswer"
             (valueChange)="onNewAnswerValueChange()"
             (keyup.control.enter)="publishNewAnswer()"
-        [placeholder]="
-          'record.metadata.userFeedbacks.newAnswer.placeholder' | translate
-        "
+            [placeholder]="
+              'record.metadata.userFeedbacks.newAnswer.placeholder' | translate
+            "
             class="grow"
             extraClass="bg-transparent border-0 placeholder-primary-darker text-primary-darker h-9"
           ></gn-ui-text-area>
@@ -54,14 +56,14 @@
                 [disabled]="isAddUserFeedbackLoading"
                 [type]="'outline'"
                 (buttonClick)="publishNewAnswer()"
-          [title]="
-            'record.metadata.userFeedbacks.newAnswer.buttonTitle' | translate
-          "
+                [title]="
+                  'record.metadata.userFeedbacks.newAnswer.buttonTitle'
+                    | translate
+                "
                 extraClass="!p-[0.5em] text-primary-darker border-primary-darker h-9"
-                >
+              >
                 @if (!isAddUserFeedbackLoading) {
-                  <ng-icon name="matSendOutline">
-                  </ng-icon>
+                  <ng-icon name="matSendOutline"> </ng-icon>
                 }
                 @if (isAddUserFeedbackLoading) {
                   <div class="flex justify-center w-full">

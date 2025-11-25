@@ -15,12 +15,7 @@ import { Paginable } from '../paginable.interface'
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css'],
   standalone: true,
-  imports: [
-    ButtonComponent,
-    NgIcon,
-    FormsModule,
-    TranslateDirective
-],
+  imports: [ButtonComponent, NgIcon, FormsModule, TranslateDirective],
   viewProviders: [
     provideIcons({
       matChevronLeft,

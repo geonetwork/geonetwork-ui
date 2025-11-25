@@ -2,12 +2,9 @@
   <gn-ui-content-ghost
     ghostClass="h-[178px]"
     [showContent]="fieldReady('abstract')"
-    >
+  >
     @if (metadata.abstract) {
-      <gn-ui-max-lines
-        [maxLines]="6"
-        data-test="metadata-info-abstract"
-        >
+      <gn-ui-max-lines [maxLines]="6" data-test="metadata-info-abstract">
         <div class="mb-6">
           <gn-ui-markdown-parser
             [textContent]="metadata.abstract"
@@ -18,10 +15,7 @@
   </gn-ui-content-ghost>
 
   @if (!fieldReady('keywords') || metadata.keywords?.length) {
-    <p
-      class="mt-6 mb-3 font-medium text-black text-sm"
-      translate
-      >
+    <p class="mt-6 mb-3 font-medium text-black text-sm" translate>
       record.metadata.keywords
     </p>
   }
@@ -29,7 +23,7 @@
   <gn-ui-content-ghost
     ghostClass="h-[31px] w-3/4"
     [showContent]="fieldReady('keywords')"
-    >
+  >
     @if (metadata.keywords?.length) {
       <gn-ui-max-lines [maxLines]="7">
         <div class="metadata-info-keywords sm:pb-4 flex flex-wrap gap-2">
@@ -39,349 +33,328 @@
               (click)="onKeywordClick(keyword)"
               [clickable]="true"
               >{{ keyword.label }}</gn-ui-badge
-              >
-            }
-          </div>
-        </gn-ui-max-lines>
-      }
-    </gn-ui-content-ghost>
-  </div>
+            >
+          }
+        </div>
+      </gn-ui-max-lines>
+    }
+  </gn-ui-content-ghost>
+</div>
 
-  @if (
-    metadata.licenses ||
-    metadata.legalConstraints ||
-    metadata.securityConstraints ||
-    metadata.otherConstraints
-    ) {
-    <gn-ui-expandable-panel
-      [title]="'record.metadata.usage' | translate"
-      data-test="usage-panel"
+@if (
+  metadata.licenses ||
+  metadata.legalConstraints ||
+  metadata.securityConstraints ||
+  metadata.otherConstraints
+) {
+  <gn-ui-expandable-panel
+    [title]="'record.metadata.usage' | translate"
+    data-test="usage-panel"
+  >
+    <div class="flex flex-col gap-[10px] mr-4 py-[12px] rounded text-gray-900">
+      @for (license of licenses; track license) {
+        @if (license.url) {
+          <div class="text-primary">
+            <a
+              [href]="license.url"
+              target="_blank"
+              class="cursor-pointer hover:underline transition-all"
+            >
+              {{ license.text }}
+              <ng-icon
+                class="!w-[12px] !h-[12px] !text-[12px] opacity-75 shrink-0"
+                name="matOpenInNew"
+              ></ng-icon>
+            </a>
+          </div>
+        } @else {
+          <div class="text-primary" gnUiLinkify>
+            {{ license.text }}
+          </div>
+        }
+      }
+      @if (legalConstraints.length) {
+        <div class="mb-6">
+          @for (constraint of legalConstraints; track constraint) {
+            <gn-ui-markdown-parser [textContent]="constraint">
+            </gn-ui-markdown-parser>
+          }
+        </div>
+      }
+      @if (otherConstraints.length) {
+        @for (constraint of otherConstraints; track constraint) {
+          <div gnUiLinkify>
+            <span
+              translate
+              class="font-medium text-black text-sm mb-[2px] mt-[16px]"
+            >
+              record.metadata.otherConstraints
+            </span>
+            <div class="mb-6">
+              <gn-ui-markdown-parser [textContent]="constraint">
+              </gn-ui-markdown-parser>
+            </div>
+          </div>
+        }
+      }
+      @if (!hasUsage) {
+        <span class="noUsage">
+          {{ 'record.metadata.noUsage' | translate }}
+        </span>
+      }
+    </div>
+  </gn-ui-expandable-panel>
+}
+@if (
+  (metadata.kind === 'dataset' && metadata.lineage) ||
+  resourceContact ||
+  metadata.resourceCreated ||
+  metadata.resourcePublished ||
+  metadata.resourceUpdated ||
+  (metadata.kind === 'dataset' && metadata.updateFrequency) ||
+  metadata.otherLanguages?.length ||
+  (metadata.kind === 'dataset' && temporalExtent)
+) {
+  <gn-ui-expandable-panel
+    [title]="'record.metadata.details' | translate"
+    data-test="details-panel"
+  >
+    @if (metadata.kind === 'dataset' && metadata.lineage) {
+      <div
+        class="text-gray-900 flex flex-col mt-4 gap-2"
+        data-test="details-panel-lineage"
       >
-      <div class="flex flex-col gap-[10px] mr-4 py-[12px] rounded text-gray-900">
-        @for (license of licenses; track license) {
-          @if (license.url) {
-            <div class="text-primary">
+        <p class="whitespace-pre-line break-words text-gray-900" gnUiLinkify>
+          {{ metadata.lineage }}
+        </p>
+      </div>
+    }
+    @if (resourceContact) {
+      <div
+        class="flex flex-row gap-6 mt-5 mb-8 resource-contact"
+        data-test="details-panel-resource-contact"
+      >
+        @if (resourceContact.organization?.logoUrl?.href) {
+          <div
+            class="flex items-center justify-center border-solid border border-gray-300 rounded-md bg-white h-32 overflow-hidden"
+          >
+            <gn-ui-thumbnail
+              class="relative h-full w-full"
+              [thumbnailUrl]="resourceContact.organization.logoUrl.href"
+              fit="contain"
+            ></gn-ui-thumbnail>
+          </div>
+        }
+        <div class="flex flex-col gap-1">
+          <p class="text-sm font-medium" translate>record.metadata.producer</p>
+          <div
+            class="text-primary font-title text-21 mr-2 cursor-pointer hover:underline"
+            data-cy="organization-name"
+          >
+            {{ resourceContact.organization?.name }}
+          </div>
+          @if (resourceContact.organization?.website) {
+            <div>
               <a
-                [href]="license.url"
+                [href]="resourceContact.organization.website"
                 target="_blank"
-                class="cursor-pointer hover:underline transition-all"
-                >
-                {{ license.text }}
+                class="contact-website text-primary text-sm cursor-pointer hover:underline transition-all"
+                >{{ resourceContact.organization.website }}
                 <ng-icon
                   class="!w-[12px] !h-[12px] !text-[12px] opacity-75 shrink-0"
                   name="matOpenInNew"
                 ></ng-icon>
               </a>
             </div>
-          } @else {
-            <div class="text-primary" gnUiLinkify>
-              {{ license.text }}
-            </div>
           }
-        }
-        @if (legalConstraints.length) {
-          <div class="mb-6">
-            @for (constraint of legalConstraints; track constraint) {
-              <gn-ui-markdown-parser
-                [textContent]="constraint"
-                >
-              </gn-ui-markdown-parser>
-            }
-          </div>
-        }
-        @if (otherConstraints.length) {
-          @for (constraint of otherConstraints; track constraint) {
-            <div gnUiLinkify>
-              <span
-                translate
-                class="font-medium text-black text-sm mb-[2px] mt-[16px]"
-                >
-                record.metadata.otherConstraints
-              </span>
-              <div class="mb-6">
-                <gn-ui-markdown-parser [textContent]="constraint">
-                </gn-ui-markdown-parser>
+          @if (resourceContact.email) {
+            <div class="mt-4">
+              <div class="flex">
+                <ng-icon
+                  class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
+                  name="matMailOutline"
+                ></ng-icon>
+                @if (resourceContact.email) {
+                  <a
+                    [href]="'mailto:' + resourceContact.email"
+                    class="text-sm hover:underline ml-2"
+                    target="_blank"
+                    data-cy="contact-email"
+                    >{{ resourceContact?.email }}</a
+                  >
+                }
               </div>
             </div>
           }
-        }
-        @if (!hasUsage) {
-          <span class="noUsage">
-            {{ 'record.metadata.noUsage' | translate }}
-          </span>
-        }
+        </div>
       </div>
-    </gn-ui-expandable-panel>
-  }
-  @if (
-    (metadata.kind === 'dataset' && metadata.lineage) ||
-    resourceContact ||
-    metadata.resourceCreated ||
-    metadata.resourcePublished ||
-    metadata.resourceUpdated ||
-    (metadata.kind === 'dataset' && metadata.updateFrequency) ||
-    metadata.otherLanguages?.length ||
-    (metadata.kind === 'dataset' && temporalExtent)
-    ) {
-    <gn-ui-expandable-panel
-      [title]="'record.metadata.details' | translate"
-      data-test="details-panel"
-      >
-      @if (metadata.kind === 'dataset' && metadata.lineage) {
-        <div
-          class="text-gray-900 flex flex-col mt-4 gap-2"
-          data-test="details-panel-lineage"
+    }
+    <div
+      class="py-6 px-6 rounded bg-gray-100 grid grid-cols-2 gap-y-6 gap-x-[20px] text-gray-700"
+    >
+      @if (metadata.resourceCreated) {
+        <div data-test="details-panel-resource-created">
+          <p class="text-sm" translate>record.metadata.creation</p>
+          <p
+            class="text-primary font-medium mt-1 resource-created"
+            [gnUiHumanizeDate]="metadata.resourceCreated"
+          ></p>
+        </div>
+      }
+      @if (metadata.resourcePublished) {
+        <div data-test="details-panel-resource-published">
+          <p class="text-sm" translate>record.metadata.publication</p>
+          <p
+            class="text-primary font-medium mt-1 resource-published"
+            [gnUiHumanizeDate]="metadata.resourcePublished"
+          ></p>
+        </div>
+      }
+      @if (metadata.resourceUpdated) {
+        <div data-test="details-panel-resource-updated">
+          <p class="text-sm" translate>record.metadata.update</p>
+          <p
+            class="text-primary font-medium mt-1 resource-updated"
+            [gnUiHumanizeDate]="metadata.resourceUpdated"
+          ></p>
+        </div>
+      }
+      @if (metadata.kind === 'dataset' && metadata.updateFrequency) {
+        <div data-test="details-panel-update-frequency">
+          <p class="text-sm" translate>record.metadata.updateFrequency</p>
+          <p
+            class="text-primary font-medium mt-1 updateFrequency"
+            translate
+            [translateParams]="{ count: updatedTimes }"
           >
-          <p class="whitespace-pre-line break-words text-gray-900" gnUiLinkify>
-            {{ metadata.lineage }}
+            {{ updateFrequency }}
           </p>
         </div>
       }
-      @if (resourceContact) {
-        <div
-          class="flex flex-row gap-6 mt-5 mb-8 resource-contact"
-          data-test="details-panel-resource-contact"
-          >
-          @if (resourceContact.organization?.logoUrl?.href) {
-            <div
-              class="flex items-center justify-center border-solid border border-gray-300 rounded-md bg-white h-32 overflow-hidden"
-              >
-              <gn-ui-thumbnail
-                class="relative h-full w-full"
-                [thumbnailUrl]="resourceContact.organization.logoUrl.href"
-                fit="contain"
-              ></gn-ui-thumbnail>
-            </div>
-          }
-          <div class="flex flex-col gap-1">
-            <p class="text-sm font-medium" translate>record.metadata.producer</p>
-            <div
-              class="text-primary font-title text-21 mr-2 cursor-pointer hover:underline"
-              data-cy="organization-name"
-              >
-              {{ resourceContact.organization?.name }}
-            </div>
-            @if (resourceContact.organization?.website) {
-              <div>
-                <a
-                  [href]="resourceContact.organization.website"
-                  target="_blank"
-                  class="contact-website text-primary text-sm cursor-pointer hover:underline transition-all"
-                  >{{ resourceContact.organization.website }}
-                  <ng-icon
-                    class="!w-[12px] !h-[12px] !text-[12px] opacity-75 shrink-0"
-                    name="matOpenInNew"
-                  ></ng-icon>
-                </a>
-              </div>
-            }
-            @if (resourceContact.email) {
-              <div class="mt-4">
-                <div class="flex">
-                  <ng-icon
-                    class="!w-5 !h-5 !text-[20px] opacity-75 shrink-0"
-                    name="matMailOutline"
-                  ></ng-icon>
-                  @if (resourceContact.email) {
-                    <a
-                      [href]="'mailto:' + resourceContact.email"
-                      class="text-sm hover:underline ml-2"
-                      target="_blank"
-                      data-cy="contact-email"
-                      >{{ resourceContact?.email }}</a
-                      >
-                    }
-                  </div>
-                </div>
-              }
-            </div>
-          </div>
-        }
-        <div
-          class="py-6 px-6 rounded bg-gray-100 grid grid-cols-2 gap-y-6 gap-x-[20px] text-gray-700"
-          >
-          @if (metadata.resourceCreated) {
-            <div
-              data-test="details-panel-resource-created"
-              >
-              <p class="text-sm" translate>record.metadata.creation</p>
-              <p
-                class="text-primary font-medium mt-1 resource-created"
-                [gnUiHumanizeDate]="metadata.resourceCreated"
-              ></p>
-            </div>
-          }
-          @if (metadata.resourcePublished) {
-            <div
-              data-test="details-panel-resource-published"
-              >
-              <p class="text-sm" translate>record.metadata.publication</p>
-              <p
-                class="text-primary font-medium mt-1 resource-published"
-                [gnUiHumanizeDate]="metadata.resourcePublished"
-              ></p>
-            </div>
-          }
-          @if (metadata.resourceUpdated) {
-            <div
-              data-test="details-panel-resource-updated"
-              >
-              <p class="text-sm" translate>record.metadata.update</p>
-              <p
-                class="text-primary font-medium mt-1 resource-updated"
-                [gnUiHumanizeDate]="metadata.resourceUpdated"
-              ></p>
-            </div>
-          }
-          @if (metadata.kind === 'dataset' && metadata.updateFrequency) {
-            <div
-              data-test="details-panel-update-frequency"
-              >
-              <p class="text-sm" translate>record.metadata.updateFrequency</p>
-              <p
-                class="text-primary font-medium mt-1 updateFrequency"
-                translate
-                [translateParams]="{ count: updatedTimes }"
-                >
-                {{ updateFrequency }}
+      @if (metadata.otherLanguages?.length) {
+        <div data-test="details-panel-other-languages">
+          <p class="text-sm mb-1" translate>record.metadata.languages</p>
+          <div class="flex flex-row gap-1 flex-wrap">
+            @for (language of metadata.otherLanguages; track language) {
+              <p class="text-primary font-medium other-languages" translate>
+                language.{{ language }}
               </p>
-            </div>
-          }
-          @if (metadata.otherLanguages?.length) {
-            <div
-              data-test="details-panel-other-languages"
-              >
-              <p class="text-sm mb-1" translate>record.metadata.languages</p>
-              <div class="flex flex-row gap-1 flex-wrap">
-                @for (language of metadata.otherLanguages; track language) {
-                  <p
-                    class="text-primary font-medium other-languages"
-                    translate
-                    >
-                    language.{{ language }}
-                  </p>
-                }
-              </div>
-            </div>
-          }
-          @if (metadata.kind === 'dataset' && temporalExtent) {
-            <div
-              data-test="details-panel-temporal-extent"
-              >
-              <p class="text-sm" translate>record.metadata.temporalExtent</p>
-              <div
-                class="flex flex-row gap-1 mb-1 text-primary font-medium temporal-extent"
-                >
-                @if (temporalExtent.start && temporalExtent.end) {
-                  <p
-                    translate
-          [translateParams]="{
-            start: temporalExtent.start,
-            end: temporalExtent.end,
-          }"
-                    >
-                    record.metadata.temporalExtent.fromDateToDate
-                  </p>
-                }
-                @if (temporalExtent.start && !temporalExtent.end) {
-                  <p
-                    translate
-                    [translateParams]="{ start: temporalExtent.start }"
-                    >
-                    record.metadata.temporalExtent.sinceDate
-                  </p>
-                }
-                @if (!temporalExtent.start && temporalExtent.end) {
-                  <p
-                    translate
-                    [translateParams]="{ end: temporalExtent.end }"
-                    >
-                    record.metadata.temporalExtent.untilDate
-                  </p>
-                }
-              </div>
-            </div>
-          }
+            }
+          </div>
         </div>
-      </gn-ui-expandable-panel>
-    }
-    @if (
-      metadata.kind !== 'dataset' &&
-      metadata.spatialExtents &&
-      metadata.spatialExtents.length
-      ) {
-      <gn-ui-expandable-panel
-        [title]="'service.metadata.spatialExtent' | translate"
-        data-test="spatial-extent-panel"
-        >
-        <gn-ui-spatial-extent
-          class="flex h-[271px] w-full rounded-lg border border-gray-100 mt-3 mb-6"
-          [spatialExtents]="metadata.spatialExtents"
-        ></gn-ui-spatial-extent>
-      </gn-ui-expandable-panel>
-    }
-    @if (metadata.landingPage) {
-      <gn-ui-expandable-panel
-        [title]="'service.metadata.other' | translate"
-        data-test="other-panel"
-        >
-        <div class="flex flex-col gap-4 mr-4 py-5 rounded text-gray-700">
-          @if (metadata.recordUpdated) {
-            <div>
-              <p class="text-sm" translate>record.metadata.updatedOn</p>
+      }
+      @if (metadata.kind === 'dataset' && temporalExtent) {
+        <div data-test="details-panel-temporal-extent">
+          <p class="text-sm" translate>record.metadata.temporalExtent</p>
+          <div
+            class="flex flex-row gap-1 mb-1 text-primary font-medium temporal-extent"
+          >
+            @if (temporalExtent.start && temporalExtent.end) {
               <p
-                class="text-primary font-medium"
-                [gnUiHumanizeDate]="metadata.recordUpdated"
-              ></p>
-            </div>
-          }
-          @if (metadata.landingPage) {
-            <div>
-              <p class="text-sm" translate>record.metadata.sheet</p>
-              <p class="text-primary font-medium" translate>
-                <a [href]="metadata.landingPage" target="_blank">
-                  <span class="break-all" gnUiLinkify>{{ metadata.landingPage }}</span>
-                </a>
+                translate
+                [translateParams]="{
+                  start: temporalExtent.start,
+                  end: temporalExtent.end,
+                }"
+              >
+                record.metadata.temporalExtent.fromDateToDate
               </p>
-            </div>
-          }
-          @if (metadata.ownerOrganization) {
-            <div>
-              <p class="text-sm" translate>record.metadata.owner</p>
-              <p class="text-primary font-medium">
-                {{ metadata.ownerOrganization.name }}
+            }
+            @if (temporalExtent.start && !temporalExtent.end) {
+              <p translate [translateParams]="{ start: temporalExtent.start }">
+                record.metadata.temporalExtent.sinceDate
               </p>
-            </div>
-          }
-          @if (metadata.uniqueIdentifier) {
-            <div>
-              <p class="text-sm" translate>record.metadata.uniqueId</p>
-              <div class="flex flex-row content-align items-end gap-1">
-                <gn-ui-copy-text-button
-                  [text]="metadata.uniqueIdentifier"
-                  [tooltipText]="'tooltip.id.copy' | translate"
-                  [displayText]="false"
-                ></gn-ui-copy-text-button>
-                <p class="text-primary font-medium">
-                  {{ metadata.uniqueIdentifier }}
-                </p>
-              </div>
-            </div>
-          }
-          @if (metadata.topics?.length) {
-            <div>
-              <p class="text-sm mb-1" translate>record.metadata.topics</p>
-              <div class="sm:pb-4 sm:pr-16">
-                @for (topic of metadata.topics; track topic) {
-                  <gn-ui-badge
-                    [clickable]="false"
-                    class="inline-block mr-2 mb-2 lowercase"
-                    >{{ topic }}</gn-ui-badge
-                    >
-                  }
-                </div>
-              </div>
+            }
+            @if (!temporalExtent.start && temporalExtent.end) {
+              <p translate [translateParams]="{ end: temporalExtent.end }">
+                record.metadata.temporalExtent.untilDate
+              </p>
             }
           </div>
-        </gn-ui-expandable-panel>
+        </div>
       }
+    </div>
+  </gn-ui-expandable-panel>
+}
+@if (
+  metadata.kind !== 'dataset' &&
+  metadata.spatialExtents &&
+  metadata.spatialExtents.length
+) {
+  <gn-ui-expandable-panel
+    [title]="'service.metadata.spatialExtent' | translate"
+    data-test="spatial-extent-panel"
+  >
+    <gn-ui-spatial-extent
+      class="flex h-[271px] w-full rounded-lg border border-gray-100 mt-3 mb-6"
+      [spatialExtents]="metadata.spatialExtents"
+    ></gn-ui-spatial-extent>
+  </gn-ui-expandable-panel>
+}
+@if (metadata.landingPage) {
+  <gn-ui-expandable-panel
+    [title]="'service.metadata.other' | translate"
+    data-test="other-panel"
+  >
+    <div class="flex flex-col gap-4 mr-4 py-5 rounded text-gray-700">
+      @if (metadata.recordUpdated) {
+        <div>
+          <p class="text-sm" translate>record.metadata.updatedOn</p>
+          <p
+            class="text-primary font-medium"
+            [gnUiHumanizeDate]="metadata.recordUpdated"
+          ></p>
+        </div>
+      }
+      @if (metadata.landingPage) {
+        <div>
+          <p class="text-sm" translate>record.metadata.sheet</p>
+          <p class="text-primary font-medium" translate>
+            <a [href]="metadata.landingPage" target="_blank">
+              <span class="break-all" gnUiLinkify>{{
+                metadata.landingPage
+              }}</span>
+            </a>
+          </p>
+        </div>
+      }
+      @if (metadata.ownerOrganization) {
+        <div>
+          <p class="text-sm" translate>record.metadata.owner</p>
+          <p class="text-primary font-medium">
+            {{ metadata.ownerOrganization.name }}
+          </p>
+        </div>
+      }
+      @if (metadata.uniqueIdentifier) {
+        <div>
+          <p class="text-sm" translate>record.metadata.uniqueId</p>
+          <div class="flex flex-row content-align items-end gap-1">
+            <gn-ui-copy-text-button
+              [text]="metadata.uniqueIdentifier"
+              [tooltipText]="'tooltip.id.copy' | translate"
+              [displayText]="false"
+            ></gn-ui-copy-text-button>
+            <p class="text-primary font-medium">
+              {{ metadata.uniqueIdentifier }}
+            </p>
+          </div>
+        </div>
+      }
+      @if (metadata.topics?.length) {
+        <div>
+          <p class="text-sm mb-1" translate>record.metadata.topics</p>
+          <div class="sm:pb-4 sm:pr-16">
+            @for (topic of metadata.topics; track topic) {
+              <gn-ui-badge
+                [clickable]="false"
+                class="inline-block mr-2 mb-2 lowercase"
+                >{{ topic }}</gn-ui-badge
+              >
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </gn-ui-expandable-panel>
+}

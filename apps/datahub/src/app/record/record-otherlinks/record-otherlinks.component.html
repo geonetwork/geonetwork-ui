@@ -3,7 +3,7 @@
     <h3
       class="inline-block font-title text-xl font-medium text-title"
       translate
-      >
+    >
       record.metadata.links
     </h3>
     <span class="px-3">({{ linksCount$ | async }})</span>
@@ -24,7 +24,7 @@
     <gn-ui-carousel
       containerClass="gap-4 pt-5 pb-7"
       (currentStepChange)="updateView()"
-      >
+    >
       @for (otherLink of otherLinks; track otherLink) {
         <gn-ui-external-link-card
           [link]="otherLink"
@@ -35,10 +35,7 @@
     </gn-ui-carousel>
   }
   @if ((isMobile$ | async) === false) {
-    <gn-ui-block-list
-      #blockList
-      containerClass="gap-4 pt-5 pb-7"
-      >
+    <gn-ui-block-list #blockList containerClass="gap-4 pt-5 pb-7">
       @for (otherLink of otherLinks; track otherLink) {
         <gn-ui-external-link-card
           #block

@@ -9,7 +9,6 @@ import { DatePickerComponent } from '../date-picker/date-picker.component'
 import { DatasetTemporalExtent } from '@geonetwork-ui/common/domain/model/record/metadata.model'
 import { TranslateDirective } from '@ngx-translate/core'
 
-
 @Component({
   selector: 'gn-ui-date-range-inputs',
   standalone: true,

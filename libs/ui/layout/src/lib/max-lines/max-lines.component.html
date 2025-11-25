@@ -3,7 +3,7 @@
   class="max-lines overflow-hidden transition-[max-height] duration-300 relative"
   [ngClass]="isExpanded ? 'ease-in' : 'ease-out'"
   [style.maxHeight]="maxHeight"
-  >
+>
   <ng-content></ng-content>
   @if (showToggleButton && !isExpanded) {
     <div
@@ -16,7 +16,7 @@
     (click)="toggleDisplay()"
     class="text-primary cursor-pointer pt-2.5"
     data-cy="readMoreButton"
-    >
+  >
     {{ (isExpanded ? 'ui.readLess' : 'ui.readMore') | translate }}
   </div>
 }

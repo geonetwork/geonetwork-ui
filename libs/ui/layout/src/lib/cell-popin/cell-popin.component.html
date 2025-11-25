@@ -5,7 +5,7 @@
   #trigger="cdkOverlayOrigin"
   [class]="extraClass"
   data-cy="cell-popin"
-  >
+>
   <ng-content select="[cellContent]"></ng-content>
   @if (activePopin) {
     <ng-template
@@ -18,12 +18,12 @@
       [cdkConnectedOverlayFlexibleDimensions]="true"
       [cdkConnectedOverlayGrowAfterOpen]="true"
       (detach)="closeOverlay()"
-      >
+    >
       @if (activePopin && isVisible) {
         <div
           class="bg-white shadow-lg border border-gray-300 relative"
           data-cy="cell-popin-content"
-          >
+        >
           <ng-content select="[popinContent]"></ng-content>
           <gn-ui-button
             data-cy="cell-popin-close"
@@ -32,7 +32,7 @@
             type="light"
             (buttonClick)="closeOverlay()"
             extraClass="w-10 h-8 px-1"
-            >
+          >
             <ng-icon name="iconoirReduce" size="24"></ng-icon>
           </gn-ui-button>
         </div>

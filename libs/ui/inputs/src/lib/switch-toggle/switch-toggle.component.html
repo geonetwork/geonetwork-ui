@@ -3,7 +3,7 @@
   multiple="false"
   class="flex w-full"
   [disabled]="disabled"
-  >
+>
   @for (option of options; track option) {
     <mat-button-toggle
       [aria-label]="option.label"
@@ -11,6 +11,6 @@
       (change)="onChange(option)"
       [class]="extraClasses"
       >{{ option.label | translate }}</mat-button-toggle
-      >
-    }
-  </mat-button-toggle-group>
+    >
+  }
+</mat-button-toggle-group>

@@ -8,7 +8,6 @@ import {
   TemplateRef,
 } from '@angular/core'
 
-
 @Component({
   selector: 'gn-ui-interactive-table-column',
   standalone: true,

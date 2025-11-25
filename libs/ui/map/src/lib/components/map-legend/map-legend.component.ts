@@ -10,7 +10,6 @@ import {
 import { MapContext } from '@geospatial-sdk/core'
 import { createLegendFromLayer } from '@geospatial-sdk/legend'
 
-
 @Component({
   selector: 'gn-ui-map-legend',
   templateUrl: './map-legend.component.html',

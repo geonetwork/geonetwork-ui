@@ -21,7 +21,6 @@ import {
   Organization,
 } from '@geonetwork-ui/common/domain/model/record'
 
-
 @Component({
   selector: 'gn-ui-record-preview',
   template: '',

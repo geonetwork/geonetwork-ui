@@ -8,9 +8,7 @@
     </div>
   }
   @if (!isLoading && (facade.canEditRecord$ | async) === true) {
-    <div
-      class="flex flex-col h-full w-full"
-      >
+    <div class="flex flex-col h-full w-full">
       <div class="w-full h-auto shrink-0 relative">
         <md-editor-top-toolbar
           (openSidePanel)="sidePanelOpen = $event"
@@ -28,12 +26,12 @@
                   <div
                     class="p-4 border border-primary bg-primary-lightest rounded-lg text-center"
                     translate
-              [translateParams]="{
-                date: formatDate(hasChanged.date),
-                user: hasChanged.user,
-              }"
+                    [translateParams]="{
+                      date: formatDate(hasChanged.date),
+                      user: hasChanged.user,
+                    }"
                     data-test="draft-alert"
-                    >
+                  >
                     editor.record.form.draft.updateAlert
                   </div>
                 }
@@ -44,24 +42,24 @@
             <div
               data-test="previousNextPageButtons"
               class="mt-auto flex flex-row justify-between"
-              >
+            >
               <gn-ui-button
                 type="gray"
                 (buttonClick)="previousPageButtonHandler()"
                 translate
-                >
+              >
                 {{
-                (currentPage$ | async) === 0
-                ? ('editor.record.form.bottomButtons.comeBackLater'
-                | translate)
-                : ('editor.record.form.bottomButtons.previous' | translate)
+                  (currentPage$ | async) === 0
+                    ? ('editor.record.form.bottomButtons.comeBackLater'
+                      | translate)
+                    : ('editor.record.form.bottomButtons.previous' | translate)
                 }}
               </gn-ui-button>
               @if ((isLastPage$ | async) === false) {
                 <gn-ui-button
                   type="primary"
                   (buttonClick)="nextPageButtonHandler()"
-                  >
+                >
                   <span translate>editor.record.form.bottomButtons.next</span>
                 </gn-ui-button>
               }
@@ -69,25 +67,21 @@
           </div>
         </div>
         @if (sidePanelOpen === 'multilingual') {
-          <gn-ui-multilingual-panel
-            [record]="facade.record$ | async"
-            >
+          <gn-ui-multilingual-panel [record]="facade.record$ | async">
           </gn-ui-multilingual-panel>
         }
         @if (sidePanelOpen === 'metadataQuality') {
           <gn-ui-metadata-quality-panel
             [record]="facade.record$ | async"
             [editorConfig]="facade.editorConfig$ | async"
-            >
+          >
           </gn-ui-metadata-quality-panel>
         }
       </div>
     </div>
   }
   @if ((facade.canEditRecord$ | async) === false) {
-    <div
-      class="flex flex-col h-full w-full"
-      >
+    <div class="flex flex-col h-full w-full">
       <header class="shrink-0 border-b border-gray-300">
         <md-editor-search-header></md-editor-search-header>
       </header>

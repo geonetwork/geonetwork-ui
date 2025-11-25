@@ -1,4 +1,3 @@
-
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -43,8 +42,8 @@ import { SortableListComponent } from '@geonetwork-ui/ui/layout'
     TranslateDirective,
     TranslatePipe,
     ContactCardComponent,
-    SortableListComponent
-],
+    SortableListComponent,
+  ],
 })
 export class FormFieldContactsComponent implements OnDestroy, OnChanges {
   @Input() value: Individual[]

@@ -1,11 +1,9 @@
 @if (message && bannerOpen) {
-  <div
-    class="absolute left-0 right-0 text-wrap bg-white mt-4"
-    >
+  <div class="absolute left-0 right-0 text-wrap bg-white mt-4">
     <div
       class="flex flex-row py-3 px-4 gap-3 justify-start border relative"
       [ngClass]="classList"
-      >
+    >
       <div [ngClass]="message.length > 200 ? 'pt-2.5' : 'pt-1'">
         <ng-icon [name]="icon"></ng-icon>
       </div>
@@ -20,7 +18,7 @@
           class="absolute top-2 right-2"
           type="button"
           (click)="closeMessage()"
-          >
+        >
           <ng-icon name="matCloseOutline"> </ng-icon>
         </button>
       }

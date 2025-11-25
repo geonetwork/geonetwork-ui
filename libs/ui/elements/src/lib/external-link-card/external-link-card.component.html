@@ -4,11 +4,11 @@
     <div
       class="flex min-w-[32px]"
       [ngClass]="size === 'S' ? 'items-end' : 'items-center'"
-      >
+    >
       <div
         class="gn-ui-card-icon"
         [title]="'record.metadata.link.postgis.tooltip' | translate"
-        >
+      >
         <ng-icon
           class="inline-block card-icon align-middle"
           name="iconoirDatabase"
@@ -22,7 +22,7 @@
     <div
       class="flex min-w-[32px]"
       [ngClass]="size === 'S' ? 'items-end' : 'items-center'"
-      >
+    >
       <div class="gn-ui-card-icon">
         <ng-icon
           class="inline-block card-icon align-middle"
@@ -54,7 +54,7 @@
         class="inline-flex items-center justify-center px-2 py-1 text-13 font-medium leading-none text-white rounded transition-opacity opacity-70 group-hover:opacity-100"
         [style.background-color]="getLinkColor(link)"
         data-cy="download-format"
-        >
+      >
         {{ getLinkFormat(link) || ('downloads.format.unknown' | translate) }}
       </span>
     </div>

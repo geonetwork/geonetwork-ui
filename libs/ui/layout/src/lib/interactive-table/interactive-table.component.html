@@ -6,7 +6,7 @@
           type="button"
           class="table-header-cell gap-1"
           (click)="column.sortable && column.handleSortChange()"
-          >
+        >
           <ng-container *ngTemplateOutlet="column.header"></ng-container>
           @if (column.sortable) {
             <div class="sort-button flex flex-col">
@@ -38,11 +38,11 @@
       data-cy="table-row"
       [attr.data-cy-title]="item.title"
       [title]="getItemTitle(item) | translate"
-      >
+    >
       <div
         class="relative h-0"
         [ngStyle]="{ 'grid-column': 'span ' + this.columns.length }"
-        >
+      >
         <!-- this element is only used in keyboard navigation -->
         <button
           type="button"
@@ -52,13 +52,13 @@
       @for (column of columns; track column) {
         <div
           class="table-row-cell px-3 py-1.5 flex items-center bg-white transition-colors duration-75 truncate border-b border-gray-200"
-        [ngClass]="{
-          'text-purple-light cursor-default':
-            (canEditItem(item) | async) === false,
-          'group-hover:text-main group-hover:bg-gray-50':
-            canEditItem(item) | async,
-        }"
-          >
+          [ngClass]="{
+            'text-purple-light cursor-default':
+              (canEditItem(item) | async) === false,
+            'group-hover:text-main group-hover:bg-gray-50':
+              canEditItem(item) | async,
+          }"
+        >
           <ng-container
             *ngTemplateOutlet="column.cell; context: { $implicit: item }"
           ></ng-container>

@@ -1,8 +1,6 @@
 <header class="h-full px-5" [style.background]="backgroundCss">
   @if (translatedBannerMessage$ | async; as bannerMessage) {
-    <div
-      class="container-lg relative top-0 mx-auto z-[1005]"
-      >
+    <div class="container-lg relative top-0 mx-auto z-[1005]">
       <gn-ui-application-banner
         [message]="bannerMessage"
         [closeEnabled]="true"
@@ -12,12 +10,12 @@
   }
   <div
     class="container-lg relative h-full mx-auto flex flex-col-reverse justify-between sm:flex-col sm:justify-end"
-    >
+  >
     <div
       class="py-8 relative z-40 mb-[184px] sm:mb-0"
       [ngClass]="{ 'pointer-events-none': expandRatio < 0.2 }"
       [style.transform]="'translate(0, ' + (1 - expandRatio) * 242 + 'px)'"
-      >
+    >
       <div
         data-cy="dh-title"
         class="font-title text-[30px] absolute w-full sm:text-[48px] sm:leading-[58px]"
@@ -37,7 +35,7 @@
       <div
         class="flex flex-wrap h-0 py-5 gap-3"
         [style.opacity]="-0.6 + expandRatio * 2"
-        >
+      >
         @if (showFavoritesButton$ | async) {
           <datahub-header-badge-button
             [routerLink]="ROUTE_SEARCH"
@@ -52,7 +50,7 @@
             type="button"
             class="badge-btn text-primary-white bg-primary-opacity-50 hover-bg-primary-opacity-100"
             (click)="clearSearchAndSort(SORT_BY_PARAMS.RESOURCE_DATES)"
-            >
+          >
             <span translate>datahub.header.lastRecords</span>
           </button>
         </div>
@@ -61,7 +59,7 @@
             type="button"
             class="badge-btn text-primary-white bg-primary-opacity-50 hover-bg-primary-opacity-100"
             (click)="clearSearchAndSort(SORT_BY_PARAMS.POPULARITY)"
-            >
+          >
             <span translate>datahub.header.popularRecords</span>
           </button>
         </div>
@@ -72,7 +70,7 @@
                 type="button"
                 class="badge-btn text-primary-white bg-primary-opacity-50 hover-bg-primary-opacity-100"
                 (click)="clearSearchAndFilterAndSort(preset)"
-                >
+              >
                 <span translate>{{ preset['name'] }}</span>
               </button>
             </div>

@@ -1,7 +1,7 @@
 <div class="flex h-full">
   <div
     class="h-full bg-black w-[50px] rounded-r-lg flex flex-col justify-between"
-    >
+  >
     <div class="flex flex-col justify-around h-24">
       <div class="flex justify-center items-center h-12">
         <img src="assets/editor-logo.svg" alt="Editor logo" />
@@ -20,13 +20,13 @@
           [style.--gn-ui-button-height]="'40px'"
           [style.--gn-ui-button-width]="'40px'"
           [style.--gn-ui-button-rounded]="'40px'"
-          >
+        >
           <a
             [href]="settingsUrl"
             target="_blank"
             class="gn-ui-btn-black"
             data-cy="account-link"
-            >
+          >
             <gn-ui-user-preview
               [user]="user"
               [avatarPlaceholder]="placeholder$ | async"
@@ -38,7 +38,7 @@
             data-cy="logout-button"
             (buttonClick)="logOut()"
             [title]="'editor.sidebar.logout' | translate"
-            >
+          >
             <ng-icon name="iconoirSystemShut" size="16px"></ng-icon>
           </gn-ui-button>
         </div>
@@ -54,12 +54,12 @@
             type="default"
             class="flex flex-col items-center gap-2"
             [routerLink]="['/organizations', organisations[0].id]"
-            >
+          >
             <img
               [src]="organisations[0].logoUrl?.href"
               alt="Organization logo"
               class="w-12 h-12"
-              />
+            />
             <span>{{ organisations[0].name }}</span>
           </gn-ui-button>
         }

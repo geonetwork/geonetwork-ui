@@ -5,7 +5,7 @@
         class="text-[16px] text-main font-bold"
         translate
         [translateParams]="{ searchText: searchText }"
-        >
+      >
         dashboard.records.search
       </h1>
       <div class="text-[12px]">
@@ -22,7 +22,7 @@
   </div>
   <div
     class="flex flex-row items-center mx-[32px] my-[16px] py-[8px] gap-[16px]"
-    >
+  >
     <div class="grow"></div>
     <gn-ui-button
       cdkOverlayOrigin
@@ -30,19 +30,13 @@
       (buttonClick)="duplicateExternalRecord()"
       type="gray"
       data-test="import-record"
-      >
+    >
       <span translate>dashboard.importRecord</span>
       @if (!isImportMenuOpen) {
-        <ng-icon
-          class="text-primary"
-          name="iconoirNavArrowDown"
-        ></ng-icon>
+        <ng-icon class="text-primary" name="iconoirNavArrowDown"></ng-icon>
       }
       @if (isImportMenuOpen) {
-        <ng-icon
-          class="text-primary"
-          name="iconoirNavArrowUp"
-        ></ng-icon>
+        <ng-icon class="text-primary" name="iconoirNavArrowUp"></ng-icon>
       }
     </gn-ui-button>
     <ng-template #template>
@@ -54,7 +48,7 @@
       (buttonClick)="createRecord()"
       type="primary"
       data-cy="create-record"
-      >
+    >
       <ng-icon class="mr-2" name="iconoirPagePlus"></ng-icon>
       <span translate>dashboard.createRecord</span>
     </gn-ui-button>

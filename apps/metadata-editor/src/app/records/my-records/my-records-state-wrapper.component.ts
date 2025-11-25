@@ -5,7 +5,6 @@ import {
   SearchStateContainerDirective,
 } from '@geonetwork-ui/feature/search'
 
-
 @Component({
   selector: 'md-editor-my-records-state-wrapper',
   templateUrl: './my-records-state-wrapper.component.html',
@@ -14,8 +13,8 @@ import {
   imports: [
     FeatureSearchModule,
     MyRecordsComponent,
-    SearchStateContainerDirective
-],
+    SearchStateContainerDirective,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyRecordsStateWrapperComponent {}

@@ -6,15 +6,13 @@
     [displayWithFn]="displayWithFn"
     [minCharacterCount]="1"
     [clearOnSelection]="true"
-    >
+  >
   </gn-ui-autocomplete>
 
   @if (contacts.length > 0) {
     @if (contacts.length === 1) {
       @for (contact of contacts; track contact; let index = $index) {
-        <gn-ui-contact-card
-          [contact]="contact"
-        ></gn-ui-contact-card>
+        <gn-ui-contact-card [contact]="contact"></gn-ui-contact-card>
       }
     }
     @if (contacts.length > 1) {
@@ -31,9 +29,8 @@
     <div
       class="p-4 text-sm border border-primary bg-primary-lightest rounded-lg"
       translate
-      >
+    >
       editor.record.form.field.contacts.noContact
     </div>
   }
 </div>
-

@@ -1,4 +1,3 @@
-
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -57,8 +56,8 @@ type OnlineNotLinkResource =
     OnlineResourceCardComponent,
     TextInputComponent,
     TextAreaComponent,
-    TranslateDirective
-],
+    TranslateDirective,
+  ],
 })
 export class FormFieldOnlineResourcesComponent {
   @Input() metadataUuid: string

@@ -12,19 +12,17 @@
     (dragFilesOver)="handleDragFilesOver($event)"
     (dropFiles)="handleDropFiles($event)"
     (keydown.enter)="fileInput.click()"
-    >
+  >
     <input
       #fileInput
       type="file"
       class="hidden"
       (change)="handleFileInput($event)"
       [disabled]="isUploadInProgress || disabled"
-      />
+    />
 
     @if (!isUploadInProgress) {
-      <div
-        class="w-14 h-14 rounded-md bg-gray-50 grid"
-        >
+      <div class="w-14 h-14 rounded-md bg-gray-50 grid">
         @if (!dragFilesOver) {
           <ng-icon
             class="place-self-center text-primary"
@@ -40,9 +38,7 @@
       </div>
     }
     @if (isUploadInProgress) {
-      <div
-        class="w-14 h-14 grid items-center justify-center relative"
-        >
+      <div class="w-14 h-14 grid items-center justify-center relative">
         <div class="text-gray-100 absolute">
           <mat-progress-spinner
             class="place-self-center"
@@ -74,7 +70,7 @@
             : 'font-medium text-gray-500'
         "
         (click)="handleSecondaryTextClick($event)"
-        >
+      >
         {{ getSecondaryText() | translate }}
       </p>
     </div>
@@ -82,13 +78,13 @@
       <span class="border-b border-gray-300 grow"></span>
       <span class="text-sm font-medium text-gray-500 or-input-url" translate>
         input.file.orInputUrl</span
-        >
-        <span class="border-b border-gray-300 grow"></span>
-      </p>
-      <gn-ui-url-input
-        class="w-full"
-        [disabled]="isUploadInProgress || disabled"
-        (uploadClick)="handleUrlChange($event)"
-      ></gn-ui-url-input>
-    </label>
-  </div>
+      >
+      <span class="border-b border-gray-300 grow"></span>
+    </p>
+    <gn-ui-url-input
+      class="w-full"
+      [disabled]="isUploadInProgress || disabled"
+      (uploadClick)="handleUrlChange($event)"
+    ></gn-ui-url-input>
+  </label>
+</div>

@@ -4,7 +4,7 @@
     (valueChange)="urlChange.next($event)"
     [placeholder]="'map.wms.urlInput.hint' | translate"
     class="w-96"
-    >
+  >
   </gn-ui-text-input>
 </div>
 
@@ -26,9 +26,9 @@
     @for (layer of layers; track layer) {
       <ng-container
         [ngTemplateOutlet]="layerTreeItem"
-    [ngTemplateOutletContext]="{
-      layer: layer,
-    }"
+        [ngTemplateOutletContext]="{
+          layer: layer,
+        }"
       ></ng-container>
     }
   </div>
@@ -47,20 +47,20 @@
         extraClass="text-sm !px-2 !py-1"
         translate
         ><span translate> map.layer.add </span></gn-ui-button
+      >
+    }
+  </div>
+  @if (layer.children?.length > 0) {
+    <div class="ml-4">
+      @for (child of layer.children; track child) {
+        <ng-container
+          [ngTemplateOutlet]="layerTreeItem"
+          [ngTemplateOutletContext]="{
+            layer: child,
+          }"
         >
+        </ng-container>
       }
     </div>
-    @if (layer.children?.length > 0) {
-      <div class="ml-4">
-        @for (child of layer.children; track child) {
-          <ng-container
-            [ngTemplateOutlet]="layerTreeItem"
-      [ngTemplateOutletContext]="{
-        layer: child,
-      }"
-            >
-          </ng-container>
-        }
-      </div>
-    }
-  </ng-template>
+  }
+</ng-template>

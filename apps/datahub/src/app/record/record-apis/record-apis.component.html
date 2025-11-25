@@ -3,7 +3,7 @@
     <h3
       class="inline-block font-title text-xl font-medium text-title"
       translate
-      >
+    >
       record.metadata.api
     </h3>
     <span class="px-3">({{ apiLinksCount$ | async }})</span>
@@ -24,7 +24,7 @@
     (currentStepChange)="updateView()"
     containerClass="gap-4 pt-5 pb-7"
     #carousel
-    >
+  >
     @for (link of apiLinks$ | async; track link) {
       <gn-ui-api-card
         [title]="link.name"
@@ -32,16 +32,13 @@
         [currentLink]="selectedApiLink"
         size="S"
         (openRecordApiForm)="openRecordApiForm($event)"
-        >
+      >
       </gn-ui-api-card>
     }
   </gn-ui-carousel>
 }
 @if ((isMobile$ | async) === false) {
-  <gn-ui-block-list
-    #blockList
-    containerClass="gap-4 pt-5 pb-7"
-    >
+  <gn-ui-block-list #blockList containerClass="gap-4 pt-5 pb-7">
     @for (link of apiLinks$ | async; track link) {
       <gn-ui-api-card
         #block
@@ -59,19 +56,16 @@
   [ngClass]="selectedApiLink ? 'ease-in' : 'ease-out'"
   [style.maxHeight]="maxHeight"
   [style.opacity]="opacity"
-  >
+>
   <div class="bg-primary-opacity-10 py-8">
     <div class="flex flex-col px-4 gap-8 container-lg lg:mx-auto">
       <div class="flex flex-wrap justify-between sm:mb-2 ng-star-inserted">
         @if (selectedApiLink?.accessServiceProtocol) {
-          <p
-            class="text-[21px] text-title font-title"
-            translate
-            >
+          <p class="text-[21px] text-title font-title" translate>
             {{
-            selectedApiLink?.accessServiceProtocol === 'GPFDL'
-            ? 'record.metadata.api.form.title.gpf'
-            : 'record.metadata.api.form.title'
+              selectedApiLink?.accessServiceProtocol === 'GPFDL'
+                ? 'record.metadata.api.form.title.gpf'
+                : 'record.metadata.api.form.title'
             }}
           </p>
         }
@@ -79,25 +73,23 @@
           type="button"
           class="flex items-center gap-0.5 text-primary group"
           (click)="closeRecordApiForm()"
-          >
+        >
           <div
             class="text-sm font-medium opacity-50 group-hover:opacity-100 uppercase tracking-wide mt-0.5"
             translate
-            >
+          >
             record.metadata.api.form.closeButton
           </div>
           <ng-icon
             class="!w-5 !h-5 text-xl font-bold !flex items-center"
             name="matCloseOutline"
-            >
+          >
           </ng-icon>
         </button>
       </div>
 
       @if (selectedApiLink?.accessServiceProtocol === 'GPFDL') {
-        <gn-ui-gpf-api-dl
-          [apiLink]="selectedApiLink"
-        ></gn-ui-gpf-api-dl>
+        <gn-ui-gpf-api-dl [apiLink]="selectedApiLink"></gn-ui-gpf-api-dl>
       }
       @if (selectedApiLink?.accessServiceProtocol !== 'GPFDL') {
         <gn-ui-record-api-form

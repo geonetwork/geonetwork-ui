@@ -24,8 +24,8 @@ import { CellPopinComponent } from '../cell-popin/cell-popin.component'
     OverlayModule,
     ButtonComponent,
     CellPopinComponent,
-    NgIconComponent
-],
+    NgIconComponent,
+  ],
   providers: [provideIcons({ iconoirExpand })],
   templateUrl: './truncated-text.component.html',
   styles: [],

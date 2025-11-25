@@ -1,13 +1,16 @@
 @if (!loading) {
   <div class="w-full">
-    <span data-cy="resultsHitsFound" translate [translateParams]="{ hits: hits }"
+    <span
+      data-cy="resultsHitsFound"
+      translate
+      [translateParams]="{ hits: hits }"
       >results.records.hits.found</span
-      >
-      @if (hits === 0) {
-        <p
-          class="mt-4"
-          [innerHtml]="'results.records.hits.empty.help.html' | translate"
-        ></p>
-      }
-    </div>
-  }
+    >
+    @if (hits === 0) {
+      <p
+        class="mt-4"
+        [innerHtml]="'results.records.hits.empty.help.html' | translate"
+      ></p>
+    }
+  </div>
+}

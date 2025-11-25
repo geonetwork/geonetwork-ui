@@ -38,13 +38,7 @@ import {
   templateUrl: './dropdown-multiselect.component.html',
   styleUrls: ['./dropdown-multiselect.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    ButtonComponent,
-    NgIcon,
-    OverlayModule,
-    FormsModule,
-    TranslatePipe
-],
+  imports: [ButtonComponent, NgIcon, OverlayModule, FormsModule, TranslatePipe],
   providers: [
     provideIcons({
       matClose,

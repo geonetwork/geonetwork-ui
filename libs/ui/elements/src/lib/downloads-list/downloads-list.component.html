@@ -1,13 +1,11 @@
 @if (links && links.length > 0) {
-  <div
-    class="flex flex-wrap justify-between items-center pb-4"
-    >
+  <div class="flex flex-wrap justify-between items-center pb-4">
     <div class="flex flex-row items-center gap-x-4">
       <div>
         <h3
           class="inline-block font-title text-xl text-title font-medium mr-4"
           translate
-          >
+        >
           record.metadata.download
         </h3>
         <span class="px-3">({{ linksCount }})</span>
@@ -21,17 +19,17 @@
     <div
       class="flex flex-wrap justify-start sm:justify-end"
       data-cy="download-format-filters"
-      >
+    >
       @for (format of visibleFormats; track format) {
         <gn-ui-button
           class="m-1 format-filter"
-      [extraClass]="
-        '!px-[12px] !py-[8px] !text-[15px]' +
-        (isFilterActive(format) ? ' opacity-100' : ' opacity-60')
-      "
+          [extraClass]="
+            '!px-[12px] !py-[8px] !text-[15px]' +
+            (isFilterActive(format) ? ' opacity-100' : ' opacity-60')
+          "
           (buttonClick)="toggleFilterFormat(format)"
           [attr.data-format]="format"
-          >
+        >
           {{ getFilterFormatTitle(format) }}
         </gn-ui-button>
       }
@@ -45,7 +43,7 @@
       #blockList
       (listChanges)="updateList($event)"
       containerClass="gap-4 pt-5 pb-7"
-      >
+    >
       @for (link of filteredLinks; track link) {
         <gn-ui-download-item
           #block

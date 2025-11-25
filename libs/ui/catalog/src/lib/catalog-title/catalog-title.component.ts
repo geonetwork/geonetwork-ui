@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core'
 
-
 @Component({
   selector: 'gn-ui-catalog-title',
   templateUrl: './catalog-title.component.html',

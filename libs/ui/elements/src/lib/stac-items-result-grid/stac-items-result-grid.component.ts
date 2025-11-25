@@ -1,4 +1,3 @@
-
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
 import { StacItem } from '@camptocamp/ogc-client'
 

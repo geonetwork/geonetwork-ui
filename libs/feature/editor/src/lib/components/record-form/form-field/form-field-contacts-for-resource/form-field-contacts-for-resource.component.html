@@ -8,18 +8,15 @@
       </gn-ui-button>
     }
   </div>
-  @if (
-    roleSectionsToDisplay && roleSectionsToDisplay.length > 0) {
-    <div
-      class="mt-8"
-      data-test="displayedRoles"
-      >
+  @if (roleSectionsToDisplay && roleSectionsToDisplay.length > 0) {
+    <div class="mt-8" data-test="displayedRoles">
       @for (
-        role of roleSectionsToDisplay; track
-        role; let index = $index; let isLast = $last) {
-        <div
-          class="flex flex-col gap-4"
-          >
+        role of roleSectionsToDisplay;
+        track role;
+        let index = $index;
+        let isLast = $last
+      ) {
+        <div class="flex flex-col gap-4">
           <div class="flex flex-row justify-between">
             <span class="font-bold text-base" translate>{{
               roleToLabel(role)
@@ -27,16 +24,17 @@
           </div>
           @if (role !== 'unspecified' && role !== 'other') {
             <gn-ui-autocomplete
-        [placeholder]="
-          'editor.record.form.field.contactsForResource.placeholder' | translate
-        "
+              [placeholder]="
+                'editor.record.form.field.contactsForResource.placeholder'
+                  | translate
+              "
               [action]="autoCompleteAction"
               (itemSelected)="addContact($event, role)"
               [displayWithFn]="displayWithFn"
               [minCharacterCount]="1"
               [clearOnSelection]="true"
               [allowSubmit]="false"
-              >
+            >
             </gn-ui-autocomplete>
           }
           @if (contactsForRessourceByRole.get(role); as contacts) {
@@ -59,7 +57,7 @@
     <div
       class="p-4 border border-primary bg-primary-lightest rounded-lg"
       translate
-      >
+    >
       editor.record.form.field.contactsForResource.noContact
     </div>
   }

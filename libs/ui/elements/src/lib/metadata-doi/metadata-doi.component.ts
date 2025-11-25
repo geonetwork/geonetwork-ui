@@ -9,12 +9,7 @@ import { CopyTextButtonComponent } from '@geonetwork-ui/ui/inputs'
 @Component({
   selector: 'gn-ui-metadata-doi',
   standalone: true,
-  imports: [
-    MatTooltipModule,
-    NgIcon,
-    TranslatePipe,
-    CopyTextButtonComponent
-],
+  imports: [MatTooltipModule, NgIcon, TranslatePipe, CopyTextButtonComponent],
   templateUrl: './metadata-doi.component.html',
   styleUrl: './metadata-doi.component.css',
   viewProviders: [

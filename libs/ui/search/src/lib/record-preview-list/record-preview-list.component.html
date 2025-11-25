@@ -1,11 +1,11 @@
 <div
   class="h-40 bg-white transition duration-200 border border-gray-200 rounded-md hover:bg-gray-50 hover:border-primary hover:text-primary"
-  >
+>
   <a
     [href]="record.landingPage"
     [target]="linkTarget"
     [title]="record.abstract"
-    >
+  >
     <div class="h-full flex flex-row items-center shadow-sm">
       <gn-ui-thumbnail
         class="w-40 h-full shrink-0 border-r border-gray-200 bg-gray-100"
@@ -24,14 +24,14 @@
           @if (record.kind === 'dataset') {
             <div
               class="text-gray-500 text-xs truncate capitalize border-r mr-4 pr-4"
-              >
+            >
               <span translate>{{ record.updateFrequency }}</span>
             </div>
           }
           @if (isViewable || isDownloadable) {
             <div
               class="text-gray-500 text-xs border-gray-300 truncate viewable-downloadable"
-              >
+            >
               @if (isViewable) {
                 <span translate>record.action.view</span>
               }

@@ -25,12 +25,7 @@ import { ButtonComponent } from '@geonetwork-ui/ui/inputs'
 @Component({
   selector: 'gn-ui-cell-popin',
   standalone: true,
-  imports: [
-    MatButtonModule,
-    OverlayModule,
-    ButtonComponent,
-    NgIconComponent
-],
+  imports: [MatButtonModule, OverlayModule, ButtonComponent, NgIconComponent],
   providers: [provideIcons({ iconoirReduce })],
   templateUrl: './cell-popin.component.html',
   styleUrls: [],

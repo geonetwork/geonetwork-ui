@@ -49,8 +49,8 @@ import { SpatialExtentComponent } from '@geonetwork-ui/ui/map'
     NgIcon,
     GnUiLinkifyDirective,
     GnUiHumanizeDateDirective,
-    SpatialExtentComponent
-],
+    SpatialExtentComponent,
+  ],
   viewProviders: [
     provideIcons({
       matOpenInNew,

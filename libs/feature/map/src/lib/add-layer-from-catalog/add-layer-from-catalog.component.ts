@@ -13,7 +13,6 @@ import {
 } from '@geonetwork-ui/ui/search'
 import { AddLayerRecordPreviewComponent } from './add-layer-record-preview/add-layer-record-preview.component'
 
-
 @Component({
   selector: 'gn-ui-add-layer-from-catalog',
   templateUrl: './add-layer-from-catalog.component.html',
@@ -38,8 +37,8 @@ import { AddLayerRecordPreviewComponent } from './add-layer-record-preview/add-l
   imports: [
     FeatureSearchModule,
     FuzzySearchComponent,
-    ResultsListContainerComponent
-],
+    ResultsListContainerComponent,
+  ],
 })
 export class AddLayerFromCatalogComponent implements OnInit {
   constructor(private searchFacade: SearchFacade) {}

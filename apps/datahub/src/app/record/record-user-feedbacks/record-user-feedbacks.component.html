@@ -7,7 +7,7 @@
         (selectValue)="changeSort($event)"
         [choices]="sortingStrategyList"
         [selected]="selectedSortingStrategy$ | async"
-        >
+      >
       </gn-ui-dropdown-selector>
     }
   </div>
@@ -34,23 +34,16 @@
           extraClass="bg-transparent border-0 placeholder-primary-darker text-primary-darker h-9"
         ></gn-ui-text-area>
         @if (!isNewCommentEmpty) {
-          <div
-            id="new-comment-buttons"
-            class="flex flex-row justify-end"
-            >
+          <div id="new-comment-buttons" class="flex flex-row justify-end">
             <gn-ui-button
               [disabled]="isAddUserFeedbackLoading"
               [type]="'outline'"
               (buttonClick)="publishNewComment()"
               title="Publish"
               extraClass="!p-[0.5em] text-primary-darker border-primary-darker h-9"
-              >
+            >
               @if (!isAddUserFeedbackLoading) {
-                <ng-icon
-                  class="grow-0"
-                  name="matSendOutline"
-                  >
-                </ng-icon>
+                <ng-icon class="grow-0" name="matSendOutline"> </ng-icon>
               }
               @if (isAddUserFeedbackLoading) {
                 <div class="flex justify-center w-full">
@@ -80,7 +73,7 @@
           [href]="loginUrl"
           class="gn-ui-btn-primary uppercase flex flex-row items-center gap-2 ml-auto"
           translate
-          >
+        >
           <ng-icon class="grow-0" name="matAccountBoxOutline"></ng-icon>
           button.login
         </a>
@@ -89,15 +82,16 @@
   }
   @if (userFeedbacksParents && userFeedbacksParents.length) {
     <div class="mt-4">
-      @for (userFeedbackParent of userFeedbacksParents; track userFeedbackParent) {
-        <div
-          class="mb-4 w-full"
-          >
+      @for (
+        userFeedbackParent of userFeedbacksParents;
+        track userFeedbackParent
+      ) {
+        <div class="mb-4 w-full">
           <gn-ui-user-feedback-item
             [userFeedbackParent]="userFeedbackParent"
-        [userFeedBacksAnswers]="
-          userFeedBacksAnswers.get(userFeedbackParent.uuid)
-        "
+            [userFeedBacksAnswers]="
+              userFeedBacksAnswers.get(userFeedbackParent.uuid)
+            "
             [activeUser]="activeUser"
             [isAddUserFeedbackLoading]="isAddUserFeedbackLoading"
             (newUserFeedbackAnswer)="onNewUserFeedbackAnswer($event)"
@@ -107,4 +101,3 @@
     </div>
   }
 }
-
